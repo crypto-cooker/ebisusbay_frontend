@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBolt, faImage, faSignOutAlt, faShoppingBag, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+import { faBolt, faImage, faSignOutAlt, faShoppingBag, faMoon, faSun, faUser } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import { Modal, NavLink, Spinner, ModalTitle } from 'react-bootstrap';
@@ -410,6 +410,14 @@ const AccountMenu = function () {
               </ul>
               <div className="d-line"></div>
               <ul className="de-submenu-profile">
+                <li>
+                  <span onClick={() => navigateTo(`/account`)}>
+                    <span>
+                      <FontAwesomeIcon icon={faUser} />
+                    </span>
+                    <span>User Profile</span>
+                  </span>
+                </li>
                 <li>
                   <span onClick={logout}>
                     <span>

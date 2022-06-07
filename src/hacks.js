@@ -1,5 +1,5 @@
 import { caseInsensitiveCompare } from './utils';
-import { imageDomains } from './Config';
+import { imageDomains } from './config';
 
 export function isCroSkullRedPotion(address) {
   return caseInsensitiveCompare(address, '0x508378E99F5527Acb6eB4f0fc22f954c5783e5F9');
@@ -32,4 +32,4 @@ export function croSkullRedPotionImageHack(address, defaultImage) {
 
 export const hostedImage = (imgPath) => {
   return `https://ik.imagekit.io/ebisusbay/${imgPath}`;
-}
+};
