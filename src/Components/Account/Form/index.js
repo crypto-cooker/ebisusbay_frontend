@@ -1,14 +1,26 @@
-import React from 'react';
+import Input from '../Input';
 
 export default function Form() {
   return (
     <div>
-      <div>User Name</div>
-      <div>Custom URL</div>
-      <div>Email Address</div>
-      <div>Discord ID</div>
-      <div>Twitter Handle</div>
-      <div>Website</div>
+      <div>
+        <Input label="User Name" />
+      </div>
+      <div>
+        <Input label="Custom URL" />
+      </div>
+      <div>
+        <Input label="Email Address" />
+      </div>
+      <div>
+        <Input label="Discord ID" />
+      </div>
+      <div>
+        <Input label="Twitter Handle" />
+      </div>
+      <div>
+        <Input label="Website" />
+      </div>
     </div>
   );
 }

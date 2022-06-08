@@ -411,7 +411,7 @@ const AccountMenu = function () {
               <div className="d-line"></div>
               <ul className="de-submenu-profile">
                 <li>
-                  <span onClick={() => navigateTo(`/account`)}>
+                  <span onClick={() => navigateTo(`/account/profile`)}>
                     <span>
                       <FontAwesomeIcon icon={faUser} />
                     </span>
