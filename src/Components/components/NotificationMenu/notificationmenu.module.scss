@@ -1,0 +1,54 @@
+@import '../../../Assets/styles/vars';
+
+.notification {
+  width: 32px;
+  height: 32px;
+  background-color: #0078cb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+
+  .popshow {
+    width: 300px !important;
+  }
+
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      padding: 5px 0;
+
+      & > span {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        cursor: pointer;
+
+        &:hover {
+          box-shadow: none;
+        }
+
+        & > span:last-child {
+          color: $textColor1;
+          background: none;
+          padding: 0;
+          font-weight: bold;
+          font-size: 14px;
+          display: block;
+          text-align: left;
+        }
+      }
+    }
+  }
+
+  .empty {
+    color: $textColor1;
+  }
+
+  .clear {
+    color: #99c9ea;
+  }
+}
