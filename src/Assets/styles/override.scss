@@ -1,5 +1,9 @@
 @import './colors';
 
+textarea {
+  resize: none;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }

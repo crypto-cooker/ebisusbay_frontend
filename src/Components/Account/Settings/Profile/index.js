@@ -5,11 +5,15 @@ import Pfp from './Pfp';
 
 export default function EditProfile() {
   return (
-    <div>
-      <Pfp />
-      <Banner />
-      <Bio />
-      <Form />
+    <div className="row mt-5">
+      <div className="col-4">
+        <Pfp />
+        <Banner />
+        <Bio />
+      </div>
+      <div className="col-8">
+        <Form />
+      </div>
     </div>
   );
 }
