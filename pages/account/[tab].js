@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
-import { Banner, Bio, Form, Pfp, TopTabs } from '@src/Components/Account';
+import TopTabs from '@src/Components/Account/Settings/TopTabs';
+import EditProfile from '@src/Components/Account/Settings/Profile';
 
 export default function Account() {
   const router = useRouter();
   const { tab } = router.query;
-  console.log(tab);
 
   return (
     <div>
@@ -12,10 +12,7 @@ export default function Account() {
         <TopTabs />
         {tab === 'profile' && (
           <>
-            <Pfp />
-            <Banner />
-            <Bio />
-            <Form />
+            <EditProfile />
           </>
         )}
       </section>
