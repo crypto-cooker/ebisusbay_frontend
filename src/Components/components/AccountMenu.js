@@ -85,10 +85,7 @@ const AccountMenu = function () {
   const logout = async () => {
     dispatch(onLogout());
   };
-  const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    dispatch(setTheme(newTheme));
-  };
+
   useEffect(() => {
     if (walletAddress) {
       dispatch(getAllCollections());
@@ -206,9 +203,6 @@ const AccountMenu = function () {
 
   return (
     <div className="mainside d-flex">
-      <span onClick={toggleTheme} className="cursor-pointer me-3 my-auto">
-        <FontAwesomeIcon icon={theme === 'dark' ? faMoon : faSun} color="#fff" />
-      </span>
       {!walletAddress && (
         <div className="connect-wal">
           <NavLink onClick={connectWalletPressed}>Connect Wallet</NavLink>

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Button from '../../../components/Button';
 import NotificationItem from './Item';
 
@@ -13,6 +14,11 @@ const NotificationItems = [
 ];
 
 export default function Notification() {
+  const [isOnSave, setIsOnSave] = useState(false);
+  const handleSaveProfile = () => {
+    setIsOnSave(true);
+  };
+
   return (
     <div className="row mt-5">
       <div className="row">
@@ -23,7 +29,7 @@ export default function Notification() {
         ))}
       </div>
       <div className="col d-flex justify-content-end">
-        <Button type="legacy" className="mt-5">
+        <Button type="legacy" className="mt-5" onClick={handleSaveProfile} isLoading={isOnSave}>
           Update Profile
         </Button>
       </div>
