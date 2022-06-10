@@ -4,10 +4,11 @@ import Link from 'next/link';
 import { createGlobalStyle } from 'styled-components';
 import useBreakpoint from 'use-breakpoint';
 import AccountMenu from '../components/AccountMenu';
+import NotificationMenu from '../components/NotificationMenu';
 import InvalidListingWarning from '../components/InvalidListingWarning';
 // import { setTheme } from '../../GlobalState/User';
 
-const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 }
+const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
 
 const GlobalStyles = createGlobalStyle`
   header#myHeader.navbar.white {
@@ -44,7 +45,7 @@ const Header = function () {
   //   dispatch(setTheme(newTheme));
   // };
 
-  useEffect(() =>{
+  useEffect(() => {
     setUseMobileMenu(minWidth < BREAKPOINTS.l);
   }, [breakpoint]);
 
@@ -183,7 +184,7 @@ const Header = function () {
             </div>
           )}
 
-
+          <NotificationMenu />
           <AccountMenu />
           <InvalidListingWarning size={'2x'} />
         </div>
