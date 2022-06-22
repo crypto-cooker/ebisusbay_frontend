@@ -7,6 +7,8 @@ import Button from '../../../components/Button';
 import Messages, { getDynamicMessage } from '../../../../languages';
 import { initialValues, editProfileFormFields } from './Form/constants';
 import { Field, RadioGroup, UploadAssetGroup } from '../../../Form';
+import useCreateSettings from '../hooks/useCreateSettings';
+import { Spinner } from 'react-bootstrap';
 
 import Banner from './Banner';
 import Bio from './Bio';
@@ -16,6 +18,7 @@ import Pfp from './Pfp';
 export default function EditProfile() {
   const [isOnSave, setIsOnSave] = useState(false);
   const [bio, setBio] = useState('');
+  const [requestNewSettings, { loading }] = useCreateSettings();
 
   const handleBio = (e) => {
     setBio(e.target.value);
@@ -64,19 +67,19 @@ export default function EditProfile() {
     try {
       setIsOnSave(true);
       console.log(values);
-      // const formData = createFormData({
-      //   ...values,
-      //   [editProfileFormFields[0].key]: {
-      //     ...values[editProfileFormFields[0].key],
-      //   },
-      // });
-      // console.log(formData);
-      // const response = await requestNewCollection(formData);
-      // if (!response || response?.message?.errors) {
-      //   toast.error('Something went wrong!');
-      // } else {
-      //   toast.success('Your collection was saved successfully');
-      // }
+      const formData = createFormData({
+        ...values,
+        [editProfileFormFields[0].key]: {
+          ...values[editProfileFormFields[0].key],
+        },
+      });
+      console.log(formData);
+      const response = await requestNewSettings(formData);
+      if (!response || response?.message?.errors) {
+        toast.error('Something went wrong!');
+      } else {
+        toast.success('Your collection was saved successfully');
+      }
     } catch (error) {
       console.log(error);
       toast.error('Error');
@@ -139,7 +142,12 @@ export default function EditProfile() {
       </form>
       <div className="d-flex justify-content-end mt-5">
         <button form="userSettings" type="submit" className="btn-main">
-          Save Profile
+          Save Profile{' '}
+          {loading && (
+            <Spinner animation="border" role="status" size="sm" className="ms-1">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          )}
         </button>
         {/* <Button type="legacy" onClick={onSubmit} isLoading={isOnSave}>
           Save Profile

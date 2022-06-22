@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap';
 
 import { deepValidation } from '../../helpers/validator';
 
-import UploadAsset from './UploadAsset';
+import UploadAssetPfp from './UploadAssetPfp';
 
 const UploadPfp = ({
   value = [],
@@ -48,7 +48,7 @@ const UploadPfp = ({
           const asset = value.find(({ position }) => position === i);
 
           return (
-            <UploadAsset
+            <UploadAssetPfp
               key={`${name}-${i}`}
               id={`${name}-${i}`}
               accept={accept}

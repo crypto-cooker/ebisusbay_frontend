@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap';
 
 import { deepValidation } from '../../helpers/validator';
 
-import UploadAsset from './UploadAsset';
+import UploadAssetBanner from './UploadAssetBanner';
 
 const UploadBanner = ({
   value = [],
@@ -43,12 +43,12 @@ const UploadBanner = ({
 
   return (
     <Form.Group className={`form-field mb-3 ${error ? 'field-message-error' : ''}`}>
-      <div className="upload-container">
+      <div className="upload-container pt-0">
         {[...Array(numberOfAssets).keys()].map((_, i) => {
           const asset = value.find(({ position }) => position === i);
 
           return (
-            <UploadAsset
+            <UploadAssetBanner
               key={`${name}-${i}`}
               id={`${name}-${i}`}
               accept={accept}
