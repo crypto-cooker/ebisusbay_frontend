@@ -1,16 +1,14 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
-
-import { Card } from 'react-bootstrap';
 import Blockies from 'react-blockies';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage } from '@fortawesome/free-solid-svg-icons';
-
 import Stack from '@mui/material/Stack';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const UploadAssetPfp = ({ id, value, accept = 'image/png, image/gif, image/jpeg, image/jpg', onChange, onClose }) => {
   const user = useSelector((state) => state.user);
   const [file, setFile] = useState(null);
+  const [hover, setHover] = useState(false);
   const inputFile = useRef(null);
 
   const isVideo = value?.file?.type?.includes('video');
@@ -62,9 +60,12 @@ const UploadAssetPfp = ({ id, value, accept = 'image/png, image/gif, image/jpeg,
 
   return (
     <Stack direction="row" alignItems="center" spacing={2} className="upload-asset me-0">
-      <label htmlFor={id}>
-        {/* <Card>
-          <Card.Body> */}
+      <label
+        htmlFor={id}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        className="cursor-pointer"
+      >
         <input
           id={id}
           ref={inputFile}
@@ -80,24 +81,25 @@ const UploadAssetPfp = ({ id, value, accept = 'image/png, image/gif, image/jpeg,
             <video src={value.result} />
           ) : isImage ? (
             <div>
-              <img src={value.result} style={{ width: '124px', borderRadius: '100px' }} />
+              <img src={value.result} style={{ width: '125px', height: '125px', borderRadius: '100px' }} />
             </div>
           ) : null
         ) : (
           <div className="cursor-pointer">
-            {/* <FontAwesomeIcon icon={faImage} className="icon" />
-                <Card.Text>+ Asset</Card.Text> */}
             <Blockies seed={user?.address} size={25} scale={5} />
           </div>
         )}
-        {/* </Card.Body>
-        </Card> */}
+        {hover && (
+          <div className="pfp-setting">
+            <FontAwesomeIcon icon={faEdit} />
+          </div>
+        )}
       </label>
-      {onClose && (
+      {/* {onClose && (
         <span className="closable" onClick={handleClose}>
           x
         </span>
-      )}
+      )} */}
     </Stack>
   );
 };

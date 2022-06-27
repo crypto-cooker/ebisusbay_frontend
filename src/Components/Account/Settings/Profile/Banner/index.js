@@ -4,7 +4,6 @@ import { faExclamation } from '@fortawesome/free-solid-svg-icons';
 
 import { UploadBanner } from '../../../../Form';
 import { editProfileFormFields } from '../Form/constants';
-// import { shortAddress } from '../../../../../utils';
 
 import styles from './banner.module.scss';
 
@@ -12,7 +11,8 @@ export default function Banner({ values, errors, touched, handleChange, setField
   return (
     <div className={styles.banner}>
       <div className={classnames('d-flex align-items-center', styles.label)}>
-        Banner <FontAwesomeIcon icon={faExclamation} className="cursor-pointer ms-2" size="xs" />
+        Banner
+        {/* <FontAwesomeIcon icon={faExclamation} className="cursor-pointer ms-2" size="xs" /> */}
       </div>
       {editProfileFormFields[2].fields.map((field) => {
         const { type, ...props } = field;
@@ -27,11 +27,7 @@ export default function Banner({ values, errors, touched, handleChange, setField
 
         if (props.inputType) props.type = props.inputType;
 
-        return type === 'field' ? (
-          <Field {...props} onChange={handleChange} onBlur={handleBlur} />
-        ) : type === 'radio' ? (
-          <RadioGroup {...props} onChange={setFieldValue} />
-        ) : type === 'upload' ? (
+        return type === 'upload' ? (
           <UploadBanner {...props} fieldKey={fieldKey} onChange={setFieldValue} onTouched={setFieldTouched} />
         ) : null;
       })}

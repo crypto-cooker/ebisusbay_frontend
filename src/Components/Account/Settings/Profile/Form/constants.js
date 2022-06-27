@@ -11,7 +11,7 @@ export const editProfileFormFields = [
     fields: [
       {
         type: FormType.field,
-        key: 'username',
+        key: 'userName',
         default: '',
         title: 'Username',
         isRequired: true,
@@ -20,7 +20,7 @@ export const editProfileFormFields = [
       },
       {
         type: FormType.field,
-        key: 'customUrl',
+        key: 'cnsName',
         default: '',
         title: 'Custom URL',
         isRequired: true,
@@ -38,7 +38,7 @@ export const editProfileFormFields = [
       },
       {
         type: FormType.field,
-        key: 'twitterHandle',
+        key: 'twitter',
         default: '',
         title: 'Twitter Handle',
         isRequired: true,
@@ -47,7 +47,7 @@ export const editProfileFormFields = [
       },
       {
         type: FormType.field,
-        key: 'instagramHandle',
+        key: 'instagram',
         default: '',
         title: 'Instagram Handle',
         isRequired: true,
@@ -56,7 +56,7 @@ export const editProfileFormFields = [
       },
       {
         type: FormType.field,
-        key: 'discordId',
+        key: 'discord',
         default: '',
         title: 'Discord ID',
         isRequired: true,
@@ -72,14 +72,23 @@ export const editProfileFormFields = [
         placeholder: 'Enter Website URL',
         description: '',
       },
+      // {
+      //   type: FormType.field,
+      //   key: 'bio',
+      //   default: '',
+      //   title: 'Bio',
+      //   isRequired: true,
+      //   placeholder: 'Enter Text',
+      //   description: '',
+      // },
     ],
   },
   {
-    key: 'assets',
+    key: 'userInfo',
     title: 'Upload Assets',
     fields: [
       {
-        key: 'uploadAvatar',
+        key: 'profilePicture',
         type: 'upload',
         title: 'Upload Avatar',
         default: [],
@@ -88,20 +97,20 @@ export const editProfileFormFields = [
       },
     ],
   },
-  {
-    key: 'assets',
-    title: 'Upload Assets',
-    fields: [
-      {
-        key: 'uploadBanner',
-        type: 'upload',
-        title: 'Upload Banner',
-        default: [],
-        isRequired: true,
-        description: '',
-      },
-    ],
-  },
+  // {
+  //   key: 'userInfo',
+  //   title: 'Upload Assets',
+  //   fields: [
+  //     {
+  //       key: 'uploadBanner',
+  //       type: 'upload',
+  //       title: 'Upload Banner',
+  //       default: [],
+  //       isRequired: true,
+  //       description: '',
+  //     },
+  //   ],
+  // },
 ];
 
 export const initialValues = editProfileFormFields.reduce(

@@ -15,7 +15,7 @@ const useCreateSettings = () => {
     });
 
     try {
-      const fetchResponse = await fetch(`${appConfig('urls.profileSettingsApi')}profile/create_profile`, {
+      const fetchResponse = await fetch(`http://localhost:4000/profile/create_profile`, {
         method: 'post',
         body: formData,
       });

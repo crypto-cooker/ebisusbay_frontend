@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
@@ -14,31 +15,53 @@ import Banner from './Banner';
 import Bio from './Bio';
 import Form from './Form';
 import Pfp from './Pfp';
+import useGetSettings from '../hooks/useGetSettings';
 
 export default function EditProfile() {
   const [isOnSave, setIsOnSave] = useState(false);
-  const [bio, setBio] = useState('');
+  const user = useSelector((state) => state.user);
+  // const [bio, setBio] = useState('');
   const [requestNewSettings, { loading }] = useCreateSettings();
+  const { response: settings } = useGetSettings();
 
-  const handleBio = (e) => {
-    setBio(e.target.value);
-    console.log(e.target.value);
+  const getInitialValues = () => {
+    if (settings) {
+      let keys = editProfileFormFields[0].fields.map((field) => field.key);
+      keys = [...keys, 'profilePicture', 'bio'];
+
+      const filteredSettings = Object.keys(settings)
+        .filter((key) => keys.includes(key))
+        .reduce((obj, key) => {
+          obj[key] = settings[key];
+          return obj;
+        }, {});
+
+      console.log({ userInfo: filteredSettings });
+      return { userInfo: filteredSettings };
+    }
+    return initialValues;
   };
+  console.log(getInitialValues());
+  // const handleBio = (e) => {
+  //   setBio(e.target.value);
+  //   console.log(e.target.value);
+  // };
 
   const userInfoValidation = Yup.object().shape({
     userInfo: Yup.object()
       .shape({
-        username: Yup.string()
+        userName: Yup.string()
           .required(Messages.errors.required)
           .max(40, getDynamicMessage(Messages.errors.charactersMaxLimit, ['40'])),
-        customUrl: Yup.string()
+        cnsName: Yup.string()
           .required(Messages.errors.required)
           .max(40, getDynamicMessage(Messages.errors.charactersMaxLimit, ['40'])),
         email: Yup.string().email(Messages.errors.invalidEmail).required(Messages.errors.required),
-        twitterHandle: Yup.string().required(Messages.errors.required),
-        discordId: Yup.string().required(Messages.errors.required),
-        instagramHandle: Yup.string().required(Messages.errors.required),
+        twitter: Yup.string().required(Messages.errors.required),
+        discord: Yup.string().required(Messages.errors.required),
+        instagram: Yup.string().required(Messages.errors.required),
         website: Yup.string().url(Messages.errors.urlError).required(Messages.errors.required),
+        bio: Yup.string().required(Messages.errors.required),
       })
       .required(),
   });
@@ -51,9 +74,12 @@ export default function EditProfile() {
         const isArray = typeof formStep[key] === 'object';
 
         if (isArray) {
-          formStep[key].forEach((value) => {
-            formData.append(key, value);
-          });
+          // formStep[key].forEach((value) => {
+          //   console.log(value)
+          //   formData.append(key, value);
+          // });
+          // console.log(formStep[key][0])
+          formData.append(key, formStep[key][0].file);
         } else {
           formData.append(key, formStep[key]);
         }
@@ -66,14 +92,15 @@ export default function EditProfile() {
   const onSubmit = useCallback(async (values) => {
     try {
       setIsOnSave(true);
-      console.log(values);
+
       const formData = createFormData({
         ...values,
         [editProfileFormFields[0].key]: {
           ...values[editProfileFormFields[0].key],
+          walletAddress: user?.address,
         },
       });
-      console.log(formData);
+
       const response = await requestNewSettings(formData);
       if (!response || response?.message?.errors) {
         toast.error('Something went wrong!');
@@ -100,13 +127,13 @@ export default function EditProfile() {
   } = useFormik({
     onSubmit,
     validationSchema,
-    initialValues,
+    initialValues: getInitialValues(),
   });
   return (
     <>
-      <form id="userSettings" autoComplete="off" onSubmit={handleSubmit}>
+      <form id="userSettings" autoComplete="off" onSubmit={handleSubmit} className="user-settings-form">
         <div className="row mt-5">
-          <div className="col-4">
+          <div className="col-12 col-sm-12 col-lg-4">
             <Pfp
               values={values}
               errors={errors}
@@ -116,7 +143,7 @@ export default function EditProfile() {
               setFieldTouched={setFieldTouched}
               handleBlur={handleBlur}
             />
-            <Banner
+            {/* <Banner
               values={values}
               errors={errors}
               touched={touched}
@@ -124,10 +151,10 @@ export default function EditProfile() {
               setFieldValue={setFieldValue}
               setFieldTouched={setFieldTouched}
               handleBlur={handleBlur}
-            />
-            <Bio text={bio} onChange={handleBio} />
+            /> */}
+            <Bio values={values?.userInfo?.bio} handleChange={handleChange} />
           </div>
-          <div className="col-8">
+          <div className="col-12 col-sm-12 col-lg-8">
             <Form
               values={values}
               errors={errors}

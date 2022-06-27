@@ -1,10 +1,5 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react';
-
 import { Card } from 'react-bootstrap';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage } from '@fortawesome/free-solid-svg-icons';
-
 import Stack from '@mui/material/Stack';
 
 const UploadAsset = ({ id, value, accept = 'image/png, image/gif, image/jpeg, image/jpg', onChange, onClose }) => {
@@ -85,11 +80,11 @@ const UploadAsset = ({ id, value, accept = 'image/png, image/gif, image/jpeg, im
           </Card.Body>
         </Card>
       </label>
-      {onClose && (
+      {/* {onClose && (
         <span className="closable" onClick={handleClose}>
           x
         </span>
-      )}
+      )} */}
     </Stack>
   );
 };

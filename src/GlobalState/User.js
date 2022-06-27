@@ -58,6 +58,9 @@ const userSlice = createSlice({
     needsOnboard: false,
     isStaking: false,
 
+    // Signatures
+    authSignature: null,
+
     // Contracts
     membershipContract: null,
     croniesContract: null,
@@ -128,6 +131,10 @@ const userSlice = createSlice({
       state.auctionContract = action.payload.auctionContract;
       state.offerContract = action.payload.offerContract;
       state.gettingContractData = false;
+    },
+
+    setAuthSigner(state, action) {
+      state.authSignature = action.payload;
     },
 
     onCorrectChain(state, action) {
@@ -343,6 +350,7 @@ const userSlice = createSlice({
 
 export const {
   accountChanged,
+  setAuthSigner,
   onProvider,
   fetchingNfts,
   onNftsLoaded,
