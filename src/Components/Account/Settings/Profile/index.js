@@ -16,13 +16,15 @@ import Bio from './Bio';
 import Form from './Form';
 import Pfp from './Pfp';
 import useGetSettings from '../hooks/useGetSettings';
+import { getCnsInfo, getCnsName } from '@src/helpers/cns';
 
 export default function EditProfile() {
-  const [isOnSave, setIsOnSave] = useState(false);
   const user = useSelector((state) => state.user);
   // const [bio, setBio] = useState('');
   const [requestNewSettings, { loading }] = useCreateSettings();
   const { response: settings } = useGetSettings();
+  const [isOnSave, setIsOnSave] = useState(false);
+  const [isFetchCns, setIsFetchCns] = useState(false);
 
   const getInitialValues = () => {
     if (settings) {
@@ -36,12 +38,12 @@ export default function EditProfile() {
           return obj;
         }, {});
 
-      console.log({ userInfo: filteredSettings });
+      // console.log({ userInfo: filteredSettings });
       return { userInfo: filteredSettings };
     }
     return initialValues;
   };
-  console.log(getInitialValues());
+  // console.log(getInitialValues());
   // const handleBio = (e) => {
   //   setBio(e.target.value);
   //   console.log(e.target.value);
@@ -79,7 +81,7 @@ export default function EditProfile() {
           //   formData.append(key, value);
           // });
           // console.log(formStep[key][0])
-          formData.append(key, formStep[key][0].file);
+          formData.append(key, formStep[key]?.[0].file);
         } else {
           formData.append(key, formStep[key]);
         }
@@ -87,6 +89,13 @@ export default function EditProfile() {
 
       return formData;
     }, new FormData());
+  };
+
+  const handleCnsSync = async () => {
+    setIsFetchCns(true);
+    console.log('getCnsName', await getCnsName(user?.address));
+    console.log('getCnsInfo', await getCnsInfo(user?.address));
+    setIsFetchCns(false);
   };
 
   const onSubmit = useCallback(async (values) => {
@@ -163,6 +172,8 @@ export default function EditProfile() {
               setFieldValue={setFieldValue}
               setFieldTouched={setFieldTouched}
               handleBlur={handleBlur}
+              isCnsSync={isFetchCns}
+              handleCnsSync={handleCnsSync}
             />
           </div>
         </div>
