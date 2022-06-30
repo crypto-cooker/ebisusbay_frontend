@@ -10,7 +10,7 @@ const useCreateSettings = () => {
 
   const [isLoading, getSigner] = useCreateSigner();
 
-  const requestNewSettings = async (formData) => {
+  const requestUpdateSettings = async (formData) => {
     setResponse({
       ...response,
       loading: true,
@@ -23,7 +23,7 @@ const useCreateSettings = () => {
         const fetchResponse = await fetch(
           `http://localhost:4000/profile?` + new URLSearchParams({ signature, nonce }),
           {
-            method: 'post',
+            method: 'patch',
             body: formData,
           }
         );
@@ -51,7 +51,7 @@ const useCreateSettings = () => {
     }
   };
 
-  return [requestNewSettings, response];
+  return [requestUpdateSettings, response];
 };
 
 export default useCreateSettings;

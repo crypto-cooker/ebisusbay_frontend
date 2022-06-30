@@ -9,6 +9,7 @@ import Button from '../../../components/Button';
 import Messages, { getDynamicMessage } from '../../../../languages';
 import { initialValues, editProfileFormFields } from './Form/constants';
 import useCreateSettings from '../hooks/useCreateSettings';
+import useUpdateSettings from '../hooks/useUpdateSettings';
 
 import Banner from './Banner';
 import Bio from './Bio';
@@ -20,6 +21,7 @@ import { getCnsInfo, getCnsName } from '@src/helpers/cns';
 export default function EditProfile() {
   const user = useSelector((state) => state.user);
   const [requestNewSettings, { loading }] = useCreateSettings();
+  const [requestUpdateSettings, { loading: updateLoading }] = useUpdateSettings();
   const { response: settings } = useGetSettings();
   const [isFetchCns, setIsFetchCns] = useState(false);
   const [mergedValues, setMergedValues] = useState(false);
@@ -36,7 +38,9 @@ export default function EditProfile() {
           return obj;
         }, {});
 
-      const result = { userInfo: { ...filteredSettings, profilePicture: [{ url: settings.profilePicture }] } };
+      const result = {
+        userInfo: { ...filteredSettings, profilePictureUrl: settings.profilePicture, bannerUrl: settings.banner },
+      };
       return result;
     }
     return initialValues;
@@ -66,12 +70,14 @@ export default function EditProfile() {
   const createFormData = (values) => {
     return Object.values(values).reduce((formData, formStep) => {
       Object.keys(formStep).forEach((key) => {
-        const isArray = typeof formStep[key] === 'object';
+        if (key !== 'profilePictureUrl' && key !== 'bannerUrl') {
+          const isArray = typeof formStep[key] === 'object';
 
-        if (isArray) {
-          formData.append(key, formStep[key]?.[0].file);
-        } else {
-          formData.append(key, formStep[key]);
+          if (isArray) {
+            formData.append(key, formStep[key]?.[0].file);
+          } else {
+            formData.append(key, formStep[key]);
+          }
         }
       });
 
@@ -111,9 +117,11 @@ export default function EditProfile() {
         },
       });
 
-      const response = await requestNewSettings(formData);
+      const response = settings?.walletAddress
+        ? await requestUpdateSettings(formData)
+        : await requestNewSettings(formData);
       if (!response || response?.message?.errors) {
-        toast.error('Something went wrong!');
+        toast.error('OnSubmit: Something went wrong!');
       } else {
         toast.success('Your collection was saved successfully');
       }

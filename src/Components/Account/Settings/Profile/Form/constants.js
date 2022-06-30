@@ -93,7 +93,7 @@ export const editProfileFormFields = [
     title: 'Upload Assets',
     fields: [
       {
-        key: 'uploadBanner',
+        key: 'banner',
         type: 'upload',
         title: 'Upload Banner',
         default: [],

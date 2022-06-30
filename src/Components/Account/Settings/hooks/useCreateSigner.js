@@ -46,7 +46,7 @@ const useSignature = () => {
 
       return [signature, nonce];
     } catch (err) {
-      console.log(err);
+      console.log(err?.message);
     }
 
     setIsLoading(false);
