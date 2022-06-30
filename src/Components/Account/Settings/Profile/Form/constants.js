@@ -72,15 +72,6 @@ export const editProfileFormFields = [
         placeholder: 'Enter Website URL',
         description: '',
       },
-      // {
-      //   type: FormType.field,
-      //   key: 'bio',
-      //   default: '',
-      //   title: 'Bio',
-      //   isRequired: true,
-      //   placeholder: 'Enter Text',
-      //   description: '',
-      // },
     ],
   },
   {
@@ -97,20 +88,20 @@ export const editProfileFormFields = [
       },
     ],
   },
-  // {
-  //   key: 'userInfo',
-  //   title: 'Upload Assets',
-  //   fields: [
-  //     {
-  //       key: 'uploadBanner',
-  //       type: 'upload',
-  //       title: 'Upload Banner',
-  //       default: [],
-  //       isRequired: true,
-  //       description: '',
-  //     },
-  //   ],
-  // },
+  {
+    key: 'userInfo',
+    title: 'Upload Assets',
+    fields: [
+      {
+        key: 'uploadBanner',
+        type: 'upload',
+        title: 'Upload Banner',
+        default: [],
+        isRequired: true,
+        description: '',
+      },
+    ],
+  },
 ];
 
 export const initialValues = editProfileFormFields.reduce(

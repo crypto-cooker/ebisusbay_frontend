@@ -1,15 +1,14 @@
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
+import { Spinner } from 'react-bootstrap';
 
 import Button from '../../../components/Button';
 import Messages, { getDynamicMessage } from '../../../../languages';
 import { initialValues, editProfileFormFields } from './Form/constants';
-import { Field, RadioGroup, UploadAssetGroup } from '../../../Form';
 import useCreateSettings from '../hooks/useCreateSettings';
-import { Spinner } from 'react-bootstrap';
 
 import Banner from './Banner';
 import Bio from './Bio';
@@ -20,16 +19,15 @@ import { getCnsInfo, getCnsName } from '@src/helpers/cns';
 
 export default function EditProfile() {
   const user = useSelector((state) => state.user);
-  // const [bio, setBio] = useState('');
   const [requestNewSettings, { loading }] = useCreateSettings();
   const { response: settings } = useGetSettings();
-  const [isOnSave, setIsOnSave] = useState(false);
   const [isFetchCns, setIsFetchCns] = useState(false);
+  const [mergedValues, setMergedValues] = useState(false);
 
   const getInitialValues = () => {
     if (settings) {
       let keys = editProfileFormFields[0].fields.map((field) => field.key);
-      keys = [...keys, 'profilePicture', 'bio'];
+      keys = [...keys, 'bio'];
 
       const filteredSettings = Object.keys(settings)
         .filter((key) => keys.includes(key))
@@ -38,16 +36,11 @@ export default function EditProfile() {
           return obj;
         }, {});
 
-      // console.log({ userInfo: filteredSettings });
-      return { userInfo: filteredSettings };
+      const result = { userInfo: { ...filteredSettings, profilePicture: [{ url: settings.profilePicture }] } };
+      return result;
     }
     return initialValues;
   };
-  // console.log(getInitialValues());
-  // const handleBio = (e) => {
-  //   setBio(e.target.value);
-  //   console.log(e.target.value);
-  // };
 
   const userInfoValidation = Yup.object().shape({
     userInfo: Yup.object()
@@ -76,11 +69,6 @@ export default function EditProfile() {
         const isArray = typeof formStep[key] === 'object';
 
         if (isArray) {
-          // formStep[key].forEach((value) => {
-          //   console.log(value)
-          //   formData.append(key, value);
-          // });
-          // console.log(formStep[key][0])
           formData.append(key, formStep[key]?.[0].file);
         } else {
           formData.append(key, formStep[key]);
@@ -93,15 +81,28 @@ export default function EditProfile() {
 
   const handleCnsSync = async () => {
     setIsFetchCns(true);
-    console.log('getCnsName', await getCnsName(user?.address));
-    console.log('getCnsInfo', await getCnsInfo(user?.address));
+    const cnsName = await getCnsName(user?.address); // Custom URL
+    const cnsInfo = await getCnsInfo(user?.address);
+    // console.log('getCnsName', cnsName);
+    // console.log('getCnsInfo', cnsInfo);
+    const userInfo = values?.userInfo;
+    const tempData = {
+      userInfo: {
+        ...userInfo,
+        cnsName,
+        twitter: cnsInfo?.twitter || userInfo?.twitter,
+        discord: cnsInfo?.discord || userInfo?.discord,
+        instagram: cnsInfo?.instagram || userInfo?.instagram,
+        website: cnsInfo?.url || userInfo?.website,
+        email: cnsInfo?.email || userInfo?.email,
+      },
+    };
+    setMergedValues(tempData);
     setIsFetchCns(false);
   };
 
   const onSubmit = useCallback(async (values) => {
     try {
-      setIsOnSave(true);
-
       const formData = createFormData({
         ...values,
         [editProfileFormFields[0].key]: {
@@ -120,7 +121,6 @@ export default function EditProfile() {
       console.log(error);
       toast.error('Error');
     }
-    setIsOnSave(false);
   }, []);
 
   const {
@@ -137,7 +137,13 @@ export default function EditProfile() {
     onSubmit,
     validationSchema,
     initialValues: getInitialValues(),
+    enableReinitialize: true,
   });
+
+  useEffect(() => {
+    setMergedValues(values);
+  }, [values]);
+
   return (
     <>
       <form id="userSettings" autoComplete="off" onSubmit={handleSubmit} className="user-settings-form">
@@ -152,7 +158,7 @@ export default function EditProfile() {
               setFieldTouched={setFieldTouched}
               handleBlur={handleBlur}
             />
-            {/* <Banner
+            <Banner
               values={values}
               errors={errors}
               touched={touched}
@@ -160,12 +166,12 @@ export default function EditProfile() {
               setFieldValue={setFieldValue}
               setFieldTouched={setFieldTouched}
               handleBlur={handleBlur}
-            /> */}
-            <Bio values={values?.userInfo?.bio} handleChange={handleChange} />
+            />
+            <Bio value={values?.userInfo?.bio} handleChange={handleChange} />
           </div>
           <div className="col-12 col-sm-12 col-lg-8">
             <Form
-              values={values}
+              values={mergedValues}
               errors={errors}
               touched={touched}
               handleChange={handleChange}
@@ -187,7 +193,8 @@ export default function EditProfile() {
             </Spinner>
           )}
         </button>
-        {/* <Button type="legacy" onClick={onSubmit} isLoading={isOnSave}>
+        {/* TODO: update button component
+        <Button type="legacy" onClick={onSubmit} isLoading={isOnSave}>
           Save Profile
         </Button> */}
       </div>

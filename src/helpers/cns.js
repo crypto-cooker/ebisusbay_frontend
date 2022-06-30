@@ -24,9 +24,9 @@ export const getCnsInfo = async (address) => {
     cnsProfile.name = await cns.getName(address);
     if (cnsProfile.name) {
       cnsProfile.twitter = await cns.name(cnsProfile.name).getText(TextRecords.Twitter);
-      cnsProfile.avatar = await cns.name(cnsProfile.name).getText(TextRecords.Avatar);
+      // cnsProfile.avatar = await cns.name(cnsProfile.name).getText(TextRecords.Avatar);
       cnsProfile.discord = await cns.name(cnsProfile.name).getText(TextRecords.Discord);
-      cnsProfile.telegram = await cns.name(cnsProfile.name).getText(TextRecords.Telegram);
+      // cnsProfile.telegram = await cns.name(cnsProfile.name).getText(TextRecords.Telegram);
       cnsProfile.instagram = await cns.name(cnsProfile.name).getText(TextRecords.Instagram);
       cnsProfile.email = await cns.name(cnsProfile.name).getText(TextRecords.Email);
       cnsProfile.url = await cns.name(cnsProfile.name).getText(TextRecords.Url);

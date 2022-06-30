@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
-import Blockies from 'react-blockies';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenSquare, faCopy } from '@fortawesome/free-solid-svg-icons';
+import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 
 import { UploadPfp } from '../../../../Form';
@@ -21,16 +20,12 @@ export default function Pfp({ values, errors, touched, handleChange, setFieldVal
 
   const handleCopy = (code) => () => {
     navigator.clipboard.writeText(code);
-    toast.success('Address copied!');
+    toast.success(values?.userInfo?.userName ? 'Username copied!' : 'Address copied!');
   };
 
   return (
     <div className="d-flex justify-content-center position-relative mb-5">
       <div className="text-center">
-        {/* <div className="icon-edit position-absolute top-0 end-0">
-          <FontAwesomeIcon icon={faPenSquare} className="cursor-pointer" />
-        </div> */}
-        {/* <Blockies seed={user?.address} size={25} scale={5} /> */}
         {editProfileFormFields[1].fields.map((field) => {
           const { type, ...props } = field;
           const fieldKey = props.key;

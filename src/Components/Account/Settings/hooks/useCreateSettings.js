@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import { appConfig } from '../../../../Config';
+// import { appConfig } from '../../../../Config';
+import useCreateSigner from './useCreateSigner';
 
 const useCreateSettings = () => {
   const [response, setResponse] = useState({
     loading: false,
     error: null,
   });
+
+  const [isLoading, getSigner] = useCreateSigner();
 
   const requestNewSettings = async (formData) => {
     setResponse({
@@ -14,8 +17,10 @@ const useCreateSettings = () => {
       error: null,
     });
 
+    const { signature, nonce } = await getSigner();
+
     try {
-      const fetchResponse = await fetch(`http://localhost:4000/profile/create_profile`, {
+      const fetchResponse = await fetch(`http://localhost:4000/profile?` + new URLSearchParams({ signature, nonce }), {
         method: 'post',
         body: formData,
       });

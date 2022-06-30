@@ -27,20 +27,25 @@ export const useGetSettings = () => {
 
       // console.log(signature, nonce);
       if (signature) {
-        const response = await fetch(
-          `http://localhost:4000/profile/profile?` + new URLSearchParams({ signature, nonce })
-        );
-        const payload = await response.json();
+        try {
+          const response = await fetch(`http://localhost:4000/profile?` + new URLSearchParams({ signature, nonce }));
+          const payload = await response.json();
 
-        setResponse({
-          isLoading: false,
-          response: payload,
-        });
+          setResponse({
+            isLoading: false,
+            response: payload,
+          });
+        } catch (e) {
+          setResponse({
+            isLoading: false,
+            error: e,
+          });
+        }
       } else {
         setResponse({
           isLoading: false,
           response: [],
-          error: { message: 'Something when wrong' },
+          error: { message: 'Something went wrong' },
         });
       }
     }

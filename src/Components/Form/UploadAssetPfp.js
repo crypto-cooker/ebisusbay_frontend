@@ -5,7 +5,14 @@ import Stack from '@mui/material/Stack';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const UploadAssetPfp = ({ id, value, accept = 'image/png, image/gif, image/jpeg, image/jpg', onChange, onClose }) => {
+const UploadAssetPfp = ({
+  id,
+  value,
+  url,
+  accept = 'image/png, image/gif, image/jpeg, image/jpg',
+  onChange,
+  onClose,
+}) => {
   const user = useSelector((state) => state.user);
   const [file, setFile] = useState(null);
   const [hover, setHover] = useState(false);
@@ -84,6 +91,10 @@ const UploadAssetPfp = ({ id, value, accept = 'image/png, image/gif, image/jpeg,
               <img src={value.result} style={{ width: '125px', height: '125px', borderRadius: '100px' }} />
             </div>
           ) : null
+        ) : url ? (
+          <div>
+            <img src={url} style={{ width: '125px', height: '125px', borderRadius: '100px' }} />
+          </div>
         ) : (
           <div className="cursor-pointer">
             <Blockies seed={user?.address} size={25} scale={5} />
@@ -95,11 +106,6 @@ const UploadAssetPfp = ({ id, value, accept = 'image/png, image/gif, image/jpeg,
           </div>
         )}
       </label>
-      {/* {onClose && (
-        <span className="closable" onClick={handleClose}>
-          x
-        </span>
-      )} */}
     </Stack>
   );
 };

@@ -51,6 +51,7 @@ const UploadPfp = ({
               id={`${name}-${i}`}
               accept={accept}
               value={asset}
+              url={value?.[0]?.url}
               onClose={asset?.result ? onClean(i) : undefined}
               onChange={onUpload(i)}
             />
