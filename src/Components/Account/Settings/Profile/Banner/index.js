@@ -17,7 +17,7 @@ export default function Banner({ values, errors, touched, handleChange, setField
       {editProfileFormFields[2].fields.map((field) => {
         const { type, ...props } = field;
         const fieldKey = props.key;
-        const subFormKey = editProfileFormFields[0].key;
+        const subFormKey = editProfileFormFields[2].key;
         const name = `${subFormKey}.${[fieldKey]}`;
         props.name = name;
         props.key = `${type}-${fieldKey}`;

@@ -74,7 +74,7 @@ export default function EditProfile() {
           const isArray = typeof formStep[key] === 'object';
 
           if (isArray) {
-            formData.append(key, formStep[key]?.[0].file);
+            formData.append('images', formStep[key]?.[0].file);
           } else {
             formData.append(key, formStep[key]);
           }

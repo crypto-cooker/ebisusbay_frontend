@@ -29,7 +29,7 @@ export default function Pfp({ values, errors, touched, handleChange, setFieldVal
         {editProfileFormFields[1].fields.map((field) => {
           const { type, ...props } = field;
           const fieldKey = props.key;
-          const subFormKey = editProfileFormFields[0].key;
+          const subFormKey = editProfileFormFields[1].key;
           const name = `${subFormKey}.${[fieldKey]}`;
           props.name = name;
           props.key = `${type}-${fieldKey}`;
