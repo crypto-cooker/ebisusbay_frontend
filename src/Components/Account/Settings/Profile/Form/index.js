@@ -1,6 +1,6 @@
 import { editProfileFormFields } from './constants';
 import { Field, RadioGroup, UploadAssetGroup } from '../../../../Form';
-import Button from '@src/Components/components/Button';
+import Button from '@src/Components/components/common/Button';
 
 export default function Form({
   values,
@@ -34,7 +34,7 @@ export default function Form({
             <div className="user-profile-form-field">
               <Field {...props} onChange={handleChange} onBlur={handleBlur} />
               {fieldKey === 'cnsName' && (
-                <Button type="legacy" className="cns-sync-btn" onClick={handleCnsSync} isLoading={isCnsSync}>
+                <Button type="button" className="cns-sync-btn" onClick={handleCnsSync} isLoading={isCnsSync}>
                   Sync
                 </Button>
               )}
