@@ -1,11 +1,15 @@
-import Constants from '../constants/constants';
+import rpcConfig from '../Assets/networks/rpc_config.json';
+import rpcConfigDev from '../Assets/networks/rpc_config_dev.json';
+import rpcConfigTestnet from '../Assets/networks/rpc_config_testnet.json';
 
+import Constants from '../constants';
 const { Features } = Constants;
 
 export const environments = {
   production: 'production',
   testnet: 'testnet',
   development: 'development',
+  local: 'local'
 };
 
 export const configData = {
@@ -33,6 +37,7 @@ export const configData = {
       stake: '0xeb074cc764F20d8fE4317ab63f45A85bcE2bEcB1',
       offer: '0x016b347aeb70cc45e3bbaf324feb3c7c464e18b0',
       madAuction: '0x47E79264A9d1343C04F4A56922bE7e6177aE03a0',
+      slothtyRugsurance: '0xE9A540CBb2247f9bD86e98d1121aBDD084Ca0e89',
     },
     tokens: {
       loot: {
@@ -46,6 +51,9 @@ export const configData = {
         address: '0x212331e1435a8df230715db4c02b2a3a0abf8c61',
       },
     },
+    collections: rpcConfig.known_contracts,
+    drops: rpcConfig.drops,
+    auctions: rpcConfig.auctions,
   },
   [environments.development]: {
     chain: {
@@ -71,6 +79,7 @@ export const configData = {
       stake: '0xeb074cc764F20d8fE4317ab63f45A85bcE2bEcB1',
       offer: '0x016b347aeb70cc45e3bbaf324feb3c7c464e18b0',
       madAuction: '0x47E79264A9d1343C04F4A56922bE7e6177aE03a0',
+      slothtyRugsurance: '0xE9A540CBb2247f9bD86e98d1121aBDD084Ca0e89',
     },
     tokens: {
       loot: {
@@ -84,6 +93,9 @@ export const configData = {
         address: '0x212331e1435a8df230715db4c02b2a3a0abf8c61',
       },
     },
+    collections: rpcConfigDev.known_contracts,
+    drops: rpcConfigDev.drops,
+    auctions: rpcConfigDev.auctions,
   },
   [environments.testnet]: {
     chain: {
@@ -109,6 +121,7 @@ export const configData = {
       stake: '0x70A9989dd73B026B34462BE158963587dD9ca16f',
       offer: '0x8Dd84fb5d7f8A504BA2398243D768C604f8Daf5E',
       madAuction: '0x84356061d598A7bCE028dB6a37b14F84cf4A5905',
+      slothtyRugsurance: '0x99F3960E8219384BF0624D388cAD698d5A54AE6C',
     },
     tokens: {
       loot: {
@@ -122,6 +135,9 @@ export const configData = {
         address: '0x4DEdeea250d2cbf54F0e156f0e9b55927094867E',
       },
     },
+    collections: rpcConfigTestnet.known_contracts,
+    drops: rpcConfigTestnet.drops,
+    auctions: rpcConfigTestnet.auctions,
   },
 };
 
@@ -147,15 +163,23 @@ export const imageDomains = [
  * @returns {null|*}
  */
 export const appConfig = (key) => {
-  const env = environments[process.env.NEXT_PUBLIC_ENV ?? process.env.NODE_ENV];
+  const env = isLocalEnv() ? environments.development : environments[currentEnv()];
   if (!key) return env ? configData[env] : configData[environments.development];
 
   const keys = key.split('.');
 
   return keys.reduce((o, i) => o[i], env ? configData[env] : configData[environments.development]);
-};
-// export const cloudinaryUrl = 'https://res.cloudinary.com/ebisusbay/image/fetch/';
+}
+
+export const currentEnv = () => {
+  return process.env.NEXT_PUBLIC_ENV ?? process.env.NODE_ENV;
+}
+
+export const isLocalEnv = () => {
+  return currentEnv() === environments.local;
+}
 
 export const featureFlags = {
+  [Features.AUCTION_OPTION_SALE]: false,
   [Features.CMS_LISTING]: false,
-};
+}

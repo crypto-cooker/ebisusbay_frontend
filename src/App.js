@@ -12,6 +12,7 @@ import firebaseConfig from './Firebase/firebase_config';
 import { initProvider } from './GlobalState/User';
 import { appInitializer } from './GlobalState/InitSlice';
 import { getTheme } from './Theme/theme';
+import {DefaultHead} from "./Components/Head/DefaultHead";
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -63,17 +64,16 @@ function App({ Component, pageProps }) {
     }
   }, [dispatch]);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const loader = document.getElementById('initialLoader');
+      if (loader) loader.style.display = 'none';
+    }
+  }, []);
+
   return (
     <ThemeProvider theme={getTheme(userTheme)}>
-      <Head>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <title>Ebisu's Bay Marketplace</title>
-        <link
-          href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;300;400;500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
-      </Head>
+      <DefaultHead />
       <div className="wraper">
         <GlobalStyles isDark={userTheme === 'dark'} />
         <Header />

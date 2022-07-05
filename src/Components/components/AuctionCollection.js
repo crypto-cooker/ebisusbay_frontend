@@ -48,14 +48,6 @@ const AuctionCollection = ({ showLoadMore = true, collectionId = null, sellerId 
     return state.marketplace;
   });
 
-  // const isFilteredOnCollection = useSelector((state) => {
-  //   return (
-  //     marketplace.curFilter !== null &&
-  //     marketplace.curFilter.type === 'collection' &&
-  //     marketplace.curFilter.address !== null
-  //   );
-  // });
-
   useEffect(() => {
     let sort = {
       type: 'listingId',
@@ -75,18 +67,6 @@ const AuctionCollection = ({ showLoadMore = true, collectionId = null, sellerId 
       filter.address = sellerId;
     } else {
       //  if cacheName is supplied filter and sort values remain same after changing pages.
-      const cachedFilter = marketplace.cachedFilter[cacheName];
-      const cachedSort = marketplace.cachedSort[cacheName];
-
-      if (cachedFilter) {
-        filter.type = cachedFilter.type;
-        filter.address = cachedFilter.address;
-      }
-
-      if (cachedSort) {
-        sort.type = cachedSort.type;
-        sort.direction = cachedSort.direction;
-      }
     }
     dispatch(init(sort, filter));
     dispatch(fetchListings());
@@ -124,11 +104,11 @@ const AuctionCollection = ({ showLoadMore = true, collectionId = null, sellerId 
                     ))}
                 </div>
               ) : (
-                <div className="text-center">Degen auctions will be available soon!</div>
+                <div className="text-center">No active auctions</div>
               )}
             </div>
 
-            <div className="col-lg-12">
+            <div className="col-lg-12 mt-4">
               <div className="text-center">
                 <h2>Completed Auctions</h2>
               </div>
@@ -144,7 +124,7 @@ const AuctionCollection = ({ showLoadMore = true, collectionId = null, sellerId 
                   ))}
                 </div>
               ) : (
-                <div className="text-center">Degen auctions will be available soon!</div>
+                <div className="text-center">No completed auctions</div>
               )}
             </div>
           </>
@@ -164,7 +144,7 @@ const AuctionCollection = ({ showLoadMore = true, collectionId = null, sellerId 
               ))}
           </div>
         ) : (
-          <span>Degen auctions will be available soon!</span>
+          <span>No active auctions</span>
         )}
       </div>
     );

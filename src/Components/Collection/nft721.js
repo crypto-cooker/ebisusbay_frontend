@@ -22,10 +22,11 @@ import {
   millisecondTimestamp,
   shortAddress,
   timeSince,
+  relativePrecision,
 } from '../../utils';
 import { getNftDetails } from '../../GlobalState/nftSlice';
 import { connectAccount, chainConnect } from '../../GlobalState/User';
-import { croSkullRedPotionImageHack } from '../../hacks';
+import { specialImageTransform } from '../../hacks';
 import ListingItem from '../NftDetails/NFTTabListings/ListingItem';
 import PriceActionBar from '../NftDetails/PriceActionBar';
 import { ERC721 } from '../../Contracts/Abis';
@@ -34,10 +35,13 @@ import MakeOfferDialog from '../Offer/MakeOfferDialog';
 import NFTTabOffers from '../Offer/NFTTabOffers';
 import { OFFER_TYPE } from '../Offer/MadeOffersRow';
 import { offerState } from '../../core/api/enums';
-import config from '../../Assets/networks/rpc_config.json';
-import {commify} from "ethers/lib/utils";
+import { commify } from 'ethers/lib/utils';
+import { appConfig } from '../../Config';
+import { hostedImage } from '../../helpers/image';
+import Link from 'next/link';
 
-const knownContracts = config.known_contracts;
+const config = appConfig();
+const knownContracts = config.collections;
 
 const Nft721 = ({ address, id }) => {
   const dispatch = useDispatch();
@@ -79,7 +83,7 @@ const Nft721 = ({ address, id }) => {
   useEffect(() => {
     async function asyncFunc() {
       if (isCroCrowCollection(address) && croCrowBreed === null) {
-        const readProvider = new ethers.providers.JsonRpcProvider(config.read_rpc);
+        const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
         const crowpunkContract = new Contract(
           '0x0f1439a290e86a38157831fe27a3dcd302904055',
           [
@@ -119,7 +123,7 @@ const Nft721 = ({ address, id }) => {
   useEffect(() => {
     async function getCrognomid() {
       if (isCrognomidesCollection(address) && crognomideBreed === null) {
-        const readProvider = new ethers.providers.JsonRpcProvider(config.read_rpc);
+        const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
         const contract = new Contract(
           '0xE57742748f98ab8e08b565160D3A9A32BFEF7352',
           ['function crognomidUsed(uint256) public view returns (bool)'],
@@ -143,7 +147,7 @@ const Nft721 = ({ address, id }) => {
   useEffect(() => {
     async function getApeInfo() {
       if (isBabyWeirdApesCollection(address)) {
-        const readProvider = new ethers.providers.JsonRpcProvider(config.read_rpc);
+        const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
         const abiFile = require(`../../Assets/abis/baby-weird-apes.json`);
         const contract = new Contract(address, abiFile.abi, readProvider);
         try {
@@ -163,24 +167,26 @@ const Nft721 = ({ address, id }) => {
 
   useEffect(() => {
     async function getAttributes(abi) {
-      const readProvider = new ethers.providers.JsonRpcProvider(config.read_rpc);
+      const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
       const contract = new Contract(address, abi, readProvider);
       try {
         const traits = await contract.getToken(id);
-        return Object.entries(traits.currentToken).filter(([key]) => {
-          return !/[^a-zA-Z]/.test(key)
-        }).map(([key, value], i) => {
-          let type = 'string';
-          if (typeof value == "boolean") {
-            type = 'boolean'
-            value = value ? 'yes' : 'no'
-          } else if (key === 'lastClaimTimestamp') {
-            type = 'date';
-          } else if (key === 'lastActionBlock') {
-            value = commify(value);
-          }
-          return {key, value, type};
-        });
+        return Object.entries(traits.currentToken)
+          .filter(([key]) => {
+            return !/[^a-zA-Z]/.test(key);
+          })
+          .map(([key, value], i) => {
+            let type = 'string';
+            if (typeof value == 'boolean') {
+              type = 'boolean';
+              value = value ? 'yes' : 'no';
+            } else if (key === 'lastClaimTimestamp') {
+              type = 'date';
+            } else if (key === 'lastActionBlock') {
+              value = commify(value);
+            }
+            return { key, value, type };
+          });
       } catch (error) {
         console.log(error);
       }
@@ -213,6 +219,11 @@ const Nft721 = ({ address, id }) => {
     if (nft.original_image.startsWith('ipfs://')) {
       const link = nft.original_image.split('://')[1];
       return `https://ipfs.io/ipfs/${link}`;
+    }
+
+    if (nft.original_image.startsWith('https://gateway.ebisusbay.com')) {
+      const link = nft.original_image.replace('gateway.ebisusbay.com', 'ipfs.io');
+      return link;
     }
 
     return nft.original_image;
@@ -287,7 +298,7 @@ const Nft721 = ({ address, id }) => {
                 ) : (
                   <>
                     <AnyMedia
-                      image={croSkullRedPotionImageHack(address, nft.image)}
+                      image={specialImageTransform(address, nft.image)}
                       video={nft.video ?? nft.animation_url}
                       videoProps={{ height: 'auto', autoPlay: true }}
                       title={nft.name}
@@ -304,7 +315,7 @@ const Nft721 = ({ address, id }) => {
                   <span
                     onClick={() =>
                       typeof window !== 'undefined' &&
-                      window.open(croSkullRedPotionImageHack(address, fullImage()), '_blank')
+                      window.open(specialImageTransform(address, fullImage()), '_blank')
                     }
                     className="d-flex align-items-center justify-content-center"
                   >
@@ -363,7 +374,7 @@ const Nft721 = ({ address, id }) => {
                     <ProfilePreview
                       type="Collection"
                       title={collectionName ?? 'View Collection'}
-                      avatar={collectionMetadata?.avatar}
+                      avatar={hostedImage(collectionMetadata?.avatar, true)}
                       address={address}
                       verified={collectionMetadata?.verified}
                       to={`/collection/${address}`}
@@ -373,11 +384,12 @@ const Nft721 = ({ address, id }) => {
                       <ProfilePreview
                         type="Rarity Rank"
                         title={nft.rank}
-                        avatar={
+                        avatar={hostedImage(
                           collectionMetadata.rarity === 'rarity_sniper'
                             ? '/img/logos/rarity-sniper.png'
-                            : '/img/logos/ebisu-technicolor.svg'
-                        }
+                            : '/img/logos/ebisu-technicolor.svg',
+                          true
+                        )}
                         hover={
                           collectionMetadata.rarity === 'rarity_sniper'
                             ? `Ranking provided by ${humanize(collectionMetadata.rarity)}`
@@ -439,6 +451,8 @@ const Nft721 = ({ address, id }) => {
                                           occurrence={data.occurrence}
                                           type={data.display_type}
                                           collectionAddress={address}
+                                          collectionSlug={collection.slug}
+                                          queryKey="traits"
                                         />
                                       );
                                     })}
@@ -454,6 +468,8 @@ const Nft721 = ({ address, id }) => {
                                         occurrence={data.occurrence}
                                         type={data.display_type}
                                         collectionAddress={address}
+                                        collectionSlug={collection.slug}
+                                        queryKey="traits"
                                       />
                                     );
                                   })}
@@ -476,12 +492,18 @@ const Nft721 = ({ address, id }) => {
                                     powertraits.length > 0 &&
                                     powertraits.map((data, i) => {
                                       return (
-                                        <div key={i} className="col-lg-4 col-md-6 col-sm-6">
-                                          <div className="nft_attr">
-                                            <h5>{data.trait_type}</h5>
-                                            <h4>{data.value > 0 ? <>+ {data.value}</> : <>{data.value}</>}</h4>
-                                          </div>
-                                        </div>
+                                        <Trait
+                                          key={i}
+                                          title={data.trait_type}
+                                          value={data.value}
+                                          valueDisplay={data.value > 0 ? `+ ${data.value}` : data.value}
+                                          percent={data.percent}
+                                          occurrence={data.occurrence}
+                                          type={data.display_type}
+                                          collectionAddress={address}
+                                          collectionSlug={collection.slug}
+                                          queryKey="powertraits"
+                                        />
                                       );
                                     })}
                                   {evoSkullTraits &&
@@ -603,26 +625,55 @@ const Nft721 = ({ address, id }) => {
 
 export default memo(Nft721);
 
-const Trait = ({ title, value, percent, occurrence, type, collectionAddress }) => {
+const Trait = ({
+  title,
+  value,
+  valueDisplay,
+  percent,
+  occurrence,
+  type,
+  collectionAddress,
+  collectionSlug,
+  queryKey,
+}) => {
+  const Value = () => {
+    return (
+      <h4>
+        {value !== undefined ? (
+          <>
+            {type === 'date' ? (
+              <>{new Date(millisecondTimestamp(value)).toDateString()}</>
+            ) : (
+              <>{mapAttributeString(valueDisplay ?? value, collectionAddress, true)}</>
+            )}
+          </>
+        ) : (
+          <>N/A</>
+        )}
+      </h4>
+    );
+  };
+
   return (
     <div className="col-lg-4 col-md-6 col-sm-6">
       <div className="nft_attr">
         <h5>{humanize(title)}</h5>
-        <h4>
-          {value !== undefined ? (
-            <>
-              {type === 'date' ? (
-                <>{new Date(millisecondTimestamp(value)).toDateString()}</>
-              ) : (
-                <>{mapAttributeString(value, collectionAddress, true)}</>
-              )}
-            </>
-          ) : (
-            <>N/A</>
-          )}
-        </h4>
+        {collectionSlug && queryKey ? (
+          <Link
+            href={{
+              pathname: `/collection/${collectionSlug}`,
+              query: { [queryKey]: JSON.stringify({ [title]: [value.toString()] }) },
+            }}
+          >
+            <a>
+              <Value />
+            </a>
+          </Link>
+        ) : (
+          <Value />
+        )}
         {occurrence ? (
-          <span>{Math.round(occurrence * 100)}% have this trait</span>
+          <span>{relativePrecision(occurrence)}% have this trait</span>
         ) : (
           percent && <span>{percent}% have this trait</span>
         )}

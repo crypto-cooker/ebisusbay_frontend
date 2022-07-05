@@ -1,13 +1,12 @@
 import React, { memo, useEffect, useState } from 'react';
-import Head from 'next/head';
-
 import store from '../../../src/Store/store';
-import { getNftDetails } from '../../../src/GlobalState/nftSlice';
-import { findCollectionByAddress, humanize, isAddress } from '../../../src/utils';
-import config from '../../../src/Assets/networks/rpc_config.json';
+import { getNftDetails } from '@src/GlobalState/nftSlice';
+import {findCollectionByAddress, humanize, isAddress, relativePrecision} from '@src/utils';
 import Nft1155 from '../../../src/Components/Collection/nft1155';
 import Nft721 from '../../../src/Components/Collection/nft721';
-const knownContracts = config.known_contracts;
+import {appConfig} from "@src/Config";
+import PageHead from "../../../src/Components/Head/PageHead";
+const knownContracts = appConfig('collections')
 
 const Nft = ({ slug, id, nft }) => {
   const [type, setType] = useState('721');
@@ -62,31 +61,25 @@ const Nft = ({ slug, id, nft }) => {
         const traitsTop = traits[0];
         const res = `${anNFT?.description ? anNFT.description.slice(0, 250) : ''} ... Top Trait: ${
           traitsTop.value ? humanize(traitsTop.value) : 'N/A'
-        }, ${traitsTop.occurrence}%`;
+        }, ${relativePrecision(traitsTop.occurrence)}%`;
 
         return res;
       }
+
+      return anNFT?.description;
     }
+
     return anNFT?.description;
   };
 
   return (
     <>
-      <Head>
-        <title>{nft?.name || 'NFT'} | Ebisu's Bay Marketplace</title>
-        <meta name="description" content={`${nft?.name || 'NFT'} for Ebisu's Bay Marketplace`} />
-        <meta name="title" content={`${nft?.name || 'NFT'} | Ebisu's Bay Marketplace`} />
-        <meta property="og:type" content="website" key="og_type" />
-        <meta property="og:title" content={`${nft?.name || 'NFT'} | Ebisu's Bay Marketplace`} key="title" />
-        <meta property="og:url" content={`https://app.ebisusbay.com/nft/${collection?.address}`} key="og_url" />
-        <meta property="og:image" content={nft?.image} key="image" />
-        <meta property="og:description" content={getTraits(nft)} />
-        <meta property="og:site_name" content="Ebisu's Bay Marketplace" />
-        <meta name="twitter:title" content={`${nft?.name || 'NFT'} | Ebisu's Bay Marketplace`} key="twitter_title" />
-        <meta name="twitter:image" content={nft?.image} key="twitter_image" />
-        <meta name="twitter:card" content="summary_large_image" key="misc-card" />
-        <meta name="twitter:site" content="Ebisu's Bay Marketplace" key="twitter_site" />
-      </Head>
+      <PageHead
+        title={nft.name}
+        description={getTraits(nft)}
+        url={`/collection/${collection?.slug}/${nft.id}`}
+        image={nft.image}
+      />
       {initialized && collection && (
         <>
           {type === '1155' ? (
@@ -113,6 +106,12 @@ export const getServerSideProps = async ({ params }) => {
   let nft;
   if (collection?.address) {
     nft = await store.dispatch(getNftDetails(collection.address, tokenId));
+  }
+
+  if (!collection || !nft) {
+    return {
+      notFound: true
+    }
   }
 
   if (isAddress(slug)) {

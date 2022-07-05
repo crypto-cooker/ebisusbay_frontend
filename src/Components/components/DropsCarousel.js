@@ -8,10 +8,10 @@ import Slider from 'react-slick';
 
 import Clock from './Clock';
 import LayeredIcon from './LayeredIcon';
-import config from '../../Assets/networks/rpc_config.json';
 import { dropState } from '../../core/api/enums';
-import {hostedImage} from "../../hacks";
-export const drops = config.drops;
+import {appConfig} from "../../Config";
+import {hostedImage} from "../../helpers/image";
+const drops = appConfig('drops');
 
 const GlobalStyles = createGlobalStyle`
   .nft-big .slick-prev::before{
@@ -67,10 +67,6 @@ export default class Responsive extends Component {
     this.arrangeCollections();
   }
 
-  // @todo refactor out
-  isCroniesDrop(drop) {
-    return drop.slug === 'cronies';
-  }
   // @todo refactor out
   isFounderDrop(drop) {
     return drop.slug === 'founding-member';
@@ -155,6 +151,7 @@ export default class Responsive extends Component {
       slidesToScroll: 1,
       initialSlide: 0,
       adaptiveHeight: 300,
+      lazyLoad: false,
       centerPadding: '100px',
       responsive: [
         {
@@ -236,7 +233,7 @@ export default class Responsive extends Component {
                         <div className="d-author">
                           <div className="author_list_pp">
                             {drop.imgAvatar ? (
-                              <img className="lazy" src={hostedImage(drop.imgAvatar)} alt={drop.author.name} />
+                              <img className="lazy" src={hostedImage(drop.imgAvatar, true)} alt={drop.author.name} />
                             ) : (
                               <Blockies seed={drop.slug} size={10} scale={5} />
                             )}

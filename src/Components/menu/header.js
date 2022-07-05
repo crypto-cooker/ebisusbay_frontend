@@ -127,9 +127,9 @@ const Header = function () {
                       </Link>
                     </div>
                     <div className="navbar-item">
-                      <Link href="/mad-auction">
+                      <Link href="/stats">
                         <a>
-                          MAD Auction
+                          Stats
                           <span className="lines"></span>
                         </a>
                       </Link>
@@ -174,9 +174,9 @@ const Header = function () {
                   </Link>
                 </div>
                 <div className="navbar-item">
-                  <Link href="/mad-auction">
+                  <Link href="/stats">
                     <a>
-                      MAD Auction
+                      Stats
                       <span className="lines"></span>
                     </a>
                   </Link>

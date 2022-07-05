@@ -1,14 +1,13 @@
 import moment from 'moment';
-import config from './Assets/networks/rpc_config.json';
 import blacklist from './core/configs/blacklist.json';
 import attributes from './core/configs/attributes.json';
 import { useEffect, useRef } from 'react';
-import dynamic from 'next/dynamic';
-// import IPFSGatewayTools from '@pinata/ipfs-gateway-tools/dist/browser';
+import IPFSGatewayTools from '@pinata/ipfs-gateway-tools/dist/node';
 import {getCnsName} from "./helpers/cns";
+import {appConfig} from "./Config";
 
-export const drops = config.drops;
-export const collections = config.known_contracts;
+const drops = appConfig('drops')
+const collections = appConfig('collections')
 
 const gateway = 'https://mygateway.mypinata.cloud';
 
@@ -413,6 +412,19 @@ export const isCroSkullPetsCollection = (address) => {
   return isCollection(address, 'croskull-pets');
 };
 
+export const isCroniesCollection = (address) => {
+  return isCollection(address, 'cronies');
+};
+
+export const isIcyValkyriesCollection = (address) => {
+  return isCollection(address, 'icy-valkyries');
+};
+
+export const isCarkayousCollection = (address) => {
+  return isCollection(address, 'carkayous');
+};
+
+
 export const percentage = (partialValue, totalValue) => {
   if (!totalValue || totalValue === 0) return 0;
   return Math.floor((100 * partialValue) / totalValue);
@@ -467,10 +479,6 @@ export const round = (num, decimals) => {
 
 export const convertIpfsResource = (resource, tooltip) => {
   if (!resource || typeof window === 'undefined') return;
-
-  const IPFSGatewayTools = dynamic(() => import('@pinata/ipfs-gateway-tools/dist/browser'), {
-    ssr: false,
-  });
 
   let gatewayTools = new IPFSGatewayTools();
 
@@ -583,4 +591,8 @@ export const getUserDisplayName = async (address) => {
   if (Array.isArray(cnsName)) cnsName = cnsName[0];
 
   return cnsName ?? shortAddress(address);
+}
+
+export const isEmptyObj = (obj) => {
+  return obj && Object.keys(obj).length === 0 && obj.constructor === Object;
 }

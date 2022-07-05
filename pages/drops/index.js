@@ -8,7 +8,9 @@ import Footer from '../../src/Components/components/Footer';
 import UpcomingDrops from '../../src/Components/Drops/UpcomingDrops';
 import PastDrops from '../../src/Components/Drops/PastDrops';
 import { getTheme } from '../../src/Theme/theme';
-import {hostedImage} from "../../src/hacks";
+import {hostedImage} from "../../src/helpers/image";
+import Head from "next/head";
+import PageHead from "../../src/Components/Head/PageHead";
 
 const Drops = () => {
   const userTheme = useSelector((state) => {
@@ -16,6 +18,11 @@ const Drops = () => {
   });
   return (
     <div>
+      <PageHead
+        title="Latest Drops"
+        description="View the hottest drops on the Ebisu's Bay Launchpad"
+        url="/drops"
+      />
       <section className="no-top mt-2 pb-2 bg-transparent">
         <div className="d-flex justify-content-center px-5">
           <p className="my-auto me-5">
@@ -52,7 +59,7 @@ const Drops = () => {
             </div>
           </div>
           <div className="col-lg-12">
-            <CurrentDrops useCarousel={typeof window !== 'undefined' && window.innerWidth >= 576} />
+            <CurrentDrops useCarousel={false} />
           </div>
         </div>
       </section>

@@ -1,4 +1,4 @@
-import Constants from '../constants/constants';
+import Constants from '../constants';
 
 const { PARAM } = Constants.Variables;
 

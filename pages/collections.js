@@ -9,7 +9,10 @@ import { Form, Spinner } from 'react-bootstrap';
 import Footer from '../src/Components/components/Footer';
 import { getAllCollections } from '../src/GlobalState/collectionsSlice';
 import { debounce, siPrefixedNumber } from '../src/utils';
-import {hostedImage} from "../src/hacks";
+import Image from "next/image";
+import {CdnImage} from "../src/Components/components/CdnImage";
+import {hostedImage} from "../src/helpers/image";
+import PageHead from "../src/Components/Head/PageHead";
 
 const GlobalStyles = createGlobalStyle`
   .mobile-view-list-item {
@@ -134,6 +137,11 @@ const Collections = () => {
 
   return (
     <div>
+      <PageHead
+        title="Collections"
+        description="View the top performing collections on Ebisu's Bay Marketplace"
+        url="/collections"
+      />
       <GlobalStyles />
       <section className="jumbotron breadcumb no-bg tint">
         <div className="mainbreadcumb">
@@ -227,8 +235,8 @@ const Collections = () => {
                               <Link href={`/collection/${collection.slug}`}>
                                 <a>
                                   {collection.metadata?.avatar ? (
-                                    <img
-                                      src={hostedImage(collection.metadata.avatar)}
+                                    <CdnImage
+                                      src={hostedImage(collection.metadata.avatar, true)}
                                       alt={collection?.name}
                                       width="50"
                                       height="50"
