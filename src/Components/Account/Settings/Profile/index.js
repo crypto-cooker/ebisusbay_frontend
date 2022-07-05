@@ -74,7 +74,9 @@ export default function EditProfile() {
           const isArray = typeof formStep[key] === 'object';
 
           if (isArray) {
-            formData.append('images', formStep[key]?.[0].file);
+            if (!settings?.walletAddress) {
+              formData.append('images', formStep[key]?.[0].file);
+            }
           } else {
             formData.append(key, formStep[key]);
           }
@@ -89,8 +91,6 @@ export default function EditProfile() {
     setIsFetchCns(true);
     const cnsName = await getCnsName(user?.address); // Custom URL
     const cnsInfo = await getCnsInfo(user?.address);
-    // console.log('getCnsName', cnsName);
-    // console.log('getCnsInfo', cnsInfo);
     const userInfo = values?.userInfo;
     const tempData = {
       userInfo: {
@@ -120,8 +120,8 @@ export default function EditProfile() {
       const response = settings?.walletAddress
         ? await requestUpdateSettings(formData)
         : await requestNewSettings(formData);
-      if (!response || response?.message?.errors) {
-        toast.error('OnSubmit: Something went wrong!');
+      if (!response || response?.message?.error) {
+        toast.error('Something went wrong!');
       } else {
         toast.success('Your collection was saved successfully');
       }
@@ -194,7 +194,7 @@ export default function EditProfile() {
       </form>
       <div className="d-flex justify-content-end mt-5">
         <button form="userSettings" type="submit" className="btn-main">
-          Save Profile{' '}
+          {settings?.walletAddress ? 'Update Profile' : 'Create Profile'}
           {loading && (
             <Spinner animation="border" role="status" size="sm" className="ms-1">
               <span className="visually-hidden">Loading...</span>

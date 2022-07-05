@@ -29,7 +29,7 @@ const useCreateSettings = () => {
         const fetchResponse = await fetch(
           `http://localhost:4000/profile?` + new URLSearchParams({ signature: signatureInStorage, nonce }),
           {
-            method: 'post',
+            method: 'POST',
             body: formData,
           }
         );

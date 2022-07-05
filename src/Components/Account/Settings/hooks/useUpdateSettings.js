@@ -1,5 +1,6 @@
 import { useState } from 'react';
 // import { appConfig } from '../../../../Config';
+import { getAuthSignerInStorage } from '@src/helpers/storage';
 import useCreateSigner from './useCreateSigner';
 
 const useCreateSettings = () => {
@@ -17,13 +18,18 @@ const useCreateSettings = () => {
       error: null,
     });
 
-    const { signature, nonce } = await getSigner();
-    if (signature) {
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    const nonce = 'ProfileSettings';
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
       try {
         const fetchResponse = await fetch(
-          `http://localhost:4000/profile?` + new URLSearchParams({ signature, nonce }),
+          `http://localhost:4000/profile?` + new URLSearchParams({ signature: signatureInStorage, nonce }),
           {
-            method: 'patch',
+            method: 'PATCH',
             body: formData,
           }
         );
