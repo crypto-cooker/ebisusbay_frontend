@@ -4,6 +4,8 @@ import Blockies from 'react-blockies';
 import Stack from '@mui/material/Stack';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import useGetSettings from '../Account/Settings/hooks/useGetSettings';
+import useUpdatePfp from '../Account/Settings/hooks/useUpdatePfp';
 
 const UploadAssetPfp = ({
   id,
@@ -17,6 +19,8 @@ const UploadAssetPfp = ({
   const [file, setFile] = useState(null);
   const [hover, setHover] = useState(false);
   const inputFile = useRef(null);
+  const { response: settings } = useGetSettings();
+  const [requestUpdatePfp] = useUpdatePfp();
 
   const isVideo = value?.file?.type?.includes('video');
   const isImage = value?.file?.type?.includes('image');
@@ -54,8 +58,13 @@ const UploadAssetPfp = ({
   }, [file, isVideo, isImage]);
 
   const handleChange = useCallback(
-    (event) => {
+    async (event) => {
       const file = event.target.files[0];
+      if (settings?.walletAddress) {
+        const formData = new FormData();
+        formData.append('profilePicture', file);
+        await requestUpdatePfp(formData);
+      }
       if (file) setFile(file);
     },
     [setFile]

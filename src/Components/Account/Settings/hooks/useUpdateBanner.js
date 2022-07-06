@@ -1,9 +1,8 @@
 import { useState } from 'react';
-// import { appConfig } from '../../../../Config';
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import useCreateSigner from './useCreateSigner';
 
-const useUpdateSettings = () => {
+const useUpdateBanner = () => {
   const [response, setResponse] = useState({
     loading: false,
     error: null,
@@ -11,7 +10,7 @@ const useUpdateSettings = () => {
 
   const [isLoading, getSigner] = useCreateSigner();
 
-  const requestUpdateSettings = async (formData) => {
+  const requestUpdateBanner = async (formData) => {
     setResponse({
       ...response,
       loading: true,
@@ -27,7 +26,8 @@ const useUpdateSettings = () => {
     if (signatureInStorage) {
       try {
         const fetchResponse = await fetch(
-          `http://localhost:4000/profile?` + new URLSearchParams({ signature: signatureInStorage, nonce }),
+          `http://localhost:4000/profile/update_banner_image?` +
+            new URLSearchParams({ signature: signatureInStorage, nonce }),
           {
             method: 'PATCH',
             body: formData,
@@ -57,7 +57,7 @@ const useUpdateSettings = () => {
     }
   };
 
-  return [requestUpdateSettings, response];
+  return [requestUpdateBanner, response];
 };
 
-export default useUpdateSettings;
+export default useUpdateBanner;

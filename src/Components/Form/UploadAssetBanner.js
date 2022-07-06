@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { Card } from 'react-bootstrap';
 import Stack from '@mui/material/Stack';
+import useGetSettings from '../Account/Settings/hooks/useGetSettings';
+import useUpdateBanner from '../Account/Settings/hooks/useUpdateBanner';
 
 const UploadAsset = ({ id, value, accept = 'image/png, image/gif, image/jpeg, image/jpg', onChange, onClose }) => {
   const [file, setFile] = useState(null);
@@ -8,6 +10,9 @@ const UploadAsset = ({ id, value, accept = 'image/png, image/gif, image/jpeg, im
 
   const isVideo = value?.file?.type?.includes('video');
   const isImage = value?.file?.type?.includes('image');
+
+  const { response: settings } = useGetSettings();
+  const [requestUpdateBanner] = useUpdateBanner();
 
   const handleClose = useCallback(() => {
     setFile(null);
@@ -42,8 +47,13 @@ const UploadAsset = ({ id, value, accept = 'image/png, image/gif, image/jpeg, im
   }, [file, isVideo, isImage]);
 
   const handleChange = useCallback(
-    (event) => {
+    async (event) => {
       const file = event.target.files[0];
+      if (settings?.walletAddress) {
+        const formData = new FormData();
+        formData.append('banner', file);
+        await requestUpdateBanner(formData);
+      }
       if (file) setFile(file);
     },
     [setFile]
