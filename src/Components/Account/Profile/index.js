@@ -9,7 +9,7 @@ import useGetSettings from '../Settings/hooks/useGetSettings';
 
 import styles from './profile.module.scss';
 
-export default function Profile() {
+export default function Profile({ slug }) {
   const user = useSelector((state) => state.user);
   const { response: userData } = useGetSettings();
   const router = useRouter();
@@ -31,7 +31,6 @@ export default function Profile() {
           <Avatar src="/img/avatar.jpg" />
         </div>
         <div className="col-lg-8">
-          <div>Become a Verified Creator</div>
           <div className={styles.username}>{userData?.cnsName}</div>
           <div className={styles.bio}>{userData?.bio}</div>
           <div className={styles.socials}>
