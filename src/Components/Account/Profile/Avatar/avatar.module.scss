@@ -1,0 +1,18 @@
+.avatar {
+  .pfp {
+    position: relative;
+
+    img {
+      border-radius: 100%;
+      max-width: 200px;
+      width: 100%;
+    }
+
+    .avatar_badge {
+      margin: -20px 0 0 100px;
+      display: block;
+      position: absolute;
+      padding: 10px;
+    }
+  }
+}

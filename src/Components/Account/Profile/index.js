@@ -1,14 +1,8 @@
-import {
-  faDiscord,
-  faTwitter,
-  faMedium,
-  faInstagram,
-  faTelegram,
-  faLinkedin,
-} from '@fortawesome/free-brands-svg-icons';
-import { faSquare, faEnvelope, faGlobe } from '@fortawesome/free-solid-svg-icons';
+import { faDiscord, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { faSquare, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import Button from '@src/Components/components/common/Button';
 import LayeredIcon from '@src/Components/components/LayeredIcon';
+import Avatar from './Avatar';
 
 import styles from './profile.module.scss';
 
@@ -18,7 +12,7 @@ export default function Profile() {
       <img src="/img/background/header-dark.webp" alt="banner" className="banner" />
       <div className={`${styles.userInfo} row`}>
         <div className="col-lg-2">
-          <img src="/img/avatar.jpg" alt="pfp" className={styles.pfp} />
+          <Avatar src="/img/avatar.jpg" />
         </div>
         <div className="col-lg-8">
           <div>Become a Verified Creator</div>
