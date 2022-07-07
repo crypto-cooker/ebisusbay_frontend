@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { Spinner } from 'react-bootstrap';
 
-import Button from '../../../components/Button';
 import Messages, { getDynamicMessage } from '../../../../languages';
 import { initialValues, editProfileFormFields } from './Form/constants';
 import useCreateSettings from '../hooks/useCreateSettings';
