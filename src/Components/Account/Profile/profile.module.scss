@@ -1,0 +1,33 @@
+.profile {
+  .pfp {
+    border-radius: 100%;
+    max-width: 200px;
+    width: 100%;
+  }
+
+  .userInfo {
+    padding: 40px 100px;
+    align-items: center;
+
+    .username {
+      font-size: 40px;
+      line-height: 48px;
+    }
+
+    .bio {
+      width: 500px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+  }
+
+  .socials {
+    display: flex;
+    align-items: center;
+    margin: 4px -6px;
+  }
+}
