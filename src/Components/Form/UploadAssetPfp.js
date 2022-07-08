@@ -19,7 +19,7 @@ const UploadAssetPfp = ({
   const [file, setFile] = useState(null);
   const [hover, setHover] = useState(false);
   const inputFile = useRef(null);
-  const { response: settings } = useGetSettings();
+  const { response: settings } = useGetSettings(user?.address);
   const [requestUpdatePfp] = useUpdatePfp();
 
   const isVideo = value?.file?.type?.includes('video');

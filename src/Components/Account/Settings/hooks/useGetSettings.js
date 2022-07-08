@@ -1,34 +1,22 @@
-import { useRef, useCallback, useState, useLayoutEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useCallback, useState, useLayoutEffect } from 'react';
 
-import useCreateSigner from './useCreateSigner';
-// import { appConfig } from "../../../Config";
-
-export const useGetSettings = () => {
+export const useGetSettings = (account) => {
   const [response, setResponse] = useState({
     isLoading: true,
     signer: null,
-    response: [],
+    response: null,
   });
-  const [isLoading, getSigner] = useCreateSigner();
 
-  const user = useSelector((state) => state.user);
-  const signer = user.authSignature;
-  const prevProvider = useRef();
-
-  const getProfileSettings = useCallback(async () => {
-    if (user.provider) {
+  const getProfileSettings = useCallback(
+    async (account) => {
       setResponse({
         ...response,
         isLoading: true,
       });
 
-      const { signature, nonce } = await getSigner();
-
-      // console.log(signature, nonce);
-      if (signature) {
+      if (account) {
         try {
-          const response = await fetch(`http://localhost:4000/profile?` + new URLSearchParams({ signature, nonce }));
+          const response = await fetch(`http://localhost:4000/profile?` + new URLSearchParams({ account }));
           const payload = await response.json();
 
           setResponse({
@@ -38,23 +26,24 @@ export const useGetSettings = () => {
         } catch (e) {
           setResponse({
             isLoading: false,
+            response: null,
             error: e,
           });
         }
       } else {
         setResponse({
           isLoading: false,
-          response: [],
+          response: null,
           error: { message: 'Something went wrong' },
         });
       }
-    }
-  }, [setResponse, response, signer, user.provider]);
+    },
+    [setResponse, response]
+  );
 
   useLayoutEffect(() => {
-    if (user.provider && !prevProvider.current) getProfileSettings();
-    prevProvider.current = user.provider;
-  }, [signer, user.provider]);
+    getProfileSettings(account);
+  }, [account]);
 
   return response;
 };

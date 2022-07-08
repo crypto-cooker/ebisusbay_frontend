@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { Card } from 'react-bootstrap';
 import Stack from '@mui/material/Stack';
 import useGetSettings from '../Account/Settings/hooks/useGetSettings';
@@ -11,7 +12,8 @@ const UploadAsset = ({ id, value, accept = 'image/png, image/gif, image/jpeg, im
   const isVideo = value?.file?.type?.includes('video');
   const isImage = value?.file?.type?.includes('image');
 
-  const { response: settings } = useGetSettings();
+  const user = useSelector((state) => state.user);
+  const { response: settings } = useGetSettings(user?.address);
   const [requestUpdateBanner] = useUpdateBanner();
 
   const handleClose = useCallback(() => {

@@ -21,7 +21,7 @@ export default function EditProfile() {
   const user = useSelector((state) => state.user);
   const [requestNewSettings, { loading }] = useCreateSettings();
   const [requestUpdateSettings, { loading: updateLoading }] = useUpdateSettings();
-  const { response: settings } = useGetSettings();
+  const { response: settings } = useGetSettings(user?.address);
   const [isFetchCns, setIsFetchCns] = useState(false);
   const [mergedValues, setMergedValues] = useState(false);
 

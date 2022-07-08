@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { faDiscord, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
@@ -11,7 +12,7 @@ import styles from './profile.module.scss';
 
 export default function Profile({ slug }) {
   const user = useSelector((state) => state.user);
-  const { response: userData } = useGetSettings();
+  const userData = useGetSettings(slug);
   const router = useRouter();
 
   const navigateTo = (route) => {
@@ -23,6 +24,12 @@ export default function Profile({ slug }) {
     return false;
   };
 
+  useEffect(() => {
+    if (userData && user?.address && !userData.isLoading && !userData.response) {
+      router.push('/');
+    }
+  }, [userData, user]);
+
   return (
     <div className={styles.profile}>
       <img src="/img/background/header-dark.webp" alt="banner" className="banner" />
@@ -31,40 +38,40 @@ export default function Profile({ slug }) {
           <Avatar src="/img/avatar.jpg" />
         </div>
         <div className="col-lg-8">
-          <div className={styles.username}>{userData?.cnsName}</div>
-          <div className={styles.bio}>{userData?.bio}</div>
+          <div className={styles.username}>{userData?.response?.cnsName}</div>
+          <div className={styles.bio}>{userData?.response?.bio}</div>
           <div className={styles.socials}>
-            {userData?.twitter && (
+            {userData?.response?.twitter && (
               <div>
-                <a href={`https://twitter.com/${userData?.twitter}`} target="_blank" rel="noreferrer">
+                <a href={`https://twitter.com/${userData?.response?.twitter}`} target="_blank" rel="noreferrer">
                   <LayeredIcon icon={faTwitter} bgIcon={faSquare} shrink={7} />
                 </a>
               </div>
             )}
-            {userData?.instagram && (
+            {userData?.response?.instagram && (
               <div>
-                <a href={`https://www.instagram.com/${userData?.instagram}`} target="_blank" rel="noreferrer">
+                <a href={`https://www.instagram.com/${userData?.response?.instagram}`} target="_blank" rel="noreferrer">
                   <LayeredIcon icon={faInstagram} bgIcon={faSquare} shrink={7} />
                 </a>
               </div>
             )}
-            {userData?.discord && (
+            {userData?.response?.discord && (
               <div>
-                <a href={`https://discord.gg/${userData?.discord}`} target="_blank" rel="noreferrer">
+                <a href={`https://discord.gg/${userData?.response?.discord}`} target="_blank" rel="noreferrer">
                   <LayeredIcon icon={faDiscord} bgIcon={faSquare} shrink={8} />
                 </a>
               </div>
             )}
-            {userData?.website && (
+            {userData?.response?.website && (
               <div>
-                <a href={`${userData?.website}`} target="_blank" rel="noreferrer">
+                <a href={`${userData?.response?.website}`} target="_blank" rel="noreferrer">
                   <LayeredIcon icon={faGlobe} bgIcon={faSquare} shrink={8} />
                 </a>
               </div>
             )}
           </div>
         </div>
-        {isMyProfile(user?.address, userData?.walletAddress) && (
+        {isMyProfile(user?.address, userData?.response?.walletAddress) && (
           <div className="col-lg-2">
             <Button onClick={() => navigateTo('/account/settings/profile')}>Profile Settings</Button>
           </div>

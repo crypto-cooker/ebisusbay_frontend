@@ -17,7 +17,7 @@ export default function Form({
     <div>
       <h2>Edit Profile</h2>
       <div>
-        {editProfileFormFields[0].fields.map((field) => {
+        {editProfileFormFields[0].fields.map((field, index) => {
           const { type, ...props } = field;
           const fieldKey = props.key;
           const subFormKey = editProfileFormFields[0].key;
@@ -31,7 +31,7 @@ export default function Form({
           if (props.inputType) props.type = props.inputType;
 
           return type === 'field' ? (
-            <div className="user-profile-form-field">
+            <div className="user-profile-form-field" key={index}>
               <Field {...props} onChange={handleChange} onBlur={handleBlur} />
               {fieldKey === 'cnsName' && (
                 <Button type="button" className="cns-sync-btn" onClick={handleCnsSync} isLoading={isCnsSync}>

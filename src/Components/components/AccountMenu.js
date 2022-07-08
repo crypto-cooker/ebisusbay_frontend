@@ -25,7 +25,7 @@ import { getThemeInStorage, setThemeInStorage } from '../../helpers/storage';
 import { getAllCollections } from '../../GlobalState/collectionsSlice';
 import { fetchMyNFTs } from '../../GlobalState/offerSlice';
 import { isUserBlacklisted, round, shortAddress } from '../../utils';
-import {appConfig} from "../../Config";
+import { appConfig } from '../../Config';
 
 const BlockiesBadge = styled.div`
   position: absolute;
@@ -405,7 +405,7 @@ const AccountMenu = function () {
               <div className="d-line"></div>
               <ul className="de-submenu-profile">
                 <li>
-                  <span onClick={() => navigateTo(`/account/profile`)}>
+                  <span onClick={() => navigateTo(`/account/${walletAddress}`)}>
                     <span>
                       <FontAwesomeIcon icon={faUser} />
                     </span>
@@ -450,7 +450,8 @@ const AccountMenu = function () {
           <StyledModalTitle>Wrong network!</StyledModalTitle>
         </Modal.Header>
         <Modal.Body>
-          To continue, you need to switch the network to <span style={{ fontWeight: 'bold' }}>{appConfig('chain.name')}</span>.{' '}
+          To continue, you need to switch the network to{' '}
+          <span style={{ fontWeight: 'bold' }}>{appConfig('chain.name')}</span>.{' '}
         </Modal.Body>
         <Modal.Footer>
           <button className="p-4 pt-2 pb-2 btn_menu inline white lead" onClick={onWrongChainModalClose}>
