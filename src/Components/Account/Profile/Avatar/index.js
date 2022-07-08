@@ -7,7 +7,7 @@ import styles from './avatar.module.scss';
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
-export default function Avatar({ src, alt = 'pfp', address = ZERO_ADDRESS, isVerified = true }) {
+export default function Avatar({ src, alt = 'pfp', address = ZERO_ADDRESS, isVerified = false }) {
   return (
     <div className={styles.avatar}>
       <div className={styles.pfp}>
