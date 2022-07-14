@@ -183,8 +183,7 @@
         "avatar": "/img/collections/meerkats/avatar.webp",
         "banner": "/img/collections/meerkats/banner.webp",
         "card": "/img/collections/meerkats/card.webp",
-        "rarity": "rarity_sniper",
-        "raritySniperSlug": "mad-meerkat",
+        "rankings": {"source": "rarity_sniper", "slug": "mad-meerkat"},
         "maxSupply": 10000,
         "website": "https://madmeerkat.io/",
         "twitter": "https://twitter.com/MadMeerkatNFT",
@@ -321,8 +320,7 @@
         "avatar": "/img/collections/chimps/avatar.webp",
         "banner": "/img/collections/chimps/banner.webp",
         "card": "/img/collections/chimps/card.webp",
-        "rarity": "rarity_sniper",
-        "raritySniperSlug": "cronos-chimp-club",
+        "rankings": {"source": "rarity_sniper", "slug": "cronos-chimp-club"},
         "maxSupply": 10000,
         "website": "https://cronoschimp.club/",
         "twitter": "https://twitter.com/CronosChimpClub",
@@ -381,8 +379,7 @@
         "avatar": "/img/collections/crocrow/avatar.webp",
         "banner": "/img/collections/crocrow/banner.webp",
         "card": "/img/collections/crocrow/card.webp",
-        "rarity": "rarity_sniper",
-        "raritySniperSlug": "cro-crow",
+        "rankings": {"source": "rarity_sniper", "slug": "cro-crow"},
         "maxSupply": 7777,
         "website": "https://crocrow.com",
         "twitter": "https://twitter.com/cronoscrocrow",
@@ -1024,6 +1021,7 @@
       "address": "0xD504ed871d33dbD4f56f523A37dceC86Ee918cb6",
       "onChain": false,
       "listable": true,
+      "powertraits": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -1073,7 +1071,7 @@
         "maxSupply": 797,
         "website": "https://cronoslizards.com/",
         "twitter": "https://twitter.com/CronosLizards",
-        "discord": "https://discord.gg/BRDQhtDNsM"
+        "discord": "https://discord.gg/7KQPm4SBFb"
       }
     },
     {
@@ -1089,8 +1087,7 @@
         "avatar": "/img/collections/cronosmb/avatar.png",
         "card": "/img/collections/cronosmb/card.jpg",
         "banner": "/img/collections/cronosmb/banner.webp",
-        "rarity": "rarity_sniper",
-        "raritySniperSlug": "cronos-primate-business",
+        "rankings": {"source": "rarity_sniper", "slug": "cronos-primate-business"},
         "maxSupply": 1000,
         "website": "https://cronospb.com/",
         "twitter": "https://twitter.com/PrimateCronos",
@@ -1439,6 +1436,7 @@
       "address": "0x7d0259070B5f513CA543afb6a906d42af5884B1B",
       "onChain": false,
       "listable": true,
+      "powertraits": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -2253,8 +2251,7 @@
         "avatar": "/img/collections/meerkats/treehouse/avatar.webp",
         "card": "/img/collections/meerkats/treehouse/card.webp",
         "banner": "/img/collections/meerkats/treehouse/banner.webp",
-        "rarity": "rarity_sniper",
-        "raritySniperSlug": "mm-treehouse",
+        "rankings": {"source": "rarity_sniper", "slug": "mm-treehouse"},
         "maxSupply": 10000,
         "website": "https://madmeerkat.io/",
         "twitter": "https://twitter.com/MadMeerkatNFT",
@@ -2372,7 +2369,7 @@
         "maxSupply": 2203,
         "website": "https://cronoslizards.com/",
         "twitter": "https://twitter.com/CronosLizards",
-        "discord": "https://discord.gg/Dk6tk36kcN"
+        "discord": "https://discord.gg/7KQPm4SBFb"
       }
     },
     {
@@ -2936,7 +2933,7 @@
       "multiToken": false,
       "address": "0x96e99d6539bA2a816DEe7239DCDdC48be52835E4",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -3153,7 +3150,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "D.G.P: New World Beta LIVE 23rd May & D.G.P: Legends Beta LIVE 27th/31st May! \nD.G.Pals is the first Gamefi Project going LIVE (May 2022) on Cronos chain, backed by Crypto.com Capital, featuring a vast metaverse filled with not one but MANY games for holders of the NFTs to explore, earn and socialize. D.G.Pal NFTs are the first interoperable NFTs that function uniquely across multiple game projects and plenty more game titles in the roadmap.",
+        "description": "D.G.P: New World Beta LIVE 23rd May & D.G.P: Legends Beta LIVE 31st May 2022!\nWelcome to the D.G.Verse! Backed by Crypto.com Capital and Spartan Group, D.G.Pals is one of the first to redefine Web3 gaming with the first Interoperable NFT on the Cronos chain. The D.G.Pals Genesis Collection is the most privileged set of 10,000 NFT collection. Genesis NFT holders will be empowered with resources, airdrops and other perks to help the D.G.Pals Team build the D.G.Verse. You can check out how, by owning a Genesis D.G.Pal NFT, you can help expand Panterra, grow the player base and contribute to development on the D.G.Pals Whitepaper or website. On top of these exclusive privileges, these Genesis D.G.Pal NFTs can also participate in all of the games in the D.G.Verse like every other D.G.Pal NFTs.",
         "verified": true,
         "avatar": "/img/collections/dgpals/avatar.png",
         "card": "/img/collections/dgpals/card.png",
@@ -3238,6 +3235,7 @@
         "card": "/img/collections/babycroge/card.png",
         "banner": "/img/collections/babycroge/banner.png",
         "maxSupply": 400,
+        "rankings": {"source": "provided"},
         "twitter": "https://twitter.com/BabyCrogeCoin",
         "website": "https://babycroge.io",
         "discord": "https://discord.gg/DZs6XTnFCV",
@@ -3883,11 +3881,10 @@
         "avatar": "/img/collections/toughlions/avatar.webp",
         "card": "/img/collections/toughlions/card.webp",
         "banner": "/img/collections/toughlions/banner.webp",
+        "rankings": {"source": "rarity_sniper", "slug": "tough-lions"},
         "maxSupply": 1111,
         "twitter": "https://twitter.com/ToughLions1111",
-        "discord": "https://discord.com/invite/8ssS2RWZvn",
-        "rarity": "rarity_sniper",
-        "raritySniperSlug": "tough-lions"
+        "discord": "https://discord.com/invite/8ssS2RWZvn"
       }
     },
     {
@@ -3977,7 +3974,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Collection of 8008 unique PFP's featuring Boomers with various aspects of blockchain technology.",
+        "description": "Collection of 8008 Boomers using crypto in the only way they know how. Everyone has felt like our Boomers at some point in their crypto journey but just like everyone else they will figure it out eventually. Founded by a fully doxed team of 11, Boomer Squad was established to build an ecosystem of on chain games, events, collections, and ecosystem developments that reflects value back to our Gen 0 Boomers through our Verified Distribution Contract called the \"Mattress Fund\" and Boomer DAO. Check out our GitBook for a full breakdown of everything already established and in the works in our ecosystem",
         "verified": true,
         "avatar": "/img/collections/boomer-squad/avatar.webp",
         "banner": "/img/collections/boomer-squad/banner.webp",
@@ -4298,13 +4295,12 @@
         "avatar": "/img/collections/meerkats/degen/avatar.png",
         "banner": "/img/collections/meerkats/degen/banner.webp",
         "card": "/img/collections/meerkats/degen/card.webp",
+        "rankings": {"source": "rarity_sniper", "slug": "mad-meerkat-degen"},
         "maxSupply": 10010,
         "website": "https://madmeerkat.io/",
         "twitter": "https://twitter.com/MadMeerkatNFT",
         "discord": "https://discord.gg/madmeerkat",
-        "medium": "https://medium.com/@madmeerkat0",
-        "rarity": "rarity_sniper",
-        "raritySniperSlug": "mad-meerkat-degen"
+        "medium": "https://medium.com/@madmeerkat0"
       }
     },
     {
@@ -4468,7 +4464,7 @@
       "multiToken": false,
       "address": "0xa9C5A884b012A0B1528012d7EaEF38512DA12b2B",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Cyberclone is a collection of 2000 uniquely generated NFTs stored on the Cronos blockchain. Each NFT Clone is inspired by the futuristic life of the year 2234, where the world is falling apart under the control of the Cyberclones, who are conquering earth!",
         "verified": true,
@@ -4495,14 +4491,13 @@
         "avatar": "/img/collections/mad-crow/avatar.webp",
         "card": "/img/collections/mad-crow/card.webp",
         "banner": "/img/collections/mad-crow/banner.webp",
+        "rankings": {"source": "rarity_sniper", "slug": "mad-crow"},
         "maxSupply": 3334,
         "website": "https://crocrow.com",
         "twitter": "https://twitter.com/cronoscrocrow",
         "discord": "https://discord.gg/8a8Xm4wwR9",
         "telegram": "https://t.me/crocrownft",
-        "medium": "https://medium.com/@cronoscrocrow",
-        "rarity": "rarity_sniper",
-        "raritySniperSlug": "mad-crow"
+        "medium": "https://medium.com/@cronoscrocrow"
       }
     },
     {
@@ -4687,7 +4682,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "D.G.P: New World Beta LIVE 23rd May & D.G.P: Legends Beta LIVE 31st May! D.G.Pals is the first Gamefi Project going LIVE (May 2022) on Cronos chain, backed by Crypto.com Capital, featuring a vast metaverse filled with not one but MANY games for holders of the NFTs to explore, earn and socialize. D.G.Pal NFTs are the first interoperable NFTs that function uniquely across multiple game projects and plenty more game titles in the roadmap.",
+        "description": "D.G.P: New World Beta LIVE 23rd May & D.G.P: Legends Beta LIVE 31st May 2022!\nWelcome to the D.G.Verse! Backed by Crypto.com Capital and Spartan Group, D.G.Pals is one of the first Gamefi project to redefine Web3 gaming with the first Interoperable NFT on the Cronos chain. 1 NFT, 2 Tokens, multiple games (4 titles in 2022). Unlock the gates to Panterra with our first game, D.G.P: New World, hatch, grow and mint D.G.Pal NFTs and earn tokens while exploring the D.G.Verse.",
         "verified": true,
         "avatar": "/img/collections/dg-pals-unlimited/avatar.webp",
         "card": "/img/collections/dg-pals-unlimited/card.webp",
@@ -4990,8 +4985,7 @@
         "avatar": "/img/collections/flaming-phenix-club/avatar.webp",
         "banner": "/img/collections/flaming-phenix-club/banner.webp",
         "card": "/img/collections/flaming-phenix-club/card.webp",
-        "rarity": "rarity_sniper",
-        "raritySniperSlug": "flaming-phenix-club",
+        "rankings": {"source": "rarity_sniper", "slug": "flaming-phenix-club"},
         "maxSupply": 6666,
         "website": "https://phenix.finance/",
         "twitter": "https://twitter.com/phenixfinance",
@@ -5269,6 +5263,7 @@
         "avatar": "/img/collections/carkayous/avatar.png",
         "card": "/img/collections/carkayous/card.png",
         "banner": "/img/collections/carkayous/banner.png",
+        "rankings": {"source": "rarity_sniper", "slug": "feral-fish"},
         "maxSupply": 2222,
         "website": "https://carkayous.com/",
         "twitter": "https://twitter.com/carkayous",
@@ -5325,6 +5320,7 @@
         "card": "/img/collections/cromads/card.png",
         "banner": "/img/collections/cromads/banner.png",
         "maxSupply": 1234,
+        "rankings": {"source": "provided"},
         "website": "https://lootpad.io/collection/cromad/",
         "twitter": "https://twitter.com/CROmadsNFT",
         "discord": "https://discord.gg/mjMXPKknrv"
@@ -5443,6 +5439,7 @@
         "card": "/img/collections/bad-bits/card.png",
         "banner": "/img/collections/bad-bits/banner.png",
         "maxSupply": 550,
+        "rankings": {"source": "provided"},
         "website": "https://badaliens.io/",
         "twitter": "https://twitter.com/BAD_Cronos",
         "discord": "https://discord.gg/HMy5SArp7g",
@@ -5750,7 +5747,7 @@
       "multiToken": false,
       "address": "0x5628c7a229ff920e3c7aB668107e822Fa84244B4",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Alien Apocalypse is a collection of 3,000 uniquely generated invaders. The first of its kind, bridging the Cronos and Cardano Blockchains. The collection contains over 180 out of this world traits that are sure to blow your mind. Owning an Alien Apocalypse NFT will grant you access to the Horde Ecosystem.",
         "verified": true,
@@ -5767,7 +5764,7 @@
       "name": "Hype Hogs",
       "slug": "hype-hogs",
       "multiToken": false,
-      "address": "",
+      "address": "0xF257E02D8c5c9a405589F99859f8b28b0Ccc5474",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -5836,6 +5833,7 @@
         "avatar": "/img/collections/crommy/avatar.jpg",
         "card": "/img/collections/crommy/card.jpg",
         "banner": "/img/collections/crommy/banner.jpg",
+        "rankings": {"source": "provided"},
         "maxSupply": 5000,
         "website": "https://www.crorarity.com/crommy/",
         "twitter": "https://twitter.com/cromummy",
@@ -5934,6 +5932,308 @@
         "twitter": "https://twitter.com/CroWhales",
         "discord": "https://discord.gg/f8hYkFxH",
         "telegram": "https://t.me/crowhalesnft"
+      }
+    },
+    {
+      "name": "CronosDrake",
+      "slug": "cronos-drake",
+      "multiToken": false,
+      "address": "0xacba47acefe362c7df6dd343e1b1501c3387b603",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "500 unique drakes with over 30 traits and can be staked to earn passive income.",
+        "verified": false,
+        "avatar": "/img/collections/cronos-drake/avatar.jpg",
+        "maxSupply": 500,
+        "twitter": "https://twitter.com/cronosdrake",
+        "discord": "https://discord.gg/ZxvghdtNxc"
+      }
+    },
+    {
+      "name": "LadyBACC",
+      "slug": "lady-bacc",
+      "multiToken": false,
+      "address": "0xEA2462cb14DA8Cb22D1d417a9A1D16EBE6030e18",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Ladies continue the BACC lineage",
+        "verified": false,
+        "avatar": "/img/collections/lady-bacc/avatar.jpg",
+        "maxSupply": 10000,
+        "twitter": "https://twitter.com/ApesLady",
+        "discord": "https://discord.gg/9VXbM9RF2H",
+        "medium": "https://medium.com/@ladyapes"
+      }
+    },
+    {
+      "name": "Crolon Mars NFT",
+      "slug": "crolon-mars-nft",
+      "multiToken": false,
+      "address": "0xcAe06e7B36cbb3BCe19f41640f1104e99F5395F4",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CrolonMars Metaverse access NFTs",
+        "verified": false,
+        "avatar": "/img/collections/crolon-mars-nft/avatar.jpg",
+        "maxSupply": 720,
+        "website": "https://www.crolonmars.com/",
+        "twitter": "https://twitter.com/CrolonMars",
+        "telegram": "https://t.me/crolon_mars",
+        "medium": "https://wakeupandsmelltheblog.com/nft/crolon-mars-release-an-exclusive-3d-nft-drop-to-the-cronos-chain/"
+      }
+    },
+    {
+      "name": "World Wide Crazy",
+      "slug": "world-wide-crazy",
+      "multiToken": false,
+      "address": "0xB6410ab2f847DE56126C2781248e791E5899488D",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "3100 crazy cats that always seem to have fun!",
+        "verified": false,
+        "avatar": "/img/collections/world-wide-crazy/avatar.png",
+        "card": "/img/collections/world-wide-crazy/card.png",
+        "banner": "/img/collections/world-wide-crazy/banner.png",
+        "maxSupply": 3100,
+        "website": "https://6sense.mystrikingly.com/",
+        "twitter": "https://twitter.com/6_sense_nft",
+        "discord": "https://discord.gg/mZ9JVWpHFC"
+      }
+    },
+    {
+      "name": "The Battle Among Mongoose",
+      "slug": "the-battle-among-mongoose",
+      "multiToken": false,
+      "address": "0x06EA467b0013C363E97780A1B447BBfeA604ba7e",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Battle Among Mongoose is a unique P2E NFT game built exclusively for the Cronos network. The NFTs' scarcity with its unique attributes and tokenomics allows you to monetize your gaming experience with $MNG.",
+        "verified": false,
+        "avatar": "/img/collections/the-battle-among-mongoose/avatar.png",
+        "card": "/img/collections/the-battle-among-mongoose/card.png",
+        "banner": "/img/collections/the-battle-among-mongoose/banner.png",
+        "maxSupply": 2022,
+        "website": "https://battle.saharadao.finance/",
+        "twitter": "https://twitter.com/SaharaDao",
+        "discord": "https://discord.gg/gTz8yjpymd",
+        "telegram": "https://t.me/SaharaDAOglobal",
+        "medium": "https://saharadao.medium.com"
+      }
+    },
+    {
+      "name": "Battle Ready Boyz",
+      "slug": "battle-ready-boyz",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Battle Ready Boyz is a project combining Design and GameFi offering its members to use their NFTs in Play-to-Earn or Risk-To-Earn.\n\nThe BRB collection features 7777 unique NFTs representing Aurora's gorilla soldiers and statues of their emperors.\n\nDon't forget to fight each other, life is too short!",
+        "verified": true,
+        "avatar": "/img/collections/battle-ready-boyz/avatar.png",
+        "card": "/img/collections/battle-ready-boyz/card.png",
+        "banner": "/img/collections/battle-ready-boyz/banner.png",
+        "maxSupply": 7777,
+        "website": "https://www.battlereadyboyz.io/",
+        "twitter": "https://twitter.com/BattleReadyBoyz",
+        "discord": "https://discord.gg/q4FQ4ukffB",
+        "medium": "https://medium.com/@battlereadyboyz/battle-ready-boyz-56a5eee494fa"
+      }
+    },
+    {
+      "name": "Trippy Treasure Chests",
+      "slug": "trippy-treasure-chests",
+      "multiToken": false,
+      "address": "0x9C9BB3BDa7914437C466f833D2BE25a405957a3a",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Offering passive income through staking, cross-chain investment returns, and royalties! Brought to you by: Possessed Pirates",
+        "verified": false,
+        "avatar": "/img/collections/trippy-treasure-chests/avatar.png",
+        "card": "/img/collections/trippy-treasure-chests/card.png",
+        "banner": "/img/collections/trippy-treasure-chests/banner.png",
+        "maxSupply": 2000,
+        "website": "https://treasure.croarmy.app/",
+        "twitter": "https://twitter.com/PosessedP",
+        "discord": "https://discord.gg/dWpku7EWct"
+      }
+    },
+    {
+      "name": "Fury Mouse Gang",
+      "slug": "fury-mouse-gang",
+      "multiToken": false,
+      "address": "0xb0A48BDCBb08A1817C8eDf51E940bd3e74572A14",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Fury Mouse Gang is an NFT project with a first generation of 2500 unique mice gang PFP collectibles. At night the fury takes hold of them and they ravage everything in their path. These creatures rule their world. The ambition is huge: to become the number 1 project on Cronos. Our community is linked around a story and a brotherhood between the members of the Gang. We want our members to live an unique experience, never seen on Cronos.. So if you can’t beat the gang, join us, before it is too late.",
+        "verified": true,
+        "avatar": "/img/collections/fury-mouse-gang/avatar.png",
+        "card": "/img/collections/fury-mouse-gang/card.png",
+        "banner": "/img/collections/fury-mouse-gang/banner.png",
+        "maxSupply": 2500,
+        "website": "https://furymousegang.com/",
+        "twitter": "https://twitter.com/FuryMouseGang",
+        "discord": "https://discord.gg/fmg"
+      }
+    },
+    {
+      "name": "Mascot Booster Bags",
+      "slug": "mascot-booster-bags",
+      "multiToken": false,
+      "address": "0x9433e3e85652f4972c9a2cb603d901f591737c9b",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Mascot booster bags are sports kits for mascots to boost their utilities. These bags will unlock powers for mascots to gain benefits in whole new ecosystem and will act as a primary collection within that ecosystem. Benefits for these bags will be revealed in Discord from time to time.",
+        "verified": true,
+        "avatar": "/img/collections/mascot-booster-bags/avatar.png",
+        "card": "/img/collections/mascot-booster-bags/card.png",
+        "banner": "/img/collections/mascot-booster-bags/banner.png",
+        "maxSupply": 576,
+        "website": "https://www.betamascots.com/",
+        "twitter": "https://twitter.com/TheSportsNFT",
+        "discord": "https://discord.gg/9Exq5ECpDv",
+        "medium": "https://medium.com/@thesportsnft"
+      }
+    },
+    {
+      "name": "GoblinCroPet",
+      "slug": "goblin-cro-pet",
+      "multiToken": false,
+      "address": "0xe3f94fCAf605F24B30A0567719b62E4775500412",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Heartbreaking Crypto investors escape from the chaotic world into a deep cave. Slowly turning into Goblins. Since then, a livable and harmless GoblinCroTown has risen. And these beasts are their petz!",
+        "verified": false,
+        "avatar": "/img/collections/goblin-cro-pet/avatar.png",
+        "card": "/img/collections/goblin-cro-pet/card.png",
+        "banner": "/img/collections/goblin-cro-pet/banner.png",
+        "maxSupply": 1500,
+        "website": "https://goblincrotown.com/",
+        "twitter": "https://twitter.com/GoblinCroTown",
+        "discord": "https://discord.gg/QE2hr8xya4"
+      }
+    },
+    {
+      "name": "Cronos Cats",
+      "slug": "cronos-cats",
+      "multiToken": false,
+      "address": "0x3f31e8854858500b7caba28ecda49c81d32a98af",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Cronos Cats is a limited Profile-Picture (PFP) with added utility community-driven collection fully native to the Cronos Network. With a supply of only 1000 algorithmically generated Cats with hundreds of Hand-Drawn traits accompanied by a complex rarity system, we strive to become a blue-chip NFT project on the Cronos Network. Our confidence derives from our extremely detailed artwork, our first-mover advantage, and the immense support we have received from the Cronos community.",
+        "verified": false,
+        "avatar": "/img/collections/cronos-cats/avatar.jpg",
+        "card": "/img/collections/cronos-cats/card.png",
+        "banner": "/img/collections/cronos-cats/banner.png",
+        "maxSupply": 1000,
+        "website": "https://cronoscats.carrd.co/",
+        "twitter": "https://twitter.com/CronosCats"
+      }
+    },
+    {
+      "name": "Cronos Demon Legion",
+      "slug": "cronos-demon-legion",
+      "multiToken": false,
+      "address": "0xE4c7F4A8DCb74Fd531e7B65e55735e9A8E321433",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "555 gaming-crazed demons have emerged from the void... They found themselves landed on the Cronos chain, and are looking for gamers and NFT lovers to join their Legion! Owning a Cronos Demon Legion NFT will act as an entry pass to all of our gaming events, contests, and tournaments (CRO and NFT prizes). All Demon holders will also automatically receive our Gen 2 via airdrop. 55 of the 555 will be placed in the CDL reserve wallet, and used as rewards for upcoming events!",
+        "verified": false,
+        "avatar": "/img/collections/cronos-demon-legion/avatar.png",
+        "card": "/img/collections/cronos-demon-legion/card.png",
+        "banner": "/img/collections/cronos-demon-legion/banner.png",
+        "rankings": {"source": "provided"},
+        "maxSupply": 555,
+        "twitter": "https://twitter.com/DemonLegionCRO",
+        "discord": "https://discord.gg/tgrn3t6nnd"
+      }
+    },
+    {
+      "name": "New America Airdrop",
+      "slug": "new-america-airdrop",
+      "multiToken": false,
+      "address": "0xE936eEbB581F5142412eA3918FC649d9B006bC10",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "\"Launch The Enforcers\" is the First 3D collection From New America NFT. With a storyline emerging from a comic book story, New America NFT takes a step into the Gaming world of things with their soon to release play to earn video game. New America NFT continues to add value with staking, and also Earning 3D assets for game play for simply holding and NFT. Enjoy customizations, monthly CRO rewards, and more through their discord community.",
+        "verified": false,
+        "avatar": "/img/collections/new-america-airdrop/avatar.jpg",
+        "card": "/img/collections/new-america-airdrop/card.jpg",
+        "banner": "/img/collections/new-america-airdrop/banner.jpg",
+        "maxSupply": 207,
+        "twitter": "https://twitter.com/NewAmericaNFT",
+        "discord": "https://discord.gg/yNJbZJSmQ5"
+      }
+    },
+    {
+      "name": "CroWitches",
+      "slug": "cro-witches",
+      "multiToken": false,
+      "address": "0x95603a09fe2d2afdd7ce5d0e3cd83319666e62d9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CroWitches is a collection of 3,333 upgradable NFTs on the Cronos network. 15% of all CroWitches NFTs minted & 7% of all marketplace volume is distributed in CRO to all holders. CroWitches NFT holders can stake their NFTs ",
+        "verified": false,
+        "avatar": "/img/collections/cro-witches/avatar.png",
+        "card": "/img/collections/cro-witches/card.png",
+        "banner": "/img/collections/cro-witches/banner.png",
+        "maxSupply": 3333,
+        "website": "https://www.crowitches.com/",
+        "twitter": "https://twitter.com/CroWitches",
+        "discord": "https://discord.gg/VrC2e4GNVR",
+        "telegram": "https://t.me/crowitches"
+      }
+    },
+    {
+      "name": "B.A.D. - Lizzys",
+      "slug": "bad-lizzys",
+      "multiToken": false,
+      "address": "0xd7eEc30A764B3Eed788e93de9fc69b432Dd54d16",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Cronos Lizards meet the BAD Bits and portal to a new universe - the BADverse! Join us as we take to the stars and explore.",
+        "verified": true,
+        "avatar": "/img/collections/bad-lizzys/avatar.png",
+        "card": "/img/collections/bad-lizzys/card.png",
+        "banner": "/img/collections/bad-lizzys/banner.png",
+        "maxSupply": 10000,
+        "website": "https://cronoslizards.com/",
+        "twitter": "https://twitter.com/badlizzys",
+        "discord": "https://discord.gg/HMy5SArp7g"
+      }
+    },
+    {
+      "name": "CroSkull Pets Eggs - Season 2",
+      "slug": "croskull-pets-eggs-s2",
+      "multiToken": false,
+      "address": "0x6d54590Ed6950EcD3987778c004d4773a7e99dAC",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A Mysterious Egg found by a CroSkull during his adventure! \"I.... never seen an egg like that, it may hatch in a some mysterious creature.\" Hatching Available on https://app.croskull.com/ ",
+        "verified": true,
+        "avatar": "/img/collections/croskull-pets-eggs-s2/avatar.jpeg",
+        "card": "/img/collections/croskull-pets-eggs-s2/card.jpeg",
+        "banner": "/img/collections/croskull-pets-eggs-s2/banner.jpeg",
+        "maxSupply": 2200,
+        "website": "https://app.croskull.com/",
+        "twitter": "https://twitter.com/CroskullNFT",
+        "discord": "https://discord.gg/croskull",
+        "medium": "https://medium.com/@croskullnft"
       }
     }
   ],
@@ -7165,7 +7465,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false
+      "complete": true
     },
     {
       "id": 45,
@@ -7836,6 +8136,7 @@
       "is1155": false,
       "published": true,
       "complete": false,
+      "featured": true,
       "disclaimer": "**Assets and characters from other Ghetto-Doves™ collections do not apply in the 7 character collection."
     },
     {
@@ -7905,13 +8206,13 @@
     {
       "id": 74,
       "slug": "cyber-clone",
-      "imgNft": "/img/drops/cyber-clone/drop.webp",
-      "imgPreview": "/img/drops/cyber-clone/drop.webp",
+      "imgNft": "/img/drops/cyber-clone/drop.jpg",
+      "imgPreview": "/img/drops/cyber-clone/drop.jpg",
       "imgAvatar": "/img/collections/cyber-clone/avatar.webp",
       "imgBanner": "/img/collections/cyber-clone/banner.webp",
       "title": "CyberClone",
       "subtitle": "Cyberclone is a collection of 1000 uniquely generated NFTs stored on the Cronos blockchain. Each NFT Clone is inspired by the futuristic life of the year 2234, where the world is falling apart under the control of the Cyberclones, who are conquering earth!",
-      "description": "Cyberclone is a collection of 1000 uniquely generated NFTs stored on the Cronos blockchain. Each NFT Clone is inspired by the futuristic life of the year 2234, where the world is falling apart under the control of the Cyberclones, who are conquering earth! Who will take control of our clone-dominated world? \n\nWe will be setting up a DAO to allow all members to participate in the future CyberClone! The CyberClone goal? We want to go even further with Cyberclone, by creating exclusive IOS and Android applications for all Cyberclone owners that will allow you to access multitudes of benefits and exchanges!",
+      "description": "Create a community CyberClone!\n\nFirst 100% 3D project, our goal is to create a new futuristic world on Cronos! \n\nRoadmap :\n\nDao: Decision, investment... for the development of the project\n\nStaking: Stake your Clones to have a passive income with CCT!\n\nHosting raffle: Sell your NFT by hosting your own raffle. Only cronos project can be put in the raffle!\n\nCyberSwap: Is going to be a peer-to-peer exchange service that allows you to exchange up to 6 NFTs in one transaction\n\nThe Trading Post: Will be a way to list NFTs to trade with other CyberClone users!\n\nMessaging:  It's a messaging service that will allow you to send NFT messages to any address/wallet linked to CRO or Twitter.\n\nMerchandising: It's a collection of exclusive clothing reserved for Clone members\n\nCyberClone App: More details on our site",
       "author": {
         "name": "CyberClone",
         "twitter": "https://twitter.com/CyberCloneNFT",
@@ -7932,7 +8233,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "priceDescription": "Whitelist presale for the first hour. Whitelist pricing applicable only during presale and limited to 5 per wallet. Public sale will begin after the presale completes"
     },
     {
@@ -8098,7 +8399,7 @@
     },
     {
       "id": 80,
-      "slug": "carkayous",
+      "slug": "carkayous-feral-fish",
       "imgNft": "/img/drops/carkayous/drop.png",
       "imgPreview": "/img/drops/carkayous/drop.png",
       "imgAvatar": "/img/collections/carkayous/avatar.png",
@@ -8256,7 +8557,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false
+      "complete": true
     },
     {
       "id": 85,
@@ -8274,7 +8575,7 @@
         "twitter": "https://twitter.com/ToughLions1111",
         "discord": "https://discord.gg/8ssS2RWZvn"
       },
-      "address": "",
+      "address": "0xF257E02D8c5c9a405589F99859f8b28b0Ccc5474",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 100,
       "totalSupply": 3333,
@@ -8287,6 +8588,101 @@
       "is1155": false,
       "published": true,
       "complete": false
+    },
+    {
+      "id": 86,
+      "slug": "cbs-ballin-bots",
+      "imgNft": "",
+      "imgAvatar": "/img/collections/cbs-ballin-bots/avatar.png",
+      "title": "CBS: Ballin Bots",
+      "subtitle": "",
+      "description": "",
+      "author": {
+        "name": "Cronos Bot Society",
+        "website": "https://cronosbotsociety.com/",
+        "twitter": "https://twitter.com/CronosBots",
+        "discord": "https://discord.gg/cronosbotsociety",
+        "medium": "https://medium.com/@Cronos-Bot-Society"
+      },
+      "address": "0x4202074d695724366F00C24Ab9D27ac1dD2ED526",
+      "maxMintPerTx": 0,
+      "maxMintPerAddress": 0,
+      "totalSupply": 0,
+      "cost": "",
+      "memberCost": "",
+      "whitelistCost": "",
+      "foundersOnly": false,
+      "start": 1657407600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": false,
+      "redirect": "https://lootpad.io/collection/ballin"
+    },
+    {
+      "id": 87,
+      "slug": "battle-ready-boyz",
+      "imgNft": "/img/drops/battle-ready-boyz/drop.png",
+      "imgPreview": "/img/drops/battle-ready-boyz/drop.png",
+      "imgAvatar": "/img/collections/battle-ready-boyz/avatar.png",
+      "imgBanner": "/img/collections/battle-ready-boyz/banner.png",
+      "title": "Battle Ready Boyz",
+      "subtitle": "Battle Ready Boyz is a project combining Design and GameFi offering its members to use their NFTs in Play-to-Earn or Risk-To-Earn.\n\nThe BRB collection features 7777 unique NFTs representing Aurora's gorilla soldiers and statues of their emperors.\n\nDon't forget to fight each other, life is too short!",
+      "description": "Battle Ready Boyz is a project combining Design and GameFi offering its members to use their NFTs in Play-to-Earn or Risk-To-Earn.\n\nThe BRB collection features 7777 unique NFTs representing Aurora's gorilla soldiers and statues of their emperors.\n\nUtilities :\n\nPlay to earn\n\nRisk to earn\n\nNFT Staking \n\nExchangeable token\n\nUtility token\n\nNFT upgrade\n\nMerch (BRB poker cards, ...)\n\nDAO & partnerships\n\nOGs & VIP events\n\nFull redistribution of royalties\n\nFree online novel\n\nAirdrop to our holders : Battle Retired Boyz\n\nDon't forget to fight each other, life is too short!",
+      "author": {
+        "name": "Battle Ready Boyz",
+        "website": "https://www.battlereadyboyz.io/",
+        "twitter": "https://twitter.com/BattleReadyBoyz",
+        "discord": "https://discord.gg/q4FQ4ukffB",
+        "medium": "https://medium.com/@battlereadyboyz/battle-ready-boyz-56a5eee494fa"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 7777,
+      "cost": "399",
+      "memberCost": "379",
+      "whitelistCost": "349",
+      "foundersOnly": false,
+      "start": null,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 88,
+      "slug": "fury-mouse-gang",
+      "imgNft": "/img/drops/fury-mouse-gang/drop.jpg",
+      "imgPreview": "/img/drops/fury-mouse-gang/drop.jpg",
+      "imgAvatar": "/img/collections/fury-mouse-gang/avatar.png",
+      "imgBanner": "/img/collections/fury-mouse-gang/banner.png",
+      "title": "Fury Mouse Gang",
+      "subtitle": "The Fury Mouse Gang is an NFT project with a first generation of 2500 unique mice gang PFP collectibles. At night the fury takes hold of them and they ravage everything in their path. These creatures rule their world.",
+      "description": "The Fury Mouse Gang is an NFT project with a first generation of 2500 unique mice gang PFP collectibles. At night the fury takes hold of them and they ravage everything in their path. These creatures rule their world. The ambition is huge: to become the number 1 project on Cronos. Our community is linked around a story and a brotherhood between the members of the Gang. We want our members to live an unique experience, never seen on Cronos.. So if you can’t beat the gang, join us, before it is too late.\n\nHolders benefits:\n\nD.A.O\n\nMistery Giveaways\n\nShared Royalties\n\nTop 5 Holders rewarded\n\nRandom Airdrops and Raffles\n\nStaking (Hold 10 mice to received a FuryHouse where you could stake your mice! Or wait for the mint)\n\nHidden utility\n\nRally, or die.",
+      "author": {
+        "name": "Fury Mouse Gang",
+        "website": "https://furymousegang.com/",
+        "twitter": "https://twitter.com/FuryMouseGang",
+        "discord": "https://discord.gg/fmg"
+      },
+      "address": "0xb0A48BDCBb08A1817C8eDf51E940bd3e74572A14",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 2500,
+      "cost": "500",
+      "memberCost": "450",
+      "whitelistCost": "425",
+      "foundersOnly": false,
+      "start": 1657393200000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": true
     }
   ],
   "auctions": [

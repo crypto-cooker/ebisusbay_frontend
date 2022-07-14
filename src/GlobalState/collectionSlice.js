@@ -193,7 +193,14 @@ export const fetchListings =
         if (!cancelled) {
 
           // @todo remove once proper filter in place on API side
-          response.nfts = response.nfts?.filter((nft) => !nft.market.type || nft.market.type === listingType.LISTING);
+          response.nfts = response.nfts?.map((nft) => {
+            // Filter out any that have an auction attached for some reason
+            if (nft.market.type && nft.market.type !== listingType.LISTING) {
+              delete nft.market;
+            }
+            return nft;
+          })
+          // response.nfts = response.nfts?.filter((nft) => !nft.market.type || nft.market.type === listingType.LISTING);
 
           response.hasRank = response.nfts.length > 0 && typeof response.nfts[0].rank !== 'undefined';
           dispatch(listingsReceived({ ...response, isUsingListingsFallback: false }));
@@ -246,10 +253,10 @@ export const updateTab = (tab) => async (dispatch) => {
 };
 
 export const getStats =
-  (address, slug, id = null, extraAddresses = null) =>
+  (collection, id = null, extraAddresses = null) =>
   async (dispatch) => {
     try {
-      const mergedAddresses = extraAddresses ? [address, ...extraAddresses] : address;
+      const mergedAddresses = extraAddresses ? [collection.address, ...extraAddresses] : collection.address;
       var response;
       if (id != null) {
         response = await getCollectionMetadata(mergedAddresses, null, {
@@ -259,12 +266,12 @@ export const getStats =
       } else {
         response = await getCollectionMetadata(mergedAddresses);
       }
-      const traits = await getCollectionTraits(address);
-      const powertraits = await getCollectionPowertraits(address);
+      const traits = await getCollectionTraits(collection.address);
+      const powertraits = collection.powertraits ? await getCollectionPowertraits(collection.address) : null;
       dispatch(
         onCollectionStatsLoaded({
           stats: {
-            ...combineStats(response.collections, address),
+            ...combineStats(response.collections, collection.address),
             ...{
               traits: traits,
               powertraits: powertraits,

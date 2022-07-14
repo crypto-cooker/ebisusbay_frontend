@@ -399,7 +399,8 @@ export const updateListed =
 
 export const connectAccount =
   (firstRun = false, type = '') =>
-  async (dispatch) => {
+  async (dispatch, getState) => {
+    const state = getState();
     const providerOptions = {
       injected: {
         display: {
@@ -461,6 +462,7 @@ export const connectAccount =
     const web3Modal = new Web3Modal({
       cacheProvider: true, // optional
       providerOptions, // required
+      theme: state.user.theme
     });
 
     const web3provider = await web3Modal
