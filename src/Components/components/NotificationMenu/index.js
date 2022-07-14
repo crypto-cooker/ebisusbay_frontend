@@ -65,9 +65,8 @@ const NotificationMenu = function () {
     setNotifications([]);
   };
 
-  return (
+  return walletAddress && (
     <div className={classnames('mainside d-flex', styles.notification)}>
-      {walletAddress && (
         <div id="de-click-menu-profile" className="de-menu-profile">
           <span onClick={() => setShowpop(!showpop)}>
             <FontAwesomeIcon icon={faBell} color="#fff" />
@@ -103,7 +102,6 @@ const NotificationMenu = function () {
             </div>
           )}
         </div>
-      )}
     </div>
   );
 };

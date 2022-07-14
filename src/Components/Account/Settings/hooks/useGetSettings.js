@@ -16,7 +16,7 @@ export const useGetSettings = (account) => {
 
       if (account) {
         try {
-          const response = await fetch(`http://localhost:4000/profile?` + new URLSearchParams({ account }));
+          const response = await fetch(`http://localhost:5555/profile?` + new URLSearchParams({ account }));
           const payload = await response.json();
 
           setResponse({

@@ -9,7 +9,7 @@ import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import AccountMenu from '../components/AccountMenu';
 import NotificationMenu from '../components/NotificationMenu';
 import InvalidListingWarning from '../components/InvalidListingWarning';
-import { setTheme } from '../../GlobalState/User';
+import { setTheme } from '@src/GlobalState/User';
 
 const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
 
