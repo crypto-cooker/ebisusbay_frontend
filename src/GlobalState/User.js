@@ -34,8 +34,8 @@ import { getAllOffers } from '../core/subgraph';
 import { offerState } from '../core/api/enums';
 import { CNS, TextRecords } from '@cnsdomains/core';
 import { txExtras } from '../core/constants';
-import {appConfig} from "../Config";
-import {MarketFilterCollection} from "../Components/Models/market-filters.model";
+import { appConfig } from '../Config';
+import { MarketFilterCollection } from '../Components/Models/market-filters.model';
 
 const config = appConfig();
 
@@ -454,7 +454,7 @@ export const connectAccount =
     const web3Modal = new Web3Modal({
       cacheProvider: true, // optional
       providerOptions, // required
-      theme: state.user.theme
+      theme: state.user.theme,
     });
 
     const web3provider = await web3Modal

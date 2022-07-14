@@ -10,9 +10,9 @@ import Footer from '../src/Components/components/Footer';
 import { createSuccessfulTransactionToastContent, humanize, percentage } from '../src/utils';
 import ShipABI from '../src/Contracts/Ship.json';
 import ShipItemABI from '../src/Contracts/ShipItem.json';
-import {appConfig} from "../src/Config";
-import {hostedImage} from "../src/helpers/image";
-import PageHead from "../src/Components/Head/PageHead";
+import { appConfig } from '../src/Config';
+import { hostedImage } from '../src/helpers/image';
+import PageHead from '../src/Components/Head/PageHead';
 
 const knownContracts = appConfig('collections');
 
@@ -251,7 +251,7 @@ const ShipBuilderCard = ({ type, shipAddress, key, mintCallback, quantityCollect
       <div className="card-body d-flex flex-column">
         <h5>{humanize(type)} Parts</h5>
         <div className="row row-cols-1 row-cols-sm-3 row-cols-md-4 g-3">
-          <div className="card border-0">
+          <div className="border-0">
             {quantityCollected[0] > 0 ? (
               <img src={`/img/collections/crosmonauts/parts/${type}-engine.webp`} className="card-img-top" alt="..." />
             ) : (
@@ -266,7 +266,7 @@ const ShipBuilderCard = ({ type, shipAddress, key, mintCallback, quantityCollect
               <p className="card-text">Parts Collected: {quantityCollected[0]}</p>
             </div>
           </div>
-          <div className="card border-0">
+          <div className="border-0">
             {quantityCollected[1] > 0 ? (
               <img src={`/img/collections/crosmonauts/parts/${type}-booster.webp`} className="card-img-top" alt="..." />
             ) : (
@@ -281,7 +281,7 @@ const ShipBuilderCard = ({ type, shipAddress, key, mintCallback, quantityCollect
               <p className="card-text">Parts Collected: {quantityCollected[1]}</p>
             </div>
           </div>
-          <div className="card border-0">
+          <div className="border-0">
             {quantityCollected[2] > 0 ? (
               <img src={`/img/collections/crosmonauts/parts/${type}-deck.webp`} className="card-img-top" alt="..." />
             ) : (
@@ -296,7 +296,7 @@ const ShipBuilderCard = ({ type, shipAddress, key, mintCallback, quantityCollect
               <p className="card-text">Parts Collected: {quantityCollected[2]}</p>
             </div>
           </div>
-          <div className="card border-0">
+          <div className="border-0">
             <div className="card-body d-flex justify-content-center">
               <div className="align-self-center">
                 <h5 className="card-title d-flex text-center">Build {humanize(type)} Ship</h5>
