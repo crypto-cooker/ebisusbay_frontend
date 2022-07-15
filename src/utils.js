@@ -1,14 +1,15 @@
 import moment from 'moment';
+import { ethers, utils } from 'ethers';
 import blacklist from './core/configs/blacklist.json';
 import attributes from './core/configs/attributes.json';
 import { useEffect, useRef } from 'react';
 import IPFSGatewayTools from '@pinata/ipfs-gateway-tools/dist/node';
-import {getCnsName} from "./helpers/cns";
-import {appConfig} from "./Config";
-import {hostedImage} from "./helpers/image";
+import { getCnsName } from './helpers/cns';
+import { appConfig } from './Config';
+import { hostedImage } from './helpers/image';
 
-const drops = appConfig('drops')
-const collections = appConfig('collections')
+const drops = appConfig('drops');
+const collections = appConfig('collections');
 
 const gateway = 'https://mygateway.mypinata.cloud';
 
@@ -256,15 +257,15 @@ export function timeSince(date) {
 
 export function secondsToDhms(seconds) {
   seconds = Number(seconds);
-  var d = Math.floor(seconds / (3600*24));
-  var h = Math.floor(seconds % (3600*24) / 3600);
-  var m = Math.floor(seconds % 3600 / 60);
+  var d = Math.floor(seconds / (3600 * 24));
+  var h = Math.floor((seconds % (3600 * 24)) / 3600);
+  var m = Math.floor((seconds % 3600) / 60);
   var s = Math.floor(seconds % 60);
 
-  var dDisplay = d > 0 ? d + (d == 1 ? " d " : " d ") : "";
-  var hDisplay = h > 0 ? h + (h == 1 ? " h " : " h ") : "";
-  var mDisplay = m > 0 ? m + (m == 1 ? " m " : " m ") : "";
-  var sDisplay = s > 0 ? s + (s == 1 ? " s" : " s") : "";
+  var dDisplay = d > 0 ? d + (d == 1 ? ' d ' : ' d ') : '';
+  var hDisplay = h > 0 ? h + (h == 1 ? ' h ' : ' h ') : '';
+  var mDisplay = m > 0 ? m + (m == 1 ? ' m ' : ' m ') : '';
+  var sDisplay = s > 0 ? s + (s == 1 ? ' s' : ' s') : '';
   return dDisplay + hDisplay + mDisplay + sDisplay;
 }
 
@@ -424,7 +425,6 @@ export const isIcyValkyriesCollection = (address) => {
 export const isCarkayousCollection = (address) => {
   return isCollection(address, 'carkayous');
 };
-
 
 export const percentage = (partialValue, totalValue) => {
   if (!totalValue || totalValue === 0) return 0;
@@ -592,11 +592,11 @@ export const getUserDisplayName = async (address) => {
   if (Array.isArray(cnsName)) cnsName = cnsName[0];
 
   return cnsName ?? shortAddress(address);
-}
+};
 
 export const isEmptyObj = (obj) => {
   return obj && Object.keys(obj).length === 0 && obj.constructor === Object;
-}
+};
 
 export const rankingsLogoForCollection = (collection) => {
   let logo = '/img/logos/ebisu-technicolor.svg';
@@ -606,7 +606,7 @@ export const rankingsLogoForCollection = (collection) => {
   else if (collection.metadata.rankings?.source === 'provided') logo = collection.metadata.avatar;
 
   return hostedImage(logo, true);
-}
+};
 export const rankingsTitleForCollection = (collection) => {
   let title = `Ranking provided by Ebisu's Bay`;
   if (!collection) return title;
@@ -615,13 +615,31 @@ export const rankingsTitleForCollection = (collection) => {
   else if (collection.metadata.rankings?.source === 'provided') title = `Ranking provided by ${collection.name}`;
 
   return title;
-}
+};
 export const rankingsLinkForCollection = (collection, id) => {
   let link = null;
   if (!collection) return link;
 
-  if (collection.metadata.rankings?.source === 'rarity_sniper') link = `https://raritysniper.com/${collection.metadata.rankings.slug}/${id}`;
-  else if (collection.metadata.rankings?.source === 'provided' && collection.metadata.website) link = collection.metadata.website;
+  if (collection.metadata.rankings?.source === 'rarity_sniper')
+    link = `https://raritysniper.com/${collection.metadata.rankings.slug}/${id}`;
+  else if (collection.metadata.rankings?.source === 'provided' && collection.metadata.website)
+    link = collection.metadata.website;
 
   return link;
-}
+};
+
+export const fetcher =
+  (library, abi) =>
+  (...args) => {
+    const [arg1, arg2, ...params] = args;
+    // it's a contract
+    if (utils.isAddress(arg1)) {
+      const address = arg1;
+      const method = arg2;
+      const contract = new ethers.Contract(address, abi, library.getSigner());
+      return contract[method](...params);
+    }
+    // it's a eth call
+    const method = arg1;
+    return library[method](arg2, ...params);
+  };

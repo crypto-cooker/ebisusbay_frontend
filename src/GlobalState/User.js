@@ -34,8 +34,8 @@ import { getAllOffers } from '../core/subgraph';
 import { offerState } from '../core/api/enums';
 import { CNS, TextRecords } from '@cnsdomains/core';
 import { txExtras } from '../core/constants';
-import {appConfig} from "../Config";
-import {MarketFilterCollection} from "../Components/Models/market-filters.model";
+import { appConfig } from '../Config';
+import { MarketFilterCollection } from '../Components/Models/market-filters.model';
 
 const config = appConfig();
 
@@ -302,6 +302,7 @@ const userSlice = createSlice({
       }
       state.web3modal = null;
       state.provider = null;
+      state.library = null;
       localStorage.clear();
       state.address = '';
       state.balance = null;
@@ -454,7 +455,7 @@ export const connectAccount =
     const web3Modal = new Web3Modal({
       cacheProvider: true, // optional
       providerOptions, // required
-      theme: state.user.theme
+      theme: state.user.theme,
     });
 
     const web3provider = await web3Modal
@@ -577,7 +578,6 @@ export const connectAccount =
           console.log('Error checking CRO balance', error);
         }
       }
-
       await dispatch(
         accountChanged({
           address: address,
