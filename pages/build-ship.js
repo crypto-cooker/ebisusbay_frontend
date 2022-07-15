@@ -82,12 +82,17 @@ const Drop = () => {
   };
 
   useEffect(() => {
-    init();
-  }, [init, user]);
+    async function func() {
+      await init();
+    }
+    if (user.provider && !isLoading) {
+      func();
+    }
+  }, [user.provider]);
 
   const mint = async (address, quantity) => {
     if (!shipContract) return;
-    console.log('minting...', quantity, address);
+
     let extra = {
       gasPrice: ethers.utils.parseUnits('5000', 'gwei'),
     };
@@ -221,7 +226,7 @@ const GreyscaleImg = styled.img`
   filter: grayscale(100%);
 `;
 
-const ShipBuilderCard = ({ type, shipAddress, key, mintCallback, quantityCollected }) => {
+const ShipBuilderCard = ({ type, shipAddress, mintCallback, quantityCollected }) => {
   const [isMinting, setIsMinting] = useState(false);
   const [quantity, setQuantity] = useState(0);
 
