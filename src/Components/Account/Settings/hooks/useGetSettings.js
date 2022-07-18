@@ -1,4 +1,5 @@
 import { useCallback, useState, useLayoutEffect } from 'react';
+import {getProfile} from "@src/core/cms/endpoints/profile";
 
 export const useGetSettings = (account) => {
   const [response, setResponse] = useState({
@@ -7,8 +8,7 @@ export const useGetSettings = (account) => {
     response: null,
   });
 
-  const getProfileSettings = useCallback(
-    async (account) => {
+  const getProfileSettings = useCallback(async (account) => {
       setResponse({
         ...response,
         isLoading: true,
@@ -16,8 +16,7 @@ export const useGetSettings = (account) => {
 
       if (account) {
         try {
-          const response = await fetch(`http://localhost:5555/profile?` + new URLSearchParams({ account }));
-          const payload = await response.json();
+          const payload = await getProfile(account);
 
           setResponse({
             isLoading: false,

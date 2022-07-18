@@ -11,7 +11,7 @@ export const editProfileFormFields = [
     fields: [
       {
         type: FormType.field,
-        key: 'userName',
+        key: 'username',
         default: '',
         title: 'Username',
         isRequired: true,

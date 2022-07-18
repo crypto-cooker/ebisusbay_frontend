@@ -2,6 +2,7 @@ import { getAuthSignerInStorage } from '@src/helpers/storage';
 import { useState } from 'react';
 // import { appConfig } from '../../../../Config';
 import useCreateSigner from './useCreateSigner';
+import {createProfile} from "@src/core/cms/endpoints/profile";
 
 const useCreateSettings = () => {
   const [response, setResponse] = useState({
@@ -24,15 +25,10 @@ const useCreateSettings = () => {
       const { signature } = await getSigner();
       signatureInStorage = signature;
     }
+
     if (signatureInStorage) {
       try {
-        const fetchResponse = await fetch(
-          `http://localhost:4000/profile?` + new URLSearchParams({ signature: signatureInStorage, nonce }),
-          {
-            method: 'POST',
-            body: formData,
-          }
-        );
+        const fetchResponse = await createProfile(formData, signatureInStorage, nonce);
 
         setResponse({
           ...response,

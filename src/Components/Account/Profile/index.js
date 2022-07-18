@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { faDiscord, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
@@ -9,74 +9,117 @@ import Avatar from './Avatar';
 import useGetSettings from '../Settings/hooks/useGetSettings';
 
 import styles from './profile.module.scss';
+import {hostedImage} from "@src/helpers/image";
+import {caseInsensitiveCompare, isCronosVerseCollection, shortAddress} from "@src/utils";
+import Inventory from "@src/Components/Account/Profile/Inventory";
+import Collections from "@src/Components/Account/Profile/Collections";
+import Listings from "@src/Components/Account/Profile/Listings";
+import Offers from "@src/Components/Account/Profile/Offers";
+import Sales from "@src/Components/Account/Profile/Sales";
+import Favorites from "@src/Components/Account/Profile/Favorites";
 
-export default function Profile({ slug }) {
+const tabs = {
+  inventory: 'inventory',
+  collections: 'collections',
+  listings: 'listings',
+  offers: 'offers',
+  sales: 'sales',
+  favorites: 'favorites',
+};
+
+export default function Profile({ address, userData }) {
   const user = useSelector((state) => state.user);
-  const userData = useGetSettings(slug);
+  // const userData = useGetSettings(slug);
   const router = useRouter();
 
   const navigateTo = (route) => {
     router.push(route);
   };
 
-  const isMyProfile = (connectedAddress, profileAddress) => {
-    if (connectedAddress && profileAddress) return connectedAddress.toLowerCase() === profileAddress.toLowerCase();
-    return false;
-  };
+  const [currentTab, setCurrentTab] = React.useState(tabs.inventory);
+  const handleTabChange = useCallback((tab) => {
+    setCurrentTab(tab);
+  }, []);
 
+  // useEffect(() => {
+  //   if (userData && user?.address && !userData.isLoading && !userData.response) {
+  //     console.log('userdata?', userData);
+  //     router.push('/');
+  //   }
+  // }, [userData, user]);
+
+  const [isProfileOwner, setIsProfileOwner] = useState(false);
   useEffect(() => {
-    if (userData && user?.address && !userData.isLoading && !userData.response) {
-      router.push('/');
-    }
-  }, [userData, user]);
+    setIsProfileOwner(user && caseInsensitiveCompare(address, user.address));
+  }, [user])
 
   return (
-    <div className={styles.profile}>
+    <div>
       <img src="/img/background/header-dark.webp" alt="banner" className="banner" />
-      <div className={`${styles.userInfo} row`}>
-        <div className="col-lg-2">
-          <Avatar src="/img/avatar.jpg" />
-        </div>
-        <div className="col-lg-8">
-          <div className={styles.username}>{userData?.response?.cnsName}</div>
-          <div className={styles.bio}>{userData?.response?.bio}</div>
-          <div className={styles.socials}>
-            {userData?.response?.twitter && (
-              <div>
-                <a href={`https://twitter.com/${userData?.response?.twitter}`} target="_blank" rel="noreferrer">
-                  <LayeredIcon icon={faTwitter} bgIcon={faSquare} shrink={7} />
-                </a>
-              </div>
-            )}
-            {userData?.response?.instagram && (
-              <div>
-                <a href={`https://www.instagram.com/${userData?.response?.instagram}`} target="_blank" rel="noreferrer">
-                  <LayeredIcon icon={faInstagram} bgIcon={faSquare} shrink={7} />
-                </a>
-              </div>
-            )}
-            {userData?.response?.discord && (
-              <div>
-                <a href={`https://discord.gg/${userData?.response?.discord}`} target="_blank" rel="noreferrer">
-                  <LayeredIcon icon={faDiscord} bgIcon={faSquare} shrink={8} />
-                </a>
-              </div>
-            )}
-            {userData?.response?.website && (
-              <div>
-                <a href={`${userData?.response?.website}`} target="_blank" rel="noreferrer">
-                  <LayeredIcon icon={faGlobe} bgIcon={faSquare} shrink={8} />
-                </a>
+      <section className="container pt-4">
+        <div className="row">
+          <div className="d-flex">
+            <div className="">
+              <Avatar src={hostedImage('/img/avatar.jpg')} />
+            </div>
+            <div className="flex-grow-1">
+              <h2>{userData?.response?.cnsName ?? shortAddress(address)}</h2>
+            </div>
+            {isProfileOwner && (
+              <div className="d-flex flex-column bd-highlight mb-3">
+                <Button onClick={() => navigateTo('/account/settings/profile')}>Profile Settings</Button>
+                <Button styleType="default-outlined" className="mt-2 w-auto">More Options</Button>
               </div>
             )}
           </div>
         </div>
-        {isMyProfile(user?.address, userData?.response?.walletAddress) && (
-          <div className="col-lg-2">
-            <Button onClick={() => navigateTo('/account/settings/profile')}>Profile Settings</Button>
+        <div className="row mt-4">
+          <div className="de_tab">
+            <ul className="de_nav mb-2 text-start">
+              <li className={`tab ${currentTab === tabs.inventory ? 'active' : ''}`}>
+                <span onClick={() => handleTabChange(tabs.inventory)}>Inventory</span>
+              </li>
+              <li className={`tab ${currentTab === tabs.collections ? 'active' : ''}`}>
+                <span onClick={() => handleTabChange(tabs.collections)}>Collections</span>
+              </li>
+              <li className={`tab ${currentTab === tabs.listings ? 'active' : ''}`}>
+                <span onClick={() => handleTabChange(tabs.listings)}>Listings</span>
+              </li>
+              <li className={`tab ${currentTab === tabs.offers ? 'active' : ''}`}>
+                <span onClick={() => handleTabChange(tabs.offers)}>Offers</span>
+              </li>
+              <li className={`tab ${currentTab === tabs.sales ? 'active' : ''}`}>
+                <span onClick={() => handleTabChange(tabs.sales)}>Sales</span>
+              </li>
+              {isProfileOwner && (
+                <li className={`tab ${currentTab === tabs.favorites ? 'active' : ''}`}>
+                  <span onClick={() => handleTabChange(tabs.favorites)}>Favorites</span>
+                </li>
+              )}
+            </ul>
+            <div className="de_tab_content">
+              {currentTab === tabs.inventory && (
+                <Inventory address={address} />
+              )}
+              {currentTab === tabs.collections && (
+                <Collections address={address} />
+              )}
+              {currentTab === tabs.listings && (
+                <Listings address={address} />
+              )}
+              {currentTab === tabs.offers && (
+                <Offers address={address} />
+              )}
+              {currentTab === tabs.sales && (
+                <Sales address={address} />
+              )}
+              {currentTab === tabs.favorites && isProfileOwner && (
+                <Favorites address={address} />
+              )}
+            </div>
           </div>
-        )}
-      </div>
+        </div>
+      </section>
     </div>
   );
 }

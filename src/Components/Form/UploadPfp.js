@@ -41,7 +41,7 @@ const UploadPfp = ({
 
   return (
     <Form.Group className={`form-field mb-3 ${error ? 'field-message-error' : ''}`}>
-      <div className="upload-container">
+      <div className="upload-container overflow-auto">
         {[...Array(numberOfAssets).keys()].map((_, i) => {
           const asset = value.find(({ position }) => position === i);
 

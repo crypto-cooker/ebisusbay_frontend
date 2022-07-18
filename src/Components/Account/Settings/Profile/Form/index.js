@@ -26,7 +26,7 @@ export default function Form({
           props.key = `${type}-${fieldKey}`;
           props.value = values[subFormKey]?.[fieldKey];
 
-          props.error = touched[subFormKey]?.[fieldKey] ? errors[subFormKey]?.[fieldKey] : undefined;
+          props.error = errors[subFormKey]?.[fieldKey] ? errors[subFormKey]?.[fieldKey] : undefined;
 
           if (props.inputType) props.type = props.inputType;
 

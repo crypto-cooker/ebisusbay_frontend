@@ -24,7 +24,7 @@ export const configData = {
       app: 'https://app.ebisusbay.com/',
       cdn: 'https://cdn.ebisusbay.com/',
       subgraph: 'https://graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
-      cmsApi: 'https://cms.ebisusbay.biz/',
+      cms: 'http://localhost:4000/api/',
     },
     rpc: {
       read: 'https://gateway.nebkas.ro/',
@@ -66,7 +66,7 @@ export const configData = {
       app: 'https://app.ebisusbay.biz/',
       cdn: 'https://cdn.ebisusbay.biz/',
       subgraph: 'https://graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
-      cmsApi: 'https://cms.ebisusbay.biz/',
+      cms: 'https://cms.ebisusbay.biz/',
     },
     rpc: {
       read: 'https://gateway.nebkas.ro/',
@@ -108,7 +108,7 @@ export const configData = {
       app: 'https://testapp.ebisusbay.biz/',
       cdn: 'https://cdn.ebisusbay.biz/',
       subgraph: 'https://testgraph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
-      cmsApi: 'https://cms.ebisusbay.biz/',
+      cms: 'https://cms.ebisusbay.biz/',
     },
     rpc: {
       read: 'https://rpc.ebisusbay.biz/',

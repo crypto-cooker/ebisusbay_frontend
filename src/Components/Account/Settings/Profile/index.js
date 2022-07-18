@@ -48,7 +48,7 @@ export default function EditProfile() {
   const userInfoValidation = Yup.object().shape({
     userInfo: Yup.object()
       .shape({
-        userName: Yup.string()
+        username: Yup.string()
           .required(Messages.errors.required)
           .max(40, getDynamicMessage(Messages.errors.charactersMaxLimit, ['40'])),
         cnsName: Yup.string()
@@ -148,8 +148,9 @@ export default function EditProfile() {
   });
 
   useEffect(() => {
+    console.log('val', values, errors);
     setMergedValues(values);
-  }, [values]);
+  }, [values, errors]);
 
   return (
     <>

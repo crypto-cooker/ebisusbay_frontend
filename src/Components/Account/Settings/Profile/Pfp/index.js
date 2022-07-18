@@ -10,8 +10,8 @@ import { shortAddress } from '../../../../../utils';
 export default function Pfp({ values, errors, touched, handleChange, setFieldValue, setFieldTouched, handleBlur }) {
   const user = useSelector((state) => state.user);
   const getUserName = (address) => {
-    if (values?.userInfo?.userName) {
-      return values?.userInfo?.userName;
+    if (values?.userInfo?.username) {
+      return values?.userInfo?.username;
     }
     if (address) {
       return shortAddress(address);
@@ -20,7 +20,7 @@ export default function Pfp({ values, errors, touched, handleChange, setFieldVal
 
   const handleCopy = (code) => () => {
     navigator.clipboard.writeText(code);
-    toast.success(values?.userInfo?.userName ? 'Username copied!' : 'Address copied!');
+    toast.success(values?.userInfo?.username ? 'Username copied!' : 'Address copied!');
   };
 
   return (

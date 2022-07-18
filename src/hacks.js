@@ -1,6 +1,6 @@
 import {hostedImage} from "./helpers/image";
 import { caseInsensitiveCompare } from './utils';
-import { imageDomains } from './config';
+import { imageDomains } from './Config';
 
 export function isCroSkullRedPotion(address) {
   return caseInsensitiveCompare(address, '0x508378E99F5527Acb6eB4f0fc22f954c5783e5F9');
