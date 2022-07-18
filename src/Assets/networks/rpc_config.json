@@ -3467,7 +3467,7 @@
       "multiToken": false,
       "address": "0xFe5CB04443D953B8888bAea08A407C38522c3b21",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": false,
@@ -5605,12 +5605,12 @@
       }
     },
     {
-      "name": "Dr. Dao",
+      "name": "Dr Dao",
       "slug": "dr-dao",
       "multiToken": false,
       "address": "0x28238122BECBE1D727F2D23631eD83d6cbe833Bc",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "\"Dr Dao achieved the impossible and found a window into parallel worlds, where with his parallel Dao Doctors, together they create the Dao Club\"  Dr Dao is a collection of 297 unique hand-drawn NFTs on Cronos Network Blockchains. The essence of \"Dao\" comes from two concepts related to the philosophy of the Dr Dao Club: DAO as a Decentralized Autonomous Organization and \"Dao\" as a term from East Asian philosophy, which represents the natural order of the universe, that unites all the individual elements into a single whole.  Dr Dao is not just art, to be owner of a Dr Dao’s NFT means to have access to: - Dr Dao Club - Incubator - Staking - Royalties sharing (50% every week) - Monthly lottery and \"Labottery\"  Hey doctors! Let’s team up!  The future is now. The future is Dao.",
         "verified": false,
@@ -6234,6 +6234,102 @@
         "twitter": "https://twitter.com/CroskullNFT",
         "discord": "https://discord.gg/croskull",
         "medium": "https://medium.com/@croskullnft"
+      }
+    },
+    {
+      "name": "Cro County Crooks",
+      "slug": "cro-county-crooks",
+      "multiToken": false,
+      "address": "0x230Bb7ce185CD0042973202f5F38B7072440e2C9",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A collection of 1111 NFTs living on the Cronos Blockchain with real utility and value to bring into the ecosystem. Utility Includes: NFT Staking, Farming, NFT Marketplace for New Artists, Regular Airdrops for Holders, Cronos NFT Dapp, CAAC Consortium(DAO), Burning Mechanism & Much More!",
+        "verified": false,
+        "avatar": "/img/collections/cro-county-crooks/avatar.png",
+        "card": "/img/collections/cro-county-crooks/card.png",
+        "banner": "/img/collections/cro-county-crooks/banner.png",
+        "maxSupply": 1111,
+        "website": "https://crooksofcronos.xyz/",
+        "twitter": "https://twitter.com/CrooksofCronos",
+        "discord": "https://discord.gg/rDVGWqdFKf"
+      }
+    },
+    {
+      "name": "Cronos Tiger",
+      "slug": "cronos-tiger",
+      "multiToken": false,
+      "address": "0x5526e68318E29A4bea0c493d69389B9592975938",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome to the Cronos Tiger ecosystem. The plan is simple: launch the founder collection and use 100% mint founds for the next collection. Each holder will be able to mint two tiger gen 2 for free. At 50% of mint we start the ico of our coin and about 1 week later it will be available in beta test our game for all holders.",
+        "verified": false,
+        "avatar": "/img/collections/cronos-tiger/avatar.png",
+        "card": "/img/collections/cronos-tiger/card.jpg",
+        "banner": "/img/collections/cronos-tiger/banner.jpeg",
+        "maxSupply": 100,
+        "twitter": "https://twitter.com/cronos_tiger",
+        "discord": "https://discord.gg/aeW9FAJgj9"
+      }
+    },
+    {
+      "name": "Sleazy Weasel",
+      "slug": "sleazy-weasel",
+      "multiToken": false,
+      "address": "0x07BEa69887Ce393F91b3D5697bADB53b92367C71",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Sleazy Weasel NFT is a collection of Sleazy Weasel with a supply of of 10000 including 2000 Rare and Legendary Sleazy Weasel unique NFTs — the unique digital collectibles living on the Cronos blockchain. Your Sleazy Weasel as your membership card grants access to holders only-benefits, the first of which is access to the staking pool and future utilities and more can be unlocked by the community through activity and decisions.",
+        "verified": false,
+        "avatar": "/img/collections/sleazy-weasel/avatar.png",
+        "card": "/img/collections/sleazy-weasel/card.png",
+        "banner": "/img/collections/sleazy-weasel/banner.png",
+        "maxSupply": 10000,
+        "website": "https://www.sleazyweasel.xyz/",
+        "twitter": "https://twitter.com/sleazy_weasel",
+        "discord": "https://discord.gg/sleazyweasenft"
+      }
+    },
+    {
+      "name": "Project X Access Pass",
+      "slug": "project-x-access-pass",
+      "multiToken": true,
+      "address": "0x8ac06d8CF5B371bf57723C050C1969f0f23Dbf98",
+      "onChain": false,
+      "listable": false,
+      "tokens": [
+        { "id": 1 }
+      ],
+      "metadata": {
+        "verified": true,
+        "avatar": "/img/collections/project-x-access-pass/avatar.png",
+        "card": "/img/collections/project-x-access-pass/card.png",
+        "banner": "/img/collections/project-x-access-pass/banner.png",
+        "maxSupply": 3000,
+        "website": "https://www.argofinance.money/",
+        "twitter": "https://twitter.com/ArgoProtocol",
+        "discord": "https://discord.gg/argofinance"
+      }
+    },
+    {
+      "name": "CheeseCake Slices",
+      "slug": "cheesecake-slices",
+      "multiToken": false,
+      "address": "0xbB6CC5e52CDB5ABC63d6e1054a8022EBE7Cd88FE",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A collection of 3000 slices of CheeseCakes! Where we aim for everyone to get a slice of the cake.",
+        "verified": false,
+        "avatar": "/img/collections/cheesecake-slices/avatar.png",
+        "card": "/img/collections/cheesecake-slices/card.png",
+        "banner": "/img/collections/cheesecake-slices/banner.png",
+        "maxSupply": 3000,
+        "website": "https://cheesecakeslices.com/",
+        "twitter": "https://twitter.com/CheesecakeSlic3",
+        "discord": "https://discord.gg/4gJM7JfrVr"
       }
     }
   ],
@@ -7491,7 +7587,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false
+      "complete": true
     },
     {
       "id": 46,
@@ -7570,7 +7666,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": false,
       "video": "https://vz-04b9a6bb-09d.b-cdn.net/72f28eef-3661-4a78-9816-3683dad31cc0/playlist.m3u8"
     },
@@ -8136,7 +8232,7 @@
       "is1155": false,
       "published": true,
       "complete": false,
-      "featured": true,
+      "featured": false,
       "disclaimer": "**Assets and characters from other Ghetto-Doves™ collections do not apply in the 7 character collection."
     },
     {
@@ -8430,7 +8526,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "priceDescription": "Presale for Whitelist and Founding Members for the first 24 hours (limit 6 per address). Public sale after presale ends."
     },
     {
@@ -8616,7 +8712,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "featured": false,
       "redirect": "https://lootpad.io/collection/ballin"

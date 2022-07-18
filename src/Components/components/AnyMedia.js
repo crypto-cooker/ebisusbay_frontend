@@ -30,75 +30,51 @@ export const AnyMedia = ({ image, video, title, url, newTab, usePlaceholder = fa
   }, []);
 
   const determineMediaType = () => {
-    if(!image) {
+    if(!image || image.startsWith('data')) {
       setDynamicType(mediaTypes.image);
       return;
     }
 
-    //prefer mp4 over gif 
-    const imageURL = new URL(image);
-    if(imageURL.pathname && imageURL.pathname.endsWith('.gif')){
-      setTransformedImage(ImageKitService.gifToMp4(imageURL).toString());
-      setVideoThumbNail(null);
-      setDynamicType(mediaTypes.video);
-    } else if(imageURL.pathname && imageURL.pathname.endsWith('.html')){
-      setDynamicType(mediaTypes.iframe);
-    } else {
-      const xhr = new XMLHttpRequest();
-      xhr.open('HEAD', transformedImage, true);
-  
-      xhr.onload = function () {
-        const contentType = xhr.getResponseHeader('Content-Type');
-        const [mediaType, format] = contentType.split('/');
-        let type = mediaTypes[mediaType] ?? mediaTypes.image;
-        if(type === mediaTypes.video){
-          setVideoThumbNail(makeThumb(transformedImage));
-        }
-        if(format === 'gif'){
-          setTransformedImage(ImageKitService.gifToMp4(imageURL).toString());
-          setVideoThumbNail(null);
-          setDynamicType(mediaTypes.video);
-        } else {
-          setDynamicType(type);
-        }
-      };
-  
-      xhr.send();
+    const knownImageTypes = ['.png', '.jpg', '.jpeg', 'webp'];
+
+    try {
+      const imageURL = new URL(image);
+      //prefer mp4 over gif
+      if(imageURL.pathname && imageURL.pathname.endsWith('.gif')){
+        setTransformedImage(ImageKitService.gifToMp4(imageURL).toString());
+        setVideoThumbNail(null);
+        setDynamicType(mediaTypes.video);
+      } else if(imageURL.pathname && imageURL.pathname.endsWith('.html')){
+        setDynamicType(mediaTypes.iframe);
+      } else if (imageURL.pathname && knownImageTypes.some((o) => imageURL.pathname.endsWith(o))) {
+        setDynamicType(mediaTypes.image);
+      } else {
+        const xhr = new XMLHttpRequest();
+        xhr.open('HEAD', transformedImage, true);
+
+        xhr.onload = function () {
+          const contentType = xhr.getResponseHeader('Content-Type');
+          const [mediaType, format] = contentType.split('/');
+          let type = mediaTypes[mediaType] ?? mediaTypes.image;
+          if(type === mediaTypes.video){
+            setVideoThumbNail(makeThumb(transformedImage));
+          }
+          if(format === 'gif'){
+            setTransformedImage(ImageKitService.gifToMp4(imageURL).toString());
+            setVideoThumbNail(null);
+            setDynamicType(mediaTypes.video);
+          } else {
+            setDynamicType(type);
+          }
+        };
+
+        xhr.send();
+      }
+    } catch (e) {
+      console.log('Unable to determine media type', e, image)
+      setDynamicType(mediaTypes.image);
     }
 
-  };
-
-  const ImageComponent = () => {
-    return (
-      <Image
-        image={transformedImage}
-        title={title}
-        className={className}
-        blur={blurImageUrl(transformedImage)}
-        sizes={sizes}
-        layout={layout}
-        width={width}
-        height={height}
-      />
-    )
-  };
-
-  const AnyMediaWithoutVideo = () => {
-    return (
-      <AnyMedia
-        image={transformedImage}
-        title={title}
-        url={url}
-        newTab={newTab}
-        usePlaceholder={usePlaceholder}
-        videoProps={videoProps}
-        className={className}
-        layout={layout}
-        width={width}
-        height={height}
-        sizes={sizes}
-      />
-    )
   };
 
   return (
@@ -115,18 +91,50 @@ export const AnyMedia = ({ image, video, title, url, newTab, usePlaceholder = fa
               autoPlay={videoProps?.autoPlay}
               controls={videoProps?.controls}
               className={className}
-              fallbackComponent={<AnyMediaWithoutVideo />}
+              fallbackComponent={
+                <AnyMedia
+                  image={transformedImage}
+                  title={title}
+                  url={url}
+                  newTab={newTab}
+                  usePlaceholder={usePlaceholder}
+                  videoProps={videoProps}
+                  className={className}
+                  layout={layout}
+                  width={width}
+                  height={height}
+                  sizes={sizes}
+                />
+              }
             />
           ) : dynamicType === mediaTypes.iframe ? (
             <IFrame url={image} />
           ) : url ? (
             <Link href={url} target={newTab ? '_blank' : '_self'}>
               <a>
-                <ImageComponent />
+                <Image
+                  image={transformedImage}
+                  title={title}
+                  className={className}
+                  blur={blurImageUrl(transformedImage)}
+                  sizes={sizes}
+                  layout={layout}
+                  width={width}
+                  height={height}
+                />
               </a>
             </Link>
           ) : (
-            <ImageComponent />
+            <Image
+              image={transformedImage}
+              title={title}
+              className={className}
+              blur={blurImageUrl(transformedImage)}
+              sizes={sizes}
+              layout={layout}
+              width={width}
+              height={height}
+            />
           )}
         </>
       )}
