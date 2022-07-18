@@ -301,15 +301,13 @@ const userSlice = createSlice({
         state.web3modal.clearCachedProvider();
       }
       state.web3modal = null;
-      state.provider = null;
-      state.library = null;
       localStorage.clear();
       state.address = '';
       state.balance = null;
       state.rewards = null;
       state.marketBalance = null;
       state.stakingRewards = null;
-      state.isMember = false;
+      state.isMember = fals10011e;
       state.vipCount = 0;
       state.stakeCount = 0;
       state.fetchingNfts = false;
