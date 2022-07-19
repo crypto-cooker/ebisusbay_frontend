@@ -52,9 +52,10 @@ export default function Inventory({ address }) {
       }
     }
 
-    if (user.provider) {
+    if (!loading) {
       fetchNfts();
     }
+    
     // eslint-disable-next-line
   }, [page, user.provider]);
 
