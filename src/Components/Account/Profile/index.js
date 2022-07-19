@@ -75,7 +75,7 @@ export default function Profile({ address, userData }) {
         </div>
         <div className="row mt-4">
           <div className="de_tab">
-            <ul className="de_nav mb-2 text-start">
+            <ul className="de_nav mb-4 text-start">
               <li className={`tab ${currentTab === tabs.inventory ? 'active' : ''}`}>
                 <span onClick={() => handleTabChange(tabs.inventory)}>Inventory</span>
               </li>
