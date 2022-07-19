@@ -1,7 +1,7 @@
 import rpcConfig from '../Assets/networks/rpc_config.json';
 import rpcConfigDev from '../Assets/networks/rpc_config_dev.json';
 import rpcConfigTestnet from '../Assets/networks/rpc_config_testnet.json';
-
+import _ from 'lodash';
 import Constants from '../constants';
 const { Features } = Constants;
 
@@ -24,7 +24,7 @@ export const configData = {
       app: 'https://app.ebisusbay.com/',
       cdn: 'https://cdn.ebisusbay.com/',
       subgraph: 'https://graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
-      cms: 'http://localhost:4000/api/',
+      cms: 'https://cms.ebisusbay.com/api/',
     },
     rpc: {
       read: 'https://gateway.nebkas.ro/',
@@ -66,7 +66,7 @@ export const configData = {
       app: 'https://app.ebisusbay.biz/',
       cdn: 'https://cdn.ebisusbay.biz/',
       subgraph: 'https://graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
-      cms: 'https://cms.ebisusbay.biz/',
+      cms: 'https://cms.ebisusbay.biz/api/',
     },
     rpc: {
       read: 'https://gateway.nebkas.ro/',
@@ -108,7 +108,7 @@ export const configData = {
       app: 'https://testapp.ebisusbay.biz/',
       cdn: 'https://cdn.ebisusbay.biz/',
       subgraph: 'https://testgraph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
-      cms: 'https://cms.ebisusbay.biz/',
+      cms: 'https://cms.ebisusbay.biz/api/',
     },
     rpc: {
       read: 'https://rpc.ebisusbay.biz/',
@@ -139,6 +139,11 @@ export const configData = {
     drops: rpcConfigTestnet.drops,
     auctions: rpcConfigTestnet.auctions,
   },
+  [environments.local]: {
+    urls: {
+      cms: 'http://localhost:4000/api/',
+    },
+  }
 };
 
 export const imageDomains = [
@@ -158,17 +163,25 @@ export const imageDomains = [
 /**
  * Retrieve a config value using "dot" notation.
  * Passing no key will return the entire config.
+ * Note that the local env config falls back to production config for any fields not present
  *
  * @param key
  * @returns {null|*}
  */
 export const appConfig = (key) => {
-  const env = isLocalEnv() ? environments.production : environments[currentEnv()];
-  if (!key) return env ? configData[env] : configData[environments.development];
+  const env = environments[currentEnv()];
+  const fallbackEnv = environments.development;
+  if (!env) return configData[fallbackEnv];
+
+  const config = isLocalEnv() ?
+    _.merge(configData[environments.production], configData[environments.local]) :
+    configData[env];
+
+  if (!key) return config;
 
   const keys = key.split('.');
 
-  return keys.reduce((o, i) => o[i], env ? configData[env] : configData[environments.development]);
+  return keys.reduce((o, i) => o[i], env ? config : configData[fallbackEnv]);
 }
 
 export const currentEnv = () => {
