@@ -3467,7 +3467,7 @@
       "multiToken": false,
       "address": "0xFe5CB04443D953B8888bAea08A407C38522c3b21",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": false,
@@ -5605,12 +5605,12 @@
       }
     },
     {
-      "name": "Dr. Dao",
+      "name": "Dr Dao",
       "slug": "dr-dao",
       "multiToken": false,
       "address": "0x28238122BECBE1D727F2D23631eD83d6cbe833Bc",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "\"Dr Dao achieved the impossible and found a window into parallel worlds, where with his parallel Dao Doctors, together they create the Dao Club\"  Dr Dao is a collection of 297 unique hand-drawn NFTs on Cronos Network Blockchains. The essence of \"Dao\" comes from two concepts related to the philosophy of the Dr Dao Club: DAO as a Decentralized Autonomous Organization and \"Dao\" as a term from East Asian philosophy, which represents the natural order of the universe, that unites all the individual elements into a single whole.  Dr Dao is not just art, to be owner of a Dr Dao’s NFT means to have access to: - Dr Dao Club - Incubator - Staking - Royalties sharing (50% every week) - Monthly lottery and \"Labottery\"  Hey doctors! Let’s team up!  The future is now. The future is Dao.",
         "verified": false,
@@ -6234,6 +6234,143 @@
         "twitter": "https://twitter.com/CroskullNFT",
         "discord": "https://discord.gg/croskull",
         "medium": "https://medium.com/@croskullnft"
+      }
+    },
+    {
+      "name": "Cro County Crooks",
+      "slug": "cro-county-crooks",
+      "multiToken": false,
+      "address": "0x230Bb7ce185CD0042973202f5F38B7072440e2C9",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A collection of 1111 NFTs living on the Cronos Blockchain with real utility and value to bring into the ecosystem. Utility Includes: NFT Staking, Farming, NFT Marketplace for New Artists, Regular Airdrops for Holders, Cronos NFT Dapp, CAAC Consortium(DAO), Burning Mechanism & Much More!",
+        "verified": false,
+        "avatar": "/img/collections/cro-county-crooks/avatar.png",
+        "card": "/img/collections/cro-county-crooks/card.png",
+        "banner": "/img/collections/cro-county-crooks/banner.png",
+        "maxSupply": 1111,
+        "website": "https://crooksofcronos.xyz/",
+        "twitter": "https://twitter.com/CrooksofCronos",
+        "discord": "https://discord.gg/rDVGWqdFKf"
+      }
+    },
+    {
+      "name": "Cronos Tiger",
+      "slug": "cronos-tiger",
+      "multiToken": false,
+      "address": "0x5526e68318E29A4bea0c493d69389B9592975938",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome to the Cronos Tiger ecosystem. The plan is simple: launch the founder collection and use 100% mint founds for the next collection. Each holder will be able to mint two tiger gen 2 for free. At 50% of mint we start the ico of our coin and about 1 week later it will be available in beta test our game for all holders.",
+        "verified": false,
+        "avatar": "/img/collections/cronos-tiger/avatar.png",
+        "card": "/img/collections/cronos-tiger/card.jpg",
+        "banner": "/img/collections/cronos-tiger/banner.jpeg",
+        "maxSupply": 100,
+        "twitter": "https://twitter.com/cronos_tiger",
+        "discord": "https://discord.gg/aeW9FAJgj9"
+      }
+    },
+    {
+      "name": "Sleazy Weasel",
+      "slug": "sleazy-weasel",
+      "multiToken": false,
+      "address": "0x07BEa69887Ce393F91b3D5697bADB53b92367C71",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Sleazy Weasel NFT is a collection of Sleazy Weasel with a supply of of 10000 including 2000 Rare and Legendary Sleazy Weasel unique NFTs — the unique digital collectibles living on the Cronos blockchain. Your Sleazy Weasel as your membership card grants access to holders only-benefits, the first of which is access to the staking pool and future utilities and more can be unlocked by the community through activity and decisions.",
+        "verified": false,
+        "avatar": "/img/collections/sleazy-weasel/avatar.png",
+        "card": "/img/collections/sleazy-weasel/card.png",
+        "banner": "/img/collections/sleazy-weasel/banner.png",
+        "maxSupply": 10000,
+        "website": "https://www.sleazyweasel.xyz/",
+        "twitter": "https://twitter.com/sleazy_weasel",
+        "discord": "https://discord.gg/sleazyweasenft"
+      }
+    },
+    {
+      "name": "Project X Access Pass",
+      "slug": "project-x-access-pass",
+      "multiToken": true,
+      "address": "0x8ac06d8CF5B371bf57723C050C1969f0f23Dbf98",
+      "onChain": false,
+      "listable": false,
+      "tokens": [
+        { "id": 1 }
+      ],
+      "metadata": {
+        "verified": true,
+        "avatar": "/img/collections/project-x-access-pass/avatar.png",
+        "card": "/img/collections/project-x-access-pass/card.png",
+        "banner": "/img/collections/project-x-access-pass/banner.png",
+        "maxSupply": 3000,
+        "website": "https://www.argofinance.money/",
+        "twitter": "https://twitter.com/ArgoProtocol",
+        "discord": "https://discord.gg/argofinance"
+      }
+    },
+    {
+      "name": "CheeseCake Slices",
+      "slug": "cheesecake-slices",
+      "multiToken": false,
+      "address": "0xbB6CC5e52CDB5ABC63d6e1054a8022EBE7Cd88FE",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A collection of 3000 slices of CheeseCakes! Where we aim for everyone to get a slice of the cake.",
+        "verified": false,
+        "avatar": "/img/collections/cheesecake-slices/avatar.png",
+        "card": "/img/collections/cheesecake-slices/card.png",
+        "banner": "/img/collections/cheesecake-slices/banner.png",
+        "maxSupply": 3000,
+        "website": "https://cheesecakeslices.com/",
+        "twitter": "https://twitter.com/CheesecakeSlic3",
+        "discord": "https://discord.gg/4gJM7JfrVr"
+      }
+    },
+    {
+      "name": "Apes Utopia",
+      "slug": "apes-utopia",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Apes embark on a journey through the Kingdom of Utopia to set foot on the world! Apes Utopia is a collection of 2,222 NFTs with over 200 features built on the Cronos blockchain. Apes Utopia NFTs provide access to various benefits in our ecosystem. Apes Utopia owners can participate in special events such as NFT sweepstakes, surprise sweepstakes, giveaways and much more. Remember, all Apes Utopia is special - but some are particularly special.",
+        "verified": true,
+        "avatar": "/img/collections/apes-utopia/avatar.gif",
+        "card": "/img/collections/apes-utopia/card.png",
+        "banner": "/img/collections/apes-utopia/banner.jpeg",
+        "maxSupply": 2222,
+        "website": "https://www.apesutopia.com/",
+        "twitter": "https://twitter.com/ApesUtopia",
+        "discord": "https://discord.gg/CBmUVWusQQ",
+        "medium": "https://medium.com/@apesutopia",
+        "telegram": "https://t.me/+AvEkD1pZfdEzZDgx"
+      }
+    },
+    {
+      "name": "DegenBrains",
+      "slug": "degen-brains",
+      "multiToken": false,
+      "address": "0xDa9d418C4B8Ac59A6eC92cDFDd514F75a0f44e18",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Purchasing a DegenBrains NFT will grant you exclusive access to a gamified Learn2Earn platform, private Discord channels with a growing community of degen-investors, and unique ways to earn passive income.",
+        "verified": false,
+        "avatar": "/img/collections/degen-brains/avatar.webp",
+        "card": "/img/collections/degen-brains/card.webp",
+        "banner": "/img/collections/degen-brains/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://degenbrains.com/",
+        "twitter": "https://twitter.com/degenbrains",
+        "discord": "https://discord.gg/degenbrainfinance",
+        "medium": "https://medium.com/@degenbrains"
       }
     }
   ],
@@ -7491,7 +7628,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false
+      "complete": true
     },
     {
       "id": 46,
@@ -7570,7 +7707,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": false,
       "video": "https://vz-04b9a6bb-09d.b-cdn.net/72f28eef-3661-4a78-9816-3683dad31cc0/playlist.m3u8"
     },
@@ -8136,7 +8273,7 @@
       "is1155": false,
       "published": true,
       "complete": false,
-      "featured": true,
+      "featured": false,
       "disclaimer": "**Assets and characters from other Ghetto-Doves™ collections do not apply in the 7 character collection."
     },
     {
@@ -8430,7 +8567,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "priceDescription": "Presale for Whitelist and Founding Members for the first 24 hours (limit 6 per address). Public sale after presale ends."
     },
     {
@@ -8616,7 +8753,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "featured": false,
       "redirect": "https://lootpad.io/collection/ballin"
@@ -8646,7 +8783,7 @@
       "memberCost": "379",
       "whitelistCost": "349",
       "foundersOnly": false,
-      "start": null,
+      "start": 1658606400000,
       "end": null,
       "referral": false,
       "is1155": false,
@@ -8683,6 +8820,39 @@
       "is1155": false,
       "published": true,
       "complete": true
+    },
+    {
+      "id": 88,
+      "slug": "apes-utopia",
+      "imgNft": "/img/drops/apes-utopia/drop.png",
+      "imgPreview": "/img/drops/apes-utopia/drop.png",
+      "imgAvatar": "/img/collections/apes-utopia/avatar.gif",
+      "imgBanner": "/img/collections/apes-utopia/banner.jpeg",
+      "title": "Apes Utopia",
+      "subtitle": "The Apes embark on a journey through the Kingdom of Utopia to set foot on the world! Apes Utopia is a collection of 2,222 NFTs with over 200 features built on the Cronos blockchain. Apes Utopia NFTs provide access to various benefits in our ecosystem. Apes Utopia owners can participate in special events such as NFT sweepstakes, surprise sweepstakes, giveaways and much more. Remember, all Apes Utopia is special - but some are particularly special.",
+      "description": "Welcome to ApesUtopia! Apes Utopia is a collection of 2,222 NFTs with over 200 features built on the Cronos blockchain. Our vision is to create a strong family-friendly brand with many benefits that can be enjoyed by everyone, especially our owners, in both the real and digital worlds.\nApes Utopia owners can access various benefits in our ecosystem.\n★ Owners can participate in special events such as NFT sweepstakes, surprise sweepstakes, giveaways and much more. There will be a weekly draw on Discord.\n\n★ In addition, our members with at least 10 ApesUtopia NFT will have special powers such as decision making and we will work to direct our project together.\n\n★Airdrop: Owners will receive a certain percentage of royalties every month.\n\n★ The BabyApesUtopia NFTs that ApesUtopia gave birth to in the world will be deposited in the wallets of the owners.\n\n★ Stake: Holders will start receiving $ATOPIA tokens in their wallets during their NFT holding period. With $ATOPIA token, they will have exclusive items in our store!\n\n★ Metaverse: Owners will enter the metaverse universe with a huge art gallery. We will also build plots to house ApesUtopia and its babies!",
+      "author": {
+        "name": "Apes Utopia",
+        "website": "https://www.apesutopia.com/",
+        "twitter": "https://twitter.com/ApesUtopia",
+        "discord": "https://discord.com/invite/CBmUVWusQQ",
+        "medium": "https://medium.com/@apesutopia",
+        "telegram": "https://t.me/+AvEkD1pZfdEzZDgx"
+      },
+      "address": "",
+      "maxMintPerTx": 20,
+      "maxMintPerAddress": 100,
+      "totalSupply": 2222,
+      "cost": "450",
+      "memberCost": "420",
+      "whitelistCost": "399",
+      "foundersOnly": false,
+      "start": 1658692800000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
     }
   ],
   "auctions": [
