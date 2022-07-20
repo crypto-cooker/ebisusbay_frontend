@@ -4,12 +4,12 @@ import Footer from '@src/Components/components/Footer';
 import {isAddress} from "@src/utils";
 import {getProfile} from "@src/core/cms/endpoints/profile";
 
-export default function Account({ address, user }) {
+export default function Account({ address, profile }) {
   const router = useRouter();
 
   return (
     <>
-      <Profile address={address} profile={user} />
+      <Profile address={address} profile={profile} />
       <Footer />
     </>
   );
@@ -26,10 +26,11 @@ export const getServerSideProps = async ({ params, query }) => {
       }
     }
   }
+
   return {
     props: {
-      user: user.response,
-      address: addressOrUsername
-    },
+      address: addressOrUsername,
+      profile: user?.response ?? {}
+    }
   };
 };
