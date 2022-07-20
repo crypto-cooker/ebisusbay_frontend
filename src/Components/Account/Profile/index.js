@@ -17,6 +17,7 @@ import Listings from "@src/Components/Account/Profile/Listings";
 import Offers from "@src/Components/Account/Profile/Offers";
 import Sales from "@src/Components/Account/Profile/Sales";
 import Favorites from "@src/Components/Account/Profile/Favorites";
+import SocialsBar from "@src/Components/Collection/SocialsBar";
 
 const tabs = {
   inventory: 'inventory',
@@ -27,7 +28,7 @@ const tabs = {
   favorites: 'favorites',
 };
 
-export default function Profile({ address, userData }) {
+export default function Profile({ address, profile }) {
   const user = useSelector((state) => state.user);
   const router = useRouter();
 
@@ -46,17 +47,22 @@ export default function Profile({ address, userData }) {
   }, [user])
 
   return (
-    <div>
+    <div className={styles.profile}>
       <img src="/img/background/header-dark.webp" alt="banner" className="banner" />
       <section className="container pt-4">
-        <div className="row">
+        <div className={`${styles.userInfo} row`}>
           <div className="d-sm-flex text-center text-sm-start">
             <div className="">
               <Avatar src={hostedImage('/img/avatar.jpg')} />
             </div>
             <div className="flex-grow-1 ms-sm-4 me-sm-4">
-              <h2>{userData?.response?.cnsName ?? shortAddress(address)}</h2>
+              <div className={styles.username}>{profile.cnsName ?? shortAddress(address)}</div>
+              <div className={styles.bio}>{profile.bio}</div>
+              <div className={`${styles.socials} text-center text-sm-start mb-2 mb-sm-0`}>
+                <SocialsBar socials={profile} />
+              </div>
             </div>
+
             {isProfileOwner && (
               <div className="d-flex flex-column bd-highlight mb-3">
                 <Button onClick={() => navigateTo('/account/settings/profile')} className="w-auto">Settings</Button>

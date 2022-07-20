@@ -579,7 +579,7 @@ const SingleDrop = () => {
                             </a>
                           </span>
                         ) : (
-                          <SocialsBar address={drop.address} collection={drop.author} showCopy={false} />
+                          <SocialsBar address={drop.address} socials={drop.author} showCopy={false} />
                         )}
                       </h4>
                     </div>

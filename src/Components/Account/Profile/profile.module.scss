@@ -1,26 +1,25 @@
-//.profile {
-//  .userInfo {
-//    align-items: center;
-//
-//    .username {
-//      font-size: 40px;
-//      line-height: 48px;
-//    }
-//
-//    .bio {
-//      width: 500px;
-//      overflow: hidden;
-//      text-overflow: ellipsis;
-//      display: -webkit-box;
-//      -webkit-line-clamp: 2;
-//      line-clamp: 2;
-//      -webkit-box-orient: vertical;
-//    }
-//  }
-//
-//  .socials {
-//    display: flex;
-//    align-items: center;
-//    margin: 4px -6px;
-//  }
-//}
+@import '../../../Assets/styles/vars';
+
+.profile {
+  .userInfo {
+    .username {
+      font-size: 40px;
+      line-height: 48px;
+    }
+
+    .bio {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      color: $textColor2;
+    }
+  }
+
+  .socials {
+    align-items: center;
+    margin: 4px -6px;
+  }
+}

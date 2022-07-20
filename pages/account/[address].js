@@ -9,7 +9,7 @@ export default function Account({ address, user }) {
 
   return (
     <>
-      <Profile address={address} userData={user} />
+      <Profile address={address} profile={user} />
       <Footer />
     </>
   );
@@ -28,7 +28,7 @@ export const getServerSideProps = async ({ params, query }) => {
   }
   return {
     props: {
-      user,
+      user: user.response,
       address: addressOrUsername
     },
   };

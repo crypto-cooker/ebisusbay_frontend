@@ -5,8 +5,8 @@ import LayeredIcon from '../components/LayeredIcon';
 import { toast } from 'react-toastify';
 import { isCrosmocraftsCollection, isCrosmocraftsPartsCollection } from '../../utils';
 
-const SocialsBar = ({ address, collection, showCopy = true }) => {
-  const { website, twitter, discord, telegram, instagram, medium, gitbook } = collection;
+const SocialsBar = ({ address, socials, showCopy = true }) => {
+  const { website, twitter, discord, telegram, instagram, medium, gitbook } = socials;
 
   const handleCopy = (code) => () => {
     navigator.clipboard.writeText(code);
