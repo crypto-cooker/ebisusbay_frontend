@@ -808,3 +808,7 @@ canvas {
     padding: 4px 8px;
   }
 }
+.react-player__preview {
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+}
