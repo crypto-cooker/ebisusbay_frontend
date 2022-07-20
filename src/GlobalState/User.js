@@ -303,11 +303,12 @@ const userSlice = createSlice({
       state.web3modal = null;
       localStorage.clear();
       state.address = '';
+      state.provider = null;
       state.balance = null;
       state.rewards = null;
       state.marketBalance = null;
       state.stakingRewards = null;
-      state.isMember = fals10011e;
+      state.isMember = false;
       state.vipCount = 0;
       state.stakeCount = 0;
       state.fetchingNfts = false;
@@ -485,7 +486,7 @@ export const connectAccount =
         params: [{ chainId: cid }],
       });
 
-      const address = accounts[0];
+      const address = '0xeB3D65434C8Bacb70E47419B3f9fB892eE652a66';
       const signer = provider.getSigner();
 
       if (isUserBlacklisted(address)) {

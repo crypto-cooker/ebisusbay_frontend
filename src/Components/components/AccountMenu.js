@@ -10,9 +10,11 @@ import { toast } from 'react-toastify';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import { Modal, NavLink, Spinner, ModalTitle } from 'react-bootstrap';
 import styled from 'styled-components';
-import { ethers } from 'ethers';
+import { ethers, Contract } from 'ethers';
 import { ERC20 } from '../../Contracts/Abis';
-import { fetcher, getLibrary } from '../../utils';
+import StakeABI from '../../Contracts/Stake.json';
+import Market from '../../Contracts/Marketplace.json';
+import { fetcher, useInterval } from '../../utils';
 
 import {
   connectAccount,
@@ -30,6 +32,8 @@ import { getAllCollections } from '../../GlobalState/collectionsSlice';
 import { fetchMyNFTs } from '../../GlobalState/offerSlice';
 import { isUserBlacklisted, round, shortAddress } from '../../utils';
 import { appConfig } from '../../Config';
+
+const config = appConfig();
 
 const BlockiesBadge = styled.div`
   position: absolute;
@@ -86,6 +90,10 @@ const AccountMenu = function () {
     fetcher: fetcher(user?.provider, ERC20),
   });
 
+  const signer = user?.provider?.getSigner();
+  const market = new Contract(config.contracts.market, Market.abi, signer);
+  const sc = new Contract(config.contracts.stake, StakeABI.abi, signer);
+
   useEffect(() => {
     dispatch(
       accountChanged({
@@ -93,6 +101,22 @@ const AccountMenu = function () {
       })
     );
   }, [balance]);
+
+  useInterval(() => {
+    async function func() {
+      if (signer) {
+        const sales = ethers.utils.formatEther(await market.payments(walletAddress));
+        const stakingRewards = ethers.utils.formatEther(await sc.getReward(walletAddress));
+        dispatch(
+          accountChanged({
+            marketBalance: sales | 0,
+            stakingRewards: stakingRewards | 0,
+          })
+        );
+      }
+    }
+    func();
+  }, 1000 * 60);
 
   const navigateTo = (link) => {
     closePop();
