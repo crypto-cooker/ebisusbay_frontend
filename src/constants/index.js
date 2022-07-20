@@ -1,7 +1,7 @@
 export default {
   Features: {
     AUCTION_OPTION_SALE: ' AUCTION_OPTION_SALE',
-    CMS_LISTING: 'cmsListing',
+    CMS_NOTIFICATIONS: 'CMS_NOTIFICATIONS',
   },
   Variables: {
     PARAM: '{PARAM}',

@@ -10,6 +10,8 @@ import AccountMenu from '../components/AccountMenu';
 import NotificationMenu from '../components/NotificationMenu';
 import InvalidListingWarning from '../components/InvalidListingWarning';
 import { setTheme } from '@src/GlobalState/User';
+import useFeatureFlag from "@src/hooks/useFeatureFlag";
+import Constants from "@src/constants";
 
 const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
 
@@ -40,6 +42,9 @@ const Header = function () {
   const [showMenu, setShowMenu] = useState(false);
   const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
   const [useMobileMenu, setUseMobileMenu] = useState(false);
+
+  const { Features } = Constants;
+  const isNotificationsEnabled = useFeatureFlag(Features.CMS_NOTIFICATIONS);
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
@@ -191,7 +196,9 @@ const Header = function () {
             </span>
           </div>
 
-          <NotificationMenu />
+          {isNotificationsEnabled && (
+            <NotificationMenu />
+          )}
           <AccountMenu />
           <InvalidListingWarning size={'2x'} />
         </div>

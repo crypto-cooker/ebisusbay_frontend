@@ -194,5 +194,5 @@ export const isLocalEnv = () => {
 
 export const featureFlags = {
   [Features.AUCTION_OPTION_SALE]: false,
-  [Features.CMS_LISTING]: false,
+  [Features.CMS_NOTIFICATIONS]: false,
 }

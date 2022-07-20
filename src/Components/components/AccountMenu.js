@@ -367,11 +367,11 @@ const AccountMenu = function () {
               <div className="d-line"></div>
               <ul className="de-submenu-profile">
                 <li>
-                  <span onClick={() => navigateTo(`/nfts`)}>
+                  <span onClick={() => navigateTo(`/account/${walletAddress}`)}>
                     <span>
-                      <FontAwesomeIcon icon={faImage} />
+                      <FontAwesomeIcon icon={faUser} />
                     </span>
-                    <span>My NFTs</span>
+                    <span>My Profile</span>
                   </span>
                 </li>
                 <li className="my-offers-menu-item">
@@ -404,14 +404,6 @@ const AccountMenu = function () {
               </ul>
               <div className="d-line"></div>
               <ul className="de-submenu-profile">
-                <li>
-                  <span onClick={() => navigateTo(`/account/${walletAddress}`)}>
-                    <span>
-                      <FontAwesomeIcon icon={faUser} />
-                    </span>
-                    <span>User Profile</span>
-                  </span>
-                </li>
                 <li>
                   <span onClick={logout}>
                     <span>
