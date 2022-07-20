@@ -9,7 +9,7 @@ import Avatar from './Avatar';
 import useGetSettings from '../Settings/hooks/useGetSettings';
 
 import styles from './profile.module.scss';
-import {hostedImage} from "@src/helpers/image";
+import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {caseInsensitiveCompare, shortAddress} from "@src/utils";
 import Inventory from "@src/Components/Account/Profile/Inventory";
 import Collections from "@src/Components/Account/Profile/Collections";
@@ -18,6 +18,7 @@ import Offers from "@src/Components/Account/Profile/Offers";
 import Sales from "@src/Components/Account/Profile/Sales";
 import Favorites from "@src/Components/Account/Profile/Favorites";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
+import PageHead from "@src/Components/Head/PageHead";
 
 const tabs = {
   inventory: 'inventory',
@@ -46,17 +47,41 @@ export default function Profile({ address, profile }) {
     setIsProfileOwner(user && caseInsensitiveCompare(address, user.address));
   }, [user])
 
+  const username = profile.username ?? profile.cnsName ?? shortAddress(address);
+  const profilePicture = profile.profilePicture ?? hostedImage('/img/avatar.jpg');
+
   return (
     <div className={styles.profile}>
-      <img src="/img/background/header-dark.webp" alt="banner" className="banner" />
+      <PageHead
+        title={username}
+        description={profile.bio}
+        image={profilePicture}
+        url={`/account/${address}`}
+      />
+      {profile.banner ? (
+        <section
+          id="profile_banner"
+          className="jumbotron breadcumb no-bg"
+          style={{
+            backgroundImage: `url(${ImageKitService.buildBannerUrl(profile.banner)})`,
+            backgroundPosition: '50% 50%',
+          }}
+        >
+          <div className="mainbreadcumb"></div>
+        </section>
+      ) : (
+        <section className="jumbotron breadcumb no-bg">
+          <div className="mainbreadcumb"></div>
+        </section>
+      )}
       <section className="container pt-4">
         <div className={`${styles.userInfo} row`}>
           <div className="d-sm-flex text-center text-sm-start">
             <div className="">
-              <Avatar src={hostedImage('/img/avatar.jpg')} />
+              <Avatar src={profilePicture} />
             </div>
             <div className="flex-grow-1 ms-sm-4 me-sm-4">
-              <div className={styles.username}>{profile.cnsName ?? shortAddress(address)}</div>
+              <div className={styles.username}>{username}</div>
               <div className={styles.bio}>{profile.bio}</div>
               <div className={`${styles.socials} text-center text-sm-start mb-2 mb-sm-0`}>
                 <SocialsBar socials={profile} />
