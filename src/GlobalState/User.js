@@ -148,6 +148,7 @@ const userSlice = createSlice({
 
     fetchingNfts(state, action) {
       state.fetchingNfts = true;
+      state.nftsFullyFetched = false;
       if (!action.payload?.persist) {
         state.nfts = [];
       }
@@ -312,6 +313,7 @@ const userSlice = createSlice({
       state.vipCount = 0;
       state.stakeCount = 0;
       state.fetchingNfts = false;
+      state.nftsFullyFetched = false;
       state.nftsInitialized = false;
       state.nfts = [];
       state.mySoldNftsFetching = false;
