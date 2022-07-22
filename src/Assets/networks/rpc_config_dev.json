@@ -6431,6 +6431,25 @@
         "telegram": "https://t.me/CroArmy_ETH",
         "medium": "https://croarmy.gitbook.io/croarmy/"
       }
+    },
+    {
+      "name": "ButtPunks V2",
+      "slug": "butt-punks-v2",
+      "multiToken": false,
+      "address": "0x9444ac0d3d7f02322634a1949888b4c88575c5e9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "ButtPunks V2 is a limited collection of 6969 vibrant and colorful NFT tokens living on the Cronos blockchain. Each token is created by combining up to 14 traits from a collection of over 300 assets with the exception of 56 hand-crafted extremely rare tokens sprinkled throughout the project!",
+        "verified": false,
+        "avatar": "/img/collections/butt-punks-v2/avatar.png",
+        "card": "/img/collections/butt-punks-v2/card.png",
+        "banner": "/img/collections/butt-punks-v2/banner.png",
+        "maxSupply": 6969,
+        "website": "https://buttpunks.com/",
+        "twitter": "https://twitter.com/buttpunks",
+        "discord": "https://discord.gg/cE2992eCyC"
+      }
     }
   ],
   "drops": [
