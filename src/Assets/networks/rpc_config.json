@@ -5972,7 +5972,7 @@
       "name": "Battle Ready Boyz",
       "slug": "battle-ready-boyz",
       "multiToken": false,
-      "address": "",
+      "address": "0x95c790bFA90De820376e4C6ad22af9C8C31Fb60D",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -6279,7 +6279,7 @@
       "name": "Apes Utopia",
       "slug": "apes-utopia",
       "multiToken": false,
-      "address": "",
+      "address": "0xCe55EDF574FbB862C34CacC05f8386e26641B195",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -8796,7 +8796,7 @@
         "discord": "https://discord.gg/q4FQ4ukffB",
         "medium": "https://medium.com/@battlereadyboyz/battle-ready-boyz-56a5eee494fa"
       },
-      "address": "",
+      "address": "0x95c790bFA90De820376e4C6ad22af9C8C31Fb60D",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 7777,
@@ -8860,7 +8860,7 @@
         "medium": "https://medium.com/@apesutopia",
         "telegram": "https://t.me/+AvEkD1pZfdEzZDgx"
       },
-      "address": "",
+      "address": "0xCe55EDF574FbB862C34CacC05f8386e26641B195",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 100,
       "totalSupply": 2222,
