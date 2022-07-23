@@ -715,6 +715,11 @@ export const fetchNfts =
 
     const walletAddress = state.user.address;
     const walletProvider = state.user.provider;
+    
+    const values = collectionAddress?.split('-') ?? '';
+    if (values.length > 1) {
+      collectionAddress = values[0];
+    }
 
     dispatch(fetchingNfts({ persist }));
     const response = await getNftsForAddress2(walletAddress, walletProvider, page, collectionAddress);
