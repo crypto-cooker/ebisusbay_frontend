@@ -19,12 +19,21 @@ export class MarketFilters {
    * @returns {*}
    */
   toQuery() {
+    let address = this.collection.value;
+    let token = this.tokenId;
+
+    const values = address?.split('-') ?? '';
+    if (values.length > 1) {
+      address = values[0];
+      token = values[1];
+    }
+
     const obj = {
-      address: this.collection.value,
+      address: address,
       seller: this.seller,
       search: this.search,
       limit: this.limit,
-      tokenId: this.tokenId,
+      tokenId: token,
     };
 
     return Object.fromEntries(Object.entries(obj).filter(([k, v]) => {
