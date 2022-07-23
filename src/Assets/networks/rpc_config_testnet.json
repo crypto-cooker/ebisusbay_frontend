@@ -1413,6 +1413,17 @@
         "medium": "https://medium.com/@apesutopia",
         "telegram": "https://t.me/+AvEkD1pZfdEzZDgx"
       }
+    },
+    {
+      "name": "TestNFT",
+      "slug": "test-nft",
+      "multiToken": false,
+      "address": "0x063E25D6B7B087c4f0FB875821e30f8cFdB6E33e",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "verified": false
+      }
     }
   ],
   "drops": [
