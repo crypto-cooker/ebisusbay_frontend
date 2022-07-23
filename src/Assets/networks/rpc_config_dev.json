@@ -1056,25 +1056,6 @@
       }
     },
     {
-      "name": "Cronos Lizards",
-      "slug": "cronos-lizards",
-      "multiToken": false,
-      "address": "0x89Ff2f804B6C029eeE739bCeE029453b05e94F43",
-      "onChain": false,
-      "listable": true,
-      "metadata": {
-        "description": "Cronos Lizards are a collection of 797 OG Lizards and 2203 Gen2 Lizards scaling the Cronos Jungle. Holding a Cronos Lizard gives you exclusive access to the LizzyDAO, Cronos' first NFT project DAO. With 100% royalty sharing and unique tokenomics to breed Baby Space Lizards, Cronos Lizards transcend the typical PFP project.",
-        "verified": false,
-        "avatar": "/img/collections/cronoslizards/avatar.png",
-        "card": "/img/collections/cronoslizards/card.png",
-        "banner": "/img/collections/cronoslizards/banner.png",
-        "maxSupply": 797,
-        "website": "https://cronoslizards.com/",
-        "twitter": "https://twitter.com/CronosLizards",
-        "discord": "https://discord.gg/7KQPm4SBFb"
-      }
-    },
-    {
       "name": "Cronos Primate Business",
       "slug": "cronos-primate-business",
       "multiToken": false,
@@ -2351,25 +2332,6 @@
         "website": "https://www.icysquidgame.com/",
         "twitter": "https://twitter.com/IcySquidGame",
         "telegram": "http://t.me/IcySquidGame"
-      }
-    },
-    {
-      "name": "Cronos Lizards Gen2",
-      "slug": "cronos-lizards-gen2",
-      "multiToken": false,
-      "address": "0xEe8d8048d84C567D73a7438E658Ae2C4807a6b7D",
-      "onChain": false,
-      "listable": true,
-      "metadata": {
-        "description": "Cronos Lizards are a collection of 797 OG Lizards and 2203 Gen2 Lizards scaling the Cronos Jungle. Holding a Cronos Lizard gives you exclusive access to the LizzyDAO, Cronos' first NFT project DAO. With 100% royalty sharing and unique tokenomics to breed Baby Space Lizards, Cronos Lizards transcend the typical PFP project.",
-        "verified": false,
-        "avatar": "/img/collections/cronoslizards/gen2/avatar.webp",
-        "card": "/img/collections/cronoslizards/gen2/card.webp",
-        "banner": "/img/collections/cronoslizards/gen2/banner.webp",
-        "maxSupply": 2203,
-        "website": "https://cronoslizards.com/",
-        "twitter": "https://twitter.com/CronosLizards",
-        "discord": "https://discord.gg/7KQPm4SBFb"
       }
     },
     {
@@ -5150,25 +5112,6 @@
         "discord": "https://discord.gg/B6kHvT2dnV",
         "medium": "https://medium.com/@cronexfinance",
         "telegram": "https://t.me/cronexfinance"
-      }
-    },
-    {
-      "name": "Baby Space Lizards",
-      "slug": "baby-space-lizards",
-      "multiToken": false,
-      "address": "0x248aE5E4790421485109A6C55058993721ca061d",
-      "onChain": false,
-      "listable": true,
-      "metadata": {
-        "description": "1500 Baby Space Lizards have hatched!",
-        "verified": false,
-        "avatar": "/img/collections/cronoslizards/baby-space-lizards/avatar.png",
-        "card": "/img/collections/cronoslizards/card.png",
-        "banner": "/img/collections/cronoslizards/banner.png",
-        "maxSupply": 1500,
-        "website": "https://cronoslizards.com/",
-        "twitter": "https://twitter.com/CronosLizards",
-        "discord": "https://discord.gg/BRDQhtDNsM"
       }
     },
     {
