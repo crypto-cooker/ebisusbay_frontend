@@ -4531,11 +4531,10 @@
       "metadata": {
         "description": "The purpose of the DAO is to accelerate the growth of Ebisu’s Bay platform and the entire Cronos ecosystem.",
         "verified": true,
-        "avatar": "/img/collections/hidden-fish/avatar.webp",
-        "card": "/img/collections/hidden-fish/card.webp",
-        "banner": "/img/collections/hidden-fish/banner.webp",
+        "avatar": "/img/collections/hidden-fish-fm-vip/avatar.webp",
+        "card": "/img/collections/hidden-fish-fm-vip/card.webp",
+        "banner": "/img/collections/hidden-fish-fm-vip/banner.webp",
         "maxSupply": 1000,
-        "website": "https://hidethefish.com",
         "twitter": "https://twitter.com/HiddenFishDAO",
         "medium": "https://blog.hidethefish.com"
       }
@@ -6392,6 +6391,24 @@
         "website": "https://buttpunks.com/",
         "twitter": "https://twitter.com/buttpunks",
         "discord": "https://discord.gg/cE2992eCyC"
+      }
+    },
+    {
+      "name": "Hidden Fish Founding Member",
+      "slug": "hidden-fish-fm",
+      "multiToken": false,
+      "address": "0xaa3cFC29BEaAdA4456B777Bfa7dcDfCBE0d122A9",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The purpose of the DAO is to accelerate the growth of Ebisu’s Bay platform and the entire Cronos ecosystem.",
+        "verified": true,
+        "avatar": "/img/collections/hidden-fish-fm/avatar.webp",
+        "card": "/img/collections/hidden-fish-fm/card.webp",
+        "banner": "/img/collections/hidden-fish-fm/banner.webp",
+        "maxSupply": 3300,
+        "twitter": "https://twitter.com/HiddenFishDAO",
+        "medium": "https://blog.hidethefish.com"
       }
     }
   ],
