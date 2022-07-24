@@ -51,8 +51,15 @@ const TopFilterBar = ({
       ...base,
       padding: 0,
     }),
+    singleValue: (base, state) => ({
+      ...base,
+      background: getTheme(userTheme).colors.bgColor2,
+      color: getTheme(userTheme).colors.textColor3
+    }),
     control: (base, state) => ({
       ...base,
+      background: getTheme(userTheme).colors.bgColor2,
+      color: getTheme(userTheme).colors.textColor3,
       padding: 2,
     }),
   };
