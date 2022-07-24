@@ -401,6 +401,10 @@ export const isBabyWeirdApesCollection = (address) => {
   return isCollection(address, 'baby-weird-apes');
 };
 
+export const isLadyWeirdApesCollection = (address) => {
+  return isCollection(address, 'lady-weird-apes');
+};
+
 export const isCronosVerseCollection = (address) => {
   return isCollection(address, 'cronosverse');
 };
