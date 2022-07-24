@@ -1,13 +1,22 @@
 [
   {
-    "users": [
-      "0xade6d50beeb9156d95eba3cd66ef2ae6695443ac"
+    "users": ["0xE877C5420604BADa353010ADd7D5C304BDC2FF33"],
+    "tokens": [
+      {
+        "slug": "carkayous-feral-fish",
+        "address": "0x72af9c869a4759e6d50e9656c0741b395532c3dd",
+        "ids": [1975]
+      }
     ],
+    "reason": "Verified by Jason the project owner"
+  },
+  {
+    "users": ["0xade6d50beeb9156d95eba3cd66ef2ae6695443ac"],
     "tokens": [
       {
         "slug": "crognomes",
         "address": "0xDe56D1C3E5B9E8e4f12533c1E64D4f6b7eEE701E",
-        "ids": [2145]
+        "ids": [215]
       }
     ],
     "reason": "Scammed in CroSkull discord. Verified by GabrielKvaal#1337"

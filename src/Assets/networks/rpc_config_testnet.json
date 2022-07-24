@@ -1377,7 +1377,7 @@
       "name": "Battle Ready Boyz",
       "slug": "battle-ready-boyz",
       "multiToken": false,
-      "address": "0xEB88A1655a052999DD36809F1990dCd98064975F",
+      "address": "0x782ab511719f5A1560eEaEbD19676aD47cD45384",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -1397,7 +1397,7 @@
       "name": "Apes Utopia",
       "slug": "apes-utopia",
       "multiToken": false,
-      "address": "0xb4aCc139D99c743641D66FC8dA3026C1F4018d31",
+      "address": "0x9aD80cc42Cb644AbB5fdb7cE37F44f79c902C821",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -1412,6 +1412,17 @@
         "discord": "https://discord.gg/CBmUVWusQQ",
         "medium": "https://medium.com/@apesutopia",
         "telegram": "https://t.me/+AvEkD1pZfdEzZDgx"
+      }
+    },
+    {
+      "name": "TestNFT",
+      "slug": "test-nft",
+      "multiToken": false,
+      "address": "0x063E25D6B7B087c4f0FB875821e30f8cFdB6E33e",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "verified": false
       }
     }
   ],
@@ -3038,7 +3049,7 @@
         "discord": "https://discord.gg/q4FQ4ukffB",
         "medium": "https://medium.com/@battlereadyboyz/battle-ready-boyz-56a5eee494fa"
       },
-      "address": "0xEB88A1655a052999DD36809F1990dCd98064975F",
+      "address": "0x782ab511719f5A1560eEaEbD19676aD47cD45384",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 7777,
@@ -3125,7 +3136,7 @@
         "medium": "https://medium.com/@apesutopia",
         "telegram": "https://t.me/+AvEkD1pZfdEzZDgx"
       },
-      "address": "0xb4aCc139D99c743641D66FC8dA3026C1F4018d31",
+      "address": "0x9aD80cc42Cb644AbB5fdb7cE37F44f79c902C821",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 100,
       "totalSupply": 2222,
