@@ -95,8 +95,8 @@ const MyStaking = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(async () => {
-    if (!user.connectingWallet && user.membershipContract) {
+  useEffect(() => {
+    async function checkApproval() {
       try {
         const isApproved = await user.membershipContract.isApprovedForAll(user.address, user.stakeContract.address);
         setIsApproved(isApproved);
@@ -105,6 +105,9 @@ const MyStaking = () => {
       } finally {
         setIsInitializing(false);
       }
+    }
+    if (!user.connectingWallet && user.membershipContract) {
+      checkApproval();
     }
     // eslint-disable-next-line
   }, [user.connectingWallet]);

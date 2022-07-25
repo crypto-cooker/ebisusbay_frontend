@@ -29,7 +29,12 @@ const InvalidListingsPopup = (props) => {
 
   return (
     <>
-      <Modal show={openInvalidListingsAlertDialog} size="lg" onHide={() => invalidListingsWarningAcknowledged()}>
+      <Modal
+        show={openInvalidListingsAlertDialog}
+        className="invalid-listing-dialog"
+        size="lg"
+        onHide={() => invalidListingsWarningAcknowledged()}
+      >
         <Modal.Header>
           <Modal.Title>Warning! Invalid Listings Detected</Modal.Title>
         </Modal.Header>
