@@ -19,7 +19,7 @@ export const getServerSideProps = async ({ params, query }) => {
   const addressOrUsername = params?.address;
 
   const user = await getProfile(addressOrUsername) ?? null;
-  if (!user) {
+  if (!user?.data) {
     if (!isAddress(addressOrUsername)) {
       return {
         notFound: true
@@ -30,7 +30,7 @@ export const getServerSideProps = async ({ params, query }) => {
   return {
     props: {
       address: addressOrUsername,
-      profile: user?.response ?? {},
+      profile: user.data ?? {},
       query: query,
     }
   };
