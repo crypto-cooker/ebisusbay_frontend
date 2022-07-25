@@ -42,11 +42,6 @@ export const DefaultHead = () => {
         content="The first NFT marketplace on Cronos. Create, buy, sell, trade and enjoy the #CroFam NFT community."
       />
       <meta property="twitter:image" key="twitter_img" content="https://app.ebisusbay.com/img/background/Ebisus-bg-1_L.webp" />
-
-      <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;300;400;500;600;700;800&display=swap"
-        rel="stylesheet"
-      />
     </Head>
   )
 }

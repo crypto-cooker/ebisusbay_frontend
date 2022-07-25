@@ -3,13 +3,16 @@ import Blockies from 'react-blockies';
 import { useDispatch, useSelector } from 'react-redux';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { useRouter } from 'next/router';
+import useSWR from 'swr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBolt, faImage, faSignOutAlt, faShoppingBag, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import { Modal, NavLink, Spinner, ModalTitle } from 'react-bootstrap';
 import styled from 'styled-components';
-import { ethers } from 'ethers';
+import { ethers, Contract } from 'ethers';
+import { ERC20 } from '../../Contracts/Abis';
+import { fetcher, useInterval } from '../../utils';
 
 import {
   connectAccount,
@@ -19,13 +22,16 @@ import {
   chainConnect,
   AccountMenuActions,
   checkForOutstandingOffers,
+  accountChanged, balanceUpdated,
 } from '../../GlobalState/User';
 
 import { getThemeInStorage, setThemeInStorage } from '../../helpers/storage';
 import { getAllCollections } from '../../GlobalState/collectionsSlice';
 import { fetchMyNFTs } from '../../GlobalState/offerSlice';
 import { isUserBlacklisted, round, shortAddress } from '../../utils';
-import {appConfig} from "../../Config";
+import { appConfig } from '../../Config';
+
+const config = appConfig();
 
 const BlockiesBadge = styled.div`
   position: absolute;
@@ -62,6 +68,7 @@ const AccountMenu = function () {
   const walletAddress = useSelector((state) => {
     return state.user.address;
   });
+
   const correctChain = useSelector((state) => {
     return state.user.correctChain;
   });
@@ -76,6 +83,34 @@ const AccountMenu = function () {
   });
   const collectionsStats = useSelector((state) => state.collections.collections);
   const myNFTs = useSelector((state) => state.offer.myNFTs);
+
+  const { data: balance, mutate } = useSWR(['getBalance', walletAddress, 'latest'], {
+    fetcher: fetcher(user?.provider, ERC20),
+  });
+
+  useEffect(() => {
+    dispatch(
+      balanceUpdated({
+        balance: ethers.utils.formatEther(balance || 0),
+      })
+    );
+  }, [balance]);
+
+  useInterval(() => {
+    async function func() {
+      if (user && !user.connectingWallet && user.provider) {
+        const sales = ethers.utils.formatEther(await user.marketContract.payments(walletAddress));
+        const stakingRewards = ethers.utils.formatEther(await user.stakeContract.getReward(walletAddress));
+        dispatch(
+          balanceUpdated({
+            marketBalance: sales || 0,
+            stakingRewards: stakingRewards || 0,
+          })
+        );
+      }
+    }
+    func();
+  }, 1000 * 60);
 
   const navigateTo = (link) => {
     closePop();
@@ -448,7 +483,8 @@ const AccountMenu = function () {
           <StyledModalTitle>Wrong network!</StyledModalTitle>
         </Modal.Header>
         <Modal.Body>
-          To continue, you need to switch the network to <span style={{ fontWeight: 'bold' }}>{appConfig('chain.name')}</span>.{' '}
+          To continue, you need to switch the network to{' '}
+          <span style={{ fontWeight: 'bold' }}>{appConfig('chain.name')}</span>.{' '}
         </Modal.Body>
         <Modal.Footer>
           <button className="p-4 pt-2 pb-2 btn_menu inline white lead" onClick={onWrongChainModalClose}>
