@@ -19,6 +19,7 @@ import Sales from "@src/Components/Account/Profile/Sales";
 import Favorites from "@src/Components/Account/Profile/Favorites";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
 import PageHead from "@src/Components/Head/PageHead";
+import {pushQueryString} from "@src/helpers/query";
 
 const tabs = {
   inventory: 'inventory',
@@ -29,7 +30,7 @@ const tabs = {
   favorites: 'favorites',
 };
 
-export default function Profile({ address, profile }) {
+export default function Profile({ address, profile, tab }) {
   const user = useSelector((state) => state.user);
   const router = useRouter();
 
@@ -37,8 +38,9 @@ export default function Profile({ address, profile }) {
     router.push(route);
   };
 
-  const [currentTab, setCurrentTab] = React.useState(tabs.inventory);
+  const [currentTab, setCurrentTab] = React.useState(tab ?? tabs.inventory);
   const handleTabChange = useCallback((tab) => {
+    pushQueryString(router, {address, tab});
     setCurrentTab(tab);
   }, []);
 

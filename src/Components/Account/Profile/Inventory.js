@@ -39,7 +39,7 @@ export default function Inventory({ address }) {
       if (!items.length) setInitialized(false);
       try {
         const response = await getNftsForAddress2(address, user.provider, page);
-        console.log(response);
+
         if (response.length > 0) {
           items.push(...response);
           setCanLoadMore(true);
