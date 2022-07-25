@@ -590,7 +590,10 @@ canvas {
 }
 
 .spinner-border {
-  color: 'white';
+  color: $textColor2;
+}
+.btn-main .spinner-border {
+  color: #FFF;
 }
 
 /** Image component styling */
