@@ -1056,25 +1056,6 @@
       }
     },
     {
-      "name": "Cronos Lizards",
-      "slug": "cronos-lizards",
-      "multiToken": false,
-      "address": "0x89Ff2f804B6C029eeE739bCeE029453b05e94F43",
-      "onChain": false,
-      "listable": true,
-      "metadata": {
-        "description": "Cronos Lizards are a collection of 797 OG Lizards and 2203 Gen2 Lizards scaling the Cronos Jungle. Holding a Cronos Lizard gives you exclusive access to the LizzyDAO, Cronos' first NFT project DAO. With 100% royalty sharing and unique tokenomics to breed Baby Space Lizards, Cronos Lizards transcend the typical PFP project.",
-        "verified": false,
-        "avatar": "/img/collections/cronoslizards/avatar.png",
-        "card": "/img/collections/cronoslizards/card.png",
-        "banner": "/img/collections/cronoslizards/banner.png",
-        "maxSupply": 797,
-        "website": "https://cronoslizards.com/",
-        "twitter": "https://twitter.com/CronosLizards",
-        "discord": "https://discord.gg/7KQPm4SBFb"
-      }
-    },
-    {
       "name": "Cronos Primate Business",
       "slug": "cronos-primate-business",
       "multiToken": false,
@@ -2351,25 +2332,6 @@
         "website": "https://www.icysquidgame.com/",
         "twitter": "https://twitter.com/IcySquidGame",
         "telegram": "http://t.me/IcySquidGame"
-      }
-    },
-    {
-      "name": "Cronos Lizards Gen2",
-      "slug": "cronos-lizards-gen2",
-      "multiToken": false,
-      "address": "0xEe8d8048d84C567D73a7438E658Ae2C4807a6b7D",
-      "onChain": false,
-      "listable": true,
-      "metadata": {
-        "description": "Cronos Lizards are a collection of 797 OG Lizards and 2203 Gen2 Lizards scaling the Cronos Jungle. Holding a Cronos Lizard gives you exclusive access to the LizzyDAO, Cronos' first NFT project DAO. With 100% royalty sharing and unique tokenomics to breed Baby Space Lizards, Cronos Lizards transcend the typical PFP project.",
-        "verified": false,
-        "avatar": "/img/collections/cronoslizards/gen2/avatar.webp",
-        "card": "/img/collections/cronoslizards/gen2/card.webp",
-        "banner": "/img/collections/cronoslizards/gen2/banner.webp",
-        "maxSupply": 2203,
-        "website": "https://cronoslizards.com/",
-        "twitter": "https://twitter.com/CronosLizards",
-        "discord": "https://discord.gg/7KQPm4SBFb"
       }
     },
     {
@@ -4569,11 +4531,10 @@
       "metadata": {
         "description": "The purpose of the DAO is to accelerate the growth of Ebisu’s Bay platform and the entire Cronos ecosystem.",
         "verified": true,
-        "avatar": "/img/collections/hidden-fish/avatar.webp",
-        "card": "/img/collections/hidden-fish/card.webp",
-        "banner": "/img/collections/hidden-fish/banner.webp",
+        "avatar": "/img/collections/hidden-fish-fm-vip/avatar.webp",
+        "card": "/img/collections/hidden-fish-fm-vip/card.webp",
+        "banner": "/img/collections/hidden-fish-fm-vip/banner.webp",
         "maxSupply": 1000,
-        "website": "https://hidethefish.com",
         "twitter": "https://twitter.com/HiddenFishDAO",
         "medium": "https://blog.hidethefish.com"
       }
@@ -5150,25 +5111,6 @@
         "discord": "https://discord.gg/B6kHvT2dnV",
         "medium": "https://medium.com/@cronexfinance",
         "telegram": "https://t.me/cronexfinance"
-      }
-    },
-    {
-      "name": "Baby Space Lizards",
-      "slug": "baby-space-lizards",
-      "multiToken": false,
-      "address": "0x248aE5E4790421485109A6C55058993721ca061d",
-      "onChain": false,
-      "listable": true,
-      "metadata": {
-        "description": "1500 Baby Space Lizards have hatched!",
-        "verified": false,
-        "avatar": "/img/collections/cronoslizards/baby-space-lizards/avatar.png",
-        "card": "/img/collections/cronoslizards/card.png",
-        "banner": "/img/collections/cronoslizards/banner.png",
-        "maxSupply": 1500,
-        "website": "https://cronoslizards.com/",
-        "twitter": "https://twitter.com/CronosLizards",
-        "discord": "https://discord.gg/BRDQhtDNsM"
       }
     },
     {
@@ -6029,7 +5971,7 @@
       "name": "Battle Ready Boyz",
       "slug": "battle-ready-boyz",
       "multiToken": false,
-      "address": "",
+      "address": "0x95c790bFA90De820376e4C6ad22af9C8C31Fb60D",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -6289,7 +6231,7 @@
         "maxSupply": 10000,
         "website": "https://www.sleazyweasel.xyz/",
         "twitter": "https://twitter.com/sleazy_weasel",
-        "discord": "https://discord.gg/sleazyweasenft"
+        "discord": "https://discord.gg/sleazyweasel"
       }
     },
     {
@@ -6336,7 +6278,7 @@
       "name": "Apes Utopia",
       "slug": "apes-utopia",
       "multiToken": false,
-      "address": "",
+      "address": "0xCe55EDF574FbB862C34CacC05f8386e26641B195",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -6371,6 +6313,102 @@
         "twitter": "https://twitter.com/degenbrains",
         "discord": "https://discord.gg/degenbrainfinance",
         "medium": "https://medium.com/@degenbrains"
+      }
+    },
+    {
+      "name": "Everybody's not friends",
+      "slug": "everybodys-not-friends",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Everybody's not friends is a handcrafted set of unique and rare 1/1 collectible characters and animations created by timebeam. This is a community driven passion project. The purpose of this project is to build a community which promotes friendship through a set of humorous 3D cartoon characters, animations and monthly live streamed brawls.",
+        "verified": true,
+        "avatar": "/img/collections/everybodysnf/avatar.png",
+        "card": "/img/collections/everybodysnf/card.png",
+        "banner": "/img/collections/everybodysnf/banner.png",
+        "maxSupply": 200,
+        "website": "https://timebeam.myportfolio.com/everybodys-friends",
+        "twitter": "https://twitter.com/everybdyfriends",
+        "discord": "https://discord.com/invite/3MmDxXpB5P"
+      }
+    },
+    {
+      "name": "Crossbreeds",
+      "slug": "crossbreeds",
+      "multiToken": false,
+      "address": "0x3403692d3527058925162f1F67370cB632Dc9b6b",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Wicked beasts whose genetics consist of Goat & Boar DNA. Our Crossbreeds can be surprisingly sophisticated and you can see this in their swagger. This is a very limited collection that can only be obtained by minting a Bad Billy Goat or Boars Gone Wild NFT before July 12th. These beasts will power our Defi Game Cove and will be by far rarest in the ecosystem. Holders of the Crossbreeds will also receive discounts on the Crazy Crossbreed collection. Staking rewards for the collection will be generated by the Defi Game Cove.",
+        "verified": false,
+        "avatar": "/img/collections/crossbreeds/avatar.webp",
+        "card": "/img/collections/crossbreeds/card.webp",
+        "banner": "/img/collections/crossbreeds/banner.webp",
+        "maxSupply": 828,
+        "twitter": "https://twitter.com/boarsgonewild",
+        "discord": "https://discord.gg/gC9ZVKDYZY",
+        "medium": "https://medium.com/@Crossbreeds/crossbreed-merger-a82680c81f96"
+      }
+    },
+    {
+      "name": "BTC CroArmy Miners",
+      "slug": "btc-cro-army-miners",
+      "multiToken": false,
+      "address": "0x963ebb384b39C720EEaD0B7094Eb0d55eCd40AB9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "BTC CroArmy Miners. This NFT represents ownership to several Antminer rentals. We are currently renting Antminers with the funds pooled with this collection. Details can be found in our discord community.  Earn / Mine / Learn about BTC in the CroArmy",
+        "verified": false,
+        "avatar": "/img/collections/btc-cro-army-miners/avatar.webp",
+        "card": "/img/collections/btc-cro-army-miners/card.webp",
+        "banner": "/img/collections/btc-cro-army-miners/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://croarmy.io/",
+        "twitter": "https://twitter.com/croarmy_eth",
+        "discord": "https://discord.gg/croarmy",
+        "telegram": "https://t.me/CroArmy_ETH",
+        "medium": "https://croarmy.gitbook.io/croarmy/"
+      }
+    },
+    {
+      "name": "ButtPunks V2",
+      "slug": "butt-punks-v2",
+      "multiToken": false,
+      "address": "0x9444ac0d3d7f02322634a1949888b4c88575c5e9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "ButtPunks V2 is a limited collection of 6969 vibrant and colorful NFT tokens living on the Cronos blockchain. Each token is created by combining up to 14 traits from a collection of over 300 assets with the exception of 56 hand-crafted extremely rare tokens sprinkled throughout the project!",
+        "verified": false,
+        "avatar": "/img/collections/butt-punks-v2/avatar.png",
+        "card": "/img/collections/butt-punks-v2/card.png",
+        "banner": "/img/collections/butt-punks-v2/banner.png",
+        "maxSupply": 6969,
+        "website": "https://buttpunks.com/",
+        "twitter": "https://twitter.com/buttpunks",
+        "discord": "https://discord.gg/cE2992eCyC"
+      }
+    },
+    {
+      "name": "Hidden Fish Founding Member",
+      "slug": "hidden-fish-fm",
+      "multiToken": false,
+      "address": "0xaa3cFC29BEaAdA4456B777Bfa7dcDfCBE0d122A9",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The purpose of the DAO is to accelerate the growth of Ebisu’s Bay platform and the entire Cronos ecosystem.",
+        "verified": true,
+        "avatar": "/img/collections/hidden-fish-fm/avatar.webp",
+        "card": "/img/collections/hidden-fish-fm/card.webp",
+        "banner": "/img/collections/hidden-fish-fm/banner.webp",
+        "maxSupply": 3300,
+        "twitter": "https://twitter.com/HiddenFishDAO",
+        "medium": "https://blog.hidethefish.com"
       }
     }
   ],
@@ -8775,7 +8813,7 @@
         "discord": "https://discord.gg/q4FQ4ukffB",
         "medium": "https://medium.com/@battlereadyboyz/battle-ready-boyz-56a5eee494fa"
       },
-      "address": "",
+      "address": "0x95c790bFA90De820376e4C6ad22af9C8C31Fb60D",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 7777,
@@ -8822,7 +8860,7 @@
       "complete": true
     },
     {
-      "id": 88,
+      "id": 89,
       "slug": "apes-utopia",
       "imgNft": "/img/drops/apes-utopia/drop.png",
       "imgPreview": "/img/drops/apes-utopia/drop.png",
@@ -8839,7 +8877,7 @@
         "medium": "https://medium.com/@apesutopia",
         "telegram": "https://t.me/+AvEkD1pZfdEzZDgx"
       },
-      "address": "",
+      "address": "0xCe55EDF574FbB862C34CacC05f8386e26641B195",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 100,
       "totalSupply": 2222,
@@ -8848,6 +8886,71 @@
       "whitelistCost": "399",
       "foundersOnly": false,
       "start": 1658692800000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 90,
+      "slug": "degen-brains",
+      "imgNft": "",
+      "imgPreview": "",
+      "imgAvatar": "/img/collections/degen-brains/avatar.webp",
+      "imgBanner": "/img/collections/degen-brains/banner.webp",
+      "title": "Degen Brains",
+      "subtitle": "",
+      "description": "",
+      "author": {
+        "name": "Degen Brains",
+        "website": "",
+        "twitter": "",
+        "discord": "",
+        "medium": "",
+        "telegram": ""
+      },
+      "address": "",
+      "maxMintPerTx": 0,
+      "maxMintPerAddress": 0,
+      "totalSupply": 0,
+      "cost": "",
+      "memberCost": "",
+      "whitelistCost": "",
+      "foundersOnly": false,
+      "start": 1658732400000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "redirect": "https://www.degenbrain.finance/"
+    },
+    {
+      "id": 91,
+      "slug": "everybodys-not-friends",
+      "imgNft": "/img/drops/everybodysnf/drop.png",
+      "imgPreview": "/img/drops/everybodysnf/drop.png",
+      "imgAvatar": "/img/collections/everybodysnf/avatar.png",
+      "imgBanner": "/img/collections/everybodysnf/banner.png",
+      "title": "Everybody's Not Friends",
+      "subtitle": "Everybody's not friends is a handcrafted set of unique and rare 1/1 collectible characters and animations created by timebeam. This is a community driven passion project. The purpose of this project is to build a community which promotes friendship through a set of humorous 3D cartoon characters, animations and monthly live streamed brawls.",
+      "description": "Everybody's not friends is a handcrafted set of unique and rare 1/1 collectible characters and animations created by timebeam. The purpose of this project is to build a community which promotes friendship through a set of humorous 3D cartoon characters, animations and monthly live streamed brawls. All the everybody's not friends characters are rigged for character animation. When you purchase a friend you are taking the next step in the everybody’s not friends community. Friends will get the exclusive opportunity to participate in brawl night! Once a month we will pick two random NFT holders and their characters will brawl. The fighters and winner will be determined by a mini app we developed called 'the random generator'. The fight will be animated based on the outcome of the random generator. We will do a live stream of the animated fight. Winners will win some cool prizes and crypto! Come join our community and lets have some fun!",
+      "author": {
+        "name": "Everybody's not friends",
+        "website": "https://timebeam.myportfolio.com/everybodys-friends",
+        "twitter": "https://twitter.com/everybdyfriends",
+        "discord": "https://discord.com/invite/3MmDxXpB5P"
+      },
+      "address": "",
+      "maxMintPerTx": 5,
+      "maxMintPerAddress": 100 ,
+      "totalSupply": 200 ,
+      "cost": "2000",
+      "memberCost": "1600",
+      "whitelistCost": "",
+      "foundersOnly": false,
+      "start": 1658952000000 ,
       "end": null,
       "referral": false,
       "is1155": false,

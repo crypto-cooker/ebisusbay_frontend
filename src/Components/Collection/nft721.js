@@ -26,7 +26,7 @@ import {
   rankingsLogoForCollection,
   rankingsTitleForCollection,
   rankingsLinkForCollection,
-  isLazyHorseCollection,
+  isLazyHorseCollection, isLazyHorsePonyCollection, isLadyWeirdApesCollection,
 } from '../../utils';
 import { getNftDetails } from '../../GlobalState/nftSlice';
 import { connectAccount, chainConnect } from '../../GlobalState/User';
@@ -86,6 +86,7 @@ const Nft721 = ({ address, id }) => {
   const [croCrowBreed, setCroCrowBreed] = useState(null);
   const [crognomideBreed, setCrognomideBreed] = useState(null);
   const [babyWeirdApeBreed, setBabyWeirdApeBreed] = useState(null);
+  const [ladyWeirdApeChildren, setLadyWeirdApeChildren] = useState(null);
   const [evoSkullTraits, setEvoSkullTraits] = useState([]);
   const [lazyHorseName, setLazyHorseName] = useState(null);
   const [lazyHorseTraits, setLazyHorseTraits] = useState([]);
@@ -231,7 +232,7 @@ const Nft721 = ({ address, id }) => {
 
   useEffect(() => {
     async function getLazyHorseName() {
-      if (isLazyHorseCollection(address)) {
+      if (isLazyHorseCollection(address) || isLazyHorsePonyCollection(address)) {
         const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
         const contract = new Contract(address, ERC721, readProvider);
         try {
@@ -252,6 +253,27 @@ const Nft721 = ({ address, id }) => {
       }
     }
     getLazyHorseName();
+
+    // eslint-disable-next-line
+  }, [address]);
+
+  useEffect(() => {
+    async function getLadyApeInfo() {
+      if (isLadyWeirdApesCollection(address)) {
+        const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+        const abiFile = require(`../../Assets/abis/lady-weird-apes-children.json`);
+        const contract = new Contract(address, abiFile.abi, readProvider);
+        try {
+          const numChildren = await contract.numChildren(id);
+          setLadyWeirdApeChildren(numChildren);
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        setLadyWeirdApeChildren(null);
+      }
+    }
+    getLadyApeInfo();
 
     // eslint-disable-next-line
   }, [address]);
@@ -380,12 +402,24 @@ const Nft721 = ({ address, id }) => {
                     <div className="d-flex flex-row align-items-center mb-4">
                       <LayeredIcon
                         icon={faHeart}
-                        bgColor={'#fff'}
+                        bgColor={'#ffffff00'}
                         color={'#dc143c'}
                         inverse={false}
                         title="This Crognomide has been bred for a Croby!"
                       />
                       <span className="fw-bold">This Crognomide has been bred for a Croby</span>
+                    </div>
+                  )}
+                  {isLadyWeirdApesCollection(address) && ladyWeirdApeChildren !== null && (
+                    <div className="d-flex flex-row align-items-center mb-4">
+                      <LayeredIcon
+                        icon={faHeart}
+                        bgColor={'#ffffff00'}
+                        color={'#dc143c'}
+                        inverse={false}
+                        title="This Crognomide has been bred for a Croby!"
+                      />
+                      <span className="fw-bold">This Lady Weird Ape has had {`${ladyWeirdApeChildren} ${ladyWeirdApeChildren === 1 ? 'child' : 'children'}`}</span>
                     </div>
                   )}
 

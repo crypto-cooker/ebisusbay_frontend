@@ -571,6 +571,11 @@ canvas {
 
 .my-listing-card {
   background: $bgColor1;
+  border-color: $borderColor1;
+}
+
+.modal-content {
+  background: $bgColor1;
 }
 
 /* Responsive Drop Video */
@@ -586,6 +591,9 @@ canvas {
 
 .spinner-border {
   color: $textColor2;
+}
+.btn-main .spinner-border {
+  color: #FFF;
 }
 
 /** Image component styling */
@@ -668,3 +676,16 @@ canvas {
   }
 }
 
+.react-player__preview {
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  height: 0 !important;
+  position: relative;
+  padding-top: 100% !important;
+}
+
+.react-player__shadow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}

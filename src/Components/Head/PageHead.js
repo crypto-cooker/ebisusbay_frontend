@@ -7,7 +7,7 @@ const config = appConfig();
 const PageHead = ({ title, description, image, url }) => {
   return (
     <Head>
-      <title>{title} | Ebisu's Bay Marketplace</title>
+      <title>{`${title} | Ebisu's Bay Marketplace`}</title>
       <meta name="title" key="title" content={title} />
       <meta name="description" key="desc" content={description} />
 
