@@ -1056,25 +1056,6 @@
       }
     },
     {
-      "name": "Cronos Lizards",
-      "slug": "cronos-lizards",
-      "multiToken": false,
-      "address": "0x89Ff2f804B6C029eeE739bCeE029453b05e94F43",
-      "onChain": false,
-      "listable": true,
-      "metadata": {
-        "description": "Cronos Lizards are a collection of 797 OG Lizards and 2203 Gen2 Lizards scaling the Cronos Jungle. Holding a Cronos Lizard gives you exclusive access to the LizzyDAO, Cronos' first NFT project DAO. With 100% royalty sharing and unique tokenomics to breed Baby Space Lizards, Cronos Lizards transcend the typical PFP project.",
-        "verified": false,
-        "avatar": "/img/collections/cronoslizards/avatar.png",
-        "card": "/img/collections/cronoslizards/card.png",
-        "banner": "/img/collections/cronoslizards/banner.png",
-        "maxSupply": 797,
-        "website": "https://cronoslizards.com/",
-        "twitter": "https://twitter.com/CronosLizards",
-        "discord": "https://discord.gg/7KQPm4SBFb"
-      }
-    },
-    {
       "name": "Cronos Primate Business",
       "slug": "cronos-primate-business",
       "multiToken": false,
@@ -2351,25 +2332,6 @@
         "website": "https://www.icysquidgame.com/",
         "twitter": "https://twitter.com/IcySquidGame",
         "telegram": "http://t.me/IcySquidGame"
-      }
-    },
-    {
-      "name": "Cronos Lizards Gen2",
-      "slug": "cronos-lizards-gen2",
-      "multiToken": false,
-      "address": "0xEe8d8048d84C567D73a7438E658Ae2C4807a6b7D",
-      "onChain": false,
-      "listable": true,
-      "metadata": {
-        "description": "Cronos Lizards are a collection of 797 OG Lizards and 2203 Gen2 Lizards scaling the Cronos Jungle. Holding a Cronos Lizard gives you exclusive access to the LizzyDAO, Cronos' first NFT project DAO. With 100% royalty sharing and unique tokenomics to breed Baby Space Lizards, Cronos Lizards transcend the typical PFP project.",
-        "verified": false,
-        "avatar": "/img/collections/cronoslizards/gen2/avatar.webp",
-        "card": "/img/collections/cronoslizards/gen2/card.webp",
-        "banner": "/img/collections/cronoslizards/gen2/banner.webp",
-        "maxSupply": 2203,
-        "website": "https://cronoslizards.com/",
-        "twitter": "https://twitter.com/CronosLizards",
-        "discord": "https://discord.gg/7KQPm4SBFb"
       }
     },
     {
@@ -4569,11 +4531,10 @@
       "metadata": {
         "description": "The purpose of the DAO is to accelerate the growth of Ebisu’s Bay platform and the entire Cronos ecosystem.",
         "verified": true,
-        "avatar": "/img/collections/hidden-fish/avatar.webp",
-        "card": "/img/collections/hidden-fish/card.webp",
-        "banner": "/img/collections/hidden-fish/banner.webp",
+        "avatar": "/img/collections/hidden-fish-fm-vip/avatar.webp",
+        "card": "/img/collections/hidden-fish-fm-vip/card.webp",
+        "banner": "/img/collections/hidden-fish-fm-vip/banner.webp",
         "maxSupply": 1000,
-        "website": "https://hidethefish.com",
         "twitter": "https://twitter.com/HiddenFishDAO",
         "medium": "https://blog.hidethefish.com"
       }
@@ -5150,25 +5111,6 @@
         "discord": "https://discord.gg/B6kHvT2dnV",
         "medium": "https://medium.com/@cronexfinance",
         "telegram": "https://t.me/cronexfinance"
-      }
-    },
-    {
-      "name": "Baby Space Lizards",
-      "slug": "baby-space-lizards",
-      "multiToken": false,
-      "address": "0x248aE5E4790421485109A6C55058993721ca061d",
-      "onChain": false,
-      "listable": true,
-      "metadata": {
-        "description": "1500 Baby Space Lizards have hatched!",
-        "verified": false,
-        "avatar": "/img/collections/cronoslizards/baby-space-lizards/avatar.png",
-        "card": "/img/collections/cronoslizards/card.png",
-        "banner": "/img/collections/cronoslizards/banner.png",
-        "maxSupply": 1500,
-        "website": "https://cronoslizards.com/",
-        "twitter": "https://twitter.com/CronosLizards",
-        "discord": "https://discord.gg/BRDQhtDNsM"
       }
     },
     {
@@ -6029,7 +5971,7 @@
       "name": "Battle Ready Boyz",
       "slug": "battle-ready-boyz",
       "multiToken": false,
-      "address": "",
+      "address": "0x95c790bFA90De820376e4C6ad22af9C8C31Fb60D",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -6289,7 +6231,7 @@
         "maxSupply": 10000,
         "website": "https://www.sleazyweasel.xyz/",
         "twitter": "https://twitter.com/sleazy_weasel",
-        "discord": "https://discord.gg/sleazyweasenft"
+        "discord": "https://discord.gg/sleazyweasel"
       }
     },
     {
@@ -6336,7 +6278,7 @@
       "name": "Apes Utopia",
       "slug": "apes-utopia",
       "multiToken": false,
-      "address": "",
+      "address": "0xCe55EDF574FbB862C34CacC05f8386e26641B195",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -6398,7 +6340,7 @@
       "multiToken": false,
       "address": "0x3403692d3527058925162f1F67370cB632Dc9b6b",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Wicked beasts whose genetics consist of Goat & Boar DNA. Our Crossbreeds can be surprisingly sophisticated and you can see this in their swagger. This is a very limited collection that can only be obtained by minting a Bad Billy Goat or Boars Gone Wild NFT before July 12th. These beasts will power our Defi Game Cove and will be by far rarest in the ecosystem. Holders of the Crossbreeds will also receive discounts on the Crazy Crossbreed collection. Staking rewards for the collection will be generated by the Defi Game Cove.",
         "verified": false,
@@ -6409,6 +6351,84 @@
         "twitter": "https://twitter.com/boarsgonewild",
         "discord": "https://discord.gg/gC9ZVKDYZY",
         "medium": "https://medium.com/@Crossbreeds/crossbreed-merger-a82680c81f96"
+      }
+    },
+    {
+      "name": "BTC CroArmy Miners",
+      "slug": "btc-cro-army-miners",
+      "multiToken": false,
+      "address": "0x963ebb384b39C720EEaD0B7094Eb0d55eCd40AB9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "BTC CroArmy Miners. This NFT represents ownership to several Antminer rentals. We are currently renting Antminers with the funds pooled with this collection. Details can be found in our discord community.  Earn / Mine / Learn about BTC in the CroArmy",
+        "verified": false,
+        "avatar": "/img/collections/btc-cro-army-miners/avatar.webp",
+        "card": "/img/collections/btc-cro-army-miners/card.webp",
+        "banner": "/img/collections/btc-cro-army-miners/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://croarmy.io/",
+        "twitter": "https://twitter.com/croarmy_eth",
+        "discord": "https://discord.gg/croarmy",
+        "telegram": "https://t.me/CroArmy_ETH",
+        "medium": "https://croarmy.gitbook.io/croarmy/"
+      }
+    },
+    {
+      "name": "ButtPunks V2",
+      "slug": "butt-punks-v2",
+      "multiToken": false,
+      "address": "0x9444ac0d3d7f02322634a1949888b4c88575c5e9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "ButtPunks V2 is a limited collection of 6969 vibrant and colorful NFT tokens living on the Cronos blockchain. Each token is created by combining up to 14 traits from a collection of over 300 assets with the exception of 56 hand-crafted extremely rare tokens sprinkled throughout the project!",
+        "verified": false,
+        "avatar": "/img/collections/butt-punks-v2/avatar.png",
+        "card": "/img/collections/butt-punks-v2/card.png",
+        "banner": "/img/collections/butt-punks-v2/banner.png",
+        "maxSupply": 6969,
+        "website": "https://buttpunks.com/",
+        "twitter": "https://twitter.com/buttpunks",
+        "discord": "https://discord.gg/cE2992eCyC"
+      }
+    },
+    {
+      "name": "Hidden Fish Founding Member",
+      "slug": "hidden-fish-fm",
+      "multiToken": false,
+      "address": "0xaa3cFC29BEaAdA4456B777Bfa7dcDfCBE0d122A9",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The purpose of the DAO is to accelerate the growth of Ebisu’s Bay platform and the entire Cronos ecosystem.",
+        "verified": true,
+        "avatar": "/img/collections/hidden-fish-fm/avatar.webp",
+        "card": "/img/collections/hidden-fish-fm/card.webp",
+        "banner": "/img/collections/hidden-fish-fm/banner.webp",
+        "maxSupply": 3300,
+        "twitter": "https://twitter.com/HiddenFishDAO",
+        "medium": "https://blog.hidethefish.com"
+      }
+    },
+    {
+      "name": "Noodles Club",
+      "slug": "noodles-club",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Noodles Club is a PFP collection of 8,888 NFTs stored on the Cronos Chain that comes with an ever-developing set of utilities. Only the real Noodles lovers will enjoy this spicy journey.",
+        "verified": true,
+        "avatar": "/img/collections/noodles-club/avatar.webp",
+        "card": "/img/collections/noodles-club/card.webp",
+        "banner": "/img/collections/noodles-club/banner.webp",
+        "maxSupply": 8888,
+        "website": "https://www.noodlesclub.com/",
+        "twitter": "https://twitter.com/noodlesclubnft",
+        "discord": "https://discord.gg/HTsURzuJVt",
+        "medium": "https://medium.com/@noodlesclubnft"
       }
     }
   ],
@@ -8813,7 +8833,7 @@
         "discord": "https://discord.gg/q4FQ4ukffB",
         "medium": "https://medium.com/@battlereadyboyz/battle-ready-boyz-56a5eee494fa"
       },
-      "address": "",
+      "address": "0x95c790bFA90De820376e4C6ad22af9C8C31Fb60D",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 7777,
@@ -8877,7 +8897,7 @@
         "medium": "https://medium.com/@apesutopia",
         "telegram": "https://t.me/+AvEkD1pZfdEzZDgx"
       },
-      "address": "",
+      "address": "0xCe55EDF574FbB862C34CacC05f8386e26641B195",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 100,
       "totalSupply": 2222,
@@ -8951,6 +8971,37 @@
       "whitelistCost": "",
       "foundersOnly": false,
       "start": 1658952000000 ,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 92,
+      "slug": "noodles-club",
+      "imgNft": "/img/drops/noodles-club/drop.webp",
+      "imgPreview": "/img/drops/noodles-club/drop.webp",
+      "imgAvatar": "/img/collections/noodles-club/avatar.webp",
+      "imgBanner": "/img/collections/noodles-club/banner.webp",
+      "title": "Noodles Club",
+      "subtitle": "Noodles Club is a PFP collection of 8,888 NFTs stored on the Cronos Chain that comes with an ever-developing set of utilities. Only the real Noodles lovers will enjoy this spicy journey.",
+      "description": "The Noodles Club NFT Collection is only the beginning of the creation of a project that will bring continuous updates and innovations within the ecosystem.\n\nThis PFP Collection consists of 8,888 unique NFTs stored on the Cronos Chain. Each NFT has been generated from the almost 200 different traits that our artists have designed. In the future you will be able to customize your NFT by giving it a name, a date of birth and other attributes like your favourite food.\n\nEach NFT comes with a set of utilities that will always increase during time. We really want to make this project a lifetime one, so we will always put our investors' opinion first. To do so, every Noodles Club holder will have the power to vote for the decisions concerning the project. This is just one of the various utilities, in fact, by obtaining one of this NFT, you will join an ecosystem that will bring:\n\n> Exclusive access to Guides, Alphas and Solidity Learning Camp\n\n> Staking & $RAMEN launch (that you will be able to spend on our marketplace or to sell)\n\n> Seasonal Rewards (that will increase the utilities of your NFT)\n\n> Noodles Club Marketplace (to spend your $RAMEN by buying WL, discounted NFTs, 1/1 Custom PFP, customization for your NFT and much more)\n\n> Exclusive Real Life House & Restaurant\n\n> NFT Trading Platform (to safely trade NFTs)\n\n \n\nChoose your perfect Noodles Bowl and start your journey now!",
+      "author": {
+        "name": "Noodles Club",
+        "website": "https://www.noodlesclub.com/",
+        "twitter": "https://twitter.com/noodlesclubnft",
+        "discord": "https://discord.gg/HTsURzuJVt",
+        "medium": "https://medium.com/@noodlesclubnft"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 8888,
+      "cost": "350",
+      "memberCost": "300",
+      "foundersOnly": false,
+      "start": 1659124800000,
       "end": null,
       "referral": false,
       "is1155": false,

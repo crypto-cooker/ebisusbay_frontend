@@ -34,8 +34,8 @@ import { getAllOffers } from '../core/subgraph';
 import { offerState } from '../core/api/enums';
 import { CNS, TextRecords } from '@cnsdomains/core';
 import { txExtras } from '../core/constants';
-import {appConfig} from "../Config";
-import {MarketFilterCollection} from "../Components/Models/market-filters.model";
+import { appConfig } from '../Config';
+import { MarketFilterCollection } from '../Components/Models/market-filters.model';
 
 const config = appConfig();
 
@@ -62,7 +62,7 @@ const userSlice = createSlice({
     // Contracts
     membershipContract: null,
     marketContract: null,
-    stateContract: null,
+    stakeContract: null,
     auctionContract: null,
     offerContract: null,
     cnsContract: null,
@@ -155,6 +155,7 @@ const userSlice = createSlice({
 
     fetchingNfts(state, action) {
       state.fetchingNfts = true;
+      state.nftsFullyFetched = false;
       if (!action.payload?.persist) {
         state.nfts = [];
       }
@@ -308,9 +309,9 @@ const userSlice = createSlice({
         state.web3modal.clearCachedProvider();
       }
       state.web3modal = null;
-      state.provider = null;
       localStorage.clear();
       state.address = '';
+      state.provider = null;
       state.balance = null;
       state.rewards = null;
       state.marketBalance = null;
@@ -319,6 +320,7 @@ const userSlice = createSlice({
       state.vipCount = 0;
       state.stakeCount = 0;
       state.fetchingNfts = false;
+      state.nftsFullyFetched = false;
       state.nftsInitialized = false;
       state.nfts = [];
       state.mySoldNftsFetching = false;
@@ -331,7 +333,15 @@ const userSlice = createSlice({
       state.theme = action.payload;
     },
     balanceUpdated(state, action) {
-      state.balance = action.payload;
+      if (action.payload.balance) {
+        state.balance = action.payload.balance;
+      }
+      if (action.payload.marketBalance) {
+        state.marketBalance = action.payload.marketBalance;
+      }
+      if (action.payload.stakingRewards) {
+        state.stakingRewards = action.payload.stakingRewards;
+      }
     },
     setVIPCount(state, action) {
       state.vipCount = action.payload;
@@ -384,6 +394,7 @@ export const {
   onLogout,
   elonContract,
   onThemeChanged,
+  balanceUpdated,
   setVIPCount,
   setStakeCount,
   onOutstandingOffersFound,
@@ -454,7 +465,7 @@ export const connectAccount =
     const web3Modal = new Web3Modal({
       cacheProvider: true, // optional
       providerOptions, // required
-      theme: state.user.theme
+      theme: state.user.theme,
     });
 
     const web3provider = await web3Modal
@@ -577,7 +588,6 @@ export const connectAccount =
           console.log('Error checking CRO balance', error);
         }
       }
-
       await dispatch(
         accountChanged({
           address: address,
@@ -721,6 +731,11 @@ export const fetchNfts =
 
     const walletAddress = state.user.address;
     const walletProvider = state.user.provider;
+    
+    const values = collectionAddress?.split('-') ?? '';
+    if (values.length > 1) {
+      collectionAddress = values[0];
+    }
 
     dispatch(fetchingNfts({ persist }));
     const response = await getNftsForAddress2(walletAddress, walletProvider, page, collectionAddress);
