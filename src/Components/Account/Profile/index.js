@@ -86,7 +86,7 @@ export default function Profile({ address, profile, tab }) {
               <div className={styles.username}>{username}</div>
               <div className={styles.bio}>{profile.bio}</div>
               <div className={`${styles.socials} text-center text-sm-start mb-2 mb-sm-0`}>
-                <SocialsBar socials={profile} />
+                <span className="fs-4"><SocialsBar socials={profile} address={address} /></span>
               </div>
             </div>
 

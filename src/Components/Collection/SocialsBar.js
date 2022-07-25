@@ -56,7 +56,7 @@ const SocialsBar = ({ address, socials, showCopy = true }) => {
         </a>
       )}
       {showCopy && (
-        <span onClick={handleCopy(address)} style={{ cursor: 'pointer' }} title="Copy Smart Contract Address">
+        <span onClick={handleCopy(address)} style={{ cursor: 'pointer' }} title="Copy Address">
           <LayeredIcon icon={faCopy} />
         </span>
       )}
