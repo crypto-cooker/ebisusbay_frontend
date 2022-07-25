@@ -12,8 +12,6 @@ import { Modal, NavLink, Spinner, ModalTitle } from 'react-bootstrap';
 import styled from 'styled-components';
 import { ethers, Contract } from 'ethers';
 import { ERC20 } from '../../Contracts/Abis';
-import StakeABI from '../../Contracts/Stake.json';
-import Market from '../../Contracts/Marketplace.json';
 import { fetcher, useInterval } from '../../utils';
 
 import {
@@ -92,7 +90,7 @@ const AccountMenu = function () {
 
   useEffect(() => {
     dispatch(
-      accountChanged({
+      balanceUpdated({
         balance: ethers.utils.formatEther(balance || 0),
       })
     );
@@ -105,8 +103,8 @@ const AccountMenu = function () {
         const stakingRewards = ethers.utils.formatEther(await user.stakeContract.getReward(walletAddress));
         dispatch(
           balanceUpdated({
-            marketBalance: sales | 0,
-            stakingRewards: stakingRewards | 0,
+            marketBalance: sales || 0,
+            stakingRewards: stakingRewards || 0,
           })
         );
       }

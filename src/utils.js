@@ -642,6 +642,13 @@ export const rankingsLinkForCollection = (collection, id) => {
   return link;
 };
 
+/**
+ * SWR fetcher for contracts, wallet functions
+ * 
+ * @param library
+ * @param abi
+ * @returns {(function(...[*]): (*))|*}
+ */
 export const fetcher =
   (library, abi) =>
   (...args) => {
