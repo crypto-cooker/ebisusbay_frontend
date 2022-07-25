@@ -1,5 +1,7 @@
 import { useState } from 'react';
-// import { appConfig } from '../../../../Config';
+import axios from 'axios';
+
+import { appConfig } from '../../../../Config';
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import useCreateSigner from './useCreateSigner';
 
@@ -11,7 +13,12 @@ const useUpdateSettings = () => {
 
   const [isLoading, getSigner] = useCreateSigner();
 
-  const requestUpdateSettings = async (formData) => {
+  const requestUpdateSettings = async (data) => {
+
+    const config = appConfig();
+
+    const { userInfo, userBanner, userAvatar } = data.userInfo;
+
     setResponse({
       ...response,
       loading: true,
@@ -26,21 +33,28 @@ const useUpdateSettings = () => {
     }
     if (signatureInStorage) {
       try {
-        const fetchResponse = await fetch(
-          `http://localhost:4000/profile?` + new URLSearchParams({ signature: signatureInStorage, nonce }),
-          {
-            method: 'PATCH',
-            body: formData,
-          }
-        );
+        const fetchResponse = await axios.patch(`${config.urls.cms}profile?signature=${signatureInStorage}&nonce=${nonce}`, userInfo)
 
+        if (userAvatar?.profilePicture[0]?.file?.name) {
+          const formData = new FormData();
+          formData.append('profilePicture', userAvatar?.profilePicture[0].file);
+          await axios.patch(`${config.urls.cms}profile/avatar?signature=${signatureInStorage}&nonce=${nonce}`, formData);
+        }
+        
+        if (userBanner?.banner[0]?.file?.name) {
+          const formData = new FormData();
+          formData.append('banner', userBanner?.banner[0].file);
+          
+          await axios.patch(`${config.urls.cms}profile/banner?signature=${signatureInStorage}&nonce=${nonce}`, formData);
+        }
+        
         setResponse({
           ...response,
           loading: false,
           error: null,
         });
 
-        return fetchResponse.json();
+        return fetchResponse.data;
       } catch (error) {
         setResponse({
           ...response,

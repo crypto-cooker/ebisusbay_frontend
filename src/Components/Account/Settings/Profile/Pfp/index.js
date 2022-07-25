@@ -30,12 +30,13 @@ export default function Pfp({ values, errors, touched, handleChange, setFieldVal
           const { type, ...props } = field;
           const fieldKey = props.key;
           const subFormKey = editProfileFormFields[1].key;
-          const name = `${subFormKey}.${[fieldKey]}`;
+          const name = `userInfo.${subFormKey}.${[fieldKey]}`;
           props.name = name;
           props.key = `${type}-${fieldKey}`;
-          props.value = values[subFormKey]?.[fieldKey];
+          props.value = values.userInfo[subFormKey]?.[fieldKey];
 
-          props.error = touched[subFormKey]?.[fieldKey] ? errors[subFormKey]?.[fieldKey] : undefined;
+          props.error = 
+                touched.userInfo?.[subFormKey]?.[fieldKey] ? errors.userInfo?.[subFormKey]?.[fieldKey] : undefined;
 
           if (props.inputType) props.type = props.inputType;
 

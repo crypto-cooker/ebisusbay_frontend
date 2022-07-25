@@ -21,12 +21,14 @@ export default function Form({
           const { type, ...props } = field;
           const fieldKey = props.key;
           const subFormKey = editProfileFormFields[0].key;
-          const name = `${subFormKey}.${[fieldKey]}`;
+          const name = `userInfo.${subFormKey}.${[fieldKey]}`;
           props.name = name;
           props.key = `${type}-${fieldKey}`;
-          props.value = values[subFormKey]?.[fieldKey];
-
-          props.error = errors[subFormKey]?.[fieldKey] ? errors[subFormKey]?.[fieldKey] : undefined;
+          props.value = values.userInfo?.[subFormKey]?.[fieldKey];
+          props.error =
+                touched.userInfo?.[subFormKey]?.[fieldKey]
+                  ? errors.userInfo?.[subFormKey]?.[fieldKey]
+                  : undefined;
 
           if (props.inputType) props.type = props.inputType;
 

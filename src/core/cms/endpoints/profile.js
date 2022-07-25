@@ -18,9 +18,6 @@ export const getProfile = async (addressOrSlug) => {
 
 export const createProfile = async (formData, signature, nonce) => {
   try {
-    formData.append('signature', signature);
-    formData.append('nonce', nonce);
-
     const response = await axios.post(`${config.urls.cms}profile`, formData, {
       params: {
         signature,

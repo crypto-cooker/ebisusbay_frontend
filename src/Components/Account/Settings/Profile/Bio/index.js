@@ -16,7 +16,7 @@ export default function Bio({ value, handleChange }) {
             placeholder="Enter Text"
             onChange={handleChange}
             value={value}
-            name="userInfo.bio"
+            name="userInfo.userInfo.bio"
           />
         </InputGroup>
       </div>

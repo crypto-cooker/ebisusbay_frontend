@@ -21,69 +21,72 @@ export default function EditProfile() {
   const user = useSelector((state) => state.user);
   const [requestNewSettings, { loading }] = useCreateSettings();
   const [requestUpdateSettings, { loading: updateLoading }] = useUpdateSettings();
-  const { response: settings } = useGetSettings(user?.address);
+  const [{ response: settings }, updateProfileSettings] = useGetSettings(user?.address);
   const [isFetchCns, setIsFetchCns] = useState(false);
   const [mergedValues, setMergedValues] = useState(false);
 
-  const getInitialValues = () => {
-    if (settings) {
+  const getInitialValues = useCallback(() => {
+    if (settings?.data) {
       let keys = editProfileFormFields[0].fields.map((field) => field.key);
       keys = [...keys, 'bio'];
-
-      const filteredSettings = Object.keys(settings)
+      const filteredSettings = Object.keys(settings.data)
         .filter((key) => keys.includes(key))
         .reduce((obj, key) => {
-          obj[key] = settings[key];
+          obj[key] = settings.data[key];
           return obj;
         }, {});
 
       const result = {
-        userInfo: { ...filteredSettings, profilePictureUrl: settings.profilePicture, bannerUrl: settings.banner },
+        userInfo: { userInfo: { ...filteredSettings }, userAvatar: { profilePicture: [{ result: settings.data.profilePicture, position: 0, file: { type: 'image' } }] }, userBanner: { banner: [{ result: settings.data.banner, position: 0, file: { type: 'image' } }] }, profilePictureUrl: settings.profilePicture, bannerUrl: settings.banner },
       };
       return result;
     }
-    return initialValues;
-  };
+    return { userInfo: { ...initialValues } };
+  }, [settings]);
 
   const userInfoValidation = Yup.object().shape({
-    userInfo: Yup.object()
-      .shape({
-        username: Yup.string()
-          .required(Messages.errors.required)
-          .max(40, getDynamicMessage(Messages.errors.charactersMaxLimit, ['40'])),
-        cnsName: Yup.string()
-          .required(Messages.errors.required)
-          .max(40, getDynamicMessage(Messages.errors.charactersMaxLimit, ['40'])),
-        email: Yup.string().email(Messages.errors.invalidEmail).required(Messages.errors.required),
-        twitter: Yup.string().required(Messages.errors.required),
-        discord: Yup.string().required(Messages.errors.required),
-        instagram: Yup.string().required(Messages.errors.required),
-        website: Yup.string().url(Messages.errors.urlError).required(Messages.errors.required),
-        bio: Yup.string().required(Messages.errors.required),
-      })
-      .required(),
-  });
+    userInfo: Yup.object({
+      userInfo: Yup.object()
+        .shape({
+          username: Yup.string()
+            .required(Messages.errors.required)
+            .max(40, getDynamicMessage(Messages.errors.charactersMaxLimit, ['40'])),
+          cnsName: Yup.string()
+            .max(40, getDynamicMessage(Messages.errors.charactersMaxLimit, ['40'])),
+          email: Yup.string().email(Messages.errors.invalidEmail).required(Messages.errors.required),
+          twitter: Yup.string(),
+          discord: Yup.string(),
+          instagram: Yup.string(),
+          website: Yup.string().url(Messages.errors.urlError),
+          bio: Yup.string(),
+        })
+        .required(),
+      userAvatar: Yup.object()
+        .shape({
+          profilePicture: Yup.array()
+        }).required(),
+      userBanner: Yup.object()
+        .shape({
+          banner: Yup.array()
+        }).required(),
+    })
 
-  const validationSchema = Yup.object().shape({}).concat(userInfoValidation);
+  });
 
   const createFormData = (values) => {
     return Object.values(values).reduce((formData, formStep) => {
-      Object.keys(formStep).forEach((key) => {
-        if (key !== 'profilePictureUrl' && key !== 'bannerUrl') {
-          const isArray = typeof formStep[key] === 'object';
-
-          if (isArray) {
-            if (!settings?.walletAddress) {
-              formData.append('images', formStep[key]?.[0].file);
-            }
-          } else {
-            formData.append(key, formStep[key]);
-          }
+      Object.keys(formStep).forEach(key => {
+        const isArray = typeof formStep[key] === 'object'
+        if (isArray) {
+          formStep[key].forEach((value) => {
+            formData.append('images', value.file)
+          })
+        } else {
+          formData.append(key, formStep[key])
         }
       });
-
       return formData;
-    }, new FormData());
+    }, new FormData())
   };
 
   const handleCnsSync = async () => {
@@ -106,29 +109,24 @@ export default function EditProfile() {
     setIsFetchCns(false);
   };
 
-  const onSubmit = useCallback(async (values) => {
+  const onSubmit = async (values) => {
     try {
-      const formData = createFormData({
-        ...values,
-        [editProfileFormFields[0].key]: {
-          ...values[editProfileFormFields[0].key],
-          walletAddress: user?.address,
-        },
-      });
 
-      const response = settings?.walletAddress
-        ? await requestUpdateSettings(formData)
-        : await requestNewSettings(formData);
+      const response = settings?.data?.walletAddress
+        ? await requestUpdateSettings(values)
+        : await requestNewSettings(values);
       if (!response || response?.message?.error) {
         toast.error('Something went wrong!');
       } else {
-        toast.success('Your collection was saved successfully');
+        toast.success('Your profile was saved successfully');
       }
+      updateProfileSettings();
+
     } catch (error) {
       console.log(error);
       toast.error('Error');
     }
-  }, []);
+  };
 
   const {
     values,
@@ -142,15 +140,28 @@ export default function EditProfile() {
     validateForm,
   } = useFormik({
     onSubmit,
-    validationSchema,
+    validationSchema: userInfoValidation,
     initialValues: getInitialValues(),
     enableReinitialize: true,
   });
 
-  useEffect(() => {
-    console.log('val', values, errors);
-    setMergedValues(values);
-  }, [values, errors]);
+  const validationForm = async (e) => {
+    const errors = await validateForm(values);
+    if (errors.userInfo) {
+      const keysErrorsGroup = Object.keys(errors.userInfo);
+      if (keysErrorsGroup.length > 0) {
+        e.preventDefault();
+        keysErrorsGroup.forEach(keyGroup => {
+
+          const keysErrorsFields = Object.keys(errors.userInfo[keyGroup]);
+
+          keysErrorsFields.forEach(keyField => {
+            setFieldTouched(`userInfo.${keyGroup}.${keyField}`, true)
+          });
+        })
+      }
+    }
+  }
 
   return (
     <>
@@ -175,11 +186,11 @@ export default function EditProfile() {
               setFieldTouched={setFieldTouched}
               handleBlur={handleBlur}
             />
-            <Bio value={values?.userInfo?.bio} handleChange={handleChange} />
+            <Bio value={values?.userInfo?.userInfo?.bio} handleChange={handleChange} />
           </div>
           <div className="col-12 col-sm-12 col-lg-8">
             <Form
-              values={mergedValues}
+              values={values}
               errors={errors}
               touched={touched}
               handleChange={handleChange}
@@ -193,9 +204,9 @@ export default function EditProfile() {
         </div>
       </form>
       <div className="d-flex justify-content-end mt-5">
-        <button form="userSettings" type="submit" className="btn-main">
-          {settings?.walletAddress ? 'Update Profile' : 'Create Profile'}
-          {loading && (
+        <button form="userSettings" type="submit" className="btn-main" onClick={validationForm}>
+          {settings?.data?.walletAddress ? 'Update Profile' : 'Create Profile'}
+          {(loading || updateLoading) && (
             <Spinner animation="border" role="status" size="sm" className="ms-1">
               <span className="visually-hidden">Loading...</span>
             </Spinner>

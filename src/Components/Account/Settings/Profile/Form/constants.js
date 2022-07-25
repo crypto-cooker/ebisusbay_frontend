@@ -23,7 +23,7 @@ export const editProfileFormFields = [
         key: 'cnsName',
         default: '',
         title: 'Custom URL',
-        isRequired: true,
+        isRequired: false,
         placeholder: 'Enter your custom URL',
         description: 'Your .CRO domain must be set at cronos.domains for sync to work',
       },
@@ -41,7 +41,7 @@ export const editProfileFormFields = [
         key: 'twitter',
         default: '',
         title: 'Twitter Handle',
-        isRequired: true,
+        isRequired: false,
         placeholder: 'Enter Twitter Handle',
         description: '',
       },
@@ -50,7 +50,7 @@ export const editProfileFormFields = [
         key: 'instagram',
         default: '',
         title: 'Instagram Handle',
-        isRequired: true,
+        isRequired: false,
         placeholder: 'Enter Instagram Handle',
         description: '',
       },
@@ -59,7 +59,7 @@ export const editProfileFormFields = [
         key: 'discord',
         default: '',
         title: 'Discord ID',
-        isRequired: true,
+        isRequired: false,
         placeholder: 'Enter Discord ID',
         description: '',
       },
@@ -68,14 +68,14 @@ export const editProfileFormFields = [
         key: 'website',
         default: '',
         title: 'Website',
-        isRequired: true,
+        isRequired: false,
         placeholder: 'Enter Website URL',
         description: '',
       },
     ],
   },
   {
-    key: 'userInfo',
+    key: 'userAvatar',
     title: 'Upload Assets',
     fields: [
       {
@@ -89,7 +89,7 @@ export const editProfileFormFields = [
     ],
   },
   {
-    key: 'userInfo',
+    key: 'userBanner',
     title: 'Upload Assets',
     fields: [
       {

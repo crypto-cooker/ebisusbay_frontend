@@ -44,7 +44,7 @@ const UploadPfp = ({
       <div className="upload-container overflow-auto">
         {[...Array(numberOfAssets).keys()].map((_, i) => {
           const asset = value.find(({ position }) => position === i);
-
+          
           return (
             <UploadAssetPfp
               key={`${name}-${i}`}

@@ -1,8 +1,10 @@
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import { useState } from 'react';
-// import { appConfig } from '../../../../Config';
+import axios from 'axios';
+
 import useCreateSigner from './useCreateSigner';
-import {createProfile} from "@src/core/cms/endpoints/profile";
+import { appConfig } from "@src/Config";
+import { createProfile } from "@src/core/cms/endpoints/profile";
 
 const useCreateSettings = () => {
   const [response, setResponse] = useState({
@@ -12,23 +14,38 @@ const useCreateSettings = () => {
 
   const [isLoading, getSigner] = useCreateSigner();
 
-  const requestNewSettings = async (formData) => {
+  const requestNewSettings = async (data) => {
+
+    const config = appConfig();
+
+    const { userInfo, userBanner, userAvatar } = data.userInfo;
+
     setResponse({
       ...response,
       loading: true,
       error: null,
     });
-
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     const nonce = 'ProfileSettings';
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;
     }
-
     if (signatureInStorage) {
       try {
-        const fetchResponse = await createProfile(formData, signatureInStorage, nonce);
+        const fetchResponse = await createProfile(userInfo, signatureInStorage, nonce);
+
+        if (userAvatar?.profilePicture[0]?.file?.name) {
+          const formData = new FormData();
+          formData.append('profilePicture', userAvatar?.profilePicture[0].file);
+          await axios.patch(`${config.urls.cms}profile/avatar?signature=${signatureInStorage}&nonce=${nonce}`, formData);
+        }
+        
+        if (userBanner?.banner[0]?.file?.name) {
+          const formData = new FormData();
+          formData.append('banner', userBanner?.banner[0].file);
+          await axios.patch(`${config.urls.cms}profile/banner?signature=${signatureInStorage}&nonce=${nonce}`, formData);
+        }
 
         setResponse({
           ...response,
@@ -36,7 +53,7 @@ const useCreateSettings = () => {
           error: null,
         });
 
-        return fetchResponse.json();
+        return fetchResponse;
       } catch (error) {
         setResponse({
           ...response,

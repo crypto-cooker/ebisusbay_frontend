@@ -1,6 +1,6 @@
 import classnames from 'classnames';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamation } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faExclamation } from '@fortawesome/free-solid-svg-icons';
 
 import { UploadBanner } from '../../../../Form';
 import { editProfileFormFields } from '../Form/constants';
@@ -18,12 +18,12 @@ export default function Banner({ values, errors, touched, handleChange, setField
         const { type, ...props } = field;
         const fieldKey = props.key;
         const subFormKey = editProfileFormFields[2].key;
-        const name = `${subFormKey}.${[fieldKey]}`;
+        const name = `userInfo.${subFormKey}.${[fieldKey]}`;
         props.name = name;
         props.key = `${type}-${fieldKey}`;
-        props.value = values[subFormKey][fieldKey];
+        props.value = values.userInfo[subFormKey][fieldKey];
 
-        props.error = touched[subFormKey]?.[fieldKey] ? errors[subFormKey]?.[fieldKey] : undefined;
+        props.error = touched.userInfo?.[subFormKey]?.[fieldKey] ? errors.userInfo?.[subFormKey]?.[fieldKey] : undefined;
 
         if (props.inputType) props.type = props.inputType;
 
