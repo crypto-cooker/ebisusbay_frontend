@@ -489,7 +489,7 @@ export const connectAccount =
         params: [{ chainId: cid }],
       });
 
-      const address = '0xeB3D65434C8Bacb70E47419B3f9fB892eE652a66';
+      const address = accounts[0];
       const signer = provider.getSigner();
 
       if (isUserBlacklisted(address)) {
