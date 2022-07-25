@@ -24,7 +24,7 @@ import {
   chainConnect,
   AccountMenuActions,
   checkForOutstandingOffers,
-  accountChanged,
+  accountChanged, balanceUpdated,
 } from '../../GlobalState/User';
 
 import { getThemeInStorage, setThemeInStorage } from '../../helpers/storage';
@@ -90,10 +90,6 @@ const AccountMenu = function () {
     fetcher: fetcher(user?.provider, ERC20),
   });
 
-  const signer = user?.provider?.getSigner();
-  const market = new Contract(config.contracts.market, Market.abi, signer);
-  const sc = new Contract(config.contracts.stake, StakeABI.abi, signer);
-
   useEffect(() => {
     dispatch(
       accountChanged({
@@ -104,11 +100,11 @@ const AccountMenu = function () {
 
   useInterval(() => {
     async function func() {
-      if (signer) {
-        const sales = ethers.utils.formatEther(await market.payments(walletAddress));
-        const stakingRewards = ethers.utils.formatEther(await sc.getReward(walletAddress));
+      if (user && !user.connectingWallet && user.provider) {
+        const sales = ethers.utils.formatEther(await user.marketContract.payments(walletAddress));
+        const stakingRewards = ethers.utils.formatEther(await user.stakeContract.getReward(walletAddress));
         dispatch(
-          accountChanged({
+          balanceUpdated({
             marketBalance: sales | 0,
             stakingRewards: stakingRewards | 0,
           })
