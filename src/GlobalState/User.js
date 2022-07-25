@@ -59,7 +59,7 @@ const userSlice = createSlice({
     // Contracts
     membershipContract: null,
     marketContract: null,
-    stateContract: null,
+    stakeContract: null,
     auctionContract: null,
     offerContract: null,
     cnsContract: null,
@@ -302,9 +302,9 @@ const userSlice = createSlice({
         state.web3modal.clearCachedProvider();
       }
       state.web3modal = null;
-      state.provider = null;
       localStorage.clear();
       state.address = '';
+      state.provider = null;
       state.balance = null;
       state.rewards = null;
       state.marketBalance = null;
@@ -326,7 +326,15 @@ const userSlice = createSlice({
       state.theme = action.payload;
     },
     balanceUpdated(state, action) {
-      state.balance = action.payload;
+      if (action.payload.balance) {
+        state.balance = action.payload.balance;
+      }
+      if (action.payload.marketBalance) {
+        state.marketBalance = action.payload.marketBalance;
+      }
+      if (action.payload.stakingRewards) {
+        state.stakingRewards = action.payload.stakingRewards;
+      }
     },
     setVIPCount(state, action) {
       state.vipCount = action.payload;
@@ -378,6 +386,7 @@ export const {
   onLogout,
   elonContract,
   onThemeChanged,
+  balanceUpdated,
   setVIPCount,
   setStakeCount,
   onOutstandingOffersFound,
@@ -571,7 +580,6 @@ export const connectAccount =
           console.log('Error checking CRO balance', error);
         }
       }
-
       await dispatch(
         accountChanged({
           address: address,
