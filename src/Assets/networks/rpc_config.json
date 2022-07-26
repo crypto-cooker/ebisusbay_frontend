@@ -6469,6 +6469,25 @@
         "twitter": "https://twitter.com/cronos_tiger",
         "discord": "https://discord.gg/JdXKXS3gDn"
       }
+    },
+    {
+      "name": "Stoned Cobras",
+      "slug": "stoned-cobras",
+      "multiToken": false,
+      "address": "0x90589753d2A1071f931a323711911675Ae3120aa",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "5500 Stoned Cobras have joined the Cronos kingdom. Created from over 85 attributes with mint variations in the millions, you can expect a completely unique stoned cobra to represent you in the Cronos kingdom.",
+        "verified": false,
+        "avatar": "/img/collections/stoned-cobras/avatar.webp",
+        "card": "/img/collections/stoned-cobras/card.webp",
+        "banner": "/img/collections/stoned-cobras/banner.webp",
+        "maxSupply": 5500,
+        "website": "https://www.stonedcobras.com",
+        "twitter": "https://twitter.com/CronosKingdom",
+        "discord": "https://discord.gg/fnJvtw65QJ"
+      }
     }
   ],
   "drops": [
