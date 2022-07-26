@@ -6507,6 +6507,26 @@
         "twitter": "https://twitter.com/warbunnys",
         "discord": "https://discord.gg/pdavJWvyme"
       }
+    },
+    {
+      "name": "Ryborgs",
+      "slug": "ryborgs",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "RYBORG: THE BUNKER is the first NFT trading/investment project on the Cronos Chain. Backed by TradingFXVPS, RYBORG aims to create an investment DAO that shares 80% profit sharing through diversification of portfolio through Stock, Forex, DeFi, NFT, Coins & Tokens. Only 1,000 unique RYBORG will be available on the 1st round.",
+        "verified": true,
+        "avatar": "/img/collections/ryborgs/avatar.webp",
+        "card": "/img/collections/ryborgs/card.webp",
+        "banner": "/img/collections/ryborgs/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://www.tradingfxvps.com/nft-vps/",
+        "twitter": "https://twitter.com/TradingfxvpsO",
+        "discord": "https://discord.gg/ryborgsnft",
+        "medium": "https://www.tradingfxvps.com/nft-vps/utility/"
+      }
     }
   ],
   "drops": [
@@ -9078,6 +9098,38 @@
       "memberCost": "300",
       "foundersOnly": false,
       "start": 1659124800000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 92,
+      "slug": "ryborgs",
+      "imgNft": "/img/drops/ryborgs/drop.webp",
+      "imgPreview": "/img/drops/ryborgs/drop.webp",
+      "imgAvatar": "/img/collections/ryborgs/avatar.webp",
+      "imgBanner": "/img/drops/ryborgs/banner.webp",
+      "title": "Ryborgs",
+      "subtitle": "RYBORG: THE BUNKER is the first NFT trading/investment project on the Cronos Chain. Backed by TradingFXVPS, RYBORG aims to create an investment DAO that shares 80% profit sharing through diversification of portfolio through Stock, Forex, DeFi, NFT, Coins & Tokens. Only 1,000 unique RYBORG will be available on the 1st round.",
+      "description": "RYBORG NFT is a license to gain access to a huge trading opportunity and trading tools to increase trading experience and performance.\nThrough various partnerships and vast experience TradingFXVPS had in the industry, RYBORG NFT aims to bring in the most profitable investment DAO available on the Cronos Chain. 100% of the secondary sales will be used for the investment DAO and 80% of the profit will be shared to RYBORG owners. \n\nBesides being in a part of the first investment DAO in Cronos Chain, RYBORG offer a wide variety of other utility for a trader/investor/artist:\n\n> Access to Signals Trade Call aka Bunker Trading Hall across Stocks, Forex, Commodities, NFT, De-Fi and Cryptocurrency \n> VIP Membership to TradingFXVPS VPS & Dedicated Server services\n> Community-based Merchandise Specialty shop\n> Earn Loyalty Token $RBG",
+      "author": {
+        "name": "Ryborgs",
+        "website": "https://www.tradingfxvps.com/nft-vps/",
+        "twitter": "https://twitter.com/TradingfxvpsO",
+        "discord": "https://discord.gg/ryborgsnft",
+        "medium": "https://www.tradingfxvps.com/nft-vps/utility/"
+      },
+      "address": "",
+      "maxMintPerTx": 5,
+      "maxMintPerAddress": 100,
+      "totalSupply": 1000,
+      "cost": "800",
+      "memberCost": "680",
+      "whitelistCost": "560",
+      "foundersOnly": false,
+      "start": 1659297600000,
       "end": null,
       "referral": false,
       "is1155": false,
