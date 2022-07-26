@@ -6430,6 +6430,83 @@
         "discord": "https://discord.gg/HTsURzuJVt",
         "medium": "https://medium.com/@noodlesclubnft"
       }
+    },
+    {
+      "name": "DarkNFT",
+      "slug": "dark-nft",
+      "multiToken": false,
+      "address": "0x6914Fe6f6eFD155709017501a74ef4A66bd99133",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "DarkNFT is a limited collection of 9,999 unique and programmatically generated characters from over 160 possible traits, including backgrounds, bodies, faces, weapons, and drones, with proof of ownership stored on any chains that DarkCrypto exists.",
+        "verified": false,
+        "avatar": "/img/collections/dark-nft/avatar.webp",
+        "card": "/img/collections/dark-nft/card.webp",
+        "banner": "/img/collections/dark-nft/banner.webp",
+        "maxSupply": 9999,
+        "website": "https://www.darkcrypto.finance/",
+        "twitter": "https://twitter.com/DarkCryptoFi",
+        "discord": "https://discord.gg/qXNzYhhzFU",
+        "medium": "https://medium.com/@darkcryptofi",
+        "telegram": "https://t.me/darkcryptofi"
+      }
+    },
+    {
+      "name": "Cronos Tiger V2",
+      "slug": "cronos-tiger-v2",
+      "multiToken": false,
+      "address": "0x18F15FEE8d8f4c9F1cF00DeD0419282C0cEa83EF",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Second collection of Cronos Tiger, its time for new traits and new utility. Staking pool is available from the launch. At 50% of mint we start the ICO of our coin and about 1 week later it will be available in beta test our game for all holders. Join discord try to win the weekly giveaways",
+        "verified": false,
+        "avatar": "/img/collections/cronos-tiger-v2/avatar.webp",
+        "card": "/img/collections/cronos-tiger-v2/card.webp",
+        "banner": "/img/collections/cronos-tiger-v2/banner.webp",
+        "maxSupply": 5000,
+        "twitter": "https://twitter.com/cronos_tiger",
+        "discord": "https://discord.gg/JdXKXS3gDn"
+      }
+    },
+    {
+      "name": "Stoned Cobras",
+      "slug": "stoned-cobras",
+      "multiToken": false,
+      "address": "0x90589753d2A1071f931a323711911675Ae3120aa",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "5500 Stoned Cobras have joined the Cronos kingdom. Created from over 85 attributes with mint variations in the millions, you can expect a completely unique stoned cobra to represent you in the Cronos kingdom.",
+        "verified": false,
+        "avatar": "/img/collections/stoned-cobras/avatar.webp",
+        "card": "/img/collections/stoned-cobras/card.webp",
+        "banner": "/img/collections/stoned-cobras/banner.webp",
+        "maxSupply": 5500,
+        "website": "https://www.stonedcobras.com",
+        "twitter": "https://twitter.com/CronosKingdom",
+        "discord": "https://discord.gg/fnJvtw65QJ"
+      }
+    },
+    {
+      "name": "War Bunnys",
+      "slug": "war-bunnys",
+      "multiToken": false,
+      "address": "0x687503672a57EC1d7E83f4D6e8036Ab9268E791E",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "War Bunnys are a race of experimental bunnies developed by Bunny Labs. They were designed to exhibit supernatural abilities while simultaneously retaining the cuteness of ordinary bunnies. Bunny labs therefore designed obstacle courses to put their creations to the test.",
+        "verified": false,
+        "avatar": "/img/collections/war-bunnys/avatar.webp",
+        "card": "/img/collections/war-bunnys/card.webp",
+        "banner": "/img/collections/war-bunnys/banner.webp",
+        "maxSupply": 2000,
+        "website": "https://warbunnys.com/",
+        "twitter": "https://twitter.com/warbunnys",
+        "discord": "https://discord.gg/pdavJWvyme"
+      }
     }
   ],
   "drops": [
@@ -8968,7 +9045,6 @@
       "totalSupply": 200 ,
       "cost": "2000",
       "memberCost": "1600",
-      "whitelistCost": "",
       "foundersOnly": false,
       "start": 1658952000000 ,
       "end": null,
