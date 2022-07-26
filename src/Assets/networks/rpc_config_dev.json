@@ -6488,6 +6488,25 @@
         "twitter": "https://twitter.com/CronosKingdom",
         "discord": "https://discord.gg/fnJvtw65QJ"
       }
+    },
+    {
+      "name": "War Bunnys",
+      "slug": "war-bunnys",
+      "multiToken": false,
+      "address": "0x687503672a57EC1d7E83f4D6e8036Ab9268E791E",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "War Bunnys are a race of experimental bunnies developed by Bunny Labs. They were designed to exhibit supernatural abilities while simultaneously retaining the cuteness of ordinary bunnies. Bunny labs therefore designed obstacle courses to put their creations to the test.",
+        "verified": false,
+        "avatar": "/img/collections/war-bunnys/avatar.webp",
+        "card": "/img/collections/war-bunnys/card.webp",
+        "banner": "/img/collections/war-bunnys/banner.webp",
+        "maxSupply": 2000,
+        "website": "https://warbunnys.com/",
+        "twitter": "https://twitter.com/warbunnys",
+        "discord": "https://discord.gg/pdavJWvyme"
+      }
     }
   ],
   "drops": [
