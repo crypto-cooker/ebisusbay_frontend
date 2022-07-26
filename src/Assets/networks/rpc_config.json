@@ -6451,6 +6451,24 @@
         "medium": "https://medium.com/@darkcryptofi",
         "telegram": "https://t.me/darkcryptofi"
       }
+    },
+    {
+      "name": "Cronos Tiger V2",
+      "slug": "cronos-tiger-v2",
+      "multiToken": false,
+      "address": "0x18F15FEE8d8f4c9F1cF00DeD0419282C0cEa83EF",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Second collection of Cronos Tiger, its time for new traits and new utility. Staking pool is available from the launch. At 50% of mint we start the ICO of our coin and about 1 week later it will be available in beta test our game for all holders. Join discord try to win the weekly giveaways",
+        "verified": false,
+        "avatar": "/img/collections/cronos-tiger-v2/avatar.webp",
+        "card": "/img/collections/cronos-tiger-v2/card.webp",
+        "banner": "/img/collections/cronos-tiger-v2/banner.webp",
+        "maxSupply": 5000,
+        "twitter": "https://twitter.com/cronos_tiger",
+        "discord": "https://discord.gg/JdXKXS3gDn"
+      }
     }
   ],
   "drops": [
