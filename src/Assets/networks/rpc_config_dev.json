@@ -6527,6 +6527,25 @@
         "discord": "https://discord.gg/ryborgsnft",
         "medium": "https://www.tradingfxvps.com/nft-vps/utility/"
       }
+    },
+    {
+      "name": "Crovilians",
+      "slug": "crovilians",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Crovilians are the citizens of The CronosVerse and have various traits representing the many societal roles required in both the metaverse and in the physical world. While each Crovilian’s unique traits represent real life roles in our society, all Crovilians are created equal in terms of access to The CronosVerse. Holding a Crovilian NFT will grant access to The CronosVerse and allow the owner to create a custom avatar to be used in our metaverse.",
+        "verified": true,
+        "avatar": "/img/collections/crovilians/avatar.webp",
+        "card": "/img/collections/crovilians/card.webp",
+        "banner": "/img/collections/crovilians/banner.webp",
+        "maxSupply": 8000,
+        "website": "https://thecronosverse.com/",
+        "twitter": "https://twitter.com/TheCronosVerse",
+        "discord": "https://discord.gg/E9Mzzy9Hex"
+      }
     }
   ],
   "drops": [
@@ -9105,7 +9124,7 @@
       "complete": false
     },
     {
-      "id": 92,
+      "id": 93,
       "slug": "ryborgs",
       "imgNft": "/img/drops/ryborgs/drop.webp",
       "imgPreview": "/img/drops/ryborgs/drop.webp",
@@ -9130,6 +9149,37 @@
       "whitelistCost": "560",
       "foundersOnly": false,
       "start": 1659297600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 94,
+      "slug": "crovilians",
+      "imgNft": "/img/drops/crovilians/drop.webp",
+      "imgPreview": "/img/drops/crovilians/drop.webp",
+      "imgAvatar": "/img/collections/cronosverse/avatar.webp",
+      "imgBanner": "/img/collections/crovilians/banner.webp",
+      "title": "Crovilians",
+      "subtitle": "The Crovilians are the citizens of The CronosVerse and have various traits representing the many societal roles required in both the metaverse and in the physical world.",
+      "description": "The Crovilians are the citizens of The CronosVerse and have various traits representing the many societal roles required in both the metaverse and in the physical world. While each Crovilian’s unique traits represent real life roles in our society, all Crovilians are created equal in terms of access to The CronosVerse. Holding a Crovilian NFT will grant access to The CronosVerse and allow the owner to create a custom avatar to be used in our metaverse.",
+      "author": {
+        "name": "CronosVerse",
+        "website": "https://thecronosverse.com/",
+        "twitter": "https://twitter.com/TheCronosVerse",
+        "discord": "https://discord.gg/E9Mzzy9Hex"
+      },
+      "address": "",
+      "maxMintPerTx": 5,
+      "maxMintPerAddress": 100,
+      "totalSupply": 8000,
+      "cost": "600",
+      "memberCost": "550",
+      "whitelistCost": "500",
+      "foundersOnly": false,
+      "start": 1659477600000,
       "end": null,
       "referral": false,
       "is1155": false,
