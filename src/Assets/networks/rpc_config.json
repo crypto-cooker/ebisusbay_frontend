@@ -6978,7 +6978,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "video": "https://app.ebisusbay.com/files/magbrewvikings/trailer.mp4",
       "mediaPosition": "left"
     },
@@ -7790,7 +7790,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "featured": false,
       "redirect": "https://lootpad.io/collection/slavikfruitfarm"
