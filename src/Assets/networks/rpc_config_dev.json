@@ -6430,6 +6430,27 @@
         "discord": "https://discord.gg/HTsURzuJVt",
         "medium": "https://medium.com/@noodlesclubnft"
       }
+    },
+    {
+      "name": "DarkNFT",
+      "slug": "dark-nft",
+      "multiToken": false,
+      "address": "0x6914Fe6f6eFD155709017501a74ef4A66bd99133",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "DarkNFT is a limited collection of 9,999 unique and programmatically generated characters from over 160 possible traits, including backgrounds, bodies, faces, weapons, and drones, with proof of ownership stored on any chains that DarkCrypto exists.",
+        "verified": false,
+        "avatar": "/img/collections/dark-nft/avatar.webp",
+        "card": "/img/collections/dark-nft/card.webp",
+        "banner": "/img/collections/dark-nft/banner.webp",
+        "maxSupply": 9999,
+        "website": "https://www.darkcrypto.finance/",
+        "twitter": "https://twitter.com/DarkCryptoFi",
+        "discord": "https://discord.gg/qXNzYhhzFU",
+        "medium": "https://medium.com/@darkcryptofi",
+        "telegram": "https://t.me/darkcryptofi"
+      }
     }
   ],
   "drops": [
