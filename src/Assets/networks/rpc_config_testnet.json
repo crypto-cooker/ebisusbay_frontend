@@ -1424,6 +1424,25 @@
       "metadata": {
         "verified": false
       }
+    },
+    {
+      "name": "Everybody's not friends",
+      "slug": "everybodys-not-friends",
+      "multiToken": false,
+      "address": "0xFCd08C7BE680b36522BA87240B296377A80a01D0",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Everybody's not friends is a handcrafted set of unique and rare 1/1 collectible characters and animations created by timebeam. This is a community driven passion project. The purpose of this project is to build a community which promotes friendship through a set of humorous 3D cartoon characters, animations and monthly live streamed brawls.",
+        "verified": true,
+        "avatar": "/img/collections/everybodysnf/avatar.png",
+        "card": "/img/collections/everybodysnf/card.png",
+        "banner": "/img/collections/everybodysnf/banner.png",
+        "maxSupply": 200,
+        "website": "https://timebeam.myportfolio.com/everybodys-friends",
+        "twitter": "https://twitter.com/everybdyfriends",
+        "discord": "https://discord.com/invite/3MmDxXpB5P"
+      }
     }
   ],
   "drops": [
@@ -3145,6 +3164,36 @@
       "whitelistCost": "399",
       "foundersOnly": false,
       "start": 1658360550000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 91,
+      "slug": "everybodys-not-friends",
+      "imgNft": "/img/drops/everybodysnf/drop.png",
+      "imgPreview": "/img/drops/everybodysnf/drop.png",
+      "imgAvatar": "/img/collections/everybodysnf/avatar.png",
+      "imgBanner": "/img/collections/everybodysnf/banner.png",
+      "title": "Everybody's Not Friends",
+      "subtitle": "Everybody's not friends is a handcrafted set of unique and rare 1/1 collectible characters and animations created by timebeam. This is a community driven passion project. The purpose of this project is to build a community which promotes friendship through a set of humorous 3D cartoon characters, animations and monthly live streamed brawls.",
+      "description": "Everybody's not friends is a handcrafted set of unique and rare 1/1 collectible characters and animations created by timebeam. The purpose of this project is to build a community which promotes friendship through a set of humorous 3D cartoon characters, animations and monthly live streamed brawls. All the everybody's not friends characters are rigged for character animation. When you purchase a friend you are taking the next step in the everybody’s not friends community. Friends will get the exclusive opportunity to participate in brawl night! Once a month we will pick two random NFT holders and their characters will brawl. The fighters and winner will be determined by a mini app we developed called 'the random generator'. The fight will be animated based on the outcome of the random generator. We will do a live stream of the animated fight. Winners will win some cool prizes and crypto! Come join our community and lets have some fun!",
+      "author": {
+        "name": "Everybody's not friends",
+        "website": "https://timebeam.myportfolio.com/everybodys-friends",
+        "twitter": "https://twitter.com/everybdyfriends",
+        "discord": "https://discord.com/invite/3MmDxXpB5P"
+      },
+      "address": "0xFCd08C7BE680b36522BA87240B296377A80a01D0",
+      "maxMintPerTx": 5,
+      "maxMintPerAddress": 100,
+      "totalSupply": 200,
+      "cost": "2000",
+      "memberCost": "1600",
+      "foundersOnly": false,
+      "start": 1658852983000,
       "end": null,
       "referral": false,
       "is1155": false,
