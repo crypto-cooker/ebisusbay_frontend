@@ -265,7 +265,7 @@ const Nft721 = ({ address, id }) => {
         const contract = new Contract(address, abiFile.abi, readProvider);
         try {
           const numChildren = await contract.numChildren(id);
-          setLadyWeirdApeChildren(numChildren);
+          setLadyWeirdApeChildren(3 - numChildren);
         } catch (error) {
           console.log(error);
         }
@@ -417,7 +417,7 @@ const Nft721 = ({ address, id }) => {
                         bgColor={'#ffffff00'}
                         color={'#dc143c'}
                         inverse={false}
-                        title="This Crognomide has been bred for a Croby!"
+                        title={`This Lady Weird Ape has had ${ladyWeirdApeChildren} ${ladyWeirdApeChildren === 1 ? 'child' : 'children'}`}
                       />
                       <span className="fw-bold">This Lady Weird Ape has had {`${ladyWeirdApeChildren} ${ladyWeirdApeChildren === 1 ? 'child' : 'children'}`}</span>
                     </div>
