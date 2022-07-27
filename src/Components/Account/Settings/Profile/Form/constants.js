@@ -44,6 +44,7 @@ export const editProfileFormFields = [
         isRequired: false,
         placeholder: 'Enter Twitter Handle',
         description: '',
+        addOn: '@',
       },
       {
         type: FormType.field,
