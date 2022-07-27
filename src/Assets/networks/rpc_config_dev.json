@@ -6319,7 +6319,7 @@
       "name": "Everybody's not friends",
       "slug": "everybodys-not-friends",
       "multiToken": false,
-      "address": "",
+      "address": "0x1eca64187AD00A86360D62f1CD4409Dc1A136B45",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -9078,7 +9078,7 @@
         "twitter": "https://twitter.com/everybdyfriends",
         "discord": "https://discord.com/invite/3MmDxXpB5P"
       },
-      "address": "",
+      "address": "0x1eca64187AD00A86360D62f1CD4409Dc1A136B45",
       "maxMintPerTx": 5,
       "maxMintPerAddress": 100 ,
       "totalSupply": 200 ,
