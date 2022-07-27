@@ -96,8 +96,7 @@ export default function EditProfile() {
     const userInfo = values?.userInfo;
     const tempData = {
       userInfo: {
-        ...userInfo,
-        cnsName,
+        username: cnsName,
         twitter: cnsInfo?.twitter || userInfo?.twitter,
         discord: cnsInfo?.discord || userInfo?.discord,
         instagram: cnsInfo?.instagram || userInfo?.instagram,
@@ -108,6 +107,14 @@ export default function EditProfile() {
     setMergedValues(tempData);
     setIsFetchCns(false);
   };
+
+  useEffect(() => {
+    if (!mergedValues) return;
+
+    for(const [key, value] of Object.entries(mergedValues.userInfo)) {
+      formikProps.setFieldValue(`userInfo.userInfo.${key}`, value)
+    }
+  }, [mergedValues]);
 
   const onSubmit = async (values) => {
     try {
@@ -128,6 +135,12 @@ export default function EditProfile() {
     }
   };
 
+  const formikProps = useFormik({
+    onSubmit,
+    validationSchema: userInfoValidation,
+    initialValues: getInitialValues(),
+    enableReinitialize: true,
+  });
   const {
     values,
     errors,
@@ -138,12 +151,7 @@ export default function EditProfile() {
     handleBlur,
     handleSubmit,
     validateForm,
-  } = useFormik({
-    onSubmit,
-    validationSchema: userInfoValidation,
-    initialValues: getInitialValues(),
-    enableReinitialize: true,
-  });
+  } = formikProps;
 
   const validationForm = async (e) => {
     const errors = await validateForm(values);

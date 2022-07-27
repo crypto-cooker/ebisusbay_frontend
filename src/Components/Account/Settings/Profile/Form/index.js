@@ -1,6 +1,9 @@
 import { editProfileFormFields } from './constants';
 import { Field, RadioGroup, UploadAssetGroup } from '../../../../Form';
 import Button from '@src/Components/components/common/Button';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCoffee, faSync} from "@fortawesome/free-solid-svg-icons";
+import React from "react";
 
 export default function Form({
   values,
@@ -16,6 +19,12 @@ export default function Form({
   return (
     <div>
       <h2>Edit Profile</h2>
+      <div className="d-flex flex-row">
+        <div className="my-auto me-2">Sync profile information from Cronos Domain Service</div>
+        <Button type="button" className="px-3 py-1" onClick={handleCnsSync} isLoading={isCnsSync}>
+          Sync
+        </Button>
+      </div>
       <div>
         {editProfileFormFields[0].fields.map((field, index) => {
           const { type, ...props } = field;

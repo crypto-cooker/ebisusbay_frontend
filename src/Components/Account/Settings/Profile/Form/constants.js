@@ -20,15 +20,6 @@ export const editProfileFormFields = [
       },
       {
         type: FormType.field,
-        key: 'cnsName',
-        default: '',
-        title: 'Custom URL',
-        isRequired: false,
-        placeholder: 'Enter your custom URL',
-        description: 'Your .CRO domain must be set at cronos.domains for sync to work',
-      },
-      {
-        type: FormType.field,
         key: 'email',
         default: '',
         title: 'Email Address',

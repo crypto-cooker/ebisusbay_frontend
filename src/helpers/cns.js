@@ -28,7 +28,7 @@ export const getCnsInfo = async (address) => {
   if (!address || !readProvider) return;
 
   try {
-    const cns = new CNS(config.chain_id, readProvider);
+    const cns = new CNS(config.chain.id, readProvider);
     const cnsProfile = {};
     cnsProfile.name = await cns.getName(address);
     if (cnsProfile.name) {
