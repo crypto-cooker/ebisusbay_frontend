@@ -7,6 +7,7 @@ import IPFSGatewayTools from '@pinata/ipfs-gateway-tools/dist/node';
 import { getCnsName } from './helpers/cns';
 import { appConfig } from './Config';
 import { hostedImage } from './helpers/image';
+import {getProfile} from "@src/core/cms/endpoints/profile";
 
 const drops = appConfig('drops');
 const collections = appConfig('collections');
@@ -602,10 +603,10 @@ export const isAddress = (address) => {
 };
 
 export const getUserDisplayName = async (address) => {
-  let cnsName = await getCnsName(address);
-  if (Array.isArray(cnsName)) cnsName = cnsName[0];
+  let profile = await getProfile(address);
+  if (profile?.data) return profile.data.username;
 
-  return cnsName ?? shortAddress(address);
+  return shortAddress(address);
 };
 
 export const isEmptyObj = (obj) => {

@@ -260,7 +260,7 @@ const AccountMenu = function () {
                 <h4>My Wallet</h4>
                 <div className="d-flex justify-content-between">
                   <span id="wallet" className="d-wallet-address">
-                    {user.cnsProfile?.name ?? shortAddress(walletAddress)}
+                    {user.profile?.username ?? shortAddress(walletAddress)}
                   </span>
                   <button className="btn_menu" title="Copy Address" onClick={handleCopy(walletAddress)}>
                     Copy
