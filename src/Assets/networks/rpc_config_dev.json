@@ -2,12 +2,12 @@
   "name": "Cronos Mainnet Beta",
   "chain_id": "25",
   "write_rpc": "https://evm.cronos.org/",
-  "read_rpc": "https://gateway.nebkas.ro",
+  "read_rpc": "https://gateway.nebkas.ro/",
   "symbol": "CRO",
   "explorer": "https://cronoscan.com/",
-  "api_base": "https://api.ebisusbay.biz/",
-  "app_base": "https://app.ebisusbay.biz/",
-  "cdn_base": "https://cdn.ebisusbay.biz/",
+  "api_base": "https://api.ebisusbay.com/",
+  "app_base": "https://app.ebisusbay.com/",
+  "cdn_base": "https://cdn.ebisusbay.com/",
   "subgraph_base": "https://graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/",
   "membership_contract": "0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5",
   "auction_contract": "0xd488b38d19d5708cbda224c041a24c3e3149bc93",
@@ -1265,8 +1265,8 @@
         "banner": "/img/collections/cronosgoats/banner.webp",
         "maxSupply": 1000,
         "website": "https://cronosgoats.com/",
-        "twitter": "https://twitter.com/CronosGoatsNFT",
-        "discord": "https://discord.gg/vgjPUqcCJ7"
+        "twitter": "https://twitter.com/boarsgonewild",
+        "discord": "https://discord.gg/gC9ZVKDYZY"
       }
     },
     {
@@ -2866,7 +2866,7 @@
         "maxSupply": 1000,
         "website": "https://www.boarsgonewild.app",
         "twitter": "https://twitter.com/boarsgonewild",
-        "discord": "https://discord.gg/nA33tCUphh"
+        "discord": "https://discord.gg/gC9ZVKDYZY"
       }
     },
     {
@@ -3061,9 +3061,9 @@
         "card": "/img/collections/cronosgoats/badbillygoats/card.png",
         "banner": "/img/collections/cronosgoats/badbillygoats/banner.png",
         "maxSupply": 8888,
-        "twitter": "https://twitter.com/CronosGoatsNFT",
         "website": "https://www.cronosgoats.com/",
-        "discord": "https://discord.com/invite/EBuTEBtaG6"
+        "twitter": "https://twitter.com/boarsgonewild",
+        "discord": "https://discord.gg/gC9ZVKDYZY"
       }
     },
     {
@@ -5807,7 +5807,7 @@
       "multiToken": false,
       "address": "0x7fbbD577E8D6510f6e5Cb19c477B9A5e050D411F",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "\"Launch The Enforcers\" is the First 3D collection From New America NFT. With a storyline emerging from a comic book story, New America NFT takes a step into the Gaming world of things with their soon to release play to earn video game. New America NFT continues to add value with staking, and also Earning 3D assets for game play for simply holding and NFT. Enjoy customizations, monthly CRO rewards, and more through their discord community.",
         "verified": false,
@@ -6107,7 +6107,7 @@
       "multiToken": false,
       "address": "0xE936eEbB581F5142412eA3918FC649d9B006bC10",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "\"Launch The Enforcers\" is the First 3D collection From New America NFT. With a storyline emerging from a comic book story, New America NFT takes a step into the Gaming world of things with their soon to release play to earn video game. New America NFT continues to add value with staking, and also Earning 3D assets for game play for simply holding and NFT. Enjoy customizations, monthly CRO rewards, and more through their discord community.",
         "verified": false,
@@ -6319,7 +6319,7 @@
       "name": "Everybody's not friends",
       "slug": "everybodys-not-friends",
       "multiToken": false,
-      "address": "",
+      "address": "0x1eca64187AD00A86360D62f1CD4409Dc1A136B45",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -6429,6 +6429,122 @@
         "twitter": "https://twitter.com/noodlesclubnft",
         "discord": "https://discord.gg/HTsURzuJVt",
         "medium": "https://medium.com/@noodlesclubnft"
+      }
+    },
+    {
+      "name": "DarkNFT",
+      "slug": "dark-nft",
+      "multiToken": false,
+      "address": "0x6914Fe6f6eFD155709017501a74ef4A66bd99133",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "DarkNFT is a limited collection of 9,999 unique and programmatically generated characters from over 160 possible traits, including backgrounds, bodies, faces, weapons, and drones, with proof of ownership stored on any chains that DarkCrypto exists.",
+        "verified": false,
+        "avatar": "/img/collections/dark-nft/avatar.webp",
+        "card": "/img/collections/dark-nft/card.webp",
+        "banner": "/img/collections/dark-nft/banner.webp",
+        "maxSupply": 9999,
+        "website": "https://www.darkcrypto.finance/",
+        "twitter": "https://twitter.com/DarkCryptoFi",
+        "discord": "https://discord.gg/qXNzYhhzFU",
+        "medium": "https://medium.com/@darkcryptofi",
+        "telegram": "https://t.me/darkcryptofi"
+      }
+    },
+    {
+      "name": "Cronos Tiger V2",
+      "slug": "cronos-tiger-v2",
+      "multiToken": false,
+      "address": "0x18F15FEE8d8f4c9F1cF00DeD0419282C0cEa83EF",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Second collection of Cronos Tiger, its time for new traits and new utility. Staking pool is available from the launch. At 50% of mint we start the ICO of our coin and about 1 week later it will be available in beta test our game for all holders. Join discord try to win the weekly giveaways",
+        "verified": false,
+        "avatar": "/img/collections/cronos-tiger-v2/avatar.webp",
+        "card": "/img/collections/cronos-tiger-v2/card.webp",
+        "banner": "/img/collections/cronos-tiger-v2/banner.webp",
+        "maxSupply": 5000,
+        "twitter": "https://twitter.com/cronos_tiger",
+        "discord": "https://discord.gg/JdXKXS3gDn"
+      }
+    },
+    {
+      "name": "Stoned Cobras",
+      "slug": "stoned-cobras",
+      "multiToken": false,
+      "address": "0x90589753d2A1071f931a323711911675Ae3120aa",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "5500 Stoned Cobras have joined the Cronos kingdom. Created from over 85 attributes with mint variations in the millions, you can expect a completely unique stoned cobra to represent you in the Cronos kingdom.",
+        "verified": false,
+        "avatar": "/img/collections/stoned-cobras/avatar.webp",
+        "card": "/img/collections/stoned-cobras/card.webp",
+        "banner": "/img/collections/stoned-cobras/banner.webp",
+        "maxSupply": 5500,
+        "website": "https://www.stonedcobras.com",
+        "twitter": "https://twitter.com/CronosKingdom",
+        "discord": "https://discord.gg/fnJvtw65QJ"
+      }
+    },
+    {
+      "name": "War Bunnys",
+      "slug": "war-bunnys",
+      "multiToken": false,
+      "address": "0x687503672a57EC1d7E83f4D6e8036Ab9268E791E",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "War Bunnys are a race of experimental bunnies developed by Bunny Labs. They were designed to exhibit supernatural abilities while simultaneously retaining the cuteness of ordinary bunnies. Bunny labs therefore designed obstacle courses to put their creations to the test.",
+        "verified": false,
+        "avatar": "/img/collections/war-bunnys/avatar.webp",
+        "card": "/img/collections/war-bunnys/card.webp",
+        "banner": "/img/collections/war-bunnys/banner.webp",
+        "maxSupply": 2000,
+        "website": "https://warbunnys.com/",
+        "twitter": "https://twitter.com/warbunnys",
+        "discord": "https://discord.gg/pdavJWvyme"
+      }
+    },
+    {
+      "name": "Ryborgs",
+      "slug": "ryborgs",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "RYBORG: THE BUNKER is the first NFT trading/investment project on the Cronos Chain. Backed by TradingFXVPS, RYBORG aims to create an investment DAO that shares 80% profit sharing through diversification of portfolio through Stock, Forex, DeFi, NFT, Coins & Tokens. Only 1,000 unique RYBORG will be available on the 1st round.",
+        "verified": true,
+        "avatar": "/img/collections/ryborgs/avatar.webp",
+        "card": "/img/collections/ryborgs/card.webp",
+        "banner": "/img/collections/ryborgs/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://www.tradingfxvps.com/nft-vps/",
+        "twitter": "https://twitter.com/TradingfxvpsO",
+        "discord": "https://discord.gg/ryborgsnft",
+        "medium": "https://www.tradingfxvps.com/nft-vps/utility/"
+      }
+    },
+    {
+      "name": "Crovilians",
+      "slug": "crovilians",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Crovilians are the citizens of The CronosVerse and have various traits representing the many societal roles required in both the metaverse and in the physical world. While each Crovilian’s unique traits represent real life roles in our society, all Crovilians are created equal in terms of access to The CronosVerse. Holding a Crovilian NFT will grant access to The CronosVerse and allow the owner to create a custom avatar to be used in our metaverse.",
+        "verified": true,
+        "avatar": "/img/collections/crovilians/avatar.webp",
+        "card": "/img/collections/crovilians/card.webp",
+        "banner": "/img/collections/crovilians/banner.webp",
+        "maxSupply": 8000,
+        "website": "https://thecronosverse.com/",
+        "twitter": "https://twitter.com/TheCronosVerse",
+        "discord": "https://discord.gg/E9Mzzy9Hex"
       }
     }
   ],
@@ -6978,7 +7094,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "video": "https://app.ebisusbay.com/files/magbrewvikings/trailer.mp4",
       "mediaPosition": "left"
     },
@@ -8962,13 +9078,12 @@
         "twitter": "https://twitter.com/everybdyfriends",
         "discord": "https://discord.com/invite/3MmDxXpB5P"
       },
-      "address": "",
+      "address": "0x1eca64187AD00A86360D62f1CD4409Dc1A136B45",
       "maxMintPerTx": 5,
       "maxMintPerAddress": 100 ,
       "totalSupply": 200 ,
       "cost": "2000",
       "memberCost": "1600",
-      "whitelistCost": "",
       "foundersOnly": false,
       "start": 1658952000000 ,
       "end": null,
@@ -9002,6 +9117,69 @@
       "memberCost": "300",
       "foundersOnly": false,
       "start": 1659124800000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 93,
+      "slug": "ryborgs",
+      "imgNft": "/img/drops/ryborgs/drop.webp",
+      "imgPreview": "/img/drops/ryborgs/drop.webp",
+      "imgAvatar": "/img/collections/ryborgs/avatar.webp",
+      "imgBanner": "/img/drops/ryborgs/banner.webp",
+      "title": "Ryborgs",
+      "subtitle": "RYBORG: THE BUNKER is the first NFT trading/investment project on the Cronos Chain. Backed by TradingFXVPS, RYBORG aims to create an investment DAO that shares 80% profit sharing through diversification of portfolio through Stock, Forex, DeFi, NFT, Coins & Tokens. Only 1,000 unique RYBORG will be available on the 1st round.",
+      "description": "RYBORG NFT is a license to gain access to a huge trading opportunity and trading tools to increase trading experience and performance.\nThrough various partnerships and vast experience TradingFXVPS had in the industry, RYBORG NFT aims to bring in the most profitable investment DAO available on the Cronos Chain. 100% of the secondary sales will be used for the investment DAO and 80% of the profit will be shared to RYBORG owners. \n\nBesides being in a part of the first investment DAO in Cronos Chain, RYBORG offer a wide variety of other utility for a trader/investor/artist:\n\n> Access to Signals Trade Call aka Bunker Trading Hall across Stocks, Forex, Commodities, NFT, De-Fi and Cryptocurrency \n> VIP Membership to TradingFXVPS VPS & Dedicated Server services\n> Community-based Merchandise Specialty shop\n> Earn Loyalty Token $RBG",
+      "author": {
+        "name": "Ryborgs",
+        "website": "https://www.tradingfxvps.com/nft-vps/",
+        "twitter": "https://twitter.com/TradingfxvpsO",
+        "discord": "https://discord.gg/ryborgsnft",
+        "medium": "https://www.tradingfxvps.com/nft-vps/utility/"
+      },
+      "address": "",
+      "maxMintPerTx": 5,
+      "maxMintPerAddress": 100,
+      "totalSupply": 1000,
+      "cost": "800",
+      "memberCost": "680",
+      "whitelistCost": "560",
+      "foundersOnly": false,
+      "start": 1659297600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 94,
+      "slug": "crovilians",
+      "imgNft": "/img/drops/crovilians/drop.webp",
+      "imgPreview": "/img/drops/crovilians/drop.webp",
+      "imgAvatar": "/img/collections/cronosverse/avatar.webp",
+      "imgBanner": "/img/collections/crovilians/banner.webp",
+      "title": "Crovilians",
+      "subtitle": "The Crovilians are the citizens of The CronosVerse and have various traits representing the many societal roles required in both the metaverse and in the physical world.",
+      "description": "The Crovilians are the citizens of The CronosVerse and have various traits representing the many societal roles required in both the metaverse and in the physical world. While each Crovilian’s unique traits represent real life roles in our society, all Crovilians are created equal in terms of access to The CronosVerse. Holding a Crovilian NFT will grant access to The CronosVerse and allow the owner to create a custom avatar to be used in our metaverse.",
+      "author": {
+        "name": "CronosVerse",
+        "website": "https://thecronosverse.com/",
+        "twitter": "https://twitter.com/TheCronosVerse",
+        "discord": "https://discord.gg/E9Mzzy9Hex"
+      },
+      "address": "",
+      "maxMintPerTx": 5,
+      "maxMintPerAddress": 100,
+      "totalSupply": 8000,
+      "cost": "600",
+      "memberCost": "550",
+      "whitelistCost": "500",
+      "foundersOnly": false,
+      "start": 1659477600000,
       "end": null,
       "referral": false,
       "is1155": false,
