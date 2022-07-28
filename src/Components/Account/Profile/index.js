@@ -43,7 +43,7 @@ export default function Profile({ address, profile, tab }) {
   const [isProfileOwner, setIsProfileOwner] = useState(false);
   useEffect(() => {
     setIsProfileOwner(user && caseInsensitiveCompare(address, user.address));
-  }, [user])
+  }, [user, address])
 
   const username = profile.username ?? profile.cnsName ?? shortAddress(address);
   const profilePicture = profile.profilePicture ?? hostedImage('/img/avatar.jpg');

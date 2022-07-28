@@ -33,31 +33,37 @@ export default function Inventory({ address }) {
     }
   };
 
-  useEffect(() => {
-    const fetchNfts = async() => {
-      setLoading(true);
-      if (!items.length) setInitialized(false);
-      try {
-        const response = await getNftsForAddress2(address, user.provider, page);
+  const fetchNfts = async() => {
+    setLoading(true);
+    if (!items.length) setInitialized(false);
+    try {
+      const response = await getNftsForAddress2(address, user.provider, page);
 
-        if (response.length > 0) {
-          items.push(...response);
-          setCanLoadMore(true);
-        } else {
-          setCanLoadMore(false);
-        }
-      } finally {
-        setLoading(false);
-        setInitialized(true);
+      if (response.length > 0) {
+        items.push(...response);
+        setCanLoadMore(true);
+      } else {
+        setCanLoadMore(false);
       }
+    } finally {
+      setLoading(false);
+      setInitialized(true);
     }
+  }
 
+  useEffect(() => {
     if (!loading) {
       fetchNfts();
     }
     
     // eslint-disable-next-line
   }, [page, user.provider]);
+
+  useEffect(() => {
+    setInitialized(false);
+    setItems([]);
+    fetchNfts();
+  }, [address]);
 
   return (
     <>
