@@ -603,6 +603,8 @@ export const isAddress = (address) => {
 };
 
 export const getUserDisplayName = async (address) => {
+  if (!address) return '';
+
   let profile = await getProfile(address);
   if (profile?.data) return profile.data.username;
 

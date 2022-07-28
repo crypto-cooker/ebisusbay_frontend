@@ -2,6 +2,7 @@ export default {
   Features: {
     AUCTION_OPTION_SALE: ' AUCTION_OPTION_SALE',
     CMS_NOTIFICATIONS: 'CMS_NOTIFICATIONS',
+    CMS_FULL_PROFILES: 'CMS_FULL_PROFILES',
   },
   Variables: {
     PARAM: '{PARAM}',

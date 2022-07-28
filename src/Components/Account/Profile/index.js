@@ -1,12 +1,8 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { faDiscord, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
-import { faSquare, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import Button from '@src/Components/components/common/Button';
-import LayeredIcon from '@src/Components/components/LayeredIcon';
 import Avatar from './Avatar';
-import useGetSettings from '../Settings/hooks/useGetSettings';
 
 import styles from './profile.module.scss';
 import {hostedImage, ImageKitService} from "@src/helpers/image";
@@ -93,7 +89,7 @@ export default function Profile({ address, profile, tab }) {
             {isProfileOwner && (
               <div className="d-flex flex-column bd-highlight mb-3">
                 <Button onClick={() => navigateTo('/account/settings/profile')} className="w-auto">Settings</Button>
-                <Button styleType="default-outlined" className="mt-2 w-auto">More</Button>
+                {/*<Button styleType="default-outlined" className="mt-2 w-auto">More</Button>*/}
               </div>
             )}
           </div>
