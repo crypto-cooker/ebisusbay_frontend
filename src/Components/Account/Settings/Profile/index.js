@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { Spinner } from 'react-bootstrap';
+import * as Filter from 'bad-words';
 
 import Messages, { getDynamicMessage } from '../../../../languages';
 import { initialValues, editProfileFormFields } from './Form/constants';
@@ -44,13 +45,21 @@ export default function EditProfile() {
     return { userInfo: { ...initialValues } };
   }, [settings]);
 
+  Yup.addMethod(Yup.string, "isProfane", function (errorMessage) {
+    return this.test(`isProfane`, errorMessage, function (value) {
+      const filter = new Filter();
+      return !filter.isProfane(value);
+    });
+  });
+
   const userInfoValidation = Yup.object().shape({
     userInfo: Yup.object({
       userInfo: Yup.object()
         .shape({
           username: Yup.string()
             .required(Messages.errors.required)
-            .max(40, getDynamicMessage(Messages.errors.charactersMaxLimit, ['40'])),
+            .max(40, getDynamicMessage(Messages.errors.charactersMaxLimit, ['40']))
+            .isProfane('Invalid!'),
           cnsName: Yup.string()
             .max(40, getDynamicMessage(Messages.errors.charactersMaxLimit, ['40'])),
           email: Yup.string().email(Messages.errors.invalidEmail).required(Messages.errors.required),
@@ -112,7 +121,7 @@ export default function EditProfile() {
     if (!mergedValues) return;
 
     for(const [key, value] of Object.entries(mergedValues.userInfo)) {
-      formikProps.setFieldValue(`userInfo.userInfo.${key}`, value)
+      formikProps.setFieldValue(`userInfo.userInfo.${key}`, value);
     }
   }, [mergedValues]);
 
