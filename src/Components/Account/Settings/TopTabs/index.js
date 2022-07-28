@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const tabs = [
   { slug: 'profile', btn: 'Edit Profile', icon: faUser },
-  // { slug: 'notification', btn: 'Notification Settings', icon: faExclamation },
-  // { slug: 'offer', btn: 'Offer Settings', icon: faMapPin },
+  { slug: 'notification', btn: 'Notification Settings', icon: faExclamation },
+  { slug: 'offer', btn: 'Offer Settings', icon: faMapPin },
   // { slug: 'admin', btn: 'Admin Settings', icon: faUser },
 ];
 

@@ -2,6 +2,6 @@
 export default function Collections({ address }) {
 
   return (
-    <>Collections</>
+    <>Coming Soon...</>
   )
 }

@@ -2,6 +2,6 @@
 export default function Offers({ address }) {
 
   return (
-    <>Offers</>
+    <>Coming Soon...</>
   )
 }

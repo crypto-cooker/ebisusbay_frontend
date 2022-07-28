@@ -100,27 +100,27 @@ export default function Profile({ address, profile, tab }) {
               <li className={`tab mb-2 ${currentTab === tabs.inventory ? 'active' : ''}`}>
                 <span onClick={() => handleTabChange(tabs.inventory)}>Inventory</span>
               </li>
-              {/*{isProfileOwner && (*/}
-              {/*  <li className={`tab mb-2 ${currentTab === tabs.collections ? 'active' : ''}`}>*/}
-              {/*    <span onClick={() => handleTabChange(tabs.collections)}>Collections</span>*/}
-              {/*  </li>*/}
-              {/*)}*/}
+              {isProfileOwner && (
+                <li className={`tab mb-2 ${currentTab === tabs.collections ? 'active' : ''}`}>
+                  <span onClick={() => handleTabChange(tabs.collections)}>Collections</span>
+                </li>
+              )}
               <li className={`tab mb-2 ${currentTab === tabs.listings ? 'active' : ''}`}>
                 <span onClick={() => handleTabChange(tabs.listings)}>Listings</span>
               </li>
-              {/*{isProfileOwner && (*/}
-              {/*  <li className={`tab mb-2 ${currentTab === tabs.offers ? 'active' : ''}`}>*/}
-              {/*    <span onClick={() => handleTabChange(tabs.offers)}>Offers</span>*/}
-              {/*  </li>*/}
-              {/*)}*/}
+              {isProfileOwner && (
+                <li className={`tab mb-2 ${currentTab === tabs.offers ? 'active' : ''}`}>
+                  <span onClick={() => handleTabChange(tabs.offers)}>Offers</span>
+                </li>
+              )}
               <li className={`tab ${currentTab === tabs.sales ? 'active' : ''}`}>
                 <span onClick={() => handleTabChange(tabs.sales)}>Sales</span>
               </li>
-              {/*{isProfileOwner && (*/}
-              {/*  <li className={`tab ${currentTab === tabs.favorites ? 'active' : ''}`}>*/}
-              {/*    <span onClick={() => handleTabChange(tabs.favorites)}>Favorites</span>*/}
-              {/*  </li>*/}
-              {/*)}*/}
+              {isProfileOwner && (
+                <li className={`tab ${currentTab === tabs.favorites ? 'active' : ''}`}>
+                  <span onClick={() => handleTabChange(tabs.favorites)}>Favorites</span>
+                </li>
+              )}
             </ul>
             <div className="de_tab_content">
               {currentTab === tabs.inventory && (

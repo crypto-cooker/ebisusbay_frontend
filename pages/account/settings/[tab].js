@@ -21,19 +21,22 @@ export default function Account() {
 
         {tab === 'notification' && (
           <>
-            <Notification />
+            {/*<Notification />*/}
+            Coming Soon...
           </>
         )}
 
         {tab === 'offer' && (
           <>
-            <Offer />
+            {/*<Offer />*/}
+            Coming Soon...
           </>
         )}
 
         {tab === 'admin' && (
           <>
-            <Admin />
+            {/*<Admin />*/}
+            Coming Soon...
           </>
         )}
       </section>
