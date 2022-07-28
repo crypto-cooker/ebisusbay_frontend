@@ -11,9 +11,11 @@ const dictionary = {
     urlError: 'Insert a valid URL',
     pixelImageError: `The image format should be ${PARAM}x${PARAM} pixels`,
     invalidFormat: 'Invalid format',
-    charactersMaxLimit: `You can not use more than ${PARAM} characters`,
+    charactersMinLimit: `Value must be at least ${PARAM} characters`,
+    charactersMaxLimit: `Value must be fewer than ${PARAM} characters`,
     arrayMinLimit: `At least ${PARAM} item(s) is required`,
     minNumber: `Numbers greater than zero`,
+    usernameFormat: 'Value must only contain alphanumeric characters, dashes, underscores'
   },
 };
 

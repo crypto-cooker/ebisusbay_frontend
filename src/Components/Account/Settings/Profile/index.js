@@ -52,20 +52,36 @@ export default function EditProfile() {
     });
   });
 
+  Yup.addMethod(Yup.string, "customUsernameRules", function (errorMessage) {
+    return this.test(`customUsernameRules`, errorMessage, function (value) {
+      if (value.includes('.')) {
+        return value.endsWith('.cro');
+      }
+
+      if (value.startsWith('-') ||
+          value.startsWith('_') ||
+          value.startsWith('.')
+      ) return false;
+
+      return true;
+    });
+  });
+
   const userInfoValidation = Yup.object().shape({
     userInfo: Yup.object({
       userInfo: Yup.object()
         .shape({
           username: Yup.string()
             .required(Messages.errors.required)
+            .min(3, getDynamicMessage(Messages.errors.charactersMinLimit, ['3']))
             .max(40, getDynamicMessage(Messages.errors.charactersMaxLimit, ['40']))
-            .isProfane('Invalid!'),
-          cnsName: Yup.string()
-            .max(40, getDynamicMessage(Messages.errors.charactersMaxLimit, ['40'])),
+            .isProfane('Invalid!')
+            .matches(/^[a-zA-Z0-9-_.]+$/, Messages.errors.usernameFormat)
+            .customUsernameRules('Invalid username'),
           email: Yup.string().email(Messages.errors.invalidEmail).required(Messages.errors.required),
-          twitter: Yup.string(),
-          discord: Yup.string(),
-          instagram: Yup.string(),
+          twitter: Yup.string().trim().nullable(),
+          discord: Yup.string().trim().nullable(),
+          instagram: Yup.string().trim().nullable(),
           website: Yup.string().url(Messages.errors.urlError),
           bio: Yup.string()
               .max(100, getDynamicMessage(Messages.errors.charactersMaxLimit, ['40']))
