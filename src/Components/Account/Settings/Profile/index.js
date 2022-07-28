@@ -67,7 +67,8 @@ export default function EditProfile() {
           discord: Yup.string(),
           instagram: Yup.string(),
           website: Yup.string().url(Messages.errors.urlError),
-          bio: Yup.string(),
+          bio: Yup.string()
+              .max(100, getDynamicMessage(Messages.errors.charactersMaxLimit, ['40']))
         })
         .required(),
       userAvatar: Yup.object()
