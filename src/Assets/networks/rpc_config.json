@@ -6566,6 +6566,27 @@
         "discord": "https://discord.gg/NrUZugQtvy",
         "telegram": "https://t.me/babycrogecoinn"
       }
+    },
+    {
+      "name": "V3SPA (The Shark Squad)",
+      "slug": "v3spa",
+      "multiToken": false,
+      "address": "0x7cbFc5959Fc5324EdbB75FA31fc5c426C872bbf3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "V3SPA is a limited collection of uniquely generated Sharks with proof of ownership stored on Cronos. With V3SPA, you’ll be able to unlock the endless usefulness and access to exclusive member benefits.",
+        "verified": false,
+        "avatar": "/img/collections/v3spa/avatar.webp",
+        "card": "/img/collections/v3spa/card.webp",
+        "banner": "/img/collections/v3spa/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://www.v3s.finance/v3spa",
+        "twitter": "https://twitter.com/v3sfinance",
+        "discord": "https://discord.gg/bqK2HSwbVJ",
+        "telegram": "https://t.me/v3sfinance",
+        "medium": "https://medium.com/@v3sfinance"
+      }
     }
   ],
   "drops": [
