@@ -1,5 +1,6 @@
 import { editProfileFormFields } from './constants';
 import { Field, RadioGroup, UploadAssetGroup } from '../../../../Form';
+
 import Button from '@src/Components/components/common/Button';
 
 export default function Form({
@@ -12,6 +13,8 @@ export default function Form({
   handleBlur,
   isCnsSync = false,
   handleCnsSync,
+  settingsData,
+  resendEmail
 }) {
   return (
     <div>
@@ -26,9 +29,9 @@ export default function Form({
           props.key = `${type}-${fieldKey}`;
           props.value = values.userInfo?.[subFormKey]?.[fieldKey];
           props.error =
-                touched.userInfo?.[subFormKey]?.[fieldKey]
-                  ? errors.userInfo?.[subFormKey]?.[fieldKey]
-                  : undefined;
+            touched.userInfo?.[subFormKey]?.[fieldKey]
+              ? errors.userInfo?.[subFormKey]?.[fieldKey]
+              : undefined;
 
           if (props.inputType) props.type = props.inputType;
 
@@ -40,6 +43,13 @@ export default function Form({
                   Sync
                 </Button>
               )}
+              {fieldKey === 'email' && settingsData?.walletAddress && !settingsData?.isVerified &&
+                <div className='mb-5'>
+                  <a className="link-text-form link-primary " onClick={resendEmail}>
+                    Resend verification email
+                  </a>
+                </div>
+              }
             </div>
           ) : type === 'radio' ? (
             <RadioGroup {...props} onChange={setFieldValue} />
