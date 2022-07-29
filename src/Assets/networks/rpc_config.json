@@ -6512,7 +6512,7 @@
       "name": "Ryborgs",
       "slug": "ryborgs",
       "multiToken": false,
-      "address": "",
+      "address": "0x4865EA5877823095c7E42f015FA924f621f191DB",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -9219,7 +9219,7 @@
         "discord": "https://discord.gg/ryborgsnft",
         "medium": "https://www.tradingfxvps.com/nft-vps/utility/"
       },
-      "address": "",
+      "address": "0x4865EA5877823095c7E42f015FA924f621f191DB",
       "maxMintPerTx": 5,
       "maxMintPerAddress": 100,
       "totalSupply": 1000,
