@@ -6415,7 +6415,7 @@
       "name": "Noodles Club",
       "slug": "noodles-club",
       "multiToken": false,
-      "address": "",
+      "address": "0x72F1dde65de4968d5b3F7eB7384AEb32d904f954",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -9188,7 +9188,7 @@
         "discord": "https://discord.gg/HTsURzuJVt",
         "medium": "https://medium.com/@noodlesclubnft"
       },
-      "address": "",
+      "address": "0x72F1dde65de4968d5b3F7eB7384AEb32d904f954",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 8888,
