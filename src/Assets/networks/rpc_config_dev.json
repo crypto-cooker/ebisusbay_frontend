@@ -6587,6 +6587,25 @@
         "telegram": "https://t.me/v3sfinance",
         "medium": "https://medium.com/@v3sfinance"
       }
+    },
+    {
+      "name": "Team Mustachios",
+      "slug": "team-mustachios",
+      "multiToken": false,
+      "address": "0x01C87a25638D97D246D4250FEE59Ad6A84899860",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Team Mustachios consists of 3 teams of 2222 units, yellow, green and blue for a total of 6666 unique NFTs. Unlike traditional stacking, we have innovated to give you an unprecedented experience. We therefore redistribute the royalties in a playful way by selecting a team each week as well as 2 traits from the collection. If your team is selected during the current week, you win but if you own one or even better 2 traits, you could win big.",
+        "verified": false,
+        "avatar": "/img/collections/team-mustachios/avatar.webp",
+        "card": "/img/collections/team-mustachios/card.webp",
+        "banner": "/img/collections/team-mustachios/banner.webp",
+        "maxSupply": 6666,
+        "website": "https://teammustachios.com/",
+        "twitter": "https://twitter.com/teammustachios",
+        "discord": "https://discord.gg/eH4SCJY5Qw"
+      }
     }
   ],
   "drops": [
