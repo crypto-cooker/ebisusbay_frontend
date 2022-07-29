@@ -6546,6 +6546,26 @@
         "twitter": "https://twitter.com/TheCronosVerse",
         "discord": "https://discord.gg/E9Mzzy9Hex"
       }
+    },
+    {
+      "name": "Baby Croge Gen2",
+      "slug": "baby-croge-gen2",
+      "multiToken": false,
+      "address": "0x0DB8c9F46F9E35A2a6D5e34635A28AE315fbD51E",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The second generation of Baby Croge NFTs are both adorable and have real utility in providing powerups in Baby Croge's arcade game, Baby Croge Pond.",
+        "verified": false,
+        "avatar": "/img/collections/baby-croge-gen2/avatar.webp",
+        "card": "/img/collections/baby-croge-gen2/card.webp",
+        "banner": "/img/collections/baby-croge-gen2/banner.webp",
+        "maxSupply": 2000,
+        "website": "https://babycroge.io",
+        "twitter": "https://twitter.com/BabyCrogeCoin",
+        "discord": "https://discord.gg/NrUZugQtvy",
+        "telegram": "https://t.me/babycrogecoinn"
+      }
     }
   ],
   "drops": [
@@ -9160,7 +9180,7 @@
       "slug": "crovilians",
       "imgNft": "/img/drops/crovilians/drop.webp",
       "imgPreview": "/img/drops/crovilians/drop.webp",
-      "imgAvatar": "/img/collections/cronosverse/avatar.webp",
+      "imgAvatar": "/img/collections/crovilians/avatar.webp",
       "imgBanner": "/img/collections/crovilians/banner.webp",
       "title": "Crovilians",
       "subtitle": "The Crovilians are the citizens of The CronosVerse and have various traits representing the many societal roles required in both the metaverse and in the physical world.",
