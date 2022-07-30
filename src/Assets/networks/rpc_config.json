@@ -5783,6 +5783,25 @@
       }
     },
     {
+      "name": "CROMMY PETS",
+      "slug": "crommy-pets",
+      "multiToken": false,
+      "address": "0xfE9b34E0fAc41C4ac8e88D56162123464189a708",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "5000 Mummies have left their sarcophagus, creating troubles in CRONOS BLOCKCHAIN, now their little pets have been awaking.Who have't thought that I am going to feed my self right? Come here wrapped Hooman!  CROPETS is finally here! 10k kitty- catties are strolling on the CRONOS BLOCKCHAIN looking for their mummy owners to finally get some foods and cuddles. Royalties to holders: 80% of all marketplace trading volume will be distributed to holders.",
+        "verified": false,
+        "avatar": "/img/collections/crommy-pets/avatar.png",
+        "card": "/img/collections/crommy-pets/card.png",
+        "banner": "/img/collections/crommy-pets/banner.png",
+        "maxSupply": 10000,
+        "website": "https://www.crorarity.com/crommy/",
+        "twitter": "https://twitter.com/cromummy",
+        "discord": "https://discord.gg/9kZ4bBsYcy"
+      }
+    },
+    {
       "name": "Invisible Crommy",
       "slug": "invisible-crommy",
       "multiToken": false,
