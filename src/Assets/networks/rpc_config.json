@@ -4266,6 +4266,26 @@
       }
     },
     {
+      "name": "Mad Sacks",
+      "slug": "mad-sacks",
+      "multiToken": false,
+      "address": "0x23721073592FB452C556fB9322bA4dF6A6675050",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Unlock the Madness within you. Find the equipment of choice that will best suit your style of battle. Different combinations produce a myriad of results, choose wisely.  All great battles evolve with time. Every season brings about new collections of Mad Sacks, offering different armament, weapons and rewards to upgrade the Madness.",
+        "verified": true,
+        "avatar": "/img/collections/meerkats/madsacks/avatar.png",
+        "banner": "/img/collections/meerkats/madsacks/banner.png",
+        "card": "/img/collections/meerkats/card.webp",
+        "maxSupply": 20000,
+        "website": "https://madmeerkat.io/",
+        "twitter": "https://twitter.com/MadMeerkatNFT",
+        "discord": "https://discord.gg/madmeerkat",
+        "medium": "https://medium.com/@madmeerkat0"
+      }
+    },
+    {
       "name": "Ghetto Doves: The Self Titled Drop - VIP",
       "slug": "ghetto-doves-vip",
       "multiToken": true,

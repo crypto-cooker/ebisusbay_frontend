@@ -11,6 +11,17 @@
     "reason": "Verified by Jason the project owner"
   },
   {
+    "users": ["0x792FDe10E22f0Bb7C9C82329e506f02BFd01729f"],
+    "tokens": [
+      {
+        "slug": "flaming-phenix-club",
+        "address": "0xCf185Cb08c62Ff969D258FBA18F92dabb278A8A9",
+        "ids": [1592]
+      }
+    ],
+    "reason": "scammed in phenix discord"
+  },
+  {
     "users": ["0xade6d50beeb9156d95eba3cd66ef2ae6695443ac"],
     "tokens": [],
     "reason": "crognome id 215 - recovered, initially scammed in CroSkull discord. Verified by GabrielKvaal#1337"
