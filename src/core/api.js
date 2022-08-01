@@ -1042,6 +1042,17 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
   if (!quickWallet.data) return [];
 
   const results = quickWallet.data;
+
+  let zeroMatched = false;
+  for (const nft of results) {
+    const matchedContract = findCollectionByAddress(nft.nftAddress, nft.nftId);
+    if (matchedContract) zeroMatched = true;
+  }
+
+  if (!zeroMatched && results.length > 0) {
+    return [0];
+  }
+
   const signer = walletProvider.getSigner();
   const walletBlacklisted = isUserBlacklisted(walletAddress);
 
