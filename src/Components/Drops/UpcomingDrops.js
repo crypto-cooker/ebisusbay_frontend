@@ -4,9 +4,9 @@ import Slider from 'react-slick';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-import { settings } from '../components/constants';
+import { settings, settingsWithoutScrolling } from '../components/constants';
 import CustomSlide from '../components/CustomSlide';
-import {appConfig} from "../../Config";
+import { appConfig } from "../../Config";
 const collections = appConfig('collections');
 const drops = appConfig('drops');
 
@@ -56,22 +56,21 @@ const UpcomingDrops = () => {
 
   return (
     <div className="nft">
-      <Slider {...settings} prevArrow={<PrevArrow />} nextArrow={<NextArrow />}>
-        {upcomingDrops &&
-          upcomingDrops.map((item, index) => (
-            <CustomSlide
-              key={index}
-              index={index + 1}
-              avatar={item.drop.imgAvatar}
-              banner={item.collection.metadata.card}
-              title={item.drop.title}
-              subtitle={`${item.drop.start ? new Date(item.drop.start).toDateString() : 'TBA'}`}
-              collectionId={item.drop.slug}
-              url={item.drop.redirect ?? `/drops/${item.drop.slug}`}
-              externalPage={!!item.drop.redirect}
-              verified={item.collection.metadata.verified}
-            />
-          ))}
+      <Slider {...(upcomingDrops.length > 3 ? settings : settingsWithoutScrolling)} prevArrow={<PrevArrow />} nextArrow={<NextArrow />}>
+        {upcomingDrops && upcomingDrops.map((item, index) => (
+          <CustomSlide
+            key={index}
+            index={index + 1}
+            avatar={item.drop.imgAvatar}
+            banner={item.collection.metadata.card}
+            title={item.drop.title}
+            subtitle={`${item.drop.start ? new Date(item.drop.start).toDateString() : 'TBA'}`}
+            collectionId={item.drop.slug}
+            url={item.drop.redirect ?? `/drops/${item.drop.slug}`}
+            externalPage={!!item.drop.redirect}
+            verified={item.collection.metadata.verified}
+          />
+        ))}
       </Slider>
     </div>
   );
