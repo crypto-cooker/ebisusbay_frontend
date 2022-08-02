@@ -6571,7 +6571,7 @@
       "name": "Crovilians",
       "slug": "crovilians",
       "multiToken": false,
-      "address": "0xf206449dB31ef6a43D63C1B56334cc472311563F",
+      "address": "0x130a6c2884325d302830179C691D328dDAd9b78C",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -9289,7 +9289,7 @@
         "twitter": "https://twitter.com/TheCronosVerse",
         "discord": "https://discord.gg/E9Mzzy9Hex"
       },
-      "address": "0xf206449dB31ef6a43D63C1B56334cc472311563F",
+      "address": "0x130a6c2884325d302830179C691D328dDAd9b78C",
       "maxMintPerTx": 5,
       "maxMintPerAddress": 100,
       "totalSupply": 8000,
