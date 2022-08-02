@@ -722,6 +722,13 @@ canvas {
   }
 }
 
+.link-text-form {
+  font-size: 12px !important;
+  cursor: pointer;
+  position: absolute;
+  margin-top: -8px;
+}
+
 .field-message-error {
   input {
     border: 1px solid $errorColor1;

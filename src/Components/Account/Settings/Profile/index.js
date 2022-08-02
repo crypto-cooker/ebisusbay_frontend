@@ -10,6 +10,7 @@ import Messages, { getDynamicMessage } from '../../../../languages';
 import { initialValues, editProfileFormFields } from './Form/constants';
 import useCreateSettings from '../hooks/useCreateSettings';
 import useUpdateSettings from '../hooks/useUpdateSettings';
+import useResendEmailVerification from '../hooks/useResendEmailVerification'
 
 import Banner from './Banner';
 import Bio from './Bio';
@@ -22,6 +23,7 @@ export default function EditProfile() {
   const user = useSelector((state) => state.user);
   const [requestNewSettings, { loading }] = useCreateSettings();
   const [requestUpdateSettings, { loading: updateLoading }] = useUpdateSettings();
+  const [requestResendEmailVerification, { loading: resendLoading }] = useResendEmailVerification();
   const [{ response: settings }, updateProfileSettings] = useGetSettings(user?.address);
   const [isFetchCns, setIsFetchCns] = useState(false);
   const [mergedValues, setMergedValues] = useState(false);
@@ -99,22 +101,6 @@ export default function EditProfile() {
 
   });
 
-  const createFormData = (values) => {
-    return Object.values(values).reduce((formData, formStep) => {
-      Object.keys(formStep).forEach(key => {
-        const isArray = typeof formStep[key] === 'object'
-        if (isArray) {
-          formStep[key].forEach((value) => {
-            formData.append('images', value.file)
-          })
-        } else {
-          formData.append(key, formStep[key])
-        }
-      });
-      return formData;
-    }, new FormData())
-  };
-
   const handleCnsSync = async () => {
     setIsFetchCns(true);
     const cnsName = await getCnsName(user?.address); // Custom URL
@@ -152,8 +138,8 @@ export default function EditProfile() {
         toast.error('Something went wrong!');
       } else {
         toast.success('Your profile was saved successfully');
+        updateProfileSettings();
       }
-      updateProfileSettings();
 
     } catch (error) {
       console.log(error);
@@ -197,6 +183,26 @@ export default function EditProfile() {
     }
   }
 
+  const createNewEmailVerification = (e) => {
+    e.preventDefault();
+
+    try {
+
+      const response = requestResendEmailVerification();
+
+      if (!response || response?.message?.error) {
+        toast.error('Something went wrong!');
+      } else {
+        toast.success('Verification forwarded');
+      }
+
+    } catch (error) {
+      console.log(error);
+      toast.error('Error');
+    }
+    
+  }
+
   return (
     <>
       <form id="userSettings" autoComplete="off" onSubmit={handleSubmit} className="user-settings-form">
@@ -233,6 +239,8 @@ export default function EditProfile() {
               handleBlur={handleBlur}
               isCnsSync={isFetchCns}
               handleCnsSync={handleCnsSync}
+              settingsData={settings?.data}
+              resendEmail={createNewEmailVerification}
             />
           </div>
         </div>
@@ -246,10 +254,6 @@ export default function EditProfile() {
             </Spinner>
           )}
         </button>
-        {/* TODO: update button component
-        <Button type="legacy" onClick={onSubmit} isLoading={isOnSave}>
-          Save Profile
-        </Button> */}
       </div>
     </>
   );
