@@ -1,26 +1,17 @@
 export const settings = {
-  infinite: true,
+  infinite: false,
   speed: 500,
   slidesToShow: 4,
   slidesToScroll: 4,
   initialSlide: 0,
-  adaptiveHeight: 300,
-  lazyLoad: true,
+  adaptiveHeight: true,
+  lazyLoad: false,
   responsive: [
     {
       breakpoint: 1900,
       settings: {
         slidesToShow: 4,
         slidesToScroll: 4,
-        infinite: true,
-      },
-    },
-    {
-      breakpoint: 1600,
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 3,
-        infinite: true,
       },
     },
     {
@@ -28,7 +19,6 @@ export const settings = {
       settings: {
         slidesToShow: 3,
         slidesToScroll: 3,
-        infinite: true,
       },
     },
     {
@@ -36,7 +26,6 @@ export const settings = {
       settings: {
         slidesToShow: 2,
         slidesToScroll: 2,
-        initialSlide: 2,
       },
     },
     {
@@ -48,3 +37,16 @@ export const settings = {
     },
   ],
 };
+
+// export const settingsWithoutScrolling = {
+//   ...settings,
+//   infinite: false,
+//   adaptiveHeight: false,
+//   responsive: settings.responsive.map(config => ({
+//     ...config,
+//     settings: {
+//       ...config.settings,
+//       infinite: false
+//     }
+//   }))
+// }

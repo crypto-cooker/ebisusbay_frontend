@@ -5910,9 +5910,9 @@
         "card": "/img/collections/cro-whales/card.png",
         "banner": "/img/collections/cro-whales/banner.png",
         "maxSupply": 100,
-        "twitter": "https://twitter.com/CroWhales",
-        "discord": "https://discord.gg/f8hYkFxH",
-        "telegram": "https://t.me/crowhalesnft"
+        "website": "https://croceanft.com/",
+        "twitter": "https://twitter.com/Crocean_NFT",
+        "discord": "https://discord.gg/N9YstjgG2y"
       }
     },
     {
@@ -7969,7 +7969,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "featured": false,
       "redirect": "https://mint.i-n-u.com/"
@@ -9176,7 +9176,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "redirect": "https://www.degenbrain.finance/"
     },
