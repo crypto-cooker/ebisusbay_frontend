@@ -7969,7 +7969,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "featured": false,
       "redirect": "https://mint.i-n-u.com/"
@@ -9176,7 +9176,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "redirect": "https://www.degenbrain.finance/"
     },
