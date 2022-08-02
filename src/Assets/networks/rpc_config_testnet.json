@@ -1488,7 +1488,7 @@
       "name": "Crovilians",
       "slug": "crovilians",
       "multiToken": false,
-      "address": "",
+      "address": "0xbCaE686611A3B5006389955cA265A0Bd2272aeAA",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -3338,7 +3338,7 @@
         "twitter": "https://twitter.com/TheCronosVerse",
         "discord": "https://discord.gg/E9Mzzy9Hex"
       },
-      "address": "",
+      "address": "0xbCaE686611A3B5006389955cA265A0Bd2272aeAA",
       "maxMintPerTx": 5,
       "maxMintPerAddress": 100,
       "totalSupply": 8000,
@@ -3346,7 +3346,7 @@
       "memberCost": "550",
       "whitelistCost": "500",
       "foundersOnly": false,
-      "start": 1659477600000,
+      "start": 1658853000000,
       "end": null,
       "referral": false,
       "is1155": false,
