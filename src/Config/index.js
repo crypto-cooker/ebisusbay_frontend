@@ -169,7 +169,6 @@ export const appConfig = (key) => {
 }
 
 export const currentEnv = () => {
-  return environments.production;
   return process.env.NEXT_PUBLIC_ENV ?? process.env.NODE_ENV ?? environments.production;
 }
 
