@@ -810,7 +810,7 @@ export async function getNft(collectionId, nftId, useFallback = true) {
 
     const url = new URL(api.nft, `${api.baseUrl}`);
     const uri = `${url}?${queryString}`;
-
+    console.log('getNft URL', uri);
     const result = await (await fetch(uri)).json();
 
     if (useFallback && !result.nft) {
