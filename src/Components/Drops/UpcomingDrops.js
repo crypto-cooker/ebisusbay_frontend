@@ -4,7 +4,7 @@ import Slider from 'react-slick';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-import { settings } from '../components/constants';
+import { settings, settingsWithoutScrolling } from '../components/constants';
 import CustomSlide from '../components/CustomSlide';
 import { appConfig } from "../../Config";
 const collections = appConfig('collections');
@@ -56,7 +56,7 @@ const UpcomingDrops = () => {
 
   return (
     <div className="nft">
-      <Slider {...settings} prevArrow={<PrevArrow />} nextArrow={<NextArrow />}>
+      <Slider {...(upcomingDrops.length > 3 ? settings : settingsWithoutScrolling)} prevArrow={<PrevArrow />} nextArrow={<NextArrow />}>
         {upcomingDrops && upcomingDrops.map((item, index) => (
           <CustomSlide
             key={index}
