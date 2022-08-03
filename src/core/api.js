@@ -810,7 +810,7 @@ export async function getNft(collectionId, nftId, useFallback = true) {
 
     const url = new URL(api.nft, `${api.baseUrl}`);
     const uri = `${url}?${queryString}`;
-
+    console.log('getNft URL', uri);
     const result = await (await fetch(uri)).json();
 
     if (useFallback && !result.nft) {
@@ -1042,7 +1042,18 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
   if (!quickWallet.data) return [];
 
   const results = quickWallet.data;
-  const signer = walletProvider?.getSigner();
+
+  let zeroMatched = false;
+  for (const nft of results) {
+    const matchedContract = findCollectionByAddress(nft.nftAddress, nft.nftId);
+    if (matchedContract) zeroMatched = true;
+  }
+
+  if (!zeroMatched && results.length > 0) {
+    return [0];
+  }
+
+  const signer = walletProvider.getSigner();
   const walletBlacklisted = isUserBlacklisted(walletAddress);
 
   let listings = await getAllListingsForUser(walletAddress);

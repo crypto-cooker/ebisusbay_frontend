@@ -11,6 +11,17 @@
     "reason": "Verified by Jason the project owner"
   },
   {
+    "users": ["0x792FDe10E22f0Bb7C9C82329e506f02BFd01729f"],
+    "tokens": [
+      {
+        "slug": "flaming-phenix-club",
+        "address": "0xCf185Cb08c62Ff969D258FBA18F92dabb278A8A9",
+        "ids": [1592]
+      }
+    ],
+    "reason": "scammed in phenix discord"
+  },
+  {
     "users": ["0xade6d50beeb9156d95eba3cd66ef2ae6695443ac"],
     "tokens": [],
     "reason": "crognome id 215 - recovered, initially scammed in CroSkull discord. Verified by GabrielKvaal#1337"
@@ -59,8 +70,19 @@
         "slug": "trooprz-mutantz",
         "address": "0x96628048830a499b156aBdC04cC169C18c3A17f2",
         "ids": [1218, 988, 891, 741]
+      },
+      {
+        "slug": "carkayous-feral-fish",
+        "address": "0x72af9c869a4759e6d50e9656c0741b395532c3dd",
+        "ids": [366, 297, 3119, 656, 2400, 1495, 723, 994, 1821, 2160, 523, 769, 1682, 2107, 306,
+          233, 86, 1603, 138, 1198, 842, 1379, 1416, 169, 1596, 651, 177, 1201, 781, 1496, 1998,
+          870, 886, 372, 452, 923, 1443, 1528, 355, 539, 2015, 2184, 985, 718, 1656, 297, 878,
+          971, 1320, 1613, 804, 465, 1092, 1994, 1642, 608, 705, 1947, 576, 366, 2180, 1326, 490,
+          122, 1291, 1630, 818, 369, 1825, 464, 1392, 2125, 1309, 1714, 1983, 2052, 1643, 838,
+          2121, 1192, 262, 2000, 64, 1684, 1310, 1915, 1024, 1831, 1204, 1761, 1422, 135, 1663,
+          1977, 2114, 743, 180, 1949, 514, 1631, 679, 680, 1020, 1823, 388, 1876, 808, 1142, 1399]
       }
     ],
-    "reason": ""
+    "reason": "whale got hacked :D jason asked us to bl these"
   }
 ]

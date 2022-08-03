@@ -48,3 +48,16 @@ export const settings = {
     },
   ],
 };
+
+export const settingsWithoutScrolling = {
+  ...settings,
+  infinite: false,
+  adaptiveHeight: false,
+  responsive: settings.responsive.map(config => ({
+    ...config,
+    settings: {
+      ...config.settings,
+      infinite: false
+    }
+  }))
+}

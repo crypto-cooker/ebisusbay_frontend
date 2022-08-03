@@ -2,7 +2,7 @@
   "name": "Cronos Mainnet Beta",
   "chain_id": "25",
   "write_rpc": "https://evm.cronos.org/",
-  "read_rpc": "https://gateway.nebkas.ro/",
+  "read_rpc": "https://rpc.ebisusbay.com/",
   "symbol": "CRO",
   "explorer": "https://cronoscan.com/",
   "api_base": "https://api.ebisusbay.com/",
@@ -2915,7 +2915,7 @@
       "multiToken": false,
       "address": "0xd8cdcA552c2419DaeEF7598C9a4C6Ff3526d35AC",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "",
         "verified": false,
@@ -4266,6 +4266,26 @@
       }
     },
     {
+      "name": "Mad Sacks",
+      "slug": "mad-sacks",
+      "multiToken": false,
+      "address": "0x23721073592FB452C556fB9322bA4dF6A6675050",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Unlock the Madness within you. Find the equipment of choice that will best suit your style of battle. Different combinations produce a myriad of results, choose wisely.  All great battles evolve with time. Every season brings about new collections of Mad Sacks, offering different armament, weapons and rewards to upgrade the Madness.",
+        "verified": true,
+        "avatar": "/img/collections/meerkats/madsacks/avatar.png",
+        "banner": "/img/collections/meerkats/madsacks/banner.webp",
+        "card": "/img/collections/meerkats/madsacks/card.webp",
+        "maxSupply": 20000,
+        "website": "https://madmeerkat.io/",
+        "twitter": "https://twitter.com/MadMeerkatNFT",
+        "discord": "https://discord.gg/madmeerkat",
+        "medium": "https://medium.com/@madmeerkat0"
+      }
+    },
+    {
       "name": "Ghetto Doves: The Self Titled Drop - VIP",
       "slug": "ghetto-doves-vip",
       "multiToken": true,
@@ -4428,7 +4448,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Cyberclone is a collection of 2000 uniquely generated NFTs stored on the Cronos blockchain. Each NFT Clone is inspired by the futuristic life of the year 2234, where the world is falling apart under the control of the Cyberclones, who are conquering earth!",
+        "description": "Cyberclone & Alphaclone is a collection of 2000 uniquely generated NFTs stored on the Cronos blockchain. Each NFT Clone is inspired by the futuristic life of the year 2234, where the world is falling apart under the control of the WorldClones, who are conquering earth!",
         "verified": true,
         "avatar": "/img/collections/cyber-clone/avatar.webp",
         "card": "/img/collections/cyber-clone/card.webp",
@@ -5783,6 +5803,25 @@
       }
     },
     {
+      "name": "CROMMY PETS",
+      "slug": "crommy-pets",
+      "multiToken": false,
+      "address": "0xfE9b34E0fAc41C4ac8e88D56162123464189a708",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "5000 Mummies have left their sarcophagus, creating troubles in CRONOS BLOCKCHAIN, now their little pets have been awaking.Who have't thought that I am going to feed my self right? Come here wrapped Hooman!  CROPETS is finally here! 10k kitty- catties are strolling on the CRONOS BLOCKCHAIN looking for their mummy owners to finally get some foods and cuddles. Royalties to holders: 80% of all marketplace trading volume will be distributed to holders.",
+        "verified": false,
+        "avatar": "/img/collections/crommy-pets/avatar.png",
+        "card": "/img/collections/crommy-pets/card.png",
+        "banner": "/img/collections/crommy-pets/banner.png",
+        "maxSupply": 10000,
+        "website": "https://www.crorarity.com/crommy/",
+        "twitter": "https://twitter.com/cromummy",
+        "discord": "https://discord.gg/9kZ4bBsYcy"
+      }
+    },
+    {
       "name": "Invisible Crommy",
       "slug": "invisible-crommy",
       "multiToken": false,
@@ -5871,9 +5910,9 @@
         "card": "/img/collections/cro-whales/card.png",
         "banner": "/img/collections/cro-whales/banner.png",
         "maxSupply": 100,
-        "twitter": "https://twitter.com/CroWhales",
-        "discord": "https://discord.gg/f8hYkFxH",
-        "telegram": "https://t.me/crowhalesnft"
+        "website": "https://croceanft.com/",
+        "twitter": "https://twitter.com/Crocean_NFT",
+        "discord": "https://discord.gg/N9YstjgG2y"
       }
     },
     {
@@ -6229,7 +6268,7 @@
         "card": "/img/collections/sleazy-weasel/card.png",
         "banner": "/img/collections/sleazy-weasel/banner.png",
         "maxSupply": 10000,
-        "website": "https://www.sleazyweasel.xyz/",
+        "website": "https://www.sleazy-weasel.com/",
         "twitter": "https://twitter.com/sleazy_weasel",
         "discord": "https://discord.gg/sleazyweasel"
       }
@@ -6415,7 +6454,7 @@
       "name": "Noodles Club",
       "slug": "noodles-club",
       "multiToken": false,
-      "address": "",
+      "address": "0x72F1dde65de4968d5b3F7eB7384AEb32d904f954",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -6512,7 +6551,7 @@
       "name": "Ryborgs",
       "slug": "ryborgs",
       "multiToken": false,
-      "address": "",
+      "address": "0x4865EA5877823095c7E42f015FA924f621f191DB",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -6532,7 +6571,7 @@
       "name": "Crovilians",
       "slug": "crovilians",
       "multiToken": false,
-      "address": "",
+      "address": "0x130a6c2884325d302830179C691D328dDAd9b78C",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -6545,6 +6584,144 @@
         "website": "https://thecronosverse.com/",
         "twitter": "https://twitter.com/TheCronosVerse",
         "discord": "https://discord.gg/E9Mzzy9Hex"
+      }
+    },
+    {
+      "name": "Baby Croge Gen2",
+      "slug": "baby-croge-gen2",
+      "multiToken": false,
+      "address": "0x0DB8c9F46F9E35A2a6D5e34635A28AE315fbD51E",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The second generation of Baby Croge NFTs are both adorable and have real utility in providing powerups in Baby Croge's arcade game, Baby Croge Pond.",
+        "verified": false,
+        "avatar": "/img/collections/baby-croge-gen2/avatar.webp",
+        "card": "/img/collections/baby-croge-gen2/card.webp",
+        "banner": "/img/collections/baby-croge-gen2/banner.webp",
+        "maxSupply": 2000,
+        "website": "https://babycroge.io",
+        "twitter": "https://twitter.com/BabyCrogeCoin",
+        "discord": "https://discord.gg/NrUZugQtvy",
+        "telegram": "https://t.me/babycrogecoinn"
+      }
+    },
+    {
+      "name": "V3SPA (The Shark Squad)",
+      "slug": "v3spa",
+      "multiToken": false,
+      "address": "0x7cbFc5959Fc5324EdbB75FA31fc5c426C872bbf3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "V3SPA is a limited collection of uniquely generated Sharks with proof of ownership stored on Cronos. With V3SPA, you’ll be able to unlock the endless usefulness and access to exclusive member benefits.",
+        "verified": false,
+        "avatar": "/img/collections/v3spa/avatar.webp",
+        "card": "/img/collections/v3spa/card.webp",
+        "banner": "/img/collections/v3spa/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://www.v3s.finance/v3spa",
+        "twitter": "https://twitter.com/v3sfinance",
+        "discord": "https://discord.gg/bqK2HSwbVJ",
+        "telegram": "https://t.me/v3sfinance",
+        "medium": "https://medium.com/@v3sfinance"
+      }
+    },
+    {
+      "name": "Team Mustachios",
+      "slug": "team-mustachios",
+      "multiToken": false,
+      "address": "0x01C87a25638D97D246D4250FEE59Ad6A84899860",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Team Mustachios consists of 3 teams of 2222 units, yellow, green and blue for a total of 6666 unique NFTs. Unlike traditional stacking, we have innovated to give you an unprecedented experience. We therefore redistribute the royalties in a playful way by selecting a team each week as well as 2 traits from the collection. If your team is selected during the current week, you win but if you own one or even better 2 traits, you could win big.",
+        "verified": false,
+        "avatar": "/img/collections/team-mustachios/avatar.webp",
+        "card": "/img/collections/team-mustachios/card.webp",
+        "banner": "/img/collections/team-mustachios/banner.webp",
+        "maxSupply": 6666,
+        "website": "https://teammustachios.com/",
+        "twitter": "https://twitter.com/teammustachios",
+        "discord": "https://discord.gg/eH4SCJY5Qw"
+      }
+    },
+    {
+      "name": "GKZMintPass",
+      "slug": "gkz-mint-pass",
+      "multiToken": false,
+      "address": "0x5Be289d47c4E55984a484268917E54a83c219578",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "With the GKZMintPass you will be getting 1 GymKong Airdropped as soon as our mint goes live!",
+        "verified": false,
+        "avatar": "/img/collections/gkz-mint-pass/avatar.webp",
+        "card": "/img/collections/gkz-mint-pass/card.webp",
+        "banner": "/img/collections/gkz-mint-pass/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://gymkongz.com/",
+        "twitter": "https://twitter.com/GymKongz",
+        "discord": "https://discord.gg/gymkongz"
+      }
+    },
+    {
+      "name": "AlphaClone",
+      "slug": "alpha-clone",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Cyberclone & Alphaclone is a collection of 2000 uniquely generated NFTs stored on the Cronos blockchain. Each NFT Clone is inspired by the futuristic life of the year 2234, where the world is falling apart under the control of the WorldClones, who are conquering earth!",
+        "verified": true,
+        "avatar": "/img/collections/alpha-clone/avatar.webp",
+        "card": "/img/collections/alpha-clone/card.webp",
+        "banner": "/img/collections/alpha-clone/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://cyber-clone.com/",
+        "twitter": "https://twitter.com/CyberCloneNFT",
+        "discord": "https://discord.gg/rKnGgUDgYD",
+        "medium": "https://medium.com/cyber-clone"
+      }
+    },
+    {
+      "name": "Pocket Demons",
+      "slug": "pocket-demons",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Pocket Demons project is a collection of 666 uniquely generated demon characters. Each Demon is generated from a pool of over 70 traits. These Demons also carry unique stats and attacks that are utilized in our P2E Game!",
+        "verified": true,
+        "avatar": "/img/collections/pocket-demons/avatar.webp",
+        "card": "/img/collections/pocket-demons/card.webp",
+        "banner": "/img/collections/pocket-demons/banner.webp",
+        "maxSupply": 666,
+        "website": "https://www.pocketdemons.com/",
+        "twitter": "https://twitter.com/PocketDemonsNFT",
+        "discord": "https://discord.gg/sdgRtxt8vJ"
+      }
+    },
+    {
+      "name": "CroHamsters",
+      "slug": "cro-hamsters",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "CroHamster is a collection of 1000 unique and 3D animated NFTs on Cronos. Each CroHamster is based on a wide variety of different traits. Owning a CroHamster will give you access to our CroHamster arena, where you can fight for awesome rewards.",
+        "verified": true,
+        "avatar": "/img/collections/cro-hamsters/avatar.webp",
+        "card": "/img/collections/cro-hamsters/card.webp",
+        "banner": "/img/collections/cro-hamsters/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://linktr.ee/crohamsternft/",
+        "twitter": "https://twitter.com/cro_hamster",
+        "discord": "https://discord.gg/sj4cHPrdVk",
+        "medium": "https://medium.com/@CroHamsterNFT"
       }
     }
   ],
@@ -7851,7 +8028,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "featured": false,
       "redirect": "https://mint.i-n-u.com/"
@@ -9058,7 +9235,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "redirect": "https://www.degenbrain.finance/"
     },
@@ -9109,7 +9286,7 @@
         "discord": "https://discord.gg/HTsURzuJVt",
         "medium": "https://medium.com/@noodlesclubnft"
       },
-      "address": "",
+      "address": "0x72F1dde65de4968d5b3F7eB7384AEb32d904f954",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 8888,
@@ -9140,7 +9317,7 @@
         "discord": "https://discord.gg/ryborgsnft",
         "medium": "https://www.tradingfxvps.com/nft-vps/utility/"
       },
-      "address": "",
+      "address": "0x4865EA5877823095c7E42f015FA924f621f191DB",
       "maxMintPerTx": 5,
       "maxMintPerAddress": 100,
       "totalSupply": 1000,
@@ -9160,7 +9337,7 @@
       "slug": "crovilians",
       "imgNft": "/img/drops/crovilians/drop.webp",
       "imgPreview": "/img/drops/crovilians/drop.webp",
-      "imgAvatar": "/img/collections/cronosverse/avatar.webp",
+      "imgAvatar": "/img/collections/crovilians/avatar.webp",
       "imgBanner": "/img/collections/crovilians/banner.webp",
       "title": "Crovilians",
       "subtitle": "The Crovilians are the citizens of The CronosVerse and have various traits representing the many societal roles required in both the metaverse and in the physical world.",
@@ -9171,7 +9348,7 @@
         "twitter": "https://twitter.com/TheCronosVerse",
         "discord": "https://discord.gg/E9Mzzy9Hex"
       },
-      "address": "",
+      "address": "0x130a6c2884325d302830179C691D328dDAd9b78C",
       "maxMintPerTx": 5,
       "maxMintPerAddress": 100,
       "totalSupply": 8000,
@@ -9180,6 +9357,100 @@
       "whitelistCost": "500",
       "foundersOnly": false,
       "start": 1659477600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 95,
+      "slug": "alpha-clone",
+      "imgNft": "/img/drops/alpha-clone/drop.webp",
+      "imgPreview": "/img/drops/alpha-clone/drop.webp",
+      "imgAvatar": "/img/collections/alpha-clone/avatar.webp",
+      "imgBanner": "/img/collections/alpha-clone/banner.webp",
+      "title": "AlphaClone",
+      "subtitle": "Cyberclone & Alphaclone is a collection of 2000 uniquely generated NFTs stored on the Cronos blockchain. Each NFT Clone is inspired by the futuristic life of the year 2234, where the world is falling apart under the control of the WorldClones, who are conquering earth!",
+      "description": "Create a community CyberClone!\n\nFirst 100% 3D project, our goal is to create a new futuristic world on Cronos!\n\nRoadmap :\n\nDao: Decision, investment... for the development of the project\n\nStaking: Stake your Clones to have a passive income with CCT!\n\nHosting raffle: Sell your NFT by hosting your own raffle. Only cronos project can be put in the raffle!\n\nCyberSwap: Is going to be a peer-to-peer exchange service that allows you to exchange up to 6 NFTs in one transaction\n\nThe Trading Post: Will be a way to list NFTs to trade with other CyberClone users!\n\nMessaging: It's a messaging service that will allow you to send NFT messages to any address/wallet linked to CRO or Twitter.\n\nMerchandising: It's a collection of exclusive clothing reserved for Clone members\n\nCyberClone App: More details on our site",
+      "author": {
+        "name": "CyberClone",
+        "twitter": "https://twitter.com/CyberCloneNFT",
+        "website": "https://cyber-clone.com/",
+        "discord": "https://discord.gg/rKnGgUDgYD",
+        "medium": "https://medium.com/cyber-clone"
+      },
+      "address": "",
+      "maxMintPerTx": 15,
+      "maxMintPerAddress": 100,
+      "totalSupply": 1000,
+      "cost": "500",
+      "memberCost": "450",
+      "whitelistCost": "425",
+      "foundersOnly": false,
+      "start": 1659621600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 96,
+      "slug": "pocket-demons",
+      "imgNft": "/img/drops/pocket-demons/drop.gif",
+      "imgPreview": "/img/drops/pocket-demons/drop.gif",
+      "imgAvatar": "/img/collections/pocket-demons/avatar.webp",
+      "imgBanner": "/img/collections/pocket-demons/banner.webp",
+      "title": "Pocket Demons",
+      "subtitle": "The Pocket Demons project is a collection of 666 uniquely generated demon characters. Each Demon is generated from a pool of over 70 traits. These Demons also carry unique stats and attacks that are utilized in our P2E Game!",
+      "description": "The Pocket Demons project is a collection of 666 uniquely generated demon characters. Each Demon is generated from a pool of over 70 traits. These Demons also carry unique stats and attacks that are utilized in our P2E Game!\n\nUtilities:\n\nTokenomics\n$FLM is the heart of our ecosystem. With this token you can participate in battles and breed your demons.\n\nP2E\nDemolish other demons in a turn-based combat game! Put some $FLM on the line and the winner takes it all!\n\nBreeding\nBreeding is the name of the game! Breed your demons to produce offspring with even better stats. Toss them in the ring or sell them off!\n\nStaking\nNot into games? That's fine, you will be able to stake your Pocket Demons and earn some passive income.",
+      "author": {
+        "name": "Pocket Demons",
+        "website": "https://www.pocketdemons.com/",
+        "twitter": "https://twitter.com/PocketDemonsNFT",
+        "discord": "https://discord.gg/sdgRtxt8vJ"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 666,
+      "cost": "450",
+      "memberCost": "350",
+      "whitelistCost": "350",
+      "foundersOnly": false,
+      "start": 1659902400000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 97,
+      "slug": "cro-hamsters",
+      "imgNft": "/img/drops/cro-hamsters/drop.webp",
+      "imgPreview": "/img/drops/cro-hamsters/drop.webp",
+      "imgAvatar": "/img/collections/cro-hamsters/avatar.webp",
+      "imgBanner": "/img/collections/cro-hamsters/banner.webp",
+      "title": "CroHamsters",
+      "subtitle": "CroHamster is a collection of 1000 unique and 3D animated NFTs on Cronos. Each CroHamster is based on a wide variety of different traits. Owning a CroHamster will give you access to our CroHamster arena, where you can fight for awesome rewards.",
+      "description": "Are you ready for the next generation of NFTs?\n\nThen welcome to CroHamsterNFT.\n\nCroHamsterNFT is an innovative project that tries to achieve maximum utility and innovation for the success of our community and project.\n\nFor this we have created a very limited collection that only contains 1000 3D animated and unique CroHamsters with different cosmetic items, weapons and 8 unique animations. \nEach CroHamster also has two special combat values \u200B\u200Bthat will be useful to fight other CroHamsters. \n\nThe Crohamsters are divided into 4 different factions (Miner, Space, Nature, Worker) and can fight against each other in the CroHamster-Arena. With this feature, we will be able to start a unique reward system for our community, in which they can win Cro rewards and points on a leaderboard thought fights in the arena. For this, each CroHamster has Attack and Defense combat stats that indicate how strong it is in fights against other CroHamsters. Additionally, if the CroHamster owns a weapon, it will get an attack bonus. To prevent stale and predictable fights, we will also use a random generated \"Luck\" and \"Hit Percentage\" value.\n\nEvery Crohamster who wants to take part in the arena fights can put their name on a list, two random CroHamsters from different factions are then selected from this list to fight against each other. The winner will then receive the mint price of a CroHamster NFT in Cro as prize (325Cro). They will also earn points on a leaderboard, allowing us to honor the best CroHamster fighters in a Hall of Fame, which qualifies them for additional Hall of Fame giveaways with unique NFT and CRO rewards.",
+      "author": {
+        "name": "CroHamsters",
+        "website": "https://www.pocketdemons.com/",
+        "twitter": "https://twitter.com/PocketDemonsNFT",
+        "discord": "https://discord.gg/sdgRtxt8vJ"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 1000,
+      "cost": "325",
+      "memberCost": "300",
+      "whitelistCost": "275",
+      "foundersOnly": false,
+      "start": 1659988800000,
       "end": null,
       "referral": false,
       "is1155": false,

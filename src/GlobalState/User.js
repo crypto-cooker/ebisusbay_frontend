@@ -739,8 +739,13 @@ export const fetchNfts =
     dispatch(fetchingNfts({ persist }));
     const response = await getNftsForAddress2(walletAddress, walletProvider, page, collectionAddress);
     if (response.length > 0) {
-      dispatch(onNftsAdded(response));
-      dispatch(nftsFetched());
+      if (response[0] === 0) {
+        dispatch(onNftsAdded([0]));
+        dispatch(nftsFetched());
+      } else {
+        dispatch(onNftsAdded(response));
+        dispatch(nftsFetched());
+      }
     } else {
       dispatch(nftsFullyFetched());
     }

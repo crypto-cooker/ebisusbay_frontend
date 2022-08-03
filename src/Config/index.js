@@ -170,7 +170,7 @@ export const imageDomains = [
  */
 export const appConfig = (key) => {
   const env = environments[currentEnv()];
-  const fallbackEnv = environments.development;
+  const fallbackEnv = environments.production;
   if (!env) return configData[fallbackEnv];
 
   const config = isLocalEnv() ?
@@ -185,7 +185,8 @@ export const appConfig = (key) => {
 }
 
 export const currentEnv = () => {
-  return process.env.NEXT_PUBLIC_ENV ?? process.env.NODE_ENV;
+  return environments.production;
+  return process.env.NEXT_PUBLIC_ENV ?? process.env.NODE_ENV ?? environments.production;
 }
 
 export const isLocalEnv = () => {

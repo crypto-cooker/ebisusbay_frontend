@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 
 import MultiDrop from '../../src/Components/Drop/multiDrop';
@@ -9,8 +9,9 @@ import {appConfig} from "@src/Config";
 import PageHead from "../../src/Components/Head/PageHead";
 
 export const drops = appConfig('drops');
+export const collections = appConfig('collections');
 
-const Drop = ({ssrDrop}) => {
+const Drop = ({ssrDrop, ssrCollection}) => {
   const router = useRouter();
   const { slug } = router.query;
 
@@ -33,7 +34,7 @@ const Drop = ({ssrDrop}) => {
         title={ssrDrop.title}
         description={ssrDrop.subtitle}
         url={`/drops/${ssrDrop.slug}`}
-        image={ssrDrop.imgNft}
+        image={ssrCollection?.metadata.card ?? ssrDrop.imgNft}
       />
       {ssrDrop && (
         <>
@@ -53,6 +54,7 @@ const Drop = ({ssrDrop}) => {
 export const getServerSideProps = async ({ params }) => {
   const slug = params?.slug;
   const drop = drops.find((c) => caseInsensitiveCompare(c.slug, slug));
+  const collection = collections.find((c) => caseInsensitiveCompare(c.slug, slug));
 
   if (!drop) {
     return {
@@ -64,6 +66,7 @@ export const getServerSideProps = async ({ params }) => {
     props: {
       slug: drop?.slug,
       ssrDrop: drop,
+      ssrCollection: collection
     },
   };
 };

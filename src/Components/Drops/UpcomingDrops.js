@@ -1,12 +1,10 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import Slider from 'react-slick';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-import { settings } from '../components/constants';
+import Slider from '../components/Slider';
 import CustomSlide from '../components/CustomSlide';
-import {appConfig} from "../../Config";
+import { appConfig } from "../../Config";
+
 const collections = appConfig('collections');
 const drops = appConfig('drops');
 
@@ -36,43 +34,25 @@ const UpcomingDrops = () => {
     arrangeCollections();
   }, [dispatch]);
 
-  const PrevArrow = (props) => {
-    const { className, style, onClick } = props;
-    return (
-      <div className={className} style={style} onClick={onClick}>
-        <FontAwesomeIcon icon={faChevronLeft} />
-      </div>
-    );
-  };
-
-  const NextArrow = (props) => {
-    const { className, style, onClick } = props;
-    return (
-      <div className={className} style={style} onClick={onClick}>
-        <FontAwesomeIcon icon={faChevronRight} />
-      </div>
-    );
-  };
-
   return (
     <div className="nft">
-      <Slider {...settings} prevArrow={<PrevArrow />} nextArrow={<NextArrow />}>
-        {upcomingDrops &&
-          upcomingDrops.map((item, index) => (
-            <CustomSlide
-              key={index}
-              index={index + 1}
-              avatar={item.drop.imgAvatar}
-              banner={item.collection.metadata.card}
-              title={item.drop.title}
-              subtitle={`${item.drop.start ? new Date(item.drop.start).toDateString() : 'TBA'}`}
-              collectionId={item.drop.slug}
-              url={item.drop.redirect ?? `/drops/${item.drop.slug}`}
-              externalPage={!!item.drop.redirect}
-              verified={item.collection.metadata.verified}
-            />
-          ))}
+      {upcomingDrops.length > 0 && <Slider size={upcomingDrops.length}>
+        {upcomingDrops && upcomingDrops.map((item, index) => (
+          <CustomSlide
+            key={index}
+            index={index + 1}
+            avatar={item.drop.imgAvatar}
+            banner={item.collection.metadata.card}
+            title={item.drop.title}
+            subtitle={`${item.drop.start ? new Date(item.drop.start).toDateString() : 'TBA'}`}
+            collectionId={item.drop.slug}
+            url={item.drop.redirect ?? `/drops/${item.drop.slug}`}
+            externalPage={!!item.drop.redirect}
+            verified={item.collection.metadata.verified}
+          />
+        ))}
       </Slider>
+      }
     </div>
   );
 };
