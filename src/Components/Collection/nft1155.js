@@ -261,7 +261,7 @@ const Nft1155 = ({ address, id }) => {
                                                   {data?.display_type === 'date' ? (
                                                     <>{new Date(millisecondTimestamp(data.value)).toDateString()}</>
                                                   ) : (
-                                                    <>{mapAttributeString(data.value, address, true)}</>
+                                                    <>{mapAttributeString(data.value, address, data.trait_type, true)}</>
                                                   )}
                                                 </>
                                               ) : (

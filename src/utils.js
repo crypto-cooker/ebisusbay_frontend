@@ -185,13 +185,28 @@ export function humanize(str) {
   return frags.join(' ');
 }
 
-export function mapAttributeString(str, address, makeHuman = false) {
+/**
+ * Extra formatting for collection attributes not caught by humanize(str)
+ * 
+ * @param str
+ * @param address
+ * @param category
+ * @param makeHuman
+ * @returns {string|*}
+ */
+export function mapAttributeString(str, address, category, makeHuman = false) {
   const mappings = attributes[address];
   let newStr = str;
 
   if (mappings) {
     for (const [key, value] of Object.entries(mappings)) {
-      newStr = newStr.replace(key, value);
+      if (typeof value === 'object' && key.toLowerCase() === category.toLowerCase()) {
+        for (const [k, v] of Object.entries(value)) {
+          newStr = newStr.replace(k, v);
+        }
+      } else {
+        newStr = newStr.replace(key, value);
+      }
     }
   }
 
