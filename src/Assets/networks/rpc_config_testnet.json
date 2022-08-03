@@ -1522,6 +1522,25 @@
         "discord": "https://discord.gg/rKnGgUDgYD",
         "medium": "https://medium.com/cyber-clone"
       }
+    },
+    {
+      "name": "Pocket Demons",
+      "slug": "pocket-demons",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Pocket Demons project is a collection of 666 uniquely generated demon characters. Each Demon is generated from a pool of over 70 traits. These Demons also carry unique stats and attacks that are utilized in our P2E Game!",
+        "verified": true,
+        "avatar": "/img/collections/pocket-demons/avatar.webp",
+        "card": "/img/collections/pocket-demons/card.webp",
+        "banner": "/img/collections/pocket-demons/banner.webp",
+        "maxSupply": 666,
+        "website": "https://www.pocketdemons.com/",
+        "twitter": "https://twitter.com/PocketDemonsNFT",
+        "discord": "https://discord.gg/sdgRtxt8vJ"
+      }
     }
   ],
   "drops": [
@@ -3432,6 +3451,37 @@
       "whitelistCost": "425",
       "foundersOnly": false,
       "start": 1659502007000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 96,
+      "slug": "pocket-demons",
+      "imgNft": "/img/drops/pocket-demons/drop.webp",
+      "imgPreview": "/img/drops/pocket-demons/drop.webp",
+      "imgAvatar": "/img/collections/pocket-demons/avatar.webp",
+      "imgBanner": "/img/collections/pocket-demons/banner.webp",
+      "title": "Pocket Demons",
+      "subtitle": "The Pocket Demons project is a collection of 666 uniquely generated demon characters. Each Demon is generated from a pool of over 70 traits. These Demons also carry unique stats and attacks that are utilized in our P2E Game!",
+      "description": "The Pocket Demons project is a collection of 666 uniquely generated demon characters. Each Demon is generated from a pool of over 70 traits. These Demons also carry unique stats and attacks that are utilized in our P2E Game!\n\nUtilities:\n\nTokenomics\n$FLM is the heart of our ecosystem. With this token you can participate in battles and breed your demons.\n\nP2E\nDemolish other demons in a turn-based combat game! Put some $FLM on the line and the winner takes it all!\n\nBreeding\nBreeding is the name of the game! Breed your demons to produce offspring with even better stats. Toss them in the ring or sell them off!\n\nStaking\nNot into games? That's fine, you will be able to stake your Pocket Demons and earn some passive income.",
+      "author": {
+        "name": "Pocket Demons",
+        "website": "https://www.pocketdemons.com/",
+        "twitter": "https://twitter.com/PocketDemonsNFT",
+        "discord": "https://discord.gg/sdgRtxt8vJ"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 666,
+      "cost": "450",
+      "memberCost": "350",
+      "whitelistCost": "350",
+      "foundersOnly": false,
+      "start": 1659502008000,
       "end": null,
       "referral": false,
       "is1155": false,
