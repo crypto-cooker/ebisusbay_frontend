@@ -4448,7 +4448,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Cyberclone is a collection of 2000 uniquely generated NFTs stored on the Cronos blockchain. Each NFT Clone is inspired by the futuristic life of the year 2234, where the world is falling apart under the control of the Cyberclones, who are conquering earth!",
+        "description": "Cyberclone & Alphaclone is a collection of 2000 uniquely generated NFTs stored on the Cronos blockchain. Each NFT Clone is inspired by the futuristic life of the year 2234, where the world is falling apart under the control of the WorldClones, who are conquering earth!",
         "verified": true,
         "avatar": "/img/collections/cyber-clone/avatar.webp",
         "card": "/img/collections/cyber-clone/card.webp",
@@ -6663,6 +6663,26 @@
         "website": "https://gymkongz.com/",
         "twitter": "https://twitter.com/GymKongz",
         "discord": "https://discord.gg/gymkongz"
+      }
+    },
+    {
+      "name": "AlphaClone",
+      "slug": "alpha-clone",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Cyberclone & Alphaclone is a collection of 2000 uniquely generated NFTs stored on the Cronos blockchain. Each NFT Clone is inspired by the futuristic life of the year 2234, where the world is falling apart under the control of the WorldClones, who are conquering earth!",
+        "verified": true,
+        "avatar": "/img/collections/alpha-clone/avatar.webp",
+        "card": "/img/collections/alpha-clone/card.webp",
+        "banner": "/img/collections/alpha-clone/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://cyber-clone.com/",
+        "twitter": "https://twitter.com/CyberCloneNFT",
+        "discord": "https://discord.gg/rKnGgUDgYD",
+        "medium": "https://medium.com/cyber-clone"
       }
     }
   ],
@@ -9298,6 +9318,38 @@
       "whitelistCost": "500",
       "foundersOnly": false,
       "start": 1659477600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 95,
+      "slug": "alpha-clone",
+      "imgNft": "/img/drops/alpha-clone/drop.webp",
+      "imgPreview": "/img/drops/alpha-clone/drop.webp",
+      "imgAvatar": "/img/collections/alpha-clone/avatar.webp",
+      "imgBanner": "/img/collections/alpha-clone/banner.webp",
+      "title": "AlphaClone",
+      "subtitle": "Cyberclone & Alphaclone is a collection of 2000 uniquely generated NFTs stored on the Cronos blockchain. Each NFT Clone is inspired by the futuristic life of the year 2234, where the world is falling apart under the control of the WorldClones, who are conquering earth!",
+      "description": "Create a community CyberClone!\n\nFirst 100% 3D project, our goal is to create a new futuristic world on Cronos!\n\nRoadmap :\n\nDao: Decision, investment... for the development of the project\n\nStaking: Stake your Clones to have a passive income with CCT!\n\nHosting raffle: Sell your NFT by hosting your own raffle. Only cronos project can be put in the raffle!\n\nCyberSwap: Is going to be a peer-to-peer exchange service that allows you to exchange up to 6 NFTs in one transaction\n\nThe Trading Post: Will be a way to list NFTs to trade with other CyberClone users!\n\nMessaging: It's a messaging service that will allow you to send NFT messages to any address/wallet linked to CRO or Twitter.\n\nMerchandising: It's a collection of exclusive clothing reserved for Clone members\n\nCyberClone App: More details on our site",
+      "author": {
+        "name": "CyberClone",
+        "twitter": "https://twitter.com/CyberCloneNFT",
+        "website": "https://cyber-clone.com/",
+        "discord": "https://discord.gg/rKnGgUDgYD",
+        "medium": "https://medium.com/cyber-clone"
+      },
+      "address": "",
+      "maxMintPerTx": 15,
+      "maxMintPerAddress": 100,
+      "totalSupply": 1000,
+      "cost": "500",
+      "memberCost": "450",
+      "whitelistCost": "425",
+      "foundersOnly": false,
+      "start": 1659621600000,
       "end": null,
       "referral": false,
       "is1155": false,
