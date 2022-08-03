@@ -29,7 +29,7 @@ const PastDrops = () => {
 
   return (
     <div className="nft">
-      {pastDrops.length > 0 && <Slider size={pastDrops.length}>
+      <Slider size={pastDrops.length}>
         {pastDrops &&
           pastDrops.map((item, index) => (
             <CustomSlide
@@ -44,7 +44,6 @@ const PastDrops = () => {
             />
           ))}
       </Slider>
-      }
     </div>
   );
 };
