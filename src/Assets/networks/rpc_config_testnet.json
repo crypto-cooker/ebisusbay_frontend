@@ -1541,6 +1541,26 @@
         "twitter": "https://twitter.com/PocketDemonsNFT",
         "discord": "https://discord.gg/sdgRtxt8vJ"
       }
+    },
+    {
+      "name": "CroHamsters",
+      "slug": "cro-hamsters",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "CroHamster is a collection of 1000 unique and 3D animated NFTs on Cronos. Each CroHamster is based on a wide variety of different traits. Owning a CroHamster will give you access to our CroHamster arena, where you can fight for awesome rewards.",
+        "verified": true,
+        "avatar": "/img/collections/cro-hamsters/avatar.webp",
+        "card": "/img/collections/cro-hamsters/card.webp",
+        "banner": "/img/collections/cro-hamsters/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://linktr.ee/crohamsternft/",
+        "twitter": "https://twitter.com/cro_hamster",
+        "discord": "https://discord.gg/sj4cHPrdVk",
+        "medium": "https://medium.com/@CroHamsterNFT"
+      }
     }
   ],
   "drops": [
@@ -3482,6 +3502,37 @@
       "whitelistCost": "350",
       "foundersOnly": false,
       "start": 1659502008000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 97,
+      "slug": "cro-hamsters",
+      "imgNft": "/img/drops/cro-hamsters/drop.webp",
+      "imgPreview": "/img/drops/cro-hamsters/drop.webp",
+      "imgAvatar": "/img/collections/cro-hamsters/avatar.webp",
+      "imgBanner": "/img/collections/cro-hamsters/banner.webp",
+      "title": "CroHamsters",
+      "subtitle": "CroHamster is a collection of 1000 unique and 3D animated NFTs on Cronos. Each CroHamster is based on a wide variety of different traits. Owning a CroHamster will give you access to our CroHamster arena, where you can fight for awesome rewards.",
+      "description": "Are you ready for the next generation of NFTs?\n\nThen welcome to CroHamsterNFT.\n\nCroHamsterNFT is an innovative project that tries to achieve maximum utility and innovation for the success of our community and project.\n\nFor this we have created a very limited collection that only contains 1000 3D animated and unique CroHamsters with different cosmetic items, weapons and 8 unique animations. \nEach CroHamster also has two special combat values \u200B\u200Bthat will be useful to fight other CroHamsters. \n\nThe Crohamsters are divided into 4 different factions (Miner, Space, Nature, Worker) and can fight against each other in the CroHamster-Arena. With this feature, we will be able to start a unique reward system for our community, in which they can win Cro rewards and points on a leaderboard thought fights in the arena. For this, each CroHamster has Attack and Defense combat stats that indicate how strong it is in fights against other CroHamsters. Additionally, if the CroHamster owns a weapon, it will get an attack bonus. To prevent stale and predictable fights, we will also use a random generated \"Luck\" and \"Hit Percentage\" value.\n\nEvery Crohamster who wants to take part in the arena fights can put their name on a list, two random CroHamsters from different factions are then selected from this list to fight against each other. The winner will then receive the mint price of a CroHamster NFT in Cro as prize (325Cro). They will also earn points on a leaderboard, allowing us to honor the best CroHamster fighters in a Hall of Fame, which qualifies them for additional Hall of Fame giveaways with unique NFT and CRO rewards.",
+      "author": {
+        "name": "CroHamsters",
+        "website": "https://www.pocketdemons.com/",
+        "twitter": "https://twitter.com/PocketDemonsNFT",
+        "discord": "https://discord.gg/sdgRtxt8vJ"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 1000,
+      "cost": "325",
+      "memberCost": "300",
+      "whitelistCost": "275",
+      "foundersOnly": false,
+      "start": 1659502009000,
       "end": null,
       "referral": false,
       "is1155": false,
