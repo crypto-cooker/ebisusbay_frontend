@@ -161,15 +161,16 @@ export const imageDomains = [
  */
 export const appConfig = (key) => {
   const env = isLocalEnv() ? environments.production : environments[currentEnv()];
-  if (!key) return env ? configData[env] : configData[environments.development];
+  if (!key) return env ? configData[env] : configData[environments.production];
 
   const keys = key.split('.');
 
-  return keys.reduce((o,i)=> o[i], env ? configData[env] : configData[environments.development]);
+  return keys.reduce((o,i)=> o[i], env ? configData[env] : configData[environments.production]);
 }
 
 export const currentEnv = () => {
-  return process.env.NEXT_PUBLIC_ENV ?? process.env.NODE_ENV;
+  return environments.production;
+  return process.env.NEXT_PUBLIC_ENV ?? process.env.NODE_ENV ?? environments.production;
 }
 
 export const isLocalEnv = () => {
