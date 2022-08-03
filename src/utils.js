@@ -187,7 +187,7 @@ export function humanize(str) {
 
 /**
  * Extra formatting for collection attributes not caught by humanize(str)
- * 
+ *
  * @param str
  * @param address
  * @param category

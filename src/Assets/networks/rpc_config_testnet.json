@@ -1546,7 +1546,7 @@
       "name": "CroHamsters",
       "slug": "cro-hamsters",
       "multiToken": false,
-      "address": "",
+      "address": "0xA6803fe63Ef62F2B6EEa2f98c153CF24eF5981d7",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -3524,7 +3524,7 @@
         "twitter": "https://twitter.com/PocketDemonsNFT",
         "discord": "https://discord.gg/sdgRtxt8vJ"
       },
-      "address": "",
+      "address": "0xA6803fe63Ef62F2B6EEa2f98c153CF24eF5981d7",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 1000,
