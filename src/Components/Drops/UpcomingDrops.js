@@ -4,11 +4,24 @@ import Slider from 'react-slick';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-import { settings, settingsWithoutScrolling } from '../components/constants';
 import CustomSlide from '../components/CustomSlide';
 import { appConfig } from "../../Config";
+
 const collections = appConfig('collections');
 const drops = appConfig('drops');
+
+const settings = {
+  infinite: true,
+  speed: 500,
+  slidesToShow: 4,
+  slidesToScroll: 4,
+  initialSlide: 0,
+  adaptiveHeight: 300,
+  lazyLoad: true,
+  responsive: [],
+};
+
+const resolutions = [480, 600, 1600, 1900];
 
 const UpcomingDrops = () => {
   const dispatch = useDispatch();
@@ -54,9 +67,43 @@ const UpcomingDrops = () => {
     );
   };
 
+  const settingsGeneration = (cant) => {
+    const newSettings = settings;
+    if (cant > 0 && settings.responsive.length < resolutions.length) {
+      if (cant <= 3) {
+        newSettings.infinite = false,
+          newSettings.adaptiveHeight = false
+      }
+      for (let i = resolutions.length - 1; i >= 0; i--) {
+
+        if (i < cant) {
+          newSettings.responsive.push({
+            breakpoint: resolutions[i],
+            settings: {
+              slidesToShow: i + 1,
+              slidesToScroll: i + 1,
+              infinite: true,
+            },
+          })
+        } else {
+          newSettings.responsive.push({
+            breakpoint: resolutions[i],
+            settings: {
+              slidesToShow: i + 1,
+              slidesToScroll: i + 1,
+              infinite: false,
+            },
+          })
+        }
+      }
+    }
+
+    return newSettings;
+  }
+
   return (
     <div className="nft">
-      <Slider {...(upcomingDrops.length > 3 ? settings : settingsWithoutScrolling)} prevArrow={<PrevArrow />} nextArrow={<NextArrow />}>
+      {upcomingDrops.length > 0 && <Slider {...settingsGeneration(upcomingDrops.length)} prevArrow={<PrevArrow />} nextArrow={<NextArrow />}>
         {upcomingDrops && upcomingDrops.map((item, index) => (
           <CustomSlide
             key={index}
@@ -72,6 +119,7 @@ const UpcomingDrops = () => {
           />
         ))}
       </Slider>
+      }
     </div>
   );
 };
