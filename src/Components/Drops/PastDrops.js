@@ -1,12 +1,9 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import Slider from 'react-slick';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import Slider from '../components/Slider';
 
-import { settings } from '../components/constants';
 import CustomSlide from '../components/CustomSlide';
-import {appConfig} from "../../Config";
+import { appConfig } from "../../Config";
 
 const drops = appConfig('drops');
 const collections = appConfig('collections');
@@ -30,27 +27,9 @@ const PastDrops = () => {
     arrangeCollections();
   }, [dispatch]);
 
-  const PrevArrow = (props) => {
-    const { className, style, onClick } = props;
-    return (
-      <div className={className} style={style} onClick={onClick}>
-        <FontAwesomeIcon icon={faChevronLeft} />
-      </div>
-    );
-  };
-
-  const NextArrow = (props) => {
-    const { className, style, onClick } = props;
-    return (
-      <div className={className} style={style} onClick={onClick}>
-        <FontAwesomeIcon icon={faChevronRight} />
-      </div>
-    );
-  };
-
   return (
     <div className="nft">
-      <Slider {...settings} prevArrow={<PrevArrow />} nextArrow={<NextArrow />}>
+      {pastDrops.length > 0 && <Slider size={pastDrops.length}>
         {pastDrops &&
           pastDrops.map((item, index) => (
             <CustomSlide
@@ -65,6 +44,7 @@ const PastDrops = () => {
             />
           ))}
       </Slider>
+      }
     </div>
   );
 };
