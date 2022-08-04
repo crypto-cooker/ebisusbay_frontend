@@ -6723,6 +6723,26 @@
         "discord": "https://discord.gg/sj4cHPrdVk",
         "medium": "https://medium.com/@CroHamsterNFT"
       }
+    },
+    {
+      "name": "Magus 255 Collection",
+      "slug": "magus-255-collection",
+      "multiToken": false,
+      "address": "0x4211c449e171ef9278dbcf0559e345b555e171e4",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Our fantastic trading-card themed Magus Prime NFTs have had all the assets handmade in-house by our amazing graphical designer. Each NFT has it's own unique look with both an artistic and use-case value.  The 255 collection will feature the following rarities:  Common - 175 Rare - 60 Legendary - 15 Mythical - 5  Depending on the rarity of your NFT, your boost will vary. The rarer your NFT, the higher the boost! The more Nodes you have, the more you will benefit from the boost.   Common - 0.1 token a day - (10 Nodes would mean 1 token a day)  Rare - 0.125 token a day (10 Nodes would mean 1.25 tokens a day)  Legendary - 0.15 token a day (10 Nodes would mean 1.5 tokens a day)  Mythical - 0.2 token a day (10 Nodes would mean 2 tokens a day)",
+        "verified": false,
+        "avatar": "/img/collections/magus-255-collection/avatar.webp",
+        "card": "/img/collections/magus-255-collection/card.webp",
+        "banner": "/img/collections/magus-255-collection/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://magusnodes.com/",
+        "twitter": "https://twitter.com/MagusNodes",
+        "discord": "https://discord.gg/CcGHagvR5w",
+        "telegram": "https://t.me/MagusNodes"
+      }
     }
   ],
   "drops": [
