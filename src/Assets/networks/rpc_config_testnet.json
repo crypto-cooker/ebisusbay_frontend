@@ -1527,7 +1527,7 @@
       "name": "Pocket Demons",
       "slug": "pocket-demons",
       "multiToken": false,
-      "address": "0xb92dc0713Fb628Ee3BA32472b1B05a6a13f79995",
+      "address": "0x3bb5B9FD9C6978a823b96E14c395648a9a31949a",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -3493,7 +3493,7 @@
         "twitter": "https://twitter.com/PocketDemonsNFT",
         "discord": "https://discord.gg/sdgRtxt8vJ"
       },
-      "address": "0xb92dc0713Fb628Ee3BA32472b1B05a6a13f79995",
+      "address": "0x3bb5B9FD9C6978a823b96E14c395648a9a31949a",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 666,
