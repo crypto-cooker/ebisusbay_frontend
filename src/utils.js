@@ -196,7 +196,7 @@ export function humanize(str) {
  */
 export function mapAttributeString(str, address, category, makeHuman = false) {
   const mappings = attributes[address];
-  let newStr = str;
+  let newStr = str?.toString() ?? '';
 
   if (mappings) {
     for (const [key, value] of Object.entries(mappings)) {
