@@ -2913,19 +2913,19 @@
       "name": "Cronos Football Club",
       "slug": "cronos-fc",
       "multiToken": false,
-      "address": "0xd8cdcA552c2419DaeEF7598C9a4C6Ff3526d35AC",
+      "address": "0xD42B7Da75fd92D7612B2D89E31782fD29CC69fb4",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": false,
-        "avatar": "/img/collections/cronosfc/avatar.webp",
-        "card": "/img/collections/cronosfc/card.webp",
-        "banner": "/img/collections/cronosfc/banner.webp",
+        "avatar": "/img/collections/cronos-fc/avatar.webp",
+        "card": "/img/collections/cronos-fc/card.webp",
+        "banner": "/img/collections/cronos-fc/banner.webp",
         "maxSupply": 25000,
-        "website": "https://cronosfc.club/",
+        "website": "https://dapp.cronosfc.club/",
         "twitter": "https://twitter.com/Cronos__FC",
-        "discord": "https://discord.gg/C7saCVJN",
+        "discord": "https://discord.gg/XPmYbqAD",
         "medium": "https://medium.com/@cfcgcronos"
       }
     },
@@ -6723,6 +6723,105 @@
         "discord": "https://discord.gg/sj4cHPrdVk",
         "medium": "https://medium.com/@CroHamsterNFT"
       }
+    },
+    {
+      "name": "Magus 255 Collection",
+      "slug": "magus-255-collection",
+      "multiToken": false,
+      "address": "0x4211c449e171ef9278dbcf0559e345b555e171e4",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Our fantastic trading-card themed Magus Prime NFTs have had all the assets handmade in-house by our amazing graphical designer. Each NFT has it's own unique look with both an artistic and use-case value.  The 255 collection will feature the following rarities:  Common - 175 Rare - 60 Legendary - 15 Mythical - 5  Depending on the rarity of your NFT, your boost will vary. The rarer your NFT, the higher the boost! The more Nodes you have, the more you will benefit from the boost.   Common - 0.1 token a day - (10 Nodes would mean 1 token a day)  Rare - 0.125 token a day (10 Nodes would mean 1.25 tokens a day)  Legendary - 0.15 token a day (10 Nodes would mean 1.5 tokens a day)  Mythical - 0.2 token a day (10 Nodes would mean 2 tokens a day)",
+        "verified": false,
+        "avatar": "/img/collections/magus-255-collection/avatar.webp",
+        "card": "/img/collections/magus-255-collection/card.webp",
+        "banner": "/img/collections/magus-255-collection/banner.webp",
+        "maxSupply": 255,
+        "website": "https://magusnodes.com/",
+        "twitter": "https://twitter.com/MagusNodes",
+        "discord": "https://discord.gg/CcGHagvR5w",
+        "telegram": "https://t.me/MagusNodes"
+      }
+    },
+    {
+      "name": "Tough Tiger Gang",
+      "slug": "tough-tiger-gang",
+      "multiToken": false,
+      "address": "0x66d2402c787Ca19cB30C3eE41Bc6534028DF9eBa",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "TTG is a collection of 2,420 algorithmically generated NFTs on the Cronos Network. Holding 4 NFTs will grant you a free airdrop which is your ticket to a first-of-its-kind Be Your Own Boss group. This group will pool mint proceeds together to buy and distribute high-value learning materials and information, which our holders can utilise to escape their 9-5 and become their own boss. We will also be running a buy-back program with our royalty fees, to ensure floor price support. For more information, head over to our Twitter or Discord in the links provided.",
+        "verified": false,
+        "avatar": "/img/collections/tough-tiger-gang/avatar.webp",
+        "card": "/img/collections/tough-tiger-gang/card.webp",
+        "banner": "/img/collections/tough-tiger-gang/banner.webp",
+        "maxSupply": 2420,
+        "twitter": "https://twitter.com/ToughTigerGang_",
+        "discord": "https://discord.gg/79BDDbyXvQ",
+        "medium": "https://medium.com/@ToughTigerGang"
+      }
+    },
+    {
+      "name": "Ape Boys Elite",
+      "slug": "ape-boys-elite",
+      "multiToken": false,
+      "address": "0x95Da4319b3B69755ee2E67297BE5A1A951D0c667",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Ape Boys Elite Is A P2E Puzzle Game Collection of 3,333 Ape Boys Hosted On The Cronos Blockchain Network. Stake Your Ape And Earn $ETE.",
+        "verified": false,
+        "avatar": "/img/collections/ape-boys-elite/avatar.webp",
+        "card": "/img/collections/ape-boys-elite/card.webp",
+        "banner": "/img/collections/ape-boys-elite/banner.webp",
+        "maxSupply": 3333,
+        "website": "https://www.apeboys.xyz/",
+        "twitter": "https://twitter.com/apeboyselite",
+        "discord": "https://discord.gg/2CHVFU5PPG"
+      }
+    },
+    {
+      "name": "Daolist Pass 3D",
+      "slug": "daolist-pass-3d",
+      "multiToken": false,
+      "address": "0x1C7F4fE849e52B013242CDCb0C88f6A3c2Ea28aF",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Daolist Pass is an NFT collection of 1500 pieces, with two principal utilities: direct access pass for the Whitelist with discount for next Dr Dao collections and for collections created by Dr Dao Lab (Incubator benefit), and P2R Booster on the DaoGames website (when it will be online), where you can generate an income of +5% in case of win or 5% of cashback in case of loss.",
+        "verified": false,
+        "avatar": "/img/collections/daolist-pass-3d/avatar.webp",
+        "card": "/img/collections/daolist-pass-3d/card.webp",
+        "banner": "/img/collections/daolist-pass-3d/banner.webp",
+        "maxSupply": 1500,
+        "website": "https://www.drdaoclub.xyz/",
+        "twitter": "https://twitter.com/DrDaoClub",
+        "discord": "https://discord.gg/fyca4JYW7V",
+        "medium": "https://medium.com/@drdao.club",
+        "telegram": "https://t.me/DrDaoFounder"
+      }
+    },
+    {
+      "name": "Black Cat - LS",
+      "slug": "black-cat-ls",
+      "multiToken": false,
+      "address": "0x49D85f22b6c65593018355D7B090164A06F8090b",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Black Cat is a collection of 311 unique NFTs reserved for the Lucky Spookies holders that gain access to exclusive initiatives within the community. Black cats were created to give everyone the opportunity to be owned by a mini-panther.",
+        "verified": false,
+        "avatar": "/img/collections/black-cat-ls/avatar.webp",
+        "card": "/img/collections/black-cat-ls/card.webp",
+        "banner": "/img/collections/black-cat-ls/banner.webp",
+        "maxSupply": 311,
+        "website": "https://luckyspookies.club/",
+        "twitter": "https://twitter.com/LuckySpookiesPC",
+        "discord": "https://discord.gg/AEQ2BCpCNZ",
+        "medium": "https://medium.com/@LuckySpookies_NFTs"
+      }
     }
   ],
   "drops": [
@@ -9438,9 +9537,10 @@
       "description": "Are you ready for the next generation of NFTs?\n\nThen welcome to CroHamsterNFT.\n\nCroHamsterNFT is an innovative project that tries to achieve maximum utility and innovation for the success of our community and project.\n\nFor this we have created a very limited collection that only contains 1000 3D animated and unique CroHamsters with different cosmetic items, weapons and 8 unique animations. \nEach CroHamster also has two special combat values \u200B\u200Bthat will be useful to fight other CroHamsters. \n\nThe Crohamsters are divided into 4 different factions (Miner, Space, Nature, Worker) and can fight against each other in the CroHamster-Arena. With this feature, we will be able to start a unique reward system for our community, in which they can win Cro rewards and points on a leaderboard thought fights in the arena. For this, each CroHamster has Attack and Defense combat stats that indicate how strong it is in fights against other CroHamsters. Additionally, if the CroHamster owns a weapon, it will get an attack bonus. To prevent stale and predictable fights, we will also use a random generated \"Luck\" and \"Hit Percentage\" value.\n\nEvery Crohamster who wants to take part in the arena fights can put their name on a list, two random CroHamsters from different factions are then selected from this list to fight against each other. The winner will then receive the mint price of a CroHamster NFT in Cro as prize (325Cro). They will also earn points on a leaderboard, allowing us to honor the best CroHamster fighters in a Hall of Fame, which qualifies them for additional Hall of Fame giveaways with unique NFT and CRO rewards.",
       "author": {
         "name": "CroHamsters",
-        "website": "https://www.pocketdemons.com/",
-        "twitter": "https://twitter.com/PocketDemonsNFT",
-        "discord": "https://discord.gg/sdgRtxt8vJ"
+        "website": "https://linktr.ee/crohamsternft/",
+        "twitter": "https://twitter.com/cro_hamster",
+        "discord": "https://discord.gg/sj4cHPrdVk",
+        "medium": "https://medium.com/@CroHamsterNFT"
       },
       "address": "",
       "maxMintPerTx": 10,

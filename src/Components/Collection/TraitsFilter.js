@@ -36,8 +36,8 @@ const TraitsFilter = ({ address }) => {
       .reduce((prev, curr) => prev + curr, 0);
   };
 
-  const traitStatName = (name, stats) => {
-    let ret = mapAttributeString(name, address, true);
+  const traitStatName = (name, stats, category) => {
+    let ret = mapAttributeString(name, address, category, true);
 
     if (stats && stats.count > 0) {
       ret = ret.concat(` (${stats.count})`);
@@ -176,7 +176,7 @@ const TraitsFilter = ({ address }) => {
                         type="checkbox"
                         id={stats[0]}
                         className="attribute-checkbox"
-                        label={traitStatName(stats[0], stats[1])}
+                        label={traitStatName(stats[0], stats[1], traitCategoryName)}
                         defaultChecked={viewGetDefaultCheckValue(traitCategoryName, stats[0])}
                         value={viewGetDefaultCheckValue(traitCategoryName, stats[0])}
                         onChange={(t) => handleCheck(t, traitCategoryName)}
