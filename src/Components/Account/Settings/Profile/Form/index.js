@@ -47,12 +47,7 @@ export default function Form({
           return type === 'field' ? (
             <div className="user-profile-form-field" key={index}>
               <Field {...props} onChange={handleChange} onBlur={handleBlur} />
-              {fieldKey === 'cnsName' && (
-                <Button type="button" className="cns-sync-btn" onClick={handleCnsSync} isLoading={isCnsSync}>
-                  Sync
-                </Button>
-              )}
-              {fieldKey === 'email' && settingsData?.walletAddress && !settingsData?.isVerified &&
+              {fieldKey === 'email' && settingsData?.walletAddress && !settingsData?.isEmailVerified &&
                 <div className='mb-5'>
                   <a className="link-text-form link-primary " onClick={resendEmail}>
                     Resend verification email

@@ -4,7 +4,6 @@ import blacklist from './core/configs/blacklist.json';
 import attributes from './core/configs/attributes.json';
 import { useEffect, useRef } from 'react';
 import IPFSGatewayTools from '@pinata/ipfs-gateway-tools/dist/node';
-import { getCnsName } from './helpers/cns';
 import { appConfig } from './Config';
 import { hostedImage } from './helpers/image';
 import {getProfile} from "@src/core/cms/endpoints/profile";

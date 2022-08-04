@@ -56,6 +56,8 @@ export default function EditProfile() {
 
   Yup.addMethod(Yup.string, "customUsernameRules", function (errorMessage) {
     return this.test(`customUsernameRules`, errorMessage, function (value) {
+      if (!value) return false;
+
       if (value.includes('.')) {
         return value.endsWith('.cro');
       }
