@@ -257,7 +257,7 @@
       "listable": true,
       "metadata": {
         "description": "Explore this Land with your CRO Monkeys and get more $BANANA",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/cromonkeysland/avatar.png",
         "card": "/img/collections/cromonkeys/card.png",
         "banner": "/img/collections/cromonkeys/banner.png",
@@ -336,7 +336,7 @@
       "listable": true,
       "metadata": {
         "description": "One of the 1111 Unique Punks to be found on the Cronos Blockchain",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/cropunks/avatar.png",
         "banner": "/img/collections/cropunks/1920_banner.png",
         "card": "/img/collections/cropunks/600_preview.png",
@@ -356,7 +356,7 @@
       "listable": true,
       "metadata": {
         "description": "One of the 111 Unique Winter Punks to be found on the Cronos Blockchain",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/winterpunks/winter_ava.png",
         "banner": "/img/collections/winterpunks/1920_bann_xmas.png",
         "card": "/img/collections/winterpunks/600_preview_xmas.png",
@@ -454,7 +454,7 @@
       "listable": true,
       "metadata": {
         "description": "CrocosNFT is a collection of Crypto Crocodiles, living in their natural habitat on the brand new, Cronos blockchain. The First Batch of the collection consists of 2000 unique digital generated artworks.",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/crocs/crocos_avatar.jpg",
         "maxSupply": 2000,
         "website": "https://crocosnft.com",
@@ -472,7 +472,7 @@
       "listable": true,
       "metadata": {
         "description": "Crocos XMAS is a collection of Crypto Crocodiles, living in their Snow habitat on the brand new, Cronos blockchain.",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/crocs/crocos_avatar.jpg",
         "maxSupply": 2000,
         "website": "https://crocosnft.com",
@@ -510,7 +510,7 @@
       "listable": true,
       "metadata": {
         "description": "SupBirds are 5000 unique bird characters which live on Ethereum Blockchain. Each Sup Bird comes with proof of ownership, represented by the ERC721-standard.",
-        "verified": true,
+        "verified": false,
         "maxSupply": 5000,
         "website": "https://www.supbirds.com/",
         "twitter": "https://twitter.com/SupBirdsNFT",
@@ -578,7 +578,7 @@
       "listable": true,
       "metadata": {
         "description": "Thanks for being a part of the CroMoon Community.",
-        "verified": true,
+        "verified": false,
         "maxSupply": 400,
         "website": "https://cromoon.net/",
         "twitter": "https://twitter.com/CroMoonOfficial",
@@ -595,7 +595,7 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
+        "verified": false,
         "maxSupply": 4242,
         "website": "https://cronostars.art/",
         "twitter": "https://twitter.com/CronoStars",
@@ -649,7 +649,7 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
+        "verified": false,
         "maxSupply": 10000,
         "website": "https://crostmascards.com/",
         "twitter": "https://twitter.com/crostmascards"
@@ -664,7 +664,7 @@
       "listable": false,
       "metadata": {
         "description": "",
-        "verified": true,
+        "verified": false,
         "maxSupply": 49,
         "website": "https://www.sneakypenguins.club/",
         "twitter": "https://twitter.com/cronospenguins",
@@ -719,7 +719,7 @@
       "listable": true,
       "metadata": {
         "description": "Recently, some ancient relics have suddenly appeared from the past. They seem to be video game consoles which come from a distant era. The GameArtNFTs, from their names, are exactly 1,989 in memory of the launch year of a famous Japanese console, which reinvented playing. Owning one allows you to go back to the 90's to rediscover forgotten video games.",
-        "verified": true,
+        "verified": false,
         "maxSupply": 1989,
         "website": "https://www.gameartnft.com/",
         "twitter": "https://twitter.com/GameArtNFT",
@@ -735,7 +735,7 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/sneakypenguins/avatar.png",
         "banner": "/img/collections/sneakypenguins/banner.webp",
         "card": "/img/collections/sneakypenguins/card.png",
@@ -755,7 +755,7 @@
       "listable": false,
       "metadata": {
         "description": "",
-        "verified": true
+        "verified": false
       }
     },
     {
@@ -767,7 +767,7 @@
       "listable": true,
       "metadata": {
         "description": "From the treacherous Himalayan mountains, the red pandas have arrived at the Cronos Chain. Get ready for all the wacky mayhem they bring!",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/redpandas/avatar.png",
         "banner": "/img/collections/redpandas/banner.png",
         "card": "/img/collections/redpandas/card.png",
@@ -823,7 +823,7 @@
       "listable": true,
       "metadata": {
         "description": "Cronos Dolphinos are a collection of 504 randomly generated Pixel Art NFTs on the Cronos Blockchain.",
-        "verified": true,
+        "verified": false,
         "maxSupply": 504,
         "website": "https://www.cronosdolphinos.com/",
         "twitter": "https://twitter.com/CronosDolphinos",
@@ -839,7 +839,7 @@
       "listable": false,
       "metadata": {
         "description": "",
-        "verified": true
+        "verified": false
       }
     },
     {
@@ -863,7 +863,7 @@
       "listable": true,
       "metadata": {
         "description": "Celebrating the first Christmas on Cronos & CroMoon, together with SantaCro",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/santacro/avatar.png",
         "banner": "/img/collections/santacro/banner.webp",
         "card": "/img/collections/santacro/card.png",
@@ -884,7 +884,7 @@
       "listable": true,
       "metadata": {
         "description": "Cro Sharks Collection",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/crosharks/avatar.jpg",
         "banner": "/img/collections/crosharks/banner.jpg",
         "card": "/img/collections/crosharks/card.jpg",
@@ -922,7 +922,7 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true
+        "verified": false
       }
     },
     {
@@ -953,7 +953,7 @@
       "listable": false,
       "metadata": {
         "description": "",
-        "verified": true
+        "verified": false
       }
     },
     {
@@ -1143,7 +1143,7 @@
       "listable": true,
       "metadata": {
         "description": "Join the Elite!",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/foxfraternity/avatar.jpg",
         "card": "/img/collections/foxfraternity/card.jpg",
         "banner": "/img/collections/foxfraternity/banner.jpg",
@@ -1231,7 +1231,7 @@
       "listable": true,
       "metadata": {
         "description": "Coming from the Smart Mars Metaverse",
-        "verified": true,
+        "verified": false,
         "maxSupply": 9000,
         "website": "https://smartmartians.com/",
         "twitter": "https://twitter.com/SMARTMARS4",
@@ -1278,7 +1278,7 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/cronosragdoll/avatar.png",
         "card": "/img/collections/cronosragdoll/card.png",
         "banner": "/img/collections/cronosragdoll/banner.webp",
@@ -1297,7 +1297,7 @@
       "listable": true,
       "metadata": {
         "description": "3333 stupid fish on Cronos Chain A collection for those who want to have unique fish in their tank Our fish don't need any special care, they can clean their own tank",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/foolyfish/avatar.png",
         "card": "/img/collections/foolyfish/card.png",
         "banner": "/img/collections/foolyfish/banner.webp",
@@ -1561,7 +1561,7 @@
       "listable": true,
       "metadata": {
         "description": "WHEN APE MEETS DOGE, WHAT DO YOU GET? THE MOST VIRAL NFT OF ALL TIME",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/dogeapesociety/avatar.png",
         "card": "/img/collections/dogeapesociety/card.png",
         "banner": "/img/collections/dogeapesociety/banner.webp",
@@ -1717,7 +1717,7 @@
       "listable": true,
       "metadata": {
         "description": "Universe's first cross-chain NFT collaboration",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/moonlanding/avatar.png",
         "card": "/img/collections/moonlanding/card.png",
         "banner": "/img/collections/moonlanding/banner.webp",
@@ -1757,7 +1757,7 @@
       "listable": true,
       "metadata": {
         "description": "The official NFT of Cronodes",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/cronodes/avatar.png",
         "card": "/img/collections/cronodes/card.webp",
         "banner": "/img/collections/cronodes/banner.webp",
@@ -1817,7 +1817,7 @@
       "onChain": false,
       "listable": false,
       "metadata": {
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/panelsproject/avatar.webp",
         "banner": "/img/collections/panelsproject/banner.webp",
         "card": "/img/collections/panelsproject/card.webp",
@@ -2011,7 +2011,7 @@
       "listable": true,
       "metadata": {
         "description": "2100 Majestic Minotaurs roaming a labyrinth on the Cronos Blockchain!",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/majesticminotaurs/avatar.png",
         "card": "/img/collections/majesticminotaurs/card.png",
         "banner": "/img/collections/majesticminotaurs/banner.webp",
@@ -2112,7 +2112,7 @@
       "listable": false,
       "metadata": {
         "description": "",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/croblins/avatar.png",
         "card": "/img/collections/croblins/card.png",
         "banner": "/img/collections/croblins/banner.png",
@@ -2249,7 +2249,7 @@
       "listable": false,
       "metadata": {
         "description": "",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/pixeltigerclub/avatar.webp",
         "card": "/img/collections/pixeltigerclub/card.webp",
         "banner": "/img/collections/pixeltigerclub/banner.webp",
@@ -2268,7 +2268,7 @@
       "listable": true,
       "metadata": {
         "description": "Inspired by Ethereum's original Autoglyphs, Cronoglyphs are 1111 unique 32x32 generative art compositions based on 13 different glyphs.",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/cronoglyphs/avatar.webp",
         "card": "/img/collections/cronoglyphs/card.webp",
         "banner": "/img/collections/cronoglyphs/banner.webp",
@@ -2305,7 +2305,7 @@
       "listable": false,
       "metadata": {
         "description": "",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/cronosclowns/avatar.webp",
         "card": "/img/collections/cronosclowns/card.webp",
         "banner": "/img/collections/cronosclowns/banner.webp",
@@ -2434,7 +2434,7 @@
       "listable": true,
       "metadata": {
         "description": "Handpunks is a OG collection of 111 Unique pixel based hand drawn art",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/handpunks/avatar.png",
         "card": "/img/collections/handpunks/card.png",
         "banner": "/img/collections/handpunks/banner.png",
@@ -2513,7 +2513,7 @@
       "listable": false,
       "metadata": {
         "description": "",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/cronoslionessclub/avatar.webp",
         "card": "/img/collections/cronoslionessclub/card.webp",
         "banner": "/img/collections/cronoslionessclub/banner.webp",
@@ -2592,7 +2592,7 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/croflips/avatar.webp",
         "card": "/img/collections/croflips/card.webp",
         "banner": "/img/collections/croflips/banner.webp",
@@ -2803,7 +2803,7 @@
       "listable": true,
       "metadata": {
         "description": "5000 Fruit Farmers Living & Loving on Cronos. Slavik Fruit Farmers grant the holder FRODEX Token Allocation, 3D Voxel Airdrops and Exclusive first access to SFF Expansions. Each Farmer is a Membership pass into the SlavikVerse Ecosystem!",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/slavikfruitfarm/avatar.png",
         "banner": "/img/collections/slavikfruitfarm/banner.png",
         "card": "/img/collections/slavikfruitfarm/card.png",
@@ -3153,7 +3153,7 @@
       "listable": false,
       "metadata": {
         "description": "Made with fighting spirit",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/bushicro/femalewarriors/avatar.png",
         "card": "/img/collections/bushicro/femalewarriors/card.jpg",
         "banner": "/img/collections/bushicro/femalewarriors/banner.png",
@@ -4605,7 +4605,7 @@
       "multiToken": false,
       "address": "0x20Ec66Dd5b6255604a8730c217391f8820707CCA",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Lazy Gopher is an NFT collection of the 6,100 most philogopherical creatures living on the Cronos blockchain.  Get ready to hit the Lazy Links with your gopher in a first of its kind P2E game!!",
         "verified": false,
@@ -4783,7 +4783,7 @@
       "listable": false,
       "metadata": {
         "description": "Step into the Rumble Ring and become the undisputed champion of Lazy World!  The Rumble Roo is your access to the ring where you can play to earn HOP,  the native token for the HopSwap decentralized exchange.  As HopSwap's first NFT project, these Roos are considered founders and exclusive members of the exchange.",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/rumble-roos/avatar.webp",
         "card": "/img/collections/rumble-roos/card.webp",
         "banner": "/img/collections/rumble-roos/banner.webp",
@@ -5201,7 +5201,7 @@
       "listable": true,
       "metadata": {
         "description": "Lazy Lanes is a bowling game and mental health space located in Lazy World. Bulldog Bowlers are the game pieces that give you access to the game and Lazy Lanes area. The game and artwork has been developed collectively between the Lazy Horse team and CronoGods with the goal of providing mental health support to our community.",
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/bulldog-bowlers/avatar.jpg",
         "card": "/img/collections/bulldog-bowlers/card.jpeg",
         "banner": "/img/collections/bulldog-bowlers/banner.jpeg",
@@ -6284,7 +6284,7 @@
         { "id": 1 }
       ],
       "metadata": {
-        "verified": true,
+        "verified": false,
         "avatar": "/img/collections/project-x-access-pass/avatar.png",
         "card": "/img/collections/project-x-access-pass/card.png",
         "banner": "/img/collections/project-x-access-pass/banner.png",
