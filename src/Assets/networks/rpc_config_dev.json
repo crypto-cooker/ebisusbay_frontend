@@ -6802,6 +6802,26 @@
         "medium": "https://medium.com/@drdao.club",
         "telegram": "https://t.me/DrDaoFounder"
       }
+    },
+    {
+      "name": "Black Cat - LS",
+      "slug": "black-cat-ls",
+      "multiToken": false,
+      "address": "0x49D85f22b6c65593018355D7B090164A06F8090b",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Black Cat is a collection of 311 unique NFTs reserved for the Lucky Spookies holders that gain access to exclusive initiatives within the community. Black cats were created to give everyone the opportunity to be owned by a mini-panther.",
+        "verified": false,
+        "avatar": "/img/collections/black-cat-ls/avatar.webp",
+        "card": "/img/collections/black-cat-ls/card.webp",
+        "banner": "/img/collections/black-cat-ls/banner.webp",
+        "maxSupply": 311,
+        "website": "https://luckyspookies.club/",
+        "twitter": "https://twitter.com/LuckySpookiesPC",
+        "discord": "https://discord.gg/AEQ2BCpCNZ",
+        "medium": "https://medium.com/@LuckySpookies_NFTs"
+      }
     }
   ],
   "drops": [
