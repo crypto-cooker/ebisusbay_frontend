@@ -1,10 +1,7 @@
 import React, { memo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Slider from 'react-slick';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import Slider from '../components/Slider';
 
-import { settings } from './constants';
 import CustomSlide from './CustomSlide';
 import { getAllCollections } from '../../GlobalState/collectionsSlice';
 
@@ -26,27 +23,9 @@ const HotCollections = () => {
     dispatch(getAllCollections());
   }, [dispatch]);
 
-  const PrevArrow = (props) => {
-    const { className, style, onClick } = props;
-    return (
-      <div className={className} style={style} onClick={onClick}>
-        <FontAwesomeIcon icon={faChevronLeft} />
-      </div>
-    );
-  };
-
-  const NextArrow = (props) => {
-    const { className, style, onClick } = props;
-    return (
-      <div className={className} style={style} onClick={onClick}>
-        <FontAwesomeIcon icon={faChevronRight} />
-      </div>
-    );
-  };
-
   return (
     <div className="nft">
-      <Slider {...settings} prevArrow={<PrevArrow />} nextArrow={<NextArrow />}>
+      <Slider size={hotCollections.length}>
         {hotCollections &&
           hotCollections.map((item, index) => (
             <CustomSlide

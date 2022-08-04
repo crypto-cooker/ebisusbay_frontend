@@ -1,12 +1,10 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import Slider from 'react-slick';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-import { settings, settingsWithoutScrolling } from '../components/constants';
+import Slider from '../components/Slider';
 import CustomSlide from '../components/CustomSlide';
 import { appConfig } from "../../Config";
+
 const collections = appConfig('collections');
 const drops = appConfig('drops');
 
@@ -36,27 +34,9 @@ const UpcomingDrops = () => {
     arrangeCollections();
   }, [dispatch]);
 
-  const PrevArrow = (props) => {
-    const { className, style, onClick } = props;
-    return (
-      <div className={className} style={style} onClick={onClick}>
-        <FontAwesomeIcon icon={faChevronLeft} />
-      </div>
-    );
-  };
-
-  const NextArrow = (props) => {
-    const { className, style, onClick } = props;
-    return (
-      <div className={className} style={style} onClick={onClick}>
-        <FontAwesomeIcon icon={faChevronRight} />
-      </div>
-    );
-  };
-
   return (
     <div className="nft">
-      <Slider {...(upcomingDrops.length > 3 ? settings : settingsWithoutScrolling)} prevArrow={<PrevArrow />} nextArrow={<NextArrow />}>
+      <Slider size={upcomingDrops.length}>
         {upcomingDrops && upcomingDrops.map((item, index) => (
           <CustomSlide
             key={index}
