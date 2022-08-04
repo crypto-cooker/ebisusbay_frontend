@@ -36,8 +36,8 @@ const PowertraitsFilter = ({ address }) => {
       .reduce((prev, curr) => prev + curr, 0);
   };
 
-  const traitStatName = (name, stats) => {
-    let ret = mapAttributeString(name, address, true);
+  const traitStatName = (name, stats, category) => {
+    let ret = mapAttributeString(name, address, category, true);
 
     if (stats && stats.count > 0) {
       ret = ret.concat(` (${stats.count})`);

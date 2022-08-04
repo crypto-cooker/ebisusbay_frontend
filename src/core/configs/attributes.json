@@ -79,5 +79,13 @@
     "Whiteteethskull": "White teeth skull",
     "Yellowrobotskull": "Yellow robot skull",
     "Yellowsugarskull": "Yellow sugar skull"
+  },
+  "0x23721073592FB452C556fB9322bA4dF6A6675050": {
+    "Tier": {
+      "1": "Common",
+      "2": "Uncommon",
+      "3": "Rare",
+      "4": "Legendary"
+    }
   }
 }
