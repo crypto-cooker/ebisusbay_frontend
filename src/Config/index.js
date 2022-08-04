@@ -162,7 +162,6 @@ export const imageDomains = [
 export const appConfig = (key) => {
   const env = isLocalEnv() ? environments.production : environments[currentEnv()];
   if (!key) return env ? configData[env] : configData[environments.production];
-console.log('pulling config with environment', currentEnv());
 
   const keys = key.split('.');
 
