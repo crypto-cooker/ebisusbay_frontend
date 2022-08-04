@@ -6754,9 +6754,9 @@
       "metadata": {
         "description": "TTG is a collection of 2,420 algorithmically generated NFTs on the Cronos Network. Holding 4 NFTs will grant you a free airdrop which is your ticket to a first-of-its-kind Be Your Own Boss group. This group will pool mint proceeds together to buy and distribute high-value learning materials and information, which our holders can utilise to escape their 9-5 and become their own boss. We will also be running a buy-back program with our royalty fees, to ensure floor price support. For more information, head over to our Twitter or Discord in the links provided.",
         "verified": false,
-        "avatar": "/img/collections/magus-255-collection/avatar.webp",
-        "card": "/img/collections/magus-255-collection/card.webp",
-        "banner": "/img/collections/magus-255-collection/banner.webp",
+        "avatar": "/img/collections/tough-tiger-gang/avatar.webp",
+        "card": "/img/collections/tough-tiger-gang/card.webp",
+        "banner": "/img/collections/tough-tiger-gang/banner.webp",
         "maxSupply": 2420,
         "twitter": "https://twitter.com/ToughTigerGang_",
         "discord": "https://discord.gg/79BDDbyXvQ",
@@ -9477,9 +9477,10 @@
       "description": "Are you ready for the next generation of NFTs?\n\nThen welcome to CroHamsterNFT.\n\nCroHamsterNFT is an innovative project that tries to achieve maximum utility and innovation for the success of our community and project.\n\nFor this we have created a very limited collection that only contains 1000 3D animated and unique CroHamsters with different cosmetic items, weapons and 8 unique animations. \nEach CroHamster also has two special combat values \u200B\u200Bthat will be useful to fight other CroHamsters. \n\nThe Crohamsters are divided into 4 different factions (Miner, Space, Nature, Worker) and can fight against each other in the CroHamster-Arena. With this feature, we will be able to start a unique reward system for our community, in which they can win Cro rewards and points on a leaderboard thought fights in the arena. For this, each CroHamster has Attack and Defense combat stats that indicate how strong it is in fights against other CroHamsters. Additionally, if the CroHamster owns a weapon, it will get an attack bonus. To prevent stale and predictable fights, we will also use a random generated \"Luck\" and \"Hit Percentage\" value.\n\nEvery Crohamster who wants to take part in the arena fights can put their name on a list, two random CroHamsters from different factions are then selected from this list to fight against each other. The winner will then receive the mint price of a CroHamster NFT in Cro as prize (325Cro). They will also earn points on a leaderboard, allowing us to honor the best CroHamster fighters in a Hall of Fame, which qualifies them for additional Hall of Fame giveaways with unique NFT and CRO rewards.",
       "author": {
         "name": "CroHamsters",
-        "website": "https://www.pocketdemons.com/",
-        "twitter": "https://twitter.com/PocketDemonsNFT",
-        "discord": "https://discord.gg/sdgRtxt8vJ"
+        "website": "https://linktr.ee/crohamsternft/",
+        "twitter": "https://twitter.com/cro_hamster",
+        "discord": "https://discord.gg/sj4cHPrdVk",
+        "medium": "https://medium.com/@CroHamsterNFT"
       },
       "address": "",
       "maxMintPerTx": 10,
