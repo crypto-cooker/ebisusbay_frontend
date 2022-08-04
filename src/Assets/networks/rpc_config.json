@@ -6762,6 +6762,25 @@
         "discord": "https://discord.gg/79BDDbyXvQ",
         "medium": "https://medium.com/@ToughTigerGang"
       }
+    },
+    {
+      "name": "Ape Boys Elite",
+      "slug": "ape-boys-elite",
+      "multiToken": false,
+      "address": "0x95Da4319b3B69755ee2E67297BE5A1A951D0c667",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Ape Boys Elite Is A P2E Puzzle Game Collection of 3,333 Ape Boys Hosted On The Cronos Blockchain Network. Stake Your Ape And Earn $ETE.",
+        "verified": false,
+        "avatar": "/img/collections/ape-boys-elite/avatar.webp",
+        "card": "/img/collections/ape-boys-elite/card.webp",
+        "banner": "/img/collections/ape-boys-elite/banner.webp",
+        "maxSupply": 3333,
+        "website": "https://www.apeboys.xyz/",
+        "twitter": "https://twitter.com/apeboyselite",
+        "discord": "https://discord.gg/2CHVFU5PPG"
+      }
     }
   ],
   "drops": [
