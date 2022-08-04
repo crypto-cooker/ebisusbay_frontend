@@ -6781,6 +6781,27 @@
         "twitter": "https://twitter.com/apeboyselite",
         "discord": "https://discord.gg/2CHVFU5PPG"
       }
+    },
+    {
+      "name": "Daolist Pass 3D",
+      "slug": "daolist-pass-3d",
+      "multiToken": false,
+      "address": "0x1C7F4fE849e52B013242CDCb0C88f6A3c2Ea28aF",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Daolist Pass is an NFT collection of 1500 pieces, with two principal utilities: direct access pass for the Whitelist with discount for next Dr Dao collections and for collections created by Dr Dao Lab (Incubator benefit), and P2R Booster on the DaoGames website (when it will be online), where you can generate an income of +5% in case of win or 5% of cashback in case of loss.",
+        "verified": false,
+        "avatar": "/img/collections/daolist-pass-3d/avatar.webp",
+        "card": "/img/collections/daolist-pass-3d/card.webp",
+        "banner": "/img/collections/daolist-pass-3d/banner.webp",
+        "maxSupply": 1500,
+        "website": "https://www.drdaoclub.xyz/",
+        "twitter": "https://twitter.com/DrDaoClub",
+        "discord": "https://discord.gg/fyca4JYW7V",
+        "medium": "https://medium.com/@drdao.club",
+        "telegram": "https://t.me/DrDaoFounder"
+      }
     }
   ],
   "drops": [
