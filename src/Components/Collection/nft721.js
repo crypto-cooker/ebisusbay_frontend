@@ -708,7 +708,7 @@ const Trait = ({
             {type === 'date' ? (
               <>{new Date(millisecondTimestamp(value)).toDateString()}</>
             ) : (
-              <>{mapAttributeString(valueDisplay ?? value, collectionAddress, true)}</>
+              <>{mapAttributeString(valueDisplay ?? value, collectionAddress, title, true)}</>
             )}
           </>
         ) : (

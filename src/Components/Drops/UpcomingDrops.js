@@ -36,7 +36,7 @@ const UpcomingDrops = () => {
 
   return (
     <div className="nft">
-      {upcomingDrops.length > 0 && <Slider size={upcomingDrops.length}>
+      <Slider size={upcomingDrops.length}>
         {upcomingDrops && upcomingDrops.map((item, index) => (
           <CustomSlide
             key={index}
@@ -52,7 +52,6 @@ const UpcomingDrops = () => {
           />
         ))}
       </Slider>
-      }
     </div>
   );
 };

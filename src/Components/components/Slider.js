@@ -14,7 +14,9 @@ const settings = {
   responsive: [],
 };
 
-const resolutions = [480, 600, 1600, 1900];
+const MAX_ITEM_RENDER = 4
+const resolutions = [1900, 1600, 600, 480];
+
 
 const Slider = ({ children, size }) => {
 
@@ -37,44 +39,36 @@ const Slider = ({ children, size }) => {
   };
 
   const settingsGeneration = useCallback(() => {
-    const newSettings = settings;
-    if (size > 0 && settings.responsive.length < resolutions.length) {
-      if (size <= 3) {
-        newSettings.infinite = false,
-          newSettings.adaptiveHeight = false
-      }
-      for (let i = resolutions.length - 1; i >= 0; i--) {
+    return resolutions.reduce((config, breakpoint, i) => {
+      const adaptiveHeight = size > 3 ? settings.adaptiveHeight : false
+      const infinite = typeof adaptiveHeight == 'boolean'? adaptiveHeight : false
 
-        if (i < size) {
-          newSettings.responsive.push({
-            breakpoint: resolutions[i],
+      return ({
+        ...config,
+        infinite,
+        adaptiveHeight,
+        responsive: [
+          ...config.responsive,
+          {
+            breakpoint,
             settings: {
-              slidesToShow: i + 1,
-              slidesToScroll: i + 1,
-              infinite: true,
+              slidesToShow: MAX_ITEM_RENDER - i,
+              slidesToScroll: MAX_ITEM_RENDER - i,
+              infinite: MAX_ITEM_RENDER - i < size,
             },
-          })
-        } else {
-          newSettings.responsive.push({
-            breakpoint: resolutions[i],
-            settings: {
-              slidesToShow: i + 1,
-              slidesToScroll: i + 1,
-              infinite: false,
-            },
-          })
-        }
-      }
-    }
-
-    return newSettings;
+          }
+        ]
+      })
+    }, settings)
   }, [size])
 
   return (
     <div className="nft">
-      <SliderRS {...settingsGeneration()} prevArrow={<PrevArrow />} nextArrow={<NextArrow />}>
-        {children}
-      </SliderRS>
+      {size > 0 && (
+        <SliderRS {...settingsGeneration()} prevArrow={<PrevArrow />} nextArrow={<NextArrow />}>
+          {children}
+        </SliderRS>
+      )}
     </div>
   )
 }

@@ -25,7 +25,7 @@ const HotCollections = () => {
 
   return (
     <div className="nft">
-      {hotCollections.length > 0 && <Slider size={hotCollections.length}>
+      <Slider size={hotCollections.length}>
         {hotCollections &&
           hotCollections.map((item, index) => (
             <CustomSlide
@@ -39,7 +39,7 @@ const HotCollections = () => {
               verified={item.metadata.verified}
             />
           ))}
-      </Slider>}
+      </Slider>
     </div>
   );
 };
