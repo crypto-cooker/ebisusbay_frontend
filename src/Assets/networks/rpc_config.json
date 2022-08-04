@@ -4605,7 +4605,7 @@
       "multiToken": false,
       "address": "0x20Ec66Dd5b6255604a8730c217391f8820707CCA",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Lazy Gopher is an NFT collection of the 6,100 most philogopherical creatures living on the Cronos blockchain.  Get ready to hit the Lazy Links with your gopher in a first of its kind P2E game!!",
         "verified": false,
