@@ -6300,7 +6300,7 @@
       "multiToken": false,
       "address": "0xbB6CC5e52CDB5ABC63d6e1054a8022EBE7Cd88FE",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A collection of 3000 slices of CheeseCakes! Where we aim for everyone to get a slice of the cake.",
         "verified": false,
@@ -6821,6 +6821,44 @@
         "twitter": "https://twitter.com/LuckySpookiesPC",
         "discord": "https://discord.gg/AEQ2BCpCNZ",
         "medium": "https://medium.com/@LuckySpookies_NFTs"
+      }
+    },
+    {
+      "name": "Moon Crew Apes",
+      "slug": "moon-crew-apes",
+      "multiToken": false,
+      "address": "0x3335A43C59b45Ed1F73dd1335A5b2583CD9B0aaA",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "7,000 Apes sent to a mission on the moon. Now they are lost. Holding your ape allows you to claim 6% of all marketplace royalties.",
+        "verified": false,
+        "avatar": "/img/collections/moon-crew-apes/avatar.webp",
+        "card": "/img/collections/moon-crew-apes/card.webp",
+        "banner": "/img/collections/moon-crew-apes/banner.webp",
+        "maxSupply": 7000,
+        "website": "https://mooncrewapes.com/",
+        "twitter": "https://twitter.com/moonapecrew",
+        "discord": "https://discord.gg/nRUBVDE7bM"
+      }
+    },
+    {
+      "name": "CroDinos",
+      "slug": "cro-dinos",
+      "multiToken": false,
+      "address": "0x60194b3eDF9b95A6087FE1940275AE7036641dd8",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CroDinos is a collection of 9326 Dinosaur NFT's. CroDinos are a bonus collection for Crowitches NFT. Holders of CroDinos will earn higher yield returns when they stake their Crowitches NFT and CroDinos NFT.",
+        "verified": false,
+        "avatar": "/img/collections/cro-dinos/avatar.webp",
+        "card": "/img/collections/cro-dinos/card.webp",
+        "banner": "/img/collections/cro-dinos/banner.webp",
+        "maxSupply": 9326,
+        "website": "https://crodinos.crowitches.com/",
+        "twitter": "https://twitter.com/CroWitches",
+        "discord": "https://discord.gg/VrC2e4GNVR"
       }
     }
   ],
