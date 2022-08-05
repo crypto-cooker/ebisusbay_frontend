@@ -1113,13 +1113,13 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
               image = nft.token_uri.image;
             }
           } else {
-            image = fallbackImageUrl;
+            image = fallbackImageUrl();
           }
         } catch (e) {
-          image = fallbackImageUrl;
+          image = fallbackImageUrl();
           console.log(e);
         }
-        if (!image) image = fallbackImageUrl;
+        if (!image) image = fallbackImageUrl();
 
         const video = nft.animation_url ?? (image.split('.').pop() === 'mp4' ? image : null);
 
