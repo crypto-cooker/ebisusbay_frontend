@@ -43,7 +43,7 @@ const UploadBanner = ({
 
   return (
     <Form.Group className={`form-field mb-3 ${error ? 'field-message-error' : ''}`}>
-      <div className="upload-container pt-0 overflow-auto">
+      <div className="upload-container pt-0 overflow-auto justify-content-center">
         {[...Array(numberOfAssets).keys()].map((_, i) => {
           const asset = value.find(({ position }) => position === i);
 

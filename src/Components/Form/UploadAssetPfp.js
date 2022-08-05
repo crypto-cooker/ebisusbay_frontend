@@ -11,7 +11,7 @@ const UploadAssetPfp = ({
   id,
   value,
   url,
-  accept = 'image/png, image/gif, image/jpeg, image/jpg',
+  accept = 'image/png, image/jpeg, image/jpg',
   onChange,
   onClose,
 }) => {
