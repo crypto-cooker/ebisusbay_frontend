@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import useCreateSigner from './useCreateSigner';
 import { appConfig } from "@src/Config";
-import { createProfile } from "@src/core/cms/endpoints/profile";
+import {createProfile, updateAvatar, updateBanner} from "@src/core/cms/endpoints/profile";
 
 const useCreateSettings = () => {
   const [response, setResponse] = useState({
@@ -15,9 +15,6 @@ const useCreateSettings = () => {
   const [isLoading, getSigner] = useCreateSigner();
 
   const requestNewSettings = async (data) => {
-
-    const config = appConfig();
-
     const { userInfo, userBanner, userAvatar } = data.userInfo;
 
     setResponse({
@@ -38,13 +35,13 @@ const useCreateSettings = () => {
         if (userAvatar?.profilePicture[0]?.file?.name) {
           const formData = new FormData();
           formData.append('profilePicture', userAvatar?.profilePicture[0].file);
-          await axios.patch(`${config.urls.cms}profile/avatar?signature=${signatureInStorage}&nonce=${nonce}`, formData);
+          await updateAvatar(formData, signatureInStorage, nonce);
         }
         
         if (userBanner?.banner[0]?.file?.name) {
           const formData = new FormData();
           formData.append('banner', userBanner?.banner[0].file);
-          await axios.patch(`${config.urls.cms}profile/banner?signature=${signatureInStorage}&nonce=${nonce}`, formData);
+          await updateBanner(formData, signatureInStorage, nonce);
         }
 
         setResponse({
