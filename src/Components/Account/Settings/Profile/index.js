@@ -93,11 +93,27 @@ export default function EditProfile() {
         .required(),
       userAvatar: Yup.object()
         .shape({
-          profilePicture: Yup.array()
+          profilePicture: Yup.array().of(
+            Yup.object().shape({
+              size: Yup.object().nullable().test('', 'Sorry, this picture exceeds the maximum file size or dimensions, please check and try again.',
+                (size) => size ? size.width <= 350 && size.height <= 350 : true
+              ),
+              file: Yup.mixed().nullable().test('', 'Sorry, this picture exceeds the maximum file size or dimensions, please check and try again.',
+                (file) => file && file.size? file.size <= 1000000 : true)
+            })
+          )
         }).required(),
       userBanner: Yup.object()
         .shape({
-          banner: Yup.array()
+          banner: Yup.array().of(
+            Yup.object().shape({
+              size: Yup.object().nullable().test('', 'Sorry, this picture exceeds the maximum file size or dimensions, please check and try again.',
+                (size) => size ? size.width === 1920 && size.height === 1080 : true
+              ),
+              file: Yup.mixed().nullable().test('', 'Sorry, this picture exceeds the maximum file size or dimensions, please check and try again.',
+                (file) => file && file.size? file.size <= 2000000 : true)
+            })
+          )
         }).required(),
     })
 

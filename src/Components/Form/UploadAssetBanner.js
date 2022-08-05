@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import useGetSettings from '../Account/Settings/hooks/useGetSettings';
 import useUpdateBanner from '../Account/Settings/hooks/useUpdateBanner';
 
-const UploadAsset = ({ id, value, accept = 'image/png, image/gif, image/jpeg, image/jpg', onChange, onClose }) => {
+const UploadAsset = ({ id, value, accept = 'image/png, image/jpeg, image/jpg', onChange, onClose }) => {
   const [file, setFile] = useState(null);
   const inputFile = useRef(null);
 
