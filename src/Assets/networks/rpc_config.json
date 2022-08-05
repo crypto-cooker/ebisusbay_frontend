@@ -6841,6 +6841,25 @@
         "twitter": "https://twitter.com/moonapecrew",
         "discord": "https://discord.gg/nRUBVDE7bM"
       }
+    },
+    {
+      "name": "CroDinos",
+      "slug": "cro-dinos",
+      "multiToken": false,
+      "address": "0x60194b3eDF9b95A6087FE1940275AE7036641dd8",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CroDinos is a collection of 9326 Dinosaur NFT's. CroDinos are a bonus collection for Crowitches NFT. Holders of CroDinos will earn higher yield returns when they stake their Crowitches NFT and CroDinos NFT.",
+        "verified": false,
+        "avatar": "/img/collections/cro-dinos/avatar.webp",
+        "card": "/img/collections/cro-dinos/card.webp",
+        "banner": "/img/collections/cro-dinos/banner.webp",
+        "maxSupply": 9326,
+        "website": "https://crodinos.crowitches.com/",
+        "twitter": "https://twitter.com/CroWitches",
+        "discord": "https://discord.gg/VrC2e4GNVR"
+      }
     }
   ],
   "drops": [
