@@ -1546,7 +1546,7 @@
       "name": "CroHamsters",
       "slug": "cro-hamsters",
       "multiToken": false,
-      "address": "0xA6803fe63Ef62F2B6EEa2f98c153CF24eF5981d7",
+      "address": "0x0BfBd9d15e5cD740917d1a0F63ec5137005673b9",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -3525,7 +3525,7 @@
         "discord": "https://discord.gg/sj4cHPrdVk",
         "medium": "https://medium.com/@CroHamsterNFT"
       },
-      "address": "0xA6803fe63Ef62F2B6EEa2f98c153CF24eF5981d7",
+      "address": "0x0BfBd9d15e5cD740917d1a0F63ec5137005673b9",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 1000,
