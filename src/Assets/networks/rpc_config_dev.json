@@ -6822,6 +6822,25 @@
         "discord": "https://discord.gg/AEQ2BCpCNZ",
         "medium": "https://medium.com/@LuckySpookies_NFTs"
       }
+    },
+    {
+      "name": "Moon Crew Apes",
+      "slug": "moon-crew-apes",
+      "multiToken": false,
+      "address": "0x3335A43C59b45Ed1F73dd1335A5b2583CD9B0aaA",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "7,000 Apes sent to a mission on the moon. Now they are lost. Holding your ape allows you to claim 6% of all marketplace royalties.",
+        "verified": false,
+        "avatar": "/img/collections/moon-crew-apes/avatar.webp",
+        "card": "/img/collections/moon-crew-apes/card.webp",
+        "banner": "/img/collections/moon-crew-apes/banner.webp",
+        "maxSupply": 7000,
+        "website": "https://mooncrewapes.com/",
+        "twitter": "https://twitter.com/moonapecrew",
+        "discord": "https://discord.gg/nRUBVDE7bM"
+      }
     }
   ],
   "drops": [
