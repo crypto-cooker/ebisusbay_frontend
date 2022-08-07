@@ -6745,6 +6745,27 @@
       }
     },
     {
+      "name" : "Argonauts",
+      "slug": "argonauts",
+      "multiToken": false,
+      "address": "0xa996aD2b9f240F78b063E47F552037658c4563d1",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Argonauts is a collection of 8,888 unique utility-enabled characters that represents your unique identity on the Cronos chain. Each Argonaut holder gets access to utility across the Argo Protocol platform, exclusive treasure chest events, activated partnership experiences, future collections, and more.",
+        "verified": true,
+        "avatar": "/img/collections/argonauts/avatar.png",
+        "card": "/img/collections/argonauts/card.png",
+        "banner": "/img/collections/argonauts/banner.png",
+        "maxSupply": 8888,
+        "website": "https://www.argofinance.money/nft",
+        "twitter": "https://twitter.com/ArgoProtocol",
+        "discord": "https://discord.gg/argofinance",
+        "medium" : "argofinance.medium.com",
+        "telegram": "http://t.me/Argo_Finance"
+      }
+    },
+    {
       "name": "Tough Tiger Gang",
       "slug": "tough-tiger-gang",
       "multiToken": false,
@@ -9594,6 +9615,38 @@
       "is1155": false,
       "published": true,
       "complete": false
+    },
+    {
+      "id": 98,
+      "slug": "argonauts",
+      "imgNft": "/img/collections/argonauts/drop.png",
+      "imgAvatar": "/img/collections/argonauts/avatar.png",
+      "title": "Argonauts",
+      "subtitle": "",
+      "description": "Argonauts is a collection of 8,888 unique utility-enabled characters that represents your unique identity on the Cronos chain. Each Argonaut holder gets access to utility across the Argo Protocol platform, exclusive treasure chest events, activated partnership experiences, future collections, and more.",
+      "author": {
+        "name": "Argo",
+        "website": "https://www.argofinance.money/nft",
+        "twitter": "https://twitter.com/ArgoProtocol",
+        "discord": "https://discord.gg/argofinance",
+        "medium": "https://argofinance.medium.com"
+      },
+      "address": "0xa996aD2b9f240F78b063E47F552037658c4563d1",
+      "maxMintPerTx": 0,
+      "maxMintPerAddress": 0,
+      "totalSupply": 8888,
+      "cost": "",
+      "memberCost": "",
+      "whitelistCost": "",
+      "foundersOnly": false,
+      "start": 1659902400000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": false,
+      "complete": false,
+      "featured": false,
+      "redirect": "https://www.argofinance.money/nft"
     }
   ],
   "auctions": [
