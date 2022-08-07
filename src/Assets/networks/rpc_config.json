@@ -9639,13 +9639,13 @@
       "memberCost": "",
       "whitelistCost": "",
       "foundersOnly": false,
-      "start": 1659902400000,
+      "start": 1659960000000,
       "end": null,
       "referral": false,
       "is1155": false,
       "published": true,
       "complete": false,
-      "featured": false,
+      "featured": true,
       "redirect": "https://www.argofinance.money/nft"
     }
   ],
