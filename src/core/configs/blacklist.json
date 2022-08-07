@@ -1,5 +1,16 @@
 [
   {
+    "users": ["0x64f371ab73181cD5e6776D68768796F996E83f1b"],
+    "tokens": [
+      {
+        "slug": "mad-sacks",
+        "address": "0x23721073592FB452C556fB9322bA4dF6A6675050",
+        "ids": [1122, 1123, 1124, 1125, 1127, 1128]
+      }
+    ],
+    "reason": "Verified by Canvas"
+  },
+  {
     "users": ["0xE877C5420604BADa353010ADd7D5C304BDC2FF33"],
     "tokens": [
       {
