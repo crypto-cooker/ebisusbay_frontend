@@ -35,7 +35,7 @@ export default nftSlice.reducer;
 export const getNftDetails = (collectionAddress, nftId) => async (dispatch, getState) => {
   dispatch(nftLoading());
   let response = await getNft(collectionAddress, nftId);
-  console.log('retrieved details for NFT', response);
+
   const currentListing = response.listings ? response.listings
     .sort((a, b) => (parseInt(a.price) > parseInt(b.price) ? 1 : -1))
     .find((l) => l.state === listingState.ACTIVE) : null;

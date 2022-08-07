@@ -6689,7 +6689,7 @@
       "name": "Pocket Demons",
       "slug": "pocket-demons",
       "multiToken": false,
-      "address": "",
+      "address": "0xAd6eE5C0e033cEdB904096EF790Fc658F1EE0bd2",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -9569,7 +9569,7 @@
         "twitter": "https://twitter.com/PocketDemonsNFT",
         "discord": "https://discord.gg/sdgRtxt8vJ"
       },
-      "address": "",
+      "address": "0xAd6eE5C0e033cEdB904096EF790Fc658F1EE0bd2",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 666,
@@ -9643,7 +9643,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": false,
+      "published": true,
       "complete": false,
       "featured": false,
       "redirect": "https://www.argofinance.money/nft"
