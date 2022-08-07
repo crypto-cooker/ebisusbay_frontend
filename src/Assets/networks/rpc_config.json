@@ -9643,7 +9643,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": false,
+      "published": true,
       "complete": false,
       "featured": false,
       "redirect": "https://www.argofinance.money/nft"
