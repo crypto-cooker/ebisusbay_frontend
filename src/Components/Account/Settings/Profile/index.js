@@ -86,7 +86,7 @@ export default function EditProfile() {
           twitter: Yup.string().trim().nullable(),
           discord: Yup.string().trim().nullable(),
           instagram: Yup.string().trim().nullable(),
-          website: Yup.string().url(Messages.errors.urlError),
+          website: Yup.string().url(Messages.errors.urlError).nullable(),
           bio: Yup.string()
               .max(100, getDynamicMessage(Messages.errors.charactersMaxLimit, ['40']))
         })
@@ -126,12 +126,12 @@ export default function EditProfile() {
     const userInfo = values?.userInfo;
     const tempData = {
       userInfo: {
-        username: cnsName,
-        twitter: cnsInfo?.twitter || userInfo?.twitter,
-        discord: cnsInfo?.discord || userInfo?.discord,
-        instagram: cnsInfo?.instagram || userInfo?.instagram,
-        website: cnsInfo?.url || userInfo?.website,
-        email: cnsInfo?.email || userInfo?.email,
+        username: cnsName || userInfo?.userInfo?.username,
+        twitter: cnsInfo?.twitter || userInfo?.userInfo?.twitter,
+        discord: cnsInfo?.discord || userInfo?.userInfo?.discord,
+        instagram: cnsInfo?.instagram || userInfo?.userInfo?.instagram,
+        website: cnsInfo?.url || userInfo?.userInfo?.website,
+        email: cnsInfo?.email || userInfo?.userInfo?.email,
       },
     };
     setMergedValues(tempData);
@@ -201,12 +201,12 @@ export default function EditProfile() {
     }
   }
 
-  const createNewEmailVerification = (e) => {
+  const createNewEmailVerification = async (e) => {
     e.preventDefault();
 
     try {
 
-      const response = requestResendEmailVerification();
+      const response = await requestResendEmailVerification();
 
       if (!response || response?.message?.error) {
         toast.error('Something went wrong!');
