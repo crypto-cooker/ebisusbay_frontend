@@ -43,7 +43,7 @@ const useResendEmailVerification = () => {
           error: null,
         });
 
-        return fetchResponse;
+        return response;
       } catch (error) {
         setResponse({
           ...response,
