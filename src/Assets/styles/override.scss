@@ -435,26 +435,6 @@ canvas {
   }
 }
 
-/*react-slick FontAwesome 5 fix.*/
-.slick-slider > .slick-arrow::before {
-  content: unset !important;
-}
-
-.slick-slider > .slick-arrow {
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.slick-slider > .slick-arrow > svg {
-  width: 1rem !important;
-  height: 1rem !important;
-  opacity: 1;
-  visibility: visible;
-  color: black;
-}
-
 .eb-de_countdown {
   font-size: 0.8rem;
   right: 20px;
@@ -826,4 +806,64 @@ canvas {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.mySwiper {
+  .swiper-button-prev, &.swiper-container-rtl .swiper-button-next {
+    left: 0;
+    right: auto;
+
+  }
+
+  .swiper-button-next, &.swiper-container-rtl .swiper-button-prev {
+    right: 0;
+    left: auto;
+  }
+}
+
+.swiper-button-prev, .swiper-button-next {
+  top: 45%;
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border: 1px solid gray;
+  border-radius: 50%;
+  color: #000;
+  font-weight: 700;
+  outline: 0;
+  transition: background-color .2s ease, color .2s ease;
+
+  &::after {
+    font-size: 16px;
+  }
+}
+
+.swiper-button-prev {
+  &:after {
+    position: relative;
+    left: -1px;
+  }
+}
+
+.swiper-button-next {
+  &:after {
+    position: relative;
+    left: 1px;
+  }
+}
+
+.swiper-button-prev, .swiper-container-rtl .swiper-button-next {
+  left: 10px;
+  right: auto;
+}
+
+.swiper-button-next, .swiper-container-rtl .swiper-button-prev {
+  right: 10px;
+  left: auto;
+}
+
+.swiper-button-prev.swiper-button-disabled, .swiper-button-next.swiper-button-disabled {
+  opacity: 0;
+  cursor: auto;
+  pointer-events: none;
 }
