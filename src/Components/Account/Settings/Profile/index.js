@@ -95,11 +95,12 @@ export default function EditProfile() {
         .shape({
           profilePicture: Yup.array().of(
             Yup.object().shape({
-              size: Yup.object().nullable().test('', 'Sorry, this picture exceeds the maximum file size or dimensions, please check and try again.',
+              size: Yup.object().nullable().test('', 'Avatar must not exceed 350 x 350 px',
                 (size) => size ? size.width <= 350 && size.height <= 350 : true
               ),
-              file: Yup.mixed().nullable().test('', 'Sorry, this picture exceeds the maximum file size or dimensions, please check and try again.',
-                (file) => file && file.size? file.size <= 1000000 : true)
+              file: Yup.mixed().nullable().test('', 'Avatar must not exceed 1MB in size',
+                (file) => file && file.size? file.size <= 1000000 : true
+              )
             })
           )
         }).required(),
@@ -107,11 +108,12 @@ export default function EditProfile() {
         .shape({
           banner: Yup.array().of(
             Yup.object().shape({
-              size: Yup.object().nullable().test('', 'Sorry, this picture exceeds the maximum file size or dimensions, please check and try again.',
-                (size) => size ? size.width === 1920 && size.height === 1080 : true
+              size: Yup.object().nullable().test('', 'Banner must be at least 800 x 360 px',
+                (size) => size ? size.width >= 800 && size.height >= 360 : true
               ),
-              file: Yup.mixed().nullable().test('', 'Sorry, this picture exceeds the maximum file size or dimensions, please check and try again.',
-                (file) => file && file.size? file.size <= 2000000 : true)
+              file: Yup.mixed().nullable().test('', 'Banner must not exceed 2MB in size',
+                (file) => file && file.size? file.size <= 2000000 : true
+              )
             })
           )
         }).required(),
