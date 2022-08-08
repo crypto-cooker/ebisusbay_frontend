@@ -1527,7 +1527,7 @@
       "name": "Pocket Demons",
       "slug": "pocket-demons",
       "multiToken": false,
-      "address": "0x3bb5B9FD9C6978a823b96E14c395648a9a31949a",
+      "address": "0x0EFccB1889EB8eE3b92a805A5d66D49fC9ae885E",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -1546,7 +1546,7 @@
       "name": "CroHamsters",
       "slug": "cro-hamsters",
       "multiToken": false,
-      "address": "0xA6803fe63Ef62F2B6EEa2f98c153CF24eF5981d7",
+      "address": "0x0BfBd9d15e5cD740917d1a0F63ec5137005673b9",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -3493,7 +3493,7 @@
         "twitter": "https://twitter.com/PocketDemonsNFT",
         "discord": "https://discord.gg/sdgRtxt8vJ"
       },
-      "address": "0x3bb5B9FD9C6978a823b96E14c395648a9a31949a",
+      "address": "0x0EFccB1889EB8eE3b92a805A5d66D49fC9ae885E",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 666,
@@ -3525,7 +3525,7 @@
         "discord": "https://discord.gg/sj4cHPrdVk",
         "medium": "https://medium.com/@CroHamsterNFT"
       },
-      "address": "0xA6803fe63Ef62F2B6EEa2f98c153CF24eF5981d7",
+      "address": "0x0BfBd9d15e5cD740917d1a0F63ec5137005673b9",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 1000,

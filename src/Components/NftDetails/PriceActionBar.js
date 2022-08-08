@@ -70,7 +70,11 @@ const PriceActionBar = ({offerType, onOfferSelected, label}) => {
   };
 
   useEffect(() => {
-    setCanBuy(listing && !isUserBlacklisted(listing.seller) && !isNftBlacklisted(listing.nftAddress, listing.nftId));
+    setCanBuy(
+      listing &&
+      !isUserBlacklisted(listing.seller) &&
+      !isNftBlacklisted(listing.nftAddress, listing.nftId)
+    );
   }, [listing]);
 
   return (

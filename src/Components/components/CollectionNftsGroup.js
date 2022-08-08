@@ -3,6 +3,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Spinner } from 'react-bootstrap';
 
 import NftCard from './NftCard';
+import {isNftBlacklisted} from "../../utils";
 
 const CollectionNftsGroup = ({
   showLoadMore = true,
@@ -45,6 +46,7 @@ const CollectionNftsGroup = ({
                   listing={listing}
                   imgClass="collection"
                   collection={collection}
+                  canBuy={!isNftBlacklisted(listing.address, listing.id) && collection.listable}
                 />
               </div>
             ))}
@@ -63,6 +65,7 @@ const CollectionNftsGroup = ({
                   listing={listing}
                   imgClass="collection"
                   collection={collection}
+                  canBuy={!isNftBlacklisted(listing.address, listing.id) && collection.listable}
                 />
               </div>
             ))}
