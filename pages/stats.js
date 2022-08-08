@@ -5,7 +5,6 @@ import Card from '../src/Components/Leaderboard/Card';
 import Table from '../src/Components/Leaderboard/Table';
 import { getAllLeaderBoard } from '../src/GlobalState/leaderBoardSlice';
 import { shortAddress } from '../src/utils';
-import Slider from 'react-slick';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import styles from '../src/Components/Leaderboard/styles.module.scss';
@@ -14,64 +13,8 @@ import Footer from "../src/Components/components/Footer";
 import {Badge} from "react-bootstrap";
 import { Modal, ModalTitle } from 'react-bootstrap';
 import styled from "styled-components";
-
-export const carouselSettings = {
-  infinite: true,
-  slidesToShow: 4,
-  slidesToScroll: 4,
-  initialSlide: 0,
-  adaptiveHeight: 300,
-  lazyLoad: true,
-  arrows: false,
-  responsive: [
-    {
-      breakpoint: 1900,
-      settings: {
-        slidesToShow: 4,
-        slidesToScroll: 4,
-      },
-    },
-    {
-      breakpoint: 1600,
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        centerMode: true,
-        focusOnSelect: true,
-        dots: true,
-      },
-    },
-    {
-      breakpoint: 1024,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
-        focusOnSelect: true,
-        dots: true,
-      },
-    },
-    {
-      breakpoint: 600,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        focusOnSelect: true,
-        dots: true,
-        arrows: true,
-      },
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        focusOnSelect: true,
-        dots: true,
-        arrows: true,
-      },
-    },
-  ],
-};
+import {Navigation, Pagination} from "swiper";
+import {Swiper, SwiperSlide} from "swiper/react";
 
 const headers = {
   totalVolume: ['User', 'Sales Volume', 'Buy Volume', 'Total Volume'],
@@ -168,36 +111,63 @@ export default function Stats() {
         )}
         <div className="d-flex gap-3 mt-lg-4 align-items-center justify-content-between">
           <div className={`nft ${styles.dots}`}>
-            <Slider {...carouselSettings} prevArrow={<PrevArrow />} nextArrow={<NextArrow />}>
-              <Card
-                title="Most Total Volume"
-                onClick={() => setType('totalVolume')}
-                totalVolume={utils.commify(leaderBoard?.totalVolume[0]?.totalVolume || 0)}
-                name={shortAddress(leaderBoard?.totalVolume[0]?.address) || 0}
-                active={type === 'totalVolume'}
-              />
-              <Card
-                title="Most Buy Volume"
-                onClick={() => setType('buyVolume')}
-                totalVolume={utils.commify(leaderBoard?.buyVolume[0]?.totalVolume || 0)}
-                name={shortAddress(leaderBoard?.buyVolume[0]?.address) || 0}
-                active={type === 'buyVolume'}
-              />
-              <Card
-                title="Most Sell Volume"
-                onClick={() => setType('sellVolume')}
-                totalVolume={utils.commify(leaderBoard?.sellVolume[0]?.totalVolume || 0)}
-                name={shortAddress(leaderBoard?.sellVolume[0]?.address) || 0}
-                active={type === 'sellVolume'}
-              />
-              <Card
-                title="Biggest Single Sale"
-                onClick={() => setType('biggestSingleSale')}
-                totalVolume={utils.commify(leaderBoard?.biggestSingleSale[0]?.totalVolume || 0)}
-                name={shortAddress(leaderBoard?.biggestSingleSale[0]?.address) || 0}
-                active={type === 'biggestSingleSale'}
-              />
-            </Slider>
+
+            <Swiper
+              spaceBetween={10}
+              slidesPerView={1}
+              navigation={true}
+              loop={true}
+              modules={[Navigation, Pagination]}
+              className="mySwiper"
+              breakpoints={{
+                576: {
+                  slidesPerView: 2,
+                },
+                768: {
+                  slidesPerView: 3,
+                },
+                1200: {
+                  slidesPerView: 4,
+                },
+              }}
+            >
+              <SwiperSlide>
+                <Card
+                  title="Most Total Volume"
+                  onClick={() => setType('totalVolume')}
+                  totalVolume={utils.commify(leaderBoard?.totalVolume[0]?.totalVolume || 0)}
+                  name={shortAddress(leaderBoard?.totalVolume[0]?.address) || 0}
+                  active={type === 'totalVolume'}
+                />
+              </SwiperSlide>
+              <SwiperSlide>
+                <Card
+                  title="Most Buy Volume"
+                  onClick={() => setType('buyVolume')}
+                  totalVolume={utils.commify(leaderBoard?.buyVolume[0]?.totalVolume || 0)}
+                  name={shortAddress(leaderBoard?.buyVolume[0]?.address) || 0}
+                  active={type === 'buyVolume'}
+                />
+              </SwiperSlide>
+              <SwiperSlide>
+                <Card
+                  title="Most Sell Volume"
+                  onClick={() => setType('sellVolume')}
+                  totalVolume={utils.commify(leaderBoard?.sellVolume[0]?.totalVolume || 0)}
+                  name={shortAddress(leaderBoard?.sellVolume[0]?.address) || 0}
+                  active={type === 'sellVolume'}
+                />
+              </SwiperSlide>
+              <SwiperSlide>
+                <Card
+                  title="Biggest Single Sale"
+                  onClick={() => setType('biggestSingleSale')}
+                  totalVolume={utils.commify(leaderBoard?.biggestSingleSale[0]?.totalVolume || 0)}
+                  name={shortAddress(leaderBoard?.biggestSingleSale[0]?.address) || 0}
+                  active={type === 'biggestSingleSale'}
+                />
+              </SwiperSlide>
+            </Swiper>
           </div>
         </div>
         <div className="mt-4 table-responsive">
