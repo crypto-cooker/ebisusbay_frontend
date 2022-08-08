@@ -428,7 +428,7 @@ const Nft721 = ({ address, id }) => {
                   )}
 
                   <div className="row" style={{ gap: '2rem 0' }}>
-                    {currentListing && (
+                    {currentListing && collection.listable && (
                       <ProfilePreview
                         type="Seller"
                         address={currentListing.seller}
