@@ -6708,7 +6708,7 @@
       "name": "CroHamsters",
       "slug": "cro-hamsters",
       "multiToken": false,
-      "address": "",
+      "address": "0xd5d89E4999374cA5A458A9D00C7A13662562FD73",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -6758,6 +6758,27 @@
         "card": "/img/collections/argonauts/card.png",
         "banner": "/img/collections/argonauts/banner.png",
         "maxSupply": 8888,
+        "website": "https://www.argofinance.money/nft",
+        "twitter": "https://twitter.com/ArgoProtocol",
+        "discord": "https://discord.gg/argofinance",
+        "medium" : "argofinance.medium.com",
+        "telegram": "http://t.me/Argo_Finance"
+      }
+    },
+    {
+      "name" : "Honorary Argonauts",
+      "slug": "honorary-argonauts",
+      "multiToken": false,
+      "address": "0xc3cf2416a69351bf336ff671ad46d92efee4ea75",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Honorary Argonauts are part of the wider Argonauts collection, uniquely designed for Ambassadors, Partners, and Core Contributors within the Argonauts community.",
+        "verified": true,
+        "avatar": "/img/collections/argonauts/avatar.png",
+        "card": "/img/collections/argonauts/card.png",
+        "banner": "/img/collections/argonauts/banner.png",
+        "maxSupply": 0,
         "website": "https://www.argofinance.money/nft",
         "twitter": "https://twitter.com/ArgoProtocol",
         "discord": "https://discord.gg/argofinance",
@@ -9601,7 +9622,7 @@
         "discord": "https://discord.gg/sj4cHPrdVk",
         "medium": "https://medium.com/@CroHamsterNFT"
       },
-      "address": "",
+      "address": "0xd5d89E4999374cA5A458A9D00C7A13662562FD73",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 1000,
