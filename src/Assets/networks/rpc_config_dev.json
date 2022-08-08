@@ -6902,6 +6902,27 @@
         "twitter": "https://twitter.com/CroWitches",
         "discord": "https://discord.gg/VrC2e4GNVR"
       }
+    },
+    {
+      "name": "The Cyborg Guardians",
+      "slug": "the-cyborg-guardians",
+      "multiToken": false,
+      "address": "0x6755B68737134fEA57303bE6F96dADcD23eC7480",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Cyborg Guardians collection is bringing boosting to the Cyborg Stables platform. It's used to boost Farm rewards up to 5% max boost. Tiers will range from Common (0.5%), Rare (1%), Legendary (1.5%), and Ultimate (2%).",
+        "verified": false,
+        "avatar": "/img/collections/the-cyborg-guardians/avatar.webp",
+        "card": "/img/collections/the-cyborg-guardians/card.webp",
+        "banner": "/img/collections/the-cyborg-guardians/banner.webp",
+        "maxSupply": 2500,
+        "website": "https://cyborgstables.io/",
+        "twitter": "https://twitter.com/CyborgSwapDEX",
+        "discord": "https://discord.gg/Ku6A7tJSVp",
+        "medium": "https://cyborgswap.medium.com/",
+        "telegram": "https://t.me/+IQJY2ugWLaVmODVk"
+      }
     }
   ],
   "drops": [
