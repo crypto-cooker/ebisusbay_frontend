@@ -6750,7 +6750,7 @@
       "multiToken": false,
       "address": "0xa996aD2b9f240F78b063E47F552037658c4563d1",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "Argonauts is a collection of 8,888 unique utility-enabled characters that represents your unique identity on the Cronos chain. Each Argonaut holder gets access to utility across the Argo Protocol platform, exclusive treasure chest events, activated partnership experiences, future collections, and more.",
         "verified": true,
