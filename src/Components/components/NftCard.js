@@ -49,7 +49,7 @@ const MakeOffer = styled.div`
   }
 `;
 
-const NftCard = ({ royalty, listing, imgClass = 'marketplace', watermark, collection }) => {
+const NftCard = ({ royalty, listing, imgClass = 'marketplace', watermark, collection, canBuy = true }) => {
   const history = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -133,7 +133,7 @@ const NftCard = ({ royalty, listing, imgClass = 'marketplace', watermark, collec
             </MakeBuy>
           )}
           <MakeOffer>
-            {getIsNftListed() ? (
+            {getIsNftListed() && canBuy ? (
               <div>
                 <Button type="legacy" onClick={handleBuy}>
                   Buy
