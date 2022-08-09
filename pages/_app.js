@@ -13,8 +13,9 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import 'swiper/css';
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 import '../src/Assets/styles/style.scss';
 import '../src/Assets/styles/override.scss';
