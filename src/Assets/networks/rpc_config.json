@@ -5593,10 +5593,10 @@
       "multiToken": false,
       "address": "0x0aecdAf71c1e5c461D2730eEe5243E7b0A81dC7b",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Create a community of aristocrats, driven by the community.\n\nFirst 100% utility project, our goal is to greatly improve the experience of cronos users.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/aristodog/avatar.png",
         "card": "/img/collections/aristodog/card.png",
         "banner": "/img/collections/aristodog/banner.png",
@@ -9335,7 +9335,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false
+      "complete": true
     },
     {
       "id": 84,
