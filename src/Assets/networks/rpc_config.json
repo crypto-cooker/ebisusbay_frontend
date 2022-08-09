@@ -6923,6 +6923,25 @@
         "medium": "https://cyborgswap.medium.com/",
         "telegram": "https://t.me/+IQJY2ugWLaVmODVk"
       }
+    },
+    {
+      "name": "CroKami",
+      "slug": "crokami",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "CroKami is a universe comprising our Manga series, NFT collection, and lore-connected game. We have set out to create a special ecosystem in which players can battle each other in game using their NFT’s, or AI in a street-fighter style arena and earn $PACK -our real world cryptocurrency and in-game currency. Play and earn!",
+        "verified": true,
+        "avatar": "/img/collections/crokami/avatar.webp",
+        "card": "/img/collections/crokami/card.webp",
+        "banner": "/img/collections/crokami/banner.webp",
+        "maxSupply": 3333,
+        "website": "https://www.crokami.com/",
+        "twitter": "https://twitter.com/cro_kami",
+        "discord": "https://discord.gg/sTeeDrWkSW"
+      }
     }
   ],
   "drops": [
@@ -9690,6 +9709,37 @@
       "complete": false,
       "featured": true,
       "redirect": "https://www.argofinance.money/nft"
+    },
+    {
+      "id": 97,
+      "slug": "crokami",
+      "imgNft": "/img/drops/crokami/drop.webp",
+      "imgPreview": "/img/drops/crokami/drop.webp",
+      "imgAvatar": "/img/collections/crokami/avatar.webp",
+      "imgBanner": "/img/drops/crokami/banner.webp",
+      "title": "CroKami",
+      "subtitle": "CroKami is a universe comprising our Manga series, NFT collection, and lore-connected game. We have set out to create a special ecosystem in which players can battle each other in game using their NFT’s, or AI in a street-fighter style arena and earn $PACK -our real world cryptocurrency and in-game currency. Play and earn!",
+      "description": "CroKami is a universe comprising our Manga series, NFT collection, and lore-connected game. We have set out to create a special ecosystem in which players can battle each other in game using their NFT’s, or AI in a street-fighter style arena and earn $PACK -our real world cryptocurrency and in-game currency. Play and earn!\n\n \n\nROADMAP:\n\nPassive Income: First month 100% for holders, then 50% for holders, 20% for community wallet, 30% for the team.\n\nHolder Benefit: If you hold more then 10 Crokami you will be entitled to free Airdrops of future collections and special in Game perks!\n\nStaking: 1 Crokami gives you 3 $PACK per day. When you hold 10 Crokamis you will be air drop 1 of 333 Caves. Caves will in crease staking percentage of your Crokamis (Must have 10 Crokamis in Cave) by 1.333 per wolf.\n\nManga Series: A chapter of the manga will be released every month, and will include special utility for holders! Every page of the manga will be turned into a NFT and will be air dropped to the most loyal members of the pack!\n\nP2E Game: In a dynamic, skill based 3D street-fighter style game, players will fight to earn $PACK, our in-game and real world cryptocurrency that is used to reward players, and build additional skills in game. Play as your very own Wolf NFT, and fight to defeat those who were exiled from the pack in a world that is connected to our Manga series.\n\nFuture Collections: Holders will get WL spots for future collections which will also be implemented into our p2e game. \n\nMerch Store: Crokami merch store will be founded in which holders will be given special deals!",
+      "author": {
+        "name": "CroKami",
+        "website": "https://www.crokami.com/",
+        "twitter": "https://twitter.com/cro_kami",
+        "discord": "https://discord.gg/sTeeDrWkSW"
+      },
+      "address": "",
+      "maxMintPerTx": 15,
+      "maxMintPerAddress": 100,
+      "totalSupply": 3333,
+      "cost": "500",
+      "memberCost": "450",
+      "whitelistCost": "400",
+      "foundersOnly": false,
+      "start": null,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
     }
   ],
   "auctions": [
