@@ -1561,6 +1561,37 @@
         "discord": "https://discord.gg/sj4cHPrdVk",
         "medium": "https://medium.com/@CroHamsterNFT"
       }
+    },
+    {
+      "name": "Trippin Panda",
+      "slug": "trippin-panda",
+      "multiToken": false,
+      "address": "0x69C4984ABdc4164A73C26e44195ea572F8132285",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "",
+        "verified": true
+      }
+    },
+    {
+      "name": "GymKongz",
+      "slug": "gymkongz",
+      "multiToken": false,
+      "address": "0x8bed965e960b76d3d7dfcda78a9d0e2ef3017e60",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "GymKongZ is a 10,000 pfp project made up of more than 255 unique traits. We will focus on improving all pillars of life, not only the physical but also the mental and financial, and any other goal members are choosing to pursue. \nWe are really wanting to expand the horizon when it comes to a group of people coming together sharing similar goals and interests.",
+        "verified": false,
+        "avatar": "/img/collections/gymkongz/avatar.webp",
+        "card": "/img/collections/gymkongz/card.webp",
+        "banner": "/img/collections/gymkongz/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://www.gymkongz.com/",
+        "twitter": "https://twitter.com/gymkongz",
+        "discord": "https://discord.gg/qJru6Av9h3"
+      }
     }
   ],
   "drops": [
@@ -3534,6 +3565,65 @@
       "whitelistCost": "275",
       "foundersOnly": false,
       "start": 1659502009000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 100,
+      "slug": "gymkongz",
+      "imgNft": "/img/drops/gymkongz/drop.webp",
+      "imgPreview": "/img/drops/gymkongz/drop.webp",
+      "imgAvatar": "/img/collections/gymkongz/avatar.webp",
+      "imgBanner": "/img/collections/gymkongz/banner.webp",
+      "title": "GymKongz",
+      "subtitle": "GymKongZ is a 10,000 pfp project made up of more than 255 unique traits. \nWe will focus on improving all pillars of life, not only the physical but also the mental and financial, and any other goal members are choosing to pursue. \nWe are really wanting to expand the horizon when it comes to a group of people coming together sharing similar goals and interests.",
+      "description": "GymKongZ is a 10,000 pfp collection made up of more than 255 unique traits.\n\nThe Kongz have a vision to create a community that can physically, mentally, and financially strengthen our holders for years to come, while also sustainably enhancing the Cronos blockchain.\n\nThe embodiment of strength brought to the Cronos chain, each Kong will bring the owner the following utilities: \n\nPasses to various webinar topics (Financial, physical, mental, etc.)\nDiscounted goods (supplements and fashion items, gym gear, and much more)\nAccess to the community Kongz Vault via our DAO, will enable every Kong with the ability to vote on a number of things such as fashion brand designs, flavor of protein powder, NFT’s we will add to our vault, and much much more. Kongz decisions will shape the community and will help us grow together. \nFuture staking of our own token that will hold various utilities. \nEach Kong you hold will be able to win exclusive giveaways upon different stages of minting. The giveaways include a brand new iPhone, Rolex Dayjust, and Tesla Model 3 to name a few.",
+      "author": {
+        "name": "GymKongz",
+        "website": "https://www.gymkongz.com/",
+        "twitter": "https://twitter.com/gymkongz",
+        "discord": "https://discord.gg/qJru6Av9h3"
+      },
+      "address": "0x8bed965e960b76d3d7dfcda78a9d0e2ef3017e60",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 10000,
+      "cost": "888",
+      "memberCost": "800",
+      "whitelistCost": "800",
+      "foundersOnly": false,
+      "start": 1660062716000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 101,
+      "slug": "trippin-panda",
+      "imgNft": "/img/drops/trippin-panda/drop.webp",
+      "imgPreview": "/img/drops/trippin-panda/drop.webp",
+      "imgAvatar": "/img/collections/trippin-panda/avatar.webp",
+      "imgBanner": "/img/collections/trippin-panda/banner.webp",
+      "title": "Trippin Panda",
+      "subtitle": "none",
+      "description": "none",
+      "author": {
+        "name": "Trippin Panda"
+      },
+      "address": "0x69C4984ABdc4164A73C26e44195ea572F8132285",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 10000,
+      "cost": "3",
+      "memberCost": "2",
+      "whitelistCost": "1",
+      "foundersOnly": false,
+      "start": 1660062746000,
       "end": null,
       "referral": false,
       "is1155": false,
