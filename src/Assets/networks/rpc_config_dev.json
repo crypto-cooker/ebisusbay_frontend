@@ -1264,7 +1264,7 @@
         "card": "/img/collections/cronosgoats/card.png",
         "banner": "/img/collections/cronosgoats/banner.webp",
         "maxSupply": 1000,
-        "website": "https://cronosgoats.com/",
+        "website": "https://crossbreeds.defigamecove.com/",
         "twitter": "https://twitter.com/boarsgonewild",
         "discord": "https://discord.gg/gC9ZVKDYZY"
       }
@@ -2864,7 +2864,7 @@
         "banner": "/img/collections/boarsgonewild/banner.png",
         "card": "/img/collections/boarsgonewild/card.png",
         "maxSupply": 1000,
-        "website": "https://www.boarsgonewild.app",
+        "website": "https://crossbreeds.defigamecove.com/",
         "twitter": "https://twitter.com/boarsgonewild",
         "discord": "https://discord.gg/gC9ZVKDYZY"
       }
@@ -3061,7 +3061,7 @@
         "card": "/img/collections/cronosgoats/badbillygoats/card.png",
         "banner": "/img/collections/cronosgoats/badbillygoats/banner.png",
         "maxSupply": 8888,
-        "website": "https://www.cronosgoats.com/",
+        "website": "https://crossbreeds.defigamecove.com/",
         "twitter": "https://twitter.com/boarsgonewild",
         "discord": "https://discord.gg/gC9ZVKDYZY"
       }
@@ -6387,6 +6387,7 @@
         "card": "/img/collections/crossbreeds/card.webp",
         "banner": "/img/collections/crossbreeds/banner.webp",
         "maxSupply": 828,
+        "website": "https://crossbreeds.defigamecove.com/",
         "twitter": "https://twitter.com/boarsgonewild",
         "discord": "https://discord.gg/gC9ZVKDYZY",
         "medium": "https://medium.com/@Crossbreeds/crossbreed-merger-a82680c81f96"
