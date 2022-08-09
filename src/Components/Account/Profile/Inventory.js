@@ -11,68 +11,47 @@ import {MyNftPageActions} from "@src/GlobalState/User";
 import MyNftTransferDialog from "@src/Components/components/MyNftTransferDialog";
 import MyNftCancelDialog from "@src/Components/components/MyNftCancelDialog";
 import {useRouter} from "next/router";
+import useSWRInfinite from "swr/infinite";
 
 const knownContracts = appConfig('collections');
+
+const fetcher = async (...args) => {
+  const [address, provider, page] = args;
+  return await getNftsForAddress2(address, provider, page);
+};
 
 export default function Inventory({ address }) {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const [page, setPage] = useState(1);
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [initialized, setInitialized] = useState(false);
-  const [canLoadMore, setCanLoadMore] = useState(false);
-
   const user = useSelector((state) => state.user);
 
+  const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite((index) => {
+    return [address, user.provider, index + 1]
+  }, fetcher);
+
+  const items = data ? [].concat(...data) : [];
+  const isLoadingInitialData = !data && !error;
+  const isLoadingMore =
+    isLoadingInitialData ||
+    (size > 0 && data && typeof data[size - 1] === "undefined");
+  const isEmpty = data?.[0]?.length === 0;
+  const isReachingEnd =
+    isEmpty || (data && data[data.length - 1]?.length < 50);
+  const isRefreshing = isValidating && data && data.length === size;
+
   const loadMore = () => {
-    if (!loading) {
-      let nextPage = page + 1;
-      setPage(nextPage);
-    }
+    setSize(size + 1);
   };
-
-  const fetchNfts = async() => {
-    setLoading(true);
-    if (!items.length) setInitialized(false);
-    try {
-      const response = await getNftsForAddress2(address, user.provider, page);
-
-      if (response.length > 0) {
-        items.push(...response);
-        setCanLoadMore(true);
-      } else {
-        setCanLoadMore(false);
-      }
-    } finally {
-      setLoading(false);
-      setInitialized(true);
-    }
-  }
-
-  useEffect(() => {
-    if (!loading) {
-      fetchNfts();
-    }
-    
-    // eslint-disable-next-line
-  }, [page, user.provider]);
-
-  useEffect(() => {
-    setInitialized(false);
-    setItems([]);
-    fetchNfts();
-  }, [address]);
 
   return (
     <>
       <div className="row">
-        {initialized ? (
+        {!isLoadingInitialData ? (
           <InfiniteScroll
             dataLength={items.length}
             next={loadMore}
-            hasMore={canLoadMore}
+            hasMore={!isReachingEnd}
             style={{ overflow: 'hidden' }}
             loader={
               <div className="row">
