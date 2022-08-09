@@ -1264,7 +1264,7 @@
         "card": "/img/collections/cronosgoats/card.png",
         "banner": "/img/collections/cronosgoats/banner.webp",
         "maxSupply": 1000,
-        "website": "https://cronosgoats.com/",
+        "website": "https://crossbreeds.defigamecove.com/",
         "twitter": "https://twitter.com/boarsgonewild",
         "discord": "https://discord.gg/gC9ZVKDYZY"
       }
@@ -1367,7 +1367,7 @@
         "maxSupply": 1000,
         "website": "https://www.icysquidgame.com/",
         "twitter": "https://twitter.com/IcySquidGame",
-        "telegram": "http://t.me/IcySquidGame"
+        "telegram": "https://t.me/IcySquidGame"
       }
     },
     {
@@ -2331,7 +2331,7 @@
         "maxSupply": 30,
         "website": "https://www.icysquidgame.com/",
         "twitter": "https://twitter.com/IcySquidGame",
-        "telegram": "http://t.me/IcySquidGame"
+        "telegram": "https://t.me/IcySquidGame"
       }
     },
     {
@@ -2803,7 +2803,7 @@
       "listable": true,
       "metadata": {
         "description": "5000 Fruit Farmers Living & Loving on Cronos. Slavik Fruit Farmers grant the holder FRODEX Token Allocation, 3D Voxel Airdrops and Exclusive first access to SFF Expansions. Each Farmer is a Membership pass into the SlavikVerse Ecosystem!",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/slavikfruitfarm/avatar.png",
         "banner": "/img/collections/slavikfruitfarm/banner.png",
         "card": "/img/collections/slavikfruitfarm/card.png",
@@ -2864,7 +2864,7 @@
         "banner": "/img/collections/boarsgonewild/banner.png",
         "card": "/img/collections/boarsgonewild/card.png",
         "maxSupply": 1000,
-        "website": "https://www.boarsgonewild.app",
+        "website": "https://crossbreeds.defigamecove.com/",
         "twitter": "https://twitter.com/boarsgonewild",
         "discord": "https://discord.gg/gC9ZVKDYZY"
       }
@@ -3061,7 +3061,7 @@
         "card": "/img/collections/cronosgoats/badbillygoats/card.png",
         "banner": "/img/collections/cronosgoats/badbillygoats/banner.png",
         "maxSupply": 8888,
-        "website": "https://www.cronosgoats.com/",
+        "website": "https://crossbreeds.defigamecove.com/",
         "twitter": "https://twitter.com/boarsgonewild",
         "discord": "https://discord.gg/gC9ZVKDYZY"
       }
@@ -5593,10 +5593,10 @@
       "multiToken": false,
       "address": "0x0aecdAf71c1e5c461D2730eEe5243E7b0A81dC7b",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Create a community of aristocrats, driven by the community.\n\nFirst 100% utility project, our goal is to greatly improve the experience of cronos users.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/aristodog/avatar.png",
         "card": "/img/collections/aristodog/card.png",
         "banner": "/img/collections/aristodog/banner.png",
@@ -6387,6 +6387,7 @@
         "card": "/img/collections/crossbreeds/card.webp",
         "banner": "/img/collections/crossbreeds/banner.webp",
         "maxSupply": 828,
+        "website": "https://crossbreeds.defigamecove.com/",
         "twitter": "https://twitter.com/boarsgonewild",
         "discord": "https://discord.gg/gC9ZVKDYZY",
         "medium": "https://medium.com/@Crossbreeds/crossbreed-merger-a82680c81f96"
@@ -6754,15 +6755,15 @@
       "metadata": {
         "description": "Argonauts is a collection of 8,888 unique utility-enabled characters that represents your unique identity on the Cronos chain. Each Argonaut holder gets access to utility across the Argo Protocol platform, exclusive treasure chest events, activated partnership experiences, future collections, and more.",
         "verified": true,
-        "avatar": "/img/collections/argonauts/avatar.png",
-        "card": "/img/collections/argonauts/card.png",
-        "banner": "/img/collections/argonauts/banner.png",
+        "avatar": "/img/collections/argonauts/avatar.webp",
+        "card": "/img/collections/argonauts/card.webp",
+        "banner": "/img/collections/argonauts/banner.webp",
         "maxSupply": 8888,
         "website": "https://www.argofinance.money/nft",
         "twitter": "https://twitter.com/ArgoProtocol",
         "discord": "https://discord.gg/argofinance",
-        "medium" : "argofinance.medium.com",
-        "telegram": "http://t.me/Argo_Finance"
+        "medium" : "https://argofinance.medium.com",
+        "telegram": "https://t.me/Argo_Finance"
       }
     },
     {
@@ -6775,15 +6776,15 @@
       "metadata": {
         "description": "Honorary Argonauts are part of the wider Argonauts collection, uniquely designed for Ambassadors, Partners, and Core Contributors within the Argonauts community.",
         "verified": true,
-        "avatar": "/img/collections/argonauts/avatar.png",
-        "card": "/img/collections/argonauts/card.png",
-        "banner": "/img/collections/argonauts/banner.png",
+        "avatar": "/img/collections/argonauts/avatar.webp",
+        "card": "/img/collections/argonauts/card.webp",
+        "banner": "/img/collections/argonauts/banner.webp",
         "maxSupply": 0,
         "website": "https://www.argofinance.money/nft",
         "twitter": "https://twitter.com/ArgoProtocol",
         "discord": "https://discord.gg/argofinance",
-        "medium" : "argofinance.medium.com",
-        "telegram": "http://t.me/Argo_Finance"
+        "medium" : "https://argofinance.medium.com",
+        "telegram": "https://t.me/Argo_Finance"
       }
     },
     {
@@ -6922,6 +6923,125 @@
         "discord": "https://discord.gg/Ku6A7tJSVp",
         "medium": "https://cyborgswap.medium.com/",
         "telegram": "https://t.me/+IQJY2ugWLaVmODVk"
+      }
+    },
+    {
+      "name": "CroKami",
+      "slug": "crokami",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "CroKami is a universe comprising our Manga series, NFT collection, and lore-connected game. We have set out to create a special ecosystem in which players can battle each other in game using their NFT’s, or AI in a street-fighter style arena and earn $PACK -our real world cryptocurrency and in-game currency. Play and earn!",
+        "verified": true,
+        "avatar": "/img/collections/crokami/avatar.webp",
+        "card": "/img/collections/crokami/card.webp",
+        "banner": "/img/collections/crokami/banner.webp",
+        "maxSupply": 3333,
+        "website": "https://www.crokami.com/",
+        "twitter": "https://twitter.com/cro_kami",
+        "discord": "https://discord.gg/sTeeDrWkSW"
+      }
+    },
+    {
+      "name": "CroDoo",
+      "slug": "crodoo",
+      "multiToken": false,
+      "address": "0xA560c70220c32c81217cF993676d177d43D48349",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The CroDoo is an NFT project with a first generation of 5678 unique voodoo dolls PFP collectibles on Cronos blockchain. We aim for a long term project of which all holders of OG collection benefit from holding them.",
+        "verified": false,
+        "avatar": "/img/collections/crodoo/avatar.webp",
+        "card": "/img/collections/crodoo/card.webp",
+        "banner": "/img/collections/crodoo/banner.webp",
+        "maxSupply": 5678,
+        "website": "https://crodoonft.com/",
+        "twitter": "https://twitter.com/CroDooNFT",
+        "discord": "https://discord.gg/W43dReVMq5"
+      }
+    },
+    {
+      "name": "CroLicker Club",
+      "slug": "crolicker-club",
+      "multiToken": false,
+      "address": "0x1eb586B92f362FC97Ed4c7A674def77928bce19D",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "750 Limited Supply, Receive rewards for holding NFT and $CROL",
+        "verified": false,
+        "avatar": "/img/collections/crolicker-club/avatar.webp",
+        "card": "/img/collections/crolicker-club/card.webp",
+        "banner": "/img/collections/crolicker-club/banner.webp",
+        "maxSupply": 750,
+        "website": "https://www.crolick.com/",
+        "twitter": "https://twitter.com/Cro_Lick",
+        "telegram": "https://t.me/cro_lick",
+        "gitbook": "https://crolicks.gitbook.io/crolick/"
+      }
+    },
+    {
+      "name": "Argonauts Mystery Pill",
+      "slug": "argonauts-mystery-pill",
+      "multiToken": false,
+      "address": "0x0A37674F61a9345f32E277b15E3C9603cDe710f6",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Mystery Pill of the Argonauts ecosystem, what’s inside…?",
+        "verified": true,
+        "avatar": "/img/collections/argonauts-mystery-pill/avatar.webp",
+        "card": "/img/collections/argonauts-mystery-pill/card.webp",
+        "banner": "/img/collections/argonauts-mystery-pill/banner.webp",
+        "maxSupply": 0,
+        "website": "https://www.argofinance.money/nft",
+        "twitter": "https://twitter.com/ArgoProtocol",
+        "discord": "https://discord.gg/argofinance",
+        "medium" : "https://argofinance.medium.com",
+        "telegram": "https://t.me/Argo_Finance"
+      }
+    },
+    {
+      "name": "GymKongz",
+      "slug": "gymkongz",
+      "multiToken": false,
+      "address": "0x42AbFb212A55D36c605cf39c9d59D118318c1E77",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "GymKongZ is a 10,000 pfp project made up of more than 255 unique traits. We will focus on improving all pillars of life, not only the physical but also the mental and financial, and any other goal members are choosing to pursue. \nWe are really wanting to expand the horizon when it comes to a group of people coming together sharing similar goals and interests.",
+        "verified": false,
+        "avatar": "/img/collections/gymkongz/avatar.webp",
+        "card": "/img/collections/gymkongz/card.webp",
+        "banner": "/img/collections/gymkongz/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://www.gymkongz.com/",
+        "twitter": "https://twitter.com/gymkongz",
+        "discord": "https://discord.gg/qJru6Av9h3"
+      }
+    },
+    {
+      "name": "ETHS Horoscope 2022-2052",
+      "slug": "eths-horoscope-2022-2052",
+      "multiToken": false,
+      "address": "0x1a9362655b49b3d6ed11798039e6f3698d5ddc8d",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Emerald Timeverse hermessecund - Horoscope NFT Collection for  30 year. 1/30",
+        "verified": false,
+        "avatar": "/img/collections/eths-horoscope-2022-2052/avatar.webp",
+        "card": "/img/collections/eths-horoscope-2022-2052/card.webp",
+        "banner": "/img/collections/eths-horoscope-2022-2052/banner.webp",
+        "maxSupply": 360,
+        "website": "https://hermessecund.com/",
+        "twitter": "https://twitter.com/hermessecund",
+        "discord": "https://discord.gg/cmjv65TK",
+        "medium": "https://medium.com/@tarwar",
+        "telegram": "https://t.me/Tarwar"
       }
     }
   ],
@@ -9215,7 +9335,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false
+      "complete": true
     },
     {
       "id": 84,
@@ -9661,9 +9781,9 @@
     {
       "id": 98,
       "slug": "argonauts",
-      "imgNft": "/img/drops/argonauts/drop.png",
-      "imgPreview": "/img/drops/argonauts/drop.png",
-      "imgAvatar": "/img/collections/argonauts/avatar.png",
+      "imgNft": "/img/drops/argonauts/drop.webp",
+      "imgPreview": "/img/drops/argonauts/drop.webp",
+      "imgAvatar": "/img/collections/argonauts/avatar.webp",
       "title": "Argonauts",
       "subtitle": "",
       "description": "Argonauts is a collection of 8,888 unique utility-enabled characters that represents your unique identity on the Cronos chain. Each Argonaut holder gets access to utility across the Argo Protocol platform, exclusive treasure chest events, activated partnership experiences, future collections, and more.",
@@ -9690,6 +9810,68 @@
       "complete": false,
       "featured": true,
       "redirect": "https://www.argofinance.money/nft"
+    },
+    {
+      "id": 99,
+      "slug": "crokami",
+      "imgNft": "/img/drops/crokami/drop.webp",
+      "imgPreview": "/img/drops/crokami/drop.webp",
+      "imgAvatar": "/img/collections/crokami/avatar.webp",
+      "imgBanner": "/img/drops/crokami/banner.webp",
+      "title": "CroKami",
+      "subtitle": "CroKami is a universe comprising our Manga series, NFT collection, and lore-connected game. We have set out to create a special ecosystem in which players can battle each other in game using their NFT’s, or AI in a street-fighter style arena and earn $PACK -our real world cryptocurrency and in-game currency. Play and earn!",
+      "description": "CroKami is a universe comprising our Manga series, NFT collection, and lore-connected game. We have set out to create a special ecosystem in which players can battle each other in game using their NFT’s, or AI in a street-fighter style arena and earn $PACK -our real world cryptocurrency and in-game currency. Play and earn!\n\n \n\nROADMAP:\n\nPassive Income: First month 100% for holders, then 50% for holders, 20% for community wallet, 30% for the team.\n\nHolder Benefit: If you hold more then 10 Crokami you will be entitled to free Airdrops of future collections and special in Game perks!\n\nStaking: 1 Crokami gives you 3 $PACK per day. When you hold 10 Crokamis you will be air drop 1 of 333 Caves. Caves will in crease staking percentage of your Crokamis (Must have 10 Crokamis in Cave) by 1.333 per wolf.\n\nManga Series: A chapter of the manga will be released every month, and will include special utility for holders! Every page of the manga will be turned into a NFT and will be air dropped to the most loyal members of the pack!\n\nP2E Game: In a dynamic, skill based 3D street-fighter style game, players will fight to earn $PACK, our in-game and real world cryptocurrency that is used to reward players, and build additional skills in game. Play as your very own Wolf NFT, and fight to defeat those who were exiled from the pack in a world that is connected to our Manga series.\n\nFuture Collections: Holders will get WL spots for future collections which will also be implemented into our p2e game. \n\nMerch Store: Crokami merch store will be founded in which holders will be given special deals!",
+      "author": {
+        "name": "CroKami",
+        "website": "https://www.crokami.com/",
+        "twitter": "https://twitter.com/cro_kami",
+        "discord": "https://discord.gg/sTeeDrWkSW"
+      },
+      "address": "",
+      "maxMintPerTx": 15,
+      "maxMintPerAddress": 100,
+      "totalSupply": 3333,
+      "cost": "500",
+      "memberCost": "450",
+      "whitelistCost": "400",
+      "foundersOnly": false,
+      "start": 1660161600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 100,
+      "slug": "gymkongz",
+      "imgNft": "/img/drops/gymkongz/drop.webp",
+      "imgPreview": "/img/drops/gymkongz/drop.webp",
+      "imgAvatar": "/img/collections/gymkongz/avatar.webp",
+      "imgBanner": "/img/collections/gymkongz/banner.webp",
+      "title": "GymKongz",
+      "subtitle": "GymKongZ is a 10,000 pfp project made up of more than 255 unique traits. \nWe will focus on improving all pillars of life, not only the physical but also the mental and financial, and any other goal members are choosing to pursue. \nWe are really wanting to expand the horizon when it comes to a group of people coming together sharing similar goals and interests.",
+      "description": "GymKongZ is a 10,000 pfp collection made up of more than 255 unique traits.\n\nThe Kongz have a vision to create a community that can physically, mentally, and financially strengthen our holders for years to come, while also sustainably enhancing the Cronos blockchain.\n\nThe embodiment of strength brought to the Cronos chain, each Kong will bring the owner the following utilities: \n\nPasses to various webinar topics (Financial, physical, mental, etc.)\nDiscounted goods (supplements and fashion items, gym gear, and much more)\nAccess to the community Kongz Vault via our DAO, will enable every Kong with the ability to vote on a number of things such as fashion brand designs, flavor of protein powder, NFT’s we will add to our vault, and much much more. Kongz decisions will shape the community and will help us grow together. \nFuture staking of our own token that will hold various utilities. \nEach Kong you hold will be able to win exclusive giveaways upon different stages of minting. The giveaways include a brand new iPhone, Rolex Dayjust, and Tesla Model 3 to name a few.",
+      "author": {
+        "name": "GymKongz",
+        "website": "https://www.gymkongz.com/",
+        "twitter": "https://twitter.com/gymkongz",
+        "discord": "https://discord.gg/qJru6Av9h3"
+      },
+      "address": "0x42AbFb212A55D36c605cf39c9d59D118318c1E77",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 10000,
+      "cost": "888",
+      "memberCost": "800",
+      "whitelistCost": "800",
+      "foundersOnly": false,
+      "start": 1660334400000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
     }
   ],
   "auctions": [
