@@ -7003,6 +7003,25 @@
         "medium" : "https://argofinance.medium.com",
         "telegram": "https://t.me/Argo_Finance"
       }
+    },
+    {
+      "name": "GymKongz",
+      "slug": "gymkongz",
+      "multiToken": false,
+      "address": "0x42AbFb212A55D36c605cf39c9d59D118318c1E77",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "GymKongZ is a 10,000 pfp project made up of more than 255 unique traits. We will focus on improving all pillars of life, not only the physical but also the mental and financial, and any other goal members are choosing to pursue. \nWe are really wanting to expand the horizon when it comes to a group of people coming together sharing similar goals and interests.",
+        "verified": false,
+        "avatar": "/img/collections/gymkongz/avatar.webp",
+        "card": "/img/collections/gymkongz/card.webp",
+        "banner": "/img/collections/gymkongz/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://www.gymkongz.com/",
+        "twitter": "https://twitter.com/gymkongz",
+        "discord": "https://discord.gg/qJru6Av9h3"
+      }
     }
   ],
   "drops": [
@@ -9772,7 +9791,7 @@
       "redirect": "https://www.argofinance.money/nft"
     },
     {
-      "id": 97,
+      "id": 99,
       "slug": "crokami",
       "imgNft": "/img/drops/crokami/drop.webp",
       "imgPreview": "/img/drops/crokami/drop.webp",
@@ -9796,6 +9815,37 @@
       "whitelistCost": "400",
       "foundersOnly": false,
       "start": 1660161600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 100,
+      "slug": "gymkongz",
+      "imgNft": "/img/drops/gymkongz/drop.webp",
+      "imgPreview": "/img/drops/gymkongz/drop.webp",
+      "imgAvatar": "/img/collections/gymkongz/avatar.webp",
+      "imgBanner": "/img/collections/gymkongz/banner.webp",
+      "title": "GymKongz",
+      "subtitle": "GymKongZ is a 10,000 pfp project made up of more than 255 unique traits. \nWe will focus on improving all pillars of life, not only the physical but also the mental and financial, and any other goal members are choosing to pursue. \nWe are really wanting to expand the horizon when it comes to a group of people coming together sharing similar goals and interests.",
+      "description": "GymKongZ is a 10,000 pfp collection made up of more than 255 unique traits.\n\nThe Kongz have a vision to create a community that can physically, mentally, and financially strengthen our holders for years to come, while also sustainably enhancing the Cronos blockchain.\n\nThe embodiment of strength brought to the Cronos chain, each Kong will bring the owner the following utilities: \n\nPasses to various webinar topics (Financial, physical, mental, etc.)\nDiscounted goods (supplements and fashion items, gym gear, and much more)\nAccess to the community Kongz Vault via our DAO, will enable every Kong with the ability to vote on a number of things such as fashion brand designs, flavor of protein powder, NFT’s we will add to our vault, and much much more. Kongz decisions will shape the community and will help us grow together. \nFuture staking of our own token that will hold various utilities. \nEach Kong you hold will be able to win exclusive giveaways upon different stages of minting. The giveaways include a brand new iPhone, Rolex Dayjust, and Tesla Model 3 to name a few.",
+      "author": {
+        "name": "GymKongz",
+        "website": "https://www.gymkongz.com/",
+        "twitter": "https://twitter.com/gymkongz",
+        "discord": "https://discord.gg/qJru6Av9h3"
+      },
+      "address": "0x42AbFb212A55D36c605cf39c9d59D118318c1E77",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 10000,
+      "cost": "888",
+      "memberCost": "800",
+      "whitelistCost": "800",
+      "foundersOnly": false,
+      "start": 1660334400000,
       "end": null,
       "referral": false,
       "is1155": false,
