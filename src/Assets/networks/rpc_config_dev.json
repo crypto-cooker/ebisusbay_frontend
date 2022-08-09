@@ -6943,6 +6943,25 @@
         "twitter": "https://twitter.com/cro_kami",
         "discord": "https://discord.gg/sTeeDrWkSW"
       }
+    },
+    {
+      "name": "CroDoo",
+      "slug": "crodoo",
+      "multiToken": false,
+      "address": "0xA560c70220c32c81217cF993676d177d43D48349",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The CroDoo is an NFT project with a first generation of 5678 unique voodoo dolls PFP collectibles on Cronos blockchain. We aim for a long term project of which all holders of OG collection benefit from holding them.",
+        "verified": false,
+        "avatar": "/img/collections/crodoo/avatar.webp",
+        "card": "/img/collections/crodoo/card.webp",
+        "banner": "/img/collections/crodoo/banner.webp",
+        "maxSupply": 5678,
+        "website": "https://crodoonft.com/",
+        "twitter": "https://twitter.com/CroDooNFT",
+        "discord": "https://discord.gg/W43dReVMq5"
+      }
     }
   ],
   "drops": [
