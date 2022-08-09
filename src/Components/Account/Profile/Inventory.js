@@ -16,7 +16,7 @@ import useSWRInfinite from "swr/infinite";
 const knownContracts = appConfig('collections');
 
 const fetcher = async (...args) => {
-  const [address, provider, page] = args;
+  const [key, address, provider, page] = args;
   return await getNftsForAddress2(address, provider, page);
 };
 
@@ -27,7 +27,7 @@ export default function Inventory({ address }) {
   const user = useSelector((state) => state.user);
 
   const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite((index) => {
-    return [address, user.provider, index + 1]
+    return ['Inventory', address, user.provider, index + 1]
   }, fetcher);
 
   const items = data ? [].concat(...data) : [];

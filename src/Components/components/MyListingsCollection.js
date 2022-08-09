@@ -17,7 +17,7 @@ import {getUnfilteredListingsForAddress} from "@src/core/api";
 import useSWRInfinite from "swr/infinite";
 
 const fetcher = async (...args) => {
-  const [address, provider, page] = args;
+  const [key, address, provider, page] = args;
   return await getUnfilteredListingsForAddress(address, provider, page);
 };
 
@@ -29,7 +29,7 @@ const MyListingsCollection = ({ walletAddress = null }) => {
   const [showInvalidOnly, setShowInvalidOnly] = useState(false);
   const user = useSelector((state) => state.user);
   const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite((index) => {
-    return [walletAddress, user.provider, index + 1]
+    return ['MyListingsCollection', walletAddress, user.provider, index + 1]
   }, fetcher);
 
   const myListings = data ? [].concat(...data) : [];
