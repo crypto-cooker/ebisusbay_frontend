@@ -1053,7 +1053,7 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
     return [0];
   }
 
-  const signer = walletProvider.getSigner();
+  const signer = walletProvider?.getSigner();
   const walletBlacklisted = isUserBlacklisted(walletAddress);
 
   let listings = await getAllListingsForUser(walletAddress);
