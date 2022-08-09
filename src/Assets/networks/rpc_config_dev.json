@@ -7043,6 +7043,44 @@
         "medium": "https://medium.com/@tarwar",
         "telegram": "https://t.me/Tarwar"
       }
+    },
+    {
+      "name": "Crognomes Adolescent",
+      "slug": "crognomes-adolescent",
+      "multiToken": false,
+      "address": "0xaEF47406e93a6c67adA8bDD194eE4d27E4Bc05d7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "1000 Adolescent CroGnomes, growing up to become the next generation of CroGnomes.",
+        "verified": true,
+        "avatar": "/img/collections/crognomes-adolescent/avatar.webp",
+        "card": "/img/collections/crognomes-adolescent/card.webp",
+        "banner": "/img/collections/crognomes-adolescent/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://www.crognomes.com/",
+        "twitter": "https://twitter.com/CroGnomes",
+        "discord": "https://discord.gg/RddQYuBGmX"
+      }
+    },
+    {
+      "name": "Crognomides Adolescent",
+      "slug": "crognomides-adolescent",
+      "multiToken": false,
+      "address": "0xa304781f2C47F20a8a567458b2B0CEa48B30220f",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "1000 Adolescent CroGnomides, growing up to become the next generation of CroGnomides.",
+        "verified": true,
+        "avatar": "/img/collections/crognomides-adolescent/avatar.webp",
+        "card": "/img/collections/crognomides-adolescent/card.webp",
+        "banner": "/img/collections/crognomides-adolescent/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://www.crognomes.com/",
+        "twitter": "https://twitter.com/CroGnomes",
+        "discord": "https://discord.gg/WkRgkSQ2hJ"
+      }
     }
   ],
   "drops": [
