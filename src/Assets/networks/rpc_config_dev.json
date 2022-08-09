@@ -7022,6 +7022,27 @@
         "twitter": "https://twitter.com/gymkongz",
         "discord": "https://discord.gg/qJru6Av9h3"
       }
+    },
+    {
+      "name": "ETHS Horoscope 2022-2052",
+      "slug": "eths-horoscope-2022-2052",
+      "multiToken": false,
+      "address": "0x1a9362655b49b3d6ed11798039e6f3698d5ddc8d",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Emerald Timeverse hermessecund - Horoscope NFT Collection for  30 year. 1/30",
+        "verified": false,
+        "avatar": "/img/collections/eths-horoscope-2022-2052/avatar.webp",
+        "card": "/img/collections/eths-horoscope-2022-2052/card.webp",
+        "banner": "/img/collections/eths-horoscope-2022-2052/banner.webp",
+        "maxSupply": 360,
+        "website": "https://hermessecund.com/",
+        "twitter": "https://twitter.com/hermessecund",
+        "discord": "https://discord.gg/cmjv65TK",
+        "medium": "https://medium.com/@tarwar",
+        "telegram": "https://t.me/Tarwar"
+      }
     }
   ],
   "drops": [
