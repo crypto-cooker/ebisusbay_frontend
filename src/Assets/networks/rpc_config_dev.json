@@ -1367,7 +1367,7 @@
         "maxSupply": 1000,
         "website": "https://www.icysquidgame.com/",
         "twitter": "https://twitter.com/IcySquidGame",
-        "telegram": "http://t.me/IcySquidGame"
+        "telegram": "https://t.me/IcySquidGame"
       }
     },
     {
@@ -2331,7 +2331,7 @@
         "maxSupply": 30,
         "website": "https://www.icysquidgame.com/",
         "twitter": "https://twitter.com/IcySquidGame",
-        "telegram": "http://t.me/IcySquidGame"
+        "telegram": "https://t.me/IcySquidGame"
       }
     },
     {
@@ -6755,15 +6755,15 @@
       "metadata": {
         "description": "Argonauts is a collection of 8,888 unique utility-enabled characters that represents your unique identity on the Cronos chain. Each Argonaut holder gets access to utility across the Argo Protocol platform, exclusive treasure chest events, activated partnership experiences, future collections, and more.",
         "verified": true,
-        "avatar": "/img/collections/argonauts/avatar.png",
-        "card": "/img/collections/argonauts/card.png",
-        "banner": "/img/collections/argonauts/banner.png",
+        "avatar": "/img/collections/argonauts/avatar.webp",
+        "card": "/img/collections/argonauts/card.webp",
+        "banner": "/img/collections/argonauts/banner.webp",
         "maxSupply": 8888,
         "website": "https://www.argofinance.money/nft",
         "twitter": "https://twitter.com/ArgoProtocol",
         "discord": "https://discord.gg/argofinance",
-        "medium" : "argofinance.medium.com",
-        "telegram": "http://t.me/Argo_Finance"
+        "medium" : "https://argofinance.medium.com",
+        "telegram": "https://t.me/Argo_Finance"
       }
     },
     {
@@ -6776,15 +6776,15 @@
       "metadata": {
         "description": "Honorary Argonauts are part of the wider Argonauts collection, uniquely designed for Ambassadors, Partners, and Core Contributors within the Argonauts community.",
         "verified": true,
-        "avatar": "/img/collections/argonauts/avatar.png",
-        "card": "/img/collections/argonauts/card.png",
-        "banner": "/img/collections/argonauts/banner.png",
+        "avatar": "/img/collections/argonauts/avatar.webp",
+        "card": "/img/collections/argonauts/card.webp",
+        "banner": "/img/collections/argonauts/banner.webp",
         "maxSupply": 0,
         "website": "https://www.argofinance.money/nft",
         "twitter": "https://twitter.com/ArgoProtocol",
         "discord": "https://discord.gg/argofinance",
-        "medium" : "argofinance.medium.com",
-        "telegram": "http://t.me/Argo_Finance"
+        "medium" : "https://argofinance.medium.com",
+        "telegram": "https://t.me/Argo_Finance"
       }
     },
     {
@@ -6981,6 +6981,27 @@
         "twitter": "https://twitter.com/Cro_Lick",
         "telegram": "https://t.me/cro_lick",
         "gitbook": "https://crolicks.gitbook.io/crolick/"
+      }
+    },
+    {
+      "name": "Argonauts Mystery Pill",
+      "slug": "argonauts-mystery-pill",
+      "multiToken": false,
+      "address": "0x0A37674F61a9345f32E277b15E3C9603cDe710f6",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Mystery Pill of the Argonauts ecosystem, what’s inside…?",
+        "verified": true,
+        "avatar": "/img/collections/argonauts-mystery-pill/avatar.webp",
+        "card": "/img/collections/argonauts-mystery-pill/card.webp",
+        "banner": "/img/collections/argonauts-mystery-pill/banner.webp",
+        "maxSupply": 0,
+        "website": "https://www.argofinance.money/nft",
+        "twitter": "https://twitter.com/ArgoProtocol",
+        "discord": "https://discord.gg/argofinance",
+        "medium" : "https://argofinance.medium.com",
+        "telegram": "https://t.me/Argo_Finance"
       }
     }
   ],
@@ -9720,9 +9741,9 @@
     {
       "id": 98,
       "slug": "argonauts",
-      "imgNft": "/img/drops/argonauts/drop.png",
-      "imgPreview": "/img/drops/argonauts/drop.png",
-      "imgAvatar": "/img/collections/argonauts/avatar.png",
+      "imgNft": "/img/drops/argonauts/drop.webp",
+      "imgPreview": "/img/drops/argonauts/drop.webp",
+      "imgAvatar": "/img/collections/argonauts/avatar.webp",
       "title": "Argonauts",
       "subtitle": "",
       "description": "Argonauts is a collection of 8,888 unique utility-enabled characters that represents your unique identity on the Cronos chain. Each Argonaut holder gets access to utility across the Argo Protocol platform, exclusive treasure chest events, activated partnership experiences, future collections, and more.",
