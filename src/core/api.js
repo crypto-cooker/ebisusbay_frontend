@@ -749,7 +749,7 @@ export async function getUnfilteredListingsForAddress(walletAddress, walletProvi
 
     json.listings = filteredListings;
 
-    return json;
+    return filteredListings;
   } catch (error) {
     console.log('error fetching sales for: ' + walletAddress);
     console.log(error);

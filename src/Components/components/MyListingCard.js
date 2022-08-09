@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-// import styled from 'styled-components';
 import { Card } from 'react-bootstrap';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,34 +7,14 @@ import { ethers } from 'ethers';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import {appConfig} from "../../Config";
 
-// const Outer = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-content: center;
-//   align-items: center;
-//   overflow: hidden;
-//   border-radius: 8px;
-//   height: 100%;
-// `;
 
 const MyListingCard = ({
   nft,
-  className = 'col-sm-12 col-md-12 col-lg-6 d-item',
-  width,
-  onImgLoad,
   canCancel = false,
   canUpdate = false,
   onCancelButtonPressed,
   onUpdateButtonPressed,
 }) => {
-  // const navigateTo = (link) => {
-  //   console.log(canUpdate);
-  //   history.push(link);
-  // };
-
-  // const viewListingDetails = () => {
-  //   navigateTo(`/listing/${nft.listingId}`);
-  // };
 
   const nftUrl = () => {
     return `/collection/${nft.address}/${nft.id}`;
