@@ -771,7 +771,9 @@ export async function getNftSalesForAddress(walletAddress, page) {
   try {
     const queryString = new URLSearchParams(query);
     const url = new URL(api.unfilteredListings, `${api.baseUrl}`);
-    return await (await fetch(`${url}?${queryString}`)).json();
+    const result = await (await fetch(`${url}?${queryString}`)).json();
+
+    return result.listings ?? [];
   } catch (error) {
     console.log('error fetching sales for: ' + walletAddress);
     console.log(error);
