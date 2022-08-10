@@ -7081,6 +7081,45 @@
         "twitter": "https://twitter.com/CroGnomes",
         "discord": "https://discord.gg/WkRgkSQ2hJ"
       }
+    },
+    {
+      "name": "Loaded Lions",
+      "slug": "loaded-lions",
+      "multiToken": false,
+      "address": "0xEa1635a0E9344d933DF42c0Fd494d39bcE865Dc4",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The collection includes 10,000 algorithmically-generated “Loaded Lion” NFTs; some are rarer than others, with a few that are legendary. Every single trait is hand drawn by our talented creative team.",
+        "verified": true,
+        "avatar": "/img/collections/loaded-lions/avatar.webp",
+        "card": "/img/collections/loaded-lions/card.webp",
+        "banner": "/img/collections/loaded-lions/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://crypto.com/nft/loaded-lions/",
+        "twitter": "https://twitter.com/loadedlions_CDC",
+        "discord": "https://discord.gg/6BkA8TBvRZ",
+        "instagram": "https://instagram.com/cryptocomnft"
+      }
+    },
+    {
+      "name": "Cyber Cubs",
+      "slug": "cyber-cubs",
+      "multiToken": false,
+      "address": "0xE3D53fb80c8Cda7Bb9B7207cb6B186172BD323cf",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Cyber Cubs collection consists of 10,000 unique and algorithmically-generated PFPs. Stumbling upon a mysterious portal, the Cyber Cubs have jumped 370 years back to the present to reunite with the Loaded Lions. Armed with advanced technology and knowledge, these Cubs quickly assimilate into the present way of life, but not without a few tricks up their sleeves. There’s no stopping this dynamic duo now.\n",
+        "verified": true,
+        "avatar": "/img/collections/cyber-cubs/avatar.webp",
+        "card": "/img/collections/cyber-cubs/card.webp",
+        "banner": "/img/collections/cyber-cubs/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://crypto.com/nft/loaded-lions?tab=cyber+cubs/",
+        "twitter": "https://twitter.com/loadedlions_cdc",
+        "discord": "https://discord.gg/cryptocom"
+      }
     }
   ],
   "drops": [
