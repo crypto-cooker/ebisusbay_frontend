@@ -83,9 +83,17 @@ export default function EditProfile() {
             .matches(/^[a-zA-Z0-9-_.]+$/, Messages.errors.usernameFormat)
             .customUsernameRules('Invalid username'),
           email: Yup.string().email(Messages.errors.invalidEmail).required(Messages.errors.required),
-          twitter: Yup.string().trim().nullable(),
+          twitter: Yup.string()
+            .trim()
+            .url()
+            .matches('^https://twitter.com/', {message:getDynamicMessage(Messages.errors.urlStart, ['https://twitter.com/'])})
+            .nullable(),
           discord: Yup.string().trim().nullable(),
-          instagram: Yup.string().trim().nullable(),
+          instagram: Yup.string()
+            .trim()
+            .url()
+            .matches('^https://www.instagram.com/', {message:getDynamicMessage(Messages.errors.urlStart, ['https://www.instagram.com/'])})
+            .nullable(),
           website: Yup.string().url(Messages.errors.urlError).nullable(),
           bio: Yup.string()
               .max(100, getDynamicMessage(Messages.errors.charactersMaxLimit, ['40']))

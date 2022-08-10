@@ -13,7 +13,7 @@ export default function Bio({ value, handleChange }) {
             as="textarea"
             aria-label="textarea"
             rows="5"
-            placeholder="Enter Text"
+            placeholder="Introduce yourself"
             onChange={handleChange}
             value={value}
             name="userInfo.userInfo.bio"
