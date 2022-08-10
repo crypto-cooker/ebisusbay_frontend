@@ -6929,7 +6929,7 @@
       "name": "CroKami",
       "slug": "crokami",
       "multiToken": false,
-      "address": "",
+      "address": "0x05bbA52753Ae9B26b3324df6de607579Cc08AA0b",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -9904,7 +9904,7 @@
         "twitter": "https://twitter.com/cro_kami",
         "discord": "https://discord.gg/sTeeDrWkSW"
       },
-      "address": "",
+      "address": "0x05bbA52753Ae9B26b3324df6de607579Cc08AA0b",
       "maxMintPerTx": 15,
       "maxMintPerAddress": 100,
       "totalSupply": 3333,
