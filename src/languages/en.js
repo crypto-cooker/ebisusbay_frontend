@@ -15,7 +15,8 @@ const dictionary = {
     charactersMaxLimit: `Value must be fewer than ${PARAM} characters`,
     arrayMinLimit: `At least ${PARAM} item(s) is required`,
     minNumber: `Numbers greater than zero`,
-    usernameFormat: 'Value must only contain alphanumeric characters, dashes, underscores'
+    usernameFormat: 'Value must only contain alphanumeric characters, dashes, underscores',
+    urlStart: `URL must start with ${PARAM}`
   },
 };
 
