@@ -35,10 +35,10 @@ export default function Profile({ address, profile, tab }) {
   };
 
   const [currentTab, setCurrentTab] = React.useState(tab ?? tabs.inventory);
-  const handleTabChange = useCallback((tab) => {
-    pushQueryString(router, {address, tab});
-    setCurrentTab(tab);
-  }, []);
+  const handleTabChange = useCallback((newTab) => {
+    pushQueryString(router, {address, tab: newTab});
+    setCurrentTab(newTab);
+  }, [address]);
 
   const [isProfileOwner, setIsProfileOwner] = useState(false);
   useEffect(() => {
