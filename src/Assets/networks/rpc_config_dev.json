@@ -6711,7 +6711,7 @@
       "multiToken": false,
       "address": "0xd5d89E4999374cA5A458A9D00C7A13662562FD73",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "CroHamster is a collection of 1000 unique and 3D animated NFTs on Cronos. Each CroHamster is based on a wide variety of different traits. Owning a CroHamster will give you access to our CroHamster arena, where you can fight for awesome rewards.",
         "verified": true,
