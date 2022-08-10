@@ -7110,7 +7110,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "The Cyber Cubs collection consists of 10,000 unique and algorithmically-generated PFPs. Stumbling upon a mysterious portal, the Cyber Cubs have jumped 370 years back to the present to reunite with the Loaded Lions. Armed with advanced technology and knowledge, these Cubs quickly assimilate into the present way of life, but not without a few tricks up their sleeves. There’s no stopping this dynamic duo now.\n",
+        "description": "The Cyber Cubs collection consists of 10,000 unique and algorithmically-generated PFPs. Stumbling upon a mysterious portal, the Cyber Cubs have jumped 370 years back to the present to reunite with the Loaded Lions. Armed with advanced technology and knowledge, these Cubs quickly assimilate into the present way of life, but not without a few tricks up their sleeves. There’s no stopping this dynamic duo now.",
         "verified": false,
         "avatar": "/img/collections/cyber-cubs/avatar.webp",
         "card": "/img/collections/cyber-cubs/card.webp",
@@ -7119,6 +7119,26 @@
         "website": "https://crypto.com/nft/loaded-lions?tab=cyber+cubs/",
         "twitter": "https://twitter.com/loadedlions_cdc",
         "discord": "https://discord.gg/cryptocom"
+      }
+    },
+    {
+      "name": "Trippin Panda",
+      "slug": "trippin-panda",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Trippin panda is an NFT project with a first generation of 1000 unique collectibles from another world. These beautiful panda escaped from a zoo, they found a fire that was still burning. They just wanted to warm up, but since that evening everything has changed forever. We want our members to live a unique experience, never seen on Cronos... There are exclusively 1000 places to change the world and join our Tripp! So make the right choice... before it's too late!",
+        "verified": true,
+        "avatar": "/img/collections/trippin-panda/avatar.webp",
+        "card": "/img/collections/trippin-panda/card.webp",
+        "banner": "/img/collections/trippin-panda/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://trippinpanda.com/",
+        "twitter": "https://twitter.com/Trippin_panda",
+        "discord": "https://discord.gg/QfqRAystVh",
+        "medium": "https://medium.com/@trippinpanda76/pandapaper-b6e0c30e23fe"
       }
     }
   ],
@@ -9944,6 +9964,38 @@
       "whitelistCost": "800",
       "foundersOnly": false,
       "start": 1660320000000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 101,
+      "slug": "trippin-panda",
+      "imgNft": "/img/drops/trippin-panda/drop.webp",
+      "imgPreview": "/img/drops/trippin-panda/drop.webp",
+      "imgAvatar": "/img/collections/trippin-panda/avatar.webp",
+      "imgBanner": "/img/collections/trippin-panda/banner.webp",
+      "title": "Trippin Panda",
+      "subtitle": "Trippin panda is an NFT project with a first generation of 1000 unique collectibles from another world. These beautiful panda escaped from a zoo, they found a fire that was still burning. They just wanted to warm up, but since that evening everything has changed forever. We want our members to live a unique experience, never seen on Cronos... There are exclusively 1000 places to change the world and join our Tripp! So make the right choice... before it's too late!",
+      "description": "Create a trippy community, so much in a Tripp that we'll go far\n\nRoadmap : \n\nDAO : It is an incorruptible organization that belongs to the people who helped create and fund it, and whose rules are public.\n\nCharity : 20.000 Cro will be donated to an association for the panda.\n\nTop 5 Holder :  Every week the people who hold the most Trippin will receive Cro!\n\nInvestment fund : Since our goal is to offer the holder reasons to hold Trippin panda, \nthis is why the investment fund will be put at their service, thanks to the DAO system.\n\nRandom Airdrop :You will receive totally random Airdrops among the holders.\n\nNFT Messaging : We will create a message tool for the Web3 .\nWith the help of this application, users can communicate securely to and from their Cronos addresses.\n\nPanda Hut : These will be the homes of the Trippin Panda, as the community grows.\n\nAuction : Then choose an NFT for which you want to make an offer.\nThe current offer, the remaining time and other details about the NFT will be available.\n\nRoadmap 2.0 : Metav… More to come stay tuned",
+      "author": {
+        "name": "Trippin Panda",
+        "website": "https://trippinpanda.com/",
+        "twitter": "https://twitter.com/Trippin_panda",
+        "discord": "https://discord.gg/QfqRAystVh",
+        "medium": "https://medium.com/@trippinpanda76/pandapaper-b6e0c30e23fe"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 1000,
+      "cost": "500",
+      "memberCost": "450",
+      "whitelistCost": "400",
+      "foundersOnly": false,
+      "start": 1660593600000,
       "end": null,
       "referral": false,
       "is1155": false,
