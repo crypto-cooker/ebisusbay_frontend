@@ -1578,7 +1578,7 @@
       "name": "GymKongz",
       "slug": "gymkongz",
       "multiToken": false,
-      "address": "0xd5298C63ca26d92E55F8BF4fb18648De004761E3",
+      "address": "0x3f29cc0c07736eddb9c0678a51515d5de6a1d7e2",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -3637,7 +3637,7 @@
         "twitter": "https://twitter.com/gymkongz",
         "discord": "https://discord.gg/qJru6Av9h3"
       },
-      "address": "0xd5298C63ca26d92E55F8BF4fb18648De004761E3",
+      "address": "0x3f29cc0c07736eddb9c0678a51515d5de6a1d7e2",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 10000,
