@@ -25,6 +25,7 @@ import {appConfig} from "../Config";
 import {FullCollectionsQuery} from "./api/queries/fullcollections";
 import {ListingsQuery} from "./api/queries/listings";
 import {getQuickWallet} from "./api/endpoints/wallets";
+import { getCollections  } from "/src/core/api/collection";
 
 const config = appConfig();
 let gatewayTools = new IPFSGatewayTools();
@@ -196,7 +197,9 @@ export async function getCollectionMetadata(contractAddress, sort, filter) {
   const queryString = new URLSearchParams(query);
 
   const uri = `${api.baseUrl}${api.collections}?${queryString}`;
-  return await (await fetch(uri)).json();
+  
+  const data = await getCollections();
+  return data.data;
 }
 
 export async function getCollectionSummary(address) {
