@@ -78,22 +78,24 @@ export default function EditProfile() {
           username: Yup.string()
             .required(Messages.errors.required)
             .min(3, getDynamicMessage(Messages.errors.charactersMinLimit, ['3']))
-            .max(40, getDynamicMessage(Messages.errors.charactersMaxLimit, ['40']))
+            .max(25, getDynamicMessage(Messages.errors.charactersMaxLimit, ['25']))
             .isProfane('Invalid!')
             .matches(/^[a-zA-Z0-9-_.]+$/, Messages.errors.usernameFormat)
             .customUsernameRules('Invalid username'),
           email: Yup.string().email(Messages.errors.invalidEmail).nullable(),
           twitter: Yup.string()
             .trim()
-            .url()
-            .matches('^https://twitter.com/', {message:getDynamicMessage(Messages.errors.urlStart, ['https://twitter.com/'])})
-            .nullable(),
+            .nullable()
+            .min(4)
+            .max(15)
+            .matches(/^[a-zA-Z0-9_.]+$/, 'Invalid Twitter username'),
           discord: Yup.string().trim().nullable(),
           instagram: Yup.string()
             .trim()
-            .url()
-            .matches('^https://www.instagram.com/', {message:getDynamicMessage(Messages.errors.urlStart, ['https://www.instagram.com/'])})
-            .nullable(),
+            .nullable()
+            .min(3)
+            .max(30)
+            .matches(/^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/, 'Invalid Instagram username'),
           website: Yup.string().url(Messages.errors.urlError).nullable(),
           bio: Yup.string()
               .max(100, getDynamicMessage(Messages.errors.charactersMaxLimit, ['40']))
