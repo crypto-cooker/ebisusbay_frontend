@@ -1,9 +1,6 @@
 import { useRouter } from 'next/router';
 import TopTabs from '../../../src/Components/Account/Settings/TopTabs';
 import EditProfile from '../../../src/Components/Account/Settings/Profile';
-import Notification from '../../../src/Components/Account/Settings/Notification';
-import Offer from '../../../src/Components/Account/Settings/Offer';
-import Admin from '../../../src/Components/Account/Settings/Admin';
 
 export default function Account() {
   const router = useRouter();
@@ -11,7 +8,8 @@ export default function Account() {
 
   return (
     <div>
-      <section className="container">
+      <section className="container mt-0">
+        <h2 className="mb-4">Account Settings</h2>
         <TopTabs />
         {tab === 'profile' && (
           <>

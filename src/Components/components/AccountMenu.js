@@ -5,7 +5,16 @@ import useOnclickOutside from 'react-cool-onclickoutside';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBolt, faImage, faSignOutAlt, faShoppingBag, faMoon, faSun, faUser } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBolt,
+  faImage,
+  faSignOutAlt,
+  faShoppingBag,
+  faMoon,
+  faSun,
+  faUser,
+  faEdit
+} from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import { Modal, NavLink, Spinner, ModalTitle } from 'react-bootstrap';
@@ -407,6 +416,14 @@ const AccountMenu = function () {
                       <FontAwesomeIcon icon={faUser} />
                     </span>
                     <span>My Profile</span>
+                  </span>
+                </li>
+                <li>
+                  <span onClick={() => navigateTo(`/account/settings/profile`)}>
+                    <span>
+                      <FontAwesomeIcon icon={faEdit} />
+                    </span>
+                    <span>Edit Account</span>
                   </span>
                 </li>
                 <li className="my-offers-menu-item">
