@@ -1,6 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getCollectionMetadata } from '../core/api';
-import {findCollectionByAddress} from '../utils';
+import { findCollectionByAddress } from '../utils';
+
+import Constants from '../constants'
+import useFeatureFlag from '../hooks/useFeatureFlag';
 
 const collectionsSlice = createSlice({
   name: 'collections',
@@ -29,31 +32,67 @@ export const { collectionsLoading, collectionsReceived } = collectionsSlice.acti
 
 export default collectionsSlice.reducer;
 
+const { Features } = Constants;
+const newEndpointEnabled = useFeatureFlag(Features.GET_COLLECTION_NEW_ENDPOINT)
+
 export const getAllCollections =
   (sortKey = 'totalVolume', sortDirection = 'desc') =>
-  async (dispatch, state) => {
-    try {
-      dispatch(collectionsLoading());
-      const response = await getCollectionMetadata();
+    async (dispatch, state) => {
+      try {
+        dispatch(collectionsLoading());
+        const response = await getCollectionMetadata();
 
-      response.collections = standardizeFoundingMemberCollection(response.collections);
+        if (newEndpointEnabled) {
+          response.collections = formatCollections(response.collections);
+        }
+        else {
+          response.collections.forEach(function (collection, index) {
 
-      response.collections = formatCollections(response.collections);
+            let contract;
 
-      const sortedCollections = sortCollections(response.collections, sortKey, sortDirection);
-      dispatch(
-        collectionsReceived({
-          collections: sortedCollections.filter((c) => c.listable && !c.skip),
-          sort: {
-            key: sortKey,
-            direction: sortDirection,
-          },
-        })
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
+            if (collection.collection.indexOf('-') !== -1) {
+
+              let parts = collection.collection.split('-');
+              contract = findCollectionByAddress(parts[0], parts[1]);
+              if (contract && !contract.split) return;
+
+            } else {
+              contract = findCollectionByAddress(collection.collection);
+              if (contract && contract.split) return;
+
+            }
+
+            if (contract) {
+
+              if (contract.mergedAddresses) {
+
+                mergeStats(contract, response, index);
+
+              }
+              response.collections[index].name = contract.name;
+              response.collections[index].slug = contract.slug;
+              response.collections[index].metadata = contract.metadata;
+              response.collections[index].listable = contract.listable;
+              response.collections[index].skip = !!contract.mergedWith;
+            }
+
+          });
+        }
+
+        const sortedCollections = sortCollections(response.collections, sortKey, sortDirection);
+        dispatch(
+          collectionsReceived({
+            collections: sortedCollections.filter((c) => c.listable && !c.skip),
+            sort: {
+              key: sortKey,
+              direction: sortDirection,
+            },
+          })
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
 function sortCollections(collections, key, direction) {
   return collections.sort((a, b) => {
@@ -101,54 +140,31 @@ function mergeStats(contract, response, index) {
   response.collections[index] = { ...response.collections[index], ...merged };
 }
 
-const standardizeFoundingMemberCollection = (collections) => {
-  const normalCollections = collections.filter(collection => {
-    return collection.address !== '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5'
-  })
-
-  const differentCollection = collections.find(collection => {
-    return collection.address == '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5'
-  })
-
-  return [...normalCollections, {
-    address: `${differentCollection.address}-1`,
-    ...differentCollection.tokens[1],
-    stats: {total: {... differentCollection.stats.tokens[1]}}
-  },  {
-    address: `${differentCollection.address}-2`,
-    ...differentCollection.tokens[2],
-    stats: {total: {... differentCollection.stats.tokens[2]}}
-  }]
-
-
-}
-
 const formatCollections = (collections) => {
 
-  return collections.map((collection)=>(
-      {
-        averageSalePrice: collection.stats.total.avg_sale_price,
-        collection: collection.address,
-        floorPrice: collection.stats.total.floor_price,
-        listable: collection.listable,
-        metadata: collection.metadata,
-        name: collection.name,
-        numberActive: collection.stats.total.active,
-        numberCancelled: collection.stats.total.cancelled,
-        numberOfSales: collection.stats.total.complete,
-        sales1d: collection.stats.total.sales1d,
-        sales7d: collection.stats.total.sales7d,
-        sales30d: collection.stats.total.sales30d,
-        skip: collection.stats.total.onChain,
-        slug: collection.slug,
-        totalFees: collection.stats.total.fee,
-        totalRoyalties: collection.stats.total.royalty,
-        totalVolume: collection.stats.total.volume,
-        volume1d: collection.stats.total.volume1d,
-        volume7d: collection.stats.total.volume7d,
-        volume30d: collection.stats.total.volume30d,
-        multiToken: collection.multiToken
-      }
-  )
-  )
+  return collections.map((collection) => (
+    {
+      averageSalePrice: collection?.stats?.total?.avg_sale_price,
+      collection: collection?.address,
+      floorPrice: collection?.stats?.total?.floor_price,
+      listable: collection?.listable,
+      metadata: collection?.metadata,
+      name: collection?.name,
+      numberActive: collection?.stats?.total?.active,
+      numberCancelled: collection?.stats?.total?.cancelled,
+      numberOfSales: collection?.stats?.total?.complete,
+      sales1d: collection?.stats?.total?.sales1d,
+      sales7d: collection?.stats?.total?.sales7d,
+      sales30d: collection?.stats?.total?.sales30d,
+      skip: collection?.stats?.total?.onChain,
+      slug: collection?.slug,
+      totalFees: collection?.stats?.total?.fee,
+      totalRoyalties: collection?.stats?.total?.royalty,
+      totalVolume: collection?.stats?.total?.volume,
+      volume1d: collection?.stats?.total?.volume1d,
+      volume7d: collection?.stats?.total?.volume7d,
+      volume30d: collection?.stats?.total?.volume30d,
+      multiToken: collection?.multiToken
+    }
+  ))
 }
