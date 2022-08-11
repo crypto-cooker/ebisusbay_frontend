@@ -32,14 +32,12 @@ export const getCnsInfo = async (address) => {
     const cnsProfile = {};
     cnsProfile.name = await cns.getName(address);
     if (cnsProfile.name) {
-      cnsProfile.twitter = await cns.name(cnsProfile.name).getText(TextRecords.Twitter);
-      // cnsProfile.avatar = await cns.name(cnsProfile.name).getText(TextRecords.Avatar);
-      cnsProfile.discord = await cns.name(cnsProfile.name).getText(TextRecords.Discord);
-      // cnsProfile.telegram = await cns.name(cnsProfile.name).getText(TextRecords.Telegram);
-      cnsProfile.instagram = await cns.name(cnsProfile.name).getText(TextRecords.Instagram);
-      cnsProfile.email = await cns.name(cnsProfile.name).getText(TextRecords.Email);
-      cnsProfile.url = await cns.name(cnsProfile.name).getText(TextRecords.Url);
-
+      const name = cns.name(cnsProfile.name);
+      cnsProfile.twitter = await name.getText(TextRecords.Twitter);
+      cnsProfile.discord = await name.getText(TextRecords.Discord);
+      cnsProfile.instagram = await name.getText(TextRecords.Instagram);
+      cnsProfile.email = await name.getText(TextRecords.Email);
+      cnsProfile.url = await name.getText(TextRecords.Url);
       return cnsProfile;
     }
   } catch (e) {

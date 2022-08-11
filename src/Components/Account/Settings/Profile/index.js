@@ -128,12 +128,13 @@ export default function EditProfile() {
 
   const handleCnsSync = async () => {
     setIsFetchCns(true);
-    const cnsName = await getCnsName(user?.address); // Custom URL
     const cnsInfo = await getCnsInfo(user?.address);
+    if (!cnsInfo) return;
+
     const userInfo = values?.userInfo;
     const tempData = {
       userInfo: {
-        username: cnsName || userInfo?.userInfo?.username,
+        username: cnsInfo?.name || userInfo?.userInfo?.username,
         twitter: cnsInfo?.twitter || userInfo?.userInfo?.twitter,
         discord: cnsInfo?.discord || userInfo?.userInfo?.discord,
         instagram: cnsInfo?.instagram || userInfo?.userInfo?.instagram,
