@@ -22,7 +22,7 @@ const GlobalStyles = createGlobalStyle`
     background-color: rgba(0,0,0,0.6);
     background-blend-mode: multiply;
   }
-  .jumbotron.breadcumb.no-bg {
+  .jumbotron.breadcumb.no-bg.tint {
     background-image: url(${({ isDark }) =>
       isDark ? '/img/background/header-dark.webp' : '/img/background/Ebisu-DT-Header.webp'});
     background-repeat: no-repeat;
@@ -31,7 +31,7 @@ const GlobalStyles = createGlobalStyle`
   }
     
   @media only screen and (max-width: 768px) {
-    .jumbotron.breadcumb.no-bg {
+    .jumbotron.breadcumb.no-bg.tint {
       background-image: url(${({ isDark }) =>
         isDark ? '/img/background/mobile-header-dark.webp' : '/img/background/Ebisu-Mobile-Header.webp'});
       background-size: cover;

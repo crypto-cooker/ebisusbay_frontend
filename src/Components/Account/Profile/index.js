@@ -68,7 +68,7 @@ export default function Profile({ address, profile, tab }) {
           <div className="mainbreadcumb"></div>
         </section>
       ) : (
-        <section className="jumbotron breadcumb no-bg">
+        <section className="jumbotron breadcumb no-bg tint">
           <div className="mainbreadcumb"></div>
         </section>
       )}
