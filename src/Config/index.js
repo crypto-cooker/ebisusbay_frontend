@@ -64,7 +64,7 @@ export const configData = {
     urls: {
       api: 'https://api.ebisusbay.biz/',
       app: 'https://app.ebisusbay.biz/',
-      cdn: 'https://cdn.ebisusbay.biz/',
+      cdn: 'https://cdn.ebisusbay.biz/test/',
       subgraph: 'https://graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.biz/api/',
     },
@@ -106,7 +106,7 @@ export const configData = {
     urls: {
       api: 'https://testapi.ebisusbay.biz/',
       app: 'https://testapp.ebisusbay.biz/',
-      cdn: 'https://cdn.ebisusbay.biz/',
+      cdn: 'https://cdn.ebisusbay.biz/test/',
       subgraph: 'https://testgraph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.biz/api/',
     },

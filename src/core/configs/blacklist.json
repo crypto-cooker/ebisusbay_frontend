@@ -1,5 +1,16 @@
 [
   {
+    "users": ["0xB6BB3B0A797D488FcAf49d68EC830239f14eFeB7"],
+    "tokens": [
+      {
+        "slug": "aristodog",
+        "address": "0x0aecdAf71c1e5c461D2730eEe5243E7b0A81dC7b",
+        "ids": [309, 312]
+      }
+    ],
+    "reason": "Verified by schwiz and wursthandz"
+  },
+  {
     "users": ["0x64f371ab73181cD5e6776D68768796F996E83f1b"],
     "tokens": [
       {
@@ -94,6 +105,6 @@
           1977, 2114, 743, 180, 1949, 514, 1631, 679, 680, 1020, 1823, 388, 1876, 808, 1142, 1399]
       }
     ],
-    "reason": "whale got hacked :D jason asked us to bl these"
+    "reason": "General blacklist entries"
   }
 ]
