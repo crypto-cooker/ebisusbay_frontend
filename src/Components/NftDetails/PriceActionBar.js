@@ -18,10 +18,16 @@ import Image from "next/image";
 import DialogAlert from '../components/DialogAlert';
 import useOutSide from '../../hooks/useOutSide';
 
+import Constants from '../../constants'
+import useFeatureFlag from '../../hooks/useFeatureFlag';
 
-const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isVerified }) => {
+
+const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isVerified, isOwner }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const { Features } = Constants;
+  const isWarningMessageEnabled = useFeatureFlag(Features.UNVERIFIED_WARNING);
 
   const user = useSelector((state) => state.user);
   const {currentListing: listing, nft} = useSelector((state) => state.nft);
@@ -118,8 +124,6 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
       !isUserBlacklisted(listing.seller) &&
       !isNftBlacklisted(listing.nftAddress, listing.nftId)
     );
-
-    console.log('Listing: ', listing)
   }, [listing]);
 
 
@@ -184,7 +188,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
                 {canBuy && (
                   <div className="flex-fill mx-1">
                     {listing.state === listingState.ACTIVE && (
-                      <Button type="legacy" className="w-100" onClick={isVerified ? executeBuy(listing.price) : openPopup} disabled={executingBuy}>
+                      <Button type="legacy" className="w-100" onClick={isVerified || !isWarningMessageEnabled ? executeBuy(listing.price) : openPopup} disabled={executingBuy}>
                         {executingBuy ? (
                           <>
                             Buy Now...
@@ -223,13 +227,13 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
                 title={'Unverified'}
                 firstButtonText={'Cancel'}
                 onClickFirstButton={closePopup}
-                secondButtonText={'Buy'}
+                secondButtonText={'Continue'}
                 onClickSecondButton={executeBuy(listing.price)}
                 closePopup={closePopup}
                 isWaiting={false}
                 isWarningMessage={true}
               >
-                <span>This contract in not verified by ebisusbay, make sure that {collectionName} is the one you are looking for</span>
+                <span>This contract is not verified by Ebisu's Bay, make sure that {collectionName} is the one you are looking for</span>
 
               </DialogAlert>}
           </span>
