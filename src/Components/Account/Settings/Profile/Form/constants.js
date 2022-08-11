@@ -23,7 +23,7 @@ export const editProfileFormFields = [
         key: 'email',
         default: '',
         title: 'Email Address',
-        isRequired: true,
+        isRequired: false,
         placeholder: 'Enter Email',
         description: '',
       },

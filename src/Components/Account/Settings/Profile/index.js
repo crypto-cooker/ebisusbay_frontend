@@ -82,7 +82,7 @@ export default function EditProfile() {
             .isProfane('Invalid!')
             .matches(/^[a-zA-Z0-9-_.]+$/, Messages.errors.usernameFormat)
             .customUsernameRules('Invalid username'),
-          email: Yup.string().email(Messages.errors.invalidEmail).required(Messages.errors.required),
+          email: Yup.string().email(Messages.errors.invalidEmail).nullable(),
           twitter: Yup.string()
             .trim()
             .url()
