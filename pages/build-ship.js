@@ -7,11 +7,11 @@ import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
 
 import Footer from '../src/Components/components/Footer';
-import { createSuccessfulTransactionToastContent, humanize, percentage } from '../src/utils';
+import { createSuccessfulTransactionToastContent, humanize, percentage } from '@src/utils';
 import ShipABI from '../src/Contracts/Ship.json';
 import ShipItemABI from '../src/Contracts/ShipItem.json';
-import { appConfig } from '../src/Config';
-import { hostedImage } from '../src/helpers/image';
+import {appConfig} from '@src/Config';
+import {hostedImage} from '@src/helpers/image';
 import PageHead from '../src/Components/Head/PageHead';
 
 const knownContracts = appConfig('collections');

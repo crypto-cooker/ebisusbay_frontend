@@ -3,10 +3,10 @@ import { useRouter } from 'next/router';
 import Collection1155 from '../../src/Components/Collection/collection1155';
 import Collection721 from '../../src/Components/Collection/collection721';
 import CollectionCronosverse from '../../src/Components/Collection/collectionCronosverse';
-import {caseInsensitiveCompare, isCronosVerseCollection, isAddress, isCollection} from '../../src/utils';
-import {appConfig} from "../../src/Config";
+import {caseInsensitiveCompare, isCronosVerseCollection, isAddress} from '@src/utils';
+import {appConfig} from "@src/Config";
 import PageHead from "../../src/Components/Head/PageHead";
-import {hostedImage} from "../../src/helpers/image";
+import {hostedImage} from "@src/helpers/image";
 
 const knownContracts = appConfig('collections')
 

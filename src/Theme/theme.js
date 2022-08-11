@@ -1,6 +1,6 @@
 export const lightTheme = {
   textColor1: '#FFFFFF',
-  textColor2: '#E97B05',
+  textColor2: '#595d69',
   textColor3: '#0d0c22',
   textColor4: '#0078CB',
   textColor5: '#35669e',
@@ -19,7 +19,7 @@ export const lightTheme = {
 
 export const darkTheme = {
   textColor1: '#000000',
-  textColor2: '#E97B05',
+  textColor2: '#a2a2a2',
   textColor3: '#FFFFFF',
   textColor4: '#0078CB',
   textColor5: '#ffffff',

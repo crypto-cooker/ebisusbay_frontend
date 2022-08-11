@@ -12,13 +12,13 @@ import Footer from '../src/Components/components/Footer';
 import ListingCollection from '../src/Components/components/ListingCollection';
 import HotCollections from '../src/Components/components/HotCollections';
 import CurrentDrops from '../src/Components/components/CurrentDrops';
-import { getMarketData } from '../src/GlobalState/marketplaceSlice';
-import { siPrefixedNumber } from '../src/utils';
-import {getTheme, theme} from '../src/Theme/theme';
-import { limitSizeOptions } from '../src/Components/components/constants/filter-options';
+import { getMarketData } from '@src/GlobalState/marketplaceSlice';
+import { siPrefixedNumber } from '@src/utils';
+import {getTheme, theme} from '@src/Theme/theme';
+import { limitSizeOptions } from '@src/Components/components/constants/filter-options';
 import Button from '../src/Components/components/Button';
-import {hostedImage} from "../src/helpers/image";
-import {appConfig} from "../src/Config";
+import {hostedImage} from "@src/helpers/image";
+import {appConfig} from "@src/Config";
 import Head from "next/head";
 
 const fadeInUp = keyframes`

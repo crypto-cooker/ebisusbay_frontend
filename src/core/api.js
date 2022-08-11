@@ -749,7 +749,7 @@ export async function getUnfilteredListingsForAddress(walletAddress, walletProvi
 
     json.listings = filteredListings;
 
-    return json;
+    return filteredListings;
   } catch (error) {
     console.log('error fetching sales for: ' + walletAddress);
     console.log(error);
@@ -771,7 +771,9 @@ export async function getNftSalesForAddress(walletAddress, page) {
   try {
     const queryString = new URLSearchParams(query);
     const url = new URL(api.unfilteredListings, `${api.baseUrl}`);
-    return await (await fetch(`${url}?${queryString}`)).json();
+    const result = await (await fetch(`${url}?${queryString}`)).json();
+
+    return result.listings ?? [];
   } catch (error) {
     console.log('error fetching sales for: ' + walletAddress);
     console.log(error);
@@ -1053,7 +1055,7 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
     return [0];
   }
 
-  const signer = walletProvider.getSigner();
+  const signer = walletProvider?.getSigner();
   const walletBlacklisted = isUserBlacklisted(walletAddress);
 
   let listings = await getAllListingsForUser(walletAddress);
@@ -1085,9 +1087,9 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
         if (knownContract.multiToken) {
           key = `${key}${knownContract.id}`;
         }
-        const writeContract =
-          writeContracts[key] ??
-          new Contract(knownContract.address, knownContract.multiToken ? ERC1155 : ERC721, signer);
+        const writeContract = signer ?
+          (writeContracts[key] ??
+          new Contract(knownContract.address, knownContract.multiToken ? ERC1155 : ERC721, signer)) : null;
         writeContracts[key] = writeContract;
 
         const listed = !!getListing(knownContract.address, nft.nftId);
@@ -1113,13 +1115,13 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
               image = nft.token_uri.image;
             }
           } else {
-            image = fallbackImageUrl;
+            image = fallbackImageUrl();
           }
         } catch (e) {
-          image = fallbackImageUrl;
+          image = fallbackImageUrl();
           console.log(e);
         }
-        if (!image) image = fallbackImageUrl;
+        if (!image) image = fallbackImageUrl();
 
         const video = nft.animation_url ?? (image.split('.').pop() === 'mp4' ? image : null);
 

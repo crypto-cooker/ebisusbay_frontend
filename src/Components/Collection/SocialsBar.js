@@ -5,8 +5,8 @@ import LayeredIcon from '../components/LayeredIcon';
 import { toast } from 'react-toastify';
 import { isCrosmocraftsCollection, isCrosmocraftsPartsCollection } from '../../utils';
 
-const SocialsBar = ({ address, collection, showCopy = true }) => {
-  const { website, twitter, discord, telegram, instagram, medium, gitbook } = collection;
+const SocialsBar = ({ address, socials, showCopy = true }) => {
+  const { website, twitter, discord, telegram, instagram, medium, gitbook } = socials;
 
   const handleCopy = (code) => () => {
     navigator.clipboard.writeText(code);
@@ -56,7 +56,7 @@ const SocialsBar = ({ address, collection, showCopy = true }) => {
         </a>
       )}
       {showCopy && (
-        <span onClick={handleCopy(address)} style={{ cursor: 'pointer' }} title="Copy Smart Contract Address">
+        <span onClick={handleCopy(address)} style={{ cursor: 'pointer' }} title="Copy Address">
           <LayeredIcon icon={faCopy} />
         </span>
       )}

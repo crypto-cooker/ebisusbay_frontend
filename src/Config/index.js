@@ -1,7 +1,7 @@
 import rpcConfig from '../Assets/networks/rpc_config.json';
 import rpcConfigDev from '../Assets/networks/rpc_config_dev.json';
 import rpcConfigTestnet from '../Assets/networks/rpc_config_testnet.json';
-
+import _ from 'lodash';
 import Constants from '../constants';
 const { Features } = Constants;
 
@@ -17,13 +17,14 @@ export const configData = {
     chain: {
       name: 'Cronos Mainnet Beta',
       id: '25',
-      symbol: 'CRO'
+      symbol: 'CRO',
     },
     urls: {
       api: 'https://api.ebisusbay.com/',
       app: 'https://app.ebisusbay.com/',
       cdn: 'https://cdn.ebisusbay.com/',
-      subgraph: 'https://graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/'
+      subgraph: 'https://graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
+      cms: 'https://cms.ebisusbay.com/api/',
     },
     rpc: {
       read: 'https://gateway.nebkas.ro/',
@@ -40,15 +41,15 @@ export const configData = {
     },
     tokens: {
       loot: {
-        'name': 'LOOT',
-        'symbol': 'LOOT',
-        'address': '0xEd34211cDD2cf76C3cceE162761A72d7b6601E2B'
+        name: 'LOOT',
+        symbol: 'LOOT',
+        address: '0xEd34211cDD2cf76C3cceE162761A72d7b6601E2B',
       },
       mad: {
-        'name': 'MAD',
-        'symbol': 'MAD',
-        'address': '0x212331e1435a8df230715db4c02b2a3a0abf8c61'
-      }
+        name: 'MAD',
+        symbol: 'MAD',
+        address: '0x212331e1435a8df230715db4c02b2a3a0abf8c61',
+      },
     },
     collections: rpcConfig.known_contracts,
     drops: rpcConfig.drops,
@@ -58,13 +59,14 @@ export const configData = {
     chain: {
       name: 'Cronos Mainnet Beta',
       id: '25',
-      symbol: 'CRO'
+      symbol: 'CRO',
     },
     urls: {
       api: 'https://api.ebisusbay.biz/',
       app: 'https://app.ebisusbay.biz/',
       cdn: 'https://cdn.ebisusbay.biz/test/',
-      subgraph: 'https://graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/'
+      subgraph: 'https://graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
+      cms: 'https://cms.ebisusbay.biz/api/',
     },
     rpc: {
       read: 'https://gateway.nebkas.ro/',
@@ -81,15 +83,15 @@ export const configData = {
     },
     tokens: {
       loot: {
-        'name': 'LOOT',
-        'symbol': 'LOOT',
-        'address': '0xEd34211cDD2cf76C3cceE162761A72d7b6601E2B'
+        name: 'LOOT',
+        symbol: 'LOOT',
+        address: '0xEd34211cDD2cf76C3cceE162761A72d7b6601E2B',
       },
       mad: {
-        'name': 'MAD',
-        'symbol': 'MAD',
-        'address': '0x212331e1435a8df230715db4c02b2a3a0abf8c61'
-      }
+        name: 'MAD',
+        symbol: 'MAD',
+        address: '0x212331e1435a8df230715db4c02b2a3a0abf8c61',
+      },
     },
     collections: rpcConfigDev.known_contracts,
     drops: rpcConfigDev.drops,
@@ -99,13 +101,14 @@ export const configData = {
     chain: {
       name: 'Cronos Testnet',
       id: '338',
-      symbol: 'tCRO'
+      symbol: 'tCRO',
     },
     urls: {
       api: 'https://testapi.ebisusbay.biz/',
       app: 'https://testapp.ebisusbay.biz/',
       cdn: 'https://cdn.ebisusbay.biz/test/',
-      subgraph: 'https://testgraph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/'
+      subgraph: 'https://testgraph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
+      cms: 'https://cms.ebisusbay.biz/api/',
     },
     rpc: {
       read: 'https://rpc.ebisusbay.biz/',
@@ -122,20 +125,25 @@ export const configData = {
     },
     tokens: {
       loot: {
-        'name': 'LOOT',
-        'symbol': 'LOOT',
-        'address': '0x2074D6a15c5F908707196C5ce982bd0598A666f9'
+        name: 'LOOT',
+        symbol: 'LOOT',
+        address: '0x2074D6a15c5F908707196C5ce982bd0598A666f9',
       },
       mad: {
-        'name': 'MAD',
-        'symbol': 'MAD',
-        'address': '0x4DEdeea250d2cbf54F0e156f0e9b55927094867E'
-      }
+        name: 'MAD',
+        symbol: 'MAD',
+        address: '0x4DEdeea250d2cbf54F0e156f0e9b55927094867E',
+      },
     },
     collections: rpcConfigTestnet.known_contracts,
     drops: rpcConfigTestnet.drops,
     auctions: rpcConfigTestnet.auctions,
   },
+  [environments.local]: {
+    urls: {
+      cms: 'http://localhost:4000/api/',
+    },
+  }
 };
 
 export const imageDomains = [
@@ -149,23 +157,31 @@ export const imageDomains = [
   'metadata.cronos.domains',
   'ik.imagekit.io',
   'cdn.ebisusbay.com',
-  'cdn.ebisusbay.biz'
+  'cdn.ebisusbay.biz',
 ];
 
 /**
  * Retrieve a config value using "dot" notation.
  * Passing no key will return the entire config.
+ * Note that the local env config falls back to production config for any fields not present
  *
  * @param key
  * @returns {null|*}
  */
 export const appConfig = (key) => {
-  const env = isLocalEnv() ? environments.production : environments[currentEnv()];
-  if (!key) return env ? configData[env] : configData[environments.production];
+  const env = environments[currentEnv()];
+  const fallbackEnv = environments.production;
+  if (!env) return configData[fallbackEnv];
+
+  const config = isLocalEnv() ?
+    _.merge(configData[environments.production], configData[environments.local]) :
+    configData[env];
+
+  if (!key) return config;
 
   const keys = key.split('.');
 
-  return keys.reduce((o,i)=> o[i], env ? configData[env] : configData[environments.production]);
+  return keys.reduce((o, i) => o[i], env ? config : configData[fallbackEnv]);
 }
 
 export const currentEnv = () => {
@@ -177,5 +193,7 @@ export const isLocalEnv = () => {
 }
 
 export const featureFlags = {
-  [Features.AUCTION_OPTION_SALE]: false
+  [Features.AUCTION_OPTION_SALE]: false,
+  [Features.CMS_NOTIFICATIONS]: false,
+  [Features.CMS_FULL_PROFILES]: false,
 }

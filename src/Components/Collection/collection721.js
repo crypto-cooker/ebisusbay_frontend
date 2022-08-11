@@ -176,7 +176,7 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
                   </h4>
                   {collection.metadata.description && <p>{collection.metadata.description}</p>}
                   <span className="fs-4">
-                    <SocialsBar address={collection.address} collection={collection.metadata} />
+                    <SocialsBar address={collection.address} socials={collection.metadata} />
                   </span>
                 </div>
               </div>

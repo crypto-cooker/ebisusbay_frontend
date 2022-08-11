@@ -1,48 +1,37 @@
-import React, { memo, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { clearMySales, fetchSales } from '../../GlobalState/User';
+import React, { memo } from 'react';
 import { Spinner } from 'react-bootstrap';
-import { getAnalytics, logEvent } from '@firebase/analytics';
 import SoldNftCard from './SoldNftCard';
 import InvalidListingsPopup from './InvalidListingsPopup';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { caseInsensitiveCompare } from '../../utils';
-import {appConfig} from "../../Config";
+import { caseInsensitiveCompare } from '@src/utils';
+import {appConfig} from "@src/Config";
+import {getNftSalesForAddress} from "@src/core/api";
+import useSWRInfinite from "swr/infinite";
 
 const knownContracts = appConfig('collections');
 
+const fetcher = async (...args) => {
+  const [key, address, page] = args;
+  return await getNftSalesForAddress(address, page);
+};
+
 const MySoldNftCollection = ({ walletAddress = null }) => {
-  const dispatch = useDispatch();
-  const [width, setWidth] = useState(0);
-  const isLoading = useSelector((state) => state.user.mySoldNftsFetching);
-  const mySoldNfts = useSelector((state) => state.user.mySoldNfts);
-  const canLoadMore = useSelector((state) => {
-    return state.user.mySoldNftsCurPage === 0 || state.user.mySoldNftsCurPage < state.user.mySoldNftsTotalPages;
-  });
+  const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite((index) => {
+    return ['MySoldNftCollection', walletAddress, index + 1]
+  }, fetcher);
 
-  const onImgLoad = ({ target: img }) => {
-    let currentWidth = width;
-    if (currentWidth < img.offsetWidth) {
-      setWidth(img.offsetWidth);
-    }
-  };
-
-  useEffect(() => {
-    dispatch(clearMySales());
-    dispatch(fetchSales(walletAddress));
-    // eslint-disable-next-line
-  }, [walletAddress]);
-
-  useEffect(() => {
-    logEvent(getAnalytics(), 'screen_view', {
-      firebase_screen: 'my_sales',
-    });
-  }, []);
+  const mySoldNfts = data ? [].concat(...data) : [];
+  const isLoadingInitialData = !data && !error;
+  const isLoadingMore =
+    isLoadingInitialData ||
+    (size > 0 && data && typeof data[size - 1] === "undefined");
+  const isEmpty = data?.[0]?.length === 0;
+  const isReachingEnd =
+    isEmpty || (data && data[data.length - 1]?.length < 50);
+  const isRefreshing = isValidating && data && data.length === size;
 
   const loadMore = () => {
-    if (!isLoading) {
-      dispatch(fetchSales(walletAddress));
-    }
+    setSize(size + 1);
   };
 
   return (
@@ -51,7 +40,7 @@ const MySoldNftCollection = ({ walletAddress = null }) => {
       <InfiniteScroll
         dataLength={mySoldNfts.length}
         next={loadMore}
-        hasMore={canLoadMore}
+        hasMore={!isReachingEnd}
         style={{ overflow: 'hidden' }}
         loader={
           <div className="row">
@@ -78,12 +67,12 @@ const MySoldNftCollection = ({ walletAddress = null }) => {
                   },
                 };
               }
-              return <SoldNftCard nft={nft} index={index} onImgLoad={onImgLoad} width={width} />;
+              return <SoldNftCard nft={nft} index={index}  />;
             })}
         </div>
       </InfiniteScroll>
 
-      {!isLoading && mySoldNfts.length === 0 && (
+      {(isEmpty || (!isLoadingInitialData && !mySoldNfts.length > 0)) && (
         <div className="row mt-4">
           <div className="col-lg-12 text-center">
             <span>Nothing to see here...</span>
