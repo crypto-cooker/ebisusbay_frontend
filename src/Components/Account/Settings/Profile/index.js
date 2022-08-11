@@ -103,9 +103,6 @@ export default function EditProfile() {
         .shape({
           profilePicture: Yup.array().of(
             Yup.object().shape({
-              size: Yup.object().nullable().test('', 'Avatar must not exceed 350 x 350 px',
-                (size) => size ? size.width <= 350 && size.height <= 350 : true
-              ),
               file: Yup.mixed().nullable().test('', 'Avatar must not exceed 1MB in size',
                 (file) => file && file.size? file.size <= 1000000 : true
               )
