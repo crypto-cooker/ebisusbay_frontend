@@ -24,7 +24,6 @@ const CurrentDrops = ({ useCarousel = true }) => {
       return { collection, drop: d };
     });
     const cd = dropCollections.filter((d) => d.collection).sort((a, b) => (a.drop.start < b.drop.start ? 1 : -1));
-    console.log('---sadf', cd);
     setCurrentDrops(cd);
   }
 

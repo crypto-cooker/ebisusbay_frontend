@@ -6990,6 +6990,7 @@
       "address": "0x0A37674F61a9345f32E277b15E3C9603cDe710f6",
       "onChain": false,
       "listable": true,
+      "tokens": [{ "id": 1 }],
       "metadata": {
         "description": "Mystery Pill of the Argonauts ecosystem, what’s inside…?",
         "verified": true,
