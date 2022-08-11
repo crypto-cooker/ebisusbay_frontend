@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {getNftsForAddress2} from "@src/core/api";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {Spinner} from "react-bootstrap";
+import {Form, Spinner} from "react-bootstrap";
 import MyNftCard from "@src/Components/components/MyNftCard";
-import {caseInsensitiveCompare} from "@src/utils";
+import {caseInsensitiveCompare, findCollectionByAddress} from "@src/utils";
 import NftCard from "@src/Components/components/NftCard";
 import {appConfig} from "@src/Config";
 import {MyNftPageActions} from "@src/GlobalState/User";
@@ -12,12 +12,15 @@ import MyNftTransferDialog from "@src/Components/components/MyNftTransferDialog"
 import MyNftCancelDialog from "@src/Components/components/MyNftCancelDialog";
 import {useRouter} from "next/router";
 import useSWRInfinite from "swr/infinite";
+import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
+import TopFilterBar from "@src/Components/components/TopFilterBar";
 
 const knownContracts = appConfig('collections');
 
+
 const fetcher = async (...args) => {
-  const [key, address, provider, page] = args;
-  return await getNftsForAddress2(address, provider, page);
+  const [key, address, provider, page, collection] = args;
+  return await getNftsForAddress2(address, provider, page, collection !== '' ? collection : undefined);
 };
 
 export default function Inventory({ address }) {
@@ -27,25 +30,62 @@ export default function Inventory({ address }) {
   const user = useSelector((state) => state.user);
 
   const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite((index) => {
-    return ['Inventory', address, user.provider, index + 1]
+    return ['Inventory', address, user.provider, index + 1, collectionFilter?.value ?? '']
   }, fetcher);
 
   const items = data ? [].concat(...data) : [];
   const isLoadingInitialData = !data && !error;
-  const isLoadingMore =
-    isLoadingInitialData ||
-    (size > 0 && data && typeof data[size - 1] === "undefined");
   const isEmpty = data?.[0]?.length === 0;
-  const isReachingEnd =
-    isEmpty || (data && data[data.length - 1]?.length < 50);
+  const isReachingEnd = isEmpty || (data && data[data.length - 1]?.length < 50);
   const isRefreshing = isValidating && data && data.length === size;
+
+  const [collections, setCollections] = useState([]);
+  const [collectionFilter, setCollectionFilter] = useState({label: 'All', value: ''});
+
+  const onFilterChange = (filterOption) => {
+    setCollectionFilter(filterOption);
+  };
+
+  useEffect(() => {
+    setSize(1);
+  }, [collectionFilter])
 
   const loadMore = () => {
     setSize(size + 1);
   };
 
+  useEffect(() => {
+    async function func() {
+      const result = await getWalletOverview(address);
+      setCollections(result.data
+        .map((c) => {
+          const name = c.name ?? findCollectionByAddress(c.nftAddress, c.nftId)?.name;
+          return {label:name, value:c.nftAddress}
+        })
+        .sort((a, b) => a.name > b.name ? 1 : -1)
+      );
+    }
+
+    func();
+
+  }, []);
+
   return (
     <>
+      <div className="row">
+        <div className="col">
+          <TopFilterBar
+            className="col-6"
+            showFilter={true}
+            showSort={false}
+            showSearch={false}
+            filterOptions={[{label: 'All', value: ''}, ...collections]}
+            filterPlaceHolder="Filter Collection..."
+            onFilterChange={onFilterChange}
+            filterValue={collectionFilter}
+          />
+        </div>
+      </div>
       <div className="row">
         {!isLoadingInitialData ? (
           <InfiniteScroll
