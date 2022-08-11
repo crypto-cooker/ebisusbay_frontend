@@ -1815,7 +1815,7 @@
       "multiToken": false,
       "address": "0x0c2Bcb06cB46F9aE7cDB29cF76245BC04048919D",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "verified": false,
         "avatar": "/img/collections/panelsproject/avatar.webp",
@@ -6986,7 +6986,7 @@
     {
       "name": "Argonauts Mystery Pill",
       "slug": "argonauts-mystery-pill",
-      "multiToken": false,
+      "multiToken": true,
       "address": "0x0A37674F61a9345f32E277b15E3C9603cDe710f6",
       "onChain": false,
       "listable": true,
