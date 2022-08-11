@@ -292,6 +292,8 @@ const Nft1155 = ({ address, id }) => {
                         offerType={offerType}
                         onOfferSelected={() => handleMakeOffer()}
                         label="Floor Price"
+                        collectionName={collectionName}
+                        isVerified={collectionMetadata?.verified}
                       />
                     </>
                   )}

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ethers } from 'ethers';
@@ -15,7 +15,11 @@ import {useRouter} from "next/router";
 import MakeListingDialog from "@src/Components/MakeListing";
 import Image from "next/image";
 
-const PriceActionBar = ({offerType, onOfferSelected, label, isOwner}) => {
+import DialogAlert from '../components/DialogAlert';
+import useOutSide from '../../hooks/useOutSide';
+
+
+const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isVerified }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -25,8 +29,24 @@ const PriceActionBar = ({offerType, onOfferSelected, label, isOwner}) => {
   const [executingCancel, setExecutingCancel] = useState(false);
   const [canBuy, setCanBuy] = useState(false);
   const [isSellDialogOpen, setIsSellDialogOpen] = useState(false);
+  const { visible: finalStep, setVisible: setFinalStep, ref } = useOutSide(false);
+
+  const openPopup = useCallback((e) => {
+    e.preventDefault();
+
+    setFinalStep(true);
+
+
+  }, [setFinalStep])
+
+  const closePopup = useCallback((e) => {
+    e.preventDefault();
+    setFinalStep(false);
+  }, [setFinalStep])
+
 
   const executeBuy = (amount) => async () => {
+    setFinalStep(false);
     setExecutingBuy(true);
     await runFunction(async (writeContract) => {
       let price = ethers.utils.parseUnits(amount.toString());
@@ -98,7 +118,10 @@ const PriceActionBar = ({offerType, onOfferSelected, label, isOwner}) => {
       !isUserBlacklisted(listing.seller) &&
       !isNftBlacklisted(listing.nftAddress, listing.nftId)
     );
+
+    console.log('Listing: ', listing)
   }, [listing]);
+
 
   return (
     <div className="price-action-bar">
@@ -161,7 +184,7 @@ const PriceActionBar = ({offerType, onOfferSelected, label, isOwner}) => {
                 {canBuy && (
                   <div className="flex-fill mx-1">
                     {listing.state === listingState.ACTIVE && (
-                      <Button type="legacy" className="w-100" onClick={executeBuy(listing.price)} disabled={executingBuy}>
+                      <Button type="legacy" className="w-100" onClick={isVerified ? executeBuy(listing.price) : openPopup} disabled={executingBuy}>
                         {executingBuy ? (
                           <>
                             Buy Now...
@@ -192,6 +215,26 @@ const PriceActionBar = ({offerType, onOfferSelected, label, isOwner}) => {
         onClose={() => setIsSellDialogOpen(!isSellDialogOpen)}
         listing={listing}
       />
+      <div className='nftSaleForm'>
+        {(finalStep) && (
+          <span ref={ref}>
+            {
+              <DialogAlert
+                title={'Unverified'}
+                firstButtonText={'Cancel'}
+                onClickFirstButton={closePopup}
+                secondButtonText={'Buy'}
+                onClickSecondButton={executeBuy(listing.price)}
+                closePopup={closePopup}
+                isWaiting={false}
+                isWarningMessage={true}
+              >
+                <span>This contract in not verified by ebisusbay, make sure that {collectionName} is the one you are looking for</span>
+
+              </DialogAlert>}
+          </span>
+        )}
+      </div>
     </div>
   );
 };

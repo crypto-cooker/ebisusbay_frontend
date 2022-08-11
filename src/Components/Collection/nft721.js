@@ -569,11 +569,14 @@ const Nft721 = ({ address, id }) => {
                   )}
 
                   {collection.listable && (
-                    <PriceActionBar
-                      offerType={offerType}
-                      onOfferSelected={() => handleMakeOffer()}
-                      isOwner={caseInsensitiveCompare(user.address, nft.owner)}
-                    />
+
+                    <PriceActionBar 
+                      offerType={offerType} 
+                      collectionName={collectionName}
+                      isVerified={collectionMetadata?.verified}
+                      onOfferSelected={() => handleMakeOffer()} 
+                      isOwner={caseInsensitiveCompare(user.address, nft.owner)}/>
+
                   )}
 
                   <div className="row" style={{ gap: '2rem 0' }}>
