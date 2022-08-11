@@ -22,9 +22,9 @@ export default function Form({
   return (
     <div>
       <h2>Edit Profile</h2>
-      <div className="d-flex flex-row">
+      <div className="d-flex flex-row mb-3">
         <div className="my-auto me-2">Sync profile information from Cronos Domain Service</div>
-        <Button type="button" className="px-3 py-1" onClick={handleCnsSync} isLoading={isCnsSync}>
+        <Button type="button" className="px-3 py-1 my-auto" onClick={handleCnsSync} isLoading={isCnsSync}>
           Sync
         </Button>
       </div>
