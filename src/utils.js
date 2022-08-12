@@ -681,3 +681,16 @@ export const fetcher =
     const method = arg1;
     return library[method](arg2, ...params);
   };
+
+
+export const buildTwitterUrl = (username) => {
+  if (!username || username.startsWith('http')) return username;
+
+  return `https://twitter.com/${username}`;
+}
+
+export const buildInstagramUrl = (username) => {
+  if (!username || username.startsWith('http')) return username;
+
+  return `https://instagram.com/${username}`;
+}

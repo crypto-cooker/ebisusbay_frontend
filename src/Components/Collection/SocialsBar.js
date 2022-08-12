@@ -3,7 +3,7 @@ import { faBook, faCopy, faGlobe, faRocket } from '@fortawesome/free-solid-svg-i
 import { faDiscord, faInstagram, faMedium, faTelegram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import LayeredIcon from '../components/LayeredIcon';
 import { toast } from 'react-toastify';
-import { isCrosmocraftsCollection, isCrosmocraftsPartsCollection } from '../../utils';
+import {buildInstagramUrl, buildTwitterUrl, isCrosmocraftsCollection, isCrosmocraftsPartsCollection} from '../../utils';
 
 const SocialsBar = ({ address, socials, showCopy = true }) => {
   const { website, twitter, discord, telegram, instagram, medium, gitbook } = socials;
@@ -21,7 +21,7 @@ const SocialsBar = ({ address, socials, showCopy = true }) => {
         </a>
       )}
       {twitter && (
-        <a href={twitter} target="_blank" rel="noreferrer" title="View Twitter">
+        <a href={buildTwitterUrl(twitter)} target="_blank" rel="noreferrer" title="View Twitter">
           <LayeredIcon icon={faTwitter} />
         </a>
       )}
@@ -36,7 +36,7 @@ const SocialsBar = ({ address, socials, showCopy = true }) => {
         </a>
       )}
       {instagram && (
-        <a href={instagram} target="_blank" rel="noreferrer" title="View Telegram">
+        <a href={buildInstagramUrl(instagram)} target="_blank" rel="noreferrer" title="View Telegram">
           <LayeredIcon icon={faInstagram} />
         </a>
       )}
