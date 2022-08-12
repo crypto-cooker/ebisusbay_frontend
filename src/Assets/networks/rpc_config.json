@@ -5553,7 +5553,7 @@
       "multiToken": false,
       "address": "0x5DA0c6A68e7C348664664F1546B9BaAA493E8C73",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "5,000 Undead Space Apes on the Cronos Network. Royalties distributed to holders.",
         "verified": false,
