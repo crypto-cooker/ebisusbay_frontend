@@ -7,6 +7,10 @@ import store from '../src/Store/store';
 import App from '../src/App';
 import { SentryLoggingService } from '../src/services/sentry-logging.service';
 import { Site24x7LoggingService } from '../src/services/site24x7-logging.service';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
 
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
@@ -22,6 +26,7 @@ import '../src/Assets/styles/override.scss';
 
 SentryLoggingService.init();
 Site24x7LoggingService.init();
+const queryClient = new QueryClient()
 
 config.autoAddCss = false;
 
@@ -30,7 +35,9 @@ export default function MyApp({ Component, pageProps }) {
     <>
       <Provider store={store}>
         <Sentry.ErrorBoundary fallback={() => <ErrorPage />}>
-          <App Component={Component} pageProps={pageProps} />
+          <QueryClientProvider client={queryClient}>
+            <App Component={Component} pageProps={pageProps} />
+          </QueryClientProvider>
         </Sentry.ErrorBoundary>
       </Provider>
     </>

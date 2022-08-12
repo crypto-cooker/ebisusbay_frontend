@@ -1,8 +1,8 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {getNftsForAddress2} from "@src/core/api";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {Form, Spinner} from "react-bootstrap";
+import {Spinner} from "react-bootstrap";
 import MyNftCard from "@src/Components/components/MyNftCard";
 import {caseInsensitiveCompare, findCollectionByAddress} from "@src/utils";
 import NftCard from "@src/Components/components/NftCard";
@@ -11,47 +11,46 @@ import {MyNftPageActions} from "@src/GlobalState/User";
 import MyNftTransferDialog from "@src/Components/components/MyNftTransferDialog";
 import MyNftCancelDialog from "@src/Components/components/MyNftCancelDialog";
 import {useRouter} from "next/router";
-import useSWRInfinite from "swr/infinite";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
 import TopFilterBar from "@src/Components/components/TopFilterBar";
+import {QueryClientProvider, useInfiniteQuery, useQueryClient} from "@tanstack/react-query";
 
 const knownContracts = appConfig('collections');
-
-
-const fetcher = async (...args) => {
-  const [key, address, provider, page, collection] = args;
-  return await getNftsForAddress2(address, provider, page, collection !== '' ? collection : undefined);
-};
 
 export default function Inventory({ address }) {
   const dispatch = useDispatch();
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const user = useSelector((state) => state.user);
 
-  const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite((index) => {
-    return ['Inventory', address, user.provider, index + 1, collectionFilter?.value ?? '']
-  }, fetcher);
-
-  const items = data ? [].concat(...data) : [];
-  const isLoadingInitialData = !data && !error;
-  const isEmpty = data?.[0]?.length === 0;
-  const isReachingEnd = isEmpty || (data && data[data.length - 1]?.length < 50);
-  const isRefreshing = isValidating && data && data.length === size;
-
   const [collections, setCollections] = useState([]);
-  const [collectionFilter, setCollectionFilter] = useState({label: 'All', value: ''});
+  const [collectionFilter, setCollectionFilter] = useState(null);
 
   const onFilterChange = (filterOption) => {
     setCollectionFilter(filterOption);
   };
 
-  useEffect(() => {
-    setSize(1);
-  }, [collectionFilter])
+  const fetcher = async ({ pageParam = 1 }) => {
+    return await getNftsForAddress2(address, user.provider, pageParam, collectionFilter?.value);
+  };
+
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery(['Inventory', address, collectionFilter], fetcher, {
+    getNextPageParam: (lastPage, pages) => {
+      return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
+    },
+  })
 
   const loadMore = () => {
-    setSize(size + 1);
+    fetchNextPage();
   };
 
   useEffect(() => {
@@ -70,51 +69,21 @@ export default function Inventory({ address }) {
 
   }, []);
 
-  return (
-    <>
-      <div className="row">
-        <div className="col">
-          <TopFilterBar
-            className="col-6"
-            showFilter={true}
-            showSort={false}
-            showSearch={false}
-            filterOptions={[{label: 'All', value: ''}, ...collections]}
-            filterPlaceHolder="Filter Collection..."
-            onFilterChange={onFilterChange}
-            filterValue={collectionFilter}
-          />
-        </div>
+  const historyContent = useMemo(() => {
+    return status === "loading" ? (
+      <div className="col-lg-12 text-center">
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
       </div>
-      <div className="row">
-        {!isLoadingInitialData ? (
-          <InfiniteScroll
-            dataLength={items.length}
-            next={loadMore}
-            hasMore={!isReachingEnd}
-            style={{ overflow: 'hidden' }}
-            loader={
-              <div className="row">
-                <div className="col-lg-12 text-center">
-                  <Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>
-                </div>
-              </div>
-            }
-            endMessage={
-              <>
-                {!items.length && (
-                  <div className="row mt-4">
-                    <div className="col-lg-12 text-center">
-                      <span>Nothing to see here...</span>
-                    </div>
-                  </div>
-                )}
-              </>
-            }
-          >
-            <div className="card-group">
+    ) : status === "error" ? (
+      <p>Error: {error.message}</p>
+    ) : (
+      <>
+        <div className="card-group">
+
+          {data.pages.map((items, index) => (
+            <React.Fragment key={index}>
               {items.map((nft, index) => {
                 const collection = knownContracts.find((c) => caseInsensitiveCompare(c.address, nft.address));
                 return (
@@ -152,18 +121,50 @@ export default function Inventory({ address }) {
                   </div>
                 )
               })}
+            </React.Fragment>
+          ))}
+        </div>
+      </>
+    );
+  }, [data, error, status]);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <div className="row">
+        <div className="col">
+          <TopFilterBar
+            className="col-6"
+            showFilter={true}
+            showSort={false}
+            showSearch={false}
+            filterOptions={[{label: 'All', value: ''}, ...collections]}
+            filterPlaceHolder="Filter Collection..."
+            onFilterChange={onFilterChange}
+            filterValue={collectionFilter}
+          />
+        </div>
+      </div>
+      <div className="row">
+        <InfiniteScroll
+          dataLength={data?.pages ? data.pages.flat().length : 0}
+          next={loadMore}
+          hasMore={hasNextPage}
+          style={{ overflow: 'hidden' }}
+          loader={
+            <div className="row">
+              <div className="col-lg-12 text-center">
+                <Spinner animation="border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </div>
             </div>
-          </InfiniteScroll>
-        ) : (
-          <div className="col-lg-12 text-center">
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          </div>
-        )}
+          }
+        >
+          {historyContent}
+        </InfiniteScroll>
         <MyNftTransferDialog />
         <MyNftCancelDialog />
       </div>
-    </>
+    </QueryClientProvider>
   )
 }
