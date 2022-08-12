@@ -1,5 +1,10 @@
 [
   {
+    "users": ["0x376A8e3f975463298c10f4d41C32349A705Ae12E"],
+    "tokens": [],
+    "reason": "Attempted scamming. Reported in #generic-0364, verified by schwiz"
+  },
+  {
     "users": ["0x64f371ab73181cD5e6776D68768796F996E83f1b"],
     "tokens": [
       {
