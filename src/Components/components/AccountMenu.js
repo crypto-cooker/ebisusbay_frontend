@@ -39,6 +39,7 @@ import { getAllCollections } from '../../GlobalState/collectionsSlice';
 import { fetchMyNFTs } from '../../GlobalState/offerSlice';
 import { isUserBlacklisted, round, shortAddress } from '../../utils';
 import { appConfig } from '../../Config';
+import {ImageKitService} from "@src/helpers/image";
 
 const config = appConfig();
 
@@ -96,6 +97,11 @@ const AccountMenu = function () {
   const { data: balance, mutate } = useSWR(['getBalance', walletAddress, 'latest'], {
     fetcher: fetcher(user?.provider, ERC20),
   });
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    dispatch(setTheme(newTheme));
+  };
 
   useEffect(() => {
     dispatch(
@@ -247,6 +253,9 @@ const AccountMenu = function () {
 
   return (
     <div className="mainside d-flex">
+      <span onClick={toggleTheme} className="cursor-pointer me-3 my-auto">
+        <FontAwesomeIcon icon={theme === 'dark' ? faMoon : faSun} color="#fff" />
+      </span>
       {!walletAddress && (
         <div className="connect-wal">
           <NavLink onClick={connectWalletPressed}>Connect Wallet</NavLink>
@@ -260,7 +269,11 @@ const AccountMenu = function () {
       {walletAddress && correctChain && (
         <div id="de-click-menu-profile" className="de-menu-profile">
           <span onClick={() => btn_icon_pop(!showpop)}>
-            <Blockies seed={user.address} size={8} scale={4} />
+            {user.profile.profilePicture ? (
+              <img src={ImageKitService.buildAvatarUrl(user.profile.profilePicture)} />
+            ) : (
+              <Blockies seed={user.address} size={8} scale={4} />
+            )}
             {user.hasOutstandingOffers && <BlockiesBadge className="notification-badge"></BlockiesBadge>}
           </span>
           {showpop && (

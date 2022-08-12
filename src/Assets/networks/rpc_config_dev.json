@@ -1266,7 +1266,7 @@
         "maxSupply": 1000,
         "website": "https://crossbreeds.defigamecove.com/",
         "twitter": "https://twitter.com/boarsgonewild",
-        "discord": "https://discord.gg/gC9ZVKDYZY"
+        "discord": "https://discord.gg/jxyytxSJAZ"
       }
     },
     {
@@ -3063,7 +3063,7 @@
         "maxSupply": 8888,
         "website": "https://crossbreeds.defigamecove.com/",
         "twitter": "https://twitter.com/boarsgonewild",
-        "discord": "https://discord.gg/gC9ZVKDYZY"
+        "discord": "https://discord.gg/jxyytxSJAZ"
       }
     },
     {
@@ -6389,7 +6389,7 @@
         "maxSupply": 828,
         "website": "https://crossbreeds.defigamecove.com/",
         "twitter": "https://twitter.com/boarsgonewild",
-        "discord": "https://discord.gg/gC9ZVKDYZY",
+        "discord": "https://discord.gg/jxyytxSJAZ",
         "medium": "https://medium.com/@Crossbreeds/crossbreed-merger-a82680c81f96"
       }
     },
@@ -7141,6 +7141,25 @@
         "twitter": "https://twitter.com/Trippin_panda",
         "discord": "https://discord.gg/QfqRAystVh",
         "medium": "https://medium.com/@trippinpanda76/pandapaper-b6e0c30e23fe"
+      }
+    },
+    {
+      "name": "VVS Miner Mole",
+      "slug": "vvs-miner-mole",
+      "multiToken": false,
+      "address": "0x06596ed89ac4609de47a21af7e36b38b2df57c26",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "VVS miner mole is a collection of 10,000 utility-enabled PFP. On top of exclusive VVS perks and special IRL event invites. The artwork is also a precursor to our upcoming game - VVSgotchi. It gives holders an opportunity to participate in the creation of new characters in the game. The collection consists of over 100+ unique hand-drawn traits from scratch spanning various rarities with no two alike.",
+        "verified": true,
+        "avatar": "/img/collections/vvs-miner-mole/avatar.webp",
+        "card": "/img/collections/vvs-miner-mole/card.webp",
+        "banner": "/img/collections/vvs-miner-mole/banner.webp",
+        "maxSupply": 2421,
+        "website": "https://vvs.finance/miner-mole/",
+        "twitter": "https://www.twitter.com/VVS_finance",
+        "discord": "https://discord.gg/V2957zMsmg"
       }
     }
   ],

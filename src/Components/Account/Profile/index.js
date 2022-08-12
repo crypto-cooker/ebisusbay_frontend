@@ -45,7 +45,7 @@ export default function Profile({ address, profile, tab }) {
     setIsProfileOwner(user && caseInsensitiveCompare(address, user.address));
   }, [user, address])
 
-  const username = profile.username ?? shortAddress(address);
+  const username = profile.username ?? (address.startsWith('0x') ? shortAddress(address) : address);
   const profilePicture = profile.profilePicture ?
     ImageKitService.from(profile.profilePicture).setWidth(200).setHeight(200).buildUrl() :
     hostedImage('/img/avatar.jpg');
