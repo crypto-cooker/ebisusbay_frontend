@@ -7009,7 +7009,7 @@
       "name": "GymKongz",
       "slug": "gymkongz",
       "multiToken": false,
-      "address": "0x42AbFb212A55D36c605cf39c9d59D118318c1E77",
+      "address": "0x133D5b18977cdDd191528789B5DB954622Aab754",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -7126,7 +7126,7 @@
       "name": "Trippin Panda",
       "slug": "trippin-panda",
       "multiToken": false,
-      "address": "",
+      "address": "0xCA8b7150B3A29CFe07a77Dc70A5714900BebBE15",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -9956,7 +9956,7 @@
         "twitter": "https://twitter.com/gymkongz",
         "discord": "https://discord.gg/qJru6Av9h3"
       },
-      "address": "0x42AbFb212A55D36c605cf39c9d59D118318c1E77",
+      "address": "0x133D5b18977cdDd191528789B5DB954622Aab754",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 10000,
@@ -9988,7 +9988,7 @@
         "discord": "https://discord.gg/QfqRAystVh",
         "medium": "https://medium.com/@trippinpanda76/pandapaper-b6e0c30e23fe"
       },
-      "address": "",
+      "address": "0xCA8b7150B3A29CFe07a77Dc70A5714900BebBE15",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 1000,
