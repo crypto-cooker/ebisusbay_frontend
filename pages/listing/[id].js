@@ -327,7 +327,7 @@ const Listing = () => {
                     </div>
                   )}
                   <div className="row" style={{ gap: '2rem 0' }}>
-                    <ProfilePreview type="Seller" address={listing.seller} to={`/seller/${listing.seller}`} />
+                    <ProfilePreview type="Seller" address={listing.seller} to={`/account/${listing.seller}`} />
                     <ProfilePreview
                       type="Collection"
                       title={collection.name}
@@ -496,7 +496,7 @@ const Listing = () => {
                             <>
                               {history.map((item, index) => (
                                 <div className="p_list" key={index}>
-                                  <Link href={`/seller/${item.purchaser}`}>
+                                  <Link href={`/account/${item.purchaser}`}>
                                     <a>
                                       <div className="p_list_pp">
                                         <span>
@@ -511,7 +511,7 @@ const Listing = () => {
                                     <span>{timeSince(item.saleTime + '000')} ago</span>
                                     Bought by{' '}
                                     <b>
-                                      <Link href={`/seller/${item.purchaser}`}>
+                                      <Link href={`/account/${item.purchaser}`}>
                                         <a>{shortAddress(item.purchaser)}</a>
                                       </Link>
                                     </b>{' '}

@@ -432,7 +432,7 @@ const Nft721 = ({ address, id }) => {
                       <ProfilePreview
                         type="Seller"
                         address={currentListing.seller}
-                        to={`/seller/${currentListing.seller}`}
+                        to={`/account/${currentListing.seller}`}
                         useCnsLookup={true}
                       />
                     )}
