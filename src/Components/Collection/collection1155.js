@@ -150,7 +150,7 @@ const Collection1155 = ({ collection, tokenId = null, cacheName = 'collection', 
                   <span className="fs-4">
                   <SocialsBar
                     address={collection.address}
-                    collection={collection.metadata}
+                    socials={collection.metadata}
                   />
                 </span>
                 </div>

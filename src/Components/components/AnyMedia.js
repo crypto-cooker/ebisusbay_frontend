@@ -1,9 +1,9 @@
 import React, { memo, useEffect, useState } from 'react';
 import ReactPlayer from 'react-player/lazy';
-import { fallbackImageUrl } from '../../core/constants';
 import Link from 'next/link';
 import { CdnImage } from './CdnImage';
-import { ImageKitService } from '../../helpers/image';
+import { ImageKitService } from '@src/helpers/image';
+import {fallbackImageUrl} from "@src/core/constants";
 
 export const AnyMedia = ({
   image,
@@ -159,11 +159,11 @@ export default memo(AnyMedia);
 const Image = memo(({ image, title, className, blur, sizes, layout, width, height }) => {
   return (
     <CdnImage
-      src={image ?? fallbackImageUrl}
+      src={image ?? fallbackImageUrl()}
       alt={title}
       onError={({ currentTarget }) => {
         currentTarget.onerror = null;
-        currentTarget.src = fallbackImageUrl;
+        currentTarget.src = fallbackImageUrl();
       }}
       className={className}
       placeholder={blur ? 'blur' : 'empty'}

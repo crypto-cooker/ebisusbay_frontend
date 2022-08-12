@@ -51,7 +51,7 @@ const Seller = () => {
       <PageHead
         title={shortAddress(address) || 'Seller'}
         description={`${shortAddress(address) || 'Seller'} for Ebisu's Bay Marketplace`}
-        url={`/seller/${address}`}
+        url={`/account/${address}`}
       />
       <section className="jumbotron breadcumb no-bg tint">
         <div className="mainbreadcumb">

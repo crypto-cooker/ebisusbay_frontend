@@ -5,7 +5,16 @@ import useOnclickOutside from 'react-cool-onclickoutside';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBolt, faImage, faSignOutAlt, faShoppingBag, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBolt,
+  faImage,
+  faSignOutAlt,
+  faShoppingBag,
+  faMoon,
+  faSun,
+  faUser,
+  faEdit
+} from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import { Modal, NavLink, Spinner, ModalTitle } from 'react-bootstrap';
@@ -120,10 +129,7 @@ const AccountMenu = function () {
   const logout = async () => {
     dispatch(onLogout());
   };
-  const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    dispatch(setTheme(newTheme));
-  };
+
   useEffect(() => {
     if (walletAddress) {
       dispatch(getAllCollections());
@@ -241,9 +247,6 @@ const AccountMenu = function () {
 
   return (
     <div className="mainside d-flex">
-      <span onClick={toggleTheme} className="cursor-pointer me-3 my-auto">
-        <FontAwesomeIcon icon={theme === 'dark' ? faMoon : faSun} color="#fff" />
-      </span>
       {!walletAddress && (
         <div className="connect-wal">
           <NavLink onClick={connectWalletPressed}>Connect Wallet</NavLink>
@@ -266,7 +269,7 @@ const AccountMenu = function () {
                 <h4>My Wallet</h4>
                 <div className="d-flex justify-content-between">
                   <span id="wallet" className="d-wallet-address">
-                    {user.cnsProfile?.name ?? shortAddress(walletAddress)}
+                    {user.profile?.username ?? shortAddress(walletAddress)}
                   </span>
                   <button className="btn_menu" title="Copy Address" onClick={handleCopy(walletAddress)}>
                     Copy
@@ -408,11 +411,19 @@ const AccountMenu = function () {
               <div className="d-line"></div>
               <ul className="de-submenu-profile">
                 <li>
-                  <span onClick={() => navigateTo(`/nfts`)}>
+                  <span onClick={() => navigateTo(`/account/${walletAddress}`)}>
                     <span>
-                      <FontAwesomeIcon icon={faImage} />
+                      <FontAwesomeIcon icon={faUser} />
                     </span>
-                    <span>My NFTs</span>
+                    <span>My Profile</span>
+                  </span>
+                </li>
+                <li>
+                  <span onClick={() => navigateTo(`/account/settings/profile`)}>
+                    <span>
+                      <FontAwesomeIcon icon={faEdit} />
+                    </span>
+                    <span>Edit Account</span>
                   </span>
                 </li>
                 <li className="my-offers-menu-item">

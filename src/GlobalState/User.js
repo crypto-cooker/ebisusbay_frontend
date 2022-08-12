@@ -32,10 +32,10 @@ import { captureException } from '@sentry/react';
 import { setThemeInStorage } from '../helpers/storage';
 import { getAllOffers } from '../core/subgraph';
 import { offerState } from '../core/api/enums';
-import { CNS, TextRecords } from '@cnsdomains/core';
 import { txExtras } from '../core/constants';
 import { appConfig } from '../Config';
 import { MarketFilterCollection } from '../Components/Models/market-filters.model';
+import {getProfile} from "@src/core/cms/endpoints/profile";
 
 const config = appConfig();
 
@@ -56,13 +56,15 @@ const userSlice = createSlice({
     needsOnboard: false,
     isStaking: false,
 
+    // Signatures
+    authSignature: null,
+
     // Contracts
     membershipContract: null,
     marketContract: null,
     stakeContract: null,
     auctionContract: null,
     offerContract: null,
-    cnsContract: null,
 
     correctChain: false,
     showWrongChainModal: false,
@@ -106,7 +108,7 @@ const userSlice = createSlice({
     // Theme
     theme: 'dark',
 
-    cnsProfile: {},
+    profile: {},
   },
   reducers: {
     accountChanged(state, action) {
@@ -125,6 +127,10 @@ const userSlice = createSlice({
       state.auctionContract = action.payload.auctionContract;
       state.offerContract = action.payload.offerContract;
       state.gettingContractData = false;
+    },
+
+    setAuthSigner(state, action) {
+      state.authSignature = action.payload;
     },
 
     onCorrectChain(state, action) {
@@ -320,7 +326,7 @@ const userSlice = createSlice({
       state.mySoldNfts = [];
       state.myUnfilteredListingsFetching = false;
       state.myUnfilteredListings = [];
-      state.cnsProfile = {};
+      state.profile = {};
     },
     onThemeChanged(state, action) {
       state.theme = action.payload;
@@ -345,14 +351,15 @@ const userSlice = createSlice({
     onOutstandingOffersFound(state, action) {
       state.hasOutstandingOffers = action.payload;
     },
-    setCnsProfile(state, action) {
-      state.cnsProfile = action.payload;
+    setProfile(state, action) {
+      state.profile = action.payload;
     },
   },
 });
 
 export const {
   accountChanged,
+  setAuthSigner,
   onProvider,
   fetchingNfts,
   onNftsLoaded,
@@ -390,7 +397,7 @@ export const {
   setVIPCount,
   setStakeCount,
   onOutstandingOffersFound,
-  setCnsProfile,
+  setProfile,
 } = userSlice.actions;
 export const user = userSlice.reducer;
 
@@ -557,7 +564,7 @@ export const connectAccount =
       let stakeCount = 0;
       let stakingRewards = 0;
 
-      dispatch(retrieveCnsProfile());
+      dispatch(retrieveProfile());
 
       if (signer && correctChain) {
         mc = new Contract(config.contracts.membership, Membership.abi, signer);
@@ -891,33 +898,15 @@ export const updateBalance = () => async (dispatch, getState) => {
   dispatch(userSlice.actions.balanceUpdated(balance));
 };
 
-export const retrieveCnsProfile = () => async (dispatch, getState) => {
+export const retrieveProfile = () => async (dispatch, getState) => {
   const { user } = getState();
-  const { address, provider } = user;
-  if (!user.provider) return;
+  const { address } = user;
 
   try {
-    let cnsProfile = {};
-    const cns = new CNS(config.chain.id, provider);
-    cnsProfile.name = await cns.getName(address);
-    if (cnsProfile.name) {
-      cnsProfile.twitter = await cns.name(cnsProfile.name).getText(TextRecords.Twitter);
-      cnsProfile.avatar = await cns.name(cnsProfile.name).getText(TextRecords.Avatar);
-      cnsProfile.discord = await cns.name(cnsProfile.name).getText(TextRecords.Discord);
-      cnsProfile.telegram = await cns.name(cnsProfile.name).getText(TextRecords.Telegram);
-      cnsProfile.instagram = await cns.name(cnsProfile.name).getText(TextRecords.Instagram);
-      cnsProfile.email = await cns.name(cnsProfile.name).getText(TextRecords.Email);
-      cnsProfile.url = await cns.name(cnsProfile.name).getText(TextRecords.Url);
-
-      // cnsProfile.details = await cns.name(cnsProfile.name).getDetails();
-      // cnsProfile.owner = await cns.name(cnsProfile.name).getOwner();
-      // cnsProfile.content = await cns.name(cnsProfile.name).getContent();
-      // cnsProfile.address = await cns.name(cnsProfile.name).getAddress();
-      // cnsProfile.resolverAddr = await cns.name(cnsProfile.name).getResolverAddr();
-    }
-    dispatch(setCnsProfile(cnsProfile));
+    let profile = await getProfile(address);
+    dispatch(setProfile(profile?.data ?? {}));
   } catch (e) {
-    console.log('cns error', e);
+    console.log('failed to retrieve profile', e);
   }
 };
 

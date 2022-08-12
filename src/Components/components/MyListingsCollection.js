@@ -1,14 +1,9 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  // clearMySales,
-  clearMyUnfilteredListings,
-  // fetchSales,
-  fetchUnfilteredListings,
   MyListingsCollectionPageActions,
 } from '../../GlobalState/User';
 import { Form, Spinner } from 'react-bootstrap';
-import { getAnalytics, logEvent } from '@firebase/analytics';
 import MyListingCard from './MyListingCard';
 import MyNftCancelDialog from './MyNftCancelDialog';
 import InvalidListingsPopup from './InvalidListingsPopup';
@@ -16,47 +11,43 @@ import InvalidListingsPopup from './InvalidListingsPopup';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import InfiniteScroll from 'react-infinite-scroll-component';
-// import SoldNftCard from './SoldNftCard';
 
 import { useRouter } from 'next/router';
+import {getUnfilteredListingsForAddress} from "@src/core/api";
+import useSWRInfinite from "swr/infinite";
+
+const fetcher = async (...args) => {
+  const [key, address, provider, page] = args;
+  return await getUnfilteredListingsForAddress(address, provider, page);
+};
 
 const MyListingsCollection = ({ walletAddress = null }) => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const [width, setWidth] = useState(0);
-  const isLoading = useSelector((state) => state.user.myUnfilteredListingsFetching);
-  const myListings = useSelector((state) => state.user.myUnfilteredListings);
-  const myUnfilteredListingsInvalidOnly = useSelector((state) => state.user.myUnfilteredListingsInvalidOnly);
-  const canLoadMore = useSelector((state) => {
-    return (
-      state.user.myUnfilteredListingsCurPage === 0 ||
-      state.user.myUnfilteredListingsCurPage < state.user.myUnfilteredListingsTotalPages
-    );
-  });
 
-  const onImgLoad = ({ target: img }) => {
-    let currentWidth = width;
-    if (currentWidth < img.offsetWidth) {
-      setWidth(img.offsetWidth);
-    }
-  };
 
-  useEffect(() => {
-    dispatch(clearMyUnfilteredListings());
-    dispatch(fetchUnfilteredListings(walletAddress));
-    // eslint-disable-next-line
-  }, [walletAddress]);
+  const [showInvalidOnly, setShowInvalidOnly] = useState(false);
+  const user = useSelector((state) => state.user);
+  const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite((index) => {
+    return ['MyListingsCollection', walletAddress, user.provider, index + 1]
+  }, fetcher);
 
-  useEffect(() => {
-    logEvent(getAnalytics(), 'screen_view', {
-      firebase_screen: 'my_sales',
-    });
-  }, []);
+  const myListings = data ? [].concat(...data) : [];
+  const isLoadingInitialData = !data && !error;
+  const isLoadingMore =
+    isLoadingInitialData ||
+    (size > 0 && data && typeof data[size - 1] === "undefined");
+  const isEmpty = data?.[0]?.length === 0;
+  const isReachingEnd =
+    isEmpty || (data && data[data.length - 1]?.length < 50);
+  const isRefreshing = isValidating && data && data.length === size;
+
+  const filteredListings = myListings
+    .filter((x) => x.listed)
+    .filter((x) => (showInvalidOnly ? !x.valid : true));
 
   const loadMore = () => {
-    if (!isLoading) {
-      dispatch(fetchUnfilteredListings(walletAddress));
-    }
+    setSize(size + 1);
   };
 
   return (
@@ -97,10 +88,8 @@ const MyListingsCollection = ({ walletAddress = null }) => {
             <Form.Switch
               className=""
               label={'Only invalid'}
-              checked={myUnfilteredListingsInvalidOnly}
-              onChange={() =>
-                dispatch(MyListingsCollectionPageActions.setInvalidOnly(!myUnfilteredListingsInvalidOnly))
-              }
+              checked={showInvalidOnly}
+              onChange={() => setShowInvalidOnly(!showInvalidOnly)}
             />
           </div>
         </div>
@@ -109,7 +98,7 @@ const MyListingsCollection = ({ walletAddress = null }) => {
         <InfiniteScroll
           dataLength={myListings.length}
           next={loadMore}
-          hasMore={canLoadMore}
+          hasMore={!isReachingEnd}
           style={{ overflow: 'hidden' }}
           loader={
             <div className="row">
@@ -122,34 +111,28 @@ const MyListingsCollection = ({ walletAddress = null }) => {
           }
         >
           <div className="card-group">
-            {myListings &&
-              myListings
-                .filter((x) => x.listed)
-                .filter((x) => (myUnfilteredListingsInvalidOnly ? !x.valid : true))
-                .map((nft, index) => (
-                  <div key={index} className="d-item col-lg-6 col-md-12 mb-4 px-2">
-                    <MyListingCard
-                      nft={nft}
-                      key={index}
-                      onImgLoad={onImgLoad}
-                      width={width}
-                      canCancel={nft.state === 0}
-                      canUpdate={nft.state === 0 && nft.isInWallet}
-                      onUpdateButtonPressed={() =>{
-                        dispatch(MyListingsCollectionPageActions.showMyNftPageListDialog(nft))
-                        router.push(`/nfts/sell?collectionId=${nft.address}&nftId=${nft.id}`)
-                      }}
-                      onCancelButtonPressed={() =>
-                        dispatch(MyListingsCollectionPageActions.showMyNftPageCancelDialog(nft))
-                      }
-                      newTab={true}
-                    />
-                  </div>
-                ))}
+            {myListings && filteredListings.map((nft, index) => (
+              <div key={index} className="d-item col-lg-6 col-md-12 mb-4 px-2">
+                <MyListingCard
+                  nft={nft}
+                  key={index}
+                  canCancel={nft.state === 0}
+                  canUpdate={nft.state === 0 && nft.isInWallet}
+                  onUpdateButtonPressed={() =>{
+                    dispatch(MyListingsCollectionPageActions.showMyNftPageListDialog(nft))
+                    router.push(`/nfts/sell?collectionId=${nft.address}&nftId=${nft.id}`)
+                  }}
+                  onCancelButtonPressed={() =>
+                    dispatch(MyListingsCollectionPageActions.showMyNftPageCancelDialog(nft))
+                  }
+                  newTab={true}
+                />
+              </div>
+            ))}
           </div>
         </InfiniteScroll>
       </div>
-      {!isLoading && myListings.length === 0 && (
+      {(isEmpty || (!isLoadingInitialData && !filteredListings.length > 0)) && (
         <div className="row mt-4">
           <div className="col-lg-12 text-center">
             <span>Nothing to see here...</span>

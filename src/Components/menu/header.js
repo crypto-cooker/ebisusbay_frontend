@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Link from 'next/link';
 import { createGlobalStyle } from 'styled-components';
 import useBreakpoint from 'use-breakpoint';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+
 import AccountMenu from '../components/AccountMenu';
+import NotificationMenu from '../components/NotificationMenu';
 import InvalidListingWarning from '../components/InvalidListingWarning';
-// import { setTheme } from '../../GlobalState/User';
+import { setTheme } from '@src/GlobalState/User';
+import useFeatureFlag from "@src/hooks/useFeatureFlag";
+import Constants from "@src/constants";
 
 const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
 
@@ -31,18 +37,19 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 const Header = function () {
+  const dispatch = useDispatch();
+  const theme = useSelector((state) => state.user.theme);
   const [showMenu, setShowMenu] = useState(false);
-  const theme = useSelector((state) => {
-    return state.user.theme;
-  });
   const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
   const [useMobileMenu, setUseMobileMenu] = useState(false);
 
-  // const dispatch = useDispatch();
-  // const toggleTheme = () => {
-  //   const newTheme = theme === 'light' ? 'dark' : 'light';
-  //   dispatch(setTheme(newTheme));
-  // };
+  const { Features } = Constants;
+  const isNotificationsEnabled = useFeatureFlag(Features.CMS_NOTIFICATIONS);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    dispatch(setTheme(newTheme));
+  };
 
   useEffect(() => {
     setUseMobileMenu(minWidth < BREAKPOINTS.l);
@@ -183,6 +190,15 @@ const Header = function () {
             </div>
           )}
 
+          <div className="mainside d-flex">
+            <span onClick={toggleTheme} className="cursor-pointer me-3 my-auto">
+              <FontAwesomeIcon icon={theme === 'dark' ? faMoon : faSun} color="#fff" />
+            </span>
+          </div>
+
+          {isNotificationsEnabled && (
+            <NotificationMenu />
+          )}
           <AccountMenu />
           <InvalidListingWarning size={'2x'} />
         </div>

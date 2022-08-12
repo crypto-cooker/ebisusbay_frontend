@@ -101,7 +101,7 @@ const AuctionComponent = (props) => {
                       <BuyerActionBar />
                     </div>
                     <div className="row" style={{ gap: '2rem 0' }}>
-                      <ProfilePreview type="Seller" address={listing.seller} to={`/seller/${listing.seller}`} />
+                      <ProfilePreview type="Seller" address={listing.seller} to={`/account/${listing.seller}`} />
                       <ProfilePreview
                         type="Collection"
                         title={collection.name}
@@ -196,7 +196,7 @@ const AuctionComponent = (props) => {
                               <>
                                 {bidHistory.map((item, index) => (
                                   <div className="p_list" key={index}>
-                                    <Link href={`/seller/${item.bidder}`}>
+                                    <Link href={`/account/${item.bidder}`}>
                                       <a>
                                         <div className="p_list_pp">
                                           <span>
@@ -209,7 +209,7 @@ const AuctionComponent = (props) => {
                                     </Link>
                                     <div className="p_list_info">
                                       <b>
-                                        <Link href={`/seller/${item.bidder}`}>
+                                        <Link href={`/account/${item.bidder}`}>
                                           <a>{shortAddress(item.bidder)}</a>
                                         </Link>
                                       </b>{' '}

@@ -4,9 +4,9 @@ import blacklist from './core/configs/blacklist.json';
 import attributes from './core/configs/attributes.json';
 import { useEffect, useRef } from 'react';
 import IPFSGatewayTools from '@pinata/ipfs-gateway-tools/dist/node';
-import { getCnsName } from './helpers/cns';
 import { appConfig } from './Config';
 import { hostedImage } from './helpers/image';
+import {getProfile} from "@src/core/cms/endpoints/profile";
 
 const drops = appConfig('drops');
 const collections = appConfig('collections');
@@ -617,10 +617,12 @@ export const isAddress = (address) => {
 };
 
 export const getUserDisplayName = async (address) => {
-  let cnsName = await getCnsName(address);
-  if (Array.isArray(cnsName)) cnsName = cnsName[0];
+  if (!address) return '';
 
-  return cnsName ?? shortAddress(address);
+  let profile = await getProfile(address);
+  if (profile?.data) return profile.data.username;
+
+  return shortAddress(address);
 };
 
 export const isEmptyObj = (obj) => {
@@ -679,3 +681,16 @@ export const fetcher =
     const method = arg1;
     return library[method](arg2, ...params);
   };
+
+
+export const buildTwitterUrl = (username) => {
+  if (!username || username.startsWith('http')) return username;
+
+  return `https://twitter.com/${username}`;
+}
+
+export const buildInstagramUrl = (username) => {
+  if (!username || username.startsWith('http')) return username;
+
+  return `https://instagram.com/${username}`;
+}

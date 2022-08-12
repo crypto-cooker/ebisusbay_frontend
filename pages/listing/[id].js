@@ -16,8 +16,8 @@ import ReactPlayer from 'react-player';
 import ProfilePreview from '../../src/Components/components/ProfilePreview';
 import LayeredIcon from '../../src/Components/components/LayeredIcon';
 import Footer from '../../src/Components/components/Footer';
-import { getListingDetails, listingUpdated } from '../../src/GlobalState/listingSlice';
-import { connectAccount, chainConnect } from '../../src/GlobalState/User';
+import { getListingDetails, listingUpdated } from '@src/GlobalState/listingSlice';
+import { connectAccount, chainConnect } from '@src/GlobalState/User';
 import {
   findCollectionByAddress,
   createSuccessfulTransactionToastContent,
@@ -31,11 +31,11 @@ import {
   isBabyWeirdApesCollection,
   isUserBlacklisted,
   isNftBlacklisted, rankingsLogoForCollection, rankingsTitleForCollection, rankingsLinkForCollection,
-} from '../../src/utils';
-import {specialImageTransform} from '../../src/hacks';
+} from '@src/utils';
+import {specialImageTransform} from '@src/hacks';
 import NFTTabOffers from '../../src/Components/Offer/NFTTabOffers';
-import {appConfig} from "../../src/Config";
-import {hostedImage} from "../../src/helpers/image";
+import {appConfig} from "@src/Config";
+import {hostedImage} from "@src/helpers/image";
 import PageHead from "../../src/Components/Head/PageHead";
 
 const config = appConfig();
@@ -327,7 +327,7 @@ const Listing = () => {
                     </div>
                   )}
                   <div className="row" style={{ gap: '2rem 0' }}>
-                    <ProfilePreview type="Seller" address={listing.seller} to={`/seller/${listing.seller}`} />
+                    <ProfilePreview type="Seller" address={listing.seller} to={`/account/${listing.seller}`} />
                     <ProfilePreview
                       type="Collection"
                       title={collection.name}
@@ -496,7 +496,7 @@ const Listing = () => {
                             <>
                               {history.map((item, index) => (
                                 <div className="p_list" key={index}>
-                                  <Link href={`/seller/${item.purchaser}`}>
+                                  <Link href={`/account/${item.purchaser}`}>
                                     <a>
                                       <div className="p_list_pp">
                                         <span>
@@ -511,7 +511,7 @@ const Listing = () => {
                                     <span>{timeSince(item.saleTime + '000')} ago</span>
                                     Bought by{' '}
                                     <b>
-                                      <Link href={`/seller/${item.purchaser}`}>
+                                      <Link href={`/account/${item.purchaser}`}>
                                         <a>{shortAddress(item.purchaser)}</a>
                                       </Link>
                                     </b>{' '}

@@ -123,7 +123,7 @@ export default function OffersRow({ data, type }) {
     <>
       <TableRowContainer>
         <div className="table-row-item address">
-          <Link href={`/seller/${data.buyer}`}>
+          <Link href={`/account/${data.buyer}`}>
             <a>
               <Blockies seed={data.buyer} size={6} scale={5} className="blockies" />
               <span className="my-auto">{shortAddress(data.buyer)}</span>

@@ -1,5 +1,9 @@
 @import './colors';
 
+textarea {
+  resize: none;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
@@ -116,6 +120,11 @@ canvas {
   width: 100%;
   border-radius: 100% !important;
   cursor: pointer;
+}
+
+/* round border for all Blockies */
+.identicon {
+  border-radius: 100% !important;
 }
 
 /* User menu buttons */
@@ -654,6 +663,135 @@ canvas {
     -o-transform: rotate(360deg);
     transform: rotate(360deg);
   }
+}
+
+
+.form-field {
+  label {
+    margin-bottom: 2px;
+  }
+
+  .label-container {
+    display: flex;
+    justify-content: space-between;
+
+    label {
+      font-size: 12px;
+      padding-top: 6px;
+    }
+
+    .required-label {
+      color: $errorColor1;
+    }
+  }
+
+  .title {
+    font-size: 18px !important;
+  }
+
+  .field-description {
+    font-size: 12px !important;
+  }
+
+  input {
+    margin-bottom: 0px;
+  }
+
+  input:disabled {
+    background-color: $bgColor1 !important;
+  }
+}
+
+.link-text-form {
+  font-size: 12px !important;
+  cursor: pointer;
+  position: absolute;
+  margin-top: -8px;
+}
+
+.field-message-error {
+  input {
+    border: 1px solid $errorColor1;
+  }
+
+  .field-description {
+    color: $errorColor1 !important;
+  }
+}
+
+.radio-group {
+  margin-bottom: 2px;
+
+  legend {
+    font-size: 18px;
+  }
+
+  input {
+    margin-right: 8px;
+  }
+}
+
+.upload-container {
+  display: flex;
+  padding-top: 16px;
+  overflow: scroll;
+  overflow-y: hidden;
+
+  .upload-asset {
+    position: relative;
+    margin-right: 28px;
+
+    .closable {
+      position: absolute;
+      height: 24px;
+      width: 24px;
+      border-radius: 50%;
+      border: 1px solid $borderColor2;
+      background-color: $bgColor3;
+      top: -8px;
+      right: -8px;
+      cursor: pointer;
+      text-align: center;
+      font-size: 14px;
+
+      &:hover {
+        color: $textColor1;
+        background-color: $bgColor1;
+        border: 1px solid $textColor1;
+      }
+    }
+
+    .card {
+      width: 90px;
+      height: 90px;
+      cursor: pointer;
+      background-color: $bgColor3;
+
+      .card-body {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        padding: 0;
+
+        .icon {
+          margin: 0 auto 0 auto;
+          width: 25px;
+          height: 25px;
+        }
+
+        .card-text {
+          font-size: 12px;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+.pfp-setting {
+  position: absolute;
+  top: 45%;
+  left: 45%;
 }
 
 .react-player__preview {

@@ -23,7 +23,6 @@ const GlobalStyles = createGlobalStyle`
     background-blend-mode: multiply;
   }
   .jumbotron.breadcumb.no-bg.tint {
-
     background-image: url(${({ isDark }) =>
       isDark ? '/img/background/header-dark.webp' : '/img/background/Ebisu-DT-Header.webp'});
     background-repeat: no-repeat;

@@ -1681,8 +1681,8 @@
       "metadata": {
         "description": "It's quiet now. Humanity has ended. https://thecrobots.com",
         "verified": true,
-        "avatar": "/img/collections/crobots/avatar.png",
-        "card": "/img/collections/crobots/card.jpg",
+        "avatar": "/img/collections/crobots/avatar.webp",
+        "card": "/img/collections/crobots/card.webp",
         "banner": "/img/collections/crobots/banner.webp",
         "website": "https://TheCrobots.com",
         "twitter": "https://twitter.com/thecrobots",
@@ -7009,7 +7009,7 @@
       "name": "GymKongz",
       "slug": "gymkongz",
       "multiToken": false,
-      "address": "0x42AbFb212A55D36c605cf39c9d59D118318c1E77",
+      "address": "0x133D5b18977cdDd191528789B5DB954622Aab754",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -7021,7 +7021,8 @@
         "maxSupply": 10000,
         "website": "https://www.gymkongz.com/",
         "twitter": "https://twitter.com/gymkongz",
-        "discord": "https://discord.gg/qJru6Av9h3"
+        "discord": "https://discord.gg/qJru6Av9h3",
+        "gitbook": "https://gymkongz.gitbook.io/gymkongz/"
       }
     },
     {
@@ -7126,7 +7127,7 @@
       "name": "Trippin Panda",
       "slug": "trippin-panda",
       "multiToken": false,
-      "address": "",
+      "address": "0xCA8b7150B3A29CFe07a77Dc70A5714900BebBE15",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -9954,9 +9955,10 @@
         "name": "GymKongz",
         "website": "https://www.gymkongz.com/",
         "twitter": "https://twitter.com/gymkongz",
-        "discord": "https://discord.gg/qJru6Av9h3"
+        "discord": "https://discord.gg/qJru6Av9h3",
+        "gitbook": "https://gymkongz.gitbook.io/gymkongz/"
       },
-      "address": "0x42AbFb212A55D36c605cf39c9d59D118318c1E77",
+      "address": "0x133D5b18977cdDd191528789B5DB954622Aab754",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 10000,
@@ -9988,7 +9990,7 @@
         "discord": "https://discord.gg/QfqRAystVh",
         "medium": "https://medium.com/@trippinpanda76/pandapaper-b6e0c30e23fe"
       },
-      "address": "",
+      "address": "0xCA8b7150B3A29CFe07a77Dc70A5714900BebBE15",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 1000,

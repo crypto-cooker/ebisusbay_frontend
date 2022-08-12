@@ -203,12 +203,12 @@ const SalesCollection = ({
                   <td>{listing.nft.rank ?? '-'}</td>
                   <td style={{ minWidth: '100px' }}>{ethers.utils.commify(Math.round(listing.price))} CRO</td>
                   <td>
-                    <Link href={`/seller/${listing.seller}`}>
+                    <Link href={`/account/${listing.seller}`}>
                       <a>{shortAddress(listing.seller)}</a>
                     </Link>
                   </td>
                   <td>
-                    <Link href={`/seller/${listing.purchaser}`}>
+                    <Link href={`/account/${listing.purchaser}`}>
                       <a>{shortAddress(listing.purchaser)}</a>
                     </Link>
                   </td>

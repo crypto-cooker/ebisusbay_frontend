@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 import MultiDrop from '../../src/Components/Drop/multiDrop';
 import SingleDrop from '../../src/Components/Drop/singleDrop';
 import CronosverseDrop from '../../src/Components/Drop/CronosverseDrop';
-import {caseInsensitiveCompare} from "../../src/utils";
-import {appConfig} from "../../src/Config";
+import {caseInsensitiveCompare} from "@src/utils";
+import {appConfig} from "@src/Config";
 import PageHead from "../../src/Components/Head/PageHead";
 
 export const drops = appConfig('drops');
