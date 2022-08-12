@@ -7021,7 +7021,8 @@
         "maxSupply": 10000,
         "website": "https://www.gymkongz.com/",
         "twitter": "https://twitter.com/gymkongz",
-        "discord": "https://discord.gg/qJru6Av9h3"
+        "discord": "https://discord.gg/qJru6Av9h3",
+        "gitbook": "https://gymkongz.gitbook.io/gymkongz/"
       }
     },
     {
@@ -9954,7 +9955,8 @@
         "name": "GymKongz",
         "website": "https://www.gymkongz.com/",
         "twitter": "https://twitter.com/gymkongz",
-        "discord": "https://discord.gg/qJru6Av9h3"
+        "discord": "https://discord.gg/qJru6Av9h3",
+        "gitbook": "https://gymkongz.gitbook.io/gymkongz/"
       },
       "address": "0x133D5b18977cdDd191528789B5DB954622Aab754",
       "maxMintPerTx": 10,
