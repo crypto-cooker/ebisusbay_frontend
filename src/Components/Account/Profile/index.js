@@ -36,7 +36,7 @@ export default function Profile({ address, profile, tab }) {
 
   const [currentTab, setCurrentTab] = React.useState(tab ?? tabs.inventory);
   const handleTabChange = useCallback((newTab) => {
-    pushQueryString(router, {address, tab: newTab});
+    pushQueryString(router, {address: profile.username ?? address, tab: newTab});
     setCurrentTab(newTab);
   }, [address]);
 
