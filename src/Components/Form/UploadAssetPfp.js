@@ -6,6 +6,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useGetSettings from '../Account/Settings/hooks/useGetSettings';
 import useUpdatePfp from '../Account/Settings/hooks/useUpdatePfp';
+import styles from "@src/Components/Account/Settings/Profile/Pfp/pfp.module.scss";
 
 const UploadAssetPfp = ({
   id,
@@ -96,13 +97,13 @@ const UploadAssetPfp = ({
           isVideo ? (
             <video src={value.result} />
           ) : isImage ? (
-            <div>
-              <img src={value.result} style={{ width: '125px', height: '125px', borderRadius: '100px' }} />
+            <div className={styles.pfp}>
+              <img src={value.result} />
             </div>
           ) : null
         ) : url ? (
-          <div>
-            <img src={url} style={{ width: '125px', height: '125px', borderRadius: '100px' }} />
+          <div className={styles.pfp}>
+            <img src={url} />
           </div>
         ) : (
           <div className="cursor-pointer">

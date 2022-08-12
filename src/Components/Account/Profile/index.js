@@ -46,7 +46,9 @@ export default function Profile({ address, profile, tab }) {
   }, [user, address])
 
   const username = profile.username ?? shortAddress(address);
-  const profilePicture = profile.profilePicture ?? hostedImage('/img/avatar.jpg');
+  const profilePicture = profile.profilePicture ?
+    ImageKitService.from(profile.profilePicture).setWidth(200).setHeight(200).buildUrl() :
+    hostedImage('/img/avatar.jpg');
 
   return (
     <div className={styles.profile}>
