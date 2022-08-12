@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Contract, ethers } from 'ethers';
-import { faCrow, faExternalLinkAlt, faHeart } from '@fortawesome/free-solid-svg-icons';
+import {faCrow, faExternalLinkAlt, faHeart, faShare, faSync} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import { Spinner } from 'react-bootstrap';
@@ -28,7 +28,7 @@ import {
   rankingsLinkForCollection,
   isLazyHorseCollection, isLazyHorsePonyCollection, isLadyWeirdApesCollection,
 } from '../../utils';
-import { getNftDetails } from '../../GlobalState/nftSlice';
+import {getNftDetails, refreshMetadata} from '../../GlobalState/nftSlice';
 import { connectAccount, chainConnect } from '../../GlobalState/User';
 import { specialImageTransform } from '../../hacks';
 import ListingItem from '../NftDetails/NFTTabListings/ListingItem';
@@ -44,6 +44,7 @@ import { appConfig } from '../../Config';
 import { hostedImage } from '../../helpers/image';
 import Link from 'next/link';
 import axios from "axios";
+import Button from "@src/Components/components/common/Button";
 
 const config = appConfig();
 const knownContracts = config.collections;
@@ -59,7 +60,7 @@ const Nft721 = ({ address, id }) => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user);
-  const nft = useSelector((state) => state.nft.nft);
+  const {nft, refreshing} = useSelector((state) => state.nft);
 
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [offerType, setOfferType] = useState(OFFER_TYPE.none);
@@ -312,6 +313,10 @@ const Nft721 = ({ address, id }) => {
     }
   };
 
+  const onRefreshMetadata = () => {
+    dispatch(refreshMetadata(address, id));
+  };
+
   useEffect(() => {
     async function func() {
       const filteredOffers = await getFilteredOffers(nft.address, nft.id.toString(), user.address);
@@ -366,18 +371,34 @@ const Nft721 = ({ address, id }) => {
               )}
               {nft && nft.original_image && (
                 <div className="nft__item_action mt-2" style={{ cursor: 'pointer' }}>
-                  <span
-                    onClick={() =>
+                  {/*<ButtonGroup>*/}
+                  {/*  <Button styleType="default-outlined">*/}
+                  {/*    Increase Bid*/}
+                  {/*  </Button>*/}
+                  {/*  <Button styleType="default-outlined" title="Share" onClick={() => onShare()}>*/}
+                  {/*    <FontAwesomeIcon icon={faShare} />*/}
+                  {/*  </Button>*/}
+                  {/*  <Button styleType="default-outlined" title="Refresh Metadata" onClick={() => onRefreshMetadata()}>*/}
+                  {/*    <FontAwesomeIcon icon={faSync} />*/}
+                  {/*  </Button>*/}
+                  {/*  <Button styleType="default-outlined" title="View Full Image" onClick={() =>*/}
+                  {/*    typeof window !== 'undefined' &&*/}
+                  {/*    window.open(specialImageTransform(address, fullImage()), '_blank')*/}
+                  {/*  }>*/}
+                  {/*    <FontAwesomeIcon icon={faExternalLinkAlt} />*/}
+                  {/*  </Button>*/}
+                  {/*</ButtonGroup>*/}
+                  <div className="d-flex justify-content-center">
+                    <Button styleType="default-outlined" title="Refresh Metadata" onClick={() => onRefreshMetadata()}>
+                      {refreshing ? <FontAwesomeIcon icon={faSync} spin/> : <FontAwesomeIcon icon={faSync}/>}
+                    </Button>
+                    <Button styleType="default-outlined" className="ms-2" title="View Full Image" onClick={() =>
                       typeof window !== 'undefined' &&
                       window.open(specialImageTransform(address, fullImage()), '_blank')
-                    }
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <span className="p-2">View Full Image</span>
-                    <div style={{ width: '14px' }}>
+                    }>
                       <FontAwesomeIcon icon={faExternalLinkAlt} />
-                    </div>
-                  </span>
+                    </Button>
+                  </div>
                 </div>
               )}
             </div>

@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getNft } from '../core/api';
 import { listingState } from '../core/api/enums';
+import {refreshToken} from "@src/core/api/endpoints/refresh";
 
 const nftSlice = createSlice({
   name: 'nft',
@@ -11,6 +12,7 @@ const nftSlice = createSlice({
     history: [],
     powertraits: [],
     currentListing: null,
+    refreshing: false
   },
   reducers: {
     nftLoading: (state) => {
@@ -25,10 +27,16 @@ const nftSlice = createSlice({
       state.powertraits = action.payload.powertraits ?? [];
       state.currentListing = action.payload.currentListing;
     },
+    nftRefreshing: (state) => {
+      state.refreshing = true;
+    },
+    nftRefreshingComplete: (state) => {
+      state.refreshing = false;
+    }
   },
 });
 
-export const { nftLoading, nftReceived } = nftSlice.actions;
+export const { nftLoading, nftReceived, nftRefreshing, nftRefreshingComplete } = nftSlice.actions;
 
 export default nftSlice.reducer;
 
@@ -45,3 +53,9 @@ export const getNftDetails = (collectionAddress, nftId) => async (dispatch, getS
   dispatch(nftReceived(response));
   return response.nft;
 };
+
+export const refreshMetadata = (collectionAddress, nftId) => async (dispatch, getState) => {
+  dispatch(nftRefreshing());
+  await refreshToken(collectionAddress, nftId);
+  dispatch(nftRefreshingComplete());
+}
