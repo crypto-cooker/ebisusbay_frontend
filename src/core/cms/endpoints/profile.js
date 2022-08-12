@@ -6,11 +6,11 @@ const api = axios.create({
   baseURL: config.urls.cms,
 });
 
-export const getProfile = async (addressOrSlug) => {
+export const getProfile = async (addressOrUsername) => {
   try {
     const response = await api.get('profile', {
       params: {
-        walletAddress: addressOrSlug
+        walletAddress: addressOrUsername
       }
     })
     return response.data;
