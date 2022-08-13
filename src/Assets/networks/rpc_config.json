@@ -1680,12 +1680,12 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "It's quiet now. Humanity has ended. https://thecrobots.com",
+        "description": "It's quiet now. Humanity has ended.",
         "verified": true,
         "avatar": "/img/collections/crobots/avatar.webp",
         "card": "/img/collections/crobots/card.webp",
         "banner": "/img/collections/crobots/banner.webp",
-        "website": "https://TheCrobots.com",
+        "website": "https://www.crobotverse.com/",
         "twitter": "https://twitter.com/thecrobots",
         "discord": "https://discord.gg/crobots"
       }
