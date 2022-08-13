@@ -313,9 +313,9 @@ const Nft721 = ({ address, id }) => {
     }
   };
 
-  const onRefreshMetadata = () => {
+  const onRefreshMetadata = useCallback(() => {
     dispatch(refreshMetadata(address, id));
-  };
+  }, [address, id]);
 
   useEffect(() => {
     async function func() {
@@ -389,8 +389,8 @@ const Nft721 = ({ address, id }) => {
                   {/*  </Button>*/}
                   {/*</ButtonGroup>*/}
                   <div className="d-flex justify-content-center">
-                    <Button styleType="default-outlined" title="Refresh Metadata" onClick={() => onRefreshMetadata()}>
-                      {refreshing ? <FontAwesomeIcon icon={faSync} spin/> : <FontAwesomeIcon icon={faSync}/>}
+                    <Button styleType="default-outlined" title="Refresh Metadata" onClick={onRefreshMetadata} disabled={refreshing}>
+                      <FontAwesomeIcon icon={faSync} spin={refreshing} />
                     </Button>
                     <Button styleType="default-outlined" className="ms-2" title="View Full Image" onClick={() =>
                       typeof window !== 'undefined' &&

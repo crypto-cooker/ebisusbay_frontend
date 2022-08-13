@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getNft } from '../core/api';
 import { listingState } from '../core/api/enums';
 import {refreshToken} from "@src/core/api/endpoints/refresh";
+import {toast} from "react-toastify";
 
 const nftSlice = createSlice({
   name: 'nft',
@@ -57,5 +58,6 @@ export const getNftDetails = (collectionAddress, nftId) => async (dispatch, getS
 export const refreshMetadata = (collectionAddress, nftId) => async (dispatch, getState) => {
   dispatch(nftRefreshing());
   await refreshToken(collectionAddress, nftId);
+  toast.success('Refresh queued! Check back in a few minutes.')
   dispatch(nftRefreshingComplete());
 }
