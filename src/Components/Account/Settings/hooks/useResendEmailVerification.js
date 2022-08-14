@@ -13,7 +13,7 @@ const useResendEmailVerification = () => {
 
   const [isLoading, getSigner] = useCreateSigner();
 
-  const requestNewSettings = async (data) => {
+  const requestNewSettings = async (address) => {
 
     const config = appConfig();
 
@@ -25,8 +25,6 @@ const useResendEmailVerification = () => {
 
     let signatureInStorage = getAuthSignerInStorage()?.signature;
 
-    const nonce = 'ProfileSettings';
-
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;
@@ -35,7 +33,7 @@ const useResendEmailVerification = () => {
     if (signatureInStorage) {
       try {
 
-        await axios.get(`${config.urls.cms}profile/email-verification?signature=${signatureInStorage}&nonce=${nonce}`);
+        await axios.get(`${config.urls.cms}profile/email-verification?signature=${signatureInStorage}&address=${address}`);
 
         setResponse({
           ...response,

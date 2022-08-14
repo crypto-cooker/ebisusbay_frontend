@@ -54,7 +54,7 @@ const UploadAsset = ({ id, value, accept = 'image/png, image/jpeg, image/jpg', o
       if (settings?.walletAddress) {
         const formData = new FormData();
         formData.append('banner', file);
-        await requestUpdateBanner(formData);
+        await requestUpdateBanner(formData, user.address);
       }
       if (file) setFile(file);
     },

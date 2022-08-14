@@ -10,7 +10,7 @@ const useUpdateBanner = () => {
 
   const [isLoading, getSigner] = useCreateSigner();
 
-  const requestUpdateBanner = async (formData) => {
+  const requestUpdateBanner = async (formData, address) => {
     setResponse({
       ...response,
       loading: true,
@@ -18,7 +18,6 @@ const useUpdateBanner = () => {
     });
 
     let signatureInStorage = getAuthSignerInStorage()?.signature;
-    const nonce = 'ProfileSettings';
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;
@@ -27,7 +26,7 @@ const useUpdateBanner = () => {
       try {
         const fetchResponse = await fetch(
           `http://localhost:4000/profile/update_banner_image?` +
-            new URLSearchParams({ signature: signatureInStorage, nonce }),
+            new URLSearchParams({ signature: signatureInStorage, address }),
           {
             method: 'PATCH',
             body: formData,

@@ -20,7 +20,7 @@ const VerificationEmail = () => {
   const emailVerification = async () => {
 
     let signatureInStorage = getAuthSignerInStorage()?.signature;
-    const nonce = 'ProfileSettings';
+    const address = user.address;
 
     if (!signatureInStorage) {
       const { signature } = await getSigner();
@@ -29,7 +29,7 @@ const VerificationEmail = () => {
 
     if (signatureInStorage) {
       try {
-        const fetchResponse = await axios.post(`${config.urls.cms}profile/email-verification?signature=${signatureInStorage}&nonce=${nonce}&token=${verificationToken}`)
+        const fetchResponse = await axios.post(`${config.urls.cms}profile/email-verification?signature=${signatureInStorage}&address=${address}&token=${verificationToken}`)
         toast.success('Your email was verified');
         router.push(`/account/settings/profile`);
       }

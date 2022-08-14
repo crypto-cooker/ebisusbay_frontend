@@ -14,7 +14,7 @@ const useCreateSettings = () => {
 
   const [isLoading, getSigner] = useCreateSigner();
 
-  const requestNewSettings = async (data) => {
+  const requestNewSettings = async (address, data) => {
     const { userInfo, userBanner, userAvatar } = data.userInfo;
 
     setResponse({
@@ -22,26 +22,26 @@ const useCreateSettings = () => {
       loading: true,
       error: null,
     });
+
     let signatureInStorage = getAuthSignerInStorage()?.signature;
-    const nonce = 'ProfileSettings';
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;
     }
     if (signatureInStorage) {
       try {
-        const fetchResponse = await createProfile(userInfo, signatureInStorage, nonce);
+        const fetchResponse = await createProfile(userInfo, signatureInStorage, address);
 
         if (userAvatar?.profilePicture[0]?.file?.name) {
           const formData = new FormData();
           formData.append('profilePicture', userAvatar?.profilePicture[0].file);
-          await updateAvatar(formData, signatureInStorage, nonce);
+          await updateAvatar(formData, signatureInStorage, address);
         }
         
         if (userBanner?.banner[0]?.file?.name) {
           const formData = new FormData();
           formData.append('banner', userBanner?.banner[0].file);
-          await updateBanner(formData, signatureInStorage, nonce);
+          await updateBanner(formData, signatureInStorage, address);
         }
 
         setResponse({

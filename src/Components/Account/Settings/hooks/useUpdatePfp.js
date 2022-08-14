@@ -10,7 +10,7 @@ const useUpdatePfp = () => {
 
   const [isLoading, getSigner] = useCreateSigner();
 
-  const requestUpdatePfp = async (formData) => {
+  const requestUpdatePfp = async (formData, address) => {
     setResponse({
       ...response,
       loading: true,
@@ -18,7 +18,6 @@ const useUpdatePfp = () => {
     });
 
     let signatureInStorage = getAuthSignerInStorage()?.signature;
-    const nonce = 'ProfileSettings';
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;
@@ -27,7 +26,7 @@ const useUpdatePfp = () => {
       try {
         const fetchResponse = await fetch(
           `http://localhost:4000/profile/update_profile_picture?` +
-            new URLSearchParams({ signature: signatureInStorage, nonce }),
+            new URLSearchParams({ signature: signatureInStorage, address }),
           {
             method: 'PATCH',
             body: formData,

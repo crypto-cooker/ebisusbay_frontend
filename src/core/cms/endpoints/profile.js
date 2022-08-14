@@ -19,12 +19,12 @@ export const getProfile = async (addressOrUsername) => {
   }
 }
 
-export const createProfile = async (formData, signature, nonce) => {
+export const createProfile = async (formData, signature, address) => {
   try {
     const response = await api.post('profile', formData, {
       params: {
         signature,
-        nonce
+        address
       }
     });
 
@@ -34,12 +34,12 @@ export const createProfile = async (formData, signature, nonce) => {
   }
 }
 
-export const updateProfile = async (data, signature, nonce) => {
+export const updateProfile = async (data, signature, address) => {
   try {
     const response = await api.patch('profile', data, {
       params: {
         signature,
-        nonce
+        address
       }
     });
 
@@ -49,20 +49,20 @@ export const updateProfile = async (data, signature, nonce) => {
   }
 }
 
-export const updateAvatar = async (formData, signature, nonce) => {
+export const updateAvatar = async (formData, signature, address) => {
   await api.patch('profile/avatar', formData, {
     params: {
       signature,
-      nonce
+      address
     }
   });
 }
 
-export const updateBanner = async (formData, signature, nonce) => {
+export const updateBanner = async (formData, signature, address) => {
   await api.patch('profile/banner', formData, {
     params: {
       signature,
-      nonce
+      address
     }
   });
 }
