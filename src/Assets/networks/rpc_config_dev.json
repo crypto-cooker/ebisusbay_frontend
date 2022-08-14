@@ -7164,6 +7164,25 @@
         "twitter": "https://www.twitter.com/VVS_finance",
         "discord": "https://discord.gg/V2957zMsmg"
       }
+    },
+    {
+      "name": "Croodle Ape",
+      "slug": "croodle-ape",
+      "multiToken": false,
+      "address": "0xf3a7baeadf59f6900c0202a4680d958b9ad4b713",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Our Artist will start drawing the based character Croodle Ape then add more then 120 traits, we love the doodle style. Then we build our discord channel and Twitter page. We start an aggressive marketing for the biggest free mint of the cronoschain history. Also running contests and giveaways on our socials to increase engagement. ",
+        "verified": false,
+        "avatar": "/img/collections/croodle-ape/avatar.webp",
+        "card": "/img/collections/croodle-ape/card.webp",
+        "banner": "/img/collections/croodle-ape/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://croodleape.com/",
+        "twitter": "https://www.twitter.com/croodleape",
+        "discord": "https://discord.gg/Tj97K4c4Y9"
+      }
     }
   ],
   "drops": [
