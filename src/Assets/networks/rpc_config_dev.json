@@ -885,9 +885,9 @@
       "metadata": {
         "description": "Cro Sharks Collection",
         "verified": false,
-        "avatar": "/img/collections/crosharks/avatar.jpg",
-        "banner": "/img/collections/crosharks/banner.jpg",
-        "card": "/img/collections/crosharks/card.jpg",
+        "avatar": "/img/collections/cro-sharks/avatar.jpg",
+        "banner": "/img/collections/cro-sharks/banner.jpg",
+        "card": "/img/collections/cro-sharks/card.jpg",
         "maxSupply": 2222,
         "website": "https://crosharks.club/",
         "twitter": "https://twitter.com/CroSharks",
@@ -5915,7 +5915,8 @@
         "maxSupply": 100,
         "website": "https://croceanft.com/",
         "twitter": "https://twitter.com/Crocean_NFT",
-        "discord": "https://discord.gg/N9YstjgG2y"
+        "discord": "https://discord.gg/N9YstjgG2y",
+        "telegram": "https://t.me/crowhalesnft"
       }
     },
     {
@@ -7173,7 +7174,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Our Artist will start drawing the based character Croodle Ape then add more then 120 traits, we love the doodle style. Then we build our discord channel and Twitter page. We start an aggressive marketing for the biggest free mint of the cronoschain history. Also running contests and giveaways on our socials to increase engagement. ",
+        "description": "Our Artist will start drawing the based character Croodle Ape then add more then 120 traits, we love the doodle style. Then we build our discord channel and Twitter page. We start an aggressive marketing for the biggest free mint of the cronoschain history. Also running contests and giveaways on our socials to increase engagement.",
         "verified": false,
         "avatar": "/img/collections/croodle-ape/avatar.webp",
         "card": "/img/collections/croodle-ape/card.webp",
@@ -7182,6 +7183,26 @@
         "website": "https://croodleape.com/",
         "twitter": "https://www.twitter.com/croodleape",
         "discord": "https://discord.gg/Tj97K4c4Y9"
+      }
+    },
+    {
+      "name": "Crosharks",
+      "slug": "crosharks",
+      "multiToken": false,
+      "address": "0xc32c0B0C63DC2F5507d0bC2705B6a0199Cc63408",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Crocean is an NFT project that started the Crowhales collection (OG – sold out). The project will initially include 3 collections. You will not experience empty promises as in typical NFT projects about metaverse, P2E, exclusiveness, uniqueness or that your picture becomes threatening when the lights go out. The facts are that everyone wants to sell at higher price than when we minted. The first collection will be 999 Crosharks (3 types of sharks – Cranger, Crovouge, Crofaw). Simply having one of them will make it possible to recover investments through staking NFT or $CRO airdrops.",
+        "verified": false,
+        "avatar": "/img/collections/crosharks/avatar.webp",
+        "card": "/img/collections/crosharks/card.webp",
+        "banner": "/img/collections/crosharks/banner.webp",
+        "maxSupply": 999,
+        "website": "https://croceanft.com/",
+        "twitter": "https://twitter.com/Crocean_NFT",
+        "discord": "https://discord.gg/N9YstjgG2y",
+        "telegram": "https://t.me/crowhalesnft"
       }
     }
   ],
