@@ -66,3 +66,12 @@ export const updateBanner = async (formData, signature, address) => {
     }
   });
 }
+
+export const verifyEmail = async (signature, address) => {
+  return await api.get('profile/email-verification', {
+    params: {
+      signature,
+      address
+    }
+  })
+}
