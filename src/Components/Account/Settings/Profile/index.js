@@ -131,7 +131,10 @@ export default function EditProfile() {
   const handleCnsSync = async () => {
     setIsFetchCns(true);
     const cnsInfo = await getCnsInfo(user?.address);
-    if (!cnsInfo) return;
+    if (!cnsInfo) {
+      setIsFetchCns(false);
+      return;
+    }
 
     const userInfo = values?.userInfo;
     const tempData = {
