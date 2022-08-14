@@ -64,7 +64,7 @@ const UploadAssetPfp = ({
       if (settings?.walletAddress) {
         const formData = new FormData();
         formData.append('profilePicture', file);
-        await requestUpdatePfp(formData);
+        await requestUpdatePfp(formData, user.address);
       }
       if (file) setFile(file);
     },

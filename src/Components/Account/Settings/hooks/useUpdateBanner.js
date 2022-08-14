@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import useCreateSigner from './useCreateSigner';
+import {updateBanner} from "@src/core/cms/endpoints/profile";
 
 const useUpdateBanner = () => {
   const [response, setResponse] = useState({
@@ -10,7 +11,7 @@ const useUpdateBanner = () => {
 
   const [isLoading, getSigner] = useCreateSigner();
 
-  const requestUpdateBanner = async (formData) => {
+  const requestUpdateBanner = async (formData, address) => {
     setResponse({
       ...response,
       loading: true,
@@ -18,21 +19,13 @@ const useUpdateBanner = () => {
     });
 
     let signatureInStorage = getAuthSignerInStorage()?.signature;
-    const nonce = 'ProfileSettings';
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;
     }
     if (signatureInStorage) {
       try {
-        const fetchResponse = await fetch(
-          `http://localhost:4000/profile/update_banner_image?` +
-            new URLSearchParams({ signature: signatureInStorage, nonce }),
-          {
-            method: 'PATCH',
-            body: formData,
-          }
-        );
+        const fetchResponse = await updateBanner(formData, signatureInStorage, address);
 
         setResponse({
           ...response,
@@ -40,7 +33,7 @@ const useUpdateBanner = () => {
           error: null,
         });
 
-        return fetchResponse.json();
+        return fetchResponse.data;
       } catch (error) {
         setResponse({
           ...response,

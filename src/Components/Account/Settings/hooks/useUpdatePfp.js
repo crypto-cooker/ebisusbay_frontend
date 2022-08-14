@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import useCreateSigner from './useCreateSigner';
+import {updateAvatar} from "@src/core/cms/endpoints/profile";
 
 const useUpdatePfp = () => {
   const [response, setResponse] = useState({
@@ -10,7 +11,7 @@ const useUpdatePfp = () => {
 
   const [isLoading, getSigner] = useCreateSigner();
 
-  const requestUpdatePfp = async (formData) => {
+  const requestUpdatePfp = async (formData, address) => {
     setResponse({
       ...response,
       loading: true,
@@ -18,21 +19,13 @@ const useUpdatePfp = () => {
     });
 
     let signatureInStorage = getAuthSignerInStorage()?.signature;
-    const nonce = 'ProfileSettings';
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;
     }
     if (signatureInStorage) {
       try {
-        const fetchResponse = await fetch(
-          `http://localhost:4000/profile/update_profile_picture?` +
-            new URLSearchParams({ signature: signatureInStorage, nonce }),
-          {
-            method: 'PATCH',
-            body: formData,
-          }
-        );
+        const fetchResponse = await updateAvatar(formData, signatureInStorage, address);
 
         setResponse({
           ...response,
@@ -40,7 +33,7 @@ const useUpdatePfp = () => {
           error: null,
         });
 
-        return fetchResponse.json();
+        return fetchResponse.data;
       } catch (error) {
         setResponse({
           ...response,

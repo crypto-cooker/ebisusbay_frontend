@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import TopTabs from '../../../src/Components/Account/Settings/TopTabs';
 import EditProfile from '../../../src/Components/Account/Settings/Profile';
+import Footer from "@src/Components/components/Footer";
 
 export default function Account() {
   const router = useRouter();
@@ -38,6 +39,7 @@ export default function Account() {
           </>
         )}
       </section>
+      <Footer />
     </div>
   );
 }

@@ -131,7 +131,10 @@ export default function EditProfile() {
   const handleCnsSync = async () => {
     setIsFetchCns(true);
     const cnsInfo = await getCnsInfo(user?.address);
-    if (!cnsInfo) return;
+    if (!cnsInfo) {
+      setIsFetchCns(false);
+      return;
+    }
 
     const userInfo = values?.userInfo;
     const tempData = {
@@ -160,8 +163,8 @@ export default function EditProfile() {
     try {
 
       const response = settings?.data?.walletAddress
-        ? await requestUpdateSettings(values)
-        : await requestNewSettings(values);
+        ? await requestUpdateSettings(user.address, values)
+        : await requestNewSettings(user.address, values);
       if (!response || response?.message?.error) {
         toast.error('Something went wrong!');
       } else {
@@ -216,7 +219,7 @@ export default function EditProfile() {
 
     try {
 
-      const response = await requestResendEmailVerification();
+      const response = await requestResendEmailVerification(user.address);
 
       if (!response || response?.message?.error) {
         toast.error('Something went wrong!');

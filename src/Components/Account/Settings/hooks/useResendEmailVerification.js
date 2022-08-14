@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import useCreateSigner from './useCreateSigner';
 import { appConfig } from "@src/Config";
+import {verifyEmail} from "@src/core/cms/endpoints/profile";
 
 const useResendEmailVerification = () => {
   const [response, setResponse] = useState({
@@ -13,7 +14,7 @@ const useResendEmailVerification = () => {
 
   const [isLoading, getSigner] = useCreateSigner();
 
-  const requestNewSettings = async (data) => {
+  const requestNewSettings = async (address) => {
 
     const config = appConfig();
 
@@ -25,8 +26,6 @@ const useResendEmailVerification = () => {
 
     let signatureInStorage = getAuthSignerInStorage()?.signature;
 
-    const nonce = 'ProfileSettings';
-
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;
@@ -34,8 +33,7 @@ const useResendEmailVerification = () => {
 
     if (signatureInStorage) {
       try {
-
-        await axios.get(`${config.urls.cms}profile/email-verification?signature=${signatureInStorage}&nonce=${nonce}`);
+        await verifyEmail(signatureInStorage, address);
 
         setResponse({
           ...response,
