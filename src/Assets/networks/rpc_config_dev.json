@@ -7204,6 +7204,44 @@
         "discord": "https://discord.gg/N9YstjgG2y",
         "telegram": "https://t.me/crowhalesnft"
       }
+    },
+    {
+      "name": "Sou-Sou Bears",
+      "slug": "sou-sou-bears",
+      "multiToken": false,
+      "address": "0xB1A61Bbcb9e0D1bDA3657d6e005E9772e7c3d90d",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Sou-Sou Bears is a collection of 100 Bearish Creatures Living and Building Wealth 'Soucially' on the Cronos Network. Owning a Bear grants you access to the SouSouDAO.",
+        "verified": false,
+        "avatar": "/img/collections/sou-sou-bears/avatar.webp",
+        "card": "/img/collections/sou-sou-bears/card.webp",
+        "banner": "/img/collections/sou-sou-bears/banner.webp",
+        "maxSupply": 100,
+        "website": "https://ipfs.io/ipfs/QmX47Zv8vcVxDc6AWB1izX1h8B2oKkx1z5kZPN1xtAB5E6/",
+        "twitter": "https://twitter.com/sousoubears",
+        "discord": "https://discord.gg/mKkPJYK4fs"
+      }
+    },
+    {
+      "name": "BB Treasury Coins",
+      "slug": "bb-treasury-coins",
+      "multiToken": false,
+      "address": "0xE8c9eC751C93fe8E7e12567FcF6Aaf2793e007a1",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Busy Bears Coins used for BB Treasury Project",
+        "verified": false,
+        "avatar": "/img/collections/bb-treasury-coins/avatar.webp",
+        "card": "/img/collections/bb-treasury-coins/card.webp",
+        "banner": "/img/collections/bb-treasury-coins/banner.webp",
+        "maxSupply": 100,
+        "website": "https://www.busybears.club/",
+        "twitter": "https://twitter.com/BusyBearsClub",
+        "discord": "https://discord.gg/5Y4mjweQR6"
+      }
     }
   ],
   "drops": [
