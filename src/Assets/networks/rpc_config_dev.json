@@ -7221,7 +7221,26 @@
         "maxSupply": 100,
         "website": "https://ipfs.io/ipfs/QmX47Zv8vcVxDc6AWB1izX1h8B2oKkx1z5kZPN1xtAB5E6/",
         "twitter": "https://twitter.com/sousoubears",
-        "discord": "https://discord.gg/mKkPJYK4fsmKkPJYK4fs"
+        "discord": "https://discord.gg/mKkPJYK4fs"
+      }
+    },
+    {
+      "name": "BB Treasury Coins",
+      "slug": "bb-treasury-coins",
+      "multiToken": false,
+      "address": "0xE8c9eC751C93fe8E7e12567FcF6Aaf2793e007a1",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Busy Bears Coins used for BB Treasury Project",
+        "verified": false,
+        "avatar": "/img/collections/bb-treasury-coins/avatar.webp",
+        "card": "/img/collections/bb-treasury-coins/card.webp",
+        "banner": "/img/collections/bb-treasury-coins/banner.webp",
+        "maxSupply": 100,
+        "website": "https://www.busybears.club/",
+        "twitter": "https://twitter.com/BusyBearsClub",
+        "discord": "https://discord.gg/5Y4mjweQR6"
       }
     }
   ],
