@@ -14,6 +14,7 @@ import {useRouter} from "next/router";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
 import TopFilterBar from "@src/Components/components/TopFilterBar";
 import {QueryClientProvider, useInfiniteQuery, useQueryClient} from "@tanstack/react-query";
+import MakeListingDialog from "@src/Components/MakeListing";
 
 const knownContracts = appConfig('collections');
 
@@ -102,11 +103,9 @@ export default function Inventory({ address }) {
                         onTransferButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageTransferDialog(nft))}
                         onSellButtonPressed={() => {
                           dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
-                          router.push(`/nfts/sell?collectionId=${nft.address}&nftId=${nft.id}`)
                         }}
                         onUpdateButtonPressed={() => {
                           dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
-                          router.push(`/nfts/sell?collectionId=${nft.address}&nftId=${nft.id}`)
                         }}
                         onCancelButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageCancelDialog(nft))}
                         newTab={true}
@@ -164,6 +163,12 @@ export default function Inventory({ address }) {
         </InfiniteScroll>
         <MyNftTransferDialog />
         <MyNftCancelDialog />
+        <MakeListingDialog
+          isOpen={!!user.myNftPageListDialog?.nft}
+          nft={user.myNftPageListDialog?.nft}
+          onClose={() => dispatch(MyNftPageActions.hideMyNftPageListDialog())}
+          listing={user.myNftPageListDialog?.listing}
+        />
       </div>
     </QueryClientProvider>
   )
