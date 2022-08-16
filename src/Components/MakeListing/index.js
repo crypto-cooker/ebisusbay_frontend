@@ -196,10 +196,11 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
     e.preventDefault()
     try {
       const nftAddress = nft.address ?? nft.nftAddress;
+      const nftId = nft.id ?? nft.nftId;
       const price = ethers.utils.parseEther(salePrice);
 
       setExecutingCreateListing(true);
-      let tx = await marketContract.makeListing(nftAddress, nft.nftId, price, txExtras);
+      let tx = await marketContract.makeListing(nftAddress, nftId, price, txExtras);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       setExecutingCreateListing(false);
