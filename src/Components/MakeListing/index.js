@@ -43,7 +43,7 @@ const DialogContainer = styled(Dialog)`
 `;
 
 const DialogTitleContainer = styled(DialogTitle)`
-  font-size: 32px !important;
+  font-size: 26px !important;
   color: ${({ theme }) => theme.colors.textColor3};
   padding: 0px !important;
   font-weight: bold !important;
@@ -63,10 +63,6 @@ const CloseIconContainer = styled.div`
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
-const listingState = {
-  create: 'create',
-  update: 'update'
-};
 
 export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
   const { Features } = Constants;
@@ -131,6 +127,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
   const getInitialProps = async () => {
     try {
       setIsLoading(true);
+      setPriceError(false);
       const nftAddress = nft.address ?? nft.nftAddress;
       const marketContractAddress = config.contracts.market;
       const marketContract = wrappedMarketContract();
@@ -221,6 +218,11 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
   };
 
   const processCreateListingRequest = async (e) => {
+    if (salePrice <= 0) {
+      setPriceError(true);
+      return;
+    }
+
     if (isBelowFloorPrice) {
       setShowConfirmButton(true);
     } else {
@@ -233,7 +235,9 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
   return (
     <DialogContainer onClose={onClose} open={isOpen} maxWidth="md">
       <DialogContent>
-        <DialogTitleContainer>{listing ? 'Update' : 'Sell'} {nft.name}</DialogTitleContainer>
+        <DialogTitleContainer className="fs-5 fs-md-3">
+          {listing ? 'Update' : 'Sell'} {nft.name}
+        </DialogTitleContainer>
         {!isLoading ? (
           <>
             <div className="row mb-2">
@@ -255,11 +259,10 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                   videoProps={{ height: 'auto', autoPlay: true }}
                   title={nft.name}
                   usePlaceholder={false}
-                  className="img-fluid img-rounded mb-sm-30"
+                  className="img-fluid img-rounded"
                 />
               </div>
               <div className="col-12 col-sm-6">
-
                 <h3>Sale Type</h3>
                 <div className="d-flex">
                   {/*<div className={`card flex-fill form_icon_button shadow first-button ${saleType === 0 ? 'active' : ''}`} onClick={() => changeSaleType('auction')}>*/}
@@ -275,41 +278,41 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                   </div>
                 </div>
 
-                <Form.Group className='form-field mb-3'>
-                  <div className='label-container'>
-                    <Form.Label className='formLabel'>
+                <Form.Group className="form-field mb-3">
+                  <div className="label-container">
+                    <Form.Label className="formLabel">
                       {saleType === 1 ? 'Listing Price' : 'Starting Bid Price'}
                     </Form.Label>
                   </div>
                   <Form.Control
-                    className='input'
-                    type='text'
-                    placeholder='Enter Amount'
+                    className="input"
+                    type="text"
+                    placeholder="Enter Amount"
                     value={salePrice}
                     onChange={costOnChange}
                     disabled={showConfirmButton || executingCreateListing || !isTransferApproved}
                   />
-                  <Form.Text className='field-description textError'>
+                  <Form.Text className="field-description textError">
                     {priceError && 'The entered value must be greater than zero'}
                   </Form.Text>
                 </Form.Group>
 
                 <div>
-                  <h3 className='feeTitle'>Fees</h3>
+                  <h3 className="feeTitle">Fees</h3>
                   <hr />
-                  <div className='fee'>
+                  <div className="fee">
                     <span>Service Fee: </span>
                     <span>{fee} %</span>
                   </div>
-                  <div className='fee'>
+                  <div className="fee">
                     <span>Royalty Fee: </span>
                     <span>{royalty} %</span>
                   </div>
-                  <div className='fee'>
+                  <div className="fee">
                     <span className='label'>Buyer pays: </span>
                     <span>{salePrice} CRO</span>
                   </div>
-                  <div className='fee'>
+                  <div className="fee">
                     <span className='label'>You receive: </span>
                     <span>{getYouReceiveViewValue()} CRO</span>
                   </div>
@@ -345,7 +348,9 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                     ) : (
                       <>
                         {executingCreateListing && (
-                          <div className="mb-2 text-center fst-italic">Please check your wallet for confirmation</div>
+                          <div className="mb-2 text-center fst-italic">
+                            <small>Please check your wallet for confirmation</small>
+                          </div>
                         )}
                         <div className="d-flex">
                           <Button type="legacy"
@@ -361,14 +366,15 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                   </>
                 ) : (
                   <>
-                    <div className="alert alert-info p-2">
-                      Ebisu's Bay needs approval to transfer this NFT on your behalf
+                    <div className="mb-2 text-center fst-italic">
+                      <small>Ebisu's Bay needs approval to transfer this NFT on your behalf</small>
                     </div>
                     <div className="d-flex justify-content-end">
                       <Button type="legacy"
                               onClick={handleApproval}
                               isLoading={executingApproval}
-                              disabled={executingApproval}>
+                              disabled={executingApproval}
+                              className="flex-fill">
                         Approve Transfer
                       </Button>
                     </div>
