@@ -70,6 +70,16 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/collection/corruption',
+        destination: '/collection/cpb-bananas',
+        permanent: true,
+      },
+      {
+        source: '/collection/corruption/:id',
+        destination: '/collection/cpb-bananas/:id',
+        permanent: true,
+      },
+      {
         source: '/mad-auction',
         destination: '/auctions/mad-auction',
         permanent: false,

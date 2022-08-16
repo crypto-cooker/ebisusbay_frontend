@@ -5451,8 +5451,8 @@
       }
     },
     {
-      "name": "Corruption",
-      "slug": "corruption",
+      "name": "Cronos Primate Business - Bananas",
+      "slug": "cpb-bananas",
       "multiToken": true,
       "tokens": [{ "id": 1 }, { "id": 2 }, { "id": 3 }],
       "address": "0xA68825768bDB7a2161422e3CcAF1973FF88f8E66",
@@ -7242,6 +7242,27 @@
         "website": "https://www.busybears.club/",
         "twitter": "https://twitter.com/BusyBearsClub",
         "discord": "https://discord.gg/5Y4mjweQR6"
+      }
+    },
+    {
+      "name": "Pirates of the Cronosphere",
+      "slug": "pirates-of-the-cronosphere",
+      "multiToken": false,
+      "address": "0xAE8663c0A83C0B0BE7c1c6960f0F42F2b529D749",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Pirates of the Cronosphere is the genesis NFT collection for the Cronosphere project. A collection of 2000 NFTS. There are 4 races of space pirate: Male, Female, Robot, Alien. 500 of each race.",
+        "verified": false,
+        "avatar": "/img/collections/pirates-of-the-cronosphere/avatar.webp",
+        "card": "/img/collections/pirates-of-the-cronosphere/card.webp",
+        "banner": "/img/collections/pirates-of-the-cronosphere/banner.webp",
+        "maxSupply": 2000,
+        "website": "https://spherevaults.com/",
+        "twitter": "https://twitter.com/CronosphereNFT",
+        "discord": "https://discord.gg/BPMUE9TJUt",
+        "medium": "https://medium.com/@gazzcronosphere",
+        "telegram": "https://t.me/Cronosphere"
       }
     }
   ],
