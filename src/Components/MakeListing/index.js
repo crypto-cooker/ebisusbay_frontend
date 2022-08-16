@@ -46,6 +46,7 @@ const DialogTitleContainer = styled(DialogTitle)`
   font-size: 26px !important;
   color: ${({ theme }) => theme.colors.textColor3};
   padding: 0px !important;
+  margin-bottom: 18px !important;
   font-weight: bold !important;
   text-align: center;
 `;
@@ -241,17 +242,6 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
         </DialogTitleContainer>
         {!isLoading ? (
           <>
-            <div className="row mb-2">
-              <div className="col text-center">
-                <Badge
-                  pill
-                  bg={user.theme === 'dark' ? 'light' : 'secondary'}
-                  text={user.theme === 'dark' ? 'dark' : 'light'}
-                >
-                  Floor Price: {floorPrice} CRO
-                </Badge>
-              </div>
-            </div>
             <div className="nftSaleForm row gx-3">
               <div className="col-12 col-sm-6 mb-2 mb-sm-0">
                 <AnyMedia
@@ -279,12 +269,22 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                   </div>
                 </div>
 
-                <Form.Group className="form-field mb-3">
-                  <div className="label-container">
-                    <Form.Label className="formLabel">
-                      {saleType === 1 ? 'Listing Price' : 'Starting Bid Price'}
-                    </Form.Label>
-                  </div>
+                <Form.Group className="form-field mb-1">
+                  <Form.Label className="formLabel w-100">
+                    <div className="d-flex">
+                      <div className="flex-grow-1">{saleType === 1 ? 'Listing Price' : 'Starting Bid Price'}</div>
+                      <div>
+                        <Badge
+                          pill
+                          bg={user.theme === 'dark' ? 'light' : 'secondary'}
+                          text={user.theme === 'dark' ? 'dark' : 'light'}
+                          className="ms-2"
+                        >
+                          Floor Price: {floorPrice} CRO
+                        </Badge>
+                      </div>
+                    </div>
+                  </Form.Label>
                   <Form.Control
                     className="input"
                     type="text"
@@ -297,6 +297,28 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                     {priceError && 'The entered value must be greater than zero'}
                   </Form.Text>
                 </Form.Group>
+
+                <div className="d-flex flex-wrap justify-content-between mb-3">
+                  <Badge bg="danger" text="light" className="cursor-pointer" onClick={() => setSalePrice(floorPrice - floorPrice * 0.25)}>
+                    -25%
+                  </Badge>
+                  <Badge bg="danger" text="light" className="cursor-pointer" onClick={() => setSalePrice(floorPrice - floorPrice * 0.1)}>
+                    -10%
+                  </Badge>
+                  <Badge
+                    bg={user.theme === 'dark' ? 'light' : 'secondary'}
+                    text={user.theme === 'dark' ? 'dark' : 'light'}
+                    className="cursor-pointer" onClick={() => setSalePrice(floorPrice)}
+                  >
+                    Floor
+                  </Badge>
+                  <Badge bg="success" text="light" className="cursor-pointer" onClick={() => setSalePrice(floorPrice + (floorPrice * 0.1))}>
+                    +10%
+                  </Badge>
+                  <Badge bg="success" text="light" className="cursor-pointer" onClick={() => setSalePrice(floorPrice + (floorPrice * 0.25))}>
+                    +25%
+                  </Badge>
+                </div>
 
                 <div>
                   <h3 className="feeTitle">Fees</h3>
