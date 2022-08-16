@@ -11,6 +11,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
+import {ChakraProvider, extendTheme} from '@chakra-ui/react'
 
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
@@ -23,6 +24,7 @@ import "swiper/css/pagination";
 
 import '../src/Assets/styles/style.scss';
 import '../src/Assets/styles/override.scss';
+import customTheme from "@src/Theme/theme";
 
 SentryLoggingService.init();
 Site24x7LoggingService.init();
@@ -35,8 +37,10 @@ export default function MyApp({ Component, pageProps }) {
     <>
       <Provider store={store}>
         <Sentry.ErrorBoundary fallback={() => <ErrorPage />}>
-          <QueryClientProvider client={queryClient}>
-            <App Component={Component} pageProps={pageProps} />
+          <QueryClientProvider client={queryClient} >
+            <ChakraProvider theme={customTheme}>
+              <App Component={Component} pageProps={pageProps} />
+            </ChakraProvider>
           </QueryClientProvider>
         </Sentry.ErrorBoundary>
       </Provider>
