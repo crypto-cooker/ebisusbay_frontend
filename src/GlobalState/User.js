@@ -1013,11 +1013,9 @@ export class MyNftPageActions {
     dispatch(userSlice.actions.setMyNftPageTransferDialog());
   };
 
-  static showMyNftPageListDialog =
-    ({ contract, id, image, name, address, price, rank }) =>
-    async (dispatch) => {
-      dispatch(userSlice.actions.setMyNftPageListDialog({ contract, id, image, name, address, price, rank }));
-    };
+  static showMyNftPageListDialog = (nft, listing) => async (dispatch) => {
+    dispatch(userSlice.actions.setMyNftPageListDialog({ nft, listing }));
+  };
 
   static setMyNftPageListDialogError = (error) => async (dispatch) => {
     dispatch(userSlice.actions.setMyNftPageListDialogError(error));
@@ -1106,11 +1104,9 @@ export class MyListingsCollectionPageActions {
     dispatch(userSlice.actions.setMyNftPageCancelDialog(nft));
   };
 
-  static showMyNftPageListDialog =
-    ({ contract, id, image, name, address, price, rank }) =>
-    async (dispatch) => {
-      dispatch(userSlice.actions.setMyNftPageListDialog({ contract, id, image, name, address, price, rank }));
-    };
+  static showMyNftPageListDialog = (nft, listing) => async (dispatch) => {
+    dispatch(userSlice.actions.setMyNftPageListDialog({ nft, listing }));
+  };
 
   static setInvalidOnly =
     (status = false) =>

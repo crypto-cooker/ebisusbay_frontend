@@ -1,6 +1,17 @@
 [
   {
     "users": ["0x376A8e3f975463298c10f4d41C32349A705Ae12E"],
+    "tokens": [
+      {
+        "slug": "mad-meerkat-degen",
+        "address": "0xA19bFcE9BaF34b92923b71D487db9D0D051a88F8",
+        "ids": [3091, 3072, 5703]
+      }
+    ],
+    "reason": "Verified by wursthandz"
+  },
+  {
+    "users": ["0x376A8e3f975463298c10f4d41C32349A705Ae12E"],
     "tokens": [],
     "reason": "Attempted scamming. Reported in #generic-0364, verified by schwiz"
   },

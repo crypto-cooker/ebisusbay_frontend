@@ -742,6 +742,7 @@ export async function getUnfilteredListingsForAddress(walletAddress, walletProvi
           rank,
           valid,
           useIframe: isMetaPixels,
+          nft,
           iframeSource: isMetaPixels ? `https://www.metaversepixels.app/grid?id=${id}&zoom=3` : null,
         };
       })
