@@ -27,7 +27,7 @@ export const configData = {
       cms: 'https://cms.ebisusbay.com/api/',
     },
     rpc: {
-      read: 'https://gateway.nebkas.ro/',
+      read: 'https://rpc.ebisusbay.com/',
       write: 'https://evm.cronos.org/',
     },
     contracts: {
@@ -69,7 +69,7 @@ export const configData = {
       cms: 'https://cms.ebisusbay.biz/api/',
     },
     rpc: {
-      read: 'https://gateway.nebkas.ro/',
+      read: 'https://rpc.ebisusbay.com/',
       write: 'https://evm.cronos.org/',
     },
     contracts: {

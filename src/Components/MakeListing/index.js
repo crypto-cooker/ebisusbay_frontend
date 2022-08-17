@@ -157,7 +157,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
   const getInitialProps = async () => {
     try {
       setIsLoading(true);
-      setPriceError(false);
+      setPriceError(null);
       const nftAddress = nft.address ?? nft.nftAddress;
       const marketContractAddress = config.contracts.market;
       const marketContract = wrappedMarketContract();
@@ -249,16 +249,26 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
   };
 
   const processCreateListingRequest = async (e) => {
-    if (salePrice <= 0) {
-      setPriceError(true);
-      return;
-    }
+    if (!validateInput()) return;
 
     if (isBelowFloorPrice(salePrice)) {
       setShowConfirmButton(true);
     } else {
       await handleCreateListing(e)
     }
+  }
+
+  const validateInput = () => {
+    if (!salePrice || parseInt(salePrice) <= 0) {
+      setPriceError('Value must be greater than zero');
+      return false;
+    }
+    if (salePrice.toString().length > 18) {
+      setPriceError('Value must not exceed 18 digits');
+      return false;
+    }
+    setPriceError(null);
+    return true;
   }
 
   if (!nft) return <></>;
@@ -323,7 +333,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                     disabled={showConfirmButton || executingCreateListing}
                   />
                   <Form.Text className="field-description textError">
-                    {priceError && 'The entered value must be greater than zero'}
+                    {priceError}
                   </Form.Text>
                 </Form.Group>
 
