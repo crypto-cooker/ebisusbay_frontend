@@ -107,6 +107,10 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
     }
   }, [setSalePrice, floorPrice, salePrice]);
 
+  const onQuickCost = useCallback((percentage) => {
+    setSalePrice(Math.round(floorPrice * (1 + percentage)));
+  })
+
   const getYouReceiveViewValue = () => {
     const youReceive = salePrice - (fee / 100) * salePrice - (royalty / 100) * salePrice;
     return ethers.utils.commify(youReceive.toFixed(2));
@@ -269,7 +273,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                   </div>
                 </div>
 
-                <Form.Group className="form-field mb-1">
+                <Form.Group className="form-field">
                   <Form.Label className="formLabel w-100">
                     <div className="d-flex">
                       <div className="flex-grow-1">{saleType === 1 ? 'Listing Price' : 'Starting Bid Price'}</div>
@@ -299,23 +303,23 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                 </Form.Group>
 
                 <div className="d-flex flex-wrap justify-content-between mb-3">
-                  <Badge bg="danger" text="light" className="cursor-pointer" onClick={() => setSalePrice(floorPrice - floorPrice * 0.25)}>
+                  <Badge bg="danger" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(-0.25)}>
                     -25%
                   </Badge>
-                  <Badge bg="danger" text="light" className="cursor-pointer" onClick={() => setSalePrice(floorPrice - floorPrice * 0.1)}>
+                  <Badge bg="danger" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(-0.1)}>
                     -10%
                   </Badge>
                   <Badge
                     bg={user.theme === 'dark' ? 'light' : 'secondary'}
                     text={user.theme === 'dark' ? 'dark' : 'light'}
-                    className="cursor-pointer" onClick={() => setSalePrice(floorPrice)}
+                    className="cursor-pointer my-1" onClick={() => onQuickCost(0)}
                   >
                     Floor
                   </Badge>
-                  <Badge bg="success" text="light" className="cursor-pointer" onClick={() => setSalePrice(floorPrice + (floorPrice * 0.1))}>
+                  <Badge bg="success" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(0.1)}>
                     +10%
                   </Badge>
-                  <Badge bg="success" text="light" className="cursor-pointer" onClick={() => setSalePrice(floorPrice + (floorPrice * 0.25))}>
+                  <Badge bg="success" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(0.25)}>
                     +25%
                   </Badge>
                 </div>
