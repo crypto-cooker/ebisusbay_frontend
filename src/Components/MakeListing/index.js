@@ -20,6 +20,7 @@ import {txExtras} from "@src/core/constants";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
 import {appConfig} from "@src/Config";
 import Market from "@src/Contracts/Marketplace.json";
+import {useWindowSize} from "@src/hooks/useWindowSize";
 
 const DialogContainer = styled(Dialog)`
   .MuiPaper-root {
@@ -82,6 +83,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
 
   const [showConfirmButton, setShowConfirmButton] = useState(false);
 
+  const windowSize = useWindowSize();
   const isAuctionOptionEnabled = useFeatureFlag(Features.AUCTION_OPTION_SALE);
   const user = useSelector((state) => state.user);
   const {marketContract} = user;
@@ -277,7 +279,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                   <Form.Label className="formLabel w-100">
                     <div className="d-flex">
                       <div className="flex-grow-1">{saleType === 1 ? 'Listing Price' : 'Starting Bid Price'}</div>
-                      <div>
+                      <div className="my-auto">
                         <Badge
                           pill
                           bg={user.theme === 'dark' ? 'light' : 'secondary'}
@@ -303,9 +305,11 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                 </Form.Group>
 
                 <div className="d-flex flex-wrap justify-content-between mb-3">
-                  <Badge bg="danger" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(-0.25)}>
-                    -25%
-                  </Badge>
+                  {windowSize.width > 377 && (
+                    <Badge bg="danger" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(-0.25)}>
+                      -25%
+                    </Badge>
+                  )}
                   <Badge bg="danger" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(-0.1)}>
                     -10%
                   </Badge>
@@ -319,9 +323,12 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                   <Badge bg="success" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(0.1)}>
                     +10%
                   </Badge>
-                  <Badge bg="success" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(0.25)}>
-                    +25%
-                  </Badge>
+
+                  {windowSize.width > 377 && (
+                    <Badge bg="success" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(0.25)}>
+                      +25%
+                    </Badge>
+                  )}
                 </div>
 
                 <div>
