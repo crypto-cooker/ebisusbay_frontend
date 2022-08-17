@@ -412,7 +412,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                 ) : (
                   <>
                     <div className="mb-2 text-center fst-italic">
-                      <small>Ebisu's Bay needs approval to transfer this NFT on your behalf</small>
+                      <small>Ebisu's Bay needs approval to transfer this NFT on your behalf once sold</small>
                     </div>
                     <div className="d-flex justify-content-end">
                       <Button type="legacy"
@@ -420,7 +420,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                               isLoading={executingApproval}
                               disabled={executingApproval}
                               className="flex-fill">
-                        Approve Transfer
+                        Approve
                       </Button>
                     </div>
                   </>
