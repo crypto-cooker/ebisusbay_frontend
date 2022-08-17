@@ -284,7 +284,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                           text={user.theme === 'dark' ? 'dark' : 'light'}
                           className="ms-2"
                         >
-                          Floor Price: {floorPrice} CRO
+                          Floor: {floorPrice} CRO
                         </Badge>
                       </div>
                     </div>
