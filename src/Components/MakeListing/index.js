@@ -124,9 +124,21 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
     }
   })
 
+  const getSaleValue = () => {
+    try {
+      return ethers.utils.commify(salePrice.toFixed(2));
+    } catch (e) {
+      return salePrice
+    }
+  };
+
   const getYouReceiveViewValue = () => {
     const youReceive = salePrice - (fee / 100) * salePrice - (royalty / 100) * salePrice;
-    return ethers.utils.commify(youReceive.toFixed(2));
+    try {
+      return ethers.utils.commify(youReceive.toFixed(2));
+    } catch (e) {
+      return youReceive
+    }
   };
 
   useEffect(() => {
@@ -308,7 +320,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                     placeholder="Enter Amount"
                     value={salePrice}
                     onChange={costOnChange}
-                    disabled={showConfirmButton || executingCreateListing || !isTransferApproved}
+                    disabled={showConfirmButton || executingCreateListing}
                   />
                   <Form.Text className="field-description textError">
                     {priceError && 'The entered value must be greater than zero'}
@@ -355,7 +367,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                   </div>
                   <div className="fee">
                     <span className='label'>Buyer pays: </span>
-                    <span>{salePrice} CRO</span>
+                    <span>{getSaleValue()} CRO</span>
                   </div>
                   <div className="fee">
                     <span className='label'>You receive: </span>
