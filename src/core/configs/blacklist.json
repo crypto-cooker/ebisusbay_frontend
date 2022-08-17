@@ -1,5 +1,16 @@
 [
   {
+    "users": ["0x316beaaedf075ceba6401549383d852c729f943c"],
+    "tokens": [
+      {
+        "slug": "carkayous-feral-fish",
+        "address": "0x72af9c869a4759e6d50e9656c0741b395532c3dd",
+        "ids": [1742, 1573, 1867, 1374, 802]
+      }
+    ],
+    "reason": "Scammed in Carkayous discord via a fake transaction, they were doing a trade and he sent over the 5 feral fish but the scammer never sent the CRO. Verified by admin @AsaAkira. Scammed person is flashpoint.cro | LHRC Xx#4626"
+  },
+  {
     "users": ["0x376A8e3f975463298c10f4d41C32349A705Ae12E"],
     "tokens": [
       {
