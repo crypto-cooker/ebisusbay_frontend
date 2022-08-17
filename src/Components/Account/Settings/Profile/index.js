@@ -98,7 +98,7 @@ export default function EditProfile() {
             .matches(/^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/, 'Invalid Instagram username'),
           website: Yup.string().url(Messages.errors.urlError).nullable(),
           bio: Yup.string()
-              .max(100, getDynamicMessage(Messages.errors.charactersMaxLimit, ['40']))
+              .max(100, getDynamicMessage(Messages.errors.charactersMaxLimit, ['100']))
         })
         .required(),
       userAvatar: Yup.object()
@@ -257,7 +257,7 @@ export default function EditProfile() {
               setFieldTouched={setFieldTouched}
               handleBlur={handleBlur}
             />
-            <Bio value={values?.userInfo?.userInfo?.bio} handleChange={handleChange} />
+            <Bio value={values?.userInfo?.userInfo?.bio} handleChange={handleChange} error={errors.userInfo?.userInfo?.bio} />
           </div>
           <div className="col-12 col-sm-12 col-lg-8">
             <Form
