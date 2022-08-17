@@ -65,6 +65,7 @@ const CloseIconContainer = styled.div`
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
+const floorThreshold = 5;
 
 export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
   const { Features } = Constants;
@@ -101,7 +102,10 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
     }
   }
 
-  const isBelowFloorPrice = (floorPrice !== 0 && ((floorPrice - Number(salePrice)) / floorPrice) * 100 > 5);
+  const isBelowFloorPrice = (price) => {
+    return (floorPrice !== 0 && ((floorPrice - Number(price)) / floorPrice) * 100 > floorThreshold);
+  };
+
   const costOnChange = useCallback((e) => {
     const newSalePrice = e.target.value.toString();
     if (numberRegexValidation.test(newSalePrice) || newSalePrice === '') {
@@ -110,7 +114,14 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
   }, [setSalePrice, floorPrice, salePrice]);
 
   const onQuickCost = useCallback((percentage) => {
-    setSalePrice(Math.round(floorPrice * (1 + percentage)));
+    if (executingCreateListing || showConfirmButton) return;
+
+    const newSalePrice = Math.round(floorPrice * (1 + percentage));
+    setSalePrice(newSalePrice);
+
+    if (isBelowFloorPrice(newSalePrice)) {
+      setShowConfirmButton(false);
+    }
   })
 
   const getYouReceiveViewValue = () => {
@@ -204,7 +215,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
     try {
       const nftAddress = nft.address ?? nft.nftAddress;
       const nftId = nft.id ?? nft.nftId;
-      const price = ethers.utils.parseEther(salePrice);
+      const price = ethers.utils.parseEther(salePrice.toString());
 
       setExecutingCreateListing(true);
       let tx = await marketContract.makeListing(nftAddress, nftId, price, txExtras);
@@ -231,7 +242,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
       return;
     }
 
-    if (isBelowFloorPrice) {
+    if (isBelowFloorPrice(salePrice)) {
       setShowConfirmButton(true);
     } else {
       await handleCreateListing(e)
