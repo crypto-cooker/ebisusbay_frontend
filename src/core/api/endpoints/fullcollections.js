@@ -1,6 +1,7 @@
 import {FullCollectionsQuery} from "../queries/fullcollections";
 import {CollectionSortOption} from "../../../Components/Models/collection-sort-option.model";
 import {appConfig} from "../../../Config";
+import {burnState, excludeBurnState} from "@src/core/api/enums";
 
 const config = appConfig();
 const api = {
@@ -22,6 +23,7 @@ export async function sortAndFetchCollectionDetails(
     pageSize: pageSize ?? 50,
     sortBy: 'id',
     direction: 'desc',
+    burnt: excludeBurnState.UNBURNT
   };
 
   if (filter && filter instanceof FullCollectionsQuery) {

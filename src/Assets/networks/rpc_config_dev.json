@@ -1110,8 +1110,8 @@
         "card": "/img/collections/crougars/card.webp",
         "banner": "/img/collections/crougars/banner.webp",
         "maxSupply": 2222,
-        "website": "https://crougar.com/",
-        "twitter": "https://twitter.com/CROugarNFT",
+        "website": "https://crougarkingdom.com/",
+        "twitter": "https://twitter.com/CROugarKingdom",
         "discord": "https://discord.gg/G8Puur6Qea",
         "medium": "https://medium.com/@crougar",
         "staking": "crodex"
@@ -4772,8 +4772,8 @@
         "card": "/img/collections/crougars/crougar-x/card.webp",
         "banner": "/img/collections/crougars/crougar-x/banner.webp",
         "maxSupply": 2222,
-        "website": "https://crougar.com/",
-        "twitter": "https://twitter.com/CROugarNFT",
+        "website": "https://crougarkingdom.com/",
+        "twitter": "https://twitter.com/CROugarKingdom",
         "discord": "https://discord.gg/G8Puur6Qea",
         "medium": "https://medium.com/@crougar"
       }
@@ -7263,6 +7263,35 @@
         "discord": "https://discord.gg/BPMUE9TJUt",
         "medium": "https://medium.com/@gazzcronosphere",
         "telegram": "https://t.me/Cronosphere"
+      }
+    },
+    {
+      "name": "Art City",
+      "slug": "art-city",
+      "multiToken": true,
+      "tokens": [
+        { "id": 1 },
+        { "id": 2 },
+        { "id": 3 },
+        { "id": 4 },
+        { "id": 5 },
+        { "id": 6 },
+        { "id": 7 }
+      ],
+      "address": "0xDF30c2fCCB1fD5B3F54DE257323b21c484f8FCD0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Art City Presale NFT collection consists of all City Council Member Card and 10% of all Art City's estates.",
+        "verified": false,
+        "avatar": "/img/collections/art-city/avatar.webp",
+        "card": "/img/collections/art-city/card.webp",
+        "banner": "/img/collections/art-city/banner.webp",
+        "maxSupply": 4001,
+        "website": "https://www.art-city.io/",
+        "twitter": "https://twitter.com/Art_city_",
+        "discord": "https://discord.gg/9XMtXSzRrK",
+        "medium": "https://medium.com/@art-city"
       }
     }
   ],
