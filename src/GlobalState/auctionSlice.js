@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAuction, getNft } from '../core/api';
+import { getAuction } from '../core/api';
 import { Contract, ethers } from 'ethers';
 import { Auction } from '../core/models/auction';
 import AuctionContract from '../Contracts/DegenAuction.json';
 import { devLog } from '../utils';
 import {appConfig} from "../Config";
+import {getNft} from "@src/core/api/endpoints/nft";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
