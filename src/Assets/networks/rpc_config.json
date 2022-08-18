@@ -1070,9 +1070,9 @@
         "banner": "/img/collections/cronosmb/banner.webp",
         "rankings": {"source": "rarity_sniper", "slug": "cronos-primate-business"},
         "maxSupply": 1000,
-        "website": "https://cronospb.com/",
+        "website": "https://www.cronospb.com/",
         "twitter": "https://twitter.com/PrimateCronos",
-        "discord": "https://discord.gg/cpb",
+        "discord": "https://discord.gg/X4shERMUwf",
         "medium": "https://medium.com/cronos-monkey-business"
       }
     },
@@ -1704,9 +1704,10 @@
         "card": "/img/collections/cronosmb/card.jpg",
         "banner": "/img/collections/cronosmb/banner.webp",
         "maxSupply": 75,
-        "website": "https://cronospb.com",
+        "website": "https://www.cronospb.com/",
         "twitter": "https://twitter.com/PrimateCronos",
-        "discord": "https://discord.gg/cpb"
+        "discord": "https://discord.gg/X4shERMUwf",
+        "medium": "https://medium.com/cronos-monkey-business"
       }
     },
     {
@@ -2214,9 +2215,9 @@
         "card": "/img/collections/cronosmb/gorilla/card.jpeg",
         "banner": "/img/collections/cronosmb/banner.webp",
         "maxSupply": 6100,
-        "website": "https://cronospb.com/",
+        "website": "https://www.cronospb.com/",
         "twitter": "https://twitter.com/PrimateCronos",
-        "discord": "https://discord.gg/cpb",
+        "discord": "https://discord.gg/X4shERMUwf",
         "medium": "https://medium.com/cronos-monkey-business"
       }
     },
@@ -5465,9 +5466,9 @@
         "card": "/img/collections/cronosmb/card.jpg",
         "banner": "/img/collections/cronosmb/banner.webp",
         "maxSupply": 1780,
-        "website": "https://cronospb.com/",
+        "website": "https://www.cronospb.com/",
         "twitter": "https://twitter.com/PrimateCronos",
-        "discord": "https://discord.gg/cpb",
+        "discord": "https://discord.gg/X4shERMUwf",
         "medium": "https://medium.com/cronos-monkey-business"
       }
     },
@@ -7292,6 +7293,26 @@
         "twitter": "https://twitter.com/Art_city_",
         "discord": "https://discord.gg/9XMtXSzRrK",
         "medium": "https://medium.com/@art-city"
+      }
+    },
+    {
+      "name": "Corrupted Primates",
+      "slug": "cpb-corrupt",
+      "multiToken": false,
+      "address": "0x67474fDBebe7A973356b6791c7D7F70264298C0A",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Unique collection of 500 randomly generated Corrupted Monkeys.",
+        "verified": false,
+        "avatar": "/img/collections/cpb-corrupt/avatar.webp",
+        "card": "/img/collections/cpb-corrupt/card.webp",
+        "banner": "/img/collections/cpb-corrupt/banner.webp",
+        "maxSupply": 500,
+        "website": "https://www.cronospb.com/",
+        "twitter": "https://twitter.com/PrimateCronos",
+        "discord": "https://discord.gg/X4shERMUwf",
+        "medium": "https://medium.com/cronos-monkey-business"
       }
     }
   ],
