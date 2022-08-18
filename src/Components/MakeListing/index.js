@@ -20,6 +20,8 @@ import {txExtras} from "@src/core/constants";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
 import {appConfig} from "@src/Config";
 import Market from "@src/Contracts/Marketplace.json";
+import {useWindowSize} from "@src/hooks/useWindowSize";
+import * as Sentry from '@sentry/react';
 
 const DialogContainer = styled(Dialog)`
   .MuiPaper-root {
@@ -46,6 +48,7 @@ const DialogTitleContainer = styled(DialogTitle)`
   font-size: 26px !important;
   color: ${({ theme }) => theme.colors.textColor3};
   padding: 0px !important;
+  margin-bottom: 18px !important;
   font-weight: bold !important;
   text-align: center;
 `;
@@ -63,12 +66,13 @@ const CloseIconContainer = styled.div`
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
+const floorThreshold = 5;
 
 export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
   const { Features } = Constants;
 
   const [saleType, setSaleType] = useState(1);
-  const [salePrice, setSalePrice] = useState(0);
+  const [salePrice, setSalePrice] = useState(null);
   const [floorPrice, setFloorPrice] = useState(0);
   const [priceError, setPriceError] = useState(false);
   const [fee, setFee] = useState(0);
@@ -81,6 +85,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
 
   const [showConfirmButton, setShowConfirmButton] = useState(false);
 
+  const windowSize = useWindowSize();
   const isAuctionOptionEnabled = useFeatureFlag(Features.AUCTION_OPTION_SALE);
   const user = useSelector((state) => state.user);
   const {marketContract} = user;
@@ -98,7 +103,10 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
     }
   }
 
-  const isBelowFloorPrice = (floorPrice !== 0 && ((floorPrice - Number(salePrice)) / floorPrice) * 100 > 5);
+  const isBelowFloorPrice = (price) => {
+    return (floorPrice !== 0 && ((floorPrice - Number(price)) / floorPrice) * 100 > floorThreshold);
+  };
+
   const costOnChange = useCallback((e) => {
     const newSalePrice = e.target.value.toString();
     if (numberRegexValidation.test(newSalePrice) || newSalePrice === '') {
@@ -106,9 +114,32 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
     }
   }, [setSalePrice, floorPrice, salePrice]);
 
+  const onQuickCost = useCallback((percentage) => {
+    if (executingCreateListing || showConfirmButton) return;
+
+    const newSalePrice = Math.round(floorPrice * (1 + percentage));
+    setSalePrice(newSalePrice);
+
+    if (isBelowFloorPrice(newSalePrice)) {
+      setShowConfirmButton(false);
+    }
+  })
+
+  const getSaleValue = () => {
+    try {
+      return ethers.utils.commify(salePrice.toFixed(2));
+    } catch (e) {
+      return salePrice
+    }
+  };
+
   const getYouReceiveViewValue = () => {
     const youReceive = salePrice - (fee / 100) * salePrice - (royalty / 100) * salePrice;
-    return ethers.utils.commify(youReceive.toFixed(2));
+    try {
+      return ethers.utils.commify(youReceive.toFixed(2));
+    } catch (e) {
+      return youReceive
+    }
   };
 
   useEffect(() => {
@@ -127,11 +158,11 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
   const getInitialProps = async () => {
     try {
       setIsLoading(true);
-      setPriceError(false);
+      setPriceError(null);
       const nftAddress = nft.address ?? nft.nftAddress;
       const marketContractAddress = config.contracts.market;
       const marketContract = wrappedMarketContract();
-      setSalePrice(listing ? Math.round(listing.price) : 0)
+      setSalePrice(listing ? Math.round(listing.price) : null)
 
       const floorPrice = await getCollectionMetadata(nftAddress);
       if (floorPrice.collections.length > 0) {
@@ -193,13 +224,16 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
   };
 
   const handleCreateListing = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    if (!validateInput()) return;
+
     try {
       const nftAddress = nft.address ?? nft.nftAddress;
       const nftId = nft.id ?? nft.nftId;
-      const price = ethers.utils.parseEther(salePrice);
+      const price = ethers.utils.parseEther(salePrice.toString());
 
       setExecutingCreateListing(true);
+      Sentry.captureEvent({message: 'handleCreateListing', extra: {nftAddress, nftId, price}});
       let tx = await marketContract.makeListing(nftAddress, nftId, price, txExtras);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -219,16 +253,27 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
   };
 
   const processCreateListingRequest = async (e) => {
-    if (salePrice <= 0) {
-      setPriceError(true);
-      return;
-    }
+    if (!validateInput()) return;
 
-    if (isBelowFloorPrice) {
+    if (isBelowFloorPrice(salePrice)) {
       setShowConfirmButton(true);
     } else {
       await handleCreateListing(e)
     }
+  }
+
+  const validateInput = () => {
+    if (!salePrice || parseInt(salePrice) < 1) {
+      setPriceError('Value must be greater than zero');
+      return false;
+    }
+    if (salePrice.toString().length > 18) {
+      setPriceError('Value must not exceed 18 digits');
+      return false;
+    }
+
+    setPriceError(null);
+    return true;
   }
 
   if (!nft) return <></>;
@@ -241,17 +286,6 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
         </DialogTitleContainer>
         {!isLoading ? (
           <>
-            <div className="row mb-2">
-              <div className="col text-center">
-                <Badge
-                  pill
-                  bg={user.theme === 'dark' ? 'light' : 'secondary'}
-                  text={user.theme === 'dark' ? 'dark' : 'light'}
-                >
-                  Floor Price: {floorPrice} CRO
-                </Badge>
-              </div>
-            </div>
             <div className="nftSaleForm row gx-3">
               <div className="col-12 col-sm-6 mb-2 mb-sm-0">
                 <AnyMedia
@@ -279,24 +313,61 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                   </div>
                 </div>
 
-                <Form.Group className="form-field mb-3">
-                  <div className="label-container">
-                    <Form.Label className="formLabel">
-                      {saleType === 1 ? 'Listing Price' : 'Starting Bid Price'}
-                    </Form.Label>
-                  </div>
+                <Form.Group className="form-field">
+                  <Form.Label className="formLabel w-100">
+                    <div className="d-flex">
+                      <div className="flex-grow-1">{saleType === 1 ? 'Listing Price' : 'Starting Bid Price'}</div>
+                      <div className="my-auto">
+                        <Badge
+                          pill
+                          bg={user.theme === 'dark' ? 'light' : 'secondary'}
+                          text={user.theme === 'dark' ? 'dark' : 'light'}
+                          className="ms-2"
+                        >
+                          Floor: {floorPrice} CRO
+                        </Badge>
+                      </div>
+                    </div>
+                  </Form.Label>
                   <Form.Control
                     className="input"
-                    type="text"
+                    type="number"
                     placeholder="Enter Amount"
                     value={salePrice}
                     onChange={costOnChange}
-                    disabled={showConfirmButton || executingCreateListing || !isTransferApproved}
+                    disabled={showConfirmButton || executingCreateListing}
                   />
                   <Form.Text className="field-description textError">
-                    {priceError && 'The entered value must be greater than zero'}
+                    {priceError}
                   </Form.Text>
                 </Form.Group>
+
+                <div className="d-flex flex-wrap justify-content-between mb-3">
+                  {windowSize.width > 377 && (
+                    <Badge bg="danger" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(-0.25)}>
+                      -25%
+                    </Badge>
+                  )}
+                  <Badge bg="danger" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(-0.1)}>
+                    -10%
+                  </Badge>
+                  <Badge
+                    bg={user.theme === 'dark' ? 'light' : 'secondary'}
+                    text={user.theme === 'dark' ? 'dark' : 'light'}
+                    className="cursor-pointer my-1" onClick={() => onQuickCost(0)}
+                  >
+                    Floor
+                  </Badge>
+                  <Badge bg="success" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(0.1)}>
+                    +10%
+                  </Badge>
+
+                  {windowSize.width > 377 && (
+                    <Badge bg="success" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(0.25)}>
+                      +25%
+                    </Badge>
+                  )}
+                </div>
 
                 <div>
                   <h3 className="feeTitle">Fees</h3>
@@ -311,7 +382,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                   </div>
                   <div className="fee">
                     <span className='label'>Buyer pays: </span>
-                    <span>{salePrice} CRO</span>
+                    <span>{getSaleValue()} CRO</span>
                   </div>
                   <div className="fee">
                     <span className='label'>You receive: </span>
@@ -368,7 +439,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                 ) : (
                   <>
                     <div className="mb-2 text-center fst-italic">
-                      <small>Ebisu's Bay needs approval to transfer this NFT on your behalf</small>
+                      <small>Ebisu's Bay needs approval to transfer this NFT on your behalf once sold</small>
                     </div>
                     <div className="d-flex justify-content-end">
                       <Button type="legacy"
@@ -376,7 +447,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                               isLoading={executingApproval}
                               disabled={executingApproval}
                               className="flex-fill">
-                        Approve Transfer
+                        Approve
                       </Button>
                     </div>
                   </>

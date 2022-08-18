@@ -78,7 +78,7 @@ export default function EditProfile() {
           username: Yup.string()
             .required(Messages.errors.required)
             .min(3, getDynamicMessage(Messages.errors.charactersMinLimit, ['3']))
-            .max(25, getDynamicMessage(Messages.errors.charactersMaxLimit, ['25']))
+            .max(50, getDynamicMessage(Messages.errors.charactersMaxLimit, ['50']))
             .isProfane('Invalid!')
             .matches(/^[a-zA-Z0-9-_.]+$/, Messages.errors.usernameFormat)
             .customUsernameRules('Invalid username'),
@@ -98,7 +98,7 @@ export default function EditProfile() {
             .matches(/^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/, 'Invalid Instagram username'),
           website: Yup.string().url(Messages.errors.urlError).nullable(),
           bio: Yup.string()
-              .max(100, getDynamicMessage(Messages.errors.charactersMaxLimit, ['40']))
+              .max(100, getDynamicMessage(Messages.errors.charactersMaxLimit, ['100']))
         })
         .required(),
       userAvatar: Yup.object()
@@ -257,7 +257,7 @@ export default function EditProfile() {
               setFieldTouched={setFieldTouched}
               handleBlur={handleBlur}
             />
-            <Bio value={values?.userInfo?.userInfo?.bio} handleChange={handleChange} />
+            <Bio value={values?.userInfo?.userInfo?.bio} handleChange={handleChange} error={errors.userInfo?.userInfo?.bio} />
           </div>
           <div className="col-12 col-sm-12 col-lg-8">
             <Form
