@@ -453,9 +453,16 @@ const Nft721 = ({ address, id }) => {
                   )}
 
                   <div className="row" style={{ gap: '2rem 0' }}>
-                    {currentListing && collection.listable && (
+                    {nft.owner ? (
                       <ProfilePreview
-                        type="Seller"
+                        type="Owner"
+                        address={nft.owner}
+                        to={`/account/${nft.owner}`}
+                        useCnsLookup={true}
+                      />
+                    ) : (currentListing && collection.listable) && (
+                      <ProfilePreview
+                        type="Owner"
                         address={currentListing.seller}
                         to={`/account/${currentListing.seller}`}
                         useCnsLookup={true}

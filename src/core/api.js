@@ -708,58 +708,6 @@ export async function getNftSalesForAddress(walletAddress, page) {
   }
 }
 
-export async function getNftSalesHistory(collectionId, nftId) {
-  try {
-    const queryString = new URLSearchParams({
-      collection: collectionId.toLowerCase(),
-      tokenId: nftId,
-    });
-
-    const url = new URL(api.nft, `${api.baseUrl}`);
-    const uri = `${url}?${queryString}`;
-
-    const result = await (await fetch(uri)).json();
-
-    return result.listings ?? [];
-  } catch (error) {
-    console.log(error);
-    Sentry.captureException(error);
-    return [];
-  }
-}
-
-export async function getNft(collectionId, nftId, useFallback = true) {
-  try {
-    const queryString = new URLSearchParams({
-      collection: collectionId.toLowerCase(),
-      tokenId: nftId,
-    });
-
-    const url = new URL(api.nft, `${api.baseUrl}`);
-    const uri = `${url}?${queryString}`;
-
-    const result = await (await fetch(uri)).json();
-
-    if (useFallback && !result.nft) {
-      result.nft = await getNftFromFile(collectionId, nftId);
-    }
-
-    const isMetaPixels = isMetapixelsCollection(collectionId);
-    if (isMetaPixels) {
-      const contract = new Contract(collectionId, MetaPixelsAbi, readProvider);
-      const data = await contract.lands(nftId);
-      const plotSize = `${data.xmax - data.xmin + 1}x${data.ymax - data.ymin + 1}`;
-      const plotCoords = `(${data.xmin}, ${data.ymin})`;
-      result.nft.description = `Metaverse Pixel plot at ${plotCoords} with a ${plotSize} size`;
-    }
-    return result;
-  } catch (error) {
-    console.log(error);
-    Sentry.captureException(error);
-    return await getNftFromFile(collectionId, nftId);
-  }
-}
-
 export async function getNftFromFile(collectionId, nftId) {
   try {
     const isMetaPixels = isMetapixelsCollection(collectionId);
