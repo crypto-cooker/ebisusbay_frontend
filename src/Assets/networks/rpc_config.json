@@ -7314,6 +7314,25 @@
         "discord": "https://discord.gg/X4shERMUwf",
         "medium": "https://medium.com/cronos-monkey-business"
       }
+    },
+    {
+      "name": "Galactic Outlaw",
+      "slug": "galactic-outlaw",
+      "multiToken": false,
+      "address": "0xA2D20f3C17fdf21745BADD0AaBe29F63795084B8",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "In the faraway wasteland of the galaxy, there's a group of barbarian full of brutal members from various species from all over the galaxy. To you, the traveler roaming in this wasteland, BEWARE OF THEM! or they're coming for you...",
+        "verified": false,
+        "avatar": "/img/collections/galactic-outlaw/avatar.webp",
+        "card": "/img/collections/galactic-outlaw/card.webp",
+        "banner": "/img/collections/galactic-outlaw/banner.webp",
+        "maxSupply": 1111,
+        "website": "https://the-galactic.com/",
+        "twitter": "https://twitter.com/GalacticCroNFT",
+        "discord": "https://discord.gg/BYQdS7nEyS"
+      }
     }
   ],
   "drops": [
