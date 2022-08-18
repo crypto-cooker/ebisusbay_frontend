@@ -163,12 +163,14 @@ export default function Inventory({ address }) {
         </InfiniteScroll>
         <MyNftTransferDialog />
         <MyNftCancelDialog />
-        <MakeListingDialog
-          isOpen={!!user.myNftPageListDialog?.nft}
-          nft={user.myNftPageListDialog?.nft}
-          onClose={() => dispatch(MyNftPageActions.hideMyNftPageListDialog())}
-          listing={user.myNftPageListDialog?.listing}
-        />
+        {user.myNftPageListDialog?.nft && (
+          <MakeListingDialog
+            isOpen={!!user.myNftPageListDialog?.nft}
+            nft={user.myNftPageListDialog?.nft}
+            onClose={() => dispatch(MyNftPageActions.hideMyNftPageListDialog())}
+            listing={user.myNftPageListDialog?.listing}
+          />
+        )}
       </div>
     </QueryClientProvider>
   )

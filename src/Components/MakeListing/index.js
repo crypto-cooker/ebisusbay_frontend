@@ -21,6 +21,7 @@ import {createSuccessfulTransactionToastContent} from "@src/utils";
 import {appConfig} from "@src/Config";
 import Market from "@src/Contracts/Marketplace.json";
 import {useWindowSize} from "@src/hooks/useWindowSize";
+import * as Sentry from '@sentry/react';
 
 const DialogContainer = styled(Dialog)`
   .MuiPaper-root {
@@ -71,7 +72,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
   const { Features } = Constants;
 
   const [saleType, setSaleType] = useState(1);
-  const [salePrice, setSalePrice] = useState(0);
+  const [salePrice, setSalePrice] = useState(null);
   const [floorPrice, setFloorPrice] = useState(0);
   const [priceError, setPriceError] = useState(false);
   const [fee, setFee] = useState(0);
@@ -161,7 +162,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
       const nftAddress = nft.address ?? nft.nftAddress;
       const marketContractAddress = config.contracts.market;
       const marketContract = wrappedMarketContract();
-      setSalePrice(listing ? Math.round(listing.price) : 0)
+      setSalePrice(listing ? Math.round(listing.price) : null)
 
       const floorPrice = await getCollectionMetadata(nftAddress);
       if (floorPrice.collections.length > 0) {
@@ -223,13 +224,16 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
   };
 
   const handleCreateListing = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    if (!validateInput()) return;
+
     try {
       const nftAddress = nft.address ?? nft.nftAddress;
       const nftId = nft.id ?? nft.nftId;
       const price = ethers.utils.parseEther(salePrice.toString());
 
       setExecutingCreateListing(true);
+      Sentry.captureEvent({message: 'handleCreateListing', extra: {nftAddress, nftId, price}});
       let tx = await marketContract.makeListing(nftAddress, nftId, price, txExtras);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -259,7 +263,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
   }
 
   const validateInput = () => {
-    if (!salePrice || parseInt(salePrice) <= 0) {
+    if (!salePrice || parseInt(salePrice) < 1) {
       setPriceError('Value must be greater than zero');
       return false;
     }
@@ -267,6 +271,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
       setPriceError('Value must not exceed 18 digits');
       return false;
     }
+
     setPriceError(null);
     return true;
   }
@@ -326,7 +331,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                   </Form.Label>
                   <Form.Control
                     className="input"
-                    type="text"
+                    type="number"
                     placeholder="Enter Amount"
                     value={salePrice}
                     onChange={costOnChange}
