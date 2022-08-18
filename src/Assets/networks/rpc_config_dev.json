@@ -7333,6 +7333,25 @@
         "twitter": "https://twitter.com/GalacticCroNFT",
         "discord": "https://discord.gg/BYQdS7nEyS"
       }
+    },
+    {
+      "name": "ChiVerse Online",
+      "slug": "chiverse-online",
+      "multiToken": false,
+      "address": "0xaaEb148d08e69329B4075379Aed0c2651bB4BF77",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Join Chiverse, the future biggest living, collectable football universe! Be a manager - mint or buy players, staff & stadium cards. Create your own team, play matches and earn prizes!",
+        "verified": false,
+        "avatar": "/img/collections/chiverse-online/avatar.webp",
+        "card": "/img/collections/chiverse-online/card.webp",
+        "banner": "/img/collections/chiverse-online/banner.webp",
+        "maxSupply": 3000,
+        "website": "https://chiverse.online/",
+        "twitter": "https://twitter.com/ChiVerseOnline",
+        "discord": "https://discord.gg/tWmKk7Htq3"
+      }
     }
   ],
   "drops": [
