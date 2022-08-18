@@ -7371,6 +7371,25 @@
         "twitter": "https://twitter.com/CronosDog",
         "discord": "https://discord.gg/MrhbxCQu"
       }
+    },
+    {
+      "name": "NoBu NFT",
+      "slug": "nobu-nft",
+      "multiToken": false,
+      "address": "0x7BC73811fD0B2Fb51A5e04D2fFD4771b0c0597A1",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "NoBu NFT is a collection of 250 Diamond, 500 Gold, 875 Silver, and 1125 Bronze to total 2750 NoBu NFTs. These NFTs will provide discounts on future mints, and purchases on our website for custom Merch. NoBu NFTs will also be stakable on a tier level basis to earn NoBu coin. 55% of funds raised on mint will go straight to starting NoBu LP.",
+        "verified": true,
+        "avatar": "/img/collections/nobu-nft/avatar.webp",
+        "card": "/img/collections/nobu-nft/card.webp",
+        "banner": "/img/collections/nobu-nft/banner.webp",
+        "maxSupply": 2750,
+        "website": "https://nobuddiesnft.com/",
+        "twitter": "https://twitter.com/NoBuddiesNFT",
+        "discord": "https://discord.gg/BdRzkJ4rWw"
+      }
     }
   ],
   "drops": [
