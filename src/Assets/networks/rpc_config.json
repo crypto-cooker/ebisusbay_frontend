@@ -7352,6 +7352,25 @@
         "twitter": "https://twitter.com/ChiVerseOnline",
         "discord": "https://discord.gg/tWmKk7Htq3"
       }
+    },
+    {
+      "name": "Cronos Dog Crew",
+      "slug": "cronos-dog-crew",
+      "multiToken": false,
+      "address": "0xe072a4C57992832ddf8fF6AE8770cFdc2Ff78A05",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Cronos Dog Crew is more than a project, it’s a mindset. Cronos Dog Crew are NFTs that give access to many utilities and perks through an active community of investors and entrepreneurs with the same goal.",
+        "verified": false,
+        "avatar": "/img/collections/cronos-dog-crew/avatar.webp",
+        "card": "/img/collections/cronos-dog-crew/card.webp",
+        "banner": "/img/collections/cronos-dog-crew/banner.webp",
+        "maxSupply": 70,
+        "website": "https://sites.google.com/view/cronosdogcrew/",
+        "twitter": "https://twitter.com/CronosDog",
+        "discord": "https://discord.gg/MrhbxCQu"
+      }
     }
   ],
   "drops": [
