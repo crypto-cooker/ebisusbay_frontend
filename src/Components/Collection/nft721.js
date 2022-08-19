@@ -754,7 +754,7 @@ const Trait = ({
     <div className="col-lg-4 col-md-6 col-sm-6">
       <div className="nft_attr">
         <h5>{humanize(title)}</h5>
-        {collectionSlug && queryKey ? (
+        {collectionSlug && queryKey && value ? (
           <Link
             href={{
               pathname: `/collection/${collectionSlug}`,
