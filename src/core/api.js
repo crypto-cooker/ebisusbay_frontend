@@ -25,11 +25,11 @@ import {appConfig} from "../Config";
 import {FullCollectionsQuery} from "./api/queries/fullcollections";
 import {ListingsQuery} from "./api/queries/listings";
 import {getQuickWallet} from "./api/endpoints/wallets";
-import { getCollections  } from "/src/core/api/collection";
 
 
 import Constants from '../constants'
 import useFeatureFlag from '../hooks/useFeatureFlag';
+import {getCollections} from "@src/core/api/next/collectioninfo";
 
 const config = appConfig();
 let gatewayTools = new IPFSGatewayTools();
