@@ -1,5 +1,6 @@
 import { Html, Head, Main, NextScript } from 'next/document';
 import {appConfig} from "../src/Config";
+import Script from "next/script";
 const cdn = appConfig('urls.cdn');
 
 export default function Document() {
@@ -23,6 +24,13 @@ export default function Document() {
         <meta content="" name="author" />
 
         <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+        <Script type="module"
+                src="https://js-wc.site24x7static.com/site24x7/client/statusiq_status_widget/statusiq-status-widget.esm.js?08_2022"
+                strategy="beforeInteractive"/>
+        <Script noModule
+                src="https://js-wc.site24x7static.com/site24x7/client/statusiq_status_widget/statusiq-status-widget.js?08_2022"
+                strategy="beforeInteractive"/>
       </Head>
       <body>
         <div id="initialLoader">
@@ -30,6 +38,7 @@ export default function Document() {
         </div>
         <Main />
         <NextScript />
+        <statusiq-status-widget src="https://status.ebisusbay.com" widget-type="sticky" widget-position="bottom-left"></statusiq-status-widget>
       </body>
     </Html>
   );
