@@ -30,3 +30,8 @@ export const listingType = {
   LISTING: 0,
   AUCTION: 1,
 }
+
+export const excludeBurnState = {
+  UNBURNT: 0,
+  BURNT: 1
+}

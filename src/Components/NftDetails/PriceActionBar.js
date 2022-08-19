@@ -11,14 +11,19 @@ import { listingUpdated } from '../../GlobalState/listingSlice';
 import { listingState } from '../../core/api/enums';
 import {OFFER_TYPE} from "../Offer/MadeOffersRow";
 import Button from "../components/Button";
+import {useRouter} from "next/router";
+import MakeListingDialog from "@src/Components/MakeListing";
 
-const PriceActionBar = ({offerType, onOfferSelected, label}) => {
+const PriceActionBar = ({offerType, onOfferSelected, label, isOwner}) => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const user = useSelector((state) => state.user);
-  const listing = useSelector((state) => state.nft.currentListing);
+  const {currentListing: listing, nft} = useSelector((state) => state.nft);
   const [executingBuy, setExecutingBuy] = useState(false);
+  const [executingCancel, setExecutingCancel] = useState(false);
   const [canBuy, setCanBuy] = useState(false);
+  const [isSellDialogOpen, setIsSellDialogOpen] = useState(false);
 
   const executeBuy = (amount) => async () => {
     setExecutingBuy(true);
@@ -31,6 +36,16 @@ const PriceActionBar = ({offerType, onOfferSelected, label}) => {
       ).wait();
     });
     setExecutingBuy(false);
+  };
+
+  const executeCancel = () => async () => {
+    setExecutingCancel(true);
+    await runFunction(async (writeContract) => {
+      return (
+        await writeContract.cancelListing(listing.listingId)
+      ).wait();
+    });
+    setExecutingCancel(false);
   };
 
   const runFunction = async (fn) => {
@@ -69,6 +84,13 @@ const PriceActionBar = ({offerType, onOfferSelected, label}) => {
     }
   };
 
+  const onSellSelected = () => {
+    setIsSellDialogOpen(true);
+  };
+  const onUpdateSelected = () => {
+    setIsSellDialogOpen(true);
+  };
+
   useEffect(() => {
     setCanBuy(
       listing &&
@@ -92,32 +114,73 @@ const PriceActionBar = ({offerType, onOfferSelected, label}) => {
           </div>
 
           <div className="d-flex">
-            {canBuy && (
-              <div className="flex-fill mx-1">
-                {listing.state === listingState.ACTIVE && (
-                  <Button type="legacy" className="w-100" onClick={executeBuy(listing.price)} disabled={executingBuy}>
-                    {executingBuy ? (
-                      <>
-                        Buy Now...
-                        <Spinner animation="border" role="status" size="sm" className="ms-1">
-                          <span className="visually-hidden">Loading...</span>
-                        </Spinner>
-                      </>
-                    ) : (
-                      <>Buy Now</>
-                    )}
+            {isOwner ? (
+              <>
+                {listing && listing.state === listingState.ACTIVE ? (
+                  <>
+                  <div className="flex-fill mx-1">
+                    <Button type="legacy-outlined" className="w-100" onClick={executeCancel()} disabled={executingCancel}>
+                      {executingCancel ? (
+                        <>
+                          Cancelling...
+                          <Spinner animation="border" role="status" size="sm" className="ms-1">
+                            <span className="visually-hidden">Loading...</span>
+                          </Spinner>
+                        </>
+                      ) : (
+                        <>Cancel Listing</>
+                      )}
+                    </Button>
+                  </div>
+
+                  <div className="flex-fill mx-1">
+                    <Button type="legacy" className="w-100" onClick={onUpdateSelected} disabled={executingCancel}>
+                      Update Listing
+                    </Button>
+                  </div>
+                  </>
+                ) : (
+                  <Button type="legacy" className="w-100" onClick={onSellSelected}>
+                    Sell this NFT
                   </Button>
                 )}
-              </div>
+              </>
+            ) : (
+              <>
+                {canBuy && (
+                  <div className="flex-fill mx-1">
+                    {listing.state === listingState.ACTIVE && (
+                      <Button type="legacy" className="w-100" onClick={executeBuy(listing.price)} disabled={executingBuy}>
+                        {executingBuy ? (
+                          <>
+                            Buy Now...
+                            <Spinner animation="border" role="status" size="sm" className="ms-1">
+                              <span className="visually-hidden">Loading...</span>
+                            </Spinner>
+                          </>
+                        ) : (
+                          <>Buy Now</>
+                        )}
+                      </Button>
+                    )}
+                  </div>
+                )}
+                <div className="flex-fill mx-1">
+                  <Button type="legacy-outlined" className="w-100" onClick={onOfferSelected}>
+                    {offerType === OFFER_TYPE.update ? 'Update' : 'Make'} Offer
+                  </Button>
+                </div>
+              </>
             )}
-            <div className="flex-fill mx-1">
-                <Button type="legacy-outlined" className="w-100" onClick={onOfferSelected}>
-                  {offerType === OFFER_TYPE.update ? 'Update' : 'Make'} Offer
-                </Button>
-            </div>
           </div>
         </Card.Body>
       </Card>
+      <MakeListingDialog
+        isOpen={isSellDialogOpen}
+        nft={nft}
+        onClose={() => setIsSellDialogOpen(!isSellDialogOpen)}
+        listing={listing}
+      />
     </div>
   );
 };

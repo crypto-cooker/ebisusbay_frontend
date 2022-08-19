@@ -445,13 +445,24 @@ const Nft721 = ({ address, id }) => {
                   )}
 
                   {collection.listable && (
-                    <PriceActionBar offerType={offerType} onOfferSelected={() => handleMakeOffer()} />
+                    <PriceActionBar
+                      offerType={offerType}
+                      onOfferSelected={() => handleMakeOffer()}
+                      isOwner={caseInsensitiveCompare(user.address, nft.owner)}
+                    />
                   )}
 
                   <div className="row" style={{ gap: '2rem 0' }}>
-                    {currentListing && collection.listable && (
+                    {nft.owner ? (
                       <ProfilePreview
-                        type="Seller"
+                        type="Owner"
+                        address={nft.owner}
+                        to={`/account/${nft.owner}`}
+                        useCnsLookup={true}
+                      />
+                    ) : (currentListing && collection.listable) && (
+                      <ProfilePreview
+                        type="Owner"
                         address={currentListing.seller}
                         to={`/account/${currentListing.seller}`}
                         useCnsLookup={true}
@@ -743,7 +754,7 @@ const Trait = ({
     <div className="col-lg-4 col-md-6 col-sm-6">
       <div className="nft_attr">
         <h5>{humanize(title)}</h5>
-        {collectionSlug && queryKey ? (
+        {collectionSlug && queryKey && value ? (
           <Link
             href={{
               pathname: `/collection/${collectionSlug}`,

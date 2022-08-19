@@ -885,9 +885,9 @@
       "metadata": {
         "description": "Cro Sharks Collection",
         "verified": false,
-        "avatar": "/img/collections/crosharks/avatar.jpg",
-        "banner": "/img/collections/crosharks/banner.jpg",
-        "card": "/img/collections/crosharks/card.jpg",
+        "avatar": "/img/collections/cro-sharks/avatar.jpg",
+        "banner": "/img/collections/cro-sharks/banner.jpg",
+        "card": "/img/collections/cro-sharks/card.jpg",
         "maxSupply": 2222,
         "website": "https://crosharks.club/",
         "twitter": "https://twitter.com/CroSharks",
@@ -1070,9 +1070,9 @@
         "banner": "/img/collections/cronosmb/banner.webp",
         "rankings": {"source": "rarity_sniper", "slug": "cronos-primate-business"},
         "maxSupply": 1000,
-        "website": "https://cronospb.com/",
+        "website": "https://www.cronospb.com/",
         "twitter": "https://twitter.com/PrimateCronos",
-        "discord": "https://discord.gg/cpb",
+        "discord": "https://discord.gg/X4shERMUwf",
         "medium": "https://medium.com/cronos-monkey-business"
       }
     },
@@ -1110,8 +1110,8 @@
         "card": "/img/collections/crougars/card.webp",
         "banner": "/img/collections/crougars/banner.webp",
         "maxSupply": 2222,
-        "website": "https://crougar.com/",
-        "twitter": "https://twitter.com/CROugarNFT",
+        "website": "https://crougarkingdom.com/",
+        "twitter": "https://twitter.com/CROugarKingdom",
         "discord": "https://discord.gg/G8Puur6Qea",
         "medium": "https://medium.com/@crougar",
         "staking": "crodex"
@@ -1704,9 +1704,10 @@
         "card": "/img/collections/cronosmb/card.jpg",
         "banner": "/img/collections/cronosmb/banner.webp",
         "maxSupply": 75,
-        "website": "https://cronospb.com",
+        "website": "https://www.cronospb.com/",
         "twitter": "https://twitter.com/PrimateCronos",
-        "discord": "https://discord.gg/cpb"
+        "discord": "https://discord.gg/X4shERMUwf",
+        "medium": "https://medium.com/cronos-monkey-business"
       }
     },
     {
@@ -2214,9 +2215,9 @@
         "card": "/img/collections/cronosmb/gorilla/card.jpeg",
         "banner": "/img/collections/cronosmb/banner.webp",
         "maxSupply": 6100,
-        "website": "https://cronospb.com/",
+        "website": "https://www.cronospb.com/",
         "twitter": "https://twitter.com/PrimateCronos",
-        "discord": "https://discord.gg/cpb",
+        "discord": "https://discord.gg/X4shERMUwf",
         "medium": "https://medium.com/cronos-monkey-business"
       }
     },
@@ -2915,20 +2916,21 @@
       "name": "Cronos Football Club",
       "slug": "cronos-fc",
       "multiToken": false,
-      "address": "0xD42B7Da75fd92D7612B2D89E31782fD29CC69fb4",
+      "address": "0xEc2eFF1207C851d130cbD87873B31252248A5bfa",
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "",
+        "description": "Cronos Football Club is a GameFi protocol which first launched the first r2e game on the Cronos blockchain. The old collection is merged into a lower supplied collection. This new 5555 collection will have utility in all our upcoming projects.",
         "verified": false,
         "avatar": "/img/collections/cronos-fc/avatar.webp",
         "card": "/img/collections/cronos-fc/card.webp",
         "banner": "/img/collections/cronos-fc/banner.webp",
-        "maxSupply": 25000,
+        "maxSupply": 5555,
         "website": "https://dapp.cronosfc.club/",
         "twitter": "https://twitter.com/Cronos__FC",
         "discord": "https://discord.gg/XPmYbqAD",
-        "medium": "https://medium.com/@cfcgcronos"
+        "medium": "https://medium.com/@cfcgcronos",
+        "telegram": "https://t.me/CronosFCofficial"
       }
     },
     {
@@ -4153,7 +4155,7 @@
       "multiToken": false,
       "address": "0x02ABFF48770cabB29c8589ecAD69A3B02059ccA8",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -4771,8 +4773,8 @@
         "card": "/img/collections/crougars/crougar-x/card.webp",
         "banner": "/img/collections/crougars/crougar-x/banner.webp",
         "maxSupply": 2222,
-        "website": "https://crougar.com/",
-        "twitter": "https://twitter.com/CROugarNFT",
+        "website": "https://crougarkingdom.com/",
+        "twitter": "https://twitter.com/CROugarKingdom",
         "discord": "https://discord.gg/G8Puur6Qea",
         "medium": "https://medium.com/@crougar"
       }
@@ -5450,8 +5452,8 @@
       }
     },
     {
-      "name": "Corruption",
-      "slug": "corruption",
+      "name": "Cronos Primate Business - Bananas",
+      "slug": "cpb-bananas",
       "multiToken": true,
       "tokens": [{ "id": 1 }, { "id": 2 }, { "id": 3 }],
       "address": "0xA68825768bDB7a2161422e3CcAF1973FF88f8E66",
@@ -5464,9 +5466,9 @@
         "card": "/img/collections/cronosmb/card.jpg",
         "banner": "/img/collections/cronosmb/banner.webp",
         "maxSupply": 1780,
-        "website": "https://cronospb.com/",
+        "website": "https://www.cronospb.com/",
         "twitter": "https://twitter.com/PrimateCronos",
-        "discord": "https://discord.gg/cpb",
+        "discord": "https://discord.gg/X4shERMUwf",
         "medium": "https://medium.com/cronos-monkey-business"
       }
     },
@@ -5752,7 +5754,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Crogecoin is the first and biggest memecoin on the Cronos network. Croge NFTs are used by the community to represent our support for Crogecoin, Cronos, and Crypto.com. The Croge community loves memes, sports, and fun.",
+        "description": "Crogecoin is the first and biggest meme coin on the Cronos network. We believe strongly in our policy of “Under promise and overdeliver” that is exactly what Croge has done to date. We have a functioning P2E game, Partnerships with UFC Fighters and Professional Soccer Players, Airdrops of $5000 sent to the community for playing our song and an official partnership with SafeMoon. Get your CrogeNFT today and start playing our P2E game!",
         "verified": true,
         "avatar": "/img/collections/croge-nft/avatar.jpg",
         "card": "/img/collections/croge-nft/card.jpg",
@@ -5915,7 +5917,8 @@
         "maxSupply": 100,
         "website": "https://croceanft.com/",
         "twitter": "https://twitter.com/Crocean_NFT",
-        "discord": "https://discord.gg/N9YstjgG2y"
+        "discord": "https://discord.gg/N9YstjgG2y",
+        "telegram": "https://t.me/crowhalesnft"
       }
     },
     {
@@ -7164,6 +7167,229 @@
         "twitter": "https://www.twitter.com/VVS_finance",
         "discord": "https://discord.gg/V2957zMsmg"
       }
+    },
+    {
+      "name": "Croodle Ape",
+      "slug": "croodle-ape",
+      "multiToken": false,
+      "address": "0xf3a7baeadf59f6900c0202a4680d958b9ad4b713",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Our Artist will start drawing the based character Croodle Ape then add more then 120 traits, we love the doodle style. Then we build our discord channel and Twitter page. We start an aggressive marketing for the biggest free mint of the cronoschain history. Also running contests and giveaways on our socials to increase engagement.",
+        "verified": false,
+        "avatar": "/img/collections/croodle-ape/avatar.webp",
+        "card": "/img/collections/croodle-ape/card.webp",
+        "banner": "/img/collections/croodle-ape/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://croodleape.com/",
+        "twitter": "https://www.twitter.com/croodleape",
+        "discord": "https://discord.gg/Tj97K4c4Y9"
+      }
+    },
+    {
+      "name": "Crosharks",
+      "slug": "crosharks",
+      "multiToken": false,
+      "address": "0xc32c0B0C63DC2F5507d0bC2705B6a0199Cc63408",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Crocean is an NFT project that started the Crowhales collection (OG – sold out). The project will initially include 3 collections. You will not experience empty promises as in typical NFT projects about metaverse, P2E, exclusiveness, uniqueness or that your picture becomes threatening when the lights go out. The facts are that everyone wants to sell at higher price than when we minted. The first collection will be 999 Crosharks (3 types of sharks – Cranger, Crovouge, Crofaw). Simply having one of them will make it possible to recover investments through staking NFT or $CRO airdrops.",
+        "verified": false,
+        "avatar": "/img/collections/crosharks/avatar.webp",
+        "card": "/img/collections/crosharks/card.webp",
+        "banner": "/img/collections/crosharks/banner.webp",
+        "maxSupply": 999,
+        "website": "https://croceanft.com/",
+        "twitter": "https://twitter.com/Crocean_NFT",
+        "discord": "https://discord.gg/N9YstjgG2y",
+        "telegram": "https://t.me/crowhalesnft"
+      }
+    },
+    {
+      "name": "Sou-Sou Bears",
+      "slug": "sou-sou-bears",
+      "multiToken": false,
+      "address": "0xB1A61Bbcb9e0D1bDA3657d6e005E9772e7c3d90d",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Sou-Sou Bears is a collection of 100 Bearish Creatures Living and Building Wealth 'Soucially' on the Cronos Network. Owning a Bear grants you access to the SouSouDAO.",
+        "verified": false,
+        "avatar": "/img/collections/sou-sou-bears/avatar.webp",
+        "card": "/img/collections/sou-sou-bears/card.webp",
+        "banner": "/img/collections/sou-sou-bears/banner.webp",
+        "maxSupply": 100,
+        "website": "https://ipfs.io/ipfs/QmX47Zv8vcVxDc6AWB1izX1h8B2oKkx1z5kZPN1xtAB5E6/",
+        "twitter": "https://twitter.com/sousoubears",
+        "discord": "https://discord.gg/mKkPJYK4fs"
+      }
+    },
+    {
+      "name": "BB Treasury Coins",
+      "slug": "bb-treasury-coins",
+      "multiToken": false,
+      "address": "0xE8c9eC751C93fe8E7e12567FcF6Aaf2793e007a1",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Busy Bears Coins used for BB Treasury Project",
+        "verified": false,
+        "avatar": "/img/collections/bb-treasury-coins/avatar.webp",
+        "card": "/img/collections/bb-treasury-coins/card.webp",
+        "banner": "/img/collections/bb-treasury-coins/banner.webp",
+        "maxSupply": 100,
+        "website": "https://www.busybears.club/",
+        "twitter": "https://twitter.com/BusyBearsClub",
+        "discord": "https://discord.gg/5Y4mjweQR6"
+      }
+    },
+    {
+      "name": "Pirates of the Cronosphere",
+      "slug": "pirates-of-the-cronosphere",
+      "multiToken": false,
+      "address": "0xAE8663c0A83C0B0BE7c1c6960f0F42F2b529D749",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Pirates of the Cronosphere is the genesis NFT collection for the Cronosphere project. A collection of 2000 NFTS. There are 4 races of space pirate: Male, Female, Robot, Alien. 500 of each race.",
+        "verified": false,
+        "avatar": "/img/collections/pirates-of-the-cronosphere/avatar.webp",
+        "card": "/img/collections/pirates-of-the-cronosphere/card.webp",
+        "banner": "/img/collections/pirates-of-the-cronosphere/banner.webp",
+        "maxSupply": 2000,
+        "website": "https://spherevaults.com/",
+        "twitter": "https://twitter.com/CronosphereNFT",
+        "discord": "https://discord.gg/BPMUE9TJUt",
+        "medium": "https://medium.com/@gazzcronosphere",
+        "telegram": "https://t.me/Cronosphere"
+      }
+    },
+    {
+      "name": "Art City",
+      "slug": "art-city",
+      "multiToken": true,
+      "tokens": [
+        { "id": 1 },
+        { "id": 2 },
+        { "id": 3 },
+        { "id": 4 },
+        { "id": 5 },
+        { "id": 6 },
+        { "id": 7 }
+      ],
+      "address": "0xDF30c2fCCB1fD5B3F54DE257323b21c484f8FCD0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Art City Presale NFT collection consists of all City Council Member Card and 10% of all Art City's estates.",
+        "verified": false,
+        "avatar": "/img/collections/art-city/avatar.webp",
+        "card": "/img/collections/art-city/card.webp",
+        "banner": "/img/collections/art-city/banner.webp",
+        "maxSupply": 4001,
+        "website": "https://www.art-city.io/",
+        "twitter": "https://twitter.com/Art_city_",
+        "discord": "https://discord.gg/9XMtXSzRrK",
+        "medium": "https://medium.com/@art-city"
+      }
+    },
+    {
+      "name": "Corrupted Primates",
+      "slug": "cpb-corrupt",
+      "multiToken": false,
+      "address": "0x67474fDBebe7A973356b6791c7D7F70264298C0A",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Unique collection of 500 randomly generated Corrupted Monkeys.",
+        "verified": false,
+        "avatar": "/img/collections/cpb-corrupt/avatar.webp",
+        "card": "/img/collections/cpb-corrupt/card.webp",
+        "banner": "/img/collections/cpb-corrupt/banner.webp",
+        "maxSupply": 500,
+        "website": "https://www.cronospb.com/",
+        "twitter": "https://twitter.com/PrimateCronos",
+        "discord": "https://discord.gg/X4shERMUwf",
+        "medium": "https://medium.com/cronos-monkey-business"
+      }
+    },
+    {
+      "name": "Galactic Outlaw",
+      "slug": "galactic-outlaw",
+      "multiToken": false,
+      "address": "0xA2D20f3C17fdf21745BADD0AaBe29F63795084B8",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "In the faraway wasteland of the galaxy, there's a group of barbarian full of brutal members from various species from all over the galaxy. To you, the traveler roaming in this wasteland, BEWARE OF THEM! or they're coming for you...",
+        "verified": false,
+        "avatar": "/img/collections/galactic-outlaw/avatar.webp",
+        "card": "/img/collections/galactic-outlaw/card.webp",
+        "banner": "/img/collections/galactic-outlaw/banner.webp",
+        "maxSupply": 1111,
+        "website": "https://the-galactic.com/",
+        "twitter": "https://twitter.com/GalacticCroNFT",
+        "discord": "https://discord.gg/BYQdS7nEyS"
+      }
+    },
+    {
+      "name": "ChiVerse Online",
+      "slug": "chiverse-online",
+      "multiToken": false,
+      "address": "0xaaEb148d08e69329B4075379Aed0c2651bB4BF77",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Join Chiverse, the future biggest living, collectable football universe! Be a manager - mint or buy players, staff & stadium cards. Create your own team, play matches and earn prizes!",
+        "verified": false,
+        "avatar": "/img/collections/chiverse-online/avatar.webp",
+        "card": "/img/collections/chiverse-online/card.webp",
+        "banner": "/img/collections/chiverse-online/banner.webp",
+        "maxSupply": 3000,
+        "website": "https://chiverse.online/",
+        "twitter": "https://twitter.com/ChiVerseOnline",
+        "discord": "https://discord.gg/tWmKk7Htq3"
+      }
+    },
+    {
+      "name": "Cronos Dog Crew",
+      "slug": "cronos-dog-crew",
+      "multiToken": false,
+      "address": "0xe072a4C57992832ddf8fF6AE8770cFdc2Ff78A05",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Cronos Dog Crew is more than a project, it’s a mindset. Cronos Dog Crew are NFTs that give access to many utilities and perks through an active community of investors and entrepreneurs with the same goal.",
+        "verified": false,
+        "avatar": "/img/collections/cronos-dog-crew/avatar.webp",
+        "card": "/img/collections/cronos-dog-crew/card.webp",
+        "banner": "/img/collections/cronos-dog-crew/banner.webp",
+        "maxSupply": 70,
+        "website": "https://sites.google.com/view/cronosdogcrew/",
+        "twitter": "https://twitter.com/CronosDog",
+        "discord": "https://discord.gg/MrhbxCQu"
+      }
+    },
+    {
+      "name": "NoBu NFT",
+      "slug": "nobu-nft",
+      "multiToken": false,
+      "address": "0xf39363ABC3434C600e731068Fb8D25d4D8b2B668",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "NoBu NFT is a collection of 250 Diamond, 500 Gold, 875 Silver, and 1125 Bronze to total 2750 NoBu NFTs. These NFTs will provide discounts on future mints, and purchases on our website for custom Merch. NoBu NFTs will also be stakable on a tier level basis to earn NoBu coin. 55% of funds raised on mint will go straight to starting NoBu LP.",
+        "verified": true,
+        "avatar": "/img/collections/nobu-nft/avatar.webp",
+        "card": "/img/collections/nobu-nft/card.webp",
+        "banner": "/img/collections/nobu-nft/banner.webp",
+        "maxSupply": 2750,
+        "website": "https://nobuddiesnft.com/",
+        "twitter": "https://twitter.com/NoBuddiesNFT",
+        "discord": "https://discord.gg/BdRzkJ4rWw"
+      }
     }
   ],
   "drops": [
@@ -7526,7 +7752,7 @@
       "imgBanner": "/img/collections/crognomes/banner.png",
       "title": "Crognomes",
       "subtitle": "2000 secretive hard working Crognomes living on the cronos blockchain who might share the location of the secret mines if taken care of well enough.",
-      "description": "Have you ever wondered where all those shiny crypto cards actually come from?\n\nThose glistening ruby, shiny indigo & luminescent jade crystals that are needed for those ooooh so sweet cashbacks are harvested deep inside the hidden cryptomines. The location of these mines are a well-kept secret by the Crognomes...\n\nWhile theyÃ¢â‚¬â„¢re no tattletales, the Crognomes might share the secret location of these Cryptomines with you, if you provide them safe refuge in your cryptowallet.\n\nCrognomes have been known to sneak in their wives, the Crognomides, when theyÃ¢â‚¬â„¢re feeling lonely. If you mint a route to your wallet after the minting fase of the Crognomes, you can expect these Crognomides to show up in your wallet as well! When you leave them alone for a long enough time, you will find your family of 2 has grown ever larger.\n\nStart your own Crognome-family and adopt your Crognome today!",
+      "description": "Have you ever wondered where all those shiny crypto cards actually come from?\n\nThose glistening ruby, shiny indigo & luminescent jade crystals that are needed for those ooooh so sweet cashbacks are harvested deep inside the hidden cryptomines. The location of these mines are a well-kept secret by the Crognomes...\n\nWhile they're no tattletales, the Crognomes might share the secret location of these Cryptomines with you, if you provide them safe refuge in your cryptowallet.\n\nCrognomes have been known to sneak in their wives, the Crognomides, when they're feeling lonely. If you mint a route to your wallet after the minting fase of the Crognomes, you can expect these Crognomides to show up in your wallet as well! When you leave them alone for a long enough time, you will find your family of 2 has grown ever larger.\n\nStart your own Crognome-family and adopt your Crognome today!",
       "author": { "name": "Crognomes", "link": "https://www.crognomes.com/" },
       "address": "0xDe56D1C3E5B9E8e4f12533c1E64D4f6b7eEE701E",
       "maxMintPerTx": 10,
@@ -9928,7 +10154,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": true,
       "redirect": "https://www.argofinance.money/nft"
     },
@@ -9984,9 +10210,9 @@
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 10000,
-      "cost": "888",
-      "memberCost": "800",
-      "whitelistCost": "800",
+      "cost": "550",
+      "memberCost": "450",
+      "whitelistCost": "450",
       "foundersOnly": false,
       "start": 1660320000000,
       "end": null,
@@ -10020,7 +10246,7 @@
       "memberCost": "450",
       "whitelistCost": "400",
       "foundersOnly": false,
-      "start": 1660590000000,
+      "start": null,
       "end": null,
       "referral": false,
       "is1155": false,

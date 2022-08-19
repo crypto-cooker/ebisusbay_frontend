@@ -20,7 +20,9 @@ export const getServerSideProps = async ({ params, query }) => {
 
   const user = await getProfile(addressOrUsername) ?? null;
 
-  if (user?.data && caseInsensitiveCompare(addressOrUsername, user.data.walletAddress)) {
+  if (user?.data &&
+    caseInsensitiveCompare(addressOrUsername, user.data.walletAddress) &&
+    !caseInsensitiveCompare(addressOrUsername, user.data.username)) {
     return {
       redirect: {
         destination: `/account/${user.data.username}`,
