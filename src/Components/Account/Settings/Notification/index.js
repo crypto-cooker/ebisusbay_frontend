@@ -5,6 +5,7 @@ import NotificationMethod from "@src/Components/Account/Settings/Notification/Me
 import useUpdateNotifications from "@src/Components/Account/Settings/hooks/useUpdateNotifications";
 import {useSelector} from "react-redux";
 import useGetSettings from "@src/Components/Account/Settings/hooks/useGetSettings";
+import {toast} from "react-toastify";
 
 const NotificationItems = [
   { key: 'SOLD', title: 'Item Sold', description: 'When someone purchases one of your items' },
@@ -21,19 +22,19 @@ export default function Notification() {
   const [{ response: settings }] = useGetSettings(user?.address);
 
   const handleSaveProfile = async () => {
-    console.log('stuff', notificationMethods, notificationTypes)
-    setIsOnSave(true);
-
     try  {
+      setIsOnSave(true);
       await requestUpdateNotifications(user.address, notificationMethods, notificationTypes);
+      toast.success('Your profile was saved successfully');
     } catch (err) {
       console.log(err);
+      toast.error('Something went wrong!');
+    } finally {
+      setIsOnSave(false);
     }
-    setIsOnSave(false);
   };
 
   const handleNotificationMethodsChange = (key, enabled) => {
-    console.log('set', key, enabled);
     if (notificationMethods.includes(key) && !enabled) {
       setNotificationMethods(notificationMethods.filter(function(value){
         return value !== key;

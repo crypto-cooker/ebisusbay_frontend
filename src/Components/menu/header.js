@@ -38,7 +38,7 @@ const GlobalStyles = createGlobalStyle`
 
 const Header = function () {
   const dispatch = useDispatch();
-  const theme = useSelector((state) => state.user.theme);
+  const {theme, profile} = useSelector((state) => state.user);
   const [showMenu, setShowMenu] = useState(false);
   const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
   const [useMobileMenu, setUseMobileMenu] = useState(false);
@@ -185,7 +185,7 @@ const Header = function () {
             </div>
           )}
 
-          {isNotificationsEnabled && (
+          {isNotificationsEnabled && profile && (
             <NotificationMenu />
           )}
           <AccountMenu />
