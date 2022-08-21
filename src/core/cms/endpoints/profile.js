@@ -75,3 +75,12 @@ export const verifyEmail = async (signature, address) => {
     }
   })
 }
+
+export const updateNotifications = async (notificationMethods, notificationTypes, signature, address) => {
+  await api.patch('profile/notifications', {notificationMethods, notificationTypes}, {
+    params: {
+      signature,
+      address
+    }
+  });
+}
