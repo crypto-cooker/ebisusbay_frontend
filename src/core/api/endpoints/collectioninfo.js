@@ -17,3 +17,7 @@ export const getCollections = async (query) => {
     throw error;
   }
 }
+
+export const getOwnerCollections = async (address, query) => {
+  return getCollections({owner: address, ...query});
+}
