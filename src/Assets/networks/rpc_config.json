@@ -2073,7 +2073,7 @@
       "multiToken": false,
       "address": "0xAed630F0B36DcbBa21Bdbe99F8662f13CC4FaFB1",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -8899,7 +8899,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false
+      "complete": true
     },
     {
       "id": 56,
