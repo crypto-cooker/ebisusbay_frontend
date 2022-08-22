@@ -18,7 +18,8 @@ export async function sortAndFetchListings(
   sort,
   filter,
   state,
-  pagesize = limitSizeOptions.lg
+  pagesize = limitSizeOptions.lg,
+  verified = 0,
 ) {
   let query = {
     state: state ?? 0,
@@ -26,6 +27,7 @@ export async function sortAndFetchListings(
     pageSize: pagesize,
     sortBy: 'listingId',
     direction: 'desc',
+    verified
   };
   if (filter && (filter instanceof ListingsQuery)) {
     query = { ...query, ...filter.toApi() };

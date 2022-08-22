@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import Select from 'react-select';
 import { useSelector } from 'react-redux';
 
@@ -6,6 +6,7 @@ import { SortOption } from '../Models/sort-option.model';
 import { getTheme } from '../../Theme/theme';
 import { Form } from 'react-bootstrap';
 import styled from 'styled-components';
+import Switch from './common/Switch';
 
 const CollectionFilterBarContainer = styled.div`
   margin: 0 0 22px;
@@ -27,6 +28,8 @@ const TopFilterBar = ({
   onSearch = () => {},
   sortValue = undefined,
   filterValue = undefined,
+  onlyVerified = false,
+  setOnlyVerified = () => {}
 }) => {
   const userTheme = useSelector((state) => {
     return state.user.theme;
@@ -130,10 +133,14 @@ const TopFilterBar = ({
           </div>
         </div>
       </div>
-      <div className="col-xl-3 px-2 mt-2 col-md-6 col-sm-12 d-sm-flex d-lg-none d-xl-flex" />
       <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12 px-2 mt-2">
         <div className="items_filter" style={{ marginBottom: 0, marginTop: 0 }}>
           <div className="dropdownSelect two w-100 mr-0 mb-0">{showSearch && showFilter && <Search />}</div>
+        </div>
+      </div>
+      <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12 px-2 mt-2">
+        <div className="d-flex justify-content-end">
+          <Switch isChecked={onlyVerified} setIsChecked={setOnlyVerified} checkedText={'Verified'} uncheckedText={'All'}/>
         </div>
       </div>
     </CollectionFilterBarContainer>
