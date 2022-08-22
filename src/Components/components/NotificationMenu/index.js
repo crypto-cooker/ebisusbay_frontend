@@ -11,15 +11,16 @@ import {Offcanvas, Spinner} from "react-bootstrap";
 import {getNotifications} from "@src/core/cms/endpoints/notifications";
 import {useQuery} from "@tanstack/react-query";
 import useDeleteNotifications from "@src/Components/Account/Settings/hooks/useDeleteNotifications";
+import Link from "next/link";
 
 const NotificationMenu = function () {
   const history = useRouter();
-  const {address, theme} = useSelector((state) => state.user);
+  const {address, theme, profile} = useSelector((state) => state.user);
   const [showpop, setShowpop] = useState(false);
   const [requestDeleteNotifications] = useDeleteNotifications();
 
   const { isLoading, error, data:notifications, status, refetch } = useQuery(['Notifications', address], () =>
-    getNotifications(address)
+    getNotifications(address), {enabled: !!profile.id}
   )
 
   const closePop = () => {
@@ -42,12 +43,15 @@ const NotificationMenu = function () {
   }
 
   return address && (
-    <div className={classnames('mainside d-flex', styles.notification)}>
-        <div id="de-click-menu-profile" className="de-menu-profile">
-          <span onClick={() => setShowpop(!showpop)}>
-            <FontAwesomeIcon icon={faBell} color="#fff" />
-          </span>
-        </div>
+    <div>
+      <div className="de-menu-notification" onClick={() => setShowpop(!showpop)}>
+        {notifications?.data?.length > 0 && (
+          <div className="d-count">{notifications.data.length}</div>
+        )}
+        <span>
+          <FontAwesomeIcon icon={faBell} color={theme === 'dark' ? '#000' : '#000'} />
+        </span>
+      </div>
 
       <Offcanvas show={showpop} onHide={closePop} placement="end">
         <Offcanvas.Header closeButton closeVariant={theme === 'dark' ? 'white': 'dark'}>
@@ -61,7 +65,11 @@ const NotificationMenu = function () {
               </Spinner>
             </div>
           ) : status === "error" ? (
-            <p>Error: {error.message}</p>
+            <p className="text-center">Error: {error.message}</p>
+          ) : !profile.id ? (
+            <p className="text-center">
+              <Link href="/account/settings/profile">Create a profile to activate notifications</Link>
+            </p>
           ) : (
             <>
               {notifications.data.length > 0 && (

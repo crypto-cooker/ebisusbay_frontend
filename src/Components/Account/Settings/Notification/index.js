@@ -59,6 +59,8 @@ export default function Notification() {
     }
   }, [settings]);
 
+  if (!user.profile.id) return <p>Create your profile in the Edit Profile tab first to update notification settings</p>
+
   return (
     <div className="row mt-5">
       <div className="col-8">

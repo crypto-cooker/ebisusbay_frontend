@@ -41,18 +41,6 @@ import { isUserBlacklisted, round, shortAddress } from '../../utils';
 import { appConfig } from '../../Config';
 import {ImageKitService} from "@src/helpers/image";
 
-const config = appConfig();
-
-const BlockiesBadge = styled.div`
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  width: 10px;
-  height: 10px;
-  border-radius: 10px;
-  background-color: #bd2727;
-`;
-
 const StyledModal = styled(Modal)`
   .modal-content {
     background: ${({ theme }) => theme.colors.bgColor1};
@@ -97,11 +85,6 @@ const AccountMenu = function () {
   const { data: balance, mutate } = useSWR(['getBalance', walletAddress, 'latest'], {
     fetcher: fetcher(user?.provider, ERC20),
   });
-
-  const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    dispatch(setTheme(newTheme));
-  };
 
   useEffect(() => {
     dispatch(
@@ -160,11 +143,6 @@ const AccountMenu = function () {
     }
   };
 
-  // const toggleTheme = () => {
-  //   const newTheme = theme === 'light' ? 'dark' : 'light';
-  //   dispatch(setTheme(newTheme));
-  // };
-
   const handleCopy = (code) => () => {
     navigator.clipboard.writeText(code);
     toast.success('Copied!');
@@ -182,10 +160,6 @@ const AccountMenu = function () {
     dispatch(AccountMenuActions.harvestStakingRewards());
   };
 
-  // const registerCode = async () => {
-  //   dispatch(AccountMenuActions.registerCode());
-  // };
-
   const clearCookies = async () => {
     dispatch(onLogout());
     toast.success(`Cookies cleared!`);
@@ -202,42 +176,6 @@ const AccountMenu = function () {
     // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    // if (typeof window === 'undefined') {
-    //   return;
-    // }
-    // let defiLink = localStorage.getItem('DeFiLink_session_storage_extension');
-    // if (defiLink) {
-    //   try {
-    //     const json = JSON.parse(defiLink);
-    //     if (!json.connected) {
-    //       dispatch(onLogout());
-    //     }
-    //   } catch (error) {
-    //     dispatch(onLogout());
-    //   }
-    // }
-    // if (
-    //   localStorage.getItem('WEB3_CONNECT_CACHED_PROVIDER') ||
-    //   window.ethereum ||
-    //   localStorage.getItem('DeFiLink_session_storage_extension')
-    // ) {
-    //   if (!user.provider) {
-    //     if (window.navigator.userAgent.includes('Crypto.com DeFiWallet')) {
-    //       dispatch(connectAccount(false, 'defi'));
-    //     } else {
-    //       dispatch(connectAccount());
-    //     }
-    //   }
-    // }
-    // if (!user.provider) {
-    //   if (window.navigator.userAgent.includes('Crypto.com DeFiWallet')) {
-    //     dispatch(connectAccount(false, 'defi'));
-    //   }
-    // }
-    // eslint-disable-next-line
-  }, []);
-
   const onWrongChainModalClose = () => {
     dispatch(setShowWrongChainModal(false));
   };
@@ -247,15 +185,8 @@ const AccountMenu = function () {
     dispatch(chainConnect());
   };
 
-  // const myUnfilteredListings = useSelector((state) => {
-  //   return state.user.myUnfilteredListings;
-  // });
-
   return (
-    <div className="mainside d-flex">
-      <span onClick={toggleTheme} className="cursor-pointer me-3 my-auto">
-        <FontAwesomeIcon icon={theme === 'dark' ? faMoon : faSun} color="#fff" />
-      </span>
+    <div>
       {!walletAddress && (
         <div className="connect-wal">
           <NavLink onClick={connectWalletPressed}>Connect Wallet</NavLink>
@@ -270,11 +201,10 @@ const AccountMenu = function () {
         <div id="de-click-menu-profile" className="de-menu-profile">
           <span onClick={() => btn_icon_pop(!showpop)}>
             {user.profile.profilePicture ? (
-              <img src={ImageKitService.buildAvatarUrl(user.profile.profilePicture)} />
+              <img src={ImageKitService.buildAvatarUrl(user.profile.profilePicture)} alt={user.profile.username} />
             ) : (
-              <Blockies seed={user.address} size={8} scale={4} />
+              <Blockies seed={user.address} size={9} scale={4} style={{width:'10px'}}/>
             )}
-            {user.hasOutstandingOffers && <BlockiesBadge className="notification-badge"></BlockiesBadge>}
           </span>
           {showpop && (
             <div className="popshow" ref={refpop}>
@@ -446,7 +376,6 @@ const AccountMenu = function () {
                     </span>
                     <span>My Offers</span>
                   </span>
-                  {user.hasOutstandingOffers && <div className="notification-badge"></div>}
                 </li>
                 {(user.vipCount > 0 || user.stakeCount > 0) && (
                   <li>

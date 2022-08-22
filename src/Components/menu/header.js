@@ -46,6 +46,11 @@ const Header = function () {
   const { Features } = Constants;
   const isNotificationsEnabled = useFeatureFlag(Features.CMS_NOTIFICATIONS);
 
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    dispatch(setTheme(newTheme));
+  };
+
   useEffect(() => {
     setUseMobileMenu(minWidth < BREAKPOINTS.l);
   }, [breakpoint]);
@@ -184,11 +189,16 @@ const Header = function () {
               </div>
             </div>
           )}
+          <div className="mainside d-flex">
+            <span onClick={toggleTheme} className="cursor-pointer me-3 my-auto">
+              <FontAwesomeIcon icon={theme === 'dark' ? faMoon : faSun} color="#fff" />
+            </span>
 
-          {isNotificationsEnabled && profile && (
-            <NotificationMenu />
-          )}
-          <AccountMenu />
+            {isNotificationsEnabled && profile && (
+              <NotificationMenu />
+            )}
+            <AccountMenu />
+          </div>
           <InvalidListingWarning size={'2x'} />
         </div>
 
