@@ -1,30 +1,26 @@
 import React, { memo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import Blockies from 'react-blockies';
-import useOnclickOutside from 'react-cool-onclickoutside';
 import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
+import {faBell, faTrash} from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
 
 import styles from './notificationmenu.module.scss';
-import {shortAddress, timeSince} from '@src/utils';
+import {timeSince} from '@src/utils';
 import {Offcanvas, Spinner} from "react-bootstrap";
 import {getNotifications} from "@src/core/cms/endpoints/notifications";
 import {useQuery} from "@tanstack/react-query";
-import Link from "next/link";
-
-
+import useDeleteNotifications from "@src/Components/Account/Settings/hooks/useDeleteNotifications";
 
 const NotificationMenu = function () {
   const history = useRouter();
   const {address, theme} = useSelector((state) => state.user);
   const [showpop, setShowpop] = useState(false);
+  const [requestDeleteNotifications] = useDeleteNotifications();
 
-  const { isLoading, error, data:notifications, status } = useQuery(['Notifications', address], () =>
+  const { isLoading, error, data:notifications, status, refetch } = useQuery(['Notifications', address], () =>
     getNotifications(address)
   )
-  console.log('data', notifications);
 
   const closePop = () => {
     setShowpop(false);
@@ -35,9 +31,15 @@ const NotificationMenu = function () {
     history.push(link);
   };
 
-  const handleClearNotifications = () => {
-    setNotifications([]);
+  const handleClearNotifications = async () => {
+    await requestDeleteNotifications(address);
+    await refetch();
   };
+
+  const handleDeleteNotification = (notification) => async (e) => {
+    await requestDeleteNotifications(address, notification.id);
+    await refetch();
+  }
 
   return address && (
     <div className={classnames('mainside d-flex', styles.notification)}>
@@ -62,21 +64,28 @@ const NotificationMenu = function () {
             <p>Error: {error.message}</p>
           ) : (
             <>
-                {notifications.data.length > 0 ? (
-                  notifications.data.map((item, index) => (
-                    <div key={index}>
-                      <span className="cursor-pointer" onClick={() => navigateTo(item.link)}>
-                          <div className="text-muted fst-italic">{timeSince(new Date(item.createdAt))} ago</div>
-                          <div>{item.message}</div>
-                      </span>
-                    </div>
-                  ))
-                ) : (
-                  <div className={styles.empty}>No new notifications</div>
-                )}
-              {notifications.length > 0 && (
-                <div className={classnames('mt-3 cursor-pointer', styles.clear)} onClick={handleClearNotifications}>
+              {notifications.data.length > 0 && (
+                <div className={classnames('mb-3 cursor-pointer text-end', styles.clear)} onClick={handleClearNotifications}>
                   Clear All Notifications
+                </div>
+              )}
+              {notifications.data.length > 0 ? (
+                notifications.data.map((item, index) => (
+                  <div key={index}>
+                    <div className="d-flex text-muted fst-italic">
+                      <div className="flex-fill">{timeSince(new Date(item.createdAt))} ago</div>
+                      <div className="cursor-pointer" onClick={handleDeleteNotification(item)}>
+                        <FontAwesomeIcon icon={faTrash} />
+                      </div>
+                    </div>
+                    <span className="cursor-pointer" onClick={() => navigateTo(item.link)}>
+                        {item.message}
+                    </span>
+                  </div>
+                ))
+              ) : (
+                <div className={classnames('text-center', styles.empty)}>
+                  No new notifications
                 </div>
               )}
             </>
