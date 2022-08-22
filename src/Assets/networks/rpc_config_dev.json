@@ -1845,7 +1845,8 @@
         "maxSupply": 100,
         "website": "https://nobuddiesnft.com/",
         "twitter": "https://twitter.com/NoBuddiesNFT",
-        "discord": "https://discord.gg/W5TDF7jC34"
+        "discord": "https://discord.gg/nobuddies",
+        "medium": "https://nobuddiesnft.medium.com/"
       }
     },
     {
@@ -2734,7 +2735,8 @@
         "maxSupply": 2250,
         "website": "https://nobuddiesnft.com/",
         "twitter": "https://twitter.com/NoBuddiesNFT",
-        "discord": "https://discord.gg/W5TDF7jC34"
+        "discord": "https://discord.gg/nobuddies",
+        "medium": "https://nobuddiesnft.medium.com/"
       }
     },
     {
@@ -7388,7 +7390,8 @@
         "maxSupply": 2750,
         "website": "https://nobuddiesnft.com/",
         "twitter": "https://twitter.com/NoBuddiesNFT",
-        "discord": "https://discord.gg/BdRzkJ4rWw"
+        "discord": "https://discord.gg/nobuddies",
+        "medium": "https://nobuddiesnft.medium.com/"
       }
     },
     {
@@ -7409,6 +7412,26 @@
         "twitter": "https://twitter.com/SphynxLabs",
         "discord": "https://discord.gg/e2t3A2RNev",
         "medium": "https://medium.com/@sphynxlabs"
+      }
+    },
+    {
+      "name": "NoBuddies Gen 3D",
+      "slug": "nobuddies-gen3d",
+      "multiToken": false,
+      "address": "0xb72cDdd1113b0906F5b82F507Ad90c5cc65B22FB",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "NoBuddies Gen 3D is the 3rd collection of NoBuddies NFT with 3333 NFTS. It’s a collection that was created by JonnyChimps to prove that even a nobody with a dream could create a successful project. OG collection brought about 250 NoBuddies and the start of a community. Gen 2 brought about the 1st Cronos NFT to be featured in an free to play Apple and Android mobile game. And now Gen 3D will bring about a P2E single/multi player game earning NoBu coin, the native coin for NoBuddies.",
+        "verified": true,
+        "avatar": "/img/collections/nobuddies-gen3d/avatar.webp",
+        "banner": "/img/collections/nobuddies-gen3d/banner.webp",
+        "card": "/img/collections/nobuddies-gen3d/card.webp",
+        "maxSupply": 3333,
+        "website": "https://nobuddiesnft.com/",
+        "twitter": "https://twitter.com/NoBuddiesNFT",
+        "discord": "https://discord.gg/nobuddies",
+        "medium": "https://nobuddiesnft.medium.com/"
       }
     }
   ],
