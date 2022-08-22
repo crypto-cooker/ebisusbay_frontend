@@ -1845,7 +1845,8 @@
         "maxSupply": 100,
         "website": "https://nobuddiesnft.com/",
         "twitter": "https://twitter.com/NoBuddiesNFT",
-        "discord": "https://discord.gg/W5TDF7jC34"
+        "discord": "https://discord.gg/nobuddies",
+        "medium": "https://nobuddiesnft.medium.com/"
       }
     },
     {
@@ -2734,7 +2735,8 @@
         "maxSupply": 2250,
         "website": "https://nobuddiesnft.com/",
         "twitter": "https://twitter.com/NoBuddiesNFT",
-        "discord": "https://discord.gg/W5TDF7jC34"
+        "discord": "https://discord.gg/nobuddies",
+        "medium": "https://nobuddiesnft.medium.com/"
       }
     },
     {
@@ -7388,7 +7390,8 @@
         "maxSupply": 2750,
         "website": "https://nobuddiesnft.com/",
         "twitter": "https://twitter.com/NoBuddiesNFT",
-        "discord": "https://discord.gg/BdRzkJ4rWw"
+        "discord": "https://discord.gg/nobuddies",
+        "medium": "https://nobuddiesnft.medium.com/"
       }
     },
     {
@@ -7409,6 +7412,45 @@
         "twitter": "https://twitter.com/SphynxLabs",
         "discord": "https://discord.gg/e2t3A2RNev",
         "medium": "https://medium.com/@sphynxlabs"
+      }
+    },
+    {
+      "name": "NoBuddies Gen 3D",
+      "slug": "nobuddies-gen3d",
+      "multiToken": false,
+      "address": "0xb72cDdd1113b0906F5b82F507Ad90c5cc65B22FB",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "NoBuddies Gen 3D is the 3rd collection of NoBuddies NFT with 3333 NFTS. It’s a collection that was created by JonnyChimps to prove that even a nobody with a dream could create a successful project. OG collection brought about 250 NoBuddies and the start of a community. Gen 2 brought about the 1st Cronos NFT to be featured in an free to play Apple and Android mobile game. And now Gen 3D will bring about a P2E single/multi player game earning NoBu coin, the native coin for NoBuddies.",
+        "verified": true,
+        "avatar": "/img/collections/nobuddies-gen3d/avatar.webp",
+        "banner": "/img/collections/nobuddies-gen3d/banner.webp",
+        "card": "/img/collections/nobuddies-gen3d/card.webp",
+        "maxSupply": 3333,
+        "website": "https://nobuddiesnft.com/",
+        "twitter": "https://twitter.com/NoBuddiesNFT",
+        "discord": "https://discord.gg/nobuddies",
+        "medium": "https://nobuddiesnft.medium.com/"
+      }
+    },
+    {
+      "name": "Sketchz by Troopz",
+      "slug": "troopz-sketchz",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "",
+        "verified": true,
+        "avatar": "/img/collections/troopz-sketchz/avatar.webp",
+        "banner": "/img/collections/troopz-sketchz/banner.webp",
+        "card": "/img/collections/troopz-sketchz/card.webp",
+        "maxSupply": 2220,
+        "twitter": "https://twitter.com/trooprzarmy",
+        "website": "https://trooprz.army/",
+        "discord": "https://discord.gg/trooprz"
       }
     }
   ],
@@ -10243,38 +10285,6 @@
     },
     {
       "id": 101,
-      "slug": "trippin-panda",
-      "imgNft": "/img/drops/trippin-panda/drop.webp",
-      "imgPreview": "/img/drops/trippin-panda/drop.webp",
-      "imgAvatar": "/img/collections/trippin-panda/avatar.webp",
-      "imgBanner": "/img/collections/trippin-panda/banner.webp",
-      "title": "Trippin Panda",
-      "subtitle": "Trippin panda is an NFT project with a first generation of 1000 unique collectibles from another world. These beautiful panda escaped from a zoo, they found a fire that was still burning. They just wanted to warm up, but since that evening everything has changed forever. We want our members to live a unique experience, never seen on Cronos... There are exclusively 1000 places to change the world and join our Tripp! So make the right choice... before it's too late!",
-      "description": "Create a trippy community, so much in a Tripp that we'll go far\n\nRoadmap : \n\nDAO : It is an incorruptible organization that belongs to the people who helped create and fund it, and whose rules are public.\n\nCharity : 20.000 Cro will be donated to an association for the panda.\n\nTop 5 Holder :  Every week the people who hold the most Trippin will receive Cro!\n\nInvestment fund : Since our goal is to offer the holder reasons to hold Trippin panda, \nthis is why the investment fund will be put at their service, thanks to the DAO system.\n\nRandom Airdrop :You will receive totally random Airdrops among the holders.\n\nNFT Messaging : We will create a message tool for the Web3 .\nWith the help of this application, users can communicate securely to and from their Cronos addresses.\n\nPanda Hut : These will be the homes of the Trippin Panda, as the community grows.\n\nAuction : Then choose an NFT for which you want to make an offer.\nThe current offer, the remaining time and other details about the NFT will be available.\n\nRoadmap 2.0 : Metav… More to come stay tuned",
-      "author": {
-        "name": "Trippin Panda",
-        "website": "https://trippinpanda.com/",
-        "twitter": "https://twitter.com/Trippin_panda",
-        "discord": "https://discord.gg/QfqRAystVh",
-        "medium": "https://medium.com/@trippinpanda76/pandapaper-b6e0c30e23fe"
-      },
-      "address": "0xCA8b7150B3A29CFe07a77Dc70A5714900BebBE15",
-      "maxMintPerTx": 10,
-      "maxMintPerAddress": 100,
-      "totalSupply": 1000,
-      "cost": "500",
-      "memberCost": "450",
-      "whitelistCost": "400",
-      "foundersOnly": false,
-      "start": null,
-      "end": null,
-      "referral": false,
-      "is1155": false,
-      "published": true,
-      "complete": false
-    },
-    {
-      "id": 102,
       "slug": "team-mustachios",
       "imgNft": "/img/drops/team-mustachios/drop.webp",
       "imgPreview": "/img/drops/team-mustachios/drop.webp",
@@ -10302,6 +10312,41 @@
       "complete": false,
       "featured": true,
       "redirect": "https://teammustachios.com/mint"
+    },
+    {
+      "id": 102,
+      "slug": "troopz-sketchz",
+      "imgNft": "/img/drops/troopz-sketchz/drop.webp",
+      "imgPreview": "/img/drops/troopz-sketchz/drop.webp",
+      "imgAvatar": "/img/collections/troopz-sketchz/avatar.webp",
+      "imgBanner": "/img/collections/troopz-sketchz/banner.webp",
+      "title": "Sketchz by Troopz",
+      "subtitle": "4 Teams, 6 Battles, 1 winner!\n\nThe community will decide the next 1111 unique Troopz collection.\n\nMonkeyz v Pandaz v Frogz v Pigz",
+      "description": "4 Teams, 6 Battles, 1 winner!\n\nThe community will decide the next 1111 unique Troopz collection.\n\nMonkeyz v Pandaz v Frogz v Pigz",
+      "author": {
+        "name": "Trooprz",
+        "twitter": "https://twitter.com/trooprzarmy",
+        "website": "https://trooprz.army/",
+        "discord": "https://discord.gg/trooprz"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 2220,
+      "cost": "80",
+      "memberCost": "60",
+      "whitelistCost": "60",
+      "erc20Cost": "40",
+      "erc20MemberCost": "40",
+      "erc20WhitelistCost": "40",
+      "erc20Unit": "TRPZ",
+      "foundersOnly": false,
+      "start": 1661544000000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
     }
   ],
   "auctions": [
