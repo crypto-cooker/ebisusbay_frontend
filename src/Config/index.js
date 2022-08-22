@@ -196,4 +196,5 @@ export const featureFlags = {
   [Features.AUCTION_OPTION_SALE]: false,
   [Features.CMS_NOTIFICATIONS]: false,
   [Features.CMS_FULL_PROFILES]: false,
+  [Features.GET_COLLECTION_NEW_ENDPOINT]: false,
 }
