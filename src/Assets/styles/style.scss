@@ -5818,3 +5818,12 @@ iframe.metaverse {
     }
   }
 }
+
+.offcanvas  {
+  background:$bgColor1;
+
+  .btn-close {
+    color:$textColor1;
+    opacity: 1;
+  }
+}

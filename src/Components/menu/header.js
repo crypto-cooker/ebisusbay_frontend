@@ -38,13 +38,18 @@ const GlobalStyles = createGlobalStyle`
 
 const Header = function () {
   const dispatch = useDispatch();
-  const theme = useSelector((state) => state.user.theme);
+  const {theme, profile} = useSelector((state) => state.user);
   const [showMenu, setShowMenu] = useState(false);
   const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
   const [useMobileMenu, setUseMobileMenu] = useState(false);
 
   const { Features } = Constants;
   const isNotificationsEnabled = useFeatureFlag(Features.CMS_NOTIFICATIONS);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    dispatch(setTheme(newTheme));
+  };
 
   useEffect(() => {
     setUseMobileMenu(minWidth < BREAKPOINTS.l);
@@ -184,11 +189,16 @@ const Header = function () {
               </div>
             </div>
           )}
+          <div className="mainside d-flex">
+            <span onClick={toggleTheme} className="cursor-pointer me-3 my-auto">
+              <FontAwesomeIcon icon={theme === 'dark' ? faMoon : faSun} color="#fff" />
+            </span>
 
-          {isNotificationsEnabled && (
-            <NotificationMenu />
-          )}
-          <AccountMenu />
+            {isNotificationsEnabled && profile && (
+              <NotificationMenu />
+            )}
+            <AccountMenu />
+          </div>
           <InvalidListingWarning size={'2x'} />
         </div>
 
