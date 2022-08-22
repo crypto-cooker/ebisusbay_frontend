@@ -7099,7 +7099,7 @@
       "listable": true,
       "metadata": {
         "description": "The collection includes 10,000 algorithmically-generated “Loaded Lion” NFTs; some are rarer than others, with a few that are legendary. Every single trait is hand drawn by our talented creative team.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/loaded-lions/avatar.webp",
         "card": "/img/collections/loaded-lions/card.webp",
         "banner": "/img/collections/loaded-lions/banner.webp",
@@ -7119,7 +7119,7 @@
       "listable": true,
       "metadata": {
         "description": "The Cyber Cubs collection consists of 10,000 unique and algorithmically-generated PFPs. Stumbling upon a mysterious portal, the Cyber Cubs have jumped 370 years back to the present to reunite with the Loaded Lions. Armed with advanced technology and knowledge, these Cubs quickly assimilate into the present way of life, but not without a few tricks up their sleeves. There’s no stopping this dynamic duo now.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/cyber-cubs/avatar.webp",
         "card": "/img/collections/cyber-cubs/card.webp",
         "banner": "/img/collections/cyber-cubs/banner.webp",
