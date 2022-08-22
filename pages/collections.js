@@ -157,7 +157,7 @@ const Collections = () => {
   const collectionNumberActiveValue = ({ numberActive }) => numberActive;
 
   const { Features } = Constants;
-  const isSwitchEnabled = useFeatureFlag(Features.VERIFIED_SWITCH_COLLECTION)
+  const isSwitchEnabled = useFeatureFlag(Features.VERIFIED_SWITCH_COLLECTION);
 
   return (
     <div>

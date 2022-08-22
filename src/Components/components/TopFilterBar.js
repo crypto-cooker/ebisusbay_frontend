@@ -7,6 +7,8 @@ import { getTheme } from '../../Theme/theme';
 import { Form } from 'react-bootstrap';
 import styled from 'styled-components';
 import Switch from './common/Switch';
+import useFeatureFlag from '@src/hooks/useFeatureFlag';
+import Constants from '@src/constants';
 
 const CollectionFilterBarContainer = styled.div`
   margin: 0 0 22px;
@@ -16,20 +18,21 @@ const TopFilterBar = ({
   showFilter = true,
   showSort = true,
   showSearch = true,
+  showSwitch = false,
   sortOptions = [],
   filterOptions = [],
   defaultSortValue = SortOption.default(),
-  defaultFilterValue = {value: null, label: 'All'},
+  defaultFilterValue = { value: null, label: 'All' },
   defaultSearchValue = '',
   filterPlaceHolder = '',
   sortPlaceHolder = '',
-  onFilterChange = () => {},
-  onSortChange = () => {},
-  onSearch = () => {},
+  onFilterChange = () => { },
+  onSortChange = () => { },
+  onSearch = () => { },
   sortValue = undefined,
   filterValue = undefined,
   onlyVerified = false,
-  setOnlyVerified = () => {}
+  setOnlyVerified = () => { }
 }) => {
   const userTheme = useSelector((state) => {
     return state.user.theme;
@@ -76,6 +79,9 @@ const TopFilterBar = ({
       color: getTheme(userTheme).colors.textColor3,
     }),
   };
+
+  const { Features } = Constants;
+  const isSwitchEnabled = useFeatureFlag(Features.VERIFIED_SWITCH_MARKETPLACE);
 
   const Filter = () => {
     return (
@@ -140,7 +146,7 @@ const TopFilterBar = ({
       </div>
       <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12 px-2 mt-2">
         <div className="d-flex justify-content-end">
-          <Switch isChecked={onlyVerified} setIsChecked={setOnlyVerified} checkedText={'Verified'} uncheckedText={'All'}/>
+          {showSwitch && isSwitchEnabled && <Switch isChecked={onlyVerified} setIsChecked={setOnlyVerified} checkedText={'Verified'} uncheckedText={'All'} />}
         </div>
       </div>
     </CollectionFilterBarContainer>

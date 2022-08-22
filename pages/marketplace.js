@@ -140,6 +140,7 @@ const Marketplace = () => {
                     <TopFilterBar
                       showFilter={true}
                       showSort={true}
+                      showSwitch={true}
                       sortOptions={[SortOption.default(), ...selectSortOptions]}
                       filterOptions={[{ value: null, label: 'All' }, ...selectFilterOptions]}
                       defaultSortValue={selectDefaultSortValue}
