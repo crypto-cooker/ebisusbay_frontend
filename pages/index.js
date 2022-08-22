@@ -378,6 +378,15 @@ const Home = () => {
             </a>
           </div>
           <div className="col">
+            <a href="https://phenix.finance/" target="_blank" rel="noreferrer">
+              <img
+                src={hostedImage(userTheme === 'light' ? '/img/logos/phenix.svg' : '/img/logos/phenix-white.svg')}
+                alt="Phenix Finance"
+                width="100px"
+              />
+            </a>
+          </div>
+          <div className="col">
             <a href="https://crodex.app/" target="_blank" rel="noreferrer">
               <img
                 src={hostedImage(userTheme === 'light' ? '/img/logos/crodex.png' : '/img/logos/crodex-white.png')}
