@@ -406,25 +406,6 @@ const AccountMenu = function () {
                     <span>Disconnect Wallet</span>
                   </span>
                 </li>
-                {/* <li>
-                  <span>
-                    <span>
-                      <FontAwesomeIcon icon={faMoon} />
-                    </span>
-                    <span className="d-flex">
-                      <label htmlFor="dark-mode-switch" className="cursor-pointer">
-                        Dark Mode
-                      </label>
-                      <FormCheck
-                        type="switch"
-                        id="dark-mode-switch"
-                        className="ms-2 cursor-pointer"
-                        checked={theme === 'dark'}
-                        onChange={toggleTheme}
-                      />
-                    </span>
-                  </span>
-                </li> */}
               </ul>
             </div>
           )}

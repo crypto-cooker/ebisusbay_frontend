@@ -23,11 +23,11 @@ export default function Account() {
           </>
         )}
 
-        {tab === 'notification' && isNotificationsEnabled ? (
+        {tab === 'notification' && (
           <>
-            <Notification />
+            {isNotificationsEnabled ? <Notification /> : <>Coming Soon...</>}
           </>
-        ) : <>Coming Soon...</>}
+        )}
 
         {tab === 'offer' && (
           <>
