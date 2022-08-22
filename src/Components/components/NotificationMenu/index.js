@@ -1,107 +1,105 @@
-import { memo, useState } from 'react';
+import React, { memo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import Blockies from 'react-blockies';
-import useOnclickOutside from 'react-cool-onclickoutside';
 import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
+import {faBell, faTrash} from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
 
 import styles from './notificationmenu.module.scss';
-import { shortAddress } from '../../../utils';
-
-const dummy = [
-  {
-    avatar: '',
-    address: '0xd97b3FE49Da58302893808A856B8214439Ae578e',
-    message: 'started following you',
-    timestamp: '1 hour ago',
-  },
-  {
-    avatar: '',
-    address: '0xd87b3FE49Da58302893808A856B8214439Ae678e',
-    message: 'liked one of your items',
-    timestamp: '2 hour ago',
-  },
-  {
-    avatar: '',
-    address: '0xd77b3FE49Da58302893808A856B8214439Ae778e',
-    message: 'Slothy#1 has been sold',
-    timestamp: '6 hour ago',
-  },
-  {
-    avatar: '',
-    address: '0xd67b3FE49Da58302893808A856B8214439Ae878e',
-    message: 'Slothy#2 has a higher bid',
-    timestamp: '6 hour ago',
-  },
-  {
-    avatar: '',
-    address: '0xd57b3FE49Da58302893808A856B8214439Ae978e',
-    message: 'started following you',
-    timestamp: '8 hour ago',
-  },
-];
+import {timeSince} from '@src/utils';
+import {Offcanvas, Spinner} from "react-bootstrap";
+import {getNotifications} from "@src/core/cms/endpoints/notifications";
+import {useQuery} from "@tanstack/react-query";
+import useDeleteNotifications from "@src/Components/Account/Settings/hooks/useDeleteNotifications";
+import Link from "next/link";
 
 const NotificationMenu = function () {
   const history = useRouter();
-  const walletAddress = useSelector((state) => state.user.address);
+  const {address, theme, profile} = useSelector((state) => state.user);
   const [showpop, setShowpop] = useState(false);
-  const [notifications, setNotifications] = useState(dummy);
+  const [requestDeleteNotifications] = useDeleteNotifications();
+
+  const { isLoading, error, data:notifications, status, refetch } = useQuery(['Notifications', address], () =>
+    getNotifications(address), {enabled: !!profile.id}
+  )
 
   const closePop = () => {
     setShowpop(false);
   };
-  const refpop = useOnclickOutside(() => {
-    closePop();
-  });
 
   const navigateTo = (link) => {
     closePop();
     history.push(link);
   };
 
-  const handleClearNotifications = () => {
-    setNotifications([]);
+  const handleClearNotifications = async () => {
+    await requestDeleteNotifications(address);
+    await refetch();
   };
 
-  return walletAddress && (
-    <div className={classnames('mainside d-flex', styles.notification)}>
-        <div id="de-click-menu-profile" className="de-menu-profile">
-          <span onClick={() => setShowpop(!showpop)}>
-            <FontAwesomeIcon icon={faBell} color="#fff" />
-          </span>
-          {showpop && (
-            <div className={classnames('popshow', styles.popshow)} ref={refpop}>
-              <h3>Notifications</h3>
-              <ul className={styles.list}>
-                {notifications.length > 0 ? (
-                  notifications.map((item, index) => (
-                    <li key={index}>
-                      <span onClick={() => navigateTo(`/`)}>
-                        <span>
-                          <Blockies seed={item.address} size="8" scale="5" />
-                        </span>
-                        <span className="ms-3">
-                          <div>{shortAddress(item.address)}</div>
-                          <div>{item.message}</div>
-                          <div>{item.timestamp}</div>
-                        </span>
-                      </span>
-                    </li>
-                  ))
-                ) : (
-                  <div className={styles.empty}>Notifications are coming ...</div>
-                )}
-              </ul>
-              {notifications.length > 0 && (
-                <div className={classnames('mt-3 cursor-pointer', styles.clear)} onClick={handleClearNotifications}>
+  const handleDeleteNotification = (notification) => async (e) => {
+    await requestDeleteNotifications(address, notification.id);
+    await refetch();
+  }
+
+  return address && (
+    <div>
+      <div className="de-menu-notification" onClick={() => setShowpop(!showpop)}>
+        {notifications?.data?.length > 0 && (
+          <div className="d-count">{notifications.data.length}</div>
+        )}
+        <span>
+          <FontAwesomeIcon icon={faBell} color={theme === 'dark' ? '#000' : '#000'} />
+        </span>
+      </div>
+
+      <Offcanvas show={showpop} onHide={closePop} placement="end">
+        <Offcanvas.Header closeButton closeVariant={theme === 'dark' ? 'white': 'dark'}>
+          <Offcanvas.Title>Notifications</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          {status === "loading" ? (
+            <div className="col-lg-12 text-center">
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            </div>
+          ) : status === "error" ? (
+            <p className="text-center">Error: {error.message}</p>
+          ) : !profile.id ? (
+            <p className="text-center">
+              <Link href="/account/settings/profile">Create a profile to activate notifications</Link>
+            </p>
+          ) : (
+            <>
+              {notifications.data.length > 0 && (
+                <div className={classnames('mb-3 cursor-pointer text-end', styles.clear)} onClick={handleClearNotifications}>
                   Clear All Notifications
                 </div>
               )}
-            </div>
+              {notifications.data.length > 0 ? (
+                notifications.data.map((item, index) => (
+                  <div key={index}>
+                    <div className="d-flex text-muted fst-italic">
+                      <div className="flex-fill">{timeSince(new Date(item.createdAt))} ago</div>
+                      <div className="cursor-pointer" onClick={handleDeleteNotification(item)}>
+                        <FontAwesomeIcon icon={faTrash} />
+                      </div>
+                    </div>
+                    <span className="cursor-pointer" onClick={() => navigateTo(item.link)}>
+                        {item.message}
+                    </span>
+                  </div>
+                ))
+              ) : (
+                <div className={classnames('text-center', styles.empty)}>
+                  No new notifications
+                </div>
+              )}
+            </>
           )}
-        </div>
+        </Offcanvas.Body>
+      </Offcanvas>
     </div>
   );
 };
