@@ -7433,6 +7433,25 @@
         "discord": "https://discord.gg/nobuddies",
         "medium": "https://nobuddiesnft.medium.com/"
       }
+    },
+    {
+      "name": "Sketchz by Troopz",
+      "slug": "troopz-sketchz",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "",
+        "verified": true,
+        "avatar": "/img/collections/troopz-sketchz/avatar.webp",
+        "banner": "/img/collections/troopz-sketchz/banner.webp",
+        "card": "/img/collections/troopz-sketchz/card.webp",
+        "maxSupply": 2220,
+        "twitter": "https://twitter.com/trooprzarmy",
+        "website": "https://trooprz.army/",
+        "discord": "https://discord.gg/trooprz"
+      }
     }
   ],
   "drops": [
@@ -10325,6 +10344,41 @@
       "complete": false,
       "featured": true,
       "redirect": "https://teammustachios.com/mint"
+    },
+    {
+      "id": 102,
+      "slug": "troopz-sketchz",
+      "imgNft": "/img/drops/troopz-sketchz/drop.webp",
+      "imgPreview": "/img/drops/troopz-sketchz/drop.webp",
+      "imgAvatar": "/img/collections/troopz-sketchz/avatar.webp",
+      "imgBanner": "/img/collections/troopz-sketchz/banner.webp",
+      "title": "Sketchz by Troopz",
+      "subtitle": "4 Teams, 6 Battles, 1 winner!\n\nThe community will decide the next 1111 unique Troopz collection.\n\nMonkeyz v Pandaz v Frogz v Pigz",
+      "description": "4 Teams, 6 Battles, 1 winner!\n\nThe community will decide the next 1111 unique Troopz collection.\n\nMonkeyz v Pandaz v Frogz v Pigz",
+      "author": {
+        "name": "Trooprz",
+        "twitter": "https://twitter.com/trooprzarmy",
+        "website": "https://trooprz.army/",
+        "discord": "https://discord.gg/trooprz"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 2220,
+      "cost": "80",
+      "memberCost": "60",
+      "whitelistCost": "60",
+      "erc20Cost": "40",
+      "erc20MemberCost": "40",
+      "erc20WhitelistCost": "40",
+      "erc20Unit": "TRPZ",
+      "foundersOnly": false,
+      "start": 1661544000000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
     }
   ],
   "auctions": [
