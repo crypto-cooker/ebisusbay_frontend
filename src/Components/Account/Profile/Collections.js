@@ -38,7 +38,10 @@ export default function Collections({ address }) {
     getOwnerCollections(address), isCollectionEnabled
   )
 
-  console.log('coll', data);
+  if (!isCollectionEnabled) {
+    return <>Coming Soon...</>
+  }
+
   return status === "loading" ? (
       <div className="row mt-4">
         <div className="col-lg-12 text-center">
@@ -49,110 +52,110 @@ export default function Collections({ address }) {
       </div>
     ) : status === "error" ? (
       <p className="text-center">Error: {error.message}</p>
+    ) : data.data.collections.length < 1 ? (
+      <p className="text-center">Nothing to see here...</p>
     ) : (
-      <div>
-        <div className="row">
-          <div className="col-lg-12">
-            <table className="table de-table table-rank textColor1" data-mobile-responsive="true">
-              <thead>
-                <tr>
+      <div className="row">
+        <div className="col-lg-12">
+          <table className="table de-table table-rank textColor1" data-mobile-responsive="true">
+            <thead>
+              <tr>
+                <th scope="col">
+                  Collection
+                </th>
+                {tableMobileView && (
                   <th scope="col">
-                    Collection
+                    Status
                   </th>
-                  {tableMobileView && (
-                    <th scope="col">
-                      Status
-                    </th>
-                  )}
-                  {tableMobileView && (
-                    <th scope="col">
-                      Last Updated
-                    </th>
-                  )}
-                  {tableMobileView && (
-                    <th scope="col" style={{ textAlign: 'center', width: 100 }}>
-                      Actions
-                    </th>
-                  )}
-                </tr>
-                <tr />
-              </thead>
-              <tbody>
-                <GlobalStyles />
+                )}
+                {tableMobileView && (
+                  <th scope="col">
+                    Last Updated
+                  </th>
+                )}
+                {tableMobileView && (
+                  <th scope="col" style={{ textAlign: 'center', width: 100 }}>
+                    Actions
+                  </th>
+                )}
+              </tr>
+              <tr />
+            </thead>
+            <tbody>
+              <GlobalStyles />
 
-                {data.data.collections &&
-                  data.data.collections.map((collection, index) => {
-                    return (
-                      <tr key={index}>
-                        <th scope="row" className="row gap-4 border-bottom-0" style={{ paddingLeft: 0 }}>
-                          <div className="col-12" style={{ paddingLeft: '75px' }}>
-                            <div className="coll_list_pp" style={{ cursor: 'pointer' }}>
-                              <Link href={`/collection/${collection.slug}`}>
-                                <a>
-                                  {collection.metadata?.avatar ? (
-                                    <CdnImage
-                                      src={hostedImage(collection.metadata.avatar, true)}
-                                      alt={collection?.name}
-                                      width="50"
-                                      height="50"
-                                    />
-                                  ) : (
-                                    null
-                                  )}
-                                </a>
-                              </Link>
-                            </div>
-                            <span>
-                              <Link href={`/collection/${collection.slug}`}>
-                                <a>{collection?.name ?? 'Unknown'}</a>
-                              </Link>
-                            </span>
+              {data.data.collections &&
+                data.data.collections.map((collection, index) => {
+                  return (
+                    <tr key={index}>
+                      <th scope="row" className="row gap-4 border-bottom-0" style={{ paddingLeft: 0 }}>
+                        <div className="col-12" style={{ paddingLeft: '75px' }}>
+                          <div className="coll_list_pp" style={{ cursor: 'pointer' }}>
+                            <Link href={`/collection/${collection.slug}`}>
+                              <a>
+                                {collection.metadata?.avatar ? (
+                                  <CdnImage
+                                    src={hostedImage(collection.metadata.avatar, true)}
+                                    alt={collection?.name}
+                                    width="50"
+                                    height="50"
+                                  />
+                                ) : (
+                                  null
+                                )}
+                              </a>
+                            </Link>
                           </div>
+                          <span>
+                            <Link href={`/collection/${collection.slug}`}>
+                              <a>{collection?.name ?? 'Unknown'}</a>
+                            </Link>
+                          </span>
+                        </div>
 
-                          {!tableMobileView && (
-                            <div className="col-12 row gap-1">
-                              <div className="col-12 mobile-view-list-item" >
-                                <span>
-                                  Status
-                                </span>
-                                <span className="text-end">{collection.metadata.verified ? 'Verified' : 'Unverified'}</span>
-                              </div>
-                              <div className="col-12 mobile-view-list-item">
-                                <span>
-                                  Last Updated
-                                </span>
-                                <span className="text-end">{collection.metadata.lastUpdate}</span>
-                              </div>
-                              <div
-                                className="col-12 mobile-view-list-item"
-                              >
-                                <span>Actions</span>
-                                <span className="text-end">
-                                  {/* <button className='btn-main' style={{ maxWidth: 172 }}>
-                                    Action 1
-                                  </button> */}
-                                </span>
-                              </div>
+                        {!tableMobileView && (
+                          <div className="col-12 row gap-1">
+                            <div className="col-12 mobile-view-list-item" >
+                              <span>
+                                Status
+                              </span>
+                              <span className="text-end">{collection.metadata.verified ? 'Verified' : 'Unverified'}</span>
                             </div>
-                          )}
-                        </th>
-                        {tableMobileView && <td>{collection.metadata.verified ? 'Verified' : 'Unverified'}</td>}
-                        {tableMobileView && <td>{collection.metadata.lastUpdated}</td>}
-                        {tableMobileView && (
-                          <td>
-                            <div style={{ display: 'flex', }}>
-                              {/* <button className='btn-main' style={{ maxWidth: 172 }}>
-                                Action 1
-                              </button> */}
+                            <div className="col-12 mobile-view-list-item">
+                              <span>
+                                Last Updated
+                              </span>
+                              <span className="text-end">{collection.metadata.lastUpdate}</span>
                             </div>
-                          </td>
+                            <div
+                              className="col-12 mobile-view-list-item"
+                            >
+                              <span>Actions</span>
+                              <span className="text-end">
+                                {/* <button className='btn-main' style={{ maxWidth: 172 }}>
+                                  Action 1
+                                </button> */}
+                              </span>
+                            </div>
+                          </div>
                         )}
-                      </tr>
-                    );
-                  })}
-              </tbody>
-            </table>
-          </div>
+                      </th>
+                      {tableMobileView && <td>{collection.metadata.verified ? 'Verified' : 'Unverified'}</td>}
+                      {tableMobileView && <td>{collection.metadata.lastUpdated}</td>}
+                      {tableMobileView && (
+                        <td>
+                          <div style={{ display: 'flex', }}>
+                            {/* <button className='btn-main' style={{ maxWidth: 172 }}>
+                              Action 1
+                            </button> */}
+                          </div>
+                        </td>
+                      )}
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
         </div>
       </div>
     );
