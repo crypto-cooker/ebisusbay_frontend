@@ -79,7 +79,7 @@ const NotificationMenu = function () {
               )}
               {notifications.data.length > 0 ? (
                 notifications.data.map((item, index) => (
-                  <div key={index}>
+                  <div key={index} className="mb-3">
                     <div className="d-flex text-muted fst-italic">
                       <div className="flex-fill">{timeSince(new Date(item.createdAt))} ago</div>
                       <div className="cursor-pointer" onClick={handleDeleteNotification(item)}>
