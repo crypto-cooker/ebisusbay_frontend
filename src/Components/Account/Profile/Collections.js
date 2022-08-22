@@ -1,14 +1,15 @@
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import React from 'react';
 import { createGlobalStyle } from 'styled-components';
-import { Form, Spinner } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 
-import useGetCollection from '@src/hooks/useGetCollectionOwners.js';
 import useFeatureFlag from '@src/hooks/useFeatureFlag';
 import { CdnImage } from "@src/Components/components/CdnImage";
 import { hostedImage } from "@src/helpers/image";
 
 import Constants from '@src/constants';
+import {useQuery} from "@tanstack/react-query";
+import {getOwnerCollections} from "@src/core/api/next/collectioninfo";
 const { Features } = Constants;
 
 const mobileListBreakpoint = 1000;
@@ -30,28 +31,25 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 export default function Collections({ address }) {
-
   const tableMobileView = typeof window !== 'undefined' && window.innerWidth > mobileListBreakpoint;
   const isCollectionEnabled = useFeatureFlag(Features.CMS_COLLECTIONS)
 
-  const [collections, setCollections] = useState([])
+  const { isLoading, error, data, status } = useQuery(['Collections', address], () =>
+    getOwnerCollections(address), isCollectionEnabled
+  )
 
-  const [response, getCollections] = useGetCollection();
-
-  const getCollection = async () => {
-    await getCollections(address)
-  }
-
-  useEffect(() => {
-    getCollection()
-  }, [])
-
-  useEffect(() => {
-    if (response && response.response?.collections) setCollections(response.response.collections)
-  }, [response])
-
-  return (
-    isCollectionEnabled ? (!response.isLoading ? (response?.response?.collections?.length > 0 ? (
+  console.log('coll', data);
+  return status === "loading" ? (
+      <div className="row mt-4">
+        <div className="col-lg-12 text-center">
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
+      </div>
+    ) : status === "error" ? (
+      <p className="text-center">Error: {error.message}</p>
+    ) : (
       <div>
         <div className="row">
           <div className="col-lg-12">
@@ -82,8 +80,8 @@ export default function Collections({ address }) {
               <tbody>
                 <GlobalStyles />
 
-                {collections &&
-                  collections.map((collection, index) => {
+                {data.data.collections &&
+                  data.data.collections.map((collection, index) => {
                     return (
                       <tr key={index}>
                         <th scope="row" className="row gap-4 border-bottom-0" style={{ paddingLeft: 0 }}>
@@ -156,24 +154,6 @@ export default function Collections({ address }) {
             </table>
           </div>
         </div>
-      </div>)
-      :
-      <div className="row mt-4">
-        <div className="col-lg-12 text-center">
-          <span>Nothing to see here...</span>
-        </div>
       </div>
-    )
-      :
-      (<div className="row mt-4">
-        <div className="col-lg-12 text-center">
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
-      </div>))
-      
-      :
-      (<>Coming Soon...</>)
-  )
+    );
 }
