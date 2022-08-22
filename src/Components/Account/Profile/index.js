@@ -16,6 +16,7 @@ import Favorites from "@src/Components/Account/Profile/Favorites";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
 import PageHead from "@src/Components/Head/PageHead";
 import {pushQueryString} from "@src/helpers/query";
+import {ethers} from "ethers";
 
 const tabs = {
   inventory: 'inventory',
@@ -46,7 +47,17 @@ export default function Profile({ address, profile, tab }) {
   }, [user, address])
 
   const identifier = profile.username ?? address;
-  const username = identifier.startsWith('0x') ? shortAddress(identifier) : identifier;
+  const username = () => {
+    try {
+      if (identifier.startsWith('0x')) {
+        return shortAddress(ethers.utils.getAddress(identifier));
+      }
+      return identifier;
+    } catch (e) {
+      return identifier;
+    }
+  }
+
   const profilePicture = profile.profilePicture ?
     ImageKitService.from(profile.profilePicture).setWidth(200).setHeight(200).buildUrl() :
     hostedImage('/img/avatar.jpg');
@@ -54,7 +65,7 @@ export default function Profile({ address, profile, tab }) {
   return (
     <div className={styles.profile}>
       <PageHead
-        title={username}
+        title={username()}
         description={profile.bio}
         image={profilePicture}
         url={`/account/${address}`}
@@ -82,7 +93,7 @@ export default function Profile({ address, profile, tab }) {
               <Avatar src={profilePicture} />
             </div>
             <div className="flex-grow-1 ms-sm-4 me-sm-4">
-              <div className={styles.username}>{username}</div>
+              <div className={styles.username}>{username()}</div>
               <div className={styles.bio}>{profile.bio}</div>
               <div className={`${styles.socials} text-center text-sm-start mb-2 mb-sm-0`}>
                 <span className="fs-4"><SocialsBar socials={profile} address={address} /></span>
