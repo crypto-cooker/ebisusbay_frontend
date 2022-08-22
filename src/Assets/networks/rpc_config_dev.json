@@ -7390,6 +7390,26 @@
         "twitter": "https://twitter.com/NoBuddiesNFT",
         "discord": "https://discord.gg/BdRzkJ4rWw"
       }
+    },
+    {
+      "name": "Scion Sphynx Council",
+      "slug": "scion-sphynx-council",
+      "multiToken": false,
+      "address": "0xE8FA3d84bd18eDEEE42665772bF22779F1AE3f7d",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Scion Sphynx NFTs have pierced the veil and crossed onto the Cronos chain bringing 2083 cats to their new home, and they have brought their excellent utilities with them! Each hand-drawn Sphynx is one-of-a-kind and a unique part of the Sphynx AIO platform. Holders of the NFTs are granted whitelists to projects launching on the SphynxPad, and have access to exclusive NFT staking pools to earn Sphynx CRO tokens and native CRO. Each Scion, regardless of the chain, strengthens the Sphynx DeFi for everyone vision, and in turn the Sphynx Army!",
+        "verified": false,
+        "avatar": "/img/collections/scion-sphynx-council/avatar.webp",
+        "card": "/img/collections/scion-sphynx-council/card.webp",
+        "banner": "/img/collections/scion-sphynx-council/banner.webp",
+        "maxSupply": 2083,
+        "website": "https://thesphynx.co/council/25",
+        "twitter": "https://twitter.com/SphynxLabs",
+        "discord": "https://discord.gg/e2t3A2RNev",
+        "medium": "https://medium.com/@sphynxlabs"
+      }
     }
   ],
   "drops": [
@@ -8753,7 +8773,7 @@
       "published": true,
       "complete": false,
       "featured": false,
-      "redirect": "https://lootpad.io/collection/slavikfruitfarm"
+      "redirect": "https://nftlaunch.me/collection/slavikfruitfarm"
     },
     {
       "id": 52,
