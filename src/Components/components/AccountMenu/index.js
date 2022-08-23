@@ -1,25 +1,20 @@
 import React, { memo, useEffect, useState } from 'react';
 import Blockies from 'react-blockies';
 import { useDispatch, useSelector } from 'react-redux';
-import useOnclickOutside from 'react-cool-onclickoutside';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBolt,
-  faImage,
-  faSignOutAlt,
   faShoppingBag,
-  faMoon,
-  faSun,
   faUser,
-  faEdit, faCoins, faCopy, faHeart, faDollarSign, faWallet
+  faEdit, faCoins, faCopy, faHeart, faDollarSign, faWallet, faSearch
 } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import {Modal, NavLink, Spinner, ModalTitle, Offcanvas} from 'react-bootstrap';
 import styled from 'styled-components';
-import { ethers, Contract } from 'ethers';
+import { ethers } from 'ethers';
 import { ERC20 } from '@src/Contracts/Abis';
 import { fetcher, useInterval } from '@src/utils';
 import styles from './accountmenu.module.scss';
@@ -32,14 +27,14 @@ import {
   chainConnect,
   AccountMenuActions,
   checkForOutstandingOffers,
-  accountChanged, balanceUpdated,
-} from '../../../GlobalState/User';
+  balanceUpdated,
+} from '@src/GlobalState/User';
 
-import { getThemeInStorage, setThemeInStorage } from '../../../helpers/storage';
-import { getAllCollections } from '../../../GlobalState/collectionsSlice';
-import { fetchMyNFTs } from '../../../GlobalState/offerSlice';
-import { isUserBlacklisted, round, shortAddress } from '../../../utils';
-import { appConfig } from '../../../Config';
+import { getThemeInStorage, setThemeInStorage } from '@src/helpers/storage';
+import { getAllCollections } from '@src/GlobalState/collectionsSlice';
+import { fetchMyNFTs } from '@src/GlobalState/offerSlice';
+import { round, shortAddress } from '@src/utils';
+import { appConfig } from '@src/Config';
 import {ImageKitService} from "@src/helpers/image";
 import classnames from "classnames";
 import {useWindowSize} from "@src/hooks/useWindowSize";
@@ -266,9 +261,19 @@ const Index = function () {
                   <div className="fs-5 fw-bold">
                     {username()}
                   </div>
-                  <button className="btn_menu" title="Copy Address" onClick={handleCopy(walletAddress)}>
-                    <FontAwesomeIcon icon={faCopy} /> Address
-                  </button>
+                  <div>
+                    <button className="btn_menu me-2" title="Copy Address" onClick={handleCopy(walletAddress)}>
+                      <FontAwesomeIcon icon={faCopy} />
+                    </button>
+                    <button className="btn_menu me-2" title="Copy Address" onClick={() => window.open(`https://cronoscan.com/address/${user.address}`, '_blank')}>
+                      <FontAwesomeIcon icon={faSearch} />
+                    </button>
+                    {user.profile.username && (
+                      <span className={styles.username}>
+                        {shortAddress(user.address)}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
