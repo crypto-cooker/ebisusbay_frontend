@@ -63,7 +63,7 @@ export default function Notification() {
 
   return (
     <div className="row mt-5">
-      <div className="col-8">
+      <div className="col-12 col-md-8">
 
         <div className="row mb-4">
           <div className="col">

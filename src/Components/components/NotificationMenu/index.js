@@ -81,13 +81,17 @@ const NotificationMenu = function () {
           <Offcanvas.Title>Notifications</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          {status === "loading" ? (
-            <div className="col-lg-12 text-center">
-              <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            </div>
-          ) : status === "error" ? (
+          {isLoading ? (
+            isFetching ? (
+              <div className="col-lg-12 text-center">
+                <Spinner animation="border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </div>
+            ) : (
+              <p>nope</p>
+            )
+          ) : isError ? (
             <p className="text-center">Error: {error.message}</p>
           ) : !profile.id ? (
             <p className="text-center">
@@ -101,19 +105,21 @@ const NotificationMenu = function () {
                     Clear All Notifications
                   </div>
 
-                  <div className="flex-fill h-auto overflow-scroll">
+                  <div className="flex-fill h-auto ">
                     {notifications.length > 0 && (
                       notifications.map((item, index) => (
-                        <div key={index} className="mb-3">
-                          <div className="d-flex text-muted fst-italic">
-                            <div className="flex-fill">{timeSince(new Date(item.createdAt))} ago</div>
-                            <div className="cursor-pointer" onClick={handleDeleteNotification(item)}>
-                              <FontAwesomeIcon icon={faTrash} />
+                        <div key={index} className="d-flex mb-3">
+                          <div className="flex-fill">
+                            <div className="text-muted fst-italic">
+                              <div className="flex-fill">{timeSince(new Date(item.createdAt))} ago</div>
                             </div>
+                            <span className="cursor-pointer" onClick={() => navigateTo(item.link)}>
+                              {item.message}
+                            </span>
                           </div>
-                          <span className="cursor-pointer" onClick={() => navigateTo(item.link)}>
-                        {item.message}
-                      </span>
+                          <div className="cursor-pointer my-auto ms-4" onClick={handleDeleteNotification(item)}>
+                            <FontAwesomeIcon icon={faTrash} />
+                          </div>
                         </div>
                       ))
                     )}
