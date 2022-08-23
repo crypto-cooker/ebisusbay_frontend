@@ -58,7 +58,7 @@ const Marketplace = () => {
   const [onlyVerified, setOnlyVerified] = useState(false)
 
   useEffect(() => {
-    dispatch(filterListingsByVerification(false, onlyVerified ? 1 : 0));
+    dispatch(filterListingsByVerification(false, onlyVerified ? 1 : null));
   }, [onlyVerified])
 
   const onFilterChange = useCallback(

@@ -154,7 +154,7 @@ export const filterListings =
   };
 
   export const filterListingsByVerification =
-  (isSales = false, verified = 0) =>
+  (isSales = false, verified = null) =>
   async (dispatch) => {
     dispatch(onVerifiedFilter({verified}));
     dispatch(fetchListings(isSales, verified ));

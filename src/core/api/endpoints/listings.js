@@ -19,7 +19,7 @@ export async function sortAndFetchListings(
   filter,
   state,
   pagesize = limitSizeOptions.lg,
-  verified = 0,
+  verified = null,
 ) {
   let query = {
     state: state ?? 0,
