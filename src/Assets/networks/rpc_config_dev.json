@@ -7471,6 +7471,25 @@
         "twitter": "https://twitter.com/CroCaveman",
         "discord": "https://discord.gg/AnEAUp2yKX"
       }
+    },
+    {
+      "name": "AIKO BEANZ",
+      "slug": "aiko-beanz",
+      "multiToken": false,
+      "address": "0x8fAe79f9b06E3f1525C1de4F88940279dC70C7C9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "10,000 pfp generated with different traits and with different rarities, their name is AIKO BEANZ, one of the Official Collections of AIKOSociety. These little BEANZs will release benefits, gifts and more to their Holders.",
+        "verified": false,
+        "avatar": "/img/collections/aiko-beanz/avatar.webp",
+        "banner": "/img/collections/aiko-beanz/banner.webp",
+        "card": "/img/collections/aiko-beanz/card.webp",
+        "maxSupply": 10000,
+        "website": "https://www.aikosociety.com/",
+        "twitter": "https://twitter.com/AikoSociety",
+        "telegram": "https://t.me/@Nino993"
+      }
     }
   ],
   "drops": [
