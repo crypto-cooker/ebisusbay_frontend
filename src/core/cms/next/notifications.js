@@ -1,14 +1,12 @@
-import {appConfig} from "@src/Config";
 import axios from "axios";
 
-const config = appConfig();
 const api = axios.create({
-  baseURL: config.urls.cms,
+  baseURL: '/api',
 });
 
 export const getNotifications = async (address, query) => {
   try {
-    const response = await api.get('notification/all', {
+    const response = await api.get('notifications', {
       params: {
         walletAddress: address,
         ...query
@@ -22,7 +20,7 @@ export const getNotifications = async (address, query) => {
 
 export const deleteNotifications = async (notificationId = null, address, signature) => {
   try {
-    const response = await api.delete('notification', {
+    const response = await api.delete('notifications', {
       params: {
         notificationId,
         address,

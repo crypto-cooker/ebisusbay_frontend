@@ -8,10 +8,10 @@ import classnames from 'classnames';
 import styles from './notificationmenu.module.scss';
 import {timeSince} from '@src/utils';
 import {Offcanvas, Spinner} from "react-bootstrap";
-import {getNotifications} from "@src/core/cms/endpoints/notifications";
 import {useQuery} from "@tanstack/react-query";
 import useDeleteNotifications from "@src/Components/Account/Settings/hooks/useDeleteNotifications";
 import Link from "next/link";
+import {getNotifications} from "@src/core/cms/next/notifications";
 
 const NotificationMenu = function () {
   const history = useRouter();
@@ -19,8 +19,31 @@ const NotificationMenu = function () {
   const [showpop, setShowpop] = useState(false);
   const [requestDeleteNotifications] = useDeleteNotifications();
 
-  const { isLoading, error, data:notifications, status, refetch } = useQuery(['Notifications', address], () =>
-    getNotifications(address), {enabled: !!profile.id}
+  // const fetcher = async ({ pageParam = 1 }) => {
+  //   return await getNotifications(address, {page: pageParam});
+  // };
+  //
+  // const {
+  //   data:notifications,
+  //   error,
+  //   fetchNextPage,
+  //   hasNextPage,
+  //   isFetching,
+  //   isFetchingNextPage,
+  //   status,
+  //   refetch
+  // } = useInfiniteQuery(['Notifications', address], fetcher, {
+  //   getNextPageParam: (lastPage, pages) => {
+  //
+  //     console.log('PAGES', pages, lastPage)
+  //     return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
+  //   },
+  // })
+
+  const { isLoading, isFetching, isError, error, data:notifications, refetch } = useQuery(
+    ['Notifications', address],
+    () => getNotifications(address),
+    {enabled: !!profile.id}
   )
 
   const closePop = () => {
@@ -45,8 +68,8 @@ const NotificationMenu = function () {
   return address && (
     <div>
       <div className="de-menu-notification" onClick={() => setShowpop(!showpop)}>
-        {notifications?.data?.length > 0 && (
-          <div className="d-count">{notifications.data.length}</div>
+        {notifications?.length > 0 && (
+          <div className="d-count">{notifications.length > 99 ? '+' : notifications.length}</div>
         )}
         <span>
           <FontAwesomeIcon icon={faBell} color={theme === 'dark' ? '#000' : '#000'} />
@@ -58,13 +81,17 @@ const NotificationMenu = function () {
           <Offcanvas.Title>Notifications</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          {status === "loading" ? (
-            <div className="col-lg-12 text-center">
-              <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            </div>
-          ) : status === "error" ? (
+          {isLoading ? (
+            isFetching ? (
+              <div className="col-lg-12 text-center">
+                <Spinner animation="border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </div>
+            ) : (
+              <p>nope</p>
+            )
+          ) : isError ? (
             <p className="text-center">Error: {error.message}</p>
           ) : !profile.id ? (
             <p className="text-center">
@@ -72,28 +99,31 @@ const NotificationMenu = function () {
             </p>
           ) : (
             <>
-              {notifications.data.length > 0 && (
-                <div className={classnames('mb-3 cursor-pointer text-end', styles.clear)} onClick={handleClearNotifications}>
-                  Clear All Notifications
-                </div>
-              )}
-              {notifications.data.length > 0 ? (
-                notifications.data.map((item, index) => (
-                  <div key={index}>
-                    <div className="d-flex text-muted fst-italic">
-                      <div className="flex-fill">{timeSince(new Date(item.createdAt))} ago</div>
-                      <div className="cursor-pointer" onClick={handleDeleteNotification(item)}>
-                        <FontAwesomeIcon icon={faTrash} />
-                      </div>
-                    </div>
-                    <span className="cursor-pointer" onClick={() => navigateTo(item.link)}>
-                        {item.message}
-                    </span>
+              {notifications.length > 0 && (
+                <div className="d-flex flex-column">
+                  <div className={classnames('mb-3 cursor-pointer text-end', styles.clear)} onClick={handleClearNotifications}>
+                    Clear All Notifications
                   </div>
-                ))
-              ) : (
-                <div className={classnames('text-center', styles.empty)}>
-                  No new notifications
+
+                  <div className="flex-fill h-auto ">
+                    {notifications.length > 0 && (
+                      notifications.map((item, index) => (
+                        <div key={index} className="d-flex mb-3">
+                          <div className="flex-fill">
+                            <div className="text-muted fst-italic">
+                              <div className="flex-fill">{timeSince(new Date(item.createdAt))} ago</div>
+                            </div>
+                            <span className="cursor-pointer" onClick={() => navigateTo(item.link)}>
+                              {item.message}
+                            </span>
+                          </div>
+                          <div className="cursor-pointer my-auto ms-4" onClick={handleDeleteNotification(item)}>
+                            <FontAwesomeIcon icon={faTrash} />
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
                 </div>
               )}
             </>

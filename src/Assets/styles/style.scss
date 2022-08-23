@@ -3905,12 +3905,7 @@ img.img-rounded {
     }
   }
 }
-.hide {
-  display: none !important;
-}
-.show {
-  display: block !important;
-}
+
 #form_sb {
   .col {
     display: flex;
@@ -5821,9 +5816,23 @@ iframe.metaverse {
 
 .offcanvas  {
   background:$bgColor1;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 
   .btn-close {
     color:$textColor1;
     opacity: 1;
   }
+
+  &.offcanvas-bottom {
+    height: 80vh;
+  }
 }
+
+.textColor1 {
+  color: $textColor1 !important;
+}
+
