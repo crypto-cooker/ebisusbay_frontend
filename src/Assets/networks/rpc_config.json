@@ -7452,6 +7452,25 @@
         "website": "https://trooprz.army/",
         "discord": "https://discord.gg/trooprz"
       }
+    },
+    {
+      "name": "CroCaveman",
+      "slug": "crocaveman",
+      "multiToken": false,
+      "address": "0x757Df1C3a75f07A6E3F440E480Ac1422cD91e2a6",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CroCaveman is a collection of 1000 unique, randomly generated NFTs launching on the Cronos Network.  We will be minting on the CroArmy Launchpad on the 23rd of August 2022 at a cost of 300 Cro (250 Cro Whitelist)  The aim of CroCaveman is to create a simple investment NFT. In which increasing monthly pay-outs can be rewarded to holders offering passive income, while treasury funds increase exponentially from continuous reinvestment. \"It's so easy a caveman could do it!\"",
+        "verified": false,
+        "avatar": "/img/collections/crocaveman/avatar.webp",
+        "banner": "/img/collections/crocaveman/banner.webp",
+        "card": "/img/collections/crocaveman/card.webp",
+        "maxSupply": 1000,
+        "website": "https://armynft.app/#/crocaveman",
+        "twitter": "https://twitter.com/CroCaveman",
+        "discord": "https://discord.gg/AnEAUp2yKX"
+      }
     }
   ],
   "drops": [
