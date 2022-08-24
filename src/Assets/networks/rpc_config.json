@@ -4685,6 +4685,11 @@
         "maxSupply": 1000,
         "twitter": "https://twitter.com/HiddenFishDAO",
         "medium": "https://blog.hidethefish.com"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
