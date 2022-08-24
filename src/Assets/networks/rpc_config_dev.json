@@ -3212,7 +3212,7 @@
       }
     },
     {
-      "name": "Braindead Monkeys ",
+      "name": "Braindead Monkeys",
       "slug": "braindead-monkeys",
       "multiToken": false,
       "address": "0xda663336FEC3Ef6e310be6522F35E391aAE6F43a",
@@ -3221,13 +3221,14 @@
       "metadata": {
         "description": "Braindead Monkeys have landed on earth to collect CRO and take it to the moon!",
         "verified": false,
-        "avatar": "/img/collections/braindeadmonekys/avatar.png",
-        "card": "/img/collections/braindeadmonekys/card.jpg",
-        "banner": "/img/collections/braindeadmonekys/banner.jpg",
+        "avatar": "/img/collections/braindead-monkeys/avatar.webp",
+        "card": "/img/collections/braindead-monkeys/card.webp",
+        "banner": "/img/collections/braindead-monkeys/banner.webp",
         "maxSupply": 1111,
-        "twitter": "https://twitter.com/BDMNFT_",
         "website": "https://www.braindeadmonkeys.com/",
-        "discord": "https://discord.gg/7cQcBvzZmy"
+        "twitter": "https://twitter.com/BDMNFT_",
+        "discord": "https://discord.gg/wRzqzVPx8R",
+        "medium": "https://medium.com/@braindeadmonkeysnft"
       }
     },
     {
@@ -7649,6 +7650,26 @@
         "website": "https://www.aikosociety.com/",
         "twitter": "https://twitter.com/AikoSociety",
         "telegram": "https://t.me/@Nino993"
+      }
+    },
+    {
+      "name": "Braindead Monkeys Allies Collection",
+      "slug": "braindead-monkeys-allies",
+      "multiToken": false,
+      "address": "0x5b66e985c313fec158B2ee45B93976A167a115f5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Braindead Monkeys Allies drop is an ultra-rare collection of special forces taking over from Gen 1 and leading into Gen 2.",
+        "verified": false,
+        "avatar": "/img/collections/braindead-monkeys-allies/avatar.webp",
+        "card": "/img/collections/braindead-monkeys-allies/card.webp",
+        "banner": "/img/collections/braindead-monkeys-allies/banner.webp",
+        "maxSupply": 222,
+        "website": "https://www.braindeadmonkeys.com/",
+        "twitter": "https://twitter.com/BDMNFT_",
+        "discord": "https://discord.gg/wRzqzVPx8R",
+        "medium": "https://medium.com/@braindeadmonkeysnft"
       }
     }
   ],
