@@ -91,7 +91,8 @@ export default class Responsive extends Component {
     const maxShowTimeInDays = 3600000 * 24 * 2;
     const defaultMaxCount = 5;
 
-    const topLevelDrops = drops.filter((d) => !d.complete && d.featured);
+    const topLevelDrops = drops.filter((d) => !d.complete && d.featured)
+      .sort((a, b) => (a.start < b.start ? 1 : -1));
     const topLevelKeys = topLevelDrops.map((d) => d.slug);
 
     const upcomingDrops = drops
