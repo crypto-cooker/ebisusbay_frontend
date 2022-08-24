@@ -10371,12 +10371,12 @@
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 2220,
-      "cost": "80",
-      "memberCost": "60",
-      "whitelistCost": "60",
-      "erc20Cost": "40",
-      "erc20MemberCost": "40",
-      "erc20WhitelistCost": "40",
+      "cost": "50",
+      "memberCost": "50",
+      "whitelistCost": "50",
+      "erc20Cost": "50",
+      "erc20MemberCost": "50",
+      "erc20WhitelistCost": "50",
       "erc20Unit": "TRPZ",
       "foundersOnly": false,
       "start": 1661544000000,
@@ -10384,7 +10384,8 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false
+      "complete": false,
+      "priceDescription": "50 $TRPZ automatically credited back to your wallet with EVERY CRO MINT"
     }
   ],
   "auctions": [
