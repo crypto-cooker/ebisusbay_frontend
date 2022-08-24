@@ -6,12 +6,15 @@ import { faCheck, faCircle } from '@fortawesome/free-solid-svg-icons';
 
 import Clock from './Clock';
 import LayeredIcon from './LayeredIcon';
-import { dropState } from '../../core/api/enums';
-import {appConfig} from "../../Config";
-import {hostedImage} from "../../helpers/image";
+import { dropState } from '@src/core/api/enums';
+import { appConfig } from "@src/Config";
+import { hostedImage } from "@src/helpers/image";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation, Pagination} from "swiper";
+import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
+
 const drops = appConfig('drops');
+const collections = appConfig('collections');
 
 const GlobalStyles = createGlobalStyle`
   .nft-big .slick-prev::before{
@@ -131,7 +134,12 @@ export default class Responsive extends Component {
         })
         .reverse();
     }
-    this.featuredDrops = [...topLevelDrops, ...upcomingDrops, ...liveDrops];
+    this.featuredDrops = [...topLevelDrops, ...upcomingDrops, ...liveDrops]
+      .map((drop) => {
+        const collection = collections.find((c) => c.slug === drop.slug);
+        return { collection, drop };
+      })
+      .filter((d) => !!d.collection && !!d.drop);
   }
 
   navigateToDrop(drop) {
@@ -155,34 +163,41 @@ export default class Responsive extends Component {
           className="mySwiper"
         >
           {this.featuredDrops &&
-            this.featuredDrops.map((drop, index) => (
+            this.featuredDrops.map((item, index) => (
               <SwiperSlide key={index}>
                 <CustomSlide className="itm">
                   <div className="nft__item_lg">
                     <div className="row align-items-center">
                       <div className="col-lg-6 text-center">
-                        <img src={hostedImage(drop.imgPreview)} className="img-fluid mx-auto" alt={drop.title} />
+                        <img src={hostedImage(item.drop.imgPreview)} className="img-fluid mx-auto" alt={item.drop.title} />
                       </div>
                       <div className="col-lg-6">
                         <div className="d-desc">
-                          <h2>{drop.title}</h2>
+                          <h2>{item.drop.title}</h2>
+                          <CollectionVerificationRow
+                            doxx={item.collection.verification?.doxx}
+                            kyc={item.collection.verification?.kyc}
+                            escrow={item.collection.verification?.escrow}
+                          />
+                          <div className="d-flex">
+                          </div>
                           <div className="d-author">
                             <div className="author_list_pp">
-                              {drop.imgAvatar ? (
-                                <img className="lazy" src={hostedImage(drop.imgAvatar, true)} alt={drop.author.name} />
+                              {item.drop.imgAvatar ? (
+                                <img className="lazy" src={hostedImage(item.drop.imgAvatar, true)} alt={item.drop.author.name} />
                               ) : (
-                                <Blockies seed={drop.slug} size={10} scale={5} />
+                                <Blockies seed={item.drop.slug} size={10} scale={5} />
                               )}
                               <VerifiedIcon>
                                 <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={7} />
                               </VerifiedIcon>
                             </div>
                             <div className="author_list_info">
-                              <div className="title">{drop.author.name}</div>
+                              <div className="title">{item.drop.author.name}</div>
                               <div className="subtitle">
-                                {drop.author.link || drop.author.website && (
+                                {item.drop.author.link || item.drop.author.website && (
                                   <span className="profile_username">
-                                  <a href={drop.author.link ?? drop.author.website} target="_blank" rel="noreferrer">
+                                  <a href={item.drop.author.link ?? item.drop.author.website} target="_blank" rel="noreferrer">
                                     View Website
                                   </a>
                                 </span>
@@ -193,83 +208,83 @@ export default class Responsive extends Component {
                           <div className="d-attr">
                             <div className="col">
                               <span className="d-title">Mint Price</span>
-                              {Array.isArray(drop.cost) ? (
+                              {Array.isArray(item.drop.cost) ? (
                                 <h3>
-                                  {ethers.utils.commify(Math.min(...drop.cost.map((c) => parseInt(c))))} -{' '}
-                                  {ethers.utils.commify(Math.max(...drop.cost.map((c) => parseInt(c))))} CRO
+                                  {ethers.utils.commify(Math.min(...item.drop.cost.map((c) => parseInt(c))))} -{' '}
+                                  {ethers.utils.commify(Math.max(...item.drop.cost.map((c) => parseInt(c))))} CRO
                                 </h3>
                               ) : (
-                                <h3>{ethers.utils.commify(drop.cost)} CRO</h3>
+                                <h3>{ethers.utils.commify(item.drop.cost)} CRO</h3>
                               )}
-                              {drop.erc20Cost && drop.erc20Unit && (
+                              {item.drop.erc20Cost && item.drop.erc20Unit && (
                                 <h3>
-                                  {ethers.utils.commify(drop.erc20Cost)} {drop.erc20Unit}
+                                  {ethers.utils.commify(item.drop.erc20Cost)} {item.drop.erc20Unit}
                                 </h3>
                               )}
-                              {drop.memberCost &&
-                                (Array.isArray(drop.memberCost) ? (
+                              {item.drop.memberCost &&
+                                (Array.isArray(item.drop.memberCost) ? (
                                   <h5>
-                                    Members: {ethers.utils.commify(Math.min(...drop.memberCost.map((c) => parseInt(c))))}{' '}
-                                    - {ethers.utils.commify(Math.max(...drop.memberCost.map((c) => parseInt(c))))} CRO
+                                    Members: {ethers.utils.commify(Math.min(...item.drop.memberCost.map((c) => parseInt(c))))}{' '}
+                                    - {ethers.utils.commify(Math.max(...item.drop.memberCost.map((c) => parseInt(c))))} CRO
                                   </h5>
                                 ) : (
-                                  <h5>Members: {ethers.utils.commify(drop.memberCost)} CRO</h5>
+                                  <h5>Members: {ethers.utils.commify(item.drop.memberCost)} CRO</h5>
                                 ))}
-                              {drop.erc20MemberCost && drop.erc20Unit && (
+                              {item.drop.erc20MemberCost && item.drop.erc20Unit && (
                                 <h5>
-                                  Members: {ethers.utils.commify(drop.erc20MemberCost)} {drop.erc20Unit}
+                                  Members: {ethers.utils.commify(item.drop.erc20MemberCost)} {item.drop.erc20Unit}
                                 </h5>
                               )}
-                              {drop.whitelistCost &&
-                                (Array.isArray(drop.whitelistCost) ? (
+                              {item.drop.whitelistCost &&
+                                (Array.isArray(item.drop.whitelistCost) ? (
                                   <h5>
                                     Whitelist:{' '}
-                                    {ethers.utils.commify(Math.min(...drop.memberCost.map((c) => parseInt(c))))} -{' '}
-                                    {ethers.utils.commify(Math.max(...drop.memberCost.map((c) => parseInt(c))))} CRO
+                                    {ethers.utils.commify(Math.min(...item.drop.memberCost.map((c) => parseInt(c))))} -{' '}
+                                    {ethers.utils.commify(Math.max(...item.drop.memberCost.map((c) => parseInt(c))))} CRO
                                   </h5>
                                 ) : (
-                                  <h5>Whitelist: {ethers.utils.commify(drop.whitelistCost)} CRO</h5>
+                                  <h5>Whitelist: {ethers.utils.commify(item.drop.whitelistCost)} CRO</h5>
                                 ))}
-                              {drop.specialWhitelistCost && (
+                              {item.drop.specialWhitelistCost && (
                                 <h5>
-                                  {drop.specialWhitelistCost.name}:{' '}
-                                  {ethers.utils.commify(drop.specialWhitelistCost.value)} CRO
+                                  {item.drop.specialWhitelistCost.name}:{' '}
+                                  {ethers.utils.commify(item.drop.specialWhitelistCost.value)} CRO
                                 </h5>
                               )}
                             </div>
                             <div className="line my-auto"></div>
-                            {drop.salePeriods ? (
+                            {item.drop.salePeriods ? (
                               <div className="col my-auto">
-                                {this.calculateStatus(drop.salePeriods.public) > dropState.NOT_STARTED ? (
+                                {this.calculateStatus(item.drop.salePeriods.public) > dropState.NOT_STARTED ? (
                                   <>
-                                    {this.calculateStatus(drop.salePeriods.public) === dropState.LIVE && (
+                                    {this.calculateStatus(item.drop.salePeriods.public) === dropState.LIVE && (
                                       <h3>Drop is Live!</h3>
                                     )}
-                                    {this.calculateStatus(drop.salePeriods.public) === dropState.EXPIRED && (
+                                    {this.calculateStatus(item.drop.salePeriods.public) === dropState.EXPIRED && (
                                       <h3>Drop Ended</h3>
                                     )}
-                                    {this.calculateStatus(drop.salePeriods.public) === dropState.SOLD_OUT && (
+                                    {this.calculateStatus(item.drop.salePeriods.public) === dropState.SOLD_OUT && (
                                       <h3>Sold Out</h3>
                                     )}
                                   </>
                                 ) : (
                                   <>
-                                    {this.calculateStatus(drop.salePeriods.presale) === dropState.NOT_STARTED && (
+                                    {this.calculateStatus(item.drop.salePeriods.presale) === dropState.NOT_STARTED && (
                                       <>
                                         <span className="d-title">Presale starts in</span>
                                         <div className="de_countdown">
-                                          <Clock deadline={drop.salePeriods.presale} />
+                                          <Clock deadline={item.drop.salePeriods.presale} />
                                         </div>
                                       </>
                                     )}
-                                    {this.calculateStatus(drop.salePeriods.presale) === dropState.LIVE && (
+                                    {this.calculateStatus(item.drop.salePeriods.presale) === dropState.LIVE && (
                                       <h3>Presale Live!</h3>
                                     )}
-                                    {this.calculateStatus(drop.salePeriods.public) === dropState.NOT_STARTED && (
+                                    {this.calculateStatus(item.drop.salePeriods.public) === dropState.NOT_STARTED && (
                                       <>
                                         <span className="d-title">Public Sale starts in</span>
                                         <div className="de_countdown">
-                                          <Clock deadline={drop.salePeriods.public} />
+                                          <Clock deadline={item.drop.salePeriods.public} />
                                         </div>
                                       </>
                                     )}
@@ -278,26 +293,26 @@ export default class Responsive extends Component {
                               </div>
                             ) : (
                               <div className="col my-auto">
-                                {this.calculateStatus(drop.start) === dropState.NOT_STARTED && (
+                                {this.calculateStatus(item.drop.start) === dropState.NOT_STARTED && (
                                   <>
                                     <span className="d-title">Drop starts in</span>
                                     <div className="de_countdown">
-                                      <Clock deadline={drop.start} />
+                                      <Clock deadline={item.drop.start} />
                                     </div>
                                     <h5>
-                                      {new Date(drop.start).toDateString()}, {new Date(drop.start).toTimeString()}
+                                      {new Date(item.drop.start).toDateString()}, {new Date(item.drop.start).toTimeString()}
                                     </h5>
                                   </>
                                 )}
-                                {this.calculateStatus(drop.start) === dropState.LIVE && <h3>Drop is Live!</h3>}
-                                {this.calculateStatus(drop.start) === dropState.EXPIRED && <h3>Drop Ended</h3>}
-                                {this.calculateStatus(drop.start) === dropState.SOLD_OUT && <h3>Sold Out</h3>}
+                                {this.calculateStatus(item.drop.start) === dropState.LIVE && <h3>Drop is Live!</h3>}
+                                {this.calculateStatus(item.drop.start) === dropState.EXPIRED && <h3>Drop Ended</h3>}
+                                {this.calculateStatus(item.drop.start) === dropState.SOLD_OUT && <h3>Sold Out</h3>}
                               </div>
                             )}
                           </div>
                           <div className="spacer-10"></div>
                           <div className="d-buttons">
-                          <span className="btn-main" onClick={() => this.navigateToDrop(drop)}>
+                          <span className="btn-main" onClick={() => this.navigateToDrop(item.drop)}>
                             View Drop
                           </span>
                           </div>

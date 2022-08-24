@@ -8,7 +8,7 @@ import { getAnalytics, logEvent } from '@firebase/analytics';
 import { keyframes } from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
 import { useRouter } from 'next/router';
-import { Form, ProgressBar, Spinner } from 'react-bootstrap';
+import {Form, OverlayTrigger, ProgressBar, Spinner, Tooltip} from 'react-bootstrap';
 import ReactPlayer from 'react-player';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
@@ -34,9 +34,13 @@ import SocialsBar from '../Collection/SocialsBar';
 import {parseUnits} from "ethers/lib/utils";
 import {appConfig} from "../../Config";
 import {hostedImage} from "../../helpers/image";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faAddressCard, faLock, faUserShield} from "@fortawesome/free-solid-svg-icons";
+import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 
 const config = appConfig();
 const drops = config.drops;
+const collections = config.collections;
 
 const fadeInUp = keyframes`
   0% {
@@ -130,6 +134,9 @@ const SingleDrop = () => {
 
   const drop = useSelector((state) => {
     return drops.find((n) => n.slug === slug);
+  });
+  const collection = useSelector((state) => {
+    return collections.find((n) => n.slug === slug);
   });
 
   const membership = useSelector((state) => {
@@ -464,10 +471,11 @@ const SingleDrop = () => {
     return dateString;
   };
 
-  // const vidRef = useRef(null);
-  // const handlePlayVideo = () => {
-  //   vidRef.current.play();
-  // };
+  const renderTooltip = (key, text) => (
+    <Tooltip id={`tooltip-${key}`} key={key}>
+      {text}
+    </Tooltip>
+  );
 
   return (
     <div>
@@ -562,10 +570,14 @@ const SingleDrop = () => {
           </div>
         </HeroSection>
 
-        <section className="container no-bottom" id="drop_detail">
-          <div className="row">
-            <div className="col-md-12">
-              <div className="d_profile de-flex">
+        <section className="container no-top">
+          <div className="row mt-md-5 pt-md-4">
+            <div className="col-md-6 text-center">
+              <img src={hostedImage(drop.imgNft)} className="img-fluid img-rounded mb-sm-30" alt={drop.title} />
+            </div>
+            <div className="col-md-6">
+
+              <div className="d_profile de-flex mt-4 mt-sm-0">
                 <div className="de-flex-col">
                   <div className="profile_avatar">
                     {drop.imgAvatar && <img src={hostedImage(drop.imgAvatar)} alt={drop.author.name} />}
@@ -586,18 +598,15 @@ const SingleDrop = () => {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
 
-        <section className="container no-top">
-          <div className="row mt-md-5 pt-md-4">
-            <div className="col-md-6 text-center">
-              <img src={hostedImage(drop.imgNft)} className="img-fluid img-rounded mb-sm-30" alt={drop.title} />
-            </div>
-            <div className="col-md-6">
+              <CollectionVerificationRow
+                doxx={collection.verification?.doxx}
+                kyc={collection.verification?.kyc}
+                escrow={collection.verification?.escrow}
+              />
+
               <div className="item_info">
-                <h2>{drop.title}</h2>
+
                 {status === statuses.UNSET || status === statuses.NOT_STARTED || drop.complete ? (
                   <div>
                     <div className="fs-6 fw-bold mb-1">Supply: {ethers.utils.commify(maxSupply.toString())}</div>
