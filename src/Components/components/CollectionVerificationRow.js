@@ -6,7 +6,7 @@ import kycPartners from '../../core/data/kyc-partners.json';
 
 export const CollectionVerificationRow = ({doxx, kyc, escrow, center = false}) => {
 
-  const kycPartner = kycPartners[kyc];
+  const kycPartner = kyc === 'hidden' ? undefined : kycPartners[kyc]
 
   const renderTooltip = (props, text) => (
     <Tooltip id="button-tooltip" {...props}>
@@ -31,7 +31,7 @@ export const CollectionVerificationRow = ({doxx, kyc, escrow, center = false}) =
         <OverlayTrigger
           placement="top"
           delay={{ show: 100, hide: 100 }}
-          overlay={(props) => renderTooltip(props, `KYC completed by ${kycPartner?.name}`)}
+          overlay={(props) => renderTooltip(props, kycPartner ? `KYC completed by ${kycPartner?.name}` : 'KYC completed')}
         >
           <div className="eb-de_countdown text-center" style={{width: '100px'}}>
             <FontAwesomeIcon icon={faUserShield} /> KYC

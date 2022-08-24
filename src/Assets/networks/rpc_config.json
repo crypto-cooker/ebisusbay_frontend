@@ -54,6 +54,11 @@
         "medium": "https://blog.ebisusbay.com/",
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "hidden",
+        "escrow": false
       }
     },
     {
@@ -78,6 +83,11 @@
         "medium": "https://blog.ebisusbay.com/",
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "hidden",
+        "escrow": false
       }
     },
     {
@@ -102,6 +112,11 @@
         "medium": "https://blog.ebisusbay.com/",
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "hidden",
+        "escrow": false
       }
     },
     {
@@ -121,6 +136,11 @@
         "banner": "/img/collections/barbara/dodgerdogs/banner.webp",
         "website": "https://crypto.com/nft/profile/vredekop?tab=created",
         "twitter": "https://twitter.com/BarbaraRedekop"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -145,6 +165,11 @@
         "medium": "https://blog.ebisusbay.com/",
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "hidden",
+        "escrow": false
       }
     },
     {
@@ -168,6 +193,11 @@
         "medium": "https://blog.ebisusbay.com/",
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -405,6 +435,11 @@
         "twitter": "https://twitter.com/EbisusBay",
         "discord": "https://discord.gg/ynrBrSkAFG",
         "medium": "https://blog.ebisusbay.com/"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "hidden",
+        "escrow": false
       }
     },
     {
@@ -1349,7 +1384,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Genesis Weird Apes is a collection of 2500 NFTs randomly generated from 125 Traits, stored on the Cronos chain. Once passed through the Weirdification process, a Genesis Weird Ape will be able to be staked to yield 8 $WAC per day, access to customization features and more! Each Genesis Weird Ape will receive an airdrop of a 3D Voxel Ape which will have the exact same traits as their 2D counterparts.",
+        "description": "The Weird Apes Club is a project with multiple collections that launched in March 2022, available on both Ebisus Bay and Crypto.comNFT. It all started with 2500 Genesis Weird Apes randomly generated from 125 Traits aimed to bring weirdness all over the Cronos Chain! Not just a PFP but an entire ecosystem of Male, Lady and Baby apes with advanced mechanisms including staking, breeding, renting, customization and more!",
         "verified": true,
         "avatar": "/img/collections/weirdapesclub/avatar.webp",
         "card": "/img/collections/weirdapesclub/card.webp",

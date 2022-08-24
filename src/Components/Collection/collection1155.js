@@ -21,6 +21,7 @@ import {appConfig} from "../../Config";
 import {ImageKitService} from "../../helpers/image";
 import {CollectionFilters} from "../Models/collection-filters.model";
 import {Spinner} from "react-bootstrap";
+import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 
 const config = appConfig();
 
@@ -146,6 +147,12 @@ const Collection1155 = ({ collection, tokenId = null, cacheName = 'collection', 
                     {collection.name}
                     <div className="clearfix" />
                   </h4>
+                  <CollectionVerificationRow
+                    doxx={collection.verification?.doxx}
+                    kyc={collection.verification?.kyc}
+                    escrow={collection.verification?.escrow}
+                    center={true}
+                  />
                   {collection.metadata.description && <p>{collection.metadata.description}</p>}
                   <span className="fs-4">
                   <SocialsBar
