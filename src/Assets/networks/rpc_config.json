@@ -6801,7 +6801,7 @@
       "multiToken": false,
       "address": "0x66d2402c787Ca19cB30C3eE41Bc6534028DF9eBa",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "TTG is a collection of 2,420 algorithmically generated NFTs on the Cronos Network. Holding 4 NFTs will grant you a free airdrop which is your ticket to a first-of-its-kind Be Your Own Boss group. This group will pool mint proceeds together to buy and distribute high-value learning materials and information, which our holders can utilise to escape their 9-5 and become their own boss. We will also be running a buy-back program with our royalty fees, to ensure floor price support. For more information, head over to our Twitter or Discord in the links provided.",
         "verified": false,
