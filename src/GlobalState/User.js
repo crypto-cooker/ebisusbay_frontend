@@ -327,6 +327,7 @@ const userSlice = createSlice({
       state.myUnfilteredListingsFetching = false;
       state.myUnfilteredListings = [];
       state.profile = {};
+      state.authSignature = null;
     },
     onThemeChanged(state, action) {
       state.theme = action.payload;
