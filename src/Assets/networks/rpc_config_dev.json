@@ -6628,6 +6628,11 @@
         "maxSupply": 3300,
         "twitter": "https://twitter.com/HiddenFishDAO",
         "medium": "https://blog.hidethefish.com"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -10501,6 +10506,37 @@
       "published": true,
       "complete": false,
       "priceDescription": "50 $TRPZ automatically credited back to your wallet with EVERY CRO MINT"
+    },
+    {
+      "id": 102,
+      "slug": "hidden-fish-fm",
+      "imgNft": "/img/drops/hidden-fish-fm/drop.webp",
+      "imgPreview": "/img/drops/hidden-fish-fm/drop.webp",
+      "imgAvatar": "/img/collections/hidden-fish-fm/avatar.webp",
+      "imgBanner": "/img/collections/hidden-fish-fm/banner.webp",
+      "title": "Hidden Fish Founding Member",
+      "subtitle": "The purpose of the DAO is to accelerate the growth of Ebisu’s Bay platform and the entire Cronos ecosystem.",
+      "description": "The purpose of the DAO is to accelerate the growth of Ebisu’s Bay platform and the entire Cronos ecosystem.",
+      "author": {
+        "name": "Hidden Fish DAO",
+        "website": "https://mint.hidethefish.com",
+        "twitter": "https://twitter.com/HiddenFishDAO",
+        "medium": "https://blog.hidethefish.com"
+      },
+      "address": "0xaa3cFC29BEaAdA4456B777Bfa7dcDfCBE0d122A9",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 3000,
+      "cost": "550",
+      "foundersOnly": false,
+      "start": 1661378665000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": true,
+      "redirect": "https://mint.hidethefish.com/"
     }
   ],
   "auctions": [
