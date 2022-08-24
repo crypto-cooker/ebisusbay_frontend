@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, {memo, useCallback, useState} from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,49 +9,47 @@ import styles from './notificationmenu.module.scss';
 import {timeSince} from '@src/utils';
 import {Offcanvas, Spinner} from "react-bootstrap";
 import {useQuery} from "@tanstack/react-query";
-import useDeleteNotifications from "@src/Components/Account/Settings/hooks/useDeleteNotifications";
+import useDeleteNotifications from "@src/hooks/useDeleteNotifications";
 import Link from "next/link";
 import {getNotifications} from "@src/core/cms/next/notifications";
+import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
+import {getAuthSignerInStorage} from "@src/helpers/storage";
+import Button from "@src/Components/components/Button";
 
 const NotificationMenu = function () {
   const history = useRouter();
   const {address, theme, profile} = useSelector((state) => state.user);
-  const [showpop, setShowpop] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
   const [requestDeleteNotifications] = useDeleteNotifications();
+  const [signature, setSignature] = useState(null);
+  const [awaitingSignature, getSigner] = useCreateSigner();
 
-  // const fetcher = async ({ pageParam = 1 }) => {
-  //   return await getNotifications(address, {page: pageParam});
-  // };
-  //
-  // const {
-  //   data:notifications,
-  //   error,
-  //   fetchNextPage,
-  //   hasNextPage,
-  //   isFetching,
-  //   isFetchingNextPage,
-  //   status,
-  //   refetch
-  // } = useInfiniteQuery(['Notifications', address], fetcher, {
-  //   getNextPageParam: (lastPage, pages) => {
-  //
-  //     console.log('PAGES', pages, lastPage)
-  //     return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
-  //   },
-  // })
-
-  const { isLoading, isFetching, isError, error, data:notifications, refetch } = useQuery(
-    ['Notifications', address],
-    () => getNotifications(address),
-    {enabled: !!profile.id}
+  const { isLoading, isError, error, data:notifications, refetch } = useQuery(
+    ['Notifications', address, signature],
+    () => getNotifications(address, signature),
+    {enabled: !!signature}
   )
 
-  const closePop = () => {
-    setShowpop(false);
+  const handleClose = () => {
+    setShowMenu(false);
   };
 
+  const handleExit = () => {
+    setSignature(false);
+  };
+
+  const openMenu = useCallback(async () => {
+    setShowMenu(true);
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    setSignature(signatureInStorage);
+  }, [signature, showMenu, getSigner]);
+
   const navigateTo = (link) => {
-    closePop();
+    handleClose();
     history.push(link);
   };
 
@@ -67,7 +65,7 @@ const NotificationMenu = function () {
 
   return address && (
     <div>
-      <div className="de-menu-notification" onClick={() => setShowpop(!showpop)}>
+      <div className="de-menu-notification" onClick={openMenu}>
         {notifications?.length > 0 && (
           <div className="d-count">{notifications.length > 99 ? '+' : notifications.length}</div>
         )}
@@ -76,20 +74,30 @@ const NotificationMenu = function () {
         </span>
       </div>
 
-      <Offcanvas show={showpop} onHide={closePop} placement="end">
+      <Offcanvas show={showMenu} onHide={handleClose} placement="end" onExited={handleExit}>
         <Offcanvas.Header closeButton closeVariant={theme === 'dark' ? 'white': 'dark'}>
           <Offcanvas.Title>Notifications</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           {isLoading ? (
-            isFetching ? (
+            awaitingSignature || signature ? (
               <div className="col-lg-12 text-center">
                 <Spinner animation="border" role="status">
                   <span className="visually-hidden">Loading...</span>
                 </Spinner>
               </div>
             ) : (
-              <p>nope</p>
+              <>
+                <p className="text-center">Verify your wallet to view notifications</p>
+
+                <Button type="legacy"
+                        className="mx-auto"
+                        onClick={openMenu}
+                        isLoading={isLoading && awaitingSignature}
+                        disabled={isLoading && awaitingSignature}>
+                  Retry
+                </Button>
+              </>
             )
           ) : isError ? (
             <p className="text-center">Error: {error.message}</p>
@@ -99,7 +107,7 @@ const NotificationMenu = function () {
             </p>
           ) : (
             <>
-              {notifications.length > 0 && (
+              {notifications.length > 0 ? (
                 <div className="d-flex flex-column">
                   <div className={classnames('mb-3 cursor-pointer text-end', styles.clear)} onClick={handleClearNotifications}>
                     Clear All Notifications
@@ -125,6 +133,8 @@ const NotificationMenu = function () {
                     )}
                   </div>
                 </div>
+              ) : (
+                <p className="text-center">There are no notifications to display</p>
               )}
             </>
           )}

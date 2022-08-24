@@ -6,11 +6,11 @@ const api = axios.create({
   baseURL: config.urls.cms,
 });
 
-export const getNotifications = async (address, query) => {
+export const getNotifications = async (address, signature, query) => {
   try {
     const response = await api.get('notification/all', {
       params: {
-        walletAddress: address,
+        address,
         ...query
       }
     })

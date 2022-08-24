@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { getAuthSignerInStorage } from '@src/helpers/storage';
-import useCreateSigner from './useCreateSigner';
-import {updateNotifications} from "@src/core/cms/endpoints/profile";
-import {deleteNotifications} from "@src/core/cms/endpoints/notifications";
+import useCreateSigner from '../Components/Account/Settings/hooks/useCreateSigner';
+import {deleteNotifications} from "@src/core/cms/next/notifications";
 
 const useDeleteNotifications = () => {
   const [response, setResponse] = useState({
