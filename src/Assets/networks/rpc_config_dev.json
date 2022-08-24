@@ -54,6 +54,11 @@
         "medium": "https://blog.ebisusbay.com/",
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "hidden",
+        "escrow": false
       }
     },
     {
@@ -78,6 +83,11 @@
         "medium": "https://blog.ebisusbay.com/",
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "hidden",
+        "escrow": false
       }
     },
     {
@@ -102,6 +112,11 @@
         "medium": "https://blog.ebisusbay.com/",
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "hidden",
+        "escrow": false
       }
     },
     {
@@ -121,6 +136,11 @@
         "banner": "/img/collections/barbara/dodgerdogs/banner.webp",
         "website": "https://crypto.com/nft/profile/vredekop?tab=created",
         "twitter": "https://twitter.com/BarbaraRedekop"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -145,6 +165,11 @@
         "medium": "https://blog.ebisusbay.com/",
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "hidden",
+        "escrow": false
       }
     },
     {
@@ -168,6 +193,11 @@
         "medium": "https://blog.ebisusbay.com/",
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -405,6 +435,11 @@
         "twitter": "https://twitter.com/EbisusBay",
         "discord": "https://discord.gg/ynrBrSkAFG",
         "medium": "https://blog.ebisusbay.com/"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "hidden",
+        "escrow": false
       }
     },
     {
@@ -1033,6 +1068,11 @@
         "twitter": "https://twitter.com/LazyHorseRC",
         "discord": "https://discord.gg/lhrc",
         "medium": "https://medium.com/@lazyhorseraceclub"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -1053,6 +1093,11 @@
         "twitter": "https://twitter.com/LazyHorseRC",
         "discord": "https://discord.gg/lhrc",
         "medium": "https://medium.com/@lazyhorseraceclub"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -1339,7 +1384,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Genesis Weird Apes is a collection of 2500 NFTs randomly generated from 125 Traits, stored on the Cronos chain. Once passed through the Weirdification process, a Genesis Weird Ape will be able to be staked to yield 8 $WAC per day, access to customization features and more! Each Genesis Weird Ape will receive an airdrop of a 3D Voxel Ape which will have the exact same traits as their 2D counterparts.",
+        "description": "The Weird Apes Club is a project with multiple collections that launched in March 2022, available on both Ebisus Bay and Crypto.comNFT. It all started with 2500 Genesis Weird Apes randomly generated from 125 Traits aimed to bring weirdness all over the Cronos Chain! Not just a PFP but an entire ecosystem of Male, Lady and Baby apes with advanced mechanisms including staking, breeding, renting, customization and more!",
         "verified": true,
         "avatar": "/img/collections/weirdapesclub/avatar.webp",
         "card": "/img/collections/weirdapesclub/card.webp",
@@ -1369,6 +1414,11 @@
         "website": "https://www.icysquidgame.com/",
         "twitter": "https://twitter.com/IcySquidGame",
         "telegram": "https://t.me/IcySquidGame"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -1425,6 +1475,11 @@
         "avatar": "/img/collections/lazyhorse/avatar.png",
         "card": "/img/collections/lazyhorse/card.png",
         "banner": "/img/collections/lazyhorse/banner.png"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -2335,6 +2390,11 @@
         "website": "https://www.icysquidgame.com/",
         "twitter": "https://twitter.com/IcySquidGame",
         "telegram": "https://t.me/IcySquidGame"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -2564,6 +2624,11 @@
         "twitter": "https://twitter.com/FightersNFT",
         "medium": "https://medium.com/@shahabs/nft-collectors-fighters-are-coming-593cb9865e20",
         "discord": "http://discord.gg/Bb39m7BBBR"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -2912,6 +2977,11 @@
         "twitter": "https://twitter.com/LazyHorseRC",
         "discord": "https://discord.gg/lhrc",
         "medium": "https://medium.com/@lazyhorseraceclub"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -3090,6 +3160,11 @@
         "website": "https://thecronosverse.com/",
         "twitter": "https://twitter.com/thecronosverse",
         "discord": "https://discord.gg/HfCHkvNy6K"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -3172,7 +3247,7 @@
       }
     },
     {
-      "name": "Braindead Monkeys ",
+      "name": "Braindead Monkeys",
       "slug": "braindead-monkeys",
       "multiToken": false,
       "address": "0xda663336FEC3Ef6e310be6522F35E391aAE6F43a",
@@ -3181,13 +3256,14 @@
       "metadata": {
         "description": "Braindead Monkeys have landed on earth to collect CRO and take it to the moon!",
         "verified": false,
-        "avatar": "/img/collections/braindeadmonekys/avatar.png",
-        "card": "/img/collections/braindeadmonekys/card.jpg",
-        "banner": "/img/collections/braindeadmonekys/banner.jpg",
+        "avatar": "/img/collections/braindead-monkeys/avatar.webp",
+        "card": "/img/collections/braindead-monkeys/card.webp",
+        "banner": "/img/collections/braindead-monkeys/banner.webp",
         "maxSupply": 1111,
-        "twitter": "https://twitter.com/BDMNFT_",
         "website": "https://www.braindeadmonkeys.com/",
-        "discord": "https://discord.gg/7cQcBvzZmy"
+        "twitter": "https://twitter.com/BDMNFT_",
+        "discord": "https://discord.gg/wRzqzVPx8R",
+        "medium": "https://medium.com/@braindeadmonkeysnft"
       }
     },
     {
@@ -3248,6 +3324,11 @@
         "website": "https://www.hypednftclub.com/crosuccubus",
         "twitter": "https://twitter.com/CroSuccubus",
         "discord": "https://discord.gg/ruKabM5A4U"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -3327,6 +3408,11 @@
         "discord": "https://discord.gg/kardia",
         "telegram": "https://t.me/kardianft",
         "medium": "https://medium.com/@playkardia/"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "escrow": true
       }
     },
     {
@@ -3368,6 +3454,11 @@
         "discord": "https://discord.gg/wxYhYkVhNN",
         "telegram": "https://t.me/monkeyoa",
         "medium": "https://medium.com/@monkeyoa"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -3388,6 +3479,11 @@
         "twitter": "https://twitter.com/croclubs",
         "discord": "http://discord.gg/RWZSJwnG7Y",
         "medium": "https://medium.com/@croclubsio"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -3758,6 +3854,11 @@
         "website": "https://www.hypednftclub.com/croofthrones",
         "twitter": "https://twitter.com/Croofthrones",
         "discord": "https://discord.gg/pYCaAwpZ"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -3777,6 +3878,11 @@
         "website": "https://selfiesofthemultiverse.com/",
         "twitter": "https://twitter.com/SelfieVerseNFT",
         "discord": "http://www.discord.gg/selfiesofthemultiverse"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -3798,6 +3904,11 @@
         "discord": "https://discord.gg/crowboys",
         "medium": "https://medium.com/@crowboysonline",
         "telegram": "https://t.me/crowboys"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -4249,6 +4360,11 @@
         "website": "http://www.bankrollbearsociety.com/",
         "twitter": "https://twitter.com/Bankrollbears",
         "discord": "http://discord.gg/bankrollbearsociety"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -4506,6 +4622,11 @@
         "website": "https://www.losttoys.io/",
         "twitter": "https://www.twitter.com/losttoysnft",
         "discord": "https://discord.gg/Tdd9TZRMxn"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -4817,6 +4938,11 @@
         "website": "https://www.hipposyndicate.com/",
         "twitter": "https://twitter.com/HippoSyndicate",
         "discord": "https://discord.gg/9j7ryEgX3K"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -5078,6 +5204,11 @@
         "twitter": "https://twitter.com/IcySquidGame",
         "discord": "https://discord.gg/jFX4RNrFGu",
         "medium": "https://medium.com/@icysquidgame"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -5217,6 +5348,11 @@
         "twitter": "https://twitter.com/lazy_lanes",
         "discord": "https://discord.gg/lhrc",
         "medium": "https://medium.com/@lazyhorseraceclub"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -5313,6 +5449,11 @@
         "website": "https://www.losttoys.io/",
         "twitter": "https://www.twitter.com/losttoysnft",
         "discord": "https://discord.gg/Tdd9TZRMxn"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -5432,6 +5573,11 @@
         "website": "https://www.cybersquad.app/",
         "twitter": "https://twitter.com/CyberSquadd",
         "discord": "https://discord.gg/cybersquad"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -5727,6 +5873,11 @@
         "website": "https://apocalypse-nft.io/",
         "twitter": "https://twitter.com/ada_apocalypse",
         "discord": "https://discord.gg/fDcyEcgSDg"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -5746,6 +5897,11 @@
         "website": "https://zap7art.club/toughlions",
         "twitter": "https://twitter.com/ToughLions1111",
         "discord": "https://discord.gg/8ssS2RWZvn"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -6032,6 +6188,11 @@
         "twitter": "https://twitter.com/BattleReadyBoyz",
         "discord": "https://discord.gg/q4FQ4ukffB",
         "medium": "https://medium.com/@battlereadyboyz/battle-ready-boyz-56a5eee494fa"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -6340,6 +6501,11 @@
         "discord": "https://discord.gg/CBmUVWusQQ",
         "medium": "https://medium.com/@apesutopia",
         "telegram": "https://t.me/+AvEkD1pZfdEzZDgx"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -6379,6 +6545,11 @@
         "website": "https://timebeam.myportfolio.com/everybodys-friends",
         "twitter": "https://twitter.com/everybdyfriends",
         "discord": "https://discord.com/invite/3MmDxXpB5P"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -6477,6 +6648,11 @@
         "twitter": "https://twitter.com/noodlesclubnft",
         "discord": "https://discord.gg/HTsURzuJVt",
         "medium": "https://medium.com/@noodlesclubnft"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -6574,6 +6750,11 @@
         "twitter": "https://twitter.com/TradingfxvpsO",
         "discord": "https://discord.gg/ryborgsnft",
         "medium": "https://www.tradingfxvps.com/nft-vps/utility/"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -6593,6 +6774,11 @@
         "website": "https://thecronosverse.com/",
         "twitter": "https://twitter.com/TheCronosVerse",
         "discord": "https://discord.gg/E9Mzzy9Hex"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -6653,6 +6839,11 @@
         "website": "https://teammustachios.com/",
         "twitter": "https://twitter.com/teammustachios",
         "discord": "https://discord.gg/eH4SCJY5Qw"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "phenix",
+        "escrow": false
       }
     },
     {
@@ -6731,6 +6922,11 @@
         "twitter": "https://twitter.com/cro_hamster",
         "discord": "https://discord.gg/sj4cHPrdVk",
         "medium": "https://medium.com/@CroHamsterNFT"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -7022,7 +7218,7 @@
       "listable": false,
       "metadata": {
         "description": "GymKongZ is a 10,000 pfp project made up of more than 255 unique traits. We will focus on improving all pillars of life, not only the physical but also the mental and financial, and any other goal members are choosing to pursue. \nWe are really wanting to expand the horizon when it comes to a group of people coming together sharing similar goals and interests.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/gymkongz/avatar.webp",
         "card": "/img/collections/gymkongz/card.webp",
         "banner": "/img/collections/gymkongz/banner.webp",
@@ -7489,6 +7685,26 @@
         "website": "https://www.aikosociety.com/",
         "twitter": "https://twitter.com/AikoSociety",
         "telegram": "https://t.me/@Nino993"
+      }
+    },
+    {
+      "name": "Braindead Monkeys Allies Collection",
+      "slug": "braindead-monkeys-allies",
+      "multiToken": false,
+      "address": "0x5b66e985c313fec158B2ee45B93976A167a115f5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Braindead Monkeys Allies drop is an ultra-rare collection of special forces taking over from Gen 1 and leading into Gen 2.",
+        "verified": false,
+        "avatar": "/img/collections/braindead-monkeys-allies/avatar.webp",
+        "card": "/img/collections/braindead-monkeys-allies/card.webp",
+        "banner": "/img/collections/braindead-monkeys-allies/banner.webp",
+        "maxSupply": 222,
+        "website": "https://www.braindeadmonkeys.com/",
+        "twitter": "https://twitter.com/BDMNFT_",
+        "discord": "https://discord.gg/wRzqzVPx8R",
+        "medium": "https://medium.com/@braindeadmonkeysnft"
       }
     }
   ],
