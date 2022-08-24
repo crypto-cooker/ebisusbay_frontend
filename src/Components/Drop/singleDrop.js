@@ -645,11 +645,11 @@ const SingleDrop = () => {
                       <h5>{`${dropObject?.erc20Cost} ${dropObject?.erc20Unit}`}</h5>
                     )}
                   </div>
-                  {(memberCost || dropObject?.erc20Cost !== dropObject?.erc20MemberCost) && (
+                  {(memberCost || (dropObject?.erc20MemberCost && dropObject?.erc20Cost !== dropObject?.erc20MemberCost)) && (
                     <div className="me-4">
                       <h6 className="mb-1">Founding Member Price</h6>
                       <h5>{memberCost} CRO</h5>
-                      {dropObject?.erc20Cost !== dropObject?.erc20MemberCost && (
+                      {dropObject?.erc20MemberCost && dropObject?.erc20Cost !== dropObject?.erc20MemberCost && (
                         <h5>{`${dropObject?.erc20MemberCost} ${dropObject?.erc20Unit}`}</h5>
                       )}
                     </div>
