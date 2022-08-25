@@ -7687,7 +7687,7 @@
       "name": "Sketchz by Troopz",
       "slug": "troopz-sketchz",
       "multiToken": false,
-      "address": "0xeF8755b66d1d6a2ea9DB3ec63AA9Cec1a17f137b",
+      "address": "0xB82F6B5a4491D38292DFCd6706aa12DD5701D7e2",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -10620,7 +10620,7 @@
         "website": "https://trooprz.army/",
         "discord": "https://discord.gg/trooprz"
       },
-      "address": "0xeF8755b66d1d6a2ea9DB3ec63AA9Cec1a17f137b",
+      "address": "0xB82F6B5a4491D38292DFCd6706aa12DD5701D7e2",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 2220,
