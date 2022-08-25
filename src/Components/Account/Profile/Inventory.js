@@ -58,17 +58,18 @@ export default function Inventory({ address }) {
     async function func() {
       const result = await getWalletOverview(address);
       setCollections(result.data
+        .filter((c) => !!findCollectionByAddress(c.nftAddress, c.nftId))
         .map((c) => {
           const name = c.name ?? findCollectionByAddress(c.nftAddress, c.nftId)?.name;
           return {label:name, value:c.nftAddress}
         })
-        .sort((a, b) => a.name > b.name ? 1 : -1)
+        .sort((a, b) => a.label > b.label ? 1 : -1)
       );
     }
 
     func();
 
-  }, []);
+  }, [address]);
 
   const historyContent = useMemo(() => {
     return status === "loading" ? (
