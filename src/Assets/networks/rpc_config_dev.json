@@ -7766,7 +7766,7 @@
       "multiToken": false,
       "address": "0x30ab0d8c808ec024365d45a105c559bdf06bcb14",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "600 Gen 2 Cronos Fossils for the Cronos Chain",
         "verified": true,
