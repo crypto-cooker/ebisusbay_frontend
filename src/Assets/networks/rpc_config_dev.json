@@ -1113,12 +1113,20 @@
         "avatar": "/img/collections/cronosmb/avatar.png",
         "card": "/img/collections/cronosmb/card.jpg",
         "banner": "/img/collections/cronosmb/banner.webp",
-        "rankings": {"source": "rarity_sniper", "slug": "cronos-primate-business"},
+        "rankings": {
+          "source": "rarity_sniper",
+          "slug": "cronos-primate-business"
+        },
         "maxSupply": 1000,
         "website": "https://www.cronospb.com/",
         "twitter": "https://twitter.com/PrimateCronos",
         "discord": "https://discord.gg/X4shERMUwf",
         "medium": "https://medium.com/cronos-monkey-business"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -1763,6 +1771,11 @@
         "twitter": "https://twitter.com/PrimateCronos",
         "discord": "https://discord.gg/X4shERMUwf",
         "medium": "https://medium.com/cronos-monkey-business"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -2275,6 +2288,11 @@
         "twitter": "https://twitter.com/PrimateCronos",
         "discord": "https://discord.gg/X4shERMUwf",
         "medium": "https://medium.com/cronos-monkey-business"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -2936,7 +2954,8 @@
         "website": "https://crossbreeds.defigamecove.com/",
         "twitter": "https://twitter.com/crossbreedsnft",
         "discord": "https://discord.gg/jxyytxSJAZ",
-        "medium": "https://medium.com/@Crossbreeds"
+        "medium": "https://medium.com/@Crossbreeds",
+        "rankings": {"source": "provided"}
       }
     },
     {
@@ -3140,7 +3159,8 @@
         "website": "https://crossbreeds.defigamecove.com/",
         "twitter": "https://twitter.com/crossbreedsnft",
         "discord": "https://discord.gg/jxyytxSJAZ",
-        "medium": "https://medium.com/@Crossbreeds"
+        "medium": "https://medium.com/@Crossbreeds",
+        "rankings": {"source": "provided"}
       }
     },
     {
@@ -5623,6 +5643,11 @@
         "twitter": "https://twitter.com/PrimateCronos",
         "discord": "https://discord.gg/X4shERMUwf",
         "medium": "https://medium.com/cronos-monkey-business"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -5986,7 +6011,8 @@
         "maxSupply": 10000,
         "website": "https://www.crorarity.com/crommy/",
         "twitter": "https://twitter.com/cromummy",
-        "discord": "https://discord.gg/9kZ4bBsYcy"
+        "discord": "https://discord.gg/9kZ4bBsYcy",
+        "rankings": {"source": "provided"}
       }
     },
     {
@@ -6172,7 +6198,8 @@
         "twitter": "https://twitter.com/SaharaDao",
         "discord": "https://discord.gg/gTz8yjpymd",
         "telegram": "https://t.me/SaharaDAOglobal",
-        "medium": "https://saharadao.medium.com"
+        "medium": "https://saharadao.medium.com",
+        "rankings": {"source": "provided"}
       }
     },
     {
@@ -6574,7 +6601,8 @@
         "website": "https://crossbreeds.defigamecove.com/",
         "twitter": "https://twitter.com/crossbreedsnft",
         "discord": "https://discord.gg/jxyytxSJAZ",
-        "medium": "https://medium.com/@Crossbreeds"
+        "medium": "https://medium.com/@Crossbreeds",
+        "rankings": {"source": "provided"}
       }
     },
     {
@@ -6977,7 +7005,11 @@
         "twitter": "https://twitter.com/ArgoProtocol",
         "discord": "https://discord.gg/argofinance",
         "medium" : "https://argofinance.medium.com",
-        "telegram": "https://t.me/Argo_Finance"
+        "telegram": "https://t.me/Argo_Finance",
+        "rankings": {
+          "source": "rarity_sniper",
+          "slug": "argonauts"
+        }
       }
     },
     {
@@ -7017,7 +7049,8 @@
         "maxSupply": 2420,
         "twitter": "https://twitter.com/ToughTigerGang_",
         "discord": "https://discord.gg/79BDDbyXvQ",
-        "medium": "https://medium.com/@ToughTigerGang"
+        "medium": "https://medium.com/@ToughTigerGang",
+        "rankings": {"source": "provided"}
       }
     },
     {
@@ -7174,7 +7207,8 @@
         "maxSupply": 5678,
         "website": "https://crodoonft.com/",
         "twitter": "https://twitter.com/CroDooNFT",
-        "discord": "https://discord.gg/W43dReVMq5"
+        "discord": "https://discord.gg/W43dReVMq5",
+        "rankings": {"source": "provided"}
       }
     },
     {
@@ -7392,7 +7426,8 @@
         "maxSupply": 10000,
         "website": "https://croodleape.com/",
         "twitter": "https://www.twitter.com/croodleape",
-        "discord": "https://discord.gg/Tj97K4c4Y9"
+        "discord": "https://discord.gg/Tj97K4c4Y9",
+        "rankings": {"source": "provided"}
       }
     },
     {
@@ -7412,7 +7447,8 @@
         "website": "https://croceanft.com/",
         "twitter": "https://twitter.com/Crocean_NFT",
         "discord": "https://discord.gg/N9YstjgG2y",
-        "telegram": "https://t.me/crowhalesnft"
+        "telegram": "https://t.me/crowhalesnft",
+        "rankings": {"source": "provided"}
       }
     },
     {
@@ -7521,6 +7557,11 @@
         "twitter": "https://twitter.com/PrimateCronos",
         "discord": "https://discord.gg/X4shERMUwf",
         "medium": "https://medium.com/cronos-monkey-business"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {

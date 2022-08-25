@@ -55,10 +55,10 @@ const Index = function () {
   const history = useRouter();
 
   const windowSize = useWindowSize();
-  const [showpop, btn_icon_pop] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
-  const closePop = () => {
-    btn_icon_pop(false);
+  const closeMenu = () => {
+    setShowMenu(false);
   };
   const walletAddress = useSelector((state) => {
     return state.user.address;
@@ -120,11 +120,12 @@ const Index = function () {
   }, 1000 * 60);
 
   const navigateTo = (link) => {
-    closePop();
+    closeMenu();
     history.push(link);
   };
 
   const logout = async () => {
+    closeMenu();
     dispatch(onLogout());
   };
 
@@ -210,7 +211,7 @@ const Index = function () {
       )}
       {walletAddress && correctChain && (
         <div id="de-click-menu-profile" className="de-menu-profile">
-          <span onClick={() => btn_icon_pop(!showpop)}>
+          <span onClick={() => setShowMenu(!showMenu)}>
             {user.profile.profilePicture ? (
               <img src={ImageKitService.buildAvatarUrl(user.profile.profilePicture)} alt={user.profile.username} />
             ) : (
@@ -242,7 +243,7 @@ const Index = function () {
       </StyledModal>
 
       {walletAddress && correctChain && (
-        <Offcanvas show={showpop} onHide={closePop} placement={windowSize.width > 400 ? 'end' : 'bottom'}>
+        <Offcanvas show={showMenu} onHide={closeMenu} placement={windowSize.width > 400 ? 'end' : 'bottom'}>
           <Offcanvas.Header closeButton closeVariant={theme === 'dark' ? 'white': 'dark'}>
             <Offcanvas.Title>My Account</Offcanvas.Title>
           </Offcanvas.Header>
