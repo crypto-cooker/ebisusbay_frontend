@@ -7821,6 +7821,25 @@
         "kyc": false,
         "escrow": false
       }
+    },
+    {
+      "name": "Baby Phenix",
+      "slug": "baby-phenix",
+      "multiToken": false,
+      "address": "0xCbb5D78e3042c7E079342FC0bFe1BC2b04522F11",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Baby Phenix is a collection os 500 birds which will also include a staking mechanism",
+        "verified": false,
+        "avatar": "/img/collections/baby-phenix/avatar.webp",
+        "card": "/img/collections/baby-phenix/card.webp",
+        "banner": "/img/collections/baby-phenix/banner.webp",
+        "maxSupply": 500,
+        "website": "https://babyphenix.com/",
+        "twitter": "https://twitter.com/phenixbaby",
+        "telegram": "t.me/babyphenix"
+      }
     }
   ],
   "drops": [
