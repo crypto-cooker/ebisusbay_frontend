@@ -13,6 +13,7 @@ import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation, Pagination} from "swiper";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 
+const tokens = appConfig('tokens')
 const drops = appConfig('drops');
 const collections = appConfig('collections');
 
@@ -217,9 +218,9 @@ export default class Responsive extends Component {
                               ) : (
                                 <h3>{ethers.utils.commify(item.drop.cost)} CRO</h3>
                               )}
-                              {item.drop.erc20Cost && item.drop.erc20Unit && (
+                              {item.drop.erc20Cost && item.drop.erc20Token && (
                                 <h3>
-                                  {ethers.utils.commify(item.drop.erc20Cost)} {item.drop.erc20Unit}
+                                  {ethers.utils.commify(item.drop.erc20Cost)} {tokens[item.drop.erc20Token].symbol}
                                 </h3>
                               )}
                               {item.drop.memberCost &&
@@ -231,9 +232,9 @@ export default class Responsive extends Component {
                                 ) : (
                                   <h5>Members: {ethers.utils.commify(item.drop.memberCost)} CRO</h5>
                                 ))}
-                              {item.drop.erc20MemberCost && item.drop.erc20Unit && (
+                              {item.drop.erc20MemberCost && item.drop.erc20Token && (
                                 <h5>
-                                  Members: {ethers.utils.commify(item.drop.erc20MemberCost)} {item.drop.erc20Unit}
+                                  Members: {ethers.utils.commify(item.drop.erc20MemberCost)} {tokens[item.drop.erc20Token].symbol}
                                 </h5>
                               )}
                               {item.drop.whitelistCost &&
