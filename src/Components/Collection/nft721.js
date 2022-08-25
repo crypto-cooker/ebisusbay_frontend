@@ -484,7 +484,7 @@ const Nft721 = ({ address, id }) => {
                         title={nft.rank}
                         avatar={rankingsLogoForCollection(collection)}
                         hover={rankingsTitleForCollection(collection)}
-                        to={rankingsLinkForCollection(collection)}
+                        to={rankingsLinkForCollection(collection, nft.id)}
                         pop={true}
                       />
                     )}
