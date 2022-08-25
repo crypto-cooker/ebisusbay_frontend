@@ -3873,7 +3873,7 @@
         "maxSupply": 2500,
         "website": "https://www.hypednftclub.com/croofthrones",
         "twitter": "https://twitter.com/Croofthrones",
-        "discord": "https://discord.gg/pYCaAwpZ"
+        "discord": "https://discord.gg/sH9JP2q6g8"
       },
       "verification": {
         "doxx": true,
@@ -7796,6 +7796,30 @@
         "website": "https://babymonsters.ca/",
         "twitter": "https://twitter.com/babymonstersnft",
         "discord": "https://discord.gg/N5YXhNDJyz"
+      }
+    },
+    {
+      "name": "Cro Of Thrones: Factions",
+      "slug": "cro-of-thrones-factions",
+      "multiToken": false,
+      "address": "0x3C5D70f5b8a5D43FdDd432c2BCB8e7DC45e271B3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Cro of Thrones Factions is an exclusive emblem collection to those who complete the Factions Quests on \"Cro of Thrones\" NFT collection. Collect a number of specifc traits (clothes) to be eligible to earn these exclusive emblems.",
+        "verified": true,
+        "avatar": "/img/collections/cro-of-thrones-factions/avatar.webp",
+        "card": "/img/collections/cro-of-thrones-factions/card.webp",
+        "banner": "/img/collections/cro-of-thrones-factions/banner.webp",
+        "maxSupply": 500,
+        "website": "https://www.hypednftclub.com/",
+        "twitter": "https://twitter.com/Croofthrones",
+        "discord": "https://discord.gg/sH9JP2q6g8"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     }
   ],
