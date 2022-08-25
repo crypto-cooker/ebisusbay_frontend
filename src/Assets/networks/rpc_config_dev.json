@@ -7778,6 +7778,25 @@
         "twitter": "https://twitter.com/CronosRocksNFT",
         "discord": "https://discord.gg/UtdADzxM6j"
       }
+    },
+    {
+      "name": "Baby Monsters",
+      "slug": "baby-monsters",
+      "multiToken": false,
+      "address": "0x776BeF0d43Acdc2b49c6885C6d15F9A5308252b2",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The monsters are scary, but what about their Babies ? We are cute and lovely \uD83D\uDC7B",
+        "verified": false,
+        "avatar": "/img/collections/baby-monsters/avatar.webp",
+        "card": "/img/collections/baby-monsters/card.webp",
+        "banner": "/img/collections/baby-monsters/banner.webp",
+        "maxSupply": 350,
+        "website": "https://babymonsters.ca/",
+        "twitter": "https://twitter.com/babymonstersnft",
+        "discord": "https://discord.gg/N5YXhNDJyz"
+      }
     }
   ],
   "drops": [
