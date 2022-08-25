@@ -4703,6 +4703,7 @@
         "card": "/img/collections/hidden-fish-fm-vip/card.webp",
         "banner": "/img/collections/hidden-fish-fm-vip/banner.webp",
         "maxSupply": 1000,
+        "website": "https://hidethefish.com/",
         "twitter": "https://twitter.com/HiddenFishDAO",
         "medium": "https://blog.hidethefish.com"
       },
@@ -6659,6 +6660,7 @@
         "card": "/img/collections/hidden-fish-fm/card.webp",
         "banner": "/img/collections/hidden-fish-fm/banner.webp",
         "maxSupply": 3300,
+        "website": "https://hidethefish.com/",
         "twitter": "https://twitter.com/HiddenFishDAO",
         "medium": "https://blog.hidethefish.com"
       },
@@ -10565,7 +10567,7 @@
       "description": "The purpose of the DAO is to accelerate the growth of Ebisu’s Bay platform and the entire Cronos ecosystem.",
       "author": {
         "name": "Hidden Fish DAO",
-        "website": "https://mint.hidethefish.com",
+        "website": "https://hidethefish.com/",
         "twitter": "https://twitter.com/HiddenFishDAO",
         "medium": "https://blog.hidethefish.com"
       },
