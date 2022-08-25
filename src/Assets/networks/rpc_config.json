@@ -7759,6 +7759,25 @@
         "discord": "https://discord.gg/wRzqzVPx8R",
         "medium": "https://medium.com/@braindeadmonkeysnft"
       }
+    },
+    {
+      "name": "Cronos Fossils Gen 2",
+      "slug": "cronos-fossils-gen2",
+      "multiToken": false,
+      "address": "0x30ab0d8c808ec024365d45a105c559bdf06bcb14",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "600 Gen 2 Cronos Fossils for the Cronos Chain",
+        "verified": true,
+        "avatar": "/img/collections/cronos-fossils-gen2/avatar.webp",
+        "card": "/img/collections/cronos-fossils-gen2/card.webp",
+        "banner": "/img/collections/cronos-fossils-gen2/banner.webp",
+        "maxSupply": 600,
+        "website": "https://www.cronosrocks.com/",
+        "twitter": "https://twitter.com/CronosRocksNFT",
+        "discord": "https://discord.gg/UtdADzxM6j"
+      }
     }
   ],
   "drops": [
