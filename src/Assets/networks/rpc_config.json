@@ -1113,12 +1113,20 @@
         "avatar": "/img/collections/cronosmb/avatar.png",
         "card": "/img/collections/cronosmb/card.jpg",
         "banner": "/img/collections/cronosmb/banner.webp",
-        "rankings": {"source": "rarity_sniper", "slug": "cronos-primate-business"},
+        "rankings": {
+          "source": "rarity_sniper",
+          "slug": "cronos-primate-business"
+        },
         "maxSupply": 1000,
         "website": "https://www.cronospb.com/",
         "twitter": "https://twitter.com/PrimateCronos",
         "discord": "https://discord.gg/X4shERMUwf",
         "medium": "https://medium.com/cronos-monkey-business"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -1763,6 +1771,11 @@
         "twitter": "https://twitter.com/PrimateCronos",
         "discord": "https://discord.gg/X4shERMUwf",
         "medium": "https://medium.com/cronos-monkey-business"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -2275,6 +2288,11 @@
         "twitter": "https://twitter.com/PrimateCronos",
         "discord": "https://discord.gg/X4shERMUwf",
         "medium": "https://medium.com/cronos-monkey-business"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -5623,6 +5641,11 @@
         "twitter": "https://twitter.com/PrimateCronos",
         "discord": "https://discord.gg/X4shERMUwf",
         "medium": "https://medium.com/cronos-monkey-business"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -7521,6 +7544,11 @@
         "twitter": "https://twitter.com/PrimateCronos",
         "discord": "https://discord.gg/X4shERMUwf",
         "medium": "https://medium.com/cronos-monkey-business"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
