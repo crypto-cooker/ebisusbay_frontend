@@ -89,7 +89,6 @@ const NotificationMenu = function () {
             ) : (
               <>
                 <p className="text-center">Verify your wallet to view notifications</p>
-
                 <Button type="legacy"
                         className="mx-auto"
                         onClick={openMenu}
@@ -102,9 +101,14 @@ const NotificationMenu = function () {
           ) : isError ? (
             <p className="text-center">Error: {error.message}</p>
           ) : !profile.id ? (
-            <p className="text-center">
-              <Link href="/account/settings/profile">Create a profile to activate notifications</Link>
-            </p>
+            <>
+              <p className="text-center">Create a profile to activate notifications</p>
+                <Button type="legacy"
+                        className="mx-auto"
+                        onClick={() => navigateTo('/account/settings/profile')}>
+                  Create Profile
+                </Button>
+            </>
           ) : (
             <>
               {notifications.length > 0 ? (
