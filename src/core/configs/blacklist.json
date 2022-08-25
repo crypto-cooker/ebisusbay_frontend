@@ -1,5 +1,21 @@
 [
   {
+    "users": ["0xe85be752a4602872d6952f1aad40a8dfb9871c37"],
+    "tokens": [
+      {
+        "slug": "flaming-phenix-club",
+        "address": "0xCf185Cb08c62Ff969D258FBA18F92dabb278A8A9",
+        "ids": [3991, 4112, 4390, 4391, 4740, 4839, 4897, 5318, 5376, 5378, 5797, 3134, 3135, 3581, 3582, 3583]
+      },
+      {
+        "slug": "hyped-dogs",
+        "address": "0xD97A5ed8d1f5943085F7eFADC8e46415F5b7deDD",
+        "ids": [1966, 2113]
+      }
+    ],
+    "reason": "Scammed in Flaming Phenix discord. Ticket #0540. Verified by wursthandz"
+  },
+  {
     "users": ["0x316beaaedf075ceba6401549383d852c729f943c"],
     "tokens": [
       {
