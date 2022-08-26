@@ -4,7 +4,7 @@ import { Contract, ethers } from 'ethers';
 import {faCrow, faExternalLinkAlt, faHeart, faShare, faSync} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import { Spinner } from 'react-bootstrap';
+import {Badge, Spinner} from 'react-bootstrap';
 
 import ProfilePreview from '../components/ProfilePreview';
 import Footer from '../components/Footer';
@@ -26,7 +26,7 @@ import {
   rankingsLogoForCollection,
   rankingsTitleForCollection,
   rankingsLinkForCollection,
-  isLazyHorseCollection, isLazyHorsePonyCollection, isLadyWeirdApesCollection,
+  isLazyHorseCollection, isLazyHorsePonyCollection, isLadyWeirdApesCollection, isNftBlacklisted,
 } from '../../utils';
 import {getNftDetails, refreshMetadata} from '../../GlobalState/nftSlice';
 import { connectAccount, chainConnect } from '../../GlobalState/User';
@@ -405,7 +405,16 @@ const Nft721 = ({ address, id }) => {
             <div className="col-md-6">
               {nft && (
                 <div className="item_info">
-                  <h2>{lazyHorseName ?? nft.name}</h2>
+                  {isNftBlacklisted(address, id) ? (
+                    <div className="mb-4">
+                      <h2 className="mb-0">{lazyHorseName ?? nft.name}</h2>
+                      <div className="d-flex">
+                        <Badge bg="danger">Blacklisted</Badge>
+                      </div>
+                    </div>
+                  ) : (
+                    <h2>{lazyHorseName ?? nft.name}</h2>
+                  )}
                   <p className="text-break">{nft.description}</p>
                   {isCroCrowCollection(address) && croCrowBreed && (
                     <div className="d-flex flex-row align-items-center mb-4">
