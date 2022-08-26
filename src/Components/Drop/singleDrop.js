@@ -28,7 +28,7 @@ import {
   percentage,
 } from '../../utils';
 import { dropState as statuses } from '../../core/api/enums';
-import { EbisuDropAbi } from '../../Contracts/Abis';
+import {EbisuDropAbi, ERC20} from '../../Contracts/Abis';
 import { getTheme } from '../../Theme/theme';
 import SocialsBar from '../Collection/SocialsBar';
 import {parseUnits} from "ethers/lib/utils";
@@ -181,17 +181,10 @@ const SingleDrop = () => {
         let writeContract = await new ethers.Contract(currentDrop.address, abi, user.provider.getSigner());
         currentDrop = Object.assign({ writeContract: writeContract }, currentDrop);
 
-        if (currentDrop.erc20Address) {
-          const erc20Contract = await new ethers.Contract(
-            dropObject.erc20Address,
-            dropObject.erc20Abi,
-            user.provider.getSigner()
-          );
-          const erc20ReadContract = await new ethers.Contract(
-            dropObject.erc20Address,
-            dropObject.erc20Abi,
-            readProvider
-          );
+        if (currentDrop.erc20Token) {
+          const token = config.tokens[dropObject.erc20Token];
+          const erc20Contract = await new ethers.Contract(token.address, ERC20, user.provider.getSigner());
+          const erc20ReadContract = await new ethers.Contract(token.address, ERC20, readProvider);
           currentDrop = {
             ...currentDrop,
             erc20Contract,
@@ -351,6 +344,13 @@ const SingleDrop = () => {
           finalCost = finalCost.sub(cost.mul(Math.floor(numToMint / 4)));
         }
 
+        if (isErc20 === true) {
+          const allowance = await dropObject.erc20ReadContract.allowance(user.address, dropObject.address);
+          if (allowance.sub(finalCost) < 0) {
+            await dropObject.erc20Contract.approve(dropObject.address, constants.MaxUint256);
+          }
+        }
+
         const gasPrice = parseUnits('5000', 'gwei');
         const gasEstimate = await contract.estimateGas.mint(numToMint, {value: finalCost});
         const gasLimit = gasEstimate.mul(2);
@@ -380,19 +380,20 @@ const SingleDrop = () => {
           }
         } else {
           if (isUsingDefaultDropAbi(dropObject.abi) || isUsingAbiFile(dropObject.abi)) {
-            response = await contract.mint(numToMint, extra);
+            if (isErc20) {
+              delete extra['value']
+              response = await contract.mintWithToken(numToMint, extra);
+            } else {
+              response = await contract.mint(numToMint, extra);
+            }
           } else {
             let method;
             for (const abiMethod of dropObject.abi) {
               if (abiMethod.includes('mint') && !abiMethod.includes('view')) method = abiMethod;
             }
 
-            if (isErc20 === true) {
-              const allowance = await dropObject.erc20ReadContract.allowance(user.address, dropObject.address);
-              if (allowance.sub(finalCost) < 0) {
-                await dropObject.erc20Contract.approve(dropObject.address, constants.MaxUint256);
-              }
-            }
+
+
             if (method.includes('address') && method.includes('uint256')) {
               if (isErc20 === true) {
                 response = await contract.mintWithLoot(user.address, numToMint);
@@ -471,11 +472,6 @@ const SingleDrop = () => {
     return dateString;
   };
 
-  const renderTooltip = (key, text) => (
-    <Tooltip id={`tooltip-${key}`} key={key}>
-      {text}
-    </Tooltip>
-  );
 
   return (
     <div>
@@ -650,8 +646,8 @@ const SingleDrop = () => {
                   <div className="me-4">
                     <h6 className="mb-1">Mint Price</h6>
                     <h5>{regularCost} CRO</h5>
-                    {dropObject?.erc20Cost && dropObject?.erc20Unit && (
-                      <h5>{`${dropObject?.erc20Cost} ${dropObject?.erc20Unit}`}</h5>
+                    {dropObject?.erc20Cost && dropObject?.erc20Token && (
+                      <h5>{`${dropObject?.erc20Cost} ${config.tokens[dropObject.erc20Token].symbol}`}</h5>
                     )}
                   </div>
                   {(memberCost || (dropObject?.erc20MemberCost && dropObject?.erc20Cost !== dropObject?.erc20MemberCost)) && (
@@ -659,7 +655,7 @@ const SingleDrop = () => {
                       <h6 className="mb-1">Founding Member Price</h6>
                       <h5>{memberCost} CRO</h5>
                       {dropObject?.erc20MemberCost && dropObject?.erc20Cost !== dropObject?.erc20MemberCost && (
-                        <h5>{`${dropObject?.erc20MemberCost} ${dropObject?.erc20Unit}`}</h5>
+                        <h5>{`${dropObject?.erc20MemberCost} ${config.tokens[dropObject.erc20Token].symbol}`}</h5>
                       )}
                     </div>
                   )}
@@ -732,7 +728,7 @@ const SingleDrop = () => {
 
                     {canMintQuantity > 0 && (
                       <div className="d-flex flex-row mt-5">
-                        <button className="btn-main lead mb-5 mr15" onClick={mintNow} disabled={minting}>
+                        <button className="btn-main lead mb-5 mr15" onClick={() => mintNow(false)} disabled={minting}>
                           {minting ? (
                             <>
                               Minting...
@@ -744,7 +740,7 @@ const SingleDrop = () => {
                             <>{drop.maxMintPerTx && drop.maxMintPerTx > 1 ? <>Mint {numToMint}</> : <>Mint</>}</>
                           )}
                         </button>
-                        {drop.erc20Unit && (
+                        {drop.erc20Token && (
                           <button
                             className="btn-main lead mb-5 mr15 mx-1"
                             onClick={() => mintNow(true)}
@@ -761,7 +757,7 @@ const SingleDrop = () => {
                               <>
                                 {drop.maxMintPerTx && drop.maxMintPerTx > 1 ? (
                                   <>
-                                    Mint {numToMint} with {drop.erc20Unit}
+                                    Mint {numToMint} with {config.tokens[drop.erc20Token].symbol}
                                   </>
                                 ) : (
                                   <>{maxMintPerTx > 1 ? <>Mint {numToMint}</> : <>Mint</>}</>
