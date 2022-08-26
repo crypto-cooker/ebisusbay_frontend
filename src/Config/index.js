@@ -50,6 +50,11 @@ export const configData = {
         symbol: 'MAD',
         address: '0x212331e1435a8df230715db4c02b2a3a0abf8c61',
       },
+      trpz: {
+        name: 'TRPZ',
+        symbol: 'TRPZ',
+        address: '0x1Cc0B25BD5105CD8905f7e9cD174435D4C890E02',
+      },
     },
     collections: rpcConfig.known_contracts,
     drops: rpcConfig.drops,
@@ -91,6 +96,11 @@ export const configData = {
         name: 'MAD',
         symbol: 'MAD',
         address: '0x212331e1435a8df230715db4c02b2a3a0abf8c61',
+      },
+      trpz: {
+        name: 'TRPZ',
+        symbol: 'TRPZ',
+        address: '0x1Cc0B25BD5105CD8905f7e9cD174435D4C890E02',
       },
     },
     collections: rpcConfigDev.known_contracts,

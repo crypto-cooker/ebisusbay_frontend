@@ -1,6 +1,9 @@
 [
   {
-    "users": ["0xe85be752a4602872d6952f1aad40a8dfb9871c37"],
+    "users": [
+      "0xe85be752a4602872d6952f1aad40a8dfb9871c37",
+      "0x8a2d01dc3237753887a6563a1f8c9f1b3d916fdb"
+    ],
     "tokens": [
       {
         "slug": "flaming-phenix-club",

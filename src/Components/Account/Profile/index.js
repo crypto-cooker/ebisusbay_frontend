@@ -6,7 +6,7 @@ import Avatar from './Avatar';
 
 import styles from './profile.module.scss';
 import {hostedImage, ImageKitService} from "@src/helpers/image";
-import {caseInsensitiveCompare, shortAddress} from "@src/utils";
+import {caseInsensitiveCompare, isUserBlacklisted, shortAddress} from "@src/utils";
 import Inventory from "@src/Components/Account/Profile/Inventory";
 import Collections from "@src/Components/Account/Profile/Collections";
 import Listings from "@src/Components/Account/Profile/Listings";
@@ -17,6 +17,7 @@ import SocialsBar from "@src/Components/Collection/SocialsBar";
 import PageHead from "@src/Components/Head/PageHead";
 import {pushQueryString} from "@src/helpers/query";
 import {ethers} from "ethers";
+import {Badge} from "react-bootstrap";
 
 const tabs = {
   inventory: 'inventory',
@@ -94,6 +95,11 @@ export default function Profile({ address, profile, tab }) {
             </div>
             <div className="flex-grow-1 ms-sm-4 me-sm-4">
               <div className={styles.username}>{username()}</div>
+              {isUserBlacklisted(address) && (
+                <div className="d-flex">
+                  <Badge bg="danger">Blacklisted</Badge>
+                </div>
+              )}
               <div className={styles.bio}>{profile.bio}</div>
               <div className={`${styles.socials} text-center text-sm-start mb-2 mb-sm-0`}>
                 <span className="fs-4"><SocialsBar socials={profile} address={address} /></span>

@@ -1865,7 +1865,7 @@
       "memberCost": "295",
       "erc20Cost": "43800000",
       "erc20MemberCost": "37000000",
-      "erc20Unit": "Loot",
+      "erc20Token": "Loot",
       "foundersOnly": false,
       "abi": [
         "function mint(uint256 _mintAmount) public payable",
