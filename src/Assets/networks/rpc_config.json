@@ -1733,6 +1733,11 @@
         "twitter": "https://twitter.com/thelaboratoryio",
         "discord": "https://discord.gg/thelaboratory",
         "medium": "https://medium.com/@TheLaboratoryIO"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "phenix",
+        "escrow": false
       }
     },
     {
@@ -6965,7 +6970,7 @@
       },
       "verification": {
         "doxx": true,
-        "kyc": false,
+        "kyc": "ebisu",
         "escrow": false
       }
     },
@@ -7191,6 +7196,11 @@
         "website": "https://www.crokami.com/",
         "twitter": "https://twitter.com/cro_kami",
         "discord": "https://discord.gg/sTeeDrWkSW"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "phenix",
+        "escrow": false
       }
     },
     {
@@ -7273,6 +7283,11 @@
         "twitter": "https://twitter.com/gymkongz",
         "discord": "https://discord.gg/qJru6Av9h3",
         "gitbook": "https://gymkongz.gitbook.io/gymkongz/"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "phenix",
+        "escrow": false
       }
     },
     {
