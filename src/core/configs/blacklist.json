@@ -4,18 +4,7 @@
       "0xe85be752a4602872d6952f1aad40a8dfb9871c37",
       "0x8a2d01dc3237753887a6563a1f8c9f1b3d916fdb"
     ],
-    "tokens": [
-      {
-        "slug": "flaming-phenix-club",
-        "address": "0xCf185Cb08c62Ff969D258FBA18F92dabb278A8A9",
-        "ids": [3991, 4112, 4391, 4740, 4839, 4897, 5318, 5376, 5378, 3134, 3135, 3581, 3582, 3583]
-      },
-      {
-        "slug": "hyped-dogs",
-        "address": "0xD97A5ed8d1f5943085F7eFADC8e46415F5b7deDD",
-        "ids": [1966, 2113]
-      }
-    ],
+    "tokens": [],
     "reason": "Scammed in Flaming Phenix discord by impersonating Phenix Akira. Ticket #0540. Verified by wursthandz"
   },
   {
