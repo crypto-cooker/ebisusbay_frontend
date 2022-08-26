@@ -7704,7 +7704,7 @@
       "multiToken": false,
       "address": "0xB82F6B5a4491D38292DFCd6706aa12DD5701D7e2",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -10649,7 +10649,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "priceDescription": "50 $TRPZ automatically credited back to your wallet with EVERY CRO MINT"
     },
     {
