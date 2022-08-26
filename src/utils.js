@@ -377,6 +377,10 @@ export const isDrop = (address, slug) => {
 };
 
 export const isCollection = (address, slug) => {
+  if (Array.isArray(slug)) {
+    return collections.some((c) => slug.includes(c.slug) && caseInsensitiveCompare(c.address, address));
+  }
+
   const collection = collections.find((c) => c.slug === slug);
   return collection && caseInsensitiveCompare(collection.address, address);
 };
@@ -419,6 +423,14 @@ export const isBabyWeirdApesCollection = (address) => {
 
 export const isLadyWeirdApesCollection = (address) => {
   return isCollection(address, 'lady-weird-apes');
+};
+
+export const isAnyWeirdApesCollection = (address) => {
+  return isCollection(address, [
+    'weird-apes-club',
+    'baby-weird-apes',
+    'lady-weird-apes'
+  ]);
 };
 
 export const isCronosVerseCollection = (address) => {
