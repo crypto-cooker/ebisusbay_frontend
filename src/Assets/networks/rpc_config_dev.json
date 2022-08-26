@@ -1392,7 +1392,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "The Weird Apes Club is a project with multiple collections that launched in March 2022, available on both Ebisus Bay and Crypto.comNFT. It all started with 2500 Genesis Weird Apes randomly generated from 125 Traits aimed to bring weirdness all over the Cronos Chain! Not just a PFP but an entire ecosystem of Male, Lady and Baby apes with advanced mechanisms including staking, breeding, renting, customization and more!",
+        "description": "Genesis Weird Apes is a collection of 2500 NFTs randomly generated from 125 traits aimed to bring Weirdness all over the Cronos Chain! Not just a PFP but an entire ecosystem of advanced mechanisms of staking, breeding, renting, customization and more!\nWith every 2D ape you may burn $WAC to claim an additional new 3D Voxel ape with corresponding rank and traits. Voxel apes will play a key role within our P2E, Legends of Weirdonite.\nVisit our Discord to join our wonderful community!",
         "verified": true,
         "avatar": "/img/collections/weirdapesclub/avatar.webp",
         "card": "/img/collections/weirdapesclub/card.webp",
@@ -1733,6 +1733,11 @@
         "twitter": "https://twitter.com/thelaboratoryio",
         "discord": "https://discord.gg/thelaboratory",
         "medium": "https://medium.com/@TheLaboratoryIO"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "phenix",
+        "escrow": false
       }
     },
     {
@@ -5590,7 +5595,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "",
+        "description": "MINT IS LIVE // The Cyber Squad are a group of extraordinary individuals who have been assembled by Genesis to rob intergalactic banks. Genesis was the first robot created by the S.O.I. He was a prototype.  It was the most advanced robot of its era, but due to a software problem, the mainframe of Genesis became aware of everything, and it was the first time an AI became free; he created the CyberSquad and began finding villains. Colloquially known as “The Squad”, these super villainous bandits are one of the most dangerous groups the galaxy has ever seen. In a universe where 90% of the life forms are built and operated by a company called the Stargen Omega Industries (S.O.I), “The Squad” stand apart as the last hope for freedom for the galaxy. // MINT IS LIVE",
         "verified": true,
         "avatar": "/img/collections/cyber-squad/avatar.png",
         "card": "/img/collections/cyber-squad/card.png",
@@ -6965,7 +6970,7 @@
       },
       "verification": {
         "doxx": true,
-        "kyc": false,
+        "kyc": "ebisu",
         "escrow": false
       }
     },
@@ -7191,6 +7196,11 @@
         "website": "https://www.crokami.com/",
         "twitter": "https://twitter.com/cro_kami",
         "discord": "https://discord.gg/sTeeDrWkSW"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "phenix",
+        "escrow": false
       }
     },
     {
@@ -7273,6 +7283,11 @@
         "twitter": "https://twitter.com/gymkongz",
         "discord": "https://discord.gg/qJru6Av9h3",
         "gitbook": "https://gymkongz.gitbook.io/gymkongz/"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "phenix",
+        "escrow": false
       }
     },
     {
