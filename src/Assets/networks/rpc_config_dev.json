@@ -5794,6 +5794,11 @@
         "twitter": "https://twitter.com/AristoDogNFT",
         "discord": "https://discord.gg/aristodog",
         "medium": "https://medium.com/aristodog"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
