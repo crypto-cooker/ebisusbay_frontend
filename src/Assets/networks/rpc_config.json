@@ -7705,7 +7705,7 @@
     },
     {
       "name": "Sketchz by Troopz",
-      "slug": "troopz-sketchz",
+      "slug": "trooprz-sketchz",
       "multiToken": false,
       "address": "0xB82F6B5a4491D38292DFCd6706aa12DD5701D7e2",
       "onChain": false,
@@ -7713,9 +7713,9 @@
       "metadata": {
         "description": "",
         "verified": true,
-        "avatar": "/img/collections/troopz-sketchz/avatar.webp",
-        "banner": "/img/collections/troopz-sketchz/banner.webp",
-        "card": "/img/collections/troopz-sketchz/card.webp",
+        "avatar": "/img/collections/trooprz-sketchz/avatar.webp",
+        "banner": "/img/collections/trooprz-sketchz/banner.webp",
+        "card": "/img/collections/trooprz-sketchz/card.webp",
         "maxSupply": 2220,
         "twitter": "https://twitter.com/trooprzarmy",
         "website": "https://trooprz.army/",
@@ -7917,6 +7917,75 @@
         "website": "https://kaijuofcronos.com/",
         "twitter": "https://twitter.com/KAIJU_OF_CRONOS",
         "discord": "https://discord.gg/fVX2Jb8mpb"
+      }
+    },
+    {
+      "name": "Skillz Boost by Troopz",
+      "slug": "trooprz-skills-boost",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Boost your Trooprz, Super Trooprz and Mutantz daily $TRPZ yield by collecting all 5 Skillz Boosts!",
+        "verified": true,
+        "avatar": "/img/collections/trooprz-skills-boost/avatar.webp",
+        "banner": "/img/collections/trooprz-skills-boost/banner.webp",
+        "card": "/img/collections/trooprz-skills-boost/card.webp",
+        "maxSupply": 1887,
+        "twitter": "https://twitter.com/trooprzarmy",
+        "website": "https://trooprz.army/",
+        "discord": "https://discord.gg/trooprz"
+      }
+    },
+    {
+      "name": "CroHogs",
+      "slug": "crohogs",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "When you buy a CroHogs NFT, you are not just purchasing a unique piece of art, but also a ticket into a growing community full of opportunities. Our collection of 1500 NFTs offers staking, our “the Hoggery” and a brand-new feature to give your NFTS a min Value even in Bear markets. Your CroHog will be your personal identity within our community, while opening the door to additional benefits. All CroHogs NFT`s are stored on the Cronos blockchain, and every owner is given full commercial usage rights/ownership.",
+        "verified": true,
+        "avatar": "/img/collections/crohogs/avatar.webp",
+        "banner": "/img/collections/crohogs/banner.webp",
+        "card": "/img/collections/crohogs/card.webp",
+        "maxSupply": 1500,
+        "website": "https://www.crohogs.com/",
+        "twitter": "https://twitter.com/cro_hogs",
+        "discord": "https://discord.gg/JGdADKNy28",
+        "instagram": "https://www.instagram.com/crohogsnft"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "phenix",
+        "escrow": false
+      }
+    },
+    {
+      "name": "Cronos Women",
+      "slug": "cronos-women",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300.000 CRO disburse for DAO Members.",
+        "verified": true,
+        "avatar": "/img/collections/cronos-women/avatar.webp",
+        "banner": "/img/collections/cronos-women/banner.webp",
+        "card": "/img/collections/cronos-women/card.webp",
+        "maxSupply": 3333,
+        "website": "https://cronos-women.com/",
+        "twitter": "https://twitter.com/Cronos_Women",
+        "discord": "https://discord.gg/CronosWomen",
+        "medium": "https://medium.com/@veliikb"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "phenix",
+        "escrow": false
       }
     }
   ],
@@ -10684,11 +10753,11 @@
     },
     {
       "id": 102,
-      "slug": "troopz-sketchz",
-      "imgNft": "/img/drops/troopz-sketchz/drop.webp",
-      "imgPreview": "/img/drops/troopz-sketchz/drop.webp",
-      "imgAvatar": "/img/collections/troopz-sketchz/avatar.webp",
-      "imgBanner": "/img/collections/troopz-sketchz/banner.webp",
+      "slug": "trooprz-sketchz",
+      "imgNft": "/img/drops/trooprz-sketchz/drop.webp",
+      "imgPreview": "/img/drops/trooprz-sketchz/drop.webp",
+      "imgAvatar": "/img/collections/trooprz-sketchz/avatar.webp",
+      "imgBanner": "/img/collections/trooprz-sketchz/banner.webp",
       "title": "Sketchz by Troopz",
       "subtitle": "4 Teams, 6 Battles, 1 winner!\n\nThe community will decide the next 1111 unique Troopz collection.\n\nMonkeyz v Pandaz v Frogz v Pigz",
       "description": "4 Teams, 6 Battles, 1 winner!\n\nThe community will decide the next 1111 unique Troopz collection.\n\nMonkeyz v Pandaz v Frogz v Pigz",
@@ -10716,7 +10785,7 @@
       "priceDescription": "50 $TRPZ automatically credited back to your wallet with EVERY CRO MINT"
     },
     {
-      "id": 102,
+      "id": 103,
       "slug": "hidden-fish-fm",
       "imgNft": "/img/drops/hidden-fish-fm/drop.webp",
       "imgPreview": "/img/drops/hidden-fish-fm/drop.webp",
@@ -10745,6 +10814,103 @@
       "complete": false,
       "featured": true,
       "redirect": "https://mint.hidethefish.com/"
+    },
+    {
+      "id": 104,
+      "slug": "trooprz-skills-boost",
+      "imgNft": "/img/drops/trooprz-skills-boost/drop.webp",
+      "imgPreview": "/img/drops/trooprz-skills-boost/drop.webp",
+      "imgAvatar": "/img/collections/trooprz-skills-boost/avatar.webp",
+      "imgBanner": "/img/collections/trooprz-skills-boost/banner.webp",
+      "title": "Skillz Boost by Troopz",
+      "subtitle": "Boost your Trooprz, Super Trooprz and Mutantz daily $TRPZ yield by collecting all 5 Skillz Boosts!",
+      "description": "Boost your Trooprz, Super Trooprz and Mutantz daily $TRPZ yield by collecting all 5 Skillz Boosts!\n\nStrength + 1 $TRPZ\nSpeed + 1 $TRPZ\nIntelligence + 2 $TRPZ\nEmpathy + 2 $TRPZ\nLoyalty + 4 $TRPZ",
+      "author": {
+        "name": "Trooprz",
+        "twitter": "https://twitter.com/trooprzarmy",
+        "website": "https://trooprz.army/",
+        "discord": "https://discord.gg/trooprz"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 1887,
+      "cost": "50",
+      "erc20Cost": "50",
+      "erc20Token": "trpz",
+      "abi": "",
+      "foundersOnly": false,
+      "start": 1661976000000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "priceDescription": "50 $TRPZ automatically credited back to your wallet with EVERY CRO MINT"
+    },
+    {
+      "id": 105,
+      "slug": "crohogs",
+      "imgNft": "/img/drops/crohogs/drop.webp",
+      "imgPreview": "/img/drops/crohogs/drop.webp",
+      "imgAvatar": "/img/collections/crohogs/avatar.webp",
+      "imgBanner": "/img/collections/crohogs/banner.webp",
+      "title": "CroHogs",
+      "subtitle": "When you buy a CroHogs NFT, you are not just purchasing a unique piece of art, but also a ticket into a growing community full of opportunities. Our collection of 1500 NFTs offers staking, our “the Hoggery” and a brand-new feature to give your NFTS a min Value even in Bear markets. Your CroHog will be your personal identity within our community, while opening the door to additional benefits. All CroHogs NFT`s are stored on the Cronos blockchain, and every owner is given full commercial usage rights/ownership.",
+      "description": "Let us introduce you to the CroHogs, the wild boar was introduced to Australia in the 19th century to hunt snakes among other things…. However, this turned out to be just the first domino in an incredible chain of events. One evening in the middle of the outback, one wild boar stumbled across a small pool of glistening water. Desperate for a drink, he trotted up to the water and threw himself in. What he didn’t realize was that this was a portal to a different World..",
+      "author": {
+        "name": "CroHogs",
+        "website": "https://www.crohogs.com/",
+        "twitter": "https://twitter.com/cro_hogs",
+        "discord": "https://discord.gg/JGdADKNy28",
+        "instagram": "https://www.instagram.com/crohogsnft"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 1500,
+      "cost": "600",
+      "memberCost": "550",
+      "whitelistCost": "500",
+      "foundersOnly": false,
+      "start": 1662235200000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 106,
+      "slug": "cronos-women",
+      "imgNft": "/img/drops/cronos-women/drop.webp",
+      "imgPreview": "/img/drops/cronos-women/drop.webp",
+      "imgAvatar": "/img/collections/cronos-women/avatar.webp",
+      "imgBanner": "/img/collections/cronos-women/banner.webp",
+      "title": "Cronos Women",
+      "subtitle": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300.000 CRO disburse for DAO Members.",
+      "description": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300.000 CRO disburse for DAO Members.",
+      "author": {
+        "name": "Cronos Women",
+        "website": "https://www.crohogs.com/",
+        "twitter": "https://twitter.com/cro_hogs",
+        "discord": "https://discord.gg/JGdADKNy28",
+        "instagram": "https://www.instagram.com/crohogsnft"
+      },
+      "address": "",
+      "maxMintPerTx": 20,
+      "maxMintPerAddress": 100,
+      "totalSupply": 3333,
+      "cost": "450",
+      "memberCost": "420",
+      "whitelistCost": "389",
+      "foundersOnly": false,
+      "start": 1662933600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
     }
   ]
 }

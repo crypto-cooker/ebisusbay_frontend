@@ -573,7 +573,7 @@ const SingleDrop = () => {
             </div>
             <div className="col-md-6">
 
-              <div className="d_profile de-flex mt-4 mt-sm-0">
+              <div className="de-flex mt-4 mt-sm-0 mb-2">
                 <div className="de-flex-col">
                   <div className="profile_avatar">
                     {drop.imgAvatar && <img src={hostedImage(drop.imgAvatar)} alt={drop.author.name} />}
