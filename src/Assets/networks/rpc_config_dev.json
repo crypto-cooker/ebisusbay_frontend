@@ -7880,6 +7880,25 @@
         "discord": "https://discord.gg/dgpals",
         "medium": "https://medium.com/officialdgpals"
       }
+    },
+    {
+      "name": "CroPet Ladies",
+      "slug": "cropet-ladies",
+      "multiToken": false,
+      "address": "0x57e776ebcD00650EEebd69851FB193592E8bdf13",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collection of 150 CroPet Ladies. Collection designed to increase love for animals and help animals in animal shelters. 50% of profits will go to animal shelters and everyone in our Discord will be able to see that!",
+        "verified": false,
+        "avatar": "/img/collections/cropet-ladies/avatar.webp",
+        "card": "/img/collections/cropet-ladies/card.webp",
+        "banner": "/img/collections/cropet-ladies/banner.webp",
+        "maxSupply": 150,
+        "website": "https://www.cropetnft.com",
+        "twitter": "https://twitter.com/CroPetNFT",
+        "discord": "https://discord.gg/Wuk8JSMvuZ"
+      }
     }
   ],
   "drops": [
