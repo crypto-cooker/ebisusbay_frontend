@@ -7987,6 +7987,30 @@
         "kyc": "phenix",
         "escrow": false
       }
+    },
+    {
+      "name": "Trillionaire Trashcans",
+      "slug": "trillionaire-trashcans",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Trillionaire Trashcans - A 10,000 uniquely created PFP project coming to you. As you may have heard the TTC NFT project has some of the best giveaways the Cronos chain has seen. We pride ourselves on how much we can give back to the community; that’s why we will be giving away a LAMBO to one lucky minter. In order to be entered into the WenLambo giveaway, you must get lucky and mint 1 of 500 Trashcans that wear the Golden Key Earring!",
+        "verified": true,
+        "avatar": "/img/collections/trillionaire-trashcans/avatar.webp",
+        "banner": "/img/collections/trillionaire-trashcans/banner.webp",
+        "card": "/img/collections/trillionaire-trashcans/card.webp",
+        "maxSupply": 10000,
+        "website": "https://ttcnft.io/",
+        "twitter": "https://twitter.com/TrillTrashCans",
+        "discord": "https://discord.gg/fSyrkT2pjc"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "phenix",
+        "escrow": false
+      }
     }
   ],
   "drops": [
@@ -10906,6 +10930,37 @@
       "whitelistCost": "389",
       "foundersOnly": false,
       "start": 1662933600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 107,
+      "slug": "trillionaire-trashcans",
+      "imgNft": "/img/drops/trillionaire-trashcans/drop.webp",
+      "imgPreview": "/img/drops/trillionaire-trashcans/drop.webp",
+      "imgAvatar": "/img/collections/trillionaire-trashcans/avatar.webp",
+      "imgBanner": "/img/collections/trillionaire-trashcans/banner.webp",
+      "title": "Trillionaire Trashcans",
+      "subtitle": "Trillionaire Trashcans - A 10,000 uniquely created PFP project coming to you. As you may have heard the TTC NFT project has some of the best giveaways the Cronos chain has seen. We pride ourselves on how much we can give back to the community; that’s why we will be giving away a LAMBO to one lucky minter. In order to be entered into the WenLambo giveaway, you must get lucky and mint 1 of 500 Trashcans that wear the Golden Key Earring!",
+      "description": "Trillionaire Trashcans - A 10,000 uniquely created PFP project coming to you. As you may have heard the TTC NFT project has some of the best giveaways the Cronos chain has seen. We pride ourselves on how much we can give back to the community; that’s why we will be giving away a LAMBO to one lucky minter. In order to be entered into the WenLambo giveaway, you must get lucky and mint 1 of 500 Trashcans that wear the Golden Key Earring! But that’s not all! A handful of our 162 different traits grants you access to numerous giveaways such as PS5’s, Xbox’s, Oculus, cash prizes and more. Owning a TTC NFT gives you exclusive access to any events we may hold in the future! Another one of our missions is to promote a cleaner environment, so when you see a TTC NFT we hope it reminds you to do your part and trash or recycle in the proper receptacles. We will also be donating a large sum to a non-profit organization who shares the mission in keeping our earth as clean as possible!!! If you get lucky enough to mint a golden key, we’d like you to remember that keys open doors and it’d be a bummer for you to lose your keys...",
+      "author": {
+        "name": "Trillionaire Trashcans",
+        "website": "https://ttcnft.io/",
+        "twitter": "https://twitter.com/TrillTrashCans",
+        "discord": "https://discord.gg/fSyrkT2pjc"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 10000,
+      "cost": "775",
+      "memberCost": "650",
+      "whitelistCost": "650",
+      "foundersOnly": false,
+      "start": 1663963200000,
       "end": null,
       "referral": false,
       "is1155": false,
