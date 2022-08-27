@@ -7245,7 +7245,8 @@
         "website": "https://www.crolick.com/",
         "twitter": "https://twitter.com/Cro_Lick",
         "telegram": "https://t.me/cro_lick",
-        "gitbook": "https://crolicks.gitbook.io/crolick/"
+        "gitbook": "https://crolicks.gitbook.io/crolick/",
+        "rankings": {"source": "provided"}
       }
     },
     {
@@ -7719,7 +7720,8 @@
         "maxSupply": 2220,
         "twitter": "https://twitter.com/trooprzarmy",
         "website": "https://trooprz.army/",
-        "discord": "https://discord.gg/trooprz"
+        "discord": "https://discord.gg/trooprz",
+        "rankings": {"source": "provided"}
       }
     },
     {
@@ -7786,7 +7788,7 @@
       "multiToken": false,
       "address": "0x30ab0d8c808ec024365d45a105c559bdf06bcb14",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "600 Gen 2 Cronos Fossils for the Cronos Chain",
         "verified": true,
@@ -7796,7 +7798,8 @@
         "maxSupply": 600,
         "website": "https://www.cronosrocks.com/",
         "twitter": "https://twitter.com/CronosRocksNFT",
-        "discord": "https://discord.gg/UtdADzxM6j"
+        "discord": "https://discord.gg/UtdADzxM6j",
+        "rankings": {"source": "provided"}
       }
     },
     {
@@ -10912,8 +10915,8 @@
       "imgAvatar": "/img/collections/cronos-women/avatar.webp",
       "imgBanner": "/img/collections/cronos-women/banner.webp",
       "title": "Cronos Women",
-      "subtitle": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300.000 CRO disburse for DAO Members.",
-      "description": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300.000 CRO disburse for DAO Members.\n\nWhat is a DAO member?\nDAO member is the role that will be given to those who receive a certain amount of NFT.\n\nHow to become a DAO member?\n\n10 NFT Holders -> DAO(1)\n20 NFT Holders -> DAO(2)\n50 NFT Holders -> DAO(3)\n100 NFT Holders -> DAO(4)\nBEST HOLDER -> DAO(5)\nWhat are the advantages of a DAO member?\n\nRight to vote in all decisions to be taken in the \"Cronos Women and Men\" Management.\n100.000 CRO disburse for DAO(2)+ members when the mint reaches 25%\n100.000 CRO disburse for DAO(3)+ members when the mint reaches 50%\n100.000 CRO disburse for DAO(4)+ members when the mint reaches 100%\n\n*You get percentage per nft when mint target is reached!",
+      "subtitle": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300,000 CRO disbursed for DAO Members.",
+      "description": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300,000 CRO disbursed for DAO Members.\n\nWhat is a DAO member?\nDAO member is the role that will be given to those who receive a certain amount of NFT.\n\nHow to become a DAO member?\n\n10 NFT Holders -> DAO(1)\n20 NFT Holders -> DAO(2)\n50 NFT Holders -> DAO(3)\n100 NFT Holders -> DAO(4)\nBEST HOLDER -> DAO(5)\nWhat are the advantages of a DAO member?\n\nRight to vote in all decisions to be taken in the \"Cronos Women and Men\" Management.\n100.000 CRO disburse for DAO(2)+ members when the mint reaches 25%\n100.000 CRO disburse for DAO(3)+ members when the mint reaches 50%\n100.000 CRO disburse for DAO(4)+ members when the mint reaches 100%\n\n*You get percentage per nft when mint target is reached!",
       "author": {
         "name": "Cronos Women",
         "website": "https://cronos-women.com/",

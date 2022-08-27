@@ -7245,7 +7245,8 @@
         "website": "https://www.crolick.com/",
         "twitter": "https://twitter.com/Cro_Lick",
         "telegram": "https://t.me/cro_lick",
-        "gitbook": "https://crolicks.gitbook.io/crolick/"
+        "gitbook": "https://crolicks.gitbook.io/crolick/",
+        "rankings": {"source": "provided"}
       }
     },
     {
@@ -7719,7 +7720,8 @@
         "maxSupply": 2220,
         "twitter": "https://twitter.com/trooprzarmy",
         "website": "https://trooprz.army/",
-        "discord": "https://discord.gg/trooprz"
+        "discord": "https://discord.gg/trooprz",
+        "rankings": {"source": "provided"}
       }
     },
     {
@@ -7786,7 +7788,7 @@
       "multiToken": false,
       "address": "0x30ab0d8c808ec024365d45a105c559bdf06bcb14",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "600 Gen 2 Cronos Fossils for the Cronos Chain",
         "verified": true,
@@ -7796,7 +7798,8 @@
         "maxSupply": 600,
         "website": "https://www.cronosrocks.com/",
         "twitter": "https://twitter.com/CronosRocksNFT",
-        "discord": "https://discord.gg/UtdADzxM6j"
+        "discord": "https://discord.gg/UtdADzxM6j",
+        "rankings": {"source": "provided"}
       }
     },
     {
