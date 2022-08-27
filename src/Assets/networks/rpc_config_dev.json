@@ -7962,6 +7962,31 @@
         "kyc": "phenix",
         "escrow": false
       }
+    },
+    {
+      "name": "Cronos Women",
+      "slug": "cronos-women",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300.000 CRO disburse for DAO Members.",
+        "verified": true,
+        "avatar": "/img/collections/cronos-women/avatar.webp",
+        "banner": "/img/collections/cronos-women/banner.webp",
+        "card": "/img/collections/cronos-women/card.webp",
+        "maxSupply": 3333,
+        "website": "https://cronos-women.com/",
+        "twitter": "https://twitter.com/Cronos_Women",
+        "discord": "https://discord.gg/CronosWomen",
+        "medium": "https://medium.com/@veliikb"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "phenix",
+        "escrow": false
+      }
     }
   ],
   "drops": [
@@ -10849,6 +10874,38 @@
       "whitelistCost": "500",
       "foundersOnly": false,
       "start": 1662235200000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 106,
+      "slug": "cronos-women",
+      "imgNft": "/img/drops/cronos-women/drop.webp",
+      "imgPreview": "/img/drops/cronos-women/drop.webp",
+      "imgAvatar": "/img/collections/cronos-women/avatar.webp",
+      "imgBanner": "/img/collections/cronos-women/banner.webp",
+      "title": "Cronos Women",
+      "subtitle": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300.000 CRO disburse for DAO Members.",
+      "description": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300.000 CRO disburse for DAO Members.",
+      "author": {
+        "name": "Cronos Women",
+        "website": "https://www.crohogs.com/",
+        "twitter": "https://twitter.com/cro_hogs",
+        "discord": "https://discord.gg/JGdADKNy28",
+        "instagram": "https://www.instagram.com/crohogsnft"
+      },
+      "address": "",
+      "maxMintPerTx": 20,
+      "maxMintPerAddress": 100,
+      "totalSupply": 3333,
+      "cost": "450",
+      "memberCost": "420",
+      "whitelistCost": "389",
+      "foundersOnly": false,
+      "start": 1662933600000,
       "end": null,
       "referral": false,
       "is1155": false,
