@@ -7860,6 +7860,26 @@
         "twitter": "https://twitter.com/phenixbaby",
         "telegram": "t.me/babyphenix"
       }
+    },
+    {
+      "name": "D.G.Pals Equipment",
+      "slug": "dg-pals-equipment",
+      "multiToken": false,
+      "address": "0x70D3ee9b000f9210C1Ce1bD2A80cBAEBe209aeb7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome to the D.G.Verse! Backed by Crypto.com Capital and Spartan Group, D.G.Pals is one of the first to redefine Web3 gaming with the first Interoperable NFT on the Cronos chain. NFT Equipment can be used by D.G.Pal NFTs in multiple games across the D.G.Verse. Most NFT Equipment belong to part of a set: collecting 2 or more of these from the same set will yield additional in-game bonuses. Do check out the D.G.Pals website for more information on NFT Equipment.",
+        "verified": true,
+        "avatar": "/img/collections/dg-pals-equipment/avatar.webp",
+        "card": "/img/collections/dg-pals-equipment/card.webp",
+        "banner": "/img/collections/dg-pals-equipment/banner.webp",
+        "maxSupply": 100000,
+        "website": "https://dgpals.io/",
+        "twitter": "https://twitter.com/officialdgpals",
+        "discord": "https://discord.gg/dgpals",
+        "medium": "https://medium.com/officialdgpals"
+      }
     }
   ],
   "drops": [
