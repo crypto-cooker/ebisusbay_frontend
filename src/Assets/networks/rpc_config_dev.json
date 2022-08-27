@@ -7860,6 +7860,64 @@
         "twitter": "https://twitter.com/phenixbaby",
         "telegram": "t.me/babyphenix"
       }
+    },
+    {
+      "name": "D.G.Pals Equipment",
+      "slug": "dg-pals-equipment",
+      "multiToken": false,
+      "address": "0x70D3ee9b000f9210C1Ce1bD2A80cBAEBe209aeb7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome to the D.G.Verse! Backed by Crypto.com Capital and Spartan Group, D.G.Pals is one of the first to redefine Web3 gaming with the first Interoperable NFT on the Cronos chain. NFT Equipment can be used by D.G.Pal NFTs in multiple games across the D.G.Verse. Most NFT Equipment belong to part of a set: collecting 2 or more of these from the same set will yield additional in-game bonuses. Do check out the D.G.Pals website for more information on NFT Equipment.",
+        "verified": true,
+        "avatar": "/img/collections/dg-pals-equipment/avatar.webp",
+        "card": "/img/collections/dg-pals-equipment/card.webp",
+        "banner": "/img/collections/dg-pals-equipment/banner.webp",
+        "maxSupply": 100000,
+        "website": "https://dgpals.io/",
+        "twitter": "https://twitter.com/officialdgpals",
+        "discord": "https://discord.gg/dgpals",
+        "medium": "https://medium.com/officialdgpals"
+      }
+    },
+    {
+      "name": "CroPet Ladies",
+      "slug": "cropet-ladies",
+      "multiToken": false,
+      "address": "0x57e776ebcD00650EEebd69851FB193592E8bdf13",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collection of 150 CroPet Ladies. Collection designed to increase love for animals and help animals in animal shelters. 50% of profits will go to animal shelters and everyone in our Discord will be able to see that!",
+        "verified": false,
+        "avatar": "/img/collections/cropet-ladies/avatar.webp",
+        "card": "/img/collections/cropet-ladies/card.webp",
+        "banner": "/img/collections/cropet-ladies/banner.webp",
+        "maxSupply": 150,
+        "website": "https://www.cropetnft.com",
+        "twitter": "https://twitter.com/CroPetNFT",
+        "discord": "https://discord.gg/Wuk8JSMvuZ"
+      }
+    },
+    {
+      "name": "Kaiju of Cronos",
+      "slug": "kaiju-of-cronos",
+      "multiToken": false,
+      "address": "0x0C5cEA99fEd27c98B505837A8E72cfDF70bcF8F0",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "By combining Crypto and IRL Businesses, Kaiju of Cronos strives to maintain sustainability within our ecosystem, while systemically providing longevity to the NFT project.  Our products and services will be offered to everyone, through the Kaiju Bazaar. Uncover the secrets of the Kaiju by staking NFTs to harness Kaiju $ENRG, in order to unlock true Kaiju $POWR.",
+        "verified": false,
+        "avatar": "/img/collections/kaiju-of-cronos/avatar.webp",
+        "card": "/img/collections/kaiju-of-cronos/card.webp",
+        "banner": "/img/collections/kaiju-of-cronos/banner.webp",
+        "maxSupply": 666,
+        "website": "https://kaijuofcronos.com/",
+        "twitter": "https://twitter.com/KAIJU_OF_CRONOS",
+        "discord": "https://discord.gg/fVX2Jb8mpb"
+      }
     }
   ],
   "drops": [
