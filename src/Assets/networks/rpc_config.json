@@ -7918,6 +7918,44 @@
         "twitter": "https://twitter.com/KAIJU_OF_CRONOS",
         "discord": "https://discord.gg/fVX2Jb8mpb"
       }
+    },
+    {
+      "name": "Drip CRO",
+      "slug": "drip-cro",
+      "multiToken": false,
+      "address": "0x079B32D7a72b58588d62164927cEF13C4c3657D0",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "By combining Crypto and IRL Businesses, Kaiju of Cronos strives to maintain sustainability within our ecosystem, while systemically providing longevity to the NFT project.  Our products and services will be offered to everyone, through the Kaiju Bazaar. Uncover the secrets of the Kaiju by staking NFTs to harness Kaiju $ENRG, in order to unlock true Kaiju $POWR.",
+        "verified": false,
+        "avatar": "/img/collections/kaiju-of-cronos/avatar.webp",
+        "card": "/img/collections/kaiju-of-cronos/card.webp",
+        "banner": "/img/collections/kaiju-of-cronos/banner.webp",
+        "maxSupply": 666,
+        "website": "https://kaijuofcronos.com/",
+        "twitter": "https://twitter.com/KAIJU_OF_CRONOS",
+        "discord": "https://discord.gg/fVX2Jb8mpb"
+      }
+    },
+    {
+      "name": "Skillz Boost by Troopz",
+      "slug": "trooprz-skills-boost",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Boost your Trooprz, Super Trooprz and Mutantz daily $TRPZ yield by collecting all 5 Skillz Boosts!",
+        "verified": true,
+        "avatar": "/img/collections/trooprz-skills-boost/avatar.webp",
+        "banner": "/img/collections/trooprz-skills-boost/banner.webp",
+        "card": "/img/collections/trooprz-skills-boost/card.webp",
+        "maxSupply": 1887,
+        "twitter": "https://twitter.com/trooprzarmy",
+        "website": "https://trooprz.army/",
+        "discord": "https://discord.gg/trooprz"
+      }
     }
   ],
   "drops": [
@@ -10745,6 +10783,39 @@
       "complete": false,
       "featured": true,
       "redirect": "https://mint.hidethefish.com/"
+    },
+    {
+      "id": 102,
+      "slug": "trooprz-skills-boost",
+      "imgNft": "/img/drops/trooprz-skills-boost/drop.webp",
+      "imgPreview": "/img/drops/trooprz-skills-boost/drop.webp",
+      "imgAvatar": "/img/collections/trooprz-skills-boost/avatar.webp",
+      "imgBanner": "/img/collections/trooprz-skills-boost/banner.webp",
+      "title": "Skillz Boost by Troopz",
+      "subtitle": "Boost your Trooprz, Super Trooprz and Mutantz daily $TRPZ yield by collecting all 5 Skillz Boosts!",
+      "description": "Boost your Trooprz, Super Trooprz and Mutantz daily $TRPZ yield by collecting all 5 Skillz Boosts!\n\nStrength + 1 $TRPZ\nSpeed + 1 $TRPZ\nIntelligence + 2 $TRPZ\nEmpathy + 2 $TRPZ\nLoyalty + 4 $TRPZ",
+      "author": {
+        "name": "Trooprz",
+        "twitter": "https://twitter.com/trooprzarmy",
+        "website": "https://trooprz.army/",
+        "discord": "https://discord.gg/trooprz"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 1887,
+      "cost": "50",
+      "erc20Cost": "50",
+      "erc20Token": "trpz",
+      "abi": "",
+      "foundersOnly": false,
+      "start": 1661976000000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "priceDescription": "50 $TRPZ automatically credited back to your wallet with EVERY CRO MINT"
     }
   ]
 }
