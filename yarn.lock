@@ -256,12 +256,12 @@
     "@babel/helper-validator-identifier" "^7.18.6"
     "to-fast-properties" "^2.0.0"
 
-"@cnsdomains/core@^0.1.2":
-  "integrity" "sha512-di+v9XW/4DZA1ZQQzHdSG2mmbsiMKn9EFPQw+1rZE7jKL1Zr5X4y29zH17r4uYn2RJt2qWt7hpF2ENXqpF+rxw=="
-  "resolved" "https://registry.npmjs.org/@cnsdomains/core/-/core-0.1.2.tgz"
-  "version" "0.1.2"
+"@cnsdomains/core@^0.2.0-alpha.0":
+  "integrity" "sha512-BJ8gt+E6cbPo5Eo8CD6Fn/zySj1rLLWjqFI1vSXC4UVpft4ZmNe70ZQ7LFv+UmOXuRmMhoFjqkA/jj2e/yutCQ=="
+  "resolved" "https://registry.npmjs.org/@cnsdomains/core/-/core-0.2.0-alpha.0.tgz"
+  "version" "0.2.0-alpha.0"
   dependencies:
-    "@ensdomains/address-encoder" "^0.2.16"
+    "@ensdomains/address-encoder" "^0.2.18"
     "@ensdomains/eth-ens-namehash" "^2.0.15"
     "bech32" "^2.0.0"
     "bs58" "^5.0.0"
@@ -600,10 +600,10 @@
   "resolved" "https://registry.npmjs.org/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz"
   "version" "0.2.5"
 
-"@ensdomains/address-encoder@^0.2.16":
-  "integrity" "sha512-VsCcItOrZjTu7VB/+8g49DvyCR0f4ENfF8NjU5LHbbaJ44KKp4VoTI0b3cc7srf7Kq0spSao4Zfdn04n+6WWGA=="
-  "resolved" "https://registry.npmjs.org/@ensdomains/address-encoder/-/address-encoder-0.2.17.tgz"
-  "version" "0.2.17"
+"@ensdomains/address-encoder@^0.2.18":
+  "integrity" "sha512-Elgi6smEraiEN5cUSGLfp/FVzMMFZDyMygOBL9sNCmpYBfQffJV0gwkQGGaniBwIhKRxttFN7jTpXM7+zKQRWQ=="
+  "resolved" "https://registry.npmjs.org/@ensdomains/address-encoder/-/address-encoder-0.2.18.tgz"
+  "version" "0.2.18"
   dependencies:
     "bech32" "^2.0.0"
     "blakejs" "^1.1.0"
@@ -3046,7 +3046,7 @@
     "base-x" "^3.0.2"
 
 "bs58@^4.0.1":
-  "integrity" "sha1-vhYedsNU9veIrkBx9j806MTwpCo= sha512-Ok3Wdf5vOIlBrgCvTq96gBkJw+JUEzdBgyaza5HLtPm7yTHkjRy8+JzNyHF7BHa0bNWOQIp3m5YF0nnFcOIKLw=="
+  "integrity" "sha512-Ok3Wdf5vOIlBrgCvTq96gBkJw+JUEzdBgyaza5HLtPm7yTHkjRy8+JzNyHF7BHa0bNWOQIp3m5YF0nnFcOIKLw=="
   "resolved" "https://registry.npmjs.org/bs58/-/bs58-4.0.1.tgz"
   "version" "4.0.1"
   dependencies:
@@ -4876,7 +4876,7 @@
   "version" "0.1.2"
 
 "js-crc@^0.2.0":
-  "integrity" "sha1-9yxcdhgXa/91zIEqHO2949jraDk="
+  "integrity" "sha512-8DdCSAOACpF8WDAjyDFBC2rj8OS4HUP9mNZBDfl8jCiPCnJG+2bkuycalxwZh6heFy6PrMvoWTp47lp6gzT65A=="
   "resolved" "https://registry.npmjs.org/js-crc/-/js-crc-0.2.0.tgz"
   "version" "0.2.0"
 
@@ -5467,7 +5467,7 @@
   "version" "0.0.8"
 
 "nano-base32@^1.0.1":
-  "integrity" "sha1-ulSMh578+5DaHE2eCX20pGySVe8="
+  "integrity" "sha512-sxEtoTqAPdjWVGv71Q17koMFGsOMSiHsIFEvzOM7cNp8BXB4AnEwmDabm5dorusJf/v1z7QxaZYxUorU9RKaAw=="
   "resolved" "https://registry.npmjs.org/nano-base32/-/nano-base32-1.0.1.tgz"
   "version" "1.0.1"
 
