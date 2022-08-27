@@ -7899,6 +7899,25 @@
         "twitter": "https://twitter.com/CroPetNFT",
         "discord": "https://discord.gg/Wuk8JSMvuZ"
       }
+    },
+    {
+      "name": "Kaiju of Cronos",
+      "slug": "kaiju-of-cronos",
+      "multiToken": false,
+      "address": "0x0C5cEA99fEd27c98B505837A8E72cfDF70bcF8F0",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "By combining Crypto and IRL Businesses, Kaiju of Cronos strives to maintain sustainability within our ecosystem, while systemically providing longevity to the NFT project.  Our products and services will be offered to everyone, through the Kaiju Bazaar. Uncover the secrets of the Kaiju by staking NFTs to harness Kaiju $ENRG, in order to unlock true Kaiju $POWR.",
+        "verified": false,
+        "avatar": "/img/collections/kaiju-of-cronos/avatar.webp",
+        "card": "/img/collections/kaiju-of-cronos/card.webp",
+        "banner": "/img/collections/kaiju-of-cronos/banner.webp",
+        "maxSupply": 666,
+        "website": "https://kaijuofcronos.com/",
+        "twitter": "https://twitter.com/KAIJU_OF_CRONOS",
+        "discord": "https://discord.gg/fVX2Jb8mpb"
+      }
     }
   ],
   "drops": [
