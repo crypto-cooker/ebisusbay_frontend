@@ -1,4 +1,4 @@
-import { CNS, TextRecords } from '@cnsdomains/core';
+import {CNS, TextRecords} from '@cnsdomains/core';
 import { ethers } from 'ethers';
 import {appConfig} from "../Config";
 
@@ -29,16 +29,17 @@ export const getCnsInfo = async (address) => {
 
   try {
     const cns = new CNS(config.chain.id, readProvider);
-    const cnsProfile = {};
-    cnsProfile.name = await cns.getName(address);
-    if (cnsProfile.name) {
-      const name = cns.name(cnsProfile.name);
-      cnsProfile.twitter = await name.getText(TextRecords.Twitter);
-      cnsProfile.discord = await name.getText(TextRecords.Discord);
-      cnsProfile.instagram = await name.getText(TextRecords.Instagram);
-      cnsProfile.email = await name.getText(TextRecords.Email);
-      cnsProfile.url = await name.getText(TextRecords.Url);
-      return cnsProfile;
+    const profile = await cns.getProfile(address);
+    if (profile) {
+      return {
+        name: profile.name,
+        twitter: profile.socials[TextRecords.Twitter],
+        instagram: profile.socials[TextRecords.Instagram],
+        discord: profile.socials[TextRecords.Discord],
+        telegram: profile.socials[TextRecords.Telegram],
+        email: profile.socials[TextRecords.Email],
+        url: profile.socials[TextRecords.Url],
+      };
     }
   } catch (e) {
     console.log('cns error', e);
