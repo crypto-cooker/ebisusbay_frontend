@@ -7920,25 +7920,6 @@
       }
     },
     {
-      "name": "Drip CRO",
-      "slug": "drip-cro",
-      "multiToken": false,
-      "address": "0x079B32D7a72b58588d62164927cEF13C4c3657D0",
-      "onChain": false,
-      "listable": false,
-      "metadata": {
-        "description": "By combining Crypto and IRL Businesses, Kaiju of Cronos strives to maintain sustainability within our ecosystem, while systemically providing longevity to the NFT project.  Our products and services will be offered to everyone, through the Kaiju Bazaar. Uncover the secrets of the Kaiju by staking NFTs to harness Kaiju $ENRG, in order to unlock true Kaiju $POWR.",
-        "verified": false,
-        "avatar": "/img/collections/kaiju-of-cronos/avatar.webp",
-        "card": "/img/collections/kaiju-of-cronos/card.webp",
-        "banner": "/img/collections/kaiju-of-cronos/banner.webp",
-        "maxSupply": 666,
-        "website": "https://kaijuofcronos.com/",
-        "twitter": "https://twitter.com/KAIJU_OF_CRONOS",
-        "discord": "https://discord.gg/fVX2Jb8mpb"
-      }
-    },
-    {
       "name": "Skillz Boost by Troopz",
       "slug": "trooprz-skills-boost",
       "multiToken": false,
@@ -7955,6 +7936,31 @@
         "twitter": "https://twitter.com/trooprzarmy",
         "website": "https://trooprz.army/",
         "discord": "https://discord.gg/trooprz"
+      }
+    },
+    {
+      "name": "CroHogs",
+      "slug": "crohogs",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "When you buy a CroHogs NFT, you are not just purchasing a unique piece of art, but also a ticket into a growing community full of opportunities. Our collection of 1500 NFTs offers staking, our “the Hoggery” and a brand-new feature to give your NFTS a min Value even in Bear markets. Your CroHog will be your personal identity within our community, while opening the door to additional benefits. All CroHogs NFT`s are stored on the Cronos blockchain, and every owner is given full commercial usage rights/ownership.",
+        "verified": true,
+        "avatar": "/img/collections/crohogs/avatar.webp",
+        "banner": "/img/collections/crohogs/banner.webp",
+        "card": "/img/collections/crohogs/card.webp",
+        "maxSupply": 1500,
+        "website": "https://www.crohogs.com/",
+        "twitter": "https://twitter.com/cro_hogs",
+        "discord": "https://discord.gg/JGdADKNy28",
+        "instagram": "https://www.instagram.com/crohogsnft"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "phenix",
+        "escrow": false
       }
     }
   ],
@@ -10754,7 +10760,7 @@
       "priceDescription": "50 $TRPZ automatically credited back to your wallet with EVERY CRO MINT"
     },
     {
-      "id": 102,
+      "id": 103,
       "slug": "hidden-fish-fm",
       "imgNft": "/img/drops/hidden-fish-fm/drop.webp",
       "imgPreview": "/img/drops/hidden-fish-fm/drop.webp",
@@ -10785,7 +10791,7 @@
       "redirect": "https://mint.hidethefish.com/"
     },
     {
-      "id": 102,
+      "id": 104,
       "slug": "trooprz-skills-boost",
       "imgNft": "/img/drops/trooprz-skills-boost/drop.webp",
       "imgPreview": "/img/drops/trooprz-skills-boost/drop.webp",
@@ -10816,6 +10822,38 @@
       "published": true,
       "complete": false,
       "priceDescription": "50 $TRPZ automatically credited back to your wallet with EVERY CRO MINT"
+    },
+    {
+      "id": 105,
+      "slug": "crohogs",
+      "imgNft": "/img/drops/crohogs/drop.webp",
+      "imgPreview": "/img/drops/crohogs/drop.webp",
+      "imgAvatar": "/img/collections/crohogs/avatar.webp",
+      "imgBanner": "/img/collections/crohogs/banner.webp",
+      "title": "CroHogs",
+      "subtitle": "When you buy a CroHogs NFT, you are not just purchasing a unique piece of art, but also a ticket into a growing community full of opportunities. Our collection of 1500 NFTs offers staking, our “the Hoggery” and a brand-new feature to give your NFTS a min Value even in Bear markets. Your CroHog will be your personal identity within our community, while opening the door to additional benefits. All CroHogs NFT`s are stored on the Cronos blockchain, and every owner is given full commercial usage rights/ownership.",
+      "description": "Let us introduce you to the CroHogs, the wild boar was introduced to Australia in the 19th century to hunt snakes among other things…. However, this turned out to be just the first domino in an incredible chain of events. One evening in the middle of the outback, one wild boar stumbled across a small pool of glistening water. Desperate for a drink, he trotted up to the water and threw himself in. What he didn’t realize was that this was a portal to a different World..",
+      "author": {
+        "name": "CroHogs",
+        "website": "https://www.crohogs.com/",
+        "twitter": "https://twitter.com/cro_hogs",
+        "discord": "https://discord.gg/JGdADKNy28",
+        "instagram": "https://www.instagram.com/crohogsnft"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 1500,
+      "cost": "600",
+      "memberCost": "550",
+      "whitelistCost": "500",
+      "foundersOnly": false,
+      "start": 1662235200000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
     }
   ]
 }
