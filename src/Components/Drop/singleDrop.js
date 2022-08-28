@@ -579,7 +579,7 @@ const SingleDrop = () => {
                     {drop.imgAvatar && <img src={hostedImage(drop.imgAvatar)} alt={drop.author.name} />}
                     <div className="profile_name">
                       <h4>
-                        {drop.author.name}
+                        {drop.title}
                         {drop.author.link ? (
                           <span className="profile_username">
                             <a href={drop.author.link} target="_blank" rel="noreferrer">
@@ -587,7 +587,7 @@ const SingleDrop = () => {
                             </a>
                           </span>
                         ) : (
-                          <SocialsBar address={drop.address} socials={drop.author} showCopy={false} />
+                          <SocialsBar address={drop.address} socials={drop.author} />
                         )}
                       </h4>
                     </div>
