@@ -30,7 +30,7 @@ import {
   isLazyHorsePonyCollection,
   isLadyWeirdApesCollection,
   isNftBlacklisted,
-  isAnyWeirdApesCollection,
+  isAnyWeirdApesCollection, isWeirdApesCollection,
 } from '../../utils';
 import {getNftDetails, refreshMetadata} from '../../GlobalState/nftSlice';
 import { connectAccount, chainConnect } from '../../GlobalState/User';
@@ -196,7 +196,15 @@ const Nft721 = ({ address, id }) => {
         const abiFile = require(`../../Assets/abis/weird-apes-bio.json`);
         const contract = new Contract('0x86dC98DB0AFd27d5cBD7501cd1a72Ff17f324609', abiFile, readProvider);
         try {
-          const apeInfo = await contract.getGenesisInfo(id);
+          let apeInfo;
+          if (isWeirdApesCollection(address)) {
+            apeInfo = await contract.getGenesisInfo(id);
+          } else if (isLadyWeirdApesCollection(address)) {
+            apeInfo = await contract.getLadyInfo(id);
+          } else if (isBabyWeirdApesCollection(address)) {
+            apeInfo = await contract.getBabyInfo(id);
+          } else return;
+
           setCustomProfile({
             name: apeInfo.name.length > 0 ? apeInfo.name : null,
             description: apeInfo.bio.length > 0 ? apeInfo.bio : null
