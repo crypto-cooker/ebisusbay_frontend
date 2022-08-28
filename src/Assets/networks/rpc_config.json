@@ -134,8 +134,9 @@
         "maxSupply": 1,
         "avatar": "/img/collections/barbara/dodgerdogs/avatar.png",
         "banner": "/img/collections/barbara/dodgerdogs/banner.webp",
-        "website": "https://crypto.com/nft/profile/vredekop?tab=created",
-        "twitter": "https://twitter.com/BarbaraRedekop"
+        "website": "https://crypto.com/nft/profile/vredekop",
+        "twitter": "https://twitter.com/BarbaraRedekop",
+        "discord": "https://discord.gg/khRfPKDFwg"
       },
       "verification": {
         "doxx": true,
@@ -721,9 +722,14 @@
         "banner": "/img/collections/barbara/elon/banner.jpg",
         "card": "/img/collections/barbara/elon/card.jpg",
         "maxSupply": 20,
-        "website": "https://crypto.com/nft/profile/vredekop?tab=created",
+        "website": "https://crypto.com/nft/profile/vredekop",
         "twitter": "https://twitter.com/BarbaraRedekop",
-        "discord": "https://discord.gg/XrhWf2SppB"
+        "discord": "https://discord.gg/khRfPKDFwg"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -740,9 +746,14 @@
         "banner": "/img/collections/barbara/dodgerdogs/banner.png",
         "card": "/img/collections/barbara/dodgerdogs/card.png",
         "maxSupply": 20,
-        "website": "https://crypto.com/nft/profile/vredekop?tab=created",
+        "website": "https://crypto.com/nft/profile/vredekop",
         "twitter": "https://twitter.com/BarbaraRedekop",
-        "discord": "https://discord.gg/XrhWf2SppB"
+        "discord": "https://discord.gg/khRfPKDFwg"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -844,9 +855,14 @@
         "banner": "/img/collections/barbara/ebisu/banner.webp",
         "card": "/img/collections/barbara/ebisu/card.webp",
         "maxSupply": 173,
-        "website": "https://crypto.com/nft/profile/vredekop?tab=created",
+        "website": "https://crypto.com/nft/profile/vredekop",
         "twitter": "https://twitter.com/BarbaraRedekop",
-        "discord": "https://discord.gg/XrhWf2SppB"
+        "discord": "https://discord.gg/khRfPKDFwg"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -3601,9 +3617,14 @@
         "avatar": "/img/collections/barbara/ebisu/avatar.webp",
         "banner": "/img/collections/barbara/ebisu/banner.webp",
         "card": "/img/collections/barbara/ebisu/card.webp",
-        "website": "https://crypto.com/nft/profile/vredekop?tab=created",
+        "website": "https://crypto.com/nft/profile/vredekop",
         "twitter": "https://twitter.com/BarbaraRedekop",
-        "discord": "https://discord.gg/XrhWf2SppB"
+        "discord": "https://discord.gg/khRfPKDFwg"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -8012,6 +8033,30 @@
       "verification": {
         "doxx": true,
         "kyc": "phenix",
+        "escrow": false
+      }
+    },
+    {
+      "name": "Lil Dori Puppies",
+      "slug": "lil-dori-puppies",
+      "multiToken": false,
+      "address": "0x53068FcC2e233995088590e705AAb112e24e4993",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Lucky puppies of Dodger Dog & Lady Ri. Childhood is a great time when all feelings and emotions are genuine. Lil Dori Puppies will bring good luck to the lives of their owners.",
+        "verified": true,
+        "avatar": "/img/collections/lil-dori-puppies/avatar.webp",
+        "banner": "/img/collections/lil-dori-puppies/banner.webp",
+        "card": "/img/collections/lil-dori-puppies/card.webp",
+        "maxSupply": 899,
+        "website": "https://crypto.com/nft/profile/vredekop",
+        "twitter": "https://twitter.com/BarbaraRedekop",
+        "discord": "https://discord.gg/khRfPKDFwg"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "ebisu",
         "escrow": false
       }
     }
