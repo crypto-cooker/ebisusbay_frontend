@@ -5819,7 +5819,11 @@
         "website": "https://aristodognft.com/",
         "twitter": "https://twitter.com/AristoDogNFT",
         "discord": "https://discord.gg/aristodog",
-        "medium": "https://medium.com/aristodog"
+        "medium": "https://medium.com/aristodog",
+        "rankings": {
+          "source": "rarity_sniper",
+          "slug": "aristodog"
+        }
       },
       "verification": {
         "doxx": true,
