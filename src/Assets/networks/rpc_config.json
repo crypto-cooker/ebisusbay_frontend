@@ -7930,14 +7930,14 @@
       }
     },
     {
-      "name": "Kaiju of Cronos",
-      "slug": "kaiju-of-cronos",
+      "name": "Kaiju VIP Talisman",
+      "slug": "kaiju-vip-talisman",
       "multiToken": false,
       "address": "0x0C5cEA99fEd27c98B505837A8E72cfDF70bcF8F0",
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "By combining Crypto and IRL Businesses, Kaiju of Cronos strives to maintain sustainability within our ecosystem, while systemically providing longevity to the NFT project.  Our products and services will be offered to everyone, through the Kaiju Bazaar. Uncover the secrets of the Kaiju by staking NFTs to harness Kaiju $ENRG, in order to unlock true Kaiju $POWR.",
+        "description": "The Kaiju Talisman is a collection of 666 NFTs offering holders exclusive VIP benefits, with an optional upgrade path to obtain new perks.\nOnly those worthy enough shall obtain the fully upgraded \"Evolved Talisman\" and gain access to the mysterious Kaiju Lair.\n\nWho knows what lies inside...",
         "verified": false,
         "avatar": "/img/collections/kaiju-of-cronos/avatar.webp",
         "card": "/img/collections/kaiju-of-cronos/card.webp",
@@ -11055,8 +11055,8 @@
       "imgAvatar": "/img/collections/whalefam/avatar.webp",
       "imgBanner": "/img/collections/whalefam/banner.webp",
       "title": "Whale Family",
-      "subtitle": "The \"Whale Family\" features a collection of 5,555 fun & vibrant Whale\nPFPs swimming on the Cronos blockchain with different levels of rarity \nfrom over 160 hand-drawn traits by Barbara Redekop.",
-      "description": "Hidden inside this collection is a limited supply of NFTs that carry \nspecial REDEEMABLE traits. Holders of these special Whales can \nredeem the corresponding prize (prizes can only be claimed once,\nplease check claimed/unclaimed before purchasing on secondary \nmarket).\nGolden Ticket\n5 unique Whale NFTs with the golden ticket trait can be redeemed for a 7-day stay in Georgia and meet \nthe artist.\nEbisus Gear\n10 unique Whale NFTs with the Ebisus Bay traits can be redeemed for a free Ebisus Bay hoodie or hat \nfrom their merchandise store.\nPaint Brush\n20 unique Whale NFTs with the paint brush trait can be redeemed for a custom “create your own Whale\nPFP” personally crafted by Barbara Redekop\n…and much more!\nOwn your Whale. IP rights will be given to holders.\nHolders will be rewarded with future airdrops, community voting,\ngames, contests, and giveaways.\nFor full list of redeemable traits, roadmap, and information… please \nvisit our website, join our discord, or follow us on Twitter & Instagram.",
+      "subtitle": "The \"Whale Family\" features a collection of 5,555 fun & vibrant Whale PFPs swimming on the Cronos blockchain with different levels of rarity. Created from over 160 hand-drawn traits by Barbara Redekop.",
+      "description": "Hidden inside this collection is a limited supply of NFTs that carry special REDEEMABLE traits.\n \nHolders of these special Whales can redeem the corresponding prize. \n(Prizes can only be claimed once, please check claimed/unclaimed before purchasing on secondary market).\n\nGolden Ticket\n5 unique Whale NFTs with the golden ticket trait can be redeemed for a 7-day stay in Georgia and meet the artist.\n\nEbisu’s Gear\n10 unique Whale NFTs with the Ebisu’s Bay traits can be redeemed for a free Ebisu’s Bay hoodie or hat from their merchandise store.\n\nPaint Brush\n20 unique Whale NFTs with the paint brush trait can be redeemed for a custom “create your own Whale PFP” personally crafted by Barbara Redekop.\n\n…and much more!\n\nOwn your Whale. IP rights will be given to holders.\n\nHolders will be rewarded with future airdrops, community voting, games, contests, giveaways, staking etc.\n\nFor full list of redeemable traits, roadmap, and information… please use the links above, visit our website, join our discord, or follow us on Twitter & Instagram.",
       "author": {
         "name": "Barbara Redekop",
         "website": "https://www.whalefam.com/",
