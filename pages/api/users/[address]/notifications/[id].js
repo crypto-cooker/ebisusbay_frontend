@@ -2,7 +2,7 @@ import {deleteNotifications} from "@src/core/cms/endpoints/notifications";
 
 export default async function handler(req, res) {
   const {method, query} = req;
-  res.setHeader('Cache-Control', 's-maxage=60');
+  res.setHeader('Cache-Control', 'no-cache');
 
   try {
     if (method === 'DELETE') {
