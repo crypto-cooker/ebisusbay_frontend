@@ -8095,6 +8095,23 @@
         "kyc": "ebisu",
         "escrow": false
       }
+    },
+    {
+      "name": "Cronos World Tour",
+      "slug": "cronos-world-tour",
+      "multiToken": false,
+      "address": "0xa284fd10bd87abd780bcf61c0c3c4ab002e00eae",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Join us as we travel the world to build up the Cronos #crofam community! These NFTs commemorate Cronos participation in various conferences & events across the globe.",
+        "verified": false,
+        "avatar": "/img/collections/cronos-world-tour/avatar.webp",
+        "banner": "/img/collections/cronos-world-tour/banner.webp",
+        "card": "/img/collections/cronos-world-tour/card.webp",
+        "maxSupply": 3865,
+        "twitter": "https://twitter.com/cronos_chain"
+      }
     }
   ],
   "drops": [
