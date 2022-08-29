@@ -5511,9 +5511,8 @@
     {
       "name": "Lost Toys VIP",
       "slug": "lost-toys-vip",
-      "multiToken": true,
-      "address": "",
-      "tokens": [{ "id": 1 }],
+      "multiToken": false,
+      "address": "0x714F995CC3f551fc6e3f3D4C4955C51bBdC8be6f",
       "onChain": false,
       "listable": true,
       "metadata": {
