@@ -1,6 +1,9 @@
 [
   {
-    "users": [],
+    "users": [
+      "0x8a00237d54350b0e094bb44f8687edc1ff9cf142",
+      "0x767b7b1d58a2c94dbd5f229dd0a255aa9b2874b4"
+    ],
     "tokens": [
       {
         "slug": "beta-mascots",

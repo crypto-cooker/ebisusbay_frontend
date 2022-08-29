@@ -6,7 +6,7 @@ export default async function handler(req, res) {
 
   try {
     if (method === 'GET') {
-      const response = await getNotifications(query.address, query.signature, query);
+      const response = await getNotifications(query.address, query);
       res.status(200).json(response);
     } else if (method === 'DELETE') {
       const response = await deleteNotifications(query.notificationId, query.address, query.signature);

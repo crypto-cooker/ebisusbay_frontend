@@ -4,11 +4,10 @@ const api = axios.create({
   baseURL: '/api',
 });
 
-export const getNotifications = async (address, signature, query) => {
+export const getNotifications = async (address, query) => {
   const response = await api.get('notifications', {
     params: {
       address,
-      signature,
       ...query
     }
   })

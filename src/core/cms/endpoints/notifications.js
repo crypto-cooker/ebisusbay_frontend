@@ -6,7 +6,7 @@ const api = axios.create({
   baseURL: config.urls.cms,
 });
 
-export const getNotifications = async (address, signature, query) => {
+export const getNotifications = async (address, query) => {
   const response = await api.get('notification/all', {
     params: {
       address,

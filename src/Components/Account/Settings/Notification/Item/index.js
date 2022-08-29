@@ -2,18 +2,13 @@ import { Form } from 'react-bootstrap';
 
 export default function NotificationItem({ title, description, isChecked, onChange }) {
   return (
-
-    <div className="row">
-      <div className="col-auto my-auto">
-        <div>
-          <Form.Switch checked={isChecked} onClick={(e) => onChange(e.target.checked)}/>
-        </div>
+    <div className="d-flex">
+      <div className="my-auto me-2">
+        <Form.Switch checked={isChecked} onClick={(e) => onChange(e.target.checked)}/>
       </div>
-      <div className="col">
-        <div>
-          <div className="fs-4 fw-bold">{title}</div>
-          <div>{description}</div>
-        </div>
+      <div>
+        <div className="fs-4 fw-bold">{title}</div>
+        <div>{description}</div>
       </div>
     </div>
   );
