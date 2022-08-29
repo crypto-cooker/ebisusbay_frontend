@@ -1,4 +1,4 @@
-FROM public.ecr.aws/docker/library/nginx:latest
+FROM public.ecr.aws/nginx/nginx:latest
 
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY conf.d/default.conf /etc/nginx/conf.d/default.conf
