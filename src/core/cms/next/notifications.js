@@ -5,31 +5,23 @@ const api = axios.create({
 });
 
 export const getNotifications = async (address, signature, query) => {
-  try {
-    const response = await api.get('notifications', {
-      params: {
-        address,
-        signature,
-        ...query
-      }
-    })
-    return response.data;
-  } catch (e) {
-    console.log('error', e);
-  }
+  const response = await api.get('notifications', {
+    params: {
+      address,
+      signature,
+      ...query
+    }
+  })
+  return response.data;
 }
 
 export const deleteNotifications = async (notificationId = null, address, signature) => {
-  try {
-    const response = await api.delete('notifications', {
-      params: {
-        notificationId,
-        address,
-        signature
-      }
-    })
-    return response.data;
-  } catch (e) {
-    console.log('error', e);
-  }
+  const response = await api.delete('notifications', {
+    params: {
+      notificationId,
+      address,
+      signature
+    }
+  })
+  return response.data;
 }

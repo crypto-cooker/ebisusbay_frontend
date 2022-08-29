@@ -6,7 +6,6 @@ import { faCheck, faCircle } from '@fortawesome/free-solid-svg-icons';
 
 import LayeredIcon from './LayeredIcon';
 import {getUserDisplayName, shortAddress} from '../../utils';
-import {getProfile} from "@src/core/cms/endpoints/profile";
 
 const VerifiedIcon = styled.span`
   font-size: 8px;

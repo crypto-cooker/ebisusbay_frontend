@@ -908,6 +908,7 @@ export const retrieveProfile = () => async (dispatch, getState) => {
     dispatch(setProfile(profile?.data ?? {}));
   } catch (e) {
     console.log('failed to retrieve profile', e);
+    dispatch(setProfile({error: true}));
   }
 };
 

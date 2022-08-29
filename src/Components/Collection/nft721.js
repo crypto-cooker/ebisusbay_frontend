@@ -487,9 +487,9 @@ const Nft721 = ({ address, id }) => {
                         bgColor={'#ffffff00'}
                         color={'#dc143c'}
                         inverse={false}
-                        title={`This Lady Weird Ape has had ${ladyWeirdApeChildren} ${ladyWeirdApeChildren === 1 ? 'child' : 'children'}`}
+                        title={`This Lady Weird Ape can make ${ladyWeirdApeChildren} ${ladyWeirdApeChildren === 1 ? 'baby' : 'babies'}`}
                       />
-                      <span className="fw-bold">This Lady Weird Ape has had {`${ladyWeirdApeChildren} ${ladyWeirdApeChildren === 1 ? 'child' : 'children'}`}</span>
+                      <span className="fw-bold">This Lady Weird Ape can make {`${ladyWeirdApeChildren} ${ladyWeirdApeChildren === 1 ? 'baby' : 'babies'}`}</span>
                     </div>
                   )}
 

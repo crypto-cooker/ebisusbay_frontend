@@ -1,5 +1,16 @@
 [
   {
+    "users": [],
+    "tokens": [
+      {
+        "slug": "beta-mascots",
+        "address": "0x19317B3fc2F1Add6b7E17a0A03A5a269Ed5ce48b",
+        "ids": [3284, 2245, 1238, 1428, 1354, 1614, 2635, 202, 256, 1404, 2508, 1949]
+      }
+    ],
+    "reason": "Vouched by Captain Cool#6290 in ticket #0502"
+  },
+  {
     "users": ["0x316beaaedf075ceba6401549383d852c729f943c"],
     "tokens": [
       {
