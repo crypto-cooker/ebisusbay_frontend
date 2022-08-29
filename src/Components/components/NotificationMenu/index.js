@@ -1,4 +1,4 @@
-import React, {memo, useCallback, useState} from 'react';
+import React, {memo, useCallback, useEffect, useState} from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,6 +23,7 @@ const NotificationMenu = function () {
   const [requestDeleteNotifications] = useDeleteNotifications();
   const [signature, setSignature] = useState(null);
   const [awaitingSignature, getSigner] = useCreateSigner();
+  const [closing, setClosing] = useState(false);
 
   const { isLoading, isError, error, data:notifications, refetch } = useQuery(
     ['Notifications', address, signature],
@@ -32,10 +33,11 @@ const NotificationMenu = function () {
 
   const handleClose = () => {
     setShowMenu(false);
+    setClosing(true);
   };
 
-  const handleExit = () => {
-    setSignature(false);
+  const handleExited = () => {
+    setClosing(false);
   };
 
   const openMenu = useCallback(async () => {
@@ -47,6 +49,11 @@ const NotificationMenu = function () {
     }
     setSignature(signatureInStorage);
   }, [signature, showMenu, getSigner]);
+
+  useEffect(() => {
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    setSignature(signatureInStorage);
+  }, []);
 
   const navigateTo = (link) => {
     handleClose();
@@ -74,13 +81,13 @@ const NotificationMenu = function () {
         </span>
       </div>
 
-      <Offcanvas show={showMenu} onHide={handleClose} placement="end" onExited={handleExit}>
+      <Offcanvas show={showMenu} onHide={handleClose} placement="end" onExited={handleExited}>
         <Offcanvas.Header closeButton closeVariant={theme === 'dark' ? 'white': 'dark'}>
           <Offcanvas.Title>Notifications</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           {isLoading ? (
-            awaitingSignature || signature ? (
+            awaitingSignature || signature || closing ? (
               <div className="col-lg-12 text-center">
                 <Spinner animation="border" role="status">
                   <span className="visually-hidden">Loading...</span>
@@ -99,15 +106,23 @@ const NotificationMenu = function () {
               </>
             )
           ) : isError ? (
-            <p className="text-center">Error: {error.message}</p>
-          ) : !profile.id ? (
             <>
-              <p className="text-center">Create a profile to activate notifications</p>
-                <Button type="legacy"
-                        className="mx-auto"
-                        onClick={() => navigateTo('/account/settings/profile')}>
-                  Create Profile
-                </Button>
+              {profile.error ? (
+                <>
+                  <p className="text-center">Error loading profile</p>
+                </>
+              ) : !profile.id ? (
+                <>
+                  <p className="text-center">Create a profile to activate notifications</p>
+                  <Button type="legacy"
+                          className="mx-auto"
+                          onClick={() => navigateTo('/account/settings/profile')}>
+                    Create Profile
+                  </Button>
+                </>
+              ) : (
+                <p className="text-center">Error: {error.message}</p>
+              )}
             </>
           ) : (
             <>
@@ -117,20 +132,22 @@ const NotificationMenu = function () {
                     Clear All Notifications
                   </div>
 
-                  <div className="flex-fill h-auto ">
+                  <div className="flex-fill h-auto">
                     {notifications.length > 0 && (
                       notifications.map((item, index) => (
-                        <div key={index} className="d-flex mb-3">
-                          <div className="flex-fill">
-                            <div className="text-muted fst-italic">
-                              <div className="flex-fill">{timeSince(new Date(item.createdAt))} ago</div>
+                        <div className="card eb-nft__card px-3 py-2 mb-2" style={{fontSize: '14px'}}>
+                          <div key={index} className="d-flex">
+                            <div className="flex-fill">
+                              <div className="text-muted fst-italic">
+                                <div className="flex-fill">{timeSince(new Date(item.createdAt))} ago</div>
+                              </div>
+                              <span className="cursor-pointer" onClick={() => navigateTo(item.link)}>
+                                {item.message}
+                              </span>
                             </div>
-                            <span className="cursor-pointer" onClick={() => navigateTo(item.link)}>
-                              {item.message}
-                            </span>
-                          </div>
-                          <div className="cursor-pointer my-auto ms-4" onClick={handleDeleteNotification(item)}>
-                            <FontAwesomeIcon icon={faTrash} />
+                            <div className="cursor-pointer my-auto ms-4" onClick={handleDeleteNotification(item)}>
+                              <FontAwesomeIcon icon={faTrash} />
+                            </div>
                           </div>
                         </div>
                       ))

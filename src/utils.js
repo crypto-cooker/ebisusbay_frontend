@@ -631,8 +631,12 @@ export const isAddress = (address) => {
 export const getUserDisplayName = async (address) => {
   if (!address) return '';
 
-  let profile = await getProfile(address);
-  if (profile?.data) return profile.data.username;
+  try {
+    let profile = await getProfile(address);
+    if (profile?.data) return profile.data.username;
+  } catch (error) {
+    return shortAddress(address);
+  }
 
   return shortAddress(address);
 };

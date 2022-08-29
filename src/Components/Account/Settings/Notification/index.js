@@ -71,13 +71,13 @@ export default function Notification() {
             <p>Choose how you wish to be notified of sales events in real time.</p>
             <NotificationMethod
               title="In App"
-              description="A red indicator will appear while in the app"
+              description="A blue badge will appear on the notifications menu icon"
               isChecked={notificationMethods.includes('IN_APP')}
               onChange={(enabled) => handleNotificationMethodsChange('IN_APP', enabled)}
             />
             <NotificationMethod
               title="Email"
-              description="Set your email in Edit Profile to receive email not"
+              description="Receive email notifications to the address set in Edit Profile"
               isChecked={notificationMethods.includes('EMAIL')}
               onChange={(enabled) => handleNotificationMethodsChange('EMAIL', enabled)}
             />
