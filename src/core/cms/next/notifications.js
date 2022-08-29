@@ -12,7 +12,10 @@ export const getNotifications = async (address, query) => {
 }
 
 export const deleteNotifications = async (notificationId = null, address, signature) => {
-  const response = await api.delete(`users/${address}/notifications/${notificationId}`, {
+  let path = `users/${address}/notifications`;
+  if (notificationId) path += `/${notificationId}`;
+
+  const response = await api.delete(path, {
     params: {signature}
   })
   return response.data;
