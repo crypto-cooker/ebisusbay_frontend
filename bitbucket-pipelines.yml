@@ -28,7 +28,7 @@ definitions:
   steps:
     - step: &test
         name: Test
-        image: node:16
+        image: public.ecr.aws/docker/library/node:16
         runs-on:
           - 'self.hosted'
           - 'linux'
@@ -47,7 +47,7 @@ pipelines:
       - step: *test
       - step:
           name: Build
-          image: node:16
+          image: public.ecr.aws/docker/library/node:16
           deployment: TestnetBuildStep
           runs-on:
             - 'self.hosted'
@@ -65,7 +65,7 @@ pipelines:
             - .next/**
       - step:
           name: Upload to S3
-          image: amazon/aws-cli
+          image: public.ecr.aws/bitnami/aws-cli:latest
           runs-on:
             - 'self.hosted'
             - 'linux'
@@ -77,7 +77,7 @@ pipelines:
             - aws s3 cp ./src/Assets/networks/rpc_config_testnet.json s3://test-ebisusbay-admin-storage/rpc_config.json
       - step:
           name: Build containers
-          image: amazon/aws-cli
+          image: public.ecr.aws/bitnami/aws-cli:latest
           deployment: Testnet
           services:
             - docker
@@ -96,7 +96,7 @@ pipelines:
             - *proxywebcontainer
       - step:
           name: Deploy
-          image: alpine:latest
+          image: public.ecr.aws/docker/library/alpine:latest
           runs-on:
             - 'self.hosted'
             - 'linux'
@@ -114,7 +114,7 @@ pipelines:
       - step: *test
       - step:
           name: Build
-          image: node:16
+          image: public.ecr.aws/docker/library/node:16
           deployment: SandboxBuildStep
           runs-on:
             - 'self.hosted'
@@ -132,7 +132,7 @@ pipelines:
             - .next/**
       - step:
           name: Upload to S3
-          image: amazon/aws-cli
+          image: public.ecr.aws/bitnami/aws-cli:latest
           runs-on:
             - 'self.hosted'
             - 'linux'
@@ -144,7 +144,7 @@ pipelines:
             - aws s3 cp ./src/Assets/networks/rpc_config_dev.json s3://dev-ebisusbay-admin-storage/rpc_config.json
       - step:
           name: Build containers
-          image: amazon/aws-cli
+          image: public.ecr.aws/bitnami/aws-cli:latest
           deployment: Sandbox
           services:
             - docker
@@ -163,7 +163,7 @@ pipelines:
             - *proxywebcontainer
       - step:
           name: Deploy
-          image: alpine:latest
+          image: public.ecr.aws/docker/library/alpine:latest
           runs-on:
             - 'self.hosted'
             - 'linux'
@@ -182,7 +182,7 @@ pipelines:
       - step: *test
       - step:
           name: Build
-          image: node:16
+          image: public.ecr.aws/docker/library/node:16
           deployment: DevelopmentBuildStep
           runs-on:
             - 'self.hosted'
@@ -200,7 +200,7 @@ pipelines:
             - .next/**
       - step:
           name: Upload to S3
-          image: amazon/aws-cli
+          image: public.ecr.aws/bitnami/aws-cli:latest
           runs-on:
             - 'self.hosted'
             - 'linux'
@@ -210,7 +210,7 @@ pipelines:
             - aws s3 cp ./src/Assets/networks/rpc_config_dev.json s3://dev-ebisusbay-admin-storage/rpc_config.json
       - step:
           name: Build containers
-          image: amazon/aws-cli
+          image: public.ecr.aws/bitnami/aws-cli:latest
           deployment: Development
           services:
             - docker
@@ -245,7 +245,7 @@ pipelines:
       - step: *test
       - step:
           name: Build
-          image: node:16
+          image: public.ecr.aws/docker/library/node:16
           deployment: ProductionBuildStep
           runs-on:
             - 'self.hosted'
@@ -261,7 +261,7 @@ pipelines:
             - .next/**
       - step:
           name: Upload to S3
-          image: amazon/aws-cli
+          image: public.ecr.aws/bitnami/aws-cli:latest
           runs-on:
             - 'self.hosted'
             - 'linux'
@@ -271,7 +271,7 @@ pipelines:
             - aws s3 cp ./src/Assets/networks/rpc_config.json s3://prod-ebisusbay-admin-storage/rpc_config.json
       - step:
           name: Build containers
-          image: amazon/aws-cli
+          image: public.ecr.aws/bitnami/aws-cli:latest
           deployment: Production
           services:
             - docker
@@ -290,7 +290,7 @@ pipelines:
             - *proxywebcontainer
       - step:
          name: Deploy
-         image: alpine:latest
+         image: public.ecr.aws/docker/library/alpine:latest
          runs-on:
            - 'self.hosted'
            - 'linux'
@@ -307,4 +307,4 @@ definitions:
     docker:
       # default memory is 1024MB
       memory: 3072
-      image: docker:dind
+      image: public.ecr.aws/docker/library/docker:dind
