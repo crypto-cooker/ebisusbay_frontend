@@ -40,7 +40,7 @@ export default function Notification() {
         return value !== key;
       }));
     }
-    else if (!notificationMethods.includes(key) && enabled) notificationMethods.push(key);
+    else if (!notificationMethods.includes(key) && enabled) setNotificationMethods(oldArray => [...oldArray, key]);
   };
 
   const handleNotificationTypesChange = (key, enabled) => {
@@ -49,7 +49,7 @@ export default function Notification() {
         return value !== key;
       }));
     }
-    else if (!notificationTypes.includes(key) && enabled) notificationTypes.push(key);
+    else if (!notificationTypes.includes(key) && enabled) setNotificationTypes(oldArray => [...oldArray, key]);
   };
 
   useEffect(() => {

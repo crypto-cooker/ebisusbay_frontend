@@ -6,7 +6,7 @@ export default function NotificationItem({ title, description, isChecked, onChan
     <div className="row">
       <div className="col-auto my-auto">
         <div>
-          <Form.Switch defaultChecked={isChecked} onClick={(e) => onChange(e.target.checked)}/>
+          <Form.Switch checked={isChecked} onClick={(e) => onChange(e.target.checked)}/>
         </div>
       </div>
       <div className="col">
