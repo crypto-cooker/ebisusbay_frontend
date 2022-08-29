@@ -5,14 +5,14 @@ const api = axios.create({
 });
 
 export const getNotifications = async (address, query) => {
-  const response = await api.get(`user/${address}/notifications`, {
+  const response = await api.get(`users/${address}/notifications`, {
     params: {...query}
   })
   return response.data;
 }
 
 export const deleteNotifications = async (notificationId = null, address, signature) => {
-  const response = await api.delete(`user/${address}/notifications/${notificationId}`, {
+  const response = await api.delete(`users/${address}/notifications/${notificationId}`, {
     params: {signature}
   })
   return response.data;
