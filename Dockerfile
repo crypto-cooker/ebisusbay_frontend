@@ -2,7 +2,7 @@
 ### Runtime image ###
 #####################
 
-FROM public.ecr.aws/docker/library/node:16-slim
+FROM node:16-slim
 
 # Update packages
 RUN apt-get update && apt-get install -y git curl procps htop net-tools netcat dnsutils

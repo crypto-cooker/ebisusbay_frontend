@@ -2,7 +2,7 @@
 ### Build image ###
 ###################
 
-FROM public.ecr.aws/docker/library/node:16 as build
+FROM node:16 as build
 
 # Install build dependencies for underlying OS
 RUN apt-get update && apt-get install -y g++ build-essential
@@ -32,7 +32,7 @@ RUN NEXT_PUBLIC_ENV=development npm run build
 ### Runtime image ###
 #####################
 
-FROM public.ecr.aws/docker/library/node:16-slim
+FROM node:16-slim
 
 # Update packages
 RUN apt-get update && apt-get install -y git curl procps htop net-tools netcat dnsutils
