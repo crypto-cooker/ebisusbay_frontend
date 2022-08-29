@@ -1401,6 +1401,11 @@
         "discord": "https://discord.gg/d6WvCpfn9W",
         "medium": "https://medium.com/@WeirdApesClub",
         "gitbook": "https://weirdape.gitbook.io/weird-apes-club/weird-apes-club/summary"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -1423,6 +1428,11 @@
         "discord": "https://discord.gg/d6WvCpfn9W",
         "medium": "https://medium.com/@WeirdApesClub",
         "gitbook": "https://weirdape.gitbook.io/weird-apes-club/weird-apes-club/summary"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -2608,6 +2618,11 @@
         "discord": "https://discord.gg/RX9h6mhnTR",
         "medium": "https://medium.com/@WeirdApesClub",
         "gitbook": "https://weirdape.gitbook.io/weird-apes-club/weird-apes-club/summary"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -3145,6 +3160,11 @@
         "discord": "https://discord.gg/RX9h6mhnTR",
         "medium": "https://medium.com/@WeirdApesClub",
         "gitbook": "https://weirdape.gitbook.io/weird-apes-club/weird-apes-club/summary"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
