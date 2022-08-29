@@ -33,7 +33,7 @@ import { getTheme } from '../../Theme/theme';
 import SocialsBar from '../Collection/SocialsBar';
 import {parseUnits} from "ethers/lib/utils";
 import {appConfig} from "../../Config";
-import {hostedImage} from "../../helpers/image";
+import {hostedImage, ImageKitService} from "../../helpers/image";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAddressCard, faLock, faUserShield} from "@fortawesome/free-solid-svg-icons";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
@@ -478,7 +478,9 @@ const SingleDrop = () => {
       <>
         <HeroSection
           className={`jumbotron h-vh tint`}
-          style={{ backgroundImage: `url(${drop.imgBanner ? hostedImage(drop.imgBanner) : hostedImage('/img/background/Ebisus-bg-1_L.webp')})` }}
+          style={{
+            backgroundImage: `url(${ImageKitService.buildBannerUrl(drop.imgBanner ?? hostedImage('/img/background/Ebisus-bg-1_L.webp'))})`
+          }}
         >
           <div className="container">
             <div className="row align-items-center">
