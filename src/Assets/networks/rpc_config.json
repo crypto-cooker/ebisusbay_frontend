@@ -4737,7 +4737,8 @@
         "website": "https://redsaint.io",
         "twitter": "https://twitter.com/RedSaintNFT",
         "discord": "https://discord.gg/Ekz27dFKwR",
-        "telegram": "https://t.me/redsaintnft"
+        "telegram": "https://t.me/redsaintnft",
+        "medium": "https://medium.com/@RedSaint"
       }
     },
     {
@@ -8148,6 +8149,27 @@
         "maxSupply": 0,
         "website": "https://cronosid.xyz/",
         "discord": "https://discord.gg/FeFu22ny6A"
+      }
+    },
+    {
+      "name": "Red Saint Warrior",
+      "slug": "red-saint-warrior",
+      "multiToken": false,
+      "address": "0xB45fa1F8751cD948B3130Cb45589F3E205Aa45B3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Warrior’s story is the story of a justice vigilante who believes in greater good and joins forces against evils . In doing so, it achieves special boosted capabilities which makes its personalities to become stronger and invincible in the face of adversity.",
+        "verified": false,
+        "avatar": "/img/collections/red-saint-warrior/avatar.webp",
+        "banner": "/img/collections/red-saint-warrior/banner.webp",
+        "card": "/img/collections/red-saint-warrior/card.webp",
+        "maxSupply": 2100,
+        "website": "https://redsaint.io",
+        "twitter": "https://twitter.com/RedSaintNFT",
+        "discord": "https://discord.gg/Ekz27dFKwR",
+        "telegram": "https://t.me/redsaintnft",
+        "medium": "https://medium.com/@RedSaint"
       }
     }
   ],
