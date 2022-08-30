@@ -10,9 +10,13 @@ import Footer from '../src/Components/components/Footer';
 import { getAllCollections } from '../src/GlobalState/collectionsSlice';
 import { debounce, siPrefixedNumber } from '../src/utils';
 import Image from "next/image";
-import {CdnImage} from "../src/Components/components/CdnImage";
-import {hostedImage} from "../src/helpers/image";
+import { CdnImage } from "../src/Components/components/CdnImage";
+import { hostedImage } from "../src/helpers/image";
 import PageHead from "../src/Components/Head/PageHead";
+import Switch from '../src/Components/components/common/Switch';
+import useFeatureFlag from '@src/hooks/useFeatureFlag';
+import Constants from '@src/constants';
+
 
 const GlobalStyles = createGlobalStyle`
   .mobile-view-list-item {
@@ -50,6 +54,7 @@ const Collections = () => {
   });
 
   const [timeframe, setTimeframe] = useState(null);
+  const [onlyVerified, setOnlyVerified] = useState(false)
 
   useEffect(() => {
     dispatch(getAllCollections());
@@ -57,6 +62,7 @@ const Collections = () => {
   }, []);
 
   useEffect(() => {
+    setOnlyVerified(false);
     if (searchTerms) {
       setFilteredCollections(collections.filter((c) => c.name.toLowerCase().includes(searchTerms.toLowerCase())));
     } else {
@@ -95,6 +101,21 @@ const Collections = () => {
       });
     }
   };
+
+  const filterByVerified = () => {
+    if (filteredCollections) {
+      if (onlyVerified) {
+        setFilteredCollections(collections.filter((c) => c.metadata.verified === true));
+      }
+      else {
+        setFilteredCollections(collections);
+      }
+    }
+  }
+
+  useEffect(() => {
+    filterByVerified();
+  }, [onlyVerified])
 
   const handleSearch = debounce((event) => {
     const { value } = event.target;
@@ -135,6 +156,9 @@ const Collections = () => {
   const collectionFloorPriceValue = ({ floorPrice }) => ethers.utils.commify(Math.round(floorPrice));
   const collectionNumberActiveValue = ({ numberActive }) => numberActive;
 
+  const { Features } = Constants;
+  const isSwitchEnabled = useFeatureFlag(Features.VERIFIED_SWITCH_COLLECTION)
+
   return (
     <div>
       <PageHead
@@ -162,6 +186,9 @@ const Collections = () => {
           </div>
           <div className="col-md-6 col-lg-8 text-end">
             <ul className="activity-filter">
+              {isSwitchEnabled? <li style={{border: 'none'}}>
+                <Switch isChecked={onlyVerified} setIsChecked={setOnlyVerified} checkedText={'Verified'} uncheckedText={'All'}/>
+              </li> : null}
               <li id="sale" className={timeframe === '1d' ? 'active' : ''} onClick={() => updateTimeframe('1d')}>
                 1d
               </li>
