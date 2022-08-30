@@ -7,10 +7,10 @@ import { commify } from 'ethers/lib/utils';
 import Link from 'next/link';
 
 import Button from '../../../Components/components/Button';
-import { findCollectionByAddress, shortAddress, shortString } from '../../../utils';
-import { getNftDetails } from '../../../GlobalState/nftSlice';
+import { findCollectionByAddress, shortAddress, shortString } from '@src/utils';
+import { getNftDetails } from '@src/GlobalState/nftSlice';
 import MakeOfferDialog from '../MakeOfferDialog';
-import AcceptOfferDialog from '../AcceptOfferDialog';
+import AcceptOfferDialog from "@src/Components/Offer/AcceptOfferDialog";
 
 const TableRowContainer = styled.div`
   display: flex;
@@ -160,10 +160,9 @@ export default function TableRow({ data, type }) {
       {!!offerType && offerType === OFFER_TYPE.accept && (
         <AcceptOfferDialog
           isOpen={!!offerType}
-          toggle={handleOffer}
-          nftData={nft}
-          offerData={data}
-          collectionMetadata={collectionData?.metadata}
+          onClose={() => handleOffer(OFFER_TYPE.none)}
+          nft={nft}
+          offer={data}
         />
       )}
       <TableRowContainer>

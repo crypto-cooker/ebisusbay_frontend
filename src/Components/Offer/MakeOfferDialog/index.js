@@ -304,7 +304,7 @@ export default function MakeOfferDialog({ isOpen, toggle, type, nftData, offerDa
           setError(true, 'Offer price must be greater than your previous offer');
           return;
         }
-        tx = await offerContract.makeOffer(nftData.address, nftData.id, {
+        tx = await offerContract.updateOffer(offerDataNew?.hash, offerDataNew?.offerIndex, {
           ...{
             value: ethers.utils.parseEther((offerPrice - offerDataNew.price).toString()),
           },
