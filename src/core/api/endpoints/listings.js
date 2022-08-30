@@ -25,7 +25,7 @@ export async function sortAndFetchListings(
     page: page,
     pageSize: pagesize,
     sortBy: 'listingId',
-    direction: 'desc',
+    direction: 'desc'
   };
   if (filter && (filter instanceof ListingsQuery)) {
     query = { ...query, ...filter.toApi() };

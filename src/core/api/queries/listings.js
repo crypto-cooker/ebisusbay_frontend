@@ -19,6 +19,7 @@ export class ListingsQuery {
   maxSaleTime = null;
   minRank = null;
   maxRank = null;
+  verified = null;
 
   constructor(json) {
     Object.assign(this, json);
@@ -66,6 +67,7 @@ export class ListingsQuery {
       maxSaleTime: this.maxSaleTime,
       minRank: this.minRank,
       maxRank: this.maxRank,
+      verified: this.verified,
     };
 
     return Object.fromEntries(Object.entries(obj).filter(([k, v]) => {
