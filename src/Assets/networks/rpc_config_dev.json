@@ -8171,6 +8171,24 @@
         "telegram": "https://t.me/redsaintnft",
         "medium": "https://medium.com/@RedSaint"
       }
+    },
+    {
+      "name": "DripCro",
+      "slug": "dripcro",
+      "multiToken": false,
+      "address": "0xcD7398b5D3864535d664d19B454088c19a8687b6",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "verified": false,
+        "avatar": "/img/collections/dripcro/avatar.webp",
+        "banner": "/img/collections/dripcro/banner.webp",
+        "card": "/img/collections/dripcro/card.webp",
+        "maxSupply": 777,
+        "website": "https://dripcro.com",
+        "discord": "https://discord.gg/ttaPM95WcR"
+      }
     }
   ],
   "drops": [
