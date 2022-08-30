@@ -208,4 +208,7 @@ export const featureFlags = {
   [Features.CMS_FULL_PROFILES]: false,
   [Features.GET_COLLECTION_NEW_ENDPOINT]: false,
   [Features.CMS_COLLECTIONS]: false,
+  [Features.VERIFIED_SWITCH_COLLECTION]: false,
+  [Features.VERIFIED_SWITCH_MARKETPLACE]: false,
+
 }

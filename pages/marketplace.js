@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import ListingCollection from '../src/Components/components/ListingCollection';
@@ -7,10 +7,10 @@ import TopFilterBar from '../src/Components/components/TopFilterBar';
 import { sortOptions } from '../src/Components/components/constants/sort-options';
 import { marketPlaceCollectionFilterOptions } from '../src/Components/components/constants/filter-options';
 import SalesCollection from '../src/Components/components/SalesCollection';
-import { filterListings, getMarketData, searchListings, sortListings } from '../src/GlobalState/marketplaceSlice';
+import { filterListings, getMarketData, searchListings, sortListings, filterListingsByVerification } from '../src/GlobalState/marketplaceSlice';
 import { debounce, siPrefixedNumber } from '../src/utils';
 import { SortOption } from '../src/Components/Models/sort-option.model';
-import {MarketFilterCollection} from "../src/Components/Models/market-filters.model";
+import { MarketFilterCollection } from "../src/Components/Models/market-filters.model";
 import PageHead from "../src/Components/Head/PageHead";
 
 const Marketplace = () => {
@@ -54,6 +54,12 @@ const Marketplace = () => {
 
     return sortOptions.filter((s) => s.key !== 'rank');
   });
+
+  const [onlyVerified, setOnlyVerified] = useState(false)
+
+  useEffect(() => {
+    dispatch(filterListingsByVerification(false, onlyVerified ? 1 : null));
+  }, [onlyVerified])
 
   const onFilterChange = useCallback(
     (filterOption) => {
@@ -134,8 +140,9 @@ const Marketplace = () => {
                     <TopFilterBar
                       showFilter={true}
                       showSort={true}
+                      showSwitch={true}
                       sortOptions={[SortOption.default(), ...selectSortOptions]}
-                      filterOptions={[ {value: null, label: 'All'}, ...selectFilterOptions]}
+                      filterOptions={[{ value: null, label: 'All' }, ...selectFilterOptions]}
                       defaultSortValue={selectDefaultSortValue}
                       defaultFilterValue={selectDefaultFilterValue}
                       defaultSearchValue={selectDefaultSearchValue}
@@ -144,6 +151,8 @@ const Marketplace = () => {
                       onFilterChange={onFilterChange}
                       onSortChange={onSortChange}
                       onSearch={onSearch}
+                      onlyVerified={onlyVerified}
+                      setOnlyVerified={setOnlyVerified}
                     />
                   </div>
                 </div>
