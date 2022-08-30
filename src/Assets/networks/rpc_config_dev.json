@@ -4737,7 +4737,8 @@
         "website": "https://redsaint.io",
         "twitter": "https://twitter.com/RedSaintNFT",
         "discord": "https://discord.gg/Ekz27dFKwR",
-        "telegram": "https://t.me/redsaintnft"
+        "telegram": "https://t.me/redsaintnft",
+        "medium": "https://medium.com/@RedSaint"
       }
     },
     {
@@ -8131,6 +8132,119 @@
         "maxSupply": 3865,
         "twitter": "https://twitter.com/cronos_chain"
       }
+    },
+    {
+      "name": "Cronos ID",
+      "slug": "cronos-id",
+      "multiToken": false,
+      "address": "0xf884647dfa84696d9373f36ee413ccc48093f924",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Cronos ID is an identity and communication layer built on Cronos. Our goal is to enable a deeper and more interconnected web3 community, where everyone is able to share and receive information and cryptocurrency in a safe and verifiable manner. Every user will now get to own a unique username and use it across many services!",
+        "verified": false,
+        "avatar": "/img/collections/cronos-id/avatar.webp",
+        "banner": "/img/collections/cronos-id/banner.webp",
+        "card": "/img/collections/cronos-id/card.webp",
+        "maxSupply": 0,
+        "website": "https://cronosid.xyz/",
+        "discord": "https://discord.gg/FeFu22ny6A"
+      }
+    },
+    {
+      "name": "Red Saint Warrior",
+      "slug": "red-saint-warrior",
+      "multiToken": false,
+      "address": "0xB45fa1F8751cD948B3130Cb45589F3E205Aa45B3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Warrior’s story is the story of a justice vigilante who believes in greater good and joins forces against evils . In doing so, it achieves special boosted capabilities which makes its personalities to become stronger and invincible in the face of adversity.",
+        "verified": false,
+        "avatar": "/img/collections/red-saint-warrior/avatar.webp",
+        "banner": "/img/collections/red-saint-warrior/banner.webp",
+        "card": "/img/collections/red-saint-warrior/card.webp",
+        "maxSupply": 2100,
+        "website": "https://redsaint.io",
+        "twitter": "https://twitter.com/RedSaintNFT",
+        "discord": "https://discord.gg/Ekz27dFKwR",
+        "telegram": "https://t.me/redsaintnft",
+        "medium": "https://medium.com/@RedSaint"
+      }
+    },
+    {
+      "name": "DripCro",
+      "slug": "dripcro",
+      "multiToken": false,
+      "address": "0x079B32D7a72b58588d62164927cEF13C4c3657D0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "verified": false,
+        "avatar": "/img/collections/dripcro/avatar.webp",
+        "banner": "/img/collections/dripcro/banner.webp",
+        "card": "/img/collections/dripcro/card.webp",
+        "maxSupply": 777,
+        "website": "https://dripcro.com",
+        "discord": "https://discord.gg/ttaPM95WcR"
+      }
+    },
+    {
+      "name": "ThirteenthEvil",
+      "slug": "thirteenth-evil",
+      "multiToken": false,
+      "address": "0xfc787d585DCA5DB15f4804351a62973Fa55aab81",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Mint OG! Be part of this community and eat this beautiful cake with us! Someone New Has Appeared! Buckle up ThirteenthEvil Here he comes! We are on the side of passive earnings! Earnings are a side effect!",
+        "verified": false,
+        "avatar": "/img/collections/thirteenth-evil/avatar.webp",
+        "banner": "/img/collections/thirteenth-evil/banner.webp",
+        "card": "/img/collections/thirteenth-evil/card.webp",
+        "maxSupply": 500,
+        "twitter": "https://twitter.com/ThirteenthEvil"
+      }
+    },
+    {
+      "name": "The Secret CRO Society",
+      "slug": "the-secret-cro-society",
+      "multiToken": false,
+      "address": "0x5eF6Dfee02F115eB5FF6bb473db895bD456D51f4",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Secret CRO Society is an exclusive club where holders have access to secret missions,  monthly giveaways, games and access to the full S.C.S community.",
+        "verified": false,
+        "avatar": "/img/collections/the-secret-cro-society/avatar.webp",
+        "banner": "/img/collections/the-secret-cro-society/banner.webp",
+        "card": "/img/collections/the-secret-cro-society/card.webp",
+        "maxSupply": 2500,
+        "website": "https://www.secretcrosociety.com/",
+        "twitter": "https://twitter.com/secretCROclub",
+        "discord": "https://discord.gg/yaPEQ8Tqqw"
+      }
+    },
+    {
+      "name": "Icy Viking Treasure Chests",
+      "slug": "icy-viking-treasure-chests",
+      "multiToken": false,
+      "address": "0x7677cbE702Ff3d0e66d3BaC0fD71Cb641A276Ae0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Rewarded for the winning clans in the Icy Squid Game",
+        "verified": true,
+        "avatar": "/img/collections/icy-viking-treasure-chests/avatar.webp",
+        "banner": "/img/collections/icy-viking-treasure-chests/banner.webp",
+        "card": "/img/collections/icy-viking-treasure-chests/card.webp",
+        "maxSupply": 200,
+        "website": "https://www.icysquidgame.com/",
+        "twitter": "https://twitter.com/IcySquidGame",
+        "discord": "https://discord.gg/ZNHNXS5ZxY",
+        "medium": "https://medium.com/@icysquidgame"
+      }
     }
   ],
   "drops": [
@@ -10356,8 +10470,8 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
-      "complete": false,
+      "published": false,
+      "complete": true,
       "redirect": "https://www.wackywurmz.com/mint"
     },
     {
