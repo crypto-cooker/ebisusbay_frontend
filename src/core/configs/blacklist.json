@@ -1,8 +1,17 @@
 [
   {
-    "users": [
-      "0x7fbd94fa64cad59b12d3916930d4e94f940b541f"
+    "users": ["0x40d2f78034a166c9aba29f0bedf410e5cade3d47"],
+    "tokens": [
+      {
+        "slug": "mad-meerkat-degen",
+        "address": "0xA19bFcE9BaF34b92923b71D487db9D0D051a88F8",
+        "ids": [4526 , 6195, 6991, 8226, 5728]
+      }
     ],
+    "reason": "Ticket #0405, verified by Canvas"
+  },
+  {
+    "users": ["0x7fbd94fa64cad59b12d3916930d4e94f940b541f"],
     "tokens": [
       {
         "slug": "croskull-pets",
