@@ -8176,7 +8176,7 @@
       "name": "DripCro",
       "slug": "dripcro",
       "multiToken": false,
-      "address": "0xcD7398b5D3864535d664d19B454088c19a8687b6",
+      "address": "0x079B32D7a72b58588d62164927cEF13C4c3657D0",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -8188,6 +8188,23 @@
         "maxSupply": 777,
         "website": "https://dripcro.com",
         "discord": "https://discord.gg/ttaPM95WcR"
+      }
+    },
+    {
+      "name": "ThirteenthEvil",
+      "slug": "thirteenth-evil",
+      "multiToken": false,
+      "address": "0xfc787d585DCA5DB15f4804351a62973Fa55aab81",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Mint OG! Be part of this community and eat this beautiful cake with us! Someone New Has Appeared! Buckle up ThirteenthEvil Here he comes! We are on the side of passive earnings! Earnings are a side effect!",
+        "verified": false,
+        "avatar": "/img/collections/thirteenth-evil/avatar.webp",
+        "banner": "/img/collections/thirteenth-evil/banner.webp",
+        "card": "/img/collections/thirteenth-evil/card.webp",
+        "maxSupply": 500,
+        "twitter": "https://twitter.com/ThirteenthEvil"
       }
     }
   ],
