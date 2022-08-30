@@ -80,8 +80,10 @@ const marketplaceSlice = createSlice({
     onVerifiedFilter: (state, action) => {
       const {verified} = action.payload
 
-      state.query.verified = verified;
       state.listings = [];
+      state.totalPages = 0;
+      state.query.page = 0;
+      state.query.filter.verified = verified;
     },
     onCollectionDataLoaded: (state, action) => {
       state.collection = action.payload.collection;
@@ -136,8 +138,7 @@ export const fetchListings =
       state.marketplace.query.sort,
       ListingsQuery.fromMarketFilter(state.marketplace.query.filter.toQuery()),
       isSales ? 1 : 0,
-      state.marketplace.query.filter.limit,
-      state.marketplace.query.verified
+      state.marketplace.query.filter.limit
     );
 
     if (!cancelled) {
@@ -153,11 +154,11 @@ export const filterListings =
     dispatch(fetchListings(isSales));
   };
 
-  export const filterListingsByVerification =
+export const filterListingsByVerification =
   (isSales = false, verified = null) =>
   async (dispatch) => {
     dispatch(onVerifiedFilter({verified}));
-    dispatch(fetchListings(isSales, verified ));
+    dispatch(fetchListings(isSales, verified));
   };
 
 export const sortListings =

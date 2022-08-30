@@ -7,6 +7,7 @@ export class MarketFilters {
   limit = limitSizeOptions.lg;
   seller = null;
   tokenId = null;
+  verified = 0;
 
   static default() {
     return new MarketFilters();
@@ -34,6 +35,7 @@ export class MarketFilters {
       search: this.search,
       limit: this.limit,
       tokenId: token,
+      verified: this.verified
     };
 
     return Object.fromEntries(Object.entries(obj).filter(([k, v]) => {
