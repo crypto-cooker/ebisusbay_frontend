@@ -55,10 +55,10 @@ const Index = function () {
   const history = useRouter();
 
   const windowSize = useWindowSize();
-  const [showpop, btn_icon_pop] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
-  const closePop = () => {
-    btn_icon_pop(false);
+  const closeMenu = () => {
+    setShowMenu(false);
   };
   const walletAddress = useSelector((state) => {
     return state.user.address;
@@ -120,11 +120,12 @@ const Index = function () {
   }, 1000 * 60);
 
   const navigateTo = (link) => {
-    closePop();
+    closeMenu();
     history.push(link);
   };
 
   const logout = async () => {
+    closeMenu();
     dispatch(onLogout());
   };
 
@@ -210,7 +211,7 @@ const Index = function () {
       )}
       {walletAddress && correctChain && (
         <div id="de-click-menu-profile" className="de-menu-profile">
-          <span onClick={() => btn_icon_pop(!showpop)}>
+          <span onClick={() => setShowMenu(!showMenu)}>
             {user.profile.profilePicture ? (
               <img src={ImageKitService.buildAvatarUrl(user.profile.profilePicture)} alt={user.profile.username} />
             ) : (
@@ -242,13 +243,9 @@ const Index = function () {
       </StyledModal>
 
       {walletAddress && correctChain && (
-        <Offcanvas show={showpop} onHide={closePop} placement={windowSize.width > 400 ? 'end' : 'bottom'}>
+        <Offcanvas show={showMenu} onHide={closeMenu} placement={windowSize.width > 400 ? 'end' : 'bottom'}>
           <Offcanvas.Header closeButton closeVariant={theme === 'dark' ? 'white': 'dark'}>
-            <Offcanvas.Title>My Account</Offcanvas.Title>
-          </Offcanvas.Header>
-          <Offcanvas.Body>
-
-            <div className="row mb-4">
+            <Offcanvas.Title>
               <div className="d-flex align-items-center">
                 <span className={classnames('me-2', styles.avatar)}>
                   {user.profile.profilePicture ? (
@@ -276,7 +273,10 @@ const Index = function () {
                   </div>
                 </div>
               </div>
-            </div>
+            </Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+
             <div className={classnames("row row-cols-2 g-2", styles.navigation)}>
               <div className="col">
                 <div className={styles.col}>
@@ -322,26 +322,6 @@ const Index = function () {
               )}
               <div className="col">
                 <div className={styles.col}>
-                  <span onClick={() => navigateTo(`/account/${walletAddress}?tab=inventory`)}>
-                    <span>
-                      <FontAwesomeIcon icon={faShoppingBag} />
-                    </span>
-                    <span className="ms-2">Inventory</span>
-                  </span>
-                </div>
-              </div>
-              <div className="col">
-                <div className={styles.col}>
-                  <span onClick={() => navigateTo(`/account/${walletAddress}?tab=collections`)}>
-                    <span>
-                      <FontAwesomeIcon icon={faShoppingBag} />
-                    </span>
-                    <span className="ms-2">Collections</span>
-                  </span>
-                </div>
-              </div>
-              <div className="col">
-                <div className={styles.col}>
                   <span onClick={() => navigateTo(`/account/${walletAddress}?tab=listings`)}>
                     <span>
                       <FontAwesomeIcon icon={faCoins} />
@@ -372,20 +352,7 @@ const Index = function () {
               </div>
             </div>
 
-            <div className="row mt-3">
-              <div className="col">
-                <div className="d-flex justify-content-evenly">
-                    <span className="cursor-pointer" onClick={clearCookies}>
-                      <span>Clear Cookies</span>
-                    </span>
-                    <span className="cursor-pointer" onClick={logout}>
-                      <span>Disconnect</span>
-                    </span>
-                </div>
-              </div>
-            </div>
-
-            <h3 className="mt-4">
+            <h3 className="mt-4 mb-3">
               <FontAwesomeIcon icon={faWallet} className="me-2"/>
               <span>Wallet Info</span>
             </h3>
@@ -481,6 +448,19 @@ const Index = function () {
                 </div>
               </div>
             )}
+
+            <div className="row mt-3">
+              <div className="col">
+                <div className="d-flex justify-content-evenly">
+                    <span className="cursor-pointer" onClick={clearCookies}>
+                      <span>Clear Cookies</span>
+                    </span>
+                  <span className="cursor-pointer" onClick={logout}>
+                      <span>Disconnect</span>
+                    </span>
+                </div>
+              </div>
+            </div>
           </Offcanvas.Body>
         </Offcanvas>
       )}

@@ -7,16 +7,12 @@ const api = axios.create({
 });
 
 export const getProfile = async (addressOrUsername) => {
-  try {
-    const response = await api.get('profile', {
-      params: {
-        walletAddress: addressOrUsername
-      }
-    })
-    return response.data;
-  } catch (e) {
-    console.log('error', e);
-  }
+  const response = await api.get('profile', {
+    params: {
+      walletAddress: addressOrUsername
+    }
+  })
+  return response.data;
 }
 
 export const createProfile = async (formData, signature, address) => {

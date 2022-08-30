@@ -4,7 +4,7 @@ import { Contract, ethers } from 'ethers';
 import {faCrow, faExternalLinkAlt, faHeart, faShare, faSync} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import { Spinner } from 'react-bootstrap';
+import {Badge, Spinner} from 'react-bootstrap';
 
 import ProfilePreview from '../components/ProfilePreview';
 import Footer from '../components/Footer';
@@ -26,7 +26,11 @@ import {
   rankingsLogoForCollection,
   rankingsTitleForCollection,
   rankingsLinkForCollection,
-  isLazyHorseCollection, isLazyHorsePonyCollection, isLadyWeirdApesCollection,
+  isLazyHorseCollection,
+  isLazyHorsePonyCollection,
+  isLadyWeirdApesCollection,
+  isNftBlacklisted,
+  isAnyWeirdApesCollection, isWeirdApesCollection,
 } from '../../utils';
 import {getNftDetails, refreshMetadata} from '../../GlobalState/nftSlice';
 import { connectAccount, chainConnect } from '../../GlobalState/User';
@@ -89,8 +93,12 @@ const Nft721 = ({ address, id }) => {
   const [babyWeirdApeBreed, setBabyWeirdApeBreed] = useState(null);
   const [ladyWeirdApeChildren, setLadyWeirdApeChildren] = useState(null);
   const [evoSkullTraits, setEvoSkullTraits] = useState([]);
-  const [lazyHorseName, setLazyHorseName] = useState(null);
   const [lazyHorseTraits, setLazyHorseTraits] = useState([]);
+
+  const [customProfile, setCustomProfile] = useState({
+    name: null,
+    description: null
+  });
 
   useEffect(() => {
     dispatch(getNftDetails(address, id));
@@ -182,6 +190,38 @@ const Nft721 = ({ address, id }) => {
   }, [address]);
 
   useEffect(() => {
+    async function getApeInfo() {
+      if (isAnyWeirdApesCollection(address)) {
+        const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+        const abiFile = require(`../../Assets/abis/weird-apes-bio.json`);
+        const contract = new Contract('0x86dC98DB0AFd27d5cBD7501cd1a72Ff17f324609', abiFile, readProvider);
+        try {
+          let apeInfo;
+          if (isWeirdApesCollection(address)) {
+            apeInfo = await contract.getGenesisInfo(id);
+          } else if (isLadyWeirdApesCollection(address)) {
+            apeInfo = await contract.getLadyInfo(id);
+          } else if (isBabyWeirdApesCollection(address)) {
+            apeInfo = await contract.getBabyInfo(id);
+          } else return;
+
+          setCustomProfile({
+            name: apeInfo.name.length > 0 ? apeInfo.name : null,
+            description: apeInfo.bio.length > 0 ? apeInfo.bio : null
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        setCustomProfile({name: null, description: null});
+      }
+    }
+    getApeInfo();
+
+    // eslint-disable-next-line
+  }, [address]);
+
+  useEffect(() => {
     async function getAttributes(abi) {
       const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
       const contract = new Contract(address, abi, readProvider);
@@ -240,7 +280,7 @@ const Nft721 = ({ address, id }) => {
           const uri = await contract.tokenURI(id);
           await axios.get(uri)
             .then((response) => {
-              setLazyHorseName(response.data.name);
+              setCustomProfile({name: response.data.name.length > 0 ? response.data.name : null, description: null});
               setLazyHorseTraits([
                 response.data.attributes.find((trait) => trait.trait_type === 'Race Count'),
                 response.data.attributes.find((trait) => trait.trait_type === 'Breeded'),
@@ -250,7 +290,7 @@ const Nft721 = ({ address, id }) => {
           console.log(error);
         }
       } else {
-        setLazyHorseName(null);
+        setCustomProfile({name: null, description: null});
       }
     }
     getLazyHorseName();
@@ -405,8 +445,17 @@ const Nft721 = ({ address, id }) => {
             <div className="col-md-6">
               {nft && (
                 <div className="item_info">
-                  <h2>{lazyHorseName ?? nft.name}</h2>
-                  <p className="text-break">{nft.description}</p>
+                  {isNftBlacklisted(address, id) ? (
+                    <div className="mb-4">
+                      <h2 className="mb-0">{customProfile.name ?? nft.name}</h2>
+                      <div className="d-flex">
+                        <Badge bg="danger">Blacklisted</Badge>
+                      </div>
+                    </div>
+                  ) : (
+                    <h2>{customProfile.name ?? nft.name}</h2>
+                  )}
+                  <p className="text-break">{customProfile.description ?? nft.description}</p>
                   {isCroCrowCollection(address) && croCrowBreed && (
                     <div className="d-flex flex-row align-items-center mb-4">
                       <LayeredIcon
@@ -438,9 +487,9 @@ const Nft721 = ({ address, id }) => {
                         bgColor={'#ffffff00'}
                         color={'#dc143c'}
                         inverse={false}
-                        title={`This Lady Weird Ape has had ${ladyWeirdApeChildren} ${ladyWeirdApeChildren === 1 ? 'child' : 'children'}`}
+                        title={`This Lady Weird Ape can make ${ladyWeirdApeChildren} ${ladyWeirdApeChildren === 1 ? 'baby' : 'babies'}`}
                       />
-                      <span className="fw-bold">This Lady Weird Ape has had {`${ladyWeirdApeChildren} ${ladyWeirdApeChildren === 1 ? 'child' : 'children'}`}</span>
+                      <span className="fw-bold">This Lady Weird Ape can make {`${ladyWeirdApeChildren} ${ladyWeirdApeChildren === 1 ? 'baby' : 'babies'}`}</span>
                     </div>
                   )}
 
@@ -484,7 +533,7 @@ const Nft721 = ({ address, id }) => {
                         title={nft.rank}
                         avatar={rankingsLogoForCollection(collection)}
                         hover={rankingsTitleForCollection(collection)}
-                        to={rankingsLinkForCollection(collection)}
+                        to={rankingsLinkForCollection(collection, nft.id)}
                         pop={true}
                       />
                     )}
@@ -686,7 +735,7 @@ const Nft721 = ({ address, id }) => {
                                 <div className="nft_attr">
                                   <h5>Father ID</h5>
                                   <h4>
-                                    <a href={`/collection/weird-apes-club-v2/${babyWeirdApeBreed.father.toNumber()}`}>
+                                    <a href={`/collection/weird-apes-club/${babyWeirdApeBreed.father.toNumber()}`}>
                                       {babyWeirdApeBreed.father.toNumber()}
                                     </a>
                                   </h4>

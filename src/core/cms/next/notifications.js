@@ -5,30 +5,18 @@ const api = axios.create({
 });
 
 export const getNotifications = async (address, query) => {
-  try {
-    const response = await api.get('notifications', {
-      params: {
-        walletAddress: address,
-        ...query
-      }
-    })
-    return response.data;
-  } catch (e) {
-    console.log('error', e);
-  }
+  const response = await api.get(`users/${address}/notifications`, {
+    params: {...query}
+  })
+  return response.data;
 }
 
 export const deleteNotifications = async (notificationId = null, address, signature) => {
-  try {
-    const response = await api.delete('notifications', {
-      params: {
-        notificationId,
-        address,
-        signature
-      }
-    })
-    return response.data;
-  } catch (e) {
-    console.log('error', e);
-  }
+  let path = `users/${address}/notifications`;
+  if (notificationId) path += `/${notificationId}`;
+
+  const response = await api.delete(path, {
+    params: {signature}
+  })
+  return response.data;
 }

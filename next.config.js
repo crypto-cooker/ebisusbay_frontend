@@ -80,6 +80,16 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/collection/troopz-sketchz',
+        destination: '/collection/trooprz-sketchz',
+        permanent: true,
+      },
+      {
+        source: '/collection/troopz-sketchz/:id',
+        destination: '/collection/trooprz-sketchz/:id',
+        permanent: true,
+      },
+      {
         source: '/mad-auction',
         destination: '/auctions/mad-auction',
         permanent: false,
