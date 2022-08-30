@@ -8225,6 +8225,26 @@
         "twitter": "https://twitter.com/secretCROclub",
         "discord": "https://discord.gg/yaPEQ8Tqqw"
       }
+    },
+    {
+      "name": "Icy Viking Treasure Chests",
+      "slug": "icy-viking-treasure-chests",
+      "multiToken": false,
+      "address": "0x7677cbE702Ff3d0e66d3BaC0fD71Cb641A276Ae0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Rewarded for the winning clans in the Icy Squid Game",
+        "verified": true,
+        "avatar": "/img/collections/icy-viking-treasure-chests/avatar.webp",
+        "banner": "/img/collections/icy-viking-treasure-chests/banner.webp",
+        "card": "/img/collections/icy-viking-treasure-chests/card.webp",
+        "maxSupply": 200,
+        "website": "https://www.icysquidgame.com/",
+        "twitter": "https://twitter.com/IcySquidGame",
+        "discord": "https://discord.gg/ZNHNXS5ZxY",
+        "medium": "https://medium.com/@icysquidgame"
+      }
     }
   ],
   "drops": [
