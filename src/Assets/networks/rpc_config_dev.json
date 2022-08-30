@@ -8206,6 +8206,25 @@
         "maxSupply": 500,
         "twitter": "https://twitter.com/ThirteenthEvil"
       }
+    },
+    {
+      "name": "The Secret CRO Society",
+      "slug": "the-secret-cro-society",
+      "multiToken": false,
+      "address": "0x5eF6Dfee02F115eB5FF6bb473db895bD456D51f4",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Secret CRO Society is an exclusive club where holders have access to secret missions,  monthly giveaways, games and access to the full S.C.S community.",
+        "verified": false,
+        "avatar": "/img/collections/the-secret-cro-society/avatar.webp",
+        "banner": "/img/collections/the-secret-cro-society/banner.webp",
+        "card": "/img/collections/the-secret-cro-society/card.webp",
+        "maxSupply": 2500,
+        "website": "https://www.secretcrosociety.com/",
+        "twitter": "https://twitter.com/secretCROclub",
+        "discord": "https://discord.gg/yaPEQ8Tqqw"
+      }
     }
   ],
   "drops": [
