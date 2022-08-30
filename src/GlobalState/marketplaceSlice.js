@@ -15,7 +15,6 @@ const marketplaceSlice = createSlice({
       page: 0,
       filter: MarketFilters.default(),
       sort: {},
-      verified: 0
     },
     totalPages: 0,
     collection: null,
