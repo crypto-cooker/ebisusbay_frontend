@@ -26,6 +26,11 @@ import {FullCollectionsQuery} from "./api/queries/fullcollections";
 import {ListingsQuery} from "./api/queries/listings";
 import {getQuickWallet} from "./api/endpoints/wallets";
 
+
+import Constants from '../constants'
+import useFeatureFlag from '../hooks/useFeatureFlag';
+import {getCollections} from "@src/core/api/next/collectioninfo";
+
 const config = appConfig();
 let gatewayTools = new IPFSGatewayTools();
 const gateway = 'https://mygateway.mypinata.cloud';
@@ -98,6 +103,10 @@ export async function getMarketMetadata() {
   return await (await fetch(uri)).json();
 }
 
+
+const { Features } = Constants;
+const newEndpointEnabled = useFeatureFlag(Features.GET_COLLECTION_NEW_ENDPOINT);
+
 export async function getCollectionMetadata(contractAddress, sort, filter) {
   let query = {
     sortBy: 'totalVolume',
@@ -120,7 +129,13 @@ export async function getCollectionMetadata(contractAddress, sort, filter) {
   const queryString = new URLSearchParams(query);
 
   const uri = `${api.baseUrl}${api.collections}?${queryString}`;
-  return await (await fetch(uri)).json();
+  if(newEndpointEnabled){
+    const data = await getCollections();
+    return data.data;
+  }
+  else{
+    return await (await fetch(uri)).json();
+  }
 }
 
 export async function getCollectionSummary(address) {

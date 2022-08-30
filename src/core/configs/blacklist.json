@@ -1,5 +1,32 @@
 [
   {
+    "users": [
+      "0x7fbd94fa64cad59b12d3916930d4e94f940b541f"
+    ],
+    "tokens": [
+      {
+        "slug": "croskull-pets",
+        "address": "0xB77959DC7a12F7549ACC084Af01259Fc48813c89",
+        "ids": [20, 559, 560, 1989]
+      }
+    ],
+    "reason": "Vouched by ordnael_reverse\uD83D\uDCA1#0742 in ticket #0406"
+  },
+  {
+    "users": [
+      "0x8a00237d54350b0e094bb44f8687edc1ff9cf142",
+      "0x767b7b1d58a2c94dbd5f229dd0a255aa9b2874b4"
+    ],
+    "tokens": [
+      {
+        "slug": "beta-mascots",
+        "address": "0x19317B3fc2F1Add6b7E17a0A03A5a269Ed5ce48b",
+        "ids": [3284, 2245, 1238, 1428, 1354, 1614, 2635, 202, 256, 1404, 2508, 1949]
+      }
+    ],
+    "reason": "Vouched by Captain Cool#6290 in ticket #0502"
+  },
+  {
     "users": ["0x316beaaedf075ceba6401549383d852c729f943c"],
     "tokens": [
       {

@@ -327,6 +327,7 @@ const userSlice = createSlice({
       state.myUnfilteredListingsFetching = false;
       state.myUnfilteredListings = [];
       state.profile = {};
+      state.authSignature = null;
     },
     onThemeChanged(state, action) {
       state.theme = action.payload;
@@ -907,6 +908,7 @@ export const retrieveProfile = () => async (dispatch, getState) => {
     dispatch(setProfile(profile?.data ?? {}));
   } catch (e) {
     console.log('failed to retrieve profile', e);
+    dispatch(setProfile({error: true}));
   }
 };
 

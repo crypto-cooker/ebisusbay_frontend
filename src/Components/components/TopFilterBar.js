@@ -62,6 +62,16 @@ const TopFilterBar = ({
       color: getTheme(userTheme).colors.textColor3,
       padding: 2,
     }),
+    input: (base, state) => ({
+      ...base,
+      color: getTheme(userTheme).colors.textColor3,
+      padding: 2,
+    }),
+    noOptionsMessage: (base, state) => ({
+      ...base,
+      background: getTheme(userTheme).colors.bgColor2,
+      color: getTheme(userTheme).colors.textColor3,
+    }),
   };
 
   const Filter = () => {

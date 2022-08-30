@@ -14,10 +14,10 @@ import HotCollections from '../src/Components/components/HotCollections';
 import CurrentDrops from '../src/Components/components/CurrentDrops';
 import { getMarketData } from '@src/GlobalState/marketplaceSlice';
 import { siPrefixedNumber } from '@src/utils';
-import {getTheme, theme} from '@src/Theme/theme';
+import {theme} from '@src/Theme/theme';
 import { limitSizeOptions } from '@src/Components/components/constants/filter-options';
 import Button from '../src/Components/components/Button';
-import {hostedImage} from "@src/helpers/image";
+import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {appConfig} from "@src/Config";
 import Head from "next/head";
 
@@ -89,7 +89,7 @@ const GlobalStyles = createGlobalStyle`
 const Jumbotron = {
   Host: styled.div`
     background-image: url(${({ isDark }) =>
-      isDark ? hostedImage('/img/background/banner-dark.webp') : hostedImage('/img/background/Ebisus-bg-1_L.webp')});
+      isDark ? ImageKitService.buildBannerUrl('/img/background/banner-dark.webp') : ImageKitService.buildBannerUrl('/img/background/Ebisus-bg-1_L.webp')});
     background-size: cover;
     background-repeat: no-repeat;
     height: max(100vh, 800px);

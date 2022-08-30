@@ -40,7 +40,7 @@ export default function Notification() {
         return value !== key;
       }));
     }
-    else if (!notificationMethods.includes(key) && enabled) notificationMethods.push(key);
+    else if (!notificationMethods.includes(key) && enabled) setNotificationMethods(oldArray => [...oldArray, key]);
   };
 
   const handleNotificationTypesChange = (key, enabled) => {
@@ -49,7 +49,7 @@ export default function Notification() {
         return value !== key;
       }));
     }
-    else if (!notificationTypes.includes(key) && enabled) notificationTypes.push(key);
+    else if (!notificationTypes.includes(key) && enabled) setNotificationTypes(oldArray => [...oldArray, key]);
   };
 
   useEffect(() => {
@@ -63,7 +63,7 @@ export default function Notification() {
 
   return (
     <div className="row mt-5">
-      <div className="col-8">
+      <div className="col-12 col-md-8">
 
         <div className="row mb-4">
           <div className="col">
@@ -71,13 +71,13 @@ export default function Notification() {
             <p>Choose how you wish to be notified of sales events in real time.</p>
             <NotificationMethod
               title="In App"
-              description="A red indicator will appear while in the app"
+              description="A blue badge will appear on the notifications menu icon"
               isChecked={notificationMethods.includes('IN_APP')}
               onChange={(enabled) => handleNotificationMethodsChange('IN_APP', enabled)}
             />
             <NotificationMethod
               title="Email"
-              description="Set your email in Edit Profile to receive email not"
+              description="Receive email notifications to the address set in Edit Profile"
               isChecked={notificationMethods.includes('EMAIL')}
               onChange={(enabled) => handleNotificationMethodsChange('EMAIL', enabled)}
             />

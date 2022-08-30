@@ -6,30 +6,23 @@ const api = axios.create({
   baseURL: config.urls.cms,
 });
 
-export const getNotifications = async (address) => {
-  try {
-    const response = await api.get('notification/all', {
-      params: {
-        walletAddress: address
-      }
-    })
-    return response.data;
-  } catch (e) {
-    console.log('error', e);
-  }
+export const getNotifications = async (address, query) => {
+  const response = await api.get('notification/all', {
+    params: {
+      address,
+      ...query
+    }
+  });
+  return response.data?.data;
 }
 
 export const deleteNotifications = async (notificationId = null, address, signature) => {
-  try {
-    const response = await api.delete('notification', {
-      params: {
-        notificationId,
-        address,
-        signature
-      }
-    })
-    return response.data;
-  } catch (e) {
-    console.log('error', e);
-  }
+  const response = await api.delete('notification', {
+    params: {
+      notificationId,
+      address,
+      signature
+    }
+  });
+  return response.data?.data;
 }

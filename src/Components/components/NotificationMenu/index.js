@@ -1,34 +1,40 @@
-import React, { memo, useState } from 'react';
+import React, {memo, useCallback, useEffect, useState} from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faBell, faTrash} from '@fortawesome/free-solid-svg-icons';
+import {faBell, faCog, faTrash} from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
 
 import styles from './notificationmenu.module.scss';
 import {timeSince} from '@src/utils';
 import {Offcanvas, Spinner} from "react-bootstrap";
-import {getNotifications} from "@src/core/cms/endpoints/notifications";
 import {useQuery} from "@tanstack/react-query";
-import useDeleteNotifications from "@src/Components/Account/Settings/hooks/useDeleteNotifications";
-import Link from "next/link";
+import useDeleteNotifications from "@src/hooks/useDeleteNotifications";
+import {getNotifications} from "@src/core/cms/next/notifications";
+import Button from "@src/Components/components/Button";
 
 const NotificationMenu = function () {
   const history = useRouter();
   const {address, theme, profile} = useSelector((state) => state.user);
-  const [showpop, setShowpop] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
   const [requestDeleteNotifications] = useDeleteNotifications();
 
-  const { isLoading, error, data:notifications, status, refetch } = useQuery(['Notifications', address], () =>
-    getNotifications(address), {enabled: !!profile.id}
+  const { isLoading, isError, error, data:notifications, refetch } = useQuery(
+    ['Notifications', address],
+    () => getNotifications(address),
+    {enabled: !!profile.id}
   )
 
-  const closePop = () => {
-    setShowpop(false);
+  const handleClose = () => {
+    setShowMenu(false);
   };
 
+  const openMenu = useCallback(async () => {
+    setShowMenu(true);
+  }, [showMenu]);
+
   const navigateTo = (link) => {
-    closePop();
+    handleClose();
     history.push(link);
   };
 
@@ -42,59 +48,101 @@ const NotificationMenu = function () {
     await refetch();
   }
 
+  const handleSettingsClicked = async () => {
+    history.push('/account/settings/notification');
+    handleClose();
+  };
+
   return address && (
     <div>
-      <div className="de-menu-notification" onClick={() => setShowpop(!showpop)}>
-        {notifications?.data?.length > 0 && (
-          <div className="d-count">{notifications.data.length}</div>
+      <div className="de-menu-notification" onClick={openMenu}>
+        {notifications?.length > 0 && (
+          <div className="d-count">{notifications.length > 99 ? '+' : notifications.length}</div>
         )}
         <span>
           <FontAwesomeIcon icon={faBell} color={theme === 'dark' ? '#000' : '#000'} />
         </span>
       </div>
 
-      <Offcanvas show={showpop} onHide={closePop} placement="end">
+      <Offcanvas show={showMenu} onHide={handleClose} placement="end">
         <Offcanvas.Header closeButton closeVariant={theme === 'dark' ? 'white': 'dark'}>
           <Offcanvas.Title>Notifications</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          {status === "loading" ? (
-            <div className="col-lg-12 text-center">
-              <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            </div>
-          ) : status === "error" ? (
-            <p className="text-center">Error: {error.message}</p>
-          ) : !profile.id ? (
-            <p className="text-center">
-              <Link href="/account/settings/profile">Create a profile to activate notifications</Link>
-            </p>
+          {isLoading ? (
+            profile.error ? (
+              <>
+                <p className="text-center">Error loading profile</p>
+              </>
+            ) : !profile.id ? (
+              <>
+                <p className="text-center">Create a profile to activate notifications</p>
+                <Button type="legacy"
+                        className="mx-auto"
+                        onClick={() => navigateTo('/account/settings/profile')}>
+                  Create Profile
+                </Button>
+              </>
+            ) : (
+              <div className="col-lg-12 text-center">
+                <Spinner animation="border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </div>
+            )
+          ) : isError ? (
+            <>
+              {profile.error ? (
+                <>
+                  <p className="text-center">Error loading profile</p>
+                </>
+              ) : !profile.id ? (
+                <>
+                  <p className="text-center">Create a profile to activate notifications</p>
+                  <Button type="legacy"
+                          className="mx-auto"
+                          onClick={() => navigateTo('/account/settings/profile')}>
+                    Create Profile
+                  </Button>
+                </>
+              ) : (
+                <p className="text-center">Error: {error.message}</p>
+              )}
+            </>
           ) : (
             <>
-              {notifications.data.length > 0 && (
-                <div className={classnames('mb-3 cursor-pointer text-end', styles.clear)} onClick={handleClearNotifications}>
-                  Clear All Notifications
-                </div>
-              )}
-              {notifications.data.length > 0 ? (
-                notifications.data.map((item, index) => (
-                  <div key={index}>
-                    <div className="d-flex text-muted fst-italic">
-                      <div className="flex-fill">{timeSince(new Date(item.createdAt))} ago</div>
-                      <div className="cursor-pointer" onClick={handleDeleteNotification(item)}>
-                        <FontAwesomeIcon icon={faTrash} />
-                      </div>
-                    </div>
-                    <span className="cursor-pointer" onClick={() => navigateTo(item.link)}>
-                        {item.message}
-                    </span>
+              <div className="d-flex justify-content-between">
+                <FontAwesomeIcon icon={faCog} onClick={handleSettingsClicked} className="cursor-pointer" />
+                {notifications.length > 0 && (
+                  <div className={classnames('mb-3 cursor-pointer text-end', styles.clear)} onClick={handleClearNotifications}>
+                    Clear All Notifications
                   </div>
-                ))
-              ) : (
-                <div className={classnames('text-center', styles.empty)}>
-                  No new notifications
+                )}
+              </div>
+              {notifications.length > 0 ? (
+                <div className="flex-fill h-auto">
+                  {notifications.length > 0 && (
+                    notifications.map((item, index) => (
+                      <div className={classnames('card eb-nft__card px-3 py-2 mb-2', styles.card)}>
+                        <div key={index} className="d-flex">
+                          <div className="flex-fill">
+                            <div className="text-muted fst-italic">
+                              <div className="flex-fill">{timeSince(new Date(item.createdAt))} ago</div>
+                            </div>
+                            <span className="cursor-pointer" onClick={() => navigateTo(item.link)}>
+                                {item.message}
+                              </span>
+                          </div>
+                          <div className="cursor-pointer my-auto ms-4" onClick={handleDeleteNotification(item)}>
+                            <FontAwesomeIcon icon={faTrash} />
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  )}
                 </div>
+              ) : (
+                <p className="text-center">There are no notifications to display</p>
               )}
             </>
           )}

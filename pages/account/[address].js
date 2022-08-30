@@ -18,7 +18,12 @@ export default function Account({ address, profile, query }) {
 export const getServerSideProps = async ({ params, query }) => {
   const addressOrUsername = params?.address;
 
-  const user = await getProfile(addressOrUsername) ?? null;
+  let user;
+  try {
+    user = await getProfile(addressOrUsername) ?? null;
+  } catch (error) {
+    // user not found or server error
+  }
 
   if (user?.data &&
     caseInsensitiveCompare(addressOrUsername, user.data.walletAddress) &&

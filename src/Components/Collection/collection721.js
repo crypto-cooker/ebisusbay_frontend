@@ -27,6 +27,7 @@ import {hostedImage, ImageKitService} from "../../helpers/image";
 import {useRouter} from "next/router";
 import {CollectionFilters} from "../Models/collection-filters.model";
 import {pushQueryString} from "../../helpers/query";
+import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 
 const config = appConfig();
 
@@ -174,6 +175,12 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
                     {collection.name}
                     <div className="clearfix" />
                   </h4>
+                  <CollectionVerificationRow
+                    doxx={collection.verification?.doxx}
+                    kyc={collection.verification?.kyc}
+                    escrow={collection.verification?.escrow}
+                    center={true}
+                  />
                   {collection.metadata.description && <p>{collection.metadata.description}</p>}
                   <span className="fs-4">
                     <SocialsBar address={collection.address} socials={collection.metadata} />
