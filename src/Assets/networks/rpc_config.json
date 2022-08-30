@@ -10356,8 +10356,8 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
-      "complete": false,
+      "published": false,
+      "complete": true,
       "redirect": "https://www.wackywurmz.com/mint"
     },
     {
