@@ -9,6 +9,7 @@ import Button from "@src/Components/components/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFilter} from "@fortawesome/free-solid-svg-icons";
 import {SortDropdown} from "@src/Components/Collection/CollectionTaskBar/SortDropdown";
+import {SearchBar} from "@src/Components/Collection/CollectionTaskBar/SearchBar";
 
 
 const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
@@ -27,13 +28,7 @@ export const CollectionTaskBar = ({onFilter, onSearch, onSort, onFilterToggle, r
   return useMobileMenu ? (
     <>
       <div className="d-flex mb-2">
-        <Form.Control
-          type="text"
-          placeholder="Search by name"
-          onChange={onSearch}
-          style={{ marginBottom: 0, marginTop: 0 }}
-          defaultValue={''}
-        />
+        <SearchBar />
       </div>
       <div className="d-flex mb-2">
         <div className="flex-fill">
@@ -69,13 +64,7 @@ export const CollectionTaskBar = ({onFilter, onSearch, onSort, onFilterToggle, r
         </Button>
       </div>
       <div className="flex-grow-1 ms-2">
-        <Form.Control
-          type="text"
-          placeholder="Search by name"
-          onChange={onSearch}
-          style={{ marginBottom: 0, marginTop: 0 }}
-          defaultValue={''}
-        />
+        <SearchBar />
       </div>
       <div className="ms-2">
         <SortDropdown onSort={onSort} />

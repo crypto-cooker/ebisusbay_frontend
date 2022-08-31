@@ -1,9 +1,8 @@
 import React, { memo, useState } from 'react';
-import {Accordion, Badge, Form} from 'react-bootstrap';
+import {Accordion, Form} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '../../components/Button';
-import { commify } from 'ethers/lib/utils';
 import {useRouter} from "next/router";
 import {pushQueryString} from "@src/helpers/query";
 import {filterListingsByPrice} from "@src/GlobalState/collectionSlice";
@@ -12,7 +11,6 @@ const RankFilter = ({ address, ...props }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const userTheme = useSelector((state) => state.user.theme);
   const currentFilter = useSelector((state) => state.collection.query.filter);
 
   const [minRank, setMinRank] = useState(currentFilter.minRank);
@@ -21,27 +19,6 @@ const RankFilter = ({ address, ...props }) => {
   const hasActiveRangeFilter = () => {
     return !!currentFilter.minRank ||
       !!currentFilter.maxRank;
-  };
-
-  const clearAttributeFilters = () => {
-    currentFilter.minRank = null;
-    currentFilter.maxRank = null;
-
-    setMinRank('');
-    setMaxRank('');
-
-    pushQueryString(router, {
-      slug: router.query.slug,
-      ...currentFilter.toPageQuery()
-    });
-
-    dispatch(
-      filterListingsByPrice({
-        address,
-        minRank: null,
-        maxRank: null,
-      })
-    );
   };
 
   const onApply = () => {
@@ -64,6 +41,8 @@ const RankFilter = ({ address, ...props }) => {
     dispatch(
       filterListingsByPrice({
         address,
+        minPrice: currentFilter.minPrice,
+        maxPrice: currentFilter.maxPrice,
         minRank: currentFilter.minRank,
         maxRank: currentFilter.maxRank,
       })
@@ -84,43 +63,8 @@ const RankFilter = ({ address, ...props }) => {
     }
   };
 
-  const ThemedBadge = (props) => {
-    return (
-      <Badge
-        pill
-        bg={userTheme === 'dark' ? 'light' : 'dark'}
-        text={userTheme === 'dark' ? 'dark' : 'light'}
-      >
-        {props.children}
-      </Badge>
-    )
-  }
-
   return (
     <div {...props}>
-      {hasActiveRangeFilter() && (
-        <div className="d-flex flex-wrap justify-content-between align-middle mb-2">
-          <div className="me-2">
-            <ThemedBadge>
-              {currentFilter.minRank && currentFilter.maxRank && (
-                <>
-                  Rank {commify(currentFilter.minRank)} - {commify(currentFilter.maxRank)}
-                </>
-              )}
-              {currentFilter.minRank && !currentFilter.maxRank && <>At least rank {commify(currentFilter.minRank)}</>}
-              {!currentFilter.minRank && currentFilter.maxRank && <>Max rank {commify(currentFilter.maxRank)}</>}
-            </ThemedBadge>
-          </div>
-          <div
-            className="d-inline-block fst-italic my-auto flex-grow-1 text-end"
-            style={{ fontSize: '0.8em', cursor: 'pointer' }}
-            onClick={clearAttributeFilters}
-          >
-            Clear
-          </div>
-        </div>
-      )}
-
       <Accordion defaultActiveKey={hasActiveRangeFilter() ? 'price' : undefined}>
         <Accordion.Item eventKey="price">
           <Accordion.Header>
