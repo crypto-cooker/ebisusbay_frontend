@@ -13,6 +13,7 @@ import useGetCollections from '../../hooks/useGetCollections';
 import { filter } from 'lodash';
 
 const mobileListBreakpoint = 1000;
+const PAGE_SIZE = 50;
 const tableMobileView = typeof window !== 'undefined' && window.innerWidth > mobileListBreakpoint;
 
 const Table = ({ timeFrame, searchTerms, onlyVerified }) => {
@@ -137,7 +138,8 @@ const Table = ({ timeFrame, searchTerms, onlyVerified }) => {
             {items.map((collection, index) => {
               return (
                 <tr key={index}>
-                  {tableMobileView && <td>{(index + 1) + (indexPages * items.length)}</td>}
+                  {tableMobileView && <td>{(index + 1) + (indexPages * PAGE_SIZE)}</td>}
+                 { console.log(index, indexPages, items.length, (index + 1) + (indexPages * items.length))}
                   <th scope="row" className="row gap-4 border-bottom-0" style={{ paddingLeft: 0 }}>
                     <div className="col-12" style={{ paddingLeft: '75px' }}>
                       <div className="coll_list_pp" style={{ cursor: 'pointer' }}>
