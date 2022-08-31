@@ -7978,7 +7978,7 @@
       "multiToken": false,
       "address": "0xA35f40e45FFF953F477700C83D550D35F11B42aB",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Boost you daily yield on Troopz staking platform with these awesome Skillz Boosts. Collect all 5 for added utility.",
         "verified": true,
@@ -11122,7 +11122,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "priceDescription": "50 $TRPZ automatically credited back to your wallet with EVERY CRO MINT"
     },
     {
