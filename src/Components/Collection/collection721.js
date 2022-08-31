@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Contract, ethers } from 'ethers';
 import Blockies from 'react-blockies';
-import {faCheck, faCircle, faFilter} from '@fortawesome/free-solid-svg-icons';
+import {faCheck, faCircle, faFilter, faSync} from '@fortawesome/free-solid-svg-icons';
 import {Collapse, Offcanvas, Spinner} from 'react-bootstrap';
 import styled from 'styled-components';
 import CollectionFilterBar from '../components/CollectionFilterBar';
@@ -36,6 +36,8 @@ import RankFilter from "@src/Components/Collection/Filters/RankFilter";
 import Button from "@src/Components/components/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {MobileFilters} from "@src/Components/Collection/CollectionTaskBar/MobileFilters";
+import {commify} from "ethers/lib/utils";
+import {FilterResultsBar} from "@src/Components/Collection/FilterResultsBar";
 
 const config = appConfig();
 
@@ -296,6 +298,7 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
                     </div>
                   </Collapse>
                   <div className="col">
+                    <FilterResultsBar collection={collection} />
                     {isUsingListingsFallback ? (
                       <CollectionListingsGroup listings={listings} canLoadMore={canLoadMore} loadMore={loadMore} />
                     ) : (

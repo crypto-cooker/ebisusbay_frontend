@@ -102,36 +102,8 @@ const TraitsFilter = ({ address, identifier }) => {
     );
   };
 
-  const ThemedBadge = (props) => {
-    return (
-      <Badge
-        pill
-        bg={userTheme === 'dark' ? 'light' : 'dark'}
-        text={userTheme === 'dark' ? 'dark' : 'light'}
-      >
-        {props.children}
-      </Badge>
-    )
-  }
-
   return (
     <>
-      <div className="mb-2">
-        {viewSelectedAttributesCount() > 0 && (
-          <div className="d-flex justify-content-between align-middle">
-            <ThemedBadge>
-              <span>{viewSelectedAttributesCount()} selected</span>
-            </ThemedBadge>
-            <div
-              className="d-inline-block fst-italic my-auto me-2"
-              style={{ fontSize: '0.8em', cursor: 'pointer' }}
-              onClick={clearAttributeFilters}
-            >
-              Clear
-            </div>
-          </div>
-        )}
-      </div>
       <Accordion id="traits">
         {viewTraitsList()
           .sort((a, b) => (a[0].toLowerCase() > b[0].toLowerCase() ? 1 : -1))

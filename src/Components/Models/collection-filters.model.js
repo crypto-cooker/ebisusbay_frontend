@@ -1,5 +1,5 @@
-import {isEmptyObj} from "../../utils";
-import {cleanedQuery} from "../../helpers/query";
+import {cleanedQuery} from "@src/helpers/query";
+import {isEmptyObj} from "@src/utils";
 
 export class CollectionFilters {
   address = null;
@@ -91,5 +91,18 @@ export class CollectionFilters {
       maxRank: this.maxRank,
       listed: this.listed,
     });
+  }
+
+  isEmpty() {
+    const query = this.toPageQuery();
+
+    const nestedObj = cleanedQuery({
+      traits: query.traits,
+      powertraits: query.powertraits
+    });
+    delete query.traits;
+    delete query.powertraits;
+
+    return isEmptyObj(query) && isEmptyObj(nestedObj);
   }
 }

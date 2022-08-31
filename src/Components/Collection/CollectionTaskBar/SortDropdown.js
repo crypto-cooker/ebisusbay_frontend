@@ -50,7 +50,7 @@ export const SortDropdown = ({onSort}) => {
   };
 
   return (
-    <div className="items_filter" style={{ marginBottom: 0, marginTop: 0}}>
+    <div className="items_filter" style={{ marginBottom: 0, marginTop: 0, minWidth: 200}}>
       <div className="dropdownSelect two w-100 mr-0 mb-0">
         <Select
           styles={customStyles}
