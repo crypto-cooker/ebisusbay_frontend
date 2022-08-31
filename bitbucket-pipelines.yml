@@ -31,8 +31,9 @@ definitions:
         image: node:16
         runs-on:
           - 'self.hosted'
-          - 'linux.shell'
+          - 'linux'
           - 'web'
+        size: 1x
         script:
           - *update
           - *version
@@ -50,8 +51,9 @@ pipelines:
           deployment: TestnetBuildStep
           runs-on:
             - 'self.hosted'
-            - 'linux.shell'
+            - 'linux'
             - 'web'
+          size: 2x
           script:
             - *update
             - *version
@@ -66,7 +68,7 @@ pipelines:
           image: amazon/aws-cli
           runs-on:
             - 'self.hosted'
-            - 'linux.shell'
+            - 'linux'
             - 'web'
           artifacts:
             download: false
@@ -81,8 +83,9 @@ pipelines:
             - docker
           runs-on:
             - 'self.hosted'
-            - 'linux.shell'
+            - 'linux'
             - 'web'
+          size: 1x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -96,8 +99,9 @@ pipelines:
           image: alpine:latest
           runs-on:
             - 'self.hosted'
-            - 'linux.shell'
+            - 'linux'
             - 'web'
+          size: 1x
           artifacts:
             download: false
           clone:
@@ -114,8 +118,9 @@ pipelines:
           deployment: SandboxBuildStep
           runs-on:
             - 'self.hosted'
-            - 'linux.shell'
+            - 'linux'
             - 'web'
+          size: 2x
           script:
             - *update
             - *version
@@ -130,7 +135,7 @@ pipelines:
           image: amazon/aws-cli
           runs-on:
             - 'self.hosted'
-            - 'linux.shell'
+            - 'linux'
             - 'web'
           artifacts:
             download: false
@@ -145,8 +150,9 @@ pipelines:
             - docker
           runs-on:
             - 'self.hosted'
-            - 'linux.shell'
+            - 'linux'
             - 'web'
+          size: 1x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -160,8 +166,9 @@ pipelines:
           image: alpine:latest
           runs-on:
             - 'self.hosted'
-            - 'linux.shell'
+            - 'linux'
             - 'web'
+          size: 1x
           artifacts:
             download: false
           clone:
@@ -179,8 +186,9 @@ pipelines:
           deployment: DevelopmentBuildStep
           runs-on:
             - 'self.hosted'
-            - 'linux.shell'
+            - 'linux'
             - 'web'
+          size: 2x
           script:
             - *update
             - *version
@@ -195,7 +203,7 @@ pipelines:
           image: amazon/aws-cli
           runs-on:
             - 'self.hosted'
-            - 'linux.shell'
+            - 'linux'
             - 'web'
           # Copy RPC config to Admin S3 Bucket
           script:
@@ -208,8 +216,9 @@ pipelines:
             - docker
           runs-on:
             - 'self.hosted'
-            - 'linux.shell'
+            - 'linux'
             - 'web'
+          size: 1x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -223,8 +232,9 @@ pipelines:
          image: alpine:latest
          runs-on:
            - 'self.hosted'
-           - 'linux.shell'
+           - 'linux'
            - 'web'
+         size: 1x
          clone:
            enabled: false
          script:
@@ -239,8 +249,9 @@ pipelines:
           deployment: ProductionBuildStep
           runs-on:
             - 'self.hosted'
-            - 'linux.shell'
+            - 'linux'
             - 'web'
+          size: 2x
           script:
             - *update
             - *version
@@ -253,7 +264,7 @@ pipelines:
           image: amazon/aws-cli
           runs-on:
             - 'self.hosted'
-            - 'linux.shell'
+            - 'linux'
             - 'web'
           # Copy RPC config to Admin S3 Bucket
           script:
@@ -266,8 +277,9 @@ pipelines:
             - docker
           runs-on:
             - 'self.hosted'
-            - 'linux.shell'
+            - 'linux'
             - 'web'
+          size: 1x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -281,8 +293,9 @@ pipelines:
          image: alpine:latest
          runs-on:
            - 'self.hosted'
-           - 'linux.shell'
+           - 'linux'
            - 'web'
+         size: 1x
          clone:
            enabled: false
          script:
