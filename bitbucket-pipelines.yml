@@ -31,7 +31,7 @@ definitions:
         image: node:16
         runs-on:
           - 'self.hosted'
-          - 'linux'
+          - 'linux.shell'
           - 'web'
         size: 1x
         script:
@@ -51,7 +51,7 @@ pipelines:
           deployment: TestnetBuildStep
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.shell'
             - 'web'
           size: 2x
           script:
@@ -68,7 +68,7 @@ pipelines:
           image: amazon/aws-cli
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.shell'
             - 'web'
           artifacts:
             download: false
@@ -83,7 +83,7 @@ pipelines:
             - docker
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.shell'
             - 'web'
           size: 1x
           script:
@@ -99,7 +99,7 @@ pipelines:
           image: alpine:latest
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.shell'
             - 'web'
           size: 1x
           artifacts:
@@ -118,7 +118,7 @@ pipelines:
           deployment: SandboxBuildStep
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.shell'
             - 'web'
           size: 2x
           script:
@@ -135,7 +135,7 @@ pipelines:
           image: amazon/aws-cli
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.shell'
             - 'web'
           artifacts:
             download: false
@@ -150,7 +150,7 @@ pipelines:
             - docker
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.shell'
             - 'web'
           size: 1x
           script:
@@ -166,7 +166,7 @@ pipelines:
           image: alpine:latest
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.shell'
             - 'web'
           size: 1x
           artifacts:
@@ -186,7 +186,7 @@ pipelines:
           deployment: DevelopmentBuildStep
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.shell'
             - 'web'
           size: 2x
           script:
@@ -203,7 +203,7 @@ pipelines:
           image: amazon/aws-cli
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.shell'
             - 'web'
           # Copy RPC config to Admin S3 Bucket
           script:
@@ -216,7 +216,7 @@ pipelines:
             - docker
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.shell'
             - 'web'
           size: 1x
           script:
@@ -232,7 +232,7 @@ pipelines:
          image: alpine:latest
          runs-on:
            - 'self.hosted'
-           - 'linux'
+           - 'linux.shell'
            - 'web'
          size: 1x
          clone:
@@ -249,7 +249,7 @@ pipelines:
           deployment: ProductionBuildStep
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.shell'
             - 'web'
           size: 2x
           script:
@@ -264,7 +264,7 @@ pipelines:
           image: amazon/aws-cli
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.shell'
             - 'web'
           # Copy RPC config to Admin S3 Bucket
           script:
@@ -277,7 +277,7 @@ pipelines:
             - docker
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.shell'
             - 'web'
           size: 1x
           script:
@@ -293,7 +293,7 @@ pipelines:
          image: alpine:latest
          runs-on:
            - 'self.hosted'
-           - 'linux'
+           - 'linux.shell'
            - 'web'
          size: 1x
          clone:
