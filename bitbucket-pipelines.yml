@@ -33,7 +33,6 @@ definitions:
           - 'self.hosted'
           - 'linux.shell'
           - 'web'
-        size: 1x
         script:
           - *update
           - *version
@@ -53,7 +52,6 @@ pipelines:
             - 'self.hosted'
             - 'linux.shell'
             - 'web'
-          size: 2x
           script:
             - *update
             - *version
@@ -85,7 +83,6 @@ pipelines:
             - 'self.hosted'
             - 'linux.shell'
             - 'web'
-          size: 1x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -101,7 +98,6 @@ pipelines:
             - 'self.hosted'
             - 'linux.shell'
             - 'web'
-          size: 1x
           artifacts:
             download: false
           clone:
@@ -120,7 +116,6 @@ pipelines:
             - 'self.hosted'
             - 'linux.shell'
             - 'web'
-          size: 2x
           script:
             - *update
             - *version
@@ -152,7 +147,6 @@ pipelines:
             - 'self.hosted'
             - 'linux.shell'
             - 'web'
-          size: 1x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -168,7 +162,6 @@ pipelines:
             - 'self.hosted'
             - 'linux.shell'
             - 'web'
-          size: 1x
           artifacts:
             download: false
           clone:
@@ -188,7 +181,6 @@ pipelines:
             - 'self.hosted'
             - 'linux.shell'
             - 'web'
-          size: 2x
           script:
             - *update
             - *version
@@ -218,7 +210,6 @@ pipelines:
             - 'self.hosted'
             - 'linux.shell'
             - 'web'
-          size: 1x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -234,7 +225,6 @@ pipelines:
            - 'self.hosted'
            - 'linux.shell'
            - 'web'
-         size: 1x
          clone:
            enabled: false
          script:
@@ -251,7 +241,6 @@ pipelines:
             - 'self.hosted'
             - 'linux.shell'
             - 'web'
-          size: 2x
           script:
             - *update
             - *version
@@ -279,7 +268,6 @@ pipelines:
             - 'self.hosted'
             - 'linux.shell'
             - 'web'
-          size: 1x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -295,7 +283,6 @@ pipelines:
            - 'self.hosted'
            - 'linux.shell'
            - 'web'
-         size: 1x
          clone:
            enabled: false
          script:
