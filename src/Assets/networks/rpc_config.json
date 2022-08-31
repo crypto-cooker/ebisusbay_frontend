@@ -5443,9 +5443,9 @@
       "metadata": {
         "description": "Carkayous is a fictitious continent created by Jesse Smith (Ink Master | TV Celeb | Tattoo Artist) where his art lives. The goal of Expedition #9 is to further explore Killick Falls Lagoon where the Feral Fish lives. This is a 2,222 PFP collection with FREE Tattoos (flight and hotel included) as the primary utility.",
         "verified": true,
-        "avatar": "/img/collections/carkayous/avatar.png",
-        "card": "/img/collections/carkayous/card.png",
-        "banner": "/img/collections/carkayous/banner.png",
+        "avatar": "/img/collections/carkayous-feral-fish/avatar.webp",
+        "card": "/img/collections/carkayous-feral-fish/card.webp",
+        "banner": "/img/collections/carkayous-feral-fish/banner.webp",
         "rankings": {"source": "rarity_sniper", "slug": "feral-fish"},
         "maxSupply": 2222,
         "website": "https://carkayous.com/",
@@ -8244,6 +8244,25 @@
         "twitter": "https://twitter.com/IcySquidGame",
         "discord": "https://discord.gg/ZNHNXS5ZxY",
         "medium": "https://medium.com/@icysquidgame"
+      }
+    },
+    {
+      "name": "Carkayous - BunnyFish",
+      "slug": "carkayous-bunnyfish",
+      "multiToken": false,
+      "address": "0x6c2757ee563d063cce48bd06b130292fe530e76d",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "BunnyFish from Carkayous attained by owning Feral Fishes that include Ledgelip or Riptide as the background. Owning enough BunnyFish that adds up to 75 points will get you an Expedition 8.2 BunnyFish.",
+        "verified": true,
+        "avatar": "/img/collections/carkayous-bunnyfish/avatar.webp",
+        "card": "/img/collections/carkayous-bunnyfish/card.webp",
+        "banner": "/img/collections/carkayous-bunnyfish/banner.webp",
+        "maxSupply": 0,
+        "website": "https://carkayous.com/",
+        "twitter": "https://twitter.com/carkayous",
+        "discord": "https://discord.gg/carkayous"
       }
     }
   ],
