@@ -1,16 +1,13 @@
 import React, { memo, useEffect, useState } from 'react';
 import {Accordion, Badge, Form} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-import { filterListingsByTrait } from '../../GlobalState/collectionSlice';
-import {humanize, isEmptyObj, mapAttributeString} from '../../utils';
-import styles from './PowertraitsFilter/filters.module.scss';
+import { filterListingsByTrait } from '@src/GlobalState/collectionSlice';
+import {humanize, mapAttributeString} from '@src/utils';
 import {useRouter} from "next/router";
-import {cleanedQuery, pushQueryString} from "../../helpers/query";
+import {cleanedQuery, pushQueryString} from "@src/helpers/query";
 
-const TraitsFilter = ({ address }) => {
+const TraitsFilter = ({ address, identifier }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -117,29 +114,9 @@ const TraitsFilter = ({ address }) => {
     )
   }
 
-  useEffect(() => {
-    const container = document.getElementById('traits');
-    if (container) {
-      container.style.display = hideAttributes ? 'none' : 'block';
-    }
-  }, [hideAttributes]);
-
   return (
     <>
       <div className="mb-2">
-        <div className="d-flex flex-wrap justify-content-between align-middle">
-          <h3
-            className="d-inline-block"
-            onClick={() => setHideAttributes(!hideAttributes)}
-            style={{ cursor: 'pointer', marginBottom: 0 }}
-          >
-            Attributes
-          </h3>
-
-          <div className="d-inline-block fst-italic my-auto me-2" style={{ fontSize: '0.8em', cursor: 'pointer' }}>
-            <FontAwesomeIcon id="traits-expand-icon" icon={hideAttributes ? faPlus : faMinus} />
-          </div>
-        </div>
         {viewSelectedAttributesCount() > 0 && (
           <div className="d-flex justify-content-between align-middle">
             <ThemedBadge>
@@ -155,7 +132,7 @@ const TraitsFilter = ({ address }) => {
           </div>
         )}
       </div>
-      <Accordion id="traits" className={`${hideAttributes ? 'd-none' : ''} ${styles.traits}`}>
+      <Accordion id="traits">
         {viewTraitsList()
           .sort((a, b) => (a[0].toLowerCase() > b[0].toLowerCase() ? 1 : -1))
           .map(([traitCategoryName, traitCategoryValues], key) => (

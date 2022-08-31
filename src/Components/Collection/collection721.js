@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Contract, ethers } from 'ethers';
 import Blockies from 'react-blockies';
-import { faCheck, faCircle } from '@fortawesome/free-solid-svg-icons';
-import { Spinner } from 'react-bootstrap';
+import {faCheck, faCircle, faFilter} from '@fortawesome/free-solid-svg-icons';
+import {Collapse, Offcanvas, Spinner} from 'react-bootstrap';
 import styled from 'styled-components';
 import CollectionFilterBar from '../components/CollectionFilterBar';
 import LayeredIcon from '../components/LayeredIcon';
@@ -14,8 +14,8 @@ import CollectionNftsGroup from '../components/CollectionNftsGroup';
 import CollectionListingsGroup from '../components/CollectionListingsGroup';
 import {init, fetchListings, getStats, updateTab} from '../../GlobalState/collectionSlice';
 import { isCronosVerseCollection, isCrosmocraftsCollection } from '../../utils';
-import TraitsFilter from './TraitsFilter';
-import PowertraitsFilter from './PowertraitsFilter';
+import TraitsFilter from './Filters/TraitsFilter';
+import PowertraitsFilter from './Filters/PowertraitsFilter';
 import SocialsBar from './SocialsBar';
 import { CollectionSortOption } from '../Models/collection-sort-option.model';
 import Market from '../../Contracts/Marketplace.json';
@@ -28,6 +28,14 @@ import {useRouter} from "next/router";
 import {CollectionFilters} from "../Models/collection-filters.model";
 import {pushQueryString} from "../../helpers/query";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
+import {CollectionTaskBar} from "@src/Components/Collection/CollectionTaskBar";
+import {DesktopFilters} from "@src/Components/Collection/CollectionTaskBar/DesktopFilters";
+import useBreakpoint from "use-breakpoint";
+import PriceFilter from "@src/Components/Collection/Filters/PriceFilter";
+import RankFilter from "@src/Components/Collection/Filters/RankFilter";
+import Button from "@src/Components/components/Button";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {MobileFilters} from "@src/Components/Collection/CollectionTaskBar/MobileFilters";
 
 const config = appConfig();
 
@@ -42,6 +50,7 @@ const tabs = {
   map: 'map'
 };
 
+const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
 const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -55,6 +64,7 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
   const collectionStats = useSelector((state) => state.collection.stats);
   const collectionLoading = useSelector((state) => state.collection.loading);
   const initialLoadComplete = useSelector((state) => state.collection.initialLoadComplete);
+  const theme = useSelector((state) => state.user.theme);
 
   const [isFirstLoaded, setIsFirstLoaded] = useState(0);
 
@@ -140,6 +150,13 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
       setIsFirstLoaded(2);
     }
   }, [collectionLoading, isFirstLoaded]);
+
+  const [filtersVisible, setFiltersVisible] = useState(false);
+  const [useMobileMenu, setUseMobileMenu] = useState(false);
+  const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
+  useEffect(() => {
+    setUseMobileMenu(minWidth < BREAKPOINTS.m);
+  }, [breakpoint]);
 
   return (
     <div>
@@ -259,28 +276,26 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
             {openMenu === tabs.items && (
               <div className="tab-1 onStep fadeIn">
                 <div className="row">
-                  <CollectionFilterBar
-                    showFilter={false}
-                    cacheName={cacheName}
-                    address={collection.address}
-                    traits={collectionStats?.traits}
-                    powertraits={collectionStats?.powertraits}
+                  <CollectionTaskBar
+                    onFilterToggle={() => setFiltersVisible(!filtersVisible)}
+                    // showFilter={false}
+                    // cacheName={cacheName}
+                    // address={collection.address}
+                    // traits={collectionStats?.traits}
+                    // powertraits={collectionStats?.powertraits}
                   />
                 </div>
                 <div className="row">
-                  {collectionStatsLoading ? (
-                    <></>
-                  ) : (
-                    // <div className="col-md-3 mb-4">
-                    //   <Skeleton count={5} type="rect" />
-                    // </div>
+                  <Collapse in={filtersVisible && !useMobileMenu} dimension="width">
                     <div className="col-md-3 mb-4">
-                      <PriceRangeFilter className="mb-3" address={collection.address} />
-                      {hasTraits() && <TraitsFilter address={collection.address} />}
-                      {hasPowertraits() && <PowertraitsFilter address={collection.address} />}
+                      <DesktopFilters
+                        address={collection.address}
+                        traits={collectionStats?.traits}
+                        powertraits={collectionStats?.powertraits}
+                      />
                     </div>
-                  )}
-                  <div className="col-md-9">
+                  </Collapse>
+                  <div className="col">
                     {isUsingListingsFallback ? (
                       <CollectionListingsGroup listings={listings} canLoadMore={canLoadMore} loadMore={loadMore} />
                     ) : (
@@ -318,6 +333,14 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
           </div>
         </div>
       </section>
+
+      <MobileFilters
+        address={collection.address}
+        show={useMobileMenu && filtersVisible}
+        onHide={() => setFiltersVisible(false)}
+        traits={collectionStats?.traits}
+        powertraits={collectionStats?.powertraits}
+      />
 
       <Footer />
     </div>
