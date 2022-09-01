@@ -54,28 +54,27 @@ export const MobileFilters = ({address, show, onHide, traits, powertraits}) => {
   };
 
   return (
-    <Offcanvas show={show} placement="bottom" onHide={onHide}>
+    <Offcanvas show={show} placement="bottom" onHide={onHide} className="filter-pane">
       <Offcanvas.Header closeButton closeVariant={theme === 'dark' ? 'white': 'dark'}>
         <Offcanvas.Title>Filters</Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
         <div className="pb-5 overflow-hidden">
-          <StatusFilter className="mb-3" />
-          <PriceFilter className="mb-3" address={address} />
-          <RankFilter className="mb-3" address={address} />
+          <StatusFilter />
+          <PriceFilter address={address} />
+          <RankFilter address={address} />
+          <hr className="mt-4 mb-2"/>
           {hasTraits() && <TraitsFilter address={address} />}
           {hasPowertraits() && <PowertraitsFilter address={address} />}
         </div>
         <div className="d-flex fixed-bottom mx-2 my-2">
           <div className="flex-fill">
             <Button type="legacy-outlined" className="w-100" style={{height: '100%'}} onClick={onClearAll}>
-              <FontAwesomeIcon icon={faFilter} />
               <span className="ms-2">Clear all</span>
             </Button>
           </div>
           <div className="flex-fill ms-4">
             <Button type="legacy" className="w-100" style={{height: '100%'}} onClick={onHide}>
-              <FontAwesomeIcon icon={faFilter} />
               <span className="ms-2">Done</span>
             </Button>
           </div>

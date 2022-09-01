@@ -64,10 +64,10 @@ const PriceFilter = ({ address, ...props }) => {
 
   return (
     <div id="filter-price" {...props}>
-      <Accordion defaultActiveKey={hasActiveRangeFilter() ? 'price' : undefined}>
+      <Accordion defaultActiveKey={hasActiveRangeFilter() ? 'price' : undefined} flush>
         <Accordion.Item eventKey="price">
           <Accordion.Header>
-            <h5 className="my-1">Price</h5>
+            Price
           </Accordion.Header>
           <Accordion.Body>
             <div className="row">

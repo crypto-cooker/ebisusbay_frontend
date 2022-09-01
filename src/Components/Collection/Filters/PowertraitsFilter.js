@@ -67,7 +67,7 @@ const PowertraitsFilter = ({ address }) => {
   };
 
   return (
-    <div className="my-4">
+    <div className="my-4" flush>
       <Accordion id="powertraits">
         {viewPowertraitsList()
           .sort((a, b) => (a[0].toLowerCase() > b[0].toLowerCase() ? 1 : -1))

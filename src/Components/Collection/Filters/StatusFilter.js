@@ -43,10 +43,10 @@ export const StatusFilter = ({...props}) => {
 
   return (
     <div {...props}>
-      <Accordion id="status" defaultActiveKey={hasActiveStatusFilter() ? 'status' : undefined}>
+      <Accordion id="status" defaultActiveKey={hasActiveStatusFilter() ? 'status' : undefined} flush>
         <Accordion.Item eventKey="status">
           <Accordion.Header>
-            <h5 className="my-1">Status</h5>
+            Status
           </Accordion.Header>
           <Accordion.Body>
             {statuses.map((status) => (

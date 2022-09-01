@@ -66,7 +66,7 @@ const TraitsFilter = ({ address }) => {
 
   return (
     <>
-      <Accordion id="traits">
+      <Accordion id="traits" flush>
         {viewTraitsList()
           .sort((a, b) => (a[0].toLowerCase() > b[0].toLowerCase() ? 1 : -1))
           .map(([traitCategoryName, traitCategoryValues], key) => (
