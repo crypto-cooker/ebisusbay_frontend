@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getCollectionMetadata } from '../core/api';
-import { findCollectionByAddress } from '../utils';
+import {findCollectionByAddress, isNumeric} from '../utils';
 
 import Constants from '../constants'
 import useFeatureFlag from '../hooks/useFeatureFlag';
@@ -105,14 +105,6 @@ function sortCollections(collections, key, direction) {
 
     return newA < newB ? 1 : -1;
   });
-}
-
-function isNumeric(str) {
-  if (typeof str != 'string') return false; // we only process strings!
-  return (
-    !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
-    !isNaN(parseFloat(str))
-  ); // ...and ensure strings of whitespace fail
 }
 
 function mergeStats(contract, response, index) {

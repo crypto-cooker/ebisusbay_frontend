@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Contract, ethers } from 'ethers';
 import Blockies from 'react-blockies';
-import { faCheck, faCircle } from '@fortawesome/free-solid-svg-icons';
-import { Spinner } from 'react-bootstrap';
+import {faCheck, faCircle, faFilter, faSync} from '@fortawesome/free-solid-svg-icons';
+import {Collapse, Offcanvas, Spinner} from 'react-bootstrap';
 import styled from 'styled-components';
 import CollectionFilterBar from '../components/CollectionFilterBar';
 import LayeredIcon from '../components/LayeredIcon';
@@ -14,8 +14,8 @@ import CollectionNftsGroup from '../components/CollectionNftsGroup';
 import CollectionListingsGroup from '../components/CollectionListingsGroup';
 import {init, fetchListings, getStats, updateTab} from '../../GlobalState/collectionSlice';
 import { isCronosVerseCollection, isCrosmocraftsCollection } from '../../utils';
-import TraitsFilter from './TraitsFilter';
-import PowertraitsFilter from './PowertraitsFilter';
+import TraitsFilter from './Filters/TraitsFilter';
+import PowertraitsFilter from './Filters/PowertraitsFilter';
 import SocialsBar from './SocialsBar';
 import { CollectionSortOption } from '../Models/collection-sort-option.model';
 import Market from '../../Contracts/Marketplace.json';
@@ -28,6 +28,13 @@ import {useRouter} from "next/router";
 import {CollectionFilters} from "../Models/collection-filters.model";
 import {pushQueryString} from "../../helpers/query";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
+import {CollectionTaskBar} from "@src/Components/Collection/CollectionTaskBar";
+import {DesktopFilters} from "@src/Components/Collection/CollectionTaskBar/DesktopFilters";
+import useBreakpoint from "use-breakpoint";
+import Button from "@src/Components/components/Button";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {MobileFilters} from "@src/Components/Collection/CollectionTaskBar/MobileFilters";
+import {FilterResultsBar} from "@src/Components/Collection/FilterResultsBar";
 
 const config = appConfig();
 
@@ -42,6 +49,7 @@ const tabs = {
   map: 'map'
 };
 
+const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
 const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -51,10 +59,10 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
 
   const [royalty, setRoyalty] = useState(null);
 
-  const collectionStatsLoading = useSelector((state) => state.collection.statsLoading);
   const collectionStats = useSelector((state) => state.collection.stats);
   const collectionLoading = useSelector((state) => state.collection.loading);
   const initialLoadComplete = useSelector((state) => state.collection.initialLoadComplete);
+  const currentFilter = useSelector((state) => state.collection.query.filter);
 
   const [isFirstLoaded, setIsFirstLoaded] = useState(0);
 
@@ -99,12 +107,23 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
     dispatch(fetchListings());
   }
 
-  const hasTraits = () => {
-    return collectionStats?.traits != null && Object.entries(collectionStats?.traits).length > 0;
-  };
+  const activeFiltersCount = () => {
+    const traits = Object.values(currentFilter.traits)
+      .map((traitCategoryValue) => traitCategoryValue.length)
+      .reduce((prev, curr) => prev + curr, 0);
+    const powertraits = Object.values(currentFilter.powertraits)
+      .map((traitCategoryValue) => traitCategoryValue.length)
+      .reduce((prev, curr) => prev + curr, 0);
+    let count = traits + powertraits;
 
-  const hasPowertraits = () => {
-    return collectionStats?.powertraits != null && Object.entries(collectionStats?.powertraits).length > 0;
+    if (currentFilter.minPrice) count++;
+    if (currentFilter.maxPrice) count++;
+    if (currentFilter.minRank) count++;
+    if (currentFilter.maxRank) count++;
+    if (currentFilter.search) count++;
+    if (currentFilter.listed) count++;
+
+    return count;
   };
 
   const loadMore = () => {
@@ -140,6 +159,13 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
       setIsFirstLoaded(2);
     }
   }, [collectionLoading, isFirstLoaded]);
+
+  const [filtersVisible, setFiltersVisible] = useState(false);
+  const [useMobileMenu, setUseMobileMenu] = useState(false);
+  const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
+  useEffect(() => {
+    setUseMobileMenu(minWidth < BREAKPOINTS.m);
+  }, [breakpoint]);
 
   return (
     <div>
@@ -259,28 +285,22 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
             {openMenu === tabs.items && (
               <div className="tab-1 onStep fadeIn">
                 <div className="row">
-                  <CollectionFilterBar
-                    showFilter={false}
-                    cacheName={cacheName}
-                    address={collection.address}
-                    traits={collectionStats?.traits}
-                    powertraits={collectionStats?.powertraits}
+                  <CollectionTaskBar
+                    onFilterToggle={() => setFiltersVisible(!filtersVisible)}
                   />
                 </div>
                 <div className="row">
-                  {collectionStatsLoading ? (
-                    <></>
-                  ) : (
-                    // <div className="col-md-3 mb-4">
-                    //   <Skeleton count={5} type="rect" />
-                    // </div>
+                  <Collapse in={filtersVisible && !useMobileMenu} dimension="width">
                     <div className="col-md-3 mb-4">
-                      <PriceRangeFilter className="mb-3" address={collection.address} />
-                      {hasTraits() && <TraitsFilter address={collection.address} />}
-                      {hasPowertraits() && <PowertraitsFilter address={collection.address} />}
+                      <DesktopFilters
+                        address={collection.address}
+                        traits={collectionStats?.traits}
+                        powertraits={collectionStats?.powertraits}
+                      />
                     </div>
-                  )}
-                  <div className="col-md-9">
+                  </Collapse>
+                  <div className="col">
+                    <FilterResultsBar collection={collection} />
                     {isUsingListingsFallback ? (
                       <CollectionListingsGroup listings={listings} canLoadMore={canLoadMore} loadMore={loadMore} />
                     ) : (
@@ -319,6 +339,24 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
         </div>
       </section>
 
+      <MobileFilters
+        address={collection.address}
+        show={useMobileMenu && filtersVisible}
+        onHide={() => setFiltersVisible(false)}
+        traits={collectionStats?.traits}
+        powertraits={collectionStats?.powertraits}
+      />
+
+      {useMobileMenu && (
+        <div className="d-flex fixed-bottom mx-2 my-2">
+          <div className="mx-auto">
+            <Button type="legacy" style={{height: '100%'}} onClick={() => setFiltersVisible(true)}>
+              <FontAwesomeIcon icon={faFilter} />
+              <span className="ms-2">Filters {activeFiltersCount()}</span>
+            </Button>
+          </div>
+        </div>
+      )}
       <Footer />
     </div>
   );
