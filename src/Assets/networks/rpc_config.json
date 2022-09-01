@@ -8264,6 +8264,27 @@
         "twitter": "https://twitter.com/carkayous",
         "discord": "https://discord.gg/carkayous"
       }
+    },
+    {
+      "name": "CroArmy Jarheads",
+      "slug": "cro-army-jarheads",
+      "multiToken": false,
+      "address": "0xD06eF4dA6d75f6E4047999d7D9b2f899688f31a0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Degen NFT flippers are coming together to whale in tiered projects. Profit distribution. Airdrops. Community.",
+        "verified": false,
+        "avatar": "/img/collections/cro-army-jarheads/avatar.webp",
+        "card": "/img/collections/cro-army-jarheads/card.webp",
+        "banner": "/img/collections/cro-army-jarheads/banner.webp",
+        "maxSupply": 2041,
+        "website": "https://croarmy.io/",
+        "twitter": "https://twitter.com/croarmy_eth",
+        "discord": "https://discord.gg/croarmy",
+        "telegram": "https://t.me/CroArmy_ETH",
+        "medium": "https://croarmy.gitbook.io/croarmy/"
+      }
     }
   ],
   "drops": [
