@@ -1,22 +1,19 @@
-import React, { memo, useEffect, useState } from 'react';
-import {Accordion, Badge, Form} from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {memo} from 'react';
+import {Accordion, Form} from 'react-bootstrap';
+import {useDispatch, useSelector} from 'react-redux';
 
-import { filterListingsByTrait } from '@src/GlobalState/collectionSlice';
-import {humanize, mapAttributeString} from '@src/utils';
+import {filterListingsByTrait} from '@src/GlobalState/collectionSlice';
+import {humanize, mapAttributeString, stripSpaces} from '@src/utils';
 import {useRouter} from "next/router";
 import {cleanedQuery, pushQueryString} from "@src/helpers/query";
 
-const TraitsFilter = ({ address, identifier }) => {
+const TraitsFilter = ({ address }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const userTheme = useSelector((state) => state.user.theme);
   const collectionStats = useSelector((state) => state.collection.stats);
   const collectionCachedTraitsFilter = useSelector((state) => state.collection.query.filter.traits);
   const currentFilter = useSelector((state) => state.collection.query.filter);
-
-  const [hideAttributes, setHideAttributes] = useState(typeof window !== 'undefined' && window.innerWidth < 768);
 
   const viewTraitsList = () => {
     if (!collectionStats || !collectionStats.traits) {
@@ -26,21 +23,8 @@ const TraitsFilter = ({ address, identifier }) => {
     return Object.entries(collectionStats.traits);
   };
 
-  const viewSelectedAttributesCount = () => {
-    const cachedTraitsFilter = collectionCachedTraitsFilter || {};
-    return Object.values(cachedTraitsFilter)
-      .map((traitCategoryValue) => Object.values(traitCategoryValue).length)
-      .reduce((prev, curr) => prev + curr, 0);
-  };
-
   const traitStatName = (name, stats, category) => {
-    let ret = mapAttributeString(name, address, category, true);
-
-    if (stats && stats.count > 0) {
-      ret = ret.concat(` (${stats.count})`);
-    }
-
-    return ret;
+    return mapAttributeString(name, address, category, true);
   };
 
   const viewGetDefaultCheckValue = (traitCategory, id) => {
@@ -53,38 +37,16 @@ const TraitsFilter = ({ address, identifier }) => {
     return cachedTraitsFilter[traitCategory].includes(id) || false;
   };
 
-  const clearAttributeFilters = () => {
-    const inputs = document.querySelectorAll('.attribute-checkbox input[type=checkbox]');
-    for (const item of inputs) {
-      item.checked = false;
-    }
-
-    currentFilter.traits = {};
-
-    pushQueryString(router, {
-      slug: router.query.slug,
-      ...currentFilter.toPageQuery()
-    });
-
-    dispatch(
-      filterListingsByTrait({
-        traits: currentFilter.traits,
-        address,
-      })
-    );
-  };
-
-  const handleCheck = (event, traitCategory) => {
+  const handleCheck = (event, traitName, traitCategory) => {
     const { id, checked } = event.target;
-
     const currentTraitFilters = collectionCachedTraitsFilter || {};
 
     let allTraits = cleanedQuery({
       ...currentTraitFilters,
       [traitCategory]: [
         ...(currentTraitFilters[traitCategory] || []),
-        id
-      ].filter((v, i, a) => a.indexOf(v) === i && (v !== id || checked)),
+        traitName
+      ].filter((v, i, a) => a.indexOf(v) === i && (v !== traitName || checked)),
     });
 
     currentFilter.traits = allTraits;
@@ -123,13 +85,23 @@ const TraitsFilter = ({ address, identifier }) => {
                     <div key={`${traitCategoryName}-${stats[0]}`}>
                       <Form.Check
                         type="checkbox"
-                        id={stats[0]}
-                        className="attribute-checkbox"
-                        label={traitStatName(stats[0], stats[1], traitCategoryName)}
-                        defaultChecked={viewGetDefaultCheckValue(traitCategoryName, stats[0])}
-                        value={viewGetDefaultCheckValue(traitCategoryName, stats[0])}
-                        onChange={(t) => handleCheck(t, traitCategoryName)}
-                      />
+                        id={stripSpaces(`trait-${traitCategoryName}-${stats[0]}`)}
+                        className="trait-checkbox"
+                      >
+                        <Form.Check.Input type={'checkbox'}
+                                          value={viewGetDefaultCheckValue(traitCategoryName, stats[0])}
+                                          onChange={(t) => handleCheck(t, stats[0], traitCategoryName)}
+                                          defaultChecked={viewGetDefaultCheckValue(traitCategoryName, stats[0])}
+                        />
+                        <Form.Check.Label className="w-100">
+                          <div className="d-flex justify-content-between cursor-pointer w-100">
+                            <div>{traitStatName(stats[0], stats[1], traitCategoryName)}</div>
+                            {stats[1]?.count && (
+                                <span className="text-muted">({stats[1].count})</span>
+                            )}
+                          </div>
+                        </Form.Check.Label>
+                      </Form.Check>
                     </div>
                   ))}
               </Accordion.Body>

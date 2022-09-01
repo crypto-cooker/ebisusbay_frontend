@@ -718,3 +718,7 @@ export const isNumeric = (str) => {
     !isNaN(parseFloat(str))
   ); // ...and ensure strings of whitespace fail
 }
+
+export const stripSpaces = (str) => {
+  return str.replace(/\W/g, '');
+}

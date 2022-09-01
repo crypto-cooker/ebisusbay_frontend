@@ -68,11 +68,10 @@ const RankFilter = ({ address, ...props }) => {
       <Accordion defaultActiveKey={hasActiveRangeFilter() ? 'price' : undefined}>
         <Accordion.Item eventKey="price">
           <Accordion.Header>
-            <h4 className="my-1">Rank</h4>
+            <h5 className="my-1">Rank</h5>
           </Accordion.Header>
           <Accordion.Body>
             <div className="row">
-              <h5 className="mb-0">Rank</h5>
               <div className="col-xl-6 col-lg-12 px-2 mt-2">
                 <Form.Control
                   type="text"

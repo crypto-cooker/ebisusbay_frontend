@@ -12,7 +12,7 @@ import {
   resetFilters,
   resetListings, searchListings
 } from "@src/GlobalState/collectionSlice";
-import {isNumeric} from "@src/utils";
+import {isNumeric, stripSpaces} from "@src/utils";
 import {listingState} from "@src/core/api/enums";
 
 export const FilterResultsBar = ({collection}) => {
@@ -29,22 +29,26 @@ export const FilterResultsBar = ({collection}) => {
   useEffect(() => {
     const traitFilters = Object.entries(currentFilter.traits).reduce((p, c) => {
       p.push(...c[1].map((t) => {
-        const name = isNumeric(t) || t.toLowerCase().includes('none') ? `${c[0]}: ${t}`: t;
+        const label = isNumeric(t) || t.toLowerCase().includes('none') ? `${c[0]}: ${t}`: t;
         return {
           type: 'trait',
+          key: stripSpaces(`trait-${c[0]}-${t}`),
           category: c[0],
-          name
+          label,
+          value: t
         }
       }));
       return p;
     }, []);
     const powertraitFilters = Object.entries(currentFilter.powertraits).reduce((p, c) => {
       p.push(...c[1].map((t) => {
-        const name = isNumeric(t) || t.toLowerCase().includes('none') ? `${c[0]}: ${t}`: t;
+        const label = isNumeric(t) || t.toLowerCase().includes('none') ? `${c[0]}: ${t}`: t;
         return {
           type: 'powertrait',
+          key: stripSpaces(`powertrait-${c[0]}-${t}`),
           category: c[0],
-          name
+          label,
+          value: t
         }
       }));
       return p;
@@ -55,28 +59,28 @@ export const FilterResultsBar = ({collection}) => {
     if (currentFilter.minPrice || currentFilter.maxPrice) {
       returnArray.push({
         type: 'price',
-        name: priceLabel(currentFilter.minPrice, currentFilter.maxPrice)
+        label: priceLabel(currentFilter.minPrice, currentFilter.maxPrice)
       })
     }
 
     if (currentFilter.minRank || currentFilter.maxRank) {
       returnArray.push({
         type: 'rank',
-        name: rankLabel(currentFilter.minRank, currentFilter.maxRank)
+        label: rankLabel(currentFilter.minRank, currentFilter.maxRank)
       })
     }
 
     if (currentFilter.search) {
       returnArray.push({
         type: 'search',
-        name: currentFilter.search
+        label: currentFilter.search
       })
     }
 
     if (currentFilter.listed) {
       returnArray.push({
         type: 'listed',
-        name: currentFilter.listed === listingState.SOLD
+        label: currentFilter.listed === listingState.SOLD
       })
     }
 
@@ -139,6 +143,15 @@ export const FilterResultsBar = ({collection}) => {
     currentFilter.maxRank = null;
     currentFilter.search = null;
 
+    const inputs1 = document.querySelectorAll('.trait-checkbox input[type=checkbox]');
+    for (const item of inputs1) {
+      item.checked = false;
+    }
+    const inputs2 = document.querySelectorAll('.powertrait-checkbox input[type=checkbox]');
+    for (const item of inputs2) {
+      item.checked = false;
+    }
+
     pushQueryString(router, {
       slug: router.query.slug,
       ...currentFilter.toPageQuery()
@@ -165,8 +178,13 @@ export const FilterResultsBar = ({collection}) => {
 
   const removeTrait = (filter) => {
     const currentTraitFilters = currentFilter.traits || {};
-    currentTraitFilters[filter.category] = currentTraitFilters[filter.category]?.filter((v) => !v.includes(filter.name));
+    currentTraitFilters[filter.category] = currentTraitFilters[filter.category]?.filter((v) => !v.includes(filter.value));
     currentFilter.traits = cleanedQuery(currentTraitFilters);
+
+    const inputs = document.querySelectorAll(`#traits input[type=checkbox]#${filter.key}`);
+    for (const item of inputs) {
+      item.checked = false;
+    }
 
     pushQueryString(router, {
       slug: router.query.slug,
@@ -182,8 +200,13 @@ export const FilterResultsBar = ({collection}) => {
 
   const removePowertrait = (filter) => {
     const currentPowertraitFilters = currentFilter.powertraits || {};
-    currentPowertraitFilters[filter.category] = currentPowertraitFilters[filter.category]?.filter((v) => !v.includes(filter.name));
+    currentPowertraitFilters[filter.category] = currentPowertraitFilters[filter.category]?.filter((v) => !v.includes(filter.value));
     currentFilter.powertraits = cleanedQuery(currentPowertraitFilters);
+
+    const inputs = document.querySelectorAll(`#powertraits input[type=checkbox]#${filter.key}`);
+    for (const item of inputs) {
+      item.checked = false;
+    }
 
     pushQueryString(router, {
       slug: router.query.slug,
@@ -264,7 +287,7 @@ export const FilterResultsBar = ({collection}) => {
         {filters.map((filter) => (
           <div className="mx-1">
             <ThemedBadge>
-              <span>{filter.name}</span>
+              <span>{filter.label}</span>
               <span className="ms-2 cursor-pointer" onClick={() => onRemove(filter)}>X</span>
             </ThemedBadge>
           </div>

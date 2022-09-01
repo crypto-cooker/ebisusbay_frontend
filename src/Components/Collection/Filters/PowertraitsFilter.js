@@ -1,11 +1,9 @@
-import React, { memo, useEffect, useState } from 'react';
-import {Accordion, Badge, Form} from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import React, {memo} from 'react';
+import {Accordion, Form} from 'react-bootstrap';
+import {useDispatch, useSelector} from 'react-redux';
 
-import {humanize, mapAttributeString} from '@src/utils';
-import { filterListingsByTrait } from '@src/GlobalState/collectionSlice';
+import {humanize, mapAttributeString, stripSpaces} from '@src/utils';
+import {filterListingsByTrait} from '@src/GlobalState/collectionSlice';
 import {useRouter} from "next/router";
 import {cleanedQuery, pushQueryString} from "@src/helpers/query";
 
@@ -13,12 +11,9 @@ const PowertraitsFilter = ({ address }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const userTheme = useSelector((state) => state.user.theme);
   const collectionStats = useSelector((state) => state.collection.stats);
   const collectionCachedTraitsFilter = useSelector((state) => state.collection.query.filter.powertraits);
   const currentFilter = useSelector((state) => state.collection.query.filter);
-
-  const [hideAttributes, setHideAttributes] = useState(typeof window !== 'undefined' && window.innerWidth < 768);
 
   const viewPowertraitsList = () => {
     if (!collectionStats || !collectionStats.powertraits) {
@@ -28,21 +23,8 @@ const PowertraitsFilter = ({ address }) => {
     return Object.entries(collectionStats.powertraits);
   };
 
-  const viewSelectedAttributesCount = () => {
-    const cachedTraitsFilter = collectionCachedTraitsFilter || {};
-    return Object.values(cachedTraitsFilter)
-      .map((traitCategoryValue) => Object.values(traitCategoryValue).length)
-      .reduce((prev, curr) => prev + curr, 0);
-  };
-
   const traitStatName = (name, stats, category) => {
-    let ret = mapAttributeString(name, address, category, true);
-
-    if (stats && stats.count > 0) {
-      ret = ret.concat(` (${stats.count})`);
-    }
-
-    return ret;
+    return mapAttributeString(name, address, category, true);
   };
 
   const viewGetDefaultCheckValue = (traitCategory, id) => {
@@ -55,29 +37,9 @@ const PowertraitsFilter = ({ address }) => {
     return cachedTraitsFilter[traitCategory].includes(id) || false;
   };
 
-  const clearAttributeFilters = () => {
-    const inputs = document.querySelectorAll('.powertrait-checkbox input[type=checkbox]');
-    for (const item of inputs) {
-      item.checked = false;
-    }
-
-    currentFilter.powertraits = {};
-
-    pushQueryString(router, {
-      slug: router.query.slug,
-      ...currentFilter.toPageQuery()
-    });
-
-    dispatch(
-      filterListingsByTrait({
-        powertraits: currentFilter.powertraits,
-        address,
-      })
-    );
-  };
-
-  const handleCheck = (event, traitCategory) => {
+  const handleCheck = (event, traitName, traitCategory) => {
     const { id, checked } = event.target;
+    const name = id.substring(id.indexOf('-') + 1);
 
     const currentTraitFilters = collectionCachedTraitsFilter || {};
 
@@ -85,8 +47,8 @@ const PowertraitsFilter = ({ address }) => {
       ...currentTraitFilters,
       [traitCategory]: [
         ...(currentTraitFilters[traitCategory] || []),
-        id
-      ].filter((v, i, a) => a.indexOf(v) === i && (v !== id || checked)),
+        traitName
+      ].filter((v, i, a) => a.indexOf(v) === i && (v !== traitName || checked)),
     });
 
     currentFilter.powertraits = allTraits;
@@ -104,56 +66,8 @@ const PowertraitsFilter = ({ address }) => {
     );
   };
 
-  const ThemedBadge = (props) => {
-    return (
-      <Badge
-        pill
-        bg={userTheme === 'dark' ? 'light' : 'dark'}
-        text={userTheme === 'dark' ? 'dark' : 'light'}
-      >
-        {props.children}
-      </Badge>
-    )
-  }
-
-  useEffect(() => {
-    const container = document.getElementById('powertraits');
-    if (container) {
-      container.style.display = hideAttributes ? 'none' : 'block';
-    }
-  }, [hideAttributes]);
-
   return (
     <div className="my-4">
-      <div className="mb-2">
-        <div className="d-flex justify-content-between align-middle">
-          <h3
-            className="d-inline-block"
-            onClick={() => setHideAttributes(!hideAttributes)}
-            style={{ cursor: 'pointer', marginBottom: 0 }}
-          >
-            In-Game Attributes
-          </h3>
-
-          <div className="d-inline-block fst-italic my-auto me-2" style={{ fontSize: '0.8em', cursor: 'pointer' }}>
-            <FontAwesomeIcon id="powertraits-expand-icon" icon={hideAttributes ? faPlus : faMinus} />
-          </div>
-        </div>
-        {viewSelectedAttributesCount() > 0 && (
-          <div className="d-flex justify-content-between align-middle">
-            <ThemedBadge>
-              <span>{viewSelectedAttributesCount()} selected</span>
-            </ThemedBadge>
-            <div
-              className="d-inline-block fst-italic my-auto me-2"
-              style={{ fontSize: '0.8em', cursor: 'pointer' }}
-              onClick={clearAttributeFilters}
-            >
-              Clear
-            </div>
-          </div>
-        )}
-      </div>
       <Accordion id="powertraits">
         {viewPowertraitsList()
           .sort((a, b) => (a[0].toLowerCase() > b[0].toLowerCase() ? 1 : -1))
@@ -173,13 +87,23 @@ const PowertraitsFilter = ({ address }) => {
                     <div key={`${traitCategoryName}-${stats[0]}`}>
                       <Form.Check
                         type="checkbox"
-                        id={stats[0]}
-                        className="powertrait-checkbox"
-                        label={traitStatName(stats[0], stats[1])}
-                        defaultChecked={viewGetDefaultCheckValue(traitCategoryName, stats[0])}
-                        value={viewGetDefaultCheckValue(traitCategoryName, stats[0])}
-                        onChange={(t) => handleCheck(t, traitCategoryName)}
-                      />
+                        id={stripSpaces(`powertrait-${traitCategoryName}-${stats[0]}`)}
+                        className="trait-checkbox"
+                      >
+                        <Form.Check.Input type={'checkbox'}
+                                          value={viewGetDefaultCheckValue(traitCategoryName, stats[0])}
+                                          onChange={(t) => handleCheck(t, stats[0], traitCategoryName)}
+                                          defaultChecked={viewGetDefaultCheckValue(traitCategoryName, stats[0])}
+                        />
+                        <Form.Check.Label className="w-100">
+                          <div className="d-flex justify-content-between cursor-pointer w-100">
+                            <div>{traitStatName(stats[0], stats[1], traitCategoryName)}</div>
+                            {stats[1]?.count && (
+                              <span className="text-muted">({stats[1].count})</span>
+                            )}
+                          </div>
+                        </Form.Check.Label>
+                      </Form.Check>
                     </div>
                   ))}
               </Accordion.Body>
