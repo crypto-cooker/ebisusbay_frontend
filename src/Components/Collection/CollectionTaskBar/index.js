@@ -14,7 +14,7 @@ import {SearchBar} from "@src/Components/Collection/CollectionTaskBar/SearchBar"
 
 const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
 
-export const CollectionTaskBar = ({onFilter, onSearch, onSort, onFilterToggle, resultsText}) => {
+export const CollectionTaskBar = ({onFilterToggle}) => {
 
   const windowSize = useWindowSize();
   const [useMobileMenu, setUseMobileMenu] = useState(false);
@@ -38,7 +38,7 @@ export const CollectionTaskBar = ({onFilter, onSearch, onSort, onFilterToggle, r
           </Button>
         </div>
         <div className="flex-fill ms-2">
-          <SortDropdown onSort={onSort} />
+          <SortDropdown />
         </div>
       </div>
 
@@ -67,7 +67,7 @@ export const CollectionTaskBar = ({onFilter, onSearch, onSort, onFilterToggle, r
         <SearchBar />
       </div>
       <div className="ms-2">
-        <SortDropdown onSort={onSort} />
+        <SortDropdown />
       </div>
       <div className="ms-2 my-auto">
 

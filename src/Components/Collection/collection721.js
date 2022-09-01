@@ -122,7 +122,7 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
     if (currentFilter.maxRank) count++;
     if (currentFilter.search) count++;
     if (currentFilter.listed) count++;
-    
+
     return count;
   };
 
@@ -287,11 +287,6 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
                 <div className="row">
                   <CollectionTaskBar
                     onFilterToggle={() => setFiltersVisible(!filtersVisible)}
-                    // showFilter={false}
-                    // cacheName={cacheName}
-                    // address={collection.address}
-                    // traits={collectionStats?.traits}
-                    // powertraits={collectionStats?.powertraits}
                   />
                 </div>
                 <div className="row">

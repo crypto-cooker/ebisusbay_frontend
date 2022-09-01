@@ -1,11 +1,13 @@
 import Select from "react-select";
 import {CollectionSortOption} from "@src/Components/Models/collection-sort-option.model";
-import React from "react";
+import React, {useCallback} from "react";
 import {getTheme} from "@src/Theme/theme";
-import {useSelector} from "react-redux";
-import {sortOptions} from "@src/Components/components/constants/sort-options";
+import {useDispatch, useSelector} from "react-redux";
+import {sortOptions} from "@src/Components/components/constants/collection-sort-options";
+import {sortListings} from "@src/GlobalState/collectionSlice";
+export const SortDropdown = () => {
+  const dispatch = useDispatch();
 
-export const SortDropdown = ({onSort}) => {
   const userTheme = useSelector((state) => state.user.theme);
   const selectDefaultSortValue = CollectionSortOption.default();
   const selectCollectionSortOptions = useSelector((state) => {
@@ -49,6 +51,14 @@ export const SortDropdown = ({onSort}) => {
     }),
   };
 
+  const onSortChange = useCallback(
+    (sortOption) => {
+      dispatch(sortListings(sortOption));
+    },
+    // eslint-disable-next-line
+    [dispatch]
+  );
+
   return (
     <div className="items_filter" style={{ marginBottom: 0, marginTop: 0, minWidth: 200}}>
       <div className="dropdownSelect two w-100 mr-0 mb-0">
@@ -59,7 +69,7 @@ export const SortDropdown = ({onSort}) => {
           getOptionLabel={(option) => option.getOptionLabel}
           getOptionValue={(option) => option.getOptionValue}
           defaultValue={selectDefaultSortValue}
-          onChange={onSort}
+          onChange={onSortChange}
         />
       </div>
     </div>

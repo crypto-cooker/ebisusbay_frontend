@@ -69,7 +69,7 @@ const collectionSlice = createSlice({
       state.query.filter = option;
     },
     onSort: (state, action) => {
-      const { cacheName, option } = action.payload;
+      const { option } = action.payload;
 
       state.listings = [];
       state.totalPages = 0;
@@ -226,7 +226,7 @@ export const filterListings = (filterOption, cacheName) => async (dispatch) => {
 };
 
 export const sortListings = (sortOption, cacheName) => async (dispatch) => {
-  dispatch(onSort({ option: sortOption, cacheName }));
+  dispatch(onSort({ option: sortOption }));
   dispatch(fetchListings());
 };
 
