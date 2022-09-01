@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { Spinner } from 'react-bootstrap';
+import {useRouter} from "next/router";
 
 import useFeatureFlag from '@src/hooks/useFeatureFlag';
 import { CdnImage } from "@src/Components/components/CdnImage";
@@ -33,6 +34,8 @@ const GlobalStyles = createGlobalStyle`
 export default function Collections({ address }) {
   const tableMobileView = typeof window !== 'undefined' && window.innerWidth > mobileListBreakpoint;
   const isCollectionEnabled = useFeatureFlag(Features.CMS_COLLECTIONS)
+
+  const router = useRouter();
 
   const { isLoading, error, data, status } = useQuery(['Collections', address], () =>
     getOwnerCollections(address), isCollectionEnabled
@@ -83,7 +86,6 @@ export default function Collections({ address }) {
             </thead>
             <tbody>
               <GlobalStyles />
-
               {data.data.collections &&
                 data.data.collections.map((collection, index) => {
                   return (
@@ -132,9 +134,9 @@ export default function Collections({ address }) {
                             >
                               <span>Actions</span>
                               <span className="text-end">
-                                {/* <button className='btn-main' style={{ maxWidth: 172 }}>
-                                  Action 1
-                                </button> */}
+                                <button className='btn-main' onClick={()=>(router.push(`/edit-collection/${collection.address}`))}>
+                                  Edit Collection
+                                </button>
                               </span>
                             </div>
                           </div>
@@ -145,9 +147,9 @@ export default function Collections({ address }) {
                       {tableMobileView && (
                         <td>
                           <div style={{ display: 'flex', }}>
-                            {/* <button className='btn-main' style={{ maxWidth: 172 }}>
-                              Action 1
-                            </button> */}
+                            <button className='btn-main' onClick={()=>(router.push(`/edit-collection/${collection.address}`))}>
+                              Edit Collection
+                            </button>
                           </div>
                         </td>
                       )}
