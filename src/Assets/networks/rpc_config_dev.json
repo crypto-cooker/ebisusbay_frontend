@@ -5797,8 +5797,8 @@
         "banner": "/img/collections/undead-space-apes/banner.png",
         "maxSupply": 5000,
         "website": "https://undeadspaceapes.com/",
-        "twitter": "https://twitter.com/UndeadSpaceApes",
-        "discord": "https://discord.gg/yvanGgJRbB/"
+        "twitter": "https://twitter.com/WeRtheUndead ",
+        "discord": "https://discord.gg/undeadcommunity"
       }
     },
     {
@@ -7978,7 +7978,7 @@
       "multiToken": false,
       "address": "0xA35f40e45FFF953F477700C83D550D35F11B42aB",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Boost you daily yield on Troopz staking platform with these awesome Skillz Boosts. Collect all 5 for added utility.",
         "verified": true,
@@ -8263,6 +8263,27 @@
         "website": "https://carkayous.com/",
         "twitter": "https://twitter.com/carkayous",
         "discord": "https://discord.gg/carkayous"
+      }
+    },
+    {
+      "name": "CroArmy Jarheads",
+      "slug": "cro-army-jarheads",
+      "multiToken": false,
+      "address": "0xD06eF4dA6d75f6E4047999d7D9b2f899688f31a0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Degen NFT flippers are coming together to whale in tiered projects. Profit distribution. Airdrops. Community.",
+        "verified": false,
+        "avatar": "/img/collections/cro-army-jarheads/avatar.webp",
+        "card": "/img/collections/cro-army-jarheads/card.webp",
+        "banner": "/img/collections/cro-army-jarheads/banner.webp",
+        "maxSupply": 2041,
+        "website": "https://croarmy.io/",
+        "twitter": "https://twitter.com/croarmy_eth",
+        "discord": "https://discord.gg/croarmy",
+        "telegram": "https://t.me/CroArmy_ETH",
+        "medium": "https://croarmy.gitbook.io/croarmy/"
       }
     }
   ],
@@ -11122,7 +11143,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "priceDescription": "50 $TRPZ automatically credited back to your wallet with EVERY CRO MINT"
     },
     {
