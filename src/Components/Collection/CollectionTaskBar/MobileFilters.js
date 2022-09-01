@@ -7,11 +7,17 @@ import Button from "@src/Components/components/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFilter} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {StatusFilter} from "@src/Components/Collection/Filters/StatusFilter";
+import {pushQueryString} from "@src/helpers/query";
+import {resetFilters} from "@src/GlobalState/collectionSlice";
+import {useRouter} from "next/router";
 
 export const MobileFilters = ({address, show, onHide, traits, powertraits}) => {
+  const dispatch = useDispatch();
+  const router = useRouter();
   const theme = useSelector((state) => state.user.theme);
+  const currentFilter = useSelector((state) => state.collection.query.filter);
 
   const hasTraits = () => {
     return traits != null && Object.entries(traits).length > 0;
@@ -19,6 +25,32 @@ export const MobileFilters = ({address, show, onHide, traits, powertraits}) => {
 
   const hasPowertraits = () => {
     return powertraits != null && Object.entries(powertraits).length > 0;
+  };
+
+  const onClearAll = () => {
+    currentFilter.traits = {};
+    currentFilter.powertraits = {};
+    currentFilter.minPrice = null;
+    currentFilter.maxPrice = null;
+    currentFilter.minRank = null;
+    currentFilter.maxRank = null;
+    currentFilter.search = null;
+    currentFilter.listed = null;
+
+    for (const item of document.querySelectorAll('.trait-checkbox input[type=checkbox], .powertrait-checkbox input[type=checkbox], .status-checkbox input[type=checkbox]')) {
+      item.checked = false;
+    }
+    for (const item of document.querySelectorAll('#filter-price input, #filter-rank input')) {
+      item.value = '';
+    }
+    document.getElementById('collection-search').value = '';
+
+    pushQueryString(router, {
+      slug: router.query.slug,
+      ...currentFilter.toPageQuery()
+    });
+
+    dispatch(resetFilters());
   };
 
   return (
@@ -36,15 +68,15 @@ export const MobileFilters = ({address, show, onHide, traits, powertraits}) => {
         </div>
         <div className="d-flex fixed-bottom mx-2 my-2">
           <div className="flex-fill">
-            <Button type="legacy-outlined" className="w-100" style={{height: '100%'}}>
+            <Button type="legacy-outlined" className="w-100" style={{height: '100%'}} onClick={onClearAll}>
               <FontAwesomeIcon icon={faFilter} />
-              <span className="ms-2">Clear</span>
+              <span className="ms-2">Clear all</span>
             </Button>
           </div>
           <div className="flex-fill ms-4">
-            <Button type="legacy" className="w-100" style={{height: '100%'}}>
+            <Button type="legacy" className="w-100" style={{height: '100%'}} onClick={onHide}>
               <FontAwesomeIcon icon={faFilter} />
-              <span className="ms-2">Apply</span>
+              <span className="ms-2">Done</span>
             </Button>
           </div>
         </div>

@@ -86,7 +86,6 @@ export const FilterResultsBar = ({collection}) => {
       })
     }
 
-    console.log('sadf', currentFilter)
     setFilters(returnArray);
   }, [
     currentFilter.traits,

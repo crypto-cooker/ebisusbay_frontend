@@ -31,12 +31,9 @@ import {CollectionVerificationRow} from "@src/Components/components/CollectionVe
 import {CollectionTaskBar} from "@src/Components/Collection/CollectionTaskBar";
 import {DesktopFilters} from "@src/Components/Collection/CollectionTaskBar/DesktopFilters";
 import useBreakpoint from "use-breakpoint";
-import PriceFilter from "@src/Components/Collection/Filters/PriceFilter";
-import RankFilter from "@src/Components/Collection/Filters/RankFilter";
 import Button from "@src/Components/components/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {MobileFilters} from "@src/Components/Collection/CollectionTaskBar/MobileFilters";
-import {commify} from "ethers/lib/utils";
 import {FilterResultsBar} from "@src/Components/Collection/FilterResultsBar";
 
 const config = appConfig();
@@ -62,11 +59,10 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
 
   const [royalty, setRoyalty] = useState(null);
 
-  const collectionStatsLoading = useSelector((state) => state.collection.statsLoading);
   const collectionStats = useSelector((state) => state.collection.stats);
   const collectionLoading = useSelector((state) => state.collection.loading);
   const initialLoadComplete = useSelector((state) => state.collection.initialLoadComplete);
-  const theme = useSelector((state) => state.user.theme);
+  const currentFilter = useSelector((state) => state.collection.query.filter);
 
   const [isFirstLoaded, setIsFirstLoaded] = useState(0);
 
@@ -111,12 +107,23 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
     dispatch(fetchListings());
   }
 
-  const hasTraits = () => {
-    return collectionStats?.traits != null && Object.entries(collectionStats?.traits).length > 0;
-  };
+  const activeFiltersCount = () => {
+    const traits = Object.values(currentFilter.traits)
+      .map((traitCategoryValue) => traitCategoryValue.length)
+      .reduce((prev, curr) => prev + curr, 0);
+    const powertraits = Object.values(currentFilter.powertraits)
+      .map((traitCategoryValue) => traitCategoryValue.length)
+      .reduce((prev, curr) => prev + curr, 0);
+    let count = traits + powertraits;
 
-  const hasPowertraits = () => {
-    return collectionStats?.powertraits != null && Object.entries(collectionStats?.powertraits).length > 0;
+    if (currentFilter.minPrice) count++;
+    if (currentFilter.maxPrice) count++;
+    if (currentFilter.minRank) count++;
+    if (currentFilter.maxRank) count++;
+    if (currentFilter.search) count++;
+    if (currentFilter.listed) count++;
+    
+    return count;
   };
 
   const loadMore = () => {
@@ -345,6 +352,16 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
         powertraits={collectionStats?.powertraits}
       />
 
+      {useMobileMenu && (
+        <div className="d-flex fixed-bottom mx-2 my-2">
+          <div className="mx-auto">
+            <Button type="legacy" style={{height: '100%'}} onClick={() => setFiltersVisible(true)}>
+              <FontAwesomeIcon icon={faFilter} />
+              <span className="ms-2">Filters {activeFiltersCount()}</span>
+            </Button>
+          </div>
+        </div>
+      )}
       <Footer />
     </div>
   );

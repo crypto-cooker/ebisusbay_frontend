@@ -94,7 +94,7 @@ export class CollectionFilters {
   }
 
   isEmpty() {
-    const query = this.toPageQuery();
+    const query = this.toQuery();
 
     const nestedObj = cleanedQuery({
       traits: query.traits,
@@ -102,6 +102,7 @@ export class CollectionFilters {
     });
     delete query.traits;
     delete query.powertraits;
+    delete query.address;
 
     return isEmptyObj(query) && isEmptyObj(nestedObj);
   }
