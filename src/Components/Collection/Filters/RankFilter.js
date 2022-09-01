@@ -64,7 +64,7 @@ const RankFilter = ({ address, ...props }) => {
   };
 
   return (
-    <div {...props}>
+    <div id="filter-rank" {...props}>
       <Accordion defaultActiveKey={hasActiveRangeFilter() ? 'price' : undefined}>
         <Accordion.Item eventKey="price">
           <Accordion.Header>

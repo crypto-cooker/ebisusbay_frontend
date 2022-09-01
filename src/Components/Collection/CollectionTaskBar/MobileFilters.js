@@ -8,6 +8,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFilter} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import {useSelector} from "react-redux";
+import {StatusFilter} from "@src/Components/Collection/Filters/StatusFilter";
 
 export const MobileFilters = ({address, show, onHide, traits, powertraits}) => {
   const theme = useSelector((state) => state.user.theme);
@@ -27,9 +28,10 @@ export const MobileFilters = ({address, show, onHide, traits, powertraits}) => {
       </Offcanvas.Header>
       <Offcanvas.Body>
         <div className="pb-5 overflow-hidden">
+          <StatusFilter className="mb-3" />
           <PriceFilter className="mb-3" address={address} />
           <RankFilter className="mb-3" address={address} />
-          {hasTraits() && <TraitsFilter address={address} identifier={'traits-mobile'}/>}
+          {hasTraits() && <TraitsFilter address={address} />}
           {hasPowertraits() && <PowertraitsFilter address={address} />}
         </div>
         <div className="d-flex fixed-bottom mx-2 my-2">

@@ -7,6 +7,7 @@ import {Badge} from "react-bootstrap";
 import {cleanedQuery, pushQueryString} from "@src/helpers/query";
 import {useRouter} from "next/router";
 import {
+  filterListingsByListed,
   filterListingsByPrice,
   filterListingsByTrait,
   resetFilters,
@@ -79,8 +80,9 @@ export const FilterResultsBar = ({collection}) => {
 
     if (currentFilter.listed) {
       returnArray.push({
-        type: 'listed',
-        label: currentFilter.listed === listingState.SOLD
+        type: 'status',
+        key: 'status-buynow',
+        label: 'Buy Now'
       })
     }
 
@@ -98,7 +100,7 @@ export const FilterResultsBar = ({collection}) => {
   ]);
 
   const priceLabel = (min, max) => {
-    if (!min && max) return null;
+    if (!min && !max) return null;
 
     if (min && max) {
       return `${commify(min)} - ${commify(max)} CRO`;
@@ -110,7 +112,7 @@ export const FilterResultsBar = ({collection}) => {
   }
 
   const rankLabel = (min, max) => {
-    if (!min && max) return null;
+    if (!min && !max) return null;
 
     if (min && max) {
       return `Rank ${commify(min)} - ${commify(max)}`;
@@ -142,15 +144,15 @@ export const FilterResultsBar = ({collection}) => {
     currentFilter.minRank = null;
     currentFilter.maxRank = null;
     currentFilter.search = null;
+    currentFilter.listed = null;
 
-    const inputs1 = document.querySelectorAll('.trait-checkbox input[type=checkbox]');
-    for (const item of inputs1) {
+    for (const item of document.querySelectorAll('.trait-checkbox input[type=checkbox], .powertrait-checkbox input[type=checkbox], .status-checkbox input[type=checkbox]')) {
       item.checked = false;
     }
-    const inputs2 = document.querySelectorAll('.powertrait-checkbox input[type=checkbox]');
-    for (const item of inputs2) {
-      item.checked = false;
+    for (const item of document.querySelectorAll('#filter-price input, #filter-rank input')) {
+      item.value = '';
     }
+    document.getElementById('collection-search').value = '';
 
     pushQueryString(router, {
       slug: router.query.slug,
@@ -171,8 +173,8 @@ export const FilterResultsBar = ({collection}) => {
       removeRank(filter);
     } else if (filter.type === 'search') {
       removeSearch(filter);
-    } else if (filter.type === 'listed') {
-      removeListed(filter);
+    } else if (filter.type === 'status') {
+      removeStatus(filter);
     }
   };
 
@@ -271,8 +273,20 @@ export const FilterResultsBar = ({collection}) => {
     dispatch(searchListings(null));
   }
 
-  const removeListed = (filter) => {
+  const removeStatus = (filter) => {
+    const inputs = document.querySelectorAll(`#status input[type=checkbox]#${filter.key}`);
+    for (const item of inputs) {
+      item.checked = false;
+    }
 
+    currentFilter.listed = null;
+
+    pushQueryString(router, {
+      slug: router.query.slug,
+      ...currentFilter.toPageQuery()
+    });
+
+    dispatch(filterListingsByListed(null));
   }
 
   return !currentFilter.isEmpty() && (
