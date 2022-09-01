@@ -10,75 +10,105 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFilter} from "@fortawesome/free-solid-svg-icons";
 import {SortDropdown} from "@src/Components/Collection/CollectionTaskBar/SortDropdown";
 import {SearchBar} from "@src/Components/Collection/CollectionTaskBar/SearchBar";
+import MakeCollectionOfferDialog from "@src/Components/Collection/MakeCollectionOfferDialog";
+import {useDispatch, useSelector} from "react-redux";
+import MetaMaskOnboarding from "@metamask/onboarding";
+import {chainConnect, connectAccount} from "@src/GlobalState/User";
 
 
 const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
 
-export const CollectionTaskBar = ({onFilterToggle}) => {
+export const CollectionTaskBar = ({collection, onFilterToggle}) => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
+  const [useMobileMenu, setUseMobileMenu] = useState(false);
+  const [collectionOfferOpen, setCollectionOfferOpen] = useState(false);
 
   const windowSize = useWindowSize();
-  const [useMobileMenu, setUseMobileMenu] = useState(false);
-
   const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
 
   useEffect(() => {
     setUseMobileMenu(minWidth < BREAKPOINTS.m);
   }, [breakpoint]);
 
-  return useMobileMenu ? (
+  const openCollectionOfferDialog = () => {
+    if (user.address) {
+      setCollectionOfferOpen(true);
+    } else {
+      if (user.needsOnboard) {
+        const onboarding = new MetaMaskOnboarding();
+        onboarding.startOnboarding();
+      } else if (!user.address) {
+        dispatch(connectAccount());
+      } else if (!user.correctChain) {
+        dispatch(chainConnect());
+      }
+    }
+  };
+
+  return (
     <>
-      <div className="d-flex mb-2">
-        <SearchBar />
-      </div>
-      <div className="d-flex mb-2">
-        <div className="flex-fill">
-          <Button type="legacy-outlined" className="w-100" style={{height: '100%'}} onClick={onFilterToggle}>
-            <FontAwesomeIcon icon={faFilter} />
-            <span className="ms-2">Filter</span>
-          </Button>
-        </div>
-        <div className="flex-fill ms-2">
-          <SortDropdown />
-        </div>
-      </div>
+      {useMobileMenu ? (
+        <>
+          <div className="d-flex mb-2">
+            <SearchBar />
+          </div>
+          <div className="d-flex mb-2">
+            <div className="flex-fill">
+              <Button type="legacy-outlined" className="w-100" style={{height: '100%'}} onClick={onFilterToggle}>
+                <FontAwesomeIcon icon={faFilter} />
+                <span className="ms-2">Filter</span>
+              </Button>
+            </div>
+            <div className="flex-fill ms-2">
+              <SortDropdown />
+            </div>
+          </div>
 
-      <div className="d-flex mb-2">
-        <div className="col">
-
-          <Button type="legacy"
-                  className="w-100"
-            // onClick={withdrawBalance}
-            // isLoading={user.withdrawingMarketBalance}
-            // disabled={user.withdrawingMarketBalance}
-          >
-            Make collection offer
-          </Button>
+          <div className="d-flex mb-2">
+            <div className="col">
+              <Button
+                type="legacy"
+                className="w-100"
+                onClick={() => setCollectionOfferOpen(true)}
+              >
+                Make collection offer
+              </Button>
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="d-flex mb-2">
+          <div className="">
+            <Button type="legacy-outlined" style={{height: '100%'}} onClick={onFilterToggle}>
+              <FontAwesomeIcon icon={faFilter} />
+            </Button>
+          </div>
+          <div className="flex-grow-1 ms-2">
+            <SearchBar />
+          </div>
+          <div className="ms-2">
+            <SortDropdown />
+          </div>
+          <div className="ms-2 my-auto">
+            <Button
+              type="legacy"
+              onClick={openCollectionOfferDialog}
+            >
+              Make collection offer
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
+
+      {collectionOfferOpen && (
+        <MakeCollectionOfferDialog
+          isOpen={collectionOfferOpen}
+          onClose={() => setCollectionOfferOpen(false)}
+          collection={collection}
+        />
+      )}
     </>
-  ) : (
-    <div className="d-flex mb-2">
-      <div className="">
-        <Button type="legacy-outlined" style={{height: '100%'}} onClick={onFilterToggle}>
-          <FontAwesomeIcon icon={faFilter} />
-        </Button>
-      </div>
-      <div className="flex-grow-1 ms-2">
-        <SearchBar />
-      </div>
-      <div className="ms-2">
-        <SortDropdown />
-      </div>
-      <div className="ms-2 my-auto">
-
-        <Button type="legacy"
-                // onClick={withdrawBalance}
-                // isLoading={user.withdrawingMarketBalance}
-                // disabled={user.withdrawingMarketBalance}
-          >
-          Make collection offer
-        </Button>
-      </div>
-    </div>
   )
 }

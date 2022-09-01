@@ -35,6 +35,7 @@ import Button from "@src/Components/components/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {MobileFilters} from "@src/Components/Collection/CollectionTaskBar/MobileFilters";
 import {FilterResultsBar} from "@src/Components/Collection/FilterResultsBar";
+import MakeCollectionOfferDialog from "@src/Components/Collection/MakeCollectionOfferDialog";
 
 const config = appConfig();
 
@@ -286,6 +287,7 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
               <div className="tab-1 onStep fadeIn">
                 <div className="row">
                   <CollectionTaskBar
+                    collection={collection}
                     onFilterToggle={() => setFiltersVisible(!filtersVisible)}
                   />
                 </div>
@@ -357,6 +359,7 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
           </div>
         </div>
       )}
+
       <Footer />
     </div>
   );
