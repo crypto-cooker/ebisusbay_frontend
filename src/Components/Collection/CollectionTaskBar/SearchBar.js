@@ -41,11 +41,12 @@ export const SearchBar = () => {
 
   return (
     <Form.Control
+      id="collection-search"
       type="text"
       placeholder="Search by name"
       onChange={handleSearch}
       style={{ marginBottom: 0, marginTop: 0 }}
-      defaultValue={''}
+      defaultValue={currentFilter.search}
     />
   )
 }

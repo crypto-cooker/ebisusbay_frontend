@@ -261,6 +261,8 @@ export const FilterResultsBar = ({collection}) => {
   }
 
   const removeSearch = (filter) => {
+    document.getElementById('collection-search').value = ''
+
     pushQueryString(router, {
       slug: router.query.slug,
       ...currentFilter.toPageQuery()
