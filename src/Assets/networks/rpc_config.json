@@ -8303,6 +8303,11 @@
         "website": "https://clubcro.fi/",
         "twitter": "https://twitter.com/ClubCro",
         "discord": "https://discord.gg/YbXEd44xdZ"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
