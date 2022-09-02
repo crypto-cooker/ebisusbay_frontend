@@ -6618,7 +6618,8 @@
         "website": "https://degenbrains.com/",
         "twitter": "https://twitter.com/degenbrains",
         "discord": "https://discord.gg/degenbrainfinance",
-        "medium": "https://medium.com/@degenbrains"
+        "medium": "https://medium.com/@degenbrains",
+        "rankings": {"source": "rarity_sniper", "slug": "degenbrains"}
       }
     },
     {
@@ -7480,7 +7481,8 @@
         "maxSupply": 2421,
         "website": "https://vvs.finance/miner-mole/",
         "twitter": "https://www.twitter.com/VVS_finance",
-        "discord": "https://discord.gg/V2957zMsmg"
+        "discord": "https://discord.gg/V2957zMsmg",
+        "rankings": {"source": "rarity_sniper", "slug": "miner-moles"}
       }
     },
     {
