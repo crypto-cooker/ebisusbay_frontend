@@ -510,6 +510,19 @@ export const findCollectionByAddress = (address, tokenId) => {
   });
 };
 
+export const findCollectionFloor = (knownContract, collectionsStats) => {
+  const collectionStats = collectionsStats.find((o) => {
+    if (knownContract.multiToken && o.collection.indexOf('-') !== -1) {
+      let parts = o.collection.split('-');
+      return caseInsensitiveCompare(knownContract.address, parts[0]) && knownContract.id === parseInt(parts[1]);
+    } else {
+      return caseInsensitiveCompare(knownContract.address, o.collection);
+    }
+  });
+
+  return collectionStats ? collectionStats.floorPrice : null;
+};
+
 export const round = (num, decimals) => {
   if (!decimals) return Math.round(num);
 

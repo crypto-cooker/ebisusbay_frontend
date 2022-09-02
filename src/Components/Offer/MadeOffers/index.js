@@ -4,13 +4,18 @@ import { Spinner } from 'react-bootstrap';
 import EmptyData from '../EmptyData';
 import TableHeader from '../MadeOffersHeader';
 import TableRow from '../MadeOffersRow';
-import {getMyOffers} from "@src/core/subgraph";
+import {getMyCollectionOffers, getMyOffers} from "@src/core/subgraph";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-export default function MadeOffers({ address }) {
-  const fetchProjects = async ({ pageParam = 0 }) =>
-    await getMyOffers(address, '0', pageParam)
+export default function MadeOffers({ address, type}) {
+  const fetchProjects = async ({ pageParam = 0 }) => {
+    if (type === 'collection') {
+      return await getMyCollectionOffers(address, '0', pageParam);
+    } else {
+      return await getMyOffers(address, '0', pageParam);
+    }
+  }
 
   const {
     data,
@@ -20,17 +25,17 @@ export default function MadeOffers({ address }) {
     isFetching,
     isFetchingNextPage,
     status,
-  } = useInfiniteQuery(['projects'], fetchProjects, {
+  } = useInfiniteQuery(['MadeOffers', type], fetchProjects, {
     getNextPageParam: (lastPage, pages) => lastPage.nextCursor,
   })
-console.log('data', data);
+
   const loadMore = () => {
     fetchNextPage();
   };
 
   return (
     <div>
-      <TableHeader type="Made" />
+      <TableHeader type="made" />
       {status === "loading" ? (
         <div className="col-lg-12 text-center">
           <Spinner animation="border" role="status">

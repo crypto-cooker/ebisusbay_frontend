@@ -39,7 +39,15 @@ const TableHeaderContainer = styled.div`
   }
 `;
 export default function TableHeader({ type }) {
-  return (
+  return type === 'made' ? (
+    <TableHeaderContainer>
+      <div className="table-row-item">Offer</div>
+      <div className="table-row-item">Price</div>
+      <div className="table-row-item">Made</div>
+      <div className="table-row-item"></div>
+      <div className="table-row-item"></div>
+    </TableHeaderContainer>
+  ) : (
     <TableHeaderContainer>
       <div className="table-row-item">Offer</div>
       <div className="table-row-item">Price</div>
