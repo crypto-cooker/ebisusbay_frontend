@@ -266,7 +266,7 @@ const Home = () => {
                 We're creating our own community validator which will run nodes to process network transactions and help secure the Crypto.org Chain, return staking rewards for 8 more years to fund our weekly giveaways, and will also give us voting power on major Cronos decisions.
               </p>
 
-              <p>
+              <p className="text-center">
                 The weekly giveaways will return 15,000 CRO in the form of:<br />
                 <span className="fw-bold">1st place: 7,500 CRO</span><br />
                 <span className="fw-bold">2nd place: 5,000 CRO</span><br />
@@ -293,6 +293,7 @@ const Home = () => {
                 src={hostedImage('/img/promos/clubcro.webp')}
                 alt="ClubCRO"
                 className="img-fluid"
+                width="100%"
                 style={{maxWidth: '600px'}}
               />
             </div>
@@ -306,7 +307,7 @@ const Home = () => {
                 {/*  </a>*/}
                 {/*</div>*/}
                 <div className="flex-fill mx-1">
-                  <a href="https://clubcro.fi/" target="_blank" rel="noreferrer">
+                  <a href="https://clubcro.fi/elite-mint" target="_blank" rel="noreferrer">
                     <Button type="legacy-outlined" className="w-100">
                        Mint Now
                     </Button>
