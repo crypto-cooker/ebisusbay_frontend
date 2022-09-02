@@ -6161,9 +6161,9 @@
       "metadata": {
         "description": "An exclusive NFT community collecting $CRO in the bear market. 60% of minting revenue will be deposited into MMO vault to earn $CRO. 1:1 Airdrop to all future collection.",
         "verified": false,
-        "avatar": "/img/collections/cro-whales/avatar.png",
-        "card": "/img/collections/cro-whales/card.png",
-        "banner": "/img/collections/cro-whales/banner.png",
+        "avatar": "/img/collections/cro-whales/avatar.webp",
+        "card": "/img/collections/cro-whales/card.webp",
+        "banner": "/img/collections/cro-whales/banner.webp",
         "maxSupply": 100,
         "website": "https://croceanft.com/",
         "twitter": "https://twitter.com/Crocean_NFT",
@@ -8303,6 +8303,26 @@
         "website": "https://clubcro.fi/",
         "twitter": "https://twitter.com/ClubCro",
         "discord": "https://discord.gg/YbXEd44xdZ"
+      }
+    },
+    {
+      "name": "Croturtles",
+      "slug": "croturtles",
+      "multiToken": false,
+      "address": "0x17a623289Aa59756920A078243B586695e14ae7C",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Croturtle is second collection created by CroceanNFT. 6123 unique collectible Croturtles PFP on Cronos blockchain. Everybody likes to get cheap an NFT and then sell even several times more expensive. All the money from royalty will be distributed to holders once every 10 days. Each holders of Croturtle will receive WL for next collection and the largest holders will receive free NFT. Our first goal is to achieve high floor (over 100 CRO).",
+        "verified": false,
+        "avatar": "/img/collections/croturtles/avatar.webp",
+        "card": "/img/collections/croturtles/card.webp",
+        "banner": "/img/collections/croturtles/banner.webp",
+        "maxSupply": 6123,
+        "website": "https://croceanft.com/",
+        "twitter": "https://twitter.com/Crocean_NFT",
+        "discord": "https://discord.gg/N9YstjgG2y",
+        "telegram": "https://t.me/crowhalesnft"
       }
     }
   ],
