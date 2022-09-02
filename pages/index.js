@@ -290,8 +290,8 @@ const Home = () => {
           <div className="col-lg-6 col-md-6 pt-3">
             <div className="mx-auto text-center">
               <img
-                src={'/img/promos/clubcro.webp'}
-                alt="ClubCROR"
+                src={hostedImage('/img/promos/clubcro.webp')}
+                alt="ClubCRO"
                 className="img-fluid"
                 style={{maxWidth: '600px'}}
               />
