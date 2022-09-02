@@ -82,7 +82,7 @@ export const getMyOffers = async (myAddress, stateFilter, lastId) => {
         variables: {
           first: FIRST,
           buyer: myAddress.toLowerCase(),
-          state: stateFilter,
+          state: stateFilter.toString(),
           lastId: lastId || '',
         },
         fetchPolicy: 'no-cache',

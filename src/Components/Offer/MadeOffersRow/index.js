@@ -7,7 +7,7 @@ import { commify } from 'ethers/lib/utils';
 import Link from 'next/link';
 
 import Button from '../../../Components/components/Button';
-import { findCollectionByAddress, shortAddress, shortString } from '@src/utils';
+import {findCollectionByAddress, shortAddress, shortString, timeSince} from '@src/utils';
 import { getNftDetails } from '@src/GlobalState/nftSlice';
 import MakeOfferDialog from '../MakeOfferDialog';
 import AcceptOfferDialog from "@src/Components/Offer/AcceptOfferDialog";
@@ -141,8 +141,7 @@ export default function TableRow({ data, type }) {
   };
 
   const getOfferDate = (timestamp) => {
-    const offerDate = moment(new Date(timestamp * 1000)).format('DD/MM/YYYY');
-    return offerDate;
+    return timeSince(new Date(timestamp * 1000));
   };
 
   return (
@@ -187,17 +186,10 @@ export default function TableRow({ data, type }) {
               </a>
             </Link>
           </div>
-          <div className="collection-name">{getCollectionName()}</div>
-        </div>
-        <div className="table-row-item nft-title">
           <a href={`/collection/${collectionData?.slug}/${nftId}`}>{shortString(nftId)}</a>
         </div>
-        <div className="table-row-item">{getState(state)}</div>
-        <div className="table-row-item">{getOfferDate(timeCreated)}</div>
-        <div className="table-row-item">
-          {type === 'Received' ? (buyer ? shortAddress(buyer) : '-') : seller ? shortAddress(seller) : '-'}
-        </div>
         <div className="table-row-item">{commify(price)} CRO</div>
+        <div className="table-row-item">{getOfferDate(timeCreated)} ago</div>
         <div className="table-row-item">
           {type === 'Made' && (
             <Button
@@ -268,11 +260,7 @@ export default function TableRow({ data, type }) {
         </ItemRow>
         <ItemRow>
           <div>Date</div>
-          <div>{getOfferDate(timeCreated)}</div>
-        </ItemRow>
-        <ItemRow>
-          <div>{type === 'Received' ? 'Buyer' : 'Owner'}</div>
-          <div>{type === 'Received' ? (buyer ? shortAddress(buyer) : '-') : seller ? shortAddress(seller) : '-'}</div>
+          <div>{getOfferDate(timeCreated)} ago</div>
         </ItemRow>
         <ItemRow>
           <div>Offer Price</div>

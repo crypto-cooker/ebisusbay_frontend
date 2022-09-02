@@ -41,12 +41,9 @@ const TableHeaderContainer = styled.div`
 export default function TableHeader({ type }) {
   return (
     <TableHeaderContainer>
-      <div className="table-row-item">Collection name</div>
-      <div className="table-row-item nft-title">NFT title</div>
-      <div className="table-row-item">Status</div>
-      <div className="table-row-item">Offer Date</div>
-      <div className="table-row-item">{type === 'Received' ? 'Buyer' : 'Owner'}</div>
-      <div className="table-row-item">Offer price</div>
+      <div className="table-row-item">Offer</div>
+      <div className="table-row-item">Price</div>
+      <div className="table-row-item">Made</div>
       <div className="table-row-item"></div>
       <div className="table-row-item"></div>
     </TableHeaderContainer>
