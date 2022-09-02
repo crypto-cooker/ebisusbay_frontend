@@ -8285,6 +8285,25 @@
         "telegram": "https://t.me/CroArmy_ETH",
         "medium": "https://croarmy.gitbook.io/croarmy/"
       }
+    },
+    {
+      "name": "ClubCRO",
+      "slug": "clubcro",
+      "multiToken": false,
+      "address": "0x207fb7B09C3c5388C7922E29097a795689c18949",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "ClubCRO is a conglomerate who share a belief that everyone should have control over their money, data and identity. We understand the mission of CRO within the context of mass adoption and the wider financial landscape.  We're creating our own community validator which will run nodes to process network transactions and help secure the Crypto.org Chain, return staking rewards for 8 more years to fund our weekly giveaways, and will also give us voting power on major Cronos decisions.",
+        "verified": false,
+        "avatar": "/img/collections/clubcro/avatar.webp",
+        "card": "/img/collections/clubcro/card.webp",
+        "banner": "/img/collections/clubcro/banner.webp",
+        "maxSupply": 1500,
+        "website": "https://clubcro.fi/",
+        "twitter": "https://twitter.com/ClubCro",
+        "discord": "https://discord.gg/YbXEd44xdZ"
+      }
     }
   ],
   "drops": [
