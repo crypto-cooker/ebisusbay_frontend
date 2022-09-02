@@ -5790,13 +5790,13 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "5,000 Undead Space Apes on the Cronos Network. Royalties distributed to holders.",
+        "description": "5,000 Undead Space Apes on the Cronos Network. Royalties used for Community Prize Pools and Raffles.",
         "verified": false,
-        "avatar": "/img/collections/undead-space-apes/avatar.png",
-        "card": "/img/collections/undead-space-apes/card.png",
-        "banner": "/img/collections/undead-space-apes/banner.png",
+        "avatar": "/img/collections/undead-space-apes/avatar.webp",
+        "card": "/img/collections/undead-space-apes/card.webp",
+        "banner": "/img/collections/undead-space-apes/banner.webp",
         "maxSupply": 5000,
-        "website": "https://undeadspaceapes.com/",
+        "website": "https://undeadcommunity.com",
         "twitter": "https://twitter.com/WeRtheUndead ",
         "discord": "https://discord.gg/undeadcommunity"
       }
