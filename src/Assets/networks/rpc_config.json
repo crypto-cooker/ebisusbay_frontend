@@ -5790,13 +5790,13 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "5,000 Undead Space Apes on the Cronos Network. Royalties distributed to holders.",
+        "description": "5,000 Undead Space Apes on the Cronos Network. Royalties used for Community Prize Pools and Raffles.",
         "verified": false,
-        "avatar": "/img/collections/undead-space-apes/avatar.png",
-        "card": "/img/collections/undead-space-apes/card.png",
-        "banner": "/img/collections/undead-space-apes/banner.png",
+        "avatar": "/img/collections/undead-space-apes/avatar.webp",
+        "card": "/img/collections/undead-space-apes/card.webp",
+        "banner": "/img/collections/undead-space-apes/banner.webp",
         "maxSupply": 5000,
-        "website": "https://undeadspaceapes.com/",
+        "website": "https://undeadcommunity.com",
         "twitter": "https://twitter.com/WeRtheUndead ",
         "discord": "https://discord.gg/undeadcommunity"
       }
@@ -6161,9 +6161,9 @@
       "metadata": {
         "description": "An exclusive NFT community collecting $CRO in the bear market. 60% of minting revenue will be deposited into MMO vault to earn $CRO. 1:1 Airdrop to all future collection.",
         "verified": false,
-        "avatar": "/img/collections/cro-whales/avatar.png",
-        "card": "/img/collections/cro-whales/card.png",
-        "banner": "/img/collections/cro-whales/banner.png",
+        "avatar": "/img/collections/cro-whales/avatar.webp",
+        "card": "/img/collections/cro-whales/card.webp",
+        "banner": "/img/collections/cro-whales/banner.webp",
         "maxSupply": 100,
         "website": "https://croceanft.com/",
         "twitter": "https://twitter.com/Crocean_NFT",
@@ -8284,6 +8284,45 @@
         "discord": "https://discord.gg/croarmy",
         "telegram": "https://t.me/CroArmy_ETH",
         "medium": "https://croarmy.gitbook.io/croarmy/"
+      }
+    },
+    {
+      "name": "ClubCRO",
+      "slug": "clubcro",
+      "multiToken": false,
+      "address": "0x207fb7B09C3c5388C7922E29097a795689c18949",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "ClubCRO is a conglomerate who share a belief that everyone should have control over their money, data and identity. We understand the mission of CRO within the context of mass adoption and the wider financial landscape.  We're creating our own community validator which will run nodes to process network transactions and help secure the Crypto.org Chain, return staking rewards for 8 more years to fund our weekly giveaways, and will also give us voting power on major Cronos decisions.",
+        "verified": false,
+        "avatar": "/img/collections/clubcro/avatar.webp",
+        "card": "/img/collections/clubcro/card.webp",
+        "banner": "/img/collections/clubcro/banner.webp",
+        "maxSupply": 1500,
+        "website": "https://clubcro.fi/",
+        "twitter": "https://twitter.com/ClubCro",
+        "discord": "https://discord.gg/YbXEd44xdZ"
+      }
+    },
+    {
+      "name": "Croturtles",
+      "slug": "croturtles",
+      "multiToken": false,
+      "address": "0x17a623289Aa59756920A078243B586695e14ae7C",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Croturtle is second collection created by CroceanNFT. 6123 unique collectible Croturtles PFP on Cronos blockchain. Everybody likes to get cheap an NFT and then sell even several times more expensive. All the money from royalty will be distributed to holders once every 10 days. Each holders of Croturtle will receive WL for next collection and the largest holders will receive free NFT. Our first goal is to achieve high floor (over 100 CRO).",
+        "verified": false,
+        "avatar": "/img/collections/croturtles/avatar.webp",
+        "card": "/img/collections/croturtles/card.webp",
+        "banner": "/img/collections/croturtles/banner.webp",
+        "maxSupply": 6123,
+        "website": "https://croceanft.com/",
+        "twitter": "https://twitter.com/Crocean_NFT",
+        "discord": "https://discord.gg/N9YstjgG2y",
+        "telegram": "https://t.me/crowhalesnft"
       }
     }
   ],
