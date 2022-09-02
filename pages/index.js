@@ -14,7 +14,7 @@ import HotCollections from '../src/Components/components/HotCollections';
 import CurrentDrops from '../src/Components/components/CurrentDrops';
 import { getMarketData } from '@src/GlobalState/marketplaceSlice';
 import { siPrefixedNumber } from '@src/utils';
-import {theme} from '@src/Theme/theme';
+import {getTheme, theme} from '@src/Theme/theme';
 import { limitSizeOptions } from '@src/Components/components/constants/filter-options';
 import Button from '../src/Components/components/Button';
 import {hostedImage, ImageKitService} from "@src/helpers/image";
@@ -249,57 +249,74 @@ const Home = () => {
       </Jumbotron.Host>
       {mobile && JumbotronData()}
 
-{/*      <section className="container no-bottom no-top">*/}
-{/*        <div className="row">*/}
-{/*          <div className="col-lg-12">*/}
-{/*            <div className="text-center pt-5">*/}
-{/*              <h2>Bad Lizzys</h2>*/}
-{/*              <div className="small-border"></div>*/}
-{/*            </div>*/}
-{/*          </div>*/}
-{/*          <div className="col-lg-8 col-md-6 d-flex align-items-center">*/}
-{/*            <div className="mt-3" style={{color:getTheme(userTheme).colors.textColor3}}>*/}
-{/*              <p>*/}
-{/*              The cronos lizards have met the strange visitors - bad bits.*/}
-{/*Offering their mysterious portal juice, the Lizards have phased into a whole new dimension!*/}
+      <section className="container no-bottom no-top">
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="text-center pt-5">
+              <h2>ClubCRO</h2>
+              <div className="small-border"></div>
+            </div>
+          </div>
+          <div className="col-lg-6 col-md-6 d-flex align-items-center">
+            <div className="mt-3" style={{color:getTheme(userTheme).colors.textColor3}}>
+              <p>
+                ClubCRO is a conglomerate who share a belief that everyone should have control over their money, data and identity. We understand the mission of CRO within the context of mass adoption and the wider financial landscape.
+              </p>
+              <p>
+                We're creating our own community validator which will run nodes to process network transactions and help secure the Crypto.org Chain, return staking rewards for 8 more years to fund our weekly giveaways, and will also give us voting power on major Cronos decisions.
+              </p>
 
-{/*This collection of 10,000 Cronos Lizards turned BAD is all about giving back to the community and setting up this OG Cronos Project to succeed.We have free airdrops, monetized token, shop, charity, and a giveback program.*/}
+              <p>
+                The weekly giveaways will return 15,000 CRO in the form of:<br />
+                <span className="fw-bold">1st place: 7,500 CRO</span><br />
+                <span className="fw-bold">2nd place: 5,000 CRO</span><br />
+                <span className="fw-bold">3rd place: 2,500 CRO</span><br />
+                & if you don’t win, we will buy back your NFT for 5,000 CRO!
+              </p>
 
-{/*NOTE: If you have any Cronos Lizards Gen1, Gen2 and BSL you can exchange each of them for a BAD Lizzy.*/}
-
-{/*GET YOURS TODAY at Cronoslizards.com/mint</p>*/}
-{/*            </div>*/}
-{/*          </div>*/}
-{/*          <div className="col-lg-4 col-md-6 pt-3">*/}
-{/*            <div className="mx-auto text-center">*/}
-{/*              <img*/}
-{/*                src={hostedImage('/img/promos/bad_liz.png')}*/}
-{/*                alt="Bad Lizzys"*/}
-{/*                className="img-fluid"*/}
-{/*                style={{maxWidth: '300px'}}*/}
-{/*              />*/}
-{/*            </div>*/}
-{/*            <div className="card-body d-flex flex-column align-middle">*/}
-{/*              <div className="d-flex justify-content-between">*/}
-{/*                /!*<div className="flex-fill mx-1">*!/*/}
-{/*                /!*  <a href="https://twitter.com/crogecoin" target="_blank" rel="noreferrer">*!/*/}
-{/*                /!*    <Button type="legacy-outlined" className="w-100">*!/*/}
-{/*                /!*      <FontAwesomeIcon icon={faTwitter} className="me-1"/> Twitter*!/*/}
-{/*                /!*    </Button>*!/*/}
-{/*                /!*  </a>*!/*/}
-{/*                /!*</div>*!/*/}
-{/*                <div className="flex-fill mx-1">*/}
-{/*                  <a href="https://cronoslizards.com/mint" target="_blank" rel="noreferrer">*/}
-{/*                    <Button type="legacy-outlined" className="w-100">*/}
-{/*                       Mint Now*/}
-{/*                    </Button>*/}
-{/*                  </a>*/}
-{/*                </div>*/}
-{/*              </div>*/}
-{/*            </div>*/}
-{/*          </div>*/}
-{/*        </div>*/}
-{/*      </section>*/}
+              <div style={{fontSize: 12}}>
+              <div>
+                *You may win multiple times. After each win, your NFT will be placed on an automatic 4-week hold, and will automatically be re-entered after the holding period
+              </div>
+              <div>
+                *Buybacks will occur at the 4-year mark and every 2 years thereafter, until the end of the program
+              </div>
+              <div>
+                *This is the very first asset-backed NFT on Cronos
+              </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-lg-6 col-md-6 pt-3">
+            <div className="mx-auto text-center">
+              <img
+                src={hostedImage('/img/promos/clubcro.webp')}
+                alt="ClubCRO"
+                className="img-fluid"
+                style={{maxWidth: '600px'}}
+              />
+            </div>
+            <div className="card-body d-flex flex-column align-middle">
+              <div className="d-flex justify-content-between">
+                {/*<div className="flex-fill mx-1">*/}
+                {/*  <a href="https://twitter.com/crogecoin" target="_blank" rel="noreferrer">*/}
+                {/*    <Button type="legacy-outlined" className="w-100">*/}
+                {/*      <FontAwesomeIcon icon={faTwitter} className="me-1"/> Twitter*/}
+                {/*    </Button>*/}
+                {/*  </a>*/}
+                {/*</div>*/}
+                <div className="flex-fill mx-1">
+                  <a href="https://clubcro.fi/" target="_blank" rel="noreferrer">
+                    <Button type="legacy-outlined" className="w-100">
+                       Mint Now
+                    </Button>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="container no-bottom">
         <div className="row">
