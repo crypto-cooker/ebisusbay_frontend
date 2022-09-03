@@ -11156,7 +11156,7 @@
       "is1155": false,
       "published": true,
       "complete": false,
-      "featured": true,
+      "featured": false,
       "redirect": "https://mint.hidethefish.com/"
     },
     {
@@ -11227,6 +11227,7 @@
       "is1155": false,
       "published": true,
       "complete": false,
+      "featured": true,
       "priceDescription": "Whitelist-only presale for the first hour (limit 5 per address). Public sale after presale ends"
     },
     {
