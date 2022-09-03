@@ -7997,7 +7997,7 @@
       "name": "CroHogs",
       "slug": "crohogs",
       "multiToken": false,
-      "address": "",
+      "address": "0xFD265797d7Bc6C25f2Cd148ec12f36a8eE00862a",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -11209,7 +11209,7 @@
         "discord": "https://discord.gg/JGdADKNy28",
         "instagram": "https://www.instagram.com/crohogsnft"
       },
-      "address": "",
+      "address": "0xFD265797d7Bc6C25f2Cd148ec12f36a8eE00862a",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 1500,
@@ -11217,7 +11217,11 @@
       "memberCost": "550",
       "whitelistCost": "500",
       "foundersOnly": false,
-      "start": 1662235200000,
+      "start": 1662231600000,
+      "salePeriods": {
+        "presale": 1662231600000,
+        "public": 1662235200000
+      },
       "end": null,
       "referral": false,
       "is1155": false,
