@@ -11226,7 +11226,8 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false
+      "complete": false,
+      "priceDescription": "Whitelist-only presale for the first hour (limit 5 per address). Public sale after presale ends"
     },
     {
       "id": 106,
