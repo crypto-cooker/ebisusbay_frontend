@@ -6618,7 +6618,8 @@
         "website": "https://degenbrains.com/",
         "twitter": "https://twitter.com/degenbrains",
         "discord": "https://discord.gg/degenbrainfinance",
-        "medium": "https://medium.com/@degenbrains"
+        "medium": "https://medium.com/@degenbrains",
+        "rankings": {"source": "rarity_sniper", "slug": "degenbrains"}
       }
     },
     {
@@ -6928,7 +6929,7 @@
       "multiToken": false,
       "address": "0x01C87a25638D97D246D4250FEE59Ad6A84899860",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Team Mustachios consists of 3 teams of 2222 units, yellow, green and blue for a total of 6666 unique NFTs. Unlike traditional stacking, we have innovated to give you an unprecedented experience. We therefore redistribute the royalties in a playful way by selecting a team each week as well as 2 traits from the collection. If your team is selected during the current week, you win but if you own one or even better 2 traits, you could win big.",
         "verified": false,
@@ -7480,7 +7481,8 @@
         "maxSupply": 2421,
         "website": "https://vvs.finance/miner-mole/",
         "twitter": "https://www.twitter.com/VVS_finance",
-        "discord": "https://discord.gg/V2957zMsmg"
+        "discord": "https://discord.gg/V2957zMsmg",
+        "rankings": {"source": "rarity_sniper", "slug": "miner-moles"}
       }
     },
     {
@@ -7995,7 +7997,7 @@
       "name": "CroHogs",
       "slug": "crohogs",
       "multiToken": false,
-      "address": "",
+      "address": "0xFD265797d7Bc6C25f2Cd148ec12f36a8eE00862a",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -8303,6 +8305,11 @@
         "website": "https://clubcro.fi/",
         "twitter": "https://twitter.com/ClubCro",
         "discord": "https://discord.gg/YbXEd44xdZ"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -11149,7 +11156,7 @@
       "is1155": false,
       "published": true,
       "complete": false,
-      "featured": true,
+      "featured": false,
       "redirect": "https://mint.hidethefish.com/"
     },
     {
@@ -11202,7 +11209,7 @@
         "discord": "https://discord.gg/JGdADKNy28",
         "instagram": "https://www.instagram.com/crohogsnft"
       },
-      "address": "",
+      "address": "0xFD265797d7Bc6C25f2Cd148ec12f36a8eE00862a",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 1500,
@@ -11210,12 +11217,18 @@
       "memberCost": "550",
       "whitelistCost": "500",
       "foundersOnly": false,
-      "start": 1662235200000,
+      "start": 1662231600000,
+      "salePeriods": {
+        "presale": 1662231600000,
+        "public": 1662235200000
+      },
       "end": null,
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false
+      "complete": false,
+      "featured": true,
+      "priceDescription": "Whitelist-only presale for the first hour (limit 5 per address). Public sale after presale ends"
     },
     {
       "id": 106,
