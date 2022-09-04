@@ -85,7 +85,7 @@ export default function MakeOfferDialog({ isOpen, nft, collection, onClose }) {
   const {offerContract, marketContract} = user;
 
   const isAboveFloorPrice = (price) => {
-    return (floorPrice !== 0 && ((Number(price) - floorPrice) / floorPrice) * 100 > floorThreshold);
+    return (parseInt(floorPrice) > 0 && ((Number(price) - floorPrice) / floorPrice) * 100 > floorThreshold);
   };
 
   const costOnChange = useCallback((e) => {
