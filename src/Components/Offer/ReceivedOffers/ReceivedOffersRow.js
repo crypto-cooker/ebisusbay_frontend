@@ -147,16 +147,6 @@ export default function TableRow({ data }) {
 
   return (
     <>
-      {!!offerType && offerType !== OFFER_TYPE.accept && offerType !== OFFER_TYPE.reject && (
-        <MakeOfferDialog
-          isOpen={!!offerType}
-          toggle={handleOffer}
-          nftData={nft}
-          offerData={data}
-          collectionMetadata={collectionData?.metadata}
-          type={offerType}
-        />
-      )}
       {!!offerType && offerType === OFFER_TYPE.accept && (
         <AcceptOfferDialog
           isOpen={!!offerType}

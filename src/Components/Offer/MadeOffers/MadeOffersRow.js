@@ -148,7 +148,7 @@ export default function TableRow({ data }) {
 
   return (
     <>
-      {!!offerType && offerType !== OFFER_TYPE.accept && offerType !== OFFER_TYPE.cancel && (
+      {!!offerType && offerType === OFFER_TYPE.update && (
         <MakeOfferDialog
           isOpen={!!offerType}
           toggle={handleOffer}

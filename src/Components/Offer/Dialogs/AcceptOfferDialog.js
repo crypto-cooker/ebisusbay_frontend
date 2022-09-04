@@ -261,7 +261,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
                   />
                 )}
               </div>
-              <div className="col-12 col-sm-6">
+              <div className="col-12 col-sm-6 mt-2 mt-sm-0">
                 <div className="mb-4 text-center">
                   <div className="fs-6">Offer Price</div>
                   <div className="fs-2 fw-bold">{offer.price} CRO</div>
@@ -337,7 +337,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
                 ) : (
                   <>
                     <div className="mb-2 text-center fst-italic">
-                      <small>Ebisu's Bay needs approval to transfer this NFT on your behalf once sold</small>
+                      <small>Ebisu's Bay needs approval to transfer this NFT on your behalf upon accepting</small>
                     </div>
                     <div className="d-flex justify-content-end">
                       <Button type="legacy"
@@ -436,7 +436,7 @@ const NftPicker = ({collectionAddress, nfts, onSelect}) => {
       ...base,
       background: getTheme(userTheme).colors.bgColor2,
       color: getTheme(userTheme).colors.textColor3,
-    }),
+    })
   };
 
   return (
@@ -446,6 +446,8 @@ const NftPicker = ({collectionAddress, nfts, onSelect}) => {
       </ImageContainer>
       <h3 className="feeTitle mt-2">Choose NFT</h3>
       <Select
+        menuPlacement="top"
+        maxMenuHeight="200px"
         styles={customStyles}
         placeholder="Choose NFT"
         options={nfts.sort((a, b) => (a.name ?? a.nftId) > (b.name ?? b.nftId) ? 1 : -1)}
