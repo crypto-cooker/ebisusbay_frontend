@@ -448,8 +448,8 @@ const NftPicker = ({collectionAddress, nfts, onSelect}) => {
       <Select
         styles={customStyles}
         placeholder="Choose NFT"
-        options={nfts}
-        getOptionLabel={(option) => option.name}
+        options={nfts.sort((a, b) => (a.name ?? a.nftId) > (b.name ?? b.nftId) ? 1 : -1)}
+        getOptionLabel={(option) => option.name ?? option.nftId}
         getOptionValue={(option) => option}
         value={chosenNft}
         defaultValue={nfts[0]}
