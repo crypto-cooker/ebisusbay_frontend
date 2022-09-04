@@ -31,21 +31,21 @@ import {
   isLadyWeirdApesCollection,
   isNftBlacklisted,
   isAnyWeirdApesCollection, isWeirdApesCollection,
-} from '../../utils';
-import {getNftDetails, refreshMetadata} from '../../GlobalState/nftSlice';
-import { connectAccount, chainConnect } from '../../GlobalState/User';
-import { specialImageTransform } from '../../hacks';
+} from '@src/utils';
+import {getNftDetails, refreshMetadata} from '@src/GlobalState/nftSlice';
+import { connectAccount, chainConnect } from '@src/GlobalState/User';
+import { specialImageTransform } from '@src/hacks';
 import ListingItem from '../NftDetails/NFTTabListings/ListingItem';
 import PriceActionBar from '../NftDetails/PriceActionBar';
-import { ERC721 } from '../../Contracts/Abis';
-import { getFilteredOffers } from '../../core/subgraph';
-import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
+import { ERC721 } from '@src/Contracts/Abis';
+import { getFilteredOffers } from '@src/core/subgraph';
+import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog2';
 import NFTTabOffers from '../Offer/NFTTabOffers';
 import { OFFER_TYPE } from '../Offer/MadeOffers/MadeOffersRow';
-import { offerState } from '../../core/api/enums';
+import { offerState } from '@src/core/api/enums';
 import { commify } from 'ethers/lib/utils';
-import { appConfig } from '../../Config';
-import { hostedImage } from '../../helpers/image';
+import { appConfig } from '@src/Config';
+import { hostedImage } from '@src/helpers/image';
 import Link from 'next/link';
 import axios from "axios";
 import Button from "@src/Components/components/common/Button";
@@ -756,11 +756,9 @@ const Nft721 = ({ address, id }) => {
       {openMakeOfferDialog && (
         <MakeOfferDialog
           isOpen={openMakeOfferDialog}
-          toggle={() => setOpenMakeOfferDialog(!openMakeOfferDialog)}
-          offerData={offerData}
-          nftData={nft}
-          collectionMetadata={collectionMetadata}
-          type={offerType}
+          onClose={() => setOpenMakeOfferDialog(false)}
+          nft={nft}
+          collection={collection}
         />
       )}
       <Footer />
