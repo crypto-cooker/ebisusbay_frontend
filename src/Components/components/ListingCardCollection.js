@@ -6,7 +6,7 @@ import { ethers } from 'ethers';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
 import Button from './Button';
-import MakeOfferDialog from '../Offer/MakeOfferDialog';
+import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
 import { chainConnect, connectAccount } from '../../GlobalState/User';
 import { AnyMedia } from './AnyMedia';
 import { specialImageTransform } from '../../hacks';

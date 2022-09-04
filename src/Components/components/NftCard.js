@@ -7,7 +7,7 @@ import { ethers } from 'ethers';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
 import Button from './Button';
-import MakeOfferDialog from '../Offer/MakeOfferDialog';
+import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog2';
 import { connectAccount, chainConnect } from '../../GlobalState/User';
 import { isNftBlacklisted, round } from '../../utils';
 import { AnyMedia } from './AnyMedia';
@@ -153,9 +153,9 @@ const NftCard = ({ royalty, listing, imgClass = 'marketplace', watermark, collec
       {openMakeOfferDialog && (
         <MakeOfferDialog
           isOpen={openMakeOfferDialog}
-          toggle={() => setOpenMakeOfferDialog(!openMakeOfferDialog)}
-          nftData={listing}
-          royalty={royalty}
+          onClose={() => setOpenMakeOfferDialog(false)}
+          nft={listing}
+          collection={collection}
         />
       )}
     </>

@@ -7,9 +7,9 @@ import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Spinner } from 'react-bootstrap';
 
-import Button from '../../../Components/components/Button';
-import Input from '../../../Components/components/common/Input';
-import ProfilePreview from '../../../Components/components/ProfilePreview';
+import Button from '../../components/Button';
+import Input from '../../components/common/Input';
+import ProfilePreview from '../../components/ProfilePreview';
 import { specialImageTransform } from '../../../hacks';
 import {
   caseInsensitiveCompare,
@@ -18,7 +18,7 @@ import {
   rankingsLogoForCollection, rankingsTitleForCollection,
   shortAddress
 } from '../../../utils';
-import { OFFER_TYPE } from '../MadeOffersRow';
+import { OFFER_TYPE } from '../MadeOffers/MadeOffersRow';
 import { updateOfferSuccess, updateOfferFailed } from '../../../GlobalState/offerSlice';
 import EmptyData from '../EmptyData';
 import Market from '../../../Contracts/Marketplace.json';
@@ -160,7 +160,7 @@ const CloseIconContainer = styled.div`
   }
 `;
 
-export default function MakeOfferDialog({ isOpen, toggle, type, nftData, offerData }) {
+export default function MakeOfferDialog({ isOpen, toggle, type, nftData, offerData, isCollectionOffer = false }) {
   const isNftLoading = useSelector((state) => {
     return state.nft.loading;
   });
@@ -279,6 +279,48 @@ export default function MakeOfferDialog({ isOpen, toggle, type, nftData, offerDa
     }
   };
 
+  const executeMakeOffer = async (address, id = null, price) => {
+    const options = {
+      ...{value: ethers.utils.parseEther(price.toString())},
+      ...txExtras,
+    };
+
+    if (isCollectionOffer) {
+      return await offerContract.makeCollectionOffer(address, options);
+    } else {
+      return await offerContract.makeOffer(address, id, options);
+    }
+  }
+
+  const executeUpdateOffer = async (hash, index, address, oldPrice, newPrice) => {
+    const options = {
+      ...{value: ethers.utils.parseEther((newPrice - oldPrice).toString())},
+      ...txExtras,
+    };
+
+    if (isCollectionOffer) {
+      return await offerContract.updateCollectionOffer(address, index, options);
+    } else {
+      return await offerContract.updateOffer(hash, index, options);
+    }
+  }
+
+  const executeCancelOffer = async (hash, index, address) => {
+    if (isCollectionOffer) {
+      return await offerContract.cancelCollectionOffer(address, index, txExtras);
+    } else {
+      return await offerContract.cancelOffer(hash, index, txExtras);
+    }
+  }
+
+  const executeRejectOffer = async (hash, index) => {
+    if (isCollectionOffer) {
+      throw new Error('Cannot reject a collection offer');
+    } else {
+      return await offerContract.rejectOffer(hash, index, txExtras);
+    }
+  }
+
   const handleOfferAction = async (actionType) => {
     try {
       let tx, receipt;
@@ -290,13 +332,7 @@ export default function MakeOfferDialog({ isOpen, toggle, type, nftData, offerDa
           setError(true, 'Offer must be at least 50% of floor value');
           return;
         }
-        tx = await offerContract.makeOffer(nftData.address, nftData.id, {
-          ...{
-            value: ethers.utils.parseEther(offerPrice.toString()),
-          },
-          ...txExtras,
-        });
-
+        tx = await makeOffer(nftData.address, nftData.id, offerPrice);
         receipt = await tx.wait();
       } else if (actionType === OFFER_TYPE.update) {
         if (!offerPrice || offerPrice <= Number(offerDataNew.price) || !isAboveOfferThreshold) {
@@ -304,18 +340,13 @@ export default function MakeOfferDialog({ isOpen, toggle, type, nftData, offerDa
           setError(true, 'Offer price must be greater than your previous offer');
           return;
         }
-        tx = await offerContract.updateOffer(offerDataNew?.hash, offerDataNew?.offerIndex, {
-          ...{
-            value: ethers.utils.parseEther((offerPrice - offerDataNew.price).toString()),
-          },
-          ...txExtras,
-        });
+        tx = await executeUpdateOffer(offerDataNew?.hash, offerDataNew?.offerIndex, nftData.address, offerDataNew.price, offerPrice);
         receipt = await tx.wait();
       } else if (actionType === OFFER_TYPE.cancel) {
-        tx = await offerContract.cancelOffer(offerDataNew?.hash, offerDataNew?.offerIndex, txExtras);
+        tx = await executeCancelOffer(offerDataNew?.hash, offerDataNew?.offerIndex, nftData.address);
         receipt = await tx.wait();
       } else if (actionType === OFFER_TYPE.reject) {
-        tx = await offerContract.rejectOffer(offerDataNew?.hash, offerDataNew?.offerIndex, txExtras);
+        tx = await executeRejectOffer(offerDataNew?.hash, offerDataNew?.offerIndex);
         receipt = await tx.wait();
       }
 
@@ -356,7 +387,7 @@ export default function MakeOfferDialog({ isOpen, toggle, type, nftData, offerDa
   return (
     <DialogContainer onClose={() => toggle(OFFER_TYPE.none)} open={isOpen} maxWidth="md">
       <DialogContent>
-        {!isGettingOfferType && <DialogTitleContainer>{offerType} Offer</DialogTitleContainer>}
+        {!isGettingOfferType && <DialogTitleContainer>{offerType} {isCollectionOffer ? 'Collection' : ''} Offer</DialogTitleContainer>}
         {findCollectionByAddress(nftData.address, nftData.id)?.multiToken && (
           <div className="mb-5">
             If you are trying to make multiple offers on the same ERC1155 token, this is not possible currently. It will
@@ -366,7 +397,11 @@ export default function MakeOfferDialog({ isOpen, toggle, type, nftData, offerDa
         {!isNftLoading && !isGettingOfferType ? (
           <DialogMainContent>
             <ImageContainer>
-              <img src={specialImageTransform(nftData.address, nftData.image)} alt={nftData.name} />
+              {isCollectionOffer ? (
+                <img src={hostedImage(collectionMetadata?.avatar)} alt={nftData.name} />
+              ) : (
+                <img src={specialImageTransform(nftData.address, nftData.image)} alt={nftData.name} />
+              )}
               {nftData && nftData.image && (
                 <div className="nft__item_action mt-2" style={{ cursor: 'pointer' }}>
                   <span onClick={() => window.open(specialImageTransform(nftData.address, fullImage()), '_blank')}>
@@ -377,20 +412,22 @@ export default function MakeOfferDialog({ isOpen, toggle, type, nftData, offerDa
               )}
             </ImageContainer>
             <NftDetailContainer>
-              <NftTitle>{nftData.name}</NftTitle>
+              <NftTitle>{isCollectionOffer ? collection.name : nftData.name}</NftTitle>
               <NftDescription>{nftData.description}</NftDescription>
               {collectionMetadata && (
                 <FlexRow className="row">
                   <div className="item_info">
                     <div className="row" style={{ gap: '2rem 0' }}>
-                      <ProfilePreview
-                        type="Collection"
-                        title={nftData.address && shortAddress(nftData.address)}
-                        avatar={hostedImage(collectionMetadata?.avatar, true)}
-                        address={nftData.address}
-                        verified={collectionMetadata?.verified}
-                        to={`/collection/${nftData.address}`}
-                      />
+                      {!isCollectionOffer && (
+                        <ProfilePreview
+                          type="Collection"
+                          title={nftData.address && shortAddress(nftData.address)}
+                          avatar={hostedImage(collectionMetadata?.avatar, true)}
+                          address={nftData.address}
+                          verified={collectionMetadata?.verified}
+                          to={`/collection/${nftData.address}`}
+                        />
+                      )}
 
                       {typeof nftData.rank !== 'undefined' && nftData.rank !== null && (
                         <ProfilePreview
@@ -404,14 +441,11 @@ export default function MakeOfferDialog({ isOpen, toggle, type, nftData, offerDa
                   </div>
                 </FlexRow>
               )}
-              <FlexRow>
-                <Royalty>Royalty</Royalty>
-                <Royalty>{royalty ? `${royalty}%` : '-'}</Royalty>
-              </FlexRow>
-              <FlexRow>
-                <FloorPrice>Floor Price</FloorPrice>
-                <FloorPrice>{floorPrice ? `${ethers.utils.commify(floorPrice)} CRO` : '-'}</FloorPrice>
-              </FlexRow>
+
+
+              <div className="text-center mb-2" style={{fontSize: '14px'}}>
+                Cancelling this offer will return the offer amount back to your wallet
+              </div>
               {(offerType === OFFER_TYPE.make || offerType === OFFER_TYPE.update) && (
                 <>
                   <FlexRow>

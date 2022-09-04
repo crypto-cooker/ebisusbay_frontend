@@ -1,17 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import { Spinner } from 'react-bootstrap';
 
-import EmptyData from '../EmptyData';
-import TableHeader from '../MadeOffersHeader';
-import TableRow from '../MadeOffersRow';
+import TableHeader from '../ReceivedOffers/ReceivedOffersHeader';
+import TableRow from '../ReceivedOffers/ReceivedOffersRow';
 import InfiniteScroll from "react-infinite-scroll-component";
-import {getAllCollectionOffers, getAllOffers, getMyOffers} from "@src/core/subgraph";
-import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
-import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
+import {getAllCollectionOffers, getAllOffers} from "@src/core/subgraph";
+import {useQuery} from "@tanstack/react-query";
 import {caseInsensitiveCompare, findCollectionByAddress, findCollectionFloor, isNftBlacklisted} from "@src/utils";
 import {offerState} from "@src/core/api/enums";
-import {getQuickWallet} from "@src/core/api/endpoints/wallets";
-import {getNotifications} from "@src/core/cms/next/notifications";
 
 export default function ReceivedOffers({ address, collectionAddresses, nfts, stats, type }) {
 
@@ -91,7 +87,7 @@ export default function ReceivedOffers({ address, collectionAddresses, nfts, sta
   } = useQuery(
     ['ReceivedOffers', type],
     fetchProjects,
-    {enabled: collectionAddresses.length > 0 && nfts.length > 0}
+    {enabled: collectionAddresses.length > 0 && nfts.length > 0, refetchOnWindowFocus: false}
   )
 
   const loadMore = () => {
@@ -100,7 +96,7 @@ export default function ReceivedOffers({ address, collectionAddresses, nfts, sta
 
   return (
     <div>
-      <TableHeader type="received" />
+      <TableHeader />
       {status === "loading" ? (
         <div className="col-lg-12 text-center">
           <Spinner animation="border" role="status">
@@ -127,7 +123,7 @@ export default function ReceivedOffers({ address, collectionAddresses, nfts, sta
             }
           >
             {data.map((offer, index) => (
-              <TableRow key={index} data={offer} type="Received" />
+              <TableRow key={index} data={offer} />
             ))}
           </InfiniteScroll>
         </>

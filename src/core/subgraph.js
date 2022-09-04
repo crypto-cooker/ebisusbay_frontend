@@ -1,5 +1,6 @@
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import {appConfig} from "../Config";
+import {caseInsensitiveCompare} from "@src/utils";
 
 const config = appConfig();
 const APIURL = `${config.urls.subgraph}${config.chain.id === '25' ? 'offers' : 'offers-testnet'}`;
@@ -139,7 +140,7 @@ export const getMyOffers = async (myAddress, stateFilter, lastId) => {
   };
 };
 
-export const getMyCollectionOffers = async (myAddress, stateFilter, lastId) => {
+export const getMyCollectionOffers = async (myAddress, stateFilter, lastId, collectionAddress = null) => {
   const myOffersQuery = `
   query($first: Int, $buyer: String, $state: String, $lastId: String) {
     collectionOffers(first: $first, where: {buyer: $buyer, state: $state, id_gt: $lastId}) {
@@ -176,8 +177,10 @@ export const getMyCollectionOffers = async (myAddress, stateFilter, lastId) => {
 
   const { collectionOffers } = response.data;
 
+  const filteredOffers = collectionAddress ? collectionOffers.find((o) => caseInsensitiveCompare(o.nftAddress, collectionAddress)) : collectionOffers;
+
   return {
-    data: collectionOffers,
+    data: filteredOffers,
   };
 };
 

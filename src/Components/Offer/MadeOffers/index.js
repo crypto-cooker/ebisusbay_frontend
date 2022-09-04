@@ -1,9 +1,8 @@
 import React from 'react';
 import { Spinner } from 'react-bootstrap';
 
-import EmptyData from '../EmptyData';
-import TableHeader from '../MadeOffersHeader';
-import TableRow from '../MadeOffersRow';
+import TableHeader from './MadeOffersHeader';
+import TableRow from './MadeOffersRow';
 import {getMyCollectionOffers, getMyOffers} from "@src/core/subgraph";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -35,7 +34,7 @@ export default function MadeOffers({ address, type}) {
 
   return (
     <div>
-      <TableHeader type="made" />
+      <TableHeader />
       {status === "loading" ? (
         <div className="col-lg-12 text-center">
           <Spinner animation="border" role="status">
@@ -64,7 +63,7 @@ export default function MadeOffers({ address, type}) {
             {data.pages.map((page, index) => (
               <div key={index}>
                 {page.data.map((offer, index) => (
-                  <TableRow key={index} data={offer} type="Made" />
+                  <TableRow key={index} data={offer} />
                 ))}
               </div>
             ))}

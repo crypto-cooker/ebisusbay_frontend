@@ -9,23 +9,18 @@ import Tab from 'react-bootstrap/Tab';
 import MadeOffers from "@src/Components/Offer/MadeOffers";
 import ReceivedOffers from "@src/Components/Offer/ReceivedOffers";
 import styled from "styled-components";
-import {StatusFilter} from "@src/Components/Collection/Filters/StatusFilter";
-import PriceFilter from "@src/Components/Collection/Filters/PriceFilter";
-import RankFilter from "@src/Components/Collection/Filters/RankFilter";
-import TraitsFilter from "@src/Components/Collection/Filters/TraitsFilter";
-import PowertraitsFilter from "@src/Components/Collection/Filters/PowertraitsFilter";
 import {useSelector} from "react-redux";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
-import {getAllOffers} from "@src/core/subgraph";
 import {getQuickWallet} from "@src/core/api/endpoints/wallets";
 import {getCollectionMetadata} from "@src/core/api";
 
 const StyledNav = styled.div`
   .nav-link {
-    color: white
+    color: ${({ theme }) => theme.colors.textColor3}
   }
   .nav-link.active {
-    background: #218cff
+    background: #218cff;
+    color: ${({ theme }) => theme.colors.white}
   }
   .nav-item {
     cursor: pointer
@@ -42,7 +37,7 @@ const tabs = {
   madeCollection: {
     key: 'made-collection',
     title: 'Made Collection Offers',
-    description: 'Offers made to an entire collection'
+    description: 'Offers made on an entire collection'
   },
   receivedDirect: {
     key: 'received-direct',
@@ -57,7 +52,7 @@ const tabs = {
   receivedCollection: {
     key: 'received-collection',
     title: 'Received Collection Offers',
-    description: 'Offers made directly to collections you own'
+    description: 'Offers received directly on collections you own'
   },
 }
 export default function Offers({ address }) {
@@ -108,21 +103,27 @@ export default function Offers({ address }) {
           <div className="m-0 p-0">
             <div className="me-4 px-2" style={{width: 250}}>
               <StyledNav>
-                <Nav id="offer-nav" variant="pills" className="flex-column" >
+                <Nav id="offer-nav" variant="pills" className="flex-column">
+                  <div className="text-muted fw-bold">
+                    Made Offers
+                  </div>
                   <Nav.Item>
-                    <Nav.Link eventKey={tabs.madeDirect.key}>Made Direct Offers</Nav.Link>
+                    <Nav.Link eventKey={tabs.madeDirect.key}>Direct Offers</Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link eventKey={tabs.madeCollection.key}>Made Collection Offers</Nav.Link>
+                    <Nav.Link eventKey={tabs.madeCollection.key}>Collection Offers</Nav.Link>
+                  </Nav.Item>
+                  <div className="text-muted fw-bold">
+                    Received Offers
+                  </div>
+                  <Nav.Item>
+                    <Nav.Link eventKey={tabs.receivedDirect.key}>Direct Offers</Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link eventKey={tabs.receivedDirect.key}>Received Direct Offers</Nav.Link>
+                    <Nav.Link eventKey={tabs.receivedPublic.key}>Public Offers</Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link eventKey={tabs.receivedPublic.key}>Received Public Offers</Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey={tabs.receivedCollection.key}>Received Collection Offers</Nav.Link>
+                    <Nav.Link eventKey={tabs.receivedCollection.key}>Collection Offers</Nav.Link>
                   </Nav.Item>
                 </Nav>
               </StyledNav>
