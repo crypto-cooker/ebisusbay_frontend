@@ -2866,7 +2866,7 @@
       "name": "Crobies",
       "slug": "crobies",
       "multiToken": false,
-      "address": "",
+      "address": "0x42D96BdfFCFa5A9B01443284142ef968E938A808",
       "onChain": false,
       "listable": true,
       "metadata": {
