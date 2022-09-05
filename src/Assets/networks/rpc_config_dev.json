@@ -8331,6 +8331,27 @@
         "discord": "https://discord.gg/N9YstjgG2y",
         "telegram": "https://t.me/crowhalesnft"
       }
+    },
+    {
+      "name": "CFC Energizers",
+      "slug": "cfc-energizers",
+      "multiToken": false,
+      "address": "0xa3dc4a9922570928f58f188Cd2e1542222f6D65b",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Energizers NFT are meant to upgrade you CFC NFTS.",
+        "verified": false,
+        "avatar": "/img/collections/cfc-energizers/avatar.webp",
+        "card": "/img/collections/cfc-energizers/card.webp",
+        "banner": "/img/collections/cfc-energizers/banner.webp",
+        "maxSupply": 0,
+        "website": "https://dapp.cronosfc.club/",
+        "twitter": "https://twitter.com/Cronos__FC",
+        "discord": "https://discord.gg/XPmYbqAD",
+        "medium": "https://medium.com/@cfcgcronos",
+        "telegram": "https://t.me/CronosFCofficial"
+      }
     }
   ],
   "drops": [
