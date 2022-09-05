@@ -2,7 +2,7 @@ import React, {useState, useCallback, useEffect} from 'react';
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 import styled from 'styled-components';
 import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
-import {Badge, Form, Spinner} from "react-bootstrap";
+import {Badge, Col, Form, Spinner} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {Contract, ethers} from "ethers";
 import Button from "@src/Components/components/Button";
@@ -19,6 +19,7 @@ import * as Sentry from '@sentry/react';
 import {hostedImage} from "@src/helpers/image";
 import Blockies from "react-blockies";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
+import {getMyCollectionOffers} from "@src/core/subgraph";
 
 const DialogContainer = styled(Dialog)`
   .MuiPaper-root {
@@ -69,6 +70,7 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
   const [offerPrice, setOfferPrice] = useState(null);
   const [floorPrice, setFloorPrice] = useState(0);
   const [priceError, setPriceError] = useState(false);
+  const [existingOffer, setExistingOffer] = useState(null);
   const [royalty, setRoyalty] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [executingCreateListing, setExecutingCreateListing] = useState(false);
@@ -80,7 +82,7 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
   const {offerContract, marketContract} = user;
 
   const isAboveFloorPrice = (price) => {
-    return (floorPrice !== 0 && ((Number(price) - floorPrice) / floorPrice) * 100 > floorThreshold);
+    return (parseInt(floorPrice) > 0 && ((Number(price) - floorPrice) / floorPrice) * 100 > floorThreshold);
   };
 
   const costOnChange = useCallback((e) => {
@@ -130,6 +132,8 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
         setFloorPrice(floorPrice.collections[0].floorPrice ?? 0);
       }
 
+      const collectionOffers = await getMyCollectionOffers(user.address, '0', '0', collection.address);
+      setExistingOffer(collectionOffers.data)
       const royalties = await marketContract.royalties(collectionAddress);
 
       setRoyalty((royalties[1] / 10000) * 100);
@@ -158,12 +162,25 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
       setExecutingCreateListing(true);
       Sentry.captureEvent({message: 'handleCreateOffer', extra: {address: collectionAddress, price}});
       const contract = wrappedOfferContract();
-      let tx = await contract.makeCollectionOffer(collectionAddress, {
-        ...{
-          value: ethers.utils.parseEther(offerPrice.toString()),
-        },
-        ...txExtras,
-      });
+
+      let tx;
+      if (existingOffer) {
+        const newPrice = parseInt(offerPrice) - parseInt(existingOffer.price)
+        tx = await contract.uppdateCollectionOffer(existingOffer.nftAddress, existingOffer.offerIndex, {
+          ...{
+            value: ethers.utils.parseEther(newPrice.toString()),
+          },
+          ...txExtras,
+        });
+      } else {
+        tx = await contract.makeCollectionOffer(collectionAddress, {
+          ...{
+            value: ethers.utils.parseEther(offerPrice.toString()),
+          },
+          ...txExtras,
+        });
+      }
+
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       setExecutingCreateListing(false);
@@ -200,6 +217,10 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
       setPriceError('Value must not exceed 18 digits');
       return false;
     }
+    if (existingOffer && parseInt(offerPrice) <= parseInt(existingOffer.price)) {
+      setPriceError('Offer must be greater than previous offer');
+      return false;
+    }
 
     setPriceError(null);
     return true;
@@ -210,13 +231,13 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
   return (
     <DialogContainer onClose={onClose} open={isOpen} maxWidth="md">
       <DialogContent>
-        <DialogTitleContainer className="fs-5 fs-md-3">
-          Offer on {collection.name}
-        </DialogTitleContainer>
         {!isLoading ? (
           <>
+            <DialogTitleContainer className="fs-5 fs-md-3">
+              {existingOffer ? <>Update Offer on {collection.name}</> : <>Offer on {collection.name}</>}
+            </DialogTitleContainer>
             <div className="text-center mb-2" style={{fontSize: '14px'}}>
-              This is an offer on the entire {collection.name} collection. Any {collection.name} owners will be able to view and accept it.
+              This is an offer on the entire {collection.name} collection. Any owners of this collection will be able to view and accept it.
             </div>
             <div className="nftSaleForm row gx-3">
               <div className="col-12 col-sm-6 mb-2 mb-sm-0">
@@ -234,6 +255,16 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
                 </div>
               </div>
               <div className="col-12 col-sm-6">
+                {existingOffer && (
+                  <div className="d-flex justify-content-between">
+                    <Form.Label className="formLabel">
+                      Previous Offer:
+                    </Form.Label>
+                    <div>
+                      {existingOffer.price} CRO
+                    </div>
+                  </div>
+                )}
                 <Form.Group className="form-field">
                   <Form.Label className="formLabel w-100">
                     <div className="d-flex">

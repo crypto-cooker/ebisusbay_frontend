@@ -1,5 +1,6 @@
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import {appConfig} from "../Config";
+import {caseInsensitiveCompare} from "@src/utils";
 
 const config = appConfig();
 const APIURL = `${config.urls.subgraph}${config.chain.id === '25' ? 'offers' : 'offers-testnet'}`;
@@ -54,6 +55,48 @@ export const getAllOffers = async (addresses, stateFilter, lastId) => {
   };
 };
 
+export const getAllCollectionOffers = async (addresses, stateFilter, lastId) => {
+  const allOffersQuery = `
+  query($first: Int, $addresses: [String], $state: String, $lastId: String) {
+    collectionOffers(first: $first, where: {nftAddress_in: $addresses, state: $state, id_gt: $lastId}) {
+        id
+        offerIndex
+        nftAddress
+        nftId
+        buyer
+        seller
+        coinAddress
+        price
+        state
+        timeCreated
+        timeUpdated
+        timeEnded
+    }
+  }
+`;
+
+  const response = await new Promise((resolve) => {
+    resolve(
+      client.query({
+        query: gql(allOffersQuery),
+        variables: {
+          first: FIRST,
+          addresses,
+          state: stateFilter,
+          lastId: lastId || '',
+        },
+        fetchPolicy: 'no-cache',
+      })
+    );
+  });
+
+  const { collectionOffers } = response.data;
+
+  return {
+    data: collectionOffers,
+  };
+};
+
 export const getMyOffers = async (myAddress, stateFilter, lastId) => {
   const myOffersQuery = `
   query($first: Int, $buyer: String, $state: String, $lastId: String) {
@@ -82,7 +125,7 @@ export const getMyOffers = async (myAddress, stateFilter, lastId) => {
         variables: {
           first: FIRST,
           buyer: myAddress.toLowerCase(),
-          state: stateFilter,
+          state: stateFilter.toString(),
           lastId: lastId || '',
         },
         fetchPolicy: 'no-cache',
@@ -94,6 +137,50 @@ export const getMyOffers = async (myAddress, stateFilter, lastId) => {
 
   return {
     data: offers,
+  };
+};
+
+export const getMyCollectionOffers = async (myAddress, stateFilter, lastId, collectionAddress = null) => {
+  const myOffersQuery = `
+  query($first: Int, $buyer: String, $state: String, $lastId: String) {
+    collectionOffers(first: $first, where: {buyer: $buyer, state: $state, id_gt: $lastId}) {
+        id
+        offerIndex
+        nftAddress
+        nftId
+        buyer
+        seller
+        coinAddress
+        price
+        state
+        timeCreated
+        timeUpdated
+        timeEnded
+    }
+  }
+`;
+
+  const response = await new Promise((resolve) => {
+    resolve(
+      client.query({
+        query: gql(myOffersQuery),
+        variables: {
+          first: FIRST,
+          buyer: myAddress.toLowerCase(),
+          state: stateFilter.toString(),
+          lastId: lastId || '',
+        },
+        fetchPolicy: 'no-cache',
+      })
+    );
+  });
+
+  const { collectionOffers } = response.data;
+
+  const filteredOffers = collectionAddress ? collectionOffers.find((o) => caseInsensitiveCompare(o.nftAddress, collectionAddress)) : collectionOffers;
+
+  return {
+    data: filteredOffers,
   };
 };
 

@@ -35,7 +35,7 @@ import Button from "@src/Components/components/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {MobileFilters} from "@src/Components/Collection/CollectionTaskBar/MobileFilters";
 import {FilterResultsBar} from "@src/Components/Collection/FilterResultsBar";
-import MakeCollectionOfferDialog from "@src/Components/Collection/MakeCollectionOfferDialog";
+import MakeCollectionOfferDialog from "@src/Components/Offer/Dialogs/MakeCollectionOfferDialog";
 
 const config = appConfig();
 

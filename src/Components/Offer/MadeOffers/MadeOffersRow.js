@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import moment from 'moment';
 import Blockies from 'react-blockies';
 import { commify } from 'ethers/lib/utils';
 import Link from 'next/link';
 
 import Button from '../../../Components/components/Button';
-import { findCollectionByAddress, shortAddress, shortString } from '@src/utils';
+import {findCollectionByAddress, shortString, timeSince} from '@src/utils';
 import { getNftDetails } from '@src/GlobalState/nftSlice';
-import MakeOfferDialog from '../MakeOfferDialog';
-import AcceptOfferDialog from "@src/Components/Offer/AcceptOfferDialog";
+import MakeOfferDialog from '../Dialogs/MakeOfferDialog';
+import {CancelOfferDialog} from "@src/Components/Offer/Dialogs/CancelOfferDialog";
+import MakeCollectionOfferDialog from "@src/Components/Offer/Dialogs/MakeCollectionOfferDialog";
 
 const TableRowContainer = styled.div`
   display: flex;
@@ -101,7 +101,7 @@ export const OFFER_TYPE = {
   none: '', // close modal
 };
 
-export default function TableRow({ data, type }) {
+export default function TableRow({ data }) {
   const { state, timeCreated, seller, buyer, price, nftAddress, nftId } = data;
 
   let nft = useSelector((state) => {
@@ -141,27 +141,33 @@ export default function TableRow({ data, type }) {
   };
 
   const getOfferDate = (timestamp) => {
-    const offerDate = moment(new Date(timestamp * 1000)).format('DD/MM/YYYY');
-    return offerDate;
+    return timeSince(new Date(timestamp * 1000));
   };
 
   return (
     <>
-      {!!offerType && offerType !== OFFER_TYPE.accept && (
+      {!!offerType && offerType === OFFER_TYPE.update && !!nftId && (
         <MakeOfferDialog
           isOpen={!!offerType}
-          toggle={handleOffer}
-          nftData={nft}
-          offerData={data}
-          collectionMetadata={collectionData?.metadata}
-          type={offerType}
+          onClose={() => handleOffer(OFFER_TYPE.none)}
+          nftId={nftId}
+          collection={collectionData}
         />
       )}
-      {!!offerType && offerType === OFFER_TYPE.accept && (
-        <AcceptOfferDialog
+      {!!offerType && offerType === OFFER_TYPE.update && !nftId && (
+        <MakeCollectionOfferDialog
           isOpen={!!offerType}
           onClose={() => handleOffer(OFFER_TYPE.none)}
+          collection={collectionData}
+        />
+      )}
+      {!!offerType && offerType === OFFER_TYPE.cancel && (
+        <CancelOfferDialog
+          isOpen={!!offerType}
+          onClose={() => handleOffer(OFFER_TYPE.none)}
+          collection={collectionData}
           nft={nft}
+          isCollectionOffer={!nftId}
           offer={data}
         />
       )}
@@ -187,56 +193,27 @@ export default function TableRow({ data, type }) {
               </a>
             </Link>
           </div>
-          <div className="collection-name">{getCollectionName()}</div>
-        </div>
-        <div className="table-row-item nft-title">
           <a href={`/collection/${collectionData?.slug}/${nftId}`}>{shortString(nftId)}</a>
         </div>
-        <div className="table-row-item">{getState(state)}</div>
-        <div className="table-row-item">{getOfferDate(timeCreated)}</div>
-        <div className="table-row-item">
-          {type === 'Received' ? (buyer ? shortAddress(buyer) : '-') : seller ? shortAddress(seller) : '-'}
-        </div>
         <div className="table-row-item">{commify(price)} CRO</div>
+        <div className="table-row-item">{getOfferDate(timeCreated)} ago</div>
         <div className="table-row-item">
-          {type === 'Made' && (
-            <Button
-              type="legacy"
-              onClick={() => handleOffer(OFFER_TYPE.update)}
-              disabled={getState(state) !== 'Active'}
-            >
-              Update
-            </Button>
-          )}
-          {type === 'Received' && (
-            <Button
-              type="legacy"
-              onClick={() => handleOffer(OFFER_TYPE.accept)}
-              disabled={getState(state) !== 'Active'}
-            >
-              Accept
-            </Button>
-          )}
+          <Button
+            type="legacy"
+            onClick={() => handleOffer(OFFER_TYPE.update)}
+            disabled={getState(state) !== 'Active'}
+          >
+            Update
+          </Button>
         </div>
         <div className="table-row-item">
-          {type === 'Made' && (
-            <Button
-              type="legacy-outlined"
-              onClick={() => handleOffer(OFFER_TYPE.cancel)}
-              disabled={getState(state) !== 'Active'}
-            >
-              Cancel
-            </Button>
-          )}
-          {type === 'Received' && !collectionData.multiToken && (
-            <Button
-              type="legacy-outlined"
-              onClick={() => handleOffer(OFFER_TYPE.reject)}
-              disabled={getState(state) !== 'Active'}
-            >
-              Reject
-            </Button>
-          )}
+          <Button
+            type="legacy-outlined"
+            onClick={() => handleOffer(OFFER_TYPE.cancel)}
+            disabled={getState(state) !== 'Active'}
+          >
+            Cancel
+          </Button>
         </div>
       </TableRowContainer>
       <TableRowContainerMobile>
@@ -268,11 +245,7 @@ export default function TableRow({ data, type }) {
         </ItemRow>
         <ItemRow>
           <div>Date</div>
-          <div>{getOfferDate(timeCreated)}</div>
-        </ItemRow>
-        <ItemRow>
-          <div>{type === 'Received' ? 'Buyer' : 'Owner'}</div>
-          <div>{type === 'Received' ? (buyer ? shortAddress(buyer) : '-') : seller ? shortAddress(seller) : '-'}</div>
+          <div>{getOfferDate(timeCreated)} ago</div>
         </ItemRow>
         <ItemRow>
           <div>Offer Price</div>
@@ -280,45 +253,22 @@ export default function TableRow({ data, type }) {
         </ItemRow>
         <ItemRow>
           <div className="table-row-button">
-            {type === 'Made' && (
-              <Button
-                type="legacy"
-                onClick={() => handleOffer(OFFER_TYPE.update)}
-                disabled={getState(state) !== 'Active'}
-              >
-                Update
-              </Button>
-            )}
-            {type === 'Received' && (
-              <Button
-                type="legacy"
-                onClick={() => handleOffer(OFFER_TYPE.accept)}
-                disabled={getState(state) !== 'Active'}
-              >
-                Accept
-              </Button>
-            )}
+            <Button
+              type="legacy"
+              onClick={() => handleOffer(OFFER_TYPE.update)}
+              disabled={getState(state) !== 'Active'}
+            >
+              Update
+            </Button>
           </div>
           <div className="table-row-button">
-            {type === 'Made' && (
-              <Button
-                type="legacy-outlined"
-                onClick={() => handleOffer(OFFER_TYPE.cancel)}
-                disabled={getState(state) !== 'Active'}
-              >
-                Cancel
-              </Button>
-            )}
-
-            {type === 'Received' && !collectionData.multiToken && (
-              <Button
-                type="legacy-outlined"
-                onClick={() => handleOffer(OFFER_TYPE.reject)}
-                disabled={getState(state) !== 'Active'}
-              >
-                Reject
-              </Button>
-            )}
+            <Button
+              type="legacy-outlined"
+              onClick={() => handleOffer(OFFER_TYPE.cancel)}
+              disabled={getState(state) !== 'Active'}
+            >
+              Cancel
+            </Button>
           </div>
         </ItemRow>
       </TableRowContainerMobile>

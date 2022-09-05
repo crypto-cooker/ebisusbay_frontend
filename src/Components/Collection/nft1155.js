@@ -18,21 +18,21 @@ import {
   relativePrecision,
   shortAddress,
   timeSince,
-} from '../../utils';
-import { getNftDetails } from '../../GlobalState/nftSlice';
-import { specialImageTransform } from '../../hacks';
-import { chainConnect, connectAccount } from '../../GlobalState/User';
+} from '@src/utils';
+import { getNftDetails } from '@src/GlobalState/nftSlice';
+import { specialImageTransform } from '@src/hacks';
+import { chainConnect, connectAccount } from '@src/GlobalState/User';
 
 import ListingItem from '../NftDetails/NFTTabListings/ListingItem';
-import { listingState, offerState } from '../../core/api/enums';
-import { getFilteredOffers } from '../../core/subgraph';
+import { listingState, offerState } from '@src/core/api/enums';
+import { getFilteredOffers } from '@src/core/subgraph';
 import PriceActionBar from '../NftDetails/PriceActionBar';
 import NFTTabListings from '../NftDetails/NFTTabListings';
-import MakeOfferDialog from '../Offer/MakeOfferDialog';
-import { OFFER_TYPE } from '../Offer/MadeOffersRow';
+import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
+import { OFFER_TYPE } from '../Offer/MadeOffers/MadeOffersRow';
 import NFTTabOffers from '../Offer/NFTTabOffers';
 import { AnyMedia } from '../components/AnyMedia';
-import { hostedImage } from '../../helpers/image';
+import { hostedImage } from '@src/helpers/image';
 
 const tabs = {
   details: 'details',
@@ -412,11 +412,9 @@ const Nft1155 = ({ address, id }) => {
       {openMakeOfferDialog && (
         <MakeOfferDialog
           isOpen={openMakeOfferDialog}
-          toggle={() => setOpenMakeOfferDialog(!openMakeOfferDialog)}
-          offerData={offerData}
-          nftData={nft}
-          collectionMetadata={collectionMetadata}
-          type={offerType}
+          onClose={() => setOpenMakeOfferDialog(false)}
+          nftId={id}
+          collection={collection}
         />
       )}
       <Footer />

@@ -15,6 +15,14 @@ import {createSuccessfulTransactionToastContent} from "@src/utils";
 import {appConfig} from "@src/Config";
 import Market from "@src/Contracts/Marketplace.json";
 import * as Sentry from '@sentry/react';
+import {hostedImage} from "@src/helpers/image";
+import Blockies from "react-blockies";
+import LayeredIcon from "@src/Components/components/LayeredIcon";
+import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
+import {txExtras} from "@src/core/constants";
+import {getQuickWallet} from "@src/core/api/endpoints/wallets";
+import Select from "react-select";
+import {getTheme} from "@src/Theme/theme";
 
 const DialogContainer = styled(Dialog)`
   .MuiPaper-root {
@@ -60,7 +68,7 @@ const CloseIconContainer = styled.div`
 const config = appConfig();
 const floorThreshold = 5;
 
-export default function AcceptOfferDialog({ isOpen, nft, onClose, offer }) {
+export default function AcceptOfferDialog({ onClose, isOpen, collection, isCollectionOffer, nft, offer}) {
 
   const [salePrice, setSalePrice] = useState(null);
   const [floorPrice, setFloorPrice] = useState(0);
@@ -74,8 +82,12 @@ export default function AcceptOfferDialog({ isOpen, nft, onClose, offer }) {
 
   const [showConfirmButton, setShowConfirmButton] = useState(false);
 
+  // Collection Offer state
+  const [collectionNfts, setCollectionNfts] = useState([]);
+  const [chosenCollectionNft, setChosenCollectionNft] = useState(null);
+
   const user = useSelector((state) => state.user);
-  const {marketContract} = user;
+  const {marketContract, offerContract} = user;
 
   const isBelowFloorPrice = (price) => {
     return (floorPrice !== 0 && ((floorPrice - Number(price)) / floorPrice) * 100 > floorThreshold);
@@ -122,6 +134,11 @@ export default function AcceptOfferDialog({ isOpen, nft, onClose, offer }) {
       const floorPrice = await getCollectionMetadata(nftAddress);
       if (floorPrice.collections.length > 0) {
         setFloorPrice(floorPrice.collections[0].floorPrice ?? 0);
+      }
+
+      if (isCollectionOffer) {
+        const walletNfts = await getQuickWallet(user.address, {collection: collection.address});
+        setCollectionNfts(walletNfts.data);
       }
 
       const fees = await marketContract.fee(user.address);
@@ -188,7 +205,12 @@ export default function AcceptOfferDialog({ isOpen, nft, onClose, offer }) {
 
       setExecutingAcceptOffer(true);
       Sentry.captureEvent({message: 'handleAcceptOffer', extra: {nftAddress, nftId, price}});
-      let tx = await marketContract.acceptOffer(offer.hash, offer.offerIndex);
+      let tx;
+      if (isCollectionOffer) {
+        tx = await offerContract.acceptCollectionOffer(offer.nftAddress, offer.offerIndex, chosenCollectionNft.nftId, txExtras);
+      } else {
+        tx = await offerContract.acceptOffer(offer.hash, offer.offerIndex, txExtras);
+      }
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       setExecutingAcceptOffer(false);
@@ -220,22 +242,26 @@ export default function AcceptOfferDialog({ isOpen, nft, onClose, offer }) {
     <DialogContainer onClose={onClose} open={isOpen} maxWidth="md">
       <DialogContent>
         <DialogTitleContainer className="fs-5 fs-md-3">
-          Accept Offer for {nft.name}
+          {isCollectionOffer ? <>Accept Collection Offer for {collection.name}</> : <>Accept Offer for {nft.name}</>}
         </DialogTitleContainer>
         {!isLoading ? (
           <>
             <div className="nftSaleForm row gx-3">
               <div className="col-12 col-sm-6 mb-2 mb-sm-0">
-                <AnyMedia
-                  image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
-                  video={nft.video ?? nft.animation_url}
-                  videoProps={{ height: 'auto', autoPlay: true }}
-                  title={nft.name}
-                  usePlaceholder={false}
-                  className="img-fluid img-rounded"
-                />
+                {isCollectionOffer ? (
+                  <NftPicker nfts={collectionNfts} onSelect={(n) => setChosenCollectionNft(n)} />
+                ) : (
+                  <AnyMedia
+                    image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
+                    video={nft.video ?? nft.animation_url}
+                    videoProps={{ height: 'auto', autoPlay: true }}
+                    title={nft.name}
+                    usePlaceholder={false}
+                    className="img-fluid img-rounded"
+                  />
+                )}
               </div>
-              <div className="col-12 col-sm-6">
+              <div className="col-12 col-sm-6 mt-2 mt-sm-0">
                 <div className="mb-4 text-center">
                   <div className="fs-6">Offer Price</div>
                   <div className="fs-2 fw-bold">{offer.price} CRO</div>
@@ -311,7 +337,7 @@ export default function AcceptOfferDialog({ isOpen, nft, onClose, offer }) {
                 ) : (
                   <>
                     <div className="mb-2 text-center fst-italic">
-                      <small>Ebisu's Bay needs approval to transfer this NFT on your behalf once sold</small>
+                      <small>Ebisu's Bay needs approval to transfer this NFT on your behalf upon accepting</small>
                     </div>
                     <div className="d-flex justify-content-end">
                       <Button type="legacy"
@@ -340,4 +366,98 @@ export default function AcceptOfferDialog({ isOpen, nft, onClose, offer }) {
       </DialogContent>
     </DialogContainer>
   );
+}
+
+
+
+
+const ImageContainer = styled.div`
+  width: 232px;
+  height: auto;
+  margin-top: 6px;
+  text-align: center;
+
+  img {
+    width: 100%;
+    border-radius: 6px;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    margin: auto;
+    margin-bottom: 10px;
+  }
+`;
+const NftPicker = ({collectionAddress, nfts, onSelect}) => {
+  const userTheme = useSelector((state) => state.user.theme);
+  const [chosenNft, setChosenNft] = useState(nfts[0]);
+
+  const handleNftChange = useCallback((chosenNft) => {
+    setChosenNft(chosenNft);
+    onSelect(chosenNft);
+  }, [chosenNft]);
+
+  const customStyles = {
+    option: (base, state) => ({
+      ...base,
+      background: getTheme(userTheme).colors.bgColor2,
+      color: getTheme(userTheme).colors.textColor3,
+      borderRadius: state.isFocused ? '0' : 0,
+      '&:hover': {
+        background: '#eee',
+        color: '#000',
+      },
+    }),
+    menu: (base) => ({
+      ...base,
+      borderRadius: 0,
+      marginTop: 0,
+    }),
+    menuList: (base) => ({
+      ...base,
+      padding: 0,
+    }),
+    singleValue: (base, state) => ({
+      ...base,
+      background: getTheme(userTheme).colors.bgColor2,
+      color: getTheme(userTheme).colors.textColor3
+    }),
+    control: (base, state) => ({
+      ...base,
+      background: getTheme(userTheme).colors.bgColor2,
+      color: getTheme(userTheme).colors.textColor3,
+      padding: 2,
+    }),
+    input: (base, state) => ({
+      ...base,
+      color: getTheme(userTheme).colors.textColor3,
+      padding: 2,
+    }),
+    noOptionsMessage: (base, state) => ({
+      ...base,
+      background: getTheme(userTheme).colors.bgColor2,
+      color: getTheme(userTheme).colors.textColor3,
+    })
+  };
+
+  return (
+    <>
+      <ImageContainer>
+        <img src={specialImageTransform(collectionAddress, chosenNft.image)} />
+      </ImageContainer>
+      <h3 className="feeTitle mt-2">Choose NFT</h3>
+      <Select
+        menuPlacement="top"
+        maxMenuHeight="200px"
+        styles={customStyles}
+        placeholder="Choose NFT"
+        options={nfts.sort((a, b) => (a.name ?? a.nftId) > (b.name ?? b.nftId) ? 1 : -1)}
+        getOptionLabel={(option) => option.name ?? option.nftId}
+        getOptionValue={(option) => option}
+        value={chosenNft}
+        defaultValue={nfts[0]}
+        onChange={handleNftChange}
+      />
+    </>
+  );
+
 }
