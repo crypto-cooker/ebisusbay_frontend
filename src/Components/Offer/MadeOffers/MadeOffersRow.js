@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import moment from 'moment';
 import Blockies from 'react-blockies';
 import { commify } from 'ethers/lib/utils';
 import Link from 'next/link';
 
 import Button from '../../../Components/components/Button';
-import {findCollectionByAddress, shortAddress, shortString, timeSince} from '@src/utils';
+import {findCollectionByAddress, shortString, timeSince} from '@src/utils';
 import { getNftDetails } from '@src/GlobalState/nftSlice';
 import MakeOfferDialog from '../Dialogs/MakeOfferDialog';
-import AcceptOfferDialog from "@src/Components/Offer/Dialogs/AcceptOfferDialog";
 import {CancelOfferDialog} from "@src/Components/Offer/Dialogs/CancelOfferDialog";
-import {RejectOfferDialog} from "@src/Components/Offer/Dialogs/RejectOfferDialog";
+import MakeCollectionOfferDialog from "@src/Components/Offer/Dialogs/MakeCollectionOfferDialog";
 
 const TableRowContainer = styled.div`
   display: flex;
@@ -148,15 +146,19 @@ export default function TableRow({ data }) {
 
   return (
     <>
-      {!!offerType && offerType === OFFER_TYPE.update && (
+      {!!offerType && offerType === OFFER_TYPE.update && !!nftId && (
         <MakeOfferDialog
           isOpen={!!offerType}
-          toggle={handleOffer}
-          nftData={nft}
-          offerData={data}
-          collectionMetadata={collectionData?.metadata}
-          type={offerType}
-          isCollectionOffer={!data.nftId}
+          onClose={() => handleOffer(OFFER_TYPE.none)}
+          nftId={nftId}
+          collection={collectionData}
+        />
+      )}
+      {!!offerType && offerType === OFFER_TYPE.update && !nftId && (
+        <MakeCollectionOfferDialog
+          isOpen={!!offerType}
+          onClose={() => handleOffer(OFFER_TYPE.none)}
+          collection={collectionData}
         />
       )}
       {!!offerType && offerType === OFFER_TYPE.cancel && (
@@ -165,7 +167,7 @@ export default function TableRow({ data }) {
           onClose={() => handleOffer(OFFER_TYPE.none)}
           collection={collectionData}
           nft={nft}
-          isCollectionOffer={!data.nftId}
+          isCollectionOffer={!nftId}
           offer={data}
         />
       )}

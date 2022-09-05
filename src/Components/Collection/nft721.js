@@ -39,7 +39,7 @@ import ListingItem from '../NftDetails/NFTTabListings/ListingItem';
 import PriceActionBar from '../NftDetails/PriceActionBar';
 import { ERC721 } from '@src/Contracts/Abis';
 import { getFilteredOffers } from '@src/core/subgraph';
-import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog2';
+import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
 import NFTTabOffers from '../Offer/NFTTabOffers';
 import { OFFER_TYPE } from '../Offer/MadeOffers/MadeOffersRow';
 import { offerState } from '@src/core/api/enums';

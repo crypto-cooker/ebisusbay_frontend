@@ -1,36 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, {useState, useCallback, useEffect} from 'react';
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 import styled from 'styled-components';
-import { Contract, ethers } from 'ethers';
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Spinner } from 'react-bootstrap';
-
-import Button from '../../components/Button';
-import Input from '../../components/common/Input';
-import ProfilePreview from '../../components/ProfilePreview';
-import { specialImageTransform } from '../../../hacks';
-import {
-  caseInsensitiveCompare,
-  humanize,
-  isEventValidNumber, rankingsLinkForCollection,
-  rankingsLogoForCollection, rankingsTitleForCollection,
-  shortAddress
-} from '../../../utils';
-import { OFFER_TYPE } from '../MadeOffers/MadeOffersRow';
-import { updateOfferSuccess, updateOfferFailed } from '../../../GlobalState/offerSlice';
-import EmptyData from '../EmptyData';
-import Market from '../../../Contracts/Marketplace.json';
-import { getFilteredOffers } from '../../../core/subgraph';
-import { getAllCollections } from '../../../GlobalState/collectionsSlice';
-import { offerState } from '../../../core/api/enums';
-import { txExtras } from '../../../core/constants';
-import { findCollectionByAddress } from '../../../utils';
-import { appConfig } from '../../../Config';
-import { hostedImage } from '../../../helpers/image';
-
-const config = appConfig();
+import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
+import {Badge, Col, Form, Spinner} from "react-bootstrap";
+import {useSelector} from "react-redux";
+import {Contract, ethers} from "ethers";
+import Button from "@src/Components/components/Button";
+import {getCollectionMetadata} from "@src/core/api";
+import {toast} from "react-toastify";
+import EmptyData from "@src/Components/Offer/EmptyData";
+import {txExtras} from "@src/core/constants";
+import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {appConfig} from "@src/Config";
+import Offer from "@src/Contracts/Offer.json";
+import Market from "@src/Contracts/Marketplace.json";
+import {useWindowSize} from "@src/hooks/useWindowSize";
+import * as Sentry from '@sentry/react';
+import {hostedImage} from "@src/helpers/image";
+import Blockies from "react-blockies";
+import LayeredIcon from "@src/Components/components/LayeredIcon";
+import {getFilteredOffers} from "@src/core/subgraph";
+import {offerState} from "@src/core/api/enums";
+import {getNft} from "@src/core/api/endpoints/nft";
 
 const DialogContainer = styled(Dialog)`
   .MuiPaper-root {
@@ -54,99 +45,12 @@ const DialogContainer = styled(Dialog)`
 `;
 
 const DialogTitleContainer = styled(DialogTitle)`
-  font-size: 32px !important;
+  font-size: 26px !important;
   color: ${({ theme }) => theme.colors.textColor3};
   padding: 0px !important;
-  margin-bottom: 24px !important;
+  margin-bottom: 18px !important;
   font-weight: bold !important;
-  text-align: center;
-`;
-
-const DialogMainContent = styled.div`
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-
-  @media only screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    flex-direction: column;
-  }
-`;
-
-const ImageContainer = styled.div`
-  width: 232px;
-  height: auto;
-  margin-top: 6px;
-  text-align: center;
-
-  img {
-    width: 100%;
-    border-radius: 6px;
-  }
-
-  @media only screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    margin: auto;
-    margin-bottom: 10px;
-  }
-`;
-
-const NftDetailContainer = styled.div`
-  width: 50%;
-  @media only screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    width: 100%;
-  }
-`;
-
-const NftTitle = styled.div`
-  font-size: 18px;
-  font-weight: bold;
-  color: ${({ theme }) => theme.colors.textColor3};
-`;
-
-const NftDescription = styled.div`
-  font-size: 12px;
-  color: ${({ theme }) => theme.colors.textColor3};
-`;
-
-const FlexRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0px;
-  margin-top: 8px;
-`;
-
-const Royalty = styled.div`
-  font-size: 14px;
-  color: ${({ theme }) => theme.colors.textColor3};
-`;
-
-const FloorPrice = styled.div`
-  font-size: 14px;
-  color: ${({ theme }) => theme.colors.textColor3};
-`;
-
-const Disclaimer = styled.div`
-  font-size: 14px;
-  color: ${({ theme }) => theme.colors.textColor3};
-`;
-
-const PriceErrorDescription = styled.div`
-  font-size: 14px;
-  color: ${({ theme }) => theme.colors.textColor3};
-`;
-
-const OfferPrice = styled.div`
-  font-size: 14px;
-  color: ${({ theme }) => theme.colors.textColor3};
-`;
-
-const OfferPriceInput = styled.div`
-  width: 60%;
-  display: flex;
-  align-items: center;
-  font-size: 18px;
-  font-weight: bold;
-  color: ${({ theme }) => theme.colors.textColor3};
+  text-align: center;<
 `;
 
 const CloseIconContainer = styled.div`
@@ -160,341 +64,336 @@ const CloseIconContainer = styled.div`
   }
 `;
 
-export default function MakeOfferDialog({ isOpen, toggle, type, nftData, offerData, isCollectionOffer = false }) {
-  const isNftLoading = useSelector((state) => {
-    return state.nft.loading;
-  });
-  const offerContract = useSelector((state) => {
-    return state.user.offerContract;
-  });
+const config = appConfig();
+const numberRegexValidation = /^[1-9]+[0-9]*$/;
+const floorThreshold = 25;
+
+export default function MakeOfferDialog({ isOpen, nft:defaultNft, collection, onClose, nftId }) {
   const walletAddress = useSelector((state) => state.user.address);
-  const collectionsStats = useSelector((state) => state.collections.collections);
 
-  const dispatch = useDispatch();
-  const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-  const readMarket = new Contract(config.contracts.market, Market.abi, readProvider);
+  const [nft, setNft] = useState(defaultNft);
+  const [offerPrice, setOfferPrice] = useState(null);
+  const [floorPrice, setFloorPrice] = useState(0);
+  const [priceError, setPriceError] = useState(false);
+  const [existingOffer, setExistingOffer] = useState(null);
+  const [royalty, setRoyalty] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [executingCreateListing, setExecutingCreateListing] = useState(false);
 
-  const [offerType, setOfferType] = useState(type);
-  const [offerDataNew, setOfferDataNew] = useState(offerData);
-  const [isGettingOfferType, setIsGettingOfferType] = useState(false);
+  const [showConfirmButton, setShowConfirmButton] = useState(false);
 
-  const [offerPrice, setOfferPrice] = useState(0);
-  const [offerPriceError, setOfferPriceError] = useState(false);
-  const [offerPriceErrorDescription, setOfferPriceErrorDescription] = useState(null);
-  const onOfferValueChange = (inputEvent) => {
-    const inputValue = Math.floor(inputEvent.target.value);
-    setOfferPrice(inputValue);
-    const isAboveOfferThreshold = floorPrice ? parseInt(inputValue) >= floorPrice / 2 : true;
+  const windowSize = useWindowSize();
+  const user = useSelector((state) => state.user);
+  const {offerContract, marketContract} = user;
 
-    if (!isAboveOfferThreshold) {
-      setError(true);
-    } else if (
-      offerType === OFFER_TYPE.update &&
-      offerDataNew?.price &&
-      Number(inputValue) > Number(offerDataNew?.price)
-    ) {
-      setError(false);
-    } else if (offerType === OFFER_TYPE.make && Number(inputValue) > 0) {
-      setError(false);
-    } else {
-      setError(true);
+  const isAboveFloorPrice = (price) => {
+    return (parseInt(floorPrice) > 0 && ((Number(price) - floorPrice) / floorPrice) * 100 > floorThreshold);
+  };
+
+  const costOnChange = useCallback((e) => {
+    const newSalePrice = e.target.value.toString();
+    if (numberRegexValidation.test(newSalePrice) || newSalePrice === '') {
+      setOfferPrice(newSalePrice)
     }
-  };
+  }, [setOfferPrice, floorPrice, offerPrice]);
 
-  const setError = (isError, description = null) => {
-    setOfferPriceError(isError);
-    if (isError) setOfferPriceErrorDescription(description);
-    else setOfferPriceErrorDescription(null);
-  };
+  const onQuickCost = useCallback((percentage) => {
+    if (executingCreateListing || showConfirmButton) return;
 
-  const [isOnAction, setIsOnAction] = useState(false);
-  const [floorPrice, setFloorPrice] = useState(null);
+    const newSalePrice = Math.round(floorPrice * (1 + percentage));
+    setOfferPrice(newSalePrice);
 
-  const [royalty, setRoyalty] = useState(null);
+    if (isAboveFloorPrice(newSalePrice)) {
+      setShowConfirmButton(false);
+    }
+  })
+
   useEffect(() => {
     async function asyncFunc() {
-      let royalties = await readMarket.royalties(nftData.address);
-      setRoyalty(Math.round(royalties[1]) / 100);
+      await getInitialProps();
     }
-    if (nftData) {
+    if (collection && user.provider && (nft || nftId)) {
       asyncFunc();
     }
-    // eslint-disable-next-line
-  }, [nftData]);
+  }, [collection, user.provider, nft, nftId]);
 
-  useEffect(() => {
-    async function asyncFunc() {
-      const knownContract = findCollectionByAddress(nftData.address, nftData.id);
-      const floorPrice = findCollectionFloor(knownContract);
-      setFloorPrice(floorPrice);
-    }
-
-    if (collectionsStats && collectionsStats.length > 0) {
-      if (nftData) {
-        asyncFunc();
-      }
-    } else {
-      dispatch(getAllCollections());
-    }
-    // eslint-disable-next-line
-  }, [nftData, collectionsStats]);
-
-  useEffect(() => {
-    async function func() {
-      setIsGettingOfferType(true);
-      const filteredOffers = await getFilteredOffers(nftData.address, nftData.id, walletAddress);
-      const data = filteredOffers
-        ? filteredOffers.data.filter((o) => o.state.toString() === offerState.ACTIVE.toString())
-        : [];
-      if (data && data.length > 0) {
-        setOfferDataNew(data);
-        setOfferType(OFFER_TYPE.update);
-      } else {
-        setOfferType(OFFER_TYPE.make);
-      }
-      setIsGettingOfferType(false);
-    }
-    if (!type && walletAddress && nftData.address && nftData.id) {
-      func();
-    }
-    // eslint-disable-next-line
-  }, []);
-
-  if (!nftData) {
-    return <></>;
-  }
-
-  const collection = findCollectionByAddress(nftData.address);
-  const collectionMetadata = collection?.metadata;
-
-  const getUpdatedOffer = (offerDataNew1, actionType1, offerPrice1) => {
-    if (actionType1 === OFFER_TYPE.update) {
-      return { ...offerDataNew1, price: offerPrice1.toString() };
-    } else if (actionType1 === OFFER_TYPE.accept) {
-      return { ...offerDataNew1, state: '1' };
-    } else if (actionType1 === OFFER_TYPE.reject) {
-      return { ...offerDataNew1, state: '2' };
-    } else if (actionType1 === OFFER_TYPE.cancel) {
-      return { ...offerDataNew1, state: '3' };
-    }
+  const wrappedOfferContract = () => {
+    return offerContract ?? new Contract(config.contracts.offer, Offer.abi, user.provider.getSigner());
   };
 
-  const executeMakeOffer = async (address, id = null, price) => {
-    const options = {
-      ...{value: ethers.utils.parseEther(price.toString())},
-      ...txExtras,
-    };
+  const wrappedMarketContract = () => {
+    return marketContract ?? new Contract(config.contracts.market, Market.abi, user.provider.getSigner());
+  };
 
-    if (isCollectionOffer) {
-      return await offerContract.makeCollectionOffer(address, options);
-    } else {
-      return await offerContract.makeOffer(address, id, options);
-    }
-  }
-
-  const executeUpdateOffer = async (hash, index, address, oldPrice, newPrice) => {
-    const options = {
-      ...{value: ethers.utils.parseEther((newPrice - oldPrice).toString())},
-      ...txExtras,
-    };
-
-    if (isCollectionOffer) {
-      return await offerContract.updateCollectionOffer(address, index, options);
-    } else {
-      return await offerContract.updateOffer(hash, index, options);
-    }
-  }
-
-  const executeCancelOffer = async (hash, index, address) => {
-    if (isCollectionOffer) {
-      return await offerContract.cancelCollectionOffer(address, index, txExtras);
-    } else {
-      return await offerContract.cancelOffer(hash, index, txExtras);
-    }
-  }
-
-  const executeRejectOffer = async (hash, index) => {
-    if (isCollectionOffer) {
-      throw new Error('Cannot reject a collection offer');
-    } else {
-      return await offerContract.rejectOffer(hash, index, txExtras);
-    }
-  }
-
-  const handleOfferAction = async (actionType) => {
+  const getInitialProps = async () => {
     try {
-      let tx, receipt;
-      setIsOnAction(true);
-      const isAboveOfferThreshold = floorPrice ? parseInt(offerPrice) >= floorPrice / 2 : true;
-      if (actionType === OFFER_TYPE.make) {
-        if (!offerPrice || offerPrice < 0 || !isAboveOfferThreshold) {
-          setIsOnAction(false);
-          setError(true, 'Offer must be at least 50% of floor value');
-          return;
-        }
-        tx = await makeOffer(nftData.address, nftData.id, offerPrice);
-        receipt = await tx.wait();
-      } else if (actionType === OFFER_TYPE.update) {
-        if (!offerPrice || offerPrice <= Number(offerDataNew.price) || !isAboveOfferThreshold) {
-          setIsOnAction(false);
-          setError(true, 'Offer price must be greater than your previous offer');
-          return;
-        }
-        tx = await executeUpdateOffer(offerDataNew?.hash, offerDataNew?.offerIndex, nftData.address, offerDataNew.price, offerPrice);
-        receipt = await tx.wait();
-      } else if (actionType === OFFER_TYPE.cancel) {
-        tx = await executeCancelOffer(offerDataNew?.hash, offerDataNew?.offerIndex, nftData.address);
-        receipt = await tx.wait();
-      } else if (actionType === OFFER_TYPE.reject) {
-        tx = await executeRejectOffer(offerDataNew?.hash, offerDataNew?.offerIndex);
-        receipt = await tx.wait();
+      setIsLoading(true);
+      setPriceError(null);
+      const collectionAddress = collection.address;
+      const marketContract = wrappedMarketContract();
+
+      const floorPrice = await getCollectionMetadata(collectionAddress);
+      if (floorPrice.collections.length > 0) {
+        setFloorPrice(floorPrice.collections[0].floorPrice ?? 0);
       }
 
-      dispatch(updateOfferSuccess(receipt.transactionHash, getUpdatedOffer(offerDataNew, actionType, offerPrice)));
-    } catch (e) {
-      dispatch(updateOfferFailed(e));
-    }
-    setIsOnAction(false);
-    toggle(OFFER_TYPE.none);
-  };
+      let fetchedNft = nft;
+      if (!nft) {
+        const tmpNft = await getNft(collectionAddress, nftId);
+        fetchedNft = tmpNft.nft;
+        setNft(tmpNft.nft);
+      }
 
-  const fullImage = () => {
-    if (nftData.image.startsWith('ipfs://')) {
-      const link = nftData.image.split('://')[1];
-      return `https://ipfs.io/ipfs/${link}`;
-    }
+      const filteredOffers = await getFilteredOffers(
+        fetchedNft.address ?? fetchedNft.nftAddress,
+        fetchedNft.id ?? fetchedNft.nftId,
+        walletAddress
+      );
+      setExistingOffer(filteredOffers.data?.find((o) => o.state.toString() === offerState.ACTIVE.toString()))
+      const royalties = await marketContract.royalties(collectionAddress);
 
-    if (nftData.image.startsWith('https://gateway.ebisusbay.com')) {
-      const link = nftData.image.replace('gateway.ebisusbay.com', 'ipfs.io');
-      return link;
-    }
+      setRoyalty((royalties[1] / 10000) * 100);
 
-    return nftData.image;
-  };
-
-  const findCollectionFloor = (knownContract) => {
-    const collectionStats = collectionsStats.find((o) => {
-      if (knownContract.multiToken && o.collection.indexOf('-') !== -1) {
-        let parts = o.collection.split('-');
-        return caseInsensitiveCompare(knownContract.address, parts[0]) && knownContract.id === parseInt(parts[1]);
+      setIsLoading(false);
+    } catch (error) {
+      if (error.data) {
+        toast.error(error.data.message);
+      } else if (error.message) {
+        toast.error(error.message);
       } else {
-        return caseInsensitiveCompare(knownContract.address, o.collection);
+        toast.error('Unknown Error');
       }
-    });
-    return collectionStats ? collectionStats.floorPrice : null;
+      console.log(error);
+    }
   };
+
+  const handleCreateOffer = async (e) => {
+    e.preventDefault();
+    if (!validateInput()) return;
+
+    try {
+      const collectionAddress = collection.address;
+      const price = ethers.utils.parseEther(offerPrice.toString());
+
+      setExecutingCreateListing(true);
+      Sentry.captureEvent({message: 'handleCreateOffer', extra: {address: collectionAddress, price}});
+      const contract = wrappedOfferContract();
+      let tx;
+      if (existingOffer) {
+        const newPrice = parseInt(offerPrice) - parseInt(existingOffer.price)
+        tx = await contract.updateOffer(existingOffer.hash, existingOffer.offerIndex, {
+          ...{
+            value: ethers.utils.parseEther(newPrice.toString()),
+          },
+          ...txExtras,
+        });
+      } else {
+        tx = await contract.makeOffer(nft.address ?? nft.nftAddress, nft.id ?? nft.nftId, {
+          ...{
+            value: ethers.utils.parseEther(offerPrice.toString()),
+          },
+          ...txExtras,
+        });
+      }
+      let receipt = await tx.wait();
+      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      setExecutingCreateListing(false);
+      onClose();
+    } catch (error) {
+      if (error.data) {
+        toast.error(error.data.message);
+      } else if (error.message) {
+        toast.error(error.message);
+      } else {
+        toast.error('Unknown Error');
+      }
+    } finally {
+      setExecutingCreateListing(false);
+    }
+  };
+
+  const processCreateListingRequest = async (e) => {
+    if (!validateInput()) return;
+
+    if (isAboveFloorPrice(offerPrice)) {
+      setShowConfirmButton(true);
+    } else {
+      await handleCreateOffer(e)
+    }
+  }
+
+  const validateInput = () => {
+    if (!offerPrice || parseInt(offerPrice) < 1) {
+      setPriceError('Value must be greater than zero');
+      return false;
+    }
+    if (offerPrice.toString().length > 18) {
+      setPriceError('Value must not exceed 18 digits');
+      return false;
+    }
+    if (existingOffer && parseInt(offerPrice) <= parseInt(existingOffer.price)) {
+      setPriceError('Offer must be greater than previous offer');
+      return false;
+    }
+
+    setPriceError(null);
+    return true;
+  }
+
+  if (!collection) return <></>;
 
   return (
-    <DialogContainer onClose={() => toggle(OFFER_TYPE.none)} open={isOpen} maxWidth="md">
+    <DialogContainer onClose={onClose} open={isOpen} maxWidth="md">
       <DialogContent>
-        {!isGettingOfferType && <DialogTitleContainer>{offerType} {isCollectionOffer ? 'Collection' : ''} Offer</DialogTitleContainer>}
-        {findCollectionByAddress(nftData.address, nftData.id)?.multiToken && (
-          <div className="mb-5">
-            If you are trying to make multiple offers on the same ERC1155 token, this is not possible currently. It will
-            instead update your current offer for this token.
-          </div>
-        )}
-        {!isNftLoading && !isGettingOfferType ? (
-          <DialogMainContent>
-            <ImageContainer>
-              {isCollectionOffer ? (
-                <img src={hostedImage(collectionMetadata?.avatar)} alt={nftData.name} />
+        {!isLoading ? (
+          <>
+            <DialogTitleContainer className="fs-5 fs-md-3">
+              {nft ? (
+                <>{existingOffer ? <>Update Offer on {nft.name}</> : <>Offer on {nft.name}</>}</>
               ) : (
-                <img src={specialImageTransform(nftData.address, nftData.image)} alt={nftData.name} />
+                <>{existingOffer ? <>Update Offer</> : <>Make Offer}</>}</>
               )}
-              {nftData && nftData.image && (
-                <div className="nft__item_action mt-2" style={{ cursor: 'pointer' }}>
-                  <span onClick={() => window.open(specialImageTransform(nftData.address, fullImage()), '_blank')}>
-                    <span className="p-2">View Full Image</span>
-                    <FontAwesomeIcon icon={faExternalLinkAlt} />
-                  </span>
+            </DialogTitleContainer>
+            <div className="nftSaleForm row gx-3">
+              <div className="col-12 col-sm-6 mb-2 mb-sm-0">
+                <div className="profile_avatar d-flex justify-content-center">
+                  <div className="d_profile_img">
+                    {collection.metadata.avatar ? (
+                      <img src={hostedImage(collection.metadata.avatar)} alt={collection.name} />
+                    ) : (
+                      <Blockies seed={collection.address.toLowerCase()} size={15} scale={10} />
+                    )}
+                    {collection.metadata.verified && (
+                      <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={8} stackClass="eb-avatar_badge" />
+                    )}
+                  </div>
                 </div>
-              )}
-            </ImageContainer>
-            <NftDetailContainer>
-              <NftTitle>{isCollectionOffer ? collection.name : nftData.name}</NftTitle>
-              <NftDescription>{nftData.description}</NftDescription>
-              {collectionMetadata && (
-                <FlexRow className="row">
-                  <div className="item_info">
-                    <div className="row" style={{ gap: '2rem 0' }}>
-                      {!isCollectionOffer && (
-                        <ProfilePreview
-                          type="Collection"
-                          title={nftData.address && shortAddress(nftData.address)}
-                          avatar={hostedImage(collectionMetadata?.avatar, true)}
-                          address={nftData.address}
-                          verified={collectionMetadata?.verified}
-                          to={`/collection/${nftData.address}`}
-                        />
-                      )}
-
-                      {typeof nftData.rank !== 'undefined' && nftData.rank !== null && (
-                        <ProfilePreview
-                          type="Rarity Rank"
-                          title={nftData.rank}
-                          avatar={rankingsLogoForCollection(collection)}
-                          hover={rankingsTitleForCollection(collection)}
-                        />
-                      )}
+              </div>
+              <div className="col-12 col-sm-6">
+                {existingOffer && (
+                  <div className="d-flex justify-content-between">
+                    <Form.Label className="formLabel">
+                      Previous Offer:
+                    </Form.Label>
+                    <div>
+                      {existingOffer.price} CRO
                     </div>
                   </div>
-                </FlexRow>
-              )}
+                )}
+                <Form.Group className="form-field">
+                  <Form.Label className="formLabel w-100">
+                    <div className="d-flex">
+                      <div className="flex-grow-1">Offer Amount</div>
+                      <div className="my-auto">
+                        <Badge
+                          pill
+                          bg={user.theme === 'dark' ? 'light' : 'secondary'}
+                          text={user.theme === 'dark' ? 'dark' : 'light'}
+                          className="ms-2"
+                        >
+                          Floor: {floorPrice} CRO
+                        </Badge>
+                      </div>
+                    </div>
+                  </Form.Label>
+                  <Form.Control
+                    className="input"
+                    type="number"
+                    placeholder="Enter Amount"
+                    value={offerPrice ?? ''}
+                    onChange={costOnChange}
+                    disabled={showConfirmButton || executingCreateListing}
+                  />
+                  <Form.Text className="field-description textError">
+                    {priceError}
+                  </Form.Text>
+                </Form.Group>
 
+                <div className="d-flex flex-wrap justify-content-between mb-3">
+                  {windowSize.width > 377 && (
+                    <Badge bg="danger" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(-0.25)}>
+                      -25%
+                    </Badge>
+                  )}
+                  <Badge bg="danger" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(-0.1)}>
+                    -10%
+                  </Badge>
+                  <Badge
+                    bg={user.theme === 'dark' ? 'light' : 'secondary'}
+                    text={user.theme === 'dark' ? 'dark' : 'light'}
+                    className="cursor-pointer my-1" onClick={() => onQuickCost(0)}
+                  >
+                    Floor
+                  </Badge>
+                  <Badge bg="success" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(0.1)}>
+                    +10%
+                  </Badge>
 
-              <div className="text-center mb-2" style={{fontSize: '14px'}}>
-                Cancelling this offer will return the offer amount back to your wallet
-              </div>
-              {(offerType === OFFER_TYPE.make || offerType === OFFER_TYPE.update) && (
-                <>
-                  <FlexRow>
-                    <OfferPrice>{offerType === OFFER_TYPE.update ? <>New Offer Price</> : <>Offer Price</>}</OfferPrice>
-                    <OfferPriceInput>
-                      <Input
-                        type="number"
-                        className={`mx-2${offerPriceError ? ' is-error' : ''}`}
-                        onKeyDown={(e) => {
-                          if (!isEventValidNumber(e)) {
-                            e.preventDefault();
-                          }
-                        }}
-                        value={offerPrice}
-                        onChange={onOfferValueChange}
-                      />
-                      CRO
-                    </OfferPriceInput>
-                  </FlexRow>
-                  {offerType === OFFER_TYPE.update && offerDataNew && (
-                    <FlexRow>
-                      {offerPrice > parseInt(offerDataNew.price) && (
-                        <Disclaimer>
-                          Offer will be increased by{' '}
-                          {offerPrice > parseInt(offerDataNew.price) ? offerPrice - parseInt(offerDataNew.price) : 0}{' '}
-                          CRO
-                        </Disclaimer>
-                      )}
-                    </FlexRow>
+                  {windowSize.width > 377 && (
+                    <Badge bg="success" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(0.25)}>
+                      +25%
+                    </Badge>
                   )}
-                  {offerPriceErrorDescription && (
-                    <FlexRow>
-                      <PriceErrorDescription>{offerPriceErrorDescription}</PriceErrorDescription>
-                    </FlexRow>
-                  )}
-                </>
-              )}
-              <div className="mt-3">
-                <Button
-                  type="legacy"
-                  onClick={() => handleOfferAction(offerType)}
-                  isLoading={isOnAction}
-                  disabled={isOnAction}
-                >
-                  {offerType} Offer
-                </Button>
+                </div>
+
+                <div className="text-center my-3" style={{fontSize: '14px'}}>
+                  Offer amount will be held in escrow until the offer is either accepted, rejected, or cancelled
+                </div>
+                <div>
+                  <h3 className="feeTitle">Fees</h3>
+                  <hr />
+                  <div className="fee">
+                    <span>Royalty Fee: </span>
+                    <span>{royalty} %</span>
+                  </div>
+                </div>
               </div>
-            </NftDetailContainer>
-          </DialogMainContent>
+
+              <div className="mt-3 mx-auto">
+                {showConfirmButton ? (
+                  <>
+                    <div className="alert alert-danger my-auto mb-2 fw-bold text-center">
+                      The desired price is {(100 - (floorPrice * 100 / offerPrice)).toFixed(1)}% above the current floor price of {floorPrice} CRO. Are you sure?
+                    </div>
+                    {executingCreateListing && (
+                      <div className="mb-2 text-center fst-italic">Please check your wallet for confirmation</div>
+                    )}
+                    <div className="d-flex">
+                      <Button type="legacy"
+                              onClick={() => setShowConfirmButton(false)}
+                              className="me-2 flex-fill">
+                        Go Back
+                      </Button>
+                      <Button type="legacy-outlined"
+                              onClick={handleCreateOffer}
+                              isLoading={executingCreateListing}
+                              disabled={executingCreateListing}
+                              className="flex-fill">
+                        I understand, continue
+                      </Button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {executingCreateListing && (
+                      <div className="mb-2 text-center fst-italic">
+                        <small>Please check your wallet for confirmation</small>
+                      </div>
+                    )}
+                    <div className="d-flex">
+                      <Button type="legacy"
+                              onClick={processCreateListingRequest}
+                              isLoading={executingCreateListing}
+                              disabled={executingCreateListing}
+                              className="flex-fill">
+                        Confirm Offer
+                      </Button>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          </>
         ) : (
           <EmptyData>
             <Spinner animation="border" role="status" size="sm" className="ms-1">
@@ -502,7 +401,7 @@ export default function MakeOfferDialog({ isOpen, toggle, type, nftData, offerDa
             </Spinner>
           </EmptyData>
         )}
-        <CloseIconContainer onClick={() => toggle(OFFER_TYPE.none)}>
+        <CloseIconContainer onClick={onClose}>
           <img src="/img/icons/close-icon-blue.svg" alt="close" width="40" height="40" />
         </CloseIconContainer>
       </DialogContent>

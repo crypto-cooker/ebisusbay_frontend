@@ -8,9 +8,7 @@ import Link from 'next/link';
 import Button from '../../../Components/components/Button';
 import {findCollectionByAddress, shortString, timeSince} from '@src/utils';
 import { getNftDetails } from '@src/GlobalState/nftSlice';
-import MakeOfferDialog from '../Dialogs/MakeOfferDialog';
 import AcceptOfferDialog from "@src/Components/Offer/Dialogs/AcceptOfferDialog";
-import {CancelOfferDialog} from "@src/Components/Offer/Dialogs/CancelOfferDialog";
 import {RejectOfferDialog} from "@src/Components/Offer/Dialogs/RejectOfferDialog";
 
 const TableRowContainer = styled.div`

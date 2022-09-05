@@ -10,7 +10,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFilter} from "@fortawesome/free-solid-svg-icons";
 import {SortDropdown} from "@src/Components/Collection/CollectionTaskBar/SortDropdown";
 import {SearchBar} from "@src/Components/Collection/CollectionTaskBar/SearchBar";
-import MakeCollectionOfferDialog from "@src/Components/Collection/MakeCollectionOfferDialog";
+import MakeCollectionOfferDialog from "@src/Components/Offer/Dialogs/MakeCollectionOfferDialog";
 import {useDispatch, useSelector} from "react-redux";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";

@@ -7,7 +7,7 @@ import { ethers } from 'ethers';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
 import Button from './Button';
-import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog2';
+import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
 import { connectAccount, chainConnect } from '../../GlobalState/User';
 import { isNftBlacklisted, round } from '../../utils';
 import { AnyMedia } from './AnyMedia';

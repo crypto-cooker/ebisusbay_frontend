@@ -6,10 +6,10 @@ import MetaMaskOnboarding from '@metamask/onboarding';
 import { commify } from 'ethers/lib/utils';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 
-import { init, fetchListings } from '../../../GlobalState/collectionSlice';
-import { devLog } from '../../../utils';
+import { init, fetchListings } from '@src/GlobalState/collectionSlice';
+import { devLog } from '@src/utils';
 import Button from '../../components/Button';
-import { chainConnect, connectAccount } from '../../../GlobalState/User';
+import { chainConnect, connectAccount } from '@src/GlobalState/User';
 import MakeOfferDialog from '../../Offer/Dialogs/MakeOfferDialog';
 
 import styles from './CollectionCronosverse.module.scss';
@@ -64,8 +64,9 @@ const CollectionCronosverse = ({ collection }) => {
       {openMakeOfferDialog && (
         <MakeOfferDialog
           isOpen={openMakeOfferDialog}
-          toggle={() => setOpenMakeOfferDialog(!openMakeOfferDialog)}
-          nftData={nftOffer}
+          onClose={() => setOpenMakeOfferDialog(false)}
+          nftId={nftOffer.id}
+          collection={collection}
         />
       )}
     </div>
