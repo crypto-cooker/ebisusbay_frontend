@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { keyframes } from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
 import styled, { createGlobalStyle } from 'styled-components';
-import {faCoffee, faFire} from '@fortawesome/free-solid-svg-icons';
+import {faBook, faCoffee, faFire} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Footer from '../src/Components/components/Footer';
@@ -20,6 +20,7 @@ import Button from '../src/Components/components/Button';
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {appConfig} from "@src/Config";
 import Head from "next/head";
+import {faDiscord, faTwitter} from "@fortawesome/free-brands-svg-icons";
 
 const fadeInUp = keyframes`
   0% {
@@ -298,17 +299,31 @@ const Home = () => {
               />
             </div>
             <div className="card-body d-flex flex-column align-middle">
-              <div className="d-flex justify-content-between">
-                {/*<div className="flex-fill mx-1">*/}
-                {/*  <a href="https://twitter.com/crogecoin" target="_blank" rel="noreferrer">*/}
-                {/*    <Button type="legacy-outlined" className="w-100">*/}
-                {/*      <FontAwesomeIcon icon={faTwitter} className="me-1"/> Twitter*/}
-                {/*    </Button>*/}
-                {/*  </a>*/}
-                {/*</div>*/}
-                <div className="flex-fill mx-1">
-                  <a href="https://clubcro.fi/elite-mint" target="_blank" rel="noreferrer">
+              <div className="d-flex justify-content-between flex-wrap">
+                <div className="flex-fill mx-1 mt-2">
+                  <a href="https://clubcro.fi/files/ClubCRO_whitepaper.pdf" target="_blank" rel="noreferrer">
                     <Button type="legacy-outlined" className="w-100">
+                      <FontAwesomeIcon icon={faBook} className="me-1"/> Whitepaper
+                    </Button>
+                  </a>
+                </div>
+                <div className="flex-fill mx-1 mt-2">
+                  <a href="https://twitter.com/ClubCRO" target="_blank" rel="noreferrer">
+                    <Button type="legacy-outlined" className="w-100">
+                      <FontAwesomeIcon icon={faTwitter} className="me-1"/> Twitter
+                    </Button>
+                  </a>
+                </div>
+                <div className="flex-fill mx-1 mt-2">
+                  <a href="https://discord.gg/YbXEd44xdZ" target="_blank" rel="noreferrer">
+                    <Button type="legacy-outlined" className="w-100">
+                      <FontAwesomeIcon icon={faDiscord} className="me-1"/> Discord
+                    </Button>
+                  </a>
+                </div>
+                <div className="flex-fill mx-1 mt-2">
+                  <a href="https://clubcro.fi/elite-mint" target="_blank" rel="noreferrer">
+                    <Button type="legacy" className="w-100">
                        Mint Now
                     </Button>
                   </a>
