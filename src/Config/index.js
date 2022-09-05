@@ -210,5 +210,6 @@ export const featureFlags = {
   [Features.CMS_COLLECTIONS]: false,
   [Features.VERIFIED_SWITCH_COLLECTION]: false,
   [Features.VERIFIED_SWITCH_MARKETPLACE]: false,
+  [Features.INFINITE_QUERY_COLLECTION]: false,
 
 }

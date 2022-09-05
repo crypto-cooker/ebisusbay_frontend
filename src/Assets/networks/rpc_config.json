@@ -2631,7 +2631,7 @@
       "multiToken": false,
       "address": "0x9b1FCA3e5F8D2ea0AF870eB09b03B28C23f62733",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": false,
@@ -2866,7 +2866,7 @@
       "name": "Crobies",
       "slug": "crobies",
       "multiToken": false,
-      "address": "0x66d794F5CC6F8228C9BA8c29c7eA6e43518E2Af9",
+      "address": "0x42D96BdfFCFa5A9B01443284142ef968E938A808",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -5443,9 +5443,9 @@
       "metadata": {
         "description": "Carkayous is a fictitious continent created by Jesse Smith (Ink Master | TV Celeb | Tattoo Artist) where his art lives. The goal of Expedition #9 is to further explore Killick Falls Lagoon where the Feral Fish lives. This is a 2,222 PFP collection with FREE Tattoos (flight and hotel included) as the primary utility.",
         "verified": true,
-        "avatar": "/img/collections/carkayous/avatar.png",
-        "card": "/img/collections/carkayous/card.png",
-        "banner": "/img/collections/carkayous/banner.png",
+        "avatar": "/img/collections/carkayous-feral-fish/avatar.webp",
+        "card": "/img/collections/carkayous-feral-fish/card.webp",
+        "banner": "/img/collections/carkayous-feral-fish/banner.webp",
         "rankings": {"source": "rarity_sniper", "slug": "feral-fish"},
         "maxSupply": 2222,
         "website": "https://carkayous.com/",
@@ -5790,15 +5790,15 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "5,000 Undead Space Apes on the Cronos Network. Royalties distributed to holders.",
+        "description": "5,000 Undead Space Apes on the Cronos Network. Royalties used for Community Prize Pools and Raffles.",
         "verified": false,
-        "avatar": "/img/collections/undead-space-apes/avatar.png",
-        "card": "/img/collections/undead-space-apes/card.png",
-        "banner": "/img/collections/undead-space-apes/banner.png",
+        "avatar": "/img/collections/undead-space-apes/avatar.webp",
+        "card": "/img/collections/undead-space-apes/card.webp",
+        "banner": "/img/collections/undead-space-apes/banner.webp",
         "maxSupply": 5000,
-        "website": "https://undeadspaceapes.com/",
-        "twitter": "https://twitter.com/UndeadSpaceApes",
-        "discord": "https://discord.gg/yvanGgJRbB/"
+        "website": "https://undeadcommunity.com",
+        "twitter": "https://twitter.com/WeRtheUndead ",
+        "discord": "https://discord.gg/undeadcommunity"
       }
     },
     {
@@ -6161,9 +6161,9 @@
       "metadata": {
         "description": "An exclusive NFT community collecting $CRO in the bear market. 60% of minting revenue will be deposited into MMO vault to earn $CRO. 1:1 Airdrop to all future collection.",
         "verified": false,
-        "avatar": "/img/collections/cro-whales/avatar.png",
-        "card": "/img/collections/cro-whales/card.png",
-        "banner": "/img/collections/cro-whales/banner.png",
+        "avatar": "/img/collections/cro-whales/avatar.webp",
+        "card": "/img/collections/cro-whales/card.webp",
+        "banner": "/img/collections/cro-whales/banner.webp",
         "maxSupply": 100,
         "website": "https://croceanft.com/",
         "twitter": "https://twitter.com/Crocean_NFT",
@@ -6618,7 +6618,8 @@
         "website": "https://degenbrains.com/",
         "twitter": "https://twitter.com/degenbrains",
         "discord": "https://discord.gg/degenbrainfinance",
-        "medium": "https://medium.com/@degenbrains"
+        "medium": "https://medium.com/@degenbrains",
+        "rankings": {"source": "rarity_sniper", "slug": "degenbrains"}
       }
     },
     {
@@ -6928,7 +6929,7 @@
       "multiToken": false,
       "address": "0x01C87a25638D97D246D4250FEE59Ad6A84899860",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Team Mustachios consists of 3 teams of 2222 units, yellow, green and blue for a total of 6666 unique NFTs. Unlike traditional stacking, we have innovated to give you an unprecedented experience. We therefore redistribute the royalties in a playful way by selecting a team each week as well as 2 traits from the collection. If your team is selected during the current week, you win but if you own one or even better 2 traits, you could win big.",
         "verified": false,
@@ -7480,7 +7481,8 @@
         "maxSupply": 2421,
         "website": "https://vvs.finance/miner-mole/",
         "twitter": "https://www.twitter.com/VVS_finance",
-        "discord": "https://discord.gg/V2957zMsmg"
+        "discord": "https://discord.gg/V2957zMsmg",
+        "rankings": {"source": "rarity_sniper", "slug": "miner-moles"}
       }
     },
     {
@@ -7660,7 +7662,7 @@
       "name": "ChiVerse Online",
       "slug": "chiverse-online",
       "multiToken": false,
-      "address": "0xaaEb148d08e69329B4075379Aed0c2651bB4BF77",
+      "address": "0xfa8cdd2925a21c78716dFcD20122A57B8eBBECF9",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -7976,11 +7978,11 @@
       "name": "Skillz Boost by Troopz",
       "slug": "trooprz-skillz-boost",
       "multiToken": false,
-      "address": "",
+      "address": "0xA35f40e45FFF953F477700C83D550D35F11B42aB",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
-        "description": "Boost your Trooprz, Super Trooprz and Mutantz daily $TRPZ yield by collecting all 5 Skillz Boosts!",
+        "description": "Boost you daily yield on Troopz staking platform with these awesome Skillz Boosts. Collect all 5 for added utility.",
         "verified": true,
         "avatar": "/img/collections/trooprz-skillz-boost/avatar.webp",
         "banner": "/img/collections/trooprz-skillz-boost/banner.webp",
@@ -7995,7 +7997,7 @@
       "name": "CroHogs",
       "slug": "crohogs",
       "multiToken": false,
-      "address": "",
+      "address": "0xFD265797d7Bc6C25f2Cd148ec12f36a8eE00862a",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -8244,6 +8246,111 @@
         "twitter": "https://twitter.com/IcySquidGame",
         "discord": "https://discord.gg/ZNHNXS5ZxY",
         "medium": "https://medium.com/@icysquidgame"
+      }
+    },
+    {
+      "name": "Carkayous - BunnyFish",
+      "slug": "carkayous-bunnyfish",
+      "multiToken": false,
+      "address": "0x6c2757ee563d063cce48bd06b130292fe530e76d",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "BunnyFish from Carkayous attained by owning Feral Fishes that include Ledgelip or Riptide as the background. Owning enough BunnyFish that adds up to 75 points will get you an Expedition 8.2 BunnyFish.",
+        "verified": true,
+        "avatar": "/img/collections/carkayous-bunnyfish/avatar.webp",
+        "card": "/img/collections/carkayous-bunnyfish/card.webp",
+        "banner": "/img/collections/carkayous-bunnyfish/banner.webp",
+        "maxSupply": 0,
+        "website": "https://carkayous.com/",
+        "twitter": "https://twitter.com/carkayous",
+        "discord": "https://discord.gg/carkayous"
+      }
+    },
+    {
+      "name": "CroArmy Jarheads",
+      "slug": "cro-army-jarheads",
+      "multiToken": false,
+      "address": "0xD06eF4dA6d75f6E4047999d7D9b2f899688f31a0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Degen NFT flippers are coming together to whale in tiered projects. Profit distribution. Airdrops. Community.",
+        "verified": false,
+        "avatar": "/img/collections/cro-army-jarheads/avatar.webp",
+        "card": "/img/collections/cro-army-jarheads/card.webp",
+        "banner": "/img/collections/cro-army-jarheads/banner.webp",
+        "maxSupply": 2041,
+        "website": "https://croarmy.io/",
+        "twitter": "https://twitter.com/croarmy_eth",
+        "discord": "https://discord.gg/croarmy",
+        "telegram": "https://t.me/CroArmy_ETH",
+        "medium": "https://croarmy.gitbook.io/croarmy/"
+      }
+    },
+    {
+      "name": "ClubCRO",
+      "slug": "clubcro",
+      "multiToken": false,
+      "address": "0x207fb7B09C3c5388C7922E29097a795689c18949",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "ClubCRO is a conglomerate who share a belief that everyone should have control over their money, data and identity. We understand the mission of CRO within the context of mass adoption and the wider financial landscape.  We're creating our own community validator which will run nodes to process network transactions and help secure the Crypto.org Chain, return staking rewards for 8 more years to fund our weekly giveaways, and will also give us voting power on major Cronos decisions.",
+        "verified": false,
+        "avatar": "/img/collections/clubcro/avatar.webp",
+        "card": "/img/collections/clubcro/card.webp",
+        "banner": "/img/collections/clubcro/banner.webp",
+        "maxSupply": 1500,
+        "website": "https://clubcro.fi/",
+        "twitter": "https://twitter.com/ClubCro",
+        "discord": "https://discord.gg/YbXEd44xdZ"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
+      }
+    },
+    {
+      "name": "Croturtles",
+      "slug": "croturtles",
+      "multiToken": false,
+      "address": "0x17a623289Aa59756920A078243B586695e14ae7C",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Croturtle is second collection created by CroceanNFT. 6123 unique collectible Croturtles PFP on Cronos blockchain. Everybody likes to get cheap an NFT and then sell even several times more expensive. All the money from royalty will be distributed to holders once every 10 days. Each holders of Croturtle will receive WL for next collection and the largest holders will receive free NFT. Our first goal is to achieve high floor (over 100 CRO).",
+        "verified": false,
+        "avatar": "/img/collections/croturtles/avatar.webp",
+        "card": "/img/collections/croturtles/card.webp",
+        "banner": "/img/collections/croturtles/banner.webp",
+        "maxSupply": 6123,
+        "website": "https://croceanft.com/",
+        "twitter": "https://twitter.com/Crocean_NFT",
+        "discord": "https://discord.gg/N9YstjgG2y",
+        "telegram": "https://t.me/crowhalesnft"
+      }
+    },
+    {
+      "name": "CFC Energizers",
+      "slug": "cfc-energizers",
+      "multiToken": false,
+      "address": "0xa3dc4a9922570928f58f188Cd2e1542222f6D65b",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Energizers NFT are meant to upgrade you CFC NFTS.",
+        "verified": false,
+        "avatar": "/img/collections/cfc-energizers/avatar.webp",
+        "card": "/img/collections/cfc-energizers/card.webp",
+        "banner": "/img/collections/cfc-energizers/banner.webp",
+        "maxSupply": 0,
+        "website": "https://dapp.cronosfc.club/",
+        "twitter": "https://twitter.com/Cronos__FC",
+        "discord": "https://discord.gg/XPmYbqAD",
+        "medium": "https://medium.com/@cfcgcronos",
+        "telegram": "https://t.me/CronosFCofficial"
       }
     }
   ],
@@ -10286,7 +10393,7 @@
       "imgBanner": "/img/collections/northern-hippo-syndicate/banner.webp",
       "title": "Northern Hippo Syndicate",
       "subtitle": "The Northern Hippo Syndicate brings the artistic and creative stylings of Little Sloth from Open Sea to the Cronos chain. This crazy collection of 5000 unique PFP grants you access to so much more than amazing art. Hold a minimum of 3 to receive a plot of metaverse land.",
-      "description": "The Northern Hippo Syndicate is a wicked and intimidating collection of 5000 PFPs plucked from the imagination of the Thai artist behind Little Sloth and Crip-Toe. \nOwning a Hippo grants you membership to a very exclusive club, with access to poker tournaments, fantasy leagues, metaverse games, alpha calls and so much more. \nHold a minimum of 3 to receive a plot of metaverse land. The more you hold, the larger the plot.",
+      "description": "A collection of 5000 wicked Hippos came together with some sloths to take over the Play-to-Earn space! A dream that started on http://crypto.com/nft, has made its way onto Cronos, and is building a one-of-a-kind P2E game, using the already well established NFT Worlds as the land and token to build on/with. But that's not all! The Hippos have also teamed up with Troopz and joined their Whitelist staking program, paying out TRPZ, a non-monetized token with jam packed with utility, as well as getting access to their super private Discord -- Moonshotz Bar & Grill, where members can win all kinds of prizes while having a great time!",
       "author": {
         "name": "Northern Hippo Syndicate",
         "website": "https://www.hipposyndicate.com/",
@@ -11070,7 +11177,7 @@
       "is1155": false,
       "published": true,
       "complete": false,
-      "featured": true,
+      "featured": false,
       "redirect": "https://mint.hidethefish.com/"
     },
     {
@@ -11081,29 +11188,29 @@
       "imgAvatar": "/img/collections/trooprz-skillz-boost/avatar.webp",
       "imgBanner": "/img/collections/trooprz-skillz-boost/banner.webp",
       "title": "Skillz Boost by Troopz",
-      "subtitle": "Boost your Trooprz, Super Trooprz and Mutantz daily $TRPZ yield by collecting all 5 Skillz Boosts!",
-      "description": "Boost your Trooprz, Super Trooprz and Mutantz daily $TRPZ yield by collecting all 5 Skillz Boosts!\n\nStrength + 1 $TRPZ\nSpeed + 1 $TRPZ\nIntelligence + 2 $TRPZ\nEmpathy + 2 $TRPZ\nLoyalty + 4 $TRPZ",
+      "subtitle": "Boost you daily yield on Troopz staking platform with these awesome Skillz Boosts. Collect all 5 for added utility.",
+      "description": "Boost you daily yield on Troopz staking platform with these awesome Skillz Boosts. Collect all 5 for added utility.\n\nStrength + 1 $TRPZ\nSpeed + 1 $TRPZ\nIntelligence + 2 $TRPZ\nEmpathy + 2 $TRPZ\nLoyalty + 4 $TRPZ",
       "author": {
         "name": "Trooprz",
         "twitter": "https://twitter.com/trooprzarmy",
         "website": "https://trooprz.army/",
         "discord": "https://discord.gg/trooprz"
       },
-      "address": "",
+      "address": "0xA35f40e45FFF953F477700C83D550D35F11B42aB",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 1887,
       "cost": "50",
       "erc20Cost": "50",
       "erc20Token": "trpz",
-      "abi": "",
+      "abi": "trooprz-sketchz.json",
       "foundersOnly": false,
       "start": 1661976000000,
       "end": null,
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "priceDescription": "50 $TRPZ automatically credited back to your wallet with EVERY CRO MINT"
     },
     {
@@ -11123,7 +11230,7 @@
         "discord": "https://discord.gg/JGdADKNy28",
         "instagram": "https://www.instagram.com/crohogsnft"
       },
-      "address": "",
+      "address": "0xFD265797d7Bc6C25f2Cd148ec12f36a8eE00862a",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 1500,
@@ -11131,12 +11238,18 @@
       "memberCost": "550",
       "whitelistCost": "500",
       "foundersOnly": false,
-      "start": 1662235200000,
+      "start": 1662231600000,
+      "salePeriods": {
+        "presale": 1662231600000,
+        "public": 1662235200000
+      },
       "end": null,
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false
+      "complete": false,
+      "featured": true,
+      "priceDescription": "Whitelist-only presale for the first hour (limit 5 per address). Public sale after presale ends"
     },
     {
       "id": 106,

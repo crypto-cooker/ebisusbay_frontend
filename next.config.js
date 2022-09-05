@@ -40,6 +40,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/drops/trooprz-skills-boost',
+        destination: '/drops/trooprz-skillz-boost',
+        permanent: true,
+      },
+      {
         source: '/collection/mad-treehouse',
         destination: '/collection/mm-treehouse',
         permanent: true,
