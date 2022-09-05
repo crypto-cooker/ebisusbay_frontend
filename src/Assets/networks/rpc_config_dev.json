@@ -2866,7 +2866,7 @@
       "name": "Crobies",
       "slug": "crobies",
       "multiToken": false,
-      "address": "",
+      "address": "0x42D96BdfFCFa5A9B01443284142ef968E938A808",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -7662,7 +7662,7 @@
       "name": "ChiVerse Online",
       "slug": "chiverse-online",
       "multiToken": false,
-      "address": "0xaaEb148d08e69329B4075379Aed0c2651bB4BF77",
+      "address": "0xfa8cdd2925a21c78716dFcD20122A57B8eBBECF9",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -8330,6 +8330,27 @@
         "twitter": "https://twitter.com/Crocean_NFT",
         "discord": "https://discord.gg/N9YstjgG2y",
         "telegram": "https://t.me/crowhalesnft"
+      }
+    },
+    {
+      "name": "CFC Energizers",
+      "slug": "cfc-energizers",
+      "multiToken": false,
+      "address": "0xa3dc4a9922570928f58f188Cd2e1542222f6D65b",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Energizers NFT are meant to upgrade you CFC NFTS.",
+        "verified": false,
+        "avatar": "/img/collections/cfc-energizers/avatar.webp",
+        "card": "/img/collections/cfc-energizers/card.webp",
+        "banner": "/img/collections/cfc-energizers/banner.webp",
+        "maxSupply": 0,
+        "website": "https://dapp.cronosfc.club/",
+        "twitter": "https://twitter.com/Cronos__FC",
+        "discord": "https://discord.gg/XPmYbqAD",
+        "medium": "https://medium.com/@cfcgcronos",
+        "telegram": "https://t.me/CronosFCofficial"
       }
     }
   ],
@@ -10372,7 +10393,7 @@
       "imgBanner": "/img/collections/northern-hippo-syndicate/banner.webp",
       "title": "Northern Hippo Syndicate",
       "subtitle": "The Northern Hippo Syndicate brings the artistic and creative stylings of Little Sloth from Open Sea to the Cronos chain. This crazy collection of 5000 unique PFP grants you access to so much more than amazing art. Hold a minimum of 3 to receive a plot of metaverse land.",
-      "description": "The Northern Hippo Syndicate is a wicked and intimidating collection of 5000 PFPs plucked from the imagination of the Thai artist behind Little Sloth and Crip-Toe. \nOwning a Hippo grants you membership to a very exclusive club, with access to poker tournaments, fantasy leagues, metaverse games, alpha calls and so much more. \nHold a minimum of 3 to receive a plot of metaverse land. The more you hold, the larger the plot.",
+      "description": "A collection of 5000 wicked Hippos came together with some sloths to take over the Play-to-Earn space! A dream that started on http://crypto.com/nft, has made its way onto Cronos, and is building a one-of-a-kind P2E game, using the already well established NFT Worlds as the land and token to build on/with. But that's not all! The Hippos have also teamed up with Troopz and joined their Whitelist staking program, paying out TRPZ, a non-monetized token with jam packed with utility, as well as getting access to their super private Discord -- Moonshotz Bar & Grill, where members can win all kinds of prizes while having a great time!",
       "author": {
         "name": "Northern Hippo Syndicate",
         "website": "https://www.hipposyndicate.com/",
