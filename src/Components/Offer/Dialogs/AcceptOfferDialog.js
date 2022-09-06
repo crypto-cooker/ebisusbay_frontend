@@ -442,8 +442,8 @@ const NftPicker = ({collectionAddress, nfts, onSelect}) => {
 
   return (
     <>
-      <ImageContainer>
-        <img src={specialImageTransform(collectionAddress, chosenNft.image)} />
+      <ImageContainer className="mx-auto">
+        <img src={specialImageTransform(collectionAddress, chosenNft.image)} alt={chosenNft.name} />
       </ImageContainer>
       <h3 className="feeTitle mt-2">Choose NFT</h3>
       <Select
