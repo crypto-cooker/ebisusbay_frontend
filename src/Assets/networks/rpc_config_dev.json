@@ -8358,7 +8358,8 @@
       "slug": "undead-community-founders-pass",
       "multiToken": true,
       "tokens": [
-        { "id": 1 }
+        { "id": 1 },
+        { "id": 2 }
       ],
       "address": "0x40d6eFB6e54EC951301c1508620A6Acb5Fd432A8",
       "onChain": false,
