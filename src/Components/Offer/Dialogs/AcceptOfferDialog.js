@@ -139,6 +139,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
       if (isCollectionOffer) {
         const walletNfts = await getQuickWallet(user.address, {collection: collection.address});
         setCollectionNfts(walletNfts.data);
+        setChosenCollectionNft(walletNfts.data[0])
       }
 
       const fees = await marketContract.fee(user.address);
