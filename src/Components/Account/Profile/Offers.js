@@ -62,10 +62,20 @@ export default function Offers({ address }) {
   const [useMobileMenu, setUseMobileMenu] = useState(false);
   const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
   const [activeTab, setActiveTab] = useState(tabs.madeDirect);
+  const [hasManuallyToggledFilters, setHasManuallyToggledFilters] = useState(false);
 
   useEffect(() => {
-    setUseMobileMenu(minWidth < BREAKPOINTS.m);
+    const isMobileSize = minWidth < BREAKPOINTS.m;
+    setUseMobileMenu(isMobileSize);
+    if (!hasManuallyToggledFilters) {
+      setFiltersVisible(!isMobileSize);
+    }
   }, [breakpoint]);
+
+  const toggleFilterVisibility = () => {
+    setHasManuallyToggledFilters(true);
+    setFiltersVisible(!filtersVisible)
+  };
 
   const setTab = (key) => {
     const tabKey = Object.entries(tabs).find(([k, v]) =>  v.key === key);
@@ -135,7 +145,7 @@ export default function Offers({ address }) {
             <div>
               <Button
                 type="legacy-outlined"
-                onClick={() => setFiltersVisible(!filtersVisible)}
+                onClick={toggleFilterVisibility}
               >
                 <FontAwesomeIcon icon={filtersVisible ? faAngleLeft : faFilter} />
               </Button>
