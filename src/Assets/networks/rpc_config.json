@@ -8374,6 +8374,27 @@
         "twitter": "https://twitter.com/WeRtheUndead ",
         "discord": "https://discord.gg/undeadcommunity"
       }
+    },
+    {
+      "name": "8-Bit Army Bros",
+      "slug": "8bit-army-bros",
+      "multiToken": false,
+      "address": "0x22475d952F5dA84007A7535725EC7c79CfA013FE",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "8-Bit Army Bros. is a collection of 10,000 unique avatars. TWO legendary mints live within this collection. Fund proceeds will be pooled and invested and rewards re-distributed to the holders.",
+        "verified": false,
+        "avatar": "/img/collections/8bit-army-bros/avatar.webp",
+        "card": "/img/collections/8bit-army-bros/card.webp",
+        "banner": "/img/collections/8bit-army-bros/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://armynft.app/",
+        "twitter": "https://twitter.com/croarmy_eth",
+        "discord": "https://discord.gg/croarmy",
+        "telegram": "https://t.me/CroArmy_ETH",
+        "medium": "https://croarmy.gitbook.io/croarmy/"
+      }
     }
   ],
   "drops": [
