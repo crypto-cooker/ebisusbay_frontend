@@ -8191,6 +8191,11 @@
         "maxSupply": 777,
         "website": "https://dripcro.com",
         "discord": "https://discord.gg/ttaPM95WcR"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
