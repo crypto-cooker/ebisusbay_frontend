@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { RadioGroup } from '../Form';
+import { RadioGroup } from '../../Form';
 
 import SetOwnerForm from './SetOwnerForm';
 import ClearOwnerForm from './ClearOwnerForm';

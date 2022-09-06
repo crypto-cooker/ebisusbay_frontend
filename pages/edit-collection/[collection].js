@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
-import { UpdateOwner } from '@src/Components/EditCollection';
+import { UpdateOwner, EditCollection as EditCollectionTap} from '@src/Components/EditCollection';
 
 const tabs = {
   editCollection: 'editCollection',
@@ -48,8 +48,8 @@ const EditCollection = ({ tab }) => {
               </div>
             </div>
             <div className="de_tab_content">
-              {currentTab === tabs.inventory && (
-                <></>
+              {currentTab === tabs.editCollection && (
+                <EditCollectionTap address={collection} />
               )}
               {currentTab === tabs.setOwner && (
                 <UpdateOwner address={collection} />

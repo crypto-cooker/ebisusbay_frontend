@@ -26,3 +26,43 @@ export const clearOwner = async (query, collectionAddress) => {
     throw error;
   }
 }
+
+export const update = async (query, body) => {
+  try{
+    const params = {...query};
+    return await api.put(`collection/update`, body, {params});
+  }
+  catch(error){
+    throw error;
+  }
+}
+
+export const updateAvatar = async (query, body) => {
+  try{
+    const params = {...query};
+    return await api.patch(`collection/avatar`, body, {params});
+  }
+  catch(error){
+    throw error;
+  }
+}
+
+export const updateBanner = async (query, body) => {
+  try{
+    const params = {...query};
+    return await api.patch(`collection/banner`, body, {params});
+  }
+  catch(error){
+    throw error;
+  }
+}
+
+export const updateCard = async (query, body) => {
+  try{
+    const params = {...query};
+    return await api.patch(`collection/card`, body, {params});
+  }
+  catch(error){
+    throw error;
+  }
+}
