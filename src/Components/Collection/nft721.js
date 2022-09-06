@@ -49,14 +49,16 @@ import { hostedImage } from '@src/helpers/image';
 import Link from 'next/link';
 import axios from "axios";
 import Button from "@src/Components/components/common/Button";
+import Market from "@src/Contracts/Marketplace.json";
 
 const config = appConfig();
 const knownContracts = config.collections;
 const tabs = {
-  details: 'details',
+  properties: 'properties',
   powertraits: 'powertraits',
   history: 'history',
   offers: 'offers',
+  info: 'info',
   breeding: 'breeding',
 };
 
@@ -94,11 +96,34 @@ const Nft721 = ({ address, id }) => {
   const [ladyWeirdApeChildren, setLadyWeirdApeChildren] = useState(null);
   const [evoSkullTraits, setEvoSkullTraits] = useState([]);
   const [lazyHorseTraits, setLazyHorseTraits] = useState([]);
-
   const [customProfile, setCustomProfile] = useState({
     name: null,
     description: null
   });
+
+  const [royalty, setRoyalty] = useState(null);
+  const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+  const readMarket = new Contract(config.contracts.market, Market.abi, readProvider);
+  useEffect(() => {
+    async function getRoyalty() {
+      try {
+        let isUsingRoyaltyStandard = await readMarket.isRoyaltyStandard(address);
+        let royaltyPercent;
+        if (isUsingRoyaltyStandard) {
+          const royaltyValue = await readMarket.calculateRoyalty(address, id, 100);
+          royaltyPercent = royaltyValue.toString();
+        } else {
+          const marketRoyalty = await readMarket.getRoyalty(address);
+          royaltyPercent = marketRoyalty.percent;
+        }
+        setRoyalty(`${royaltyPercent}%`);
+      } catch (error) {
+        console.log('error retrieving royalties for collection', error);
+        setRoyalty('N/A');
+      }
+    }
+    getRoyalty();
+  }, []);
 
   useEffect(() => {
     dispatch(getNftDetails(address, id));
@@ -333,7 +358,7 @@ const Nft721 = ({ address, id }) => {
     return nft.original_image;
   };
 
-  const [currentTab, setCurrentTab] = React.useState(tabs.details);
+  const [currentTab, setCurrentTab] = React.useState(tabs.properties);
   const handleTabChange = useCallback((tab) => {
     setCurrentTab(tab);
   }, []);
@@ -543,8 +568,8 @@ const Nft721 = ({ address, id }) => {
 
                   <div className="de_tab">
                     <ul className="de_nav nft_tabs_options">
-                      <li className={`tab ${currentTab === tabs.details ? 'active' : ''}`}>
-                        <span onClick={() => handleTabChange(tabs.details)}>Details</span>
+                      <li className={`tab ${currentTab === tabs.properties ? 'active' : ''}`}>
+                        <span onClick={() => handleTabChange(tabs.properties)}>Properties</span>
                       </li>
                       {((powertraits && powertraits.length > 0) || (evoSkullTraits && evoSkullTraits.length > 0)) && (
                         <li className={`tab ${currentTab === tabs.powertraits ? 'active' : ''}`}>
@@ -557,6 +582,9 @@ const Nft721 = ({ address, id }) => {
                       <li className={`tab ${currentTab === tabs.offers ? 'active' : ''}`}>
                         <span onClick={() => handleTabChange(tabs.offers)}>Offers</span>
                       </li>
+                      <li className={`tab ${currentTab === tabs.info ? 'active' : ''}`}>
+                        <span onClick={() => handleTabChange(tabs.info)}>Info</span>
+                      </li>
                       {babyWeirdApeBreed && (
                         <li className={`tab ${currentTab === tabs.breeding ? 'active' : ''}`}>
                           <span onClick={() => handleTabChange(tabs.breeding)}>Breed Info</span>
@@ -565,12 +593,12 @@ const Nft721 = ({ address, id }) => {
                     </ul>
 
                     <div className="de_tab_content">
-                      {currentTab === tabs.details && (
+                      {currentTab === tabs.properties && (
                         <div className="tab-1 onStep fadeIn">
                           {(nft.attributes && Array.isArray(nft.attributes) && nft.attributes.length > 0) ||
                           (nft.properties && Array.isArray(nft.properties) && nft.properties.length > 0) ? (
                             <div className="d-block mb-3">
-                              <div className="row mt-5 gx-3 gy-2">
+                              <div className="row gx-3 gy-2">
                                 {nft.attributes &&
                                   Array.isArray(nft.attributes) &&
                                   nft.attributes
@@ -621,7 +649,7 @@ const Nft721 = ({ address, id }) => {
                           {(powertraits && powertraits.length > 0) || (evoSkullTraits && evoSkullTraits.length > 0) || (lazyHorseTraits && lazyHorseTraits.length > 0) ? (
                             <>
                               <div className="d-block mb-3">
-                                <div className="row mt-5 gx-3 gy-2">
+                                <div className="row gx-3 gy-2">
                                   {powertraits &&
                                     powertraits.length > 0 &&
                                     powertraits.map((data, i) => {
@@ -699,6 +727,41 @@ const Nft721 = ({ address, id }) => {
                       )}
 
                       {currentTab === tabs.offers && <NFTTabOffers nftAddress={address} nftId={id} />}
+
+                      {currentTab === tabs.info && (
+                        <div className="tab-1 onStep fadeIn">
+                          <div className="d-block mb-3">
+                            <div className="row gx-3 gy-2">
+                              <div className="d-flex justify-content-between">
+                                <div>Contract Address</div>
+                                <div>
+                                  <a href={`${config.urls.explorer}address/${address}`} target="_blank">
+                                    {shortAddress(address)}
+                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted"/>
+                                  </a>
+                                </div>
+                              </div>
+                              <div className="d-flex justify-content-between">
+                                <div>Token ID</div>
+                                <div>
+                                  <a href={`${config.urls.explorer}token/${address}?a=${id}`} target="_blank">
+                                    {id.length > 10 ? shortAddress(id) : id}
+                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted"/>
+                                  </a>
+                                </div>
+                              </div>
+                              <div className="d-flex justify-content-between">
+                                <div>Token Standard</div>
+                                <div>{collection.multiToken ? 'ERC1155' : 'ERC721'}</div>
+                              </div>
+                              <div className="d-flex justify-content-between">
+                                <div>Royalty</div>
+                                <div>{royalty ?? 'N/A'}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
 
                       {currentTab === tabs.breeding && babyWeirdApeBreed && (
                         <div className="tab-2 onStep fadeIn">
