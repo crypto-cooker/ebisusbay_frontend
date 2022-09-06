@@ -1,4 +1,4 @@
-import UpdateOwner from "./updateOwner";
+import UpdateOwner from "./UpdateOwner";
 
 export {
   UpdateOwner,

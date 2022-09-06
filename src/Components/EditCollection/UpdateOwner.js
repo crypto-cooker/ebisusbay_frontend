@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { RadioGroup } from '../Form';
 
 import SetOwnerForm from './SetOwnerForm';
-import ClearOwnerForm from './clearOwnerForm';
+import ClearOwnerForm from './ClearOwnerForm';
 
 const optionsRadioGroup = [{ value: 'setOwner', label: 'Transfer ownership' }, { value: 'clearOwner', label: 'Claim ownership' }]
 
