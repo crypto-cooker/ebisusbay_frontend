@@ -21,3 +21,24 @@ export const getCollections = async (query) => {
 export const getOwnerCollections = async (address, query) => {
   return getCollections({owner: address, ...query});
 }
+
+export const setOwner = async (query, collectionAddress, ownerAddress) => {
+  try{
+    const params = {...query};
+    return await api.post(`setCollectionOwner`, {collectionAddress, ownerAddress}, {params});
+  }
+  catch(error){
+    throw error;
+  }
+}
+
+export const clearOwner = async (query, collectionAddress) => {
+  try{
+    const params = {...query};
+
+    return await api.post(`clearCollectionOwner`, { collectionAddress }, {params});
+  }
+  catch(error){
+    throw error;
+  }
+}

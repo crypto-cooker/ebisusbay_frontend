@@ -1680,9 +1680,9 @@
         "banner": "/img/collections/chronoswapfoundingmember/banner.webp",
         "card": "/img/collections/chronoswapfoundingmember/card.png",
         "maxSupply": 387,
-        "website": "https://chronoswap.org/",
+        "website": "https://cyborgstables.io/",
         "twitter": "https://twitter.com/CyborgSwapDEX",
-        "discord": "https://discord.gg/JytqG6e8",
+        "discord": "https://discord.gg/Ku6A7tJSVp",
         "medium": "https://cyborgswap.medium.com/",
         "telegram": "https://t.me/+IQJY2ugWLaVmODVk"
       }
@@ -2280,10 +2280,11 @@
         "avatar": "/img/collections/meta_cyborgs/avatar.png",
         "card": "/img/collections/meta_cyborgs/banner.webp",
         "banner": "/img/collections/meta_cyborgs/banner.webp",
-        "website": "https://cyborgswap.io/",
-        "twitter": "https://twitter.com/chronoswap",
-        "discord": "https://discord.gg/chronoswap",
-        "medium": "https://medium.com/@chronoswap"
+        "website": "https://cyborgstables.io/",
+        "twitter": "https://twitter.com/CyborgSwapDEX",
+        "discord": "https://discord.gg/Ku6A7tJSVp",
+        "medium": "https://cyborgswap.medium.com/",
+        "telegram": "https://t.me/+IQJY2ugWLaVmODVk"
       }
     },
     {
@@ -6130,8 +6131,8 @@
         "website": "https://cyborgstables.io/",
         "twitter": "https://twitter.com/CyborgSwapDEX",
         "discord": "https://discord.gg/Ku6A7tJSVp",
-        "medium": "https://cyborgswap.medium.com",
-        "telegram": "https://t.me/chronoswap_chat"
+        "medium": "https://cyborgswap.medium.com/",
+        "telegram": "https://t.me/+IQJY2ugWLaVmODVk"
       }
     },
     {
@@ -8026,7 +8027,7 @@
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300.000 CRO disburse for DAO Members.",
+        "description": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300k CRO will be distributed to DAO members.",
         "verified": true,
         "avatar": "/img/collections/cronos-women/avatar.webp",
         "banner": "/img/collections/cronos-women/banner.webp",
@@ -8190,6 +8191,11 @@
         "maxSupply": 777,
         "website": "https://dripcro.com",
         "discord": "https://discord.gg/ttaPM95WcR"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -8351,6 +8357,50 @@
         "discord": "https://discord.gg/XPmYbqAD",
         "medium": "https://medium.com/@cfcgcronos",
         "telegram": "https://t.me/CronosFCofficial"
+      }
+    },
+    {
+      "name": "Undead Community Founders Pass",
+      "slug": "undead-community-founders-pass",
+      "multiToken": true,
+      "tokens": [
+        { "id": 1 },
+        { "id": 2 }
+      ],
+      "address": "0x40d6eFB6e54EC951301c1508620A6Acb5Fd432A8",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Undead Founders Pass is the Genesis pass in the Undead ecosystem. The Founders Pass gives whitelist access to exclusive Undead collections and community benefits.",
+        "verified": false,
+        "avatar": "/img/collections/undead-community-founders-pass/avatar.webp",
+        "card": "/img/collections/undead-community-founders-pass/card.webp",
+        "banner": "/img/collections/undead-community-founders-pass/banner.webp",
+        "maxSupply": 3500,
+        "website": "https://undeadcommunity.com",
+        "twitter": "https://twitter.com/WeRtheUndead ",
+        "discord": "https://discord.gg/undeadcommunity"
+      }
+    },
+    {
+      "name": "8-Bit Army Bros",
+      "slug": "8bit-army-bros",
+      "multiToken": false,
+      "address": "0x22475d952F5dA84007A7535725EC7c79CfA013FE",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "8-Bit Army Bros. is a collection of 10,000 unique avatars. TWO legendary mints live within this collection. Fund proceeds will be pooled and invested and rewards re-distributed to the holders.",
+        "verified": false,
+        "avatar": "/img/collections/8bit-army-bros/avatar.webp",
+        "card": "/img/collections/8bit-army-bros/card.webp",
+        "banner": "/img/collections/8bit-army-bros/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://armynft.app/",
+        "twitter": "https://twitter.com/croarmy_eth",
+        "discord": "https://discord.gg/croarmy",
+        "telegram": "https://t.me/CroArmy_ETH",
+        "medium": "https://croarmy.gitbook.io/croarmy/"
       }
     }
   ],
@@ -11259,8 +11309,8 @@
       "imgAvatar": "/img/collections/cronos-women/avatar.webp",
       "imgBanner": "/img/collections/cronos-women/banner.webp",
       "title": "Cronos Women",
-      "subtitle": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300K CRO disbursed for DAO Members.",
-      "description": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300K CRO disbursed for DAO Members.\n\nWhat is a DAO member?\nDAO member is the role that will be given to those who receive a certain amount of NFT.\n\nHow to become a DAO member?\n\n10 NFT Holders -> DAO(1)\n20 NFT Holders -> DAO(2)\n50 NFT Holders -> DAO(3)\n100 NFT Holders -> DAO(4)\nBEST HOLDER -> DAO(5)\nWhat are the advantages of a DAO member?\n\nRight to vote in all decisions to be taken in the \"Cronos Women and Men\" Management.\n100K CRO disburse for DAO(2)+ members when the mint reaches 25%\n100K CRO disburse for DAO(3)+ members when the mint reaches 50%\n100K CRO disburse for DAO(4)+ members when the mint reaches 100%\n\n*You get percentage per nft when mint target is reached!",
+      "subtitle": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300k CRO will be distributed to DAO members.",
+      "description": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300k CRO will be distributed to DAO members.\n\nWhat is a DAO member?\nDAO member is the role that will be given to those who receive a certain amount of NFT.\n\nHow to become a DAO member?\n\n10 NFT Holders -> DAO(1)\n20 NFT Holders -> DAO(2)\n50 NFT Holders -> DAO(3)\n100 NFT Holders -> DAO(4)\nBEST HOLDER -> DAO(5)\nWhat are the advantages of a DAO member?\n\nRight to vote in all decisions to be taken in the \"Cronos Women and Men\" Management.\n100K CRO distributed to the DAO(2)+ members when the mint reaches 25%\n100K CRO distributed to the DAO(3)+ members when the mint reaches 50%\n100K CRO distributed to the DAO(4)+ members when the mint reaches 100%\n\n*You get percentage per nft when mint target is reached!",
       "author": {
         "name": "Cronos Women",
         "website": "https://cronos-women.com/",
