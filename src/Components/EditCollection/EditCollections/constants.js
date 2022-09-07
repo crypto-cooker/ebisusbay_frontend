@@ -50,6 +50,7 @@ export const editCollectionFormFields = [
         isRequired: false,
         placeholder: 'Enter Twitter Handle',
         description: '',
+        addOn: '@',
       },
       {
         type: FormType.field,
@@ -59,10 +60,11 @@ export const editCollectionFormFields = [
         isRequired: false,
         placeholder: 'Enter Discord ID',
         description: '',
+        addOn: '@',
       },
       {
         type: FormType.field,
-        key: 'Telegram',
+        key: 'telegram',
         default: '',
         title: 'Telegram Handle',
         isRequired: false,
@@ -71,7 +73,7 @@ export const editCollectionFormFields = [
       },
       {
         type: FormType.field,
-        key: 'Instagram',
+        key: 'instagram',
         default: '',
         title: 'Instagram Handle',
         isRequired: false,
@@ -80,7 +82,7 @@ export const editCollectionFormFields = [
       },
       {
         type: FormType.field,
-        key: 'Medium',
+        key: 'medium',
         default: '',
         title: 'Medium Handle',
         isRequired: false,
@@ -89,7 +91,7 @@ export const editCollectionFormFields = [
       },
       {
         type: FormType.field,
-        key: 'Documentation',
+        key: 'documentation',
         default: '',
         title: 'Documentation Handle',
         isRequired: false,

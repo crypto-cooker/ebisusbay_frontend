@@ -27,7 +27,7 @@ export default function Pfp({ values, errors, touched, handleChange, setFieldVal
           props.key = `${type}-${fieldKey}`;
           props.value = values[subFormKey]?.[fieldKey];
           props.error = 
-                touched.userInfo?.[subFormKey]?.[fieldKey] ? errors.userInfo?.[subFormKey]?.[fieldKey] : undefined;
+                touched[subFormKey]?.[fieldKey] ? errors[subFormKey]?.[fieldKey] : undefined;
 
           if (props.inputType) props.type = props.inputType;
 

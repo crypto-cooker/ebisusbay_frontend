@@ -15,6 +15,7 @@ import Bio from './Bio';
 import Banner from './Banner';
 import Card from './Card';
 import Pfp from './Pfp';
+import * as DOMPurify from 'dompurify';
 import CustomizedDialogs from '../dialog';
 
 const EditCollection = ({ address: collectionAddress }) => {
@@ -48,11 +49,15 @@ const EditCollection = ({ address: collectionAddress }) => {
         collectionInfo: {
           collectionName: name,
           listable: listable,
-          twitter: metadata.twitter,
-          discord: metadata.discord,
-          website: metadata.website,
+          twitter: metadata.twitter? metadata.twitter : '',
+          discord: metadata.discord? metadata.discord : '',
+          website: metadata.website? metadata.website : '',
           collectionSlug: slug,
-          description: metadata.description,
+          description: metadata.description? metadata.description : '',
+          instagram: metadata.instagram? metadata.instagram : '',
+          telegram: metadata.telegram? metadata.telegram : '',
+          medium: metadata.medium? metadata.medium : '',
+          documentation: metadata.medium? metadata.documentation : ''
         },
         collectionAvatar: { collectionPicture: [{ result: metadata.avatar, position: 0, file: { type: 'image' } }] },
         collectionBanner: { banner: [{ result: metadata.banner, position: 0, file: { type: 'image' } }] },
@@ -104,8 +109,16 @@ const EditCollection = ({ address: collectionAddress }) => {
           .min(3, getDynamicMessage(Messages.errors.charactersMinLimit, ['3']))
           .max(50, getDynamicMessage(Messages.errors.charactersMaxLimit, ['50']))
           .isProfane('Invalid!')
-          .matches(/^[a-zA-Z0-9-_.]+$/, Messages.errors.usernameFormat)
-          .customUsernameRules('Invalid username'),
+          .matches(/^[a-zA-Z0-9-_.\s]+$/, Messages.errors.usernameFormat)
+          .customUsernameRules('Invalid username')
+          .test('max one space between chars', 'max one space between chars', val => {
+            for(let i = 1; i < val.length; i++){
+              if(val[i - 1] ===  ' ' && val[i] === ' '){
+                return false
+              }
+            }
+            return true;
+          }),
         collectionSlug: Yup.string()
           .required(Messages.errors.required)
           .min(3, getDynamicMessage(Messages.errors.charactersMinLimit, ['3']))
@@ -113,13 +126,38 @@ const EditCollection = ({ address: collectionAddress }) => {
           .isProfane('Invalid!')
           .matches(/^[a-zA-Z0-9-_.]+$/, Messages.errors.usernameFormat)
           .trim()
-          .customUsernameRules('Invalid username'),
+          .customUsernameRules('Invalid slug')
+          .test('max one space between dash', 'max one space between dash', val => {
+            for(let i = 1; i < val.length; i++){
+              if(val[i - 1] ===  '-' && val[i] === '-'){
+                return false
+              }
+            }
+            return true;
+          }),
         listable: Yup.boolean(),
         twitter: Yup.string()
-          .required(Messages.errors.required)
-          .trim(),
-        discord: Yup.string().trim().required(Messages.errors.required),
-        website: Yup.string().url(Messages.errors.urlError).required(Messages.errors.required),
+          .trim()
+          .nullable()
+          .min(4)
+          .max(15)
+          .matches(/^[a-zA-Z0-9_.]+$/, 'Invalid Twitter'),
+        discord: Yup.string().trim()
+        .nullable()
+        .matches(/^[a-zA-Z0-9_.]+$/, 'Invalid Twitter'),
+        telegram: Yup.string().trim()
+        .nullable()
+        .matches(/^[a-zA-Z0-9_.]+$/, 'Invalid Twitter'),
+        instagram: Yup.string().trim()
+          .nullable()
+          .matches(/^[a-zA-Z0-9_.]+$/, 'Invalid Instagram'),
+        medium: Yup.string().trim()
+          .nullable()
+          .matches(/^[a-zA-Z0-9_.]+$/, 'Invalid medium'),
+        documentation: Yup.string().trim()
+          .nullable()
+          .url(Messages.errors.urlError),
+        website: Yup.string().url(Messages.errors.urlError).nullable(),
         description: Yup.string()
           .max(1000, getDynamicMessage(Messages.errors.charactersMaxLimit, ['1000']))
       })
@@ -131,8 +169,8 @@ const EditCollection = ({ address: collectionAddress }) => {
             file: Yup.mixed().nullable().test('', 'Avatar must not exceed 2MB in size',
               (file) => file && file.size ? file.size <= 2000000 : true
             ),
-            size: Yup.object().nullable().test('', 'Banner must be at least 800 x 360 px',
-              (size) => size ? size.width >= 500 && size.height >= 500 : true
+            size: Yup.object().nullable().test('', 'Banner must be at least 500 x 500 px',
+              (size) => size ? size.width <= 500 && size.height <= 500 : true
             ),
           })
         )
@@ -155,7 +193,7 @@ const EditCollection = ({ address: collectionAddress }) => {
               (file) => file && file.size ? file.size <= 2000000 : true
             ),
             size: Yup.object().nullable().test('', 'Card must be 600 x 338 px',
-            (size) => size ? size.width >= 600 && size.height >= 338 : true
+            (size) => size ? size.width == 600 && size.height == 338 : true
           ),
           })
         )
@@ -171,6 +209,7 @@ const EditCollection = ({ address: collectionAddress }) => {
 
   const validationForm = async (e) => {
     const errors = await validateForm(values);
+    setFieldValue('collectionInfo.description', DOMPurify.sanitize(values.collectionInfo.description));
     e.preventDefault();
     if (errors) {
       const keysErrorsGroup = Object.keys(errors);
@@ -236,10 +275,6 @@ const EditCollection = ({ address: collectionAddress }) => {
       </div>
     )
   }
-
-  useEffect(()=>{
-    console.log('values: ',values)
-  }, [values])
 
   return (
     <>
