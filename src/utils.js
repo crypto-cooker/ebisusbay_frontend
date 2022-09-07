@@ -199,14 +199,14 @@ export function mapAttributeString(str, address, category, makeHuman = false) {
   let newStr = str?.toString() ?? '';
 
   if (mappings) {
-    for (const [key, value] of Object.entries(mappings)) {
-      if (typeof value === 'object' && key.toLowerCase() === category.toLowerCase()) {
-        for (const [k, v] of Object.entries(value)) {
-          newStr = newStr.replace(k, v);
-        }
-      } else {
-        newStr = newStr.replace(key, value);
-      }
+    if (Object.keys(mappings).includes(str) && typeof mappings[str] === 'string') {
+      return mappings[str]
+    }
+
+    if (Object.keys(mappings).includes(category) &&
+      typeof mappings[category] === 'object' &&
+      Object.keys(mappings[category]).includes(str)) {
+      return mappings[category][str];
     }
   }
 
