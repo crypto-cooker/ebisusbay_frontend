@@ -16,7 +16,7 @@ services:
       # APMINSIGHT_APP_NAME: local-ebisusbay-web-arm64-us-east-1
       # APMINSIGHT_APP_PORT: '3000'
     healthcheck:
-      test: ["CMD-SHELL", "curl -f -s http://localhost:3000/health || exit 1"]
+      test: ["CMD-SHELL", "curl -f -s http://localhost:3000/api/health || exit 1"]
       interval: 5s
       timeout: 2s
       retries: 3
@@ -44,7 +44,7 @@ services:
       AMPLIFY_API_KEY: b7f1ca270e79d8dc6350cd837b2b006b
       AMPLIFY_ENABLED: false
     healthcheck:
-      test: ["CMD-SHELL", "curl -f -s http://localhost:8080/health || exit 1"]
+      test: ["CMD-SHELL", "curl -f -s http://localhost:8080/api/health || exit 1"]
       interval: 5s
       timeout: 2s
       retries: 3
