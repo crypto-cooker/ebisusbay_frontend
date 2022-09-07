@@ -12,6 +12,7 @@ import {StatusFilter} from "@src/Components/Collection/Filters/StatusFilter";
 import {pushQueryString} from "@src/helpers/query";
 import {resetFilters} from "@src/GlobalState/collectionSlice";
 import {useRouter} from "next/router";
+import {getTheme} from "@src/Theme/theme";
 
 export const MobileFilters = ({address, show, onHide, traits, powertraits}) => {
   const dispatch = useDispatch();
@@ -67,7 +68,7 @@ export const MobileFilters = ({address, show, onHide, traits, powertraits}) => {
           {hasTraits() && <TraitsFilter address={address} keyPrefix="mobile" />}
           {hasPowertraits() && <PowertraitsFilter address={address} keyPrefix="mobile" />}
         </div>
-        <div className="d-flex fixed-bottom mx-2 my-2">
+        <div className="d-flex fixed-bottom px-2 py-2" style={{backgroundColor: getTheme(theme).colors.bgColor1}}>
           <div className="flex-fill">
             <Button type="legacy-outlined" className="w-100" style={{height: '100%'}} onClick={onClearAll}>
               <span className="ms-2">Clear all</span>
