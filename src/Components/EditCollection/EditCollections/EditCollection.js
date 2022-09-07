@@ -15,16 +15,19 @@ import Bio from './Bio';
 import Banner from './Banner';
 import Card from './Card';
 import Pfp from './Pfp';
+import CustomizedDialogs from '../dialog';
 
 const EditCollection = ({ address: collectionAddress }) => {
 
-  const [{ isLoading : isLoadingRequest, response, error }, update] = useUpdate();
+  const [{ isLoading: isLoadingRequest, response, error }, update] = useUpdate();
+  const [isOpen, setIsOpen] = useState(false);
   const user = useSelector((state) => state.user);
 
   const onSubmit = async () => {
     try {
       await update(user.address, values, collectionAddress);
-      refetch(()=> getCollections({ address: collectionAddress }))
+      setIsOpen(false);
+      refetch(() => getCollections({ address: collectionAddress }))
       resetForm();
     } catch (error) {
       console.log(error);
@@ -40,7 +43,7 @@ const EditCollection = ({ address: collectionAddress }) => {
 
   useEffect(() => {
     if (!isLoading && data.data?.collections) {
-      const { listable, slug,  name, metadata } = data.data.collections[0];
+      const { listable, slug, name, metadata } = data.data.collections[0];
       setInitialValues({
         collectionInfo: {
           collectionName: name,
@@ -82,6 +85,17 @@ const EditCollection = ({ address: collectionAddress }) => {
     });
   });
 
+  useEffect(() => {
+    if (!isLoadingRequest) {
+      if (error) {
+        toast.error('Something went wrong!');
+      } else if (response) {
+        toast.success('It was updated successfully');
+        refetch(() => getOwnerCollections(user.address));
+      }
+    }
+  }, [isLoadingRequest, response, error])
+
   const userInfoValidation = Yup.object().shape({
     collectionInfo: Yup.object()
       .shape({
@@ -92,7 +106,7 @@ const EditCollection = ({ address: collectionAddress }) => {
           .isProfane('Invalid!')
           .matches(/^[a-zA-Z0-9-_.]+$/, Messages.errors.usernameFormat)
           .customUsernameRules('Invalid username'),
-          collectionSlug: Yup.string()
+        collectionSlug: Yup.string()
           .required(Messages.errors.required)
           .min(3, getDynamicMessage(Messages.errors.charactersMinLimit, ['3']))
           .max(50, getDynamicMessage(Messages.errors.charactersMaxLimit, ['50']))
@@ -106,17 +120,20 @@ const EditCollection = ({ address: collectionAddress }) => {
           .trim(),
         discord: Yup.string().trim().required(Messages.errors.required),
         website: Yup.string().url(Messages.errors.urlError).required(Messages.errors.required),
-        bio: Yup.string()
-          .max(100, getDynamicMessage(Messages.errors.charactersMaxLimit, ['100']))
+        description: Yup.string()
+          .max(1000, getDynamicMessage(Messages.errors.charactersMaxLimit, ['1000']))
       })
       .required(),
     collectionAvatar: Yup.object()
       .shape({
         collectionPicture: Yup.array().of(
           Yup.object().shape({
-            file: Yup.mixed().nullable().test('', 'Avatar must not exceed 1MB in size',
-              (file) => file && file.size ? file.size <= 1000000 : true
-            )
+            file: Yup.mixed().nullable().test('', 'Avatar must not exceed 2MB in size',
+              (file) => file && file.size ? file.size <= 2000000 : true
+            ),
+            size: Yup.object().nullable().test('', 'Banner must be at least 800 x 360 px',
+              (size) => size ? size.width >= 500 && size.height >= 500 : true
+            ),
           })
         )
       }).required(),
@@ -124,9 +141,6 @@ const EditCollection = ({ address: collectionAddress }) => {
       .shape({
         banner: Yup.array().of(
           Yup.object().shape({
-            size: Yup.object().nullable().test('', 'Banner must be at least 800 x 360 px',
-              (size) => size ? size.width >= 800 && size.height >= 360 : true
-            ),
             file: Yup.mixed().nullable().test('', 'Banner must not exceed 2MB in size',
               (file) => file && file.size ? file.size <= 2000000 : true
             )
@@ -137,9 +151,12 @@ const EditCollection = ({ address: collectionAddress }) => {
       .shape({
         card: Yup.array().of(
           Yup.object().shape({
-            file: Yup.mixed().nullable().test('', 'Card must not exceed 1MB in size',
-              (file) => file && file.size ? file.size <= 1000000 : true
-            )
+            file: Yup.mixed().nullable().test('', 'Card must not exceed 2MB in size',
+              (file) => file && file.size ? file.size <= 2000000 : true
+            ),
+            size: Yup.object().nullable().test('', 'Card must be 600 x 338 px',
+            (size) => size ? size.width >= 600 && size.height >= 338 : true
+          ),
           })
         )
       }).required(),
@@ -151,6 +168,27 @@ const EditCollection = ({ address: collectionAddress }) => {
     initialValues,
     enableReinitialize: true,
   });
+
+  const validationForm = async (e) => {
+    const errors = await validateForm(values);
+    e.preventDefault();
+    if (errors) {
+      const keysErrorsGroup = Object.keys(errors);
+      if (keysErrorsGroup.length > 0) {
+        keysErrorsGroup.forEach(keyGroup => {
+
+          const keysErrorsFields = Object.keys(errors[keyGroup]);
+
+          keysErrorsFields.forEach(keyField => {
+            setFieldTouched(`${keyGroup}.${keyField}`, true)
+          });
+        })
+      }
+      else {
+        setIsOpen(true);
+      }
+    }
+  }
 
   const {
     values,
@@ -165,12 +203,50 @@ const EditCollection = ({ address: collectionAddress }) => {
     resetForm
   } = formikProps;
 
+  const Title = () => {
+    return (
+      <div style={{ minWidth: 200, textAlign: 'center', fontWeight: 'bold', margin: '0px 24px' }}>
+        Update collection
+      </div>
+    )
+  }
+
+  const Body = () => {
+    return (
+      <div style={{ minWidth: 200, textAlign: 'center' }}>
+        The collection <span style={{ fontWeight: 'bold' }}>{(collectionAddress)}</span> will be updated
+      </div>
+    )
+  }
+
+  const DialogActions = () => {
+    return (
+      <div style={{ display: 'flex', margin: 'auto' }}>
+        <button className="btn-main" style={{ marginRight: 8 }} onClick={(e) => { setIsOpen(false) }}>
+          Cancel
+        </button>
+        <button form='updateCollection' className="btn-main" type="submit">
+          Accept
+          {(isLoadingRequest) && (
+            <Spinner animation="border" role="status" size="sm" className="ms-1">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          )}
+        </button>
+      </div>
+    )
+  }
+
+  useEffect(()=>{
+    console.log('values: ',values)
+  }, [values])
+
   return (
     <>
-      <form id="userSettings" autoComplete="off" onSubmit={handleSubmit} className="user-settings-form">
+      <form id="updateCollection" autoComplete="off" onSubmit={handleSubmit} className="user-settings-form">
         <div className="row mt-5">
           <div className="col-12 col-sm-12 col-lg-4">
-          <Pfp
+            <Pfp
               values={values}
               errors={errors}
               touched={touched}
@@ -211,18 +287,13 @@ const EditCollection = ({ address: collectionAddress }) => {
             <Bio value={values?.collectionInfo.description} handleChange={handleChange} error={errors?.collectionInfo?.description} />
           </div>
         </div>
+      <CustomizedDialogs propsDialog={{ title: Title(), body: Body(), dialogActions: DialogActions(), isOpen, setIsOpen }} />
       </form>
       <div className="d-flex justify-content-end mt-5">
-        <button form="userSettings" type="submit" className="btn-main" onClick={handleSubmit}>
+        <button form="userSettings" type="submit" className="btn-main" onClick={validationForm}>
           Update Collection
-          {(isLoadingRequest) && (
-            <Spinner animation="border" role="status" size="sm" className="ms-1">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          )}
         </button>
       </div>
-
     </>
   )
 }

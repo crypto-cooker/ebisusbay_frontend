@@ -17,11 +17,11 @@ export default function Bio({ value, handleChange, error }) {
             onChange={handleChange}
             value={value}
             name="collectionInfo.description"
-            description="Max 100 characters"
+            description="Max 1000 characters"
             className="mb-0"
           />
         </InputGroup>
-        <Form.Text className="field-description text-muted">{error ?? 'Max 100 characters'}</Form.Text>
+        <Form.Text className="field-description text-muted">{error ?? 'Max 1000 characters'}</Form.Text>
       </div>
 
     </div>

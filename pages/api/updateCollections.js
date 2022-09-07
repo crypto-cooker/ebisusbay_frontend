@@ -4,7 +4,7 @@ export default async function handler(req, res) {
 
   const {query, body} = req;
   try{
-    const response = await update({signature: query.signature, address: query.address}, body);
+    const response = await update({signature: query.signature, address: query.address, collectionAddress: query.collectionAddress}, body);
     res.status(response.status).json(response.data)
   }
   catch(error){

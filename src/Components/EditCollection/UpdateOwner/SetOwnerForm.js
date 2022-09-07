@@ -35,7 +35,7 @@ const SetOwnerForm = ({ address: collectionAddress }) => {
   }, [isLoading, response, error])
 
   useEffect(() => {
-    if (!data?.data?.collections?.find((collection) => collection.address == collectionAddress)) router.push(`/account/${user.address}?tab=collections`)
+    if (data && !data?.data?.collections?.find((collection) => collection.address == collectionAddress)) router.push(`/account/${user.address}?tab=collections`)
   }, [data])
 
 

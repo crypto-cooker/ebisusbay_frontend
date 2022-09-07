@@ -1,11 +1,9 @@
-import { useCallback, useState, useLayoutEffect } from 'react';
+import { useCallback, useState } from 'react';
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 
 import { updateCollection } from "@src/core/cms/next/collections";
 import { updateAvatar, updateBanner, updateCard} from "@src/core/cms/endpoints/collections";
-import { setOwner } from "@src/core/api/next/collectioninfo";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
-import { clearPreviewData } from 'next/dist/server/api-utils';
 
 export const useUpdate = () => {
   const [response, setResponse] = useState({
@@ -33,7 +31,7 @@ export const useUpdate = () => {
     }
     if (signatureInStorage) {
     try {
-      const payload = await updateCollection({ signature: signatureInStorage, address }, collectionInfo); 
+      const payload = await updateCollection({ signature: signatureInStorage, address, collectionAddress }, collectionInfo); 
       if (collectionAvatar.collectionPicture[0]?.file?.name) {
         const formData = new FormData();
         formData.append('avatar', collectionAvatar.collectionPicture[0].file);
