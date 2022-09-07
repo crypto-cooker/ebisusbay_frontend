@@ -7,7 +7,7 @@ import {humanize, mapAttributeString, stripSpaces} from '@src/utils';
 import {useRouter} from "next/router";
 import {cleanedQuery, pushQueryString} from "@src/helpers/query";
 
-const TraitsFilter = ({ address }) => {
+const TraitsFilter = ({ address, keyPrefix }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -64,6 +64,14 @@ const TraitsFilter = ({ address }) => {
     );
   };
 
+  const getKey = (identifier) => {
+    let key = identifier;
+    if (keyPrefix) {
+      key = `${keyPrefix}-${key}`
+    }
+    return key;
+  };
+
   return (
     <>
       <Accordion id="traits" flush>
@@ -82,10 +90,10 @@ const TraitsFilter = ({ address }) => {
                     return a[0] > b[0] ? 1 : -1;
                   })
                   .map((stats) => (
-                    <div key={`${traitCategoryName}-${stats[0]}`}>
+                    <div key={getKey(stripSpaces(`trait-${traitCategoryName}-${stats[0]}`))}>
                       <Form.Check
                         type="checkbox"
-                        id={stripSpaces(`trait-${traitCategoryName}-${stats[0]}`)}
+                        id={getKey(stripSpaces(`trait-${traitCategoryName}-${stats[0]}`))}
                         className="trait-checkbox"
                       >
                         <Form.Check.Input type={'checkbox'}

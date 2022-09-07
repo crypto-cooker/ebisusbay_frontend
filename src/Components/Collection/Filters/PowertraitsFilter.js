@@ -7,7 +7,7 @@ import {filterListingsByTrait} from '@src/GlobalState/collectionSlice';
 import {useRouter} from "next/router";
 import {cleanedQuery, pushQueryString} from "@src/helpers/query";
 
-const PowertraitsFilter = ({ address }) => {
+const PowertraitsFilter = ({ address, keyPrefix }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -66,9 +66,17 @@ const PowertraitsFilter = ({ address }) => {
     );
   };
 
+  const getKey = (identifier) => {
+    let key = identifier;
+    if (keyPrefix) {
+      key = `${keyPrefix}-${key}`
+    }
+    return key;
+  };
+
   return (
-    <div className="my-4" flush>
-      <Accordion id="powertraits">
+    <div className="my-4">
+      <Accordion id="powertraits" flush>
         {viewPowertraitsList()
           .sort((a, b) => (a[0].toLowerCase() > b[0].toLowerCase() ? 1 : -1))
           .map(([traitCategoryName, traitCategoryValues], key) => (
@@ -84,10 +92,10 @@ const PowertraitsFilter = ({ address }) => {
                     return a[0] > b[0] ? 1 : -1;
                   })
                   .map((stats) => (
-                    <div key={`${traitCategoryName}-${stats[0]}`}>
+                    <div key={getKey(stripSpaces(`powertrait-${traitCategoryName}-${stats[0]}`))}>
                       <Form.Check
                         type="checkbox"
-                        id={stripSpaces(`powertrait-${traitCategoryName}-${stats[0]}`)}
+                        id={getKey(stripSpaces(`powertrait-${traitCategoryName}-${stats[0]}`))}
                         className="trait-checkbox"
                       >
                         <Form.Check.Input type={'checkbox'}

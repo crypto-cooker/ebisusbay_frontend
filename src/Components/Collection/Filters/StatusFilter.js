@@ -13,7 +13,7 @@ const statuses = [
   }
 ];
 
-export const StatusFilter = ({...props}) => {
+export const StatusFilter = ({keyPrefix, ...props}) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const currentFilter = useSelector((state) => state.collection.query.filter);
@@ -41,6 +41,14 @@ export const StatusFilter = ({...props}) => {
     );
   };
 
+  const getKey = (identifier) => {
+    let key = identifier;
+    if (keyPrefix) {
+      key = `${keyPrefix}-${key}`
+    }
+    return key;
+  };
+
   return (
     <div {...props}>
       <Accordion id="status" defaultActiveKey={hasActiveStatusFilter() ? 'status' : undefined} flush>
@@ -51,10 +59,10 @@ export const StatusFilter = ({...props}) => {
           <Accordion.Body>
             {statuses.map((status) => (
 
-              <div key={status.key}>
+              <div key={getKey(status.key)}>
                 <Form.Check
                   type="checkbox"
-                  id={status.key}
+                  id={getKey(status.key)}
                   className="status-checkbox"
                 >
                   <Form.Check.Input type={'checkbox'}

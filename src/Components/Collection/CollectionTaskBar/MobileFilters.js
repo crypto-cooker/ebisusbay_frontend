@@ -60,12 +60,12 @@ export const MobileFilters = ({address, show, onHide, traits, powertraits}) => {
       </Offcanvas.Header>
       <Offcanvas.Body>
         <div className="pb-5 overflow-hidden">
-          <StatusFilter />
+          <StatusFilter keyPrefix="mobile" />
           <PriceFilter address={address} />
           <RankFilter address={address} />
           <hr className="mt-4 mb-2"/>
-          {hasTraits() && <TraitsFilter address={address} />}
-          {hasPowertraits() && <PowertraitsFilter address={address} />}
+          {hasTraits() && <TraitsFilter address={address} keyPrefix="mobile" />}
+          {hasPowertraits() && <PowertraitsFilter address={address} keyPrefix="mobile" />}
         </div>
         <div className="d-flex fixed-bottom mx-2 my-2">
           <div className="flex-fill">

@@ -17,12 +17,12 @@ export const DesktopFilters = ({address, traits, powertraits}) => {
 
   return (
     <div className="filter-pane">
-      <StatusFilter />
+      <StatusFilter keyPrefix="desktop" />
       <PriceFilter address={address} />
       <RankFilter address={address} />
       <hr className="mt-4 mb-2"/>
-      {hasTraits() && <TraitsFilter address={address} />}
-      {hasPowertraits() && <PowertraitsFilter address={address} />}
+      {hasTraits() && <TraitsFilter address={address} keyPrefix="desktop" />}
+      {hasPowertraits() && <PowertraitsFilter address={address} keyPrefix="desktop" />}
     </div>
   )
 }
