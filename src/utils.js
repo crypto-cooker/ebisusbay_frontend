@@ -470,13 +470,15 @@ export const percentage = (partialValue, totalValue) => {
   return Math.floor((100 * partialValue) / totalValue);
 };
 
-export const relativePrecision = (num) => {
+export const relativePrecision = (num, minDecimals = 1) => {
   if (num < 0.001) {
     return Math.round(num * 10000) / 100;
   } else if (num < 0.01) {
     return Math.round(num * 1000) / 10;
   }
-  return Math.round(num * 100);
+
+  const multiplier = minDecimals + 1;
+  return Math.round(num * 100 * multiplier) /  multiplier;
 };
 
 export const sliceIntoChunks = (arr, chunkSize) => {
