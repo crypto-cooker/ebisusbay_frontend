@@ -8,6 +8,7 @@ const api = {
 
 export async function getWalletOverview(walletAddress) {
   let queryString = new URLSearchParams({
+    pageSize: 1000,
     wallet: walletAddress
   });
 

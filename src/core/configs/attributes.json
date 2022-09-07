@@ -87,5 +87,11 @@
       "3": "Rare",
       "4": "Legendary"
     }
+  },
+  "0x3c46f9B9fFD5b3E63f5703BEE0A27e59c7A6941e": {
+    "3DCamo": "3D Camo",
+    "3DRed": "3D Red",
+    "3DYellow": "3D Yellow",
+    "OrangeBowTie": "Orange Bowtie"
   }
 }
