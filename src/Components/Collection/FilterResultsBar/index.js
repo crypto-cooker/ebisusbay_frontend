@@ -13,7 +13,7 @@ import {
   resetFilters,
   resetListings, searchListings
 } from "@src/GlobalState/collectionSlice";
-import {isNumeric, stripSpaces} from "@src/utils";
+import {isNumeric, mapAttributeString, stripSpaces} from "@src/utils";
 import {listingState} from "@src/core/api/enums";
 
 export const FilterResultsBar = ({collection}) => {
@@ -35,7 +35,7 @@ export const FilterResultsBar = ({collection}) => {
           type: 'trait',
           key: stripSpaces(`trait-${c[0]}-${t}`),
           category: c[0],
-          label,
+          label: mapAttributeString(label, collection.address),
           value: t
         }
       }));
@@ -48,7 +48,7 @@ export const FilterResultsBar = ({collection}) => {
           type: 'powertrait',
           key: stripSpaces(`powertrait-${c[0]}-${t}`),
           category: c[0],
-          label,
+          label: mapAttributeString(label, collection.address),
           value: t
         }
       }));
