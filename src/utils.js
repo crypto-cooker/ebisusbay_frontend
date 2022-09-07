@@ -199,14 +199,14 @@ export function mapAttributeString(str, address, category, makeHuman = false) {
   let newStr = str?.toString() ?? '';
 
   if (mappings) {
-    for (const [key, value] of Object.entries(mappings)) {
-      if (typeof value === 'object' && key.toLowerCase() === category.toLowerCase()) {
-        for (const [k, v] of Object.entries(value)) {
-          newStr = newStr.replace(k, v);
-        }
-      } else {
-        newStr = newStr.replace(key, value);
-      }
+    if (Object.keys(mappings).includes(str) && typeof mappings[str] === 'string') {
+      return mappings[str]
+    }
+
+    if (Object.keys(mappings).includes(category) &&
+      typeof mappings[category] === 'object' &&
+      Object.keys(mappings[category]).includes(str)) {
+      return mappings[category][str];
     }
   }
 
@@ -470,13 +470,15 @@ export const percentage = (partialValue, totalValue) => {
   return Math.floor((100 * partialValue) / totalValue);
 };
 
-export const relativePrecision = (num) => {
+export const relativePrecision = (num, minDecimals = 1) => {
   if (num < 0.001) {
     return Math.round(num * 10000) / 100;
   } else if (num < 0.01) {
     return Math.round(num * 1000) / 10;
   }
-  return Math.round(num * 100);
+
+  const multiplier = minDecimals + 1;
+  return Math.round(num * 100 * multiplier) /  multiplier;
 };
 
 export const sliceIntoChunks = (arr, chunkSize) => {
