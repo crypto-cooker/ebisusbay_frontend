@@ -1,7 +1,7 @@
 import { useFormik } from 'formik';
 import { Field } from '@src/Components/Form'
 import * as Yup from 'yup';
-import CustomizedDialogs from '../dialog';
+import CustomizedDialogs from '../Dialog';
 import { useEffect, useState } from 'react';
 import useClearOwner from '../hooks/useClearOwner';
 import { useSelector } from 'react-redux';

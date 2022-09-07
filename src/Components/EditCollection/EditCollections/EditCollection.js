@@ -16,7 +16,7 @@ import Banner from './Banner';
 import Card from './Card';
 import Pfp from './Pfp';
 import * as DOMPurify from 'dompurify';
-import CustomizedDialogs from '../dialog';
+import CustomizedDialogs from '../Dialog';
 
 const EditCollection = ({ address: collectionAddress }) => {
 

@@ -1,4 +1,4 @@
-import UpdateOwner from "./UpdateOwner/updateOwner";
+import UpdateOwner from "./UpdateOwner/UpdateOwner";
 import EditCollection from "./EditCollections/EditCollection";
 
 export {
