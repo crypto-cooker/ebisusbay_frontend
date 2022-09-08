@@ -269,17 +269,19 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
                     onFilterToggle={() => setFiltersVisible(!filtersVisible)}
                   />
                 </div>
-                <div className="row">
+                <div className="d-flex">
                   <Collapse in={filtersVisible && !useMobileMenu} dimension="width">
-                    <div className="col-md-3 mb-4">
-                      <DesktopFilters
-                        address={collection.address}
-                        traits={collectionStats?.traits}
-                        powertraits={collectionStats?.powertraits}
-                      />
+                    <div className="m-0 p-0">
+                      <div className="me-4 px-2" style={{width: 250}}>
+                        <DesktopFilters
+                          address={collection.address}
+                          traits={collectionStats?.traits}
+                          powertraits={collectionStats?.powertraits}
+                        />
+                      </div>
                     </div>
                   </Collapse>
-                  <div className="col">
+                  <div className="flex-fill">
                     <FilterResultsBar collection={collection} />
                     {isUsingListingsFallback ? (
                       <CollectionListingsGroup listings={listings} canLoadMore={canLoadMore} loadMore={loadMore} />
