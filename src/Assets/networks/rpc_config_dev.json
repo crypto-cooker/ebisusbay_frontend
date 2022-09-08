@@ -8421,6 +8421,25 @@
         "twitter": "https://twitter.com/FeralShibaClub",
         "discord": "https://discord.gg/6rb3csApbr"
       }
+    },
+    {
+      "name": "Croman Society",
+      "slug": "croman-society",
+      "multiToken": false,
+      "address": "0x4c555b1f854d6127d397cf49f84f496564804c81",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Croman Society Is A Collection 1111 Unique Croman living on the Cronos Blockchain. Staking, breeding included",
+        "verified": false,
+        "avatar": "/img/collections/croman-society/avatar.webp",
+        "card": "/img/collections/croman-society/card.webp",
+        "banner": "/img/collections/croman-society/banner.webp",
+        "maxSupply": 1111,
+        "website": "https://cromansociety.art/",
+        "twitter": "https://twitter.com/CromanSociety",
+        "discord": "https://discord.gg/us28gZQW"
+      }
     }
   ],
   "drops": [
