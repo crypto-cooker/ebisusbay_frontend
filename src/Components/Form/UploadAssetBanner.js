@@ -68,7 +68,7 @@ const UploadAsset = ({ id, value, accept = 'image/png, image/jpeg, image/jpg', o
   return (
     <Stack direction="row" alignItems="center" spacing={2} className="upload-asset me-0" style={{ width: '100%' }}>
       <label htmlFor={id} style={{ width: '100%' }}>
-        <Card style={{ width: '100%', height: '160px' }}>
+        <Card style={{ width: '100%', height: value?.result? '100%' : '160px' }}>
           <Card.Body>
             <input
               id={id}
