@@ -7185,7 +7185,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "7,000 Apes sent to a mission on the moon. Now they are lost. Holding your ape allows you to claim 6% of all marketplace royalties.",
+        "description": "7,000 Apes sent to a mission on the moon. Now they are lost. Holding your ape allows you to claim 60% of all marketplace royalties.",
         "verified": false,
         "avatar": "/img/collections/moon-crew-apes/avatar.webp",
         "card": "/img/collections/moon-crew-apes/card.webp",
@@ -8380,6 +8380,11 @@
         "website": "https://undeadcommunity.com",
         "twitter": "https://twitter.com/WeRtheUndead ",
         "discord": "https://discord.gg/undeadcommunity"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -8401,6 +8406,44 @@
         "discord": "https://discord.gg/croarmy",
         "telegram": "https://t.me/CroArmy_ETH",
         "medium": "https://croarmy.gitbook.io/croarmy/"
+      }
+    },
+    {
+      "name": "Feral Shiba Club",
+      "slug": "feral-shiba-club",
+      "multiToken": false,
+      "address": "0x9e295527Efb2514BfcbC7AC5b3D17aE3eE192C9D",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Feral Shiba Club is a deflationary and revenue sharing NFT project on Cronos.",
+        "verified": false,
+        "avatar": "/img/collections/feral-shiba-club/avatar.webp",
+        "card": "/img/collections/feral-shiba-club/card.webp",
+        "banner": "/img/collections/feral-shiba-club/banner.webp",
+        "maxSupply": 8000,
+        "website": "https://feralshiba.club/",
+        "twitter": "https://twitter.com/FeralShibaClub",
+        "discord": "https://discord.gg/6rb3csApbr"
+      }
+    },
+    {
+      "name": "Croman Society",
+      "slug": "croman-society",
+      "multiToken": false,
+      "address": "0x4c555b1f854d6127d397cf49f84f496564804c81",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Croman Society Is A Collection 1111 Unique Croman living on the Cronos Blockchain. Staking, breeding included",
+        "verified": false,
+        "avatar": "/img/collections/croman-society/avatar.webp",
+        "card": "/img/collections/croman-society/card.webp",
+        "banner": "/img/collections/croman-society/banner.webp",
+        "maxSupply": 1111,
+        "website": "https://cromansociety.art/",
+        "twitter": "https://twitter.com/CromanSociety",
+        "discord": "https://discord.gg/us28gZQW"
       }
     }
   ],
