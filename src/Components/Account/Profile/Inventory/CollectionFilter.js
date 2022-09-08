@@ -54,6 +54,7 @@ export const CollectionFilter = ({collections, currentFilter, onFilter, keyPrefi
                   <Form.Check.Label className="w-100">
                     <div className="d-flex justify-content-between cursor-pointer w-100">
                       <div>{collection.name}</div>
+                      <div className="text-muted">({collection.balance})</div>
                     </div>
                   </Form.Check.Label>
                 </Form.Check>

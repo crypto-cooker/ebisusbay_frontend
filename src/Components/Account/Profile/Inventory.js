@@ -65,6 +65,7 @@ export default function Inventory({ address }) {
         .reduce((arr, item) => {
           const coll = findCollectionByAddress(item.nftAddress, item.nftId);
           if (!coll) return arr;
+          coll.balance = item.balance;
           arr.push(coll);
           return arr;
         }, [])
