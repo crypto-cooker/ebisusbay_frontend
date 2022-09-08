@@ -73,8 +73,8 @@ const ItemValue = styled.div`
   }
 `;
 
-export default function CollectionInfoBar({ collectionStats, royalty, type = 'legacy' }) {
-  const { numberActive, averageSalePrice, numberOfSales, floorPrice, totalVolume } = collectionStats;
+export default function CollectionInfoBar({ collectionStats, type = 'legacy' }) {
+  const { numberActive, averageSalePrice, numberOfSales, floorPrice, totalVolume, totalSupply } = collectionStats;
 
   if (type === 'legacy') {
     return (
@@ -82,8 +82,8 @@ export default function CollectionInfoBar({ collectionStats, royalty, type = 'le
         <div className="nft_attr">
           <div className="row">
             <div className="col-md-2 col-xs-4">
-              <h5>Floor</h5>
-              <h4>{numberActive > 0 && floorPrice ? <>{siPrefixedNumber(Number(floorPrice).toFixed(0))} CRO</> : <>-</>}</h4>
+              <h5>Items</h5>
+              <h4>{totalSupply ?? '-'}</h4>
             </div>
             <div className="col-md-2 col-xs-4">
               <h5>Volume</h5>
@@ -98,12 +98,12 @@ export default function CollectionInfoBar({ collectionStats, royalty, type = 'le
               <h4>{averageSalePrice ? <>{siPrefixedNumber(Number(averageSalePrice).toFixed(0))} CRO</> : <>-</>}</h4>
             </div>
             <div className="col-md-2 col-xs-4">
-              <h5>Royalty</h5>
-              <h4>{royalty ? <>{royalty}%</> : <>-</>}</h4>
-            </div>
-            <div className="col-md-2 col-xs-4">
               <h5>Active Listings</h5>
               <h4>{numberActive ? <>{siPrefixedNumber(numberActive)}</> : <>-</>}</h4>
+            </div>
+            <div className="col-md-2 col-xs-4">
+              <h5>Floor</h5>
+              <h4>{numberActive > 0 && floorPrice ? <>{siPrefixedNumber(Number(floorPrice).toFixed(0))} CRO</> : <>-</>}</h4>
             </div>
           </div>
         </div>

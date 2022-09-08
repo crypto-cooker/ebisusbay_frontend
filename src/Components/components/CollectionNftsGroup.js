@@ -42,7 +42,6 @@ const CollectionNftsGroup = ({
             listings.map((listing, index) => (
               <div key={index} className="d-item col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12">
                 <NftCard
-                  royalty={royalty}
                   listing={listing}
                   imgClass="collection"
                   collection={collection}

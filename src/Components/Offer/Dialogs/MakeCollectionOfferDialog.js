@@ -71,7 +71,6 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
   const [floorPrice, setFloorPrice] = useState(0);
   const [priceError, setPriceError] = useState(false);
   const [existingOffer, setExistingOffer] = useState(null);
-  const [royalty, setRoyalty] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [executingCreateListing, setExecutingCreateListing] = useState(false);
 
@@ -134,9 +133,6 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
 
       const collectionOffers = await getMyCollectionOffers(user.address, '0', '0', collection.address);
       setExistingOffer(collectionOffers.data)
-      const royalties = await marketContract.royalties(collectionAddress);
-
-      setRoyalty((royalties[1] / 10000) * 100);
 
       setIsLoading(false);
     } catch (error) {
@@ -240,7 +236,7 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
               This is an offer on the entire {collection.name} collection. Any owners of this collection will be able to view and accept it.
             </div>
             <div className="nftSaleForm row gx-3">
-              <div className="col-12 col-sm-6 mb-2 mb-sm-0">
+              <div className="col-12 col-sm-6 mb-sm-3">
                 <div className="profile_avatar d-flex justify-content-center">
                   <div className="d_profile_img">
                     {collection.metadata.avatar ? (
@@ -254,79 +250,72 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
                   </div>
                 </div>
               </div>
-              <div className="col-12 col-sm-6">
-                {existingOffer && (
-                  <div className="d-flex justify-content-between">
-                    <Form.Label className="formLabel">
-                      Previous Offer:
-                    </Form.Label>
-                    <div>
-                      {existingOffer.price} CRO
-                    </div>
-                  </div>
-                )}
-                <Form.Group className="form-field">
-                  <Form.Label className="formLabel w-100">
-                    <div className="d-flex">
-                      <div className="flex-grow-1">Offer Amount</div>
-                      <div className="my-auto">
-                        <Badge
-                          pill
-                          bg={user.theme === 'dark' ? 'light' : 'secondary'}
-                          text={user.theme === 'dark' ? 'dark' : 'light'}
-                          className="ms-2"
-                        >
-                          Floor: {floorPrice} CRO
-                        </Badge>
+              <div className="col-12 col-sm-6 my-auto">
+                <div className="mt-4 mt-sm-0 mb-3 mb-sm-0">
+                  {existingOffer && (
+                    <div className="d-flex justify-content-between">
+                      <Form.Label className="formLabel">
+                        Previous Offer:
+                      </Form.Label>
+                      <div>
+                        {existingOffer.price} CRO
                       </div>
                     </div>
-                  </Form.Label>
-                  <Form.Control
-                    className="input"
-                    type="number"
-                    placeholder="Enter Amount"
-                    value={offerPrice}
-                    onChange={costOnChange}
-                    disabled={showConfirmButton || executingCreateListing}
-                  />
-                  <Form.Text className="field-description textError">
-                    {priceError}
-                  </Form.Text>
-                </Form.Group>
-
-                <div className="d-flex flex-wrap justify-content-between mb-3">
-                  {windowSize.width > 377 && (
-                    <Badge bg="danger" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(-0.25)}>
-                      -25%
-                    </Badge>
                   )}
-                  <Badge bg="danger" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(-0.1)}>
-                    -10%
-                  </Badge>
-                  <Badge
-                    bg={user.theme === 'dark' ? 'light' : 'secondary'}
-                    text={user.theme === 'dark' ? 'dark' : 'light'}
-                    className="cursor-pointer my-1" onClick={() => onQuickCost(0)}
-                  >
-                    Floor
-                  </Badge>
-                  <Badge bg="success" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(0.1)}>
-                    +10%
-                  </Badge>
+                  <Form.Group className="form-field">
+                    <Form.Label className="formLabel w-100">
+                      <div className="d-flex">
+                        <div className="flex-grow-1">Offer Amount</div>
+                        <div className="my-auto">
+                          <Badge
+                            pill
+                            bg={user.theme === 'dark' ? 'light' : 'secondary'}
+                            text={user.theme === 'dark' ? 'dark' : 'light'}
+                            className="ms-2"
+                          >
+                            Floor: {floorPrice} CRO
+                          </Badge>
+                        </div>
+                      </div>
+                    </Form.Label>
+                    <Form.Control
+                      className="input"
+                      type="number"
+                      placeholder="Enter Amount"
+                      value={offerPrice}
+                      onChange={costOnChange}
+                      disabled={showConfirmButton || executingCreateListing}
+                    />
+                    <Form.Text className="field-description textError">
+                      {priceError}
+                    </Form.Text>
+                  </Form.Group>
 
-                  {windowSize.width > 377 && (
-                    <Badge bg="success" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(0.25)}>
-                      +25%
+                  <div className="d-flex flex-wrap justify-content-between">
+                    {windowSize.width > 377 && (
+                      <Badge bg="danger" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(-0.25)}>
+                        -25%
+                      </Badge>
+                    )}
+                    <Badge bg="danger" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(-0.1)}>
+                      -10%
                     </Badge>
-                  )}
-                </div>
+                    <Badge
+                      bg={user.theme === 'dark' ? 'light' : 'secondary'}
+                      text={user.theme === 'dark' ? 'dark' : 'light'}
+                      className="cursor-pointer my-1" onClick={() => onQuickCost(0)}
+                    >
+                      Floor
+                    </Badge>
+                    <Badge bg="success" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(0.1)}>
+                      +10%
+                    </Badge>
 
-                <div>
-                  <h3 className="feeTitle">Fees</h3>
-                  <hr />
-                  <div className="fee">
-                    <span>Royalty Fee: </span>
-                    <span>{royalty} %</span>
+                    {windowSize.width > 377 && (
+                      <Badge bg="success" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(0.25)}>
+                        +25%
+                      </Badge>
+                    )}
                   </div>
                 </div>
               </div>

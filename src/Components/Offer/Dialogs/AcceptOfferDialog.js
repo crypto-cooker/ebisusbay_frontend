@@ -23,6 +23,7 @@ import {txExtras} from "@src/core/constants";
 import {getQuickWallet} from "@src/core/api/endpoints/wallets";
 import Select from "react-select";
 import {getTheme} from "@src/Theme/theme";
+import {collectionRoyaltyPercent} from "@src/core/chain";
 
 const DialogContainer = styled(Dialog)`
   .MuiPaper-root {
@@ -127,6 +128,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
     try {
       setIsLoading(true);
       const nftAddress = nft.address ?? nft.nftAddress;
+      const nftId = nft.id ?? nft.nftId;
       const marketContractAddress = config.contracts.market;
       const marketContract = wrappedMarketContract();
       setSalePrice(offer ? Math.round(offer.price) : null)
@@ -139,14 +141,14 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
       if (isCollectionOffer) {
         const walletNfts = await getQuickWallet(user.address, {collection: collection.address});
         setCollectionNfts(walletNfts.data);
-        setChosenCollectionNft(walletNfts.data[0])
+        await chooseCollectionNft(walletNfts.data[0])
+      } else {
+        const royalties = await collectionRoyaltyPercent(nftAddress, nftId);
+        setRoyalty(royalties);
       }
 
       const fees = await marketContract.fee(user.address);
-      const royalties = await marketContract.royalties(nftAddress);
-
       setFee((fees / 10000) * 100);
-      setRoyalty((royalties[1] / 10000) * 100);
 
       const contract = new Contract(nftAddress, ERC721, user.provider.getSigner());
       const transferEnabled = await contract.isApprovedForAll(user.address, marketContractAddress);
@@ -237,6 +239,12 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
     }
   }
 
+  const chooseCollectionNft = async (nft) => {
+    setChosenCollectionNft(nft);
+    const royalties = await collectionRoyaltyPercent(nft.address ?? nft.nftAddress, nft.id ?? nft.nftId);
+    setRoyalty(royalties);
+  }
+
   if (!nft) return <></>;
 
   return (
@@ -250,7 +258,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
             <div className="nftSaleForm row gx-3">
               <div className="col-12 col-sm-6 mb-2 mb-sm-0">
                 {isCollectionOffer ? (
-                  <NftPicker nfts={collectionNfts} onSelect={(n) => setChosenCollectionNft(n)} />
+                  <NftPicker nfts={collectionNfts} onSelect={(n) => chooseCollectionNft(n)} />
                 ) : (
                   <AnyMedia
                     image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}

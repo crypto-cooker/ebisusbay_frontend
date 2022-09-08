@@ -35,6 +35,7 @@ import { AnyMedia } from '../components/AnyMedia';
 import { hostedImage } from '@src/helpers/image';
 import {appConfig} from "@src/Config";
 import Market from "@src/Contracts/Marketplace.json";
+import {collectionRoyaltyPercent} from "@src/core/chain";
 
 const config = appConfig();
 const tabs = {
@@ -79,25 +80,10 @@ const Nft1155 = ({ address, id }) => {
   }, [dispatch, address, id]);
 
   const [royalty, setRoyalty] = useState(null);
-  const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-  const readMarket = new Contract(config.contracts.market, Market.abi, readProvider);
   useEffect(() => {
     async function getRoyalty() {
-      try {
-        let isUsingRoyaltyStandard = await readMarket.isRoyaltyStandard(address);
-        let royaltyPercent;
-        if (isUsingRoyaltyStandard) {
-          const royaltyValue = await readMarket.calculateRoyalty(address, id, 100);
-          royaltyPercent = royaltyValue.toString();
-        } else {
-          const marketRoyalty = await readMarket.getRoyalty(address);
-          royaltyPercent = marketRoyalty.percent;
-        }
-        setRoyalty(`${royaltyPercent}%`);
-      } catch (error) {
-        console.log('error retrieving royalties for collection', error);
-        setRoyalty('N/A');
-      }
+      const royalty = await collectionRoyaltyPercent(address, id);
+      setRoyalty(royalty);
     }
     getRoyalty();
   }, []);

@@ -1,37 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Head from 'next/head';
-import { Contract, ethers } from 'ethers';
 import { faCheck, faCircle } from '@fortawesome/free-solid-svg-icons';
 import Blockies from 'react-blockies';
 
 import Footer from '../components/Footer';
 import CollectionListingsGroup from '../components/CollectionListingsGroup';
 import LayeredIcon from '../components/LayeredIcon';
-import { init, fetchListings, getStats } from '../../GlobalState/collectionSlice';
-import { isCrosmocraftsPartsCollection } from '../../utils';
+import { init, fetchListings, getStats } from '@src/GlobalState/collectionSlice';
+import { isCrosmocraftsPartsCollection } from '@src/utils';
 import SocialsBar from './SocialsBar';
 import { CollectionSortOption } from '../Models/collection-sort-option.model';
-import Market from '../../Contracts/Marketplace.json';
 import CollectionInfoBar from '../components/CollectionInfoBar';
 import stakingPlatforms from '../../core/data/staking-platforms.json';
 import SalesCollection from '../components/SalesCollection';
 import CollectionNftsGroup from '../components/CollectionNftsGroup';
-import {appConfig} from "../../Config";
-import {ImageKitService} from "../../helpers/image";
+import {ImageKitService} from "@src/helpers/image";
 import {CollectionFilters} from "../Models/collection-filters.model";
 import {Spinner} from "react-bootstrap";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 
-const config = appConfig();
-
 const Collection1155 = ({ collection, tokenId = null, cacheName = 'collection', slug }) => {
   const dispatch = useDispatch();
 
-  const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-  const readMarket = new Contract(config.contracts.market, Market.abi, readProvider);
-
-  const [royalty, setRoyalty] = useState(null);
   const [metadata, setMetadata] = useState(null);
 
   const collectionStats = useSelector((state) => state.collection.stats);
@@ -100,13 +90,6 @@ const Collection1155 = ({ collection, tokenId = null, cacheName = 'collection', 
         dispatch(getStats(collection, tokenId));
       } else {
         dispatch(getStats(collection));
-      }
-      try {
-        let royalties = await readMarket.royalties(collection.address);
-        setRoyalty(Math.round(royalties[1]) / 100);
-      } catch (error) {
-        console.log('error retrieving royalties for collection', error);
-        setRoyalty('N/A');
       }
     }
     asyncFunc();
@@ -181,7 +164,7 @@ const Collection1155 = ({ collection, tokenId = null, cacheName = 'collection', 
               </div>
             )}
             <div className="d-item col-md-12 mx-auto">
-              <CollectionInfoBar collectionStats={collectionStats} royalty={royalty} />
+              <CollectionInfoBar collectionStats={collectionStats} />
             </div>
             {isCrosmocraftsPartsCollection(collection.address) && (
               <div className="row mb-2">
@@ -226,7 +209,6 @@ const Collection1155 = ({ collection, tokenId = null, cacheName = 'collection', 
                     ) : (
                       <CollectionNftsGroup
                         listings={listings}
-                        royalty={royalty}
                         canLoadMore={canLoadMore}
                         loadMore={loadMore}
                         address={collection.address}

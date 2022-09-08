@@ -22,6 +22,7 @@ import LayeredIcon from "@src/Components/components/LayeredIcon";
 import {getFilteredOffers} from "@src/core/subgraph";
 import {offerState} from "@src/core/api/enums";
 import {getNft} from "@src/core/api/endpoints/nft";
+import {collectionRoyaltyPercent} from "@src/core/chain";
 
 const DialogContainer = styled(Dialog)`
   .MuiPaper-root {
@@ -150,9 +151,8 @@ export default function MakeOfferDialog({ isOpen, nft:defaultNft, collection, on
         walletAddress
       );
       setExistingOffer(filteredOffers.data?.find((o) => o.state.toString() === offerState.ACTIVE.toString()))
-      const royalties = await marketContract.royalties(collectionAddress);
-
-      setRoyalty((royalties[1] / 10000) * 100);
+      const royalties = await collectionRoyaltyPercent(collectionAddress, fetchedNft.id ?? fetchedNft.nftId);
+      setRoyalty(royalties);
 
       setIsLoading(false);
     } catch (error) {

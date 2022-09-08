@@ -50,6 +50,7 @@ import Link from 'next/link';
 import axios from "axios";
 import Button from "@src/Components/components/common/Button";
 import Market from "@src/Contracts/Marketplace.json";
+import {collectionRoyaltyPercent} from "@src/core/chain";
 
 const config = appConfig();
 const knownContracts = config.collections;
@@ -102,25 +103,10 @@ const Nft721 = ({ address, id }) => {
   });
 
   const [royalty, setRoyalty] = useState(null);
-  const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-  const readMarket = new Contract(config.contracts.market, Market.abi, readProvider);
   useEffect(() => {
     async function getRoyalty() {
-      try {
-        let isUsingRoyaltyStandard = await readMarket.isRoyaltyStandard(address);
-        let royaltyPercent;
-        if (isUsingRoyaltyStandard) {
-          const royaltyValue = await readMarket.calculateRoyalty(address, id, 100);
-          royaltyPercent = royaltyValue.toString();
-        } else {
-          const marketRoyalty = await readMarket.getRoyalty(address);
-          royaltyPercent = marketRoyalty.percent;
-        }
-        setRoyalty(`${royaltyPercent}%`);
-      } catch (error) {
-        console.log('error retrieving royalties for collection', error);
-        setRoyalty('N/A');
-      }
+      const royalty = await collectionRoyaltyPercent(address, id);
+      setRoyalty(royalty);
     }
     getRoyalty();
   }, []);
@@ -756,7 +742,7 @@ const Nft721 = ({ address, id }) => {
                               </div>
                               <div className="d-flex justify-content-between">
                                 <div>Royalty</div>
-                                <div>{royalty ?? 'N/A'}</div>
+                                <div>{royalty ? `${royalty}%` : 'N/A'}</div>
                               </div>
                             </div>
                           </div>

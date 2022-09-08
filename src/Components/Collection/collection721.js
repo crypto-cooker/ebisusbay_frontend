@@ -1,32 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Contract, ethers } from 'ethers';
 import Blockies from 'react-blockies';
-import {faCheck, faCircle, faFilter, faSync} from '@fortawesome/free-solid-svg-icons';
-import {Collapse, Offcanvas, Spinner} from 'react-bootstrap';
+import {faCheck, faCircle, faFilter} from '@fortawesome/free-solid-svg-icons';
+import {Collapse, Spinner} from 'react-bootstrap';
 import styled from 'styled-components';
-import CollectionFilterBar from '../components/CollectionFilterBar';
 import LayeredIcon from '../components/LayeredIcon';
 import Footer from '../components/Footer';
 import CollectionInfoBar from '../components/CollectionInfoBar';
 import SalesCollection from '../components/SalesCollection';
 import CollectionNftsGroup from '../components/CollectionNftsGroup';
 import CollectionListingsGroup from '../components/CollectionListingsGroup';
-import {init, fetchListings, getStats, updateTab} from '../../GlobalState/collectionSlice';
-import { isCronosVerseCollection, isCrosmocraftsCollection } from '../../utils';
-import TraitsFilter from './Filters/TraitsFilter';
-import PowertraitsFilter from './Filters/PowertraitsFilter';
+import {init, fetchListings, getStats, updateTab} from '@src/GlobalState/collectionSlice';
+import { isCronosVerseCollection, isCrosmocraftsCollection } from '@src/utils';
 import SocialsBar from './SocialsBar';
 import { CollectionSortOption } from '../Models/collection-sort-option.model';
-import Market from '../../Contracts/Marketplace.json';
 import stakingPlatforms from '../../core/data/staking-platforms.json';
-import PriceRangeFilter from '../Collection/PriceRangeFilter';
 import CollectionCronosverse from '../Collection/collectionCronosverse';
-import {appConfig} from "../../Config";
-import {hostedImage, ImageKitService} from "../../helpers/image";
+import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {useRouter} from "next/router";
 import {CollectionFilters} from "../Models/collection-filters.model";
-import {pushQueryString} from "../../helpers/query";
+import {pushQueryString} from "@src/helpers/query";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import {CollectionTaskBar} from "@src/Components/Collection/CollectionTaskBar";
 import {DesktopFilters} from "@src/Components/Collection/CollectionTaskBar/DesktopFilters";
@@ -35,9 +28,6 @@ import Button from "@src/Components/components/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {MobileFilters} from "@src/Components/Collection/CollectionTaskBar/MobileFilters";
 import {FilterResultsBar} from "@src/Components/Collection/FilterResultsBar";
-import MakeCollectionOfferDialog from "@src/Components/Offer/Dialogs/MakeCollectionOfferDialog";
-
-const config = appConfig();
 
 const NegativeMargin = styled.div`
   margin-left: -1.75rem !important;
@@ -54,11 +44,6 @@ const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
 const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
   const dispatch = useDispatch();
   const router = useRouter();
-
-  const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-  const readMarket = new Contract(config.contracts.market, Market.abi, readProvider);
-
-  const [royalty, setRoyalty] = useState(null);
 
   const collectionStats = useSelector((state) => state.collection.stats);
   const collectionLoading = useSelector((state) => state.collection.loading);
@@ -140,13 +125,6 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
   useEffect(() => {
     async function asyncFunc() {
       dispatch(getStats(collection, null, collection.mergedAddresses));
-      try {
-        let royalties = await readMarket.royalties(collection.address);
-        setRoyalty(Math.round(royalties[1]) / 100);
-      } catch (error) {
-        console.log('error retrieving royalties for collection', error);
-        setRoyalty('N/A');
-      }
     }
     asyncFunc();
     // eslint-disable-next-line
@@ -232,7 +210,7 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
                 </div>
               </div>
             )}
-            <CollectionInfoBar collectionStats={collectionStats} royalty={royalty} />
+            <CollectionInfoBar collectionStats={collectionStats} />
             {collection.address.toLowerCase() === '0x7D5f8F9560103E1ad958A6Ca43d49F954055340a'.toLowerCase() && (
               <div className="row m-3">
                 <div className="mx-auto text-center fw-bold" style={{ fontSize: '1.2em' }}>
@@ -308,7 +286,6 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
                     ) : (
                       <CollectionNftsGroup
                         listings={listings}
-                        royalty={royalty}
                         canLoadMore={canLoadMore}
                         loadMore={loadMore}
                         collection={collection}
