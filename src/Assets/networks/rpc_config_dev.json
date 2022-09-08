@@ -8402,6 +8402,25 @@
         "telegram": "https://t.me/CroArmy_ETH",
         "medium": "https://croarmy.gitbook.io/croarmy/"
       }
+    },
+    {
+      "name": "Feral Shiba Club",
+      "slug": "feral-shiba-club",
+      "multiToken": false,
+      "address": "0x9e295527Efb2514BfcbC7AC5b3D17aE3eE192C9D",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Feral Shiba Club is a deflationary and revenue sharing NFT project on Cronos.",
+        "verified": false,
+        "avatar": "/img/collections/feral-shiba-club/avatar.webp",
+        "card": "/img/collections/feral-shiba-club/card.webp",
+        "banner": "/img/collections/feral-shiba-club/banner.webp",
+        "maxSupply": 8000,
+        "website": "https://feralshiba.club/",
+        "twitter": "https://twitter.com/FeralShibaClub",
+        "discord": "https://discord.gg/6rb3csApbr"
+      }
     }
   ],
   "drops": [
