@@ -1636,6 +1636,25 @@
         "kyc": "phenix",
         "escrow": false
       }
+    },
+    {
+      "name": "Carkayous - BunnyFish",
+      "slug": "carkayous-bunnyfish",
+      "multiToken": false,
+      "address": "0x8f0596af0dda307c3e58fa07230f506ace395784",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "BunnyFish from Carkayous attained by owning Feral Fishes that include Ledgelip or Riptide as the background. Owning enough BunnyFish that adds up to 75 points will get you an Expedition 8.2 BunnyFish.",
+        "verified": true,
+        "avatar": "/img/collections/carkayous-bunnyfish/avatar.webp",
+        "card": "/img/collections/carkayous-bunnyfish/card.webp",
+        "banner": "/img/collections/carkayous-bunnyfish/banner.webp",
+        "maxSupply": 0,
+        "website": "https://carkayous.com/",
+        "twitter": "https://twitter.com/carkayous",
+        "discord": "https://discord.gg/carkayous"
+      }
     }
   ],
   "drops": [
