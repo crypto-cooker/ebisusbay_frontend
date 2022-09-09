@@ -8445,6 +8445,29 @@
         "twitter": "https://twitter.com/CromanSociety",
         "discord": "https://discord.gg/us28gZQW"
       }
+    },
+    {
+      "name": "Undead Cemetery AD#1",
+      "slug": "undead-cemetery-ad1",
+      "multiToken": true,
+      "tokens": [
+        { "id": 1 },
+        { "id": 2 }
+      ],
+      "address": "0xb4572Ee948Ee2E1838632479ACb12b78098edE35",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Only Place Where You Can Find Equality Is In The Cemetery.",
+        "verified": false,
+        "avatar": "/img/collections/undead-cemetery-ad1/avatar.webp",
+        "card": "/img/collections/undead-cemetery-ad1/card.webp",
+        "banner": "/img/collections/undead-cemetery-ad1/banner.webp",
+        "maxSupply": 0,
+        "website": "https://undeadcommunity.com",
+        "twitter": "https://twitter.com/WeRtheUndead ",
+        "discord": "https://discord.gg/undeadcommunity"
+      }
     }
   ],
   "drops": [
