@@ -8468,6 +8468,24 @@
         "twitter": "https://twitter.com/WeRtheUndead ",
         "discord": "https://discord.gg/undeadcommunity"
       }
+    },
+    {
+      "name": "Football Squares",
+      "slug": "football-squares",
+      "multiToken": false,
+      "address": "0xAE1B0fd3F10AFC09f4dE9128676a2C1fe7b9bf8a",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Football Squares is a collection of 100 unique 3D NFTs on the Cronos chain. These NFTs will mark your spot on the football squares card for Monday night games for a chance on weekly payouts. This mint of 100 will secure you a WL for future football squares cards mints!",
+        "verified": false,
+        "avatar": "/img/collections/football-squares/avatar.webp",
+        "card": "/img/collections/football-squares/card.webp",
+        "banner": "/img/collections/football-squares/banner.webp",
+        "maxSupply": 100,
+        "twitter": "https://twitter.com/warpathfarms",
+        "discord": "https://discord.gg/tGYdHyZH44"
+      }
     }
   ],
   "drops": [
