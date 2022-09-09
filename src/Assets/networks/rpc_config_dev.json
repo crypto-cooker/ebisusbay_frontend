@@ -8486,6 +8486,25 @@
         "twitter": "https://twitter.com/warpathfarms",
         "discord": "https://discord.gg/tGYdHyZH44"
       }
+    },
+    {
+      "name": "CROtopia OG NFT Collection",
+      "slug": "crotopia-og-nft",
+      "multiToken": false,
+      "address": "0x87Fc368Db5Ab03FCd34626B673dEAef430718637",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "CROtopia OG holders will receive access to everything inside CROtopia. Holders will also benefit from airdrops and future utilities",
+        "verified": false,
+        "avatar": "/img/collections/crotopia-og-nft/avatar.webp",
+        "card": "/img/collections/crotopia-og-nft/card.webp",
+        "banner": "/img/collections/crotopia-og-nft/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://www.crotopia.xyz",
+        "twitter": "https://twitter.com/PrimateCronos",
+        "discord": "https://discord.gg/8GVHCGn7"
+      }
     }
   ],
   "drops": [
