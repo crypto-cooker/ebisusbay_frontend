@@ -1616,7 +1616,7 @@
       "name": "Cronos Women",
       "slug": "cronos-women",
       "multiToken": false,
-      "address": "0x83A700d8A9e9827530145F3de44cB39FB365c406",
+      "address": "0x6D8E071C38a6386EA8BDBa0d4022C3c4645c1792",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -3722,7 +3722,7 @@
         "discord": "https://discord.gg/CronosWomen",
         "medium": "https://medium.com/@veliikb"
       },
-      "address": "0x83A700d8A9e9827530145F3de44cB39FB365c406",
+      "address": "0x6D8E071C38a6386EA8BDBa0d4022C3c4645c1792",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 100,
       "totalSupply": 3333,
