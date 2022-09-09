@@ -6,6 +6,17 @@ const api = axios.create({
   baseURL: config.urls.cms,
 });
 
+export const getCollections = async (query) => {
+  try{
+    const params = {...query};
+
+    return await api.get(`collection`, {params});
+  }
+  catch(error){
+    throw error;
+  }
+}
+
 export const setOwner = async (query, collectionAddress, ownerAddress) => {
   const params = {...query};
   try{

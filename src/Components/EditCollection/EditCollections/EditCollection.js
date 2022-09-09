@@ -73,23 +73,6 @@ const EditCollection = ({ address: collectionAddress }) => {
     });
   });
 
-  Yup.addMethod(Yup.string, "customUsernameRules", function (errorMessage) {
-    return this.test(`customUsernameRules`, errorMessage, function (value) {
-      if (!value) return false;
-
-      if (value.includes('.')) {
-        return value.endsWith('.cro');
-      }
-
-      if (value.startsWith('-') ||
-        value.startsWith('_') ||
-        value.startsWith('.')
-      ) return false;
-
-      return true;
-    });
-  });
-
   useEffect(() => {
     if (!isLoadingRequest) {
       if (error) {
@@ -110,7 +93,6 @@ const EditCollection = ({ address: collectionAddress }) => {
           .max(50, getDynamicMessage(Messages.errors.charactersMaxLimit, ['50']))
           .isProfane('Invalid!')
           .matches(/^[a-zA-Z0-9-_.\s]+$/, Messages.errors.usernameFormat)
-          .customUsernameRules('Invalid username')
           .test('max one space between chars', 'max one space between chars', val => {
             for(let i = 1; i < val.length; i++){
               if(val[i - 1] ===  ' ' && val[i] === ' '){
@@ -126,7 +108,6 @@ const EditCollection = ({ address: collectionAddress }) => {
           .isProfane('Invalid!')
           .matches(/^[a-zA-Z0-9-_.]+$/, Messages.errors.usernameFormat)
           .trim()
-          .customUsernameRules('Invalid slug')
           .test('max one space between dash', 'max one space between dash', val => {
             for(let i = 1; i < val.length; i++){
               if(val[i - 1] ===  '-' && val[i] === '-'){
@@ -139,15 +120,14 @@ const EditCollection = ({ address: collectionAddress }) => {
         twitter: Yup.string()
           .trim()
           .nullable()
-          .min(4)
-          .max(15)
+          .min(4, getDynamicMessage(Messages.errors.charactersMinLimit, ['4']))
+          .max(15, getDynamicMessage(Messages.errors.charactersMaxLimit, ['15']))
           .matches(/^[a-zA-Z0-9_.]+$/, 'Invalid Twitter'),
         discord: Yup.string().trim()
         .nullable()
-        .matches(/^[a-zA-Z0-9_.]+$/, 'Invalid Twitter'),
+        .matches(/^[a-zA-Z0-9_.]+$/, 'Invalid Discord'),
         telegram: Yup.string().trim()
-        .nullable()
-        .matches(/^[a-zA-Z0-9_.]+$/, 'Invalid Twitter'),
+        .nullable(),
         instagram: Yup.string().trim()
           .nullable()
           .matches(/^[a-zA-Z0-9_.]+$/, 'Invalid Instagram'),
