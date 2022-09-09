@@ -33,12 +33,13 @@ export const getCnsInfo = async (address) => {
     if (profile) {
       return {
         name: profile.name,
-        twitter: profile.socials[TextRecords.Twitter],
-        instagram: profile.socials[TextRecords.Instagram],
-        discord: profile.socials[TextRecords.Discord],
-        telegram: profile.socials[TextRecords.Telegram],
-        email: profile.socials[TextRecords.Email],
-        url: profile.socials[TextRecords.Url],
+        twitter: profile.resolver.socials[TextRecords.Twitter],
+        instagram: profile.resolver.socials[TextRecords.Instagram],
+        discord: profile.resolver.socials[TextRecords.Discord],
+        telegram: profile.resolver.socials[TextRecords.Telegram],
+        email: profile.resolver.socials[TextRecords.Email],
+        url: profile.resolver.socials[TextRecords.Url],
+        description: profile.resolver.socials[TextRecords.Description]
       };
     }
   } catch (e) {
