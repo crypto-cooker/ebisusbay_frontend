@@ -68,3 +68,18 @@ Delete:
 ```
 docker system prune -a --volumes
 ```
+
+## Connecting to EC2 instance(s)
+Instructions: https://ebisusbay.atlassian.net/wiki/spaces/IN/pages/32112641/Accessing+EC2+instance
+
+Retrieve an AWS SSO access token for CLI usage:
+```
+aws sso login --profile ebisusbay-core
+```
+
+Starting a session:
+```
+aws ssm start-session \
+    --target <DOCKER_HOST_INSTANCE_ID> \
+    --region us-east-1 --profile ebisusbay-core
+```
