@@ -29,6 +29,14 @@ const PriceActionBar = ({offerType, onOfferSelected, label, isOwner}) => {
     setExecutingBuy(true);
     await runFunction(async (writeContract) => {
       let price = ethers.utils.parseUnits(amount.toString());
+      console.log(`
+        makePurchase\n
+        Listing ID: ${listing.listingId}\n
+        Write Contract: ${writeContract.address}\n
+        Price from UI: ${amount.toString()}\n
+        Price into contract: ${price.toString()}\n
+        Extras Obj: ${JSON.stringify({value: price})}}
+      `);
       return (
         await writeContract.makePurchase(listing.listingId, {
           value: price,
