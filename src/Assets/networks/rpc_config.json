@@ -8023,7 +8023,7 @@
       "name": "Cronos Women",
       "slug": "cronos-women",
       "multiToken": false,
-      "address": "",
+      "address": "0x91B0C2e86576AC85A096599300BfDF6b2F1A9b22",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -11361,7 +11361,7 @@
         "discord": "https://discord.gg/CronosWomen",
         "medium": "https://medium.com/@veliikb"
       },
-      "address": "",
+      "address": "0x91B0C2e86576AC85A096599300BfDF6b2F1A9b22",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 100,
       "totalSupply": 3333,
