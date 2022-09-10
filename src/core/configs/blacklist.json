@@ -158,5 +158,13 @@
       }
     ],
     "reason": "General blacklist entries"
+  },{
+    "users": ["0x376A8e3f975463298c10f4d41C32349A705Ae12E", "0x34c0ab4ca5601530dab284bfc8dac9bde747e780"],
+    "tokens": [
+      {"slug" : "tough-lions",
+      "address" : "0xb242399f3f52fcfa8b09d7d6e4C3DBe84D0644fc",
+      "ids" : [724]}
+    ], 
+    "reason" : "the ol' trading scam"
   }
 ]
