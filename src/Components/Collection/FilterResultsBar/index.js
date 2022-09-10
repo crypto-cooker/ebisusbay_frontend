@@ -1,5 +1,5 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSync} from "@fortawesome/free-solid-svg-icons";
+import {faSquareXmark, faSync} from "@fortawesome/free-solid-svg-icons";
 import {commify} from "ethers/lib/utils";
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
@@ -11,10 +11,9 @@ import {
   filterListingsByPrice,
   filterListingsByTrait,
   resetFilters,
-  resetListings, searchListings
+  searchListings
 } from "@src/GlobalState/collectionSlice";
 import {isNumeric, mapAttributeString, stripSpaces} from "@src/utils";
-import {listingState} from "@src/core/api/enums";
 
 export const FilterResultsBar = ({collection}) => {
   const dispatch = useDispatch();
@@ -303,7 +302,9 @@ export const FilterResultsBar = ({collection}) => {
           <div className="mx-1">
             <ThemedBadge>
               <span>{filter.label}</span>
-              <span className="ms-2 cursor-pointer" onClick={() => onRemove(filter)}>X</span>
+              <span className="ms-2 cursor-pointer" onClick={() => onRemove(filter)}>
+                <FontAwesomeIcon icon={faSquareXmark} />
+              </span>
             </ThemedBadge>
           </div>
         ))}
