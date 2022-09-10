@@ -68,9 +68,9 @@ const PowertraitsFilter = ({ address, keyPrefix }) => {
 
   const getKey = (identifier) => {
     let key = identifier;
-    if (keyPrefix) {
-      key = `${keyPrefix}-${key}`
-    }
+    // if (keyPrefix) {
+    //   key = `${keyPrefix}-${key}`
+    // }
     return key;
   };
 

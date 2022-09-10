@@ -43,9 +43,9 @@ export const StatusFilter = ({keyPrefix, ...props}) => {
 
   const getKey = (identifier) => {
     let key = identifier;
-    if (keyPrefix) {
-      key = `${keyPrefix}-${key}`
-    }
+    // if (keyPrefix) {
+    //   key = `${keyPrefix}-${key}`
+    // }
     return key;
   };
 
