@@ -7185,7 +7185,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "7,000 Apes sent to a mission on the moon. Now they are lost. Holding your ape allows you to claim 6% of all marketplace royalties.",
+        "description": "7,000 Apes sent to a mission on the moon. Now they are lost. Holding your ape allows you to claim 60% of all marketplace royalties.",
         "verified": false,
         "avatar": "/img/collections/moon-crew-apes/avatar.webp",
         "card": "/img/collections/moon-crew-apes/card.webp",
@@ -8023,7 +8023,7 @@
       "name": "Cronos Women",
       "slug": "cronos-women",
       "multiToken": false,
-      "address": "",
+      "address": "0x91B0C2e86576AC85A096599300BfDF6b2F1A9b22",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -8380,6 +8380,11 @@
         "website": "https://undeadcommunity.com",
         "twitter": "https://twitter.com/WeRtheUndead ",
         "discord": "https://discord.gg/undeadcommunity"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -8401,6 +8406,104 @@
         "discord": "https://discord.gg/croarmy",
         "telegram": "https://t.me/CroArmy_ETH",
         "medium": "https://croarmy.gitbook.io/croarmy/"
+      }
+    },
+    {
+      "name": "Feral Shiba Club",
+      "slug": "feral-shiba-club",
+      "multiToken": false,
+      "address": "0x9e295527Efb2514BfcbC7AC5b3D17aE3eE192C9D",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Feral Shiba Club is a deflationary and revenue sharing NFT project on Cronos.",
+        "verified": false,
+        "avatar": "/img/collections/feral-shiba-club/avatar.webp",
+        "card": "/img/collections/feral-shiba-club/card.webp",
+        "banner": "/img/collections/feral-shiba-club/banner.webp",
+        "maxSupply": 8000,
+        "website": "https://feralshiba.club/",
+        "twitter": "https://twitter.com/FeralShibaClub",
+        "discord": "https://discord.gg/6rb3csApbr"
+      }
+    },
+    {
+      "name": "Croman Society",
+      "slug": "croman-society",
+      "multiToken": false,
+      "address": "0x4c555b1f854d6127d397cf49f84f496564804c81",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Croman Society Is A Collection 1111 Unique Croman living on the Cronos Blockchain. Staking, breeding included",
+        "verified": false,
+        "avatar": "/img/collections/croman-society/avatar.webp",
+        "card": "/img/collections/croman-society/card.webp",
+        "banner": "/img/collections/croman-society/banner.webp",
+        "maxSupply": 1111,
+        "website": "https://cromansociety.art/",
+        "twitter": "https://twitter.com/CromanSociety",
+        "discord": "https://discord.gg/us28gZQW"
+      }
+    },
+    {
+      "name": "Undead Cemetery AD#1",
+      "slug": "undead-cemetery-ad1",
+      "multiToken": true,
+      "tokens": [
+        { "id": 1 },
+        { "id": 2 }
+      ],
+      "address": "0xb4572Ee948Ee2E1838632479ACb12b78098edE35",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Only Place Where You Can Find Equality Is In The Cemetery.",
+        "verified": false,
+        "avatar": "/img/collections/undead-cemetery-ad1/avatar.webp",
+        "card": "/img/collections/undead-cemetery-ad1/card.webp",
+        "banner": "/img/collections/undead-cemetery-ad1/banner.webp",
+        "maxSupply": 0,
+        "website": "https://undeadcommunity.com",
+        "twitter": "https://twitter.com/WeRtheUndead ",
+        "discord": "https://discord.gg/undeadcommunity"
+      }
+    },
+    {
+      "name": "Football Squares",
+      "slug": "football-squares",
+      "multiToken": false,
+      "address": "0xAE1B0fd3F10AFC09f4dE9128676a2C1fe7b9bf8a",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Football Squares is a collection of 100 unique 3D NFTs on the Cronos chain. These NFTs will mark your spot on the football squares card for Monday night games for a chance on weekly payouts. This mint of 100 will secure you a WL for future football squares cards mints!",
+        "verified": false,
+        "avatar": "/img/collections/football-squares/avatar.webp",
+        "card": "/img/collections/football-squares/card.webp",
+        "banner": "/img/collections/football-squares/banner.webp",
+        "maxSupply": 100,
+        "twitter": "https://twitter.com/warpathfarms",
+        "discord": "https://discord.gg/tGYdHyZH44"
+      }
+    },
+    {
+      "name": "CROtopia OG NFT Collection",
+      "slug": "crotopia-og-nft",
+      "multiToken": false,
+      "address": "0x87Fc368Db5Ab03FCd34626B673dEAef430718637",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "CROtopia OG holders will receive access to everything inside CROtopia. Holders will also benefit from airdrops and future utilities",
+        "verified": false,
+        "avatar": "/img/collections/crotopia-og-nft/avatar.webp",
+        "card": "/img/collections/crotopia-og-nft/card.webp",
+        "banner": "/img/collections/crotopia-og-nft/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://www.crotopia.xyz",
+        "twitter": "https://twitter.com/PrimateCronos",
+        "discord": "https://discord.gg/8GVHCGn7"
       }
     }
   ],
@@ -11318,7 +11421,7 @@
         "discord": "https://discord.gg/CronosWomen",
         "medium": "https://medium.com/@veliikb"
       },
-      "address": "",
+      "address": "0x91B0C2e86576AC85A096599300BfDF6b2F1A9b22",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 100,
       "totalSupply": 3333,

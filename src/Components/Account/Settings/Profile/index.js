@@ -145,6 +145,7 @@ export default function EditProfile() {
         instagram: cnsInfo?.instagram || userInfo?.userInfo?.instagram,
         website: cnsInfo?.url || userInfo?.userInfo?.website,
         email: cnsInfo?.email || userInfo?.userInfo?.email,
+        bio: cnsInfo?.description || userInfo?.userInfo?.bio,
       },
     };
     setMergedValues(tempData);
