@@ -32,8 +32,8 @@ export default function Inventory({ address }) {
   const [collectionFilter, setCollectionFilter] = useState([]);
 
   const onFilterChange = (filterOption) => {
-    console.log('setfilter', filterOption)
     setCollectionFilter(filterOption ?? []);
+    refetch();
   };
 
   const fetcher = async ({ pageParam = 1 }) => {
@@ -48,10 +48,12 @@ export default function Inventory({ address }) {
     isFetching,
     isFetchingNextPage,
     status,
+    refetch,
   } = useInfiniteQuery(['Inventory', address, collectionFilter], fetcher, {
     getNextPageParam: (lastPage, pages) => {
       return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
     },
+    refetchOnWindowFocus: false
   })
 
   const loadMore = () => {
@@ -157,7 +159,7 @@ export default function Inventory({ address }) {
       <div className="d-flex">
         <Collapse in={filtersVisible && !useMobileMenu} dimension="width">
           <div className="m-0 p-0">
-            <div className="me-4 px-2" style={{width: 250}}>
+            <div className="me-4 px-2" style={{width: 300}}>
               <CollectionFilter
                 collections={collections}
                 currentFilter={collectionFilter}
