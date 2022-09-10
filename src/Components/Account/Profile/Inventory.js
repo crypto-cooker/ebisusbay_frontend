@@ -8,7 +8,6 @@ import {caseInsensitiveCompare, findCollectionByAddress} from "@src/utils";
 import NftCard from "@src/Components/components/NftCard";
 import {appConfig} from "@src/Config";
 import {MyNftPageActions} from "@src/GlobalState/User";
-import MyNftTransferDialog from "@src/Components/components/MyNftTransferDialog";
 import MyNftCancelDialog from "@src/Components/components/MyNftCancelDialog";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
 import {useInfiniteQuery} from "@tanstack/react-query";
@@ -19,6 +18,7 @@ import Button from "@src/Components/components/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faFilter} from "@fortawesome/free-solid-svg-icons";
 import useBreakpoint from "use-breakpoint";
+import TransferNftDialog from "@src/Components/Account/Profile/Dialogs/TransferNftDialog";
 
 const knownContracts = appConfig('collections');
 
@@ -76,7 +76,6 @@ export default function Inventory({ address }) {
     }
 
     func();
-
   }, [address]);
 
   const historyContent = useMemo(() => {
@@ -134,7 +133,7 @@ export default function Inventory({ address }) {
         </div>
       </>
     );
-  }, [data, error, status]);
+  }, [data, error, status, address, user.address]);
 
   const [filtersVisible, setFiltersVisible] = useState(true);
   const [useMobileMenu, setUseMobileMenu] = useState(false);
@@ -205,8 +204,14 @@ export default function Inventory({ address }) {
         onFilter={onFilterChange}
         onHide={() => setFiltersVisible(false)}
       />
-      <MyNftTransferDialog />
       <MyNftCancelDialog />
+      {user.myNftPageTransferDialog && (
+        <TransferNftDialog
+          isOpen={!!user.myNftPageTransferDialog}
+          nft={user.myNftPageTransferDialog}
+          onClose={() => dispatch(MyNftPageActions.hideMyNftPageTransferDialog())}
+        />
+      )}
       {user.myNftPageListDialog?.nft && (
         <MakeListingDialog
           isOpen={!!user.myNftPageListDialog?.nft}
