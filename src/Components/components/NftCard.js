@@ -9,7 +9,7 @@ import MetaMaskOnboarding from '@metamask/onboarding';
 import Button from './Button';
 import MakeOfferDialog from '../Offer/MakeOfferDialog';
 import { connectAccount, chainConnect } from '../../GlobalState/User';
-import { isNftBlacklisted, round } from '../../utils';
+import {isNftBlacklisted, round, siPrefixedNumber} from '../../utils';
 import { AnyMedia } from './AnyMedia';
 import { nftCardUrl } from '../../helpers/image';
 
@@ -129,7 +129,7 @@ const NftCard = ({ royalty, listing, imgClass = 'marketplace', watermark, collec
           {getIsNftListed() && (
             <MakeBuy>
               {collection.multiToken && <div>Floor:</div>}
-              <div>{ethers.utils.commify(round(listing.market?.price))} CRO</div>
+              <div>{listing.market?.price > 6 ? siPrefixedNumber(listing.market?.price) : ethers.utils.commify(round(listing.market?.price))} CRO</div>
             </MakeBuy>
           )}
           <MakeOffer>
