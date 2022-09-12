@@ -8536,10 +8536,10 @@
       "multiToken": false,
       "address": "",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "God hates all crofam!!! This is strictly a pfp project with no utility. Why no utility… because god hates you. Now go away.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/god-hates-crofam/avatar.webp",
         "card": "/img/collections/god-hates-crofam/card.webp",
         "banner": "/img/collections/god-hates-crofam/banner.webp",
