@@ -738,7 +738,7 @@ const Nft721 = ({ address, id }) => {
                               </div>
                               <div className="d-flex justify-content-between">
                                 <div>Token Standard</div>
-                                <div>{collection.multiToken ? 'ERC1155' : 'ERC721'}</div>
+                                <div>{collection.multiToken ? 'CRC-1155' : 'CRC-721'}</div>
                               </div>
                               <div className="d-flex justify-content-between">
                                 <div>Royalty</div>
