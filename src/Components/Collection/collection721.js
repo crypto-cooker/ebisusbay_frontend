@@ -34,6 +34,10 @@ const NegativeMargin = styled.div`
   margin-right: -1.75rem !important;
 `;
 
+const ThemedBackground = styled.div`
+  background: ${({ theme }) => theme.colors.bgColor1}
+`;
+
 const tabs = {
   items: 'items',
   activity: 'activity',
@@ -263,16 +267,16 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
           <div className="de_tab_content">
             {openMenu === tabs.items && (
               <div className="tab-1 onStep fadeIn">
-                <div className="row">
+                <ThemedBackground className="row sticky-top pt-2">
                   <CollectionTaskBar
                     collection={collection}
                     onFilterToggle={() => setFiltersVisible(!filtersVisible)}
                   />
-                </div>
+                </ThemedBackground>
                 <div className="d-flex">
                   <Collapse in={filtersVisible && !useMobileMenu} dimension="width">
                     <div className="m-0 p-0">
-                      <div className="me-4 px-2" style={{width: 250}}>
+                      <div className="me-4" style={{width: 250, top:'56px'}}>
                         <DesktopFilters
                           address={collection.address}
                           traits={collectionStats?.traits}
