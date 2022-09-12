@@ -8505,6 +8505,27 @@
         "twitter": "https://twitter.com/PrimateCronos",
         "discord": "https://discord.gg/8GVHCGn7"
       }
+    },
+    {
+      "name": "The Ether Cyborgs",
+      "slug": "the-ether-cyborgs",
+      "multiToken": false,
+      "address": "0xd987B5C6D40808Bf88579198E0436863144b6a0C",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The first Cronos NFT collection backed 1:1 with an ETH token!",
+        "verified": false,
+        "avatar": "/img/collections/the-ether-cyborgs/avatar.webp",
+        "card": "/img/collections/the-ether-cyborgs/card.webp",
+        "banner": "/img/collections/the-ether-cyborgs/banner.webp",
+        "maxSupply": 50,
+        "website": "https://cyborgswap.io/",
+        "twitter": "https://twitter.com/CyborgSwapDEX",
+        "discord": "https://discord.gg/Ku6A7tJSVp",
+        "medium": "https://cyborgswap.medium.com/",
+        "telegram": "https://t.me/+IQJY2ugWLaVmODVk"
+      }
     }
   ],
   "drops": [
