@@ -601,6 +601,7 @@ const SingleDrop = () => {
                 doxx={collection.verification?.doxx}
                 kyc={collection.verification?.kyc}
                 escrow={collection.verification?.escrow}
+                creativeCommons={collection.verification?.creativeCommons}
               />
 
               <div className="item_info">
