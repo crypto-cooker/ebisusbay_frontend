@@ -1,28 +1,19 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 import styled from 'styled-components';
-import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
-import {Badge, Col, Form, Spinner} from "react-bootstrap";
+import {Form, Spinner} from "react-bootstrap";
 import {useSelector} from "react-redux";
-import {Contract, ethers} from "ethers";
+import {Contract} from "ethers";
 import Button from "@src/Components/components/Button";
-import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {txExtras} from "@src/core/constants";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
-import {appConfig} from "@src/Config";
-import Offer from "@src/Contracts/Offer.json";
-import Market from "@src/Contracts/Marketplace.json";
-import {useWindowSize} from "@src/hooks/useWindowSize";
 import * as Sentry from '@sentry/react';
-import {hostedImage} from "@src/helpers/image";
-import Blockies from "react-blockies";
-import LayeredIcon from "@src/Components/components/LayeredIcon";
-import {getMyCollectionOffers} from "@src/core/subgraph";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
 import {specialImageTransform} from "@src/hacks";
 import {ERC1155, ERC721} from "@src/Contracts/Abis";
+import {getProfile} from "@src/core/cms/endpoints/profile";
+import {isCnsName} from "@src/helpers/cns";
 
 const DialogContainer = styled(Dialog)`
   .MuiPaper-root {
@@ -113,16 +104,26 @@ export default function TransferNftDialog({ isOpen, nft, onClose }) {
       const nftAddress = nft.address ?? nft.nftAddress;
       const nftId = nft.id ?? nft.nftId;
 
+      let targetAddress = recipientAddress;
+      if (isCnsName(recipientAddress)) {
+        const recipientProfile = await getProfile(recipientAddress);
+        if (recipientProfile.data && isCnsName(recipientProfile.data.username)) {
+          targetAddress = recipientProfile.data.walletAddress;
+        } else {
+          setFieldError('No matching profiles for this CNS name');
+          return false;
+        }
+      }
       setExecutingTransferNft(true);
-      Sentry.captureEvent({message: 'handleTransfer', extra: {address: nftAddress, recipientAddress}});
+      Sentry.captureEvent({message: 'handleTransfer', extra: {address: nftAddress, targetAddress}});
 
       let tx;
       if (nft.multiToken) {
         const contract = new Contract(nftAddress, ERC1155, user.provider.getSigner());
-        tx = await contract.safeTransferFrom(user.address, recipientAddress, nftId, 1, []);
+        tx = await contract.safeTransferFrom(user.address, targetAddress, nftId, 1, []);
       } else {
         const contract = new Contract(nftAddress, ERC721, user.provider.getSigner());
-        tx = await contract.safeTransferFrom(user.address, recipientAddress, nftId);
+        tx = await contract.safeTransferFrom(user.address, targetAddress, nftId);
       }
 
       let receipt = await tx.wait();
@@ -143,8 +144,8 @@ export default function TransferNftDialog({ isOpen, nft, onClose }) {
   };
 
   const validateInput = () => {
-    if (!recipientAddress) {
-      setFieldError('Please enter a receipient address');
+    if (!recipientAddress || (!recipientAddress.endsWith('.cro') && !recipientAddress.startsWith('0x'))) {
+      setFieldError('Please enter a valid Cronos address or CNS name');
       return false;
     }
 
@@ -177,12 +178,12 @@ export default function TransferNftDialog({ isOpen, nft, onClose }) {
                 <div className="mt-4 mt-sm-0 mb-3 mb-sm-0">
                   <Form.Group className="form-field">
                     <Form.Label className="formLabel w-100">
-                      Recipient Address
+                      Recipient Address or CNS Name
                     </Form.Label>
                     <Form.Control
                       className="input"
                       type="text"
-                      placeholder="Enter Address"
+                      placeholder="Address or CNS name"
                       value={recipientAddress}
                       onChange={onChangeAddress}
                       disabled={executingTransferNft}
