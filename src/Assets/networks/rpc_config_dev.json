@@ -7385,7 +7385,8 @@
         "maxSupply": 1000,
         "website": "https://www.crognomes.com/",
         "twitter": "https://twitter.com/CroGnomes",
-        "discord": "https://discord.gg/RddQYuBGmX"
+        "discord": "https://discord.gg/RddQYuBGmX",
+        "rankings": {"source": "provided"}
       }
     },
     {
@@ -7404,7 +7405,8 @@
         "maxSupply": 1000,
         "website": "https://www.crognomes.com/",
         "twitter": "https://twitter.com/CroGnomes",
-        "discord": "https://discord.gg/WkRgkSQ2hJ"
+        "discord": "https://discord.gg/WkRgkSQ2hJ",
+        "rankings": {"source": "provided"}
       }
     },
     {
@@ -8212,7 +8214,8 @@
         "banner": "/img/collections/thirteenth-evil/banner.webp",
         "card": "/img/collections/thirteenth-evil/card.webp",
         "maxSupply": 500,
-        "twitter": "https://twitter.com/ThirteenthEvil"
+        "twitter": "https://twitter.com/ThirteenthEvil",
+        "rankings": {"source": "provided"}
       }
     },
     {

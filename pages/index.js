@@ -254,75 +254,38 @@ const Home = () => {
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center pt-5">
-              <h2>ClubCRO</h2>
+              <h2>CROtopia</h2>
               <div className="small-border"></div>
             </div>
           </div>
           <div className="col-lg-6 col-md-6 d-flex align-items-center">
             <div className="mt-3" style={{color:getTheme(userTheme).colors.textColor3}}>
               <p>
-                ClubCRO is a conglomerate who share a belief that everyone should have control over their money, data and identity. We understand the mission of CRO within the context of mass adoption and the wider financial landscape.
+                CROtopia OG Pass gives users immediate access to a fully functioning and ever expanding Metaverse. Holders gain access to all partner buildings and are able to compete in our Play 2 Earn section. Crotopia OG pass holders will also benefit from exclusive airdrops, skins, accessories and more.
               </p>
-              <p>
-                We're creating our own community validator which will run nodes to process network transactions and help secure the Crypto.org Chain, return staking rewards for 8 more years to fund our weekly giveaways, and will also give us voting power on major Cronos decisions.
-              </p>
-
-              <p className="text-center">
-                The weekly giveaways will return 15,000 CRO in the form of:<br />
-                <span className="fw-bold">1st place: 7,500 CRO</span><br />
-                <span className="fw-bold">2nd place: 5,000 CRO</span><br />
-                <span className="fw-bold">3rd place: 2,500 CRO</span><br />
-                & if you don’t win, we will buy back your NFT for 5,000 CRO!
-              </p>
-
-              <div style={{fontSize: 12}}>
-              <div>
-                *You may win multiple times. After each win, your NFT will be placed on an automatic 4-week hold, and will automatically be re-entered after the holding period
-              </div>
-              <div>
-                *Buybacks will occur at the 4-year mark and every 2 years thereafter, until the end of the program
-              </div>
-              <div>
-                *This is the very first asset-backed NFT on Cronos
-              </div>
-              </div>
             </div>
           </div>
           <div className="col-lg-6 col-md-6 pt-3">
             <div className="mx-auto text-center">
               <img
-                src={hostedImage('/img/promos/clubcro.webp')}
-                alt="ClubCRO"
+                src={hostedImage('/img/promos/crotopia.webp')}
+                alt="CROtopia"
                 className="img-fluid"
                 width="100%"
-                style={{maxWidth: '600px'}}
+                style={{maxWidth: '300px'}}
               />
             </div>
-            <div className="card-body d-flex flex-column align-middle">
+            <div className="d-flex flex-column align-middle">
               <div className="d-flex justify-content-between flex-wrap">
-                <div className="flex-fill mx-1 mt-2">
-                  <a href="https://clubcro.fi/files/ClubCRO_whitepaper.pdf" target="_blank" rel="noreferrer">
-                    <Button type="legacy-outlined" className="w-100">
-                      <FontAwesomeIcon icon={faBook} className="me-1"/> Whitepaper
-                    </Button>
-                  </a>
-                </div>
-                <div className="flex-fill mx-1 mt-2">
-                  <a href="https://twitter.com/ClubCRO" target="_blank" rel="noreferrer">
-                    <Button type="legacy-outlined" className="w-100">
-                      <FontAwesomeIcon icon={faTwitter} className="me-1"/> Twitter
-                    </Button>
-                  </a>
-                </div>
-                <div className="flex-fill mx-1 mt-2">
-                  <a href="https://discord.gg/YbXEd44xdZ" target="_blank" rel="noreferrer">
-                    <Button type="legacy-outlined" className="w-100">
-                      <FontAwesomeIcon icon={faDiscord} className="me-1"/> Discord
-                    </Button>
-                  </a>
-                </div>
-                <div className="flex-fill mx-1 mt-2">
-                  <a href="https://clubcro.fi/elite-mint" target="_blank" rel="noreferrer">
+                {/*<div className="flex-fill mx-1 mt-2">*/}
+                {/*  <a href="https://www.crotopia.world/" target="_blank" rel="noreferrer">*/}
+                {/*    <Button type="legacy-outlined" className="w-100">*/}
+                {/*      Metaverse*/}
+                {/*    </Button>*/}
+                {/*  </a>*/}
+                {/*</div>*/}
+                <div className="flex-fill mx-auto mt-2" style={{maxWidth:300}}>
+                  <a href="https://www.crotopia.xyz" target="_blank" rel="noreferrer">
                     <Button type="legacy" className="w-100">
                        Mint Now
                     </Button>
