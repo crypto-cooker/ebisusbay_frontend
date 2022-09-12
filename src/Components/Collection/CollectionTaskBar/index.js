@@ -21,6 +21,7 @@ const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
 export const CollectionTaskBar = ({collection, onFilterToggle, onSortToggle}) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const currentFilter = useSelector((state) => state.collection.query.filter);
 
   const [useMobileMenu, setUseMobileMenu] = useState(false);
   const [collectionOfferOpen, setCollectionOfferOpen] = useState(false);
@@ -47,6 +48,25 @@ export const CollectionTaskBar = ({collection, onFilterToggle, onSortToggle}) =>
     }
   };
 
+  const activeFiltersCount = () => {
+    const traits = Object.values(currentFilter.traits)
+      .map((traitCategoryValue) => traitCategoryValue.length)
+      .reduce((prev, curr) => prev + curr, 0);
+    const powertraits = Object.values(currentFilter.powertraits)
+      .map((traitCategoryValue) => traitCategoryValue.length)
+      .reduce((prev, curr) => prev + curr, 0);
+    let count = traits + powertraits;
+
+    if (currentFilter.minPrice) count++;
+    if (currentFilter.maxPrice) count++;
+    if (currentFilter.minRank) count++;
+    if (currentFilter.maxRank) count++;
+    if (currentFilter.search) count++;
+    if (currentFilter.listed) count++;
+
+    return count;
+  };
+
   return (
     <>
       {useMobileMenu ? (
@@ -58,7 +78,8 @@ export const CollectionTaskBar = ({collection, onFilterToggle, onSortToggle}) =>
             <div className="flex-fill">
               <Button type="legacy-outlined" className="w-100" style={{height: '100%'}} onClick={onFilterToggle}>
                 <FontAwesomeIcon icon={faFilter} />
-                <span className="ms-2">Filter</span>
+
+                <span className="ms-2">Filter {activeFiltersCount() > 0 ? `(${activeFiltersCount()})` : ''}</span>
               </Button>
             </div>
             <div className="flex-fill ms-2">

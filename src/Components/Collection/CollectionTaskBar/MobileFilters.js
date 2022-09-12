@@ -71,12 +71,12 @@ export const MobileFilters = ({address, show, onHide, traits, powertraits}) => {
         <div className="d-flex fixed-bottom px-2 py-2" style={{backgroundColor: getTheme(theme).colors.bgColor1}}>
           <div className="flex-fill">
             <Button type="legacy-outlined" className="w-100" style={{height: '100%'}} onClick={onClearAll}>
-              <span className="ms-2">Clear all</span>
+              Clear all
             </Button>
           </div>
           <div className="flex-fill ms-4">
             <Button type="legacy" className="w-100" style={{height: '100%'}} onClick={onHide}>
-              <span className="ms-2">Done</span>
+              Done
             </Button>
           </div>
         </div>

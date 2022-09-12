@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Blockies from 'react-blockies';
-import {faCheck, faCircle, faFilter} from '@fortawesome/free-solid-svg-icons';
+import {faCheck, faCircle} from '@fortawesome/free-solid-svg-icons';
 import {Collapse, Spinner} from 'react-bootstrap';
 import styled from 'styled-components';
 import LayeredIcon from '../components/LayeredIcon';
@@ -24,8 +24,6 @@ import {CollectionVerificationRow} from "@src/Components/components/CollectionVe
 import {CollectionTaskBar} from "@src/Components/Collection/CollectionTaskBar";
 import {DesktopFilters} from "@src/Components/Collection/CollectionTaskBar/DesktopFilters";
 import useBreakpoint from "use-breakpoint";
-import Button from "@src/Components/components/Button";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {MobileFilters} from "@src/Components/Collection/CollectionTaskBar/MobileFilters";
 import {FilterResultsBar} from "@src/Components/Collection/FilterResultsBar";
 import {MobileSort} from "@src/Components/Collection/CollectionTaskBar/MobileSort";
@@ -53,7 +51,7 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
   const collectionStats = useSelector((state) => state.collection.stats);
   const collectionLoading = useSelector((state) => state.collection.loading);
   const initialLoadComplete = useSelector((state) => state.collection.initialLoadComplete);
-  const currentFilter = useSelector((state) => state.collection.query.filter);
+  // const currentFilter = useSelector((state) => state.collection.query.filter);
 
   const [isFirstLoaded, setIsFirstLoaded] = useState(0);
 
@@ -98,24 +96,24 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
     dispatch(fetchListings());
   }
 
-  const activeFiltersCount = () => {
-    const traits = Object.values(currentFilter.traits)
-      .map((traitCategoryValue) => traitCategoryValue.length)
-      .reduce((prev, curr) => prev + curr, 0);
-    const powertraits = Object.values(currentFilter.powertraits)
-      .map((traitCategoryValue) => traitCategoryValue.length)
-      .reduce((prev, curr) => prev + curr, 0);
-    let count = traits + powertraits;
-
-    if (currentFilter.minPrice) count++;
-    if (currentFilter.maxPrice) count++;
-    if (currentFilter.minRank) count++;
-    if (currentFilter.maxRank) count++;
-    if (currentFilter.search) count++;
-    if (currentFilter.listed) count++;
-
-    return count;
-  };
+  // const activeFiltersCount = () => {
+  //   const traits = Object.values(currentFilter.traits)
+  //     .map((traitCategoryValue) => traitCategoryValue.length)
+  //     .reduce((prev, curr) => prev + curr, 0);
+  //   const powertraits = Object.values(currentFilter.powertraits)
+  //     .map((traitCategoryValue) => traitCategoryValue.length)
+  //     .reduce((prev, curr) => prev + curr, 0);
+  //   let count = traits + powertraits;
+  //
+  //   if (currentFilter.minPrice) count++;
+  //   if (currentFilter.maxPrice) count++;
+  //   if (currentFilter.minRank) count++;
+  //   if (currentFilter.maxRank) count++;
+  //   if (currentFilter.search) count++;
+  //   if (currentFilter.listed) count++;
+  //
+  //   return count;
+  // };
 
   const loadMore = () => {
     dispatch(fetchListings());
@@ -340,16 +338,16 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
         onHide={() => setMobileSortVisible(false)}
       />
 
-      {useMobileMenu && openMenu === tabs.items && (
-        <div className="d-flex fixed-bottom mx-2 my-2">
-          <div className="mx-auto">
-            <Button type="legacy" style={{height: '100%'}} onClick={() => setFiltersVisible(true)}>
-              <FontAwesomeIcon icon={faFilter} />
-              <span className="ms-2">Filters {activeFiltersCount()}</span>
-            </Button>
-          </div>
-        </div>
-      )}
+      {/*{useMobileMenu && openMenu === tabs.items && (*/}
+      {/*  <div className="d-flex fixed-bottom mx-2 my-2">*/}
+      {/*    <div className="mx-auto">*/}
+      {/*      <Button type="legacy" style={{height: '100%'}} onClick={() => setFiltersVisible(true)}>*/}
+      {/*        <FontAwesomeIcon icon={faFilter} />*/}
+      {/*        <span className="ms-2">Filters {activeFiltersCount()}</span>*/}
+      {/*      </Button>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*)}*/}
 
       <Footer />
     </div>
