@@ -151,6 +151,7 @@ const Collection1155 = ({ collection, tokenId = null, cacheName = 'collection', 
                     doxx={collection.verification?.doxx}
                     kyc={collection.verification?.kyc}
                     escrow={collection.verification?.escrow}
+                    creativeCommons={collection.verification?.creativeCommons}
                     center={true}
                   />
                   {collection.metadata.description && <p>{collection.metadata.description}</p>}

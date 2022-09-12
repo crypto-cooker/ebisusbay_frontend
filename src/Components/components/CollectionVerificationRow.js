@@ -3,8 +3,9 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAddressCard, faLock, faUserShield} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import kycPartners from '../../core/data/kyc-partners.json';
+import {faCreativeCommons} from "@fortawesome/free-brands-svg-icons";
 
-export const CollectionVerificationRow = ({doxx, kyc, escrow, center = false}) => {
+export const CollectionVerificationRow = ({doxx, kyc, escrow, creativeCommons, center = false}) => {
 
   const kycPartner = kyc === 'hidden' ? undefined : kycPartners[kyc]
 
@@ -14,13 +15,28 @@ export const CollectionVerificationRow = ({doxx, kyc, escrow, center = false}) =
     </Tooltip>
   );
 
+  const doxxStatus = () => {
+    if (!doxx) return;
+    if (doxx === 'public') return 'Team has been publicly doxxed';
+    if (doxx === 'private' || doxx === true) return 'Team has been privately doxxed';
+
+    return 'Team has an unknown doxx status';
+  }
+
+  const kycStatus = () => {
+    if (!kyc) return;
+    if (kycPartner) return `KYC completed by ${kycPartner?.name}`;
+
+    return 'KYC completed';
+  }
+
   return (
     <div className={`d-flex ${center ? 'justify-content-center' : ''}`}>
       {doxx && (
         <OverlayTrigger
           placement="top"
           delay={{ show: 100, hide: 100 }}
-          overlay={(props) => renderTooltip(props, 'Team has been privately doxxed')}
+          overlay={(props) => renderTooltip(props, doxxStatus())}
         >
           <div className="eb-de_countdown text-center" style={{width: '100px'}}>
             <FontAwesomeIcon icon={faAddressCard} /> Doxxed
@@ -31,7 +47,7 @@ export const CollectionVerificationRow = ({doxx, kyc, escrow, center = false}) =
         <OverlayTrigger
           placement="top"
           delay={{ show: 100, hide: 100 }}
-          overlay={(props) => renderTooltip(props, kycPartner ? `KYC completed by ${kycPartner?.name}` : 'KYC completed')}
+          overlay={(props) => renderTooltip(props, kycStatus())}
         >
           <div className="eb-de_countdown text-center" style={{width: '100px'}}>
             <FontAwesomeIcon icon={faUserShield} /> KYC
@@ -46,6 +62,17 @@ export const CollectionVerificationRow = ({doxx, kyc, escrow, center = false}) =
         >
           <div className="eb-de_countdown text-center" style={{width: '100px'}}>
             <FontAwesomeIcon icon={faLock} /> Escrow
+          </div>
+        </OverlayTrigger>
+      )}
+      {creativeCommons && (
+        <OverlayTrigger
+          placement="top"
+          delay={{ show: 100, hide: 100 }}
+          overlay={(props) => renderTooltip(props, 'Images for this collection are under the Creative Commons (CC0) license')}
+        >
+          <div className="eb-de_countdown text-center" style={{width: '100px'}}>
+            <FontAwesomeIcon icon={faCreativeCommons} /> CC0
           </div>
         </OverlayTrigger>
       )}

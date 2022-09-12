@@ -2265,6 +2265,12 @@
         "twitter": "https://twitter.com/BAD_Cronos",
         "discord": "https://discord.gg/2WT7gbSPnK",
         "medium": "https://medium.com/@babyaliendivision"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "escrow": false,
+        "creativeCommons": true
       }
     },
     {
@@ -2938,7 +2944,7 @@
         "maxSupply": 5000,
         "website": "https://slavikfruitfarm.io/",
         "twitter": "https://twitter.com/SlavikFruitFarm",
-        "discord": "https://discord.gg/D5KgZ6Aghq"
+        "discord": "https://discord.gg/sff"
       }
     },
     {
@@ -3755,6 +3761,12 @@
         "twitter": "https://twitter.com/BAD_Cronos",
         "discord": "https://discord.gg/qKBy2azf69",
         "medium": "https://medium.com/@babyaliendivision"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "escrow": false,
+        "creativeCommons": true
       }
     },
     {
@@ -4116,6 +4128,12 @@
         "twitter": "https://twitter.com/BAD_Cronos",
         "discord": "https://discord.gg/qKBy2azf69",
         "medium": "https://medium.com/@babyaliendivision"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "escrow": false,
+        "creativeCommons": true
       }
     },
     {
@@ -4959,6 +4977,12 @@
         "twitter": "https://twitter.com/BAD_Cronos",
         "discord": "https://discord.gg/qKBy2azf69",
         "medium": "https://medium.com/@babyaliendivision"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "escrow": false,
+        "creativeCommons": true
       }
     },
     {
@@ -5308,6 +5332,12 @@
         "twitter": "https://twitter.com/BAD_Cronos",
         "discord": "https://discord.gg/qKBy2azf69",
         "medium": "https://medium.com/@babyaliendivision"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "escrow": false,
+        "creativeCommons": true
       }
     },
     {
@@ -5632,6 +5662,12 @@
         "twitter": "https://twitter.com/BAD_Cronos",
         "discord": "https://discord.gg/HMy5SArp7g",
         "medium": "https://medium.com/@babyaliendivision"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "escrow": false,
+        "creativeCommons": true
       }
     },
     {
@@ -6458,6 +6494,12 @@
         "website": "https://cronoslizards.com/",
         "twitter": "https://twitter.com/badlizzys",
         "discord": "https://discord.gg/HMy5SArp7g"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "escrow": false,
+        "creativeCommons": true
       }
     },
     {
@@ -8528,6 +8570,29 @@
         "discord": "https://discord.gg/Ku6A7tJSVp",
         "medium": "https://cyborgswap.medium.com/",
         "telegram": "https://t.me/+IQJY2ugWLaVmODVk"
+      }
+    },
+    {
+      "name": "God Hates Cro Fam",
+      "slug": "god-hates-crofam",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "God hates all crofam!!! This is strictly a pfp project with no utility. Why no utility… because god hates you. Now go away.",
+        "verified": true,
+        "avatar": "/img/collections/god-hates-crofam/avatar.webp",
+        "card": "/img/collections/god-hates-crofam/card.webp",
+        "banner": "/img/collections/god-hates-crofam/banner.webp",
+        "maxSupply": 50,
+        "twitter": "https://twitter.com/ghcfnft"
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": false,
+        "escrow": false,
+        "creativeCommons": true
       }
     }
   ],
@@ -11519,6 +11584,34 @@
       "whitelistCost": "150",
       "foundersOnly": false,
       "start": null,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 109,
+      "slug": "god-hates-crofam",
+      "imgNft": "/img/drops/god-hates-crofam/drop.webp",
+      "imgPreview": "/img/drops/god-hates-crofam/drop.webp",
+      "imgAvatar": "/img/collections/god-hates-crofam/avatar.webp",
+      "imgBanner": "/img/collections/god-hates-crofam/banner.webp",
+      "title": "God Hates Cro Fam",
+      "subtitle": "God hates all crofam!!! This is strictly a pfp project with no utility. Why no utility… because god hates you. Now go away.",
+      "description": "What does it feel like to be hated by god?? Now you know!",
+      "author": {
+        "name": "God Hates Cro Fam",
+        "twitter": "https://twitter.com/ghcfnft"
+      },
+      "address": "",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 100,
+      "totalSupply": 5000,
+      "cost": "50",
+      "memberCost": "45",
+      "foundersOnly": false,
+      "start": 1663185600000,
       "end": null,
       "referral": false,
       "is1155": false,
