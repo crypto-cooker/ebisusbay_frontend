@@ -6993,7 +6993,7 @@
       "multiToken": false,
       "address": "0xAd6eE5C0e033cEdB904096EF790Fc658F1EE0bd2",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Pocket Demons project is a collection of 666 uniquely generated demon characters. Each Demon is generated from a pool of over 70 traits. These Demons also carry unique stats and attacks that are utilized in our P2E Game!",
         "verified": true,
@@ -11109,7 +11109,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false
+      "complete": true
     },
     {
       "id": 97,
