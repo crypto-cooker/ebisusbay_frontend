@@ -63,6 +63,11 @@ export default function Profile({ address, profile, tab }) {
     ImageKitService.from(profile.profilePicture).setWidth(200).setHeight(200).buildUrl() :
     hostedImage('/img/avatar.jpg');
 
+  // Ensure correct tab highlighted when changing from AccountMenu while already in Profile page
+  useEffect(() => {
+    setCurrentTab(tab ?? tabs.inventory);
+  }, [tab])
+
   return (
     <div className={styles.profile}>
       <PageHead
