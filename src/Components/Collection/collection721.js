@@ -201,7 +201,7 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
         </div>
       </section>
 
-      <section className="container no-top">
+      <div className="px-4">
         {collectionStats && (
           <div className="row">
             {hasRank && collection.metadata.rarity === 'rarity_sniper' && (
@@ -311,7 +311,7 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
               </div>
             )}
             {openMenu === tabs.activity && (
-              <div className="tab-2 onStep fadeIn">
+              <div className="tab-2 onStep fadeIn container">
                 <SalesCollection cacheName="collection" collectionId={collection.address} />
               </div>
             )}
@@ -322,7 +322,7 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
             )}
           </div>
         </div>
-      </section>
+      </div>
 
       <MobileFilters
         address={collection.address}
@@ -332,7 +332,7 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
         powertraits={collectionStats?.powertraits}
       />
 
-      {useMobileMenu && (
+      {useMobileMenu && openMenu === tabs.items && (
         <div className="d-flex fixed-bottom mx-2 my-2">
           <div className="mx-auto">
             <Button type="legacy" style={{height: '100%'}} onClick={() => setFiltersVisible(true)}>
