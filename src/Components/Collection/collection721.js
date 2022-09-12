@@ -28,6 +28,7 @@ import Button from "@src/Components/components/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {MobileFilters} from "@src/Components/Collection/CollectionTaskBar/MobileFilters";
 import {FilterResultsBar} from "@src/Components/Collection/FilterResultsBar";
+import {MobileSort} from "@src/Components/Collection/CollectionTaskBar/MobileSort";
 
 const NegativeMargin = styled.div`
   margin-left: -1.75rem !important;
@@ -144,6 +145,7 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
   }, [collectionLoading, isFirstLoaded]);
 
   const [filtersVisible, setFiltersVisible] = useState(false);
+  const [mobileSortVisible, setMobileSortVisible] = useState(false);
   const [useMobileMenu, setUseMobileMenu] = useState(false);
   const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
   useEffect(() => {
@@ -271,6 +273,7 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
                   <CollectionTaskBar
                     collection={collection}
                     onFilterToggle={() => setFiltersVisible(!filtersVisible)}
+                    onSortToggle={() => setMobileSortVisible(!mobileSortVisible)}
                   />
                 </ThemedBackground>
                 <div className="d-flex">
@@ -330,6 +333,11 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
         onHide={() => setFiltersVisible(false)}
         traits={collectionStats?.traits}
         powertraits={collectionStats?.powertraits}
+      />
+
+      <MobileSort
+        show={useMobileMenu && mobileSortVisible}
+        onHide={() => setMobileSortVisible(false)}
       />
 
       {useMobileMenu && openMenu === tabs.items && (

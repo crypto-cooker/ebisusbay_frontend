@@ -7,7 +7,7 @@ import {listingFilterOptions} from "@src/Components/components/constants/filter-
 import {CollectionSortOption} from "@src/Components/Models/collection-sort-option.model";
 import Button from "@src/Components/components/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faFilter} from "@fortawesome/free-solid-svg-icons";
+import {faFilter, faSort} from "@fortawesome/free-solid-svg-icons";
 import {SortDropdown} from "@src/Components/Collection/CollectionTaskBar/SortDropdown";
 import {SearchBar} from "@src/Components/Collection/CollectionTaskBar/SearchBar";
 import MakeCollectionOfferDialog from "@src/Components/Offer/Dialogs/MakeCollectionOfferDialog";
@@ -18,7 +18,7 @@ import {chainConnect, connectAccount} from "@src/GlobalState/User";
 
 const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
 
-export const CollectionTaskBar = ({collection, onFilterToggle}) => {
+export const CollectionTaskBar = ({collection, onFilterToggle, onSortToggle}) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
@@ -62,7 +62,10 @@ export const CollectionTaskBar = ({collection, onFilterToggle}) => {
               </Button>
             </div>
             <div className="flex-fill ms-2">
-              <SortDropdown />
+              <Button type="legacy-outlined" className="w-100" style={{height: '100%'}} onClick={onSortToggle}>
+                <FontAwesomeIcon icon={faSort} />
+                <span className="ms-2">Sort</span>
+              </Button>
             </div>
           </div>
 
