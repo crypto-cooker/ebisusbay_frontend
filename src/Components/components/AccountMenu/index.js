@@ -8,7 +8,7 @@ import {
   faBolt,
   faShoppingBag,
   faUser,
-  faEdit, faCoins, faCopy, faHeart, faDollarSign, faWallet, faSearch
+  faEdit, faCoins, faCopy, faHeart, faDollarSign, faWallet, faSearch, faHand
 } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import MetaMaskOnboarding from '@metamask/onboarding';
@@ -302,7 +302,7 @@ const Index = function () {
                 <span onClick={() => navigateTo(`/account/${walletAddress}?tab=offers`)}>
                   <div className={styles.col}>
                       <span>
-                        <FontAwesomeIcon icon={faCoins} />
+                        <FontAwesomeIcon icon={faHand} />
                       </span>
                       <span className="ms-2">My Offers</span>
                   </div>
