@@ -6306,7 +6306,7 @@
       "multiToken": false,
       "address": "0x95c790bFA90De820376e4C6ad22af9C8C31Fb60D",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Battle Ready Boyz is a project combining Design and GameFi offering its members to use their NFTs in Play-to-Earn or Risk-To-Earn.\n\nThe BRB collection features 7777 unique NFTs representing Aurora's gorilla soldiers and statues of their emperors.\n\nDon't forget to fight each other, life is too short!",
         "verified": true,
@@ -10945,7 +10945,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false
+      "complete": true
     },
     {
       "id": 88,
