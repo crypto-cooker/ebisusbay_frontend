@@ -132,22 +132,18 @@ const NftCard = ({ listing, imgClass = 'marketplace', watermark, collection, can
               <div>{ethers.utils.commify(round(listing.market?.price))} CRO</div>
             </MakeBuy>
           )}
-          <MakeOffer>
+          <div className="d-flex flex-wrap">
             {getIsNftListed() && canBuy ? (
-              <div>
-                <Button type="legacy" onClick={handleBuy}>
-                  Buy
-                </Button>
-              </div>
+              <Button type="legacy" className="flex-fill m-1" onClick={handleBuy}>
+                Buy
+              </Button>
             ) : (
               <div></div>
             )}
-            <div>
-              <Button type="legacy-outlined" onClick={() => handleMakeOffer()}>
-                Offer
-              </Button>
-            </div>
-          </MakeOffer>
+            <Button type="legacy-outlined" className="flex-fill m-1" onClick={() => handleMakeOffer()}>
+              Offer
+            </Button>
+          </div>
         </div>
       </div>
       {openMakeOfferDialog && (
