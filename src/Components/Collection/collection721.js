@@ -142,7 +142,7 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
     }
   }, [collectionLoading, isFirstLoaded]);
 
-  const [filtersVisible, setFiltersVisible] = useState(false);
+  const [filtersVisible, setFiltersVisible] = useState(true);
   const [mobileSortVisible, setMobileSortVisible] = useState(false);
   const [useMobileMenu, setUseMobileMenu] = useState(false);
   const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
