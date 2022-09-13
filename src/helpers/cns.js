@@ -25,6 +25,18 @@ export const getCnsName = async (address) => {
 };
 
 /**
+ * Get a CNS name from a 0x address
+ *
+ * @param name
+ * @returns {Promise<string>}
+ */
+export const getCnsAddress = async (name) => {
+  const cns = new CNS(config.chain.id, readProvider);
+  const profile = await cns.getProfile(name);
+
+  return profile.address;
+}
+/**
  * Get various profile information for a given address
  *
  * @param address

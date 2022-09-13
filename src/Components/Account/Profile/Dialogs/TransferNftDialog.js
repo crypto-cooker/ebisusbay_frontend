@@ -12,8 +12,7 @@ import * as Sentry from '@sentry/react';
 import {AnyMedia} from "@src/Components/components/AnyMedia";
 import {specialImageTransform} from "@src/hacks";
 import {ERC1155, ERC721} from "@src/Contracts/Abis";
-import {getProfile} from "@src/core/cms/endpoints/profile";
-import {isCnsName} from "@src/helpers/cns";
+import {getCnsAddress, isCnsName} from "@src/helpers/cns";
 
 const DialogContainer = styled(Dialog)`
   .MuiPaper-root {
@@ -61,6 +60,7 @@ export default function TransferNftDialog({ isOpen, nft, onClose }) {
   const [fieldError, setFieldError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [executingTransferNft, setExecutingTransferNft] = useState(false);
+  const [executingCnsLookup, setExecutingCnsLookup] = useState(false);
 
   const user = useSelector((state) => state.user);
 
@@ -106,14 +106,18 @@ export default function TransferNftDialog({ isOpen, nft, onClose }) {
 
       let targetAddress = recipientAddress;
       if (isCnsName(recipientAddress)) {
-        const recipientProfile = await getProfile(recipientAddress);
-        if (recipientProfile.data && isCnsName(recipientProfile.data.username)) {
-          targetAddress = recipientProfile.data.walletAddress;
+        setExecutingCnsLookup(true);
+        const cnsAddress = await getCnsAddress(recipientAddress);
+        if (cnsAddress) {
+          targetAddress = cnsAddress;
+          setExecutingCnsLookup(false);
         } else {
           setFieldError('No matching profiles for this CNS name');
-          return false;
+          setExecutingCnsLookup(false);
+          return;
         }
       }
+
       setExecutingTransferNft(true);
       Sentry.captureEvent({message: 'handleTransfer', extra: {address: nftAddress, targetAddress}});
 
@@ -140,6 +144,7 @@ export default function TransferNftDialog({ isOpen, nft, onClose }) {
       }
     } finally {
       setExecutingTransferNft(false);
+      setExecutingCnsLookup(false);
     }
   };
 
@@ -209,8 +214,8 @@ export default function TransferNftDialog({ isOpen, nft, onClose }) {
                 <div className="d-flex">
                   <Button type="legacy"
                           onClick={handleTransfer}
-                          isLoading={executingTransferNft}
-                          disabled={executingTransferNft}
+                          isLoading={executingTransferNft || executingCnsLookup}
+                          disabled={executingTransferNft || executingCnsLookup}
                           className="flex-fill">
                     Confirm Transfer
                   </Button>
