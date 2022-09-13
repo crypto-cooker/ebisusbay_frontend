@@ -146,9 +146,20 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
   const [mobileSortVisible, setMobileSortVisible] = useState(false);
   const [useMobileMenu, setUseMobileMenu] = useState(false);
   const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
+  const [hasManuallyToggledFilters, setHasManuallyToggledFilters] = useState(false);
+
   useEffect(() => {
-    setUseMobileMenu(minWidth < BREAKPOINTS.m);
+    const isMobileSize = minWidth < BREAKPOINTS.m;
+    setUseMobileMenu(isMobileSize);
+    if (!hasManuallyToggledFilters) {
+      setFiltersVisible(!isMobileSize);
+    }
   }, [breakpoint]);
+
+  const toggleFilterVisibility = () => {
+    setHasManuallyToggledFilters(true);
+    setFiltersVisible(!filtersVisible)
+  };
 
   return (
     <div>
@@ -270,7 +281,7 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
                 <ThemedBackground className="row sticky-top pt-2">
                   <CollectionTaskBar
                     collection={collection}
-                    onFilterToggle={() => setFiltersVisible(!filtersVisible)}
+                    onFilterToggle={toggleFilterVisibility}
                     onSortToggle={() => setMobileSortVisible(!mobileSortVisible)}
                   />
                 </ThemedBackground>
