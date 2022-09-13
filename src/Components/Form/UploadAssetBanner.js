@@ -84,7 +84,7 @@ const UploadAsset = ({ id, value, accept = 'image/png, image/jpeg, image/jpg', o
               isVideo ? (
                 <video src={value.result} />
               ) : isImage ? (
-                <img src={value.result} />
+                <img class='input_image' style={{ width: '100%', objectFit: 'cover' }} src={value.result} />
               ) : null
             ) : (
               <></>

@@ -5840,3 +5840,40 @@ iframe.metaverse {
   width: 108px;
   height: 30px;
 }
+
+@media only screen and (min-width: 0px) {
+  .input_image {
+    max-height: 290px;
+  }
+}
+
+@media only screen and (min-width: 576px) {
+  .input_image {
+    max-height: 268px;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  .input_image {
+    max-height: 390px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .input_image {
+    max-height: 166px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .input_image {
+    max-height: 200px;
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  .input_image {
+    max-height: 232px;
+  }
+}
+
