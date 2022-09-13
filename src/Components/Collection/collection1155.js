@@ -6,7 +6,7 @@ import Blockies from 'react-blockies';
 import Footer from '../components/Footer';
 import CollectionListingsGroup from '../components/CollectionListingsGroup';
 import LayeredIcon from '../components/LayeredIcon';
-import { init, fetchListings, getStats } from '@src/GlobalState/collectionSlice';
+import {init, fetchListings, getStats, updateTab} from '@src/GlobalState/collectionSlice';
 import { isCrosmocraftsPartsCollection } from '@src/utils';
 import SocialsBar from './SocialsBar';
 import { CollectionSortOption } from '../Models/collection-sort-option.model';
@@ -18,9 +18,18 @@ import {ImageKitService} from "@src/helpers/image";
 import {CollectionFilters} from "../Models/collection-filters.model";
 import {Spinner} from "react-bootstrap";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
+import {pushQueryString} from "@src/helpers/query";
+import {useRouter} from "next/router";
 
-const Collection1155 = ({ collection, tokenId = null, cacheName = 'collection', slug }) => {
+
+const tabs = {
+  items: 'items',
+  activity: 'activity'
+};
+
+const Collection1155 = ({ collection, tokenId = null, query }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const [metadata, setMetadata] = useState(null);
 
@@ -46,17 +55,14 @@ const Collection1155 = ({ collection, tokenId = null, cacheName = 'collection', 
   };
 
   const [openMenu, setOpenMenu] = React.useState(0);
-  const handleBtnClick = (index) => (element) => {
-    if (typeof window === 'undefined') {
-      return;
-    }
-    var elements = document.querySelectorAll('.tab');
-    for (var i = 0; i < elements.length; i++) {
-      elements[i].classList.remove('active');
-    }
-    element.target.parentElement.classList.add('active');
+  const handleBtnClick = (key) => (element) => {
+    setOpenMenu(key);
 
-    setOpenMenu(index);
+    pushQueryString(router, {
+      slug: router.query.slug,
+      tab: key
+    });
+    dispatch(updateTab(key));
   };
 
   const loadMore = () => {
@@ -79,6 +85,11 @@ const Collection1155 = ({ collection, tokenId = null, cacheName = 'collection', 
     dispatch(fetchListings());
     // eslint-disable-next-line
   }, [dispatch, collection]);
+
+  useEffect(() => {
+    setOpenMenu(query.tab ?? tabs.items);
+    // eslint-disable-next-line
+  }, [dispatch, collection.address]);
 
   useEffect(() => {
     setMetadata(collection.metadata);
@@ -151,7 +162,7 @@ const Collection1155 = ({ collection, tokenId = null, cacheName = 'collection', 
         </div>
       </section>
 
-      <section className="container no-top">
+      <div className="px-4 mb-4">
         {collectionStats && (
           <div className="row">
             {hasRank && collectionMetadata?.rarity === 'rarity_sniper' && (
@@ -191,17 +202,17 @@ const Collection1155 = ({ collection, tokenId = null, cacheName = 'collection', 
         )}
 
         <div className="de_tab">
-          <ul className="de_nav mb-4">
-            <li id="Mainbtn0" className="tab active">
-              <span onClick={handleBtnClick(0)}>Items</span>
+          <ul className="de_nav mb-2">
+            <li id="Mainbtn0" className={`tab ${openMenu === tabs.items ? 'active' : ''}`}>
+              <span onClick={handleBtnClick(tabs.items)}>Items</span>
             </li>
-            <li id="Mainbtn1" className="tab">
-              <span onClick={handleBtnClick(1)}>Activity</span>
+            <li id="Mainbtn1" className={`tab ${openMenu === tabs.activity ? 'active' : ''}`}>
+              <span onClick={handleBtnClick(tabs.activity)}>Activity</span>
             </li>
           </ul>
 
           <div className="de_tab_content">
-            {openMenu === 0 && (
+            {openMenu === tabs.items && (
               <div className="tab-1 onStep fadeIn">
                 <div className="row">
                   <div className="col-md-12">
@@ -229,14 +240,14 @@ const Collection1155 = ({ collection, tokenId = null, cacheName = 'collection', 
                 </div>
               </div>
             )}
-            {openMenu === 1 && (
+            {openMenu === tabs.activity && (
               <div className="tab-2 onStep fadeIn">
                 <SalesCollection cacheName="collection" collectionId={collection.address} tokenId={tokenId} />
               </div>
             )}
           </div>
         </div>
-      </section>
+      </div>
 
       <Footer />
     </div>

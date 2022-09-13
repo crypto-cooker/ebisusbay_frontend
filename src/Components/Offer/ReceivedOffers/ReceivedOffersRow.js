@@ -100,7 +100,7 @@ export const OFFER_TYPE = {
   none: '', // close modal
 };
 
-export default function TableRow({ data }) {
+export default function TableRow({ data, type }) {
   const { state, timeCreated, seller, buyer, price, nftAddress, nftId } = data;
 
   let nft = useSelector((state) => {
@@ -201,7 +201,7 @@ export default function TableRow({ data }) {
           </Button>
         </div>
         <div className="table-row-item">
-          {!collectionData.multiToken && (
+          {type !== 'received-public' && type !== 'received-collection' && (
             <Button
               type="legacy-outlined"
               onClick={() => handleOffer(OFFER_TYPE.reject)}

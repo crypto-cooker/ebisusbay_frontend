@@ -123,7 +123,7 @@ export default function ReceivedOffers({ address, collectionAddresses, nfts, sta
             }
           >
             {data.map((offer, index) => (
-              <TableRow key={index} data={offer} />
+              <TableRow key={index} data={offer} type={type}/>
             ))}
           </InfiniteScroll>
         </>

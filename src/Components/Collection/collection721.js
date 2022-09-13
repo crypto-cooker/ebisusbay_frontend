@@ -44,7 +44,7 @@ const tabs = {
 };
 
 const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
-const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
+const Collection721 = ({ collection,  query }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -66,7 +66,7 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
 
   const isUsingListingsFallback = useSelector((state) => state.collection.isUsingListingsFallback);
 
-  const [openMenu, setOpenMenu] = useState(0);
+  const [openMenu, setOpenMenu] = useState(tabs.items);
   const handleBtnClick = (key) => (element) => {
     setOpenMenu(key);
 
@@ -213,7 +213,7 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
         </div>
       </section>
 
-      <div className="px-4">
+      <div className="px-4 mb-4">
         {collectionStats && (
           <div className="row">
             {hasRank && collection.metadata.rarity === 'rarity_sniper' && (
@@ -264,14 +264,14 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
         <div className="de_tab">
           <ul className="de_nav mb-2">
             <li id="Mainbtn0" className={`tab ${openMenu === tabs.items ? 'active' : ''}`}>
-              <span onClick={handleBtnClick('items')}>Items</span>
+              <span onClick={handleBtnClick(tabs.items)}>Items</span>
             </li>
             <li id="Mainbtn1" className={`tab ${openMenu === tabs.activity ? 'active' : ''}`}>
-              <span onClick={handleBtnClick('activity')}>Activity</span>
+              <span onClick={handleBtnClick(tabs.activity)}>Activity</span>
             </li>
             {isCronosVerseCollection(collection.address) && (
               <li id="Mainbtn9" className={`tab ${openMenu === tabs.map ? 'active' : ''}`}>
-                <span onClick={handleBtnClick('map')}>Map</span>
+                <span onClick={handleBtnClick(tabs.map)}>Map</span>
               </li>
             )}
           </ul>
