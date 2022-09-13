@@ -277,13 +277,13 @@ const Home = () => {
             </div>
             <div className="d-flex flex-column align-middle">
               <div className="d-flex justify-content-between flex-wrap">
-                {/*<div className="flex-fill mx-1 mt-2">*/}
-                {/*  <a href="https://www.crotopia.world/" target="_blank" rel="noreferrer">*/}
-                {/*    <Button type="legacy-outlined" className="w-100">*/}
-                {/*      Metaverse*/}
-                {/*    </Button>*/}
-                {/*  </a>*/}
-                {/*</div>*/}
+                <div className="flex-fill mx-1 mt-2">
+                  <a href="https://www.crotopia.land/" target="_blank" rel="noreferrer">
+                    <Button type="legacy-outlined" className="w-100">
+                      Metaverse
+                    </Button>
+                  </a>
+                </div>
                 <div className="flex-fill mx-auto mt-2" style={{maxWidth:300}}>
                   <a href="https://www.crotopia.xyz" target="_blank" rel="noreferrer">
                     <Button type="legacy" className="w-100">

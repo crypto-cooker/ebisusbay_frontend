@@ -5686,7 +5686,7 @@
         "maxSupply": 10000,
         "website": "https://www.cybersquad.app/",
         "twitter": "https://twitter.com/CyberSquadd",
-        "discord": "https://discord.gg/cybersquad"
+        "discord": "https://discord.gg/9tVUbW33uX"
       },
       "verification": {
         "doxx": true,
@@ -8071,7 +8071,7 @@
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300k CRO will be distributed to DAO members.",
+        "description": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model.\nStake will start on Crodex at 13 Sep. 21:00 UTC (HUGE APR)",
         "verified": true,
         "avatar": "/img/collections/cronos-women/avatar.webp",
         "banner": "/img/collections/cronos-women/banner.webp",
@@ -10773,7 +10773,7 @@
         "name": "CyberSquad",
         "website": "https://www.cybersquad.app/",
         "twitter": "https://twitter.com/CyberSquadd",
-        "discord": "https://discord.gg/cybersquad"
+        "discord": "https://discord.gg/9tVUbW33uX"
       },
       "address": "0x92E38D9A6a55984e83025CAD11e5538a8227ef3c",
       "maxMintPerTx": 10,
@@ -11501,8 +11501,8 @@
       "imgAvatar": "/img/collections/cronos-women/avatar.webp",
       "imgBanner": "/img/collections/cronos-women/banner.webp",
       "title": "Cronos Women",
-      "subtitle": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300k CRO will be distributed to DAO members.",
-      "description": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300k CRO will be distributed to DAO members.\n\nWhat is a DAO member?\nDAO member is the role that will be given to those who receive a certain amount of NFT.\n\nHow to become a DAO member?\n\n10 NFT Holders -> DAO(1)\n20 NFT Holders -> DAO(2)\n50 NFT Holders -> DAO(3)\n100 NFT Holders -> DAO(4)\nBEST HOLDER -> DAO(5)\nWhat are the advantages of a DAO member?\n\nRight to vote in all decisions to be taken in the \"Cronos Women and Men\" Management.\n100K CRO distributed to the DAO(2)+ members when the mint reaches 25%\n100K CRO distributed to the DAO(3)+ members when the mint reaches 50%\n100K CRO distributed to the DAO(4)+ members when the mint reaches 100%\n\n*You get percentage per nft when mint target is reached!",
+      "subtitle": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model.\nStake will start on Crodex at 13 Sep. 21:00 UTC (HUGE APR)",
+      "description": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model.\n\nStake will start on Crodex at 13 Sep. 21:00 UTC (HUGE APR)\n\nDAO member is the role that will be given to those who receive a certain amount of NFT.\n\n- 10 NFT mint -> DAO1\n- 20 NFT mint -> DAO2 -  2 Free Mint\n- 50 NFT mint -> DAO3 -  (DAO2 Reward) + 4 Free Mint\n- 100 NFT mint -> DAO4 -  (DAO3 Reward) + 9 Free Mint\n- for 105 NFT+ mint -> DAO5 + 1 Free Mint for every 5 Mint\n\nOnly the mint count is valid. Nfts given as gifts will not be counted.\n\nFor example; When you make 100 mint, you will earn 15 Free Mint. after 100 mint, 1 Free Mint for every 5 Mint",
       "author": {
         "name": "Cronos Women",
         "website": "https://cronos-women.com/",
@@ -11547,8 +11547,8 @@
       "maxMintPerAddress": 100,
       "totalSupply": 10000,
       "cost": "775",
-      "memberCost": "650",
-      "whitelistCost": "650",
+      "memberCost": "600",
+      "whitelistCost": "500",
       "foundersOnly": false,
       "start": 1663963200000,
       "end": null,
