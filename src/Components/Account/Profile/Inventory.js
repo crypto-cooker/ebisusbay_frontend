@@ -97,7 +97,7 @@ export default function Inventory({ address }) {
                 const collection = knownContracts.find((c) => caseInsensitiveCompare(c.address, nft.address));
                 return (
                   <div
-                    className="d-item col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12 mb-4"
+                    className="d-item col-xxl-2 col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12 mb-4"
                     key={`${nft.address}-${nft.id}-${nft.listed}-${index}`}
                   >
                     {caseInsensitiveCompare(address, user.address) ? (
@@ -158,7 +158,7 @@ export default function Inventory({ address }) {
       <div className="d-flex">
         <Collapse in={filtersVisible && !useMobileMenu} dimension="width">
           <div className="m-0 p-0">
-            <div className="me-4 px-2" style={{width: 300}}>
+            <div className="me-4 px-2" style={{width: 350}}>
               <CollectionFilter
                 collections={collections}
                 currentFilter={collectionFilter}

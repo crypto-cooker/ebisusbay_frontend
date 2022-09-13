@@ -92,7 +92,7 @@ export default function Profile({ address, profile, tab }) {
           <div className="mainbreadcumb"></div>
         </section>
       )}
-      <section className="container pt-4">
+      <section className="px-5 pt-4">
         <div className={`${styles.userInfo} row`}>
           <div className="d-sm-flex text-center text-sm-start">
             <div className="flex-shrink-0">
