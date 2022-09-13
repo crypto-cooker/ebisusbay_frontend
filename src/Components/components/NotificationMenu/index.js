@@ -123,8 +123,8 @@ const NotificationMenu = function () {
                 <div className="flex-fill h-auto">
                   {notifications.length > 0 && (
                     notifications.map((item, index) => (
-                      <div className={classnames('card eb-nft__card px-3 py-2 mb-2', styles.card)}>
-                        <div key={index} className="d-flex">
+                      <div key={index} className={classnames('card eb-nft__card px-3 py-2 mb-2', styles.card)}>
+                        <div className="d-flex">
                           <div className="flex-fill">
                             <div className="text-muted fst-italic">
                               <div className="flex-fill">{timeSince(new Date(item.createdAt))} ago</div>

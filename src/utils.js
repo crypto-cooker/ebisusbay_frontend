@@ -515,6 +515,19 @@ export const findCollectionByAddress = (address, tokenId) => {
   });
 };
 
+export const findCollectionFloor = (knownContract, collectionsStats) => {
+  const collectionStats = collectionsStats.find((o) => {
+    if (knownContract.multiToken && o.collection.indexOf('-') !== -1) {
+      let parts = o.collection.split('-');
+      return caseInsensitiveCompare(knownContract.address, parts[0]) && knownContract.id === parseInt(parts[1]);
+    } else {
+      return caseInsensitiveCompare(knownContract.address, o.collection);
+    }
+  });
+
+  return collectionStats ? collectionStats.floorPrice : null;
+};
+
 export const round = (num, decimals) => {
   if (!decimals) return Math.round(num);
 
@@ -714,4 +727,16 @@ export const buildInstagramUrl = (username) => {
   if (!username || username.startsWith('http')) return username;
 
   return `https://instagram.com/${username}`;
+}
+
+export const isNumeric = (str) => {
+  if (typeof str != 'string') return false; // we only process strings!
+  return (
+    !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+    !isNaN(parseFloat(str))
+  ); // ...and ensure strings of whitespace fail
+}
+
+export const stripSpaces = (str) => {
+  return str.replace(/\W/g, '');
 }

@@ -235,7 +235,7 @@
       "multiToken": false,
       "address": "0x570966a3503aE3fc2191f68dae3a6395eeFB897A",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -288,7 +288,7 @@
       "multiToken": false,
       "address": "",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -329,7 +329,7 @@
       "multiToken": false,
       "address": "0x6F25b5cCf0Ab49A1906E36C9572CF202e62aE066",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -349,7 +349,7 @@
       "multiToken": false,
       "address": "0xde0d3CCA05A9870D82180e771Eb2efc1de039cB9",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -369,7 +369,7 @@
       "multiToken": false,
       "address": "0x3b3BC5Ca5451D6dDDFCa7248AF04172632f4A990",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -389,7 +389,7 @@
       "multiToken": false,
       "address": "0x1D3587f44944a665F28bE1d9D9E322d43318DbB8",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -409,7 +409,7 @@
       "multiToken": false,
       "address": "0xd036b2223bcc2A96164B023022D6b78CD71A1a12",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -447,7 +447,7 @@
       "multiToken": false,
       "address": "0xdd5014784763ea9C0d758b8C84a7979ca29BADDF",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -467,7 +467,7 @@
       "multiToken": false,
       "address": "0x65d9377905Ceb76B96055B13A8d84DFdf59529aA",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -527,7 +527,7 @@
       "multiToken": false,
       "address": "0x99a1E178d0AB41DbdA42EED5faaDFAA073c4AA14",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -623,7 +623,7 @@
       "multiToken": false,
       "address": "0x424616fAb8A0f2DE40627bd798e03Fdd718CfAcd",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -663,7 +663,7 @@
       "multiToken": false,
       "address": "0xC997749351CC4C9770f885B0147F455F5907F11A",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -683,7 +683,7 @@
       "multiToken": false,
       "address": "0x77436B454e9EAAeA307c84243F521F313fb89BD9",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -702,7 +702,7 @@
       "multiToken": false,
       "address": "0x00F2218f253b1AF8315b5aA7Dce9D692eB0817Bb",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -721,7 +721,7 @@
       "multiToken": false,
       "address": "0xBde6bc3dd2265b23684435C4C87AA7DD85910739",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -822,7 +822,7 @@
       "multiToken": false,
       "address": "0xA53b72d9733aBEaCF97e0557f2767B189404a066",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": false,
@@ -842,7 +842,7 @@
       "multiToken": false,
       "address": "0xFB7C34B7D5782baF2fF2F65B40Ab0d4070674c19",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -862,7 +862,7 @@
       "multiToken": false,
       "address": "0xF184aD3a4f31376b5D9372040f12A80d3198a9D6",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -899,7 +899,7 @@
       "multiToken": false,
       "address": "0x794dc82F15fce5f5A90Ea2c4442FA03B76e8C8a8",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -937,7 +937,7 @@
       "multiToken": false,
       "address": "0x660c86fc9977278204245f2e54C11A0f1276a94b",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -956,7 +956,7 @@
       "multiToken": false,
       "address": "0xB458E21EB481Ef9652684e0656a96ca002554AAb",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -1014,7 +1014,7 @@
       "multiToken": false,
       "address": "0xb588883f69E94889A81608bf58EB0a578B93aa6f",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -1034,7 +1034,7 @@
       "multiToken": false,
       "address": "0x01A0962b78AF631AE0a56cDE60458Abdb81467Db",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -1075,7 +1075,7 @@
       "multiToken": false,
       "address": "0x2D803AC436d7F86d52070Bc5eB72F72358dA150b",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Cyberclone is a collection of 2000 uniquely generated NFTs stored on the Cronos blockchain. Each NFT Clone is inspired by the futuristic life of the year 2234, where the world is falling apart under the control of the Cyberclones, who are conquering earth!",
         "verified": true,
@@ -1095,7 +1095,7 @@
       "multiToken": false,
       "address": "0x9CD90D8Efa6D7302b5d1E720E31aA98C014A4c2b",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Bankroll Bear Society is an NFT project consisting of 5,000 Bears. Found on the Cronos chain. We are offering direct REAL-LIFE utilities. Our Bears are a VIP gateway into the Bankroll Universe and ecosystem.",
         "verified": true,
@@ -1114,7 +1114,7 @@
       "multiToken": false,
       "address": "0x7a7Ac50912B869a8Cd7f1614499b9684859Bb71b",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Looneycorns is the first of 5 unique toys/NFTs from the Lost Toy collection. Each toy character represents a childhood favourite that has been lost over time and needs a new home. \n\nEach of the 2,200 Looneycorns NFT have a different rarity level and to ensure that each one is totally unique, we have also gone the â€œextra-mileâ€ and created over 120 traits which would easily make up a collection of 5,000 NFTs!",
         "verified": true,
@@ -1133,7 +1133,7 @@
       "multiToken": false,
       "address": "0xE91CcEF501e07B1A0928085e104a67F67ef40201",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Welcome to Manor H, where Dr. Boo's ghosts were born. These ghosts come in 2111 appearances, divided into 3 categories: COMMON, RARE & EPIC. In addition to the staking and the numerous perks offered by these categories, each Boo NFT acquired will receive a Poison NFT, with a different color depending on the category (yellow, green or black). A Boo NFT + Poison NFT pair will allow access to the Manor in the metaverse, to retrieve multiple items daily to build a new NFT Boo FRK!",
         "verified": true,
@@ -1153,7 +1153,7 @@
       "multiToken": false,
       "address": "0xFF2d132Ec0B07210448D662EccB9BE68380e4DcF",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Northern Hippo Syndicate brings the artistic and creative stylings of Little Sloth from Open Sea to the Cronos chain. This crazy collection of 5000 unique PFP grants you access to so much more than amazing art. Hold a minimum of 3 to receive a plot of metaverse land.",
         "verified": true,
@@ -1172,7 +1172,7 @@
       "multiToken": false,
       "address": "0x3279F28dC59783d204D9cD66a965cF4AA120706F",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Flaming Phenix Club is a prestigious collection of 6,666 stunningly beautiful, fiery, and unique creatures apart of the Phenix Finance Ecosystem.",
         "verified": true,
@@ -1193,7 +1193,7 @@
       "multiToken": false,
       "address": "0x6270Da0F8a685Af46CBBFbdba18EbE76AdA942A3",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Icy Valkyries is a collection of 1000 NFTs who live in the darkest corner of Valhalla. Owning a Valkyrie allows you to fight in the monthly Icy Squid Game for huge jackpots, build a farm, start a family and establish your own clan.",
         "verified": true,
@@ -1213,7 +1213,7 @@
       "multiToken": false,
       "address": "0xd0186A9e068407738A5D4c710347F37763c20394",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Carkayous is a fictitious continent created by Jesse Smith (Ink Master | TV Celeb | Tattoo Artist) where his art lives. The goal of Expedition #9 is to further explore Killick Falls Lagoon where the Feral Fish lives. This is a 2,222 PFP collection with FREE Tattoos (flight and hotel included) as the primary utility.",
         "verified": true,
@@ -1251,7 +1251,7 @@
       "multiToken": false,
       "address": "0xe6f9Bbe97183F1849697cF6722e414Ff46398b74",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -1270,7 +1270,7 @@
       "multiToken": false,
       "address": "0x37f42eb690f03b845BA4a4eb19a977AaE10dB448",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": false
@@ -1282,7 +1282,7 @@
       "multiToken": false,
       "address": "0xd0997A498E6e4e90ff850202BAEEe88C64d265Fb",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Create a community of aristocrats, driven by the community.\n\nFirst 100% utility project, our goal is to greatly improve the experience of cronos users.",
         "verified": false,
@@ -1302,7 +1302,7 @@
       "multiToken": false,
       "address": "0xa20A2502777948ba4D2231c100011F27cD0B8444",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Alien Apocalypse is a collection of 3,000 uniquely generated invaders. The first of its kind, bridging the Cronos and Cardano Blockchains. The collection contains over 180 out of this world traits that are sure to blow your mind. Owning an Alien Apocalypse NFT will grant you access to the Horde Ecosystem.",
         "verified": true,
@@ -1321,7 +1321,7 @@
       "multiToken": false,
       "address": "0xA23A6AE440CfE3Ca3d1FEc8424153a8c50C1A342",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Hype Hogs, a collection of 3,333 different characters generated by the artist named \"ZAP7\". Each character has unique identity and rarity. Holders will be allowed to engage in a variety of community events such as random airdrops, customizing your hype hogs, the opportunity to win a random prize, or numerous giveaways. Half of the royalties will be used to sweep the floor or to help grow the community.",
         "verified": true,
@@ -1360,7 +1360,7 @@
       "multiToken": false,
       "address": "0xf28aD2F8557ae2b53B26211c5cF4a5EF99b0347F",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Fury Mouse Gang is an NFT project with a first generation of 2500 unique mice gang PFP collectibles. At night the fury takes hold of them and they ravage everything in their path. These creatures rule their world. The ambition is huge: to become the number 1 project on Cronos. Our community is linked around a story and a brotherhood between the members of the Gang. We want our members to live an unique experience, never seen on Cronos.. So if you canâ€™t beat the gang, join us, before it is too late.",
         "verified": true,
@@ -1379,7 +1379,7 @@
       "multiToken": false,
       "address": "0x782ab511719f5A1560eEaEbD19676aD47cD45384",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Battle Ready Boyz is a project combining Design and GameFi offering its members to use their NFTs in Play-to-Earn or Risk-To-Earn.\n\nThe BRB collection features 7777 unique NFTs representing Aurora's gorilla soldiers and statues of their emperors.\n\nDon't forget to fight each other, life is too short!",
         "verified": true,
@@ -1399,7 +1399,7 @@
       "multiToken": false,
       "address": "0x9aD80cc42Cb644AbB5fdb7cE37F44f79c902C821",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Apes embark on a journey through the Kingdom of Utopia to set foot on the world! Apes Utopia is a collection of 2,222 NFTs with over 200 features built on the Cronos blockchain. Apes Utopia NFTs provide access to various benefits in our ecosystem. Apes Utopia owners can participate in special events such as NFT sweepstakes, surprise sweepstakes, giveaways and much more. Remember, all Apes Utopia is special - but some are particularly special.",
         "verified": true,
@@ -1420,7 +1420,7 @@
       "multiToken": false,
       "address": "0x063E25D6B7B087c4f0FB875821e30f8cFdB6E33e",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "verified": false
       }
@@ -1431,7 +1431,7 @@
       "multiToken": false,
       "address": "0xFCd08C7BE680b36522BA87240B296377A80a01D0",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Everybody's not friends is a handcrafted set of unique and rare 1/1 collectible characters and animations created by timebeam. This is a community driven passion project. The purpose of this project is to build a community which promotes friendship through aÂ set of humorous 3D cartoon characters,Â animations and monthly live streamed brawls.",
         "verified": true,
@@ -1450,7 +1450,7 @@
       "multiToken": false,
       "address": "0x53973c3239388a23f99fA5D6CF85106434d27076",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Noodles Club is a PFP collection of 8,888 NFTs stored on the Cronos Chain that comes with an ever-developing set of utilities. Only the real Noodles lovers will enjoy this spicy journey.",
         "verified": true,
@@ -1470,7 +1470,7 @@
       "multiToken": false,
       "address": "0xe823026da4f921E6830b435672B8c74BF3f426Ac",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "RYBORG: THE BUNKER is the first NFT trading/investment project on the Cronos Chain. Backed by TradingFXVPS, RYBORG aims to create an investment DAO that shares 80% profit sharing through diversification of portfolio through Stock, Forex, DeFi, NFT, Coins & Tokens. Only 1,000 unique RYBORG will be available on the 1st round.",
         "verified": true,
@@ -1490,7 +1490,7 @@
       "multiToken": false,
       "address": "0xbCaE686611A3B5006389955cA265A0Bd2272aeAA",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Crovilians are the citizens of The CronosVerse and have various traits representing the many societal roles required in both the metaverse and in the physical world. While each Crovilianâ€™s unique traits represent real life roles in our society, all Crovilians are created equal in terms of access to The CronosVerse. Holding a Crovilian NFT will grant access to The CronosVerse and allow the owner to create a custom avatar to be used in our metaverse.",
         "verified": true,
@@ -1509,7 +1509,7 @@
       "multiToken": false,
       "address": "0x4a2d5c811E8117C4C4ea574ce810D681D5Cd14F2",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Cyberclone & Alphaclone is a collection of 2000 uniquely generated NFTs stored on the Cronos blockchain. Each NFT Clone is inspired by the futuristic life of the year 2234, where the world is falling apart under the control of the WorldClones, who are conquering earth!",
         "verified": true,
@@ -1529,7 +1529,7 @@
       "multiToken": false,
       "address": "0x0EFccB1889EB8eE3b92a805A5d66D49fC9ae885E",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Pocket Demons project is a collection of 666 uniquely generated demon characters. Each Demon is generated from a pool of over 70 traits. These Demons also carry unique stats and attacks that are utilized in our P2E Game!",
         "verified": true,
@@ -1548,7 +1548,7 @@
       "multiToken": false,
       "address": "0x0BfBd9d15e5cD740917d1a0F63ec5137005673b9",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "CroHamster is a collection of 1000 unique and 3D animated NFTs on Cronos. Each CroHamster is based on a wide variety of different traits. Owning a CroHamster will give you access to our CroHamster arena, where you can fight for awesome rewards.",
         "verified": true,
@@ -1568,7 +1568,7 @@
       "multiToken": false,
       "address": "0x69C4984ABdc4164A73C26e44195ea572F8132285",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true
@@ -1580,7 +1580,7 @@
       "multiToken": false,
       "address": "0x3f29cc0c07736eddb9c0678a51515d5de6a1d7e2",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "GymKongZ is a 10,000 pfp project made up of more than 255 unique traits. We will focus on improving all pillars of life, not only the physical but also the mental and financial, and any other goal members are choosing to pursue. \nWe are really wanting to expand the horizon when it comes to a group of people coming together sharing similar goals and interests.",
         "verified": false,
@@ -1599,7 +1599,7 @@
       "multiToken": false,
       "address": "0xA383245Cd497aFb047802e6A64B79A234f43F33D",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "CroKami is a universe comprising our Manga series, NFT collection, and lore-connected game. We have set out to create a special ecosystem in which players can battle each other in game using their NFTâ€™s, or AI in a street-fighter style arena and earn $PACK -our real world cryptocurrency and in-game currency. Play and earn!",
         "verified": true,

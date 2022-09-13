@@ -9,7 +9,7 @@ import MetaMaskOnboarding from '@metamask/onboarding';
 import { chainConnect, connectAccount } from '../../GlobalState/User';
 import { listingUpdated } from '../../GlobalState/listingSlice';
 import { listingState } from '../../core/api/enums';
-import {OFFER_TYPE} from "../Offer/MadeOffersRow";
+import {OFFER_TYPE} from "../Offer/MadeOffers/MadeOffersRow";
 import Button from "../components/Button";
 import {useRouter} from "next/router";
 import MakeListingDialog from "@src/Components/MakeListing";

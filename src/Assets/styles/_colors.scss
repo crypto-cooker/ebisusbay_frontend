@@ -29,6 +29,8 @@
   --color-errorColor1: #e85b5b;
 
   --color-boxShadow1: rgba(20, 20, 20, 0.1);
+
+  --color-divider_soft: #ddd;
 }
 
 // dark theme colors
@@ -62,6 +64,8 @@ html[data-theme='dark'] {
   --color-errorColor1: #e85b5b;
 
   --color-boxShadow1: rgba(20, 20, 20, 0.6);
+
+  --color-divider_soft: #333;
 }
 
 // vars
@@ -94,3 +98,5 @@ $warningColor1: var(--color-warningColor1);
 $errorColor1: var(--color-errorColor1);
 
 $colorBoxShadow1: var(--color-boxShadow1);
+
+$dividerSoft: var(--color-divider_soft);

@@ -165,6 +165,66 @@ const PriceRangeFilter = ({ address, ...props }) => {
         </div>
       )}
 
+
+      <Accordion defaultActiveKey={hasActiveRangeFilter() ? 'price' : undefined}>
+        <Accordion.Item eventKey="price">
+          <Accordion.Header>
+            <h3 className="my-1">Range Filters</h3>
+          </Accordion.Header>
+          <Accordion.Body>
+            <div className="row">
+              <h5 className="mb-0">Price</h5>
+              <div className="col-xl-6 col-lg-12 px-2 mt-2">
+                <Form.Control
+                  type="text"
+                  placeholder="Min Price"
+                  value={minPrice ?? ''}
+                  onChange={onMinPriceChange}
+                  style={{ marginBottom: 0, marginTop: 0 }}
+                />
+              </div>
+              <div className="col-xl-6 col-lg-12 px-2 mt-2">
+                <Form.Control
+                  type="text"
+                  placeholder="Max Price"
+                  value={maxPrice ?? ''}
+                  onChange={onMaxPriceChange}
+                  style={{ marginBottom: 0, marginTop: 0 }}
+                />
+              </div>
+            </div>
+            <div className="row mt-4">
+              <h5 className="mb-0">Rank</h5>
+              <div className="col-xl-6 col-lg-12 px-2 mt-2">
+                <Form.Control
+                  type="text"
+                  placeholder="Min Rank"
+                  value={minRank ?? ''}
+                  onChange={onMinRankChange}
+                  style={{ marginBottom: 0, marginTop: 0 }}
+                />
+              </div>
+              <div className="col-xl-6 col-lg-12 px-2 mt-2">
+                <Form.Control
+                  type="text"
+                  placeholder="Max Rank"
+                  value={maxRank ?? ''}
+                  onChange={onMaxRankChange}
+                  style={{ marginBottom: 0, marginTop: 0 }}
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col">
+                <Button type="legacy" className="ms-auto mt-3" onClick={onApply}>
+                  Apply
+                </Button>
+              </div>
+            </div>
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
+
       <Accordion defaultActiveKey={hasActiveRangeFilter() ? 'price' : undefined}>
         <Accordion.Item eventKey="price">
           <Accordion.Header>

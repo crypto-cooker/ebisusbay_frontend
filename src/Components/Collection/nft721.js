@@ -31,32 +31,35 @@ import {
   isLadyWeirdApesCollection,
   isNftBlacklisted,
   isAnyWeirdApesCollection, isWeirdApesCollection,
-} from '../../utils';
-import {getNftDetails, refreshMetadata} from '../../GlobalState/nftSlice';
-import { connectAccount, chainConnect } from '../../GlobalState/User';
-import { specialImageTransform } from '../../hacks';
+} from '@src/utils';
+import {getNftDetails, refreshMetadata} from '@src/GlobalState/nftSlice';
+import { connectAccount, chainConnect } from '@src/GlobalState/User';
+import { specialImageTransform } from '@src/hacks';
 import ListingItem from '../NftDetails/NFTTabListings/ListingItem';
 import PriceActionBar from '../NftDetails/PriceActionBar';
-import { ERC721 } from '../../Contracts/Abis';
-import { getFilteredOffers } from '../../core/subgraph';
-import MakeOfferDialog from '../Offer/MakeOfferDialog';
+import { ERC721 } from '@src/Contracts/Abis';
+import { getFilteredOffers } from '@src/core/subgraph';
+import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
 import NFTTabOffers from '../Offer/NFTTabOffers';
-import { OFFER_TYPE } from '../Offer/MadeOffersRow';
-import { offerState } from '../../core/api/enums';
+import { OFFER_TYPE } from '../Offer/MadeOffers/MadeOffersRow';
+import { offerState } from '@src/core/api/enums';
 import { commify } from 'ethers/lib/utils';
-import { appConfig } from '../../Config';
-import { hostedImage } from '../../helpers/image';
+import { appConfig } from '@src/Config';
+import { hostedImage } from '@src/helpers/image';
 import Link from 'next/link';
 import axios from "axios";
 import Button from "@src/Components/components/common/Button";
+import Market from "@src/Contracts/Marketplace.json";
+import {collectionRoyaltyPercent} from "@src/core/chain";
 
 const config = appConfig();
 const knownContracts = config.collections;
 const tabs = {
-  details: 'details',
+  properties: 'properties',
   powertraits: 'powertraits',
   history: 'history',
   offers: 'offers',
+  info: 'info',
   breeding: 'breeding',
 };
 
@@ -94,11 +97,19 @@ const Nft721 = ({ address, id }) => {
   const [ladyWeirdApeChildren, setLadyWeirdApeChildren] = useState(null);
   const [evoSkullTraits, setEvoSkullTraits] = useState([]);
   const [lazyHorseTraits, setLazyHorseTraits] = useState([]);
-
   const [customProfile, setCustomProfile] = useState({
     name: null,
     description: null
   });
+
+  const [royalty, setRoyalty] = useState(null);
+  useEffect(() => {
+    async function getRoyalty() {
+      const royalty = await collectionRoyaltyPercent(address, id);
+      setRoyalty(royalty);
+    }
+    getRoyalty();
+  }, []);
 
   useEffect(() => {
     dispatch(getNftDetails(address, id));
@@ -333,7 +344,7 @@ const Nft721 = ({ address, id }) => {
     return nft.original_image;
   };
 
-  const [currentTab, setCurrentTab] = React.useState(tabs.details);
+  const [currentTab, setCurrentTab] = React.useState(tabs.properties);
   const handleTabChange = useCallback((tab) => {
     setCurrentTab(tab);
   }, []);
@@ -543,8 +554,8 @@ const Nft721 = ({ address, id }) => {
 
                   <div className="de_tab">
                     <ul className="de_nav nft_tabs_options">
-                      <li className={`tab ${currentTab === tabs.details ? 'active' : ''}`}>
-                        <span onClick={() => handleTabChange(tabs.details)}>Details</span>
+                      <li className={`tab ${currentTab === tabs.properties ? 'active' : ''}`}>
+                        <span onClick={() => handleTabChange(tabs.properties)}>Properties</span>
                       </li>
                       {((powertraits && powertraits.length > 0) || (evoSkullTraits && evoSkullTraits.length > 0)) && (
                         <li className={`tab ${currentTab === tabs.powertraits ? 'active' : ''}`}>
@@ -557,6 +568,9 @@ const Nft721 = ({ address, id }) => {
                       <li className={`tab ${currentTab === tabs.offers ? 'active' : ''}`}>
                         <span onClick={() => handleTabChange(tabs.offers)}>Offers</span>
                       </li>
+                      <li className={`tab ${currentTab === tabs.info ? 'active' : ''}`}>
+                        <span onClick={() => handleTabChange(tabs.info)}>Info</span>
+                      </li>
                       {babyWeirdApeBreed && (
                         <li className={`tab ${currentTab === tabs.breeding ? 'active' : ''}`}>
                           <span onClick={() => handleTabChange(tabs.breeding)}>Breed Info</span>
@@ -565,12 +579,12 @@ const Nft721 = ({ address, id }) => {
                     </ul>
 
                     <div className="de_tab_content">
-                      {currentTab === tabs.details && (
+                      {currentTab === tabs.properties && (
                         <div className="tab-1 onStep fadeIn">
                           {(nft.attributes && Array.isArray(nft.attributes) && nft.attributes.length > 0) ||
                           (nft.properties && Array.isArray(nft.properties) && nft.properties.length > 0) ? (
                             <div className="d-block mb-3">
-                              <div className="row mt-5 gx-3 gy-2">
+                              <div className="row gx-3 gy-2">
                                 {nft.attributes &&
                                   Array.isArray(nft.attributes) &&
                                   nft.attributes
@@ -621,7 +635,7 @@ const Nft721 = ({ address, id }) => {
                           {(powertraits && powertraits.length > 0) || (evoSkullTraits && evoSkullTraits.length > 0) || (lazyHorseTraits && lazyHorseTraits.length > 0) ? (
                             <>
                               <div className="d-block mb-3">
-                                <div className="row mt-5 gx-3 gy-2">
+                                <div className="row gx-3 gy-2">
                                   {powertraits &&
                                     powertraits.length > 0 &&
                                     powertraits.map((data, i) => {
@@ -700,6 +714,41 @@ const Nft721 = ({ address, id }) => {
 
                       {currentTab === tabs.offers && <NFTTabOffers nftAddress={address} nftId={id} />}
 
+                      {currentTab === tabs.info && (
+                        <div className="tab-1 onStep fadeIn">
+                          <div className="d-block mb-3">
+                            <div className="row gx-3 gy-2">
+                              <div className="d-flex justify-content-between">
+                                <div>Contract Address</div>
+                                <div>
+                                  <a href={`${config.urls.explorer}address/${address}`} target="_blank">
+                                    {shortAddress(address)}
+                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted"/>
+                                  </a>
+                                </div>
+                              </div>
+                              <div className="d-flex justify-content-between">
+                                <div>Token ID</div>
+                                <div>
+                                  <a href={`${config.urls.explorer}token/${address}?a=${id}`} target="_blank">
+                                    {id.length > 10 ? shortAddress(id) : id}
+                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted"/>
+                                  </a>
+                                </div>
+                              </div>
+                              <div className="d-flex justify-content-between">
+                                <div>Token Standard</div>
+                                <div>{collection.multiToken ? 'CRC-1155' : 'CRC-721'}</div>
+                              </div>
+                              <div className="d-flex justify-content-between">
+                                <div>Royalty</div>
+                                <div>{royalty ? `${royalty}%` : 'N/A'}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
                       {currentTab === tabs.breeding && babyWeirdApeBreed && (
                         <div className="tab-2 onStep fadeIn">
                           <div className="d-block mb-3">
@@ -756,11 +805,9 @@ const Nft721 = ({ address, id }) => {
       {openMakeOfferDialog && (
         <MakeOfferDialog
           isOpen={openMakeOfferDialog}
-          toggle={() => setOpenMakeOfferDialog(!openMakeOfferDialog)}
-          offerData={offerData}
-          nftData={nft}
-          collectionMetadata={collectionMetadata}
-          type={offerType}
+          onClose={() => setOpenMakeOfferDialog(false)}
+          nft={nft}
+          collection={collection}
         />
       )}
       <Footer />

@@ -1,39 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Contract, ethers } from 'ethers';
 import Blockies from 'react-blockies';
-import { faCheck, faCircle } from '@fortawesome/free-solid-svg-icons';
-import { Spinner } from 'react-bootstrap';
+import {faCheck, faCircle} from '@fortawesome/free-solid-svg-icons';
+import {Collapse, Spinner} from 'react-bootstrap';
 import styled from 'styled-components';
-import CollectionFilterBar from '../components/CollectionFilterBar';
 import LayeredIcon from '../components/LayeredIcon';
 import Footer from '../components/Footer';
 import CollectionInfoBar from '../components/CollectionInfoBar';
 import SalesCollection from '../components/SalesCollection';
 import CollectionNftsGroup from '../components/CollectionNftsGroup';
 import CollectionListingsGroup from '../components/CollectionListingsGroup';
-import {init, fetchListings, getStats, updateTab} from '../../GlobalState/collectionSlice';
-import { isCronosVerseCollection, isCrosmocraftsCollection } from '../../utils';
-import TraitsFilter from './TraitsFilter';
-import PowertraitsFilter from './PowertraitsFilter';
+import {init, fetchListings, getStats, updateTab} from '@src/GlobalState/collectionSlice';
+import { isCronosVerseCollection, isCrosmocraftsCollection } from '@src/utils';
 import SocialsBar from './SocialsBar';
 import { CollectionSortOption } from '../Models/collection-sort-option.model';
-import Market from '../../Contracts/Marketplace.json';
 import stakingPlatforms from '../../core/data/staking-platforms.json';
-import PriceRangeFilter from '../Collection/PriceRangeFilter';
 import CollectionCronosverse from '../Collection/collectionCronosverse';
-import {appConfig} from "../../Config";
-import {hostedImage, ImageKitService} from "../../helpers/image";
+import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {useRouter} from "next/router";
 import {CollectionFilters} from "../Models/collection-filters.model";
-import {pushQueryString} from "../../helpers/query";
+import {pushQueryString} from "@src/helpers/query";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
-
-const config = appConfig();
+import {CollectionTaskBar} from "@src/Components/Collection/CollectionTaskBar";
+import {DesktopFilters} from "@src/Components/Collection/CollectionTaskBar/DesktopFilters";
+import useBreakpoint from "use-breakpoint";
+import {MobileFilters} from "@src/Components/Collection/CollectionTaskBar/MobileFilters";
+import {FilterResultsBar} from "@src/Components/Collection/FilterResultsBar";
+import {MobileSort} from "@src/Components/Collection/CollectionTaskBar/MobileSort";
 
 const NegativeMargin = styled.div`
   margin-left: -1.75rem !important;
   margin-right: -1.75rem !important;
+`;
+
+const ThemedBackground = styled.div`
+  background: ${({ theme }) => theme.colors.bgColor1}
 `;
 
 const tabs = {
@@ -42,19 +43,15 @@ const tabs = {
   map: 'map'
 };
 
+const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
 const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-  const readMarket = new Contract(config.contracts.market, Market.abi, readProvider);
-
-  const [royalty, setRoyalty] = useState(null);
-
-  const collectionStatsLoading = useSelector((state) => state.collection.statsLoading);
   const collectionStats = useSelector((state) => state.collection.stats);
   const collectionLoading = useSelector((state) => state.collection.loading);
   const initialLoadComplete = useSelector((state) => state.collection.initialLoadComplete);
+  // const currentFilter = useSelector((state) => state.collection.query.filter);
 
   const [isFirstLoaded, setIsFirstLoaded] = useState(0);
 
@@ -99,13 +96,24 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
     dispatch(fetchListings());
   }
 
-  const hasTraits = () => {
-    return collectionStats?.traits != null && Object.entries(collectionStats?.traits).length > 0;
-  };
-
-  const hasPowertraits = () => {
-    return collectionStats?.powertraits != null && Object.entries(collectionStats?.powertraits).length > 0;
-  };
+  // const activeFiltersCount = () => {
+  //   const traits = Object.values(currentFilter.traits)
+  //     .map((traitCategoryValue) => traitCategoryValue.length)
+  //     .reduce((prev, curr) => prev + curr, 0);
+  //   const powertraits = Object.values(currentFilter.powertraits)
+  //     .map((traitCategoryValue) => traitCategoryValue.length)
+  //     .reduce((prev, curr) => prev + curr, 0);
+  //   let count = traits + powertraits;
+  //
+  //   if (currentFilter.minPrice) count++;
+  //   if (currentFilter.maxPrice) count++;
+  //   if (currentFilter.minRank) count++;
+  //   if (currentFilter.maxRank) count++;
+  //   if (currentFilter.search) count++;
+  //   if (currentFilter.listed) count++;
+  //
+  //   return count;
+  // };
 
   const loadMore = () => {
     dispatch(fetchListings());
@@ -120,13 +128,6 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
   useEffect(() => {
     async function asyncFunc() {
       dispatch(getStats(collection, null, collection.mergedAddresses));
-      try {
-        let royalties = await readMarket.royalties(collection.address);
-        setRoyalty(Math.round(royalties[1]) / 100);
-      } catch (error) {
-        console.log('error retrieving royalties for collection', error);
-        setRoyalty('N/A');
-      }
     }
     asyncFunc();
     // eslint-disable-next-line
@@ -140,6 +141,25 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
       setIsFirstLoaded(2);
     }
   }, [collectionLoading, isFirstLoaded]);
+
+  const [filtersVisible, setFiltersVisible] = useState(true);
+  const [mobileSortVisible, setMobileSortVisible] = useState(false);
+  const [useMobileMenu, setUseMobileMenu] = useState(false);
+  const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
+  const [hasManuallyToggledFilters, setHasManuallyToggledFilters] = useState(false);
+
+  useEffect(() => {
+    const isMobileSize = minWidth < BREAKPOINTS.m;
+    setUseMobileMenu(isMobileSize);
+    if (!hasManuallyToggledFilters) {
+      setFiltersVisible(!isMobileSize);
+    }
+  }, [breakpoint]);
+
+  const toggleFilterVisibility = () => {
+    setHasManuallyToggledFilters(true);
+    setFiltersVisible(!filtersVisible)
+  };
 
   return (
     <div>
@@ -193,7 +213,7 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
         </div>
       </section>
 
-      <section className="container no-top">
+      <div className="px-4">
         {collectionStats && (
           <div className="row">
             {hasRank && collection.metadata.rarity === 'rarity_sniper' && (
@@ -206,7 +226,7 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
                 </div>
               </div>
             )}
-            <CollectionInfoBar collectionStats={collectionStats} royalty={royalty} />
+            <CollectionInfoBar collectionStats={collectionStats} />
             {collection.address.toLowerCase() === '0x7D5f8F9560103E1ad958A6Ca43d49F954055340a'.toLowerCase() && (
               <div className="row m-3">
                 <div className="mx-auto text-center fw-bold" style={{ fontSize: '1.2em' }}>
@@ -259,35 +279,32 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
           <div className="de_tab_content">
             {openMenu === tabs.items && (
               <div className="tab-1 onStep fadeIn">
-                <div className="row">
-                  <CollectionFilterBar
-                    showFilter={false}
-                    cacheName={cacheName}
-                    address={collection.address}
-                    traits={collectionStats?.traits}
-                    powertraits={collectionStats?.powertraits}
+                <ThemedBackground className="row sticky-top pt-2">
+                  <CollectionTaskBar
+                    collection={collection}
+                    onFilterToggle={toggleFilterVisibility}
+                    onSortToggle={() => setMobileSortVisible(!mobileSortVisible)}
                   />
-                </div>
-                <div className="row">
-                  {collectionStatsLoading ? (
-                    <></>
-                  ) : (
-                    // <div className="col-md-3 mb-4">
-                    //   <Skeleton count={5} type="rect" />
-                    // </div>
-                    <div className="col-md-3 mb-4">
-                      <PriceRangeFilter className="mb-3" address={collection.address} />
-                      {hasTraits() && <TraitsFilter address={collection.address} />}
-                      {hasPowertraits() && <PowertraitsFilter address={collection.address} />}
+                </ThemedBackground>
+                <div className="d-flex">
+                  <Collapse in={filtersVisible && !useMobileMenu} dimension="width">
+                    <div className="m-0 p-0">
+                      <div className="me-4" style={{width: 250, top:'56px'}}>
+                        <DesktopFilters
+                          address={collection.address}
+                          traits={collectionStats?.traits}
+                          powertraits={collectionStats?.powertraits}
+                        />
+                      </div>
                     </div>
-                  )}
-                  <div className="col-md-9">
+                  </Collapse>
+                  <div className="flex-fill">
+                    <FilterResultsBar collection={collection} />
                     {isUsingListingsFallback ? (
                       <CollectionListingsGroup listings={listings} canLoadMore={canLoadMore} loadMore={loadMore} />
                     ) : (
                       <CollectionNftsGroup
                         listings={listings}
-                        royalty={royalty}
                         canLoadMore={canLoadMore}
                         loadMore={loadMore}
                         collection={collection}
@@ -307,7 +324,7 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
               </div>
             )}
             {openMenu === tabs.activity && (
-              <div className="tab-2 onStep fadeIn">
+              <div className="tab-2 onStep fadeIn container">
                 <SalesCollection cacheName="collection" collectionId={collection.address} />
               </div>
             )}
@@ -318,7 +335,31 @@ const Collection721 = ({ collection,  cacheName = 'collection', query }) => {
             )}
           </div>
         </div>
-      </section>
+      </div>
+
+      <MobileFilters
+        address={collection.address}
+        show={useMobileMenu && filtersVisible}
+        onHide={() => setFiltersVisible(false)}
+        traits={collectionStats?.traits}
+        powertraits={collectionStats?.powertraits}
+      />
+
+      <MobileSort
+        show={useMobileMenu && mobileSortVisible}
+        onHide={() => setMobileSortVisible(false)}
+      />
+
+      {/*{useMobileMenu && openMenu === tabs.items && (*/}
+      {/*  <div className="d-flex fixed-bottom mx-2 my-2">*/}
+      {/*    <div className="mx-auto">*/}
+      {/*      <Button type="legacy" style={{height: '100%'}} onClick={() => setFiltersVisible(true)}>*/}
+      {/*        <FontAwesomeIcon icon={faFilter} />*/}
+      {/*        <span className="ms-2">Filters {activeFiltersCount()}</span>*/}
+      {/*      </Button>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*)}*/}
 
       <Footer />
     </div>
