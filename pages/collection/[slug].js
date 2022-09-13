@@ -70,13 +70,13 @@ const Collection = ({ ssrCollection, query }) => {
           ) : type === collectionTypes.ERC1155 ? (
             <>
               {collection.split ? (
-                <Collection1155 collection={collection} tokenId={collection.id} slug={slug} cacheName={slug} />
+                <Collection1155 collection={collection} tokenId={collection.id} query={query} />
               ) : (
-                <Collection1155 collection={collection} slug={slug} cacheName={slug} />
+                <Collection1155 collection={collection} query={query} />
               )}
             </>
           ) : (
-            <Collection721 collection={collection} cacheName={slug} query={query} />
+            <Collection721 collection={collection} query={query} />
           )}
         </>
       )}
