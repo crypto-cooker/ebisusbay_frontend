@@ -8,7 +8,7 @@ import {
   faBolt,
   faShoppingBag,
   faUser,
-  faEdit, faCoins, faCopy, faHeart, faDollarSign, faWallet, faSearch
+  faEdit, faCoins, faCopy, faHeart, faDollarSign, faWallet, faSearch, faHand
 } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import MetaMaskOnboarding from '@metamask/onboarding';
@@ -279,76 +279,76 @@ const Index = function () {
 
             <div className={classnames("row row-cols-2 g-2", styles.navigation)}>
               <div className="col">
-                <div className={styles.col}>
-                  <span onClick={() => navigateTo(`/account/${walletAddress}`)}>
-                    <span>
-                      <FontAwesomeIcon icon={faUser} />
-                    </span>
-                    <span className="ms-2">My Profile</span>
-                  </span>
-                </div>
+                <span onClick={() => navigateTo(`/account/${walletAddress}`)}>
+                  <div className={styles.col}>
+                      <span>
+                        <FontAwesomeIcon icon={faUser} />
+                      </span>
+                      <span className="ms-2">My Profile</span>
+                  </div>
+                </span>
               </div>
               <div className="col">
-                <div className={styles.col}>
-                  <span onClick={() => navigateTo(`/account/settings/profile`)}>
-                    <span>
-                      <FontAwesomeIcon icon={faEdit} />
-                    </span>
-                    <span className="ms-2">Edit Account</span>
-                  </span>
-                </div>
+                <span onClick={() => navigateTo(`/account/settings/profile`)}>
+                  <div className={styles.col}>
+                      <span>
+                        <FontAwesomeIcon icon={faEdit} />
+                      </span>
+                      <span className="ms-2">Edit Account</span>
+                  </div>
+                </span>
               </div>
               <div className="col">
-                <div className={styles.col}>
-                  <span onClick={() => navigateTo(`/offers`)}>
-                    <span>
-                      <FontAwesomeIcon icon={faCoins} />
-                    </span>
-                    <span className="ms-2">My Offers</span>
-                  </span>
-                </div>
+                <span onClick={() => navigateTo(`/account/${walletAddress}?tab=offers`)}>
+                  <div className={styles.col}>
+                      <span>
+                        <FontAwesomeIcon icon={faHand} />
+                      </span>
+                      <span className="ms-2">My Offers</span>
+                  </div>
+                </span>
               </div>
               {(user.vipCount > 0 || user.stakeCount > 0) && (
                 <div className="col">
-                  <div className={styles.col}>
-                    <span onClick={() => navigateTo(`/staking`)}>
+                  <span onClick={() => navigateTo(`/staking`)}>
+                    <div className={styles.col}>
                       <span>
                         <FontAwesomeIcon icon={faBolt} />
                       </span>
                       <span className="ms-2">My Staking</span>
-                    </span>
-                  </div>
+                    </div>
+                  </span>
                 </div>
               )}
               <div className="col">
-                <div className={styles.col}>
-                  <span onClick={() => navigateTo(`/account/${walletAddress}?tab=listings`)}>
-                    <span>
-                      <FontAwesomeIcon icon={faCoins} />
-                    </span>
-                    <span className="ms-2">Listings</span>
-                  </span>
-                </div>
+                <span onClick={() => navigateTo(`/account/${walletAddress}?tab=listings`)}>
+                  <div className={styles.col}>
+                      <span>
+                        <FontAwesomeIcon icon={faCoins} />
+                      </span>
+                      <span className="ms-2">Listings</span>
+                  </div>
+                </span>
               </div>
               <div className="col">
-                <div className={styles.col}>
-                  <span onClick={() => navigateTo(`/account/${walletAddress}?tab=sales`)}>
-                    <span>
-                      <FontAwesomeIcon icon={faDollarSign} />
-                    </span>
-                    <span className="ms-2">Sales</span>
-                  </span>
-                </div>
+                <span onClick={() => navigateTo(`/account/${walletAddress}?tab=sales`)}>
+                  <div className={styles.col}>
+                      <span>
+                        <FontAwesomeIcon icon={faDollarSign} />
+                      </span>
+                      <span className="ms-2">Sales</span>
+                  </div>
+                </span>
               </div>
               <div className="col">
-                <div className={styles.col}>
-                  <span onClick={() => navigateTo(`/account/${walletAddress}?tab=favorites`)}>
-                    <span>
-                      <FontAwesomeIcon icon={faHeart} />
-                    </span>
-                    <span className="ms-2">Favourites</span>
-                  </span>
-                </div>
+                <span onClick={() => navigateTo(`/account/${walletAddress}?tab=favorites`)}>
+                  <div className={styles.col}>
+                      <span>
+                        <FontAwesomeIcon icon={faHeart} />
+                      </span>
+                      <span className="ms-2">Favourites</span>
+                  </div>
+                </span>
               </div>
             </div>
 

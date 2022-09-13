@@ -25,6 +25,7 @@ export const configData = {
       cdn: 'https://cdn.ebisusbay.com/',
       subgraph: 'https://graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.com/api/',
+      explorer: 'https://cronoscan.com/',
     },
     rpc: {
       read: 'https://rpc.ebisusbay.com/',
@@ -72,6 +73,7 @@ export const configData = {
       cdn: 'https://cdn.ebisusbay.biz/test/',
       subgraph: 'https://graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.biz/api/',
+      explorer: 'https://cronoscan.com/',
     },
     rpc: {
       read: 'https://rpc.ebisusbay.com/',
@@ -119,6 +121,7 @@ export const configData = {
       cdn: 'https://cdn.ebisusbay.biz/test/',
       subgraph: 'https://testgraph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.biz/api/',
+      explorer: 'https://testnet.cronoscan.com/',
     },
     rpc: {
       read: 'https://rpc.ebisusbay.biz/',

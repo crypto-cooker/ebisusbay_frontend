@@ -69,7 +69,7 @@ const collectionSlice = createSlice({
       state.query.filter = option;
     },
     onSort: (state, action) => {
-      const { cacheName, option } = action.payload;
+      const { option } = action.payload;
 
       state.listings = [];
       state.totalPages = 0;
@@ -113,6 +113,16 @@ const collectionSlice = createSlice({
       state.query.filter.minRank = minRank;
       state.query.filter.maxRank = maxRank;
     },
+    clearFilters: (state, action) => {
+      const filter = CollectionFilters.default();
+      filter.address = state.query.filter.address;
+
+      state.listings = [];
+      state.totalPages = 0;
+      state.query.page = 0;
+      state.query.filter = filter;
+      state.query.sort = {};
+    },
     onCollectionStatsLoaded: (state, action) => {
       state.stats = action.payload.stats;
       state.statsLoading = false;
@@ -140,6 +150,7 @@ export const {
   onCollectionStatsLoading,
   onCollectionStatsLoaded,
   onTabUpdated,
+  clearFilters
 } = collectionSlice.actions;
 
 export default collectionSlice.reducer;
@@ -215,7 +226,7 @@ export const filterListings = (filterOption, cacheName) => async (dispatch) => {
 };
 
 export const sortListings = (sortOption, cacheName) => async (dispatch) => {
-  dispatch(onSort({ option: sortOption, cacheName }));
+  dispatch(onSort({ option: sortOption }));
   dispatch(fetchListings());
 };
 
@@ -243,8 +254,8 @@ export const filterListingsByPrice =
   dispatch(fetchListings());
 };
 
-export const resetListings = () => async (dispatch) => {
-  dispatch(clearSet());
+export const resetFilters = () => async (dispatch) => {
+  dispatch(clearFilters());
   dispatch(fetchListings());
 };
 

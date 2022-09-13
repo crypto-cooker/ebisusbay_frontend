@@ -1,7 +1,7 @@
 import React, {memo, useCallback, useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { ethers } from 'ethers';
+import {Contract, ethers} from 'ethers';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Spinner } from 'react-bootstrap';
@@ -18,28 +18,33 @@ import {
   relativePrecision,
   shortAddress,
   timeSince,
-} from '../../utils';
-import { getNftDetails } from '../../GlobalState/nftSlice';
-import { specialImageTransform } from '../../hacks';
-import { chainConnect, connectAccount } from '../../GlobalState/User';
+} from '@src/utils';
+import { getNftDetails } from '@src/GlobalState/nftSlice';
+import { specialImageTransform } from '@src/hacks';
+import { chainConnect, connectAccount } from '@src/GlobalState/User';
 
 import ListingItem from '../NftDetails/NFTTabListings/ListingItem';
-import { listingState, offerState } from '../../core/api/enums';
-import { getFilteredOffers } from '../../core/subgraph';
+import { listingState, offerState } from '@src/core/api/enums';
+import { getFilteredOffers } from '@src/core/subgraph';
 import PriceActionBar from '../NftDetails/PriceActionBar';
 import NFTTabListings from '../NftDetails/NFTTabListings';
-import MakeOfferDialog from '../Offer/MakeOfferDialog';
-import { OFFER_TYPE } from '../Offer/MadeOffersRow';
+import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
+import { OFFER_TYPE } from '../Offer/MadeOffers/MadeOffersRow';
 import NFTTabOffers from '../Offer/NFTTabOffers';
 import { AnyMedia } from '../components/AnyMedia';
-import { hostedImage } from '../../helpers/image';
+import { hostedImage } from '@src/helpers/image';
+import {appConfig} from "@src/Config";
+import Market from "@src/Contracts/Marketplace.json";
+import {collectionRoyaltyPercent} from "@src/core/chain";
 
+const config = appConfig();
 const tabs = {
-  details: 'details',
+  properties: 'properties',
   powertraits: 'powertraits',
   history: 'history',
   listings: 'listings',
   offers: 'offers',
+  info: 'info',
 };
 
 const Nft1155 = ({ address, id }) => {
@@ -74,6 +79,15 @@ const Nft1155 = ({ address, id }) => {
     dispatch(getNftDetails(address, id));
   }, [dispatch, address, id]);
 
+  const [royalty, setRoyalty] = useState(null);
+  useEffect(() => {
+    async function getRoyalty() {
+      const royalty = await collectionRoyaltyPercent(address, id);
+      setRoyalty(royalty);
+    }
+    getRoyalty();
+  }, []);
+
   const fullImage = () => {
     if (nft.original_image.startsWith('ipfs://')) {
       const link = nft.original_image.split('://')[1];
@@ -88,7 +102,7 @@ const Nft1155 = ({ address, id }) => {
     return nft.original_image;
   };
 
-  const [currentTab, setCurrentTab] = useState(tabs.details);
+  const [currentTab, setCurrentTab] = useState(tabs.properties);
   const handleTabChange = useCallback((tab) => {
     setCurrentTab(tab);
   }, []);
@@ -218,8 +232,8 @@ const Nft1155 = ({ address, id }) => {
 
                   <div className="de_tab">
                     <ul className="de_nav nft_tabs_options">
-                      <li className={`tab ${currentTab === tabs.details ? 'active' : ''}`}>
-                        <span onClick={() => handleTabChange(tabs.details)}>Details</span>
+                      <li className={`tab ${currentTab === tabs.properties ? 'active' : ''}`}>
+                        <span onClick={() => handleTabChange(tabs.properties)}>Properties</span>
                       </li>
                       {powertraits && powertraits.length > 0 && (
                         <li className={`tab ${currentTab === tabs.powertraits ? 'active' : ''}`}>
@@ -237,15 +251,18 @@ const Nft1155 = ({ address, id }) => {
                       <li className={`tab ${currentTab === tabs.offers ? 'active' : ''}`}>
                         <span onClick={() => handleTabChange(tabs.offers)}>Offers</span>
                       </li>
+                      <li className={`tab ${currentTab === tabs.info ? 'active' : ''}`}>
+                        <span onClick={() => handleTabChange(tabs.info)}>Info</span>
+                      </li>
                     </ul>
 
                     <div className="de_tab_content">
-                      {currentTab === tabs.details && (
+                      {currentTab === tabs.properties && (
                         <div className="tab-1 onStep fadeIn">
                           {(nft.attributes && Array.isArray(nft.attributes) && nft.attributes.length > 0) ||
                           (nft.properties && Array.isArray(nft.properties) && nft.properties.length > 0) ? (
                             <div className="d-block mb-3">
-                              <div className="row mt-5 gx-3 gy-2">
+                              <div className="row gx-3 gy-2">
                                 {nft.attributes &&
                                   Array.isArray(nft.attributes) &&
                                   nft.attributes
@@ -326,7 +343,7 @@ const Nft1155 = ({ address, id }) => {
                           {powertraits && powertraits.length > 0 ? (
                             <>
                               <div className="d-block mb-3">
-                                <div className="row mt-5 gx-3 gy-2">
+                                <div className="row gx-3 gy-2">
                                   {powertraits.map((data, i) => {
                                     return (
                                       <div key={i} className="col-lg-4 col-md-6 col-sm-6">
@@ -400,6 +417,42 @@ const Nft1155 = ({ address, id }) => {
                           <NFTTabListings listings={activeListings} />
                         </div>
                       )}
+
+                      {currentTab === tabs.info && (
+                        <div className="tab-1 onStep fadeIn">
+                          <div className="d-block mb-3">
+                            <div className="row gx-3 gy-2">
+                              <div className="d-flex justify-content-between">
+                                <div>Contract Address</div>
+                                <div>
+                                  <a href={`${config.urls.explorer}address/${address}`} target="_blank">
+                                    {shortAddress(address)}
+                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted"/>
+                                  </a>
+                                </div>
+                              </div>
+                              <div className="d-flex justify-content-between">
+                                <div>Token ID</div>
+                                <div>
+                                  <a href={`${config.urls.explorer}token/${address}?a=${id}`} target="_blank">
+                                    {id.length > 10 ? shortAddress(id) : id}
+                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted"/>
+                                  </a>
+                                </div>
+                              </div>
+                              <div className="d-flex justify-content-between">
+                                <div>Token Standard</div>
+                                <div>{collection.multiToken ? 'CRC-1155' : 'CRC-721'}</div>
+                              </div>
+                              <div className="d-flex justify-content-between">
+                                <div>Royalty</div>
+                                <div>{royalty ?? 'N/A'}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
                       {currentTab === tabs.offers && <NFTTabOffers nftAddress={address} nftId={id} />}
                     </div>
                   </div>
@@ -412,11 +465,9 @@ const Nft1155 = ({ address, id }) => {
       {openMakeOfferDialog && (
         <MakeOfferDialog
           isOpen={openMakeOfferDialog}
-          toggle={() => setOpenMakeOfferDialog(!openMakeOfferDialog)}
-          offerData={offerData}
-          nftData={nft}
-          collectionMetadata={collectionMetadata}
-          type={offerType}
+          onClose={() => setOpenMakeOfferDialog(false)}
+          nftId={id}
+          collection={collection}
         />
       )}
       <Footer />

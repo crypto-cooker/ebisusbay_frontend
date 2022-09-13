@@ -22,6 +22,7 @@ import {appConfig} from "@src/Config";
 import Market from "@src/Contracts/Marketplace.json";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import * as Sentry from '@sentry/react';
+import {collectionRoyaltyPercent} from "@src/core/chain";
 
 const DialogContainer = styled(Dialog)`
   .MuiPaper-root {
@@ -160,6 +161,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
       setIsLoading(true);
       setPriceError(null);
       const nftAddress = nft.address ?? nft.nftAddress;
+      const nftId = nft.id ?? nft.nftId;
       const marketContractAddress = config.contracts.market;
       const marketContract = wrappedMarketContract();
       setSalePrice(listing ? Math.round(listing.price) : null)
@@ -170,10 +172,10 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
       }
 
       const fees = await marketContract.fee(user.address);
-      const royalties = await marketContract.royalties(nftAddress);
-
       setFee((fees / 10000) * 100);
-      setRoyalty((royalties[1] / 10000) * 100);
+
+      const royalties = await collectionRoyaltyPercent(nftAddress, nftId);
+      setRoyalty(royalties);
 
       const contract = new Contract(nftAddress, ERC721, user.provider.getSigner());
       const transferEnabled = await contract.isApprovedForAll(user.address, marketContractAddress);

@@ -7,7 +7,7 @@ import { ethers } from 'ethers';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
 import Button from './Button';
-import MakeOfferDialog from '../Offer/MakeOfferDialog';
+import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
 import { connectAccount, chainConnect } from '../../GlobalState/User';
 import {isNftBlacklisted, round, siPrefixedNumber} from '../../utils';
 import { AnyMedia } from './AnyMedia';
@@ -49,7 +49,7 @@ const MakeOffer = styled.div`
   }
 `;
 
-const NftCard = ({ royalty, listing, imgClass = 'marketplace', watermark, collection, canBuy = true }) => {
+const NftCard = ({ listing, imgClass = 'marketplace', watermark, collection, canBuy = true }) => {
   const history = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -132,30 +132,26 @@ const NftCard = ({ royalty, listing, imgClass = 'marketplace', watermark, collec
               <div>{listing.market?.price > 6 ? siPrefixedNumber(listing.market?.price) : ethers.utils.commify(round(listing.market?.price))} CRO</div>
             </MakeBuy>
           )}
-          <MakeOffer>
+          <div className="d-flex flex-wrap">
             {getIsNftListed() && canBuy ? (
-              <div>
-                <Button type="legacy" onClick={handleBuy}>
-                  Buy
-                </Button>
-              </div>
+              <Button type="legacy" className="flex-fill m-1" onClick={handleBuy}>
+                Buy
+              </Button>
             ) : (
               <div></div>
             )}
-            <div>
-              <Button type="legacy-outlined" onClick={() => handleMakeOffer()}>
-                Offer
-              </Button>
-            </div>
-          </MakeOffer>
+            <Button type="legacy-outlined" className="flex-fill m-1" onClick={() => handleMakeOffer()}>
+              Offer
+            </Button>
+          </div>
         </div>
       </div>
       {openMakeOfferDialog && (
         <MakeOfferDialog
           isOpen={openMakeOfferDialog}
-          toggle={() => setOpenMakeOfferDialog(!openMakeOfferDialog)}
-          nftData={listing}
-          royalty={royalty}
+          onClose={() => setOpenMakeOfferDialog(false)}
+          nft={listing}
+          collection={collection}
         />
       )}
     </>

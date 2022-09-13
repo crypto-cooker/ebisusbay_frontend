@@ -6,12 +6,12 @@ import { ethers } from 'ethers';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
 import Button from './Button';
-import MakeOfferDialog from '../Offer/MakeOfferDialog';
-import { getTheme } from '../../Theme/theme';
+import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
+import { getTheme } from '@src/Theme/theme';
 import { AnyMedia } from './AnyMedia';
-import { connectAccount, chainConnect } from '../../GlobalState/User';
-import { round } from '../../utils';
-import {nftCardUrl} from "../../helpers/image";
+import { connectAccount, chainConnect } from '@src/GlobalState/User';
+import { round } from '@src/utils';
+import {nftCardUrl} from "@src/helpers/image";
 
 const Watermarked = styled.div`
   position: relative;
@@ -54,7 +54,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark, address, co
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
-  const handleMakeOffer = (type) => {
+  const handleMakeOffer = () => {
     if (user.address) {
       setOpenMakeOfferDialog(!openMakeOfferDialog);
     } else {
@@ -159,8 +159,9 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark, address, co
       {openMakeOfferDialog && (
         <MakeOfferDialog
           isOpen={openMakeOfferDialog}
-          toggle={() => setOpenMakeOfferDialog(!openMakeOfferDialog)}
-          nftData={convertListingData(listing)}
+          onClose={() => setOpenMakeOfferDialog(false)}
+          nftId={listing.nftId}
+          collection={collection}
         />
       )}
     </>

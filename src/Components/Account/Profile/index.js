@@ -63,6 +63,11 @@ export default function Profile({ address, profile, tab }) {
     ImageKitService.from(profile.profilePicture).setWidth(200).setHeight(200).buildUrl() :
     hostedImage('/img/avatar.jpg');
 
+  // Ensure correct tab highlighted when changing from AccountMenu while already in Profile page
+  useEffect(() => {
+    setCurrentTab(tab ?? tabs.inventory);
+  }, [tab])
+
   return (
     <div className={styles.profile}>
       <PageHead
@@ -87,7 +92,7 @@ export default function Profile({ address, profile, tab }) {
           <div className="mainbreadcumb"></div>
         </section>
       )}
-      <section className="container pt-4">
+      <section className="px-5 pt-4">
         <div className={`${styles.userInfo} row`}>
           <div className="d-sm-flex text-center text-sm-start">
             <div className="flex-shrink-0">

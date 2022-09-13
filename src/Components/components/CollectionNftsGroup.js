@@ -37,12 +37,11 @@ const CollectionNftsGroup = ({
           </div>
         ) : <></>}
       >
-        <div className="card-group">
+        <div className="card-group row g-3">
           {listings &&
             listings.map((listing, index) => (
-              <div key={index} className="d-item col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12 mb-4 px-2">
+              <div key={index} className="d-item col-xxl-2 col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12">
                 <NftCard
-                  royalty={royalty}
                   listing={listing}
                   imgClass="collection"
                   collection={collection}
@@ -59,7 +58,7 @@ const CollectionNftsGroup = ({
         <div className="card-group">
           {listings &&
             listings.map((listing, index) => (
-              <div key={index} className="d-item col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12 mb-4 px-2">
+              <div key={index} className="d-item col-xxl-2 col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12 mb-4 px-2">
                 <NftCard
                   royalty={royalty}
                   listing={listing}

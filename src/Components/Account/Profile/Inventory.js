@@ -2,38 +2,42 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {getNftsForAddress2} from "@src/core/api";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {Spinner} from "react-bootstrap";
+import {Collapse, Spinner} from "react-bootstrap";
 import MyNftCard from "@src/Components/components/MyNftCard";
 import {caseInsensitiveCompare, findCollectionByAddress} from "@src/utils";
 import NftCard from "@src/Components/components/NftCard";
 import {appConfig} from "@src/Config";
 import {MyNftPageActions} from "@src/GlobalState/User";
-import MyNftTransferDialog from "@src/Components/components/MyNftTransferDialog";
 import MyNftCancelDialog from "@src/Components/components/MyNftCancelDialog";
-import {useRouter} from "next/router";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
-import TopFilterBar from "@src/Components/components/TopFilterBar";
-import {QueryClientProvider, useInfiniteQuery, useQueryClient} from "@tanstack/react-query";
+import {useInfiniteQuery} from "@tanstack/react-query";
 import MakeListingDialog from "@src/Components/MakeListing";
+import {CollectionFilter} from "@src/Components/Account/Profile/Inventory/CollectionFilter";
+import {MobileFilters} from "@src/Components/Account/Profile/Inventory/MobileFilters";
+import Button from "@src/Components/components/Button";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faAngleLeft, faFilter} from "@fortawesome/free-solid-svg-icons";
+import useBreakpoint from "use-breakpoint";
+import TransferNftDialog from "@src/Components/Account/Profile/Dialogs/TransferNftDialog";
 
 const knownContracts = appConfig('collections');
 
+const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
 export default function Inventory({ address }) {
   const dispatch = useDispatch();
-  const router = useRouter();
-  const queryClient = useQueryClient();
 
   const user = useSelector((state) => state.user);
 
   const [collections, setCollections] = useState([]);
-  const [collectionFilter, setCollectionFilter] = useState(null);
+  const [collectionFilter, setCollectionFilter] = useState([]);
 
   const onFilterChange = (filterOption) => {
-    setCollectionFilter(filterOption);
+    setCollectionFilter(filterOption ?? []);
+    refetch();
   };
 
   const fetcher = async ({ pageParam = 1 }) => {
-    return await getNftsForAddress2(address, user.provider, pageParam, collectionFilter?.value);
+    return await getNftsForAddress2(address, user.provider, pageParam, collectionFilter);
   };
 
   const {
@@ -44,10 +48,12 @@ export default function Inventory({ address }) {
     isFetching,
     isFetchingNextPage,
     status,
+    refetch,
   } = useInfiniteQuery(['Inventory', address, collectionFilter], fetcher, {
     getNextPageParam: (lastPage, pages) => {
       return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
     },
+    refetchOnWindowFocus: false
   })
 
   const loadMore = () => {
@@ -58,17 +64,18 @@ export default function Inventory({ address }) {
     async function func() {
       const result = await getWalletOverview(address);
       setCollections(result.data
-        .filter((c) => !!findCollectionByAddress(c.nftAddress, c.nftId))
-        .map((c) => {
-          const name = c.name ?? findCollectionByAddress(c.nftAddress, c.nftId)?.name;
-          return {label:name, value:c.nftAddress}
-        })
-        .sort((a, b) => a.label > b.label ? 1 : -1)
+        .reduce((arr, item) => {
+          const coll = findCollectionByAddress(item.nftAddress, item.nftId);
+          if (!coll) return arr;
+          coll.balance = item.balance;
+          arr.push(coll);
+          return arr;
+        }, [])
+        .sort((a, b) => a.name > b.name ? 1 : -1)
       );
     }
 
     func();
-
   }, [address]);
 
   const historyContent = useMemo(() => {
@@ -82,7 +89,7 @@ export default function Inventory({ address }) {
       <p>Error: {error.message}</p>
     ) : (
       <>
-        <div className="card-group">
+        <div className="card-group row g-3">
 
           {data.pages.map((items, index) => (
             <React.Fragment key={index}>
@@ -90,7 +97,7 @@ export default function Inventory({ address }) {
                 const collection = knownContracts.find((c) => caseInsensitiveCompare(c.address, nft.address));
                 return (
                   <div
-                    className="d-item col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12 mb-4 px-2"
+                    className="d-item col-xxl-2 col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12 mb-4"
                     key={`${nft.address}-${nft.id}-${nft.listed}-${index}`}
                   >
                     {caseInsensitiveCompare(address, user.address) ? (
@@ -126,53 +133,103 @@ export default function Inventory({ address }) {
         </div>
       </>
     );
-  }, [data, error, status]);
+  }, [data, error, status, address, user.address]);
+
+  const [filtersVisible, setFiltersVisible] = useState(true);
+  const [useMobileMenu, setUseMobileMenu] = useState(false);
+  const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
+  const [hasManuallyToggledFilters, setHasManuallyToggledFilters] = useState(false);
+
+  useEffect(() => {
+    const isMobileSize = minWidth < BREAKPOINTS.m;
+    setUseMobileMenu(isMobileSize);
+    if (!hasManuallyToggledFilters) {
+      setFiltersVisible(!isMobileSize);
+    }
+  }, [breakpoint]);
+
+  const toggleFilterVisibility = () => {
+    setHasManuallyToggledFilters(true);
+    setFiltersVisible(!filtersVisible)
+  };
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="row">
-        <div className="col">
-          <TopFilterBar
-            className="col-6"
-            showFilter={true}
-            showSort={false}
-            showSearch={false}
-            filterOptions={[{label: 'All', value: ''}, ...collections]}
-            filterPlaceHolder="Filter Collection..."
-            onFilterChange={onFilterChange}
-            filterValue={collectionFilter}
-          />
+    <>
+      <div className="d-flex">
+        <Collapse in={filtersVisible && !useMobileMenu} dimension="width">
+          <div className="m-0 p-0">
+            <div className="me-4 px-2" style={{width: 320}}>
+              <CollectionFilter
+                collections={collections}
+                currentFilter={collectionFilter}
+                onFilter={onFilterChange}
+              />
+            </div>
+          </div>
+        </Collapse>
+        <div className="flex-fill">
+          <div className="d-flex mb-2">
+            <div>
+              <Button
+                type="legacy-outlined"
+                onClick={toggleFilterVisibility}
+              >
+                <FontAwesomeIcon icon={filtersVisible ? faAngleLeft : faFilter} />
+              </Button>
+            </div>
+          </div>
+          <InfiniteScroll
+            dataLength={data?.pages ? data.pages.flat().length : 0}
+            next={loadMore}
+            hasMore={hasNextPage}
+            style={{ overflow: 'hidden' }}
+            loader={
+              <div className="row">
+                <div className="col-lg-12 text-center">
+                  <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
+                </div>
+              </div>
+            }
+          >
+            {historyContent}
+          </InfiniteScroll>
         </div>
       </div>
-      <div className="row">
-        <InfiniteScroll
-          dataLength={data?.pages ? data.pages.flat().length : 0}
-          next={loadMore}
-          hasMore={hasNextPage}
-          style={{ overflow: 'hidden' }}
-          loader={
-            <div className="row">
-              <div className="col-lg-12 text-center">
-                <Spinner animation="border" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </Spinner>
-              </div>
-            </div>
-          }
-        >
-          {historyContent}
-        </InfiniteScroll>
-        <MyNftTransferDialog />
-        <MyNftCancelDialog />
-        {user.myNftPageListDialog?.nft && (
-          <MakeListingDialog
-            isOpen={!!user.myNftPageListDialog?.nft}
-            nft={user.myNftPageListDialog?.nft}
-            onClose={() => dispatch(MyNftPageActions.hideMyNftPageListDialog())}
-            listing={user.myNftPageListDialog?.listing}
-          />
-        )}
-      </div>
-    </QueryClientProvider>
+      <MobileFilters
+        show={useMobileMenu && filtersVisible}
+        collections={collections}
+        currentFilter={collectionFilter}
+        onFilter={onFilterChange}
+        onHide={() => setFiltersVisible(false)}
+      />
+      <MyNftCancelDialog />
+      {user.myNftPageTransferDialog && (
+        <TransferNftDialog
+          isOpen={!!user.myNftPageTransferDialog}
+          nft={user.myNftPageTransferDialog}
+          onClose={() => dispatch(MyNftPageActions.hideMyNftPageTransferDialog())}
+        />
+      )}
+      {user.myNftPageListDialog?.nft && (
+        <MakeListingDialog
+          isOpen={!!user.myNftPageListDialog?.nft}
+          nft={user.myNftPageListDialog?.nft}
+          onClose={() => dispatch(MyNftPageActions.hideMyNftPageListDialog())}
+          listing={user.myNftPageListDialog?.listing}
+        />
+      )}
+      {useMobileMenu && (
+        <div className="d-flex fixed-bottom mx-2 my-2">
+          <div className="mx-auto">
+            <Button type="legacy" style={{height: '100%'}} onClick={() => setFiltersVisible(true)}>
+              <FontAwesomeIcon icon={faFilter} />
+              <span className="ms-2">Filters ({collectionFilter.length})</span>
+            </Button>
+          </div>
+        </div>
+      )}
+    </>
   )
 }

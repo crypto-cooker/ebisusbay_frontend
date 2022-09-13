@@ -24,6 +24,12 @@ export const getCnsName = async (address) => {
   return await cns.getName(address);
 };
 
+/**
+ * Get various profile information for a given address
+ *
+ * @param address
+ * @returns {Promise<{twitter: *, discord: *, name: string, telegram: *, description: *, instagram: *, email: *, url: *}>}
+ */
 export const getCnsInfo = async (address) => {
   if (!address || !readProvider) return;
 
@@ -46,3 +52,13 @@ export const getCnsInfo = async (address) => {
     console.log('cns error', e);
   }
 };
+
+/**
+ * Check if a value matches the format of a CNS domain
+ *
+ * @param value
+ * @returns {*}
+ */
+export const isCnsName = (value) => {
+  return value.endsWith('.cro');
+}
