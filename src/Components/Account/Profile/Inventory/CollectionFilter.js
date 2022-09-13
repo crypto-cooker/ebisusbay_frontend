@@ -56,7 +56,7 @@ export const CollectionFilter = ({collections, currentFilter, onFilter, keyPrefi
           <Form.Check
             type="checkbox"
             id={getKey(collection)}
-            className="collection-checkbox"
+            className="collection-checkbox my-2"
           >
             <Form.Check.Input type={'checkbox'}
                               value={viewGetDefaultCheckValue(collection.address)}
@@ -67,7 +67,7 @@ export const CollectionFilter = ({collections, currentFilter, onFilter, keyPrefi
               <div className="d-flex cursor-pointer w-100">
                 <div>
                   {collection.metadata?.avatar ? (
-                    <Image
+                    <img
                       src={ImageKitService.buildAvatarUrl(collection.metadata.avatar, true)}
                       alt={collection?.name}
                       width="25"
