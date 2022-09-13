@@ -158,7 +158,7 @@ export default function Inventory({ address }) {
       <div className="d-flex">
         <Collapse in={filtersVisible && !useMobileMenu} dimension="width">
           <div className="m-0 p-0">
-            <div className="me-4 px-2" style={{width: 350}}>
+            <div className="me-4 px-2" style={{width: 320}}>
               <CollectionFilter
                 collections={collections}
                 currentFilter={collectionFilter}
