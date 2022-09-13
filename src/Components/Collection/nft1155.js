@@ -371,7 +371,7 @@ const Nft1155 = ({ address, id }) => {
                               {soldListings.map((listing, index) => (
                                 <ListingItem
                                   key={`sold-item-${index}`}
-                                  route="/seller"
+                                  route="/account"
                                   primaryTitle="Bought by"
                                   user={listing.purchaser}
                                   time={timeSince(listing.saleTime + '000')}
