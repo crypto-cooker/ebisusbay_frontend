@@ -8594,6 +8594,31 @@
         "escrow": false,
         "creativeCommons": true
       }
+    },
+    {
+      "name": "SQUIDCROC",
+      "slug": "squidcroc",
+      "multiToken": false,
+      "address": "0x10571Ca51976b6565Ef3791AAD8997D85A82dB63",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "SQUIDCROWGE SQUIDCROCS are inspired by squid game and crogecoin that has a staking mechanism that you earn squidcrowge coin which give croge rewards plus all original minters get discount on our version 2 nft collection which will be stake able and an avatar for a p2e game.",
+        "verified": false,
+        "avatar": "/img/collections/squidcroc/avatar.webp",
+        "card": "/img/collections/squidcroc/card.webp",
+        "banner": "/img/collections/squidcroc/banner.webp",
+        "maxSupply": 2000,
+        "twitter": "https://twitter.com/SquidCrowge",
+        "discord": "https://discord.gg/59CdBQSeFg",
+        "telegram": "https://t.me/squidcrowgeportal"
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": false,
+        "escrow": false,
+        "creativeCommons": true
+      }
     }
   ],
   "drops": [
