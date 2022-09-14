@@ -3015,9 +3015,9 @@
       "metadata": {
         "description": "Display your NFTs in your Metaverse home, earn $RENT and make it a reality using AR with your Smartphone.",
         "verified": false,
-        "avatar": "/img/collections/crohomes/avatar.png",
-        "banner": "/img/collections/crohomes/banner.png",
-        "card": "/img/collections/crohomes/card.png",
+        "avatar": "/img/collections/cro-homes/avatar.webp",
+        "banner": "/img/collections/cro-homes/banner.webp",
+        "card": "/img/collections/cro-homes/card.webp",
         "maxSupply": 3333,
         "website": "https://cro.homes",
         "twitter": "https://twitter.com/CROHomesNFT",
@@ -3497,9 +3497,9 @@
       "metadata": {
         "description": "",
         "verified": false,
-        "avatar": "/img/collections/crohomes/avatar.png",
-        "banner": "/img/collections/crohomes/banner.png",
-        "card": "/img/collections/crohomes/card.png",
+        "avatar": "/img/collections/cro-homes/avatar.webp",
+        "banner": "/img/collections/cro-homes/banner.webp",
+        "card": "/img/collections/cro-homes/card.webp",
         "maxSupply": 3333,
         "website": "https://cro.homes",
         "twitter": "https://twitter.com/CROHomesNFT",
@@ -8631,6 +8631,26 @@
         "website": "https://cronoscruisers.com/",
         "twitter": "https://www.twitter.com/cronoscruisers",
         "discord": "https://discord.gg/FV2MWCWKmF"
+      }
+    },
+    {
+      "name": "CRO Homes Companions Collections",
+      "slug": "cro-homes-companion-collection",
+      "multiToken": false,
+      "address": "0xBA51Cbe289c808B2Da3ef51DdF617076A49A0eA8",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The First Companion collection of the CRO Homes Project. Collect them all and create your own style!",
+        "verified": false,
+        "avatar": "/img/collections/cro-homes/avatar.webp",
+        "banner": "/img/collections/cro-homes/banner.webp",
+        "card": "/img/collections/cro-homes/card.webp",
+        "maxSupply": 10000,
+        "website": "https://cro.homes",
+        "twitter": "https://twitter.com/CROHomesNFT",
+        "discord": "https://discord.gg/crohomes",
+        "medium": "https://medium.com/@CROHomes"
       }
     }
   ],
