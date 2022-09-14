@@ -94,8 +94,19 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark, address, co
   return (
     <>
       <div className="card eb-nft__card h-100 shadow">
-        {watermark ? (
-          <Watermarked watermark={watermark}>
+        <div className="card-img-container">
+          {watermark ? (
+            <Watermarked watermark={watermark}>
+              <AnyMedia
+                image={nftCardUrl(listing.nftAddress, listing.nft.image)}
+                className={`card-img-top ${imgClass}`}
+                title={listing.nft.name}
+                url={`/collection/${listing.nftAddress}/${listing.nftId}`}
+                height={440}
+                width={440}
+              />
+            </Watermarked>
+          ) : (
             <AnyMedia
               image={nftCardUrl(listing.nftAddress, listing.nft.image)}
               className={`card-img-top ${imgClass}`}
@@ -104,17 +115,8 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark, address, co
               height={440}
               width={440}
             />
-          </Watermarked>
-        ) : (
-          <AnyMedia
-            image={nftCardUrl(listing.nftAddress, listing.nft.image)}
-            className={`card-img-top ${imgClass}`}
-            title={listing.nft.name}
-            url={`/collection/${listing.nftAddress}/${listing.nftId}`}
-            height={440}
-            width={440}
-          />
-        )}
+          )}
+        </div>
         {listing.nft.rank ? (
           <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{listing.nft.rank}</div>
         ) : (

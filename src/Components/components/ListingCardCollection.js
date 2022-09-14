@@ -89,8 +89,19 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark, a
   return (
     <>
       <div className="card eb-nft__card h-100 shadow">
-        {watermark ? (
-          <Watermarked watermark={watermark}>
+        <div className="card-img-container">
+          {watermark ? (
+            <Watermarked watermark={watermark}>
+              <AnyMedia
+                image={nftCardUrl(listing.nftAddress, listing.nft.image)}
+                className={`card-img-top ${imgClass}`}
+                title={listing.nft.name}
+                url={`/collection/${listing.nftAddress}/${listing.nftId}`}
+                width={440}
+                height={440}
+              />
+            </Watermarked>
+          ) : (
             <AnyMedia
               image={nftCardUrl(listing.nftAddress, listing.nft.image)}
               className={`card-img-top ${imgClass}`}
@@ -99,17 +110,8 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark, a
               width={440}
               height={440}
             />
-          </Watermarked>
-        ) : (
-          <AnyMedia
-            image={nftCardUrl(listing.nftAddress, listing.nft.image)}
-            className={`card-img-top ${imgClass}`}
-            title={listing.nft.name}
-            url={`/collection/${listing.nftAddress}/${listing.nftId}`}
-            width={440}
-            height={440}
-          />
-        )}
+          )}
+        </div>
         {listing.nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{listing.nft.rank}</div>}
         <div className="card-body d-flex flex-column justify-content-between">
           <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
