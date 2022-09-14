@@ -8576,7 +8576,7 @@
       "name": "God Hates Cro Fam",
       "slug": "god-hates-crofam",
       "multiToken": false,
-      "address": "",
+      "address": "0xb2F52B0d3fc3bc18847FD9ac9DE57DfE90CA4133",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -11629,7 +11629,7 @@
         "name": "God Hates Cro Fam",
         "twitter": "https://twitter.com/ghcfnft"
       },
-      "address": "",
+      "address": "0xb2F52B0d3fc3bc18847FD9ac9DE57DfE90CA4133",
       "maxMintPerTx": 25,
       "maxMintPerAddress": 100,
       "totalSupply": 5000,
