@@ -11,7 +11,7 @@ import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {ERC721} from "@src/Contracts/Abis";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {createSuccessfulTransactionToastContent, isNftBlacklisted} from "@src/utils";
 import {appConfig} from "@src/Config";
 import Market from "@src/Contracts/Marketplace.json";
 import * as Sentry from '@sentry/react';
@@ -140,7 +140,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
 
       if (isCollectionOffer) {
         const walletNfts = await getQuickWallet(user.address, {collection: collection.address});
-        setCollectionNfts(walletNfts.data);
+        setCollectionNfts(walletNfts.data.filter((nft) => !isNftBlacklisted(nft.address ?? nft.nftAddress, nft.id ?? nft.nftId)));
         await chooseCollectionNft(walletNfts.data[0])
       } else {
         const royalties = await collectionRoyaltyPercent(nftAddress, nftId);
