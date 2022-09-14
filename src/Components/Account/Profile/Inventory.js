@@ -30,6 +30,10 @@ export default function Inventory({ address }) {
 
   const [collections, setCollections] = useState([]);
   const [collectionFilter, setCollectionFilter] = useState([]);
+  const [filtersVisible, setFiltersVisible] = useState(true);
+  const [useMobileMenu, setUseMobileMenu] = useState(false);
+  const [hasManuallyToggledFilters, setHasManuallyToggledFilters] = useState(false);
+  const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
 
   const onFilterChange = (filterOption) => {
     setCollectionFilter(filterOption ?? []);
@@ -97,7 +101,7 @@ export default function Inventory({ address }) {
                 const collection = knownContracts.find((c) => caseInsensitiveCompare(c.address, nft.address));
                 return (
                   <div
-                    className="d-item col-xxl-2 col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12 mb-4"
+                    className={`d-item ${filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2'}  mb-4`}
                     key={`${nft.address}-${nft.id}-${nft.listed}-${index}`}
                   >
                     {caseInsensitiveCompare(address, user.address) ? (
@@ -133,12 +137,7 @@ export default function Inventory({ address }) {
         </div>
       </>
     );
-  }, [data, error, status, address, user.address]);
-
-  const [filtersVisible, setFiltersVisible] = useState(true);
-  const [useMobileMenu, setUseMobileMenu] = useState(false);
-  const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
-  const [hasManuallyToggledFilters, setHasManuallyToggledFilters] = useState(false);
+  }, [data, error, status, address, user.address, filtersVisible]);
 
   useEffect(() => {
     const isMobileSize = minWidth < BREAKPOINTS.m;
@@ -156,7 +155,7 @@ export default function Inventory({ address }) {
   return (
     <>
       <div className="d-flex">
-        <Collapse in={filtersVisible && !useMobileMenu} dimension="width">
+        {filtersVisible && !useMobileMenu && (
           <div className="m-0 p-0">
             <div className="me-4 px-2" style={{width: 320}}>
               <CollectionFilter
@@ -166,7 +165,7 @@ export default function Inventory({ address }) {
               />
             </div>
           </div>
-        </Collapse>
+        )}
         <div className="flex-fill">
           <div className="d-flex mb-2">
             <div>

@@ -8576,7 +8576,7 @@
       "name": "God Hates Cro Fam",
       "slug": "god-hates-crofam",
       "multiToken": false,
-      "address": "",
+      "address": "0xb2F52B0d3fc3bc18847FD9ac9DE57DfE90CA4133",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -8587,6 +8587,31 @@
         "banner": "/img/collections/god-hates-crofam/banner.webp",
         "maxSupply": 50,
         "twitter": "https://twitter.com/ghcfnft"
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": false,
+        "escrow": false,
+        "creativeCommons": true
+      }
+    },
+    {
+      "name": "SQUIDCROC",
+      "slug": "squidcroc",
+      "multiToken": false,
+      "address": "0x10571Ca51976b6565Ef3791AAD8997D85A82dB63",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "SQUIDCROWGE SQUIDCROCS are inspired by squid game and crogecoin that has a staking mechanism that you earn squidcrowge coin which give croge rewards plus all original minters get discount on our version 2 nft collection which will be stake able and an avatar for a p2e game.",
+        "verified": false,
+        "avatar": "/img/collections/squidcroc/avatar.webp",
+        "card": "/img/collections/squidcroc/card.webp",
+        "banner": "/img/collections/squidcroc/banner.webp",
+        "maxSupply": 2000,
+        "twitter": "https://twitter.com/SquidCrowge",
+        "discord": "https://discord.gg/59CdBQSeFg",
+        "telegram": "https://t.me/squidcrowgeportal"
       },
       "verification": {
         "doxx": "private",
@@ -11546,8 +11571,8 @@
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 10000,
-      "cost": "775",
-      "memberCost": "600",
+      "cost": "600",
+      "memberCost": "500",
       "whitelistCost": "500",
       "foundersOnly": false,
       "start": 1663963200000,
@@ -11604,7 +11629,7 @@
         "name": "God Hates Cro Fam",
         "twitter": "https://twitter.com/ghcfnft"
       },
-      "address": "",
+      "address": "0xb2F52B0d3fc3bc18847FD9ac9DE57DfE90CA4133",
       "maxMintPerTx": 25,
       "maxMintPerAddress": 100,
       "totalSupply": 5000,

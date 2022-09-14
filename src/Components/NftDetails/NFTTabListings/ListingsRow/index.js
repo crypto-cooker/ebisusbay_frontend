@@ -64,7 +64,7 @@ export default function ListingsRow({ listing }) {
 
   return (
     <ListingItem
-      route="/seller"
+      route="/account"
       buttonText="Buy Now"
       primaryTitle="Listed by"
       user={listing.seller}
