@@ -420,38 +420,21 @@ const Nft721 = ({ address, id }) => {
               ) : (
                 <></>
               )}
-              {nft && nft.original_image && (
                 <div className="nft__item_action mt-2" style={{ cursor: 'pointer' }}>
-                  {/*<ButtonGroup>*/}
-                  {/*  <Button styleType="default-outlined">*/}
-                  {/*    Increase Bid*/}
-                  {/*  </Button>*/}
-                  {/*  <Button styleType="default-outlined" title="Share" onClick={() => onShare()}>*/}
-                  {/*    <FontAwesomeIcon icon={faShare} />*/}
-                  {/*  </Button>*/}
-                  {/*  <Button styleType="default-outlined" title="Refresh Metadata" onClick={() => onRefreshMetadata()}>*/}
-                  {/*    <FontAwesomeIcon icon={faSync} />*/}
-                  {/*  </Button>*/}
-                  {/*  <Button styleType="default-outlined" title="View Full Image" onClick={() =>*/}
-                  {/*    typeof window !== 'undefined' &&*/}
-                  {/*    window.open(specialImageTransform(address, fullImage()), '_blank')*/}
-                  {/*  }>*/}
-                  {/*    <FontAwesomeIcon icon={faExternalLinkAlt} />*/}
-                  {/*  </Button>*/}
-                  {/*</ButtonGroup>*/}
                   <div className="d-flex justify-content-center">
                     <Button styleType="default-outlined" title="Refresh Metadata" onClick={onRefreshMetadata} disabled={refreshing}>
                       <FontAwesomeIcon icon={faSync} spin={refreshing} />
                     </Button>
-                    <Button styleType="default-outlined" className="ms-2" title="View Full Image" onClick={() =>
-                      typeof window !== 'undefined' &&
-                      window.open(specialImageTransform(address, fullImage()), '_blank')
-                    }>
-                      <FontAwesomeIcon icon={faExternalLinkAlt} />
-                    </Button>
+                    {nft && nft.original_image && (
+                      <Button styleType="default-outlined" className="ms-2" title="View Full Image" onClick={() =>
+                        typeof window !== 'undefined' &&
+                        window.open(specialImageTransform(address, fullImage()), '_blank')
+                      }>
+                        <FontAwesomeIcon icon={faExternalLinkAlt} />
+                      </Button>
+                    )}
                   </div>
                 </div>
-              )}
             </div>
             <div className="col-md-6">
               {nft && (
