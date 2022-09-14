@@ -3015,9 +3015,9 @@
       "metadata": {
         "description": "Display your NFTs in your Metaverse home, earn $RENT and make it a reality using AR with your Smartphone.",
         "verified": false,
-        "avatar": "/img/collections/crohomes/avatar.png",
-        "banner": "/img/collections/crohomes/banner.png",
-        "card": "/img/collections/crohomes/card.png",
+        "avatar": "/img/collections/cro-homes/avatar.webp",
+        "banner": "/img/collections/cro-homes/banner.webp",
+        "card": "/img/collections/cro-homes/card.webp",
         "maxSupply": 3333,
         "website": "https://cro.homes",
         "twitter": "https://twitter.com/CROHomesNFT",
@@ -3497,9 +3497,9 @@
       "metadata": {
         "description": "",
         "verified": false,
-        "avatar": "/img/collections/crohomes/avatar.png",
-        "banner": "/img/collections/crohomes/banner.png",
-        "card": "/img/collections/crohomes/card.png",
+        "avatar": "/img/collections/cro-homes/avatar.webp",
+        "banner": "/img/collections/cro-homes/banner.webp",
+        "card": "/img/collections/cro-homes/card.webp",
         "maxSupply": 3333,
         "website": "https://cro.homes",
         "twitter": "https://twitter.com/CROHomesNFT",
@@ -8612,12 +8612,45 @@
         "twitter": "https://twitter.com/SquidCrowge",
         "discord": "https://discord.gg/59CdBQSeFg",
         "telegram": "https://t.me/squidcrowgeportal"
-      },
-      "verification": {
-        "doxx": "private",
-        "kyc": false,
-        "escrow": false,
-        "creativeCommons": true
+      }
+    },
+    {
+      "name": "Cronos Cruisers",
+      "slug": "cronos-cruisers",
+      "multiToken": false,
+      "address": "0xd25358e2cAD3E1Fd165887569892A99fFFA674ac",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Cronos Cruisers is a collection of 8,000 algorithmically-generated NFTs, racing through the winter along the Cronos Ring to be the ultimate Cronos Cruiser. With more than 200 traits, including expressions, outfits, accessories, and more…every Cronos Cruiser is unique. Each Cronos Cruiser will open portals to limitless possibilities, such as numerous members-only benefits, events, and doubles as an early access token on Cronos. The sky is the limit.",
+        "verified": false,
+        "avatar": "/img/collections/cronos-cruisers/avatar.webp",
+        "card": "/img/collections/cronos-cruisers/card.webp",
+        "banner": "/img/collections/cronos-cruisers/banner.webp",
+        "maxSupply": 0,
+        "website": "https://cronoscruisers.com/",
+        "twitter": "https://www.twitter.com/cronoscruisers",
+        "discord": "https://discord.gg/FV2MWCWKmF"
+      }
+    },
+    {
+      "name": "CRO Homes Companions Collections",
+      "slug": "cro-homes-companion-collection",
+      "multiToken": false,
+      "address": "0xBA51Cbe289c808B2Da3ef51DdF617076A49A0eA8",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The First Companion collection of the CRO Homes Project. Collect them all and create your own style!",
+        "verified": false,
+        "avatar": "/img/collections/cro-homes/avatar.webp",
+        "banner": "/img/collections/cro-homes/banner.webp",
+        "card": "/img/collections/cro-homes/card.webp",
+        "maxSupply": 10000,
+        "website": "https://cro.homes",
+        "twitter": "https://twitter.com/CROHomesNFT",
+        "discord": "https://discord.gg/crohomes",
+        "medium": "https://medium.com/@CROHomes"
       }
     }
   ],

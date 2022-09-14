@@ -446,7 +446,7 @@ const Nft1155 = ({ address, id }) => {
                               </div>
                               <div className="d-flex justify-content-between">
                                 <div>Royalty</div>
-                                <div>{royalty ?? 'N/A'}</div>
+                                <div>{royalty ? `${royalty}%` : 'N/A'}</div>
                               </div>
                             </div>
                           </div>

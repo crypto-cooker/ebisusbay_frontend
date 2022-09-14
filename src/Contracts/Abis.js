@@ -27,6 +27,9 @@ export const ERC20 = [
   'function allowance(address owner, address spender) external view returns (uint256)',
   'function balanceOf(address owner) public view returns (uint256)',
 ];
+export const ERC2981 = [
+  'function royaltyInfo(uint256 tokenId, uint256 salePrice) external view returns (address receiver, uint256 royaltyAmount)',
+];
 
 export const Elon = ['function mint(uint256 count) public payable'];
 
