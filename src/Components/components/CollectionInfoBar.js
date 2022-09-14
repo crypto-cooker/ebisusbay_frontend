@@ -1,6 +1,7 @@
 import React from 'react';
 import { siPrefixedNumber } from '../../utils';
 import styled from 'styled-components';
+import {commify} from "ethers/lib/utils";
 
 const CollectionInfoBarContainer = styled.div`
   display: flex;
@@ -83,7 +84,7 @@ export default function CollectionInfoBar({ collectionStats, type = 'legacy' }) 
           <div className="row">
             <div className="col-md-2 col-xs-4">
               <h5>Items</h5>
-              <h4>{totalSupply ?? '-'}</h4>
+              <h4>{totalSupply ? commify(totalSupply) : '-'}</h4>
             </div>
             <div className="col-md-2 col-xs-4">
               <h5>Volume</h5>
