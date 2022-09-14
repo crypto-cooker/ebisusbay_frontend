@@ -94,8 +94,21 @@ const NftCard = ({ listing, imgClass = 'marketplace', watermark, collection, can
   return (
     <>
       <div className="card eb-nft__card h-100 shadow">
-        {watermark ? (
-          <Watermarked watermark={watermark}>
+        <div className="card-img-container">
+          {watermark ? (
+            <Watermarked watermark={watermark}>
+              <AnyMedia
+                image={nftCardUrl(listing.address, listing.image)}
+                className={`card-img-top ${imgClass}`}
+                title={listing.name}
+                url={`/collection/${collection.slug}/${listing.id}`}
+                width={440}
+                height={440}
+                video={listing.video ?? listing.animation_url}
+                usePlaceholder={true}
+              />
+            </Watermarked>
+          ) : (
             <AnyMedia
               image={nftCardUrl(listing.address, listing.image)}
               className={`card-img-top ${imgClass}`}
@@ -106,19 +119,8 @@ const NftCard = ({ listing, imgClass = 'marketplace', watermark, collection, can
               video={listing.video ?? listing.animation_url}
               usePlaceholder={true}
             />
-          </Watermarked>
-        ) : (
-          <AnyMedia
-            image={nftCardUrl(listing.address, listing.image)}
-            className={`card-img-top ${imgClass}`}
-            title={listing.name}
-            url={`/collection/${collection.slug}/${listing.id}`}
-            width={440}
-            height={440}
-            video={listing.video ?? listing.animation_url}
-            usePlaceholder={true}
-          />
-        )}
+          )}
+        </div>
         {listing.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{listing.rank}</div>}
         <div className="card-body d-flex flex-column justify-content-between">
           <Link href={`/collection/${collection.slug}/${listing.id}`}>

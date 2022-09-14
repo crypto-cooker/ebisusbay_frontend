@@ -238,7 +238,7 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
             <div className="nftSaleForm row gx-3">
               <div className="col-12 col-sm-6 mb-sm-3">
                 <div className="profile_avatar d-flex justify-content-center">
-                  <div className="d_profile_img">
+                  <div className="dialog_avatar position-relative">
                     {collection.metadata.avatar ? (
                       <img src={hostedImage(collection.metadata.avatar)} alt={collection.name} />
                     ) : (

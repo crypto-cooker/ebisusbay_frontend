@@ -1265,8 +1265,8 @@
       "metadata": {
         "description": "Crxillion Club is the original NFT collection of CRODEX. It is the first NFT collection offering DeFi use-cases in the Cronos Network.",
         "verified": true,
-        "avatar": "/img/collections/crxillion/avatar.jpeg",
-        "card": "/img/collections/crxillion/card.png",
+        "avatar": "/img/collections/crxillion/avatar.webp",
+        "card": "/img/collections/crxillion/card.webp",
         "banner": "/img/collections/crxillion/banner.webp",
         "maxSupply": 2500,
         "website": "https://crodex.app/",
@@ -4757,7 +4757,8 @@
         "twitter": "https://twitter.com/RedSaintNFT",
         "discord": "https://discord.gg/Ekz27dFKwR",
         "telegram": "https://t.me/redsaintnft",
-        "medium": "https://medium.com/@RedSaint"
+        "medium": "https://medium.com/@RedSaint",
+        "rankings": {"source": "provided"}
       }
     },
     {
@@ -8216,7 +8217,8 @@
         "twitter": "https://twitter.com/RedSaintNFT",
         "discord": "https://discord.gg/Ekz27dFKwR",
         "telegram": "https://t.me/redsaintnft",
-        "medium": "https://medium.com/@RedSaint"
+        "medium": "https://medium.com/@RedSaint",
+        "rankings": {"source": "provided"}
       }
     },
     {
@@ -8651,6 +8653,26 @@
         "twitter": "https://twitter.com/CROHomesNFT",
         "discord": "https://discord.gg/crohomes",
         "medium": "https://medium.com/@CROHomes"
+      }
+    },
+    {
+      "name": "Space Crxillions",
+      "slug": "space-crxillions",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Space Crxillions are the second NFT collection of CRODEX. They are the main characters of the Metaverse Hub Adventures along with the original Crxillion Club members, offering a variety of gamified DeFi utilities on Cronos.",
+        "verified": true,
+        "avatar": "/img/collections/space-crxillions/avatar.webp",
+        "card": "/img/collections/space-crxillions/card.webp",
+        "banner": "/img/collections/space-crxillions/banner.webp",
+        "maxSupply": 3000,
+        "website": "https://crodex.app/",
+        "twitter": "https://twitter.com/crodexapp",
+        "discord": "https://discord.gg/7HwpTF63y5",
+        "telegram": "https://t.me/crodexofficial"
       }
     }
   ],
@@ -11670,6 +11692,38 @@
       "memberCost": "45",
       "foundersOnly": false,
       "start": 1663185600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 110,
+      "slug": "space-crxillions",
+      "imgNft": "/img/drops/space-crxillions/drop.webp",
+      "imgPreview": "/img/drops/space-crxillions/drop.webp",
+      "imgAvatar": "/img/collections/space-crxillions/avatar.webp",
+      "imgBanner": "/img/collections/space-crxillions/banner.webp",
+      "title": "Space Crxillions",
+      "subtitle": "Space Crxillions are the second NFT collection of CRODEX. They are the main characters of the Metaverse Hub Adventures along with the original Crxillion Club members, offering a variety of gamified DeFi utilities on Cronos.",
+      "description": "Space Crxillions are the main characters of the Metaverse Hub Adventures along with the original Crxillion Club members.\nWhile your usual NFTs are one-dimensional investments that you can just hodl and trade, Space Crxillions will enable you to actively utilize your NFTs as yield generators, boosters or tickets for adventures and games with various offerings.",
+      "author": {
+        "name": "Crodex",
+        "website": "https://crodex.app/",
+        "twitter": "https://twitter.com/crodexapp",
+        "discord": "https://discord.gg/7HwpTF63y5",
+        "telegram": "https://t.me/crodexofficial"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 3000,
+      "cost": "700",
+      "memberCost": "700",
+      "whitelistCost": "600",
+      "foundersOnly": false,
+      "start": 1663531200000,
       "end": null,
       "referral": false,
       "is1155": false,
