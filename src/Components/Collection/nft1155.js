@@ -2,7 +2,7 @@ import React, {memo, useCallback, useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import {Contract, ethers} from 'ethers';
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import {faExternalLinkAlt, faSync} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Spinner } from 'react-bootstrap';
 import MetaMaskOnboarding from '@metamask/onboarding';
@@ -19,7 +19,7 @@ import {
   shortAddress,
   timeSince,
 } from '@src/utils';
-import { getNftDetails } from '@src/GlobalState/nftSlice';
+import {getNftDetails, refreshMetadata} from '@src/GlobalState/nftSlice';
 import { specialImageTransform } from '@src/hacks';
 import { chainConnect, connectAccount } from '@src/GlobalState/User';
 
@@ -36,6 +36,7 @@ import { hostedImage } from '@src/helpers/image';
 import {appConfig} from "@src/Config";
 import Market from "@src/Contracts/Marketplace.json";
 import {collectionRoyaltyPercent} from "@src/core/chain";
+import Button from "@src/Components/components/common/Button";
 
 const config = appConfig();
 const tabs = {
@@ -51,7 +52,7 @@ const Nft1155 = ({ address, id }) => {
   const dispatch = useDispatch();
   const history = useRouter();
 
-  const nft = useSelector((state) => state.nft.nft);
+  const {nft, refreshing} = useSelector((state) => state.nft);
   const soldListings = useSelector((state) =>
     state.nft.history.filter((i) => i.state === listingState.SOLD).sort((a, b) => (a.saleTime < b.saleTime ? 1 : -1))
   );
@@ -126,6 +127,10 @@ const Nft1155 = ({ address, id }) => {
     }
   };
 
+  const onRefreshMetadata = useCallback(() => {
+    dispatch(refreshMetadata(address, id));
+  }, [address, id]);
+
   useEffect(() => {
     async function func() {
       const filteredOffers = await getFilteredOffers(nft.address, nft.id.toString(), user.address);
@@ -178,19 +183,21 @@ const Nft1155 = ({ address, id }) => {
               ) : (
                 <></>
               )}
-              {nft && nft.original_image && (
-                <div className="nft__item_action mt-2" style={{ cursor: 'pointer' }}>
-                  <span
-                    onClick={() =>
+              <div className="nft__item_action mt-2" style={{ cursor: 'pointer' }}>
+                <div className="d-flex justify-content-center">
+                  <Button styleType="default-outlined" title="Refresh Metadata" onClick={onRefreshMetadata} disabled={refreshing}>
+                    <FontAwesomeIcon icon={faSync} spin={refreshing} />
+                  </Button>
+                  {nft && nft.original_image && (
+                    <Button styleType="default-outlined" className="ms-2" title="View Full Image" onClick={() =>
                       typeof window !== 'undefined' &&
                       window.open(specialImageTransform(address, fullImage()), '_blank')
-                    }
-                  >
-                    <span className="p-2">View Full Image</span>
-                    <FontAwesomeIcon icon={faExternalLinkAlt} />
-                  </span>
+                    }>
+                      <FontAwesomeIcon icon={faExternalLinkAlt} />
+                    </Button>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
             <div className="col-md-6">
               {nft && (

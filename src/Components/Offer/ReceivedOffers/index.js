@@ -57,9 +57,12 @@ export default function ReceivedOffers({ address, collectionAddresses, nfts, sta
     } else if (type === 'received-collection') {
       const {data: allCollectionOffers} = await getAllCollectionOffers(collectionAddresses, '0', pageParam);
       return allCollectionOffers.filter((offer) => {
-        const nft = nfts.find((c) => caseInsensitiveCompare(c.nftAddress, offer.nftAddress));
-
-        if (!nft) return false;
+        const nft = nfts.filter((nft) => {
+          const matchesAddress = caseInsensitiveCompare(nft.nftAddress, offer.nftAddress);
+          const isBlacklisted = isNftBlacklisted(offer.nftAddress, nft.nftId);
+          return matchesAddress && !isBlacklisted;
+        });
+        if (!nft.length > 0) return false;
 
         const knownContract = findCollectionByAddress(offer.nftAddress, offer.nftId);
         if (!knownContract) return false;
@@ -68,9 +71,8 @@ export default function ReceivedOffers({ address, collectionAddresses, nfts, sta
         const offerPrice = parseInt(offer.price);
         const isAboveOfferThreshold = floorPrice ? offerPrice >= floorPrice / 2 : true;
         const canShowCompletedOffers = !knownContract.multiToken || parseInt(offer.state) === offerState.ACTIVE;
-        const isBlacklisted = isNftBlacklisted(offer.nftAddress, offer.nftId);
 
-        return isAboveOfferThreshold && canShowCompletedOffers && !nft.is1155 && !isBlacklisted;
+        return isAboveOfferThreshold && canShowCompletedOffers;
       })
         .sort((a, b) => parseInt(b.price) - parseInt(a.price));
     }
