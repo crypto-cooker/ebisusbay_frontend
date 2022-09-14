@@ -119,9 +119,9 @@ const Index = function () {
     func();
   }, 1000 * 60);
 
-  const navigateTo = (link) => {
+  const navigateTo = (pathname, query) => {
     closeMenu();
-    history.push(link);
+    history.push({pathname, query});
   };
 
   const logout = async () => {
@@ -299,7 +299,7 @@ const Index = function () {
                 </span>
               </div>
               <div className="col">
-                <span onClick={() => navigateTo(`/account/${walletAddress}?tab=offers`)}>
+                <span onClick={() => navigateTo(`/account/${walletAddress}`, {tab:'offers'})}>
                   <div className={styles.col}>
                       <span>
                         <FontAwesomeIcon icon={faHand} />
@@ -321,7 +321,7 @@ const Index = function () {
                 </div>
               )}
               <div className="col">
-                <span onClick={() => navigateTo(`/account/${walletAddress}?tab=listings`)}>
+                <span onClick={() => navigateTo(`/account/${walletAddress}`, {tab:'listings'})}>
                   <div className={styles.col}>
                       <span>
                         <FontAwesomeIcon icon={faCoins} />
@@ -331,7 +331,7 @@ const Index = function () {
                 </span>
               </div>
               <div className="col">
-                <span onClick={() => navigateTo(`/account/${walletAddress}?tab=sales`)}>
+                <span onClick={() => navigateTo(`/account/${walletAddress}`, {tab:'sales'})}>
                   <div className={styles.col}>
                       <span>
                         <FontAwesomeIcon icon={faDollarSign} />
@@ -341,7 +341,7 @@ const Index = function () {
                 </span>
               </div>
               <div className="col">
-                <span onClick={() => navigateTo(`/account/${walletAddress}?tab=favorites`)}>
+                <span onClick={() => navigateTo(`/account/${walletAddress}`, {tab:'favorites'})}>
                   <div className={styles.col}>
                       <span>
                         <FontAwesomeIcon icon={faHeart} />
