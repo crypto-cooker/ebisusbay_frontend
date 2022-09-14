@@ -12,6 +12,7 @@ import {FullCollectionsQuery} from "../core/api/queries/fullcollections";
 import {CollectionFilters} from "../Components/Models/collection-filters.model";
 import {sortAndFetchCollectionDetails} from "../core/api/endpoints/fullcollections";
 import {sortAndFetchListings} from "../core/api/endpoints/listings";
+import {getCollections} from "@src/core/api/next/collectioninfo";
 
 const knownContracts = appConfig('collections');
 
@@ -263,6 +264,7 @@ export const updateTab = (tab) => async (dispatch) => {
   dispatch(onTabUpdated(tab));
 };
 
+// @todo: remove mergedAddress support for autolistings
 export const getStats =
   (collection, id = null, extraAddresses = null) =>
   async (dispatch) => {
@@ -270,12 +272,41 @@ export const getStats =
       const mergedAddresses = extraAddresses ? [collection.address, ...extraAddresses] : collection.address;
       var response;
       if (id != null) {
+        // const newStats = await getCollections({address: mergedAddresses});
+        // response = {
+        //   collections: [
+        //     {
+        //       collection: mergedAddresses,
+        //       totalSupply: newStats.data.collections[0].tokens[id].metadata.maxSupply,
+        //       totalVolume: newStats.data.collections[0].stats.tokens[id].volume,
+        //       numberOfSales: newStats.data.collections[0].stats.tokens[id].complete,
+        //       averageSalePrice: newStats.data.collections[0].stats.tokens[id].avg_sale_price,
+        //       numberActive: newStats.data.collections[0].stats.tokens[id].active,
+        //       floorPrice: newStats.data.collections[0].stats.tokens[id].floor_price
+        //     }
+        //   ]
+        // };
         response = await getCollectionMetadata(mergedAddresses, null, {
           type: 'tokenId',
           value: id,
         });
-      } else {
+      } else if (Array.isArray(mergedAddresses)) {
         response = await getCollectionMetadata(mergedAddresses);
+      } else {
+        const newStats = await getCollections({address: mergedAddresses});
+        response = {
+          collections: [
+            {
+              collection: mergedAddresses,
+              totalSupply: newStats.data.collections[0].totalSupply,
+              totalVolume: newStats.data.collections[0].stats.total.volume,
+              numberOfSales: newStats.data.collections[0].stats.total.complete,
+              averageSalePrice: newStats.data.collections[0].stats.total.avg_sale_price,
+              numberActive: newStats.data.collections[0].stats.total.active,
+              floorPrice: newStats.data.collections[0].stats.total.floor_price
+            }
+          ]
+        };
       }
       const traits = await getCollectionTraits(collection.address);
       const powertraits = collection.powertraits ? await getCollectionPowertraits(collection.address) : null;
