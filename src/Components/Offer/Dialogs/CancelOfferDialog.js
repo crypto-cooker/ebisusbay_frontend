@@ -15,6 +15,7 @@ import {txExtras} from "@src/core/constants";
 import {toast} from "react-toastify";
 import * as Sentry from "@sentry/react";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {AnyMedia} from "@src/Components/components/AnyMedia";
 
 const DialogContainer = styled(Dialog)`
   .MuiPaper-root {
@@ -54,23 +55,6 @@ const CloseIconContainer = styled.div`
 
   img {
     width: 28px;
-  }
-`;
-
-const ImageContainer = styled.div`
-  width: 232px;
-  height: auto;
-  margin-top: 6px;
-  text-align: center;
-
-  img {
-    width: 100%;
-    border-radius: 6px;
-  }
-
-  @media only screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    margin: auto;
-    margin-bottom: 10px;
   }
 `;
 
@@ -123,7 +107,7 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
               <div className="col-12 col-sm-6 mb-2 mb-sm-0">
                 {isCollectionOffer ? (
                   <div className="profile_avatar d-flex justify-content-center mb-2">
-                    <div className="d_profile_img">
+                    <div className="dialog_avatar position-relative">
                     {collection.metadata.avatar ? (
                       <img src={hostedImage(collection.metadata.avatar)} alt={collection.name} />
                     ) : (
@@ -135,9 +119,14 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
                     </div>
                   </div>
                 ) : (
-                  <ImageContainer>
-                    <img src={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)} alt={nft.name} />
-                  </ImageContainer>
+                  <AnyMedia
+                    image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
+                    video={nft.video ?? nft.animation_url}
+                    videoProps={{ height: 'auto', autoPlay: true }}
+                    title={nft.name}
+                    usePlaceholder={false}
+                    className="img-fluid img-rounded"
+                  />
                 )}
               </div>
               <div className="col-12 col-sm-6">

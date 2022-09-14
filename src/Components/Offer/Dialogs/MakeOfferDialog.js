@@ -23,6 +23,8 @@ import {getFilteredOffers} from "@src/core/subgraph";
 import {offerState} from "@src/core/api/enums";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {collectionRoyaltyPercent} from "@src/core/chain";
+import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {specialImageTransform} from "@src/hacks";
 
 const DialogContainer = styled(Dialog)`
   .MuiPaper-root {
@@ -256,18 +258,14 @@ export default function MakeOfferDialog({ isOpen, nft:defaultNft, collection, on
             </DialogTitleContainer>
             <div className="nftSaleForm row gx-3">
               <div className="col-12 col-sm-6 mb-2 mb-sm-0">
-                <div className="profile_avatar d-flex justify-content-center">
-                  <div className="d_profile_img">
-                    {collection.metadata.avatar ? (
-                      <img src={hostedImage(collection.metadata.avatar)} alt={collection.name} />
-                    ) : (
-                      <Blockies seed={collection.address.toLowerCase()} size={15} scale={10} />
-                    )}
-                    {collection.metadata.verified && (
-                      <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={8} stackClass="eb-avatar_badge" />
-                    )}
-                  </div>
-                </div>
+                <AnyMedia
+                  image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
+                  video={nft.video ?? nft.animation_url}
+                  videoProps={{ height: 'auto', autoPlay: true }}
+                  title={nft.name}
+                  usePlaceholder={false}
+                  className="img-fluid img-rounded"
+                />
               </div>
               <div className="col-12 col-sm-6">
                 {existingOffer && (

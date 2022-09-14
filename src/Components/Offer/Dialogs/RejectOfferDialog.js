@@ -15,6 +15,7 @@ import {txExtras} from "@src/core/constants";
 import {toast} from "react-toastify";
 import * as Sentry from "@sentry/react";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {AnyMedia} from "@src/Components/components/AnyMedia";
 
 const DialogContainer = styled(Dialog)`
   .MuiPaper-root {
@@ -133,9 +134,14 @@ export const RejectOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
                     </div>
                   </div>
                 ) : (
-                  <ImageContainer>
-                    <img src={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)} alt={nft.name} />
-                  </ImageContainer>
+                  <AnyMedia
+                    image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
+                    video={nft.video ?? nft.animation_url}
+                    videoProps={{ height: 'auto', autoPlay: true }}
+                    title={nft.name}
+                    usePlaceholder={false}
+                    className="img-fluid img-rounded"
+                  />
                 )}
               </div>
               <div className="col-12 col-sm-6">
