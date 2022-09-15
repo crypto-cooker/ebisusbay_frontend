@@ -8726,6 +8726,25 @@
         "medium": "https://medium.com/@drdao.club",
         "telegram": "https://t.me/DrDaoFounder"
       }
+    },
+    {
+      "name": "X-Mythic",
+      "slug": "x-mythic",
+      "multiToken": false,
+      "address": "0xE125600D10a940c6ddC9F0aF4D536e035086f283",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome Cronos family. We want to promote the CroMythic project as much as possible. There was a plan for free mint but we decided to get 6 CROs because if it was for free everyone would take it and it would be over quickly. We want it to last as long as possible and be available with our OG collection. Therefore, please only take 1 Piece. I know I know that when OG mint is successful, this mint will probably gain prices, but give others a chance let this mint last a long time Thank you",
+        "verified": false,
+        "avatar": "/img/collections/x-mythic/avatar.webp",
+        "card": "/img/collections/x-mythic/card.webp",
+        "banner": "/img/collections/x-mythic/banner.webp",
+        "maxSupply": 500,
+        "website": "https://cromythic.com/",
+        "twitter": "https://twitter.com/cromythic",
+        "discord": "https://discord.gg/Hn3J9ruJ"
+      }
     }
   ],
   "drops": [
