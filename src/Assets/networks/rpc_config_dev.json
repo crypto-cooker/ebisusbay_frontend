@@ -8705,6 +8705,27 @@
         "twitter": "https://twitter.com/antennna7",
         "discord": "https://discord.gg/mZ9JVWpHFC"
       }
+    },
+    {
+      "name": "AI Labs",
+      "slug": "ai-labs",
+      "multiToken": false,
+      "address": "0x44aa4cB2efF7167A306449EDe9b550e57Ca33036",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "In the middle of a dark night, after many long years of painstaking work in the Dao Lab, Dr Dao achieved the impossible and found a way to create a window into parallel worlds. Teaming up with parallel Dao Doctors, they explore exciting new worlds together to discover different laboratories. Enjoy the Dao adventures and find your unique Dao Lab!",
+        "verified": false,
+        "avatar": "/img/collections/ai-labs/avatar.webp",
+        "card": "/img/collections/ai-labs/card.webp",
+        "banner": "/img/collections/ai-labs/banner.webp",
+        "maxSupply": 888,
+        "website": "https://www.drdaoclub.xyz/",
+        "twitter": "https://twitter.com/DrDaoClub",
+        "discord": "https://discord.gg/fyca4JYW7V",
+        "medium": "https://medium.com/@drdao.club",
+        "telegram": "https://t.me/DrDaoFounder"
+      }
     }
   ],
   "drops": [
