@@ -2269,8 +2269,7 @@
       "verification": {
         "doxx": "public",
         "kyc": false,
-        "escrow": false,
-        "creativeCommons": true
+        "escrow": false
       }
     },
     {
@@ -3765,8 +3764,7 @@
       "verification": {
         "doxx": "public",
         "kyc": false,
-        "escrow": false,
-        "creativeCommons": true
+        "escrow": false
       }
     },
     {
@@ -4132,8 +4130,7 @@
       "verification": {
         "doxx": "public",
         "kyc": false,
-        "escrow": false,
-        "creativeCommons": true
+        "escrow": false
       }
     },
     {
@@ -4982,8 +4979,7 @@
       "verification": {
         "doxx": "public",
         "kyc": false,
-        "escrow": false,
-        "creativeCommons": true
+        "escrow": false
       }
     },
     {
@@ -5337,8 +5333,7 @@
       "verification": {
         "doxx": "public",
         "kyc": false,
-        "escrow": false,
-        "creativeCommons": true
+        "escrow": false
       }
     },
     {
@@ -5667,8 +5662,7 @@
       "verification": {
         "doxx": "public",
         "kyc": false,
-        "escrow": false,
-        "creativeCommons": true
+        "escrow": false
       }
     },
     {
@@ -6499,8 +6493,7 @@
       "verification": {
         "doxx": "public",
         "kyc": false,
-        "escrow": false,
-        "creativeCommons": true
+        "escrow": false
       }
     },
     {
