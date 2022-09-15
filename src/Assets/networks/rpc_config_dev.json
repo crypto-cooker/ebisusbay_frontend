@@ -8676,7 +8676,7 @@
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "BOB Adventures is a collection of 666 hand-drawn unique and limited NFTs with 120+ different traits that has different rarities. There is 3 factions and 3 legendries (1 from each faction), Humans, Cyborgs and Reptiles. By holding generation 1 BOB NFT, you will get automatic WL for next generations, will be able to participate in DAO voting and giveaways! There will be staking, airdrops and even real-life surprise for biggest BOB holders + in future we will open BOB shop!",
+        "description": "BOB Adventures is a collection of 666 hand-drawn unique and limited NFTs with 120+ different traits that has different rarities. There is 3 factions and 3 legendaries (1 from each faction), Humans, Cyborgs and Reptiles. By holding generation 1 BOB NFT, you will get automatic WL for next generations, will be able to participate in DAO voting and giveaways! There will be staking, airdrops and even real-life surprise for biggest BOB holders + in future we will open BOB shop!",
         "verified": false,
         "avatar": "/img/collections/bob-adventures/avatar.webp",
         "card": "/img/collections/bob-adventures/card.webp",
@@ -8685,6 +8685,83 @@
         "website": "https://cbonft.com/",
         "twitter": "https://twitter.com/CroBobAdventure",
         "discord": "https://discord.gg/bATYfZZ4xn"
+      }
+    },
+    {
+      "name": "R.O.S.E.S: CRO",
+      "slug": "roses-cro",
+      "multiToken": false,
+      "address": "0x3D9799D8A733D21d7A28E569eE2f20c97351fEd6",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "3000 roses with a beautiful gradation. Flowers of condolence for the dead NFT projects.",
+        "verified": false,
+        "avatar": "/img/collections/roses-cro/avatar.webp",
+        "card": "/img/collections/roses-cro/card.webp",
+        "banner": "/img/collections/roses-cro/banner.webp",
+        "maxSupply": 3000,
+        "website": "https://6sense.mystrikingly.com/",
+        "twitter": "https://twitter.com/antennna7",
+        "discord": "https://discord.gg/mZ9JVWpHFC"
+      }
+    },
+    {
+      "name": "AI Labs",
+      "slug": "ai-labs",
+      "multiToken": false,
+      "address": "0x44aa4cB2efF7167A306449EDe9b550e57Ca33036",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "In the middle of a dark night, after many long years of painstaking work in the Dao Lab, Dr Dao achieved the impossible and found a way to create a window into parallel worlds. Teaming up with parallel Dao Doctors, they explore exciting new worlds together to discover different laboratories. Enjoy the Dao adventures and find your unique Dao Lab!",
+        "verified": false,
+        "avatar": "/img/collections/ai-labs/avatar.webp",
+        "card": "/img/collections/ai-labs/card.webp",
+        "banner": "/img/collections/ai-labs/banner.webp",
+        "maxSupply": 888,
+        "website": "https://www.drdaoclub.xyz/",
+        "twitter": "https://twitter.com/DrDaoClub",
+        "discord": "https://discord.gg/fyca4JYW7V",
+        "medium": "https://medium.com/@drdao.club",
+        "telegram": "https://t.me/DrDaoFounder"
+      }
+    },
+    {
+      "name": "X-Mythic",
+      "slug": "x-mythic",
+      "multiToken": false,
+      "address": "0xE125600D10a940c6ddC9F0aF4D536e035086f283",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome Cronos family. We want to promote the CroMythic project as much as possible. There was a plan for free mint but we decided to get 6 CROs because if it was for free everyone would take it and it would be over quickly. We want it to last as long as possible and be available with our OG collection. Therefore, please only take 1 Piece. I know I know that when OG mint is successful, this mint will probably gain prices, but give others a chance let this mint last a long time Thank you",
+        "verified": false,
+        "avatar": "/img/collections/x-mythic/avatar.webp",
+        "card": "/img/collections/x-mythic/card.webp",
+        "banner": "/img/collections/x-mythic/banner.webp",
+        "maxSupply": 500,
+        "website": "https://cromythic.com/",
+        "twitter": "https://twitter.com/cromythic",
+        "discord": "https://discord.gg/Hn3J9ruJ"
+      }
+    },
+    {
+      "name": "OG Cronos Duck",
+      "slug": "og-cronos-duck",
+      "multiToken": false,
+      "address": "0x2CBB73e3148D25E137478Fe3166791c63c35A80b",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "500 OG Cronos Duck with real utility: Each OG holder will receive a portion of the secondary sales royalties simply by holding their own cronos ducks (50% giveaway 50% holder). For every Cronos Duck you hold you get 1 NFT for all upcoming collections for free. (Ratio 1:1) Mint Share 10% of the mint founds of each new collections will be divided among the OG Holders to maintain a high yield. Giveaway will be organized every week with rich prizes in CRO, giving everyone the opportunity to earn an extra income.",
+        "verified": false,
+        "avatar": "/img/collections/og-cronos-duck/avatar.webp",
+        "card": "/img/collections/og-cronos-duck/card.webp",
+        "banner": "/img/collections/og-cronos-duck/banner.webp",
+        "maxSupply": 500,
+        "twitter": "https://twitter.com/cronosduck",
+        "discord": "https://discord.gg/x5RAfj6YaY"
       }
     }
   ],
