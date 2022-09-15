@@ -8763,6 +8763,25 @@
         "twitter": "https://twitter.com/cronosduck",
         "discord": "https://discord.gg/x5RAfj6YaY"
       }
+    },
+    {
+      "name": "Wild Cro Dogs",
+      "slug": "wild-cro-dogs",
+      "multiToken": false,
+      "address": "0xC68797e5998C42D4A9aF3881016306a732b3d3A1",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A unique project that combines art, passive income & charity!",
+        "verified": false,
+        "avatar": "/img/collections/wild-cro-dogs/avatar.webp",
+        "card": "/img/collections/wild-cro-dogs/card.webp",
+        "banner": "/img/collections/wild-cro-dogs/banner.webp",
+        "maxSupply": 5000,
+        "website": "https://www.wildcrodogs.com/",
+        "twitter": "https://twitter.com/wildcrodogs",
+        "discord": "https://discord.gg/jRFFTfgUs3"
+      }
     }
   ],
   "drops": [
