@@ -2269,8 +2269,7 @@
       "verification": {
         "doxx": "public",
         "kyc": false,
-        "escrow": false,
-        "creativeCommons": true
+        "escrow": false
       }
     },
     {
@@ -3765,8 +3764,7 @@
       "verification": {
         "doxx": "public",
         "kyc": false,
-        "escrow": false,
-        "creativeCommons": true
+        "escrow": false
       }
     },
     {
@@ -4132,8 +4130,7 @@
       "verification": {
         "doxx": "public",
         "kyc": false,
-        "escrow": false,
-        "creativeCommons": true
+        "escrow": false
       }
     },
     {
@@ -4982,8 +4979,7 @@
       "verification": {
         "doxx": "public",
         "kyc": false,
-        "escrow": false,
-        "creativeCommons": true
+        "escrow": false
       }
     },
     {
@@ -5337,8 +5333,7 @@
       "verification": {
         "doxx": "public",
         "kyc": false,
-        "escrow": false,
-        "creativeCommons": true
+        "escrow": false
       }
     },
     {
@@ -5667,8 +5662,7 @@
       "verification": {
         "doxx": "public",
         "kyc": false,
-        "escrow": false,
-        "creativeCommons": true
+        "escrow": false
       }
     },
     {
@@ -6499,8 +6493,7 @@
       "verification": {
         "doxx": "public",
         "kyc": false,
-        "escrow": false,
-        "creativeCommons": true
+        "escrow": false
       }
     },
     {
@@ -8673,6 +8666,25 @@
         "twitter": "https://twitter.com/crodexapp",
         "discord": "https://discord.gg/7HwpTF63y5",
         "telegram": "https://t.me/crodexofficial"
+      }
+    },
+    {
+      "name": "BOB Adventures",
+      "slug": "bob-adventures",
+      "multiToken": false,
+      "address": "0x7841dA84C0eC87744306C6420Eb039b8Cbd39d70",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "BOB Adventures is a collection of 666 hand-drawn unique and limited NFTs with 120+ different traits that has different rarities. There is 3 factions and 3 legendries (1 from each faction), Humans, Cyborgs and Reptiles. By holding generation 1 BOB NFT, you will get automatic WL for next generations, will be able to participate in DAO voting and giveaways! There will be staking, airdrops and even real-life surprise for biggest BOB holders + in future we will open BOB shop!",
+        "verified": false,
+        "avatar": "/img/collections/bob-adventures/avatar.webp",
+        "card": "/img/collections/bob-adventures/card.webp",
+        "banner": "/img/collections/bob-adventures/banner.webp",
+        "maxSupply": 666,
+        "website": "https://cbonft.com/",
+        "twitter": "https://twitter.com/CroBobAdventure",
+        "discord": "https://discord.gg/bATYfZZ4xn"
       }
     }
   ],
