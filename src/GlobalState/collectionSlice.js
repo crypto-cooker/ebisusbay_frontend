@@ -294,16 +294,17 @@ export const getStats =
         response = await getCollectionMetadata(mergedAddresses);
       } else {
         const newStats = await getCollections({address: mergedAddresses});
+        const sCollection = newStats.data.collections[0];
         response = {
           collections: [
             {
               collection: mergedAddresses,
-              totalSupply: newStats.data.collections[0].totalSupply,
-              totalVolume: newStats.data.collections[0].stats.total.volume,
-              numberOfSales: newStats.data.collections[0].stats.total.complete,
-              averageSalePrice: newStats.data.collections[0].stats.total.avg_sale_price,
-              numberActive: newStats.data.collections[0].stats.total.active,
-              floorPrice: newStats.data.collections[0].stats.total.floor_price
+              totalSupply: sCollection.totalSupply,
+              totalVolume: sCollection.stats.total.volume,
+              numberOfSales: sCollection.stats.total.complete,
+              averageSalePrice: sCollection.stats.total.avgSalePrice ?? sCollection.stats.total.avg_sale_price,
+              numberActive: sCollection.stats.total.active,
+              floorPrice: sCollection.stats.total.floorPrice ?? sCollection.stats.total.floor_price
             }
           ]
         };
