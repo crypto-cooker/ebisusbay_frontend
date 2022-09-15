@@ -8745,6 +8745,24 @@
         "twitter": "https://twitter.com/cromythic",
         "discord": "https://discord.gg/Hn3J9ruJ"
       }
+    },
+    {
+      "name": "OG Cronos Duck",
+      "slug": "og-cronos-duck",
+      "multiToken": false,
+      "address": "0x2CBB73e3148D25E137478Fe3166791c63c35A80b",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "500 OG Cronos Duck with real utility: Each OG holder will receive a portion of the secondary sales royalties simply by holding their own cronos ducks (50% giveaway 50% holder). For every Cronos Duck you hold you get 1 NFT for all upcoming collections for free. (Ratio 1:1) Mint Share 10% of the mint founds of each new collections will be divided among the OG Holders to maintain a high yield. Giveaway will be organized every week with rich prizes in CRO, giving everyone the opportunity to earn an extra income.",
+        "verified": false,
+        "avatar": "/img/collections/og-cronos-duck/avatar.webp",
+        "card": "/img/collections/og-cronos-duck/card.webp",
+        "banner": "/img/collections/og-cronos-duck/banner.webp",
+        "maxSupply": 500,
+        "twitter": "https://twitter.com/cronosduck",
+        "discord": "https://discord.gg/x5RAfj6YaY"
+      }
     }
   ],
   "drops": [
