@@ -8676,7 +8676,7 @@
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "BOB Adventures is a collection of 666 hand-drawn unique and limited NFTs with 120+ different traits that has different rarities. There is 3 factions and 3 legendries (1 from each faction), Humans, Cyborgs and Reptiles. By holding generation 1 BOB NFT, you will get automatic WL for next generations, will be able to participate in DAO voting and giveaways! There will be staking, airdrops and even real-life surprise for biggest BOB holders + in future we will open BOB shop!",
+        "description": "BOB Adventures is a collection of 666 hand-drawn unique and limited NFTs with 120+ different traits that has different rarities. There is 3 factions and 3 legendaries (1 from each faction), Humans, Cyborgs and Reptiles. By holding generation 1 BOB NFT, you will get automatic WL for next generations, will be able to participate in DAO voting and giveaways! There will be staking, airdrops and even real-life surprise for biggest BOB holders + in future we will open BOB shop!",
         "verified": false,
         "avatar": "/img/collections/bob-adventures/avatar.webp",
         "card": "/img/collections/bob-adventures/card.webp",
@@ -8685,6 +8685,25 @@
         "website": "https://cbonft.com/",
         "twitter": "https://twitter.com/CroBobAdventure",
         "discord": "https://discord.gg/bATYfZZ4xn"
+      }
+    },
+    {
+      "name": "R.O.S.E.S: CRO",
+      "slug": "roses-cro",
+      "multiToken": false,
+      "address": "0x3D9799D8A733D21d7A28E569eE2f20c97351fEd6",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "3000 roses with a beautiful gradation. Flowers of condolence for the dead NFT projects.",
+        "verified": false,
+        "avatar": "/img/collections/roses-cro/avatar.webp",
+        "card": "/img/collections/roses-cro/card.webp",
+        "banner": "/img/collections/roses-cro/banner.webp",
+        "maxSupply": 3000,
+        "website": "https://6sense.mystrikingly.com/",
+        "twitter": "https://twitter.com/antennna7",
+        "discord": "https://discord.gg/mZ9JVWpHFC"
       }
     }
   ],
