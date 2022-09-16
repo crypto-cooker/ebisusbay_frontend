@@ -25,7 +25,7 @@ import {
   isFounderVipDrop,
   isMagBrewVikingsDrop,
   newlineText,
-  percentage,
+  percentage, round,
 } from '../../utils';
 import { dropState as statuses } from '../../core/api/enums';
 import {EbisuDropAbi, ERC20} from '../../Contracts/Abis';
@@ -648,7 +648,7 @@ const SingleDrop = () => {
                 <div className="d-flex flex-row">
                   <div className="me-4">
                     <h6 className="mb-1">Mint Price</h6>
-                    <h5>{regularCost} CRO</h5>
+                    <h5>{round(regularCost)} CRO</h5>
                     {dropObject?.erc20Cost && dropObject?.erc20Token && (
                       <h5>{`${dropObject?.erc20Cost} ${config.tokens[dropObject.erc20Token].symbol}`}</h5>
                     )}
@@ -656,7 +656,7 @@ const SingleDrop = () => {
                   {(memberCost || (dropObject?.erc20MemberCost && dropObject?.erc20Cost !== dropObject?.erc20MemberCost)) && (
                     <div className="me-4">
                       <h6 className="mb-1">Founding Member Price</h6>
-                      <h5>{memberCost} CRO</h5>
+                      <h5>{round(memberCost)} CRO</h5>
                       {dropObject?.erc20MemberCost && dropObject?.erc20Cost !== dropObject?.erc20MemberCost && (
                         <h5>{`${dropObject?.erc20MemberCost} ${config.tokens[dropObject.erc20Token].symbol}`}</h5>
                       )}
@@ -665,7 +665,7 @@ const SingleDrop = () => {
                   {whitelistCost > 0 && (
                     <div className="me-4">
                       <h6 className="mb-1">Whitelist Price</h6>
-                      <h5>{whitelistCost} CRO</h5>
+                      <h5>{round(whitelistCost)} CRO</h5>
                     </div>
                   )}
                   {specialWhitelist && (
