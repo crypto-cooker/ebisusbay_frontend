@@ -1,5 +1,5 @@
 import React, {useState, useCallback, useEffect, memo} from 'react';
-import {Dialog, DialogContent, DialogTitle} from '@mui/material';
+import {ClickAwayListener, Dialog, DialogContent, DialogTitle, Tooltip} from '@mui/material';
 import styled from 'styled-components';
 import {
   faCheck,
@@ -8,7 +8,7 @@ import {
   faDollarSign,
   faStairs, faStar
 } from "@fortawesome/free-solid-svg-icons";
-import {Accordion, Badge, Col, Form, OverlayTrigger, Spinner, Tooltip} from "react-bootstrap";
+import {Accordion, Badge, Form, Spinner} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {ethers} from "ethers";
 import Button from "@src/Components/components/Button";
@@ -27,7 +27,7 @@ import useBreakpoint from "use-breakpoint";
 import {getListings} from "@src/core/api/endpoints/listings";
 import {specialImageTransform} from "@src/hacks";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
-import {Lazy, Navigation, Pagination} from "swiper";
+import {Lazy, Navigation} from "swiper";
 import {Swiper, SwiperSlide} from "swiper/react";
 
 const DialogContainer = styled(Dialog)`
@@ -521,6 +521,7 @@ const MaxPricePerItemField = ({onChange, disabled}) => {
 
 const AutoSwapItemsField = ({onChange, disabled}) => {
   const [isChecked, setIsChecked] = useState(false);
+  const [tooltipOpen, setTooltipOpen] = useState(false);
   const [error, setError] = useState(false);
 
   const onFieldChange = useCallback((e) => {
@@ -529,11 +530,33 @@ const AutoSwapItemsField = ({onChange, disabled}) => {
     onChange(newValue);
   }, [setIsChecked, isChecked]);
 
+  const handleTooltipClose = () => {
+    setTooltipOpen(false);
+  };
+
+  const handleTooltipOpen = () => {
+    setTooltipOpen(true);
+  };
+
   return (
     <Form.Group className="form-field d-flex">
       <Form.Label className="formLabel w-100">
         <span>Auto Swap Items</span>
-        <FontAwesomeIcon icon={faCircleQuestion} className="ms-1"/>
+        <ClickAwayListener onClickAway={handleTooltipClose}>
+          <span>
+            <Tooltip
+              title="Automatically swap items that were sold or delisted while sweeping"
+              placement="top-start"
+              onClose={handleTooltipClose}
+              open={tooltipOpen}
+              disableFocusListener
+              disableHoverListener
+              disableTouchListener
+            >
+              <FontAwesomeIcon icon={faCircleQuestion} className="ms-1" onClick={handleTooltipOpen}/>
+            </Tooltip>
+          </span>
+        </ClickAwayListener>
       </Form.Label>
       <Form.Switch
         checked={isChecked}
