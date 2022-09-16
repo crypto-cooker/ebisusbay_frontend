@@ -40,7 +40,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@metamask/detect-provider": "^1.2.0",
     "@metamask/onboarding": "^1.0.1",
-    "@mui/material": "^5.2.4",
+    "@mui/material": "^5.10.5",
     "@pinata/ipfs-gateway-tools": "^1.1.6",
     "@reduxjs/toolkit": "^1.6.2",
     "@sentry/nextjs": "^7.5.1",
