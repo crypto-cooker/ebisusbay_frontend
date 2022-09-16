@@ -8652,7 +8652,7 @@
       "name": "Space Crxillions",
       "slug": "space-crxillions",
       "multiToken": false,
-      "address": "",
+      "address": "0xB6782F208ABe10E8962407d139f6698Bfc4FD13F",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -11823,7 +11823,7 @@
         "discord": "https://discord.gg/7HwpTF63y5",
         "telegram": "https://t.me/crodexofficial"
       },
-      "address": "",
+      "address": "0xB6782F208ABe10E8962407d139f6698Bfc4FD13F",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 3000,
