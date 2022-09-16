@@ -8782,6 +8782,24 @@
         "twitter": "https://twitter.com/wildcrodogs",
         "discord": "https://discord.gg/jRFFTfgUs3"
       }
+    },
+    {
+      "name": "Finger Monkeys",
+      "slug": "finger-monkeys",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "5555 Lucky Finger Monkeys are about to hit Cronos. Lookout for the interactive platform!",
+        "verified": true,
+        "avatar": "/img/collections/finger-monkeys/avatar.webp",
+        "card": "/img/collections/finger-monkeys/card.webp",
+        "banner": "/img/collections/finger-monkeys/banner.webp",
+        "maxSupply": 5555,
+        "website": "https://www.specterofart.com/FingerMonkeys",
+        "discord": "https://discord.gg/CcwFDwPuuh"
+      }
     }
   ],
   "drops": [
@@ -11832,6 +11850,36 @@
       "whitelistCost": "600",
       "foundersOnly": false,
       "start": 1663531200000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 111,
+      "slug": "finger-monkeys",
+      "imgNft": "/img/drops/finger-monkeys/drop.webp",
+      "imgPreview": "/img/drops/finger-monkeys/drop.webp",
+      "imgAvatar": "/img/collections/finger-monkeys/avatar.webp",
+      "imgBanner": "/img/collections/finger-monkeys/banner.webp",
+      "title": "Finger Monkeys",
+      "subtitle": "5555 Lucky Finger Monkeys are about to hit Cronos. Lookout for the interactive platform!",
+      "description": "Every wallet needs a LUCKY Finger Monkey in the collection. Finger Monkey collection some of the animations look cool, some look funny and some of them even look weird.\n\nTop 1000 rank gets % of royalties.\n\n$50 in CRO a week “Wanted Wednesdays” giveaway for holders of 10 or more Finger Monkeys.\n\nHolders of 25 or more Finger Monkeys will get a monthly % of royalties of all NFTs coming from project.",
+      "author": {
+        "name": "Finger Monkeys",
+        "website": "https://www.specterofart.com/FingerMonkeys",
+        "discord": "https://discord.gg/CcwFDwPuuh"
+      },
+      "address": "",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 200,
+      "totalSupply": 5555,
+      "cost": "195",
+      "memberCost": "150",
+      "whitelistCost": "150",
+      "foundersOnly": false,
+      "start": null,
       "end": null,
       "referral": false,
       "is1155": false,
