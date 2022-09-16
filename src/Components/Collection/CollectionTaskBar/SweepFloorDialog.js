@@ -1,39 +1,34 @@
 import React, {useState, useCallback, useEffect, memo} from 'react';
-import {Dialog, DialogContent, DialogTitle, Tooltip} from '@mui/material';
+import {Dialog, DialogContent, DialogTitle} from '@mui/material';
 import styled from 'styled-components';
 import {
   faCheck,
   faCircle,
   faCircleQuestion,
   faDollarSign,
-  faSquareXmark,
   faStairs, faStar
 } from "@fortawesome/free-solid-svg-icons";
-import {Badge, Col, Form, OverlayTrigger, Spinner} from "react-bootstrap";
+import {Accordion, Badge, Col, Form, OverlayTrigger, Spinner} from "react-bootstrap";
 import {useSelector} from "react-redux";
-import {Contract, ethers} from "ethers";
+import {ethers} from "ethers";
 import Button from "@src/Components/components/Button";
-import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {txExtras} from "@src/core/constants";
 import {createSuccessfulTransactionToastContent, isNumeric, mapAttributeString, round, stripSpaces} from "@src/utils";
-import {appConfig} from "@src/Config";
-import Offer from "@src/Contracts/Offer.json";
-import Market from "@src/Contracts/Marketplace.json";
-import {useWindowSize} from "@src/hooks/useWindowSize";
 import * as Sentry from '@sentry/react';
 import {hostedImage} from "@src/helpers/image";
 import Blockies from "react-blockies";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
-import {getMyCollectionOffers} from "@src/core/subgraph";
 import DotIcon from "@src/Components/components/DotIcon";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {getListingsByCollection} from "@src/core/api/next/listings";
 import {ListingsQuery} from "@src/core/api/queries/listings";
 import {commify, parseUnits} from "ethers/lib/utils";
 import useBreakpoint from "use-breakpoint";
 import {getListings} from "@src/core/api/endpoints/listings";
+import {specialImageTransform} from "@src/hacks";
+import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {Navigation, Pagination} from "swiper";
+import {Swiper, SwiperSlide} from "swiper/react";
 
 const DialogContainer = styled(Dialog)`
   .MuiPaper-root {
@@ -102,8 +97,8 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
 
   // Confirmation States
   const [showConfirmButton, setShowConfirmButton] = useState(false);
-  const [confirmationCount, setConfirmationCount] = useState(0);
   const [confirmationCost, setConfirmationCost] = useState(0);
+  const [confirmationItems, setConfirmationItems] = useState([]);
 
   const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
   const user = useSelector((state) => state.user);
@@ -196,7 +191,7 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
       const filteredListings = await retrieveEligibleListings();
 
       const listingIds = filteredListings.map((listing) => listing.listingId);
-      const totalCost = filteredListings.reduce((p, n) => p + parseInt(n.price), 0);
+      const totalCost = ethers.utils.parseUnits(filteredListings.reduce((p, n) => p + parseInt(n.price), 0).toString());
 
       const gasPrice = parseUnits('5000', 'gwei');
       const gasEstimate = await user.marketContract.estimateGas.makePurchases(listingIds, {value: totalCost});
@@ -206,7 +201,6 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
         gasPrice,
         gasLimit
       };
-
       let tx = await user.marketContract.makePurchases(listingIds, extra);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -232,8 +226,8 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
     try {
       setExecutingSearch(true);
       const eligibleListings = await retrieveEligibleListings();
+      setConfirmationItems(eligibleListings);
       if (eligibleListings.length > 0) {
-        setConfirmationCount(eligibleListings.length);
         setConfirmationCost(eligibleListings.reduce((p, n) => p + parseInt(n.price), 0));
         setShowConfirmButton(true);
       } else {
@@ -275,7 +269,7 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
                 <div className="profile_avatar d-flex justify-content-center">
                   <div className="dialog_avatar position-relative">
                     {collection.metadata.avatar ? (
-                      <img src={hostedImage(collection.metadata.avatar)} alt={collection.name} />
+                      <img src={hostedImage(collection.metadata.avatar)} alt={collection.name} style={{background:'white'}}/>
                     ) : (
                       <Blockies seed={collection.address.toLowerCase()} size={15} scale={10} />
                     )}
@@ -353,8 +347,9 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
                 )}
                 {showConfirmButton ? (
                   <>
-                    <div className="alert alert-info my-auto mb-2 fw-bold text-center">
-                      Sweeper will attempt to sweep {confirmationCount} matched listings ({commify(confirmationCost)} CRO). This value could change, depending on volume and liquidity of the collection
+                    <Results listings={confirmationItems} cost={confirmationCost} />
+                    <div className="alert alert-info my-2 fw-bold text-center">
+                      These listings could change, depending on volume and liquidity of the collection. Continue?
                     </div>
                     {executingSweepFloor && (
                       <div className="mb-2 text-center fst-italic">Please check your wallet for confirmation</div>
@@ -363,9 +358,9 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
                       <Button type="legacy-outlined"
                               onClick={() => {
                                 setShowConfirmButton(false)
-                                setConfirmationCount(0)
                                 setConfirmationCost(0)
                               }}
+                              disabled={executingSweepFloor}
                               className="me-2 flex-fill">
                         Go Back
                       </Button>
@@ -670,3 +665,52 @@ const ActiveFiltersField = memo(({collection, activeFilters}) => {
     </>
   )
 });
+
+const Results = ({listings, cost}) => {
+console.log("items", listings);
+  return (
+    <Accordion >
+      <Accordion.Item eventKey="0">
+        <Accordion.Header as="div">
+          Found {listings.length} {listings.length === 1 ? 'listing' : 'listings'} ({commify(cost)} CRO)
+        </Accordion.Header>
+        <Accordion.Body>
+          <Swiper
+            spaceBetween={10}
+            slidesPerView={3}
+            slidesPerGroup={3}
+            navigation={true}
+            modules={[Navigation]}
+            breakpoints={{
+              600: {
+                slidesPerView: 4,
+                slidesPerGroup: 4,
+              },
+              1024: {
+                slidesPerView: 5,
+                slidesPerGroup: 5,
+              },
+            }}
+          >
+            {listings.map((listing) => (
+              <SwiperSlide>
+                <div>
+                  <div className="text-center" style={{fontSize:'14px'}}>#{listing.nftId}</div>
+                  <AnyMedia
+                    image={specialImageTransform(listing.nft.address ?? listing.nft.nftAddress, listing.nft.image)}
+                    video={listing.nft.video ?? listing.nft.animation_url}
+                    videoProps={{ height: 'auto', autoPlay: true }}
+                    title={listing.nft.name}
+                    usePlaceholder={false}
+                    className="img-fluid img-rounded"
+                  />
+                  <div className="text-center" style={{fontSize:'14px'}}>{listing.price} CRO</div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </Accordion.Body>
+      </Accordion.Item>
+    </Accordion>
+  )
+}
