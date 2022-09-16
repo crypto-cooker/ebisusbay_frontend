@@ -12,9 +12,7 @@ import {FullCollectionsQuery} from "../core/api/queries/fullcollections";
 import {CollectionFilters} from "../Components/Models/collection-filters.model";
 import {sortAndFetchCollectionDetails} from "../core/api/endpoints/fullcollections";
 import {sortAndFetchListings} from "../core/api/endpoints/listings";
-import {getCollections} from "@src/core/api/next/collectioninfo";
-
-const knownContracts = appConfig('collections');
+import { getCollections } from "@src/core/api/next/collectioninfo";
 
 const collectionSlice = createSlice({
   name: 'collection',
@@ -174,9 +172,13 @@ export const fetchListings =
 
     const address = state.collection.query.filter.address;
     const weirdApes = Array.isArray(address);
+    const res = await getCollections({address});
+    const contract = res?.data?.collections[0]
+
     const knownContract = weirdApes
       ? null
-      : knownContracts.find((c) => caseInsensitiveCompare(c.address, address));
+      : 
+      contract
     const fallbackContracts = ['red-skull-potions', 'cronos-fc'];
     const pageSizeOverride = findAllListings ? 1208 : null;
 

@@ -9,7 +9,7 @@ import {appConfig} from "@src/Config";
 import PageHead from "../../src/Components/Head/PageHead";
 
 export const drops = appConfig('drops');
-export const collections = appConfig('collections');
+const config = appConfig();
 
 const Drop = ({ssrDrop, ssrCollection}) => {
   const router = useRouter();
@@ -54,7 +54,9 @@ const Drop = ({ssrDrop, ssrCollection}) => {
 export const getServerSideProps = async ({ params }) => {
   const slug = params?.slug;
   const drop = drops.find((c) => caseInsensitiveCompare(c.slug, slug));
-  const collection = collections.find((c) => caseInsensitiveCompare(c.slug, slug));
+  const res = await fetch(`${config.urls.api}collectioninfo?slug=${slug}`)
+  const json = await res.json();
+  const collection = json.collections[0]
 
   if (!drop) {
     return {

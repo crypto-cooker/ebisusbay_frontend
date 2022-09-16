@@ -7,8 +7,7 @@ import {caseInsensitiveCompare, isCronosVerseCollection, isAddress} from '@src/u
 import {appConfig} from "@src/Config";
 import PageHead from "../../src/Components/Head/PageHead";
 import {hostedImage} from "@src/helpers/image";
-
-const knownContracts = appConfig('collections')
+import { getCollections } from "@src/core/api/next/collectioninfo";
 
 const collectionTypes = {
   UNSET: -1,
@@ -16,6 +15,7 @@ const collectionTypes = {
   ERC1155: 1,
   CRONOSVERSE: 2,
 };
+const config = appConfig();
 
 const Collection = ({ ssrCollection, query }) => {
   const router = useRouter();
@@ -26,19 +26,25 @@ const Collection = ({ ssrCollection, query }) => {
   const [redirect, setRedirect] = useState(null);
   const [initialized, setInitialized] = useState(false);
 
-  useEffect(() => {
+  const onChangeSlug = async () => {
     setRedirect(null);
-    let col = knownContracts.find((c) => c.slug === slug);
+
+    const res = await getCollections({slug});
+    const col = res.data?.collections?.[0]
+
     if (col) {
       if (!!col.mergedWith) {
-        let redirectToCollection = knownContracts.find((c) => caseInsensitiveCompare(c.address, col.mergedWith));
+        const res = await getCollections({address: col.mergedWith});
+        const redirectToCollection = res.data?.collections?.[0]
+
         setRedirect(redirectToCollection.slug);
       }
       setCollection(col);
       if (isCronosVerseCollection(col.address)) setType(collectionTypes.ERC721);
       else setType(col.multiToken ? collectionTypes.ERC1155 : collectionTypes.ERC721);
     } else {
-      col = knownContracts.find((c) => caseInsensitiveCompare(c.address, slug));
+        const res = await getCollections({address: slug});
+        col = res.data?.collections?.[0]
       if (col) {
         setCollection(col);
         setRedirect(col.slug);
@@ -46,6 +52,10 @@ const Collection = ({ ssrCollection, query }) => {
       }
     }
     setInitialized(true);
+  }
+
+  useEffect(() => {
+    onChangeSlug();
   }, [slug]);
 
   if (redirect) {
@@ -88,9 +98,14 @@ export const getServerSideProps = async ({ params, query }) => {
   const slug = params?.slug;
   let collection;
   if (isAddress(slug)) {
-    collection = knownContracts.find((c) => c?.address.toLowerCase() === slug.toLowerCase());
+    const res = await fetch(`${config.urls.api}collectioninfo?address=${slug}`)
+    const json = await res.json();
+    collection = json.collections[0]
   } else {
-    collection = knownContracts.find((c) => c?.slug.toLowerCase() === slug.toLowerCase());
+
+    const res = await fetch(`${config.urls.api}collectioninfo?slug=${slug}`)
+    const json = await res.json();
+    collection = json.collections[0]
   }
 
   if (!collection) {
