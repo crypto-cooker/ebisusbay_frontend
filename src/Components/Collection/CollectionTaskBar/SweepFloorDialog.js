@@ -445,7 +445,6 @@ const BudgetSweeperField = ({onChange, disabled}) => {
       <Form.Control
         className="input"
         type="number"
-        placeholder="CRO"
         value={budget}
         onChange={onFieldChange}
         disabled={disabled}
