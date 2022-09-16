@@ -344,14 +344,14 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
 
               <div className="mt-3 mx-auto">
                 {priceError && (
-                  <div className="alert alert-info my-auto mb-2 fw-bold text-center">
+                  <div className="alert alert-primary my-auto mb-2 text-center">
                     {priceError}
                   </div>
                 )}
                 {showConfirmButton ? (
                   <>
                     <Results listings={confirmationItems} cost={confirmationCost} />
-                    <div className="alert alert-info my-2 fw-bold text-center">
+                    <div className="alert alert-primary my-2 text-center">
                       These listings could change, depending on volume and liquidity of the collection. Continue?
                     </div>
                     {executingSweepFloor && (
