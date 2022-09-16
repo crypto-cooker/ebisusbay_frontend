@@ -259,7 +259,7 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
   if (!collection) return <></>;
 
   return (
-    <DialogContainer fullscreen onClose={onClose} open={isOpen}>
+    <DialogContainer onClose={onClose} open={isOpen} maxWidth="md">
       <DialogContent>
         {!isLoading ? (
           <>
