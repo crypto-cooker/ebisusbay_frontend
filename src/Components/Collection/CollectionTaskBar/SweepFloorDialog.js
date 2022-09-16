@@ -8,7 +8,7 @@ import {
   faDollarSign,
   faStairs, faStar
 } from "@fortawesome/free-solid-svg-icons";
-import {Accordion, Badge, Col, Form, OverlayTrigger, Spinner} from "react-bootstrap";
+import {Accordion, Badge, Col, Form, OverlayTrigger, Spinner, Tooltip} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {ethers} from "ethers";
 import Button from "@src/Components/components/Button";
@@ -27,7 +27,7 @@ import useBreakpoint from "use-breakpoint";
 import {getListings} from "@src/core/api/endpoints/listings";
 import {specialImageTransform} from "@src/hacks";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
-import {Navigation, Pagination} from "swiper";
+import {Lazy, Navigation, Pagination} from "swiper";
 import {Swiper, SwiperSlide} from "swiper/react";
 
 const DialogContainer = styled(Dialog)`
@@ -670,7 +670,6 @@ const ActiveFiltersField = memo(({collection, activeFilters}) => {
 });
 
 const Results = ({listings, cost}) => {
-console.log("items", listings);
   return (
     <Accordion >
       <Accordion.Item eventKey="0">
@@ -683,7 +682,7 @@ console.log("items", listings);
             slidesPerView={3}
             slidesPerGroup={3}
             navigation={true}
-            modules={[Navigation]}
+            modules={[Lazy, Navigation]}
             breakpoints={{
               600: {
                 slidesPerView: 4,
@@ -696,16 +695,14 @@ console.log("items", listings);
             }}
           >
             {listings.map((listing) => (
-              <SwiperSlide>
+              <SwiperSlide key={listing.listingId}>
                 <div>
                   <div className="text-center" style={{fontSize:'14px'}}>#{listing.nftId}</div>
                   <AnyMedia
                     image={specialImageTransform(listing.nft.address ?? listing.nft.nftAddress, listing.nft.image)}
-                    video={listing.nft.video ?? listing.nft.animation_url}
-                    videoProps={{ height: 'auto', autoPlay: true }}
                     title={listing.nft.name}
                     usePlaceholder={false}
-                    className="img-fluid img-rounded"
+                    className="img-fluid img-rounded swiper-lazy"
                   />
                   <div className="text-center" style={{fontSize:'14px'}}>{listing.price} CRO</div>
                 </div>
