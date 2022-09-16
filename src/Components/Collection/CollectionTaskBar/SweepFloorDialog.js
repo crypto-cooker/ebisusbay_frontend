@@ -259,7 +259,7 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
   if (!collection) return <></>;
 
   return (
-    <DialogContainer onClose={onClose} open={isOpen} maxWidth="md">
+    <DialogContainer fullScreen={fullscreen} onClose={onClose} open={isOpen} maxWidth="md">
       <DialogContent>
         {!isLoading ? (
           <>
@@ -409,7 +409,7 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
 
 const BudgetSweeperField = ({onChange, disabled}) => {
   const user = useSelector((state) => state.user);
-  const [budget, setBudget] = useState(null);
+  const [budget, setBudget] = useState('');
   const [error, setError] = useState(false);
 
   const onFieldChange = useCallback((e) => {
@@ -452,9 +452,8 @@ const BudgetSweeperField = ({onChange, disabled}) => {
   )
 }
 
-const QuantitySweeperField = ({balance, onChange, disabled}) => {
-  const user = useSelector((state) => state.user);
-  const [quantity, setQuantity] = useState(null);
+const QuantitySweeperField = ({onChange, disabled}) => {
+  const [quantity, setQuantity] = useState('');
   const [error, setError] = useState(false);
 
   const onFieldChange = useCallback((e) => {
@@ -463,9 +462,7 @@ const QuantitySweeperField = ({balance, onChange, disabled}) => {
       setQuantity(newValue);
       onChange(newValue);
     }
-    // @todo compare against wallet balance
-
-  }, [setQuantity, balance, quantity]);
+  }, [setQuantity, quantity]);
 
   return (
     <Form.Group className="form-field">
@@ -487,7 +484,7 @@ const QuantitySweeperField = ({balance, onChange, disabled}) => {
 }
 
 const MaxPricePerItemField = ({onChange, disabled}) => {
-  const [price, setPrice] = useState(null);
+  const [price, setPrice] = useState('');
   const [error, setError] = useState(false);
 
   const onFieldChange = useCallback((e) => {

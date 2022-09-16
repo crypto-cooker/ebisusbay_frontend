@@ -127,12 +127,9 @@ export const getListings = async (listingsQuery) => {
     abortController = new AbortController();
     const { signal } = abortController;
 
-    console.log('input', {
+    const response = await api.get(`listings`, {
       params:query,
       signal
-    })
-    const response = await api.get(`listings`, {
-      params:query
     });
 
     abortController = null;
