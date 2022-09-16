@@ -188,7 +188,10 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
       setExecutingSweepFloor(true);
       Sentry.captureEvent({message: 'handleSweepFloor', extra: {address: collectionAddress}});
 
-      const filteredListings = await retrieveEligibleListings();
+      let filteredListings = confirmationItems;
+      if (autoSwapItems) {
+        filteredListings = await retrieveEligibleListings();
+      }
 
       const listingIds = filteredListings.map((listing) => listing.listingId);
       const totalCost = ethers.utils.parseUnits(filteredListings.reduce((p, n) => p + parseInt(n.price), 0).toString());
