@@ -93,7 +93,7 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
   const [budget, setBudget] = useState(null);
   const [quantity, setQuantity] = useState(null);
   const [maxPricePerItem, setMaxPricePerItem] = useState(null);
-  const [autoSwapItems, setAutoSwapItems] = useState(false);
+  const [autoSwapItems, setAutoSwapItems] = useState(true);
 
   // Confirmation States
   const [showConfirmButton, setShowConfirmButton] = useState(false);
@@ -519,7 +519,7 @@ const MaxPricePerItemField = ({onChange, disabled}) => {
 }
 
 const AutoSwapItemsField = ({onChange, disabled}) => {
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(true);
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [error, setError] = useState(false);
 
