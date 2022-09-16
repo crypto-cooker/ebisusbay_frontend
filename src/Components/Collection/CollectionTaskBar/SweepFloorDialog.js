@@ -98,6 +98,7 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
   const [budget, setBudget] = useState(null);
   const [quantity, setQuantity] = useState(null);
   const [maxPricePerItem, setMaxPricePerItem] = useState(null);
+  const [autoSwapItems, setAutoSwapItems] = useState(false);
 
   // Confirmation States
   const [showConfirmButton, setShowConfirmButton] = useState(false);
@@ -336,6 +337,12 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
                 {tab === sweepType.custom && adjustLayout && (
                   <ActiveFiltersField activeFilters={activeFilters} collection={collection} />
                 )}
+                <div className="mt-2">
+                  <AutoSwapItemsField
+                    onChange={(value) => setAutoSwapItems(value)}
+                    disabled={showConfirmButton || executingSweepFloor}
+                  />
+                </div>
               </div>
 
               <div className="mt-3 mx-auto">
@@ -510,6 +517,31 @@ const MaxPricePerItemField = ({onChange, disabled}) => {
       <Form.Text className="field-description textError">
         {error}
       </Form.Text>
+    </Form.Group>
+  )
+}
+
+const AutoSwapItemsField = ({onChange, disabled}) => {
+  const [isChecked, setIsChecked] = useState(false);
+  const [error, setError] = useState(false);
+
+  const onFieldChange = useCallback((e) => {
+    const newValue = e.target.checked;
+    setIsChecked(newValue);
+    onChange(newValue);
+  }, [setIsChecked, isChecked]);
+
+  return (
+    <Form.Group className="form-field d-flex">
+      <Form.Label className="formLabel w-100">
+        <span>Auto Swap Items</span>
+        <FontAwesomeIcon icon={faCircleQuestion} className="ms-1"/>
+      </Form.Label>
+      <Form.Switch
+        checked={isChecked}
+        onChange={onFieldChange}
+        disabled={disabled}
+      />
     </Form.Group>
   )
 }
