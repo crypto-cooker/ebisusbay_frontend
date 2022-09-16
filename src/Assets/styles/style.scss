@@ -5534,7 +5534,7 @@ iframe.metaverse {
   }
 
   .form_icon_button {
-    border: solid 1px $textColor2;
+    border: solid 1px $borderColor1;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -5572,7 +5572,7 @@ iframe.metaverse {
     height: 40px;
     background-color: $cardColor2;
     border-radius: 2px;
-    &::placeholder {color: $textColor1;}
+    &::placeholder {color: $textColor2;}
     margin-bottom: 0px;
   }  
 

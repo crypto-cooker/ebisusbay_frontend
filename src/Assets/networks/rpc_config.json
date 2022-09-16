@@ -8652,7 +8652,7 @@
       "name": "Space Crxillions",
       "slug": "space-crxillions",
       "multiToken": false,
-      "address": "",
+      "address": "0xB6782F208ABe10E8962407d139f6698Bfc4FD13F",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -8781,6 +8781,48 @@
         "website": "https://www.wildcrodogs.com/",
         "twitter": "https://twitter.com/wildcrodogs",
         "discord": "https://discord.gg/jRFFTfgUs3"
+      }
+    },
+    {
+      "name": "Finger Monkeys",
+      "slug": "finger-monkeys",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "5555 Lucky Finger Monkeys are about to hit Cronos. Lookout for the interactive platform!",
+        "verified": true,
+        "avatar": "/img/collections/finger-monkeys/avatar.webp",
+        "card": "/img/collections/finger-monkeys/card.webp",
+        "banner": "/img/collections/finger-monkeys/banner.webp",
+        "maxSupply": 5555,
+        "website": "https://www.specterofart.com/FingerMonkeys",
+        "discord": "https://discord.gg/CcwFDwPuuh"
+      }
+    },
+    {
+      "name": "World Of Cats",
+      "slug": "world-of-cats",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "World of Cats is a handcrafted collection of 4444 Unique NFTs created by the artist Tam4tik with utility that is tied to the real world.\nEach with their own identity to be discovered by its founder. \nIn its purest form, WORLD OF CATS is the art of storytelling.\nCurated By:  HiddenFishDAO™",
+        "verified": true,
+        "avatar": "/img/collections/world-of-cats/avatar.webp",
+        "card": "/img/collections/world-of-cats/card.webp",
+        "banner": "/img/collections/world-of-cats/banner.webp",
+        "maxSupply": 4444,
+        "website": "https://worldofcats.xyz/",
+        "twitter": "https://twitter.com/worldofcatsnft",
+        "discord": "https://discord.gg/worldofcats"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "ebisu",
+        "escrow": false
       }
     }
   ],
@@ -11823,7 +11865,7 @@
         "discord": "https://discord.gg/7HwpTF63y5",
         "telegram": "https://t.me/crodexofficial"
       },
-      "address": "",
+      "address": "0xB6782F208ABe10E8962407d139f6698Bfc4FD13F",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 3000,
@@ -11832,6 +11874,67 @@
       "whitelistCost": "600",
       "foundersOnly": false,
       "start": 1663531200000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 111,
+      "slug": "finger-monkeys",
+      "imgNft": "/img/drops/finger-monkeys/drop.webp",
+      "imgPreview": "/img/drops/finger-monkeys/drop.webp",
+      "imgAvatar": "/img/collections/finger-monkeys/avatar.webp",
+      "imgBanner": "/img/collections/finger-monkeys/banner.webp",
+      "title": "Finger Monkeys",
+      "subtitle": "5555 Lucky Finger Monkeys are about to hit Cronos. Lookout for the interactive platform!",
+      "description": "Every wallet needs a LUCKY Finger Monkey in the collection. Finger Monkey collection some of the animations look cool, some look funny and some of them even look weird.\n\nTop 1000 rank gets % of royalties.\n\n$50 in CRO a week “Wanted Wednesdays” giveaway for holders of 10 or more Finger Monkeys.\n\nHolders of 25 or more Finger Monkeys will get a monthly % of royalties of all NFTs coming from project.",
+      "author": {
+        "name": "Finger Monkeys",
+        "website": "https://www.specterofart.com/FingerMonkeys",
+        "discord": "https://discord.gg/CcwFDwPuuh"
+      },
+      "address": "",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 200,
+      "totalSupply": 5555,
+      "cost": "195",
+      "memberCost": "150",
+      "whitelistCost": "150",
+      "foundersOnly": false,
+      "start": null,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 112,
+      "slug": "world-of-cats",
+      "imgNft": "/img/drops/world-of-cats/drop.webp",
+      "imgPreview": "/img/drops/world-of-cats/drop.webp",
+      "imgAvatar": "/img/collections/world-of-cats/avatar.webp",
+      "imgBanner": "/img/collections/world-of-cats/banner.webp",
+      "title": "World Of Cats",
+      "subtitle": "World of Cats is a handcrafted collection of 4444 Unique NFTs created by the artist Tam4tik with utility that is tied to the real world.\nEach with their own identity to be discovered by its founder. \nIn its purest form, WORLD OF CATS is the art of storytelling.\nCurated By:  HiddenFishDAO™",
+      "description": "World Of Cats has collaborated with the top collections on Cronos to bring you a professional NFT experience to a growing blockchain.\nOur goal is to connect the WEB3 with the Real World.\nOur Roadmap includes Charity to Cat Shelters, Your own Cats' IP-Rights and the 3D File rigged and ready to be imported to C4D, Blender or Unreal Engine, Storytelling, Passive Income through Staking & Book / Animation Series sales & more.",
+      "author": {
+        "name": "World Of Cats",
+        "website": "https://worldofcats.xyz/",
+        "twitter": "https://twitter.com/worldofcatsnft",
+        "discord": "https://discord.gg/worldofcats"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 4444,
+      "cost": "300",
+      "memberCost": "250",
+      "whitelistCost": "250",
+      "foundersOnly": false,
+      "start": 1664827200000,
       "end": null,
       "referral": false,
       "is1155": false,
