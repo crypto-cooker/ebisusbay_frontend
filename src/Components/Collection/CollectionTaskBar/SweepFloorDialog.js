@@ -87,7 +87,8 @@ const sweepType = {
 const BREAKPOINTS = { xs: 0, sm: 576, m: 768, l: 1199, xl: 1200 };
 
 export default function SweepFloorDialog({ isOpen, collection, onClose, activeFilters, fullscreen = false }) {
-  const [priceError, setPriceError] = useState(false);
+  const [sweepError, setSweepError] = useState(null);
+  const [formErrors, setFormErrors] = useState({});
   const [tab, setTab] = useState(activeFilters.isEmpty() ? sweepType.quantity : sweepType.custom);
   const [adjustLayout, setAdjustLayout] = useState(false);
 
@@ -127,7 +128,7 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
   const getInitialProps = async () => {
     try {
       setIsLoading(true);
-      setPriceError(null);
+      setSweepError(null);
       setIsLoading(false);
     } catch (error) {
       if (error.data) {
@@ -187,7 +188,7 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
 
   const handleSweepFloor = async (e) => {
     e.preventDefault();
-    if (!validateInput()) return;
+    if (!validateForm()) return;
 
     try {
       const collectionAddress = collection.address;
@@ -229,11 +230,12 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
     }
   };
 
-  const processCreateListingRequest = async (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
-    if (!validateInput()) return;
+    if (!validateForm()) return;
 
     try {
+      setSweepError(null);
       setExecutingSearch(true);
       const eligibleListings = await retrieveEligibleListings();
       setConfirmationItems(eligibleListings);
@@ -241,23 +243,31 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
         setConfirmationCost(eligibleListings.reduce((p, n) => p + parseInt(n.price), 0));
         setShowConfirmButton(true);
       } else {
-        setPriceError('There are no eligible items to sweep')
+        setSweepError('There are no eligible items to sweep')
       }
     } catch (e) {
       setShowConfirmButton(false);
-      setPriceError('Error while retrieving items to sweep')
+      setSweepError('Error while retrieving items to sweep')
     } finally {
       setExecutingSearch(false);
     }
   }
 
-  const validateInput = () => {
-    setPriceError(null);
-    return true;
+  const validateForm = () => {
+    let errors = {};
+    if (tab === sweepType.quantity && !quantity) {
+      errors.quantity = 'Quantity is required';
+    }
+    if (tab === sweepType.budget && !budget) {
+      errors.budget = 'Budget is required';
+    }
+    setFormErrors(errors);
+    return !Object.keys(errors).length > 0;
   }
 
   const changeTab = (newTab) => {
     if (showConfirmButton) return;
+    setFormErrors({});
     setTab(newTab);
   };
 
@@ -318,6 +328,7 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
                     <QuantitySweeperField
                       onChange={(value) => setQuantity(value)}
                       disabled={showConfirmButton || executingSweepFloor}
+                      error={formErrors.quantity}
                     />
                   </div>
                 )}
@@ -327,6 +338,7 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
                       balance={0}
                       onChange={(value) => setBudget(value)}
                       disabled={showConfirmButton || executingSweepFloor}
+                      error={formErrors.budget}
                     />
                   </div>
                 )}
@@ -350,9 +362,9 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
               </div>
 
               <div className="mt-3 mx-auto">
-                {priceError && (
+                {sweepError && (
                   <div className="alert alert-primary my-auto mb-2 text-center">
-                    {priceError}
+                    {sweepError}
                   </div>
                 )}
                 {showConfirmButton ? (
@@ -392,7 +404,7 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
                     )}
                     <div className="d-flex">
                       <Button type="legacy"
-                              onClick={processCreateListingRequest}
+                              onClick={handleSearch}
                               isLoading={executingSearch}
                               disabled={executingSearch}
                               className="flex-fill">
@@ -419,10 +431,9 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
   );
 }
 
-const BudgetSweeperField = ({onChange, disabled}) => {
+const BudgetSweeperField = ({onChange, disabled, error}) => {
   const user = useSelector((state) => state.user);
   const [budget, setBudget] = useState('');
-  const [error, setError] = useState(false);
 
   const onFieldChange = useCallback((e) => {
     const newValue = e.target.value.toString().replace(numberRegexValidation);
@@ -463,9 +474,8 @@ const BudgetSweeperField = ({onChange, disabled}) => {
   )
 }
 
-const QuantitySweeperField = ({onChange, disabled}) => {
+const QuantitySweeperField = ({onChange, disabled, error}) => {
   const [quantity, setQuantity] = useState('');
-  const [error, setError] = useState(false);
 
   const onFieldChange = useCallback((e) => {
     const newValue = e.target.value.toString().replace(numberRegexValidation);
