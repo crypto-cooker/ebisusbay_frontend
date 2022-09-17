@@ -15,10 +15,6 @@ import {createSuccessfulTransactionToastContent, isNftBlacklisted} from "@src/ut
 import {appConfig} from "@src/Config";
 import Market from "@src/Contracts/Marketplace.json";
 import * as Sentry from '@sentry/react';
-import {hostedImage} from "@src/helpers/image";
-import Blockies from "react-blockies";
-import LayeredIcon from "@src/Components/components/LayeredIcon";
-import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
 import {txExtras} from "@src/core/constants";
 import {getQuickWallet} from "@src/core/api/endpoints/wallets";
 import Select from "react-select";
@@ -92,14 +88,6 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
 
   const isBelowFloorPrice = (price) => {
     return (floorPrice !== 0 && ((floorPrice - Number(price)) / floorPrice) * 100 > floorThreshold);
-  };
-
-  const getSaleValue = () => {
-    try {
-      return ethers.utils.commify(salePrice.toFixed(2));
-    } catch (e) {
-      return salePrice
-    }
   };
 
   const getYouReceiveViewValue = () => {
@@ -286,10 +274,6 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
                   <div className="fee">
                     <span>Royalty Fee: </span>
                     <span>{royalty} %</span>
-                  </div>
-                  <div className="fee">
-                    <span className='label'>Buyer pays: </span>
-                    <span>{getSaleValue()} CRO</span>
                   </div>
                   <div className="fee">
                     <span className='label'>You receive: </span>
