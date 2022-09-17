@@ -8712,7 +8712,7 @@
       "multiToken": false,
       "address": "0x44aa4cB2efF7167A306449EDe9b550e57Ca33036",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "In the middle of a dark night, after many long years of painstaking work in the Dao Lab, Dr Dao achieved the impossible and found a way to create a window into parallel worlds. Teaming up with parallel Dao Doctors, they explore exciting new worlds together to discover different laboratories. Enjoy the Dao adventures and find your unique Dao Lab!",
         "verified": false,
