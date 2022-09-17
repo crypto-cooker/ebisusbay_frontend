@@ -8,12 +8,12 @@ import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 
 import { init, fetchListings } from '@src/GlobalState/collectionSlice';
 import { devLog } from '@src/utils';
-import Button from '../../components/Button';
+import Button from '../../../components/Button';
 import { chainConnect, connectAccount } from '@src/GlobalState/User';
-import MakeOfferDialog from '../../Offer/Dialogs/MakeOfferDialog';
+import MakeOfferDialog from '../../../Offer/Dialogs/MakeOfferDialog';
 
 import styles from './CollectionCronosverse.module.scss';
-import {CollectionFilters} from "../../Models/collection-filters.model";
+import {CollectionFilters} from "../../../Models/collection-filters.model";
 
 const CollectionCronosverse = ({ collection }) => {
   const dispatch = useDispatch();
