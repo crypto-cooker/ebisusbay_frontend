@@ -20,7 +20,7 @@ import { createSuccessfulTransactionToastContent, isFounderDrop, newlineText } f
 import { dropState as statuses } from '../../core/api/enums';
 import { EbisuDropAbi } from '../../Contracts/Abis';
 
-import styles from '../Collection/collectionCronosverse/CollectionCronosverse.module.scss';
+import styles from '../Collection/Custom/Cronosverse/CollectionCronosverse.module.scss';
 import {appConfig} from "../../Config";
 
 const tiles = [

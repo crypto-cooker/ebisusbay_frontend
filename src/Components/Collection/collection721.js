@@ -15,7 +15,7 @@ import { isCronosVerseCollection, isCrosmocraftsCollection } from '@src/utils';
 import SocialsBar from './SocialsBar';
 import { CollectionSortOption } from '../Models/collection-sort-option.model';
 import stakingPlatforms from '../../core/data/staking-platforms.json';
-import CollectionCronosverse from '../Collection/collectionCronosverse';
+import CollectionCronosverse from './Custom/Cronosverse';
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {useRouter} from "next/router";
 import {CollectionFilters} from "../Models/collection-filters.model";
