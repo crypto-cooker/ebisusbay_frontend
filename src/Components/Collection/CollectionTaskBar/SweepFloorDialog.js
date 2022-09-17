@@ -14,7 +14,14 @@ import {ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {createSuccessfulTransactionToastContent, isNumeric, mapAttributeString, round, stripSpaces} from "@src/utils";
+import {
+  createSuccessfulTransactionToastContent,
+  isNumeric,
+  mapAttributeString,
+  round,
+  shortString,
+  stripSpaces
+} from "@src/utils";
 import * as Sentry from '@sentry/react';
 import {hostedImage} from "@src/helpers/image";
 import Blockies from "react-blockies";
@@ -719,7 +726,7 @@ const Results = ({listings, cost}) => {
             {listings.map((listing) => (
               <SwiperSlide key={listing.listingId}>
                 <div>
-                  <div className="text-center" style={{fontSize:'14px'}}>#{listing.nftId}</div>
+                  <div className="text-center" style={{fontSize:'14px'}}>#{shortString(listing.nftId, 3, 3)}</div>
                   <AnyMedia
                     image={specialImageTransform(listing.nft.address ?? listing.nft.nftAddress, listing.nft.image)}
                     title={listing.nft.name}
