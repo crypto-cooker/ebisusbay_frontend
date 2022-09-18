@@ -11860,7 +11860,7 @@
       "description": "Space Crxillions are the main characters of the Metaverse Hub Adventures along with the original Crxillion Club members.\nWhile your usual NFTs are one-dimensional investments that you can just hodl and trade, Space Crxillions will enable you to actively utilize your NFTs as yield generators, boosters or tickets for adventures and games with various offerings.",
       "author": {
         "name": "Crodex",
-        "website": "https://swap.crodex.app/#/mhub/",
+        "website": "https://swap.crodex.app/#/mhub",
         "twitter": "https://twitter.com/crodexapp",
         "discord": "https://discord.gg/7HwpTF63y5",
         "telegram": "https://t.me/crodexofficial"
@@ -11870,7 +11870,7 @@
       "maxMintPerAddress": 100,
       "totalSupply": 3000,
       "cost": "700",
-      "memberCost": "700",
+      "memberCost": "650",
       "whitelistCost": "600",
       "foundersOnly": false,
       "start": 1663527600000,
