@@ -6774,7 +6774,7 @@
       "multiToken": false,
       "address": "0x72F1dde65de4968d5b3F7eB7384AEb32d904f954",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Noodles Club is a PFP collection of 8,888 NFTs stored on the Cronos Chain that comes with an ever-developing set of utilities. Only the real Noodles lovers will enjoy this spicy journey.",
         "verified": true,
