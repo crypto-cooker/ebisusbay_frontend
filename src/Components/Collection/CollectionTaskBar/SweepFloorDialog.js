@@ -85,6 +85,7 @@ const sweepType = {
   custom: 'custom'
 };
 const BREAKPOINTS = { xs: 0, sm: 576, m: 768, l: 1199, xl: 1200 };
+const maxSweepCount = 40;
 
 export default function SweepFloorDialog({ isOpen, collection, onClose, activeFilters, fullscreen = false }) {
   const [sweepError, setSweepError] = useState(null);
@@ -144,16 +145,16 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
 
   const retrieveEligibleListings = async () => {
     let query;
-    let limit = 50;
+    let limit = maxSweepCount;
     if (tab === sweepType.custom) {
       query = ListingsQuery.fromCollectionFilter(activeFilters.toQuery());
-      limit = quantity <= 50 ? quantity : 50;
+      limit = quantity <= maxSweepCount ? quantity : maxSweepCount;
     } else if (tab === sweepType.quantity) {
       query = new ListingsQuery();
-      limit = quantity <= 50 ? quantity : 50;
+      limit = quantity <= maxSweepCount ? quantity : maxSweepCount;
     } else if (tab === sweepType.budget) {
       query = new ListingsQuery();
-      limit = 50;
+      limit = maxSweepCount;
     }
     query.page = 1;
     query.pageSize = limit;
@@ -479,7 +480,7 @@ const QuantitySweeperField = ({onChange, disabled, error}) => {
 
   const onFieldChange = useCallback((e) => {
     const newValue = e.target.value.toString().replace(numberRegexValidation);
-    if (parseInt(newValue) <= 50 || newValue === '') {
+    if (parseInt(newValue) <= maxSweepCount || newValue === '') {
       setQuantity(newValue);
       onChange(newValue);
     }
