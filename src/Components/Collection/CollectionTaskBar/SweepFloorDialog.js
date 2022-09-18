@@ -85,6 +85,7 @@ const sweepType = {
   custom: 'custom'
 };
 const BREAKPOINTS = { xs: 0, sm: 576, m: 768, l: 1199, xl: 1200 };
+const maxSweepCount = 40;
 
 export default function SweepFloorDialog({ isOpen, collection, onClose, activeFilters, fullscreen = false }) {
   const [sweepError, setSweepError] = useState(null);
@@ -144,16 +145,16 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
 
   const retrieveEligibleListings = async () => {
     let query;
-    let limit = 50;
+    let limit = maxSweepCount;
     if (tab === sweepType.custom) {
       query = ListingsQuery.fromCollectionFilter(activeFilters.toQuery());
-      limit = quantity <= 50 ? quantity : 50;
+      limit = quantity <= maxSweepCount ? quantity : maxSweepCount;
     } else if (tab === sweepType.quantity) {
       query = new ListingsQuery();
-      limit = quantity <= 50 ? quantity : 50;
+      limit = quantity <= maxSweepCount ? quantity : maxSweepCount;
     } else if (tab === sweepType.budget) {
       query = new ListingsQuery();
-      limit = 50;
+      limit = maxSweepCount;
     }
     query.page = 1;
     query.pageSize = limit;
@@ -369,9 +370,9 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
                 )}
                 {showConfirmButton ? (
                   <>
-                    <Results listings={confirmationItems} cost={confirmationCost} />
+                    <Results listings={confirmationItems} cost={confirmationCost} isMobile={adjustLayout}/>
                     <div className="alert alert-primary my-2 text-center">
-                      These listings could change, depending on volume and liquidity of the collection. Continue?
+                      These listings could change depending on volume and liquidity of the collection. Continue?
                     </div>
                     {executingSweepFloor && (
                       <div className="mb-2 text-center fst-italic">Please check your wallet for confirmation</div>
@@ -479,7 +480,7 @@ const QuantitySweeperField = ({onChange, disabled, error}) => {
 
   const onFieldChange = useCallback((e) => {
     const newValue = e.target.value.toString().replace(numberRegexValidation);
-    if (parseInt(newValue) <= 50 || newValue === '') {
+    if (parseInt(newValue) <= maxSweepCount || newValue === '') {
       setQuantity(newValue);
       onChange(newValue);
     }
@@ -708,16 +709,17 @@ const ActiveFiltersField = memo(({collection, activeFilters}) => {
   )
 });
 
-const Results = ({listings, cost}) => {
+const Results = ({listings, cost, isMobile}) => {
   return (
-    <Accordion >
+    <Accordion>
       <Accordion.Item eventKey="0">
         <Accordion.Header as="div">
           Found {listings.length} {listings.length === 1 ? 'listing' : 'listings'} ({commify(cost)} CRO)
         </Accordion.Header>
-        <Accordion.Body>
+        <Accordion.Body className="px-1">
           <Swiper
-            spaceBetween={10}
+            className={isMobile ? '' :  'mySwiper'}
+            spaceBetween={0}
             slidesPerView={3}
             slidesPerGroup={3}
             navigation={true}
@@ -735,7 +737,7 @@ const Results = ({listings, cost}) => {
           >
             {listings.map((listing) => (
               <SwiperSlide key={listing.listingId}>
-                <div>
+                <div className="px-2">
                   <div className="text-center" style={{fontSize:'14px'}}>#{shortString(listing.nftId, 3, 3)}</div>
                   <AnyMedia
                     image={specialImageTransform(listing.nft.address ?? listing.nft.nftAddress, listing.nft.image)}
