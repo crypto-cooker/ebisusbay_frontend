@@ -370,9 +370,9 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
                 )}
                 {showConfirmButton ? (
                   <>
-                    <Results listings={confirmationItems} cost={confirmationCost} />
+                    <Results listings={confirmationItems} cost={confirmationCost} isMobile={adjustLayout}/>
                     <div className="alert alert-primary my-2 text-center">
-                      These listings could change, depending on volume and liquidity of the collection. Continue?
+                      These listings could change depending on volume and liquidity of the collection. Continue?
                     </div>
                     {executingSweepFloor && (
                       <div className="mb-2 text-center fst-italic">Please check your wallet for confirmation</div>
@@ -709,16 +709,17 @@ const ActiveFiltersField = memo(({collection, activeFilters}) => {
   )
 });
 
-const Results = ({listings, cost}) => {
+const Results = ({listings, cost, isMobile}) => {
   return (
-    <Accordion >
+    <Accordion>
       <Accordion.Item eventKey="0">
         <Accordion.Header as="div">
           Found {listings.length} {listings.length === 1 ? 'listing' : 'listings'} ({commify(cost)} CRO)
         </Accordion.Header>
-        <Accordion.Body>
+        <Accordion.Body className="px-1">
           <Swiper
-            spaceBetween={10}
+            className={isMobile ? '' :  'mySwiper'}
+            spaceBetween={0}
             slidesPerView={3}
             slidesPerGroup={3}
             navigation={true}
@@ -736,7 +737,7 @@ const Results = ({listings, cost}) => {
           >
             {listings.map((listing) => (
               <SwiperSlide key={listing.listingId}>
-                <div>
+                <div className="px-2">
                   <div className="text-center" style={{fontSize:'14px'}}>#{shortString(listing.nftId, 3, 3)}</div>
                   <AnyMedia
                     image={specialImageTransform(listing.nft.address ?? listing.nft.nftAddress, listing.nft.image)}
