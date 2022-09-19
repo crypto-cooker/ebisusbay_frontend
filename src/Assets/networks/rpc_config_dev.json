@@ -8824,6 +8824,25 @@
         "kyc": "ebisu",
         "escrow": false
       }
+    },
+    {
+      "name": "Crotech Friends",
+      "slug": "crotech-friends",
+      "multiToken": false,
+      "address": "0xDa997f6c50306F886ce730B65bb1BFc977B89e8D",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Crotech Friends have arrived on Cronos!  The second series from the Crotech Frontier collection - a story driven, ARG inspired NFT collection - the Crotech Friends are AI generated unique pieces of art, with zero traits, zero rarity ranks, every one is a true 1/1.  With a supply of 555 pieces, holders get 55% of the secondary market royalties, and access to a private Discord channel where the Crotech Frontier story will unfold. The Crotech Friends are here to help guide you as you travel to the Crotech Frontier.",
+        "verified": false,
+        "avatar": "/img/collections/crotech-friends/avatar.webp",
+        "card": "/img/collections/crotech-friends/card.webp",
+        "banner": "/img/collections/crotech-friends/banner.webp",
+        "maxSupply": 555,
+        "website": "https://thedegenerated.art/",
+        "twitter": "https://twitter.com/CrotechFrontier",
+        "discord": "https://discord.gg/tzeRUxAdEm"
+      }
     }
   ],
   "drops": [
