@@ -8862,6 +8862,100 @@
         "twitter": "https://www.twitter.com/croodleape",
         "discord": "https://discord.gg/Tj97K4c4Y9"
       }
+    },
+    {
+      "name": "Cronos Apes",
+      "slug": "cronos-apes",
+      "multiToken": false,
+      "address": "0x5Cb9a12d31CF751ACc58B12B47cc4E093A6AB580",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "5000 Pixelated Apes on the Cronos Chain. 60% of Royalties income distributed weekly to holders.",
+        "verified": false,
+        "avatar": "/img/collections/cronos-apes/avatar.webp",
+        "card": "/img/collections/cronos-apes/card.webp",
+        "banner": "/img/collections/cronos-apes/banner.webp",
+        "maxSupply": 5000,
+        "website": "https://www.cronosapesnft.com/",
+        "twitter": "https://www.twitter.com/cronosapesnft",
+        "discord": "https://discord.gg/G3JkKJAYVB"
+      }
+    },
+    {
+      "name": "Filthy Wizard CroTown",
+      "slug": "filthy-wizard-cro-town",
+      "multiToken": false,
+      "address": "0x50A3f50756E7fCA7651275f8ED5cc1E846012422",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Filthier Filthiest abracadaBruuuhh",
+        "verified": false,
+        "avatar": "/img/collections/filthy-wizard-cro-town/avatar.webp",
+        "card": "/img/collections/filthy-wizard-cro-town/card.webp",
+        "banner": "/img/collections/filthy-wizard-cro-town/banner.webp",
+        "maxSupply": 2000,
+        "website": "https://goblincrotown.com/",
+        "twitter": "https://www.twitter.com/GoblinCroTown",
+        "discord": "https://discord.gg/QE2hr8xya4"
+      }
+    },
+    {
+      "name": "CroZomB",
+      "slug": "crozomb",
+      "multiToken": false,
+      "address": "0x29F0BCBB5e8255Ba46970BDCbC2736E2c70f7Aa5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CroZomB. Collection of 5000 zombies on Cronos! 100% mint money and royalty goes to staking pool. 50% Reward will be give back to CZB community. 40% Reward compounding. 10% reward for founder.",
+        "verified": false,
+        "avatar": "/img/collections/crozomb/avatar.webp",
+        "card": "/img/collections/crozomb/card.webp",
+        "maxSupply": 5000,
+        "twitter": "https://www.twitter.com/crozomb",
+        "discord": "https://discord.gg/vKQ5Q6EMuM"
+      }
+    },
+    {
+      "name": "Crorus",
+      "slug": "crorus",
+      "multiToken": false,
+      "address": "0x8fD7094600fb146B41Db6941C24D082143ae74e1",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "3333 Crorus have been brought back from the afterlife to live on the cronos chain to uplift and build an organic community through education and decentralized finance. Minting a Crorus member nft Will is you pass into our growing ecosystem and community.",
+        "verified": false,
+        "avatar": "/img/collections/crorus/avatar.webp",
+        "card": "/img/collections/crorus/card.webp",
+        "banner": "/img/collections/crorus/banner.webp",
+        "maxSupply": 3333,
+        "website": "https://crorus.xyz/",
+        "twitter": "https://www.twitter.com/Crorus_nft",
+        "discord": "https://discord.gg/fAw8PBdW"
+      }
+    },
+    {
+      "name": "Chefz",
+      "slug": "chefz",
+      "multiToken": false,
+      "address": "0x1375D3D2169C66d325514EB61933A08c276Ca531",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A Collection of 2500 PFP NFTs, Chefz are the hottest JPEGs to hit the Cronos Chain. Use the Chefz to spice up your visit to the restaurant. Brought to you by The Cronos Steakhouse.",
+        "verified": false,
+        "avatar": "/img/collections/chefz/avatar.webp",
+        "card": "/img/collections/chefz/card.webp",
+        "banner": "/img/collections/chefz/banner.webp",
+        "maxSupply": 2500,
+        "website": "https://www.cronossteakhouse.com/",
+        "twitter": "https://www.twitter.com/CronoSteakHouse",
+        "discord": "https://discord.gg/fpTgAReDyN",
+        "medium": "https://medium.com/@CronoSteakHouse"
+      }
     }
   ],
   "drops": [
