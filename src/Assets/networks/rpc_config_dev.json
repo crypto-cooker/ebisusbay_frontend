@@ -8843,6 +8843,25 @@
         "twitter": "https://twitter.com/CrotechFrontier",
         "discord": "https://discord.gg/tzeRUxAdEm"
       }
+    },
+    {
+      "name": "Mutant Croodle Ape",
+      "slug": "mutant-croodle-ape",
+      "multiToken": false,
+      "address": "0x84Fd887B14442C070a9B63a966D15a2C98E03FA2",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "\"In the end, everything in this world will be Corrupted...\" from the success of \"Croodle Ape\", 3000 mutated apes are born. More than 50 different traits with different levels of rarities designed by the previous collection. Mutate yourself for 80 CRO and get access to our amazing community!",
+        "verified": false,
+        "avatar": "/img/collections/mutant-croodle-ape/avatar.webp",
+        "card": "/img/collections/mutant-croodle-ape/card.webp",
+        "banner": "/img/collections/mutant-croodle-ape/banner.webp",
+        "maxSupply": 3000,
+        "website": "https://croodleape.com/",
+        "twitter": "https://www.twitter.com/croodleape",
+        "discord": "https://discord.gg/Tj97K4c4Y9"
+      }
     }
   ],
   "drops": [
