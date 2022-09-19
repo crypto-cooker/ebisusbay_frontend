@@ -8862,6 +8862,25 @@
         "twitter": "https://www.twitter.com/croodleape",
         "discord": "https://discord.gg/Tj97K4c4Y9"
       }
+    },
+    {
+      "name": "Cronos Apes",
+      "slug": "cronos-apes",
+      "multiToken": false,
+      "address": "0x5Cb9a12d31CF751ACc58B12B47cc4E093A6AB580",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "5000 Pixelated Apes on the Cronos Chain. 60% of Royalties income distributed weekly to holders. ",
+        "verified": false,
+        "avatar": "/img/collections/cronos-apes/avatar.webp",
+        "card": "/img/collections/cronos-apes/card.webp",
+        "banner": "/img/collections/cronos-apes/banner.webp",
+        "maxSupply": 5000,
+        "website": "https://www.cronosapesnft.com/",
+        "twitter": "https://www.twitter.com/cronosapesnft",
+        "discord": "https://discord.gg/G3JkKJAYVB"
+      }
     }
   ],
   "drops": [
