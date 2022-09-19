@@ -8917,6 +8917,25 @@
         "twitter": "https://www.twitter.com/crozomb",
         "discord": "https://discord.gg/vKQ5Q6EMuM"
       }
+    },
+    {
+      "name": "Crorus",
+      "slug": "crorus",
+      "multiToken": false,
+      "address": "0x8fD7094600fb146B41Db6941C24D082143ae74e1",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "3333 Crorus have been brought back from the afterlife to live on the cronos chain to uplift and build an organic community through education and decentralized finance. Minting a Crorus member nft Will is you pass into our growing ecosystem and community.",
+        "verified": false,
+        "avatar": "/img/collections/crorus/avatar.webp",
+        "card": "/img/collections/crorus/card.webp",
+        "banner": "/img/collections/crorus/banner.webp",
+        "maxSupply": 3333,
+        "website": "https://crorus.xyz/",
+        "twitter": "https://www.twitter.com/Crorus_nft",
+        "discord": "https://discord.gg/fAw8PBdW"
+      }
     }
   ],
   "drops": [
