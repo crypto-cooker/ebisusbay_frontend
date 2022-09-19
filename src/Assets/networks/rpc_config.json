@@ -8871,7 +8871,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "5000 Pixelated Apes on the Cronos Chain. 60% of Royalties income distributed weekly to holders. ",
+        "description": "5000 Pixelated Apes on the Cronos Chain. 60% of Royalties income distributed weekly to holders.",
         "verified": false,
         "avatar": "/img/collections/cronos-apes/avatar.webp",
         "card": "/img/collections/cronos-apes/card.webp",
@@ -8880,6 +8880,25 @@
         "website": "https://www.cronosapesnft.com/",
         "twitter": "https://www.twitter.com/cronosapesnft",
         "discord": "https://discord.gg/G3JkKJAYVB"
+      }
+    },
+    {
+      "name": "Filthy Wizard CroTown",
+      "slug": "filthy-wizard-cro-town",
+      "multiToken": false,
+      "address": "0x50A3f50756E7fCA7651275f8ED5cc1E846012422",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Filthier Filthiest abracadaBruuuhh",
+        "verified": false,
+        "avatar": "/img/collections/filthy-wizard-cro-town/avatar.webp",
+        "card": "/img/collections/filthy-wizard-cro-town/card.webp",
+        "banner": "/img/collections/filthy-wizard-cro-town/banner.webp",
+        "maxSupply": 2000,
+        "website": "https://goblincrotown.com/",
+        "twitter": "https://www.twitter.com/GoblinCroTown",
+        "discord": "https://discord.gg/QE2hr8xya4"
       }
     }
   ],
