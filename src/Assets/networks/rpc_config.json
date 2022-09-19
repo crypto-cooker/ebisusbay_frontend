@@ -8900,6 +8900,23 @@
         "twitter": "https://www.twitter.com/GoblinCroTown",
         "discord": "https://discord.gg/QE2hr8xya4"
       }
+    },
+    {
+      "name": "CroZomB",
+      "slug": "crozomb",
+      "multiToken": false,
+      "address": "0x29F0BCBB5e8255Ba46970BDCbC2736E2c70f7Aa5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CroZomB. Collection of 5000 zombies on Cronos! 100% mint money and royalty goes to staking pool. 50% Reward will be give back to CZB community. 40% Reward compounding. 10% reward for founder.",
+        "verified": false,
+        "avatar": "/img/collections/crozomb/avatar.webp",
+        "card": "/img/collections/crozomb/card.webp",
+        "maxSupply": 5000,
+        "twitter": "https://www.twitter.com/crozomb",
+        "discord": "https://discord.gg/vKQ5Q6EMuM"
+      }
     }
   ],
   "drops": [
