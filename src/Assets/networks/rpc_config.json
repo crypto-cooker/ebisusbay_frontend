@@ -8936,6 +8936,26 @@
         "twitter": "https://www.twitter.com/Crorus_nft",
         "discord": "https://discord.gg/fAw8PBdW"
       }
+    },
+    {
+      "name": "Chefz",
+      "slug": "chefz",
+      "multiToken": false,
+      "address": "0x1375D3D2169C66d325514EB61933A08c276Ca531",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A Collection of 2500 PFP NFTs, Chefz are the hottest JPEGs to hit the Cronos Chain. Use the Chefz to spice up your visit to the restaurant. Brought to you by The Cronos Steakhouse.",
+        "verified": false,
+        "avatar": "/img/collections/chefz/avatar.webp",
+        "card": "/img/collections/chefz/card.webp",
+        "banner": "/img/collections/chefz/banner.webp",
+        "maxSupply": 2500,
+        "website": "https://www.cronossteakhouse.com/",
+        "twitter": "https://www.twitter.com/CronoSteakHouse",
+        "discord": "https://discord.gg/fpTgAReDyN",
+        "medium": "https://medium.com/@CronoSteakHouse"
+      }
     }
   ],
   "drops": [
