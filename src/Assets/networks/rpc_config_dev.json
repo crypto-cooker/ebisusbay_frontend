@@ -6303,12 +6303,12 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Battle Ready Boyz is a project combining Design and GameFi offering its members to use their NFTs in Play-to-Earn or Risk-To-Earn.\n\nThe BRB collection features 7777 unique NFTs representing Aurora's gorilla soldiers and statues of their emperors.\n\nDon't forget to fight each other, life is too short!",
+        "description": "Battle Ready Boyz is a project combining Design and GameFi offering its members to use their NFTs in Play-to-Earn or Risk-To-Earn.\n\nThe BRB collection features 1067 unique NFTs representing Aurora's gorilla soldiers and statues of their emperors.\n\nDon't forget to fight each other, life is too short!",
         "verified": true,
         "avatar": "/img/collections/battle-ready-boyz/avatar.png",
         "card": "/img/collections/battle-ready-boyz/card.png",
         "banner": "/img/collections/battle-ready-boyz/banner.png",
-        "maxSupply": 7777,
+        "maxSupply": 1067,
         "website": "https://www.battlereadyboyz.io/",
         "twitter": "https://twitter.com/BattleReadyBoyz",
         "discord": "https://discord.gg/q4FQ4ukffB",
@@ -8674,7 +8674,7 @@
       "multiToken": false,
       "address": "0x7841dA84C0eC87744306C6420Eb039b8Cbd39d70",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "BOB Adventures is a collection of 666 hand-drawn unique and limited NFTs with 120+ different traits that has different rarities. There is 3 factions and 3 legendaries (1 from each faction), Humans, Cyborgs and Reptiles. By holding generation 1 BOB NFT, you will get automatic WL for next generations, will be able to participate in DAO voting and giveaways! There will be staking, airdrops and even real-life surprise for biggest BOB holders + in future we will open BOB shop!",
         "verified": false,
