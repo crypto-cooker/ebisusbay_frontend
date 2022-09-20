@@ -4151,6 +4151,11 @@
         "twitter": "https://twitter.com/BoomerSquadNFT1",
         "discord": "https://discord.gg/boomersquad",
         "medium": "https://medium.com/@BoomerSquadNFT"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
