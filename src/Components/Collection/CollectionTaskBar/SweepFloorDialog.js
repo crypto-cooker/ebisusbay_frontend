@@ -173,10 +173,10 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
     }
 
     let listingIds = [];
-    if (tab === sweepType.budget && parseInt(budget) > 0) {
+    if ([sweepType.budget, sweepType.custom].includes(tab) && parseInt(budget) > 0) {
       filteredListings.reduce((prev, curr) => {
         const price = parseInt(curr.price);
-        if (prev + price < parseInt(budget)) {
+        if (prev + price <= parseInt(budget)) {
           listingIds.push(curr.listingId);
           return prev + price;
         }
