@@ -4151,6 +4151,11 @@
         "twitter": "https://twitter.com/BoomerSquadNFT1",
         "discord": "https://discord.gg/boomersquad",
         "medium": "https://medium.com/@BoomerSquadNFT"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -7038,8 +7043,13 @@
         "banner": "/img/collections/pocket-demons/banner.webp",
         "maxSupply": 666,
         "website": "https://www.pocketdemons.com/",
-        "twitter": "https://twitter.com/PocketDemonsNFT",
-        "discord": "https://discord.gg/sdgRtxt8vJ"
+        "twitter": "https://twitter.com/Pocket_Demons",
+        "discord": "https://discord.gg/sXrJZR983J"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -11544,8 +11554,8 @@
       "author": {
         "name": "Pocket Demons",
         "website": "https://www.pocketdemons.com/",
-        "twitter": "https://twitter.com/PocketDemonsNFT",
-        "discord": "https://discord.gg/sdgRtxt8vJ"
+        "twitter": "https://twitter.com/Pocket_Demons",
+        "discord": "https://discord.gg/sXrJZR983J"
       },
       "address": "0xAd6eE5C0e033cEdB904096EF790Fc658F1EE0bd2",
       "maxMintPerTx": 10,
