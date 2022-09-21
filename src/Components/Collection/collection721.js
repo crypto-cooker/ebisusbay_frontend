@@ -11,7 +11,7 @@ import SalesCollection from '../components/SalesCollection';
 import CollectionNftsGroup from '../components/CollectionNftsGroup';
 import CollectionListingsGroup from '../components/CollectionListingsGroup';
 import {init, fetchListings, getStats, updateTab} from '@src/GlobalState/collectionSlice';
-import { isCronosVerseCollection, isCrosmocraftsCollection } from '@src/utils';
+import {isCnsCollection, isCronosVerseCollection, isCrosmocraftsCollection} from '@src/utils';
 import SocialsBar from './SocialsBar';
 import { CollectionSortOption } from '../Models/collection-sort-option.model';
 import stakingPlatforms from '../../core/data/staking-platforms.json';
@@ -27,6 +27,7 @@ import useBreakpoint from "use-breakpoint";
 import {MobileFilters} from "@src/Components/Collection/CollectionTaskBar/MobileFilters";
 import {FilterResultsBar} from "@src/Components/Collection/FilterResultsBar";
 import {MobileSort} from "@src/Components/Collection/CollectionTaskBar/MobileSort";
+import {CnsRegistration} from "@src/Components/Collection/Custom/CnsRegistration";
 
 const NegativeMargin = styled.div`
   margin-left: -1.75rem !important;
@@ -40,7 +41,8 @@ const ThemedBackground = styled.div`
 const tabs = {
   items: 'items',
   activity: 'activity',
-  map: 'map'
+  map: 'map',
+  cns: 'cns'
 };
 
 const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
@@ -263,15 +265,20 @@ const Collection721 = ({ collection,  query }) => {
 
         <div className="de_tab">
           <ul className="de_nav mb-2">
-            <li id="Mainbtn0" className={`tab ${openMenu === tabs.items ? 'active' : ''}`}>
+            <li className={`tab ${openMenu === tabs.items ? 'active' : ''} my-1`}>
               <span onClick={handleBtnClick(tabs.items)}>Items</span>
             </li>
-            <li id="Mainbtn1" className={`tab ${openMenu === tabs.activity ? 'active' : ''}`}>
+            <li className={`tab ${openMenu === tabs.activity ? 'active' : ''} my-1`}>
               <span onClick={handleBtnClick(tabs.activity)}>Activity</span>
             </li>
             {isCronosVerseCollection(collection.address) && (
-              <li id="Mainbtn9" className={`tab ${openMenu === tabs.map ? 'active' : ''}`}>
+              <li className={`tab ${openMenu === tabs.map ? 'active' : ''} my-1`}>
                 <span onClick={handleBtnClick(tabs.map)}>Map</span>
+              </li>
+            )}
+            {isCnsCollection(collection.address) && (
+              <li className={`tab ${openMenu === tabs.cns ? 'active' : ''} my-1`}>
+                <span onClick={handleBtnClick(tabs.cns)}>Register Domain</span>
               </li>
             )}
           </ul>
@@ -332,6 +339,9 @@ const Collection721 = ({ collection,  query }) => {
               <NegativeMargin className="tab-2 onStep fadeIn overflow-auto mt-2">
                 <CollectionCronosverse collection={collection} slug={collection.slug} cacheName={collection.slug} />
               </NegativeMargin>
+            )}
+            {openMenu === tabs.cns && (
+              <CnsRegistration />
             )}
           </div>
         </div>

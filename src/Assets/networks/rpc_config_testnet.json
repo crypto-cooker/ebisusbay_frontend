@@ -1678,6 +1678,26 @@
         "escrow": false,
         "creativeCommons": true
       }
+    },
+    {
+      "name": "Cronos Name Service",
+      "slug": "cronos-name-service",
+      "multiToken": false,
+      "address": "0xe7cbE08d6B4684c2962E5e06c1D1019Ba86dff79",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CNS domains are unique decentralized domains for web3. CNS makes the blockchain ecosystem a bit simpler by allowing users to create a global username for their public addresses and decentralized dapps. Join our discord community to learn more about CNS.",
+        "verified": true,
+        "avatar": "/img/collections/cronos-name-service/avatar.webp",
+        "card": "/img/collections/cronos-name-service/card.webp",
+        "banner": "/img/collections/cronos-name-service/banner.webp",
+        "website": "https://www.cronos.domains/",
+        "twitter": "https://twitter.com/Cronos_domains",
+        "discord": "https://bit.ly/3sXzV9l",
+        "medium": "https://bit.ly/3wl1PN2",
+        "telegram": "https://bit.ly/3LaM1Sx"
+      }
     }
   ],
   "drops": [

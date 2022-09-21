@@ -468,6 +468,10 @@ export const isLazyHorsePonyCollection = (address) => {
   return isCollection(address, 'lazy-horse-pony');
 };
 
+export const isCnsCollection = (address) => {
+  return isCollection(address, 'cronos-name-service');
+};
+
 export const percentage = (partialValue, totalValue) => {
   if (!totalValue || totalValue === 0) return 0;
   return Math.floor((100 * partialValue) / totalValue);
