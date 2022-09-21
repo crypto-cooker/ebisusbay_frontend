@@ -890,3 +890,9 @@ html[data-theme='dark'] {
     border: 1px solid $dividerSoft;
   }
 }
+
+select {
+  background-color: $bgColor1 !important;
+  border: 1px solid $borderColor2 !important;
+  color: $textColor1 !important;
+}
