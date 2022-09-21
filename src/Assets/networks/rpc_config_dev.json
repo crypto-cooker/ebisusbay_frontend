@@ -56,7 +56,7 @@
         "telegram": "https://t.me/ebisusbay"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "public",
         "kyc": "hidden",
         "escrow": false
       }
@@ -85,7 +85,7 @@
         "telegram": "https://t.me/ebisusbay"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "public",
         "kyc": "hidden",
         "escrow": false
       }
@@ -114,7 +114,7 @@
         "telegram": "https://t.me/ebisusbay"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "public",
         "kyc": "hidden",
         "escrow": false
       }
@@ -140,7 +140,7 @@
         "instagram": "https://www.instagram.com/im_barbara_redekop/"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "public",
         "kyc": "ebisu",
         "escrow": false
       }
@@ -169,7 +169,7 @@
         "telegram": "https://t.me/ebisusbay"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "public",
         "kyc": "hidden",
         "escrow": false
       }
@@ -197,7 +197,7 @@
         "telegram": "https://t.me/ebisusbay"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "public",
         "kyc": "ebisu",
         "escrow": false
       }
@@ -439,7 +439,7 @@
         "medium": "https://blog.ebisusbay.com/"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "public",
         "kyc": "hidden",
         "escrow": false
       }
@@ -729,7 +729,7 @@
         "instagram": "https://www.instagram.com/im_barbara_redekop/"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "public",
         "kyc": "ebisu",
         "escrow": false
       }
@@ -754,7 +754,7 @@
         "instagram": "https://www.instagram.com/im_barbara_redekop/"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "public",
         "kyc": "ebisu",
         "escrow": false
       }
@@ -864,7 +864,7 @@
         "instagram": "https://www.instagram.com/im_barbara_redekop/"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "public",
         "kyc": "ebisu",
         "escrow": false
       }
@@ -1090,7 +1090,7 @@
         "medium": "https://medium.com/@lazyhorseraceclub"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": "ebisu",
         "escrow": false
       }
@@ -1115,7 +1115,7 @@
         "medium": "https://medium.com/@lazyhorseraceclub"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": "ebisu",
         "escrow": false
       }
@@ -1403,7 +1403,7 @@
         "gitbook": "https://weirdape.gitbook.io/weird-apes-club/weird-apes-club/summary"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -1430,7 +1430,7 @@
         "gitbook": "https://weirdape.gitbook.io/weird-apes-club/weird-apes-club/summary"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -1454,7 +1454,7 @@
         "telegram": "https://t.me/IcySquidGame"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -1515,7 +1515,7 @@
         "banner": "/img/collections/lazyhorse/banner.png"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": "ebisu",
         "escrow": false
       }
@@ -1534,6 +1534,11 @@
         "card": "/img/collections/barbara/spacecrystalunicorns/card.jpg",
         "banner": "/img/collections/barbara/spacecrystalunicorns/banner.jpg",
         "discord": "https://discord.gg/XrhWf2SppB"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -1765,7 +1770,7 @@
         "medium": "https://medium.com/@TheLaboratoryIO"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": "phenix",
         "escrow": false
       }
@@ -2451,7 +2456,7 @@
         "telegram": "https://t.me/IcySquidGame"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -2626,7 +2631,7 @@
         "gitbook": "https://weirdape.gitbook.io/weird-apes-club/weird-apes-club/summary"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -2690,7 +2695,7 @@
         "discord": "http://discord.gg/Bb39m7BBBR"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -3044,7 +3049,7 @@
         "medium": "https://medium.com/@lazyhorseraceclub"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": "ebisu",
         "escrow": false
       }
@@ -3168,7 +3173,7 @@
         "gitbook": "https://weirdape.gitbook.io/weird-apes-club/weird-apes-club/summary"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -3233,8 +3238,8 @@
         "discord": "https://discord.gg/HfCHkvNy6K"
       },
       "verification": {
-        "doxx": true,
-        "kyc": false,
+        "doxx": false,
+        "kyc": "ebisu",
         "escrow": false
       }
     },
@@ -3397,7 +3402,7 @@
         "discord": "https://discord.gg/ruKabM5A4U"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -3527,7 +3532,7 @@
         "medium": "https://medium.com/@monkeyoa"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -3552,7 +3557,7 @@
         "medium": "https://medium.com/@croclubsio"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -3653,7 +3658,7 @@
         "instagram": "https://www.instagram.com/im_barbara_redekop/"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "public",
         "kyc": "ebisu",
         "escrow": false
       }
@@ -3938,7 +3943,7 @@
         "discord": "https://discord.gg/sH9JP2q6g8"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -3962,7 +3967,7 @@
         "discord": "http://www.discord.gg/selfiesofthemultiverse"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -3988,7 +3993,7 @@
         "telegram": "https://t.me/crowboys"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -4454,7 +4459,7 @@
         "discord": "http://discord.gg/bankrollbearsociety"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -4716,7 +4721,7 @@
         "discord": "https://discord.gg/Tdd9TZRMxn"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -4782,7 +4787,7 @@
         "medium": "https://blog.hidethefish.com"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": "ebisu",
         "escrow": false
       }
@@ -5045,7 +5050,7 @@
         "discord": "https://discord.gg/9j7ryEgX3K"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -5311,7 +5316,7 @@
         "medium": "https://medium.com/@icysquidgame"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -5460,7 +5465,7 @@
         "medium": "https://medium.com/@lazyhorseraceclub"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": "ebisu",
         "escrow": false
       }
@@ -5560,7 +5565,7 @@
         "discord": "https://discord.gg/Tdd9TZRMxn"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -5689,7 +5694,7 @@
         "discord": "https://discord.gg/9tVUbW33uX"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "public",
         "kyc": false,
         "escrow": false
       }
@@ -5883,7 +5888,7 @@
         }
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -6003,7 +6008,7 @@
         "discord": "https://discord.gg/fDcyEcgSDg"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -6027,7 +6032,7 @@
         "discord": "https://discord.gg/8ssS2RWZvn"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -6320,7 +6325,7 @@
         "medium": "https://medium.com/@battlereadyboyz/battle-ready-boyz-56a5eee494fa"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -6638,7 +6643,7 @@
         "telegram": "https://t.me/+AvEkD1pZfdEzZDgx"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -6683,7 +6688,7 @@
         "discord": "https://discord.com/invite/3MmDxXpB5P"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -6768,7 +6773,7 @@
         "medium": "https://blog.hidethefish.com"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": "ebisu",
         "escrow": false
       }
@@ -6793,7 +6798,7 @@
         "medium": "https://medium.com/@noodlesclubnft"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -6895,7 +6900,7 @@
         "medium": "https://www.tradingfxvps.com/nft-vps/utility/"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -6919,8 +6924,8 @@
         "discord": "https://discord.gg/E9Mzzy9Hex"
       },
       "verification": {
-        "doxx": true,
-        "kyc": false,
+        "doxx": false,
+        "kyc": "ebisu",
         "escrow": false
       }
     },
@@ -6984,7 +6989,7 @@
         "discord": "https://discord.gg/eH4SCJY5Qw"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": "phenix",
         "escrow": false
       }
@@ -7072,7 +7077,7 @@
         "medium": "https://medium.com/@CroHamsterNFT"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": "ebisu",
         "escrow": false
       }
@@ -7301,7 +7306,7 @@
         "discord": "https://discord.gg/sTeeDrWkSW"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": "phenix",
         "escrow": false
       }
@@ -7389,7 +7394,7 @@
         "gitbook": "https://gymkongz.gitbook.io/gymkongz/"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": "phenix",
         "escrow": false
       }
@@ -7941,7 +7946,7 @@
         "discord": "https://discord.gg/sH9JP2q6g8"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": false,
         "escrow": false
       }
@@ -8062,7 +8067,7 @@
         "instagram": "https://www.instagram.com/crohogsnft"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": "phenix",
         "escrow": false
       }
@@ -8087,7 +8092,7 @@
         "medium": "https://medium.com/@veliikb"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": "phenix",
         "escrow": false
       }
@@ -8111,7 +8116,7 @@
         "discord": "https://discord.gg/fSyrkT2pjc"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": "phenix",
         "escrow": false
       }
@@ -8136,7 +8141,7 @@
         "instagram": "https://www.instagram.com/im_barbara_redekop/"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "public",
         "kyc": "ebisu",
         "escrow": false
       }
@@ -8162,7 +8167,7 @@
         "instagram": "https://www.instagram.com/im_barbara_redekop/"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "public",
         "kyc": "ebisu",
         "escrow": false
       }
@@ -8830,7 +8835,7 @@
         "discord": "https://discord.gg/worldofcats"
       },
       "verification": {
-        "doxx": true,
+        "doxx": "private",
         "kyc": "ebisu",
         "escrow": false
       }
