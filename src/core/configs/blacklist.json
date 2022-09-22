@@ -158,35 +158,32 @@
       }
     ],
     "reason": "General blacklist entries"
-  },{
+  },
+  {
     "users": ["0x376A8e3f975463298c10f4d41C32349A705Ae12E", "0x34c0ab4ca5601530dab284bfc8dac9bde747e780"],
     "tokens": [
-      {"slug" : "tough-lions",
-      "address" : "0xb242399f3f52fcfa8b09d7d6e4C3DBe84D0644fc",
-      "ids" : [724]}
+      {
+        "slug": "tough-lions",
+        "address": "0xb242399f3f52fcfa8b09d7d6e4C3DBe84D0644fc",
+        "ids": [724]
+      }
     ], 
     "reason" : "the ol' trading scam"
-  },{
-    "slug" : "crohogs",
-    "address" : "0xFD265797d7Bc6C25f2Cd148ec12f36a8eE00862a",
-    "ids":  [
-      4,
-      12,
-      1408,
-      13,
-      673,
-      1249,
-      352,
-      16,
-      352,
-      874
-    ],
+  },
+  {
     "users" : [
       "0x2a22149ad254a7c90eb8fe2a284833c642ac385c",
       "0x24cb7600f7d631982c072536c8f602f54282d2ef",
       "0xb67abc8e8c64c35f7dd0ba76f54420e935335b32",
       "0x71f00df03d73665770d4dafdc37205238e9e3d7b",
       "0x2e8702c811634afc20572e6dd860e40eef8efda0"
+    ],
+    "tokens": [
+      {
+        "slug" : "crohogs",
+        "address" : "0xFD265797d7Bc6C25f2Cd148ec12f36a8eE00862a",
+        "ids":  [4, 12, 1408, 13, 673, 1249, 352, 16, 352, 874]
+      }
     ],
     "reason" : "mint snipe hack"
   },
