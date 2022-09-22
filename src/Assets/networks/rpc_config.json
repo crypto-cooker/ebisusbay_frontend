@@ -1404,7 +1404,7 @@
       },
       "verification": {
         "doxx": "private",
-        "kyc": false,
+        "kyc": "ebisu",
         "escrow": false
       }
     },
@@ -1431,7 +1431,7 @@
       },
       "verification": {
         "doxx": "private",
-        "kyc": false,
+        "kyc": "ebisu",
         "escrow": false
       }
     },
@@ -2632,7 +2632,7 @@
       },
       "verification": {
         "doxx": "private",
-        "kyc": false,
+        "kyc": "ebisu",
         "escrow": false
       }
     },
@@ -3174,7 +3174,7 @@
       },
       "verification": {
         "doxx": "private",
-        "kyc": false,
+        "kyc": "ebisu",
         "escrow": false
       }
     },
