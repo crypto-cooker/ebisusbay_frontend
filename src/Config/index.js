@@ -206,11 +206,11 @@ export const isLocalEnv = () => {
 export const featureFlags = {
   [Features.AUCTION_OPTION_SALE]: false,
   [Features.CMS_NOTIFICATIONS]: true,
-  [Features.CMS_FULL_PROFILES]: false,
+  [Features.CMS_FULL_PROFILES]: true,
   [Features.GET_COLLECTION_NEW_ENDPOINT]: false,
-  [Features.CMS_COLLECTIONS]: true,
-  [Features.VERIFIED_SWITCH_COLLECTION]: true,
+  [Features.CMS_COLLECTIONS]: false,
+  [Features.VERIFIED_SWITCH_COLLECTION]: false,
   [Features.VERIFIED_SWITCH_MARKETPLACE]: false,
-  [Features.INFINITE_QUERY_COLLECTION]: true,
+  [Features.INFINITE_QUERY_COLLECTION]: false,
 
 }
