@@ -48,9 +48,10 @@ export const CnsRegistration = () => {
     try {
       setExecutingSearch(true);
     } finally {
-      const domain = `${terms}.cro`;
+      const lcTerms = terms.toLowerCase();
+      const domain = `${lcTerms}.cro`;
       const results = await readKit.register.isAvailable(domain);
-      setTargetDomain(terms);
+      setTargetDomain(lcTerms);
       setSearchResult(results);
       setExecutingSearch(false);
     }
