@@ -51,7 +51,7 @@ const Drops = () => {
         </div>
       </section>
 
-      <section className="container">
+      <section className="gl-legacy container">
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
@@ -65,7 +65,7 @@ const Drops = () => {
         </div>
       </section>
 
-      <section className="container no-top">
+      <section className="gl-legacy container no-top">
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
@@ -81,7 +81,7 @@ const Drops = () => {
         </div>
       </section>
 
-      <section className="container no-top">
+      <section className="gl-legacy container no-top">
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">

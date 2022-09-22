@@ -121,7 +121,7 @@ const Collection1155 = ({ collection, tokenId = null, query }) => {
         <div className="mainbreadcumb"></div>
       </section>
 
-      <section className="container d_coll no-top no-bottom">
+      <section className="gl-legacy container d_coll no-top no-bottom">
         <div className="row">
           <div className="col-md-12">
             <div className="d_profile">

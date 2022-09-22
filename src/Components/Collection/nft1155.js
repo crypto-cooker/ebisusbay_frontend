@@ -153,7 +153,7 @@ const Nft1155 = ({ address, id }) => {
   return (
     <div>
       {isLoading ? (
-        <section className="container">
+        <section className="gl-legacy container">
           <div className="row mt-4">
             <div className="col-lg-12 text-center">
               <Spinner animation="border" role="status">
@@ -163,7 +163,7 @@ const Nft1155 = ({ address, id }) => {
           </div>
         </section>
       ) : (
-        <section className="container">
+        <section className="gl-legacy container">
           <div className="row">
             <div className="col-md-6 text-center">
               {nft ? (

@@ -20,7 +20,7 @@ const MyStaking = () => {
         </div>
       </section>
 
-      <section className="container">
+      <section className="gl-legacy container">
         <MyStakingComponent />
       </section>
 

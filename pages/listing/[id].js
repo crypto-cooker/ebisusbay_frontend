@@ -244,7 +244,7 @@ const Listing = () => {
           </div>
         </section>
       ) : (
-        <section className="container">
+        <section className="gl-legacy container">
           <div className="row mt-md-5 pt-md-4">
             <div className="col-md-6 text-center">
               {listing ? (

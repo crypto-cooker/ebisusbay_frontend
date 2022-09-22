@@ -100,7 +100,7 @@ const Marketplace = () => {
         </div>
       </section>
 
-      <section className="container">
+      <section className="gl-legacy container">
         <div className="row">
           {marketData && (
             <div className="d-item col-lg-6 col-sm-10 mb-4 mx-auto">

@@ -251,7 +251,7 @@ const Home = () => {
       </Jumbotron.Host>
       {mobile && JumbotronData()}
 
-      <section className="container no-bottom no-top">
+      <section className="gl-legacy container no-bottom no-top">
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center pt-5">
@@ -298,7 +298,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="container no-bottom">
+      <section className="gl-legacy container no-bottom">
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
@@ -312,7 +312,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="container no-bottom">
+      <section className="gl-legacy container no-bottom">
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
@@ -326,7 +326,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="container">
+      <section className="gl-legacy container">
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
@@ -346,7 +346,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="container">
+      <section className="gl-legacy container">
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">

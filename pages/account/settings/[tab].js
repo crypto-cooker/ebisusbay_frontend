@@ -15,7 +15,7 @@ export default function Account() {
 
   return (
     <div>
-      <section className="container mt-0">
+      <section className="gl-legacy container mt-0">
         <Heading as="h2" size="xl" className="mb-4">Account Settings</Heading>
         <TopTabs />
         {tab === 'profile' && (

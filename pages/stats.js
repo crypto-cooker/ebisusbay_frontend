@@ -77,7 +77,7 @@ export default function Stats() {
         description="View the top performing NFTs and users on Ebisu's Bay Marketplace"
         url="/stats"
       />
-      <section className="container">
+      <section className="gl-legacy container">
         <div className="row">
           <div className="col-12 col-lg-7 text-center text-lg-start">
             <Heading className="mb-0">Cronos Marketplace NFT Sales</Heading>
