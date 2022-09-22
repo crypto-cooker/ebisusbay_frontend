@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Card } from 'react-bootstrap';
-import Stack from '@mui/material/Stack';
 import useGetSettings from '../Account/Settings/hooks/useGetSettings';
 import useUpdateBanner from '../Account/Settings/hooks/useUpdateBanner';
+import {Stack} from "@chakra-ui/react";
 
 const UploadAsset = ({ id, value, accept = 'image/png, image/jpeg, image/jpg', onChange, onClose }) => {
   const [file, setFile] = useState(null);

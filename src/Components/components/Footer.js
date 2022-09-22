@@ -5,6 +5,7 @@ import { faSquare, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import LayeredIcon from './LayeredIcon';
 import {hostedImage} from "../../helpers/image";
 import Link from "next/link";
+import {Heading} from "@chakra-ui/react";
 
 const Footer = () => {
   const userTheme = useSelector((state) => {
@@ -27,7 +28,7 @@ const Footer = () => {
           </div>
           <div className="col-md-3 col-sm-6 col-xs-1">
             <div className="widget">
-              <h5>Marketplace</h5>
+              <Heading as="h5" size="md">Marketplace</Heading>
               <ul>
                 <li><Link href="/marketplace">Explore</Link></li>
                 <li><Link href="/collections">Collections</Link></li>
@@ -40,7 +41,7 @@ const Footer = () => {
           </div>
           <div className="col-md-3 col-sm-6 col-xs-1">
             <div className="widget">
-              <h5>Resources</h5>
+              <Heading as="h5" size="md">Resources</Heading>
               <ul>
                 <li><a href="https://status.ebisusbay.com/" target="_blank" rel="noreferrer">Platform Status</a></li>
                 <li><a href="https://faq.ebisusbay.com/" target="_blank" rel="noreferrer">FAQ</a></li>
@@ -53,7 +54,7 @@ const Footer = () => {
           </div>
           <div className="col-md-3 col-sm-6 col-xs-1">
             <div className="widget">
-              <h5>Community</h5>
+              <Heading as="h5" size="md">Community</Heading>
               <ul>
                 <li><a href="/collection/founding-member">Become a Founding Member</a></li>
                 <li><a href="https://discord.gg/ebisusbay" target="_blank" rel="noreferrer">Discord</a></li>

@@ -71,8 +71,8 @@ const customTheme = extendTheme({
     useSystemColorMode: false,
   },
   fonts: {
-    heading: `DM Sans`,
-    body: `DM Sans`,
-  },
+    heading: 'DM Sans, Helvetica, Arial, sans-serif',
+    body: `DM Sans, Helvetica, Arial, sans-serif`,
+  }
 })
 export default customTheme

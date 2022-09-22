@@ -13,6 +13,7 @@ import Image from "next/image";
 import {CdnImage} from "@src/Components/components/CdnImage";
 import {hostedImage} from "@src/helpers/image";
 import PageHead from "@src/Components/Head/PageHead";
+import {Heading} from "@chakra-ui/react";
 
 const GlobalStyles = createGlobalStyle`
   .mobile-view-list-item {
@@ -148,7 +149,7 @@ const Collections = () => {
           <div className="container">
             <div className="row m-10-hor">
               <div className="col-12">
-                <h1 className="text-center">Collections</h1>
+                <Heading as="h1" size="2xl" className="text-center">Collections</Heading>
               </div>
             </div>
           </div>

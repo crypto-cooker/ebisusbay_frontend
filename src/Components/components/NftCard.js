@@ -12,6 +12,7 @@ import { connectAccount, chainConnect } from '../../GlobalState/User';
 import {isNftBlacklisted, round, siPrefixedNumber} from '../../utils';
 import { AnyMedia } from './AnyMedia';
 import { nftCardUrl } from '../../helpers/image';
+import {Heading} from "@chakra-ui/react";
 
 const Watermarked = styled.div`
   position: relative;
@@ -125,7 +126,7 @@ const NftCard = ({ listing, imgClass = 'marketplace', watermark, collection, can
         <div className="card-body d-flex flex-column justify-content-between">
           <Link href={`/collection/${collection.slug}/${listing.id}`}>
             <a>
-              <h6 className="card-title mt-auto">{listing.name}</h6>
+              <Heading as="h6" size="sm" className="card-title mt-auto">{listing.name}</Heading>
             </a>
           </Link>
           {getIsNftListed() && (

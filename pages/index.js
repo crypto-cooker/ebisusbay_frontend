@@ -21,6 +21,7 @@ import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {appConfig} from "@src/Config";
 import Head from "next/head";
 import {faDiscord, faTwitter} from "@fortawesome/free-brands-svg-icons";
+import {Heading} from "@chakra-ui/react";
 
 const fadeInUp = keyframes`
   0% {
@@ -157,13 +158,13 @@ const Home = () => {
   const JumbotronData = () => {
     return (
       <Jumbotron.Data>
-        <h6>
+        <Heading as="h6" size="sm">
           <span className="text-uppercase color">Ebisu's Bay Marketplace</span>
-        </h6>
+        </Heading>
         <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
-          <h1>
+          <Heading as="h1" size="2xl">
             Discover <span className="color">rare</span> digital art and collect NFTs
-          </h1>
+          </Heading>
         </Reveal>
         <Reveal className="onStep" keyframes={fadeInUp} delay={600} duration={900} triggerOnce>
           <p className="lead">
@@ -198,27 +199,27 @@ const Home = () => {
               <div className="row">
                 <div className="col-4 col-sm-4 col-md-4 col-12  mb30 ">
                   <div className="de_count text-center text-md-start">
-                    <h3>
+                    <Heading as="h3" size="xl">
                       <span>{siPrefixedNumber(Number(marketData.totalVolume).toFixed(0))}</span>
-                    </h3>
+                    </Heading>
                     <h5 className="id-color">Volume</h5>
                   </div>
                 </div>
 
                 <div className="col-4 col-sm-4 col-md-4 col-12 mb30 ">
                   <div className="de_count text-center text-md-start">
-                    <h3>
+                    <Heading as="h3" size="xl">
                       <span>{siPrefixedNumber(Number(marketData.totalSales).toFixed(0))}</span>
-                    </h3>
+                    </Heading>
                     <h5 className="id-color">NFTs Sold</h5>
                   </div>
                 </div>
 
                 <div className="col-4 col-sm-4 col-md-4 col-12 mb30 ">
                   <div className="de_count text-center text-md-start">
-                    <h3>
+                    <Heading as="h3" size="xl">
                       <span>{siPrefixedNumber(marketData.totalActive)}</span>
-                    </h3>
+                    </Heading>
                     <h5 className="id-color">Active Listings</h5>
                   </div>
                 </div>
@@ -254,7 +255,7 @@ const Home = () => {
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center pt-5">
-              <h2>CROtopia</h2>
+              <Heading>CROtopia</Heading>
               <div className="small-border"></div>
             </div>
           </div>
@@ -301,7 +302,7 @@ const Home = () => {
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2>Current Drops</h2>
+              <Heading>Current Drops</Heading>
               <div className="small-border"></div>
             </div>
           </div>
@@ -315,7 +316,7 @@ const Home = () => {
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2>Hot Collections</h2>
+              <Heading>Hot Collections</Heading>
               <div className="small-border"></div>
             </div>
           </div>
@@ -329,7 +330,7 @@ const Home = () => {
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2>New Listings</h2>
+              <Heading>New Listings</Heading>
               <div className="small-border"></div>
             </div>
           </div>
@@ -349,7 +350,7 @@ const Home = () => {
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2>Frens</h2>
+              <Heading>Frens</Heading>
               <div className="small-border"></div>
             </div>
           </div>

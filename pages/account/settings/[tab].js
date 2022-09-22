@@ -5,6 +5,7 @@ import Footer from "@src/Components/components/Footer";
 import Notification from "@src/Components/Account/Settings/Notification";
 import useFeatureFlag from "@src/hooks/useFeatureFlag";
 import Constants from "@src/constants";
+import {Heading} from "@chakra-ui/react";
 
 export default function Account() {
   const router = useRouter();
@@ -15,7 +16,7 @@ export default function Account() {
   return (
     <div>
       <section className="container mt-0">
-        <h2 className="mb-4">Account Settings</h2>
+        <Heading as="h2" size="xl" className="mb-4">Account Settings</Heading>
         <TopTabs />
         {tab === 'profile' && (
           <>

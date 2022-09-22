@@ -5,8 +5,8 @@ import {CNS, CNSNameAvailability, CNSPriceCurrency, constants} from "@cnsdomains
 import {Alert, Collapse, Form} from "react-bootstrap";
 import Button from "@src/Components/components/common/Button";
 import {ethers} from "ethers";
-import {Skeleton} from "@mui/material";
 import {devLog} from "@src/utils";
+import {Heading, Skeleton, Text} from "@chakra-ui/react";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -76,7 +76,7 @@ export const CnsRegistration = () => {
         <div className="col mx-auto">
           {registrationComplete ? (
             <div className="text-center">
-              <h3>Registration Complete!</h3>
+              <Heading as="h3" size="md">Registration Complete!</Heading>
               <span>{domainName()} has successfully been registered</span>
               <Button
                 type="legacy"
@@ -88,7 +88,7 @@ export const CnsRegistration = () => {
             </div>
           ) : (
             <>
-              <h3 className="mb-2">Find Your Domain</h3>
+              <Heading as="h3" size="md" className="mb-2">Find Your Domain</Heading>
               <div className="d-flex justify-content-start">
                 <Form.Control
                   className="mb-0"
@@ -339,13 +339,13 @@ const Registration = ({domain, readKit, onRegistrationComplete}) => {
     <div className="row nftSaleForm">
       <div className="col">
         <div>
-          <h3>Register {domain}.cro</h3>
+          <Heading as="h3" size="md">Register {domain}.cro</Heading>
           <hr />
           <div className="fee">
             <span>Registration Period: </span>
             <Form.Select
               aria-label="Choose Registration Period"
-              style={{maxWidth: 120}}
+              style={{maxWidth: 130}}
               onChange={onSelectRegistrationPeriod}
             >
               <option value="1">1 Year</option>
@@ -360,7 +360,7 @@ const Registration = ({domain, readKit, onRegistrationComplete}) => {
             <span>Fee Token: </span>
             <Form.Select
               aria-label="Choose Fee Token"
-              style={{maxWidth: 120}}
+              style={{maxWidth: 130}}
               onChange={onSelectFeeToken}
             >
               <option value={CNSPriceCurrency.USDC}>USDC</option>
@@ -369,12 +369,16 @@ const Registration = ({domain, readKit, onRegistrationComplete}) => {
           </div>
           <div className="fee">
             <span className='label'>Registration Cost: </span>
-            {executingCalculate ? <Skeleton width={120} /> : <span>{registrationPrice} {feeToken}</span>}
+            <Skeleton width="130px" isLoaded={!executingCalculate}>
+              <Text align="right">{registrationPrice} {feeToken}</Text>
+            </Skeleton>
           </div>
           {user.address && (
             <div className="fee">
               <span className='label'>Wallet Balance ({feeToken}): </span>
-              {executingCalculate ? <Skeleton width={120} /> : <span>{walletBalance?.balance} {feeToken}</span>}
+              <Skeleton width="130px" isLoaded={!executingCalculate}>
+                <Text align="right">{walletBalance?.balance} {feeToken}</Text>
+              </Skeleton>
             </div>
           )}
         </div>

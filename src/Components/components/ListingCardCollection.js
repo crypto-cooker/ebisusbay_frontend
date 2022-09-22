@@ -12,6 +12,7 @@ import { AnyMedia } from './AnyMedia';
 import {nftCardUrl} from "@src/helpers/image";
 import {appConfig} from "@src/Config";
 import {caseInsensitiveCompare} from "@src/utils";
+import {Heading} from "@chakra-ui/react";
 
 const config = appConfig();
 
@@ -116,7 +117,7 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark, a
         <div className="card-body d-flex flex-column justify-content-between">
           <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
             <a>
-              <h6 className="card-title mt-auto">{listing.nft.name}</h6>
+              <Heading as="h6" size="sm" className="card-title mt-auto">{listing.nft.name}</Heading>
             </a>
           </Link>
           <MakeBuy>

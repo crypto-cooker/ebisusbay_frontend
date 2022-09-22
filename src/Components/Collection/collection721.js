@@ -28,6 +28,7 @@ import {MobileFilters} from "@src/Components/Collection/CollectionTaskBar/Mobile
 import {FilterResultsBar} from "@src/Components/Collection/FilterResultsBar";
 import {MobileSort} from "@src/Components/Collection/CollectionTaskBar/MobileSort";
 import {CnsRegistration} from "@src/Components/Collection/Custom/CnsRegistration";
+import {Heading} from "@chakra-ui/react";
 
 const NegativeMargin = styled.div`
   margin-left: -1.75rem !important;
@@ -193,10 +194,10 @@ const Collection721 = ({ collection,  query }) => {
                 </div>
 
                 <div className="profile_name">
-                  <h4>
+                  <Heading as="h4" size="md">
                     {collection.name}
                     <div className="clearfix" />
-                  </h4>
+                  </Heading>
                   <CollectionVerificationRow
                     doxx={collection.verification?.doxx}
                     kyc={collection.verification?.kyc}

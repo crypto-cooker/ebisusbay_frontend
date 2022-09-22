@@ -39,6 +39,7 @@ import {ImageKitService} from "@src/helpers/image";
 import classnames from "classnames";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import Button from "@src/Components/components/Button";
+import {Heading} from "@chakra-ui/react";
 
 const StyledModal = styled(Modal)`
   .modal-content {
@@ -352,10 +353,10 @@ const Index = function () {
               </div>
             </div>
 
-            <h3 className="mt-4 mb-3">
+            <Heading as="h3" size="md" className="mt-4 mb-3">
               <FontAwesomeIcon icon={faWallet} className="me-2"/>
               <span>Wallet Info</span>
-            </h3>
+            </Heading>
             <div className="row mb-2">
               <div className="col">
                 <div className="text-muted">Balance</div>

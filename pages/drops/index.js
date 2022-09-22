@@ -11,6 +11,7 @@ import { getTheme } from '../../src/Theme/theme';
 import {hostedImage} from "../../src/helpers/image";
 import Head from "next/head";
 import PageHead from "../../src/Components/Head/PageHead";
+import {Heading} from "@chakra-ui/react";
 
 const Drops = () => {
   const userTheme = useSelector((state) => {
@@ -54,7 +55,7 @@ const Drops = () => {
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2>Active Drops</h2>
+              <Heading>Active Drops</Heading>
               <div className="small-border"></div>
             </div>
           </div>
@@ -68,9 +69,9 @@ const Drops = () => {
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2>
+              <Heading>
                 Upcoming Drops
-              </h2>
+              </Heading>
               <div className="small-border"></div>
             </div>
           </div>
@@ -84,7 +85,7 @@ const Drops = () => {
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2>Completed Drops</h2>
+              <Heading>Completed Drops</Heading>
               <div className="small-border"></div>
             </div>
           </div>

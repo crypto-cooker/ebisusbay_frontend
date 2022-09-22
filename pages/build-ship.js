@@ -13,6 +13,7 @@ import ShipItemABI from '../src/Contracts/ShipItem.json';
 import {appConfig} from '@src/Config';
 import {hostedImage} from '@src/helpers/image';
 import PageHead from '../src/Components/Head/PageHead';
+import {Heading} from "@chakra-ui/react";
 
 const knownContracts = appConfig('collections');
 
@@ -127,7 +128,7 @@ const Drop = () => {
           <div className="container">
             <div className="row m-10-hor">
               <div className="col-12 text-center">
-                <h1>Build a Crosmocraft</h1>
+                <Heading as="h1" size="2xl" >Build a Crosmocraft</Heading>
               </div>
             </div>
           </div>

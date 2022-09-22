@@ -15,6 +15,7 @@ import { Modal, ModalTitle } from 'react-bootstrap';
 import styled from "styled-components";
 import {Navigation, Pagination} from "swiper";
 import {Swiper, SwiperSlide} from "swiper/react";
+import {Heading} from "@chakra-ui/react";
 
 const headers = {
   totalVolume: ['User', 'Sales Volume', 'Buy Volume', 'Total Volume'],
@@ -79,7 +80,7 @@ export default function Stats() {
       <section className="container">
         <div className="row">
           <div className="col-12 col-lg-7 text-center text-lg-start">
-            <h2 className="mb-0">Cronos Marketplace NFT Sales</h2>
+            <Heading className="mb-0">Cronos Marketplace NFT Sales</Heading>
           </div>
           <div className="col-12 col-lg-5 text-center text-lg-end mt-4 mt-lg-0">
             <ul className="activity-filter">

@@ -5,6 +5,7 @@ import Button from '@src/Components/components/common/Button';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCoffee, faSync} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
+import {Heading} from "@chakra-ui/react";
 
 export default function Form({
   values,
@@ -21,7 +22,7 @@ export default function Form({
 }) {
   return (
     <div>
-      <h2>Edit Profile</h2>
+      <Heading as="h2" size="xl">Edit Profile</Heading>
       <div className="d-flex flex-row mb-3">
         <div className="my-auto me-2">Sync profile information from Cronos Domain Service</div>
         <Button type="button" className="px-3 py-1 my-auto" onClick={handleCnsSync} isLoading={isCnsSync}>

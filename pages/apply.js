@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Footer from '../src/Components/components/Footer';
 import {useRouter} from "next/router";
 import PageHead from "../src/Components/Head/PageHead";
+import {Heading} from "@chakra-ui/react";
 const NativeForms = dynamic(() => import('native-forms-react'), { ssr: false });
 
 const fadeInUp = keyframes`
@@ -129,7 +130,7 @@ const Application = ({type}) => {
       <section className="container mt-0 mt-lg-5">
         <div className="row">
           <div className="col">
-            <h2>Choose Application Type</h2>
+            <Heading>Choose Application Type</Heading>
           </div>
         </div>
         <div className="row justify-content-center mt-2">
@@ -144,7 +145,7 @@ const Application = ({type}) => {
               </Reveal>
               <div className="text">
                 <Reveal className="onStep" keyframes={fadeInUp} delay={100} duration={600} triggerOnce>
-                  <h4 className="">Listing Request</h4>
+                  <Heading as="h4" size="md">Listing Request</Heading>
                 </Reveal>
                 <Reveal className="onStep" keyframes={fadeInUp} delay={200} duration={600} triggerOnce>
                   <p className="">For established projects that would like to be added to the marketplace.</p>
@@ -164,7 +165,7 @@ const Application = ({type}) => {
               </Reveal>
               <div className="text">
                 <Reveal className="onStep" keyframes={fadeInUp} delay={100} duration={600} triggerOnce>
-                  <h4 className="">Launchpad Request</h4>
+                  <Heading as="h4" size="md">Launchpad Request</Heading>
                 </Reveal>
                 <Reveal className="onStep" keyframes={fadeInUp} delay={200} duration={600} triggerOnce>
                   <p className="">For projects that would like to launch on the Ebisu's Bay launchpad</p>
@@ -178,7 +179,7 @@ const Application = ({type}) => {
             <div className="col-lg-12 mt-4">
               {openTab === choice.listing && (
                 <>
-                  <h3 className="text-center">Listing Request</h3>
+                  <Heading as="h3" size="md" className="text-center">Listing Request</Heading>
                   <StyledForm isDark={userTheme === 'dark'}>
                     <NativeForms form="https://form.nativeforms.com/iNHbm1jZmoWRPBXaK1Db" />
                   </StyledForm>
@@ -186,7 +187,7 @@ const Application = ({type}) => {
               )}
               {openTab === choice.launchpad && (
                 <>
-                  <h3 className="text-center">Launchpad Request</h3>
+                  <Heading as="h3" size="md" className="text-center">Launchpad Request</Heading>
                   <StyledForm isDark={userTheme === 'dark'}>
                     <NativeForms form="https://form.nativeforms.com/AM0YjZ50jZmoWRPBXaK1Db" />
                   </StyledForm>

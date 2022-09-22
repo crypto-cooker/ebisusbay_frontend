@@ -20,6 +20,7 @@ import {Spinner} from "react-bootstrap";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import {pushQueryString} from "@src/helpers/query";
 import {useRouter} from "next/router";
+import {Heading} from "@chakra-ui/react";
 
 
 const tabs = {
@@ -137,10 +138,10 @@ const Collection1155 = ({ collection, tokenId = null, query }) => {
                 </div>
 
                 <div className="profile_name">
-                  <h4>
+                  <Heading as="h4" size="md">
                     {collection.name}
                     <div className="clearfix" />
-                  </h4>
+                  </Heading>
                   <CollectionVerificationRow
                     doxx={collection.verification?.doxx}
                     kyc={collection.verification?.kyc}

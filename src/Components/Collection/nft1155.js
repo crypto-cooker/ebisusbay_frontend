@@ -37,6 +37,7 @@ import {appConfig} from "@src/Config";
 import Market from "@src/Contracts/Marketplace.json";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import Button from "@src/Components/components/common/Button";
+import {Heading} from "@chakra-ui/react";
 
 const config = appConfig();
 const tabs = {
@@ -202,8 +203,8 @@ const Nft1155 = ({ address, id }) => {
             <div className="col-md-6">
               {nft && (
                 <div className="item_info">
-                  <h2>{nft.name}</h2>
-                  <p className="text-break">{nft.description}</p>
+                  <Heading>{nft.name}</Heading>
+                  <p className="text-break mb-4">{nft.description}</p>
                   {collection.listable && (
                     <>
                       <PriceActionBar

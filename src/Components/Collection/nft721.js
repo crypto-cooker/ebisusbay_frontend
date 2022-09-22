@@ -51,6 +51,7 @@ import axios from "axios";
 import Button from "@src/Components/components/common/Button";
 import Market from "@src/Contracts/Marketplace.json";
 import {collectionRoyaltyPercent} from "@src/core/chain";
+import {Heading} from "@chakra-ui/react";
 
 const config = appConfig();
 const knownContracts = config.collections;
@@ -441,15 +442,15 @@ const Nft721 = ({ address, id }) => {
                 <div className="item_info">
                   {isNftBlacklisted(address, id) ? (
                     <div className="mb-4">
-                      <h2 className="mb-0">{customProfile.name ?? nft.name}</h2>
+                      <Heading className="mb-0">{customProfile.name ?? nft.name}</Heading>
                       <div className="d-flex">
                         <Badge bg="danger">Blacklisted</Badge>
                       </div>
                     </div>
                   ) : (
-                    <h2>{customProfile.name ?? nft.name}</h2>
+                    <Heading>{customProfile.name ?? nft.name}</Heading>
                   )}
-                  <p className="text-break">{customProfile.description ?? nft.description}</p>
+                  <p className="text-break mb-4">{customProfile.description ?? nft.description}</p>
                   {isCroCrowCollection(address) && croCrowBreed && (
                     <div className="d-flex flex-row align-items-center mb-4">
                       <LayeredIcon
