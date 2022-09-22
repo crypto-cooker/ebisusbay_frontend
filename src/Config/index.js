@@ -154,6 +154,7 @@ export const configData = {
   },
   [environments.local]: {
     urls: {
+      api: 'https://api.ebisusbay.biz/',
       cms: 'http://localhost:4000/api/',
     },
   }
@@ -208,7 +209,7 @@ export const isLocalEnv = () => {
 export const featureFlags = {
   [Features.AUCTION_OPTION_SALE]: false,
   [Features.CMS_NOTIFICATIONS]: true,
-  [Features.CMS_FULL_PROFILES]: false,
+  [Features.CMS_FULL_PROFILES]: true,
   [Features.GET_COLLECTION_NEW_ENDPOINT]: false,
   [Features.CMS_COLLECTIONS]: false,
   [Features.VERIFIED_SWITCH_COLLECTION]: false,

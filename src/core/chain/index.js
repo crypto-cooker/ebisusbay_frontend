@@ -13,8 +13,8 @@ export async function collectionRoyaltyPercent(address, id) {
       return marketRoyalty.percent;
     }
 
-    const royalty = await readMarket.calculateRoyalty(address, id, 100);
-    return Number(royalty);
+    const royalty = await readMarket.calculateRoyalty(address, id, 1000);
+    return Number(royalty) / 10;
   } catch (error) {
     console.log('error retrieving royalties for collection', error);
     return 0;
