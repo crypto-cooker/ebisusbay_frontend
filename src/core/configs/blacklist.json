@@ -181,8 +181,7 @@
     "tokens": [
       {
         "slug" : "crohogs",
-        "address" : "0xFD265797d7Bc6C25f2Cd148ec12f36a8eE00862a",
-        "ids":  [4, 12, 1408, 13, 673, 1249, 352, 16, 352, 874]
+        "address" : "0xFD265797d7Bc6C25f2Cd148ec12f36a8eE00862a"
       }
     ],
     "reason" : "mint snipe hack"
