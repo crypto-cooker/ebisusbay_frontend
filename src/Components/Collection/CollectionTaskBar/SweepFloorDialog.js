@@ -1,6 +1,4 @@
 import React, {useState, useCallback, useEffect, memo} from 'react';
-import {ClickAwayListener, Dialog, DialogContent, DialogTitle, Tooltip} from '@mui/material';
-import styled from 'styled-components';
 import {
   faCheck,
   faCircle,
@@ -36,47 +34,16 @@ import {specialImageTransform} from "@src/hacks";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
 import {Lazy, Navigation} from "swiper";
 import {Swiper, SwiperSlide} from "swiper/react";
-
-const DialogContainer = styled(Dialog)`
-  .MuiPaper-root {
-    border-radius: 8px;
-    overflow: hidden;
-    background-color: ${({ theme }) => theme.colors.bgColor1};
-  }
-
-  .MuiDialogContent-root {
-    width: 700px;
-    padding: 15px 42px 28px !important;
-    border-radius: 8px;
-    max-width: 734px;
-    background-color: ${({ theme }) => theme.colors.bgColor1};
-    color: ${({ theme }) => theme.colors.textColor3};
-
-    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
-      width: 100%;
-    }
-  }
-`;
-
-const DialogTitleContainer = styled(DialogTitle)`
-  font-size: 26px !important;
-  color: ${({ theme }) => theme.colors.textColor3};
-  padding: 0px !important;
-  margin-bottom: 18px !important;
-  font-weight: bold !important;
-  text-align: center;<
-`;
-
-const CloseIconContainer = styled.div`
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  cursor: pointer;
-
-  img {
-    width: 28px;
-  }
-`;
+import {
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay, Tooltip
+} from "@chakra-ui/react";
+import {getTheme} from "@src/Theme/theme";
 
 const numberRegexValidation = /[^0-9]/g;
 const sweepType = {
@@ -275,94 +242,99 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
   if (!collection) return <></>;
 
   return (
-    <DialogContainer fullScreen={fullscreen} onClose={onClose} open={isOpen} maxWidth="md">
-      <DialogContent>
+    <Modal onClose={onClose} isOpen={isOpen} size={fullscreen ? 'full' : '2xl'} isCentered>
+      <ModalOverlay />
+      <ModalContent>
         {!isLoading ? (
           <>
-            <DialogTitleContainer className="fs-5 fs-md-3">
+            <ModalHeader className="text-center">
               Sweep {collection.name}
-            </DialogTitleContainer>
-            <div className="text-center mb-2" style={{fontSize: '14px'}}>
-               Quickly sweep NFTs off the floor
-            </div>
-            <div className="nftSaleForm row gx-3">
-              <div className="col-12 col-sm-6 mb-2 mb-sm-0">
-                <div className="profile_avatar d-flex justify-content-center">
-                  <div className="dialog_avatar position-relative">
-                    {collection.metadata.avatar ? (
-                      <img src={hostedImage(collection.metadata.avatar)} alt={collection.name} style={{background:'white'}}/>
-                    ) : (
-                      <Blockies seed={collection.address.toLowerCase()} size={15} scale={10} />
-                    )}
-                    {collection.metadata.verified && (
-                      <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={8} stackClass="eb-avatar_badge" />
-                    )}
-                  </div>
-                </div>
-                {tab === sweepType.custom && !adjustLayout && (
-                  <ActiveFiltersField activeFilters={activeFilters} collection={collection} />
-                )}
+            </ModalHeader>
+            <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
+            <ModalBody>
+              <div className="text-center mb-2" style={{fontSize: '14px'}}>
+                 Quickly sweep NFTs off the floor
               </div>
-              <div className="col-12 col-sm-6">
-                <div className="d-flex">
-                  <div className={`card flex-fill form_icon_button shadow ${tab === sweepType.quantity ? 'active' : ''}`} onClick={() => changeTab(sweepType.quantity)}>
-                    {tab === sweepType.quantity && <DotIcon icon={faCheck} />}
-                    <FontAwesomeIcon className='icon' icon={faStairs} />
-                    <p>Quantity</p>
+              <div className="nftSaleForm row gx-3">
+                <div className="col-12 col-sm-6 mb-2 mb-sm-0">
+                  <div className="profile_avatar d-flex justify-content-center">
+                    <div className="dialog_avatar position-relative">
+                      {collection.metadata.avatar ? (
+                        <img src={hostedImage(collection.metadata.avatar)} alt={collection.name} style={{background:'white'}}/>
+                      ) : (
+                        <Blockies seed={collection.address.toLowerCase()} size={15} scale={10} />
+                      )}
+                      {collection.metadata.verified && (
+                        <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={8} stackClass="eb-avatar_badge" />
+                      )}
+                    </div>
                   </div>
-                  <div className={`card flex-fill form_icon_button shadow ms-2 ${tab === sweepType.budget ? 'active' : ''}`} onClick={() => changeTab(sweepType.budget)}>
-                    {tab === sweepType.budget && <DotIcon icon={faCheck} />}
-                    <FontAwesomeIcon className='icon' icon={faDollarSign} />
-                    <p>Budget</p>
-                  </div>
-                  <div className={`card flex-fill form_icon_button shadow ms-2 ${tab === sweepType.custom ? 'active' : ''}`} onClick={() => changeTab(sweepType.custom)}>
-                    {tab === sweepType.custom && <DotIcon icon={faCheck} />}
-                    <FontAwesomeIcon className='icon' icon={faStar} />
-                    <p>Custom</p>
-                  </div>
+                  {tab === sweepType.custom && !adjustLayout && (
+                    <ActiveFiltersField activeFilters={activeFilters} collection={collection} />
+                  )}
                 </div>
-                {tab === sweepType.quantity && <div className="mb-2">Sweep up to a specific quantity</div>}
-                {tab === sweepType.budget && <div className="mb-2">Sweep up to a specific budget</div>}
-                {tab === sweepType.custom && <div className="mb-2">Use collection filters for sweeping</div>}
-                {[sweepType.quantity, sweepType.custom].includes(tab) && (
+                <div className="col-12 col-sm-6">
+                  <div className="d-flex">
+                    <div className={`card flex-fill form_icon_button shadow ${tab === sweepType.quantity ? 'active' : ''}`} onClick={() => changeTab(sweepType.quantity)}>
+                      {tab === sweepType.quantity && <DotIcon icon={faCheck} />}
+                      <FontAwesomeIcon className='icon' icon={faStairs} />
+                      <p>Quantity</p>
+                    </div>
+                    <div className={`card flex-fill form_icon_button shadow ms-2 ${tab === sweepType.budget ? 'active' : ''}`} onClick={() => changeTab(sweepType.budget)}>
+                      {tab === sweepType.budget && <DotIcon icon={faCheck} />}
+                      <FontAwesomeIcon className='icon' icon={faDollarSign} />
+                      <p>Budget</p>
+                    </div>
+                    <div className={`card flex-fill form_icon_button shadow ms-2 ${tab === sweepType.custom ? 'active' : ''}`} onClick={() => changeTab(sweepType.custom)}>
+                      {tab === sweepType.custom && <DotIcon icon={faCheck} />}
+                      <FontAwesomeIcon className='icon' icon={faStar} />
+                      <p>Custom</p>
+                    </div>
+                  </div>
+                  {tab === sweepType.quantity && <div className="mb-2">Sweep up to a specific quantity</div>}
+                  {tab === sweepType.budget && <div className="mb-2">Sweep up to a specific budget</div>}
+                  {tab === sweepType.custom && <div className="mb-2">Use collection filters for sweeping</div>}
+                  {[sweepType.quantity, sweepType.custom].includes(tab) && (
+                    <div className="mt-2">
+                      <QuantitySweeperField
+                        onChange={(value) => setQuantity(value)}
+                        disabled={showConfirmButton || executingSweepFloor}
+                        error={formErrors.quantity}
+                      />
+                    </div>
+                  )}
+                  {[sweepType.budget, sweepType.custom].includes(tab) && (
+                    <div className="mt-2">
+                      <BudgetSweeperField
+                        balance={0}
+                        onChange={(value) => setBudget(value)}
+                        disabled={showConfirmButton || executingSweepFloor}
+                        error={formErrors.budget}
+                      />
+                    </div>
+                  )}
+                  {(tab === sweepType.budget || tab === sweepType.quantity) && (
+                    <div className="mt-2">
+                      <MaxPricePerItemField
+                        onChange={(value) => setMaxPricePerItem(value)}
+                        disabled={showConfirmButton || executingSweepFloor}
+                      />
+                    </div>
+                  )}
+                  {tab === sweepType.custom && adjustLayout && (
+                    <ActiveFiltersField activeFilters={activeFilters} collection={collection} />
+                  )}
                   <div className="mt-2">
-                    <QuantitySweeperField
-                      onChange={(value) => setQuantity(value)}
+                    <AutoSwapItemsField
+                      onChange={(value) => setAutoSwapItems(value)}
                       disabled={showConfirmButton || executingSweepFloor}
-                      error={formErrors.quantity}
                     />
                   </div>
-                )}
-                {[sweepType.budget, sweepType.custom].includes(tab) && (
-                  <div className="mt-2">
-                    <BudgetSweeperField
-                      balance={0}
-                      onChange={(value) => setBudget(value)}
-                      disabled={showConfirmButton || executingSweepFloor}
-                      error={formErrors.budget}
-                    />
-                  </div>
-                )}
-                {(tab === sweepType.budget || tab === sweepType.quantity) && (
-                  <div className="mt-2">
-                    <MaxPricePerItemField
-                      onChange={(value) => setMaxPricePerItem(value)}
-                      disabled={showConfirmButton || executingSweepFloor}
-                    />
-                  </div>
-                )}
-                {tab === sweepType.custom && adjustLayout && (
-                  <ActiveFiltersField activeFilters={activeFilters} collection={collection} />
-                )}
-                <div className="mt-2">
-                  <AutoSwapItemsField
-                    onChange={(value) => setAutoSwapItems(value)}
-                    disabled={showConfirmButton || executingSweepFloor}
-                  />
                 </div>
               </div>
-
-              <div className="mt-3 mx-auto">
+            </ModalBody>
+            <ModalFooter className="border-0">
+              <div className="w-100">
                 {sweepError && (
                   <div className="alert alert-primary my-auto mb-2 text-center">
                     {sweepError}
@@ -415,7 +387,7 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
                   </>
                 )}
               </div>
-            </div>
+            </ModalFooter>
           </>
         ) : (
           <EmptyData>
@@ -424,11 +396,8 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
             </Spinner>
           </EmptyData>
         )}
-        <CloseIconContainer onClick={onClose}>
-          <img src="/img/icons/close-icon-blue.svg" alt="close" width="40" height="40" />
-        </CloseIconContainer>
-      </DialogContent>
-    </DialogContainer>
+      </ModalContent>
+    </Modal>
   );
 }
 
@@ -538,7 +507,6 @@ const MaxPricePerItemField = ({onChange, disabled}) => {
 
 const AutoSwapItemsField = ({onChange, disabled}) => {
   const [isChecked, setIsChecked] = useState(true);
-  const [tooltipOpen, setTooltipOpen] = useState(false);
   const [error, setError] = useState(false);
 
   const onFieldChange = useCallback((e) => {
@@ -547,33 +515,18 @@ const AutoSwapItemsField = ({onChange, disabled}) => {
     onChange(newValue);
   }, [setIsChecked, isChecked]);
 
-  const handleTooltipClose = () => {
-    setTooltipOpen(false);
-  };
-
-  const handleTooltipOpen = () => {
-    setTooltipOpen(true);
-  };
-
   return (
     <Form.Group className="form-field d-flex">
       <Form.Label className="formLabel w-100">
         <span>Auto Swap Items</span>
-        <ClickAwayListener onClickAway={handleTooltipClose}>
-          <span>
-            <Tooltip
-              title="Automatically swap items that were sold or delisted while sweeping"
-              placement="top-start"
-              onClose={handleTooltipClose}
-              open={tooltipOpen}
-              disableFocusListener
-              disableHoverListener
-              disableTouchListener
-            >
-              <FontAwesomeIcon icon={faCircleQuestion} className="ms-1" onClick={handleTooltipOpen}/>
-            </Tooltip>
-          </span>
-        </ClickAwayListener>
+        <span>
+          <Tooltip
+            label="Automatically swap items that were sold or delisted while sweeping"
+            placement="top-start"
+          >
+            <FontAwesomeIcon icon={faCircleQuestion} className="ms-1" />
+          </Tooltip>
+        </span>
       </Form.Label>
       <Form.Switch
         checked={isChecked}

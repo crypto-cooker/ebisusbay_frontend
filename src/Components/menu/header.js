@@ -12,6 +12,7 @@ import InvalidListingWarning from '../components/InvalidListingWarning';
 import { setTheme } from '@src/GlobalState/User';
 import useFeatureFlag from "@src/hooks/useFeatureFlag";
 import Constants from "@src/constants";
+import {useColorMode} from "@chakra-ui/react";
 
 const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
 
@@ -38,6 +39,7 @@ const GlobalStyles = createGlobalStyle`
 
 const Header = function () {
   const dispatch = useDispatch();
+  const { colorMode, setColorMode } = useColorMode()
   const {theme, profile} = useSelector((state) => state.user);
   const [showMenu, setShowMenu] = useState(false);
   const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
@@ -49,6 +51,7 @@ const Header = function () {
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     dispatch(setTheme(newTheme));
+    setColorMode(newTheme);
   };
 
   useEffect(() => {

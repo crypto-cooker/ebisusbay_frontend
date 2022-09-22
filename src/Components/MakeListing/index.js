@@ -1,6 +1,4 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import { Dialog, DialogContent, DialogTitle } from '@mui/material';
-import styled from 'styled-components';
 import {specialImageTransform} from "@src/hacks";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
 import DotIcon from "@src/Components/components/DotIcon";
@@ -23,47 +21,16 @@ import Market from "@src/Contracts/Marketplace.json";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import * as Sentry from '@sentry/react';
 import {collectionRoyaltyPercent} from "@src/core/chain";
-
-const DialogContainer = styled(Dialog)`
-  .MuiPaper-root {
-    border-radius: 8px;
-    overflow: hidden;
-    background-color: ${({ theme }) => theme.colors.bgColor1};
-  }
-
-  .MuiDialogContent-root {
-    width: 700px;
-    padding: 15px 42px 28px !important;
-    border-radius: 8px;
-    max-width: 734px;
-    background-color: ${({ theme }) => theme.colors.bgColor1};
-    color: ${({ theme }) => theme.colors.textColor3};
-
-    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
-      width: 100%;
-    }
-  }
-`;
-
-const DialogTitleContainer = styled(DialogTitle)`
-  font-size: 26px !important;
-  color: ${({ theme }) => theme.colors.textColor3};
-  padding: 0px !important;
-  margin-bottom: 18px !important;
-  font-weight: bold !important;
-  text-align: center;
-`;
-
-const CloseIconContainer = styled.div`
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  cursor: pointer;
-
-  img {
-    width: 28px;
-  }
-`;
+import {
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay
+} from "@chakra-ui/react";
+import {getTheme} from "@src/Theme/theme";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -281,119 +248,124 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
   if (!nft) return <></>;
 
   return (
-    <DialogContainer onClose={onClose} open={isOpen} maxWidth="md">
-      <DialogContent>
-        <DialogTitleContainer className="fs-5 fs-md-3">
+    <Modal onClose={onClose} isOpen={isOpen} size="2xl" isCentered>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader className="text-center">
           {listing ? 'Update' : 'Sell'} {nft.name}
-        </DialogTitleContainer>
+        </ModalHeader>
+        <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
         {!isLoading ? (
           <>
-            <div className="nftSaleForm row gx-3">
-              <div className="col-12 col-sm-6 mb-2 mb-sm-0">
-                <AnyMedia
-                  image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
-                  video={nft.video ?? nft.animation_url}
-                  videoProps={{ height: 'auto', autoPlay: true }}
-                  title={nft.name}
-                  usePlaceholder={false}
-                  className="img-fluid img-rounded"
-                />
-              </div>
-              <div className="col-12 col-sm-6">
-                <h3>Sale Type</h3>
-                <div className="d-flex">
-                  {/*<div className={`card flex-fill form_icon_button shadow first-button ${saleType === 0 ? 'active' : ''}`} onClick={() => changeSaleType('auction')}>*/}
-                  {/*  {saleType === 0 && <DotIcon icon={faCheck} />}*/}
-                  {/*  <FontAwesomeIcon className='icon' icon={faClock} />*/}
-                  {/*  <p>Auction</p>*/}
-                  {/*</div>*/}
-
-                  <div className={`card flex-fill form_icon_button shadow ${saleType === 1 ? 'active' : ''}`} onClick={() => changeSaleType('fixedPrice')}>
-                    {saleType === 1 && <DotIcon icon={faCheck} />}
-                    <FontAwesomeIcon className='icon' icon={faDollarSign} />
-                    <p>Fixed Price</p>
-                  </div>
-                </div>
-
-                <Form.Group className="form-field">
-                  <Form.Label className="formLabel w-100">
-                    <div className="d-flex">
-                      <div className="flex-grow-1">{saleType === 1 ? 'Listing Price' : 'Starting Bid Price'}</div>
-                      <div className="my-auto">
-                        <Badge
-                          pill
-                          bg={user.theme === 'dark' ? 'light' : 'secondary'}
-                          text={user.theme === 'dark' ? 'dark' : 'light'}
-                          className="ms-2"
-                        >
-                          Floor: {floorPrice} CRO
-                        </Badge>
-                      </div>
-                    </div>
-                  </Form.Label>
-                  <Form.Control
-                    className="input"
-                    type="number"
-                    placeholder="Enter Amount"
-                    value={salePrice}
-                    onChange={costOnChange}
-                    disabled={showConfirmButton || executingCreateListing}
+            <ModalBody>
+              <div className="nftSaleForm row gx-3">
+                <div className="col-12 col-sm-6 mb-2 mb-sm-0">
+                  <AnyMedia
+                    image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
+                    video={nft.video ?? nft.animation_url}
+                    videoProps={{ height: 'auto', autoPlay: true }}
+                    title={nft.name}
+                    usePlaceholder={false}
+                    className="img-fluid img-rounded"
                   />
-                  <Form.Text className="field-description textError">
-                    {priceError}
-                  </Form.Text>
-                </Form.Group>
-
-                <div className="d-flex flex-wrap justify-content-between mb-3">
-                  {windowSize.width > 377 && (
-                    <Badge bg="danger" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(-0.25)}>
-                      -25%
-                    </Badge>
-                  )}
-                  <Badge bg="danger" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(-0.1)}>
-                    -10%
-                  </Badge>
-                  <Badge
-                    bg={user.theme === 'dark' ? 'light' : 'secondary'}
-                    text={user.theme === 'dark' ? 'dark' : 'light'}
-                    className="cursor-pointer my-1" onClick={() => onQuickCost(0)}
-                  >
-                    Floor
-                  </Badge>
-                  <Badge bg="success" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(0.1)}>
-                    +10%
-                  </Badge>
-
-                  {windowSize.width > 377 && (
-                    <Badge bg="success" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(0.25)}>
-                      +25%
-                    </Badge>
-                  )}
                 </div>
+                <div className="col-12 col-sm-6">
+                  <h3>Sale Type</h3>
+                  <div className="d-flex">
+                    {/*<div className={`card flex-fill form_icon_button shadow first-button ${saleType === 0 ? 'active' : ''}`} onClick={() => changeSaleType('auction')}>*/}
+                    {/*  {saleType === 0 && <DotIcon icon={faCheck} />}*/}
+                    {/*  <FontAwesomeIcon className='icon' icon={faClock} />*/}
+                    {/*  <p>Auction</p>*/}
+                    {/*</div>*/}
 
-                <div>
-                  <h3 className="feeTitle">Fees</h3>
-                  <hr />
-                  <div className="fee">
-                    <span>Service Fee: </span>
-                    <span>{fee} %</span>
+                    <div className={`card flex-fill form_icon_button shadow ${saleType === 1 ? 'active' : ''}`} onClick={() => changeSaleType('fixedPrice')}>
+                      {saleType === 1 && <DotIcon icon={faCheck} />}
+                      <FontAwesomeIcon className='icon' icon={faDollarSign} />
+                      <p>Fixed Price</p>
+                    </div>
                   </div>
-                  <div className="fee">
-                    <span>Royalty Fee: </span>
-                    <span>{royalty} %</span>
+
+                  <Form.Group className="form-field">
+                    <Form.Label className="formLabel w-100">
+                      <div className="d-flex">
+                        <div className="flex-grow-1">{saleType === 1 ? 'Listing Price' : 'Starting Bid Price'}</div>
+                        <div className="my-auto">
+                          <Badge
+                            pill
+                            bg={user.theme === 'dark' ? 'light' : 'secondary'}
+                            text={user.theme === 'dark' ? 'dark' : 'light'}
+                            className="ms-2"
+                          >
+                            Floor: {floorPrice} CRO
+                          </Badge>
+                        </div>
+                      </div>
+                    </Form.Label>
+                    <Form.Control
+                      className="input"
+                      type="number"
+                      placeholder="Enter Amount"
+                      value={salePrice}
+                      onChange={costOnChange}
+                      disabled={showConfirmButton || executingCreateListing}
+                    />
+                    <Form.Text className="field-description textError">
+                      {priceError}
+                    </Form.Text>
+                  </Form.Group>
+
+                  <div className="d-flex flex-wrap justify-content-between mb-3">
+                    {windowSize.width > 377 && (
+                      <Badge bg="danger" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(-0.25)}>
+                        -25%
+                      </Badge>
+                    )}
+                    <Badge bg="danger" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(-0.1)}>
+                      -10%
+                    </Badge>
+                    <Badge
+                      bg={user.theme === 'dark' ? 'light' : 'secondary'}
+                      text={user.theme === 'dark' ? 'dark' : 'light'}
+                      className="cursor-pointer my-1" onClick={() => onQuickCost(0)}
+                    >
+                      Floor
+                    </Badge>
+                    <Badge bg="success" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(0.1)}>
+                      +10%
+                    </Badge>
+
+                    {windowSize.width > 377 && (
+                      <Badge bg="success" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(0.25)}>
+                        +25%
+                      </Badge>
+                    )}
                   </div>
-                  <div className="fee">
-                    <span className='label'>Buyer pays: </span>
-                    <span>{getSaleValue()} CRO</span>
-                  </div>
-                  <div className="fee">
-                    <span className='label'>You receive: </span>
-                    <span>{getYouReceiveViewValue()} CRO</span>
+
+                  <div>
+                    <h3 className="feeTitle">Fees</h3>
+                    <hr />
+                    <div className="fee">
+                      <span>Service Fee: </span>
+                      <span>{fee} %</span>
+                    </div>
+                    <div className="fee">
+                      <span>Royalty Fee: </span>
+                      <span>{royalty} %</span>
+                    </div>
+                    <div className="fee">
+                      <span className='label'>Buyer pays: </span>
+                      <span>{getSaleValue()} CRO</span>
+                    </div>
+                    <div className="fee">
+                      <span className='label'>You receive: </span>
+                      <span>{getYouReceiveViewValue()} CRO</span>
+                    </div>
                   </div>
                 </div>
               </div>
-
-              <div className="mt-3 mx-auto">
+            </ModalBody>
+            <ModalFooter className="border-0">
+              <div className="w-100">
                 {isTransferApproved ? (
                   <>
                     {showConfirmButton ? (
@@ -407,6 +379,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                         <div className="d-flex">
                           <Button type="legacy"
                                   onClick={() => setShowConfirmButton(false)}
+                                  disabled={executingCreateListing}
                                   className="me-2 flex-fill">
                             Go Back
                           </Button>
@@ -455,7 +428,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                   </>
                 )}
               </div>
-            </div>
+            </ModalFooter>
           </>
         ) : (
           <EmptyData>
@@ -464,10 +437,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
             </Spinner>
           </EmptyData>
         )}
-        <CloseIconContainer onClick={onClose}>
-          <img src="/img/icons/close-icon-blue.svg" alt="close" width="40" height="40" />
-        </CloseIconContainer>
-      </DialogContent>
-    </DialogContainer>
+      </ModalContent>
+    </Modal>
   );
 }

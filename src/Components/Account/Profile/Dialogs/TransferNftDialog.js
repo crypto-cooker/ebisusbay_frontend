@@ -1,6 +1,4 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import { Dialog, DialogContent, DialogTitle } from '@mui/material';
-import styled from 'styled-components';
 import {Form, Spinner} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {Contract} from "ethers";
@@ -13,47 +11,16 @@ import {AnyMedia} from "@src/Components/components/AnyMedia";
 import {specialImageTransform} from "@src/hacks";
 import {ERC1155, ERC721} from "@src/Contracts/Abis";
 import {getCnsAddress, isCnsName} from "@src/helpers/cns";
-
-const DialogContainer = styled(Dialog)`
-  .MuiPaper-root {
-    border-radius: 8px;
-    overflow: hidden;
-    background-color: ${({ theme }) => theme.colors.bgColor1};
-  }
-
-  .MuiDialogContent-root {
-    width: 700px;
-    padding: 15px 42px 28px !important;
-    border-radius: 8px;
-    max-width: 734px;
-    background-color: ${({ theme }) => theme.colors.bgColor1};
-    color: ${({ theme }) => theme.colors.textColor3};
-
-    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
-      width: 100%;
-    }
-  }
-`;
-
-const DialogTitleContainer = styled(DialogTitle)`
-  font-size: 26px !important;
-  color: ${({ theme }) => theme.colors.textColor3};
-  padding: 0px !important;
-  margin-bottom: 18px !important;
-  font-weight: bold !important;
-  text-align: center;<
-`;
-
-const CloseIconContainer = styled.div`
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  cursor: pointer;
-
-  img {
-    width: 28px;
-  }
-`;
+import {
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay
+} from "@chakra-ui/react";
+import {getTheme} from "@src/Theme/theme";
 
 export default function TransferNftDialog({ isOpen, nft, onClose }) {
   const [recipientAddress, setRecipientAddress] = useState(null);
@@ -161,51 +128,56 @@ export default function TransferNftDialog({ isOpen, nft, onClose }) {
   if (!nft) return <></>;
 
   return (
-    <DialogContainer onClose={onClose} open={isOpen} maxWidth="md">
-      <DialogContent>
+    <Modal onClose={onClose} isOpen={isOpen} size="2xl" isCentered>
+      <ModalOverlay />
+      <ModalContent>
         {!isLoading ? (
           <>
-            <DialogTitleContainer className="fs-5 fs-md-3">
+            <ModalHeader className="text-center">
               Transfer {nft.name}
-            </DialogTitleContainer>
-            <div className="nftSaleForm row gx-3">
-              <div className="col-12 col-sm-4 mb-sm-3">
-                <AnyMedia
-                  image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
-                  video={nft.video ?? nft.animation_url}
-                  videoProps={{ height: 'auto', autoPlay: true }}
-                  title={nft.name}
-                  usePlaceholder={false}
-                  className="img-fluid img-rounded"
-                />
-              </div>
-              <div className="col-12 col-sm-8 my-auto">
-                <div className="mt-4 mt-sm-0 mb-3 mb-sm-0">
-                  <Form.Group className="form-field">
-                    <Form.Label className="formLabel w-100">
-                      Recipient Address or CNS Name
-                    </Form.Label>
-                    <Form.Control
-                      className="input"
-                      type="text"
-                      placeholder="Address or CNS name"
-                      value={recipientAddress}
-                      onChange={onChangeAddress}
-                      disabled={executingTransferNft}
-                    />
-                    <Form.Text className="field-description textError">
-                      {fieldError}
-                    </Form.Text>
-                  </Form.Group>
+            </ModalHeader>
+            <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
+            <ModalBody>
+              <div className="nftSaleForm row gx-3">
+                <div className="col-12 col-sm-4 mb-sm-3">
+                  <AnyMedia
+                    image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
+                    video={nft.video ?? nft.animation_url}
+                    videoProps={{ height: 'auto', autoPlay: true }}
+                    title={nft.name}
+                    usePlaceholder={false}
+                    className="img-fluid img-rounded"
+                  />
                 </div>
-                {nft.multiToken && (
-                  <div className="text-center my-3 text-muted" style={{fontSize: '14px'}}>
-                    This is a CRC-1155 token. Tokens of this type are limited to a quantity of one per transaction at this time
+                <div className="col-12 col-sm-8 my-auto">
+                  <div className="mt-4 mt-sm-0 mb-3 mb-sm-0">
+                    <Form.Group className="form-field">
+                      <Form.Label className="formLabel w-100">
+                        Recipient Address or CNS Name
+                      </Form.Label>
+                      <Form.Control
+                        className="input"
+                        type="text"
+                        placeholder="Address or CNS name"
+                        value={recipientAddress}
+                        onChange={onChangeAddress}
+                        disabled={executingTransferNft}
+                      />
+                      <Form.Text className="field-description textError">
+                        {fieldError}
+                      </Form.Text>
+                    </Form.Group>
                   </div>
-                )}
+                  {nft.multiToken && (
+                    <div className="text-center my-3 text-muted" style={{fontSize: '14px'}}>
+                      This is a CRC-1155 token. Tokens of this type are limited to a quantity of one per transaction at this time
+                    </div>
+                  )}
+                </div>
               </div>
-
-              <div className="mt-3 mx-auto">
+            </ModalBody>
+            <ModalFooter className="border-0">
+              <div className="w-100">
                 {executingTransferNft && (
                   <div className="mb-2 text-center fst-italic">
                     <small>Please check your wallet for confirmation</small>
@@ -221,7 +193,7 @@ export default function TransferNftDialog({ isOpen, nft, onClose }) {
                   </Button>
                 </div>
               </div>
-            </div>
+            </ModalFooter>
           </>
         ) : (
           <EmptyData>
@@ -230,10 +202,7 @@ export default function TransferNftDialog({ isOpen, nft, onClose }) {
             </Spinner>
           </EmptyData>
         )}
-        <CloseIconContainer onClick={onClose}>
-          <img src="/img/icons/close-icon-blue.svg" alt="close" width="40" height="40" />
-        </CloseIconContainer>
-      </DialogContent>
-    </DialogContainer>
+      </ModalContent>
+    </Modal>
   );
 }
