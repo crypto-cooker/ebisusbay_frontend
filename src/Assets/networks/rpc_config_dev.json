@@ -5562,7 +5562,9 @@
         "maxSupply": 2200,
         "website": "https://www.losttoys.io/",
         "twitter": "https://www.twitter.com/losttoysnft",
-        "discord": "https://discord.gg/Tdd9TZRMxn"
+        "discord": "https://discord.gg/Tdd9TZRMxn",
+        "medium": "https://hello-143.gitbook.io/lost-toys-nft/",
+        "instagram": "https://www.instagram.com/losttoysnft/"
       },
       "verification": {
         "doxx": "private",
@@ -8990,6 +8992,32 @@
         "twitter": "https://twitter.com/CroMorphs",
         "discord": "https://http://discord.gg/8N2g6YYJxz"
       }
+    },
+    {
+      "name": "The Meanies",
+      "slug": "the-meanies",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Meanies are a collection of 2,500 uniquely generated NFTs and the 2nd character of the Lost Toys project. Each NFT is based on 7 trait categories with different rarities. A Lost Toy NFT is not simply an NFT it is a key to unlocking over 15 utilities!",
+        "verified": true,
+        "avatar": "/img/collections/the-meanies/avatar.webp",
+        "card": "/img/collections/the-meanies/card.webp",
+        "banner": "/img/collections/the-meanies/banner.webp",
+        "maxSupply": 2200,
+        "website": "https://www.losttoys.io/",
+        "twitter": "https://www.twitter.com/losttoysnft",
+        "discord": "https://discord.gg/Tdd9TZRMxn",
+        "medium": "https://hello-143.gitbook.io/lost-toys-nft/",
+        "instagram": "https://www.instagram.com/losttoysnft/"
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": false,
+        "escrow": false
+      }
     }
   ],
   "drops": [
@@ -12101,6 +12129,39 @@
       "whitelistCost": "250",
       "foundersOnly": false,
       "start": 1664827200000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 113,
+      "slug": "the-meanies",
+      "imgNft": "/img/drops/the-meanies/drop.webp",
+      "imgPreview": "/img/drops/the-meanies/drop.webp",
+      "imgAvatar": "/img/collections/the-meanies/avatar.webp",
+      "imgBanner": "/img/collections/the-meanies/banner.webp",
+      "title": "The Meanies",
+      "subtitle": "The Meanies are a collection of 2,500 uniquely generated NFTs and the 2nd character of the Lost Toys project. Each NFT is based on 7 trait categories with different rarities. A Lost Toy NFT is not simply an NFT it is a key to unlocking over 15 utilities!",
+      "description": "The Meanies are a collection of 2,500 uniquely generated NFTs and the 2nd character of the Lost Toys project. Each NFT is based on 7 trait categories with different rarities. A Lost Toy NFT is not simply an NFT it is a key to unlocking over 15 utilities!",
+      "author": {
+        "name": "Lost Toys",
+        "website": "https://www.losttoys.io/",
+        "twitter": "https://www.twitter.com/losttoysnft",
+        "discord": "https://discord.gg/Tdd9TZRMxn",
+        "medium": "https://hello-143.gitbook.io/lost-toys-nft/",
+        "instagram": "https://www.instagram.com/losttoysnft/"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 2500,
+      "cost": "500",
+      "memberCost": "450",
+      "whitelistCost": "450",
+      "foundersOnly": false,
+      "start": 1664395200000,
       "end": null,
       "referral": false,
       "is1155": false,
