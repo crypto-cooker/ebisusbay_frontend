@@ -235,7 +235,7 @@
       "multiToken": false,
       "address": "0x570966a3503aE3fc2191f68dae3a6395eeFB897A",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -288,7 +288,7 @@
       "multiToken": false,
       "address": "",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -329,7 +329,7 @@
       "multiToken": false,
       "address": "0x6F25b5cCf0Ab49A1906E36C9572CF202e62aE066",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -349,7 +349,7 @@
       "multiToken": false,
       "address": "0xde0d3CCA05A9870D82180e771Eb2efc1de039cB9",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -369,7 +369,7 @@
       "multiToken": false,
       "address": "0x3b3BC5Ca5451D6dDDFCa7248AF04172632f4A990",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -389,7 +389,7 @@
       "multiToken": false,
       "address": "0x1D3587f44944a665F28bE1d9D9E322d43318DbB8",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -409,7 +409,7 @@
       "multiToken": false,
       "address": "0xd036b2223bcc2A96164B023022D6b78CD71A1a12",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -447,7 +447,7 @@
       "multiToken": false,
       "address": "0xdd5014784763ea9C0d758b8C84a7979ca29BADDF",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -467,7 +467,7 @@
       "multiToken": false,
       "address": "0x65d9377905Ceb76B96055B13A8d84DFdf59529aA",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -527,7 +527,7 @@
       "multiToken": false,
       "address": "0x99a1E178d0AB41DbdA42EED5faaDFAA073c4AA14",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -623,7 +623,7 @@
       "multiToken": false,
       "address": "0x424616fAb8A0f2DE40627bd798e03Fdd718CfAcd",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -663,7 +663,7 @@
       "multiToken": false,
       "address": "0xC997749351CC4C9770f885B0147F455F5907F11A",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -683,7 +683,7 @@
       "multiToken": false,
       "address": "0x77436B454e9EAAeA307c84243F521F313fb89BD9",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -702,7 +702,7 @@
       "multiToken": false,
       "address": "0x00F2218f253b1AF8315b5aA7Dce9D692eB0817Bb",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -721,7 +721,7 @@
       "multiToken": false,
       "address": "0xBde6bc3dd2265b23684435C4C87AA7DD85910739",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -822,7 +822,7 @@
       "multiToken": false,
       "address": "0xA53b72d9733aBEaCF97e0557f2767B189404a066",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": false,
@@ -842,7 +842,7 @@
       "multiToken": false,
       "address": "0xFB7C34B7D5782baF2fF2F65B40Ab0d4070674c19",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -862,7 +862,7 @@
       "multiToken": false,
       "address": "0xF184aD3a4f31376b5D9372040f12A80d3198a9D6",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -899,7 +899,7 @@
       "multiToken": false,
       "address": "0x794dc82F15fce5f5A90Ea2c4442FA03B76e8C8a8",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -937,7 +937,7 @@
       "multiToken": false,
       "address": "0x660c86fc9977278204245f2e54C11A0f1276a94b",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -956,7 +956,7 @@
       "multiToken": false,
       "address": "0xB458E21EB481Ef9652684e0656a96ca002554AAb",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -1014,7 +1014,7 @@
       "multiToken": false,
       "address": "0xb588883f69E94889A81608bf58EB0a578B93aa6f",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -1034,7 +1034,7 @@
       "multiToken": false,
       "address": "0x01A0962b78AF631AE0a56cDE60458Abdb81467Db",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -1075,7 +1075,7 @@
       "multiToken": false,
       "address": "0x2D803AC436d7F86d52070Bc5eB72F72358dA150b",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Cyberclone is a collection of 2000 uniquely generated NFTs stored on the Cronos blockchain. Each NFT Clone is inspired by the futuristic life of the year 2234, where the world is falling apart under the control of the Cyberclones, who are conquering earth!",
         "verified": true,
@@ -1095,7 +1095,7 @@
       "multiToken": false,
       "address": "0x9CD90D8Efa6D7302b5d1E720E31aA98C014A4c2b",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Bankroll Bear Society is an NFT project consisting of 5,000 Bears. Found on the Cronos chain. We are offering direct REAL-LIFE utilities. Our Bears are a VIP gateway into the Bankroll Universe and ecosystem.",
         "verified": true,
@@ -1114,9 +1114,9 @@
       "multiToken": false,
       "address": "0x7a7Ac50912B869a8Cd7f1614499b9684859Bb71b",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
-        "description": "Looneycorns is the first of 5 unique toys/NFTs from the Lost Toy collection. Each toy character represents a childhood favourite that has been lost over time and needs a new home. \n\nEach of the 2,200 Looneycorns NFT have a different rarity level and to ensure that each one is totally unique, we have also gone the “extra-mile” and created over 120 traits which would easily make up a collection of 5,000 NFTs!",
+        "description": "Looneycorns is the first of 5 unique toys/NFTs from the Lost Toy collection. Each toy character represents a childhood favourite that has been lost over time and needs a new home. \n\nEach of the 2,200 Looneycorns NFT have a different rarity level and to ensure that each one is totally unique, we have also gone the â€œextra-mileâ€ and created over 120 traits which would easily make up a collection of 5,000 NFTs!",
         "verified": true,
         "avatar": "/img/collections/looneycorns/avatar.webp",
         "card": "/img/collections/looneycorns/card.webp",
@@ -1133,7 +1133,7 @@
       "multiToken": false,
       "address": "0xE91CcEF501e07B1A0928085e104a67F67ef40201",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Welcome to Manor H, where Dr. Boo's ghosts were born. These ghosts come in 2111 appearances, divided into 3 categories: COMMON, RARE & EPIC. In addition to the staking and the numerous perks offered by these categories, each Boo NFT acquired will receive a Poison NFT, with a different color depending on the category (yellow, green or black). A Boo NFT + Poison NFT pair will allow access to the Manor in the metaverse, to retrieve multiple items daily to build a new NFT Boo FRK!",
         "verified": true,
@@ -1153,7 +1153,7 @@
       "multiToken": false,
       "address": "0xFF2d132Ec0B07210448D662EccB9BE68380e4DcF",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Northern Hippo Syndicate brings the artistic and creative stylings of Little Sloth from Open Sea to the Cronos chain. This crazy collection of 5000 unique PFP grants you access to so much more than amazing art. Hold a minimum of 3 to receive a plot of metaverse land.",
         "verified": true,
@@ -1172,7 +1172,7 @@
       "multiToken": false,
       "address": "0x3279F28dC59783d204D9cD66a965cF4AA120706F",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Flaming Phenix Club is a prestigious collection of 6,666 stunningly beautiful, fiery, and unique creatures apart of the Phenix Finance Ecosystem.",
         "verified": true,
@@ -1193,7 +1193,7 @@
       "multiToken": false,
       "address": "0x6270Da0F8a685Af46CBBFbdba18EbE76AdA942A3",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Icy Valkyries is a collection of 1000 NFTs who live in the darkest corner of Valhalla. Owning a Valkyrie allows you to fight in the monthly Icy Squid Game for huge jackpots, build a farm, start a family and establish your own clan.",
         "verified": true,
@@ -1213,7 +1213,7 @@
       "multiToken": false,
       "address": "0xd0186A9e068407738A5D4c710347F37763c20394",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Carkayous is a fictitious continent created by Jesse Smith (Ink Master | TV Celeb | Tattoo Artist) where his art lives. The goal of Expedition #9 is to further explore Killick Falls Lagoon where the Feral Fish lives. This is a 2,222 PFP collection with FREE Tattoos (flight and hotel included) as the primary utility.",
         "verified": true,
@@ -1251,7 +1251,7 @@
       "multiToken": false,
       "address": "0xe6f9Bbe97183F1849697cF6722e414Ff46398b74",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true,
@@ -1270,7 +1270,7 @@
       "multiToken": false,
       "address": "0x37f42eb690f03b845BA4a4eb19a977AaE10dB448",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": false
@@ -1282,7 +1282,7 @@
       "multiToken": false,
       "address": "0xd0997A498E6e4e90ff850202BAEEe88C64d265Fb",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Create a community of aristocrats, driven by the community.\n\nFirst 100% utility project, our goal is to greatly improve the experience of cronos users.",
         "verified": false,
@@ -1302,7 +1302,7 @@
       "multiToken": false,
       "address": "0xa20A2502777948ba4D2231c100011F27cD0B8444",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Alien Apocalypse is a collection of 3,000 uniquely generated invaders. The first of its kind, bridging the Cronos and Cardano Blockchains. The collection contains over 180 out of this world traits that are sure to blow your mind. Owning an Alien Apocalypse NFT will grant you access to the Horde Ecosystem.",
         "verified": true,
@@ -1321,7 +1321,7 @@
       "multiToken": false,
       "address": "0xA23A6AE440CfE3Ca3d1FEc8424153a8c50C1A342",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Hype Hogs, a collection of 3,333 different characters generated by the artist named \"ZAP7\". Each character has unique identity and rarity. Holders will be allowed to engage in a variety of community events such as random airdrops, customizing your hype hogs, the opportunity to win a random prize, or numerous giveaways. Half of the royalties will be used to sweep the floor or to help grow the community.",
         "verified": true,
@@ -1360,9 +1360,9 @@
       "multiToken": false,
       "address": "0xf28aD2F8557ae2b53B26211c5cF4a5EF99b0347F",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
-        "description": "The Fury Mouse Gang is an NFT project with a first generation of 2500 unique mice gang PFP collectibles. At night the fury takes hold of them and they ravage everything in their path. These creatures rule their world. The ambition is huge: to become the number 1 project on Cronos. Our community is linked around a story and a brotherhood between the members of the Gang. We want our members to live an unique experience, never seen on Cronos.. So if you can’t beat the gang, join us, before it is too late.",
+        "description": "The Fury Mouse Gang is an NFT project with a first generation of 2500 unique mice gang PFP collectibles. At night the fury takes hold of them and they ravage everything in their path. These creatures rule their world. The ambition is huge: to become the number 1 project on Cronos. Our community is linked around a story and a brotherhood between the members of the Gang. We want our members to live an unique experience, never seen on Cronos.. So if you canâ€™t beat the gang, join us, before it is too late.",
         "verified": true,
         "avatar": "/img/collections/fury-mouse-gang/avatar.png",
         "card": "/img/collections/fury-mouse-gang/card.png",
@@ -1379,7 +1379,7 @@
       "multiToken": false,
       "address": "0x782ab511719f5A1560eEaEbD19676aD47cD45384",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Battle Ready Boyz is a project combining Design and GameFi offering its members to use their NFTs in Play-to-Earn or Risk-To-Earn.\n\nThe BRB collection features 7777 unique NFTs representing Aurora's gorilla soldiers and statues of their emperors.\n\nDon't forget to fight each other, life is too short!",
         "verified": true,
@@ -1399,7 +1399,7 @@
       "multiToken": false,
       "address": "0x9aD80cc42Cb644AbB5fdb7cE37F44f79c902C821",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Apes embark on a journey through the Kingdom of Utopia to set foot on the world! Apes Utopia is a collection of 2,222 NFTs with over 200 features built on the Cronos blockchain. Apes Utopia NFTs provide access to various benefits in our ecosystem. Apes Utopia owners can participate in special events such as NFT sweepstakes, surprise sweepstakes, giveaways and much more. Remember, all Apes Utopia is special - but some are particularly special.",
         "verified": true,
@@ -1420,7 +1420,7 @@
       "multiToken": false,
       "address": "0x063E25D6B7B087c4f0FB875821e30f8cFdB6E33e",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "verified": false
       }
@@ -1431,9 +1431,9 @@
       "multiToken": false,
       "address": "0xFCd08C7BE680b36522BA87240B296377A80a01D0",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
-        "description": "Everybody's not friends is a handcrafted set of unique and rare 1/1 collectible characters and animations created by timebeam. This is a community driven passion project. The purpose of this project is to build a community which promotes friendship through a set of humorous 3D cartoon characters, animations and monthly live streamed brawls.",
+        "description": "Everybody's not friends is a handcrafted set of unique and rare 1/1 collectible characters and animations created by timebeam. This is a community driven passion project. The purpose of this project is to build a community which promotes friendship through aÂ set of humorous 3D cartoon characters,Â animations and monthly live streamed brawls.",
         "verified": true,
         "avatar": "/img/collections/everybodysnf/avatar.png",
         "card": "/img/collections/everybodysnf/card.png",
@@ -1450,7 +1450,7 @@
       "multiToken": false,
       "address": "0x53973c3239388a23f99fA5D6CF85106434d27076",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Noodles Club is a PFP collection of 8,888 NFTs stored on the Cronos Chain that comes with an ever-developing set of utilities. Only the real Noodles lovers will enjoy this spicy journey.",
         "verified": true,
@@ -1470,7 +1470,7 @@
       "multiToken": false,
       "address": "0xe823026da4f921E6830b435672B8c74BF3f426Ac",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "RYBORG: THE BUNKER is the first NFT trading/investment project on the Cronos Chain. Backed by TradingFXVPS, RYBORG aims to create an investment DAO that shares 80% profit sharing through diversification of portfolio through Stock, Forex, DeFi, NFT, Coins & Tokens. Only 1,000 unique RYBORG will be available on the 1st round.",
         "verified": true,
@@ -1490,9 +1490,9 @@
       "multiToken": false,
       "address": "0xbCaE686611A3B5006389955cA265A0Bd2272aeAA",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
-        "description": "The Crovilians are the citizens of The CronosVerse and have various traits representing the many societal roles required in both the metaverse and in the physical world. While each Crovilian’s unique traits represent real life roles in our society, all Crovilians are created equal in terms of access to The CronosVerse. Holding a Crovilian NFT will grant access to The CronosVerse and allow the owner to create a custom avatar to be used in our metaverse.",
+        "description": "The Crovilians are the citizens of The CronosVerse and have various traits representing the many societal roles required in both the metaverse and in the physical world. While each Crovilianâ€™s unique traits represent real life roles in our society, all Crovilians are created equal in terms of access to The CronosVerse. Holding a Crovilian NFT will grant access to The CronosVerse and allow the owner to create a custom avatar to be used in our metaverse.",
         "verified": true,
         "avatar": "/img/collections/crovilians/avatar.webp",
         "card": "/img/collections/crovilians/card.webp",
@@ -1509,7 +1509,7 @@
       "multiToken": false,
       "address": "0x4a2d5c811E8117C4C4ea574ce810D681D5Cd14F2",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Cyberclone & Alphaclone is a collection of 2000 uniquely generated NFTs stored on the Cronos blockchain. Each NFT Clone is inspired by the futuristic life of the year 2234, where the world is falling apart under the control of the WorldClones, who are conquering earth!",
         "verified": true,
@@ -1529,7 +1529,7 @@
       "multiToken": false,
       "address": "0x0EFccB1889EB8eE3b92a805A5d66D49fC9ae885E",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Pocket Demons project is a collection of 666 uniquely generated demon characters. Each Demon is generated from a pool of over 70 traits. These Demons also carry unique stats and attacks that are utilized in our P2E Game!",
         "verified": true,
@@ -1548,7 +1548,7 @@
       "multiToken": false,
       "address": "0x0BfBd9d15e5cD740917d1a0F63ec5137005673b9",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "CroHamster is a collection of 1000 unique and 3D animated NFTs on Cronos. Each CroHamster is based on a wide variety of different traits. Owning a CroHamster will give you access to our CroHamster arena, where you can fight for awesome rewards.",
         "verified": true,
@@ -1568,7 +1568,7 @@
       "multiToken": false,
       "address": "0x69C4984ABdc4164A73C26e44195ea572F8132285",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": true
@@ -1580,7 +1580,7 @@
       "multiToken": false,
       "address": "0x3f29cc0c07736eddb9c0678a51515d5de6a1d7e2",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "GymKongZ is a 10,000 pfp project made up of more than 255 unique traits. We will focus on improving all pillars of life, not only the physical but also the mental and financial, and any other goal members are choosing to pursue. \nWe are really wanting to expand the horizon when it comes to a group of people coming together sharing similar goals and interests.",
         "verified": false,
@@ -1599,9 +1599,9 @@
       "multiToken": false,
       "address": "0xA383245Cd497aFb047802e6A64B79A234f43F33D",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
-        "description": "CroKami is a universe comprising our Manga series, NFT collection, and lore-connected game. We have set out to create a special ecosystem in which players can battle each other in game using their NFT’s, or AI in a street-fighter style arena and earn $PACK -our real world cryptocurrency and in-game currency. Play and earn!",
+        "description": "CroKami is a universe comprising our Manga series, NFT collection, and lore-connected game. We have set out to create a special ecosystem in which players can battle each other in game using their NFTâ€™s, or AI in a street-fighter style arena and earn $PACK -our real world cryptocurrency and in-game currency. Play and earn!",
         "verified": true,
         "avatar": "/img/collections/crokami/avatar.webp",
         "card": "/img/collections/crokami/card.webp",
@@ -1610,6 +1610,93 @@
         "website": "https://www.crokami.com/",
         "twitter": "https://twitter.com/cro_kami",
         "discord": "https://discord.gg/sTeeDrWkSW"
+      }
+    },
+    {
+      "name": "Cronos Women",
+      "slug": "cronos-women",
+      "multiToken": false,
+      "address": "0x6D8E071C38a6386EA8BDBa0d4022C3c4645c1792",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300k CRO will be distributed to DAO members.",
+        "verified": true,
+        "avatar": "/img/collections/cronos-women/avatar.webp",
+        "banner": "/img/collections/cronos-women/banner.webp",
+        "card": "/img/collections/cronos-women/card.webp",
+        "maxSupply": 3333,
+        "website": "https://cronos-women.com/",
+        "twitter": "https://twitter.com/Cronos_Women",
+        "discord": "https://discord.gg/CronosWomen",
+        "medium": "https://medium.com/@veliikb"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "phenix",
+        "escrow": false
+      }
+    },
+    {
+      "name": "Carkayous - BunnyFish",
+      "slug": "carkayous-bunnyfish",
+      "multiToken": false,
+      "address": "0x8f0596af0dda307c3e58fa07230f506ace395784",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "BunnyFish from Carkayous attained by owning Feral Fishes that include Ledgelip or Riptide as the background. Owning enough BunnyFish that adds up to 75 points will get you an Expedition 8.2 BunnyFish.",
+        "verified": true,
+        "avatar": "/img/collections/carkayous-bunnyfish/avatar.webp",
+        "card": "/img/collections/carkayous-bunnyfish/card.webp",
+        "banner": "/img/collections/carkayous-bunnyfish/banner.webp",
+        "maxSupply": 0,
+        "website": "https://carkayous.com/",
+        "twitter": "https://twitter.com/carkayous",
+        "discord": "https://discord.gg/carkayous"
+      }
+    },
+    {
+      "name": "God Hates Cro Fam",
+      "slug": "god-hates-crofam",
+      "multiToken": false,
+      "address": "0xa2Dd607A92252daf79901d04c6eB871B95e31ddE",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "God hates all crofam!!! This is strictly a pfp project with no utility. Why no utility… because god hates you. Now go away.",
+        "verified": true,
+        "avatar": "/img/collections/god-hates-crofam/avatar.webp",
+        "card": "/img/collections/god-hates-crofam/card.webp",
+        "banner": "/img/collections/god-hates-crofam/banner.webp",
+        "maxSupply": 50,
+        "twitter": "https://twitter.com/ghcfnft"
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": false,
+        "escrow": false,
+        "creativeCommons": true
+      }
+    },
+    {
+      "name": "Cronos Name Service",
+      "slug": "cronos-name-service",
+      "multiToken": false,
+      "address": "0xe7cbE08d6B4684c2962E5e06c1D1019Ba86dff79",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CNS domains are unique decentralized domains for web3. CNS makes the blockchain ecosystem a bit simpler by allowing users to create a global username for their public addresses and decentralized dapps. Join our discord community to learn more about CNS.",
+        "verified": true,
+        "avatar": "/img/collections/cronos-name-service/avatar.webp",
+        "card": "/img/collections/cronos-name-service/card.webp",
+        "banner": "/img/collections/cronos-name-service/banner.webp",
+        "website": "https://www.cronos.domains/",
+        "twitter": "https://twitter.com/Cronos_domains",
+        "discord": "https://bit.ly/3sXzV9l",
+        "medium": "https://bit.ly/3wl1PN2",
+        "telegram": "https://bit.ly/3LaM1Sx"
       }
     }
   ],
@@ -1735,14 +1822,14 @@
       "imgBanner": "/img/collections/barbara/spacecrystalunicorns/banner.jpg",
       "title": "Space Crystal Unicorns",
       "subtitle": "They are magical! Their strength lies in feeling and finding those in need. All funds raised will be used to support hippotherapy classes for children with disabilities.",
-      "description": "Hello everyone, \n\nI have always had a passion for art which most already know, but what most don’t know is that I am very fond of equestrian sports. Growing up I self-taught to become an equestrian rider. I have also judged equestrian events and competitions and organized charity festivals in support of children with disabilities. \n\nRiding horses can be very healing for children and their psycho-emotional state and for those who become more involved, assists with muscle development. I used to coach children for free but have retired from this. However, I keep in close contact with the equestrian club in my hometown and occasionally still assist by running the group classes for children. I also financially support and support them with media coverage, assisting with fund raising to help kids receive this amazing and free therapy with horses.\n\nTo support the equestrian club and children, I am auctioning a limited-edition 1:1 ‘Rare Heart Hodler’ NFT. It also comes with a T-shirt and an autographed card from myself. Additionally, 10 holders of the 'Heart Hodler' from the open edition will be randomly selected to receive a physical autographed card from myself",
+      "description": "Hello everyone, \n\nI have always had a passion for art which most already know, but what most donâ€™t know is that I am very fond of equestrian sports. Growing up I self-taught to become an equestrian rider. I have also judged equestrian events and competitions and organized charity festivals in support of children with disabilities. \n\nRiding horses can be very healing for children and their psycho-emotional state and for those who become more involved, assists with muscle development. I used to coach children for free but have retired from this. However, I keep in close contact with the equestrian club in my hometown and occasionally still assist by running the group classes for children. I also financially support and support them with media coverage, assisting with fund raising to help kids receive this amazing and free therapy with horses.\n\nTo support the equestrian club and children, I am auctioning a limited-edition 1:1 â€˜Rare Heart Hodlerâ€™ NFT. It also comes with a T-shirt and an autographed card from myself. Additionally, 10 holders of the 'Heart Hodler' from the open edition will be randomly selected to receive a physical autographed card from myself",
       "author": {
         "name": "Barbara",
         "link": "http://www.ritmclub.ru/"
       },
       "address": "0xefEf991Be8F4911764f72598e4C4776D917A1F9D",
       "maxMintPerTx": 10,
-      "totalSupply": "∞",
+      "totalSupply": "âˆž",
       "cost": "1",
       "memberCost": "1",
       "foundersOnly": false,
@@ -1796,7 +1883,7 @@
       "imgBanner": "/img/collections/crognomes/banner.png",
       "title": "Crognomes",
       "subtitle": "2000 secretive hard working Crognomes living on the cronos blockchain who might share the location of the secret mines if taken care of well enough.",
-      "description": "\"Have you ever wondered where all those shiny crypto cards actually come from?\n\nThose glistening ruby, shiny indigo & luminescent jade crystals that are needed for those ooooh so sweet cashbacks are harvested deep inside the hidden cryptomines. The location of these mines are a well-kept secret by the Crognomes... \n\nWhile they’re no tattletales, the Crognomes might share the secret location of these Cryptomines with you, if you provide them safe refuge in your cryptowallet. \n\nCrognomes have been known to sneak in their wives, the Crognomides, when they’re feeling lonely. So you can expect these Crognomides to show up in your wallet as well!* If you leave them alone for a long enough time, you will find your family of 2 has grown ever larger. \n\nStart your own Crognome-family and adopt your Crognome today!\n\n*In order to make sure that the Crognomides find their husband in your cryptowallet in time, you will need to have minted your Crognomes NFTs BEFORE 9PM UTC on the 26th of January! All Crognome NFTs minted after that will have the option to safely usher their Crognomides into their cryptowallet by minting a safe route. \nThis route can be minted for 50 CRO\"",
+      "description": "\"Have you ever wondered where all those shiny crypto cards actually come from?\n\nThose glistening ruby, shiny indigo & luminescent jade crystals that are needed for those ooooh so sweet cashbacks are harvested deep inside the hidden cryptomines. The location of these mines are a well-kept secret by the Crognomes... \n\nWhile theyâ€™re no tattletales, the Crognomes might share the secret location of these Cryptomines with you, if you provide them safe refuge in your cryptowallet. \n\nCrognomes have been known to sneak in their wives, the Crognomides, when theyâ€™re feeling lonely. So you can expect these Crognomides to show up in your wallet as well!* If you leave them alone for a long enough time, you will find your family of 2 has grown ever larger. \n\nStart your own Crognome-family and adopt your Crognome today!\n\n*In order to make sure that the Crognomides find their husband in your cryptowallet in time, you will need to have minted your Crognomes NFTs BEFORE 9PM UTC on the 26th of January! All Crognome NFTs minted after that will have the option to safely usher their Crognomides into their cryptowallet by minting a safe route. \nThis route can be minted for 50 CRO\"",
       "author": { "name": "Crognomes", "link": "https://www.crognomes.com/" },
       "address": "0x570966a3503aE3fc2191f68dae3a6395eeFB897A",
       "maxMintPerTx": 10,
@@ -1824,7 +1911,7 @@
       "imgBanner": "/img/collections/anuah/banner.png",
       "title": "Aunah",
       "subtitle": "SUBTITLE NEEDED",
-      "description": "There’s no slowing down anytime soon.\n\nBetween his skillfully bold contemplative rendering of abstraction and realism, his paintings are visceral yet sensual.\n\nEach concept is a treat, your mind skips between pops of color to moody-sophistication. Chance creates and energy with hints of density giving off a slight sculptural feel for the eye to play with.\n\nHis subjects are elevated to a new age and vibe that will constantly stimulate your mind with ever-changing narratives.\n\nChance Watt",
+      "description": "Thereâ€™s no slowing down anytime soon.\n\nBetween his skillfully bold contemplative rendering of abstraction and realism, his paintings are visceral yet sensual.\n\nEach concept is a treat, your mind skips between pops of color to moody-sophistication. Chance creates and energy with hints of density giving off a slight sculptural feel for the eye to play with.\n\nHis subjects are elevated to a new age and vibe that will constantly stimulate your mind with ever-changing narratives.\n\nChance Watt",
       "author": { "name": "Chance Watt", "link": "https://www.instagram.com/chance.watt/" },
       "address": "0xFdc26dde39BE26e01f25e26999AF26C672541174",
       "maxMintPerTx": 1,
@@ -1865,7 +1952,7 @@
       "memberCost": "295",
       "erc20Cost": "43800000",
       "erc20MemberCost": "37000000",
-      "erc20Unit": "Loot",
+      "erc20Token": "Loot",
       "foundersOnly": false,
       "abi": [
         "function mint(uint256 _mintAmount) public payable",
@@ -1898,7 +1985,7 @@
       "imgBanner": "/img/collections/mariecyborg/banner.webp",
       "title": "Marie's Cyborgs",
       "subtitle": "Marie's Cyborgs connects fashion and the Metaverse. We invite you to enter Marie's universe by sharing her passions: Fashion, movies and her cyborgs!\nThe whole team is looking forward to meeting you!",
-      "description": "Marie is a French high-potential model.\nConvinced that art takes multiple forms, she now wishes to introduce her universe through her collection of NFTs and becoming one of the first model in Metaverse.\nThe collection will come in 3 classes based on Marie’s passions: fashion, movies (rare) and her cyborgs (legendary).",
+      "description": "Marie is a French high-potential model.\nConvinced that art takes multiple forms, she now wishes to introduce her universe through her collection of NFTs and becoming one of the first model in Metaverse.\nThe collection will come in 3 classes based on Marieâ€™s passions: fashion, movies (rare) and her cyborgs (legendary).",
       "author": { "name": "Marie Cyborg", "link": "https://www.mariescyborgs.io/" },
       "address": "0xb454d48F7898E1A6C38601FF0750D8B982BFA497",
       "maxMintPerTx": 25,
@@ -1954,8 +2041,8 @@
       "imgAvatar": "/img/collections/crazyscientists/avatar.png",
       "imgBanner": "/img/collections/crazyscientists/banner.png",
       "title": "The LAB: Crazy Scientists",
-      "subtitle": "5555 Crazy Scientists has for a long time been in the underground laboratory, they are now ready to move to the cronos blockchain.\n\nCrazy Scientists is a NFT collection packed with utility. The Crazy Scientists will be the central part of the Laboratory’s ecosystem. They will have utility in our future launchpad, farms and play to earn game. We will also provide community utility such as airdrops, merch and raffles.",
-      "description": "5555 Crazy Scientists has for a long time been in the underground laboratory, they are now ready to move to the cronos blockchain.\n\nCrazy Scientists is a NFT collection packed with utility. The Crazy Scientists will be the central part of the Laboratory’s ecosystem. They will have utility in our future launchpad, farms and play to earn game. We will also provide community utility such as airdrops, merch and raffles.",
+      "subtitle": "5555 Crazy Scientists has for a long time been in the underground laboratory, they are now ready to move to the cronos blockchain.\n\nCrazy Scientists is a NFT collection packed with utility. The Crazy Scientists will be the central part of the Laboratoryâ€™s ecosystem. They will have utility in our future launchpad, farms and play to earn game. We will also provide community utility such as airdrops, merch and raffles.",
+      "description": "5555 Crazy Scientists has for a long time been in the underground laboratory, they are now ready to move to the cronos blockchain.\n\nCrazy Scientists is a NFT collection packed with utility. The Crazy Scientists will be the central part of the Laboratoryâ€™s ecosystem. They will have utility in our future launchpad, farms and play to earn game. We will also provide community utility such as airdrops, merch and raffles.",
       "author": { "name": "The LAB", "link": "https://www.thelaboratory.io/" },
       "address": "0x6F25b5cCf0Ab49A1906E36C9572CF202e62aE066",
       "maxMintPerTx": 5,
@@ -2033,7 +2120,7 @@
       "imgBanner": "/img/drops/hypeddogs/banner.webp",
       "title": "The HD: Hyped Dogs",
       "subtitle": "Hyped Dogs GEN1 is a collection of 3000 uniquely generated NFTs stored on the Cronos Chain. Each Hyped Dog NFT is generated with over 120 + attributes with different rarities.",
-      "description": "Hyped Dogs is a collection of 3000 uniquely generated NFTs stored on the Cronos Chain. Each Hyped Dog NFT is generated with over 120 + attributes with different rarities. Being a Hyped Dog member goes beyond owning an awesome dog art, it’s your pass to a exclusive brotherhood with many benefits. Hyped Dogs is here with the goal to merge physical world and crypto world. We are here and we are HYPED! Come join us!",
+      "description": "Hyped Dogs is a collection of 3000 uniquely generated NFTs stored on the Cronos Chain. Each Hyped Dog NFT is generated with over 120 + attributes with different rarities. Being a Hyped Dog member goes beyond owning an awesome dog art, itâ€™s your pass to a exclusive brotherhood with many benefits. Hyped Dogs is here with the goal to merge physical world and crypto world. We are here and we are HYPED! Come join us!",
       "author": { "name": "The LAB", "link": "https://www.thelaboratory.io/" },
       "address": "0x1D3587f44944a665F28bE1d9D9E322d43318DbB8",
       "maxMintPerTx": 7,
@@ -2084,7 +2171,7 @@
       "imgBanner": "/img/drops/alienft/banner.png",
       "title": "Cronos ALIENFT",
       "subtitle": "A limited collection of 2500 NFTs with a variety of hand-drawn attributes with a unique design sure to please all life forms. Offering forms of utility like royalty sharing that will reward the user upon staking their NFTS on Crodex",
-      "description": "From far off unquantifiable depths of our universe these brilliant extraterrestrial life forms live in harmony… until recently they have caught solar wind of what the humans of earth have been doing with these “NFTs” so they want in… will you take the small step for man and create the big change for mankind! Our unique utility of NFT staking will allow users to earn a from of passive rewards in this case CRO from staking their NFTs, the rewards are gathered from 100% of all secondary market sales at an 8% royalty fee.",
+      "description": "From far off unquantifiable depths of our universe these brilliant extraterrestrial life forms live in harmonyâ€¦ until recently they have caught solar wind of what the humans of earth have been doing with these â€œNFTsâ€ so they want inâ€¦ will you take the small step for man and create the big change for mankind! Our unique utility of NFT staking will allow users to earn a from of passive rewards in this case CRO from staking their NFTs, the rewards are gathered from 100% of all secondary market sales at an 8% royalty fee.",
       "author": { "name": "ALIENFT", "link": "https://www.aliennft.ca/" },
       "address": "0x10F7D2BbaEEF04e7b61335ba4b680412d0B167D6",
       "maxMintPerTx": 5,
@@ -2220,7 +2307,7 @@
       "imgBanner": "/img/drops/goldpartner/banner.png",
       "title": "Gold Partner",
       "subtitle": "Gold Partner Collection - The Hall of Fame is a collection of 300 Hand-drawn, 3D, and animated NFT's with very unique features and utilities. Every NFT is hand-drawn, comes with a unique edition# engraved, a first of its kind on Cronos Chain. Holders of the NFT's will enjoy 30% share of the profits earned from upcoming collections. These NFT's offer a profit-sharing partnership opportunity to the buyers and holders to earn passive income from all upcoming drops.",
-      "description": "Gold Partner Collection - The Hall of Fame is designed after deep research by our team. This collection honors founders and inventors of different sports forgotten by the world. This collection is structured in a way that makes you a direct profit-sharing partner in the project.\n Long term goal of this project is to create a decentralized marketplace for trading real-world sports collectibles. \nUnique Utilities: \n\t •30% of profits from upcoming drops are shared directly among the holders of this collection.  \n\t •Chance to be a Platinum partner and enjoy a bigger chunk of profits.   \n\t •Community-driven Project with a long-term vision of becoming a marketplace for real-world sports collectibles.     \nCome explore the joy of owning an NFT project and become a founding member!",
+      "description": "Gold Partner Collection - The Hall of Fame is designed after deep research by our team. This collection honors founders and inventors of different sports forgotten by the world. This collection is structured in a way that makes you a direct profit-sharing partner in the project.\n Long term goal of this project is to create a decentralized marketplace for trading real-world sports collectibles. \nUnique Utilities: \n\t â€¢30% of profits from upcoming drops are shared directly among the holders of this collection.  \n\t â€¢Chance to be a Platinum partner and enjoy a bigger chunk of profits.   \n\t â€¢Community-driven Project with a long-term vision of becoming a marketplace for real-world sports collectibles.     \nCome explore the joy of owning an NFT project and become a founding member!",
       "author": { "name": "Sports NFT", "link": "http://www.thesportsnft.io/" },
       "address": "0x4668329e1cb30841282c0b209B20e6b069f8C523",
       "maxMintPerTx": 5,
@@ -2247,7 +2334,7 @@
       "imgBanner": "/img/drops/fighters/banner.png",
       "title": "Cronos Fighters",
       "subtitle": "We fall. We break. We fail. BUT THEN. We rise. We heal. We Overcome. We all have a fighter in us - Mint yours today. \nFighters are FINALLY Here!",
-      "description": "Cronos Fighters is a generative collection of 1000 Female and Male Champions. A fighter's purpose is to inspire and motivate, no matter the situation. This is the first piece of the Fighters game and metaverse. Each V1 fighter will give it’s owner many perks, such as, token airdrops, game upgrades, voting rights and more! Our goal is to add value to our holders while creating the greatest world the Cronos chain has ever seen! Fighters Are Here!",
+      "description": "Cronos Fighters is a generative collection of 1000 Female and Male Champions. A fighter's purpose is to inspire and motivate, no matter the situation. This is the first piece of the Fighters game and metaverse. Each V1 fighter will give itâ€™s owner many perks, such as, token airdrops, game upgrades, voting rights and more! Our goal is to add value to our holders while creating the greatest world the Cronos chain has ever seen! Fighters Are Here!",
       "author": { "name": "Cronos Fighters", "link": "http://fightersnft.io/" },
       "address": "0x17e95a737533d93cf4B7180f8f48070914b84706",
       "maxMintPerTx": 10,
@@ -2660,8 +2747,8 @@
       "imgAvatar": "/img/collections/smash-stunts/avatar.png",
       "imgBanner": "/img/collections/smash-stunts/banner.webp",
       "title": "Smash Stunts",
-      "subtitle": "Ashley Lammela stunt rider a.k.a. \"SmashStunts\" teamed up with famous artist and former Chuck Jones Background Painter Patrick Guyton to create the SmashStunts comic series. What is she wearing, where is she popping this sick wheelie, and how close to the original can you get? The rarest traits are the original colors of the painting. A mepyDoo® production.",
-      "description": "This NFT is derived from an original painting being released in Las Vegas on May 1st 2022 at the DeRubeis Fine Art of Metal Gallery in the Planet Hollywood Resort, Miracle Mile Shops at 5:30pm Pacific time. Check @smashstunts to watch. What is she wearing, where is she popping this sick wheelie, and how close to the original can you get? The rarest traits are the original colors of the painting. A mepyDoo® production (@mepyDoo)",
+      "subtitle": "Ashley Lammela stunt rider a.k.a. \"SmashStunts\" teamed up with famous artist and former Chuck Jones Background Painter Patrick Guyton to create the SmashStunts comic series. What is she wearing, where is she popping this sick wheelie, and how close to the original can you get? The rarest traits are the original colors of the painting. A mepyDooÂ® production.",
+      "description": "This NFT is derived from an original painting being released in Las Vegas on May 1st 2022 at the DeRubeis Fine Art of Metal Gallery in the Planet Hollywood Resort, Miracle Mile Shops at 5:30pm Pacific time. Check @smashstunts to watch. What is she wearing, where is she popping this sick wheelie, and how close to the original can you get? The rarest traits are the original colors of the painting. A mepyDooÂ® production (@mepyDoo)",
       "author": { "name": "Smash Stunts", "link": "http://xtremejunkies.io/" },
       "address": "0xB458E21EB481Ef9652684e0656a96ca002554AAb",
       "maxMintPerTx": 10,
@@ -2685,7 +2772,7 @@
       "imgAvatar": "/img/collections/psycho-golden-lady/avatar.webp",
       "imgBanner": "/img/collections/psycho-golden-lady/banner.webp",
       "title": "Psycho Golden Lady",
-      "subtitle": "Famed Artist Ugonzo, the creator of PsychoKitty, teamed up with world famous Artist Patrick Guyton, the infamous Gold and Silver Leaf painter and creator of Gilded Modernism® went on a journey to New York to view a very famous Painting. The two artists wanted to collaborate and create something special by an artist that touched them both personally and created the desire in both to pick up a Paint Brush.",
+      "subtitle": "Famed Artist Ugonzo, the creator of PsychoKitty, teamed up with world famous Artist Patrick Guyton, the infamous Gold and Silver Leaf painter and creator of Gilded ModernismÂ® went on a journey to New York to view a very famous Painting. The two artists wanted to collaborate and create something special by an artist that touched them both personally and created the desire in both to pick up a Paint Brush.",
       "description": "Ugonzo (@Ugonzo_art) and Patrick Guyon (@patrickguyton_) toiled for weeks to create this stunning masterpiece and tribute to their favorite Artist, and bring this concept painting to the 21st Century, in both classical and the new modern NFT style. How close to the original can you get in rarity?\n\nAll will be revealed on May 1st 2022 at 6pm Live in Las Vegas on Instagram from the DeRubeis Fine Art of Metal Gallery in the Planet Hollywood resort, Miracle Mile shops.",
       "author": { "name": "Psycho Golden Lady", "link": "http://www.artgroupink.com/" },
       "address": "0x2b918ed7929ff2787a8eebcf2d78378672530882",
@@ -2737,7 +2824,7 @@
       "imgBanner": "/img/collections/genesis-crates/banner.webp",
       "title": "Genesis Crates",
       "subtitle": "The Genesis Crates is a collection of 5000 NFTs being the first NFTs in the Crowboys Online Ecosystem. These crates come in three rarities (Good, Bad and Ugly), but every crate has its own attributes! Thanks to them you can generate $West token, find wealthy treasure inside, get weapons airdropped, and much more! They also give the holder a variety of other benefits detailed in our whitepaper like royalties paid through staking, discounts in the metaverse saloon, and an automatic whitelist for the next NFT - Genesis Crowboy to name a few.",
-      "description": "The Genesis Crates Collection and the first NFT for Crowboys Online. These crates come in three rarities (Good, Bad and Ugly), and allow the holder to generate passive income in the form of our $WEST token while staked. $WEST will be used in our First-Person Shooter video game and our metaverse ecosystem. With $WEST you can purchase and trade: weapons, skins, horses, wearables, properties, play mini-games or deposit it before playing the competitive mode(Compete 2 Earn).\n\n✮Rarity System % daily passive income:Good 93%= 1x $WEST daily Bad 6%= 1.5x $WEST daily + bad banner airdrop Ugly 1%= 3.5x $WEST daily + ugly banner airdrop \n\n✮Crates will also have 2 weapons inside already, so whenever they come live, holders will get airdrops! They come in different conditions though!\n\n✮Crates will be able to open to get a random treasure (with wealth multiplier from 0 to 10).\n\nMore Benefits:\n\n✮80% of royalties go to holders through Staking.\n✮5% discount in the metaverse saloon!\n✮Automatic whitelist for the next NFT - Genesis Crowboy\n✮First of two genesis NFTs you need to hold to become a Genesis Member, which will be rewarded with special Events, Airdrops & possibility of Alpha/Beta testing of the game and metaverse.\n✮And much more!",
+      "description": "The Genesis Crates Collection and the first NFT for Crowboys Online. These crates come in three rarities (Good, Bad and Ugly), and allow the holder to generate passive income in the form of our $WEST token while staked. $WEST will be used in our First-Person Shooter video game and our metaverse ecosystem. With $WEST you can purchase and trade: weapons, skins, horses, wearables, properties, play mini-games or deposit it before playing the competitive mode(Compete 2 Earn).\n\nâœ®Rarity System % daily passive income:Good 93%= 1x $WEST daily Bad 6%= 1.5x $WEST daily + bad banner airdrop Ugly 1%= 3.5x $WEST daily + ugly banner airdrop \n\nâœ®Crates will also have 2 weapons inside already, so whenever they come live, holders will get airdrops! They come in different conditions though!\n\nâœ®Crates will be able to open to get a random treasure (with wealth multiplier from 0 to 10).\n\nMore Benefits:\n\nâœ®80% of royalties go to holders through Staking.\nâœ®5% discount in the metaverse saloon!\nâœ®Automatic whitelist for the next NFT - Genesis Crowboy\nâœ®First of two genesis NFTs you need to hold to become a Genesis Member, which will be rewarded with special Events, Airdrops & possibility of Alpha/Beta testing of the game and metaverse.\nâœ®And much more!",
       "author": { "name": "Crowboys", "link": "https://crowboys.online/" },
       "address": "0xb65477F31262399777A511Cf0d7e668C775095B1",
       "maxMintPerTx": 8,
@@ -2817,8 +2904,8 @@
       "imgAvatar": "/img/collections/ghetto-doves/avatar.webp",
       "imgBanner": "/img/collections/ghetto-doves/banner.webp",
       "title": "Ghetto Doves",
-      "subtitle": "The Ghetto-Doves™ are a 7 character friend group of city pigeon kids. The “self titled” drop of 3500 NFT’s on the Cronos chain is a fun and edgy collection. Enter the imaginative and dynamic throwback urban landscape of your favorite characters and be a part of their adventures.",
-      "description": "The news around the block:Do you remember the days of collecting and trading cards and vinyl seemed like the coolest thing to do? Today, those coveted collectibles have been widely replaced by NFTs.\n\nWe offer the ability to utilize an IRL value trading and gamification aspect to build a collection and “level up” from the airdrop “EB-NFT™” Card, to a Deli.\n\nEach holder’s goal will be to collect one of each of the characters a total of 7 by the end of the minting process. Missing characters in your collection may be acquired only through secondary to fulfill your collection.\n\nAdditional attributes and 7 character gamification will be revealed prior to Mint day .. Stay Tuned!!! \uD83D\uDC8E\uD83D\uDC8E",
+      "subtitle": "The Ghetto-Dovesâ„¢ are a 7 character friend group of city pigeon kids. The â€œself titledâ€ drop of 3500 NFTâ€™s on the Cronos chain is a fun and edgy collection. Enter the imaginative and dynamic throwback urban landscape of your favorite characters and be a part of their adventures.",
+      "description": "The news around the block:Do you remember the days of collecting and trading cards and vinyl seemed like the coolest thing to do? Today, those coveted collectibles have been widely replaced by NFTs.\n\nWe offer the ability to utilize an IRL value trading and gamification aspect to build a collection and â€œlevel upâ€ from the airdrop â€œEB-NFTâ„¢â€ Card, to a Deli.\n\nEach holderâ€™s goal will be to collect one of each of the characters a total of 7 by the end of the minting process. Missing characters in your collection may be acquired only through secondary to fulfill your collection.\n\nAdditional attributes and 7 character gamification will be revealed prior to Mint day .. Stay Tuned!!! \uD83D\uDC8E\uD83D\uDC8E",
       "author": { "name": "Ghetto Doves NFT", "link": "https://ghettodoves.com/" },
       "address": "0x01A0962b78AF631AE0a56cDE60458Abdb81467Db",
       "maxMintPerTx": 20,
@@ -2838,7 +2925,7 @@
       "is1155": false,
       "published": true,
       "complete": false,
-      "disclaimer": "**Assets and characters from other Ghetto-Doves™ collections do not apply in the 7 character collection."
+      "disclaimer": "**Assets and characters from other Ghetto-Dovesâ„¢ collections do not apply in the 7 character collection."
     },
     {
       "id": 73,
@@ -2849,7 +2936,7 @@
       "imgBanner": "/img/drops/bankroll-bear-society/banner.png",
       "title": "Bankroll Bear Society",
       "subtitle": "The Bankroll Bear Society is an NFT project consisting of 5,000 Bears. Found on the Cronos chain. We are offering direct REAL-LIFE utilities. Our Bears are a VIP gateway into the Bankroll Universe and ecosystem.\n\nImmerse yourself into the Bankroll Bear Society today!!",
-      "description": "The Bankroll Bear Society - A 5,000 NFTs collection of bears with more than 75 attributes. The Bears are putting forward a project with real life utilities and benefits. The Forest ecosystem contains all the businesses the Founders have established partnerships with such as ETR Jewelry and BBS Clothing. All holders get discounts on all items in all forest establishments! We’ll have staking, our own token, airdrop giveaways; you name it, we got it! \n\nOur token will be usable in businesses within the forest ecosystem! Our giveaways will consist of both WEB3 and real-world items ranging from sterling silver rings to gold chains! We will be planting 5,000 trees to combat deforestation around the world. \n\nThis is only the beginning of our journey, come along for a ride and… Welcome to The Forest!",
+      "description": "The Bankroll Bear Society - A 5,000 NFTs collection of bears with more than 75 attributes. The Bears are putting forward a project with real life utilities and benefits. The Forest ecosystem contains all the businesses the Founders have established partnerships with such as ETR Jewelry and BBS Clothing. All holders get discounts on all items in all forest establishments! Weâ€™ll have staking, our own token, airdrop giveaways; you name it, we got it! \n\nOur token will be usable in businesses within the forest ecosystem! Our giveaways will consist of both WEB3 and real-world items ranging from sterling silver rings to gold chains! We will be planting 5,000 trees to combat deforestation around the world. \n\nThis is only the beginning of our journey, come along for a ride andâ€¦ Welcome to The Forest!",
       "author": {
         "name": "Bankroll Bear Society",
         "website": "http://www.bankrollbearsociety.com/",
@@ -2912,8 +2999,8 @@
       "imgAvatar": "/img/collections/looneycorns/avatar.webp",
       "imgBanner": "/img/collections/looneycorns/banner.webp",
       "title": "Looneycorns",
-      "subtitle": "Looneycorns, is the first of 5 unique toys/NFTs from the Lost Toy collection. Each toy character represents a childhood favourite that has been lost over time and needs a new home. \n\nEach of the 2,200 Looneycorns NFT have a different rarity level and to ensure that each one is totally unique, we have also gone the “extra-mile” and created over 120 traits which would easily make up a collection of 5,000 NFTs!",
-      "description": "Looneycorns, is the first of 5 unique toys from the Lost Toy collection. Each toy character represents a childhood favourite that has been lost over time and needs a new home.\n\nThose who look after their toys/NFTs will have the opportunity to receive amazing weekly prizes from our ToyBox and earn tokens. This could be to win a night's stay at the Hilton for two, limited edition trainers or even sought after NFTs! You, our community will decide!\n\nIn addition, holders of our NFT’s will have exclusive access to our platform SnipeHub designed to help manage your ever-growing NFT portfolio with ease and “snipe” better deals! \n\nFinally, at Lost Toys we believe that every child deserves a toy to build memories with and for that reason, we plan to also support those in need with toy donations. \n\nUTILITIES\n\nPLATFORM ACCESS- Exclusive free access to our platform SnipeHub and future applications\n\nTOYBOX REWARDS- Holders will be entered into a weekly raffle, to win IRL rewards\n\nCHARITY DONATIONS- We will be donating toys to the Toy Project charity on a monthly basis \n\nAIRDROPS- Collectors of our NFTs will receive multiple airdrops\n\nDAO- Holders of our airdropped NFT will be able to vote the next toys and future SnipeHub platform functionality\n\nNON MONETIZED TOKENIZATION- Holders will be able to stake our NFTs to earn tokens to make raffle purchases \n\nREAL LIFE TOYS- We will be sending to NFT holders of all 5 of toy characters (these will be minted throughout the phases) a real life collectable toy\n\nAUTO WHITELIST TO FUTURE MINTS- Holders of our toys will get discounts on future mints\n\nTHE ARTIST\n\nThe design of our NFT collection is extremely important to us, as it is often the first thing people see when exploring collections and we wanted people to own something truly special.\n\nFor this reason, we have spared no expense and commissioned the services of renowned 3D artist Felipe Rui, whose fame comes from his famous collection of “dark Disney” art designs which have been presented in in many galleries.",
+      "subtitle": "Looneycorns, is the first of 5 unique toys/NFTs from the Lost Toy collection. Each toy character represents a childhood favourite that has been lost over time and needs a new home. \n\nEach of the 2,200 Looneycorns NFT have a different rarity level and to ensure that each one is totally unique, we have also gone the â€œextra-mileâ€ and created over 120 traits which would easily make up a collection of 5,000 NFTs!",
+      "description": "Looneycorns, is the first of 5 unique toys from the Lost Toy collection. Each toy character represents a childhood favourite that has been lost over time and needs a new home.\n\nThose who look after their toys/NFTs will have the opportunity to receive amazing weekly prizes from our ToyBox and earn tokens. This could be to win a night's stay at the Hilton for two, limited edition trainers or even sought after NFTs! You, our community will decide!\n\nIn addition, holders of our NFTâ€™s will have exclusive access to our platform SnipeHub designed to help manage your ever-growing NFT portfolio with ease and â€œsnipeâ€ better deals! \n\nFinally, at Lost Toys we believe that every child deserves a toy to build memories with and for that reason, we plan to also support those in need with toy donations. \n\nUTILITIES\n\nPLATFORM ACCESS- Exclusive free access to our platform SnipeHub and future applications\n\nTOYBOX REWARDS- Holders will be entered into a weekly raffle, to win IRL rewards\n\nCHARITY DONATIONS- We will be donating toys to the Toy Project charity on a monthly basis \n\nAIRDROPS- Collectors of our NFTs will receive multiple airdrops\n\nDAO- Holders of our airdropped NFT will be able to vote the next toys and future SnipeHub platform functionality\n\nNON MONETIZED TOKENIZATION- Holders will be able to stake our NFTs to earn tokens to make raffle purchases \n\nREAL LIFE TOYS- We will be sending to NFT holders of all 5 of toy characters (these will be minted throughout the phases) a real life collectable toy\n\nAUTO WHITELIST TO FUTURE MINTS- Holders of our toys will get discounts on future mints\n\nTHE ARTIST\n\nThe design of our NFT collection is extremely important to us, as it is often the first thing people see when exploring collections and we wanted people to own something truly special.\n\nFor this reason, we have spared no expense and commissioned the services of renowned 3D artist Felipe Rui, whose fame comes from his famous collection of â€œdark Disneyâ€ art designs which have been presented in in many galleries.",
       "author": {
         "name": "Looneycorns",
         "website": "https://www.losttoys.io/",
@@ -3105,7 +3192,7 @@
       "imgBanner": "/img/collections/cyber-squad/banner.png",
       "title": "CyberSquad: Omniverse",
       "subtitle": "The CyberSquad is one of the first PFP projects in the NFT history, its even older than BAYC. The CyberSquad is a series that contains unique characters with unique identities and background stories. CyberSquad: Omniverse drop contains 10 main characters and a total of 10,000 unique 1/1 NFTs.",
-      "description": "The Cyber Squad are a group of extraordinary individuals who have been assembled by Genesis to rob intergalactic banks. Genesis was the first robot created by the S.O.I. He was a prototype. It was the most advanced robot of its era, but due to a software problem, the mainframe of Genesis became aware of everything. It was the first time an A.I. became free; he created the CyberSquad and began finding villains. Colloquially known as “The Squad”, these super villainous bandits are one of the most dangerous groups the galaxy has ever seen. In a universe where 90% of the life forms are built and operated by a company called the Stargen Omega Industries (S.O.I.), “The Squad” stand apart as the last hope for freedom for the galaxy. Omniverse mission is vital to survive of CyberSquad. IGSSD agents went back in time to stop CyberSquad from ever assembling, and they need your help! \n\nMint Your CyberSquad and Join the Squad Now!\nCheck out the Roadmap: https://www.cybersquad.app/roadmap",
+      "description": "The Cyber Squad are a group of extraordinary individuals who have been assembled by Genesis to rob intergalactic banks. Genesis was the first robot created by the S.O.I. He was a prototype. It was the most advanced robot of its era, but due to a software problem, the mainframe of Genesis became aware of everything. It was the first time an A.I. became free; he created the CyberSquad and began finding villains. Colloquially known as â€œThe Squadâ€, these super villainous bandits are one of the most dangerous groups the galaxy has ever seen. In a universe where 90% of the life forms are built and operated by a company called the Stargen Omega Industries (S.O.I.), â€œThe Squadâ€ stand apart as the last hope for freedom for the galaxy. Omniverse mission is vital to survive of CyberSquad. IGSSD agents went back in time to stop CyberSquad from ever assembling, and they need your help! \n\nMint Your CyberSquad and Join the Squad Now!\nCheck out the Roadmap: https://www.cybersquad.app/roadmap",
       "author": {
         "name": "CyberSquad",
         "website": "https://www.cybersquad.app/",
@@ -3136,7 +3223,7 @@
       "imgBanner": "/img/collections/aristodog/banner.png",
       "title": "AristoDog",
       "subtitle": "Create a community of aristocrats, driven by the community.\n\nFirst 100% utility project, our goal is to greatly improve the experience of cronos users.",
-      "description": "Create a community of aristocrats, driven by the community.\n\nFirst 100% utility project, our goal is to greatly improve the experience of cronos users.\n\nRoadmap:\n\nHosting raffle: Sell your NFT by hosting your own raffle, only a few projects will be partnered in the beginning so we can use their NFTs collections.\n\nDAO: Decision, investment... The project is in your hands.\n\nSwap NFTs: Securely exchange NFTs from peer to peer.\n\nThe Trading Post will be a way to list NFTs to trade with other users.\n\nThe Dog House: Royalties share, dog house with evolving system and potential items gains to improve your house.\n\nAristoLand: A corner of paradise for our aristocrats\n\nRoadmap 2.0: Yes, this is going to be something big… Stay tuned.",
+      "description": "Create a community of aristocrats, driven by the community.\n\nFirst 100% utility project, our goal is to greatly improve the experience of cronos users.\n\nRoadmap:\n\nHosting raffle: Sell your NFT by hosting your own raffle, only a few projects will be partnered in the beginning so we can use their NFTs collections.\n\nDAO: Decision, investment... The project is in your hands.\n\nSwap NFTs: Securely exchange NFTs from peer to peer.\n\nThe Trading Post will be a way to list NFTs to trade with other users.\n\nThe Dog House: Royalties share, dog house with evolving system and potential items gains to improve your house.\n\nAristoLand: A corner of paradise for our aristocrats\n\nRoadmap 2.0: Yes, this is going to be something bigâ€¦ Stay tuned.",
       "author": {
         "name": "AristoDog",
         "website": "https://aristodognft.com/",
@@ -3283,7 +3370,7 @@
       "imgBanner": "/img/collections/fury-mouse-gang/banner.png",
       "title": "Fury Mouse Gang",
       "subtitle": "The Fury Mouse Gang is an NFT project with a first generation of 2500 unique mice gang PFP collectibles. At night the fury takes hold of them and they ravage everything in their path. These creatures rule their world.",
-      "description": "The Fury Mouse Gang is an NFT project with a first generation of 2500 unique mice gang PFP collectibles. At night the fury takes hold of them and they ravage everything in their path. These creatures rule their world. The ambition is huge: to become the number 1 project on Cronos. Our community is linked around a story and a brotherhood between the members of the Gang. We want our members to live an unique experience, never seen on Cronos.. So if you can’t beat the gang, join us, before it is too late.\n\nHolders benefits:\n\nD.A.O\n\nMistery Giveaways\n\nShared Royalties\n\nTop 5 Holders rewarded\n\nRandom Airdrops and Raffles\n\nStaking (Hold 10 mice to received a FuryHouse where you could stake your mice! Or wait for the mint)\n\nHidden utility\n\nRally, or die.",
+      "description": "The Fury Mouse Gang is an NFT project with a first generation of 2500 unique mice gang PFP collectibles. At night the fury takes hold of them and they ravage everything in their path. These creatures rule their world. The ambition is huge: to become the number 1 project on Cronos. Our community is linked around a story and a brotherhood between the members of the Gang. We want our members to live an unique experience, never seen on Cronos.. So if you canâ€™t beat the gang, join us, before it is too late.\n\nHolders benefits:\n\nD.A.O\n\nMistery Giveaways\n\nShared Royalties\n\nTop 5 Holders rewarded\n\nRandom Airdrops and Raffles\n\nStaking (Hold 10 mice to received a FuryHouse where you could stake your mice! Or wait for the mint)\n\nHidden utility\n\nRally, or die.",
       "author": {
         "name": "Fury Mouse Gang",
         "website": "https://furymousegang.com/",
@@ -3314,7 +3401,7 @@
       "imgBanner": "/img/collections/apes-utopia/banner.jpeg",
       "title": "Apes Utopia",
       "subtitle": "The Apes embark on a journey through the Kingdom of Utopia to set foot on the world! Apes Utopia is a collection of 2,222 NFTs with over 200 features built on the Cronos blockchain. Apes Utopia NFTs provide access to various benefits in our ecosystem. Apes Utopia owners can participate in special events such as NFT sweepstakes, surprise sweepstakes, giveaways and much more. Remember, all Apes Utopia is special - but some are particularly special.",
-      "description": "Welcome to ApesUtopia! Apes Utopia is a collection of 2,222 NFTs with over 200 features built on the Cronos blockchain. Our vision is to create a strong family-friendly brand with many benefits that can be enjoyed by everyone, especially our owners, in both the real and digital worlds.\nApes Utopia owners can access various benefits in our ecosystem.\n★ Owners can participate in special events such as NFT sweepstakes, surprise sweepstakes, giveaways and much more. There will be a weekly draw on Discord.\n\n★ In addition, our members with at least 10 ApesUtopia NFT will have special powers such as decision making and we will work to direct our project together.\n\n★Airdrop: Owners will receive a certain percentage of royalties every month.\n\n★ The BabyApesUtopia NFTs that ApesUtopia gave birth to in the world will be deposited in the wallets of the owners.\n\n★ Stake: Holders will start receiving $ATOPIA tokens in their wallets during their NFT holding period. With $ATOPIA token, they will have exclusive items in our store!\n\n★ Metaverse: Owners will enter the metaverse universe with a huge art gallery. We will also build plots to house ApesUtopia and its babies!",
+      "description": "Welcome to ApesUtopia! Apes Utopia is a collection of 2,222 NFTs with over 200 features built on the Cronos blockchain. Our vision is to create a strong family-friendly brand with many benefits that can be enjoyed by everyone, especially our owners, in both the real and digital worlds.\nApes Utopia owners can access various benefits in our ecosystem.\nâ˜… Owners can participate in special events such as NFT sweepstakes, surprise sweepstakes, giveaways and much more. There will be a weekly draw on Discord.\n\nâ˜… In addition, our members with at least 10 ApesUtopia NFT will have special powers such as decision making and we will work to direct our project together.\n\nâ˜…Airdrop: Owners will receive a certain percentage of royalties every month.\n\nâ˜… The BabyApesUtopia NFTs that ApesUtopia gave birth to in the world will be deposited in the wallets of the owners.\n\nâ˜… Stake: Holders will start receiving $ATOPIA tokens in their wallets during their NFT holding period. With $ATOPIA token, they will have exclusive items in our store!\n\nâ˜… Metaverse: Owners will enter the metaverse universe with a huge art gallery. We will also build plots to house ApesUtopia and its babies!",
       "author": {
         "name": "Apes Utopia",
         "website": "https://www.apesutopia.com/",
@@ -3346,8 +3433,8 @@
       "imgAvatar": "/img/collections/everybodysnf/avatar.png",
       "imgBanner": "/img/collections/everybodysnf/banner.png",
       "title": "Everybody's Not Friends",
-      "subtitle": "Everybody's not friends is a handcrafted set of unique and rare 1/1 collectible characters and animations created by timebeam. This is a community driven passion project. The purpose of this project is to build a community which promotes friendship through a set of humorous 3D cartoon characters, animations and monthly live streamed brawls.",
-      "description": "Everybody's not friends is a handcrafted set of unique and rare 1/1 collectible characters and animations created by timebeam. The purpose of this project is to build a community which promotes friendship through a set of humorous 3D cartoon characters, animations and monthly live streamed brawls. All the everybody's not friends characters are rigged for character animation. When you purchase a friend you are taking the next step in the everybody’s not friends community. Friends will get the exclusive opportunity to participate in brawl night! Once a month we will pick two random NFT holders and their characters will brawl. The fighters and winner will be determined by a mini app we developed called 'the random generator'. The fight will be animated based on the outcome of the random generator. We will do a live stream of the animated fight. Winners will win some cool prizes and crypto! Come join our community and lets have some fun!",
+      "subtitle": "Everybody's not friends is a handcrafted set of unique and rare 1/1 collectible characters and animations created by timebeam. This is a community driven passion project. The purpose of this project is to build a community which promotes friendship through aÂ set of humorous 3D cartoon characters,Â animations and monthly live streamed brawls.",
+      "description": "Everybody's not friends is a handcrafted set of unique and rareÂ 1/1 collectible characters and animations created by timebeam.Â The purpose of this project is to build a community which promotes friendship through a set of humorous 3D cartoon characters,Â animations and monthly live streamed brawls. All the everybody's not friends characters are rigged for character animation. When you purchase a friend you are taking the next step in the everybodyâ€™s not friends community.Â Friends will get the exclusive opportunity to participate in brawl night! Once a month we will pick two random NFT holders and their characters will brawl. The fighters and winner will be determined by a miniÂ app we developedÂ called 'the random generator'. The fight will be animated based on the outcome of the random generator. We will do a live stream of the animated fight. Winners will win some cool prizes andÂ crypto! Come join our community and lets have some fun!",
       "author": {
         "name": "Everybody's not friends",
         "website": "https://timebeam.myportfolio.com/everybodys-friends",
@@ -3440,7 +3527,7 @@
       "imgBanner": "/img/collections/crovilians/banner.webp",
       "title": "Crovilians",
       "subtitle": "The Crovilians are the citizens of The CronosVerse and have various traits representing the many societal roles required in both the metaverse and in the physical world.",
-      "description": "The Crovilians are the citizens of The CronosVerse and have various traits representing the many societal roles required in both the metaverse and in the physical world. While each Crovilian’s unique traits represent real life roles in our society, all Crovilians are created equal in terms of access to The CronosVerse. Holding a Crovilian NFT will grant access to The CronosVerse and allow the owner to create a custom avatar to be used in our metaverse.",
+      "description": "The Crovilians are the citizens of The CronosVerse and have various traits representing the many societal roles required in both the metaverse and in the physical world. While each Crovilianâ€™s unique traits represent real life roles in our society, all Crovilians are created equal in terms of access to The CronosVerse. Holding a Crovilian NFT will grant access to The CronosVerse and allow the owner to create a custom avatar to be used in our metaverse.",
       "author": {
         "name": "CronosVerse",
         "website": "https://thecronosverse.com/",
@@ -3598,8 +3685,8 @@
       "imgAvatar": "/img/collections/crokami/avatar.webp",
       "imgBanner": "/img/drops/crokami/banner.webp",
       "title": "CroKami",
-      "subtitle": "CroKami is a universe comprising our Manga series, NFT collection, and lore-connected game. We have set out to create a special ecosystem in which players can battle each other in game using their NFT’s, or AI in a street-fighter style arena and earn $PACK -our real world cryptocurrency and in-game currency. Play and earn!",
-      "description": "CroKami is a universe comprising our Manga series, NFT collection, and lore-connected game. We have set out to create a special ecosystem in which players can battle each other in game using their NFT’s, or AI in a street-fighter style arena and earn $PACK -our real world cryptocurrency and in-game currency. Play and earn!\n\n \n\nROADMAP:\n\nPassive Income: First month 100% for holders, then 50% for holders, 20% for community wallet, 30% for the team.\n\nHolder Benefit: If you hold more then 10 Crokami you will be entitled to free Airdrops of future collections and special in Game perks!\n\nStaking: 1 Crokami gives you 3 $PACK per day. When you hold 10 Crokamis you will be air drop 1 of 333 Caves. Caves will in crease staking percentage of your Crokamis (Must have 10 Crokamis in Cave) by 1.333 per wolf.\n\nManga Series: A chapter of the manga will be released every month, and will include special utility for holders! Every page of the manga will be turned into a NFT and will be air dropped to the most loyal members of the pack!\n\nP2E Game: In a dynamic, skill based 3D street-fighter style game, players will fight to earn $PACK, our in-game and real world cryptocurrency that is used to reward players, and build additional skills in game. Play as your very own Wolf NFT, and fight to defeat those who were exiled from the pack in a world that is connected to our Manga series.\n\nFuture Collections: Holders will get WL spots for future collections which will also be implemented into our p2e game. \n\nMerch Store: Crokami merch store will be founded in which holders will be given special deals!",
+      "subtitle": "CroKami is a universe comprising our Manga series, NFT collection, and lore-connected game. We have set out to create a special ecosystem in which players can battle each other in game using their NFTâ€™s, or AI in a street-fighter style arena and earn $PACK -our real world cryptocurrency and in-game currency. Play and earn!",
+      "description": "CroKami is a universe comprising our Manga series, NFT collection, and lore-connected game. We have set out to create a special ecosystem in which players can battle each other in game using their NFTâ€™s, or AI in a street-fighter style arena and earn $PACK -our real world cryptocurrency and in-game currency. Play and earn!\n\n \n\nROADMAP:\n\nPassive Income: First month 100% for holders, then 50% for holders, 20% for community wallet, 30% for the team.\n\nHolder Benefit: If you hold more then 10 Crokami you will be entitled to free Airdrops of future collections and special in Game perks!\n\nStaking: 1 Crokami gives you 3 $PACK per day. When you hold 10 Crokamis you will be air drop 1 of 333 Caves. Caves will in crease staking percentage of your Crokamis (Must have 10 Crokamis in Cave) by 1.333 per wolf.\n\nManga Series: A chapter of the manga will be released every month, and will include special utility for holders! Every page of the manga will be turned into a NFT and will be air dropped to the most loyal members of the pack!\n\nP2E Game: In a dynamic, skill based 3D street-fighter style game, players will fight to earn $PACK, our in-game and real world cryptocurrency that is used to reward players, and build additional skills in game. Play as your very own Wolf NFT, and fight to defeat those who were exiled from the pack in a world that is connected to our Manga series.\n\nFuture Collections: Holders will get WL spots for future collections which will also be implemented into our p2e game. \n\nMerch Store: Crokami merch store will be founded in which holders will be given special deals!",
       "author": {
         "name": "CroKami",
         "website": "https://www.crokami.com/",
@@ -3630,7 +3717,7 @@
       "imgBanner": "/img/collections/gymkongz/banner.webp",
       "title": "GymKongz",
       "subtitle": "GymKongZ is a 10,000 pfp project made up of more than 255 unique traits. \nWe will focus on improving all pillars of life, not only the physical but also the mental and financial, and any other goal members are choosing to pursue. \nWe are really wanting to expand the horizon when it comes to a group of people coming together sharing similar goals and interests.",
-      "description": "GymKongZ is a 10,000 pfp collection made up of more than 255 unique traits.\n\nThe Kongz have a vision to create a community that can physically, mentally, and financially strengthen our holders for years to come, while also sustainably enhancing the Cronos blockchain.\n\nThe embodiment of strength brought to the Cronos chain, each Kong will bring the owner the following utilities: \n\nPasses to various webinar topics (Financial, physical, mental, etc.)\nDiscounted goods (supplements and fashion items, gym gear, and much more)\nAccess to the community Kongz Vault via our DAO, will enable every Kong with the ability to vote on a number of things such as fashion brand designs, flavor of protein powder, NFT’s we will add to our vault, and much much more. Kongz decisions will shape the community and will help us grow together. \nFuture staking of our own token that will hold various utilities. \nEach Kong you hold will be able to win exclusive giveaways upon different stages of minting. The giveaways include a brand new iPhone, Rolex Dayjust, and Tesla Model 3 to name a few.",
+      "description": "GymKongZ is a 10,000 pfp collection made up of more than 255 unique traits.\n\nThe Kongz have a vision to create a community that can physically, mentally, and financially strengthen our holders for years to come, while also sustainably enhancing the Cronos blockchain.\n\nThe embodiment of strength brought to the Cronos chain, each Kong will bring the owner the following utilities: \n\nPasses to various webinar topics (Financial, physical, mental, etc.)\nDiscounted goods (supplements and fashion items, gym gear, and much more)\nAccess to the community Kongz Vault via our DAO, will enable every Kong with the ability to vote on a number of things such as fashion brand designs, flavor of protein powder, NFTâ€™s we will add to our vault, and much much more. Kongz decisions will shape the community and will help us grow together. \nFuture staking of our own token that will hold various utilities. \nEach Kong you hold will be able to win exclusive giveaways upon different stages of minting. The giveaways include a brand new iPhone, Rolex Dayjust, and Tesla Model 3 to name a few.",
       "author": {
         "name": "GymKongz",
         "website": "https://www.gymkongz.com/",
@@ -3679,6 +3766,66 @@
       "is1155": false,
       "published": true,
       "complete": false
+    },
+    {
+      "id": 106,
+      "slug": "cronos-women",
+      "imgNft": "/img/drops/cronos-women/drop.webp",
+      "imgPreview": "/img/drops/cronos-women/drop.webp",
+      "imgAvatar": "/img/collections/cronos-women/avatar.webp",
+      "imgBanner": "/img/collections/cronos-women/banner.webp",
+      "title": "Cronos Women",
+      "subtitle": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300k CRO will be distributed to DAO members.",
+      "description": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300k CRO will be distributed to DAO members.\n\nWhat is a DAO member?\nDAO member is the role that will be given to those who receive a certain amount of NFT.\n\nHow to become a DAO member?\n\n10 NFT Holders -> DAO(1)\n20 NFT Holders -> DAO(2)\n50 NFT Holders -> DAO(3)\n100 NFT Holders -> DAO(4)\nBEST HOLDER -> DAO(5)\nWhat are the advantages of a DAO member?\n\nRight to vote in all decisions to be taken in the \"Cronos Women and Men\" Management.\n100K CRO distributed to the DAO(2)+ members when the mint reaches 25%\n100K CRO distributed to the DAO(3)+ members when the mint reaches 50%\n100K CRO distributed to the DAO(4)+ members when the mint reaches 100%\n\n*You get percentage per nft when mint target is reached!",
+      "author": {
+        "name": "Cronos Women",
+        "website": "https://cronos-women.com/",
+        "twitter": "https://twitter.com/Cronos_Women",
+        "discord": "https://discord.gg/CronosWomen",
+        "medium": "https://medium.com/@veliikb"
+      },
+      "address": "0x6D8E071C38a6386EA8BDBa0d4022C3c4645c1792",
+      "maxMintPerTx": 20,
+      "maxMintPerAddress": 100,
+      "totalSupply": 3333,
+      "cost": "450",
+      "memberCost": "420",
+      "whitelistCost": "389",
+      "foundersOnly": false,
+      "start": 1662660711000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 109,
+      "slug": "god-hates-crofam",
+      "imgNft": "/img/drops/god-hates-crofam/drop.webp",
+      "imgPreview": "/img/drops/god-hates-crofam/drop.webp",
+      "imgAvatar": "/img/collections/god-hates-crofam/avatar.webp",
+      "imgBanner": "/img/collections/god-hates-crofam/banner.webp",
+      "title": "God Hates Cro Fam",
+      "subtitle": "God hates all crofam!!! This is strictly a pfp project with no utility. Why no utility… because god hates you. Now go away.",
+      "description": "What does it feel like to be hated by god?? Now you know!",
+      "author": {
+        "name": "God Hates Cro Fam",
+        "twitter": "https://twitter.com/ghcfnft"
+      },
+      "address": "0xa2Dd607A92252daf79901d04c6eB871B95e31ddE",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 100,
+      "totalSupply": 5000,
+      "cost": "50",
+      "memberCost": "45",
+      "foundersOnly": false,
+      "start": 1663104212000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
     }
   ],
   "auctions": [
@@ -3720,7 +3867,7 @@
     {
       "hash": "",
       "title": "Space Crystal Unicorns",
-      "description": "Hello everyone, \n\nI have always had a passion for art which most already know, but what most don’t know is that I am very fond of equestrian sports. Growing up I self-taught to become an equestrian rider. I have also judged equestrian events and competitions and organized charity festivals in support of children with disabilities. \n\nRiding horses can be very healing for children and their psycho-emotional state and for those who become more involved, assists with muscle development. I used to coach children for free but have retired from this. However, I keep in close contact with the equestrian club in my hometown and occasionally still assist by running the group classes for children. I also financially support and support them with media coverage, assisting with fund raising to help kids receive this amazing and free therapy with horses.\n\nTo support the equestrian club and children, I am auctioning a limited-edition 1:1 ‘Rare Heart Hodler’ NFT. It also comes with a T-shirt and an autographed card from myself. Additionally, 10 holders of the 'Heart Hodler' from the open edition will be randomly selected to receive a physical autographed card from myself",
+      "description": "Hello everyone, \n\nI have always had a passion for art which most already know, but what most donâ€™t know is that I am very fond of equestrian sports. Growing up I self-taught to become an equestrian rider. I have also judged equestrian events and competitions and organized charity festivals in support of children with disabilities. \n\nRiding horses can be very healing for children and their psycho-emotional state and for those who become more involved, assists with muscle development. I used to coach children for free but have retired from this. However, I keep in close contact with the equestrian club in my hometown and occasionally still assist by running the group classes for children. I also financially support and support them with media coverage, assisting with fund raising to help kids receive this amazing and free therapy with horses.\n\nTo support the equestrian club and children, I am auctioning a limited-edition 1:1 â€˜Rare Heart Hodlerâ€™ NFT. It also comes with a T-shirt and an autographed card from myself. Additionally, 10 holders of the 'Heart Hodler' from the open edition will be randomly selected to receive a physical autographed card from myself",
       "link": "http://www.ritmclub.ru/",
       "imgAvatar": "/img/collections/lazyhorse/avatar.png",
       "redirectToDrop": "space-crystal-unicorns"

@@ -327,7 +327,16 @@ canvas {
   -webkit-border-radius: 15px;
   background: $bgColor1;
   transition: 0.7s;
-  overflow: hidden;
+
+  .card-img-container {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    -moz-border-radius-topleft: 15px;
+    -moz-border-radius-topright: 15px;
+    -webkit-border-top-left-radius: 15px;
+    -webkit-border-top-right-radius: 15px;
+    overflow: hidden;
+  }
 
   img {
     width: 100%;
@@ -408,6 +417,12 @@ canvas {
 }
 .profile_avatar .d_profile_img .eb-avatar_badge {
   margin: -20px 0 0 80px;
+  display: block;
+  position: absolute;
+  padding: 10px;
+}
+.profile_avatar .dialog_avatar .eb-avatar_badge {
+  margin: -38px 0 0 107px;
   display: block;
   position: absolute;
   padding: 10px;
@@ -819,51 +834,65 @@ canvas {
     right: 0;
     left: auto;
   }
-}
 
-.swiper-button-prev, .swiper-button-next {
-  top: 45%;
-  width: 40px;
-  height: 40px;
-  background: #fff;
-  border: 1px solid gray;
-  border-radius: 50%;
-  color: #000;
-  font-weight: 700;
-  outline: 0;
-  transition: background-color .2s ease, color .2s ease;
+  .swiper-button-prev, .swiper-button-next {
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    border: 1px solid gray;
+    border-radius: 50%;
+    color: #000;
+    font-weight: 700;
+    outline: 0;
+    transition: background-color .2s ease, color .2s ease;
 
-  &::after {
-    font-size: 16px;
+    &::after {
+      font-size: 16px;
+    }
+  }
+
+  .swiper-button-prev {
+    &:after {
+      position: relative;
+      left: -1px;
+    }
+  }
+
+  .swiper-button-next {
+    &:after {
+      position: relative;
+      left: 1px;
+    }
+  }
+
+  .swiper-button-prev.swiper-button-disabled, .swiper-button-next.swiper-button-disabled {
+    opacity: 0;
+    cursor: auto;
+    pointer-events: none;
   }
 }
 
-.swiper-button-prev {
-  &:after {
-    position: relative;
-    left: -1px;
+html[data-theme='dark'] {
+  .accordion-button:not(.collapsed)::after {
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
+  }
+  .accordion-button::after {
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
   }
 }
 
-.swiper-button-next {
-  &:after {
-    position: relative;
-    left: 1px;
+.filter-pane {
+  .accordion-item {
+    background-color: transparent;
+    border-bottom: 1px solid $dividerSoft;
+  }
+  hr {
+    border: 1px solid $dividerSoft;
   }
 }
 
-.swiper-button-prev, .swiper-container-rtl .swiper-button-next {
-  left: 10px;
-  right: auto;
-}
-
-.swiper-button-next, .swiper-container-rtl .swiper-button-prev {
-  right: 10px;
-  left: auto;
-}
-
-.swiper-button-prev.swiper-button-disabled, .swiper-button-next.swiper-button-disabled {
-  opacity: 0;
-  cursor: auto;
-  pointer-events: none;
+select {
+  background-color: $bgColor1 !important;
+  border: 1px solid $borderColor2 !important;
+  color: $textColor1 !important;
 }

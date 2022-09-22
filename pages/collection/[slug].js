@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Collection1155 from '../../src/Components/Collection/collection1155';
 import Collection721 from '../../src/Components/Collection/collection721';
-import CollectionCronosverse from '../../src/Components/Collection/collectionCronosverse';
+import CollectionCronosverse from '@src/Components/Collection/Custom/Cronosverse';
 import {caseInsensitiveCompare, isCronosVerseCollection, isAddress} from '@src/utils';
 import {appConfig} from "@src/Config";
 import PageHead from "../../src/Components/Head/PageHead";
@@ -70,13 +70,13 @@ const Collection = ({ ssrCollection, query }) => {
           ) : type === collectionTypes.ERC1155 ? (
             <>
               {collection.split ? (
-                <Collection1155 collection={collection} tokenId={collection.id} slug={slug} cacheName={slug} />
+                <Collection1155 collection={collection} tokenId={collection.id} query={query} />
               ) : (
-                <Collection1155 collection={collection} slug={slug} cacheName={slug} />
+                <Collection1155 collection={collection} query={query} />
               )}
             </>
           ) : (
-            <Collection721 collection={collection} cacheName={slug} query={query} />
+            <Collection721 collection={collection} query={query} />
           )}
         </>
       )}

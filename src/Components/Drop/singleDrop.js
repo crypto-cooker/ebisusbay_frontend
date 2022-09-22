@@ -8,7 +8,7 @@ import { getAnalytics, logEvent } from '@firebase/analytics';
 import { keyframes } from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
 import { useRouter } from 'next/router';
-import { Form, ProgressBar, Spinner } from 'react-bootstrap';
+import {Form, OverlayTrigger, ProgressBar, Spinner, Tooltip} from 'react-bootstrap';
 import ReactPlayer from 'react-player';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
@@ -25,18 +25,22 @@ import {
   isFounderVipDrop,
   isMagBrewVikingsDrop,
   newlineText,
-  percentage,
+  percentage, round,
 } from '../../utils';
 import { dropState as statuses } from '../../core/api/enums';
-import { EbisuDropAbi } from '../../Contracts/Abis';
+import {EbisuDropAbi, ERC20} from '../../Contracts/Abis';
 import { getTheme } from '../../Theme/theme';
 import SocialsBar from '../Collection/SocialsBar';
 import {parseUnits} from "ethers/lib/utils";
 import {appConfig} from "../../Config";
-import {hostedImage} from "../../helpers/image";
+import {hostedImage, ImageKitService} from "../../helpers/image";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faAddressCard, faLock, faUserShield} from "@fortawesome/free-solid-svg-icons";
+import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 
 const config = appConfig();
 const drops = config.drops;
+const collections = config.collections;
 
 const fadeInUp = keyframes`
   0% {
@@ -131,6 +135,9 @@ const SingleDrop = () => {
   const drop = useSelector((state) => {
     return drops.find((n) => n.slug === slug);
   });
+  const collection = useSelector((state) => {
+    return collections.find((n) => n.slug === slug);
+  });
 
   const membership = useSelector((state) => {
     return state.memberships;
@@ -174,17 +181,10 @@ const SingleDrop = () => {
         let writeContract = await new ethers.Contract(currentDrop.address, abi, user.provider.getSigner());
         currentDrop = Object.assign({ writeContract: writeContract }, currentDrop);
 
-        if (currentDrop.erc20Address) {
-          const erc20Contract = await new ethers.Contract(
-            dropObject.erc20Address,
-            dropObject.erc20Abi,
-            user.provider.getSigner()
-          );
-          const erc20ReadContract = await new ethers.Contract(
-            dropObject.erc20Address,
-            dropObject.erc20Abi,
-            readProvider
-          );
+        if (currentDrop.erc20Token) {
+          const token = config.tokens[dropObject.erc20Token];
+          const erc20Contract = await new ethers.Contract(token.address, ERC20, user.provider.getSigner());
+          const erc20ReadContract = await new ethers.Contract(token.address, ERC20, readProvider);
           currentDrop = {
             ...currentDrop,
             erc20Contract,
@@ -344,6 +344,13 @@ const SingleDrop = () => {
           finalCost = finalCost.sub(cost.mul(Math.floor(numToMint / 4)));
         }
 
+        if (isErc20 === true) {
+          const allowance = await dropObject.erc20ReadContract.allowance(user.address, dropObject.address);
+          if (allowance.sub(finalCost) < 0) {
+            await dropObject.erc20Contract.approve(dropObject.address, constants.MaxUint256);
+          }
+        }
+
         const gasPrice = parseUnits('5000', 'gwei');
         const gasEstimate = await contract.estimateGas.mint(numToMint, {value: finalCost});
         const gasLimit = gasEstimate.mul(2);
@@ -373,19 +380,20 @@ const SingleDrop = () => {
           }
         } else {
           if (isUsingDefaultDropAbi(dropObject.abi) || isUsingAbiFile(dropObject.abi)) {
-            response = await contract.mint(numToMint, extra);
+            if (isErc20) {
+              delete extra['value']
+              response = await contract.mintWithToken(numToMint, extra);
+            } else {
+              response = await contract.mint(numToMint, extra);
+            }
           } else {
             let method;
             for (const abiMethod of dropObject.abi) {
               if (abiMethod.includes('mint') && !abiMethod.includes('view')) method = abiMethod;
             }
 
-            if (isErc20 === true) {
-              const allowance = await dropObject.erc20ReadContract.allowance(user.address, dropObject.address);
-              if (allowance.sub(finalCost) < 0) {
-                await dropObject.erc20Contract.approve(dropObject.address, constants.MaxUint256);
-              }
-            }
+
+
             if (method.includes('address') && method.includes('uint256')) {
               if (isErc20 === true) {
                 response = await contract.mintWithLoot(user.address, numToMint);
@@ -464,17 +472,15 @@ const SingleDrop = () => {
     return dateString;
   };
 
-  // const vidRef = useRef(null);
-  // const handlePlayVideo = () => {
-  //   vidRef.current.play();
-  // };
 
   return (
     <div>
       <>
         <HeroSection
           className={`jumbotron h-vh tint`}
-          style={{ backgroundImage: `url(${drop.imgBanner ? hostedImage(drop.imgBanner) : hostedImage('/img/background/Ebisus-bg-1_L.webp')})` }}
+          style={{
+            backgroundImage: `url(${ImageKitService.buildBannerUrl(drop.imgBanner ?? hostedImage('/img/background/Ebisus-bg-1_L.webp'))})`
+          }}
         >
           <div className="container">
             <div className="row align-items-center">
@@ -562,16 +568,20 @@ const SingleDrop = () => {
           </div>
         </HeroSection>
 
-        <section className="container no-bottom" id="drop_detail">
-          <div className="row">
-            <div className="col-md-12">
-              <div className="d_profile de-flex">
+        <section id="drop_detail" className="container no-top">
+          <div className="row mt-md-5 pt-md-4">
+            <div className="col-md-6 text-center">
+              <img src={hostedImage(drop.imgNft)} className="img-fluid img-rounded mb-sm-30" alt={drop.title} />
+            </div>
+            <div className="col-md-6">
+
+              <div className="de-flex mt-4 mt-sm-0 mb-2">
                 <div className="de-flex-col">
                   <div className="profile_avatar">
                     {drop.imgAvatar && <img src={hostedImage(drop.imgAvatar)} alt={drop.author.name} />}
                     <div className="profile_name">
                       <h4>
-                        {drop.author.name}
+                        {drop.title}
                         {drop.author.link ? (
                           <span className="profile_username">
                             <a href={drop.author.link} target="_blank" rel="noreferrer">
@@ -579,25 +589,23 @@ const SingleDrop = () => {
                             </a>
                           </span>
                         ) : (
-                          <SocialsBar address={drop.address} socials={drop.author} showCopy={false} />
+                          <SocialsBar address={drop.address} socials={drop.author} />
                         )}
                       </h4>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
 
-        <section className="container no-top">
-          <div className="row mt-md-5 pt-md-4">
-            <div className="col-md-6 text-center">
-              <img src={hostedImage(drop.imgNft)} className="img-fluid img-rounded mb-sm-30" alt={drop.title} />
-            </div>
-            <div className="col-md-6">
+              <CollectionVerificationRow
+                doxx={collection.verification?.doxx}
+                kyc={collection.verification?.kyc}
+                escrow={collection.verification?.escrow}
+                creativeCommons={collection.verification?.creativeCommons}
+              />
+
               <div className="item_info">
-                <h2>{drop.title}</h2>
+
                 {status === statuses.UNSET || status === statuses.NOT_STARTED || drop.complete ? (
                   <div>
                     <div className="fs-6 fw-bold mb-1">Supply: {ethers.utils.commify(maxSupply.toString())}</div>
@@ -640,24 +648,24 @@ const SingleDrop = () => {
                 <div className="d-flex flex-row">
                   <div className="me-4">
                     <h6 className="mb-1">Mint Price</h6>
-                    <h5>{regularCost} CRO</h5>
-                    {dropObject?.erc20Cost && dropObject?.erc20Unit && (
-                      <h5>{`${dropObject?.erc20Cost} ${dropObject?.erc20Unit}`}</h5>
+                    <h5>{round(regularCost)} CRO</h5>
+                    {dropObject?.erc20Cost && dropObject?.erc20Token && (
+                      <h5>{`${dropObject?.erc20Cost} ${config.tokens[dropObject.erc20Token].symbol}`}</h5>
                     )}
                   </div>
-                  {(memberCost || dropObject?.erc20Cost !== dropObject?.erc20MemberCost) && (
+                  {(memberCost || (dropObject?.erc20MemberCost && dropObject?.erc20Cost !== dropObject?.erc20MemberCost)) && (
                     <div className="me-4">
                       <h6 className="mb-1">Founding Member Price</h6>
-                      <h5>{memberCost} CRO</h5>
-                      {dropObject?.erc20Cost !== dropObject?.erc20MemberCost && (
-                        <h5>{`${dropObject?.erc20MemberCost} ${dropObject?.erc20Unit}`}</h5>
+                      <h5>{round(memberCost)} CRO</h5>
+                      {dropObject?.erc20MemberCost && dropObject?.erc20Cost !== dropObject?.erc20MemberCost && (
+                        <h5>{`${dropObject?.erc20MemberCost} ${config.tokens[dropObject.erc20Token].symbol}`}</h5>
                       )}
                     </div>
                   )}
                   {whitelistCost > 0 && (
                     <div className="me-4">
                       <h6 className="mb-1">Whitelist Price</h6>
-                      <h5>{whitelistCost} CRO</h5>
+                      <h5>{round(whitelistCost)} CRO</h5>
                     </div>
                   )}
                   {specialWhitelist && (
@@ -723,7 +731,7 @@ const SingleDrop = () => {
 
                     {canMintQuantity > 0 && (
                       <div className="d-flex flex-row mt-5">
-                        <button className="btn-main lead mb-5 mr15" onClick={mintNow} disabled={minting}>
+                        <button className="btn-main lead mb-5 mr15" onClick={() => mintNow(false)} disabled={minting}>
                           {minting ? (
                             <>
                               Minting...
@@ -735,7 +743,7 @@ const SingleDrop = () => {
                             <>{drop.maxMintPerTx && drop.maxMintPerTx > 1 ? <>Mint {numToMint}</> : <>Mint</>}</>
                           )}
                         </button>
-                        {drop.erc20Unit && (
+                        {drop.erc20Token && (
                           <button
                             className="btn-main lead mb-5 mr15 mx-1"
                             onClick={() => mintNow(true)}
@@ -752,7 +760,7 @@ const SingleDrop = () => {
                               <>
                                 {drop.maxMintPerTx && drop.maxMintPerTx > 1 ? (
                                   <>
-                                    Mint {numToMint} with {drop.erc20Unit}
+                                    Mint {numToMint} with {config.tokens[drop.erc20Token].symbol}
                                   </>
                                 ) : (
                                   <>{maxMintPerTx > 1 ? <>Mint {numToMint}</> : <>Mint</>}</>

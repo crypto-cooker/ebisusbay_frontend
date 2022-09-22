@@ -23,11 +23,12 @@ export const configData = {
       api: 'https://api.ebisusbay.com/',
       app: 'https://app.ebisusbay.com/',
       cdn: 'https://cdn.ebisusbay.com/',
-      subgraph: 'https://graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
+      subgraph: 'https://graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.com/api/',
+      explorer: 'https://cronoscan.com/',
     },
     rpc: {
-      read: 'https://gateway.nebkas.ro/',
+      read: 'https://rpc.ebisusbay.com/',
       write: 'https://evm.cronos.org/',
     },
     contracts: {
@@ -49,6 +50,11 @@ export const configData = {
         name: 'MAD',
         symbol: 'MAD',
         address: '0x212331e1435a8df230715db4c02b2a3a0abf8c61',
+      },
+      trpz: {
+        name: 'TRPZ',
+        symbol: 'TRPZ',
+        address: '0x1Cc0B25BD5105CD8905f7e9cD174435D4C890E02',
       },
     },
     collections: rpcConfig.known_contracts,
@@ -65,11 +71,12 @@ export const configData = {
       api: 'https://api.ebisusbay.biz/',
       app: 'https://app.ebisusbay.biz/',
       cdn: 'https://cdn.ebisusbay.biz/test/',
-      subgraph: 'https://graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
+      subgraph: 'https://graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.biz/api/',
+      explorer: 'https://cronoscan.com/',
     },
     rpc: {
-      read: 'https://gateway.nebkas.ro/',
+      read: 'https://rpc.ebisusbay.com/',
       write: 'https://evm.cronos.org/',
     },
     contracts: {
@@ -91,6 +98,11 @@ export const configData = {
         name: 'MAD',
         symbol: 'MAD',
         address: '0x212331e1435a8df230715db4c02b2a3a0abf8c61',
+      },
+      trpz: {
+        name: 'TRPZ',
+        symbol: 'TRPZ',
+        address: '0x1Cc0B25BD5105CD8905f7e9cD174435D4C890E02',
       },
     },
     collections: rpcConfigDev.known_contracts,
@@ -109,6 +121,7 @@ export const configData = {
       cdn: 'https://cdn.ebisusbay.biz/test/',
       subgraph: 'https://testgraph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.biz/api/',
+      explorer: 'https://testnet.cronoscan.com/',
     },
     rpc: {
       read: 'https://rpc.ebisusbay.biz/',
@@ -141,6 +154,7 @@ export const configData = {
   },
   [environments.local]: {
     urls: {
+      api: 'https://api.ebisusbay.biz/',
       cms: 'http://localhost:4000/api/',
     },
   }
@@ -194,6 +208,12 @@ export const isLocalEnv = () => {
 
 export const featureFlags = {
   [Features.AUCTION_OPTION_SALE]: false,
-  [Features.CMS_NOTIFICATIONS]: false,
-  [Features.CMS_FULL_PROFILES]: false,
+  [Features.CMS_NOTIFICATIONS]: true,
+  [Features.CMS_FULL_PROFILES]: true,
+  [Features.GET_COLLECTION_NEW_ENDPOINT]: false,
+  [Features.CMS_COLLECTIONS]: false,
+  [Features.VERIFIED_SWITCH_COLLECTION]: false,
+  [Features.VERIFIED_SWITCH_MARKETPLACE]: false,
+  [Features.INFINITE_QUERY_COLLECTION]: false,
+
 }

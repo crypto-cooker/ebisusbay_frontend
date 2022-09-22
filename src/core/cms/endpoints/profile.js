@@ -7,16 +7,12 @@ const api = axios.create({
 });
 
 export const getProfile = async (addressOrUsername) => {
-  try {
-    const response = await api.get('profile', {
-      params: {
-        walletAddress: addressOrUsername
-      }
-    })
-    return response.data;
-  } catch (e) {
-    console.log('error', e);
-  }
+  const response = await api.get('profile', {
+    params: {
+      walletAddress: addressOrUsername
+    }
+  })
+  return response.data;
 }
 
 export const createProfile = async (formData, signature, address) => {
@@ -74,4 +70,13 @@ export const verifyEmail = async (signature, address) => {
       address
     }
   })
+}
+
+export const updateNotifications = async (notificationMethods, notificationTypes, signature, address) => {
+  await api.patch('profile/notifications', {notificationMethods, notificationTypes}, {
+    params: {
+      signature,
+      address
+    }
+  });
 }

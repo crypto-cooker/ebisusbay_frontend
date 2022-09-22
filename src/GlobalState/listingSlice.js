@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getListing, getNft } from '../core/api';
+import { getListing } from '../core/api';
+import {getNft} from "@src/core/api/endpoints/nft";
 
 const listingSlice = createSlice({
   name: 'listing',

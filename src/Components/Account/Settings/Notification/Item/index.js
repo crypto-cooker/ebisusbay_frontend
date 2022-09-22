@@ -1,15 +1,15 @@
 import { Form } from 'react-bootstrap';
 
-import styles from './item.module.scss';
-
-export default function NotificationItem({ title, description }) {
+export default function NotificationItem({ title, description, isChecked, onChange }) {
   return (
-    <div className={styles.item}>
-      <div className="d-flex align-items-center justify-content-between">
-        <h2>{title}</h2>
-        <Form.Switch />
+    <div className="d-flex">
+      <div className="my-auto me-2">
+        <Form.Switch checked={isChecked} onClick={(e) => onChange(e.target.checked)}/>
       </div>
-      <div>{description}</div>
+      <div>
+        <div className="fs-4 fw-bold">{title}</div>
+        <div>{description}</div>
+      </div>
     </div>
   );
 }

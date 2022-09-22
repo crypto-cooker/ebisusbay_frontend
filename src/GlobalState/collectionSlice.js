@@ -12,6 +12,7 @@ import {FullCollectionsQuery} from "../core/api/queries/fullcollections";
 import {CollectionFilters} from "../Components/Models/collection-filters.model";
 import {sortAndFetchCollectionDetails} from "../core/api/endpoints/fullcollections";
 import {sortAndFetchListings} from "../core/api/endpoints/listings";
+import {getCollections} from "@src/core/api/next/collectioninfo";
 
 const knownContracts = appConfig('collections');
 
@@ -69,7 +70,7 @@ const collectionSlice = createSlice({
       state.query.filter = option;
     },
     onSort: (state, action) => {
-      const { cacheName, option } = action.payload;
+      const { option } = action.payload;
 
       state.listings = [];
       state.totalPages = 0;
@@ -113,6 +114,16 @@ const collectionSlice = createSlice({
       state.query.filter.minRank = minRank;
       state.query.filter.maxRank = maxRank;
     },
+    clearFilters: (state, action) => {
+      const filter = CollectionFilters.default();
+      filter.address = state.query.filter.address;
+
+      state.listings = [];
+      state.totalPages = 0;
+      state.query.page = 0;
+      state.query.filter = filter;
+      state.query.sort = {};
+    },
     onCollectionStatsLoaded: (state, action) => {
       state.stats = action.payload.stats;
       state.statsLoading = false;
@@ -140,6 +151,7 @@ export const {
   onCollectionStatsLoading,
   onCollectionStatsLoaded,
   onTabUpdated,
+  clearFilters
 } = collectionSlice.actions;
 
 export default collectionSlice.reducer;
@@ -215,7 +227,7 @@ export const filterListings = (filterOption, cacheName) => async (dispatch) => {
 };
 
 export const sortListings = (sortOption, cacheName) => async (dispatch) => {
-  dispatch(onSort({ option: sortOption, cacheName }));
+  dispatch(onSort({ option: sortOption }));
   dispatch(fetchListings());
 };
 
@@ -243,8 +255,8 @@ export const filterListingsByPrice =
   dispatch(fetchListings());
 };
 
-export const resetListings = () => async (dispatch) => {
-  dispatch(clearSet());
+export const resetFilters = () => async (dispatch) => {
+  dispatch(clearFilters());
   dispatch(fetchListings());
 };
 
@@ -252,6 +264,7 @@ export const updateTab = (tab) => async (dispatch) => {
   dispatch(onTabUpdated(tab));
 };
 
+// @todo: remove mergedAddress support for autolistings
 export const getStats =
   (collection, id = null, extraAddresses = null) =>
   async (dispatch) => {
@@ -259,12 +272,42 @@ export const getStats =
       const mergedAddresses = extraAddresses ? [collection.address, ...extraAddresses] : collection.address;
       var response;
       if (id != null) {
+        // const newStats = await getCollections({address: mergedAddresses});
+        // response = {
+        //   collections: [
+        //     {
+        //       collection: mergedAddresses,
+        //       totalSupply: newStats.data.collections[0].tokens[id].metadata.maxSupply,
+        //       totalVolume: newStats.data.collections[0].stats.tokens[id].volume,
+        //       numberOfSales: newStats.data.collections[0].stats.tokens[id].complete,
+        //       averageSalePrice: newStats.data.collections[0].stats.tokens[id].avg_sale_price,
+        //       numberActive: newStats.data.collections[0].stats.tokens[id].active,
+        //       floorPrice: newStats.data.collections[0].stats.tokens[id].floor_price
+        //     }
+        //   ]
+        // };
         response = await getCollectionMetadata(mergedAddresses, null, {
           type: 'tokenId',
           value: id,
         });
-      } else {
+      } else if (Array.isArray(mergedAddresses)) {
         response = await getCollectionMetadata(mergedAddresses);
+      } else {
+        const newStats = await getCollections({address: mergedAddresses});
+        const sCollection = newStats.data.collections[0];
+        response = {
+          collections: [
+            {
+              collection: mergedAddresses,
+              totalSupply: sCollection.totalSupply,
+              totalVolume: sCollection.stats.total.volume,
+              numberOfSales: sCollection.stats.total.complete,
+              averageSalePrice: sCollection.stats.total.avgSalePrice ?? sCollection.stats.total.avg_sale_price,
+              numberActive: sCollection.stats.total.active,
+              floorPrice: sCollection.stats.total.floorPrice ?? sCollection.stats.total.floor_price
+            }
+          ]
+        };
       }
       const traits = await getCollectionTraits(collection.address);
       const powertraits = collection.powertraits ? await getCollectionPowertraits(collection.address) : null;

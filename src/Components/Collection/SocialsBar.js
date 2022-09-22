@@ -55,7 +55,7 @@ const SocialsBar = ({ address, socials, showCopy = true }) => {
           <LayeredIcon icon={faBook} />
         </a>
       )}
-      {showCopy && (
+      {showCopy && address && (
         <span onClick={handleCopy(address)} style={{ cursor: 'pointer' }} title="Copy Address">
           <LayeredIcon icon={faCopy} />
         </span>

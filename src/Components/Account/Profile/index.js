@@ -6,7 +6,7 @@ import Avatar from './Avatar';
 
 import styles from './profile.module.scss';
 import {hostedImage, ImageKitService} from "@src/helpers/image";
-import {caseInsensitiveCompare, shortAddress} from "@src/utils";
+import {caseInsensitiveCompare, isUserBlacklisted, shortAddress} from "@src/utils";
 import Inventory from "@src/Components/Account/Profile/Inventory";
 import Collections from "@src/Components/Account/Profile/Collections";
 import Listings from "@src/Components/Account/Profile/Listings";
@@ -16,6 +16,8 @@ import Favorites from "@src/Components/Account/Profile/Favorites";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
 import PageHead from "@src/Components/Head/PageHead";
 import {pushQueryString} from "@src/helpers/query";
+import {ethers} from "ethers";
+import {Badge} from "react-bootstrap";
 
 const tabs = {
   inventory: 'inventory',
@@ -46,15 +48,30 @@ export default function Profile({ address, profile, tab }) {
   }, [user, address])
 
   const identifier = profile.username ?? address;
-  const username = identifier.startsWith('0x') ? shortAddress(identifier) : identifier;
+  const username = () => {
+    try {
+      if (identifier.startsWith('0x')) {
+        return shortAddress(ethers.utils.getAddress(identifier));
+      }
+      return identifier;
+    } catch (e) {
+      return identifier;
+    }
+  }
+
   const profilePicture = profile.profilePicture ?
     ImageKitService.from(profile.profilePicture).setWidth(200).setHeight(200).buildUrl() :
     hostedImage('/img/avatar.jpg');
 
+  // Ensure correct tab highlighted when changing from AccountMenu while already in Profile page
+  useEffect(() => {
+    setCurrentTab(tab ?? tabs.inventory);
+  }, [tab])
+
   return (
     <div className={styles.profile}>
       <PageHead
-        title={username}
+        title={username()}
         description={profile.bio}
         image={profilePicture}
         url={`/account/${address}`}
@@ -75,14 +92,19 @@ export default function Profile({ address, profile, tab }) {
           <div className="mainbreadcumb"></div>
         </section>
       )}
-      <section className="container pt-4">
+      <section className="px-5 pt-4">
         <div className={`${styles.userInfo} row`}>
           <div className="d-sm-flex text-center text-sm-start">
             <div className="flex-shrink-0">
               <Avatar src={profilePicture} />
             </div>
             <div className="flex-grow-1 ms-sm-4 me-sm-4">
-              <div className={styles.username}>{username}</div>
+              <div className={styles.username}>{username()}</div>
+              {isUserBlacklisted(address) && (
+                <div className="d-flex">
+                  <Badge bg="danger">Blacklisted</Badge>
+                </div>
+              )}
               <div className={styles.bio}>{profile.bio}</div>
               <div className={`${styles.socials} text-center text-sm-start mb-2 mb-sm-0`}>
                 <span className="fs-4"><SocialsBar socials={profile} address={address} /></span>

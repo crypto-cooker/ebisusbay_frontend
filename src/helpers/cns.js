@@ -1,4 +1,4 @@
-import { CNS, TextRecords } from '@cnsdomains/core';
+import {CNS, TextRecords} from '@cnsdomains/core';
 import { ethers } from 'ethers';
 import {appConfig} from "../Config";
 
@@ -24,23 +24,53 @@ export const getCnsName = async (address) => {
   return await cns.getName(address);
 };
 
+/**
+ * Get a CNS name from a 0x address
+ *
+ * @param name
+ * @returns {Promise<string>}
+ */
+export const getCnsAddress = async (name) => {
+  const cns = new CNS(config.chain.id, readProvider);
+  const profile = await cns.getProfile(name);
+
+  return profile.address;
+}
+/**
+ * Get various profile information for a given address
+ *
+ * @param address
+ * @returns {Promise<{twitter: *, discord: *, name: string, telegram: *, description: *, instagram: *, email: *, url: *}>}
+ */
 export const getCnsInfo = async (address) => {
   if (!address || !readProvider) return;
 
   try {
     const cns = new CNS(config.chain.id, readProvider);
-    const cnsProfile = {};
-    cnsProfile.name = await cns.getName(address);
-    if (cnsProfile.name) {
-      const name = cns.name(cnsProfile.name);
-      cnsProfile.twitter = await name.getText(TextRecords.Twitter);
-      cnsProfile.discord = await name.getText(TextRecords.Discord);
-      cnsProfile.instagram = await name.getText(TextRecords.Instagram);
-      cnsProfile.email = await name.getText(TextRecords.Email);
-      cnsProfile.url = await name.getText(TextRecords.Url);
-      return cnsProfile;
+    const profile = await cns.getProfile(address);
+    if (profile) {
+      return {
+        name: profile.name,
+        twitter: profile.resolver.socials[TextRecords.Twitter],
+        instagram: profile.resolver.socials[TextRecords.Instagram],
+        discord: profile.resolver.socials[TextRecords.Discord],
+        telegram: profile.resolver.socials[TextRecords.Telegram],
+        email: profile.resolver.socials[TextRecords.Email],
+        url: profile.resolver.socials[TextRecords.Url],
+        description: profile.resolver.socials[TextRecords.Description]
+      };
     }
   } catch (e) {
     console.log('cns error', e);
   }
 };
+
+/**
+ * Check if a value matches the format of a CNS domain
+ *
+ * @param value
+ * @returns {*}
+ */
+export const isCnsName = (value) => {
+  return value.endsWith('.cro');
+}

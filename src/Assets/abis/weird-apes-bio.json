@@ -1,0 +1,110 @@
+[
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_genesisApes",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "_ladyApes",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "_babyApes",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_tokenId",
+                "type": "uint256"
+            }
+        ],
+        "name": "getBabyInfo",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "bio",
+                "type": "string"
+            },
+            {
+                "internalType": "bool",
+                "name": "born",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_tokenId",
+                "type": "uint256"
+            }
+        ],
+        "name": "getGenesisInfo",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "bio",
+                "type": "string"
+            },
+            {
+                "internalType": "bool",
+                "name": "born",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_tokenId",
+                "type": "uint256"
+            }
+        ],
+        "name": "getLadyInfo",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "bio",
+                "type": "string"
+            },
+            {
+                "internalType": "bool",
+                "name": "born",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
+]

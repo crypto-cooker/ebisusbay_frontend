@@ -7,9 +7,9 @@ import { ethers } from 'ethers';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
 import Button from './Button';
-import MakeOfferDialog from '../Offer/MakeOfferDialog';
+import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
 import { connectAccount, chainConnect } from '../../GlobalState/User';
-import { isNftBlacklisted, round } from '../../utils';
+import {isNftBlacklisted, round, siPrefixedNumber} from '../../utils';
 import { AnyMedia } from './AnyMedia';
 import { nftCardUrl } from '../../helpers/image';
 
@@ -49,7 +49,7 @@ const MakeOffer = styled.div`
   }
 `;
 
-const NftCard = ({ royalty, listing, imgClass = 'marketplace', watermark, collection, canBuy = true }) => {
+const NftCard = ({ listing, imgClass = 'marketplace', watermark, collection, canBuy = true }) => {
   const history = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -94,8 +94,21 @@ const NftCard = ({ royalty, listing, imgClass = 'marketplace', watermark, collec
   return (
     <>
       <div className="card eb-nft__card h-100 shadow">
-        {watermark ? (
-          <Watermarked watermark={watermark}>
+        <div className="card-img-container">
+          {watermark ? (
+            <Watermarked watermark={watermark}>
+              <AnyMedia
+                image={nftCardUrl(listing.address, listing.image)}
+                className={`card-img-top ${imgClass}`}
+                title={listing.name}
+                url={`/collection/${collection.slug}/${listing.id}`}
+                width={440}
+                height={440}
+                video={listing.video ?? listing.animation_url}
+                usePlaceholder={true}
+              />
+            </Watermarked>
+          ) : (
             <AnyMedia
               image={nftCardUrl(listing.address, listing.image)}
               className={`card-img-top ${imgClass}`}
@@ -106,19 +119,8 @@ const NftCard = ({ royalty, listing, imgClass = 'marketplace', watermark, collec
               video={listing.video ?? listing.animation_url}
               usePlaceholder={true}
             />
-          </Watermarked>
-        ) : (
-          <AnyMedia
-            image={nftCardUrl(listing.address, listing.image)}
-            className={`card-img-top ${imgClass}`}
-            title={listing.name}
-            url={`/collection/${collection.slug}/${listing.id}`}
-            width={440}
-            height={440}
-            video={listing.video ?? listing.animation_url}
-            usePlaceholder={true}
-          />
-        )}
+          )}
+        </div>
         {listing.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{listing.rank}</div>}
         <div className="card-body d-flex flex-column justify-content-between">
           <Link href={`/collection/${collection.slug}/${listing.id}`}>
@@ -129,33 +131,29 @@ const NftCard = ({ royalty, listing, imgClass = 'marketplace', watermark, collec
           {getIsNftListed() && (
             <MakeBuy>
               {collection.multiToken && <div>Floor:</div>}
-              <div>{ethers.utils.commify(round(listing.market?.price))} CRO</div>
+              <div>{listing.market?.price > 6 ? siPrefixedNumber(listing.market?.price) : ethers.utils.commify(round(listing.market?.price))} CRO</div>
             </MakeBuy>
           )}
-          <MakeOffer>
+          <div className="d-flex flex-wrap">
             {getIsNftListed() && canBuy ? (
-              <div>
-                <Button type="legacy" onClick={handleBuy}>
-                  Buy
-                </Button>
-              </div>
+              <Button type="legacy" className="flex-fill m-1" onClick={handleBuy}>
+                Buy
+              </Button>
             ) : (
               <div></div>
             )}
-            <div>
-              <Button type="legacy-outlined" onClick={() => handleMakeOffer()}>
-                Offer
-              </Button>
-            </div>
-          </MakeOffer>
+            <Button type="legacy-outlined" className="flex-fill m-1" onClick={() => handleMakeOffer()}>
+              Offer
+            </Button>
+          </div>
         </div>
       </div>
       {openMakeOfferDialog && (
         <MakeOfferDialog
           isOpen={openMakeOfferDialog}
-          toggle={() => setOpenMakeOfferDialog(!openMakeOfferDialog)}
-          nftData={listing}
-          royalty={royalty}
+          onClose={() => setOpenMakeOfferDialog(false)}
+          nft={listing}
+          collection={collection}
         />
       )}
     </>

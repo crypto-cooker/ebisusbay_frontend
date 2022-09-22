@@ -40,6 +40,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/drops/trooprz-skills-boost',
+        destination: '/drops/trooprz-skillz-boost',
+        permanent: true,
+      },
+      {
         source: '/collection/mad-treehouse',
         destination: '/collection/mm-treehouse',
         permanent: true,
@@ -67,6 +72,26 @@ const nextConfig = {
       {
         source: '/collection/carkayous/:id',
         destination: '/collection/carkayous-feral-fish/:id',
+        permanent: true,
+      },
+      {
+        source: '/collection/corruption',
+        destination: '/collection/cpb-bananas',
+        permanent: true,
+      },
+      {
+        source: '/collection/corruption/:id',
+        destination: '/collection/cpb-bananas/:id',
+        permanent: true,
+      },
+      {
+        source: '/collection/troopz-sketchz',
+        destination: '/collection/trooprz-sketchz',
+        permanent: true,
+      },
+      {
+        source: '/collection/troopz-sketchz/:id',
+        destination: '/collection/trooprz-sketchz/:id',
         permanent: true,
       },
       {

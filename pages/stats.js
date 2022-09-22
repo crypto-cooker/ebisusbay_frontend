@@ -35,7 +35,7 @@ const StyledModalTitle = styled(ModalTitle)`
 
 export default function Stats() {
   const dispatch = useDispatch();
-  const [timeframe, setTimeframe] = useState('custom');
+  const [timeframe, setTimeframe] = useState('30d');
   const [type, setType] = useState('totalVolume');
   const [showDialog, setShowDialog] = useState(false);
 
@@ -95,9 +95,9 @@ export default function Stats() {
               <li id="sale" className={timeframe === null ? 'active' : ''} onClick={() => updateTimeframe(null)}>
                 All Time
               </li>
-              <li id="sale" className={timeframe === 'custom' ? 'active' : ''} onClick={() => updateTimeframe('custom')}>
-                Competition
-              </li>
+              {/*<li id="sale" className={timeframe === 'custom' ? 'active' : ''} onClick={() => updateTimeframe('custom')}>*/}
+              {/*  Competition*/}
+              {/*</li>*/}
             </ul>
           </div>
         </div>

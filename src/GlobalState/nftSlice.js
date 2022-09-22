@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getNft } from '../core/api';
 import { listingState } from '../core/api/enums';
 import {refreshToken} from "@src/core/api/endpoints/refresh";
 import {toast} from "react-toastify";
+import {getNft} from "@src/core/api/endpoints/nft";
 
 const nftSlice = createSlice({
   name: 'nft',

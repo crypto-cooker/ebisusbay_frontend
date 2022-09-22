@@ -199,14 +199,14 @@ export function mapAttributeString(str, address, category, makeHuman = false) {
   let newStr = str?.toString() ?? '';
 
   if (mappings) {
-    for (const [key, value] of Object.entries(mappings)) {
-      if (typeof value === 'object' && key.toLowerCase() === category.toLowerCase()) {
-        for (const [k, v] of Object.entries(value)) {
-          newStr = newStr.replace(k, v);
-        }
-      } else {
-        newStr = newStr.replace(key, value);
-      }
+    if (Object.keys(mappings).includes(str) && typeof mappings[str] === 'string') {
+      return mappings[str]
+    }
+
+    if (Object.keys(mappings).includes(category) &&
+      typeof mappings[category] === 'object' &&
+      Object.keys(mappings[category]).includes(str)) {
+      return mappings[category][str];
     }
   }
 
@@ -220,16 +220,19 @@ export function mapAttributeString(str, address, category, makeHuman = false) {
  * @returns {string|number}
  */
 export function siPrefixedNumber(num) {
-  // Nine Zeroes for Billions
-  return Math.abs(Number(num)) >= 1.0e9
-    ? (Math.abs(Number(num)) / 1.0e9).toFixed(2) + 'B'
-    : // Six Zeroes for Millions
+  // Twelve Zeroes for Trillions
+  return Math.abs(Number(num)) >= 1.0e12
+    ? (Math.abs(Number(num)) / 1.0e12).toFixed(2) + 'T'
+    : // Nine Zeroes for Billions
+    Math.abs(Number(num)) >= 1.0e9
+      ? (Math.abs(Number(num)) / 1.0e9).toFixed(2) + 'B'
+      : // Six Zeroes for Millions
     Math.abs(Number(num)) >= 1.0e6
-    ? (Math.abs(Number(num)) / 1.0e6).toFixed(2) + 'M'
-    : // Three Zeroes for Thousands
+      ? (Math.abs(Number(num)) / 1.0e6).toFixed(2) + 'M'
+      : // Three Zeroes for Thousands
     Math.abs(Number(num)) >= 1.0e3
-    ? (Math.abs(Number(num)) / 1.0e3).toFixed(2) + 'K'
-    : Math.abs(Number(num));
+      ? (Math.abs(Number(num)) / 1.0e3).toFixed(2) + 'K'
+      : Math.abs(Number(num));
 }
 
 export function shortAddress(address) {
@@ -377,6 +380,10 @@ export const isDrop = (address, slug) => {
 };
 
 export const isCollection = (address, slug) => {
+  if (Array.isArray(slug)) {
+    return collections.some((c) => slug.includes(c.slug) && caseInsensitiveCompare(c.address, address));
+  }
+
   const collection = collections.find((c) => c.slug === slug);
   return collection && caseInsensitiveCompare(collection.address, address);
 };
@@ -421,6 +428,14 @@ export const isLadyWeirdApesCollection = (address) => {
   return isCollection(address, 'lady-weird-apes');
 };
 
+export const isAnyWeirdApesCollection = (address) => {
+  return isCollection(address, [
+    'weird-apes-club',
+    'baby-weird-apes',
+    'lady-weird-apes'
+  ]);
+};
+
 export const isCronosVerseCollection = (address) => {
   return isCollection(address, 'cronosverse');
 };
@@ -453,18 +468,24 @@ export const isLazyHorsePonyCollection = (address) => {
   return isCollection(address, 'lazy-horse-pony');
 };
 
+export const isCnsCollection = (address) => {
+  return isCollection(address, 'cronos-name-service');
+};
+
 export const percentage = (partialValue, totalValue) => {
   if (!totalValue || totalValue === 0) return 0;
   return Math.floor((100 * partialValue) / totalValue);
 };
 
-export const relativePrecision = (num) => {
+export const relativePrecision = (num, minDecimals = 1) => {
   if (num < 0.001) {
     return Math.round(num * 10000) / 100;
   } else if (num < 0.01) {
     return Math.round(num * 1000) / 10;
   }
-  return Math.round(num * 100);
+
+  const multiplier = minDecimals + 1;
+  return Math.round(num * 100 * multiplier) /  multiplier;
 };
 
 export const sliceIntoChunks = (arr, chunkSize) => {
@@ -496,6 +517,19 @@ export const findCollectionByAddress = (address, tokenId) => {
 
     return matchesAddress;
   });
+};
+
+export const findCollectionFloor = (knownContract, collectionsStats) => {
+  const collectionStats = collectionsStats.find((o) => {
+    if (knownContract.multiToken && o.collection.indexOf('-') !== -1) {
+      let parts = o.collection.split('-');
+      return caseInsensitiveCompare(knownContract.address, parts[0]) && knownContract.id === parseInt(parts[1]);
+    } else {
+      return caseInsensitiveCompare(knownContract.address, o.collection);
+    }
+  });
+
+  return collectionStats ? collectionStats.floorPrice : null;
 };
 
 export const round = (num, decimals) => {
@@ -619,8 +653,12 @@ export const isAddress = (address) => {
 export const getUserDisplayName = async (address) => {
   if (!address) return '';
 
-  let profile = await getProfile(address);
-  if (profile?.data) return profile.data.username;
+  try {
+    let profile = await getProfile(address);
+    if (profile?.data) return profile.data.username;
+  } catch (error) {
+    return shortAddress(address);
+  }
 
   return shortAddress(address);
 };
@@ -693,4 +731,16 @@ export const buildInstagramUrl = (username) => {
   if (!username || username.startsWith('http')) return username;
 
   return `https://instagram.com/${username}`;
+}
+
+export const isNumeric = (str) => {
+  if (typeof str != 'string') return false; // we only process strings!
+  return (
+    !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+    !isNaN(parseFloat(str))
+  ); // ...and ensure strings of whitespace fail
+}
+
+export const stripSpaces = (str) => {
+  return str.replace(/\W/g, '');
 }

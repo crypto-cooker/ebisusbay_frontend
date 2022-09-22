@@ -327,6 +327,7 @@ const userSlice = createSlice({
       state.myUnfilteredListingsFetching = false;
       state.myUnfilteredListings = [];
       state.profile = {};
+      state.authSignature = null;
     },
     onThemeChanged(state, action) {
       state.theme = action.payload;
@@ -907,6 +908,7 @@ export const retrieveProfile = () => async (dispatch, getState) => {
     dispatch(setProfile(profile?.data ?? {}));
   } catch (e) {
     console.log('failed to retrieve profile', e);
+    dispatch(setProfile({error: true}));
   }
 };
 
@@ -1013,11 +1015,9 @@ export class MyNftPageActions {
     dispatch(userSlice.actions.setMyNftPageTransferDialog());
   };
 
-  static showMyNftPageListDialog =
-    ({ contract, id, image, name, address, price, rank }) =>
-    async (dispatch) => {
-      dispatch(userSlice.actions.setMyNftPageListDialog({ contract, id, image, name, address, price, rank }));
-    };
+  static showMyNftPageListDialog = (nft, listing) => async (dispatch) => {
+    dispatch(userSlice.actions.setMyNftPageListDialog({ nft, listing }));
+  };
 
   static setMyNftPageListDialogError = (error) => async (dispatch) => {
     dispatch(userSlice.actions.setMyNftPageListDialogError(error));
@@ -1106,11 +1106,9 @@ export class MyListingsCollectionPageActions {
     dispatch(userSlice.actions.setMyNftPageCancelDialog(nft));
   };
 
-  static showMyNftPageListDialog =
-    ({ contract, id, image, name, address, price, rank }) =>
-    async (dispatch) => {
-      dispatch(userSlice.actions.setMyNftPageListDialog({ contract, id, image, name, address, price, rank }));
-    };
+  static showMyNftPageListDialog = (nft, listing) => async (dispatch) => {
+    dispatch(userSlice.actions.setMyNftPageListDialog({ nft, listing }));
+  };
 
   static setInvalidOnly =
     (status = false) =>

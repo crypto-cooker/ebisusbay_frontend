@@ -6,11 +6,14 @@ import { ethers } from 'ethers';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
 import Button from './Button';
-import MakeOfferDialog from '../Offer/MakeOfferDialog';
-import { chainConnect, connectAccount } from '../../GlobalState/User';
+import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
+import { chainConnect, connectAccount } from '@src/GlobalState/User';
 import { AnyMedia } from './AnyMedia';
-import { specialImageTransform } from '../../hacks';
-import {nftCardUrl} from "../../helpers/image";
+import {nftCardUrl} from "@src/helpers/image";
+import {appConfig} from "@src/Config";
+import {caseInsensitiveCompare} from "@src/utils";
+
+const config = appConfig();
 
 const Watermarked = styled.div`
   position: relative;
@@ -52,19 +55,11 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark, a
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
-  // const [modalType, setModalType] = useState('Make');
-
-  // const handleBuy = () => {
-  //   if (listing.listingId) {
-  //     history.push(`/listing/${listing.listingId}`);
-  //   } else {
-  //     history.push(`/collection/${listing.nftAddress}/${listing.nftId}`);
-  //   }
-  // };
+  const [collection, setCollection] = useState(null);
 
   const handleMakeOffer = () => {
-    // setModalType(type);
     if (user.address) {
+      setCollection(config.collections.find((c) => caseInsensitiveCompare(listing.nftAddress, c.address)));
       setOpenMakeOfferDialog(!openMakeOfferDialog);
     } else {
       if (user.needsOnboard) {
@@ -94,8 +89,19 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark, a
   return (
     <>
       <div className="card eb-nft__card h-100 shadow">
-        {watermark ? (
-          <Watermarked watermark={watermark}>
+        <div className="card-img-container">
+          {watermark ? (
+            <Watermarked watermark={watermark}>
+              <AnyMedia
+                image={nftCardUrl(listing.nftAddress, listing.nft.image)}
+                className={`card-img-top ${imgClass}`}
+                title={listing.nft.name}
+                url={`/collection/${listing.nftAddress}/${listing.nftId}`}
+                width={440}
+                height={440}
+              />
+            </Watermarked>
+          ) : (
             <AnyMedia
               image={nftCardUrl(listing.nftAddress, listing.nft.image)}
               className={`card-img-top ${imgClass}`}
@@ -104,17 +110,8 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark, a
               width={440}
               height={440}
             />
-          </Watermarked>
-        ) : (
-          <AnyMedia
-            image={nftCardUrl(listing.nftAddress, listing.nft.image)}
-            className={`card-img-top ${imgClass}`}
-            title={listing.nft.name}
-            url={`/collection/${listing.nftAddress}/${listing.nftId}`}
-            width={440}
-            height={440}
-          />
-        )}
+          )}
+        </div>
         {listing.nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{listing.nft.rank}</div>}
         <div className="card-body d-flex flex-column justify-content-between">
           <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
@@ -143,10 +140,9 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark, a
       {openMakeOfferDialog && (
         <MakeOfferDialog
           isOpen={openMakeOfferDialog}
-          toggle={() => setOpenMakeOfferDialog(!openMakeOfferDialog)}
-          nftData={convertListingData(listing)}
-          collectionMetadata={collectionMetadata}
-          type={'Make'}
+          onClose={() => setOpenMakeOfferDialog(false)}
+          nftId={listing.nftId}
+          collection={collection}
         />
       )}
     </>

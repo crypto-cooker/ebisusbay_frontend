@@ -4,7 +4,7 @@ import { Contract, ethers } from 'ethers';
 import {faCrow, faExternalLinkAlt, faHeart, faShare, faSync} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import { Spinner } from 'react-bootstrap';
+import {Badge, Spinner} from 'react-bootstrap';
 
 import ProfilePreview from '../components/ProfilePreview';
 import Footer from '../components/Footer';
@@ -26,33 +26,40 @@ import {
   rankingsLogoForCollection,
   rankingsTitleForCollection,
   rankingsLinkForCollection,
-  isLazyHorseCollection, isLazyHorsePonyCollection, isLadyWeirdApesCollection,
-} from '../../utils';
-import {getNftDetails, refreshMetadata} from '../../GlobalState/nftSlice';
-import { connectAccount, chainConnect } from '../../GlobalState/User';
-import { specialImageTransform } from '../../hacks';
+  isLazyHorseCollection,
+  isLazyHorsePonyCollection,
+  isLadyWeirdApesCollection,
+  isNftBlacklisted,
+  isAnyWeirdApesCollection, isWeirdApesCollection,
+} from '@src/utils';
+import {getNftDetails, refreshMetadata} from '@src/GlobalState/nftSlice';
+import { connectAccount, chainConnect } from '@src/GlobalState/User';
+import { specialImageTransform } from '@src/hacks';
 import ListingItem from '../NftDetails/NFTTabListings/ListingItem';
 import PriceActionBar from '../NftDetails/PriceActionBar';
-import { ERC721 } from '../../Contracts/Abis';
-import { getFilteredOffers } from '../../core/subgraph';
-import MakeOfferDialog from '../Offer/MakeOfferDialog';
+import { ERC721 } from '@src/Contracts/Abis';
+import { getFilteredOffers } from '@src/core/subgraph';
+import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
 import NFTTabOffers from '../Offer/NFTTabOffers';
-import { OFFER_TYPE } from '../Offer/MadeOffersRow';
-import { offerState } from '../../core/api/enums';
+import { OFFER_TYPE } from '../Offer/MadeOffers/MadeOffersRow';
+import { offerState } from '@src/core/api/enums';
 import { commify } from 'ethers/lib/utils';
-import { appConfig } from '../../Config';
-import { hostedImage } from '../../helpers/image';
+import { appConfig } from '@src/Config';
+import { hostedImage } from '@src/helpers/image';
 import Link from 'next/link';
 import axios from "axios";
 import Button from "@src/Components/components/common/Button";
+import Market from "@src/Contracts/Marketplace.json";
+import {collectionRoyaltyPercent} from "@src/core/chain";
 
 const config = appConfig();
 const knownContracts = config.collections;
 const tabs = {
-  details: 'details',
+  properties: 'properties',
   powertraits: 'powertraits',
   history: 'history',
   offers: 'offers',
+  info: 'info',
   breeding: 'breeding',
 };
 
@@ -89,8 +96,20 @@ const Nft721 = ({ address, id }) => {
   const [babyWeirdApeBreed, setBabyWeirdApeBreed] = useState(null);
   const [ladyWeirdApeChildren, setLadyWeirdApeChildren] = useState(null);
   const [evoSkullTraits, setEvoSkullTraits] = useState([]);
-  const [lazyHorseName, setLazyHorseName] = useState(null);
   const [lazyHorseTraits, setLazyHorseTraits] = useState([]);
+  const [customProfile, setCustomProfile] = useState({
+    name: null,
+    description: null
+  });
+
+  const [royalty, setRoyalty] = useState(null);
+  useEffect(() => {
+    async function getRoyalty() {
+      const royalty = await collectionRoyaltyPercent(address, id);
+      setRoyalty(royalty);
+    }
+    getRoyalty();
+  }, []);
 
   useEffect(() => {
     dispatch(getNftDetails(address, id));
@@ -182,6 +201,38 @@ const Nft721 = ({ address, id }) => {
   }, [address]);
 
   useEffect(() => {
+    async function getApeInfo() {
+      if (isAnyWeirdApesCollection(address)) {
+        const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+        const abiFile = require(`../../Assets/abis/weird-apes-bio.json`);
+        const contract = new Contract('0x86dC98DB0AFd27d5cBD7501cd1a72Ff17f324609', abiFile, readProvider);
+        try {
+          let apeInfo;
+          if (isWeirdApesCollection(address)) {
+            apeInfo = await contract.getGenesisInfo(id);
+          } else if (isLadyWeirdApesCollection(address)) {
+            apeInfo = await contract.getLadyInfo(id);
+          } else if (isBabyWeirdApesCollection(address)) {
+            apeInfo = await contract.getBabyInfo(id);
+          } else return;
+
+          setCustomProfile({
+            name: apeInfo.name.length > 0 ? apeInfo.name : null,
+            description: apeInfo.bio.length > 0 ? apeInfo.bio : null
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        setCustomProfile({name: null, description: null});
+      }
+    }
+    getApeInfo();
+
+    // eslint-disable-next-line
+  }, [address]);
+
+  useEffect(() => {
     async function getAttributes(abi) {
       const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
       const contract = new Contract(address, abi, readProvider);
@@ -240,7 +291,7 @@ const Nft721 = ({ address, id }) => {
           const uri = await contract.tokenURI(id);
           await axios.get(uri)
             .then((response) => {
-              setLazyHorseName(response.data.name);
+              setCustomProfile({name: response.data.name.length > 0 ? response.data.name : null, description: null});
               setLazyHorseTraits([
                 response.data.attributes.find((trait) => trait.trait_type === 'Race Count'),
                 response.data.attributes.find((trait) => trait.trait_type === 'Breeded'),
@@ -250,7 +301,7 @@ const Nft721 = ({ address, id }) => {
           console.log(error);
         }
       } else {
-        setLazyHorseName(null);
+        setCustomProfile({name: null, description: null});
       }
     }
     getLazyHorseName();
@@ -293,7 +344,7 @@ const Nft721 = ({ address, id }) => {
     return nft.original_image;
   };
 
-  const [currentTab, setCurrentTab] = React.useState(tabs.details);
+  const [currentTab, setCurrentTab] = React.useState(tabs.properties);
   const handleTabChange = useCallback((tab) => {
     setCurrentTab(tab);
   }, []);
@@ -369,44 +420,36 @@ const Nft721 = ({ address, id }) => {
               ) : (
                 <></>
               )}
-              {nft && nft.original_image && (
                 <div className="nft__item_action mt-2" style={{ cursor: 'pointer' }}>
-                  {/*<ButtonGroup>*/}
-                  {/*  <Button styleType="default-outlined">*/}
-                  {/*    Increase Bid*/}
-                  {/*  </Button>*/}
-                  {/*  <Button styleType="default-outlined" title="Share" onClick={() => onShare()}>*/}
-                  {/*    <FontAwesomeIcon icon={faShare} />*/}
-                  {/*  </Button>*/}
-                  {/*  <Button styleType="default-outlined" title="Refresh Metadata" onClick={() => onRefreshMetadata()}>*/}
-                  {/*    <FontAwesomeIcon icon={faSync} />*/}
-                  {/*  </Button>*/}
-                  {/*  <Button styleType="default-outlined" title="View Full Image" onClick={() =>*/}
-                  {/*    typeof window !== 'undefined' &&*/}
-                  {/*    window.open(specialImageTransform(address, fullImage()), '_blank')*/}
-                  {/*  }>*/}
-                  {/*    <FontAwesomeIcon icon={faExternalLinkAlt} />*/}
-                  {/*  </Button>*/}
-                  {/*</ButtonGroup>*/}
                   <div className="d-flex justify-content-center">
                     <Button styleType="default-outlined" title="Refresh Metadata" onClick={onRefreshMetadata} disabled={refreshing}>
                       <FontAwesomeIcon icon={faSync} spin={refreshing} />
                     </Button>
-                    <Button styleType="default-outlined" className="ms-2" title="View Full Image" onClick={() =>
-                      typeof window !== 'undefined' &&
-                      window.open(specialImageTransform(address, fullImage()), '_blank')
-                    }>
-                      <FontAwesomeIcon icon={faExternalLinkAlt} />
-                    </Button>
+                    {nft && nft.original_image && (
+                      <Button styleType="default-outlined" className="ms-2" title="View Full Image" onClick={() =>
+                        typeof window !== 'undefined' &&
+                        window.open(specialImageTransform(address, fullImage()), '_blank')
+                      }>
+                        <FontAwesomeIcon icon={faExternalLinkAlt} />
+                      </Button>
+                    )}
                   </div>
                 </div>
-              )}
             </div>
             <div className="col-md-6">
               {nft && (
                 <div className="item_info">
-                  <h2>{lazyHorseName ?? nft.name}</h2>
-                  <p className="text-break">{nft.description}</p>
+                  {isNftBlacklisted(address, id) ? (
+                    <div className="mb-4">
+                      <h2 className="mb-0">{customProfile.name ?? nft.name}</h2>
+                      <div className="d-flex">
+                        <Badge bg="danger">Blacklisted</Badge>
+                      </div>
+                    </div>
+                  ) : (
+                    <h2>{customProfile.name ?? nft.name}</h2>
+                  )}
+                  <p className="text-break">{customProfile.description ?? nft.description}</p>
                   {isCroCrowCollection(address) && croCrowBreed && (
                     <div className="d-flex flex-row align-items-center mb-4">
                       <LayeredIcon
@@ -438,20 +481,31 @@ const Nft721 = ({ address, id }) => {
                         bgColor={'#ffffff00'}
                         color={'#dc143c'}
                         inverse={false}
-                        title={`This Lady Weird Ape has had ${ladyWeirdApeChildren} ${ladyWeirdApeChildren === 1 ? 'child' : 'children'}`}
+                        title={`This Lady Weird Ape can make ${ladyWeirdApeChildren} ${ladyWeirdApeChildren === 1 ? 'baby' : 'babies'}`}
                       />
-                      <span className="fw-bold">This Lady Weird Ape has had {`${ladyWeirdApeChildren} ${ladyWeirdApeChildren === 1 ? 'child' : 'children'}`}</span>
+                      <span className="fw-bold">This Lady Weird Ape can make {`${ladyWeirdApeChildren} ${ladyWeirdApeChildren === 1 ? 'baby' : 'babies'}`}</span>
                     </div>
                   )}
 
                   {collection.listable && (
-                    <PriceActionBar offerType={offerType} onOfferSelected={() => handleMakeOffer()} />
+                    <PriceActionBar
+                      offerType={offerType}
+                      onOfferSelected={() => handleMakeOffer()}
+                      isOwner={caseInsensitiveCompare(user.address, nft.owner)}
+                    />
                   )}
 
                   <div className="row" style={{ gap: '2rem 0' }}>
-                    {currentListing && collection.listable && (
+                    {nft.owner ? (
                       <ProfilePreview
-                        type="Seller"
+                        type="Owner"
+                        address={nft.owner}
+                        to={`/account/${nft.owner}`}
+                        useCnsLookup={true}
+                      />
+                    ) : (currentListing && collection.listable) && (
+                      <ProfilePreview
+                        type="Owner"
                         address={currentListing.seller}
                         to={`/account/${currentListing.seller}`}
                         useCnsLookup={true}
@@ -473,7 +527,7 @@ const Nft721 = ({ address, id }) => {
                         title={nft.rank}
                         avatar={rankingsLogoForCollection(collection)}
                         hover={rankingsTitleForCollection(collection)}
-                        to={rankingsLinkForCollection(collection)}
+                        to={rankingsLinkForCollection(collection, nft.id)}
                         pop={true}
                       />
                     )}
@@ -483,8 +537,8 @@ const Nft721 = ({ address, id }) => {
 
                   <div className="de_tab">
                     <ul className="de_nav nft_tabs_options">
-                      <li className={`tab ${currentTab === tabs.details ? 'active' : ''}`}>
-                        <span onClick={() => handleTabChange(tabs.details)}>Details</span>
+                      <li className={`tab ${currentTab === tabs.properties ? 'active' : ''}`}>
+                        <span onClick={() => handleTabChange(tabs.properties)}>Properties</span>
                       </li>
                       {((powertraits && powertraits.length > 0) || (evoSkullTraits && evoSkullTraits.length > 0)) && (
                         <li className={`tab ${currentTab === tabs.powertraits ? 'active' : ''}`}>
@@ -497,6 +551,9 @@ const Nft721 = ({ address, id }) => {
                       <li className={`tab ${currentTab === tabs.offers ? 'active' : ''}`}>
                         <span onClick={() => handleTabChange(tabs.offers)}>Offers</span>
                       </li>
+                      <li className={`tab ${currentTab === tabs.info ? 'active' : ''}`}>
+                        <span onClick={() => handleTabChange(tabs.info)}>Info</span>
+                      </li>
                       {babyWeirdApeBreed && (
                         <li className={`tab ${currentTab === tabs.breeding ? 'active' : ''}`}>
                           <span onClick={() => handleTabChange(tabs.breeding)}>Breed Info</span>
@@ -505,12 +562,12 @@ const Nft721 = ({ address, id }) => {
                     </ul>
 
                     <div className="de_tab_content">
-                      {currentTab === tabs.details && (
+                      {currentTab === tabs.properties && (
                         <div className="tab-1 onStep fadeIn">
                           {(nft.attributes && Array.isArray(nft.attributes) && nft.attributes.length > 0) ||
                           (nft.properties && Array.isArray(nft.properties) && nft.properties.length > 0) ? (
                             <div className="d-block mb-3">
-                              <div className="row mt-5 gx-3 gy-2">
+                              <div className="row gx-3 gy-2">
                                 {nft.attributes &&
                                   Array.isArray(nft.attributes) &&
                                   nft.attributes
@@ -561,7 +618,7 @@ const Nft721 = ({ address, id }) => {
                           {(powertraits && powertraits.length > 0) || (evoSkullTraits && evoSkullTraits.length > 0) || (lazyHorseTraits && lazyHorseTraits.length > 0) ? (
                             <>
                               <div className="d-block mb-3">
-                                <div className="row mt-5 gx-3 gy-2">
+                                <div className="row gx-3 gy-2">
                                   {powertraits &&
                                     powertraits.length > 0 &&
                                     powertraits.map((data, i) => {
@@ -621,7 +678,7 @@ const Nft721 = ({ address, id }) => {
                               {listingHistory.map((listing, index) => (
                                 <ListingItem
                                   key={`sold-item-${index}`}
-                                  route="/seller"
+                                  route="/account"
                                   primaryTitle="Bought by"
                                   user={listing.purchaser}
                                   time={timeSince(listing.saleTime + '000')}
@@ -639,6 +696,41 @@ const Nft721 = ({ address, id }) => {
                       )}
 
                       {currentTab === tabs.offers && <NFTTabOffers nftAddress={address} nftId={id} />}
+
+                      {currentTab === tabs.info && (
+                        <div className="tab-1 onStep fadeIn">
+                          <div className="d-block mb-3">
+                            <div className="row gx-3 gy-2">
+                              <div className="d-flex justify-content-between">
+                                <div>Contract Address</div>
+                                <div>
+                                  <a href={`${config.urls.explorer}address/${address}`} target="_blank">
+                                    {shortAddress(address)}
+                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted"/>
+                                  </a>
+                                </div>
+                              </div>
+                              <div className="d-flex justify-content-between">
+                                <div>Token ID</div>
+                                <div>
+                                  <a href={`${config.urls.explorer}token/${address}?a=${id}`} target="_blank">
+                                    {id.length > 10 ? shortAddress(id) : id}
+                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted"/>
+                                  </a>
+                                </div>
+                              </div>
+                              <div className="d-flex justify-content-between">
+                                <div>Token Standard</div>
+                                <div>{collection.multiToken ? 'CRC-1155' : 'CRC-721'}</div>
+                              </div>
+                              <div className="d-flex justify-content-between">
+                                <div>Royalty</div>
+                                <div>{royalty ? `${royalty}%` : 'N/A'}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
 
                       {currentTab === tabs.breeding && babyWeirdApeBreed && (
                         <div className="tab-2 onStep fadeIn">
@@ -675,7 +767,7 @@ const Nft721 = ({ address, id }) => {
                                 <div className="nft_attr">
                                   <h5>Father ID</h5>
                                   <h4>
-                                    <a href={`/collection/weird-apes-club-v2/${babyWeirdApeBreed.father.toNumber()}`}>
+                                    <a href={`/collection/weird-apes-club/${babyWeirdApeBreed.father.toNumber()}`}>
                                       {babyWeirdApeBreed.father.toNumber()}
                                     </a>
                                   </h4>
@@ -696,11 +788,9 @@ const Nft721 = ({ address, id }) => {
       {openMakeOfferDialog && (
         <MakeOfferDialog
           isOpen={openMakeOfferDialog}
-          toggle={() => setOpenMakeOfferDialog(!openMakeOfferDialog)}
-          offerData={offerData}
-          nftData={nft}
-          collectionMetadata={collectionMetadata}
-          type={offerType}
+          onClose={() => setOpenMakeOfferDialog(false)}
+          nft={nft}
+          collection={collection}
         />
       )}
       <Footer />
@@ -743,7 +833,7 @@ const Trait = ({
     <div className="col-lg-4 col-md-6 col-sm-6">
       <div className="nft_attr">
         <h5>{humanize(title)}</h5>
-        {collectionSlug && queryKey ? (
+        {collectionSlug && queryKey && value ? (
           <Link
             href={{
               pathname: `/collection/${collectionSlug}`,

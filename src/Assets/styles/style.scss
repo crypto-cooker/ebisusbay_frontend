@@ -99,7 +99,6 @@ section {
 .wraper {
   padding: 0;
   display: block;
-  overflow: hidden;
   width: 100%;
   background: $bgColor1;
 
@@ -3905,12 +3904,7 @@ img.img-rounded {
     }
   }
 }
-.hide {
-  display: none !important;
-}
-.show {
-  display: block !important;
-}
+
 #form_sb {
   .col {
     display: flex;
@@ -5540,7 +5534,7 @@ iframe.metaverse {
   }
 
   .form_icon_button {
-    border: solid 1px $textColor2;
+    border: solid 1px $borderColor1;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -5552,7 +5546,7 @@ iframe.metaverse {
     align-items: center;
     justify-content: center;
     margin-bottom: 10px;
-    width: 205px;
+    min-width: 75px;
     height: 78px;
     cursor: pointer;
 
@@ -5578,7 +5572,7 @@ iframe.metaverse {
     height: 40px;
     background-color: $cardColor2;
     border-radius: 2px;
-    &::placeholder {color: $textColor1;}
+    &::placeholder {color: $textColor2;}
     margin-bottom: 0px;
   }  
 
@@ -5818,3 +5812,67 @@ iframe.metaverse {
     }
   }
 }
+
+.offcanvas  {
+  background:$bgColor1;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  .btn-close {
+    color:$textColor1;
+    opacity: 1;
+  }
+
+  &.offcanvas-bottom {
+    height: 100vh;
+  }
+}
+
+.textColor1 {
+  color: $textColor1 !important;
+}
+
+#isVerifiedSwitch {
+  width: 108px;
+  height: 30px;
+}
+
+@media only screen and (min-width: 0px) {
+  .input_image {
+    max-height: 290px;
+  }
+}
+
+@media only screen and (min-width: 576px) {
+  .input_image {
+    max-height: 268px;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  .input_image {
+    max-height: 390px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .input_image {
+    max-height: 166px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .input_image {
+    max-height: 200px;
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  .input_image {
+    max-height: 232px;
+  }
+}
+

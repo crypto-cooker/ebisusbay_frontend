@@ -3,16 +3,28 @@ import {ListingsQuery} from "../queries/listings";
 import {SortOption} from "../../../Components/Models/sort-option.model";
 import {CollectionSortOption} from "../../../Components/Models/collection-sort-option.model";
 import {appConfig} from "../../../Config";
+import {Axios} from "@src/core/http/axios";
+import {listingState} from "@src/core/api/enums";
 
 const config = appConfig();
-const api = {
+const apiOld = {
   baseUrl: config.urls.api,
   listings: '/listings',
 };
+const api = Axios.create(config.urls.api);
 
 // @todo refactor into something more generic
 let abortController = null;
 
+/**
+ * @deprecated Use getListings
+ * @param page
+ * @param sort
+ * @param filter
+ * @param state
+ * @param pagesize
+ * @returns {Promise<{response: any, cancelled: boolean}|{response: *[], cancelled: boolean}>}
+ */
 export async function sortAndFetchListings(
   page,
   sort,
@@ -25,7 +37,7 @@ export async function sortAndFetchListings(
     page: page,
     pageSize: pagesize,
     sortBy: 'listingId',
-    direction: 'desc',
+    direction: 'desc'
   };
   if (filter && (filter instanceof ListingsQuery)) {
     query = { ...query, ...filter.toApi() };
@@ -45,7 +57,7 @@ export async function sortAndFetchListings(
 
   const queryString = new URLSearchParams(query);
 
-  const url = new URL(api.listings, `${api.baseUrl}`);
+  const url = new URL(apiOld.listings, `${apiOld.baseUrl}`);
   const uri = `${url}?${queryString}`;
 
   //  Debugging
@@ -83,5 +95,51 @@ export async function sortAndFetchListings(
     }
     abortController = null;
     throw new TypeError(error);
+  }
+}
+
+export const getListings = async (listingsQuery) => {
+  let query = {
+    state: listingState.ACTIVE,
+    page: 1,
+    pageSize: limitSizeOptions.lg,
+    sortBy: 'listingId',
+    direction: 'desc',
+    ...listingsQuery.toApi()
+  };
+
+  const date = new Date();
+  const time = `${date.getSeconds()}-${date.getMilliseconds()}`;
+  const log = (message) => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`${time} ${message}`);
+    }
+  };
+
+  try {
+    log(`Ongoing call: ${!!abortController}`);
+
+    if (abortController) {
+      abortController.abort();
+      log(`Cancelled previous call.`);
+    }
+
+    abortController = new AbortController();
+    const { signal } = abortController;
+
+    const response = await api.get(`listings`, {
+      params:query,
+      signal
+    });
+
+    abortController = null;
+    return response;
+  } catch (error) {
+    if (error && error.name === 'AbortError') {
+      log(`Cancelled.`);
+      return { cancelled: true, response: [] };
+    }
+    abortController = null;
+    throw error;
   }
 }

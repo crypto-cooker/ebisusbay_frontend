@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  MyListingsCollectionPageActions,
+  MyListingsCollectionPageActions, MyNftPageActions,
 } from '../../GlobalState/User';
 import { Form, Spinner } from 'react-bootstrap';
 import MyListingCard from './MyListingCard';
@@ -15,6 +15,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useRouter } from 'next/router';
 import {getUnfilteredListingsForAddress} from "@src/core/api";
 import useSWRInfinite from "swr/infinite";
+import MakeListingDialog from "@src/Components/MakeListing";
 
 const fetcher = async (...args) => {
   const [key, address, provider, page] = args;
@@ -111,19 +112,18 @@ const MyListingsCollection = ({ walletAddress = null }) => {
           }
         >
           <div className="card-group">
-            {myListings && filteredListings.map((nft, index) => (
+            {myListings && filteredListings.map((listing, index) => (
               <div key={index} className="d-item col-lg-6 col-md-12 mb-4 px-2">
                 <MyListingCard
-                  nft={nft}
+                  nft={listing}
                   key={index}
-                  canCancel={nft.state === 0}
-                  canUpdate={nft.state === 0 && nft.isInWallet}
+                  canCancel={listing.state === 0}
+                  canUpdate={listing.state === 0 && listing.isInWallet}
                   onUpdateButtonPressed={() =>{
-                    dispatch(MyListingsCollectionPageActions.showMyNftPageListDialog(nft))
-                    router.push(`/nfts/sell?collectionId=${nft.address}&nftId=${nft.id}`)
+                    dispatch(MyListingsCollectionPageActions.showMyNftPageListDialog(listing.nft, listing))
                   }}
                   onCancelButtonPressed={() =>
-                    dispatch(MyListingsCollectionPageActions.showMyNftPageCancelDialog(nft))
+                    dispatch(MyListingsCollectionPageActions.showMyNftPageCancelDialog(listing))
                   }
                   newTab={true}
                 />
@@ -142,6 +142,12 @@ const MyListingsCollection = ({ walletAddress = null }) => {
 
       <MyNftCancelDialog/>
       <InvalidListingsPopup navigateTo={false}/>
+      <MakeListingDialog
+        isOpen={!!user.myNftPageListDialog?.nft}
+        nft={user.myNftPageListDialog?.nft}
+        onClose={() => dispatch(MyNftPageActions.hideMyNftPageListDialog())}
+        listing={user.myNftPageListDialog?.listing}
+      />
     </>
   );
 };

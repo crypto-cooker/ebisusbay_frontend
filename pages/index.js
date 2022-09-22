@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { keyframes } from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
 import styled, { createGlobalStyle } from 'styled-components';
-import {faCoffee, faFire} from '@fortawesome/free-solid-svg-icons';
+import {faBook, faCoffee, faFire} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Footer from '../src/Components/components/Footer';
@@ -17,9 +17,10 @@ import { siPrefixedNumber } from '@src/utils';
 import {getTheme, theme} from '@src/Theme/theme';
 import { limitSizeOptions } from '@src/Components/components/constants/filter-options';
 import Button from '../src/Components/components/Button';
-import {hostedImage} from "@src/helpers/image";
+import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {appConfig} from "@src/Config";
 import Head from "next/head";
+import {faDiscord, faTwitter} from "@fortawesome/free-brands-svg-icons";
 
 const fadeInUp = keyframes`
   0% {
@@ -89,7 +90,7 @@ const GlobalStyles = createGlobalStyle`
 const Jumbotron = {
   Host: styled.div`
     background-image: url(${({ isDark }) =>
-      isDark ? hostedImage('/img/background/banner-dark.webp') : hostedImage('/img/background/Ebisus-bg-1_L.webp')});
+      isDark ? ImageKitService.buildBannerUrl('/img/background/banner-dark.webp') : ImageKitService.buildBannerUrl('/img/background/Ebisus-bg-1_L.webp')});
     background-size: cover;
     background-repeat: no-repeat;
     height: max(100vh, 800px);
@@ -249,57 +250,52 @@ const Home = () => {
       </Jumbotron.Host>
       {mobile && JumbotronData()}
 
-{/*      <section className="container no-bottom no-top">*/}
-{/*        <div className="row">*/}
-{/*          <div className="col-lg-12">*/}
-{/*            <div className="text-center pt-5">*/}
-{/*              <h2>Bad Lizzys</h2>*/}
-{/*              <div className="small-border"></div>*/}
-{/*            </div>*/}
-{/*          </div>*/}
-{/*          <div className="col-lg-8 col-md-6 d-flex align-items-center">*/}
-{/*            <div className="mt-3" style={{color:getTheme(userTheme).colors.textColor3}}>*/}
-{/*              <p>*/}
-{/*              The cronos lizards have met the strange visitors - bad bits.*/}
-{/*Offering their mysterious portal juice, the Lizards have phased into a whole new dimension!*/}
-
-{/*This collection of 10,000 Cronos Lizards turned BAD is all about giving back to the community and setting up this OG Cronos Project to succeed.We have free airdrops, monetized token, shop, charity, and a giveback program.*/}
-
-{/*NOTE: If you have any Cronos Lizards Gen1, Gen2 and BSL you can exchange each of them for a BAD Lizzy.*/}
-
-{/*GET YOURS TODAY at Cronoslizards.com/mint</p>*/}
-{/*            </div>*/}
-{/*          </div>*/}
-{/*          <div className="col-lg-4 col-md-6 pt-3">*/}
-{/*            <div className="mx-auto text-center">*/}
-{/*              <img*/}
-{/*                src={hostedImage('/img/promos/bad_liz.png')}*/}
-{/*                alt="Bad Lizzys"*/}
-{/*                className="img-fluid"*/}
-{/*                style={{maxWidth: '300px'}}*/}
-{/*              />*/}
-{/*            </div>*/}
-{/*            <div className="card-body d-flex flex-column align-middle">*/}
-{/*              <div className="d-flex justify-content-between">*/}
-{/*                /!*<div className="flex-fill mx-1">*!/*/}
-{/*                /!*  <a href="https://twitter.com/crogecoin" target="_blank" rel="noreferrer">*!/*/}
-{/*                /!*    <Button type="legacy-outlined" className="w-100">*!/*/}
-{/*                /!*      <FontAwesomeIcon icon={faTwitter} className="me-1"/> Twitter*!/*/}
-{/*                /!*    </Button>*!/*/}
-{/*                /!*  </a>*!/*/}
-{/*                /!*</div>*!/*/}
-{/*                <div className="flex-fill mx-1">*/}
-{/*                  <a href="https://cronoslizards.com/mint" target="_blank" rel="noreferrer">*/}
-{/*                    <Button type="legacy-outlined" className="w-100">*/}
-{/*                       Mint Now*/}
-{/*                    </Button>*/}
-{/*                  </a>*/}
-{/*                </div>*/}
-{/*              </div>*/}
-{/*            </div>*/}
-{/*          </div>*/}
-{/*        </div>*/}
-{/*      </section>*/}
+      <section className="container no-bottom no-top">
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="text-center pt-5">
+              <h2>CROtopia</h2>
+              <div className="small-border"></div>
+            </div>
+          </div>
+          <div className="col-lg-6 col-md-6 d-flex align-items-center">
+            <div className="mt-3" style={{color:getTheme(userTheme).colors.textColor3}}>
+              <p>
+                CROtopia OG Pass gives users immediate access to a fully functioning and ever expanding Metaverse. Holders gain access to all partner buildings and are able to compete in our Play 2 Earn section. Crotopia OG pass holders will also benefit from exclusive airdrops, skins, accessories and more.
+              </p>
+            </div>
+          </div>
+          <div className="col-lg-6 col-md-6 pt-3">
+            <div className="mx-auto text-center">
+              <img
+                src={hostedImage('/img/promos/crotopia.webp')}
+                alt="CROtopia"
+                className="img-fluid"
+                width="100%"
+                style={{maxWidth: '300px'}}
+              />
+            </div>
+            <div className="d-flex flex-column align-middle">
+              <div className="d-flex justify-content-between flex-wrap">
+                <div className="flex-fill mx-1 mt-2">
+                  <a href="https://www.crotopia.land/" target="_blank" rel="noreferrer">
+                    <Button type="legacy-outlined" className="w-100">
+                      Metaverse
+                    </Button>
+                  </a>
+                </div>
+                <div className="flex-fill mx-auto mt-2" style={{maxWidth:300}}>
+                  <a href="https://www.crotopia.xyz" target="_blank" rel="noreferrer">
+                    <Button type="legacy" className="w-100">
+                       Mint Now
+                    </Button>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="container no-bottom">
         <div className="row">
@@ -374,6 +370,15 @@ const Home = () => {
                 src={hostedImage(userTheme === 'light' ? '/img/logos/wearefi-logo.png' : '/img/logos/wearefi-white.png')}
                 alt="WeAre Solutions"
                 width={userTheme === 'light' ? '64px' : '160px'}
+              />
+            </a>
+          </div>
+          <div className="col">
+            <a href="https://phenix.finance/" target="_blank" rel="noreferrer">
+              <img
+                src={hostedImage(userTheme === 'light' ? '/img/logos/phenix.svg' : '/img/logos/phenix-white.svg')}
+                alt="Phenix Finance"
+                width="100px"
               />
             </a>
           </div>
