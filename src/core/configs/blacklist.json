@@ -166,5 +166,33 @@
       "ids" : [724]}
     ], 
     "reason" : "the ol' trading scam"
+  },{
+    "slug" : "crohogs",
+    "address" : "0xFD265797d7Bc6C25f2Cd148ec12f36a8eE00862a",
+    "ids":  [
+      4,
+      12,
+      1408,
+      13,
+      673,
+      1249,
+      352,
+      16,
+      352,
+      874
+    ],
+    "users" : [
+      "0x2a22149ad254a7c90eb8fe2a284833c642ac385c",
+      "0x24cb7600f7d631982c072536c8f602f54282d2ef",
+      "0xb67abc8e8c64c35f7dd0ba76f54420e935335b32",
+      "0x71f00df03d73665770d4dafdc37205238e9e3d7b",
+      "0x2e8702c811634afc20572e6dd860e40eef8efda0"
+    ],
+    "reason" : "mint snipe hack"
+  },
+  {
+    "users": ["0x658b476fc8a04338e97a56707be9f9bc4a95761c"],
+    "tokens": [],
+    "reason": "impersonating TheDegeneratedNFTs"
   }
 ]
