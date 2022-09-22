@@ -1,20 +1,20 @@
 import { useFormik } from 'formik';
 import { Field } from '@src/Components/Form'
 import * as Yup from 'yup';
-import CustomizedDialogs from './Dialog';
+import CustomizedDialogs from '../Dialog';
 import { useEffect, useState } from 'react';
-import useClearOwner from './hooks/useClearOwner';
+import useSetOwner from '../hooks/useSetOwner';
 import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
 import { Spinner } from 'react-bootstrap';
-import { useQuery } from "@tanstack/react-query";
-import { getOwnerCollections } from "@src/core/api/next/collectioninfo";
+import { toast } from 'react-toastify';
+import {useQuery} from "@tanstack/react-query";
+import {getOwnerCollections} from "@src/core/api/next/collectioninfo";
 import { useRouter } from "next/router";
 
-const ClearOwnerForm = ({ address: collectionAddress }) => {
+const SetOwnerForm = ({ address: collectionAddress }) => {
 
   const [isOpen, setIsOpen] = useState(false);
-  const [{ isLoading, response, error }, clearCollectionOwner] = useClearOwner();
+  const [{ isLoading, response, error }, setNewOwner] = useSetOwner();
   const user = useSelector((state) => state.user);
   const router = useRouter();
 
@@ -29,20 +29,19 @@ const ClearOwnerForm = ({ address: collectionAddress }) => {
       } else if (response) {
         toast.success('It was updated successfully');
         setIsOpen(false);
+        refetch(() => getOwnerCollections(user.address));
       }
-      refetch(() => getOwnerCollections(user.address));
     }
   }, [isLoading, response, error])
 
   useEffect(() => {
-    if (!data?.data?.collections?.find((collection) => collection.address == collectionAddress)) router.push(`/account/${user.address}?tab=collections`)
+    if (data && !data?.data?.collections?.find((collection) => collection.address == collectionAddress)) router.push(`/account/${user.address}?tab=collections`)
   }, [data])
 
 
-  const onSubmit = async (e) => {
-    e.preventDefault()
+  const onSubmit = async () => {
     try {
-      await clearCollectionOwner(user.address, collectionAddress);
+      await setNewOwner(user.address, collectionAddress, values.address);
 
     } catch (error) {
       console.log(error);
@@ -57,7 +56,7 @@ const ClearOwnerForm = ({ address: collectionAddress }) => {
   const Title = () => {
     return (
       <div style={{ minWidth: 200, textAlign: 'center', fontWeight: 'bold', margin: '0px 24px' }}>
-        Clear Collection Owner
+        Accept the new Collection Owner
       </div>
     )
   }
@@ -65,7 +64,7 @@ const ClearOwnerForm = ({ address: collectionAddress }) => {
   const Body = () => {
     return (
       <div style={{ minWidth: 200, textAlign: 'center' }}>
-        Do you want to clear the owner of the collection?
+        The collection <span style={{ fontWeight: 'bold' }}>{cutWalletAddress(collectionAddress)}</span> will be transferred to <span style={{ fontWeight: 'bold' }}>{cutWalletAddress(values.address)}</span>
       </div>
     )
   }
@@ -88,9 +87,37 @@ const ClearOwnerForm = ({ address: collectionAddress }) => {
     )
   }
 
+  const formikProps = useFormik({
+    onSubmit,
+    validationSchema: addressValidation,
+    initialValues: { address: '' },
+    enableReinitialize: true,
+  });
+
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    setFieldValue,
+    setFieldTouched,
+    handleBlur,
+    handleSubmit,
+    validateForm,
+  } = formikProps;
+
   const validationForm = async (e) => {
+    const errors = await validateForm(values);
     e.preventDefault();
-    setIsOpen(true);
+    if (errors) {
+      const keysErrorsGroup = Object.keys(errors);
+      if (keysErrorsGroup.length > 0) {
+        setFieldTouched(`address`, true)
+      }
+      else {
+        setIsOpen(true);
+      }
+    }
   }
 
   const cutWalletAddress = (address = '') => {
@@ -113,17 +140,30 @@ const ClearOwnerForm = ({ address: collectionAddress }) => {
   }
 
   return (
-    <form id="ownership" autoComplete="off" onSubmit={onSubmit} className="user-settings-form">
+    <form id="ownership" autoComplete="off" onSubmit={handleSubmit} className="user-settings-form">
       <div>
-        <Field
+      <Field
           type='input'
-          name='address'
+          name='collectionAddress'
           value={collectionAddress}
           title='Collection Address'
           placeholder=''
-          description=''
+          description='Insert the address of the new owner'
           isRequired={true}
           isDisabled={true}
+        />
+        <Field
+          type='input'
+          name='address'
+          value={values.address}
+          error={errors.address}
+          title='Wallet Address'
+          placeholder='Wallet address'
+          description='Insert the address of the new owner'
+          isRequired={true}
+          isDisabled={false}
+          onChange={handleChange}
+          onBlur={handleBlur}
         />
       </div>
       <div className='row'>
@@ -138,4 +178,4 @@ const ClearOwnerForm = ({ address: collectionAddress }) => {
   )
 }
 
-export default ClearOwnerForm;
+export default SetOwnerForm;

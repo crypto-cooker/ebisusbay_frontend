@@ -1,4 +1,4 @@
-import { useCallback, useState, useLayoutEffect } from 'react';
+import { useCallback, useState } from 'react';
 import { clearOwner } from "@src/core/api/next/collectioninfo";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 

@@ -10,7 +10,7 @@ import { hostedImage } from "@src/helpers/image";
 
 import Constants from '@src/constants';
 import {useQuery} from "@tanstack/react-query";
-import {getOwnerCollections} from "@src/core/api/next/collectioninfo";
+import {getOwnerCollections} from "@src/core/cms/next/collections";
 const { Features } = Constants;
 
 const mobileListBreakpoint = 1000;
@@ -55,7 +55,7 @@ export default function Collections({ address }) {
       </div>
     ) : status === "error" ? (
       <p className="text-center">Error: {error.message}</p>
-    ) : data.data.collections.length < 1 ? (
+    ) : data.data.data.length < 1 ? (
       <p className="text-center">Nothing to see here...</p>
     ) : (
       <div className="row">
@@ -86,8 +86,8 @@ export default function Collections({ address }) {
             </thead>
             <tbody>
               <GlobalStyles />
-              {data.data.collections &&
-                data.data.collections.map((collection, index) => {
+              {data.data.data &&
+                data.data.data.map((collection, index) => {
                   return (
                     <tr key={index}>
                       <th scope="row" className="row gap-4 border-bottom-0" style={{ paddingLeft: 0 }}>
