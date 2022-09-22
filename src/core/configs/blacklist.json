@@ -166,5 +166,29 @@
       "ids" : [724]}
     ], 
     "reason" : "the ol' trading scam"
+  },{
+    "slug" : "crohogs",
+    "address" : "0xFD265797d7Bc6C25f2Cd148ec12f36a8eE00862a",
+    "ids":  [
+      4,
+      12,
+      1408,
+      13,
+      673,
+      1249,
+      352,
+      16,
+      352,
+      874
+    ],
+    "users" : [
+
+    ],
+    "reason" : "mint snipe hack"
+  },
+  {
+    "users": ["0x658b476fc8a04338e97a56707be9f9bc4a95761c"],
+    "tokens": [],
+    "reason": "impersonating TheDegeneratedNFTs"
   }
 ]
