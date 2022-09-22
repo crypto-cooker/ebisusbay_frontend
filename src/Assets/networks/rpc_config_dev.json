@@ -8971,6 +8971,25 @@
         "discord": "https://discord.gg/fpTgAReDyN",
         "medium": "https://medium.com/@CronoSteakHouse"
       }
+    },
+    {
+      "name": "Mini Morphs",
+      "slug": "mini-morphs",
+      "multiToken": false,
+      "address": "0x9676c33E31e43731B03E71D42385F7f677D7929d",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "4200 Mini Morphs run off and explore the kosmos.",
+        "verified": false,
+        "avatar": "/img/collections/mini-morphs/avatar.webp",
+        "card": "/img/collections/mini-morphs/card.webp",
+        "banner": "/img/collections/mini-morphs/banner.webp",
+        "maxSupply": 4200,
+        "website": "https://www.cromorphs.com/MiniMorphs/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://http://discord.gg/8N2g6YYJxz"
+      }
     }
   ],
   "drops": [
