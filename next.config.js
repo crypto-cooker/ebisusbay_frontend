@@ -45,6 +45,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/drops/painted-pandas',
+        destination: '/drops/painted-pandaz',
+        permanent: true,
+      },
+      {
         source: '/collection/mad-treehouse',
         destination: '/collection/mm-treehouse',
         permanent: true,
