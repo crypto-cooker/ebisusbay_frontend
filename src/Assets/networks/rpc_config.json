@@ -8595,7 +8595,7 @@
       "multiToken": false,
       "address": "0xe386f188FA10aB957E3eFaAE57Fc20039BD84d64",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "God hates all crofam!!! This is strictly a pfp project with no utility. Why no utility… because god hates you. Now go away.",
         "verified": true,
@@ -12095,7 +12095,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false
+      "complete": true
     },
     {
       "id": 110,
