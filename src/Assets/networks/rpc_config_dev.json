@@ -9043,6 +9043,25 @@
         "kyc": false,
         "escrow": false
       }
+    },
+    {
+      "name": "Painted Pandas by Troopz",
+      "slug": "painted-pandas",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "1111 rare, unique and algorithmically generated Painted Pandaz.\n\n10 $TRPZ Daily Staking Yield | 10 x Legendary 1/1s | Exclusive Painted Pandaz Auctionz & Rafflez | The return of the classic ‘Trait Based’ rewards \n\nActs as your 'Panda Pass' for exclusive deals across our Whitelisted Community partners.",
+        "verified": true,
+        "avatar": "/img/collections/painted-pandas/avatar.webp",
+        "card": "/img/collections/painted-pandas/card.webp",
+        "banner": "/img/collections/painted-pandas/banner.webp",
+        "maxSupply": 1111,
+        "twitter": "https://twitter.com/trooprzarmy",
+        "website": "https://trooprz.army/",
+        "discord": "https://discord.gg/trooprz"
+      }
     }
   ],
   "drops": [
@@ -12224,6 +12243,38 @@
       "is1155": false,
       "published": true,
       "complete": false
+    },
+    {
+      "id": 114,
+      "slug": "painted-pandas",
+      "imgNft": "/img/drops/painted-pandas/drop.webp",
+      "imgPreview": "/img/drops/painted-pandas/drop.webp",
+      "imgAvatar": "/img/collections/painted-pandas/avatar.webp",
+      "imgBanner": "/img/collections/painted-pandas/banner.webp",
+      "title": "Painted Pandas by Troopz",
+      "subtitle": "1111 rare, unique and algorithmically generated Painted Pandaz.\n\n10 $TRPZ Daily Staking Yield | 10 x Legendary 1/1s | Exclusive Painted Pandaz Auctionz & Rafflez | The return of the classic ‘Trait Based’ rewards \n\nActs as your 'Panda Pass' for exclusive deals across our Whitelisted Community partners.",
+      "description": "1111 rare, unique and algorithmically generated Painted Pandaz.\n\n10 $TRPZ Daily Staking Yield | 10 x Legendary 1/1s | Exclusive Painted Pandaz Auctionz & Rafflez | The return of the classic ‘Trait Based’ rewards\n\nActs as your 'Panda Pass' for exclusive deals across our Whitelisted Community partners.",
+      "author": {
+        "name": "Trooprz",
+        "twitter": "https://twitter.com/trooprzarmy",
+        "website": "https://trooprz.army/",
+        "discord": "https://discord.gg/trooprz"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 50,
+      "totalSupply": 1111,
+      "cost": "444",
+      "memberCost": "333",
+      "whitelistCost": "333",
+      "foundersOnly": false,
+      "start": 1664222400000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "priceDescription": "200 $TRPZ automatically credited back to your wallet with EVERY CRO MINT"
     }
   ]
 }
