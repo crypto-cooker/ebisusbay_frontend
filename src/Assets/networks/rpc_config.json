@@ -6714,6 +6714,11 @@
         "discord": "https://discord.gg/jxyytxSJAZ",
         "medium": "https://medium.com/@Crossbreeds",
         "rankings": {"source": "provided"}
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "phenix",
+        "escrow": false
       }
     },
     {
@@ -7080,7 +7085,7 @@
       },
       "verification": {
         "doxx": "private",
-        "kyc": "ebisu",
+        "kyc": "phenix",
         "escrow": false
       }
     },
@@ -8816,6 +8821,11 @@
         "maxSupply": 5555,
         "website": "https://www.specterofart.com/FingerMonkeys",
         "discord": "https://discord.gg/CcwFDwPuuh"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "phenix",
+        "escrow": false
       }
     },
     {
@@ -9040,7 +9050,7 @@
       },
       "verification": {
         "doxx": false,
-        "kyc": false,
+        "kyc": "phenix",
         "escrow": false
       }
     },
