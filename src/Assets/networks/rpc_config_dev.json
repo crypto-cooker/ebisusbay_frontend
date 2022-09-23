@@ -8108,7 +8108,7 @@
       "name": "Trillionaire Trashcans",
       "slug": "trillionaire-trashcans",
       "multiToken": false,
-      "address": "",
+      "address": "0x4b7803015C03De5371C9498d6a9c779cfcA159Ad",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -12021,7 +12021,7 @@
         "twitter": "https://twitter.com/TrillTrashCans",
         "discord": "https://discord.gg/fSyrkT2pjc"
       },
-      "address": "",
+      "address": "0x4b7803015C03De5371C9498d6a9c779cfcA159Ad",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 10000,
