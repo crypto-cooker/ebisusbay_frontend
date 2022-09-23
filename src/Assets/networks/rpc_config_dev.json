@@ -9073,6 +9073,28 @@
         "website": "https://trooprz.army/",
         "discord": "https://discord.gg/trooprz"
       }
+    },
+    {
+      "name": "SeaShrine Founding Member VIP",
+      "slug": "seashrine-vip",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "SeaShrine is a new marketplace founded and built by the same team behind the Cronos success, Ebisu’s Bay. With upcoming feature parity with their previous endeavor, the team looks to replicate their accomplishments and to recreate a Gold Standard for marketplaces on the new Aptos blockchain. Embark on this journey with us by minting a VIP Founding Member NFT now!",
+        "verified": true,
+        "avatar": "/img/drops/seashrine-vip/avatar.webp",
+        "card": "/img/drops/seashrine-vip/card.webp",
+        "banner": "/img/drops/seashrine-vip/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      }
     }
   ],
   "drops": [
@@ -12286,6 +12308,39 @@
       "published": true,
       "complete": false,
       "priceDescription": "200 $TRPZ automatically credited back to your wallet with EVERY CRO MINT"
+    },
+    {
+      "id": 103,
+      "slug": "seashrine-vip",
+      "imgNft": "/img/drops/seashrine-vip/drop.webp",
+      "imgPreview": "/img/drops/seashrine-vip/drop.webp",
+      "imgAvatar": "/img/drops/seashrine-vip/avatar.webp",
+      "imgBanner": "/img/drops/seashrine-vip/banner.webp",
+      "title": "SeaShrine Founding Member VIP",
+      "subtitle": "SeaShrine is a new marketplace founded and built by the same team behind the Cronos success, Ebisu’s Bay. With upcoming feature parity with their previous endeavor, the team looks to replicate their accomplishments and to recreate a Gold Standard for marketplaces on the new Aptos blockchain. Embark on this journey with us by minting a VIP Founding Member NFT now!",
+      "description": "SeaShrine is a new marketplace founded and built by the same team behind the Cronos success, Ebisu’s Bay. With upcoming feature parity with their previous endeavor, the team looks to replicate their accomplishments and to recreate a Gold Standard for marketplaces on the new Aptos blockchain. Embark on this journey with us by minting a VIP Founding Member NFT now!",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 3000,
+      "foundersOnly": false,
+      "start": 1664481600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": false,
+      "redirect": "https://seashrine.io/"
     }
   ]
 }
