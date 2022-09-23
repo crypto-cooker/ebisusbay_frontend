@@ -1703,7 +1703,7 @@
       "name": "Trillionaire Trashcans",
       "slug": "trillionaire-trashcans",
       "multiToken": false,
-      "address": "0xC05b1A38B773557AF63a724e3f7779D0ceA9Bdc2",
+      "address": "0xFec1D8AcBCBaDDC00cec22D544854E2fD938cF05",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -3839,7 +3839,7 @@
         "twitter": "https://twitter.com/TrillTrashCans",
         "discord": "https://discord.gg/fSyrkT2pjc"
       },
-      "address": "0xC05b1A38B773557AF63a724e3f7779D0ceA9Bdc2",
+      "address": "0xFec1D8AcBCBaDDC00cec22D544854E2fD938cF05",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 10000,
