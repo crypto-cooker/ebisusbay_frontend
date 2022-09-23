@@ -8765,7 +8765,8 @@
         "maxSupply": 500,
         "website": "https://cromythic.com/",
         "twitter": "https://twitter.com/cromythic",
-        "discord": "https://discord.gg/Hn3J9ruJ"
+        "discord": "https://discord.gg/Hn3J9ruJ",
+        "rankings": {"source": "provided"}
       }
     },
     {
