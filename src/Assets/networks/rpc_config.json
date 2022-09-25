@@ -8060,7 +8060,7 @@
       "multiToken": false,
       "address": "0xFD265797d7Bc6C25f2Cd148ec12f36a8eE00862a",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "When you buy a CroHogs NFT, you are not just purchasing a unique piece of art, but also a ticket into a growing community full of opportunities. Our collection of 1500 NFTs offers staking, our “the Hoggery” and a brand-new feature to give your NFTS a min Value even in Bear markets. Your CroHog will be your personal identity within our community, while opening the door to additional benefits. All CroHogs NFT`s are stored on the Cronos blockchain, and every owner is given full commercial usage rights/ownership.",
         "verified": true,
