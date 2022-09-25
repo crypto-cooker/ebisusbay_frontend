@@ -9114,6 +9114,31 @@
         "twitter": "https://twitter.com/ninja_fu_",
         "discord": "https://discord.gg/N5YXhNDJyz"
       }
+    },
+    {
+      "name": "Boomer Squad - Boom Rooms",
+      "slug": "boomer-squad-boom-rooms",
+      "multiToken": false,
+      "address": "0x8Dd9975c78423480a6188F55B0767fbF4478b001",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Boom Rooms - Brought to you by the Boomer Squad team is the main source of distribution for our ecosystem utility token $SCRATCH. Take your Boom Rooms and place room components in them to build up your room score which determines how much $SCRATCH you will be generating. These rooms are fully customized, build your own NFTs with Room Components and show off some flare with the Boom Room Cosmetic Components!",
+        "verified": true,
+        "avatar": "/img/collections/boomer-squad-boom-rooms/avatar.webp",
+        "banner": "/img/collections/boomer-squad-boom-rooms/banner.webp",
+        "card": "/img/collections/boomer-squad-boom-rooms/card.webp",
+        "maxSupply": 7000,
+        "website": "https://www.boomersquad.io/",
+        "twitter": "https://twitter.com/BoomerSquadNFT1",
+        "discord": "https://discord.gg/boomersquad",
+        "medium": "https://medium.com/@BoomerSquadNFT"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
+      }
     }
   ],
   "drops": [
