@@ -2940,11 +2940,11 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "5000 Fruit Farmers Living & Loving on Cronos. Slavik Fruit Farmers grant the holder FRODEX Token Allocation, 3D Voxel Airdrops and Exclusive first access to SFF Expansions. Each Farmer is a Membership pass into the SlavikVerse Ecosystem!",
+        "description": "5000 Fruit Farmers Living & Loving on Cronos. Each Farmer is an access pass into the SFF Ecosystem.",
         "verified": true,
-        "avatar": "/img/collections/slavikfruitfarm/avatar.png",
-        "banner": "/img/collections/slavikfruitfarm/banner.png",
-        "card": "/img/collections/slavikfruitfarm/card.png",
+        "avatar": "/img/collections/slavikfruitfarm/avatar.webp",
+        "banner": "/img/collections/slavikfruitfarm/banner.webp",
+        "card": "/img/collections/slavikfruitfarm/card.webp",
         "maxSupply": 5000,
         "website": "https://slavikfruitfarm.io/",
         "twitter": "https://twitter.com/SlavikFruitFarm",
@@ -9095,6 +9095,25 @@
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
       }
+    },
+    {
+      "name": "Ninja_fu_warriors",
+      "slug": "ninja-fu-warriors",
+      "multiToken": false,
+      "address": "0x7d24acf59b211904c9713c9d901643e20fc81904",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome to the --Ninja_fu-- The Return of the Emblematic Warrior. There you have Strong and Solid Beast Ready to Fight.",
+        "verified": false,
+        "avatar": "/img/collections/ninja-fu-warriors/avatar.webp",
+        "card": "/img/collections/ninja-fu-warriors/card.webp",
+        "banner": "/img/collections/ninja-fu-warriors/banner.webp",
+        "maxSupply": 600,
+        "website": "https://ninjafu.ca/",
+        "twitter": "https://twitter.com/ninja_fu_",
+        "discord": "https://discord.gg/N5YXhNDJyz"
+      }
     }
   ],
   "drops": [
@@ -10439,7 +10458,7 @@
       "slug": "slavik-fruit-farm",
       "imgNft": "",
       "imgPreview": "",
-      "imgAvatar": "/img/collections/slavikfruitfarm/avatar.png",
+      "imgAvatar": "/img/collections/slavikfruitfarm/avatar.webp",
       "title": "Slavik Fruit Farm",
       "subtitle": "",
       "description": "",
