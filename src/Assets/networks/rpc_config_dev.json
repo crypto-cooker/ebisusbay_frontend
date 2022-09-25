@@ -9095,8 +9095,27 @@
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
       }
-    },
-    {
+    },{
+      "id": 104,
+      "name" : "Immortal Cyborgs",
+      "slug": "immortal-cyborgs",
+      "listable" : false,
+      "subtitle": "THE FOUNDING MEMBER NFT RELEASE FOR CYBORG CORP. NEWEST ECOSYSTEM ADDITION IS FINALLY HERE, CYBORGS! THE 10 000 IMMORTAL CYBORGS ARE BRINGING BOOSTING TO THE NON FUNGIBLE CYBORG PLATFORM LP FARMS BUT ALSO TO NFT STAKING POOLS!",
+      "metadata": {
+        "description": "THE DROP IS DIVIDED INTO 2 PARTS : PRESALE (FIRST 500 NFT MINTED) PRICE 500 CRO FOR WL, 525 CRO FOR FMF1 HOLDERS & 550 CRO REGULAR PRICE. PUBLIC SALE (TIC 501 TO 10 000) PRICE 300 CRO FOR WL, 325 CRO FOR FMF1 HOLDERS & 350 CRO REGULAR PRICE. THE IMMORTAL CYBORGS CAN BE USED TO BOOST NFC PLATFORM FARMS & POOLS REWARDS UP TO 5% MAX BOOST. UNTIL THE REVEAL OF THE COLLECTION & THE RARITIES, PRESALE NFTS WILL HAVE A 1% BOOST AND PUBLIC SALE NFTS A 0.5% BOOST. A $NFC STARTER PACK OF 25 COINS WILL BE AIRDROPPED AT LISTING TO EVERY HOLDERS OF A TIC NFT. AIRDROP WILL BE 1 PER NFT AND $NFC LISTING PRICE WILL BE $0.10. IN ADDITION, PRESALE NFT HOLDERS WILL RECEIVE 100 NFC PER MONTH FOR 5 MONTHS. THIS FOUNDING MEMBER NFT COLLECTION USED TO FUND THE PLATFORM WILL ALSO ALLOW HOLDERS TO A DISCOUNT PRICE ON EVERY NON FUNGIBLE CYBORGS LAUNCHPADS!",
+        "maxSupply" : 10000,
+        "website": "https://nfc.market/",
+        "twitter": "https://twitter.com/CyborgSwapDEX",
+        "discord": "discord.gg/Ku6A7tJSVp",
+        "medium": "https://cyborgswap.medium.com/",
+        "telegram": "https://t.me/+IQJY2ugWLaVmODVk",
+        "card": "/img/drops/immortal-cyborgs/card.png",
+        "avatar": "/img/drops/immortal-cyborgs/avatar.png",
+        "banner": "/img/drops/immortal-cyborgs/banner.png"
+      },
+      "address": "0xDA565665a546582774De08EC03AA0eac92592f11",
+      "multiToken": false
+    },{
       "name": "Ninja_fu_warriors",
       "slug": "ninja-fu-warriors",
       "multiToken": false,
@@ -12385,6 +12404,39 @@
       "complete": false,
       "featured": false,
       "redirect": "https://seashrine.io/"
+    },{
+      "id": 104,
+      "slug": "immortal-cyborgs",
+      "imgNft": "/img/drops/immortal-cyborgs/drop.png",
+      "imgPreview": "/img/drops/immortal-cyborgs/drop.png",
+      "imgAvatar": "/img/drops/immortal-cyborgs/avatar.png",
+      "imgBanner": "/img/drops/immortal-cyborgs/banner.png",
+      "title": "THE IMMORTAL CYBORGS",
+      "subtitle": "THE FOUNDING MEMBER NFT RELEASE FOR CYBORG CORP. NEWEST ECOSYSTEM ADDITION IS FINALLY HERE, CYBORGS! THE 10 000 IMMORTAL CYBORGS ARE BRINGING BOOSTING TO THE NON FUNGIBLE CYBORG PLATFORM LP FARMS BUT ALSO TO NFT STAKING POOLS!",
+      "description": "THE DROP IS DIVIDED INTO 2 PARTS : PRESALE (FIRST 500 NFT MINTED) PRICE 500 CRO FOR WL, 525 CRO FOR FMF1 HOLDERS & 550 CRO REGULAR PRICE. PUBLIC SALE (TIC 501 TO 10 000) PRICE 300 CRO FOR WL, 325 CRO FOR FMF1 HOLDERS & 350 CRO REGULAR PRICE. THE IMMORTAL CYBORGS CAN BE USED TO BOOST NFC PLATFORM FARMS & POOLS REWARDS UP TO 5% MAX BOOST. UNTIL THE REVEAL OF THE COLLECTION & THE RARITIES, PRESALE NFTS WILL HAVE A 1% BOOST AND PUBLIC SALE NFTS A 0.5% BOOST. A $NFC STARTER PACK OF 25 COINS WILL BE AIRDROPPED AT LISTING TO EVERY HOLDERS OF A TIC NFT. AIRDROP WILL BE 1 PER NFT AND $NFC LISTING PRICE WILL BE $0.10. IN ADDITION, PRESALE NFT HOLDERS WILL RECEIVE 100 NFC PER MONTH FOR 5 MONTHS. THIS FOUNDING MEMBER NFT COLLECTION USED TO FUND THE PLATFORM WILL ALSO ALLOW HOLDERS TO A DISCOUNT PRICE ON EVERY NON FUNGIBLE CYBORGS LAUNCHPADS!",
+      "author": {
+        "name": "Cyborg Swap",
+        "website": "https://nfc.market/",
+        "twitter": "https://twitter.com/CyborgSwapDEX",
+        "discord": "discord.gg/Ku6A7tJSVp",
+        "medium": "https://cyborgswap.medium.com/",
+        "telegram": "https://t.me/+IQJY2ugWLaVmODVk"
+      },
+      "address": "0xDA565665a546582774De08EC03AA0eac92592f11",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 10000,
+      "foundersOnly": false,
+      "start": 1664144026994,
+      "cost": "550",
+      "whitelistCost": "500",
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": true,
+      "redirect": "https://cyborgswap.io/nft-drop/TheImmortalCyborgs"
     }
   ]
 }
