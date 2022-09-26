@@ -326,7 +326,7 @@ export function caseInsensitiveCompare(str1, str2) {
 }
 
 export function newlineText(text) {
-  return text.split('\n').map((str, i) => <p key={i}>{str}</p>);
+  return text.split('\n').map((str, i) => <p key={i} className="mb-3">{str}</p>);
 }
 
 export const isCroniesDrop = (address) => {

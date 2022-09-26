@@ -4,8 +4,7 @@ import { Card } from 'react-bootstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
-
-import Stack from '@mui/material/Stack';
+import {Stack} from "@chakra-ui/react";
 
 const UploadAsset = ({ id, value, accept = 'image/png, image/gif, image/jpeg, image/jpg', onChange, onClose }) => {
   const [file, setFile] = useState(null);

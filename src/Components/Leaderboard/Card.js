@@ -1,13 +1,14 @@
 import React from 'react';
 import styles from './styles.module.scss';
+import {Heading} from "@chakra-ui/react";
 
 export default function Card({ title, totalVolume, name, onClick, active }) {
   return (
     <div className={`${styles.card} ${active ? `${styles.active}` : ''}`} onClick={onClick}>
-      <h3 className="mb-0">{title}</h3>
-      <h3>{totalVolume} CRO</h3>
+      <Heading as="h3" size="md" className="mb-0">{title}</Heading>
+      <Heading as="h3" size="md">{totalVolume} CRO</Heading>
       <div className="d-flex justify-content-between">
-        <h3 className="mb-0">#1 {name}</h3>
+        <Heading as="h3" size="md" className="mb-0 mt-4">#1 {name}</Heading>
       </div>
     </div>
   );

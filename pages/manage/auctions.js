@@ -64,7 +64,7 @@ const ManageAuctions = () => {
         </div>
       </section>
 
-      <section className="container">
+      <section className="gl-legacy container">
         <div className="de_tab">
           <ul className="de_nav">
             <li id="Mainbtn0" className="tab active">

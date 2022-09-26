@@ -6,8 +6,10 @@ import useUpdateNotifications from "@src/Components/Account/Settings/hooks/useUp
 import {useSelector} from "react-redux";
 import useGetSettings from "@src/Components/Account/Settings/hooks/useGetSettings";
 import {toast} from "react-toastify";
+import {Heading} from "@chakra-ui/react";
 
 const NotificationItems = [
+  { key: 'FAVORITE_LISTED', title: 'Favorited Item Listed', description: 'When an item from your favorites gets listed' },
   { key: 'SOLD', title: 'Item Sold', description: 'When someone purchases one of your items' },
   { key: 'OFFER_MADE', title: 'Offer Received', description: 'When someone makes an offer on one of your items' },
   { key: 'OFFER_ACCEPTED', title: 'Offer Accepted', description: 'When one of your offers gets accepted' },
@@ -67,8 +69,8 @@ export default function Notification() {
 
         <div className="row mb-4">
           <div className="col">
-            <h2>Notification Methods</h2>
-            <p>Choose how you wish to be notified of sales events in real time.</p>
+            <Heading as="h2" size="xl">Notification Methods</Heading>
+            <p className="mb-4">Choose how you wish to be notified of sales events in real time.</p>
             <NotificationMethod
               title="In App"
               description="A blue badge will appear on the notifications menu icon"
@@ -86,7 +88,7 @@ export default function Notification() {
 
         <div className="row">
           <div className="col">
-            <h2>Notification Events</h2>
+            <Heading as="h2" size="xl">Notification Events</Heading>
             {NotificationItems.map((item) => (
               <NotificationItem
                 key={item.key}

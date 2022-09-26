@@ -12,6 +12,7 @@ import { AnyMedia } from './AnyMedia';
 import { connectAccount, chainConnect } from '@src/GlobalState/User';
 import { round } from '@src/utils';
 import {nftCardUrl} from "@src/helpers/image";
+import {Heading} from "@chakra-ui/react";
 
 const Watermarked = styled.div`
   position: relative;
@@ -137,7 +138,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark, address, co
           )}
           <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
             <a>
-              <h6 className="card-title mt-auto">{listing.nft.name}</h6>
+              <Heading as="h6" size="sm" className="card-title mt-auto">{listing.nft.name}</Heading>
             </a>
           </Link>
           <MakeBuy>

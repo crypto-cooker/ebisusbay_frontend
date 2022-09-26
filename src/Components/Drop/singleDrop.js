@@ -37,6 +37,7 @@ import {hostedImage, ImageKitService} from "../../helpers/image";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAddressCard, faLock, faUserShield} from "@fortawesome/free-solid-svg-icons";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
+import {Heading} from "@chakra-ui/react";
 
 const config = appConfig();
 const drops = config.drops;
@@ -535,24 +536,24 @@ const SingleDrop = () => {
                 )}
                 {status === statuses.NOT_STARTED && drop.start && (
                   <Reveal className="onStep" keyframes={fadeInUp} delay={600} duration={900} triggerOnce>
-                    <h4 className="col-white">
+                    <Heading as="h4" size="md" className="col-white">
                       Starts in:{' '}
                       <span className="text-uppercase color">
                         <Countdown date={drop.start} />
                       </span>
-                    </h4>
+                    </Heading>
                   </Reveal>
                 )}
                 <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
-                  <h1 className="col-white">{drop.title}</h1>
+                  <Heading as="h1" size="2xl" className="col-white mb-4">{drop.title}</Heading>
                 </Reveal>
                 <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
-                  <div className="lead col-white">{newlineText(drop.subtitle)}</div>
+                  <div className="lead col-white mb-4">{newlineText(drop.subtitle)}</div>
                 </Reveal>
                 {drop.foundersOnly && (
                   <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
-                    <h1 className="col-white">{drop.title}</h1>
-                    {drop.foundersOnly && <h3 className="col-white">Founding Member Presale</h3>}
+                    <Heading as="h1" size="2xl" className="col-white">{drop.title}</Heading>
+                    {drop.foundersOnly && <Heading as="h3" size="md" className="col-white">Founding Member Presale</Heading>}
                   </Reveal>
                 )}
                 <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
@@ -580,7 +581,7 @@ const SingleDrop = () => {
                   <div className="profile_avatar">
                     {drop.imgAvatar && <img src={hostedImage(drop.imgAvatar)} alt={drop.author.name} />}
                     <div className="profile_name">
-                      <h4>
+                      <Heading as="h4" size="md">
                         {drop.title}
                         {drop.author.link ? (
                           <span className="profile_username">
@@ -591,7 +592,7 @@ const SingleDrop = () => {
                         ) : (
                           <SocialsBar address={drop.address} socials={drop.author} />
                         )}
-                      </h4>
+                      </Heading>
                     </div>
                   </div>
                 </div>
@@ -623,7 +624,7 @@ const SingleDrop = () => {
                   </div>
                 )}
 
-                <div className="mt-3">{newlineText(drop.description)}</div>
+                <div className="mt-3 mb-4">{newlineText(drop.description)}</div>
 
                 {drop.disclaimer && (
                   <p className="fw-bold text-center my-4" style={{ color: getTheme(userTheme).colors.textColor3 }}>
@@ -647,31 +648,31 @@ const SingleDrop = () => {
 
                 <div className="d-flex flex-row">
                   <div className="me-4">
-                    <h6 className="mb-1">Mint Price</h6>
-                    <h5>{round(regularCost)} CRO</h5>
+                    <Heading as="h6" size="sm" className="mb-1">Mint Price</Heading>
+                    <Heading as="h5" size="md">{round(regularCost)} CRO</Heading>
                     {dropObject?.erc20Cost && dropObject?.erc20Token && (
-                      <h5>{`${dropObject?.erc20Cost} ${config.tokens[dropObject.erc20Token].symbol}`}</h5>
+                      <Heading as="h5" size="md">{`${dropObject?.erc20Cost} ${config.tokens[dropObject.erc20Token].symbol}`}</Heading>
                     )}
                   </div>
                   {(memberCost || (dropObject?.erc20MemberCost && dropObject?.erc20Cost !== dropObject?.erc20MemberCost)) && (
                     <div className="me-4">
-                      <h6 className="mb-1">Founding Member Price</h6>
-                      <h5>{round(memberCost)} CRO</h5>
+                      <Heading as="h6" size="sm" className="mb-1">Founding Member Price</Heading>
+                      <Heading as="h5" size="md">{round(memberCost)} CRO</Heading>
                       {dropObject?.erc20MemberCost && dropObject?.erc20Cost !== dropObject?.erc20MemberCost && (
-                        <h5>{`${dropObject?.erc20MemberCost} ${config.tokens[dropObject.erc20Token].symbol}`}</h5>
+                        <Heading as="h5" size="md">{`${dropObject?.erc20MemberCost} ${config.tokens[dropObject.erc20Token].symbol}`}</Heading>
                       )}
                     </div>
                   )}
                   {whitelistCost > 0 && (
                     <div className="me-4">
-                      <h6 className="mb-1">Whitelist Price</h6>
-                      <h5>{round(whitelistCost)} CRO</h5>
+                      <Heading as="h6" size="sm" className="mb-1">Whitelist Price</Heading>
+                      <Heading as="h5" size="md">{round(whitelistCost)} CRO</Heading>
                     </div>
                   )}
                   {specialWhitelist && (
                     <div className="me-4">
-                      <h6 className="mb-1">{specialWhitelist.name}</h6>
-                      <h5>{specialWhitelist.value} CRO</h5>
+                      <Heading as="h6" size="sm" className="mb-1">{specialWhitelist.name}</Heading>
+                      <Heading as="h5" size="md">{specialWhitelist.value} CRO</Heading>
                     </div>
                   )}
                 </div>
@@ -686,22 +687,22 @@ const SingleDrop = () => {
 
                 {status === statuses.LIVE && drop.end && (
                   <div className="me-4">
-                    <h6 className="mb-1">{status === statuses.EXPIRED ? <>Minting Ended</> : <>Minting Ends</>}</h6>
-                    <h3>{convertTime(drop.end)}</h3>
+                    <Heading as="h6" size="sm" className="mb-1">{status === statuses.EXPIRED ? <>Minting Ended</> : <>Minting Ends</>}</Heading>
+                    <Heading as="h3" size="md">{convertTime(drop.end)}</Heading>
                   </div>
                 )}
                 {status === statuses.NOT_STARTED && drop.start && (
                   <div className="me-4">
-                    <h6 className="mb-1">Minting Starts</h6>
-                    <h3>
+                    <Heading as="h6" size="sm" className="mb-1">Minting Starts</Heading>
+                    <Heading as="h3" size="md">
                       {new Date(drop.start).toDateString()}, {new Date(drop.start).toTimeString()}
-                    </h3>
+                    </Heading>
                   </div>
                 )}
                 {status === statuses.NOT_STARTED && !drop.start && (
                   <div className="me-4">
-                    <h6 className="mb-1">Minting Starts</h6>
-                    <h3>TBA</h3>
+                    <Heading as="h6" size="sm" className="mb-1">Minting Starts</Heading>
+                    <Heading as="h3" size="md">TBA</Heading>
                   </div>
                 )}
                 {status === statuses.LIVE && !drop.complete && (

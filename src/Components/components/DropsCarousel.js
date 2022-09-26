@@ -12,6 +12,7 @@ import { hostedImage } from "@src/helpers/image";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation, Pagination} from "swiper";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
+import {Heading} from "@chakra-ui/react";
 
 const tokens = appConfig('tokens')
 const drops = appConfig('drops');
@@ -175,7 +176,7 @@ export default class Responsive extends Component {
                       </div>
                       <div className="col-lg-6">
                         <div className="d-desc">
-                          <h2>{item.drop.title}</h2>
+                          <Heading>{item.drop.title}</Heading>
                           <CollectionVerificationRow
                             doxx={item.collection.verification?.doxx}
                             kyc={item.collection.verification?.kyc}
@@ -212,50 +213,50 @@ export default class Responsive extends Component {
                               <span className="d-title">Mint Price</span>
                               {item.drop.cost &&
                                 (Array.isArray(item.drop.cost) ? (
-                                <h3>
+                                <Heading as="h3" size="md">
                                   {ethers.utils.commify(Math.min(...item.drop.cost.map((c) => parseInt(c))))} -{' '}
                                   {ethers.utils.commify(Math.max(...item.drop.cost.map((c) => parseInt(c))))} CRO
-                                </h3>
+                                </Heading>
                               ) : (
-                                <h3>{ethers.utils.commify(item.drop.cost)} CRO</h3>
+                                <Heading as="h3" size="md">{ethers.utils.commify(item.drop.cost)} CRO</Heading>
                               ))}
                               {!item.drop.cost && (
                                 <h3>TBA</h3>
                               )}
                               {item.drop.erc20Cost && item.drop.erc20Token && (
-                                <h3>
+                                <Heading as="h3" size="md">
                                   {ethers.utils.commify(item.drop.erc20Cost)} {tokens[item.drop.erc20Token].symbol}
-                                </h3>
+                                </Heading>
                               )}
                               {item.drop.memberCost &&
                                 (Array.isArray(item.drop.memberCost) ? (
-                                  <h5>
+                                  <Heading as="h5" size="sm">
                                     Members: {ethers.utils.commify(Math.min(...item.drop.memberCost.map((c) => parseInt(c))))}{' '}
                                     - {ethers.utils.commify(Math.max(...item.drop.memberCost.map((c) => parseInt(c))))} CRO
-                                  </h5>
+                                  </Heading>
                                 ) : (
-                                  <h5>Members: {ethers.utils.commify(item.drop.memberCost)} CRO</h5>
+                                  <Heading as="h5" size="sm">Members: {ethers.utils.commify(item.drop.memberCost)} CRO</Heading>
                                 ))}
                               {item.drop.erc20MemberCost && item.drop.erc20Token && (
-                                <h5>
+                                <Heading as="h5" size="sm">
                                   Members: {ethers.utils.commify(item.drop.erc20MemberCost)} {tokens[item.drop.erc20Token].symbol}
-                                </h5>
+                                </Heading>
                               )}
                               {item.drop.whitelistCost &&
                                 (Array.isArray(item.drop.whitelistCost) ? (
-                                  <h5>
+                                  <Heading as="h5" size="sm">
                                     Whitelist:{' '}
                                     {ethers.utils.commify(Math.min(...item.drop.memberCost.map((c) => parseInt(c))))} -{' '}
                                     {ethers.utils.commify(Math.max(...item.drop.memberCost.map((c) => parseInt(c))))} CRO
-                                  </h5>
+                                  </Heading>
                                 ) : (
-                                  <h5>Whitelist: {ethers.utils.commify(item.drop.whitelistCost)} CRO</h5>
+                                  <Heading as="h5" size="sm">Whitelist: {ethers.utils.commify(item.drop.whitelistCost)} CRO</Heading>
                                 ))}
                               {item.drop.specialWhitelistCost && (
-                                <h5>
+                                <Heading as="h5" size="sm">
                                   {item.drop.specialWhitelistCost.name}:{' '}
                                   {ethers.utils.commify(item.drop.specialWhitelistCost.value)} CRO
-                                </h5>
+                                </Heading>
                               )}
                             </div>
                             <div className="line my-auto"></div>

@@ -18,6 +18,7 @@ import {
 import { getTheme } from '../../Theme/theme';
 import {hostedImage} from "../../helpers/image";
 import {AnyMedia} from "./AnyMedia";
+import {Heading} from "@chakra-ui/react";
 
 const txExtras = {
   gasPrice: ethers.utils.parseUnits('5000', 'gwei'),
@@ -136,7 +137,7 @@ const MyStaking = () => {
 
   return (
     <>
-      <section className="container no-top">
+      <section className="gl-legacy container no-top">
         <div className="row mt-md-5 pt-md-4">
           <div className="col-md-4 text-center">
             <AnyMedia
@@ -148,7 +149,7 @@ const MyStaking = () => {
           </div>
           <div className="col-md-8">
             <div className="item_info">
-              <h2>VIP Founding Member Staking</h2>
+              <Heading>VIP Founding Member Staking</Heading>
               <div className="my-2">
                 Earn rewards generated through platform sales &#128640; {/*<a*/}
                 {/*  href="https://blog.ebisusbay.com/founding-member-vip-staking-6f7405a68eed"*/}
