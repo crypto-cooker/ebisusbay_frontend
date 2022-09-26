@@ -347,7 +347,7 @@ const Index = function () {
                       <span>
                         <FontAwesomeIcon icon={faHeart} />
                       </span>
-                      <span className="ms-2">Favourites</span>
+                      <span className="ms-2">Favorites</span>
                   </div>
                 </span>
               </div>

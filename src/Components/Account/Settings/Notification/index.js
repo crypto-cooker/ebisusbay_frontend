@@ -9,6 +9,7 @@ import {toast} from "react-toastify";
 import {Heading} from "@chakra-ui/react";
 
 const NotificationItems = [
+  { key: 'FAVORITE_LISTED', title: 'Favorited Item Listed', description: 'When an item from your favorites gets listed' },
   { key: 'SOLD', title: 'Item Sold', description: 'When someone purchases one of your items' },
   { key: 'OFFER_MADE', title: 'Offer Received', description: 'When someone makes an offer on one of your items' },
   { key: 'OFFER_ACCEPTED', title: 'Offer Accepted', description: 'When one of your offers gets accepted' },

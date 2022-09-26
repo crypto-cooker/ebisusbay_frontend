@@ -2,7 +2,7 @@ import React, {memo, useCallback, useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import {Contract, ethers} from 'ethers';
-import {faExternalLinkAlt, faSync} from '@fortawesome/free-solid-svg-icons';
+import {faExternalLinkAlt, faHeart as faHeartSolid, faSync} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Spinner } from 'react-bootstrap';
 import MetaMaskOnboarding from '@metamask/onboarding';
@@ -10,18 +10,19 @@ import MetaMaskOnboarding from '@metamask/onboarding';
 import ProfilePreview from '../components/ProfilePreview';
 import Footer from '../components/Footer';
 import {
+  caseInsensitiveCompare,
   findCollectionByAddress,
   humanize,
-  isCrosmocraftsPartsDrop,
+  isCrosmocraftsPartsDrop, isEmptyObj,
   mapAttributeString,
   millisecondTimestamp, rankingsLinkForCollection, rankingsLogoForCollection, rankingsTitleForCollection,
   relativePrecision,
   shortAddress,
   timeSince,
 } from '@src/utils';
-import {getNftDetails, refreshMetadata} from '@src/GlobalState/nftSlice';
+import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
 import { specialImageTransform } from '@src/hacks';
-import { chainConnect, connectAccount } from '@src/GlobalState/User';
+import {chainConnect, connectAccount, retrieveProfile} from '@src/GlobalState/User';
 
 import ListingItem from '../NftDetails/NFTTabListings/ListingItem';
 import { listingState, offerState } from '@src/core/api/enums';
@@ -37,7 +38,10 @@ import {appConfig} from "@src/Config";
 import Market from "@src/Contracts/Marketplace.json";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import Button from "@src/Components/components/common/Button";
-import {Heading} from "@chakra-ui/react";
+import {ButtonGroup, Heading} from "@chakra-ui/react";
+import {toast} from "react-toastify";
+import useToggleFavorite from "@src/Components/NftDetails/hooks/useToggleFavorite";
+import {faHeart as faHeartOutline} from "@fortawesome/free-regular-svg-icons";
 
 const config = appConfig();
 const tabs = {
@@ -53,7 +57,7 @@ const Nft1155 = ({ address, id }) => {
   const dispatch = useDispatch();
   const history = useRouter();
 
-  const {nft, refreshing} = useSelector((state) => state.nft);
+  const {nft, refreshing, favorites} = useSelector((state) => state.nft);
   const soldListings = useSelector((state) =>
     state.nft.history.filter((i) => i.state === listingState.SOLD).sort((a, b) => (a.saleTime < b.saleTime ? 1 : -1))
   );
@@ -76,6 +80,7 @@ const Nft1155 = ({ address, id }) => {
   });
   const isLoading = useSelector((state) => state.nft.loading);
   const user = useSelector((state) => state.user);
+  const [{ isLoading:isFavoriting, response, error }, toggleFavorite]  = useToggleFavorite();
 
   useEffect(() => {
     dispatch(getNftDetails(address, id));
@@ -150,6 +155,27 @@ const Nft1155 = ({ address, id }) => {
     // eslint-disable-next-line
   }, [nft, user.address]);
 
+  const onFavoriteClicked = async () => {
+    if (isEmptyObj(user.profile)) {
+      toast.info(`Connect wallet and create a profile to start adding favorites`);
+      return;
+    }
+    if (user.profile.error) {
+      toast.info(`Error loading profile. Please try reconnecting wallet`);
+      return;
+    }
+    const isCurrentFav = isFavorite();
+    await toggleFavorite(user.address, address, id, !isCurrentFav);
+    toast.success(`Item ${isCurrentFav ? 'removed from' : 'added to'} favorites`);
+    dispatch(tickFavorite(isCurrentFav ? -1 : 1));
+    dispatch(retrieveProfile());
+  };
+
+  const isFavorite = () => {
+    if (!user.profile?.favorites) return false;
+    return user.profile.favorites.find((f) => caseInsensitiveCompare(address, f.tokenAddress) && id === f.tokenId);
+  }
+
   return (
     <div>
       {isLoading ? (
@@ -184,20 +210,34 @@ const Nft1155 = ({ address, id }) => {
               ) : (
                 <></>
               )}
-              <div className="nft__item_action mt-2" style={{ cursor: 'pointer' }}>
-                <div className="d-flex justify-content-center">
+              <div className="mt-2" style={{ cursor: 'pointer' }}>
+                <ButtonGroup size='sm' isAttached variant='outline'>
                   <Button styleType="default-outlined" title="Refresh Metadata" onClick={onRefreshMetadata} disabled={refreshing}>
                     <FontAwesomeIcon icon={faSync} spin={refreshing} />
                   </Button>
+                  <Button
+                    styleType="default-outlined"
+                    title={isFavorite() ? 'This item is in your favorites list' : 'Click to add to your favorites list'}
+                    onClick={onFavoriteClicked}
+                  >
+                    <div>
+                      <span className="me-1">{favorites}</span>
+                      {isFavorite() ? (
+                        <FontAwesomeIcon icon={faHeartSolid} style={{color:'#dc143c'}} />
+                      ) : (
+                        <FontAwesomeIcon icon={faHeartOutline} />
+                      )}
+                    </div>
+                  </Button>
                   {nft && nft.original_image && (
-                    <Button styleType="default-outlined" className="ms-2" title="View Full Image" onClick={() =>
+                    <Button styleType="default-outlined" title="View Full Image" onClick={() =>
                       typeof window !== 'undefined' &&
                       window.open(specialImageTransform(address, fullImage()), '_blank')
                     }>
                       <FontAwesomeIcon icon={faExternalLinkAlt} />
                     </Button>
                   )}
-                </div>
+                </ButtonGroup>
               </div>
             </div>
             <div className="col-md-6">
