@@ -1,6 +1,8 @@
 import { Html, Head, Main, NextScript } from 'next/document';
 import {appConfig} from "../src/Config";
 import Script from "next/script";
+import {ColorModeScript} from "@chakra-ui/react";
+import customTheme from "@src/Theme/theme";
 const cdn = appConfig('urls.cdn');
 
 export default function Document() {
@@ -36,6 +38,7 @@ export default function Document() {
         <div id="initialLoader">
           <div className="loader"></div>
         </div>
+        <ColorModeScript initialColorMode={customTheme.config.initialColorMode} />
         <Main />
         <NextScript />
         <statusiq-status-widget src="https://status.ebisusbay.com" widget-type="sticky" widget-position="bottom-left"></statusiq-status-widget>

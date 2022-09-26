@@ -30,7 +30,7 @@ const EditCollection = ({ tab }) => {
           </div>
         </div>
       </section>
-      <section className="container pt-4">
+      <section className="gl-legacy container pt-4">
         <div className="row mt-2 mt-sm-4">
           <div className="de_tab">
             <div className='' style={{ display: 'flex', justifyContent: 'space-between' }}>

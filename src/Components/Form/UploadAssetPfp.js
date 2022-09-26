@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import Blockies from 'react-blockies';
-import Stack from '@mui/material/Stack';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useGetSettings from '../Account/Settings/hooks/useGetSettings';
 import useUpdatePfp from '../Account/Settings/hooks/useUpdatePfp';
 import styles from "@src/Components/Account/Settings/Profile/Pfp/pfp.module.scss";
+import {Stack} from "@chakra-ui/react";
 
 const UploadAssetPfp = ({
   id,

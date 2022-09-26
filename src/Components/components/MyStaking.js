@@ -18,6 +18,7 @@ import {
 import { getTheme } from '../../Theme/theme';
 import {hostedImage} from "../../helpers/image";
 import {AnyMedia} from "./AnyMedia";
+import {Heading} from "@chakra-ui/react";
 
 const txExtras = {
   gasPrice: ethers.utils.parseUnits('5000', 'gwei'),
@@ -136,7 +137,7 @@ const MyStaking = () => {
 
   return (
     <>
-      <section className="container no-top">
+      <section className="gl-legacy container no-top">
         <div className="row mt-md-5 pt-md-4">
           <div className="col-md-4 text-center">
             <AnyMedia
@@ -148,7 +149,7 @@ const MyStaking = () => {
           </div>
           <div className="col-md-8">
             <div className="item_info">
-              <h2>VIP Founding Member Staking</h2>
+              <Heading>VIP Founding Member Staking</Heading>
               <div className="my-2">
                 Earn rewards generated through platform sales &#128640; {/*<a*/}
                 {/*  href="https://blog.ebisusbay.com/founding-member-vip-staking-6f7405a68eed"*/}
@@ -276,7 +277,7 @@ const StakeCard = ({ stake, threshold, buttonName, buttonActionName }) => {
   return (
     <div className="card eb-nft__card h-100 shadow px-4">
       <div className="card-body d-flex flex-column text-center">
-        <h5>{buttonName}</h5>
+        <Heading as="h5" size="md" className="mb-2">{buttonName}</Heading>
         <div className="row row-cols-1 g-3">
           <div>
             <Form.Label>Quantity</Form.Label>
@@ -400,7 +401,7 @@ const RewardsCard = () => {
     <div className="col">
       <div className="card eb-nft__card h-100 shadow px-4">
         <div className="card-body d-flex flex-column">
-          <h5>Rewards</h5>
+          <Heading as="h5" size="md" className="mb-2">Rewards</Heading>
           {rewardsInfoLoading ? (
             <Spinner animation="border" role="status" size="sm" className="mx-auto">
               <span className="visually-hidden">Loading...</span>

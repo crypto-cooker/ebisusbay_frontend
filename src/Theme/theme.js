@@ -1,3 +1,6 @@
+import {extendTheme} from "@chakra-ui/react";
+import { mode } from '@chakra-ui/theme-tools';
+
 export const lightTheme = {
   textColor1: '#FFFFFF',
   textColor2: '#595d69',
@@ -56,8 +59,30 @@ export const theme = {
 
 export const getTheme = (mode) => {
   if (mode === 'light') {
-    return theme;
+    return { ...theme, colors: lightTheme };
   } else if (mode === 'dark') {
     return { ...theme, colors: darkTheme };
   }
 };
+
+
+const customTheme = extendTheme({
+  config: {
+    initialColorMode: 'dark',
+    useSystemColorMode: false,
+  },
+  fonts: {
+    heading: 'DM Sans, Helvetica, Arial, sans-serif',
+    body: `DM Sans, Helvetica, Arial, sans-serif`,
+  },
+  components: {
+    Modal: {
+      baseStyle: (props) => ({
+        dialog: {
+          bg: mode(lightTheme.bgColor1, darkTheme.bgColor1)(props)
+        }
+      })
+    }
+  }
+})
+export default customTheme

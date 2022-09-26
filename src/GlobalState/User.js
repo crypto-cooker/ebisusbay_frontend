@@ -977,27 +977,6 @@ export class AccountMenuActions {
       }
     }
   };
-
-  static registerCode = () => async (dispatch, getState) => {
-    const { user } = getState();
-    try {
-      const id = nanoid(10);
-      const encoded = ethers.utils.formatBytes32String(id);
-      const tx = await user.membershipContract.register(encoded);
-      const receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      dispatch(registeredCode(id));
-    } catch (error) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        console.log(error);
-        toast.error('Unknown Error');
-      }
-    }
-  };
 }
 
 /**
@@ -1019,10 +998,6 @@ export class MyNftPageActions {
     dispatch(userSlice.actions.setMyNftPageListDialog({ nft, listing }));
   };
 
-  static setMyNftPageListDialogError = (error) => async (dispatch) => {
-    dispatch(userSlice.actions.setMyNftPageListDialogError(error));
-  };
-
   static hideMyNftPageListDialog = () => async (dispatch) => {
     dispatch(userSlice.actions.setMyNftPageListDialog(null));
   };
@@ -1034,71 +1009,6 @@ export class MyNftPageActions {
   static hideNftPageCancelDialog = () => async (dispatch) => {
     dispatch(userSlice.actions.setMyNftPageCancelDialog(null));
   };
-
-  static setMyNftPageListedOnly =
-    (status = false) =>
-    async (dispatch) => {
-      dispatch(userSlice.actions.setMyNftPageListedOnly(status));
-    };
-
-  static setMyNftPageActiveFilterOption = (filterOption) => async (dispatch) => {
-    dispatch(userSlice.actions.setMyNftPageActiveFilterOption(filterOption));
-  };
-
-  static transferDialogConfirm = (selectedNft, walletAddress, transferAddress) => async (dispatch) => {
-    try {
-      dispatch(MyNftPageActions.hideMyNftPageTransferDialog());
-
-      const tx = selectedNft.multiToken
-        ? await selectedNft.contract.safeTransferFrom(walletAddress, transferAddress, selectedNft.id, 1, [])
-        : await selectedNft.contract.safeTransferFrom(walletAddress, transferAddress, selectedNft.id);
-
-      await tx.wait();
-
-      toast.success(`Transfer successful!`);
-
-      dispatch(transferedNFT(selectedNft));
-    } catch (error) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        console.log(error);
-        toast.error('Unknown Error');
-      }
-    }
-  };
-
-  static listingDialogConfirm =
-    ({ contractAddress, nftId, salePrice, marketContract }) =>
-    async (dispatch) => {
-      try {
-        dispatch(MyNftPageActions.setMyNftPageListDialogError(false));
-
-        const price = ethers.utils.parseEther(salePrice);
-
-        let tx = await marketContract.makeListing(contractAddress, nftId, price, txExtras);
-
-        let receipt = await tx.wait();
-
-        dispatch(updateListed(contractAddress, nftId, true, salePrice));
-
-        dispatch(MyNftPageActions.hideMyNftPageListDialog());
-
-        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      } catch (error) {
-        if (error.data) {
-          toast.error(error.data.message);
-        } else if (error.message) {
-          toast.error(error.message);
-        } else {
-          console.log(error);
-          toast.error('Unknown Error');
-        }
-        dispatch(MyNftPageActions.setMyNftPageListDialogError(true));
-      }
-    };
 }
 
 export class MyListingsCollectionPageActions {

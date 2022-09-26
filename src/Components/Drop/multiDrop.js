@@ -399,7 +399,7 @@ const MultiDrop = () => {
           </div>
         </HeroSection>
 
-        <section className="container no-bottom" id="drop_detail">
+        <section className="gl-legacy container no-bottom" id="drop_detail">
           <div className="row">
             <div className="col-md-12">
               <div className="d_profile de-flex">
@@ -425,7 +425,7 @@ const MultiDrop = () => {
           </div>
         </section>
 
-        <section className="container no-top no-bottom mb-4" id="drop_detail">
+        <section className="gl-legacy container no-top no-bottom mb-4" id="drop_detail">
           <div className="row">
             <div className="text-center">
               <h2>{drop.title}</h2>
@@ -476,7 +476,7 @@ const MultiDrop = () => {
           </div>
         </section>
 
-        <section className="container no-top" id="drop_detail">
+        <section className="gl-legacy container no-top" id="drop_detail">
           <div className="card-group">
             <div className="d-item col-sm-4 mb-4 px-2">
               <MultiDropCard

@@ -12,6 +12,7 @@ import { debounce, siPrefixedNumber } from '../src/utils';
 import { SortOption } from '../src/Components/Models/sort-option.model';
 import { MarketFilterCollection } from "../src/Components/Models/market-filters.model";
 import PageHead from "../src/Components/Head/PageHead";
+import {Heading} from "@chakra-ui/react";
 
 const Marketplace = () => {
   const cacheName = 'marketplace';
@@ -92,14 +93,14 @@ const Marketplace = () => {
           <div className="container">
             <div className="row m-10-hor">
               <div className="col-12">
-                <h1 className="text-center">Marketplace</h1>
+                <Heading as="h1" size="2xl" className="text-center">Marketplace</Heading>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="container">
+      <section className="gl-legacy container">
         <div className="row">
           {marketData && (
             <div className="d-item col-lg-6 col-sm-10 mb-4 mx-auto">

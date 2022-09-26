@@ -72,8 +72,9 @@ body {
 strong {
   font-weight: bold;
 }
-section {
-  padding: 90px 0;
+section.gl-legacy {
+  padding-top: 90px;
+  padding-bottom: 90px;
   &.no-top {
     padding-top: 0 !important;
   }

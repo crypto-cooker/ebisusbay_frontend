@@ -21,7 +21,7 @@ const Blood4NftAuction = () => {
         url="/blood-4-nft"
         image={hostedImage(image)}
       />
-      <section className="container no-bottom no-top">
+      <section className="gl-legacy container no-bottom no-top">
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center pt-5">
@@ -44,7 +44,7 @@ const Blood4NftAuction = () => {
           </div>
         </div>
       </section>
-      <section className="container pt-5">
+      <section className="gl-legacy container pt-5">
         <div className="row">
           <div className="col-lg-12 pt-3">
             <CuratedAuctionCollection collectionId="0xCF30e6C7D977F217734e5A265554a016760928E7" />

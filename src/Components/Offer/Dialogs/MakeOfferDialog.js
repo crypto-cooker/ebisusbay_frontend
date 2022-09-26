@@ -1,8 +1,5 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import { Dialog, DialogContent, DialogTitle } from '@mui/material';
-import styled from 'styled-components';
-import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
-import {Badge, Col, Form, Spinner} from "react-bootstrap";
+import {Badge, Form, Spinner} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {Contract, ethers} from "ethers";
 import Button from "@src/Components/components/Button";
@@ -16,56 +13,22 @@ import Offer from "@src/Contracts/Offer.json";
 import Market from "@src/Contracts/Marketplace.json";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import * as Sentry from '@sentry/react';
-import {hostedImage} from "@src/helpers/image";
-import Blockies from "react-blockies";
-import LayeredIcon from "@src/Components/components/LayeredIcon";
 import {getFilteredOffers} from "@src/core/subgraph";
 import {offerState} from "@src/core/api/enums";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
 import {specialImageTransform} from "@src/hacks";
-
-const DialogContainer = styled(Dialog)`
-  .MuiPaper-root {
-    border-radius: 8px;
-    overflow: hidden;
-    background-color: ${({ theme }) => theme.colors.bgColor1};
-  }
-
-  .MuiDialogContent-root {
-    width: 700px;
-    padding: 15px 42px 28px !important;
-    border-radius: 8px;
-    max-width: 734px;
-    background-color: ${({ theme }) => theme.colors.bgColor1};
-    color: ${({ theme }) => theme.colors.textColor3};
-
-    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
-      width: 100%;
-    }
-  }
-`;
-
-const DialogTitleContainer = styled(DialogTitle)`
-  font-size: 26px !important;
-  color: ${({ theme }) => theme.colors.textColor3};
-  padding: 0px !important;
-  margin-bottom: 18px !important;
-  font-weight: bold !important;
-  text-align: center;<
-`;
-
-const CloseIconContainer = styled.div`
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  cursor: pointer;
-
-  img {
-    width: 28px;
-  }
-`;
+import {
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay
+} from "@chakra-ui/react";
+import {getTheme} from "@src/Theme/theme";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -245,109 +208,114 @@ export default function MakeOfferDialog({ isOpen, nft:defaultNft, collection, on
   if (!collection) return <></>;
 
   return (
-    <DialogContainer onClose={onClose} open={isOpen} maxWidth="md">
-      <DialogContent>
+    <Modal onClose={onClose} isOpen={isOpen} size="2xl" isCentered>
+      <ModalOverlay />
+      <ModalContent>
         {!isLoading ? (
           <>
-            <DialogTitleContainer className="fs-5 fs-md-3">
+            <ModalHeader className="text-center">
               {nft ? (
                 <>{existingOffer ? <>Update Offer on {nft.name}</> : <>Offer on {nft.name}</>}</>
               ) : (
                 <>{existingOffer ? <>Update Offer</> : <>Make Offer}</>}</>
               )}
-            </DialogTitleContainer>
-            <div className="nftSaleForm row gx-3">
-              <div className="col-12 col-sm-6 mb-2 mb-sm-0">
-                <AnyMedia
-                  image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
-                  video={nft.video ?? nft.animation_url}
-                  videoProps={{ height: 'auto', autoPlay: true }}
-                  title={nft.name}
-                  usePlaceholder={false}
-                  className="img-fluid img-rounded"
-                />
-              </div>
-              <div className="col-12 col-sm-6">
-                {existingOffer && (
-                  <div className="d-flex justify-content-between">
-                    <Form.Label className="formLabel">
-                      Previous Offer:
-                    </Form.Label>
-                    <div>
-                      {existingOffer.price} CRO
-                    </div>
-                  </div>
-                )}
-                <Form.Group className="form-field">
-                  <Form.Label className="formLabel w-100">
-                    <div className="d-flex">
-                      <div className="flex-grow-1">Offer Amount</div>
-                      <div className="my-auto">
-                        <Badge
-                          pill
-                          bg={user.theme === 'dark' ? 'light' : 'secondary'}
-                          text={user.theme === 'dark' ? 'dark' : 'light'}
-                          className="ms-2"
-                        >
-                          Floor: {floorPrice} CRO
-                        </Badge>
+            </ModalHeader>
+            <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
+            <ModalBody>
+              <div className="nftSaleForm row gx-3">
+                <div className="col-12 col-sm-6 mb-2 mb-sm-0">
+                  <AnyMedia
+                    image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
+                    video={nft.video ?? nft.animation_url}
+                    videoProps={{ height: 'auto', autoPlay: true }}
+                    title={nft.name}
+                    usePlaceholder={false}
+                    className="img-fluid img-rounded"
+                  />
+                </div>
+                <div className="col-12 col-sm-6">
+                  {existingOffer && (
+                    <div className="d-flex justify-content-between">
+                      <Form.Label className="formLabel">
+                        Previous Offer:
+                      </Form.Label>
+                      <div>
+                        {existingOffer.price} CRO
                       </div>
                     </div>
-                  </Form.Label>
-                  <Form.Control
-                    className="input"
-                    type="number"
-                    placeholder="Enter Amount"
-                    value={offerPrice ?? ''}
-                    onChange={costOnChange}
-                    disabled={showConfirmButton || executingCreateListing}
-                  />
-                  <Form.Text className="field-description textError">
-                    {priceError}
-                  </Form.Text>
-                </Form.Group>
-
-                <div className="d-flex flex-wrap justify-content-between mb-3">
-                  {windowSize.width > 377 && (
-                    <Badge bg="danger" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(-0.25)}>
-                      -25%
-                    </Badge>
                   )}
-                  <Badge bg="danger" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(-0.1)}>
-                    -10%
-                  </Badge>
-                  <Badge
-                    bg={user.theme === 'dark' ? 'light' : 'secondary'}
-                    text={user.theme === 'dark' ? 'dark' : 'light'}
-                    className="cursor-pointer my-1" onClick={() => onQuickCost(0)}
-                  >
-                    Floor
-                  </Badge>
-                  <Badge bg="success" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(0.1)}>
-                    +10%
-                  </Badge>
+                  <Form.Group className="form-field">
+                    <Form.Label className="formLabel w-100">
+                      <div className="d-flex">
+                        <div className="flex-grow-1">Offer Amount</div>
+                        <div className="my-auto">
+                          <Badge
+                            pill
+                            bg={user.theme === 'dark' ? 'light' : 'secondary'}
+                            text={user.theme === 'dark' ? 'dark' : 'light'}
+                            className="ms-2"
+                          >
+                            Floor: {floorPrice} CRO
+                          </Badge>
+                        </div>
+                      </div>
+                    </Form.Label>
+                    <Form.Control
+                      className="input"
+                      type="number"
+                      placeholder="Enter Amount"
+                      value={offerPrice ?? ''}
+                      onChange={costOnChange}
+                      disabled={showConfirmButton || executingCreateListing}
+                    />
+                    <Form.Text className="field-description textError">
+                      {priceError}
+                    </Form.Text>
+                  </Form.Group>
 
-                  {windowSize.width > 377 && (
-                    <Badge bg="success" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(0.25)}>
-                      +25%
+                  <div className="d-flex flex-wrap justify-content-between mb-3">
+                    {windowSize.width > 377 && (
+                      <Badge bg="danger" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(-0.25)}>
+                        -25%
+                      </Badge>
+                    )}
+                    <Badge bg="danger" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(-0.1)}>
+                      -10%
                     </Badge>
-                  )}
-                </div>
+                    <Badge
+                      bg={user.theme === 'dark' ? 'light' : 'secondary'}
+                      text={user.theme === 'dark' ? 'dark' : 'light'}
+                      className="cursor-pointer my-1" onClick={() => onQuickCost(0)}
+                    >
+                      Floor
+                    </Badge>
+                    <Badge bg="success" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(0.1)}>
+                      +10%
+                    </Badge>
 
-                <div className="text-center my-3" style={{fontSize: '14px'}}>
-                  Offer amount will be held in escrow until the offer is either accepted, rejected, or cancelled
-                </div>
-                <div>
-                  <h3 className="feeTitle">Fees</h3>
-                  <hr />
-                  <div className="fee">
-                    <span>Royalty Fee: </span>
-                    <span>{royalty} %</span>
+                    {windowSize.width > 377 && (
+                      <Badge bg="success" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(0.25)}>
+                        +25%
+                      </Badge>
+                    )}
+                  </div>
+
+                  <div className="text-center my-3" style={{fontSize: '14px'}}>
+                    Offer amount will be held in escrow until the offer is either accepted, rejected, or cancelled
+                  </div>
+                  <div>
+                    <h3 className="feeTitle">Fees</h3>
+                    <hr />
+                    <div className="fee">
+                      <span>Royalty Fee: </span>
+                      <span>{royalty} %</span>
+                    </div>
                   </div>
                 </div>
               </div>
-
-              <div className="mt-3 mx-auto">
+            </ModalBody>
+            <ModalFooter className="border-0">
+              <div className="w-100">
                 {showConfirmButton ? (
                   <>
                     <div className="alert alert-danger my-auto mb-2 fw-bold text-center">
@@ -356,7 +324,7 @@ export default function MakeOfferDialog({ isOpen, nft:defaultNft, collection, on
                     {executingCreateListing && (
                       <div className="mb-2 text-center fst-italic">Please check your wallet for confirmation</div>
                     )}
-                    <div className="d-flex">
+                    <div className="d-flex w-100">
                       <Button type="legacy"
                               onClick={() => setShowConfirmButton(false)}
                               className="me-2 flex-fill">
@@ -390,7 +358,7 @@ export default function MakeOfferDialog({ isOpen, nft:defaultNft, collection, on
                   </>
                 )}
               </div>
-            </div>
+            </ModalFooter>
           </>
         ) : (
           <EmptyData>
@@ -399,10 +367,7 @@ export default function MakeOfferDialog({ isOpen, nft:defaultNft, collection, on
             </Spinner>
           </EmptyData>
         )}
-        <CloseIconContainer onClick={onClose}>
-          <img src="/img/icons/close-icon-blue.svg" alt="close" width="40" height="40" />
-        </CloseIconContainer>
-      </DialogContent>
-    </DialogContainer>
+      </ModalContent>
+    </Modal>
   );
 }

@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import LayeredIcon from './LayeredIcon';
 import {hostedImage} from "../../helpers/image";
+import {Heading} from "@chakra-ui/react";
 
 const VerifiedIcon = styled.span`
   font-size: 10px;
@@ -49,7 +50,7 @@ const CustomSlide = ({ index, avatar, banner, title, subtitle, collectionId, url
         </div>
         <div className="nft_coll_info">
           <span>
-            <h4>{title}</h4>
+            <Heading as="h4" size="md">{title}</Heading>
           </span>
           <span>{subtitle}</span>
         </div>

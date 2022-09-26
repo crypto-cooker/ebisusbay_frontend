@@ -1,7 +1,8 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Contract, ethers } from 'ethers';
-import {faCrow, faExternalLinkAlt, faHeart, faShare, faSync} from '@fortawesome/free-solid-svg-icons';
+import {faCrow, faExternalLinkAlt, faHeart as faHeartSolid, faSync} from '@fortawesome/free-solid-svg-icons';
+import {faHeart as faHeartOutline} from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import {Badge, Spinner} from 'react-bootstrap';
@@ -30,10 +31,10 @@ import {
   isLazyHorsePonyCollection,
   isLadyWeirdApesCollection,
   isNftBlacklisted,
-  isAnyWeirdApesCollection, isWeirdApesCollection,
+  isAnyWeirdApesCollection, isWeirdApesCollection, isEmptyObj,
 } from '@src/utils';
-import {getNftDetails, refreshMetadata} from '@src/GlobalState/nftSlice';
-import { connectAccount, chainConnect } from '@src/GlobalState/User';
+import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
+import {connectAccount, chainConnect, retrieveProfile} from '@src/GlobalState/User';
 import { specialImageTransform } from '@src/hacks';
 import ListingItem from '../NftDetails/NFTTabListings/ListingItem';
 import PriceActionBar from '../NftDetails/PriceActionBar';
@@ -49,8 +50,10 @@ import { hostedImage } from '@src/helpers/image';
 import Link from 'next/link';
 import axios from "axios";
 import Button from "@src/Components/components/common/Button";
-import Market from "@src/Contracts/Marketplace.json";
 import {collectionRoyaltyPercent} from "@src/core/chain";
+import {ButtonGroup, Heading} from "@chakra-ui/react";
+import useToggleFavorite from "@src/Components/NftDetails/hooks/useToggleFavorite";
+import {toast} from "react-toastify";
 
 const config = appConfig();
 const knownContracts = config.collections;
@@ -67,7 +70,7 @@ const Nft721 = ({ address, id }) => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user);
-  const {nft, refreshing} = useSelector((state) => state.nft);
+  const {nft, refreshing, favorites} = useSelector((state) => state.nft);
 
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [offerType, setOfferType] = useState(OFFER_TYPE.none);
@@ -89,6 +92,8 @@ const Nft721 = ({ address, id }) => {
     return collection?.name;
   });
   const isLoading = useSelector((state) => state.nft.loading);
+
+  const [{ isLoading:isFavoriting, response, error }, toggleFavorite]  = useToggleFavorite();
 
   // Custom breeding considerations
   const [croCrowBreed, setCroCrowBreed] = useState(null);
@@ -386,10 +391,31 @@ const Nft721 = ({ address, id }) => {
     // eslint-disable-next-line
   }, [nft, user.address]);
 
+  const onFavoriteClicked = async () => {
+    if (isEmptyObj(user.profile)) {
+      toast.info(`Connect wallet and create a profile to start adding favorites`);
+      return;
+    }
+    if (user.profile.error) {
+      toast.info(`Error loading profile. Please try reconnecting wallet`);
+      return;
+    }
+    const isCurrentFav = isFavorite();
+    await toggleFavorite(user.address, address, id, !isCurrentFav);
+    toast.success(`Item ${isCurrentFav ? 'removed from' : 'added to'} favorites`);
+    dispatch(tickFavorite(isCurrentFav ? -1 : 1));
+    dispatch(retrieveProfile());
+  };
+
+  const isFavorite = () => {
+    if (!user.profile?.favorites) return false;
+    return user.profile.favorites.find((f) => caseInsensitiveCompare(address, f.tokenAddress) && id === f.tokenId);
+  }
+
   return (
     <div>
       {isLoading ? (
-        <section className="container">
+        <section className="gl-legacy container">
           <div className="row mt-4">
             <div className="col-lg-12 text-center">
               <Spinner animation="border" role="status">
@@ -399,7 +425,7 @@ const Nft721 = ({ address, id }) => {
           </div>
         </section>
       ) : (
-        <section className="container">
+        <section className="gl-legacy container">
           <div className="row">
             <div className="col-md-6 text-center">
               {nft ? (
@@ -420,20 +446,34 @@ const Nft721 = ({ address, id }) => {
               ) : (
                 <></>
               )}
-                <div className="nft__item_action mt-2" style={{ cursor: 'pointer' }}>
-                  <div className="d-flex justify-content-center">
+                <div className="mt-2" style={{ cursor: 'pointer' }}>
+                  <ButtonGroup size='sm' isAttached variant='outline'>
                     <Button styleType="default-outlined" title="Refresh Metadata" onClick={onRefreshMetadata} disabled={refreshing}>
                       <FontAwesomeIcon icon={faSync} spin={refreshing} />
                     </Button>
+                    <Button
+                      styleType="default-outlined"
+                      title={isFavorite() ? 'This item is in your favorites list' : 'Click to add to your favorites list'}
+                      onClick={onFavoriteClicked}
+                    >
+                      <div>
+                        <span className="me-1">{favorites}</span>
+                        {isFavorite() ? (
+                          <FontAwesomeIcon icon={faHeartSolid} style={{color:'#dc143c'}} />
+                        ) : (
+                          <FontAwesomeIcon icon={faHeartOutline} />
+                        )}
+                      </div>
+                    </Button>
                     {nft && nft.original_image && (
-                      <Button styleType="default-outlined" className="ms-2" title="View Full Image" onClick={() =>
+                      <Button styleType="default-outlined" title="View Full Image" onClick={() =>
                         typeof window !== 'undefined' &&
                         window.open(specialImageTransform(address, fullImage()), '_blank')
                       }>
                         <FontAwesomeIcon icon={faExternalLinkAlt} />
                       </Button>
                     )}
-                  </div>
+                  </ButtonGroup>
                 </div>
             </div>
             <div className="col-md-6">
@@ -441,15 +481,15 @@ const Nft721 = ({ address, id }) => {
                 <div className="item_info">
                   {isNftBlacklisted(address, id) ? (
                     <div className="mb-4">
-                      <h2 className="mb-0">{customProfile.name ?? nft.name}</h2>
+                      <Heading className="mb-0">{customProfile.name ?? nft.name}</Heading>
                       <div className="d-flex">
                         <Badge bg="danger">Blacklisted</Badge>
                       </div>
                     </div>
                   ) : (
-                    <h2>{customProfile.name ?? nft.name}</h2>
+                    <Heading>{customProfile.name ?? nft.name}</Heading>
                   )}
-                  <p className="text-break">{customProfile.description ?? nft.description}</p>
+                  <p className="text-break mb-4">{customProfile.description ?? nft.description}</p>
                   {isCroCrowCollection(address) && croCrowBreed && (
                     <div className="d-flex flex-row align-items-center mb-4">
                       <LayeredIcon
@@ -465,7 +505,7 @@ const Nft721 = ({ address, id }) => {
                   {isCrognomidesCollection(address) && crognomideBreed && (
                     <div className="d-flex flex-row align-items-center mb-4">
                       <LayeredIcon
-                        icon={faHeart}
+                        icon={faHeartSolid}
                         bgColor={'#ffffff00'}
                         color={'#dc143c'}
                         inverse={false}
@@ -477,7 +517,7 @@ const Nft721 = ({ address, id }) => {
                   {isLadyWeirdApesCollection(address) && ladyWeirdApeChildren !== null && (
                     <div className="d-flex flex-row align-items-center mb-4">
                       <LayeredIcon
-                        icon={faHeart}
+                        icon={faHeartSolid}
                         bgColor={'#ffffff00'}
                         color={'#dc143c'}
                         inverse={false}
