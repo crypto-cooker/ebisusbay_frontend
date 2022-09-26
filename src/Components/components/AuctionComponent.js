@@ -65,7 +65,7 @@ const AuctionComponent = (props) => {
     <>
       <div>
         {isLoading ? (
-          <section className="container">
+          <section className="gl-legacy container">
             <div className="row mt-4">
               <div className="col-lg-12 text-center">
                 <Spinner animation="border" role="status">
@@ -75,7 +75,7 @@ const AuctionComponent = (props) => {
             </div>
           </section>
         ) : (
-          <section className="container">
+          <section className="gl-legacy container">
             <div className="row mt-md-5 pt-md-4">
               <div className="col-md-6 text-center">
                 {listing && (

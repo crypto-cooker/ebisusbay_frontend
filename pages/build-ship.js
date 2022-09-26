@@ -135,7 +135,7 @@ const Drop = () => {
         </div>
       </section>
 
-      <section className="container d_coll no-top no-bottom">
+      <section className="gl-legacy container d_coll no-top no-bottom">
         <div className="row">
           <div className="col-md-12">
             <div className="d_profile">
@@ -166,7 +166,7 @@ const Drop = () => {
         </div>
       </section>
 
-      <section className="container no-top">
+      <section className="gl-legacy container no-top">
         {isLoading ? (
           <div className="row mt-4" style={{ marginTop: '220px' }}>
             <div className="col-lg-12 text-center">

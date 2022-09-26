@@ -234,7 +234,7 @@ const Listing = () => {
         image={listing?.nft?.image}
       />
       {isLoading ? (
-        <section className="container">
+        <section className="gl-legacy container">
           <div className="row mt-4">
             <div className="col-lg-12 text-center">
               <Spinner animation="border" role="status">

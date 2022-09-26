@@ -388,7 +388,7 @@ const CronosverseDrop = () => {
           </div>
         </HeroSection>
 
-        <section className="container no-bottom" id="drop_detail">
+        <section className="gl-legacy container no-bottom" id="drop_detail">
           <div className="row">
             <div className="col-md-12">
               <div className="d_profile de-flex">
@@ -413,7 +413,7 @@ const CronosverseDrop = () => {
             </div>
           </div>
         </section>
-        <section className="container no-top">
+        <section className="gl-legacy container no-top">
           <div className="row">
             <div className="item_info">
               <h2>{drop.title}</h2>

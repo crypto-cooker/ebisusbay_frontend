@@ -137,7 +137,7 @@ const MyStaking = () => {
 
   return (
     <>
-      <section className="container no-top">
+      <section className="gl-legacy container no-top">
         <div className="row mt-md-5 pt-md-4">
           <div className="col-md-4 text-center">
             <AnyMedia
