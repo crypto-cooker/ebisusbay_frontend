@@ -9059,7 +9059,7 @@
       "name": "Painted Pandaz by Troopz",
       "slug": "painted-pandaz",
       "multiToken": false,
-      "address": "",
+      "address": "0x2FfF5FE8a3e13A10509E4297DF9d1fdaF1eE7DC4",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -12357,7 +12357,7 @@
         "website": "https://trooprz.army/",
         "discord": "https://discord.gg/trooprz"
       },
-      "address": "",
+      "address": "0x2FfF5FE8a3e13A10509E4297DF9d1fdaF1eE7DC4",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 50,
       "totalSupply": 1111,
