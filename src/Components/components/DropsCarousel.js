@@ -265,13 +265,13 @@ export default class Responsive extends Component {
                                 {this.calculateStatus(item.drop.salePeriods.public) > dropState.NOT_STARTED ? (
                                   <>
                                     {this.calculateStatus(item.drop.salePeriods.public) === dropState.LIVE && (
-                                      <h3>Drop is Live!</h3>
+                                      <Heading as="h3" size="lg">Drop is Live!</Heading>
                                     )}
                                     {this.calculateStatus(item.drop.salePeriods.public) === dropState.EXPIRED && (
-                                      <h3>Drop Ended</h3>
+                                      <Heading as="h3" size="lg">Drop Ended</Heading>
                                     )}
                                     {this.calculateStatus(item.drop.salePeriods.public) === dropState.SOLD_OUT && (
-                                      <h3>Sold Out</h3>
+                                      <Heading as="h3" size="lg">Sold Out</Heading>
                                     )}
                                   </>
                                 ) : (
@@ -285,7 +285,7 @@ export default class Responsive extends Component {
                                       </>
                                     )}
                                     {this.calculateStatus(item.drop.salePeriods.presale) === dropState.LIVE && (
-                                      <h3>Presale Live!</h3>
+                                      <Heading as="h3" size="lg">Presale Live!</Heading>
                                     )}
                                     {this.calculateStatus(item.drop.salePeriods.public) === dropState.NOT_STARTED && (
                                       <>
@@ -311,9 +311,9 @@ export default class Responsive extends Component {
                                     </h5>
                                   </>
                                 )}
-                                {this.calculateStatus(item.drop.start) === dropState.LIVE && <h3>Drop is Live!</h3>}
-                                {this.calculateStatus(item.drop.start) === dropState.EXPIRED && <h3>Drop Ended</h3>}
-                                {this.calculateStatus(item.drop.start) === dropState.SOLD_OUT && <h3>Sold Out</h3>}
+                                {this.calculateStatus(item.drop.start) === dropState.LIVE && <Heading as="h3" size="lg">Drop is Live!</Heading>}
+                                {this.calculateStatus(item.drop.start) === dropState.EXPIRED && <Heading as="h3" size="lg">Drop Ended</Heading>}
+                                {this.calculateStatus(item.drop.start) === dropState.SOLD_OUT && <Heading as="h3" size="lg">Sold Out</Heading>}
                               </div>
                             )}
                           </div>

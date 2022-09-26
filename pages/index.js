@@ -21,7 +21,7 @@ import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {appConfig} from "@src/Config";
 import Head from "next/head";
 import {faDiscord, faTwitter} from "@fortawesome/free-brands-svg-icons";
-import {Heading} from "@chakra-ui/react";
+import {Center, Heading} from "@chakra-ui/react";
 
 const fadeInUp = keyframes`
   0% {
@@ -350,31 +350,37 @@ const Home = () => {
         </div>
         <div className="row align-items-center text-center">
           <div className="col">
-            <a href="https://nebkas.ro" target="_blank" rel="noreferrer">
-              <img
-                src={hostedImage(userTheme === 'light' ? '/img/logos/nebkas-logo.png' : '/img/logos/nebkas-logo.png')}
-                alt="nebkas.co"
-                width="128px"
-              />
-            </a>
+            <Center>
+              <a href="https://nebkas.ro" target="_blank" rel="noreferrer">
+                <img
+                  src={hostedImage(userTheme === 'light' ? '/img/logos/nebkas-logo.png' : '/img/logos/nebkas-logo.png')}
+                  alt="nebkas.co"
+                  width="128px"
+                />
+              </a>
+            </Center>
           </div>
           <div className="col">
-            <a href="https://weare.fi/en/" target="_blank" rel="noreferrer">
-              <img
-                src={hostedImage(userTheme === 'light' ? '/img/logos/wearefi-logo.png' : '/img/logos/wearefi-white.png')}
-                alt="WeAre Solutions"
-                width={userTheme === 'light' ? '64px' : '160px'}
-              />
-            </a>
+            <Center>
+              <a href="https://weare.fi/en/" target="_blank" rel="noreferrer">
+                <img
+                  src={hostedImage(userTheme === 'light' ? '/img/logos/wearefi-logo.png' : '/img/logos/wearefi-white.png')}
+                  alt="WeAre Solutions"
+                  width={userTheme === 'light' ? '64px' : '160px'}
+                />
+              </a>
+            </Center>
           </div>
           <div className="col">
-            <a href="https://crodex.app/" target="_blank" rel="noreferrer">
-              <img
-                src={hostedImage(userTheme === 'light' ? '/img/logos/crodex.png' : '/img/logos/crodex-white.png')}
-                alt="CRODEX"
-                width="150px"
-              />
-            </a>
+            <Center>
+              <a href="https://crodex.app/" target="_blank" rel="noreferrer">
+                <img
+                  src={hostedImage(userTheme === 'light' ? '/img/logos/crodex.png' : '/img/logos/crodex-white.png')}
+                  alt="CRODEX"
+                  width="150px"
+                />
+              </a>
+            </Center>
           </div>
         </div>
       </section>

@@ -277,7 +277,7 @@ const StakeCard = ({ stake, threshold, buttonName, buttonActionName }) => {
   return (
     <div className="card eb-nft__card h-100 shadow px-4">
       <div className="card-body d-flex flex-column text-center">
-        <h5>{buttonName}</h5>
+        <Heading as="h5" size="md" className="mb-2">{buttonName}</Heading>
         <div className="row row-cols-1 g-3">
           <div>
             <Form.Label>Quantity</Form.Label>
@@ -401,7 +401,7 @@ const RewardsCard = () => {
     <div className="col">
       <div className="card eb-nft__card h-100 shadow px-4">
         <div className="card-body d-flex flex-column">
-          <h5>Rewards</h5>
+          <Heading as="h5" size="md" className="mb-2">Rewards</Heading>
           {rewardsInfoLoading ? (
             <Spinner animation="border" role="status" size="sm" className="mx-auto">
               <span className="visually-hidden">Loading...</span>

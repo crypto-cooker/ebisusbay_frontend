@@ -5,6 +5,7 @@ import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {CdnImage} from "@src/Components/components/CdnImage";
 import Blockies from "react-blockies";
 import Image from "next/image";
+import {Heading} from "@chakra-ui/react";
 
 export const CollectionFilter = ({collections, currentFilter, onFilter, keyPrefix = null}) => {
   const [visibleCollections, setVisibleCollections] = useState(collections);
@@ -49,7 +50,7 @@ export const CollectionFilter = ({collections, currentFilter, onFilter, keyPrefi
 
   return (
     <div className="filter-pane">
-      <h5>Collections</h5>
+      <Heading as="h5" size="md" className="mb-2">Collections</Heading>
       <Form.Control type="text" placeholder="Filter" onChange={onTextFilterChange}/>
       {visibleCollections.map((collection) => (
         <div key={getKey(collection)}>

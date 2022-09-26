@@ -8,6 +8,7 @@ import PopupMen from './PopupMenu';
 import AnyMedia from './AnyMedia';
 import {appConfig} from "../../Config";
 import {nftCardUrl} from "../../helpers/image";
+import {Heading} from "@chakra-ui/react";
 
 const MyNftCard = ({
   nft,
@@ -103,11 +104,11 @@ const MyNftCard = ({
         <div className="card-title mt-auto">
           <span onClick={() => navigateTo(nftUrl())} style={{ cursor: 'pointer' }}>
             {nft.count && nft.count > 0 ? (
-              <h4>
+              <Heading as="h6" size="sm">
                 {nft.name} (x{nft.count})
-              </h4>
+              </Heading>
             ) : (
-              <h4>{nft.name}</h4>
+              <Heading as="h6" size="sm">{nft.name}</Heading>
             )}
           </span>
         </div>
