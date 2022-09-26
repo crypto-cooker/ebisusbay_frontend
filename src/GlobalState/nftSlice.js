@@ -3,6 +3,7 @@ import { listingState } from '../core/api/enums';
 import {refreshToken} from "@src/core/api/endpoints/refresh";
 import {toast} from "react-toastify";
 import {getNft} from "@src/core/api/endpoints/nft";
+import {getNftFavorites} from "@src/core/cms/next/favorites";
 
 const nftSlice = createSlice({
   name: 'nft',
@@ -28,6 +29,7 @@ const nftSlice = createSlice({
       state.history = action.payload.listings ?? [];
       state.powertraits = action.payload.powertraits ?? [];
       state.currentListing = action.payload.currentListing;
+      state.favorites = action.payload.favorites;
     },
     nftRefreshing: (state) => {
       state.refreshing = true;
@@ -54,7 +56,7 @@ export const getNftDetails = (collectionAddress, nftId) => async (dispatch, getS
     .find((l) => l.state === listingState.ACTIVE) : null;
   response.nft = { ...response.nft, address: collectionAddress, id: nftId };
   response.currentListing = currentListing;
-
+  response.favorites = await getNftFavorites(collectionAddress, nftId);
   dispatch(nftReceived(response));
   return response.nft;
 };

@@ -6,9 +6,13 @@ const api = axios.create({
   baseURL: config.urls.cms,
 });
 
-export const getFavorites = async (address, type =  'nft') => {
-  const endpoint = type === 'nft' ? 'nft/favorite' : 'collection/watchList';
-  const response = await api.get(endpoint, {params:{address}});
+export const getNftFavorites = async (tokenAddress, tokenId) => {
+  const response = await api.get('nft/favorites', {params:{tokenAddress, tokenId}});
+  return response.data?.data;
+}
+
+export const getUserFavorites = async (address) => {
+  const response = await api.get('profile/favorites', {params:{address}});
   return response.data?.data;
 }
 

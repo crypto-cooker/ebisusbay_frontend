@@ -1,4 +1,4 @@
-import {getFavorites} from "@src/core/cms/next/favorites";
+import {getUserFavorites} from "@src/core/cms/next/favorites";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {Spinner} from "react-bootstrap";
@@ -8,7 +8,7 @@ import {useQuery} from "@tanstack/react-query";
 export default function Favorites({ address }) {
 
   const { isLoading, error, data:nfts, status } = useQuery(['Favorites', address], () =>
-    getFavorites(address)
+    getUserFavorites(address)
   )
 
   return status === "loading" ? (

@@ -4,7 +4,12 @@ const api = axios.create({
   baseURL: '/api',
 });
 
-export const getFavorites = async (address) => {
+export const getNftFavorites = async (tokenAddress, tokenId) => {
+  const response = await api.get(`nft/favorites`, {params:{tokenAddress, tokenId}});
+  return response.data;
+}
+
+export const getUserFavorites = async (address) => {
   const response = await api.get(`users/${address}/favorites`);
   return response.data;
 }

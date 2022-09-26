@@ -31,7 +31,7 @@ import {
   isLazyHorsePonyCollection,
   isLadyWeirdApesCollection,
   isNftBlacklisted,
-  isAnyWeirdApesCollection, isWeirdApesCollection,
+  isAnyWeirdApesCollection, isWeirdApesCollection, isEmptyObj,
 } from '@src/utils';
 import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
 import {connectAccount, chainConnect, retrieveProfile} from '@src/GlobalState/User';
@@ -392,8 +392,12 @@ const Nft721 = ({ address, id }) => {
   }, [nft, user.address]);
 
   const onFavoriteClicked = async () => {
-    if (!user.profile || user.profile.error) {
+    if (isEmptyObj(user.profile)) {
       toast.info(`Connect wallet and create a profile to start adding favorites`);
+      return;
+    }
+    if (user.profile.error) {
+      toast.info(`Error loading profile. Please try reconnecting wallet`);
       return;
     }
     const isCurrentFav = isFavorite();

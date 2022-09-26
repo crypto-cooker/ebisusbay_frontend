@@ -13,14 +13,14 @@ import {
   caseInsensitiveCompare,
   findCollectionByAddress,
   humanize,
-  isCrosmocraftsPartsDrop,
+  isCrosmocraftsPartsDrop, isEmptyObj,
   mapAttributeString,
   millisecondTimestamp, rankingsLinkForCollection, rankingsLogoForCollection, rankingsTitleForCollection,
   relativePrecision,
   shortAddress,
   timeSince,
 } from '@src/utils';
-import {getNftDetails, refreshMetadata} from '@src/GlobalState/nftSlice';
+import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
 import { specialImageTransform } from '@src/hacks';
 import {chainConnect, connectAccount, retrieveProfile} from '@src/GlobalState/User';
 
@@ -57,7 +57,7 @@ const Nft1155 = ({ address, id }) => {
   const dispatch = useDispatch();
   const history = useRouter();
 
-  const {nft, refreshing} = useSelector((state) => state.nft);
+  const {nft, refreshing, favorites} = useSelector((state) => state.nft);
   const soldListings = useSelector((state) =>
     state.nft.history.filter((i) => i.state === listingState.SOLD).sort((a, b) => (a.saleTime < b.saleTime ? 1 : -1))
   );
@@ -156,13 +156,18 @@ const Nft1155 = ({ address, id }) => {
   }, [nft, user.address]);
 
   const onFavoriteClicked = async () => {
-    if (!user.profile || user.profile.error) {
+    if (isEmptyObj(user.profile)) {
       toast.info(`Connect wallet and create a profile to start adding favorites`);
+      return;
+    }
+    if (user.profile.error) {
+      toast.info(`Error loading profile. Please try reconnecting wallet`);
       return;
     }
     const isCurrentFav = isFavorite();
     await toggleFavorite(user.address, address, id, !isCurrentFav);
     toast.success(`Item ${isCurrentFav ? 'removed from' : 'added to'} favorites`);
+    dispatch(tickFavorite(isCurrentFav ? -1 : 1));
     dispatch(retrieveProfile());
   };
 
@@ -205,7 +210,7 @@ const Nft1155 = ({ address, id }) => {
               ) : (
                 <></>
               )}
-              <div className="nft__item_action mt-2" style={{ cursor: 'pointer' }}>
+              <div className="mt-2" style={{ cursor: 'pointer' }}>
                 <ButtonGroup size='sm' isAttached variant='outline'>
                   <Button styleType="default-outlined" title="Refresh Metadata" onClick={onRefreshMetadata} disabled={refreshing}>
                     <FontAwesomeIcon icon={faSync} spin={refreshing} />
@@ -215,7 +220,14 @@ const Nft1155 = ({ address, id }) => {
                     title={isFavorite() ? 'This item is in your favorites list' : 'Click to add to your favorites list'}
                     onClick={onFavoriteClicked}
                   >
-                    <FontAwesomeIcon icon={isFavorite() ? faHeartSolid : faHeartOutline} />
+                    <div>
+                      <span className="me-1">{favorites}</span>
+                      {isFavorite() ? (
+                        <FontAwesomeIcon icon={faHeartSolid} style={{color:'#dc143c'}} />
+                      ) : (
+                        <FontAwesomeIcon icon={faHeartOutline} />
+                      )}
+                    </div>
                   </Button>
                   {nft && nft.original_image && (
                     <Button styleType="default-outlined" title="View Full Image" onClick={() =>

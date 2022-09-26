@@ -6,6 +6,7 @@ import Nft1155 from '../../../src/Components/Collection/nft1155';
 import Nft721 from '../../../src/Components/Collection/nft721';
 import {appConfig} from "@src/Config";
 import PageHead from "../../../src/Components/Head/PageHead";
+import {getNft} from "@src/core/api/endpoints/nft";
 const knownContracts = appConfig('collections')
 
 const Nft = ({ slug, id, nft }) => {
@@ -105,7 +106,8 @@ export const getServerSideProps = async ({ params }) => {
 
   let nft;
   if (collection?.address) {
-    nft = await store.dispatch(getNftDetails(collection.address, tokenId));
+    const resp = await getNft(collection.address, tokenId);
+    nft = { ...resp.nft, address: collection.address, id: tokenId };
   }
 
   if (!collection || !nft) {

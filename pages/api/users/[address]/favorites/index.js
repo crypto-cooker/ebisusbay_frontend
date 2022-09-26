@@ -1,11 +1,11 @@
-import {addFavorite, deleteFavorite, getFavorites} from "@src/core/cms/endpoints/favorites";
+import {addFavorite, deleteFavorite, getUserFavorites} from "@src/core/cms/endpoints/favorites";
 
 export default async function handler(req, res) {
   const {method, body, query} = req;
 
   try {
     if (method === 'GET') {
-      const response = await getFavorites(query.address);
+      const response = await getUserFavorites(query.address);
       res.status(200).json(response);
     }
     if (method === 'POST') {
