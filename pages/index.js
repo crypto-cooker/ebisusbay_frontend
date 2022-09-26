@@ -255,40 +255,33 @@ const Home = () => {
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center pt-5">
-              <Heading>CROtopia</Heading>
+              <Heading>SeaShrine Founding Member VIP</Heading>
               <div className="small-border"></div>
             </div>
           </div>
           <div className="col-lg-6 col-md-6 d-flex align-items-center">
             <div className="mt-3" style={{color:getTheme(userTheme).colors.textColor3}}>
-              <p>
-                CROtopia OG Pass gives users immediate access to a fully functioning and ever expanding Metaverse. Holders gain access to all partner buildings and are able to compete in our Play 2 Earn section. Crotopia OG pass holders will also benefit from exclusive airdrops, skins, accessories and more.
+              <p className="fs-5">
+                SeaShrine is a new marketplace founded and built by the same team behind the Cronos success, Ebisu’s Bay. With upcoming feature parity with their previous endeavor, the team looks to replicate their accomplishments and to recreate a Gold Standard for marketplaces on the new Aptos blockchain. Embark on this journey with us by minting a VIP Founding Member NFT now!
               </p>
+              <p className="fw-bold fs-4">Minting Begins 29 Sept 2022</p>
             </div>
           </div>
           <div className="col-lg-6 col-md-6 pt-3">
             <div className="mx-auto text-center">
               <img
-                src={hostedImage('/img/promos/crotopia.webp')}
-                alt="CROtopia"
+                src={hostedImage('/img/promos/seashrine.webp')}
+                alt="SeaShrine Founding Member VIP"
                 className="img-fluid"
                 width="100%"
-                style={{maxWidth: '300px'}}
               />
             </div>
             <div className="d-flex flex-column align-middle">
               <div className="d-flex justify-content-between flex-wrap">
-                <div className="flex-fill mx-1 mt-2">
-                  <a href="https://www.crotopia.land/" target="_blank" rel="noreferrer">
-                    <Button type="legacy-outlined" className="w-100">
-                      Metaverse
-                    </Button>
-                  </a>
-                </div>
                 <div className="flex-fill mx-auto mt-2" style={{maxWidth:300}}>
-                  <a href="https://www.crotopia.xyz" target="_blank" rel="noreferrer">
+                  <a href="https://seashrine.io" target="_blank" rel="noreferrer">
                     <Button type="legacy" className="w-100">
-                       Mint Now
+                       View Website
                     </Button>
                   </a>
                 </div>
@@ -371,15 +364,6 @@ const Home = () => {
                 src={hostedImage(userTheme === 'light' ? '/img/logos/wearefi-logo.png' : '/img/logos/wearefi-white.png')}
                 alt="WeAre Solutions"
                 width={userTheme === 'light' ? '64px' : '160px'}
-              />
-            </a>
-          </div>
-          <div className="col">
-            <a href="https://phenix.finance/" target="_blank" rel="noreferrer">
-              <img
-                src={hostedImage(userTheme === 'light' ? '/img/logos/phenix.svg' : '/img/logos/phenix-white.svg')}
-                alt="Phenix Finance"
-                width="100px"
               />
             </a>
           </div>

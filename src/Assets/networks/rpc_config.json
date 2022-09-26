@@ -2940,11 +2940,11 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "5000 Fruit Farmers Living & Loving on Cronos. Slavik Fruit Farmers grant the holder FRODEX Token Allocation, 3D Voxel Airdrops and Exclusive first access to SFF Expansions. Each Farmer is a Membership pass into the SlavikVerse Ecosystem!",
+        "description": "5000 Fruit Farmers Living & Loving on Cronos. Each Farmer is an access pass into the SFF Ecosystem.",
         "verified": true,
-        "avatar": "/img/collections/slavikfruitfarm/avatar.png",
-        "banner": "/img/collections/slavikfruitfarm/banner.png",
-        "card": "/img/collections/slavikfruitfarm/card.png",
+        "avatar": "/img/collections/slavikfruitfarm/avatar.webp",
+        "banner": "/img/collections/slavikfruitfarm/banner.webp",
+        "card": "/img/collections/slavikfruitfarm/card.webp",
         "maxSupply": 5000,
         "website": "https://slavikfruitfarm.io/",
         "twitter": "https://twitter.com/SlavikFruitFarm",
@@ -5859,7 +5859,7 @@
         "card": "/img/collections/dr-dao/card.jpeg",
         "banner": "/img/collections/dr-dao/banner.jpeg",
         "maxSupply": 297,
-        "website": "https://www.drdaoclub.xyz/",
+        "website": "https://daogames.online/",
         "twitter": "https://twitter.com/DrDaoClub",
         "discord": "https://discord.gg/fyca4JYW7V",
         "medium": "https://medium.com/@drdao.club",
@@ -6714,6 +6714,11 @@
         "discord": "https://discord.gg/jxyytxSJAZ",
         "medium": "https://medium.com/@Crossbreeds",
         "rankings": {"source": "provided"}
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "phenix",
+        "escrow": false
       }
     },
     {
@@ -7080,7 +7085,7 @@
       },
       "verification": {
         "doxx": "private",
-        "kyc": "ebisu",
+        "kyc": "phenix",
         "escrow": false
       }
     },
@@ -8055,7 +8060,7 @@
       "multiToken": false,
       "address": "0xFD265797d7Bc6C25f2Cd148ec12f36a8eE00862a",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "When you buy a CroHogs NFT, you are not just purchasing a unique piece of art, but also a ticket into a growing community full of opportunities. Our collection of 1500 NFTs offers staking, our “the Hoggery” and a brand-new feature to give your NFTS a min Value even in Bear markets. Your CroHog will be your personal identity within our community, while opening the door to additional benefits. All CroHogs NFT`s are stored on the Cronos blockchain, and every owner is given full commercial usage rights/ownership.",
         "verified": true,
@@ -8103,7 +8108,7 @@
       "name": "Trillionaire Trashcans",
       "slug": "trillionaire-trashcans",
       "multiToken": false,
-      "address": "",
+      "address": "0x4b7803015C03De5371C9498d6a9c779cfcA159Ad",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -8471,7 +8476,7 @@
       "multiToken": false,
       "address": "0x9e295527Efb2514BfcbC7AC5b3D17aE3eE192C9D",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "The Feral Shiba Club is a deflationary and revenue sharing NFT project on Cronos.",
         "verified": false,
@@ -8590,7 +8595,7 @@
       "multiToken": false,
       "address": "0xe386f188FA10aB957E3eFaAE57Fc20039BD84d64",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "God hates all crofam!!! This is strictly a pfp project with no utility. Why no utility… because god hates you. Now go away.",
         "verified": true,
@@ -8760,7 +8765,8 @@
         "maxSupply": 500,
         "website": "https://cromythic.com/",
         "twitter": "https://twitter.com/cromythic",
-        "discord": "https://discord.gg/Hn3J9ruJ"
+        "discord": "https://discord.gg/Hn3J9ruJ",
+        "rankings": {"source": "provided"}
       }
     },
     {
@@ -8816,6 +8822,11 @@
         "maxSupply": 5555,
         "website": "https://www.specterofart.com/FingerMonkeys",
         "discord": "https://discord.gg/CcwFDwPuuh"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "phenix",
+        "escrow": false
       }
     },
     {
@@ -9040,7 +9051,112 @@
       },
       "verification": {
         "doxx": false,
-        "kyc": false,
+        "kyc": "phenix",
+        "escrow": false
+      }
+    },
+    {
+      "name": "Painted Pandaz by Troopz",
+      "slug": "painted-pandaz",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "1111 rare, unique and algorithmically generated Painted Pandaz.\n\n10 $TRPZ Daily Staking Yield | 10 x Legendary 1/1s | Exclusive Painted Pandaz Auctionz & Rafflez | The return of the classic ‘Trait Based’ rewards \n\nActs as your 'Panda Pass' for exclusive deals across our Whitelisted Community partners.",
+        "verified": true,
+        "avatar": "/img/collections/painted-pandaz/avatar.webp",
+        "card": "/img/collections/painted-pandaz/card.webp",
+        "banner": "/img/collections/painted-pandaz/banner.webp",
+        "maxSupply": 1111,
+        "twitter": "https://twitter.com/trooprzarmy",
+        "website": "https://trooprz.army/",
+        "discord": "https://discord.gg/trooprz"
+      }
+    },
+    {
+      "name": "SeaShrine Founding Member VIP",
+      "slug": "seashrine-vip",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "SeaShrine is a new marketplace founded and built by the same team behind the Cronos success, Ebisu’s Bay. With upcoming feature parity with their previous endeavor, the team looks to replicate their accomplishments and to recreate a Gold Standard for marketplaces on the new Aptos blockchain. Embark on this journey with us by minting a VIP Founding Member NFT now!",
+        "verified": true,
+        "avatar": "/img/drops/seashrine-vip/avatar.webp",
+        "card": "/img/drops/seashrine-vip/card.webp",
+        "banner": "/img/drops/seashrine-vip/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      }
+    },
+    {
+      "name" : "Immortal Cyborgs",
+      "slug": "immortal-cyborgs",
+      "multiToken": false,
+      "address": "0xDA565665a546582774De08EC03AA0eac92592f11",
+      "listable" : false,
+      "metadata": {
+        "description": "THE FOUNDING MEMBER NFT RELEASE FOR CYBORG CORP. NEWEST ECOSYSTEM ADDITION IS FINALLY HERE, CYBORGS! THE 10 000 IMMORTAL CYBORGS ARE BRINGING BOOSTING TO THE NON FUNGIBLE CYBORG PLATFORM LP FARMS BUT ALSO TO NFT STAKING POOLS!",
+        "verified": true,
+        "avatar": "/img/collections/immortal-cyborgs/avatar.webp",
+        "banner": "/img/collections/immortal-cyborgs/banner.webp",
+        "card": "/img/collections/immortal-cyborgs/card.webp",
+        "maxSupply": 10000,
+        "website": "https://nfc.market/",
+        "twitter": "https://twitter.com/CyborgSwapDEX",
+        "discord": "discord.gg/Ku6A7tJSVp",
+        "medium": "https://cyborgswap.medium.com/",
+        "telegram": "https://t.me/+IQJY2ugWLaVmODVk"
+      }
+    },
+    {
+      "name": "Ninja_fu_warriors",
+      "slug": "ninja-fu-warriors",
+      "multiToken": false,
+      "address": "0x7d24acf59b211904c9713c9d901643e20fc81904",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome to the --Ninja_fu-- The Return of the Emblematic Warrior. There you have Strong and Solid Beast Ready to Fight.",
+        "verified": false,
+        "avatar": "/img/collections/ninja-fu-warriors/avatar.webp",
+        "card": "/img/collections/ninja-fu-warriors/card.webp",
+        "banner": "/img/collections/ninja-fu-warriors/banner.webp",
+        "maxSupply": 600,
+        "website": "https://ninjafu.ca/",
+        "twitter": "https://twitter.com/ninja_fu_",
+        "discord": "https://discord.gg/N5YXhNDJyz"
+      }
+    },
+    {
+      "name": "Boomer Squad - Boom Rooms",
+      "slug": "boomer-squad-boom-rooms",
+      "multiToken": false,
+      "address": "0x8Dd9975c78423480a6188F55B0767fbF4478b001",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Boom Rooms - Brought to you by the Boomer Squad team is the main source of distribution for our ecosystem utility token $SCRATCH. Take your Boom Rooms and place room components in them to build up your room score which determines how much $SCRATCH you will be generating. These rooms are fully customized, build your own NFTs with Room Components and show off some flare with the Boom Room Cosmetic Components!",
+        "verified": true,
+        "avatar": "/img/collections/boomer-squad-boom-rooms/avatar.webp",
+        "banner": "/img/collections/boomer-squad-boom-rooms/banner.webp",
+        "card": "/img/collections/boomer-squad-boom-rooms/card.webp",
+        "maxSupply": 7000,
+        "website": "https://www.boomersquad.io/",
+        "twitter": "https://twitter.com/BoomerSquadNFT1",
+        "discord": "https://discord.gg/boomersquad",
+        "medium": "https://medium.com/@BoomerSquadNFT"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
         "escrow": false
       }
     }
@@ -10387,7 +10503,7 @@
       "slug": "slavik-fruit-farm",
       "imgNft": "",
       "imgPreview": "",
-      "imgAvatar": "/img/collections/slavikfruitfarm/avatar.png",
+      "imgAvatar": "/img/collections/slavikfruitfarm/avatar.webp",
       "title": "Slavik Fruit Farm",
       "subtitle": "",
       "description": "",
@@ -11991,7 +12107,7 @@
         "twitter": "https://twitter.com/TrillTrashCans",
         "discord": "https://discord.gg/fSyrkT2pjc"
       },
-      "address": "",
+      "address": "0x4b7803015C03De5371C9498d6a9c779cfcA159Ad",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 10000,
@@ -12065,7 +12181,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false
+      "complete": true
     },
     {
       "id": 110,
@@ -12224,6 +12340,105 @@
       "is1155": false,
       "published": true,
       "complete": false
+    },
+    {
+      "id": 114,
+      "slug": "painted-pandaz",
+      "imgNft": "/img/drops/painted-pandaz/drop.webp",
+      "imgPreview": "/img/drops/painted-pandaz/drop.webp",
+      "imgAvatar": "/img/collections/painted-pandaz/avatar.webp",
+      "imgBanner": "/img/collections/painted-pandaz/banner.webp",
+      "title": "Painted Pandaz by Troopz",
+      "subtitle": "1111 rare, unique and algorithmically generated Painted Pandaz.\n\n10 $TRPZ Daily Staking Yield | 10 x Legendary 1/1s | Exclusive Painted Pandaz Auctionz & Rafflez | The return of the classic ‘Trait Based’ rewards \n\nActs as your 'Panda Pass' for exclusive deals across our Whitelisted Community partners.",
+      "description": "1111 rare, unique and algorithmically generated Painted Pandaz.\n\n10 $TRPZ Daily Staking Yield | 10 x Legendary 1/1s | Exclusive Painted Pandaz Auctionz & Rafflez | The return of the classic ‘Trait Based’ rewards\n\nActs as your 'Panda Pass' for exclusive deals across our Whitelisted Community partners.",
+      "author": {
+        "name": "Trooprz",
+        "twitter": "https://twitter.com/trooprzarmy",
+        "website": "https://trooprz.army/",
+        "discord": "https://discord.gg/trooprz"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 50,
+      "totalSupply": 1111,
+      "cost": "444",
+      "memberCost": "333",
+      "whitelistCost": "333",
+      "foundersOnly": false,
+      "start": 1664222400000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "priceDescription": "200 $TRPZ automatically credited back to your wallet with EVERY CRO MINT"
+    },
+    {
+      "id": 115,
+      "slug": "seashrine-vip",
+      "imgNft": "/img/drops/seashrine-vip/drop.webp",
+      "imgPreview": "/img/drops/seashrine-vip/drop.webp",
+      "imgAvatar": "/img/drops/seashrine-vip/avatar.webp",
+      "imgBanner": "/img/drops/seashrine-vip/banner.webp",
+      "title": "SeaShrine Founding Member VIP",
+      "subtitle": "SeaShrine is a new marketplace founded and built by the same team behind the Cronos success, Ebisu’s Bay. With upcoming feature parity with their previous endeavor, the team looks to replicate their accomplishments and to recreate a Gold Standard for marketplaces on the new Aptos blockchain. Embark on this journey with us by minting a VIP Founding Member NFT now!",
+      "description": "SeaShrine is a new marketplace founded and built by the same team behind the Cronos success, Ebisu’s Bay. With upcoming feature parity with their previous endeavor, the team looks to replicate their accomplishments and to recreate a Gold Standard for marketplaces on the new Aptos blockchain. Embark on this journey with us by minting a VIP Founding Member NFT now!",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 3000,
+      "foundersOnly": false,
+      "start": 1664481600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": false,
+      "redirect": "https://seashrine.io/"
+    },
+    {
+      "id": 116,
+      "slug": "immortal-cyborgs",
+      "imgNft": "/img/drops/immortal-cyborgs/drop.webp",
+      "imgPreview": "/img/drops/immortal-cyborgs/drop.webp",
+      "imgAvatar": "/img/collections/immortal-cyborgs/avatar.webp",
+      "imgBanner": "/img/collections/immortal-cyborgs/banner.webp",
+      "title": "THE IMMORTAL CYBORGS",
+      "subtitle": "THE FOUNDING MEMBER NFT RELEASE FOR CYBORG CORP. NEWEST ECOSYSTEM ADDITION IS FINALLY HERE, CYBORGS! THE 10 000 IMMORTAL CYBORGS ARE BRINGING BOOSTING TO THE NON FUNGIBLE CYBORG PLATFORM LP FARMS BUT ALSO TO NFT STAKING POOLS!",
+      "description": "THE DROP IS DIVIDED INTO 2 PARTS : PRESALE (FIRST 500 NFT MINTED) PRICE 500 CRO FOR WL, 525 CRO FOR FMF1 HOLDERS & 550 CRO REGULAR PRICE. PUBLIC SALE (TIC 501 TO 10 000) PRICE 300 CRO FOR WL, 325 CRO FOR FMF1 HOLDERS & 350 CRO REGULAR PRICE. THE IMMORTAL CYBORGS CAN BE USED TO BOOST NFC PLATFORM FARMS & POOLS REWARDS UP TO 5% MAX BOOST. UNTIL THE REVEAL OF THE COLLECTION & THE RARITIES, PRESALE NFTS WILL HAVE A 1% BOOST AND PUBLIC SALE NFTS A 0.5% BOOST. A $NFC STARTER PACK OF 25 COINS WILL BE AIRDROPPED AT LISTING TO EVERY HOLDERS OF A TIC NFT. AIRDROP WILL BE 1 PER NFT AND $NFC LISTING PRICE WILL BE $0.10. IN ADDITION, PRESALE NFT HOLDERS WILL RECEIVE 100 NFC PER MONTH FOR 5 MONTHS. THIS FOUNDING MEMBER NFT COLLECTION USED TO FUND THE PLATFORM WILL ALSO ALLOW HOLDERS TO A DISCOUNT PRICE ON EVERY NON FUNGIBLE CYBORGS LAUNCHPADS!",
+      "author": {
+        "name": "Cyborg Swap",
+        "website": "https://nfc.market/",
+        "twitter": "https://twitter.com/CyborgSwapDEX",
+        "discord": "discord.gg/Ku6A7tJSVp",
+        "medium": "https://cyborgswap.medium.com/",
+        "telegram": "https://t.me/+IQJY2ugWLaVmODVk"
+      },
+      "address": "0xDA565665a546582774De08EC03AA0eac92592f11",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 10000,
+      "foundersOnly": false,
+      "start": 1664144026994,
+      "cost": "550",
+      "whitelistCost": "500",
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": false,
+      "redirect": "https://cyborgswap.io/nft-drop/TheImmortalCyborgs"
     }
   ]
 }

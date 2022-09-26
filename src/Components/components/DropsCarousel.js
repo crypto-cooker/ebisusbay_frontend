@@ -211,13 +211,17 @@ export default class Responsive extends Component {
                           <div className="d-attr">
                             <div className="col">
                               <span className="d-title">Mint Price</span>
-                              {Array.isArray(item.drop.cost) ? (
+                              {item.drop.cost &&
+                                (Array.isArray(item.drop.cost) ? (
                                 <Heading as="h3" size="md">
                                   {ethers.utils.commify(Math.min(...item.drop.cost.map((c) => parseInt(c))))} -{' '}
                                   {ethers.utils.commify(Math.max(...item.drop.cost.map((c) => parseInt(c))))} CRO
                                 </Heading>
                               ) : (
                                 <Heading as="h3" size="md">{ethers.utils.commify(item.drop.cost)} CRO</Heading>
+                              ))}
+                              {!item.drop.cost && (
+                                <h3>TBA</h3>
                               )}
                               {item.drop.erc20Cost && item.drop.erc20Token && (
                                 <Heading as="h3" size="md">
