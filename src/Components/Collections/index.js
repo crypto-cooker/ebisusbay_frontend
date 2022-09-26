@@ -55,7 +55,7 @@ const Collections = () => {
       <GlobalStyles />
       <Header title={'Collections'} />
 
-      <section className="container no-top">
+      <section className="gl-legacy container no-top">
         <div className="row mt-4">
           <div className="col-lg-4 col-md-6">
             <Form.Control type="text" placeholder="Search for Collection" onChange={handleSearch} />

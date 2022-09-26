@@ -127,7 +127,7 @@ const Application = ({type}) => {
         />
       )}
       <GlobalStyles />
-      <section className="container mt-0 mt-lg-5">
+      <section className="gl-legacy container mt-0 mt-lg-5">
         <div className="row">
           <div className="col">
             <Heading>Choose Application Type</Heading>
