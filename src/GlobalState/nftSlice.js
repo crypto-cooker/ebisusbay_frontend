@@ -13,7 +13,8 @@ const nftSlice = createSlice({
     history: [],
     powertraits: [],
     currentListing: null,
-    refreshing: false
+    refreshing: false,
+    favorites: 0
   },
   reducers: {
     nftLoading: (state) => {
@@ -33,11 +34,14 @@ const nftSlice = createSlice({
     },
     nftRefreshingComplete: (state) => {
       state.refreshing = false;
+    },
+    nftFavorited: (state, action) => {
+      state.favorites = action.payload;
     }
   },
 });
 
-export const { nftLoading, nftReceived, nftRefreshing, nftRefreshingComplete } = nftSlice.actions;
+export const { nftLoading, nftReceived, nftRefreshing, nftRefreshingComplete, nftFavorited } = nftSlice.actions;
 
 export default nftSlice.reducer;
 
@@ -60,4 +64,10 @@ export const refreshMetadata = (collectionAddress, nftId) => async (dispatch, ge
   await refreshToken(collectionAddress, nftId);
   toast.success('Refresh queued! Check back in a few minutes.')
   dispatch(nftRefreshingComplete());
+}
+
+export const tickFavorite = (num) => async (dispatch, getState) => {
+  const { nft } = getState();
+  let count = nft.favorites + num;
+  dispatch(nftFavorited(count));
 }

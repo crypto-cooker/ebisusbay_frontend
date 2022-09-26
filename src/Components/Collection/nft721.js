@@ -33,7 +33,7 @@ import {
   isNftBlacklisted,
   isAnyWeirdApesCollection, isWeirdApesCollection,
 } from '@src/utils';
-import {getNftDetails, refreshMetadata} from '@src/GlobalState/nftSlice';
+import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
 import {connectAccount, chainConnect, retrieveProfile} from '@src/GlobalState/User';
 import { specialImageTransform } from '@src/hacks';
 import ListingItem from '../NftDetails/NFTTabListings/ListingItem';
@@ -70,7 +70,7 @@ const Nft721 = ({ address, id }) => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user);
-  const {nft, refreshing} = useSelector((state) => state.nft);
+  const {nft, refreshing, favorites} = useSelector((state) => state.nft);
 
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [offerType, setOfferType] = useState(OFFER_TYPE.none);
@@ -399,6 +399,7 @@ const Nft721 = ({ address, id }) => {
     const isCurrentFav = isFavorite();
     await toggleFavorite(user.address, address, id, !isCurrentFav);
     toast.success(`Item ${isCurrentFav ? 'removed from' : 'added to'} favorites`);
+    dispatch(tickFavorite(isCurrentFav ? -1 : 1));
     dispatch(retrieveProfile());
   };
 
@@ -441,7 +442,7 @@ const Nft721 = ({ address, id }) => {
               ) : (
                 <></>
               )}
-                <div className="nft__item_action mt-2" style={{ cursor: 'pointer' }}>
+                <div className="mt-2" style={{ cursor: 'pointer' }}>
                   <ButtonGroup size='sm' isAttached variant='outline'>
                     <Button styleType="default-outlined" title="Refresh Metadata" onClick={onRefreshMetadata} disabled={refreshing}>
                       <FontAwesomeIcon icon={faSync} spin={refreshing} />
@@ -451,7 +452,14 @@ const Nft721 = ({ address, id }) => {
                       title={isFavorite() ? 'This item is in your favorites list' : 'Click to add to your favorites list'}
                       onClick={onFavoriteClicked}
                     >
-                      <FontAwesomeIcon icon={isFavorite() ? faHeartSolid : faHeartOutline} />
+                      <div>
+                        <span className="me-1">{favorites}</span>
+                        {isFavorite() ? (
+                          <FontAwesomeIcon icon={faHeartSolid} style={{color:'#dc143c'}} />
+                        ) : (
+                          <FontAwesomeIcon icon={faHeartOutline} />
+                        )}
+                      </div>
                     </Button>
                     {nft && nft.original_image && (
                       <Button styleType="default-outlined" title="View Full Image" onClick={() =>
@@ -493,7 +501,7 @@ const Nft721 = ({ address, id }) => {
                   {isCrognomidesCollection(address) && crognomideBreed && (
                     <div className="d-flex flex-row align-items-center mb-4">
                       <LayeredIcon
-                        icon={faHeart}
+                        icon={faHeartSolid}
                         bgColor={'#ffffff00'}
                         color={'#dc143c'}
                         inverse={false}
@@ -505,7 +513,7 @@ const Nft721 = ({ address, id }) => {
                   {isLadyWeirdApesCollection(address) && ladyWeirdApeChildren !== null && (
                     <div className="d-flex flex-row align-items-center mb-4">
                       <LayeredIcon
-                        icon={faHeart}
+                        icon={faHeartSolid}
                         bgColor={'#ffffff00'}
                         color={'#dc143c'}
                         inverse={false}
