@@ -98,16 +98,17 @@ export default function MakeOfferDialog({ isOpen, nft:defaultNft, collection, on
       const collectionAddress = collection.address;
       const marketContract = wrappedMarketContract();
 
-      const floorPrice = await getCollectionMetadata(collectionAddress);
-      if (floorPrice.collections.length > 0) {
-        setFloorPrice(floorPrice.collections[0].floorPrice ?? 0);
-      }
-
       let fetchedNft = nft;
       if (!nft) {
         const tmpNft = await getNft(collectionAddress, nftId);
         fetchedNft = tmpNft.nft;
         setNft(tmpNft.nft);
+      }
+
+      const floorToken = collection.multiToken ? {type: 'tokenId', value: fetchedNft.id ?? fetchedNft.nftId} : undefined;
+      const floorPrice = await getCollectionMetadata(collectionAddress, null, floorToken);
+      if (floorPrice.collections.length > 0) {
+        setFloorPrice(floorPrice.collections[0].floorPrice ?? 0);
       }
 
       const filteredOffers = await getFilteredOffers(

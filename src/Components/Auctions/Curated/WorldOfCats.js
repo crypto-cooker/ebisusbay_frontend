@@ -19,7 +19,7 @@ const WorldOfCatsAuction = () => {
         url="/world-of-cats"
         image={image}
       />
-      <section className="no-bottom" style={{background:'black', color:'white'}}>
+      <section className="no-bottom shadow-lg" style={{background:'black', color:'white'}}>
         <div className="container">
           <div className="row">
             <div className="col-sm-6 my-auto">

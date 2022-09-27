@@ -56,7 +56,11 @@ export const getNftDetails = (collectionAddress, nftId) => async (dispatch, getS
     .find((l) => l.state === listingState.ACTIVE) : null;
   response.nft = { ...response.nft, address: collectionAddress, id: nftId };
   response.currentListing = currentListing;
-  response.favorites = await getNftFavorites(collectionAddress, nftId);
+  try {
+    response.favorites = await getNftFavorites(collectionAddress, nftId);
+  } catch (e) {
+    console.log(e);
+  }
   dispatch(nftReceived(response));
   return response.nft;
 };
