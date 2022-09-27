@@ -8833,7 +8833,7 @@
       "name": "World Of Cats",
       "slug": "world-of-cats",
       "multiToken": false,
-      "address": "",
+      "address": "0x4Ce0B9608006533dA056170f1efe8eEa771e0d19",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -12261,7 +12261,7 @@
         "twitter": "https://twitter.com/worldofcatsnft",
         "discord": "https://discord.gg/worldofcats"
       },
-      "address": "",
+      "address": "0x4Ce0B9608006533dA056170f1efe8eEa771e0d19",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 4444,

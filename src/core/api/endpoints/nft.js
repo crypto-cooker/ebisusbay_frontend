@@ -30,7 +30,8 @@ export async function getNft(collectionId, nftId) {
     return result;
   } catch (error) {
     Sentry.captureException(error);
-    return await getNftFromFile(collectionId, nftId) ?? {status: 404};
+    const nft = await getNftFromFile(collectionId, nftId);
+    return nft ? {nft} : {status: 404};
   }
 }
 

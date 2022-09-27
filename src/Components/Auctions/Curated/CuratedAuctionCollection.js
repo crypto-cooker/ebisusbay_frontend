@@ -6,6 +6,7 @@ import AuctionCard from "../../components/AuctionCard";
 import {caseInsensitiveCompare} from "../../../utils";
 import {auctionState} from "../../../core/api/enums";
 import {Auction} from "../../../core/models/auction";
+import {Heading} from "@chakra-ui/react";
 
 const testAuctions = [];
 
@@ -53,7 +54,7 @@ const CuratedAuctionCollection = ({ collectionId = null}) => {
         <>
           <div className="col-lg-12">
             <div className="text-center">
-              <h2>Active Auctions</h2>
+              <Heading as="h2" size="xl" className="mb-2">Active Auctions</Heading>
             </div>
           </div>
           <div className="col-lg-12 pt-3">
@@ -73,7 +74,7 @@ const CuratedAuctionCollection = ({ collectionId = null}) => {
 
           <div className="col-lg-12 mt-4">
             <div className="text-center">
-              <h2>Completed Auctions</h2>
+              <Heading as="h2" size="xl" className="mb-2">Completed Auctions</Heading>
             </div>
           </div>
           <div className="col-lg-12 pt-3">

@@ -154,7 +154,7 @@ export const configData = {
   },
   [environments.local]: {
     urls: {
-      api: 'https://api.ebisusbay.biz/',
+      api: 'https://api.ebisusbay.com/',
       cms: 'http://localhost:4000/api/',
     },
   }
