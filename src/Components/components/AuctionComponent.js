@@ -228,7 +228,7 @@ const AuctionComponent = (props) => {
                         )}
                         {openMenu === 3 && (
                           <div className="tab-4 onStep fadeIn">
-                            <h4>How it works:</h4>
+                            <Heading as="h4" size="sm">How it works:</Heading>
                             <ol>
                               <li>
                                 Connect your wallet and place a bid. Minimum bid will change depending on the current

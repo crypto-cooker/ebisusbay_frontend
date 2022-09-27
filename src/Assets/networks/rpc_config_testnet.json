@@ -1746,6 +1746,32 @@
         "kyc": "ebisu",
         "escrow": false
       }
+    },
+    {
+      "name": "The Meanies",
+      "slug": "the-meanies",
+      "multiToken": false,
+      "address": "0x449e8DcD04f7E232Ee669090799FA30aE778851d",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Meanies are a collection of 2,500 uniquely generated NFTs and the 2nd character of the Lost Toys project. Each NFT is based on 7 trait categories with different rarities. A Lost Toy NFT is not simply an NFT it is a key to unlocking over 15 utilities!",
+        "verified": true,
+        "avatar": "/img/collections/the-meanies/avatar.webp",
+        "card": "/img/collections/the-meanies/card.webp",
+        "banner": "/img/collections/the-meanies/banner.webp",
+        "maxSupply": 2200,
+        "website": "https://www.losttoys.io/",
+        "twitter": "https://www.twitter.com/losttoysnft",
+        "discord": "https://discord.gg/Tdd9TZRMxn",
+        "medium": "https://hello-143.gitbook.io/lost-toys-nft/",
+        "instagram": "https://www.instagram.com/losttoysnft/"
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": false,
+        "escrow": false
+      }
     }
   ],
   "drops": [
@@ -3936,6 +3962,40 @@
       "is1155": false,
       "published": true,
       "complete": false
+    },
+    {
+      "id": 113,
+      "slug": "the-meanies",
+      "imgNft": "/img/drops/the-meanies/drop.webp",
+      "imgPreview": "/img/drops/the-meanies/drop.webp",
+      "imgAvatar": "/img/collections/the-meanies/avatar.webp",
+      "imgBanner": "/img/collections/the-meanies/banner.webp",
+      "title": "The Meanies",
+      "subtitle": "The Meanies are a collection of 2,500 uniquely generated NFTs and the 2nd character of the Lost Toys project. Each NFT is based on 7 trait categories with different rarities. A Lost Toy NFT is not simply an NFT it is a key to unlocking over 15 utilities!",
+      "description": "The Meanies are a collection of 2,500 uniquely generated NFTs and the 2nd character of the Lost Toys project. Each NFT is based on 7 trait categories with different rarities. A Lost Toy NFT is not simply an NFT it is a key to unlocking over 15 utilities!",
+      "author": {
+        "name": "Lost Toys",
+        "website": "https://www.losttoys.io/",
+        "twitter": "https://www.twitter.com/losttoysnft",
+        "discord": "https://discord.gg/Tdd9TZRMxn",
+        "medium": "https://hello-143.gitbook.io/lost-toys-nft/",
+        "instagram": "https://www.instagram.com/losttoysnft/"
+      },
+      "address": "0x449e8DcD04f7E232Ee669090799FA30aE778851d",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 2500,
+      "cost": "500",
+      "memberCost": "450",
+      "whitelistCost": "450",
+      "foundersOnly": false,
+      "start": 1664316293000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "priceDescription": "Whitelist-only presale for the first 40 minutes. Public sale after presale ends"
     }
   ],
 
