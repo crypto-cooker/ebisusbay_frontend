@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import {BigNumber, constants, ethers} from 'ethers';
 import AuctionContract from '../../Contracts/DegenAuction.json';
-import { sortAndFetchAuctions } from '../../core/api';
+import { sortAndFetchAuctions } from '@src/core/api';
 import Clock from '../components/Clock';
 import Link from 'next/link';
-import { auctionState } from '../../core/api/enums';
-import { Auction } from '../../core/models/auction';
+import { auctionState } from '@src/core/api/enums';
+import { Auction } from '@src/core/models/auction';
 import { commify } from 'ethers/lib/utils';
 import {Form, Spinner} from "react-bootstrap";
 import {
@@ -13,12 +13,12 @@ import {
   createSuccessfulTransactionToastContent,
   isEventValidNumber,
   secondsToDhms
-} from "../../utils";
+} from "@src/utils";
 import {useDispatch, useSelector} from "react-redux";
 import {toast} from "react-toastify";
 import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "../../GlobalState/User";
-import {appConfig} from "../../Config";
+import {chainConnect, connectAccount} from "@src/GlobalState/User";
+import {appConfig} from "@src/Config";
 
 const config = appConfig();
 
@@ -221,35 +221,35 @@ const ManageAuctionList = () => {
       <div className="card-group mb-4">
         {activeAuctions?.length > 0 ? (
           <>
-            activeAuctions.map((auction, index) => (
-            <div key={index} className="d-item col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12 mb-4 px-2">
-              <div className="card eb-nft__card h-100 shadow">
-                <img src={auction.nft.image} className={`card-img-top marketplace`} alt={auction.nft.name} />
-                <div className="eb-de_countdown text-center">
-                  Ends In:
-                  {auction.state !== auctionState.NOT_STARTED ? (
-                    <Clock deadline={auction.getEndAt} />
-                  ) : (
-                    <div className="fw-bold">Not Started</div>
-                  )}
-                </div>
-                <div className="card-body d-flex flex-column">
-                  <h6 className="card-title mt-auto">{auction.nft.name}</h6>
-                  <p className="card-text">
-                    {commify(auction.getHighestBid)} MAD <br />
-                    State: {mapStateToHumanReadable(auction)}
-                  </p>
-                </div>
-                <div className="card-footer d-flex justify-content-between">
-                  <Link href={`/auctions/${auction.getAuctionId}`}>
-                    <a>View</a>
-                  </Link>
-                  {auction.state === auctionState.NOT_STARTED && (
-                    <span className="cursor-pointer" onClick={() => showConfirmationDialog(auction)}>Start</span>
-                  )}
+            {activeAuctions.map((auction, index) => (
+              <div key={index} className="d-item col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12 mb-4 px-2">
+                <div className="card eb-nft__card h-100 shadow">
+                  <img src={auction.nft.metadata.image} className={`card-img-top marketplace`} alt={auction.nft.metadata.name} />
+                  <div className="eb-de_countdown text-center">
+                    Ends In:
+                    {auction.state !== auctionState.NOT_STARTED ? (
+                      <Clock deadline={auction.getEndAt} />
+                    ) : (
+                      <div className="fw-bold">Not Started</div>
+                    )}
+                  </div>
+                  <div className="card-body d-flex flex-column">
+                    <h6 className="card-title mt-auto">{auction.nft.metadata.name}</h6>
+                    <p className="card-text">
+                      {commify(auction.getHighestBid)} MAD <br />
+                      State: {mapStateToHumanReadable(auction)}
+                    </p>
+                  </div>
+                  <div className="card-footer d-flex justify-content-between">
+                    <Link href={`/auctions/${auction.getAuctionId}`}>
+                      <a>View</a>
+                    </Link>
+                    {auction.state === auctionState.NOT_STARTED && (
+                      <span className="cursor-pointer" onClick={() => showConfirmationDialog(auction)}>Start</span>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
             ))}
           </>
         ) : (

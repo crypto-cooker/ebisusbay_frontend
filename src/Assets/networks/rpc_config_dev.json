@@ -8476,7 +8476,7 @@
       "multiToken": false,
       "address": "0x9e295527Efb2514BfcbC7AC5b3D17aE3eE192C9D",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "The Feral Shiba Club is a deflationary and revenue sharing NFT project on Cronos.",
         "verified": false,
@@ -8833,7 +8833,7 @@
       "name": "World Of Cats",
       "slug": "world-of-cats",
       "multiToken": false,
-      "address": "",
+      "address": "0x4Ce0B9608006533dA056170f1efe8eEa771e0d19",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -9059,7 +9059,7 @@
       "name": "Painted Pandaz by Troopz",
       "slug": "painted-pandaz",
       "multiToken": false,
-      "address": "",
+      "address": "0x2FfF5FE8a3e13A10509E4297DF9d1fdaF1eE7DC4",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -12261,7 +12261,7 @@
         "twitter": "https://twitter.com/worldofcatsnft",
         "discord": "https://discord.gg/worldofcats"
       },
-      "address": "",
+      "address": "0x4Ce0B9608006533dA056170f1efe8eEa771e0d19",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 4444,
@@ -12357,7 +12357,7 @@
         "website": "https://trooprz.army/",
         "discord": "https://discord.gg/trooprz"
       },
-      "address": "",
+      "address": "0x2FfF5FE8a3e13A10509E4297DF9d1fdaF1eE7DC4",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 50,
       "totalSupply": 1111,
