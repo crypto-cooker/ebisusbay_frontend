@@ -1,5 +1,13 @@
 [
   {
+    "users": [
+      "0x278EE3Acc9572485C86EEc381d2E229294A61A75",
+      "0x57e9d223f9Fc307B217400D8f46328cb3693a0D4"
+    ],
+    "tokens": [],
+    "reason": "Impersonation. #generic-0441"
+  },
+  {
     "users": ["0x40d2f78034a166c9aba29f0bedf410e5cade3d47"],
     "tokens": [
       {
