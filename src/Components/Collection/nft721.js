@@ -1,8 +1,8 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Contract, ethers } from 'ethers';
-import {faCrow, faExternalLinkAlt, faHeart as faHeartSolid, faSync} from '@fortawesome/free-solid-svg-icons';
 import {faHeart as faHeartOutline} from '@fortawesome/free-regular-svg-icons';
+import {faCrow, faExternalLinkAlt, faHeart, faShare, faSync, faEllipsisH, faShareAlt} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import {Badge, Spinner} from 'react-bootstrap';
@@ -11,6 +11,7 @@ import ProfilePreview from '../components/ProfilePreview';
 import Footer from '../components/Footer';
 import LayeredIcon from '../components/LayeredIcon';
 import { AnyMedia } from '../components/AnyMedia';
+
 import {
   caseInsensitiveCompare,
   humanize,
@@ -54,6 +55,7 @@ import {collectionRoyaltyPercent} from "@src/core/chain";
 import {ButtonGroup, Heading} from "@chakra-ui/react";
 import useToggleFavorite from "@src/Components/NftDetails/hooks/useToggleFavorite";
 import {toast} from "react-toastify";
+import PopupSocialMedia from '../components/SocialMediaPopup';
 
 const config = appConfig();
 const knownContracts = config.collections;
@@ -68,7 +70,6 @@ const tabs = {
 
 const Nft721 = ({ address, id }) => {
   const dispatch = useDispatch();
-
   const user = useSelector((state) => state.user);
   const {nft, refreshing, favorites} = useSelector((state) => state.nft);
 
@@ -473,6 +474,9 @@ const Nft721 = ({ address, id }) => {
                         <FontAwesomeIcon icon={faExternalLinkAlt} />
                       </Button>
                     )}
+                    <PopupSocialMedia>
+                      <FontAwesomeIcon icon={faShareAlt} style={{ cursor: 'pointer' }} />
+                    </PopupSocialMedia>
                   </ButtonGroup>
                 </div>
             </div>

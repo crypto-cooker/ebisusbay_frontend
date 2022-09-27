@@ -2,7 +2,7 @@ import React, {memo, useCallback, useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import {Contract, ethers} from 'ethers';
-import {faExternalLinkAlt, faHeart as faHeartSolid, faSync} from '@fortawesome/free-solid-svg-icons';
+import {faExternalLinkAlt, faHeart as faHeartSolid, faSync, faShareAlt} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Spinner } from 'react-bootstrap';
 import MetaMaskOnboarding from '@metamask/onboarding';
@@ -42,6 +42,7 @@ import {ButtonGroup, Heading} from "@chakra-ui/react";
 import {toast} from "react-toastify";
 import useToggleFavorite from "@src/Components/NftDetails/hooks/useToggleFavorite";
 import {faHeart as faHeartOutline} from "@fortawesome/free-regular-svg-icons";
+import PopupSocialMedia from '../components/SocialMediaPopup';
 
 const config = appConfig();
 const tabs = {
@@ -237,6 +238,9 @@ const Nft1155 = ({ address, id }) => {
                       <FontAwesomeIcon icon={faExternalLinkAlt} />
                     </Button>
                   )}
+                  <PopupSocialMedia>
+                      <FontAwesomeIcon icon={faShareAlt} style={{ cursor: 'pointer' }} />
+                    </PopupSocialMedia>
                 </ButtonGroup>
               </div>
             </div>
