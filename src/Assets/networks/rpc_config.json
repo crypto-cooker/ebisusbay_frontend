@@ -9061,7 +9061,7 @@
       "multiToken": false,
       "address": "0x2FfF5FE8a3e13A10509E4297DF9d1fdaF1eE7DC4",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "1111 rare, unique and algorithmically generated Painted Pandaz.\n\n10 $TRPZ Daily Staking Yield | 10 x Legendary 1/1s | Exclusive Painted Pandaz Auctionz & Rafflez | The return of the classic ‘Trait Based’ rewards \n\nActs as your 'Panda Pass' for exclusive deals across our Whitelisted Community partners.",
         "verified": true,
