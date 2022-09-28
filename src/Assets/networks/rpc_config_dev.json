@@ -9008,7 +9008,7 @@
       "name": "The Meanies",
       "slug": "the-meanies",
       "multiToken": false,
-      "address": "",
+      "address": "0xE310Bd632bf98923E03144455C7645ee13353b97",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -12294,7 +12294,7 @@
         "medium": "https://hello-143.gitbook.io/lost-toys-nft/",
         "instagram": "https://www.instagram.com/losttoysnft/"
       },
-      "address": "",
+      "address": "0xE310Bd632bf98923E03144455C7645ee13353b97",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 2500,
