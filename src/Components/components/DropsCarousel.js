@@ -218,7 +218,7 @@ export default class Responsive extends Component {
                                   {ethers.utils.commify(Math.max(...item.drop.cost.map((c) => parseInt(c))))} CRO
                                 </Heading>
                               ) : (
-                                <Heading as="h3" size="md">{ethers.utils.commify(item.drop.cost)} CRO</Heading>
+                                <Heading as="h3" size="md">{ethers.utils.commify(item.drop.cost)} {item.drop.chain ? 'ETH' : 'CRO'}</Heading>
                               ))}
                               {!item.drop.cost && (
                                 <h3>TBA</h3>
@@ -235,7 +235,7 @@ export default class Responsive extends Component {
                                     - {ethers.utils.commify(Math.max(...item.drop.memberCost.map((c) => parseInt(c))))} CRO
                                   </Heading>
                                 ) : (
-                                  <Heading as="h5" size="sm">Members: {ethers.utils.commify(item.drop.memberCost)} CRO</Heading>
+                                  <Heading as="h5" size="sm">Members: {ethers.utils.commify(item.drop.memberCost)} {item.drop.chain ? 'ETH' : 'CRO'}</Heading>
                                 ))}
                               {item.drop.erc20MemberCost && item.drop.erc20Token && (
                                 <Heading as="h5" size="sm">
@@ -250,7 +250,7 @@ export default class Responsive extends Component {
                                     {ethers.utils.commify(Math.max(...item.drop.memberCost.map((c) => parseInt(c))))} CRO
                                   </Heading>
                                 ) : (
-                                  <Heading as="h5" size="sm">Whitelist: {ethers.utils.commify(item.drop.whitelistCost)} CRO</Heading>
+                                  <Heading as="h5" size="sm">Whitelist: {ethers.utils.commify(item.drop.whitelistCost)} {item.drop.chain ? 'ETH' : 'CRO'}</Heading>
                                 ))}
                               {item.drop.specialWhitelistCost && (
                                 <Heading as="h5" size="sm">
