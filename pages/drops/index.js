@@ -27,19 +27,15 @@ const Drops = () => {
       <section className="no-top mt-2 pb-2 bg-transparent">
         <div className="d-flex justify-content-center px-5">
           <p className="my-auto me-5">
-            Enjoy amazing discounts on drops and 50% off service fees while holding an Ebisu's Bay Founding Member NFT.
-            <span className="fw-bold d-block d-md-inline-block text-end ms-3">
-              <Link href="/collection/founding-member">
-                <a>Learn More</a>
-              </Link>
+          Now is your chance to mint a Founding Member VIP from the team that brought you EbisusBay.
+            <span className="fw-bold d-block d-md-inline-block text-end ms-3">            
+                <a href='https://blog.seashrine.io/vip-founding-member-nft-presale-announcement-4b791d086d63' target="_blank" rel="noopener noreferrer" >Learn More</a>
             </span>
           </p>
-          <div style={{ width: '70px' }} className="my-auto">
-            <Link href="/collection/founding-member">
-              <a>
-                <img src={hostedImage('/img/founding_member_sm.png')} className="img-responsive" alt="Founding Member Membership" />
+          <div style={{ width: '70px' }} className="my-auto"> 
+              <a href='https://seashrine.io/#mint' target="_blank" rel="noopener noreferrer" >
+                <img src={hostedImage('/img/drops/seashrine-vip/drop.webp')} className="img-responsive" alt="Founding Member Membership" />
               </a>
-            </Link>
           </div>
         </div>
       </section>
