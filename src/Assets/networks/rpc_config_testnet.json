@@ -1795,6 +1795,31 @@
         "kyc": "phenix",
         "escrow": false
       }
+    },
+    {
+      "name": "Spiteful Sea Club Access Cards",
+      "slug": "ssc-access-cards",
+      "multiToken": false,
+      "address": "0x9dcd58f48a036d965b4c441f97ba37514ebbcae6",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A collection of 1,888 access cards, featuring 3D Spiteful Sea Creatures - the turtle, octopus, and the shark. The character and purpose of the models reflects the desire of their owners - further develop and bring change to the NFT market and the Web3 space as a whole. Setting new standards and trends requires a group of convinced individuals who come together to set in motion a wave that will eventually sweep an entire sea with it.",
+        "verified": true,
+        "avatar": "/img/collections/ssc-access-cards/avatar.webp",
+        "card": "/img/collections/ssc-access-cards/card.webp",
+        "banner": "/img/collections/ssc-access-cards/banner.webp",
+        "maxSupply": 1888,
+        "website": "https://www.spitefulseaclub.com/",
+        "twitter": "https://www.twitter.com/spitefulseanft",
+        "discord": "https://discord.gg/7efQGdwW7r",
+        "medium": "https://spiteful-sea-club.gitbook.io/spiteful-sea-club/"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "phenix",
+        "escrow": false
+      }
     }
   ],
   "drops": [
@@ -4049,6 +4074,38 @@
       "published": true,
       "complete": false,
       "priceDescription": "Whitelist-only presale for the first 40 minutes. Public sale after presale ends"
+    },
+    {
+      "id": 114,
+      "slug": "ssc-access-cards",
+      "imgNft": "/img/drops/ssc-access-cards/drop.webp",
+      "imgPreview": "/img/drops/ssc-access-cards/drop.webp",
+      "imgAvatar": "/img/collections/ssc-access-cards/avatar.webp",
+      "imgBanner": "/img/drops/ssc-access-cards/banner.webp",
+      "title": "Spiteful Sea Club Access Cards",
+      "subtitle": "A collection of 1,888 access cards, featuring 3D Spiteful Sea Creatures - the turtle, octopus, and the shark. The character and purpose of the models reflects the desire of their owners - further develop and bring change to the NFT market and the Web3 space as a whole. Setting new standards and trends requires a group of convinced individuals who come together to set in motion a wave that will eventually sweep an entire sea with it. ",
+      "description": "Holders’ Club:\nThe Holders’ Club will be a big factor in fulfilling our mission and gives rise to a number of products and utilities, all of which are accessible using the SSC Access Card.\n\nHighPoint:\nLong-term building endeavor: a web app with the goal to accelerate the web3 infrastructure by making the trend data more accessible. Holders will benefit from exclusive perks and the success of Highpoint.\n\nHidden Staking:\nUnlock rewards (WL/CRO/NFT raffles, voting rights, shared royalties, free PFP mint) without actually having to stake and lock up your NFT in a vault!\n\nDeep Sea Analytics:\nOur in-house professional analyst team will give our holders exclusive in-depth rundowns of community-selected projects and topics/trends.\n\nThe Investment Wallet: \nWe will make USD$10,000 available to our holders in an exclusive wallet. This can be used in any way; to invest in other projects, coins, or even back into the SSC ecosystem.\n\nEnvironmental:\nWe have an official environmental partner to help make a difference.",
+      "author": {
+        "name": "Spiteful Sea Club",
+        "website": "https://www.spitefulseaclub.com/",
+        "twitter": "https://www.twitter.com/spitefulseanft",
+        "discord": "https://discord.gg/7efQGdwW7r",
+        "medium": "https://spiteful-sea-club.gitbook.io/spiteful-sea-club/"
+      },
+      "address": "0x9dcd58f48a036d965b4c441f97ba37514ebbcae6",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 1888,
+      "cost": "700",
+      "memberCost": "650",
+      "whitelistCost": "650",
+      "foundersOnly": false,
+      "start": 1664471518000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
     }
   ],
 
