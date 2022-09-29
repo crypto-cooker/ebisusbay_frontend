@@ -62,6 +62,7 @@ const LegacyButton = styled.button`
   cursor: pointer;
   box-shadow: 2px 2px 20px 0px rgb(131 100 226 / 0%);
   transition: all 0.3s ease;
+  outline: none;
 
   &:hover {
     box-shadow: 2px 2px 20px 0px rgb(131 100 226 / 50%);
