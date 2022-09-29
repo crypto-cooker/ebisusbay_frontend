@@ -53,7 +53,6 @@ const LegacyButton = styled.button`
   background: #218cff;
   border-radius: 6px;
   letter-spacing: normal;
-  outline: 1px solid #218cff;
   font-weight: 800;
   text-decoration: none;
   padding: 8px 24px;
@@ -70,7 +69,7 @@ const LegacyButton = styled.button`
   }
 
   &:disabled {
-    outline: 1px solid #cccccc;
+    border: 1px solid #cccccc;
   }
 `;
 
@@ -83,15 +82,17 @@ const LegacyOutlinedButton = styled.button`
   background-color: ${({ theme }) => theme.colors.bgColor1} !important;
   border-radius: 6px;
   letter-spacing: normal;
-  outline: 1px solid #ddd;
   font-weight: 800;
   text-decoration: none;
   padding: 8px 24px;
   font-size: 14px;
-  border: none;
   cursor: pointer;
   box-shadow: 2px 2px 20px 0px rgb(131 100 226 / 0%);
   transition: all 0.3s ease;
+  outline: none;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ddd;
 
   &:hover {
     box-shadow: 2px 2px 20px 0px rgb(131 100 226 / 50%);
@@ -99,7 +100,7 @@ const LegacyOutlinedButton = styled.button`
   }
 
   &:focus {
-    outline: 1px solid #ddd !important;
+    border: 1px solid #ddd !important;
   }
 
   &:disabled {
