@@ -9199,6 +9199,91 @@
         "discord": "https://discord.gg/VrC2e4GNVR",
         "telegram": "https://t.me/crowitches"
       }
+    },
+    {
+      "name": "Animals2Earn",
+      "slug": "animals2earn",
+      "multiToken": false,
+      "address": "0xe18995a8551186F94926935D456E76E4f3b3d4f6",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The basis of the Animals2Earn project is 17 species of animals, with unique properties. This project will earn you in Bessa, in Hossa and in between. We have big plans, even bigger aspirations to make your wallet grow.  Additionally airdrop of unique NFT for every owner of different 17 Animal species. This NFT will give you 25% of the royalties from market sales of your Animals. Animals2Earn is coming!",
+        "verified": false,
+        "avatar": "/img/collections/animals2earn/avatar.webp",
+        "card": "/img/collections/animals2earn/card.webp",
+        "banner": "/img/collections/animals2earn/banner.webp",
+        "maxSupply": 100,
+        "twitter": "https://twitter.com/Animals2Earn"
+      }
+    },
+    {
+      "name": "Animals2Earn II",
+      "slug": "animals2earn-ii",
+      "multiToken": false,
+      "address": "0x64149ffa142C7b4a6d731dF1E66749baBc1eCadc",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The basis of the Animals2Earn project is 17 species of animals, with unique properties. This project will earn you in Bessa, in Hossa and in between. We have big plans, even bigger aspirations to make your wallet grow.  Additionally airdrop of unique NFT for every owner of different 17 Animal species. This NFT will give you 25% of the royalties from market sales of your Animals. Animals2Earn is coming!",
+        "verified": false,
+        "avatar": "/img/collections/animals2earn/avatar.webp",
+        "card": "/img/collections/animals2earn/card.webp",
+        "banner": "/img/collections/animals2earn/banner.webp",
+        "maxSupply": 100,
+        "twitter": "https://twitter.com/Animals2Earn"
+      }
+    },
+    {
+      "name": "Animals2Earn III",
+      "slug": "animals2earn-iii",
+      "multiToken": false,
+      "address": "0xc8122591ddd5976DE31A30901A6953775268bc9c",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The basis of the Animals2Earn project is 17 species of animals, with unique properties. This project will earn you in Bessa, in Hossa and in between. We have big plans, even bigger aspirations to make your wallet grow.  Additionally airdrop of unique NFT for every owner of different 17 Animal species. This NFT will give you 25% of the royalties from market sales of your Animals. Animals2Earn is coming!",
+        "verified": false,
+        "avatar": "/img/collections/animals2earn/avatar.webp",
+        "card": "/img/collections/animals2earn/card.webp",
+        "banner": "/img/collections/animals2earn/banner.webp",
+        "maxSupply": 100,
+        "twitter": "https://twitter.com/Animals2Earn"
+      }
+    },
+    {
+      "name": "Animals2Earn IV",
+      "slug": "animals2earn-iv",
+      "multiToken": false,
+      "address": "0x767EEA5675b0043AfEDF919B4D7F0B1c11163FF5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The basis of the Animals2Earn project is 17 species of animals, with unique properties. This project will earn you in Bessa, in Hossa and in between. We have big plans, even bigger aspirations to make your wallet grow.  Additionally airdrop of unique NFT for every owner of different 17 Animal species. This NFT will give you 25% of the royalties from market sales of your Animals. Animals2Earn is coming!",
+        "verified": false,
+        "avatar": "/img/collections/animals2earn/avatar.webp",
+        "card": "/img/collections/animals2earn/card.webp",
+        "banner": "/img/collections/animals2earn/banner.webp",
+        "maxSupply": 100,
+        "twitter": "https://twitter.com/Animals2Earn"
+      }
+    },
+    {
+      "name": "Animals2Earn V",
+      "slug": "animals2earn-v",
+      "multiToken": false,
+      "address": "0x63A4D44a9B264E26188Acd7450ACC916fc3b61eb",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The basis of the Animals2Earn project is 17 species of animals, with unique properties. This project will earn you in Bessa, in Hossa and in between. We have big plans, even bigger aspirations to make your wallet grow.  Additionally airdrop of unique NFT for every owner of different 17 Animal species. This NFT will give you 25% of the royalties from market sales of your Animals. Animals2Earn is coming!",
+        "verified": false,
+        "avatar": "/img/collections/animals2earn/avatar.webp",
+        "card": "/img/collections/animals2earn/card.webp",
+        "banner": "/img/collections/animals2earn/banner.webp",
+        "maxSupply": 100,
+        "twitter": "https://twitter.com/Animals2Earn"
+      }
     }
   ],
   "drops": [
