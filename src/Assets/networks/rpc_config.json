@@ -8810,7 +8810,7 @@
       "name": "Finger Monkeys",
       "slug": "finger-monkeys",
       "multiToken": false,
-      "address": "",
+      "address": "0xcfad4A3d1eE92f3A0c49B1758ac039Db41FAE94D",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -9158,6 +9158,46 @@
         "doxx": false,
         "kyc": "ebisu",
         "escrow": false
+      }
+    },
+    {
+      "name": "CroWitches Generation 2",
+      "slug": "cro-witches-gen2",
+      "multiToken": false,
+      "address": "0x5ac04d6f18386ad2b556d16c2cB99F0d9f7564CB",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CroWitches Generation 2 is a collection of 3000 upgradable NFTs on the Cronos network. This is the seconds collection in a set of 10 CroWitches NFT Collections that will be generated",
+        "verified": false,
+        "avatar": "/img/collections/cro-witches-gen2/avatar.webp",
+        "card": "/img/collections/cro-witches-gen2/card.webp",
+        "banner": "/img/collections/cro-witches-gen2/banner.webp",
+        "maxSupply": 3000,
+        "website": "https://app.crowitches.com/",
+        "twitter": "https://twitter.com/CroWitches",
+        "discord": "https://discord.gg/VrC2e4GNVR",
+        "telegram": "https://t.me/crowitches"
+      }
+    },
+    {
+      "name": "CroWitches Generation 3",
+      "slug": "cro-witches-gen3",
+      "multiToken": false,
+      "address": "0xfBf2727Bef4F6C4749948bed4aB865c448470898",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CroWitches Generation 3 is a collection of 3000 upgradable NFTs on the Cronos network. This is the seconds collection in a set of 10 CroWitches NFT Collections that will be generated",
+        "verified": false,
+        "avatar": "/img/collections/cro-witches-gen3/avatar.webp",
+        "card": "/img/collections/cro-witches-gen3/card.webp",
+        "banner": "/img/collections/cro-witches-gen3/banner.webp",
+        "maxSupply": 2000,
+        "website": "https://app.crowitches.com/",
+        "twitter": "https://twitter.com/CroWitches",
+        "discord": "https://discord.gg/VrC2e4GNVR",
+        "telegram": "https://t.me/crowitches"
       }
     }
   ],
@@ -12230,7 +12270,7 @@
         "website": "https://www.specterofart.com/FingerMonkeys",
         "discord": "https://discord.gg/CcwFDwPuuh"
       },
-      "address": "",
+      "address": "0xcfad4A3d1eE92f3A0c49B1758ac039Db41FAE94D",
       "maxMintPerTx": 25,
       "maxMintPerAddress": 200,
       "totalSupply": 5555,
