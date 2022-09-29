@@ -12501,7 +12501,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "priceDescription": "200 $TRPZ automatically credited back to your wallet with EVERY CRO MINT"
     },
     {
@@ -12526,7 +12526,10 @@
       "address": "",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
-      "totalSupply": 3000,
+      "totalSupply": 8800,
+      "cost": "0.09",
+      "memberCost": "0.0777",
+      "whitelistCost": "0.0777",
       "foundersOnly": false,
       "start": 1664481600000,
       "end": null,
@@ -12534,8 +12537,9 @@
       "is1155": false,
       "published": true,
       "complete": false,
-      "featured": false,
-      "redirect": "https://seashrine.io/"
+      "featured": true,
+      "redirect": "https://seashrine.io/",
+      "chain": "eth"
     },
     {
       "id": 116,

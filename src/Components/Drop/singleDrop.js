@@ -569,7 +569,7 @@ const SingleDrop = () => {
           </div>
         </HeroSection>
 
-        <section id="drop_detail" className="container no-top">
+        <section id="drop_detail" className="gl-legacy container no-top">
           <div className="row mt-md-5 pt-md-4">
             <div className="col-md-6 text-center">
               <img src={hostedImage(drop.imgNft)} className="img-fluid img-rounded mb-sm-30" alt={drop.title} />
