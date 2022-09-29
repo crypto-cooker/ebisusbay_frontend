@@ -165,7 +165,7 @@ const Home = () => {
           <div className="d-flex">
             <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
               <Box minH={175} minW={150}>
-                <Image src="https://cdn.ebisusbay.biz/dragon_animation_AiB8XEPbr.gif?tr=w-150" width={150} height={175}/>
+                <img src="https://cdn.ebisusbay.biz/dragon_animation_AiB8XEPbr.gif?tr=w-150"/>
               </Box>
             </Reveal>
             <VStack>
