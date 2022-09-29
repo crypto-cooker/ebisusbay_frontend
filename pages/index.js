@@ -163,23 +163,23 @@ const Home = () => {
           <span className="text-uppercase color">Ebisu's Bay Presents: SeaShrine</span>
         </Heading>
           <div className="d-flex">
-            <Box minH={175} minW={150}>
-              <Image src="https://cdn.ebisusbay.biz/dragon_animation_AiB8XEPbr.gif?tr=w-150" width={150} height={175}/>
-            </Box>
-              <VStack>
-                <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
+            <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
+              <Box minH={175} minW={150}>
+                <Image src="https://cdn.ebisusbay.biz/dragon_animation_AiB8XEPbr.gif?tr=w-150" width={150} height={175}/>
+              </Box>
+            </Reveal>
+            <VStack>
+              <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
                 <Heading as="h1" size="xl">
                   A community-based marketplace for rare art NFTs
                 </Heading>
-                </Reveal>
-
-                <Reveal className="onStep" keyframes={fadeInUp} delay={600} duration={900} triggerOnce>
-                  <Text className="lead">
-                    Now is your chance to mint a VIP founding membership on SeaShrine an Aptos NFT marketplace brought to you by the same team behind Ebisu's Bay!
-                  </Text>
-                </Reveal>
-
-              </VStack>
+              </Reveal>
+              <Reveal className="onStep" keyframes={fadeInUp} delay={600} duration={900} triggerOnce>
+                <Text className="lead">
+                  Now is your chance to mint a VIP founding membership on SeaShrine an Aptos NFT marketplace brought to you by the same team behind Ebisu's Bay!
+                </Text>
+              </Reveal>
+            </VStack>
           </div>
         <Reveal className="onStep call-to-action" keyframes={inline} delay={800} duration={900} triggerOnce>
           <div
