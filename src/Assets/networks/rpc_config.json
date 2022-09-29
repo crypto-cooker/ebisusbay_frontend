@@ -9284,6 +9284,25 @@
         "maxSupply": 100,
         "twitter": "https://twitter.com/Animals2Earn"
       }
+    },
+    {
+      "name": "CroLions Club",
+      "slug": "crolions-club",
+      "multiToken": false,
+      "address": "0xE1101d533Ba0Ae671E75EC9d7a231E255CEfba9b",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CroLions Club! the first cronos project to pay 100% of royalties back to the community!",
+        "verified": false,
+        "avatar": "/img/collections/crolions-club/avatar.webp",
+        "card": "/img/collections/crolions-club/card.webp",
+        "banner": "/img/collections/crolions-club/banner.webp",
+        "maxSupply": 3333,
+        "website": "https://crolionsclub.site",
+        "twitter": "https://twitter.com/CrolionsClub",
+        "discord": "https://discord.gg/hTmdgXHC"
+      }
     }
   ],
   "drops": [
@@ -12437,8 +12456,7 @@
       "is1155": false,
       "published": true,
       "complete": false,
-      "featured": false,
-      "priceDescription": "Whitelist-only presale for the first 40 minutes. Public sale after presale ends"
+      "featured": false
     },
     {
       "id": 114,
