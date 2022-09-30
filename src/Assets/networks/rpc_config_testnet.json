@@ -1800,7 +1800,7 @@
       "name": "Spiteful Sea Club Access Cards",
       "slug": "ssc-access-cards",
       "multiToken": false,
-      "address": "0x8b4CE99e5EBa67001e8D3fE2F9F5F3178cb33507",
+      "address": "0xC9423BEA37Fa2B25bB1deecBaF0f14d8047CC025",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -4092,7 +4092,7 @@
         "discord": "https://discord.gg/7efQGdwW7r",
         "medium": "https://spiteful-sea-club.gitbook.io/spiteful-sea-club/"
       },
-      "address": "0x8b4CE99e5EBa67001e8D3fE2F9F5F3178cb33507",
+      "address": "0xC9423BEA37Fa2B25bB1deecBaF0f14d8047CC025",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 1888,
