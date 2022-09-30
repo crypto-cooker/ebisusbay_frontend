@@ -23,7 +23,7 @@ import {
   isCyberCloneDrop,
   isFounderDrop,
   isFounderVipDrop,
-  isMagBrewVikingsDrop,
+  isMagBrewVikingsDrop, isSscCollection,
   newlineText,
   percentage, round,
 } from '../../utils';
@@ -224,6 +224,13 @@ const SingleDrop = () => {
         const canMint = user.address ? await readContract.canMint(user.address) : 0;
         setDropInfoFromContract(infos, canMint);
         setMaxSupply(2222);
+        calculateStatus(currentDrop, infos.totalSupply, currentDrop.totalSupply);
+      } else if (isSscCollection(drop.address)) {
+        let readContract = await new ethers.Contract(currentDrop.address, abi, readProvider);
+        const infos = await readContract.getInfo();
+        const canMint = user.address ? await readContract.canMint(user.address) : 0;
+        setDropInfoFromContract(infos, canMint);
+        setMaxSupply(1888);
         calculateStatus(currentDrop, infos.totalSupply, currentDrop.totalSupply);
       } else {
         if (currentDrop.address && (isUsingDefaultDropAbi(currentDrop.abi) || isUsingAbiFile(currentDrop.abi))) {
