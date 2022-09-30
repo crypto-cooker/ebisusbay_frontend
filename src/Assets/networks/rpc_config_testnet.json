@@ -1727,7 +1727,7 @@
       "name": "World Of Cats",
       "slug": "world-of-cats",
       "multiToken": false,
-      "address": "0x6446e0fD9Af5Cd998E4071eb36565CF09387BC02",
+      "address": "0xbFFE791a74Ac0BC08a55853F9A41f6B073752e2F",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -4026,7 +4026,7 @@
         "twitter": "https://twitter.com/worldofcatsnft",
         "discord": "https://discord.gg/worldofcats"
       },
-      "address": "0x6446e0fD9Af5Cd998E4071eb36565CF09387BC02",
+      "address": "0xbFFE791a74Ac0BC08a55853F9A41f6B073752e2F",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 4444,
