@@ -9347,6 +9347,25 @@
         "kyc": false,
         "escrow": false
       }
+    },
+    {
+      "name": "Fury Quack Gang",
+      "slug": "fury-quack-gang",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Fury Quack Gang is an NFTs sub-collection of the Fury Mouse Gang. Counting 3500 Fury Ducks. Like the mice, at night the fury takes hold of them and they ravage everything in their path. These creatures are the enemies number 1 of the Fury Mouse Gang and they want to rule on the World",
+        "verified": true,
+        "avatar": "/img/collections/fury-quack-gang/avatar.webp",
+        "card": "/img/collections/fury-quack-gang/card.webp",
+        "banner": "/img/collections/fury-quack-gang/banner.webp",
+        "maxSupply": 2500,
+        "website": "https://furymousegang.com/",
+        "twitter": "https://twitter.com/FuryMouseGang",
+        "discord": "https://discord.gg/fmg"
+      }
     }
   ],
   "drops": [
@@ -12668,6 +12687,39 @@
       "published": true,
       "complete": false,
       "featured": false
+    },
+    {
+      "id": 117,
+      "slug": "fury-quack-gang",
+      "imgNft": "/img/drops/fury-quack-gang/drop.webp",
+      "imgPreview": "/img/drops/fury-quack-gang/drop.webp",
+      "imgAvatar": "/img/collections/fury-quack-gang/avatar.webp",
+      "imgBanner": "/img/collections/fury-quack-gang/banner.webp",
+      "title": "Fury Quack Gang",
+      "subtitle": "The Fury Quack Gang is an NFTs sub-collection of the Fury Mouse Gang. Counting 3500 Fury Ducks. Like the mice, at night the fury takes hold of them and they ravage everything in their path. These creatures are the enemies number 1 of the Fury Mouse Gang and they want to rule on the World",
+      "description": "The Fury Quack Gang is an NFTs sub-collection of the Fury Mouse Gang. Counting 3500 Fury Ducks. Like the mice, at night the fury takes hold of them and they ravage everything in their path. These creatures are the enemies number 1 of the Fury Mouse Gang. The ambition is huge, our goal is to become the number 1 project on the Cronos blockchain. Our community is linked around a story in comics style. The first Chapter was about the Fury Mouse Gang, and now the second Chapter will cover the Fury Quack Gang.",
+      "author": {
+        "name": "Fury Mouse Gang",
+        "website": "https://furymousegang.com/",
+        "twitter": "https://twitter.com/FuryMouseGang",
+        "discord": "https://discord.gg/fmg"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 3500,
+      "foundersOnly": false,
+      "start": 1664650800000,
+      "cost": "350",
+      "memberCost": "250",
+      "whitelistCost": "250",
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": false,
+      "redirect": "https://furyquackgang.com/"
     }
   ]
 }
