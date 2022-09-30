@@ -9322,6 +9322,31 @@
         "twitter": "https://twitter.com/MinionsMushroom",
         "discord": "https://discord.gg/k3tuEM33D3"
       }
+    },
+    {
+      "name": "Cronos Fighters",
+      "slug": "cronos-fighters-v2",
+      "multiToken": false,
+      "address": "0x616267cb35823DCBD6d0107d68507BD92aad6376",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "V2 Fighters are HERE! Now grab a Fighter you love, make upgrades, earn tokens and battle them out in a head to head fight!",
+        "verified": true,
+        "avatar": "/img/collections/cronos-fighters-v2/avatar.webp",
+        "card": "/img/collections/cronos-fighters-v2/card.webp",
+        "banner": "/img/collections/cronos-fighters-v2/banner.webp",
+        "maxSupply": 4000,
+        "website": "http://fightersnft.io/",
+        "twitter": "https://twitter.com/FightersNFT",
+        "medium": "https://medium.com/@shahabs/nft-collectors-fighters-are-coming-593cb9865e20",
+        "discord": "http://discord.gg/Bb39m7BBBR"
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": false,
+        "escrow": false
+      }
     }
   ],
   "drops": [
@@ -12610,6 +12635,39 @@
       "complete": false,
       "featured": false,
       "redirect": "https://cyborgswap.io/nft-drop/TheImmortalCyborgs"
+    },
+    {
+      "id": 117,
+      "slug": "cronos-fighters-v2",
+      "imgNft": "/img/drops/cronos-fighters-v2/drop.webp",
+      "imgPreview": "/img/drops/cronos-fighters-v2/drop.webp",
+      "imgAvatar": "/img/collections/cronos-fighters-v2/avatar.webp",
+      "imgBanner": "/img/collections/cronos-fighters-v2/banner.webp",
+      "title": "Cronos Fighters",
+      "subtitle": "V2 Fighters are HERE! Now grab a Fighter you love, make upgrades, earn tokens and battle them out in a head to head fight!",
+      "description": "They will be fully playable in our game and Metaverse. V2 will be customizable and upgradeable. V1 will grant you access to buy V2. V2 will yield 5 $FYTE Tokens a day. FIND A FIGHTER that SPEAKS TO YOU!",
+      "author": {
+        "name": "Cronos Fighters",
+        "website": "http://fightersnft.io/",
+        "twitter": "https://twitter.com/FightersNFT",
+        "medium": "https://medium.com/@shahabs/nft-collectors-fighters-are-coming-593cb9865e20",
+        "discord": "http://discord.gg/Bb39m7BBBR"
+      },
+      "address": "0x616267cb35823DCBD6d0107d68507BD92aad6376",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 4000,
+      "foundersOnly": false,
+      "start": 1664913600000,
+      "cost": "395",
+      "memberCost": "295",
+      "whitelistCost": "295",
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": false
     }
   ]
 }
