@@ -216,7 +216,11 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
               <div className="nftSaleForm row gx-3">
                 <div className="col-12 col-sm-6 mb-2 mb-sm-0">
                   {isCollectionOffer ? (
-                    <NftPicker nfts={collectionNfts} onSelect={(n) => chooseCollectionNft(n)} />
+                    <NftPicker
+                      nfts={collectionNfts}
+                      initialNft={chosenCollectionNft}
+                      onSelect={(n) => chooseCollectionNft(n)}
+                    />
                   ) : (
                     <AnyMedia
                       image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
@@ -291,7 +295,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
                           <Button type="legacy"
                                   onClick={processAcceptOfferRequest}
                                   isLoading={executingAcceptOffer}
-                                  disabled={executingAcceptOffer}
+                                  disabled={!chosenCollectionNft || executingAcceptOffer}
                                   className="flex-fill">
                             Accept Offer
                           </Button>
@@ -349,9 +353,9 @@ const ImageContainer = styled.div`
     margin-bottom: 10px;
   }
 `;
-const NftPicker = ({collectionAddress, nfts, onSelect}) => {
+const NftPicker = ({collectionAddress, nfts, onSelect, initialNft}) => {
   const userTheme = useSelector((state) => state.user.theme);
-  const [chosenNft, setChosenNft] = useState(nfts[0]);
+  const [chosenNft, setChosenNft] = useState(initialNft);
 
   const handleNftChange = useCallback((chosenNft) => {
     setChosenNft(chosenNft);
