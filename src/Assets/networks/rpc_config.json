@@ -9303,6 +9303,25 @@
         "twitter": "https://twitter.com/CrolionsClub",
         "discord": "https://discord.gg/hTmdgXHC"
       }
+    },
+    {
+      "name": "Mushroom Minions",
+      "slug": "mushroom-minions",
+      "multiToken": false,
+      "address": "0x56Db07fB1F560c2486527Da02c2fF1D276C2aec4",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The legend of the Mushrooms begins as the Minions arm up to defend their kingdom against the death caps.",
+        "verified": false,
+        "avatar": "/img/collections/mushroom-minions/avatar.webp",
+        "card": "/img/collections/mushroom-minions/card.webp",
+        "banner": "/img/collections/mushroom-minions/banner.webp",
+        "maxSupply": 300,
+        "website": "https://mushroomminions.co.uk/",
+        "twitter": "https://twitter.com/MinionsMushroom",
+        "discord": "https://discord.gg/k3tuEM33D3"
+      }
     }
   ],
   "drops": [
