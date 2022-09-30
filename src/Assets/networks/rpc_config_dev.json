@@ -8999,7 +8999,7 @@
         "card": "/img/collections/mini-morphs/card.webp",
         "banner": "/img/collections/mini-morphs/banner.webp",
         "maxSupply": 4200,
-        "website": "https://www.cromorphs.com/MiniMorphs/",
+        "website": "https://www.cromorphs.com/MiniMorphs.html",
         "twitter": "https://twitter.com/CroMorphs",
         "discord": "https://http://discord.gg/8N2g6YYJxz"
       }
@@ -9034,7 +9034,7 @@
       "name": "Spiteful Sea Club Access Cards",
       "slug": "ssc-access-cards",
       "multiToken": false,
-      "address": "",
+      "address": "0x60dD798417DB4Ed75840Cd3a2631f468d6d58893",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -12474,7 +12474,7 @@
         "discord": "https://discord.gg/7efQGdwW7r",
         "medium": "https://spiteful-sea-club.gitbook.io/spiteful-sea-club/"
       },
-      "address": "",
+      "address": "0x60dD798417DB4Ed75840Cd3a2631f468d6d58893",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 1888,

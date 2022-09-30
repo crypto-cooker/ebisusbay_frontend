@@ -1727,7 +1727,7 @@
       "name": "World Of Cats",
       "slug": "world-of-cats",
       "multiToken": false,
-      "address": "0x6446e0fD9Af5Cd998E4071eb36565CF09387BC02",
+      "address": "0xbFFE791a74Ac0BC08a55853F9A41f6B073752e2F",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -1800,7 +1800,7 @@
       "name": "Spiteful Sea Club Access Cards",
       "slug": "ssc-access-cards",
       "multiToken": false,
-      "address": "0x8b4CE99e5EBa67001e8D3fE2F9F5F3178cb33507",
+      "address": "0x0F23564e371c4321d760a58C4b40349f3C5F9850",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -4026,7 +4026,7 @@
         "twitter": "https://twitter.com/worldofcatsnft",
         "discord": "https://discord.gg/worldofcats"
       },
-      "address": "0x6446e0fD9Af5Cd998E4071eb36565CF09387BC02",
+      "address": "0xbFFE791a74Ac0BC08a55853F9A41f6B073752e2F",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 4444,
@@ -4092,7 +4092,7 @@
         "discord": "https://discord.gg/7efQGdwW7r",
         "medium": "https://spiteful-sea-club.gitbook.io/spiteful-sea-club/"
       },
-      "address": "0x8b4CE99e5EBa67001e8D3fE2F9F5F3178cb33507",
+      "address": "0x0F23564e371c4321d760a58C4b40349f3C5F9850",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 1888,
