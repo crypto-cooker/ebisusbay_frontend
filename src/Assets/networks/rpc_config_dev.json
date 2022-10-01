@@ -9352,7 +9352,7 @@
       "name": "Fury Quack Gang",
       "slug": "fury-quack-gang",
       "multiToken": false,
-      "address": "",
+      "address": "0xFe320bB9830f6f62a3C7dd7F9B55c8609D0aDe35",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -9365,6 +9365,25 @@
         "website": "https://furymousegang.com/",
         "twitter": "https://twitter.com/FuryMouseGang",
         "discord": "https://discord.gg/fmg"
+      }
+    },
+    {
+      "name": "Jungle Ape",
+      "slug": "jungle-ape",
+      "multiToken": false,
+      "address": "0xfcE5A6571fA0495d28f9D305945E74bA4dDEAD62",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Croodle Ape is not finished and now our second chapter is about to begin! \"Jungle Ape\" an exclusive collection of 500 primordial NFTs that can't be bought but can only be earned.",
+        "verified": false,
+        "avatar": "/img/collections/jungle-ape/avatar.webp",
+        "card": "/img/collections/jungle-ape/card.webp",
+        "banner": "/img/collections/jungle-ape/banner.webp",
+        "maxSupply": 500,
+        "website": "https://croodleape.com/",
+        "twitter": "https://www.twitter.com/croodleape",
+        "discord": "https://discord.gg/GpbDK7j9aS"
       }
     }
   ],
@@ -12704,7 +12723,7 @@
         "twitter": "https://twitter.com/FuryMouseGang",
         "discord": "https://discord.gg/fmg"
       },
-      "address": "",
+      "address": "0xFe320bB9830f6f62a3C7dd7F9B55c8609D0aDe35",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 3500,
