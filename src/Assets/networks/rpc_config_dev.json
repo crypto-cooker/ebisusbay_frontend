@@ -9423,6 +9423,26 @@
         "twitter": "https://twitter.com/ThirteenthEvil",
         "discord": "https://discord.gg/Fg6Megb4Vn"
       }
+    },
+    {
+      "name": "La Brigade De Cuisine",
+      "slug": "la-brigade-de-cuisine",
+      "multiToken": false,
+      "address": "0x5702C37deD614a5d64dA6ec1071f93fb236Ba7C9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Are you a serious griller? Do you want to control the flames of the grills? Then this is a DAO NFT you won't want to miss. From proposals to treasury spending La Brigade De Cuisine has it all. Brought to you by The Cronos Steakhouse.",
+        "verified": false,
+        "avatar": "/img/collections/la-brigade-de-cuisine/avatar.webp",
+        "card": "/img/collections/la-brigade-de-cuisine/card.webp",
+        "banner": "/img/collections/la-brigade-de-cuisine/banner.webp",
+        "maxSupply": 200,
+        "website": "https://www.cronossteakhouse.com/",
+        "twitter": "https://www.twitter.com/CronoSteakHouse",
+        "discord": "https://discord.gg/fpTgAReDyN",
+        "medium": "https://medium.com/@CronoSteakHouse"
+      }
     }
   ],
   "drops": [
