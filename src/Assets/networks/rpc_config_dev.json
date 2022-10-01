@@ -9352,7 +9352,7 @@
       "name": "Fury Quack Gang",
       "slug": "fury-quack-gang",
       "multiToken": false,
-      "address": "",
+      "address": "0xFe320bB9830f6f62a3C7dd7F9B55c8609D0aDe35",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -12704,7 +12704,7 @@
         "twitter": "https://twitter.com/FuryMouseGang",
         "discord": "https://discord.gg/fmg"
       },
-      "address": "",
+      "address": "0xFe320bB9830f6f62a3C7dd7F9B55c8609D0aDe35",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 3500,
