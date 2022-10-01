@@ -27,7 +27,7 @@ export const getServerSideProps = async ({ params, query }) => {
     !caseInsensitiveCompare(addressOrUsername, user.data.username)) {
     return {
       redirect: {
-        destination: `/account/${user.data.username}`,
+        destination: `/account/${user.data.username}${query?.tab? `?tab=${query?.tab}` : ''}`,
         permanent: false,
       },
     }
