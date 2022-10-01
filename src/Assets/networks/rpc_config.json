@@ -9385,6 +9385,25 @@
         "twitter": "https://www.twitter.com/croodleape",
         "discord": "https://discord.gg/GpbDK7j9aS"
       }
+    },
+    {
+      "name": "Discoverilla",
+      "slug": "discoverilla",
+      "multiToken": false,
+      "address": "0xB098FBb5aeDa47C46156E123633c63b47C7EB38e",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Discoverilla is the first decentralized ADS platform based on NFT. NFT investors can become famous and rich through Gorilla NFT, the higher the level of NFT the more famous they become. In addition, $DISCOVER token investors will enjoy endless pump thanks to the boost level upgrades of NFTs using $DISCOVER. Imagine Attaining World-Fame for Yourself on the Metaverse.",
+        "verified": false,
+        "avatar": "/img/collections/discoverilla/avatar.webp",
+        "card": "/img/collections/discoverilla/card.webp",
+        "banner": "/img/collections/discoverilla/banner.webp",
+        "maxSupply": 3333,
+        "website": "https://sales.discoverilla.com/",
+        "twitter": "https://www.twitter.com/discoverilla",
+        "discord": "https://discord.gg/tu4ADr7SNB"
+      }
     }
   ],
   "drops": [
