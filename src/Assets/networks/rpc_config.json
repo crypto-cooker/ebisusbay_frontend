@@ -9366,6 +9366,25 @@
         "twitter": "https://twitter.com/FuryMouseGang",
         "discord": "https://discord.gg/fmg"
       }
+    },
+    {
+      "name": "Jungle Ape",
+      "slug": "jungle-ape",
+      "multiToken": false,
+      "address": "0xfcE5A6571fA0495d28f9D305945E74bA4dDEAD62",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Croodle Ape is not finished and now our second chapter is about to begin! \"Jungle Ape\" an exclusive collection of 500 primordial NFTs that can't be bought but can only be earned.",
+        "verified": false,
+        "avatar": "/img/collections/jungle-ape/avatar.webp",
+        "card": "/img/collections/jungle-ape/card.webp",
+        "banner": "/img/collections/jungle-ape/banner.webp",
+        "maxSupply": 500,
+        "website": "https://croodleape.com/",
+        "twitter": "https://www.twitter.com/croodleape",
+        "discord": "https://discord.gg/GpbDK7j9aS"
+      }
     }
   ],
   "drops": [
