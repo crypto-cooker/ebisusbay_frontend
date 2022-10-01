@@ -10,7 +10,7 @@ export async function collectionRoyaltyPercent(address, id) {
   try {
     if (!id) {
       const marketRoyalty = await readMarket.getRoyalty(address);
-      return marketRoyalty.percent;
+      return marketRoyalty.percent / 100;
     }
 
     const royalty = await readMarket.calculateRoyalty(address, id, 1000);
