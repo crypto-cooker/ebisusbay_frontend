@@ -263,45 +263,50 @@ const Home = () => {
       </Jumbotron.Host>
       {mobile && JumbotronData()}
 
-      {/*<section className="gl-legacy container no-bottom no-top">*/}
-      {/*  <div className="row">*/}
-      {/*    <div className="col-lg-12">*/}
-      {/*      <div className="text-center pt-5">*/}
-      {/*        <Heading>SeaShrine Founding Member VIP</Heading>*/}
-      {/*        <div className="small-border"></div>*/}
-      {/*      </div>*/}
-      {/*    </div>*/}
-      {/*    <div className="col-lg-6 col-md-6 d-flex align-items-center">*/}
-      {/*      <div className="mt-3" style={{color:getTheme(userTheme).colors.textColor3}}>*/}
-      {/*        <p className="fs-5">*/}
-      {/*          SeaShrine is a new marketplace founded and built by the same team behind the Cronos success, Ebisu’s Bay. With upcoming feature parity with their previous endeavor, the team looks to replicate their accomplishments and to recreate a Gold Standard for marketplaces on the new Aptos blockchain. Embark on this journey with us by minting a VIP Founding Member NFT now!*/}
-      {/*        </p>*/}
-      {/*        <p className="fw-bold fs-4">Minting Begins 29 Sept 2022</p>*/}
-      {/*      </div>*/}
-      {/*    </div>*/}
-      {/*    <div className="col-lg-6 col-md-6 pt-3">*/}
-      {/*      <div className="mx-auto text-center">*/}
-      {/*        <img*/}
-      {/*          src={hostedImage('/img/promos/seashrine.webp')}*/}
-      {/*          alt="SeaShrine Founding Member VIP"*/}
-      {/*          className="img-fluid"*/}
-      {/*          width="100%"*/}
-      {/*        />*/}
-      {/*      </div>*/}
-      {/*      <div className="d-flex flex-column align-middle">*/}
-      {/*        <div className="d-flex justify-content-between flex-wrap">*/}
-      {/*          <div className="flex-fill mx-auto mt-2" style={{maxWidth:300}}>*/}
-      {/*            <a href="https://seashrine.io" target="_blank" rel="noreferrer">*/}
-      {/*              <Button type="legacy" className="w-100">*/}
-      {/*                 View Website*/}
-      {/*              </Button>*/}
-      {/*            </a>*/}
-      {/*          </div>*/}
-      {/*        </div>*/}
-      {/*      </div>*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</section>*/}
+      <section className="gl-legacy container no-bottom no-top">
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="text-center pt-5">
+              <Heading>Fury Quack Gang</Heading>
+              <div className="small-border"></div>
+            </div>
+          </div>
+          <div className="col-lg-6 col-md-6 d-flex align-items-center">
+            <div className="mt-3" style={{color:getTheme(userTheme).colors.textColor3}}>
+              <p className="fs-5 mb-4">
+                "It's us, against all."
+              </p>
+              <p className="fs-5 mb-4">
+                The Fury Quack Gang is an NFTs sub-collection of the Fury Mouse Gang. Counting 3500 Fury Ducks. Like the mice, at night the fury takes hold of them and they ravage everything in their path. These creatures are the enemies number 1 of the Fury Mouse Gang and they want to rule on the World. "Best art work on Cronos."
+              </p>
+              <p className="fs-5">
+                Rally, or die.
+              </p>
+            </div>
+          </div>
+          <div className="col-lg-6 col-md-6 pt-3">
+            <div className="mx-auto text-center">
+              <img
+                src={hostedImage('/img/promos/quack.webp')}
+                alt="Fury Quack Gang"
+                className="img-fluid"
+                width="100%"
+              />
+            </div>
+            <div className="d-flex flex-column align-middle">
+              <div className="d-flex justify-content-between flex-wrap">
+                <div className="flex-fill mx-auto mt-2" style={{maxWidth:300}}>
+                  <a href="https://furyquackgang.com/" target="_blank" rel="noreferrer">
+                    <Button type="legacy" className="w-100">
+                       Mint Now
+                    </Button>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="gl-legacy container no-bottom">
         <div className="row">
