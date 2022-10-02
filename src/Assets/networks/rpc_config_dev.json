@@ -6494,9 +6494,9 @@
       "metadata": {
         "description": "Cronos Lizards meet the BAD Bits and portal to a new universe - the BADverse! Join us as we take to the stars and explore.",
         "verified": true,
-        "avatar": "/img/collections/bad-lizzys/avatar.png",
-        "card": "/img/collections/bad-lizzys/card.png",
-        "banner": "/img/collections/bad-lizzys/banner.png",
+        "avatar": "/img/collections/bad-lizzys/avatar.webp",
+        "card": "/img/collections/bad-lizzys/card.webp",
+        "banner": "/img/collections/bad-lizzys/banner.webp",
         "maxSupply": 10000,
         "website": "https://cronoslizards.com/",
         "twitter": "https://twitter.com/badlizzys",
@@ -12797,6 +12797,39 @@
       "complete": false,
       "featured": false,
       "redirect": "https://furyquackgang.com/"
+    },
+    {
+      "id": 118,
+      "slug": "bad-lizzys",
+      "imgNft": "/img/drops/bad-lizzys/drop.webp",
+      "imgPreview": "/img/drops/bad-lizzys/drop.webp",
+      "imgAvatar": "/img/collections/bad-lizzys/avatar.webp",
+      "imgBanner": "/img/drops/bad-lizzys/banner.webp",
+      "title": "B.A.D. - Lizzys",
+      "subtitle": "10,000 Collection of saucy BAD Lizards - previously known as Cronos Lizards.\n\nThe Cronos Lizards have met the strange visitors - bad bits.\nOffering their mysterious portal juice, the Lizards have phased into a whole new dimension!",
+      "description": "The BAD Lizzys are a Cronos project that are under the B.A.D umbrella with the aim of the project to deliver value to it’s holders. B.A.D has been part of Cronos since December 2021. \n\n•    Roadmap 1.0 includes the delivery of the following:\n•    Tight community\n•    In-Wallet Staking for GLXY Token\n•    Shares of monthly rewards in CRO\n•    Access to Roadmap 1.5\n\nThe B.A.D Team have recently launched glxyswap.io Dex in preparation for additional future utility, come join this amazing team and community for a project that keeps delivering.",
+      "author": {
+        "name": "Baby Alien Division",
+        "website": "https://cronoslizards.com/",
+        "twitter": "https://twitter.com/badlizzys",
+        "discord": "https://discord.gg/HMy5SArp7g"
+      },
+      "address": "0xd7eEc30A764B3Eed788e93de9fc69b432Dd54d16",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 10000,
+      "foundersOnly": false,
+      "start": 1664650800000,
+      "cost": "200",
+      "memberCost": "200",
+      "whitelistCost": "200",
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": false,
+      "redirect": "https://cronoslizards.com/"
     }
   ]
 }
