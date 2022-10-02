@@ -7054,7 +7054,7 @@
         "card": "/img/collections/pocket-demons/card.webp",
         "banner": "/img/collections/pocket-demons/banner.webp",
         "maxSupply": 666,
-        "website": "https://www.pocketdemons.com/",
+        "website": "https://www.pocketdemons.net/",
         "twitter": "https://twitter.com/Pocket_Demons",
         "discord": "https://discord.gg/sXrJZR983J"
       },
@@ -9034,7 +9034,7 @@
       "name": "Spiteful Sea Club Access Cards",
       "slug": "ssc-access-cards",
       "multiToken": false,
-      "address": "0x907ecec37451C32154CBA3070436996F554D25E5",
+      "address": "0x45Fe45e5623a129d652F15962d901C7B609e5194",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -12051,7 +12051,7 @@
       "description": "The Pocket Demons project is a collection of 666 uniquely generated demon characters. Each Demon is generated from a pool of over 70 traits. These Demons also carry unique stats and attacks that are utilized in our P2E Game!\n\nUtilities:\n\nTokenomics\n$FLM is the heart of our ecosystem. With this token you can participate in battles and breed your demons.\n\nP2E\nDemolish other demons in a turn-based combat game! Put some $FLM on the line and the winner takes it all!\n\nBreeding\nBreeding is the name of the game! Breed your demons to produce offspring with even better stats. Toss them in the ring or sell them off!\n\nStaking\nNot into games? That's fine, you will be able to stake your Pocket Demons and earn some passive income.",
       "author": {
         "name": "Pocket Demons",
-        "website": "https://www.pocketdemons.com/",
+        "website": "https://www.pocketdemons.net",
         "twitter": "https://twitter.com/Pocket_Demons",
         "discord": "https://discord.gg/sXrJZR983J"
       },
@@ -12635,7 +12635,7 @@
         "discord": "https://discord.gg/7efQGdwW7r",
         "medium": "https://spiteful-sea-club.gitbook.io/spiteful-sea-club/"
       },
-      "address": "0x907ecec37451C32154CBA3070436996F554D25E5",
+      "address": "0x45Fe45e5623a129d652F15962d901C7B609e5194",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 1888,
