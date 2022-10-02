@@ -295,7 +295,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
                           <Button type="legacy"
                                   onClick={processAcceptOfferRequest}
                                   isLoading={executingAcceptOffer}
-                                  disabled={!chosenCollectionNft || executingAcceptOffer}
+                                  disabled={(isCollectionOffer && !chosenCollectionNft) || executingAcceptOffer}
                                   className="flex-fill">
                             Accept Offer
                           </Button>
