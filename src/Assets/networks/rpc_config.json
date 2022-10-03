@@ -12577,7 +12577,7 @@
       "imgBanner": "/img/collections/world-of-cats/banner.webp",
       "title": "World Of Cats",
       "subtitle": "World of Cats is a handcrafted collection of 4444 Unique NFTs created by the artist Tam4tik with utility that is tied to the real world.\nEach with their own identity to be discovered by its founder. \nIn its purest form, WORLD OF CATS is the art of storytelling.\nCurated By:  HiddenFishDAO™",
-      "description": "World Of Cats has collaborated with the top collections on Cronos to bring you a professional NFT experience to a growing blockchain.\nOur goal is to connect the WEB3 with the Real World.\nOur Roadmap includes Charity to Cat Shelters, Your own Cats' IP-Rights and the 3D File rigged and ready to be imported to C4D, Blender or Unreal Engine, Storytelling, Passive Income through Staking & Book / Animation Series sales & more.",
+      "description": "World Of Cats has collaborated with the top collections on Cronos to bring you a professional NFT experience to a growing blockchain.\nOur goal is to connect the WEB3 with the Real World.\nOur Roadmap includes Charity to Cat Shelters, Your own Cats' IP-Rights and the 3D File rigged and ready to be imported to C4D, Blender or Unreal Engine, Storytelling, Passive Income through Staking & Book / Animation Series sales & more.\n\nCurated by: @HiddenFishDAO ™",
       "author": {
         "name": "World Of Cats",
         "website": "https://worldofcats.xyz/",
@@ -12597,7 +12597,9 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false
+      "complete": false,
+      "disclaimer": "Reveal will be done 24 hours after the minting has begun",
+      "priceDescription": "Whitelist-only presale for the first 48 hours (limit 10 per address). Public Sale will begin after presale ends if there is supply left."
     },
     {
       "id": 113,
