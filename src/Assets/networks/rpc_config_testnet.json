@@ -1722,6 +1722,176 @@
         "kyc": "phenix",
         "escrow": false
       }
+    },
+    {
+      "name": "World Of Cats",
+      "slug": "world-of-cats",
+      "multiToken": false,
+      "address": "0xbFFE791a74Ac0BC08a55853F9A41f6B073752e2F",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "World of Cats is a handcrafted collection of 4444 Unique NFTs created by the artist Tam4tik with utility that is tied to the real world.\nEach with their own identity to be discovered by its founder. \nIn its purest form, WORLD OF CATS is the art of storytelling.\nCurated By:  HiddenFishDAO™",
+        "verified": true,
+        "avatar": "/img/collections/world-of-cats/avatar.webp",
+        "card": "/img/collections/world-of-cats/card.webp",
+        "banner": "/img/collections/world-of-cats/banner.webp",
+        "maxSupply": 4444,
+        "website": "https://worldofcats.xyz/",
+        "twitter": "https://twitter.com/worldofcatsnft",
+        "discord": "https://discord.gg/worldofcats"
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": "ebisu",
+        "escrow": false
+      }
+    },
+    {
+      "name": "The Meanies",
+      "slug": "the-meanies",
+      "multiToken": false,
+      "address": "0x449e8DcD04f7E232Ee669090799FA30aE778851d",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Meanies are a collection of 2,500 uniquely generated NFTs and the 2nd character of the Lost Toys project. Each NFT is based on 7 trait categories with different rarities. A Lost Toy NFT is not simply an NFT it is a key to unlocking over 15 utilities!",
+        "verified": true,
+        "avatar": "/img/collections/the-meanies/avatar.webp",
+        "card": "/img/collections/the-meanies/card.webp",
+        "banner": "/img/collections/the-meanies/banner.webp",
+        "maxSupply": 2200,
+        "website": "https://www.losttoys.io/",
+        "twitter": "https://www.twitter.com/losttoysnft",
+        "discord": "https://discord.gg/Tdd9TZRMxn",
+        "medium": "https://hello-143.gitbook.io/lost-toys-nft/",
+        "instagram": "https://www.instagram.com/losttoysnft/"
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "name": "Finger Monkeys",
+      "slug": "finger-monkeys",
+      "multiToken": false,
+      "address": "0xd324C3B5e160266A858c7B35968e7d9eAD8cfE59",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "5555 Lucky Finger Monkeys are about to hit Cronos. Lookout for the interactive platform!",
+        "verified": true,
+        "avatar": "/img/collections/finger-monkeys/avatar.webp",
+        "card": "/img/collections/finger-monkeys/card.webp",
+        "banner": "/img/collections/finger-monkeys/banner.webp",
+        "maxSupply": 5555,
+        "website": "https://www.specterofart.com/FingerMonkeys",
+        "discord": "https://discord.gg/CcwFDwPuuh"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "phenix",
+        "escrow": false
+      }
+    },
+    {
+      "name": "Spiteful Sea Club Access Cards",
+      "slug": "ssc-access-cards",
+      "multiToken": false,
+      "address": "0x0F23564e371c4321d760a58C4b40349f3C5F9850",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A collection of 1,888 access cards, featuring 3D Spiteful Sea Creatures - the turtle, octopus, and the shark. The character and purpose of the models reflects the desire of their owners - further develop and bring change to the NFT market and the Web3 space as a whole. Setting new standards and trends requires a group of convinced individuals who come together to set in motion a wave that will eventually sweep an entire sea with it.",
+        "verified": true,
+        "avatar": "/img/collections/ssc-access-cards/avatar.webp",
+        "card": "/img/collections/ssc-access-cards/card.webp",
+        "banner": "/img/collections/ssc-access-cards/banner.webp",
+        "maxSupply": 1888,
+        "website": "https://www.spitefulseaclub.com/",
+        "twitter": "https://www.twitter.com/spitefulseanft",
+        "discord": "https://discord.gg/7efQGdwW7r",
+        "medium": "https://spiteful-sea-club.gitbook.io/spiteful-sea-club/"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "phenix",
+        "escrow": false
+      }
+    },
+    {
+      "name": "Cronos Fighters",
+      "slug": "cronos-fighters-v2",
+      "multiToken": false,
+      "address": "0x52795c4B3aC043990076947013c71BE1eC0c3123",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "V2 Fighters are HERE! Now grab a Fighter you love, make upgrades, earn tokens and battle them out in a head to head fight!",
+        "verified": true,
+        "avatar": "/img/collections/cronos-fighters-v2/avatar.webp",
+        "card": "/img/collections/cronos-fighters-v2/card.webp",
+        "banner": "/img/collections/cronos-fighters-v2/banner.webp",
+        "maxSupply": 4000,
+        "website": "http://fightersnft.io/",
+        "twitter": "https://twitter.com/FightersNFT",
+        "medium": "https://medium.com/@shahabs/nft-collectors-fighters-are-coming-593cb9865e20",
+        "discord": "http://discord.gg/Bb39m7BBBR"
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "name": "0xLuckless v2.0",
+      "slug": "0xluckless-v2-0",
+      "multiToken": false,
+      "address": "0x8845C0ce2bFCFE5fa3F28c919134096f6035E261",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "8K Resolution Artworks that are unique and unlike anything else on the blockchain, created with the power of A.I. and advanced editing techniques across multiple platforms to produce the highest quality artwork on Cronos. No roadmaps, no staking, no games, just art, community, and utility.",
+        "verified": false,
+        "avatar": "/img/collections/0xluckless-v2-0/avatar.webp",
+        "card": "/img/collections/0xluckless-v2-0/card.webp",
+        "banner": "/img/collections/0xluckless-v2-0/banner.webp",
+        "maxSupply": 102,
+        "website": "https://0xluckless.com",
+        "twitter": "https://twitter.com/0xLuckless",
+        "discord": "https://discord.gg/BpAVk2Za2c",
+        "medium": "https://medium.com/@0xLuckless",
+        "instagram": "https://www.instagram.com/0xLuckless"
+      }
+    },
+    {
+      "name": "Whale Family",
+      "slug": "whalefam",
+      "multiToken": false,
+      "address": "0xFa6D6607E6850bBB10bD48370C99aB9C985BF759",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The \"Whale Family\" features a collection of 5,555 fun & vibrant Whale\nPFPs swimming on the Cronos blockchain with different levels of rarity \nfrom over 160 hand-drawn traits by Barbara Redekop.",
+        "verified": true,
+        "avatar": "/img/collections/whalefam/avatar.webp",
+        "banner": "/img/collections/whalefam/banner.webp",
+        "card": "/img/collections/whalefam/card.webp",
+        "maxSupply": 5555,
+        "website": "https://www.whalefam.com/",
+        "twitter": "https://twitter.com/WhaleFamNFT",
+        "discord": "https://discord.gg/khRfPKDFwg",
+        "gitbook": "https://drive.google.com/file/d/1va8ft-odC7VeQHOxume2viVvA8Kh7aYI/view",
+        "instagram": "https://www.instagram.com/im_barbara_redekop/"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "ebisu",
+        "escrow": false
+      }
     }
   ],
   "drops": [
@@ -3855,6 +4025,39 @@
       "complete": false
     },
     {
+      "id": 108,
+      "slug": "whalefam",
+      "imgNft": "/img/drops/whalefam/drop.webp",
+      "imgPreview": "/img/drops/whalefam/drop.webp",
+      "imgAvatar": "/img/collections/whalefam/avatar.webp",
+      "imgBanner": "/img/collections/whalefam/banner.webp",
+      "title": "Whale Family",
+      "subtitle": "The \"Whale Family\" features a collection of 5,555 fun & vibrant Whale PFPs swimming on the Cronos blockchain with different levels of rarity. Created from over 160 hand-drawn traits by Barbara Redekop.",
+      "description": "Hidden inside this collection is a limited supply of NFTs that carry special REDEEMABLE traits.\n \nHolders of these special Whales can redeem the corresponding prize. \n(Prizes can only be claimed once, please check claimed/unclaimed before purchasing on secondary market).\n\nGolden Ticket\n5 unique Whale NFTs with the golden ticket trait can be redeemed for a 7-day stay in Georgia and meet the artist.\n\nEbisu’s Gear\n10 unique Whale NFTs with the Ebisu’s Bay traits can be redeemed for a free Ebisu’s Bay hoodie or hat from their merchandise store.\n\nPaint Brush\n20 unique Whale NFTs with the paint brush trait can be redeemed for a custom “create your own Whale PFP” personally crafted by Barbara Redekop.\n\n…and much more!\n\nOwn your Whale. IP rights will be given to holders.\n\nHolders will be rewarded with future airdrops, community voting, games, contests, giveaways, staking etc.\n\nFor full list of redeemable traits, roadmap, and information… please use the links above, visit our website, join our discord, or follow us on Twitter & Instagram.",
+      "author": {
+        "name": "Barbara Redekop",
+        "website": "https://www.whalefam.com/",
+        "twitter": "https://twitter.com/WhaleFamNFT",
+        "discord": "https://discord.gg/khRfPKDFwg",
+        "gitbook": "https://drive.google.com/file/d/1va8ft-odC7VeQHOxume2viVvA8Kh7aYI/view",
+        "instagram": "https://www.instagram.com/im_barbara_redekop/"
+      },
+      "address": "0xFa6D6607E6850bBB10bD48370C99aB9C985BF759",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 5555,
+      "cost": "250",
+      "memberCost": "200",
+      "whitelistCost": "150",
+      "foundersOnly": false,
+      "start": 1664769590000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
       "id": 109,
       "slug": "god-hates-crofam",
       "imgNft": "/img/drops/god-hates-crofam/drop.webp",
@@ -3881,52 +4084,200 @@
       "is1155": false,
       "published": true,
       "complete": false
-    }
-  ],
-
-  "auctions": [
-    {
-      "hash": "0xbf4208f46ff433f6164b7959a0608a47bb2a715baa9a551e80c682b414e0c9dff",
-      "title": "Horse 1",
-      "description": "The Lazy Horse Race Club will be supporting SaddleUp!, a charity based out of Nashville, TN. Specifically, proceeds will be donated to the Lauren and Charlotte Uribe Pony Fund. This fund's purpose is to provide 10 therapy horses to help replenish SaddleUp!'s therapy herd, helping to provide thousands of additional therapy sessions for children and adults with intellectual or developmental disabilities.",
-      "link": "https://www.saddleupnashville.org/how-you-can-help/",
-      "imgAvatar": "/img/collections/lazyhorse/avatar.png"
     },
     {
-      "hash": "0xc2e0aa1bb3c371e2cef1f9cdc91dc4d859dd8ccd35a540e2f5e066ea869d9f43",
-      "title": "Horse 2",
-      "description": "The Lazy Horse Race Club will be supporting SaddleUp!, a charity based out of Nashville, TN. Specifically, proceeds will be donated to the Lauren and Charlotte Uribe Pony Fund. This fund's purpose is to provide 10 therapy horses to help replenish SaddleUp!'s therapy herd, helping to provide thousands of additional therapy sessions for children and adults with intellectual or developmental disabilities.",
-      "link": "https://www.saddleupnashville.org/how-you-can-help/",
-      "imgAvatar": "/img/collections/lazyhorse/avatar.png"
+      "id": 111,
+      "slug": "finger-monkeys",
+      "imgNft": "/img/drops/finger-monkeys/drop.webp",
+      "imgPreview": "/img/drops/finger-monkeys/drop.webp",
+      "imgAvatar": "/img/collections/finger-monkeys/avatar.webp",
+      "imgBanner": "/img/collections/finger-monkeys/banner.webp",
+      "title": "Finger Monkeys",
+      "subtitle": "5555 Lucky Finger Monkeys are about to hit Cronos. Lookout for the interactive platform!",
+      "description": "Every wallet needs a LUCKY Finger Monkey in the collection. Finger Monkey collection some of the animations look cool, some look funny and some of them even look weird.\n\nTop 1000 rank gets % of royalties.\n\n$50 in CRO a week “Wanted Wednesdays” giveaway for holders of 10 or more Finger Monkeys.\n\nHolders of 25 or more Finger Monkeys will get a monthly % of royalties of all NFTs coming from project.",
+      "author": {
+        "name": "Finger Monkeys",
+        "website": "https://www.specterofart.com/FingerMonkeys",
+        "discord": "https://discord.gg/CcwFDwPuuh"
+      },
+      "address": "0xd324C3B5e160266A858c7B35968e7d9eAD8cfE59",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 200,
+      "totalSupply": 5555,
+      "cost": "195",
+      "memberCost": "150",
+      "whitelistCost": "150",
+      "foundersOnly": false,
+      "start": 1664316293000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
     },
     {
-      "hash": "0x96a6de55059aeefd739fda0acdb82d7b0eb9f3c5d27b953664453bd94f673c52",
-      "title": "Croskull 1",
-      "description": "The CroSkull team will be supporting Cancer Research UK, a charity within England and Wales. Proceeds will be donated and used to provide labs with research chemicals, continue operation of mobile awareness units to provide early diagnosis to visitors, provide free cancer clinical trials to those in need, tools for advanced DNA sequencing, and chat support for those emotionally affected by their own or a loved one's diagnosis and treatment.",
-      "link": "https://www.cancerresearchuk.org/about-cancer/bone-cancer",
-      "imgAvatar": "/img/collections/lazyhorse/avatar.png"
+      "id": 112,
+      "slug": "world-of-cats",
+      "imgNft": "/img/drops/world-of-cats/drop.webp",
+      "imgPreview": "/img/drops/world-of-cats/drop.webp",
+      "imgAvatar": "/img/collections/world-of-cats/avatar.webp",
+      "imgBanner": "/img/collections/world-of-cats/banner.webp",
+      "title": "World Of Cats",
+      "subtitle": "World of Cats is a handcrafted collection of 4444 Unique NFTs created by the artist Tam4tik with utility that is tied to the real world.\nEach with their own identity to be discovered by its founder. \nIn its purest form, WORLD OF CATS is the art of storytelling.\nCurated By:  HiddenFishDAO™",
+      "description": "World Of Cats has collaborated with the top collections on Cronos to bring you a professional NFT experience to a growing blockchain.\nOur goal is to connect the WEB3 with the Real World.\nOur Roadmap includes Charity to Cat Shelters, Your own Cats' IP-Rights and the 3D File rigged and ready to be imported to C4D, Blender or Unreal Engine, Storytelling, Passive Income through Staking & Book / Animation Series sales & more.",
+      "author": {
+        "name": "World Of Cats",
+        "website": "https://worldofcats.xyz/",
+        "twitter": "https://twitter.com/worldofcatsnft",
+        "discord": "https://discord.gg/worldofcats"
+      },
+      "address": "0xbFFE791a74Ac0BC08a55853F9A41f6B073752e2F",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 4444,
+      "cost": "300",
+      "memberCost": "250",
+      "whitelistCost": "250",
+      "foundersOnly": false,
+      "start": 1663104212000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
     },
     {
-      "hash": "0xafca64614fedc7c503e44bbaf99f95d3c46d614b05ae3d2975af490aaa69daea",
-      "title": "Croskull 2",
-      "description": "The CroSkull team will be supporting Cancer Research UK, a charity within England and Wales. Proceeds will be donated and used to provide labs with research chemicals, continue operation of mobile awareness units to provide early diagnosis to visitors, provide free cancer clinical trials to those in need, tools for advanced DNA sequencing, and chat support for those emotionally affected by their own or a loved one's diagnosis and treatment.",
-      "link": "https://www.cancerresearchuk.org/about-cancer/bone-cancer",
-      "imgAvatar": "/img/collections/lazyhorse/avatar.png"
+      "id": 113,
+      "slug": "the-meanies",
+      "imgNft": "/img/drops/the-meanies/drop.webp",
+      "imgPreview": "/img/drops/the-meanies/drop.webp",
+      "imgAvatar": "/img/collections/the-meanies/avatar.webp",
+      "imgBanner": "/img/collections/the-meanies/banner.webp",
+      "title": "The Meanies",
+      "subtitle": "The Meanies are a collection of 2,500 uniquely generated NFTs and the 2nd character of the Lost Toys project. Each NFT is based on 7 trait categories with different rarities. A Lost Toy NFT is not simply an NFT it is a key to unlocking over 15 utilities!",
+      "description": "The Meanies are a collection of 2,500 uniquely generated NFTs and the 2nd character of the Lost Toys project. Each NFT is based on 7 trait categories with different rarities. A Lost Toy NFT is not simply an NFT it is a key to unlocking over 15 utilities!",
+      "author": {
+        "name": "Lost Toys",
+        "website": "https://www.losttoys.io/",
+        "twitter": "https://www.twitter.com/losttoysnft",
+        "discord": "https://discord.gg/Tdd9TZRMxn",
+        "medium": "https://hello-143.gitbook.io/lost-toys-nft/",
+        "instagram": "https://www.instagram.com/losttoysnft/"
+      },
+      "address": "0x449e8DcD04f7E232Ee669090799FA30aE778851d",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 2500,
+      "cost": "500",
+      "memberCost": "450",
+      "whitelistCost": "450",
+      "foundersOnly": false,
+      "start": 1664316293000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "priceDescription": "Whitelist-only presale for the first 40 minutes. Public sale after presale ends"
     },
     {
-      "hash": "0x99f01faa9599773cd53676aa2d6eb10f2139c0de0c6c22ea6cb71d9febcf485b",
-      "title": "Chimps",
-      "description": "Chimp info...",
-      "link": "https://www.cancerresearchuk.org/about-cancer/bone-cancer",
-      "imgAvatar": "/img/collections/lazyhorse/avatar.png"
+      "id": 114,
+      "slug": "ssc-access-cards",
+      "imgNft": "/img/drops/ssc-access-cards/drop.webp",
+      "imgPreview": "/img/drops/ssc-access-cards/drop.webp",
+      "imgAvatar": "/img/collections/ssc-access-cards/avatar.webp",
+      "imgBanner": "/img/drops/ssc-access-cards/banner.webp",
+      "title": "Spiteful Sea Club Access Cards",
+      "subtitle": "A collection of 1,888 access cards, featuring 3D Spiteful Sea Creatures - the turtle, octopus, and the shark. The character and purpose of the models reflects the desire of their owners - further develop and bring change to the NFT market and the Web3 space as a whole. Setting new standards and trends requires a group of convinced individuals who come together to set in motion a wave that will eventually sweep an entire sea with it. ",
+      "description": "Holders’ Club:\nThe Holders’ Club will be a big factor in fulfilling our mission and gives rise to a number of products and utilities, all of which are accessible using the SSC Access Card.\n\nHighPoint:\nLong-term building endeavor: a web app with the goal to accelerate the web3 infrastructure by making the trend data more accessible. Holders will benefit from exclusive perks and the success of Highpoint.\n\nHidden Staking:\nUnlock rewards (WL/CRO/NFT raffles, voting rights, shared royalties, free PFP mint) without actually having to stake and lock up your NFT in a vault!\n\nDeep Sea Analytics:\nOur in-house professional analyst team will give our holders exclusive in-depth rundowns of community-selected projects and topics/trends.\n\nThe Investment Wallet: \nWe will make USD$10,000 available to our holders in an exclusive wallet. This can be used in any way; to invest in other projects, coins, or even back into the SSC ecosystem.\n\nEnvironmental:\nWe have an official environmental partner to help make a difference.",
+      "author": {
+        "name": "Spiteful Sea Club",
+        "website": "https://www.spitefulseaclub.com/",
+        "twitter": "https://www.twitter.com/spitefulseanft",
+        "discord": "https://discord.gg/7efQGdwW7r",
+        "medium": "https://spiteful-sea-club.gitbook.io/spiteful-sea-club/"
+      },
+      "address": "0x0F23564e371c4321d760a58C4b40349f3C5F9850",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 1888,
+      "cost": "700",
+      "memberCost": "650",
+      "whitelistCost": "650",
+      "foundersOnly": false,
+      "start": 1664471518000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
     },
     {
-      "hash": "",
-      "title": "Space Crystal Unicorns",
-      "description": "Hello everyone, \n\nI have always had a passion for art which most already know, but what most donâ€™t know is that I am very fond of equestrian sports. Growing up I self-taught to become an equestrian rider. I have also judged equestrian events and competitions and organized charity festivals in support of children with disabilities. \n\nRiding horses can be very healing for children and their psycho-emotional state and for those who become more involved, assists with muscle development. I used to coach children for free but have retired from this. However, I keep in close contact with the equestrian club in my hometown and occasionally still assist by running the group classes for children. I also financially support and support them with media coverage, assisting with fund raising to help kids receive this amazing and free therapy with horses.\n\nTo support the equestrian club and children, I am auctioning a limited-edition 1:1 â€˜Rare Heart Hodlerâ€™ NFT. It also comes with a T-shirt and an autographed card from myself. Additionally, 10 holders of the 'Heart Hodler' from the open edition will be randomly selected to receive a physical autographed card from myself",
-      "link": "http://www.ritmclub.ru/",
-      "imgAvatar": "/img/collections/lazyhorse/avatar.png",
-      "redirectToDrop": "space-crystal-unicorns"
+      "id": 117,
+      "slug": "cronos-fighters-v2",
+      "imgNft": "/img/drops/cronos-fighters-v2/drop.webp",
+      "imgPreview": "/img/drops/cronos-fighters-v2/drop.webp",
+      "imgAvatar": "/img/collections/cronos-fighters-v2/avatar.webp",
+      "imgBanner": "/img/collections/cronos-fighters-v2/banner.webp",
+      "title": "Cronos Fighters",
+      "subtitle": "V2 Fighters are HERE! Now grab a Fighter you love, make upgrades, earn tokens and battle them out in a head to head fight!",
+      "description": "They will be fully playable in our game and Metaverse. V2 will be customizable and upgradeable. V1 will grant you access to buy V2. V2 will yield 5 $FYTE Tokens a day. FIND A FIGHTER that SPEAKS TO YOU!",
+      "author": {
+        "name": "Cronos Fighters",
+        "website": "http://fightersnft.io/",
+        "twitter": "https://twitter.com/FightersNFT",
+        "medium": "https://medium.com/@shahabs/nft-collectors-fighters-are-coming-593cb9865e20",
+        "discord": "http://discord.gg/Bb39m7BBBR"
+      },
+      "address": "0x52795c4B3aC043990076947013c71BE1eC0c3123",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 4000,
+      "foundersOnly": false,
+      "start": 1664768703000,
+      "cost": "395",
+      "memberCost": "295",
+      "whitelistCost": "295",
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": false
+    },
+    {
+      "id": 119,
+      "slug": "0xluckless-v2-0",
+      "imgNft": "/img/drops/0xluckless-v2-0/drop.webp",
+      "imgPreview": "/img/drops/0xluckless-v2-0/drop.webp",
+      "imgAvatar": "/img/collections/0xluckless-v2-0/avatar.webp",
+      "imgBanner": "/img/drops/0xluckless-v2-0/banner.webp",
+      "title": "0xLuckless v2.0",
+      "subtitle": "8K Resolution Artworks that are unique and unlike anything else on the blockchain, created with the power of A.I. and advanced editing techniques across multiple platforms to produce the highest quality artwork on Cronos. No roadmaps, no staking, no games, just art, community, and utility.",
+      "description": "During the course of the creation of this project, 0xLuckless faced many obstacles and life-changing events that fueled the creation of each piece and the resonance of what each piece represents while remaining open to your own personal interpretation and enjoyment. None of this would be possible, without the help of my AI companions, the ghosts in the machine. Enjoy.",
+      "author": {
+        "name": "0xLuckless",
+        "website": "https://0xluckless.com",
+        "twitter": "https://twitter.com/0xLuckless",
+        "discord": "https://discord.gg/BpAVk2Za2c",
+        "medium": "https://medium.com/@0xLuckless",
+        "instagram": "https://www.instagram.com/0xLuckless"
+      },
+      "address": "0x8845C0ce2bFCFE5fa3F28c919134096f6035E261",
+      "maxMintPerTx": 3,
+      "maxMintPerAddress": 6,
+      "totalSupply": 102,
+      "foundersOnly": false,
+      "start": 1664768950000,
+      "cost": "1500",
+      "memberCost": "1350",
+      "whitelistCost": "1150",
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": false
     }
   ]
 }

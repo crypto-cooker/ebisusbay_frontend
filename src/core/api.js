@@ -821,7 +821,7 @@ export async function getNftFromFile(collectionId, nftId) {
       }
       const video = convertIpfsResource(json.animation_url, json.tooltip);
 
-      let isStaked;
+      let isStaked = false;
       if (collectionId === '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44') {
         if (await contract.stakedApes(nftId)) {
           canTransfer = false;
@@ -833,7 +833,7 @@ export async function getNftFromFile(collectionId, nftId) {
       nft = {
         name: json.name,
         image: image,
-        video: video,
+        video: video ?? null,
         description: json.description,
         properties: properties ? properties : [],
         canTransfer: canTransfer,

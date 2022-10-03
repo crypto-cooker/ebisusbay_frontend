@@ -4,13 +4,15 @@ import { useRouter } from 'next/router';
 import AuctionComponent from '../../src/Components/components/AuctionComponent';
 import MadAuction from "../../src/Components/Auctions/Curated/MadAuction";
 import Blood4NftAuction from "../../src/Components/Auctions/Curated/Blood4NftAuction";
-import {isAddress} from "../../src/utils";
+import WorldOfCatsAuction from "@src/Components/Auctions/Curated/WorldOfCats";
 
 const Auction = ({id}) => {
   if (id === 'mad-auction') {
     return (<MadAuction />)
   } else if (id === 'blood-4-nft') {
     return (<Blood4NftAuction />);
+  } else if (id === 'world-of-cats') {
+    return (<WorldOfCatsAuction />);
   } else {
     return (<AuctionComponent id={id} />);
   }

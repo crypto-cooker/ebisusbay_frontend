@@ -23,7 +23,7 @@ import {
   isCyberCloneDrop,
   isFounderDrop,
   isFounderVipDrop,
-  isMagBrewVikingsDrop,
+  isMagBrewVikingsDrop, isSscCollection,
   newlineText,
   percentage, round,
 } from '../../utils';
@@ -37,7 +37,8 @@ import {hostedImage, ImageKitService} from "../../helpers/image";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAddressCard, faLock, faUserShield} from "@fortawesome/free-solid-svg-icons";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
-import {Heading} from "@chakra-ui/react";
+import {Box, Center, Heading, Text, useColorModeValue} from "@chakra-ui/react";
+import {mode} from "@chakra-ui/theme-tools";
 
 const config = appConfig();
 const drops = config.drops;
@@ -224,6 +225,15 @@ const SingleDrop = () => {
         const canMint = user.address ? await readContract.canMint(user.address) : 0;
         setDropInfoFromContract(infos, canMint);
         setMaxSupply(2222);
+        calculateStatus(currentDrop, infos.totalSupply, currentDrop.totalSupply);
+      } else if (isSscCollection(drop.address)) {
+        let readContract = await new ethers.Contract(currentDrop.address, abi, readProvider);
+        const infos = await readContract.getInfo();
+        const canMint = user.address ? await readContract.canMint(user.address) : 0;
+        setDropInfoFromContract(infos, canMint);
+        setMemberCost(600);
+        setWhitelistCost(600);
+        setMaxSupply(1888);
         calculateStatus(currentDrop, infos.totalSupply, currentDrop.totalSupply);
       } else {
         if (currentDrop.address && (isUsingDefaultDropAbi(currentDrop.abi) || isUsingAbiFile(currentDrop.abi))) {
@@ -569,12 +579,12 @@ const SingleDrop = () => {
           </div>
         </HeroSection>
 
-        <section id="drop_detail" className="container no-top">
+        <section id="drop_detail" className="gl-legacy container no-top">
           <div className="row mt-md-5 pt-md-4">
             <div className="col-md-6 text-center">
               <img src={hostedImage(drop.imgNft)} className="img-fluid img-rounded mb-sm-30" alt={drop.title} />
             </div>
-            <div className="col-md-6">
+            <div className="col-md-6 mt-4 mt-md-0">
 
               <div className="de-flex mt-4 mt-sm-0 mb-2">
                 <div className="de-flex-col">
@@ -627,9 +637,11 @@ const SingleDrop = () => {
                 <div className="mt-3 mb-4">{newlineText(drop.description)}</div>
 
                 {drop.disclaimer && (
-                  <p className="fw-bold text-center my-4" style={{ color: getTheme(userTheme).colors.textColor3 }}>
-                    {drop.disclaimer}
-                  </p>
+                  <Box bg={useColorModeValue('gray.100','gray.700')} rounded={'lg'} my="4">
+                    <Text fontWeight="bold" p="4" className="text-center">
+                      {drop.disclaimer}
+                    </Text>
+                  </Box>
                 )}
 
                 {isCrosmocraftsPartsDrop(drop.address) && (

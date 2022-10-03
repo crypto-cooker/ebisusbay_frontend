@@ -472,6 +472,10 @@ export const isCnsCollection = (address) => {
   return isCollection(address, 'cronos-name-service');
 };
 
+export const isSscCollection = (address) => {
+  return isCollection(address, 'ssc-access-cards');
+};
+
 export const percentage = (partialValue, totalValue) => {
   if (!totalValue || totalValue === 0) return 0;
   return Math.floor((100 * partialValue) / totalValue);
