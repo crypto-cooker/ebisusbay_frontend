@@ -3,11 +3,15 @@ import React, { useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faSquareTwitter, faTelegram } from '@fortawesome/free-brands-svg-icons';
-import { useRouter } from 'next/router';
-import Button from "@src/Components/components/common/Button";
+import { LegacyOutlinedButton } from "@src/Components/components/common/Button";
 import { toast } from "react-toastify";
-
-import useOutSide from '../../hooks/useOutSide';
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverBody,
+  PopoverArrow,
+} from '@chakra-ui/react'
 
 const options = [
   {
@@ -27,23 +31,7 @@ const options = [
   }
 ]
 
-const FIELD_HEIGHT = 55;
-const DEFAULT_MENU_SPACING = 30;
-
 const SocialMediaPopup = ({ children }) => {
-
-  const { visible, setVisible, ref } = useOutSide(false);
-  const router = useRouter()
-
-  const pxInset = (DEFAULT_MENU_SPACING + FIELD_HEIGHT * (
-    options.length)
-  );
-
-  const onClick = useCallback(() => {
-    setVisible((prevSate) =>
-      !prevSate
-    )
-  }, [setVisible]);
 
   const copyLink = useCallback(() => {
     navigator.clipboard.writeText(window.location);
@@ -51,37 +39,44 @@ const SocialMediaPopup = ({ children }) => {
   }, [navigator, window.location])
 
   return (
-    <>
-      <Button styleType="default-outlined" onClick={onClick}>
-        {React.cloneElement(children)}
-      </Button>
-
-      {visible && <div className='social-media-popup' style={{ inset: `-${pxInset}px auto auto -200px` }} ref={ref}>
-        <ul>
-          {options.map(option => <li
-            key={option.socialMedia}>
-            <a href={`${option.url}${window.location}`} target='_blank' >
-              <div className='icon_container'>
-                <FontAwesomeIcon icon={option.icon} style={{ height: 28 }} />
-              </div>
-              <div className='label_container'>
-                <span>Share on {option.socialMedia}</span>
-              </div>
-            </a>
-          </li>)}
-          <li onClick={copyLink} >
-            <div className='icon_container'>
-              <FontAwesomeIcon icon={faCopy} style={{ height: 28 }} />
-            </div>
-            <div className='label_container'>
-              <span>
-                Copy Link
-              </span>
-            </div>
-          </li>
-        </ul>
-      </div>}
-    </>
+    <Popover>
+      <PopoverTrigger>
+        <LegacyOutlinedButton className="m-0 text-nowrap p-4 pt-2 pb-2 btn-outline inline white">
+          {React.cloneElement(children)}
+        </LegacyOutlinedButton>
+      </PopoverTrigger>
+      <PopoverContent width='240px'>
+        <PopoverBody>
+          <PopoverArrow />
+          <div className='social_media_popup'>
+            <ul>
+              {options.map(option => (
+                <a href={`${option.url}${window.location}`} target='_blank' >
+                  <li key={option.socialMedia}>
+                    <div className='icon_container'>
+                      <FontAwesomeIcon icon={option.icon} style={{ height: 28 }} />
+                    </div>
+                    <div className='label_container'>
+                      <span>Share on {option.socialMedia}</span>
+                    </div>
+                  </li>
+                </a>
+              ))}
+              <li onClick={copyLink}>
+                <div className='icon_container'>
+                  <FontAwesomeIcon icon={faCopy} style={{ height: 28 }} />
+                </div>
+                <div className='label_container'>
+                  <span>
+                    Copy Link
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </PopoverBody>
+      </PopoverContent>
+    </Popover>
   )
 };
 

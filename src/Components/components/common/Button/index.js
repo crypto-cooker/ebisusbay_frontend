@@ -31,7 +31,7 @@ const LegacyButton = styled.button`
   }
 `;
 
-const LegacyOutlinedButton = styled.button`
+export const LegacyOutlinedButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
