@@ -9483,6 +9483,25 @@
         "twitter": "https://twitter.com/OctoPirateSkull",
         "discord": "https://discord.gg/86HBgXYMn6"
       }
+    },
+    {
+      "name": "KillaCats",
+      "slug": "killacats",
+      "multiToken": false,
+      "address": "0x6DC9bfA5E2D8645aA5245CCCdA69e8BD0aBfEb5E",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Mint and enjoy profits as a holder of our one of a kind NFT.  The KC collection comes with tons of added rewards and benefits such as the KC lottery, Premium members club, great royalties and much more.",
+        "verified": false,
+        "avatar": "/img/collections/killacats/avatar.webp",
+        "card": "/img/collections/killacats/card.webp",
+        "banner": "/img/collections/killacats/banner.webp",
+        "maxSupply": 3000,
+        "website": "https://killacats.com/",
+        "twitter": "https://twitter.com/KillaCats",
+        "discord": "https://discord.gg/AVqDK99a"
+      }
     }
   ],
   "drops": [
