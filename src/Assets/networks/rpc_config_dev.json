@@ -9502,6 +9502,25 @@
         "twitter": "https://twitter.com/KillaCats",
         "discord": "https://discord.gg/AVqDK99a"
       }
+    },
+    {
+      "name": "Teenage Phenix",
+      "slug": "teenage-phenix",
+      "multiToken": false,
+      "address": "0x083Fa144084a1B062157578E58F4AD4bc2154861",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Baby Phenix is all grown up now and more bada** than ever before. Expect an insane staking pool and some other things :wink:",
+        "verified": false,
+        "avatar": "/img/collections/teenage-phenix/avatar.webp",
+        "card": "/img/collections/teenage-phenix/card.webp",
+        "banner": "/img/collections/teenage-phenix/banner.webp",
+        "maxSupply": 3500,
+        "website": "https://babyphenix.com/",
+        "twitter": "https://twitter.com/phenixbaby",
+        "telegram": "t.me/babyphenix"
+      }
     }
   ],
   "drops": [
