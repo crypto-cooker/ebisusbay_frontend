@@ -1845,6 +1845,27 @@
         "kyc": false,
         "escrow": false
       }
+    },
+    {
+      "name": "0xLuckless v2.0",
+      "slug": "0xluckless-v2-0",
+      "multiToken": false,
+      "address": "0x8845C0ce2bFCFE5fa3F28c919134096f6035E261",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "8K Resolution Artworks that are unique and unlike anything else on the blockchain, created with the power of A.I. and advanced editing techniques across multiple platforms to produce the highest quality artwork on Cronos. No roadmaps, no staking, no games, just art, community, and utility.",
+        "verified": false,
+        "avatar": "/img/collections/0xluckless-v2-0/avatar.webp",
+        "card": "/img/collections/0xluckless-v2-0/card.webp",
+        "banner": "/img/collections/0xluckless-v2-0/banner.webp",
+        "maxSupply": 102,
+        "website": "https://0xluckless.com",
+        "twitter": "https://twitter.com/0xLuckless",
+        "discord": "https://discord.gg/BpAVk2Za2c",
+        "medium": "https://medium.com/@0xLuckless",
+        "instagram": "https://www.instagram.com/0xLuckless"
+      }
     }
   ],
   "drops": [
@@ -4158,6 +4179,40 @@
       "cost": "395",
       "memberCost": "295",
       "whitelistCost": "295",
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": false
+    },
+    {
+      "id": 119,
+      "slug": "0xluckless-v2-0",
+      "imgNft": "/img/drops/0xluckless-v2-0/drop.webp",
+      "imgPreview": "/img/drops/0xluckless-v2-0/drop.webp",
+      "imgAvatar": "/img/collections/0xluckless-v2-0/avatar.webp",
+      "imgBanner": "/img/drops/0xluckless-v2-0/banner.webp",
+      "title": "0xLuckless v2.0",
+      "subtitle": "8K Resolution Artworks that are unique and unlike anything else on the blockchain, created with the power of A.I. and advanced editing techniques across multiple platforms to produce the highest quality artwork on Cronos. No roadmaps, no staking, no games, just art, community, and utility.",
+      "description": "During the course of the creation of this project, 0xLuckless faced many obstacles and life-changing events that fueled the creation of each piece and the resonance of what each piece represents while remaining open to your own personal interpretation and enjoyment. None of this would be possible, without the help of my AI companions, the ghosts in the machine. Enjoy.",
+      "author": {
+        "name": "0xLuckless",
+        "website": "https://0xluckless.com",
+        "twitter": "https://twitter.com/0xLuckless",
+        "discord": "https://discord.gg/BpAVk2Za2c",
+        "medium": "https://medium.com/@0xLuckless",
+        "instagram": "https://www.instagram.com/0xLuckless"
+      },
+      "address": "0x8845C0ce2bFCFE5fa3F28c919134096f6035E261",
+      "maxMintPerTx": 3,
+      "maxMintPerAddress": 6,
+      "totalSupply": 102,
+      "foundersOnly": false,
+      "start": 1664768950000,
+      "cost": "1500",
+      "memberCost": "1350",
+      "whitelistCost": "1150",
       "end": null,
       "referral": false,
       "is1155": false,
