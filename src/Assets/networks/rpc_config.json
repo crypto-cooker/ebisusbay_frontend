@@ -12639,7 +12639,7 @@
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 1888,
-      "cost": "600",
+      "cost": "650",
       "memberCost": "600",
       "whitelistCost": "600",
       "foundersOnly": false,

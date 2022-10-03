@@ -231,7 +231,6 @@ const SingleDrop = () => {
         const canMint = user.address ? await readContract.canMint(user.address) : 0;
         setDropInfoFromContract(infos, canMint);
         setMemberCost(600);
-        setRegularCost(600);
         setWhitelistCost(600);
         setMaxSupply(1888);
         calculateStatus(currentDrop, infos.totalSupply, currentDrop.totalSupply);
