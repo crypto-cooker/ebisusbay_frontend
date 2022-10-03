@@ -9464,6 +9464,25 @@
         "medium": "https://medium.com/@0xLuckless",
         "instagram": "https://www.instagram.com/0xLuckless"
       }
+    },
+    {
+      "name": "Octo Pirate Skull",
+      "slug": "octo-pirate-skull",
+      "multiToken": false,
+      "address": "0xcc293ddd68df5f3389a2f020edb032525c78a592",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Octo Pirate Skull is a collection of 2888 unique hand-drawn Pirate warriors. Pirates who sailed to Cronos Island to conquer it. Each of the Octo Pirates has utility in staking and P2E game. Join us before it's too late.",
+        "verified": false,
+        "avatar": "/img/collections/octo-pirate-skull/avatar.webp",
+        "card": "/img/collections/octo-pirate-skull/card.webp",
+        "banner": "/img/collections/octo-pirate-skull/banner.webp",
+        "maxSupply": 2888,
+        "website": "https://octopirateskull.com/",
+        "twitter": "https://twitter.com/OctoPirateSkull",
+        "discord": "https://discord.gg/86HBgXYMn6"
+      }
     }
   ],
   "drops": [
