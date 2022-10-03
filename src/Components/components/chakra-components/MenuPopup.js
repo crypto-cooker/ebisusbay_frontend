@@ -27,30 +27,31 @@ const MenuPopup = ({ children, options = [] }) => {
           <div className='social_media_popup'>
             <ul>
               {options.map(option => (
-                option.type === 'event' ?
+                option.type === 'url' ?
                   (
-                    <li onClick={option.handleClick} key={option.label}>
-                      <div className='icon_container'>
-                        <FontAwesomeIcon icon={option.icon} style={{ height: 28 }} />
-                      </div>
-                      <div className='label_container'>
-                        <span>
-                          {option.label}
-                        </span>
-                      </div>
-                    </li>
-                  ) 
+                    <a href={`${option.url}${window.location}`} target='_blank' >
+                      <li key={option.label}>
+                        <div className='icon_container'>
+                          <FontAwesomeIcon icon={option.icon} style={{ height: 28 }} />
+                        </div>
+                        <div className='label_container'>
+                          <span>{option.label}</span>
+                        </div>
+                      </li>
+                    </a>
+
+                  )
                   :
-                  (<a href={`${option.url}${window.location}`} target='_blank' >
-                    <li key={option.label}>
-                      <div className='icon_container'>
-                        <FontAwesomeIcon icon={option.icon} style={{ height: 28 }} />
-                      </div>
-                      <div className='label_container'>
-                        <span>{option.label}</span>
-                      </div>
-                    </li>
-                  </a>)
+                  (<li onClick={option.handleClick} key={option.label}>
+                    <div className='icon_container'>
+                      <FontAwesomeIcon icon={option.icon} style={{ height: 28 }} />
+                    </div>
+                    <div className='label_container'>
+                      <span>
+                        {option.label}
+                      </span>
+                    </div>
+                  </li>)
 
               ))}
             </ul>
