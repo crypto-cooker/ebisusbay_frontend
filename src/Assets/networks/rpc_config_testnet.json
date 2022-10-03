@@ -1866,6 +1866,32 @@
         "medium": "https://medium.com/@0xLuckless",
         "instagram": "https://www.instagram.com/0xLuckless"
       }
+    },
+    {
+      "name": "Whale Family",
+      "slug": "whalefam",
+      "multiToken": false,
+      "address": "0xFa6D6607E6850bBB10bD48370C99aB9C985BF759",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The \"Whale Family\" features a collection of 5,555 fun & vibrant Whale\nPFPs swimming on the Cronos blockchain with different levels of rarity \nfrom over 160 hand-drawn traits by Barbara Redekop.",
+        "verified": true,
+        "avatar": "/img/collections/whalefam/avatar.webp",
+        "banner": "/img/collections/whalefam/banner.webp",
+        "card": "/img/collections/whalefam/card.webp",
+        "maxSupply": 5555,
+        "website": "https://www.whalefam.com/",
+        "twitter": "https://twitter.com/WhaleFamNFT",
+        "discord": "https://discord.gg/khRfPKDFwg",
+        "gitbook": "https://drive.google.com/file/d/1va8ft-odC7VeQHOxume2viVvA8Kh7aYI/view",
+        "instagram": "https://www.instagram.com/im_barbara_redekop/"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "ebisu",
+        "escrow": false
+      }
     }
   ],
   "drops": [
@@ -3992,6 +4018,39 @@
       "whitelistCost": "500",
       "foundersOnly": false,
       "start": 1663955891000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 108,
+      "slug": "whalefam",
+      "imgNft": "/img/drops/whalefam/drop.webp",
+      "imgPreview": "/img/drops/whalefam/drop.webp",
+      "imgAvatar": "/img/collections/whalefam/avatar.webp",
+      "imgBanner": "/img/collections/whalefam/banner.webp",
+      "title": "Whale Family",
+      "subtitle": "The \"Whale Family\" features a collection of 5,555 fun & vibrant Whale PFPs swimming on the Cronos blockchain with different levels of rarity. Created from over 160 hand-drawn traits by Barbara Redekop.",
+      "description": "Hidden inside this collection is a limited supply of NFTs that carry special REDEEMABLE traits.\n \nHolders of these special Whales can redeem the corresponding prize. \n(Prizes can only be claimed once, please check claimed/unclaimed before purchasing on secondary market).\n\nGolden Ticket\n5 unique Whale NFTs with the golden ticket trait can be redeemed for a 7-day stay in Georgia and meet the artist.\n\nEbisu’s Gear\n10 unique Whale NFTs with the Ebisu’s Bay traits can be redeemed for a free Ebisu’s Bay hoodie or hat from their merchandise store.\n\nPaint Brush\n20 unique Whale NFTs with the paint brush trait can be redeemed for a custom “create your own Whale PFP” personally crafted by Barbara Redekop.\n\n…and much more!\n\nOwn your Whale. IP rights will be given to holders.\n\nHolders will be rewarded with future airdrops, community voting, games, contests, giveaways, staking etc.\n\nFor full list of redeemable traits, roadmap, and information… please use the links above, visit our website, join our discord, or follow us on Twitter & Instagram.",
+      "author": {
+        "name": "Barbara Redekop",
+        "website": "https://www.whalefam.com/",
+        "twitter": "https://twitter.com/WhaleFamNFT",
+        "discord": "https://discord.gg/khRfPKDFwg",
+        "gitbook": "https://drive.google.com/file/d/1va8ft-odC7VeQHOxume2viVvA8Kh7aYI/view",
+        "instagram": "https://www.instagram.com/im_barbara_redekop/"
+      },
+      "address": "0xFa6D6607E6850bBB10bD48370C99aB9C985BF759",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 5555,
+      "cost": "250",
+      "memberCost": "200",
+      "whitelistCost": "150",
+      "foundersOnly": false,
+      "start": 1664769590000,
       "end": null,
       "referral": false,
       "is1155": false,
