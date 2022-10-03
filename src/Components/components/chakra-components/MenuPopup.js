@@ -23,7 +23,7 @@ const MenuPopup = ({ children, options = [] }) => {
         </LegacyOutlinedButton>
       </PopoverTrigger>
       <PopoverContent width='240px' bg={getTheme(userTheme).colors.bgColor1}>
-        <PopoverBody>
+        <PopoverBody p='0'>
           <div className='social_media_popup'>
             <ul>
               {options.map(option => (
