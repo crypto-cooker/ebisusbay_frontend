@@ -54,7 +54,6 @@ const Collection721 = ({ collection,  query }) => {
   const collectionStats = useSelector((state) => state.collection.stats);
   const collectionLoading = useSelector((state) => state.collection.loading);
   const initialLoadComplete = useSelector((state) => state.collection.initialLoadComplete);
-  // const currentFilter = useSelector((state) => state.collection.query.filter);
 
   const [isFirstLoaded, setIsFirstLoaded] = useState(0);
 
@@ -359,6 +358,7 @@ const Collection721 = ({ collection,  query }) => {
       <MobileSort
         show={useMobileMenu && mobileSortVisible}
         onHide={() => setMobileSortVisible(false)}
+        hasRank={hasRank}
       />
 
       {/*{useMobileMenu && openMenu === tabs.items && (*/}
