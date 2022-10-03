@@ -6,7 +6,7 @@ import {getTheme} from "@src/Theme/theme";
 import {sortOptions} from "@src/Components/components/constants/collection-sort-options";
 import {sortListings} from "@src/GlobalState/collectionSlice";
 
-export const MobileSort = ({show, onHide}) => {
+export const MobileSort = ({show, onHide, hasRank}) => {
   const dispatch = useDispatch();
   const theme = useSelector((state) => state.user.theme);
   const currentSort = useSelector((state) => state.collection.query.sort);
@@ -26,7 +26,7 @@ export const MobileSort = ({show, onHide}) => {
       </Offcanvas.Header>
       <Offcanvas.Body>
         <div className="pb-5 overflow-hidden">
-          {sortOptions.map((option, key) => (
+          {sortOptions.filter((o) => hasRank || o.key !== 'rank').map((option, key) => (
             <div key={key} className="my-2">
               <Form.Check
                 type="radio"
