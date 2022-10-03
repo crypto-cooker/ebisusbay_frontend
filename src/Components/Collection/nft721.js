@@ -55,7 +55,9 @@ import {collectionRoyaltyPercent} from "@src/core/chain";
 import {ButtonGroup, Heading} from "@chakra-ui/react";
 import useToggleFavorite from "@src/Components/NftDetails/hooks/useToggleFavorite";
 import {toast} from "react-toastify";
-import PopupSocialMedia from '../components/SocialMediaPopup';
+import  { MenuPopup } from '../components/chakra-components';
+import { faCopy } from '@fortawesome/free-solid-svg-icons';
+import { faFacebook, faSquareTwitter, faTelegram } from '@fortawesome/free-brands-svg-icons';
 
 const config = appConfig();
 const knownContracts = config.collections;
@@ -95,6 +97,39 @@ const Nft721 = ({ address, id }) => {
   const isLoading = useSelector((state) => state.nft.loading);
 
   const [{ isLoading:isFavoriting, response, error }, toggleFavorite]  = useToggleFavorite();
+
+  const copyLink = useCallback(() => {
+    navigator.clipboard.writeText(window.location);
+    toast.info(`Link copied!`);
+  }, [navigator, window.location])
+
+  const options = [
+    {
+      url: 'https://www.facebook.com/sharer/sharer.php?u=',
+      label: 'Share on facebook',
+      icon: faFacebook,
+      type: 'url'
+    },
+    {
+      url: 'https://twitter.com/intent/tweet?text=',
+      label: 'Share on twitter',
+      icon: faSquareTwitter,
+      type: 'url'
+    },
+    {
+      url: 'https://telegram.me/share/?url=',
+      label: 'Share on telegram',
+      icon: faTelegram,
+      type: 'url'
+    },
+    {
+      label: 'Copy Link',
+      icon: faCopy,
+      type: 'event',
+      handleClick: copyLink
+    }
+  
+  ];
 
   // Custom breeding considerations
   const [croCrowBreed, setCroCrowBreed] = useState(null);
@@ -474,9 +509,9 @@ const Nft721 = ({ address, id }) => {
                         <FontAwesomeIcon icon={faExternalLinkAlt} />
                       </Button>
                     )}
-                    <PopupSocialMedia>
+                    <MenuPopup options={options}>
                       <FontAwesomeIcon icon={faShareAlt} style={{ cursor: 'pointer' }} />
-                    </PopupSocialMedia>
+                    </MenuPopup>
                   </ButtonGroup>
                 </div>
             </div>
