@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 import { toast } from 'react-toastify';
 import { faLink, faEllipsisH, faExchangeAlt, faTag, faTimes, faPen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import PopupMen from './PopupMenu';
+import  { MenuPopup } from '../components/chakra-components';
 import AnyMedia from './AnyMedia';
 import {appConfig} from "../../Config";
 import {nftCardUrl} from "../../helpers/image";
@@ -124,9 +124,9 @@ const MyNftCard = ({
             </span>
           )}
         </div>
-        <PopupMen icon={faEllipsisH} options={getOptions()}>
+        <MenuPopup options={getOptions()}>
           <FontAwesomeIcon icon={faEllipsisH} style={{ cursor: 'pointer' }} />
-        </PopupMen>
+        </MenuPopup>
       </div>
     </div>
   );

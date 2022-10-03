@@ -1,8 +1,8 @@
-import React, {memo, useCallback, useEffect, useState} from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import {Contract, ethers} from 'ethers';
-import {faExternalLinkAlt, faHeart as faHeartSolid, faSync} from '@fortawesome/free-solid-svg-icons';
+import { Contract, ethers } from 'ethers';
+import { faExternalLinkAlt, faHeart as faHeartSolid, faSync, faShareAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Spinner } from 'react-bootstrap';
 import MetaMaskOnboarding from '@metamask/onboarding';
@@ -20,9 +20,9 @@ import {
   shortAddress,
   timeSince,
 } from '@src/utils';
-import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
+import { getNftDetails, refreshMetadata, tickFavorite } from '@src/GlobalState/nftSlice';
 import { specialImageTransform } from '@src/hacks';
-import {chainConnect, connectAccount, retrieveProfile} from '@src/GlobalState/User';
+import { chainConnect, connectAccount, retrieveProfile } from '@src/GlobalState/User';
 
 import ListingItem from '../NftDetails/NFTTabListings/ListingItem';
 import { listingState, offerState } from '@src/core/api/enums';
@@ -34,14 +34,17 @@ import { OFFER_TYPE } from '../Offer/MadeOffers/MadeOffersRow';
 import NFTTabOffers from '../Offer/NFTTabOffers';
 import { AnyMedia } from '../components/AnyMedia';
 import { hostedImage } from '@src/helpers/image';
-import {appConfig} from "@src/Config";
+import { appConfig } from "@src/Config";
 import Market from "@src/Contracts/Marketplace.json";
-import {collectionRoyaltyPercent} from "@src/core/chain";
+import { collectionRoyaltyPercent } from "@src/core/chain";
 import Button from "@src/Components/components/common/Button";
-import {ButtonGroup, Heading} from "@chakra-ui/react";
-import {toast} from "react-toastify";
+import { ButtonGroup, Heading } from "@chakra-ui/react";
+import { toast } from "react-toastify";
 import useToggleFavorite from "@src/Components/NftDetails/hooks/useToggleFavorite";
-import {faHeart as faHeartOutline} from "@fortawesome/free-regular-svg-icons";
+import { faHeart as faHeartOutline } from "@fortawesome/free-regular-svg-icons";
+import { MenuPopup } from '../components/chakra-components';
+import { faCopy } from '@fortawesome/free-solid-svg-icons';
+import { faFacebook, faSquareTwitter, faTelegram } from '@fortawesome/free-brands-svg-icons';
 
 const config = appConfig();
 const tabs = {
@@ -57,7 +60,7 @@ const Nft1155 = ({ address, id }) => {
   const dispatch = useDispatch();
   const history = useRouter();
 
-  const {nft, refreshing, favorites} = useSelector((state) => state.nft);
+  const { nft, refreshing, favorites } = useSelector((state) => state.nft);
   const soldListings = useSelector((state) =>
     state.nft.history.filter((i) => i.state === listingState.SOLD).sort((a, b) => (a.saleTime < b.saleTime ? 1 : -1))
   );
@@ -80,7 +83,7 @@ const Nft1155 = ({ address, id }) => {
   });
   const isLoading = useSelector((state) => state.nft.loading);
   const user = useSelector((state) => state.user);
-  const [{ isLoading:isFavoriting, response, error }, toggleFavorite]  = useToggleFavorite();
+  const [{ isLoading: isFavoriting, response, error }, toggleFavorite] = useToggleFavorite();
 
   useEffect(() => {
     dispatch(getNftDetails(address, id));
@@ -94,6 +97,39 @@ const Nft1155 = ({ address, id }) => {
     }
     getRoyalty();
   }, []);
+
+  const copyLink = useCallback(() => {
+    navigator.clipboard.writeText(window.location);
+    toast.info(`Link copied!`);
+  }, [navigator, window.location])
+
+  const options = [
+    {
+      url: 'https://www.facebook.com/sharer/sharer.php?u=',
+      label: 'Share on facebook',
+      icon: faFacebook,
+      type: 'url'
+    },
+    {
+      url: 'https://twitter.com/intent/tweet?text=',
+      label: 'Share on twitter',
+      icon: faSquareTwitter,
+      type: 'url'
+    },
+    {
+      url: 'https://telegram.me/share/?url=',
+      label: 'Share on telegram',
+      icon: faTelegram,
+      type: 'url'
+    },
+    {
+      label: 'Copy Link',
+      icon: faCopy,
+      type: 'event',
+      handleClick: copyLink
+    }
+
+  ];
 
   const fullImage = () => {
     if (nft.original_image.startsWith('ipfs://')) {
@@ -223,7 +259,7 @@ const Nft1155 = ({ address, id }) => {
                     <div>
                       <span className="me-1">{favorites}</span>
                       {isFavorite() ? (
-                        <FontAwesomeIcon icon={faHeartSolid} style={{color:'#dc143c'}} />
+                        <FontAwesomeIcon icon={faHeartSolid} style={{ color: '#dc143c' }} />
                       ) : (
                         <FontAwesomeIcon icon={faHeartOutline} />
                       )}
@@ -237,6 +273,9 @@ const Nft1155 = ({ address, id }) => {
                       <FontAwesomeIcon icon={faExternalLinkAlt} />
                     </Button>
                   )}
+                  <MenuPopup options={options}>
+                    <FontAwesomeIcon icon={faShareAlt} style={{ cursor: 'pointer' }} />
+                  </MenuPopup>
                 </ButtonGroup>
               </div>
             </div>
@@ -308,7 +347,7 @@ const Nft1155 = ({ address, id }) => {
                       {currentTab === tabs.properties && (
                         <div className="tab-1 onStep fadeIn">
                           {(nft.attributes && Array.isArray(nft.attributes) && nft.attributes.length > 0) ||
-                          (nft.properties && Array.isArray(nft.properties) && nft.properties.length > 0) ? (
+                            (nft.properties && Array.isArray(nft.properties) && nft.properties.length > 0) ? (
                             <div className="d-block mb-3">
                               <div className="row gx-3 gy-2">
                                 {nft.attributes &&
@@ -475,7 +514,7 @@ const Nft1155 = ({ address, id }) => {
                                 <div>
                                   <a href={`${config.urls.explorer}address/${address}`} target="_blank">
                                     {shortAddress(address)}
-                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted"/>
+                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted" />
                                   </a>
                                 </div>
                               </div>
@@ -484,7 +523,7 @@ const Nft1155 = ({ address, id }) => {
                                 <div>
                                   <a href={`${config.urls.explorer}token/${address}?a=${id}`} target="_blank">
                                     {id.length > 10 ? shortAddress(id) : id}
-                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted"/>
+                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted" />
                                   </a>
                                 </div>
                               </div>
