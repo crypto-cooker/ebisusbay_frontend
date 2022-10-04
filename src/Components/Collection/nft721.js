@@ -106,19 +106,19 @@ const Nft721 = ({ address, id }) => {
   const options = [
     {
       url: 'https://www.facebook.com/sharer/sharer.php?u=',
-      label: 'Share on facebook',
+      label: 'Share on Facebook',
       icon: faFacebook,
       type: 'url'
     },
     {
       url: 'https://twitter.com/intent/tweet?text=',
-      label: 'Share on twitter',
+      label: 'Share on Twitter',
       icon: faSquareTwitter,
       type: 'url'
     },
     {
       url: 'https://telegram.me/share/?url=',
-      label: 'Share on telegram',
+      label: 'Share on Telegram',
       icon: faTelegram,
       type: 'url'
     },
