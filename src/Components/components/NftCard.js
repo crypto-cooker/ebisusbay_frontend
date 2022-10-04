@@ -13,6 +13,7 @@ import {isNftBlacklisted, round, siPrefixedNumber} from '../../utils';
 import { AnyMedia } from './AnyMedia';
 import { nftCardUrl } from '../../helpers/image';
 import {Heading} from "@chakra-ui/react";
+import Image from "next/image";
 
 const Watermarked = styled.div`
   position: relative;
@@ -132,7 +133,12 @@ const NftCard = ({ listing, imgClass = 'marketplace', watermark, collection, can
           {getIsNftListed() && (
             <MakeBuy>
               {collection.multiToken && <div>Floor:</div>}
-              <div>{listing.market?.price > 6 ? siPrefixedNumber(listing.market?.price) : ethers.utils.commify(round(listing.market?.price))} CRO</div>
+              <div className="d-flex">
+                <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+                <span className="ms-1">
+                  {listing.market?.price > 6 ? siPrefixedNumber(listing.market?.price) : ethers.utils.commify(round(listing.market?.price))}
+                </span>
+              </div>
             </MakeBuy>
           )}
           <div className="d-flex flex-wrap">

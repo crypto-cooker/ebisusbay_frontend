@@ -6,7 +6,6 @@ import useSWR from 'swr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBolt,
-  faShoppingBag,
   faUser,
   faEdit, faCoins, faCopy, faHeart, faDollarSign, faWallet, faSearch, faHand
 } from '@fortawesome/free-solid-svg-icons';
@@ -40,6 +39,7 @@ import classnames from "classnames";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import Button from "@src/Components/components/Button";
 import {Heading} from "@chakra-ui/react";
+import Image from "next/image";
 
 const StyledModal = styled(Modal)`
   .modal-content {
@@ -363,7 +363,16 @@ const Index = function () {
                 <div className="">
                   {!user.connectingWallet ? (
                     <span className="d-wallet-value">
-                      {user.balance ? <>{ethers.utils.commify(round(user.balance, 2))} CRO</> : <>N/A</>}
+                      {user.balance ? (
+                        <div className="d-flex">
+                          <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+                          <span className="ms-1">
+                            {ethers.utils.commify(round(user.balance, 2))}
+                          </span>
+                        </div>
+                      ) : (
+                        <>N/A</>
+                      )}
                     </span>
                   ) : (
                     <span>
@@ -383,9 +392,12 @@ const Index = function () {
                     <>
                       {user.marketBalance ? (
                         <>
-                          <span className="d-wallet-value">
-                            {ethers.utils.commify(round(user.marketBalance, 2))} CRO
-                          </span>
+                          <div className="d-flex">
+                            <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+                            <span className="ms-1">
+                              {ethers.utils.commify(round(user.marketBalance, 2))}
+                            </span>
+                          </div>
                         </>
                       ) : (
                         <span className="d-wallet-value">0.0 CRO</span>

@@ -13,6 +13,7 @@ import {nftCardUrl} from "@src/helpers/image";
 import {appConfig} from "@src/Config";
 import {caseInsensitiveCompare} from "@src/utils";
 import {Heading} from "@chakra-ui/react";
+import Image from "next/image";
 
 const config = appConfig();
 
@@ -121,7 +122,12 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark, a
             </a>
           </Link>
           <MakeBuy>
-            <div>{ethers.utils.commify(listing.price)} CRO</div>
+            <div className="d-flex">
+              <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+              <span className="ms-1">
+                {ethers.utils.commify(listing.price)}
+              </span>
+            </div>
           </MakeBuy>
           <MakeOffer>
             <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>

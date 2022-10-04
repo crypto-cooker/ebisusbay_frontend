@@ -28,6 +28,8 @@ import {
   ModalHeader,
   ModalOverlay
 } from "@chakra-ui/react";
+import Image from "next/image";
+import {commify} from "ethers/lib/utils";
 
 const config = appConfig();
 const floorThreshold = 5;
@@ -235,7 +237,14 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
                 <div className="col-12 col-sm-6 mt-2 mt-sm-0">
                   <div className="mb-4 text-center">
                     <div className="fs-6">Offer Price</div>
-                    <div className="fs-2 fw-bold">{offer.price} CRO</div>
+                    <div className="fs-2 fw-bold">
+                      <div className="d-flex justify-content-center">
+                        <Image src="/img/logos/cdc_icon.svg" width={32} height={32} />
+                        <span className="ms-1">
+                          {commify(offer.price)}
+                        </span>
+                      </div>
+                    </div>
                   </div>
 
                   <div>

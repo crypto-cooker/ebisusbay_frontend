@@ -50,7 +50,7 @@ import { appConfig } from '@src/Config';
 import { hostedImage } from '@src/helpers/image';
 import Link from 'next/link';
 import axios from "axios";
-import Button from "@src/Components/components/common/Button";
+import Button, {LegacyOutlinedButton} from "@src/Components/components/common/Button";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {ButtonGroup, Heading} from "@chakra-ui/react";
 import useToggleFavorite from "@src/Components/NftDetails/hooks/useToggleFavorite";
@@ -510,7 +510,9 @@ const Nft721 = ({ address, id }) => {
                       </Button>
                     )}
                     <MenuPopup options={options}>
-                      <FontAwesomeIcon icon={faShareAlt} style={{ cursor: 'pointer' }} />
+                      <Button styleType="default-outlined">
+                        <FontAwesomeIcon icon={faShareAlt} style={{ cursor: 'pointer' }} />
+                      </Button>
                     </MenuPopup>
                   </ButtonGroup>
                 </div>

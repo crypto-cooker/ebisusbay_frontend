@@ -3,16 +3,17 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { ethers } from 'ethers';
 import { toast } from 'react-toastify';
-import {createSuccessfulTransactionToastContent, isNftBlacklisted, isUserBlacklisted} from '../../utils';
+import {createSuccessfulTransactionToastContent, isNftBlacklisted, isUserBlacklisted} from '@src/utils';
 import { Card, Spinner } from 'react-bootstrap';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import { chainConnect, connectAccount } from '../../GlobalState/User';
-import { listingUpdated } from '../../GlobalState/listingSlice';
-import { listingState } from '../../core/api/enums';
+import { chainConnect, connectAccount } from '@src/GlobalState/User';
+import { listingUpdated } from '@src/GlobalState/listingSlice';
+import { listingState } from '@src/core/api/enums';
 import {OFFER_TYPE} from "../Offer/MadeOffers/MadeOffersRow";
 import Button from "../components/Button";
 import {useRouter} from "next/router";
 import MakeListingDialog from "@src/Components/MakeListing";
+import Image from "next/image";
 
 const PriceActionBar = ({offerType, onOfferSelected, label, isOwner}) => {
   const dispatch = useDispatch();
@@ -100,14 +101,24 @@ const PriceActionBar = ({offerType, onOfferSelected, label, isOwner}) => {
   }, [listing]);
 
   return (
-    <div className="row price-action-bar">
+    <div className="price-action-bar">
       <Card className="mb-4 border-1 shadow pab-card">
         <Card.Body>
           <div id={`lid-${listing?.listingId}`}>
             <div className="d-flex flex-row justify-content-between">
               <div className={`my-auto fw-bold`}>
                 <>
-                  <h5>{label ?? 'Listing Price'}:</h5> <span className="fs-3 ms-1">{listing ? ethers.utils.commify(listing.price) : '-'} CRO</span>
+                  <h5>{label ?? 'Listing Price'}:</h5>
+                  <span className="d-flex fs-3 ms-1">
+                    {listing ? (
+                      <>
+                        <Image src="/img/logos/cdc_icon.svg" width={25} height={25} className="my-auto"/>
+                        <span className="ms-1">{ethers.utils.commify(listing.price)}</span>
+                      </>
+                    ) : (
+                      <span>-</span>
+                    )}
+                  </span>
                 </>
               </div>
             </div>

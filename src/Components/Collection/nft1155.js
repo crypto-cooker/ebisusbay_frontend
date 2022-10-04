@@ -274,7 +274,9 @@ const Nft1155 = ({ address, id }) => {
                     </Button>
                   )}
                   <MenuPopup options={options}>
-                    <FontAwesomeIcon icon={faShareAlt} style={{ cursor: 'pointer' }} />
+                    <Button styleType="default-outlined">
+                      <FontAwesomeIcon icon={faShareAlt} style={{ cursor: 'pointer' }} />
+                    </Button>
                   </MenuPopup>
                 </ButtonGroup>
               </div>

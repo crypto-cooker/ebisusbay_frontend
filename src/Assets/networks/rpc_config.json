@@ -3993,8 +3993,8 @@
         "telegram": "https://t.me/crowboys"
       },
       "verification": {
-        "doxx": "private",
-        "kyc": false,
+        "doxx": "public",
+        "kyc": "ebisu",
         "escrow": false
       }
     },
