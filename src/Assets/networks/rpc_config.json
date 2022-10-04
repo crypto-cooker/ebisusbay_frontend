@@ -9471,7 +9471,7 @@
       "multiToken": false,
       "address": "0xcc293ddd68df5f3389a2f020edb032525c78a592",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "Octo Pirate Skull is a collection of 2888 unique hand-drawn Pirate warriors. Pirates who sailed to Cronos Island to conquer it. Each of the Octo Pirates has utility in staking and P2E game. Join us before it's too late.",
         "verified": false,
