@@ -10,6 +10,8 @@ import {findCollectionByAddress, shortString, timeSince} from '@src/utils';
 import { getNftDetails } from '@src/GlobalState/nftSlice';
 import AcceptOfferDialog from "@src/Components/Offer/Dialogs/AcceptOfferDialog";
 import {RejectOfferDialog} from "@src/Components/Offer/Dialogs/RejectOfferDialog";
+import Image from "next/image";
+import {ethers} from "ethers";
 
 const TableRowContainer = styled.div`
   display: flex;
@@ -189,7 +191,14 @@ export default function TableRow({ data, type }) {
           </div>
           <a href={`/collection/${collectionData?.slug}/${nftId}`}>{shortString(nftId)}</a>
         </div>
-        <div className="table-row-item">{commify(price)} CRO</div>
+        <div className="table-row-item">
+          <div className="d-flex">
+            <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+            <span className="ms-1">
+              {commify(price)}
+            </span>
+          </div>
+        </div>
         <div className="table-row-item">{getOfferDate(timeCreated)} ago</div>
         <div className="table-row-item">
           <Button

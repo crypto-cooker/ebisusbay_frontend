@@ -6,9 +6,11 @@ import { faLink, faEllipsisH, faExchangeAlt, faTag, faTimes, faPen } from '@fort
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import  { MenuPopup } from '../components/chakra-components';
 import AnyMedia from './AnyMedia';
-import {appConfig} from "../../Config";
-import {nftCardUrl} from "../../helpers/image";
+import {appConfig} from "@src/Config";
+import {nftCardUrl} from "@src/helpers/image";
 import {Heading} from "@chakra-ui/react";
+import Image from "next/image";
+import {round} from "@src/utils";
 
 const MyNftCard = ({
   nft,
@@ -113,7 +115,16 @@ const MyNftCard = ({
           </span>
         </div>
         <p className="card-text">
-          {nft.listed && nft.price ? <>{ethers.utils.commify(nft.price)} CRO</> : <>&nbsp;</>}
+          {nft.listed && nft.price ? (
+            <div className="d-flex">
+              <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+              <span className="ms-1">
+                {ethers.utils.commify(round(nft.price, 2))}
+              </span>
+            </div>
+          ) : (
+            <>&nbsp;</>
+          )}
         </p>
       </div>
       <div className="card-footer mynft-card-footer">

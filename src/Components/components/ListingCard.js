@@ -10,9 +10,10 @@ import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
 import { getTheme } from '@src/Theme/theme';
 import { AnyMedia } from './AnyMedia';
 import { connectAccount, chainConnect } from '@src/GlobalState/User';
-import { round } from '@src/utils';
+import {round} from '@src/utils';
 import {nftCardUrl} from "@src/helpers/image";
 import {Heading} from "@chakra-ui/react";
+import Image from "next/image";
 
 const Watermarked = styled.div`
   position: relative;
@@ -142,7 +143,12 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark, address, co
             </a>
           </Link>
           <MakeBuy>
-            <div>{getCorrectPrice(listing.price)} CRO</div>
+            <div className="d-flex">
+              <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+              <span className="ms-1">
+                {getCorrectPrice(listing.price)}
+              </span>
+            </div>
           </MakeBuy>
           <MakeOffer>
             <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
