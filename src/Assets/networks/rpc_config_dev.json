@@ -8602,7 +8602,7 @@
         "avatar": "/img/collections/god-hates-crofam/avatar.webp",
         "card": "/img/collections/god-hates-crofam/card.webp",
         "banner": "/img/collections/god-hates-crofam/banner.webp",
-        "maxSupply": 50,
+        "maxSupply": 5000,
         "twitter": "https://twitter.com/ghcfnft"
       },
       "verification": {
@@ -9520,6 +9520,29 @@
         "website": "https://babyphenix.com/",
         "twitter": "https://twitter.com/phenixbaby",
         "telegram": "t.me/babyphenix"
+      }
+    },
+    {
+      "name": "Devil Loves Cro Fam",
+      "slug": "devil-loves-crofam",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Devil Loves Cro Fam is a pfp project only with no roadmap or utility. Unless you call going to hell a utility!",
+        "verified": true,
+        "avatar": "/img/collections/devil-loves-crofam/avatar.webp",
+        "card": "/img/collections/devil-loves-crofam/card.webp",
+        "banner": "/img/collections/devil-loves-crofam/banner.webp",
+        "maxSupply": 10000,
+        "twitter": "https://twitter.com/ghcfnft"
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": false,
+        "escrow": false,
+        "creativeCommons": true
       }
     }
   ],
@@ -12944,6 +12967,34 @@
       "published": true,
       "complete": false,
       "featured": false
+    },
+    {
+      "id": 120,
+      "slug": "devil-loves-crofam",
+      "imgNft": "/img/drops/devil-loves-crofam/drop.webp",
+      "imgPreview": "/img/drops/devil-loves-crofam/drop.webp",
+      "imgAvatar": "/img/collections/devil-loves-crofam/avatar.webp",
+      "imgBanner": "/img/collections/devil-loves-crofam/banner.webp",
+      "title": "Devil Loves Cro Fam",
+      "subtitle": "Devil Loves Cro Fam is a pfp project only with no roadmap or utility. Unless you call going to hell a utility!",
+      "description": "10k collection with 5k dropped to gen 1 God Hates Cro Fam holders. The rest are 30-35 CRO and go to hell!!",
+      "author": {
+        "name": "Devil Loves Cro Fam",
+        "twitter": "https://twitter.com/ghcfnft"
+      },
+      "address": "",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 100,
+      "totalSupply": 10000,
+      "cost": "35",
+      "memberCost": "30",
+      "foundersOnly": false,
+      "start": 1665000000000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
     }
   ]
 }
