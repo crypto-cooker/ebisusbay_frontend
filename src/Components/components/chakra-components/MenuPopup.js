@@ -18,9 +18,7 @@ const MenuPopup = ({ children, options = [] }) => {
   return (
     <Popover>
       <PopoverTrigger>
-        <LegacyOutlinedButton className="m-0 text-nowrap p-4 pt-2 pb-2 btn-outline inline white">
-          {React.cloneElement(children)}
-        </LegacyOutlinedButton>
+        {React.cloneElement(children)}
       </PopoverTrigger>
       <PopoverContent width='240px' bg={getTheme(userTheme).colors.bgColor1}>
         <PopoverBody p='0'>
