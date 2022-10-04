@@ -9490,7 +9490,7 @@
       "multiToken": false,
       "address": "0x6DC9bfA5E2D8645aA5245CCCdA69e8BD0aBfEb5E",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "Mint and enjoy profits as a holder of our one of a kind NFT.  The KC collection comes with tons of added rewards and benefits such as the KC lottery, Premium members club, great royalties and much more.",
         "verified": false,
