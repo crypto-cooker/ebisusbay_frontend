@@ -2,7 +2,7 @@ import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Contract, ethers } from 'ethers';
 import {faHeart as faHeartOutline} from '@fortawesome/free-regular-svg-icons';
-import {faCrow, faExternalLinkAlt, faHeart, faShare, faSync, faEllipsisH, faShareAlt} from '@fortawesome/free-solid-svg-icons';
+import {faCrow, faExternalLinkAlt, faHeart as faHeartSolid, faShare, faSync, faEllipsisH, faShareAlt} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import {Badge, Spinner} from 'react-bootstrap';
