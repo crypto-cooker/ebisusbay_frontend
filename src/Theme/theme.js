@@ -82,7 +82,14 @@ const customTheme = extendTheme({
           bg: mode(lightTheme.bgColor1, darkTheme.bgColor1)(props)
         }
       })
-    }
+    },
+    Drawer: {
+      baseStyle: (props) => ({
+        dialog: {
+          bg: mode(lightTheme.bgColor1, darkTheme.bgColor1)(props)
+        }
+      })
+    },
   }
 })
 export default customTheme
