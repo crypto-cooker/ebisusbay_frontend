@@ -5749,7 +5749,7 @@
     {
       "name": "Zealous Zelenskyys",
       "slug": "zealous-zelenskyys",
-      "multiToken": true,
+      "multiToken": false,
       "address": "0x90Dd56b0149D5A8c10A6479546ae4690Df7B124B",
       "onChain": false,
       "listable": true,
