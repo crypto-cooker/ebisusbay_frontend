@@ -11,49 +11,48 @@ import { listingUpdated } from '@src/GlobalState/listingSlice';
 import { listingState } from '@src/core/api/enums';
 import {OFFER_TYPE} from "../Offer/MadeOffers/MadeOffersRow";
 import Button from "../components/Button";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import MakeListingDialog from "@src/Components/MakeListing";
 import Image from "next/image";
+import { shortAddress } from '@src/utils'
 
-import DialogAlert from '../components/DialogAlert';
-import useOutSide from '../../hooks/useOutSide';
+import {
+  useDisclosure,
+  Table,
+  Tbody,
+  Tr,
+  Td,
+  TableContainer,
+} from '@chakra-ui/react'
+
+import Modal from '../components/Modal'
 
 import Constants from '../../constants'
 import useFeatureFlag from '../../hooks/useFeatureFlag';
 
-
-const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isVerified, isOwner }) => {
+const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isVerified, isOwner, collectionStats }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   const { Features } = Constants;
   const isWarningMessageEnabled = useFeatureFlag(Features.UNVERIFIED_WARNING);
 
   const user = useSelector((state) => state.user);
-  const {currentListing: listing, nft} = useSelector((state) => state.nft);
+  const { currentListing: listing, nft } = useSelector((state) => state.nft);
   const [executingBuy, setExecutingBuy] = useState(false);
   const [executingCancel, setExecutingCancel] = useState(false);
   const [canBuy, setCanBuy] = useState(false);
   const [isSellDialogOpen, setIsSellDialogOpen] = useState(false);
-  const { visible: finalStep, setVisible: setFinalStep, ref } = useOutSide(false);
 
   const openPopup = useCallback((e) => {
     e.preventDefault();
-
-    setFinalStep(true);
-
-
-  }, [setFinalStep])
-
-  const closePopup = useCallback((e) => {
-    e.preventDefault();
-    setFinalStep(false);
-  }, [setFinalStep])
-
+    onOpen();
+  }, [onOpen])
 
   const executeBuy = (amount) => async () => {
-    setFinalStep(false);
     setExecutingBuy(true);
+    onClose();
     await runFunction(async (writeContract) => {
       let price = ethers.utils.parseUnits(amount.toString());
       return (
@@ -127,6 +126,56 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
   }, [listing]);
 
 
+  const ModalBody = () => {
+    return (
+      <>
+        This contract is not verified by Ebisu's Bay. Review this information to ensure it's what you want to buy.
+        <TableContainer>
+          <Table variant='simple'>
+            <Tbody>
+              <Tr>
+                <Td>Collections name</Td>
+                <Td>{collectionName}</Td>
+              </Tr>
+              <Tr>
+                <Td>Contract address</Td>
+                <Td>{shortAddress(collectionStats?.collection)}</Td>
+              </Tr>
+              <Tr>
+                <Td>Total Sales</Td>
+                <Td>{collectionStats?.numberOfSales}</Td>
+              </Tr>
+              <Tr>
+                <Td>Total Volume</Td>
+                <Td>{collectionStats?.totalVolume} CRO</Td>
+              </Tr>
+              <Tr>
+                <Td>Total Items</Td>
+                <Td>{collectionStats?.totalSupply}</Td>
+              </Tr>
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </>
+    )
+  }
+
+  const ModalFooter = () => {
+    return (
+      <div className="w-100">
+        <div className="d-flex justify-content-center">
+          <Button type="legacy" className="me-2" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button type="legacy-outlined" onClick={executeBuy(listing.price)}>
+            Continue
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
+
   return (
     <div className="price-action-bar">
       <Card className="mb-4 border-1 shadow pab-card">
@@ -156,26 +205,26 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
               <>
                 {listing && listing.state === listingState.ACTIVE ? (
                   <>
-                  <div className="flex-fill mx-1">
-                    <Button type="legacy-outlined" className="w-100" onClick={executeCancel()} disabled={executingCancel}>
-                      {executingCancel ? (
-                        <>
-                          Cancelling...
-                          <Spinner animation="border" role="status" size="sm" className="ms-1">
-                            <span className="visually-hidden">Loading...</span>
-                          </Spinner>
-                        </>
-                      ) : (
-                        <>Cancel Listing</>
-                      )}
-                    </Button>
-                  </div>
+                    <div className="flex-fill mx-1">
+                      <Button type="legacy-outlined" className="w-100" onClick={executeCancel()} disabled={executingCancel}>
+                        {executingCancel ? (
+                          <>
+                            Cancelling...
+                            <Spinner animation="border" role="status" size="sm" className="ms-1">
+                              <span className="visually-hidden">Loading...</span>
+                            </Spinner>
+                          </>
+                        ) : (
+                          <>Cancel Listing</>
+                        )}
+                      </Button>
+                    </div>
 
-                  <div className="flex-fill mx-1">
-                    <Button type="legacy" className="w-100" onClick={onUpdateSelected} disabled={executingCancel}>
-                      Update Listing
-                    </Button>
-                  </div>
+                    <div className="flex-fill mx-1">
+                      <Button type="legacy" className="w-100" onClick={onUpdateSelected} disabled={executingCancel}>
+                        Update Listing
+                      </Button>
+                    </div>
                   </>
                 ) : (
                   <Button type="legacy" className="w-100" onClick={onSellSelected}>
@@ -220,24 +269,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
         listing={listing}
       />
       <div className='nftSaleForm'>
-        {(finalStep) && (
-          <span ref={ref}>
-            {
-              <DialogAlert
-                title={'Unverified'}
-                firstButtonText={'Cancel'}
-                onClickFirstButton={closePopup}
-                secondButtonText={'Continue'}
-                onClickSecondButton={executeBuy(listing.price)}
-                closePopup={closePopup}
-                isWaiting={false}
-                isWarningMessage={true}
-              >
-                <span>This contract is not verified by Ebisu's Bay, make sure that {collectionName} is the one you are looking for</span>
-
-              </DialogAlert>}
-          </span>
-        )}
+        <Modal isCentered title={'This is an unverified collection'} body={ModalBody()} dialogActions={ModalFooter()} isOpen={isOpen} onClose={onClose}/>
       </div>
     </div>
   );
