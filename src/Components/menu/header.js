@@ -13,6 +13,7 @@ import { setTheme } from '@src/GlobalState/User';
 import useFeatureFlag from "@src/hooks/useFeatureFlag";
 import Constants from "@src/constants";
 import {useColorMode} from "@chakra-ui/react";
+import Cart from "@src/Components/v2/modules/navbar/cart";
 
 const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
 
@@ -200,6 +201,7 @@ const Header = function () {
             {isNotificationsEnabled && profile && (
               <NotificationMenu />
             )}
+            <Cart />
             <AccountMenu />
           </div>
           <InvalidListingWarning size={'2x'} />

@@ -6,14 +6,28 @@ import Link from 'next/link';
 import { ethers } from 'ethers';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
-import Button from './Button';
 import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
-import { connectAccount, chainConnect } from '../../GlobalState/User';
-import {isNftBlacklisted, round, siPrefixedNumber} from '../../utils';
+import { connectAccount, chainConnect } from '@src/GlobalState/User';
+import {isNftBlacklisted, round, siPrefixedNumber} from '@src/utils';
 import { AnyMedia } from './AnyMedia';
-import { nftCardUrl } from '../../helpers/image';
-import {Heading} from "@chakra-ui/react";
+import { nftCardUrl } from '@src/helpers/image';
+import {
+  Box, Flex,
+  Heading, Spacer,
+  Text
+} from "@chakra-ui/react";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+  faBolt,
+  faEllipsisH, faExternalLink, faHand,
+  faLink, faShoppingBag, faSync,
+} from "@fortawesome/free-solid-svg-icons";
+import {useColorModeValue} from "@chakra-ui/color-mode";
 import Image from "next/image";
+import {darkTheme, lightTheme} from "@src/Theme/theme";
+import {MenuPopup} from "@src/Components/components/chakra-components";
+import {addToCart, removeFromCart} from "@src/GlobalState/cartSlice";
+import {toast} from "react-toastify";
 
 const Watermarked = styled.div`
   position: relative;
@@ -39,26 +53,69 @@ const MakeBuy = styled.div`
   align-items: center;
 `;
 
-const MakeOffer = styled.div`
-  margin-top: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 2;
-
-  .w-45 {
-    width: 45%;
-  }
-`;
-
-const NftCard = ({ listing, imgClass = 'marketplace', watermark, collection, canBuy = true }) => {
+const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, collection, canBuy = true }) => {
   const history = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const cart = useSelector((state) => state.cart);
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const isInCart = cart.nfts.map((o) => o.market.id).includes(nft.market.id);
+
+  const getOptions = () => {
+    const options = [];
+
+    options.push({
+      icon: faBolt,
+      label: 'Buy Now',
+      handleClick: null,
+    });
+
+    options.push({
+      icon: faHand,
+      label: 'Make Offer',
+      handleClick: handleMakeOffer,
+    });
+
+    if (nft.market) {
+      if (isInCart) {
+        options.push({
+          icon: faShoppingBag,
+          label: 'Remove from Cart',
+          handleClick: handleRemoveFromCart,
+        });
+      } else {
+        options.push({
+          icon: faShoppingBag,
+          label: 'Add to Cart',
+          handleClick: handleAddToCart,
+        });
+      }
+    }
+
+    options.push({
+      icon: faSync,
+      label: 'Refresh Metadata',
+      handleClick: null,
+    });
+
+    options.push({
+      icon: faExternalLink,
+      label: 'Open Original',
+      handleClick: null,
+    });
+
+    options.push({
+      icon: faLink,
+      label: 'Copy link',
+      // handleClick: onCopyLinkButtonPressed(new URL(nftUrl(), appConfig('urls.app'))),
+    });
+
+    return options;
+  };
 
   const handleMakeOffer = () => {
-    const isBlacklisted = isNftBlacklisted(listing.address, listing.id);
+    const isBlacklisted = isNftBlacklisted(nft.address, nft.id);
     if (isBlacklisted) return;
 
     if (user.address) {
@@ -79,15 +136,24 @@ const NftCard = ({ listing, imgClass = 'marketplace', watermark, collection, can
     // if (listing.market?.id) {
     //   history.push(`/listing/${listing.market?.id}`);
     // } else {
-    history.push(`/collection/${listing.address}/${listing.id}`);
+    history.push(`/collection/${nft.address}/${nft.id}`);
     // if (listing?.address && listing?.id) {
     //   history.push(`/collection/${getSlugFromAddress(listing.address)}/${listing.id}`);
     // }
     // }
   };
 
+  const handleAddToCart = () => {
+    dispatch(addToCart(nft));
+    toast.success('Added to cart');
+  };
+  const handleRemoveFromCart = () => {
+    dispatch(removeFromCart(nft));
+    toast.success('Removed to cart');
+  };
+
   const getIsNftListed = () => {
-    if (listing.market?.price) {
+    if (nft.market?.price) {
       return true;
     }
     return false;
@@ -95,71 +161,112 @@ const NftCard = ({ listing, imgClass = 'marketplace', watermark, collection, can
 
   return (
     <>
-      <div className="card eb-nft__card h-100 shadow">
-        <div className="card-img-container">
-          {watermark ? (
-            <Watermarked watermark={watermark}>
-              <AnyMedia
-                image={nftCardUrl(listing.address, listing.image)}
-                className={`card-img-top ${imgClass}`}
-                title={listing.name}
-                url={`/collection/${collection.slug}/${listing.id}`}
-                width={440}
-                height={440}
-                video={listing.video ?? listing.animation_url}
-                usePlaceholder={true}
-              />
-            </Watermarked>
-          ) : (
-            <AnyMedia
-              image={nftCardUrl(listing.address, listing.image)}
-              className={`card-img-top ${imgClass}`}
-              title={listing.name}
-              url={`/collection/${collection.slug}/${listing.id}`}
-              width={440}
-              height={440}
-              video={listing.video ?? listing.animation_url}
-              usePlaceholder={true}
-            />
-          )}
-        </div>
-        {listing.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{listing.rank}</div>}
-        <div className="card-body d-flex flex-column justify-content-between">
-          <Link href={`/collection/${collection.slug}/${listing.id}`}>
-            <a>
-              <Heading as="h6" size="sm" className="card-title mt-auto">{listing.name}</Heading>
-            </a>
-          </Link>
-          {getIsNftListed() && (
-            <MakeBuy>
-              {collection.multiToken && <div>Floor:</div>}
-              <div className="d-flex">
-                <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
-                <span className="ms-1">
-                  {listing.market?.price > 6 ? siPrefixedNumber(listing.market?.price) : ethers.utils.commify(round(listing.market?.price))}
-                </span>
+      <Box
+        className="card eb-nft__card h-100 shadow"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        data-group
+      >
+        <Box
+          _groupHover={{
+            background:useColorModeValue('#FFFFFF', '#404040'),
+            transition:'0.3s ease',
+            borderColor:'#ddd'
+        }}
+          borderRadius={'15px'}
+          transition="0.3s ease"
+          height="100%"
+        >
+          <Flex direction="column" height="100%">
+            <div className="card-img-container position-relative">
+              <Box
+                _groupHover={{transform:'scale(1.05)', transition:'0.3s ease'}}
+                transition="0.3s ease"
+                transform="scale(1.0)"
+              >
+                {watermark ? (
+                  <Watermarked watermark={watermark}>
+                    <AnyMedia
+                      image={nftCardUrl(nft.address, nft.image)}
+                      className={`card-img-top ${imgClass}`}
+                      title={nft.name}
+                      url={`/collection/${collection.slug}/${nft.id}`}
+                      width={440}
+                      height={440}
+                      video={nft.video ?? nft.animation_url}
+                      usePlaceholder={true}
+                    />
+                  </Watermarked>
+                ) : (
+                  <AnyMedia
+                    image={nftCardUrl(nft.address, nft.image)}
+                    className={`card-img-top ${imgClass}`}
+                    title={nft.name}
+                    url={`/collection/${collection.slug}/${nft.id}`}
+                    width={440}
+                    height={440}
+                    video={nft.video ?? nft.animation_url}
+                    usePlaceholder={true}
+                  />
+                )}
+              </Box>
+            </div>
+            {nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{nft.rank}</div>}
+            <div className="d-flex flex-column justify-content-between p-2 pb-1">
+              <Link href={`/collection/${collection.slug}/${nft.id}`}>
+                <a>
+                  <Heading as="h6" size="sm" className="card-title mt-auto">{nft.name}</Heading>
+                </a>
+              </Link>
+              {getIsNftListed() && (
+                <MakeBuy>
+                  {collection.multiToken && <div>Floor:</div>}
+                  <div className="d-flex">
+                    <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+                    <span className="ms-1">
+                    {nft.market?.price > 6 ? siPrefixedNumber(nft.market?.price) : ethers.utils.commify(round(nft.market?.price))}
+                  </span>
+                  </div>
+                </MakeBuy>
+              )}
+            </div>
+            <Spacer />
+            <Box
+              borderBottomRadius={15}
+              _groupHover={{background: useColorModeValue(lightTheme.textColor4, darkTheme.textColor4), color:lightTheme.textColor1}}
+              px={4}
+              py={1}
+            >
+              <div className="d-flex justify-content-between">
+                  <Box
+                    _groupHover={{visibility:'visible', color:lightTheme.textColor1}}
+                    visibility="hidden"
+                  >
+                    {nft.market?.price ? (
+                      <>
+                        {isInCart ? (
+                          <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={handleRemoveFromCart}>Remove From Cart</Text>
+                        ) : (
+                          <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={handleAddToCart}>Add to Cart</Text>
+                        )}
+                      </>
+                    ) : (
+                      <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={handleMakeOffer}>Make Offer</Text>
+                    )}
+                  </Box>
+                <MenuPopup options={getOptions()}>
+                  <FontAwesomeIcon icon={faEllipsisH} style={{ cursor: 'pointer' }} className="my-auto" />
+                </MenuPopup>
               </div>
-            </MakeBuy>
-          )}
-          <div className="d-flex flex-wrap">
-            {getIsNftListed() && canBuy ? (
-              <Button type="legacy" className="flex-fill m-1" onClick={handleBuy}>
-                Buy
-              </Button>
-            ) : (
-              <div></div>
-            )}
-            <Button type="legacy-outlined" className="flex-fill m-1" onClick={() => handleMakeOffer()}>
-              Offer
-            </Button>
-          </div>
-        </div>
-      </div>
+            </Box>
+          </Flex>
+        </Box>
+      </Box>
       {openMakeOfferDialog && (
         <MakeOfferDialog
           isOpen={openMakeOfferDialog}
           onClose={() => setOpenMakeOfferDialog(false)}
-          nft={listing}
+          nft={nft}
           collection={collection}
         />
       )}
