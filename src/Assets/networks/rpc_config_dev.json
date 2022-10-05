@@ -9526,7 +9526,7 @@
       "name": "Devil Loves Cro Fam",
       "slug": "devil-loves-crofam",
       "multiToken": false,
-      "address": "",
+      "address": "0x4C107A367Fe3A209c8E54be4f8B1AE57C0Cf0e14",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -12982,7 +12982,7 @@
         "name": "Devil Loves Cro Fam",
         "twitter": "https://twitter.com/ghcfnft"
       },
-      "address": "",
+      "address": "0x4C107A367Fe3A209c8E54be4f8B1AE57C0Cf0e14",
       "maxMintPerTx": 25,
       "maxMintPerAddress": 100,
       "totalSupply": 10000,
