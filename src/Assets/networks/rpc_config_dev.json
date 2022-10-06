@@ -11831,7 +11831,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false
+      "complete": true
     },
     {
       "id": 86,
@@ -12658,9 +12658,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
-      "disclaimer": "Reveal will be done 24 hours after the minting has begun",
-      "priceDescription": "Whitelist-only presale for the first 48 hours (limit 10 per address). Public Sale will begin after presale ends if there is supply left."
+      "complete": false
     },
     {
       "id": 113,
