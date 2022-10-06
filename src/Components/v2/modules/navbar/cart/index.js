@@ -11,44 +11,30 @@ import {
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
-  DrawerOverlay, Flex, Input, Spacer, Text, useColorModeValue, VStack
+  DrawerOverlay, Flex, Spacer, Text, useColorModeValue, VStack
 } from "@chakra-ui/react";
-import {clearCartInStorage, getCartInStorage} from "@src/helpers/storage";
 import {getListingsByIds} from "@src/core/api/next/listings";
 import {acknowledgePrompt, clearCart, removeFromCart} from "@src/GlobalState/cartSlice";
-import Image from "next/image";
 import {ImageKitService} from "@src/helpers/image";
 import {commify} from "ethers/lib/utils";
 import {ethers} from "ethers";
-import {listingUpdated} from "@src/GlobalState/listingSlice";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {Spinner} from "react-bootstrap";
 import Button from "@src/Components/components/common/Button";
 import {listingState} from "@src/core/api/enums";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
-import {specialImageTransform} from "@src/hacks";
 import Link from "next/link";
 
 const Cart = function () {
   const dispatch = useDispatch();
-  const {address, theme, profile} = useSelector((state) => state.user);
   const user = useSelector((state) => state.user);
   const cart = useSelector((state) => state.cart);
   const [showMenu, setShowMenu] = useState(false);
   const [executingBuy, setExecutingBuy] = useState(false);
   const [invalidItems, setInvalidItems] = useState([]);
-
-  // const fetchCartListings = async () => {
-  //   console.log('fetch')
-  //   const cartListings = getCartInStorage();
-  //   if (cartListings.length === 0) return [];
-  //   const listings = await getListingsByIds(cartListings);
-  //   console.log('listings', cartListings, listings);
-  //   return listings.data.listings;
-  // }
+  const hoverBackground = useColorModeValue('gray.100', '#424242');
 
   useEffect(() => {
     if (cart.shouldPrompt) {
@@ -56,13 +42,6 @@ const Cart = function () {
       dispatch(acknowledgePrompt());
     }
   }, [cart]);
-
-  // useEffect(() => {
-  //   async function func() {
-  //     setListings(await fetchCartListings());
-  //   }
-  //   func();
-  // }, []);
 
   const handleClose = () => {
     setShowMenu(false);
@@ -159,7 +138,7 @@ const Cart = function () {
           <div className="d-count">{cart.nfts.length > 99 ? '+' : cart.nfts.length}</div>
         )}
         <span>
-          <FontAwesomeIcon icon={faShoppingBag} color={theme === 'dark' ? '#000' : '#000'} />
+          <FontAwesomeIcon icon={faShoppingBag} color={user.theme === 'dark' ? '#000' : '#000'} />
         </span>
       </div>
       <Drawer
@@ -183,7 +162,7 @@ const Cart = function () {
                 {cart.nfts.map((nft, key) => (
                   <Box
                     key={nft.listingId}
-                    _hover={{background: useColorModeValue('gray.100', '#424242')}}
+                    _hover={{background: hoverBackground}}
                     p={2}
                     rounded="lg"
                   >
