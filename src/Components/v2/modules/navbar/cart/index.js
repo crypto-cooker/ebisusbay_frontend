@@ -1,4 +1,4 @@
-import React, {memo, useCallback, useEffect, useState} from 'react';
+import React, {forwardRef, memo, useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faShoppingBag, faSync, faTrash} from '@fortawesome/free-solid-svg-icons';
@@ -30,6 +30,7 @@ import Button from "@src/Components/components/common/Button";
 import {listingState} from "@src/core/api/enums";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
 import {specialImageTransform} from "@src/hacks";
+import Link from "next/link";
 
 const Cart = function () {
   const dispatch = useDispatch();
@@ -138,6 +139,19 @@ const Cart = function () {
     }
   }
 
+  const NftLink = forwardRef(({ onClick, href, name }, ref) => {
+    const closeAndGo = (e) => {
+      setShowMenu(false);
+      onClick(e);
+    };
+
+    return (
+      <a href={href} onClick={closeAndGo} ref={ref}>
+        <Text fontWeight="bold" noOfLines={2}>{name}</Text>
+      </a>
+    )
+  })
+
   return (
     <div>
       <div className="de-menu-notification" onClick={openMenu}>
@@ -188,7 +202,10 @@ const Cart = function () {
                       </Box>
                       <Box flex='1' ms={2}>
                         <VStack align="left">
-                          <Text fontWeight="bold" noOfLines={2}>{nft.name}</Text>
+
+                          <Link href={`/collection/${nft.address}/${nft.id}`} passHref>
+                            <NftLink name={nft.name} />
+                          </Link>
                           <Text>{(nft.price)} CRO</Text>
                           {invalidItems.includes(nft.listingId) && (
                             <Badge variant='outline' colorScheme='red'>

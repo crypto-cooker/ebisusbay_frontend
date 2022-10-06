@@ -9,7 +9,7 @@ import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
 import {darkTheme, getTheme, lightTheme} from '@src/Theme/theme';
 import { AnyMedia } from './AnyMedia';
 import { connectAccount, chainConnect } from '@src/GlobalState/User';
-import {round} from '@src/utils';
+import {createSuccessfulAddCartContent, round} from '@src/utils';
 import {convertGateway, nftCardUrl} from "@src/helpers/image";
 import {Box, Flex, Heading, Spacer, Text} from "@chakra-ui/react";
 import Image from "next/image";
@@ -25,7 +25,7 @@ import {
   faShoppingBag,
   faSync
 } from "@fortawesome/free-solid-svg-icons";
-import {addToCart, removeFromCart} from "@src/GlobalState/cartSlice";
+import {addToCart, openCart, removeFromCart} from "@src/GlobalState/cartSlice";
 import {toast} from "react-toastify";
 import {appConfig} from "@src/Config";
 import {refreshMetadata} from "@src/GlobalState/nftSlice";
@@ -127,9 +127,11 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark, address, co
       listingId: listing.listingId,
       name: listing.nft.name,
       image: listing.nft.image,
-      price: listing.price
+      price: listing.price,
+      address: listing.nftAddress,
+      id: listing.nftId
     }));
-    toast.success('Added to cart');
+    toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
   };
 
   const handleRemoveFromCart = () => {

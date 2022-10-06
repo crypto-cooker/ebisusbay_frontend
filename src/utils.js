@@ -313,6 +313,21 @@ export function createSuccessfulTransactionToastContent(transactionHash) {
   );
 }
 
+export function createSuccessfulAddCartContent(onClickView) {
+  return (
+    <span>
+      Added to cart
+      <span
+        className="link-primary"
+        style={{ paddingLeft: '1rem' }}
+        onClick={onClickView}
+      >
+        View cart
+      </span>
+    </span>
+  );
+}
+
 /**
  *
  * Case insensitive comparison

@@ -10,7 +10,7 @@ import { chainConnect, connectAccount } from '@src/GlobalState/User';
 import { AnyMedia } from './AnyMedia';
 import {convertGateway, nftCardUrl} from "@src/helpers/image";
 import {appConfig} from "@src/Config";
-import {caseInsensitiveCompare} from "@src/utils";
+import {caseInsensitiveCompare, createSuccessfulAddCartContent} from "@src/utils";
 import {Box, Flex, Heading, Spacer, Text} from "@chakra-ui/react";
 import Image from "next/image";
 import {
@@ -22,7 +22,7 @@ import {
   faShoppingBag,
   faSync
 } from "@fortawesome/free-solid-svg-icons";
-import {addToCart, removeFromCart} from "@src/GlobalState/cartSlice";
+import {addToCart, openCart, removeFromCart} from "@src/GlobalState/cartSlice";
 import {toast} from "react-toastify";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {darkTheme, lightTheme} from "@src/Theme/theme";
@@ -131,9 +131,11 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark })
       listingId: listing.listingId,
       name: listing.nft.name,
       image: listing.nft.image,
-      price: listing.price
+      price: listing.price,
+      address: listing.nftAddress,
+      id: listing.nftId
     }));
-    toast.success('Added to cart');
+    toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
   };
 
   const handleRemoveFromCart = () => {

@@ -8,11 +8,16 @@ import MetaMaskOnboarding from '@metamask/onboarding';
 import { useDispatch, useSelector } from 'react-redux';
 import { Spinner } from 'react-bootstrap';
 
-import { createSuccessfulTransactionToastContent, shortAddress, timeSince } from '../../../../utils';
+import {
+  createSuccessfulAddCartContent,
+  createSuccessfulTransactionToastContent,
+  shortAddress,
+  timeSince
+} from '../../../../utils';
 import { chainConnect, connectAccount } from '../../../../GlobalState/User';
 import { getNftDetails } from '../../../../GlobalState/nftSlice';
 import ListingItem from '../ListingItem';
-import {addToCart} from "@src/GlobalState/cartSlice";
+import {addToCart, openCart} from "@src/GlobalState/cartSlice";
 
 export default function ListingsRow({ listing, nft }) {
   const dispatch = useDispatch();
@@ -64,14 +69,15 @@ export default function ListingsRow({ listing, nft }) {
   };
 
   const handleAddToCart = () => {
-    console.log("LIST", listing, nft)
     dispatch(addToCart({
       listingId: listing.listingId,
       name: nft.name,
       image: nft.image,
-      price: listing.price
+      price: listing.price,
+      address: listing.nftAddress,
+      id: listing.nftId
     }));
-    toast.success('Added to cart');
+    toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
   };
 
   return (

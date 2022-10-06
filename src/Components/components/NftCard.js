@@ -8,7 +8,13 @@ import MetaMaskOnboarding from '@metamask/onboarding';
 
 import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
 import { connectAccount, chainConnect } from '@src/GlobalState/User';
-import {isNftBlacklisted, round, siPrefixedNumber} from '@src/utils';
+import {
+  createSuccessfulAddCartContent,
+  isNftBlacklisted,
+  openWithCronosExplorer,
+  round,
+  siPrefixedNumber
+} from '@src/utils';
 import { AnyMedia } from './AnyMedia';
 import {convertGateway, nftCardUrl} from '@src/helpers/image';
 import {
@@ -26,7 +32,7 @@ import {useColorModeValue} from "@chakra-ui/color-mode";
 import Image from "next/image";
 import {darkTheme, lightTheme} from "@src/Theme/theme";
 import {MenuPopup} from "@src/Components/components/chakra-components";
-import {addToCart, removeFromCart} from "@src/GlobalState/cartSlice";
+import {addToCart, openCart, removeFromCart} from "@src/GlobalState/cartSlice";
 import {toast} from "react-toastify";
 import {refreshMetadata} from "@src/GlobalState/nftSlice";
 import {appConfig} from "@src/Config";
@@ -130,13 +136,16 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, collection
   };
 
   const handleAddToCart = () => {
+    console.log('ADD', nft);
     dispatch(addToCart({
       listingId: nft.market.id,
       name: nft.name,
       image: nft.image,
-      price: nft.market.price
+      price: nft.market.price,
+      address: nft.address,
+      id: nft.id
     }));
-    toast.success('Added to cart');
+    toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
   };
 
   const handleRemoveFromCart = () => {
