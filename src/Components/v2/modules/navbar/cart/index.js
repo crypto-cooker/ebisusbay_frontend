@@ -28,6 +28,8 @@ import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {Spinner} from "react-bootstrap";
 import Button from "@src/Components/components/common/Button";
 import {listingState} from "@src/core/api/enums";
+import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {specialImageTransform} from "@src/hacks";
 
 const Cart = function () {
   const dispatch = useDispatch();
@@ -164,45 +166,45 @@ const Cart = function () {
             </Flex>
             {cart.nfts.length > 0 ? (
               <>
-                {cart.nfts.map((nft, key) => {
-                  const blurImage = ImageKitService.buildBlurUrl(nft.image, {width: 100, height: 100});
-                  const image = ImageKitService.buildFixedWidthUrl(nft.image, 100, 100);
-                  return (
-                    <Box
-                      key={key}
-                      _hover={{background: useColorModeValue('gray.100', '#424242')}}
-                      p={2}
-                      rounded="lg"
-                    >
-                      <Flex>
-                        <Box>
-                          <Image
-                            key={image}
-                            src={image}
-                            width={100}
-                            height={100}
-                            blurDataURL={blurImage}
-                            style={{borderRadius: '10px'}}
-                          />
-                        </Box>
-                        <Box flex='1' ms={2}>
-                          <VStack align="left">
-                            <Text fontWeight="bold" noOfLines={1}>{nft.name}</Text>
-                            <Text>{(nft.price)} CRO</Text>
-                            {invalidItems.includes(nft.listingId) && (
-                              <Badge variant='outline' colorScheme='red'>
-                                Listing has been sold
-                              </Badge>
-                            )}
-                          </VStack>
-                        </Box>
-                        <Box ms={2} cursor="pointer" my="auto" onClick={() => handleRemoveItem(nft)}>
-                          <FontAwesomeIcon icon={faTrash}/>
-                        </Box>
-                      </Flex>
-                    </Box>
-                  );
-                })}
+                {cart.nfts.map((nft, key) => (
+                  <Box
+                    key={key}
+                    _hover={{background: useColorModeValue('gray.100', '#424242')}}
+                    p={2}
+                    rounded="lg"
+                  >
+                    <Flex>
+                      <Box
+                        width={100}
+                        height={100}
+                        style={{borderRadius: '20px'}}
+                      >
+                        <AnyMedia
+                          image={ImageKitService.buildFixedWidthUrl(nft.image, 100, 100)}
+                          video={nft.video ?? nft.animation_url}
+                          videoProps={{ height: 'auto' }}
+                          title={nft.name}
+                          usePlaceholder={false}
+                          className="rounded"
+                        />
+                      </Box>
+                      <Box flex='1' ms={2}>
+                        <VStack align="left">
+                          <Text fontWeight="bold" noOfLines={1}>{nft.name}</Text>
+                          <Text>{(nft.price)} CRO</Text>
+                          {invalidItems.includes(nft.listingId) && (
+                            <Badge variant='outline' colorScheme='red'>
+                              Listing has been sold
+                            </Badge>
+                          )}
+                        </VStack>
+                      </Box>
+                      <Box ms={2} cursor="pointer" my="auto" onClick={() => handleRemoveItem(nft)}>
+                        <FontAwesomeIcon icon={faTrash}/>
+                      </Box>
+                    </Flex>
+                  </Box>
+                ))}
               </>
             ) : (
               <Box py={8}>
