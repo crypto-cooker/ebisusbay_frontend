@@ -167,7 +167,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
           <Button type="legacy" className="me-2" onClick={onClose}>
             Cancel
           </Button>
-          <Button type="legacy-outlined" onClick={executeBuy(listing.price)}>
+          <Button type="legacy-outlined" onClick={executeBuy(listing?.price)}>
             Continue
           </Button>
         </div>
@@ -268,9 +268,9 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
         onClose={() => setIsSellDialogOpen(!isSellDialogOpen)}
         listing={listing}
       />
-      {/*<div className='nftSaleForm'>*/}
-      {/*  <Modal isCentered title={'This is an unverified collection'} body={ModalBody()} dialogActions={ModalFooter()} isOpen={isOpen} onClose={onClose}/>*/}
-      {/*</div>*/}
+      <div className='nftSaleForm'>
+        <Modal isCentered title={'This is an unverified collection'} body={ModalBody()} dialogActions={ModalFooter()} isOpen={isOpen} onClose={onClose}/>
+      </div>
     </div>
   );
 };
