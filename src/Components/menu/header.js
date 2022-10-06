@@ -13,6 +13,7 @@ import { setTheme } from '@src/GlobalState/User';
 import useFeatureFlag from "@src/hooks/useFeatureFlag";
 import Constants from "@src/constants";
 import {useColorMode} from "@chakra-ui/react";
+import Cart from "@src/Components/v2/modules/navbar/cart";
 
 const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
 
@@ -40,7 +41,7 @@ const GlobalStyles = createGlobalStyle`
 const Header = function () {
   const dispatch = useDispatch();
   const { colorMode, setColorMode } = useColorMode()
-  const {theme, profile} = useSelector((state) => state.user);
+  const {theme, profile, address} = useSelector((state) => state.user);
   const [showMenu, setShowMenu] = useState(false);
   const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
   const [useMobileMenu, setUseMobileMenu] = useState(false);
@@ -197,10 +198,15 @@ const Header = function () {
               <FontAwesomeIcon icon={theme === 'dark' ? faMoon : faSun} color="#fff" />
             </span>
 
+            <span className={address ? '' : 'me-2'}>
+              <Cart />
+            </span>
             {isNotificationsEnabled && profile && (
               <NotificationMenu />
             )}
-            <AccountMenu />
+            <span className="my-auto">
+              <AccountMenu />
+            </span>
           </div>
           <InvalidListingWarning size={'2x'} />
         </div>

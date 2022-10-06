@@ -56,6 +56,15 @@ export class ImageKitService {
     return kit.buildUrl();
   }
 
+  static buildFixedWidthUrl(imageUrl, width, height) {
+    const kit = ImageKitService.from(imageUrl)
+      .setWidth(width)
+      .setHeight(height)
+      .setCrop('at_max');
+
+    return kit.buildUrl();
+  }
+
   // setAsCard() {
   //   this.setParam('n', 'n-ml_card');
   //   return this;
@@ -151,4 +160,17 @@ export const hostedImage = (imgPath, useThumbnail) => {
 export const nftCardUrl = (nftAddress, nftImage) => {
   if (!nftImage || nftImage.startsWith('data')) return nftImage;
   return ImageKitService.buildNftCardUrl(specialImageTransform(nftAddress, nftImage));
+}
+
+export const convertGateway = (imageUrl) => {
+  if (imageUrl.startsWith('ipfs://')) {
+    const link = imageUrl.split('://')[1];
+    return `https://ipfs.io/ipfs/${link}`;
+  }
+
+  if (imageUrl.startsWith('https://gateway.ebisusbay.com')) {
+    return imageUrl.replace('gateway.ebisusbay.com', 'ipfs.io');
+  }
+
+  return imageUrl;
 }

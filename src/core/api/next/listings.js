@@ -13,3 +13,13 @@ export const getListingsByCollection = async (address, listingsQuery) => {
     throw error;
   }
 }
+
+export const getListingsByIds = async (listingIds) => {
+  try{
+    const ids = listingIds.join(',');
+    return await api.get(`listings`, {params: {listingId: ids}});
+  }
+  catch(error){
+    throw error;
+  }
+}

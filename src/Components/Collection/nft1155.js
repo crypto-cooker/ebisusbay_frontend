@@ -45,6 +45,7 @@ import { faHeart as faHeartOutline } from "@fortawesome/free-regular-svg-icons";
 import { MenuPopup } from '../components/chakra-components';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faSquareTwitter, faTelegram } from '@fortawesome/free-brands-svg-icons';
+import { getStats } from '@src/GlobalState/collectionSlice';
 
 const config = appConfig();
 const tabs = {
@@ -144,6 +145,18 @@ const Nft1155 = ({ address, id }) => {
 
     return nft.original_image;
   };
+
+
+  const collectionStats = useSelector((state) => state.collection.stats);
+
+  useEffect(() => {
+    async function asyncFunc() {
+      dispatch(getStats(collection, null, collection.mergedAddresses));
+    }
+    asyncFunc();
+    // eslint-disable-next-line
+  }, [dispatch, collection]);
+  
 
   const [currentTab, setCurrentTab] = useState(tabs.properties);
   const handleTabChange = useCallback((tab) => {
@@ -292,6 +305,9 @@ const Nft1155 = ({ address, id }) => {
                         offerType={offerType}
                         onOfferSelected={() => handleMakeOffer()}
                         label="Floor Price"
+                        collectionName={collectionName}
+                        isVerified={collectionMetadata?.verified}
+                        collectionStats={collectionStats}
                       />
                     </>
                   )}
@@ -503,7 +519,7 @@ const Nft1155 = ({ address, id }) => {
                       )}
                       {currentTab === tabs.listings && (
                         <div className="tab-3 onStep fadeIn">
-                          <NFTTabListings listings={activeListings} />
+                          <NFTTabListings listings={activeListings} nft={nft} />
                         </div>
                       )}
 

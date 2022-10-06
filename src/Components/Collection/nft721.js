@@ -58,6 +58,7 @@ import {toast} from "react-toastify";
 import  { MenuPopup } from '../components/chakra-components';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faSquareTwitter, faTelegram } from '@fortawesome/free-brands-svg-icons';
+import { getStats } from '@src/GlobalState/collectionSlice';
 
 const config = appConfig();
 const knownContracts = config.collections;
@@ -88,6 +89,17 @@ const Nft721 = ({ address, id }) => {
   const collection = useSelector((state) => {
     return knownContracts.find((c) => caseInsensitiveCompare(c.address, address));
   });
+
+  const collectionStats = useSelector((state) => state.collection.stats);
+
+  useEffect(() => {
+    async function asyncFunc() {
+      dispatch(getStats(collection, null, collection.mergedAddresses));
+    }
+    asyncFunc();
+    // eslint-disable-next-line
+  }, [dispatch, collection]);
+  
   const collectionMetadata = useSelector((state) => {
     return collection?.metadata;
   });
@@ -567,13 +579,15 @@ const Nft721 = ({ address, id }) => {
                       <span className="fw-bold">This Lady Weird Ape can make {`${ladyWeirdApeChildren} ${ladyWeirdApeChildren === 1 ? 'baby' : 'babies'}`}</span>
                     </div>
                   )}
-
                   {collection.listable && (
-                    <PriceActionBar
-                      offerType={offerType}
-                      onOfferSelected={() => handleMakeOffer()}
+
+                    <PriceActionBar 
+                      offerType={offerType} 
+                      collectionName={collectionName}
+                      isVerified={collectionMetadata?.verified}
+                      onOfferSelected={() => handleMakeOffer()} 
                       isOwner={caseInsensitiveCompare(user.address, nft.owner)}
-                    />
+                      collectionStats={collectionStats}/>
                   )}
 
                   <div className="row" style={{ gap: '2rem 0' }}>
