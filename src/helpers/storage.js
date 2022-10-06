@@ -30,22 +30,22 @@ export const getCartInStorage = () => {
   return [];
 };
 
-export const addToCartInStorage = (item) => {
+export const addToCartInStorage = (listingId, {name, image, price}) => {
   let storage = localStorage.getItem(LOCAL_STORAGE_ITEMS.cart);
   const cart = storage ? JSON.parse(storage) : [];
-  if (item.market != null && cart.map((o) => !o.market?.id).includes(item.market.id)) {
-    cart.push(item);
+  if (!cart.map((o) => o.listingId).includes(listingId)) {
+    cart.push({listingId, name, image, price});
     localStorage.setItem(LOCAL_STORAGE_ITEMS.cart, JSON.stringify(cart));
   }
 };
 
-export const removeFromCartInStorage = (item) => {
+export const removeFromCartInStorage = (listingId) => {
   let storage = localStorage.getItem(LOCAL_STORAGE_ITEMS.cart);
   let cart = storage ? JSON.parse(storage) : [];
-  cart = cart.filter((o) => o.market.id !== item.market.id);
+  cart = cart.filter((o) => o.listingId !== listingId);
   localStorage.setItem(LOCAL_STORAGE_ITEMS.cart, JSON.stringify(cart));
 };
 
 export const clearCartInStorage = () => {
-  localStorage.setItem(LOCAL_STORAGE_ITEMS.cart, []);
+  localStorage.setItem(LOCAL_STORAGE_ITEMS.cart, JSON.stringify([]));
 };

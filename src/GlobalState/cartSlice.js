@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {addToCartInStorage, getCartInStorage, removeFromCartInStorage} from "@src/helpers/storage";
+import {addToCartInStorage, clearCartInStorage, getCartInStorage, removeFromCartInStorage} from "@src/helpers/storage";
 
 const data = typeof window !== "undefined" ? getCartInStorage() : []
 const cartSlice = createSlice({
@@ -10,19 +10,20 @@ const cartSlice = createSlice({
   },
   reducers: {
     addToCart: (state, action) => {
-      const nftToAdd = action.payload;
-      state.nfts.push(nftToAdd);
-      addToCartInStorage(nftToAdd);
+      const itemToAdd = action.payload;
+      state.nfts.push(itemToAdd);
+      addToCartInStorage(itemToAdd.listingId, itemToAdd);
       state.shouldPrompt = state.nfts.length === 1;
     },
     removeFromCart: (state, action) => {
-      const nftToDelete = action.payload;
-      state.nfts = state.nfts.filter((nft) => !(nft.id === nftToDelete.id && nft.address === nftToDelete.address));
-      removeFromCartInStorage(nftToDelete);
+      const listingId = action.payload;
+      state.nfts = state.nfts.filter((nft) => nft.listingId !== listingId);
+      removeFromCartInStorage(listingId);
     },
     clearCart: (state) => {
       state.nfts = [];
       state.shouldPrompt = false;
+      clearCartInStorage();
     },
     acknowledgePrompt: (state) => {
       state.shouldPrompt = false;

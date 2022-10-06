@@ -76,11 +76,11 @@ const Cart = function () {
   }, [showMenu]);
 
   const calculateTotalPrice = () => {
-    return cart.nfts.reduce((p, n) => p + parseInt(n.market.price), 0);
+    return cart.nfts.reduce((p, n) => p + parseInt(n.price), 0);
   }
 
   const executeBuy = async () => {
-    const listingIds = cart.nfts.map((o) => o.market.id);
+    const listingIds = cart.nfts.map((o) => o.listingId);
     const totalPrice = calculateTotalPrice();
     let price = ethers.utils.parseUnits(totalPrice.toString());
     let tx = await user.marketContract.makePurchases(listingIds, {
@@ -96,7 +96,7 @@ const Cart = function () {
     if (user.address) {
       try {
         setExecutingBuy(true);
-        const listingIds = cart.nfts.map((o) => o.market.id);
+        const listingIds = cart.nfts.map((o) => o.listingId);
         const listings = await getListingsByIds(listingIds);
         const validListings = listings.data.listings
           .filter((o) => o.state === listingState.ACTIVE)
@@ -104,8 +104,8 @@ const Cart = function () {
 
         if (validListings.length < cart.nfts.length) {
           const invalidItems = cart.nfts
-            .filter((o) => o.market.id !== o)
-            .map((o) => o.market.id);
+            .filter((o) => o.listingId !== o)
+            .map((o) => o.listingId);
           setInvalidItems(invalidItems);
           return;
         }
@@ -178,8 +178,8 @@ const Cart = function () {
                       <Box flex='1' ms={2}>
                         <VStack align="left">
                           <Text fontWeight="bold" noOfLines={1}>{nft.name}</Text>
-                          <Text>{commify(nft.market.price)} CRO</Text>
-                          {invalidItems.includes(nft.market.id) && (
+                          <Text>{(nft.price)} CRO</Text>
+                          {invalidItems.includes(nft.listingId) && (
                             <Badge variant='outline' colorScheme='red'>
                               Listing has been sold
                             </Badge>
@@ -192,16 +192,6 @@ const Cart = function () {
                     </Flex>
                   </Box>
                 ))}
-                <Box my={4}>
-                  <Flex>
-                    <Box flex='1'>
-                      <Text fontWeight="bold">Total Price</Text>
-                    </Box>
-                    <Box>
-                      <Text fontWeight="bold">{commify(calculateTotalPrice())} CRO</Text>
-                    </Box>
-                  </Flex>
-                </Box>
               </>
             ) : (
               <Box py={8}>
@@ -213,15 +203,27 @@ const Cart = function () {
           </DrawerBody>
 
           <DrawerFooter>
-            <Button
-              className="w-100"
-              title="Refresh Metadata"
-              onClick={preparePurchase}
-              disabled={!cart.nfts.length > 0 || executingBuy}
-              isLoading={executingBuy}
-            >
-              Complete Purchase
-            </Button>
+            <Flex direction="column" w="100%">
+              <Box my={4}>
+                <Flex>
+                  <Box flex='1'>
+                    <Text fontWeight="bold">Total Price</Text>
+                  </Box>
+                  <Box>
+                    <Text fontWeight="bold">{commify(calculateTotalPrice())} CRO</Text>
+                  </Box>
+                </Flex>
+              </Box>
+              <Button
+                className="w-100"
+                title="Refresh Metadata"
+                onClick={preparePurchase}
+                disabled={!cart.nfts.length > 0 || executingBuy}
+                isLoading={executingBuy}
+              >
+                Complete Purchase
+              </Button>
+            </Flex>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

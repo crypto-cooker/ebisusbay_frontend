@@ -60,7 +60,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, collection
   const cart = useSelector((state) => state.cart);
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const isInCart = cart.nfts.map((o) => o.market.id).includes(nft.market.id);
+  const isInCart = nft.market?.id && cart.nfts.map((o) => o.listingId).includes(nft.market.id);
 
   const getOptions = () => {
     const options = [];
@@ -114,6 +114,21 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, collection
     return options;
   };
 
+  const handleAddToCart = () => {
+    dispatch(addToCart({
+      listingId: nft.market.id,
+      name: nft.name,
+      image: nft.image,
+      price: nft.market.price
+    }));
+    toast.success('Added to cart');
+  };
+
+  const handleRemoveFromCart = () => {
+    dispatch(removeFromCart(nft.market.id));
+    toast.success('Removed to cart');
+  };
+
   const handleMakeOffer = () => {
     const isBlacklisted = isNftBlacklisted(nft.address, nft.id);
     if (isBlacklisted) return;
@@ -132,26 +147,6 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, collection
     }
   };
 
-  const handleBuy = () => {
-    // if (listing.market?.id) {
-    //   history.push(`/listing/${listing.market?.id}`);
-    // } else {
-    history.push(`/collection/${nft.address}/${nft.id}`);
-    // if (listing?.address && listing?.id) {
-    //   history.push(`/collection/${getSlugFromAddress(listing.address)}/${listing.id}`);
-    // }
-    // }
-  };
-
-  const handleAddToCart = () => {
-    dispatch(addToCart(nft));
-    toast.success('Added to cart');
-  };
-  const handleRemoveFromCart = () => {
-    dispatch(removeFromCart(nft));
-    toast.success('Removed to cart');
-  };
-
   const getIsNftListed = () => {
     if (nft.market?.price) {
       return true;
@@ -166,19 +161,21 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, collection
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         data-group
+        _hover={{
+          borderColor:useColorModeValue('#595d69', '#ddd'),
+        }}
       >
         <Box
           _groupHover={{
             background:useColorModeValue('#FFFFFF', '#404040'),
-            transition:'0.3s ease',
-            borderColor:'#ddd'
+            transition:'0.3s ease'
         }}
           borderRadius={'15px'}
           transition="0.3s ease"
           height="100%"
         >
           <Flex direction="column" height="100%">
-            <div className="card-img-container position-relative">
+            <div className="card-img-container">
               <Box
                 _groupHover={{transform:'scale(1.05)', transition:'0.3s ease'}}
                 transition="0.3s ease"
