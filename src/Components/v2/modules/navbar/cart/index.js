@@ -181,8 +181,6 @@ const Cart = function () {
                       >
                         <AnyMedia
                           image={ImageKitService.buildFixedWidthUrl(nft.image, 100, 100)}
-                          video={nft.video ?? nft.animation_url}
-                          videoProps={{ height: 'auto' }}
                           title={nft.name}
                           usePlaceholder={false}
                           className="img-rounded-8"
