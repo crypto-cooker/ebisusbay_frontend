@@ -8835,7 +8835,7 @@
       "multiToken": false,
       "address": "0x4Ce0B9608006533dA056170f1efe8eEa771e0d19",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "World of Cats is a handcrafted collection of 4444 Unique NFTs created by the artist Tam4tik with utility that is tied to the real world.\nEach with their own identity to be discovered by its founder. \nIn its purest form, WORLD OF CATS is the art of storytelling.\nCurated By:  HiddenFishDAO™",
         "verified": true,
@@ -12658,7 +12658,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false
+      "complete": true
     },
     {
       "id": 113,
