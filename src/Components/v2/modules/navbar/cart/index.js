@@ -168,7 +168,7 @@ const Cart = function () {
               <>
                 {cart.nfts.map((nft, key) => (
                   <Box
-                    key={key}
+                    key={nft.listingId}
                     _hover={{background: useColorModeValue('gray.100', '#424242')}}
                     p={2}
                     rounded="lg"
