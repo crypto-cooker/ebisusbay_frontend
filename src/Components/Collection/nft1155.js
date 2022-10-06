@@ -519,7 +519,7 @@ const Nft1155 = ({ address, id }) => {
                       )}
                       {currentTab === tabs.listings && (
                         <div className="tab-3 onStep fadeIn">
-                          <NFTTabListings listings={activeListings} />
+                          <NFTTabListings listings={activeListings} nft={nft} />
                         </div>
                       )}
 

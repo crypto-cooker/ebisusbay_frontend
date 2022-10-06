@@ -12,8 +12,9 @@ import { createSuccessfulTransactionToastContent, shortAddress, timeSince } from
 import { chainConnect, connectAccount } from '../../../../GlobalState/User';
 import { getNftDetails } from '../../../../GlobalState/nftSlice';
 import ListingItem from '../ListingItem';
+import {addToCart} from "@src/GlobalState/cartSlice";
 
-export default function ListingsRow({ listing }) {
+export default function ListingsRow({ listing, nft }) {
   const dispatch = useDispatch();
   const history = useRouter();
 
@@ -62,16 +63,27 @@ export default function ListingsRow({ listing }) {
     }
   };
 
+  const handleAddToCart = () => {
+    console.log("LIST", listing, nft)
+    dispatch(addToCart({
+      listingId: listing.listingId,
+      name: nft.name,
+      image: nft.image,
+      price: listing.price
+    }));
+    toast.success('Added to cart');
+  };
+
   return (
     <ListingItem
       route="/account"
-      buttonText="Buy Now"
+      buttonText="Add to Cart"
       primaryTitle="Listed by"
       user={listing.seller}
       time={timeSince(listing.listingTime + '000')}
       price={ethers.utils.commify(listing.price)}
       primaryText={shortAddress(listing.seller)}
-      onClick={executeBuy(listing.price)}
+      onClick={handleAddToCart}
       isProcessing={executingBuy}
     />
   );
