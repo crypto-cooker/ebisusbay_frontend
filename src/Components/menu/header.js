@@ -41,7 +41,7 @@ const GlobalStyles = createGlobalStyle`
 const Header = function () {
   const dispatch = useDispatch();
   const { colorMode, setColorMode } = useColorMode()
-  const {theme, profile} = useSelector((state) => state.user);
+  const {theme, profile, address} = useSelector((state) => state.user);
   const [showMenu, setShowMenu] = useState(false);
   const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
   const [useMobileMenu, setUseMobileMenu] = useState(false);
@@ -198,11 +198,15 @@ const Header = function () {
               <FontAwesomeIcon icon={theme === 'dark' ? faMoon : faSun} color="#fff" />
             </span>
 
+            <span className={address ? '' : 'me-2'}>
+              <Cart />
+            </span>
             {isNotificationsEnabled && profile && (
               <NotificationMenu />
             )}
-            <Cart />
-            <AccountMenu />
+            <span className="my-auto">
+              <AccountMenu />
+            </span>
           </div>
           <InvalidListingWarning size={'2x'} />
         </div>

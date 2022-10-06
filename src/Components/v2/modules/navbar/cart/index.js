@@ -136,7 +136,7 @@ const Cart = function () {
     }
   }
 
-  return address && (
+  return (
     <div>
       <div className="de-menu-notification" onClick={openMenu}>
         {cart.nfts.length > 0 && (
