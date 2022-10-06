@@ -185,7 +185,7 @@ const Cart = function () {
                           videoProps={{ height: 'auto' }}
                           title={nft.name}
                           usePlaceholder={false}
-                          className="img-rounded-10"
+                          className="img-rounded-8"
                         />
                       </Box>
                       <Box flex='1' ms={2}>
