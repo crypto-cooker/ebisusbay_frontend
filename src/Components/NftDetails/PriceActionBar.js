@@ -268,9 +268,9 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
         onClose={() => setIsSellDialogOpen(!isSellDialogOpen)}
         listing={listing}
       />
-      <div className='nftSaleForm'>
-        <Modal isCentered title={'This is an unverified collection'} body={ModalBody()} dialogActions={ModalFooter()} isOpen={isOpen} onClose={onClose}/>
-      </div>
+      {/*<div className='nftSaleForm'>*/}
+      {/*  <Modal isCentered title={'This is an unverified collection'} body={ModalBody()} dialogActions={ModalFooter()} isOpen={isOpen} onClose={onClose}/>*/}
+      {/*</div>*/}
     </div>
   );
 };
