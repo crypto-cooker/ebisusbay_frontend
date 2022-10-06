@@ -152,3 +152,16 @@ export const nftCardUrl = (nftAddress, nftImage) => {
   if (!nftImage || nftImage.startsWith('data')) return nftImage;
   return ImageKitService.buildNftCardUrl(specialImageTransform(nftAddress, nftImage));
 }
+
+export const convertGateway = (imageUrl) => {
+  if (imageUrl.startsWith('ipfs://')) {
+    const link = imageUrl.split('://')[1];
+    return `https://ipfs.io/ipfs/${link}`;
+  }
+
+  if (imageUrl.startsWith('https://gateway.ebisusbay.com')) {
+    return imageUrl.replace('gateway.ebisusbay.com', 'ipfs.io');
+  }
+
+  return imageUrl;
+}

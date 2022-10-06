@@ -10,7 +10,7 @@ import {darkTheme, getTheme, lightTheme} from '@src/Theme/theme';
 import { AnyMedia } from './AnyMedia';
 import { connectAccount, chainConnect } from '@src/GlobalState/User';
 import {round} from '@src/utils';
-import {nftCardUrl} from "@src/helpers/image";
+import {convertGateway, nftCardUrl} from "@src/helpers/image";
 import {Box, Flex, Heading, Spacer, Text} from "@chakra-ui/react";
 import Image from "next/image";
 import {useColorModeValue} from "@chakra-ui/color-mode";
@@ -27,6 +27,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {addToCart, removeFromCart} from "@src/GlobalState/cartSlice";
 import {toast} from "react-toastify";
+import {appConfig} from "@src/Config";
+import {refreshMetadata} from "@src/GlobalState/nftSlice";
+import {specialImageTransform} from "@src/hacks";
 
 const Watermarked = styled.div`
   position: relative;
@@ -64,12 +67,6 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark, address, co
     const options = [];
 
     options.push({
-      icon: faBolt,
-      label: 'Buy Now',
-      handleClick: null,
-    });
-
-    options.push({
       icon: faHand,
       label: 'Make Offer',
       handleClick: handleMakeOffer,
@@ -92,22 +89,37 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark, address, co
     options.push({
       icon: faSync,
       label: 'Refresh Metadata',
-      handleClick: null,
+      handleClick: handleRefresh,
     });
 
     options.push({
       icon: faExternalLink,
       label: 'Open Original',
-      handleClick: null,
+      handleClick: handleOpenOriginal,
     });
 
     options.push({
       icon: faLink,
       label: 'Copy link',
-      // handleClick: onCopyLinkButtonPressed(new URL(nftUrl(), appConfig('urls.app'))),
+      handleClick: handleCopy,
     });
 
     return options;
+  };
+
+  const handleMakeOffer = () => {
+    if (user.address) {
+      setOpenMakeOfferDialog(!openMakeOfferDialog);
+    } else {
+      if (user.needsOnboard) {
+        const onboarding = new MetaMaskOnboarding();
+        onboarding.startOnboarding();
+      } else if (!user.address) {
+        dispatch(connectAccount());
+      } else if (!user.correctChain) {
+        dispatch(chainConnect());
+      }
+    }
   };
 
   const handleAddToCart = () => {
@@ -125,19 +137,19 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark, address, co
     toast.success('Removed to cart');
   };
 
-  const handleMakeOffer = () => {
-    if (user.address) {
-      setOpenMakeOfferDialog(!openMakeOfferDialog);
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
+  const handleOpenOriginal = () => {
+    if (listing.nft.original_image) {
+      window.open(specialImageTransform(listing.nftAddress, convertGateway(listing.nft.original_image)), '_blank')
     }
+  };
+
+  const handleRefresh = () => {
+    dispatch(refreshMetadata(listing.nftAddress, listing.nftId));
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(`${appConfig('urls.app')}collection/${listing.nftAddress}/${listing.nftId}`);
+    toast.success('Address Copied!');
   };
 
   const getCorrectPrice = (price) => {

@@ -8,7 +8,7 @@ import MetaMaskOnboarding from '@metamask/onboarding';
 import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
 import { chainConnect, connectAccount } from '@src/GlobalState/User';
 import { AnyMedia } from './AnyMedia';
-import {nftCardUrl} from "@src/helpers/image";
+import {convertGateway, nftCardUrl} from "@src/helpers/image";
 import {appConfig} from "@src/Config";
 import {caseInsensitiveCompare} from "@src/utils";
 import {Box, Flex, Heading, Spacer, Text} from "@chakra-ui/react";
@@ -28,6 +28,8 @@ import {useColorModeValue} from "@chakra-ui/color-mode";
 import {darkTheme, lightTheme} from "@src/Theme/theme";
 import {MenuPopup} from "@src/Components/components/chakra-components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {refreshMetadata} from "@src/GlobalState/nftSlice";
+import {specialImageTransform} from "@src/hacks";
 
 const config = appConfig();
 
@@ -55,7 +57,7 @@ const MakeBuy = styled.div`
   align-items: center;
 `;
 
-const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark, address, collectionMetadata }) => {
+const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const cart = useSelector((state) => state.cart);
@@ -66,12 +68,6 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark, a
 
   const getOptions = () => {
     const options = [];
-
-    options.push({
-      icon: faBolt,
-      label: 'Buy Now',
-      handleClick: null,
-    });
 
     options.push({
       icon: faHand,
@@ -96,22 +92,38 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark, a
     options.push({
       icon: faSync,
       label: 'Refresh Metadata',
-      handleClick: null,
+      handleClick: handleRefresh,
     });
 
     options.push({
       icon: faExternalLink,
       label: 'Open Original',
-      handleClick: null,
+      handleClick: handleOpenOriginal,
     });
 
     options.push({
       icon: faLink,
       label: 'Copy link',
-      // handleClick: onCopyLinkButtonPressed(new URL(nftUrl(), appConfig('urls.app'))),
+      handleClick: handleCopy,
     });
 
     return options;
+  };
+
+  const handleMakeOffer = () => {
+    if (user.address) {
+      setCollection(config.collections.find((c) => caseInsensitiveCompare(listing.nftAddress, c.address)));
+      setOpenMakeOfferDialog(!openMakeOfferDialog);
+    } else {
+      if (user.needsOnboard) {
+        const onboarding = new MetaMaskOnboarding();
+        onboarding.startOnboarding();
+      } else if (!user.address) {
+        dispatch(connectAccount());
+      } else if (!user.correctChain) {
+        dispatch(chainConnect());
+      }
+    }
   };
 
   const handleAddToCart = () => {
@@ -129,20 +141,19 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark, a
     toast.success('Removed to cart');
   };
 
-  const handleMakeOffer = () => {
-    if (user.address) {
-      setCollection(config.collections.find((c) => caseInsensitiveCompare(listing.nftAddress, c.address)));
-      setOpenMakeOfferDialog(!openMakeOfferDialog);
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
+  const handleOpenOriginal = () => {
+    if (listing.nft.original_image) {
+      window.open(specialImageTransform(listing.nftAddress, convertGateway(listing.nft.original_image)), '_blank')
     }
+  };
+
+  const handleRefresh = () => {
+    dispatch(refreshMetadata(listing.nftAddress, listing.nftId));
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(`${appConfig('urls.app')}collection/${listing.nftAddress}/${listing.nftId}`);
+    toast.success('Address Copied!');
   };
 
   const convertListingData = (listingData) => {

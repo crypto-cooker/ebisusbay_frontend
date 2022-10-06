@@ -10,7 +10,7 @@ import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
 import { connectAccount, chainConnect } from '@src/GlobalState/User';
 import {isNftBlacklisted, round, siPrefixedNumber} from '@src/utils';
 import { AnyMedia } from './AnyMedia';
-import { nftCardUrl } from '@src/helpers/image';
+import {convertGateway, nftCardUrl} from '@src/helpers/image';
 import {
   Box, Flex,
   Heading, Spacer,
@@ -28,6 +28,9 @@ import {darkTheme, lightTheme} from "@src/Theme/theme";
 import {MenuPopup} from "@src/Components/components/chakra-components";
 import {addToCart, removeFromCart} from "@src/GlobalState/cartSlice";
 import {toast} from "react-toastify";
+import {refreshMetadata} from "@src/GlobalState/nftSlice";
+import {appConfig} from "@src/Config";
+import {specialImageTransform} from "@src/hacks";
 
 const Watermarked = styled.div`
   position: relative;
@@ -66,12 +69,6 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, collection
     const options = [];
 
     options.push({
-      icon: faBolt,
-      label: 'Buy Now',
-      handleClick: null,
-    });
-
-    options.push({
       icon: faHand,
       label: 'Make Offer',
       handleClick: handleMakeOffer,
@@ -96,37 +93,22 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, collection
     options.push({
       icon: faSync,
       label: 'Refresh Metadata',
-      handleClick: null,
+      handleClick: handleRefresh,
     });
 
     options.push({
       icon: faExternalLink,
       label: 'Open Original',
-      handleClick: null,
+      handleClick: handleOpenOriginal,
     });
 
     options.push({
       icon: faLink,
       label: 'Copy link',
-      // handleClick: onCopyLinkButtonPressed(new URL(nftUrl(), appConfig('urls.app'))),
+      handleClick: handleCopy,
     });
 
     return options;
-  };
-
-  const handleAddToCart = () => {
-    dispatch(addToCart({
-      listingId: nft.market.id,
-      name: nft.name,
-      image: nft.image,
-      price: nft.market.price
-    }));
-    toast.success('Added to cart');
-  };
-
-  const handleRemoveFromCart = () => {
-    dispatch(removeFromCart(nft.market.id));
-    toast.success('Removed to cart');
   };
 
   const handleMakeOffer = () => {
@@ -145,6 +127,36 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, collection
         dispatch(chainConnect());
       }
     }
+  };
+
+  const handleAddToCart = () => {
+    dispatch(addToCart({
+      listingId: nft.market.id,
+      name: nft.name,
+      image: nft.image,
+      price: nft.market.price
+    }));
+    toast.success('Added to cart');
+  };
+
+  const handleRemoveFromCart = () => {
+    dispatch(removeFromCart(nft.market.id));
+    toast.success('Removed to cart');
+  };
+
+  const handleOpenOriginal = () => {
+    if (nft.original_image) {
+      window.open(specialImageTransform(nft.address, convertGateway(nft.original_image)), '_blank')
+    }
+  };
+
+  const handleRefresh = () => {
+    dispatch(refreshMetadata(nft.address, nft.id));
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(`${appConfig('urls.app')}collection/${collection.slug}/${nft.id}`);
+    toast.success('Address Copied!');
   };
 
   const getIsNftListed = () => {
