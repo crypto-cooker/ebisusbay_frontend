@@ -68,7 +68,7 @@ const Cart = function () {
     dispatch(clearCart());
   };
   const handleRemoveItem = (nft) => {
-    dispatch(removeFromCart(nft));
+    dispatch(removeFromCart(nft.listingId));
   };
 
   const openMenu = useCallback(async () => {
@@ -164,34 +164,45 @@ const Cart = function () {
             </Flex>
             {cart.nfts.length > 0 ? (
               <>
-                {cart.nfts.map((nft, key) => (
-                  <Box
-                    key={key}
-                    _hover={{background:useColorModeValue('gray.100', '#424242')}}
-                    p={2}
-                    rounded="lg"
-                  >
-                    <Flex>
-                      <Box>
-                        <Image src={ImageKitService.buildAvatarUrl(nft.image)} width={100} height={100} style={{borderRadius:'10px'}} />
-                      </Box>
-                      <Box flex='1' ms={2}>
-                        <VStack align="left">
-                          <Text fontWeight="bold" noOfLines={1}>{nft.name}</Text>
-                          <Text>{(nft.price)} CRO</Text>
-                          {invalidItems.includes(nft.listingId) && (
-                            <Badge variant='outline' colorScheme='red'>
-                              Listing has been sold
-                            </Badge>
-                          )}
-                        </VStack>
-                      </Box>
-                      <Box ms={2} cursor="pointer" my="auto" onClick={() => handleRemoveItem(nft)}>
-                        <FontAwesomeIcon icon={faTrash} />
-                      </Box>
-                    </Flex>
-                  </Box>
-                ))}
+                {cart.nfts.map((nft, key) => {
+                  const blurImage = ImageKitService.buildBlurUrl(nft.image, {width: 100, height: 100});
+                  const image = ImageKitService.buildFixedWidthUrl(nft.image, 100, 100);
+                  return (
+                    <Box
+                      key={key}
+                      _hover={{background: useColorModeValue('gray.100', '#424242')}}
+                      p={2}
+                      rounded="lg"
+                    >
+                      <Flex>
+                        <Box>
+                          <Image
+                            key={image}
+                            src={image}
+                            width={100}
+                            height={100}
+                            blurDataURL={blurImage}
+                            style={{borderRadius: '10px'}}
+                          />
+                        </Box>
+                        <Box flex='1' ms={2}>
+                          <VStack align="left">
+                            <Text fontWeight="bold" noOfLines={1}>{nft.name}</Text>
+                            <Text>{(nft.price)} CRO</Text>
+                            {invalidItems.includes(nft.listingId) && (
+                              <Badge variant='outline' colorScheme='red'>
+                                Listing has been sold
+                              </Badge>
+                            )}
+                          </VStack>
+                        </Box>
+                        <Box ms={2} cursor="pointer" my="auto" onClick={() => handleRemoveItem(nft)}>
+                          <FontAwesomeIcon icon={faTrash}/>
+                        </Box>
+                      </Flex>
+                    </Box>
+                  );
+                })}
               </>
             ) : (
               <Box py={8}>

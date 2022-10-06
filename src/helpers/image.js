@@ -56,6 +56,15 @@ export class ImageKitService {
     return kit.buildUrl();
   }
 
+  static buildFixedWidthUrl(imageUrl, width, height) {
+    const kit = ImageKitService.from(imageUrl)
+      .setWidth(width)
+      .setHeight(height)
+      .setCrop('at_max');
+
+    return kit.buildUrl();
+  }
+
   // setAsCard() {
   //   this.setParam('n', 'n-ml_card');
   //   return this;
