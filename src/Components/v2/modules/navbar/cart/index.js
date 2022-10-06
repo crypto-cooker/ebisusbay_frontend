@@ -190,7 +190,7 @@ const Cart = function () {
                       </Box>
                       <Box flex='1' ms={2}>
                         <VStack align="left">
-                          <Text fontWeight="bold" noOfLines={1}>{nft.name}</Text>
+                          <Text fontWeight="bold" noOfLines={2}>{nft.name}</Text>
                           <Text>{(nft.price)} CRO</Text>
                           {invalidItems.includes(nft.listingId) && (
                             <Badge variant='outline' colorScheme='red'>
