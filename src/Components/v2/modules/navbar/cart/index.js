@@ -14,7 +14,7 @@ import {
   DrawerOverlay, Flex, Spacer, Text, useColorModeValue, VStack
 } from "@chakra-ui/react";
 import {getListingsByIds} from "@src/core/api/next/listings";
-import {acknowledgePrompt, clearCart, removeFromCart} from "@src/GlobalState/cartSlice";
+import {acknowledgePrompt, clearCart, removeFromCart, syncStorage} from "@src/GlobalState/cartSlice";
 import {ImageKitService} from "@src/helpers/image";
 import {commify} from "ethers/lib/utils";
 import {ethers} from "ethers";
@@ -26,6 +26,7 @@ import Button from "@src/Components/components/common/Button";
 import {listingState} from "@src/core/api/enums";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
 import Link from "next/link";
+import {LOCAL_STORAGE_ITEMS} from "@src/helpers/storage";
 
 const Cart = function () {
   const dispatch = useDispatch();
@@ -130,6 +131,21 @@ const Cart = function () {
       </a>
     )
   })
+
+  useEffect(() => {
+    const onReceiveMessage = (e) => {
+      const { key } = e;
+      if (key === LOCAL_STORAGE_ITEMS.cart) {
+        dispatch(syncStorage());
+      }
+    };
+    if (typeof window !== 'undefined') {
+      window.addEventListener("storage", onReceiveMessage);
+      return () => {
+        window.removeEventListener("storage", onReceiveMessage);
+      };
+    }
+  }, []);
 
   return (
     <div>

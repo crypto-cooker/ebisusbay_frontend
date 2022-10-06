@@ -30,10 +30,13 @@ const cartSlice = createSlice({
     },
     openCart: (state) => {
       state.shouldPrompt = true;
+    },
+    syncStorage: (state) => {
+      state.nfts = getCartInStorage();
     }
   },
 });
 
-export const { addToCart, removeFromCart, clearCart, acknowledgePrompt, openCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, clearCart, acknowledgePrompt, openCart, syncStorage } = cartSlice.actions;
 
 export default cartSlice.reducer;

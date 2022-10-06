@@ -1,4 +1,4 @@
-const LOCAL_STORAGE_ITEMS = {
+export const LOCAL_STORAGE_ITEMS = {
   theme: 'THEME',
   authSignature: 'AUTH_SIGNATURE',
   cart: 'CART',
