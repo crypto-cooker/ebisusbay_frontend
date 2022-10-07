@@ -508,7 +508,7 @@ const Index = function () {
                     <Box>
                       {!user.connectingWallet ? (
                         <>
-                          {user.marketBalance ? (
+                          {user.address ? (
                             <Text  textAlign="left">
                               ${cnsBalance}
                             </Text>
@@ -518,10 +518,10 @@ const Index = function () {
                         </>
                       ) : (
                         <span>
-                      <Spinner animation="border" role="status" size={'sm'}>
-                        <span className="visually-hidden">Loading...</span>
-                      </Spinner>
-                    </span>
+                          <Spinner animation="border" role="status" size={'sm'}>
+                            <span className="visually-hidden">Loading...</span>
+                          </Spinner>
+                        </span>
                       )}
                     </Box>
                   </VStack>
