@@ -15,23 +15,6 @@ textarea {
   min-height: 100vh;
 }
 
-//  to fix the footer to the bottom of page when there is not enough content.
-body > div#root > div.wraper {
-  //  first child is header
-  //  second element is component's top level div placed by router.
-  & > div:nth-child(2) {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-
-    //  first child element is header picture and title
-    //  Content: second child element is class with .container class
-    & > section:nth-child(2) {
-      flex: 1;
-    }
-  }
-}
-
 //  Hide partners in other places than homepage.
 footer {
   &[data-is-in-home-page='false'] {
@@ -491,30 +474,6 @@ canvas {
   .de-menu-profile {
     position: relative;
     cursor: pointer;
-  }
-}
-
-.navbar {
-  position: relative;
-  @media only screen and (max-width: 1199px) {
-    &.navbar {
-      position: relative;
-      .mainside-warning {
-        position: absolute;
-        right: 90px;
-        top: 12px;
-      }
-    }
-  }
-  @media only screen and (max-width: 641px) {
-    &.navbar {
-      .mainside-warning {
-        a {
-          font-size: 13px;
-          padding: 4px 10px;
-        }
-      }
-    }
   }
 }
 

@@ -76,7 +76,9 @@ function App({ Component, pageProps }) {
       <div className="wraper">
         <GlobalStyles isDark={userTheme === 'dark'} />
         <Header />
-        <Component {...pageProps} />
+        <div style={{paddingTop:'74px'}}>
+          <Component {...pageProps} />
+        </div>
         <ScrollToTopBtn />
         <ToastContainer position={toast.POSITION.BOTTOM_LEFT} hideProgressBar={true} />
       </div>
