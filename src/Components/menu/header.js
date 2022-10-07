@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Link from 'next/link';
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+import {faBars, faHamburger, faMoon, faSun} from '@fortawesome/free-solid-svg-icons';
 
 import AccountMenu from '../components/AccountMenu';
 import NotificationMenu from '../components/NotificationMenu';
@@ -31,6 +31,7 @@ const GlobalStyles = createGlobalStyle`
     box-shadow: 0 4px 20px 0 rgba(10,10,10, .8);
   }
 `;
+
 const NavLink = ({name, to}) => {
   return (
     <Box
@@ -76,11 +77,11 @@ const Header = function () {
                           style={{ width: '44px', height: '40px' }}
                         />
                     <Text
-                      fontSize="md"
+                      fontSize="lg"
                       pt={2}
-                      fontWeight="bold"
+                      fontWeight="normal"
                       color="white"
-                      minWidth="86px"
+                      minWidth="97px"
                       display={{base: 'none', sm: 'block'}}
                     >
                       Ebisu's Bay
@@ -117,7 +118,7 @@ const Header = function () {
             </span>
               <IconButton
                 size={'md'}
-                icon={isOpen ? <CloseIcon/> : <HamburgerIcon/>}
+                icon={isOpen ? <CloseIcon/> : <FontAwesomeIcon icon={faBars} />}
                 aria-label={'Open Menu'}
                 display={{md: 'none'}}
                 onClick={isOpen ? onClose : onOpen}
