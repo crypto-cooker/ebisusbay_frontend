@@ -9448,7 +9448,7 @@
       "name": "0xLuckless v2.0",
       "slug": "0xluckless-v2-0",
       "multiToken": false,
-      "address": "",
+      "address": "0x0d511FAA531d8D36aDE88daFcBbb9cE83Be42111",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -12950,7 +12950,7 @@
         "medium": "https://medium.com/@0xLuckless",
         "instagram": "https://www.instagram.com/0xLuckless"
       },
-      "address": "",
+      "address": "0x0d511FAA531d8D36aDE88daFcBbb9cE83Be42111",
       "maxMintPerTx": 3,
       "maxMintPerAddress": 6,
       "totalSupply": 62,
