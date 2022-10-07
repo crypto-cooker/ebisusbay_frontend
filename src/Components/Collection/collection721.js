@@ -286,7 +286,7 @@ const Collection721 = ({ collection,  query }) => {
           <div className="de_tab_content">
             {openMenu === tabs.items && (
               <div className="tab-1 onStep fadeIn">
-                <ThemedBackground className="row sticky-top pt-2">
+                <ThemedBackground className="row sticky-top pt-2" style={{top: 84}}>
                   <CollectionTaskBar
                     collection={collection}
                     onFilterToggle={toggleFilterVisibility}

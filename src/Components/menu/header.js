@@ -1,50 +1,53 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Link from 'next/link';
 import { createGlobalStyle } from 'styled-components';
-import useBreakpoint from 'use-breakpoint';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 
 import AccountMenu from '../components/AccountMenu';
 import NotificationMenu from '../components/NotificationMenu';
-import InvalidListingWarning from '../components/InvalidListingWarning';
 import { setTheme } from '@src/GlobalState/User';
 import useFeatureFlag from "@src/hooks/useFeatureFlag";
 import Constants from "@src/constants";
-import {useColorMode} from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  HStack,
+  IconButton,
+  Stack, Text,
+  useColorMode,
+  useDisclosure
+} from "@chakra-ui/react";
 import Cart from "@src/Components/v2/modules/navbar/cart";
+import {CloseIcon, HamburgerIcon} from "@chakra-ui/icons";
 
 const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
 
 const GlobalStyles = createGlobalStyle`
-  header#myHeader.navbar.white {
+  header#myHeader {
     background: ${({ theme }) => theme.colors.bgColor4};
     border-bottom: 0;
     box-shadow: 0 4px 20px 0 rgba(10,10,10, .8);
   }
-  header#myHeader.navbar.white .btn, .navbar.white a, .navbar.sticky.white a{
-    color: #fff;
-  }
-  .navbar .menu-line, .navbar .menu-line1, .navbar .menu-line2{
-    background: #fff;
-  }
-  @media only screen and (max-width: 1199px) { 
-    .navbar{
-      background: #0078cb;
-      border-bottom: 0;
-      box-shadow: 0 4px 20px 0 rgba(10,10,10, .8);
-    }
-  }
 `;
+const NavLink = ({name, to}) => {
+  return (
+    <Box
+      rounded={'md'}
+      cursor={'pointer'}>
+      <Link href={to}>
+        {name}
+      </Link>
+    </Box>
+  );
+}
 
 const Header = function () {
   const dispatch = useDispatch();
+  const {isOpen, onOpen, onClose} = useDisclosure();
   const { colorMode, setColorMode } = useColorMode()
   const {theme, profile, address} = useSelector((state) => state.user);
-  const [showMenu, setShowMenu] = useState(false);
-  const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
-  const [useMobileMenu, setUseMobileMenu] = useState(false);
 
   const { Features } = Constants;
   const isNotificationsEnabled = useFeatureFlag(Features.CMS_NOTIFICATIONS);
@@ -55,169 +58,89 @@ const Header = function () {
     setColorMode(newTheme);
   };
 
-  useEffect(() => {
-    setUseMobileMenu(minWidth < BREAKPOINTS.l);
-  }, [breakpoint]);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const header = document.getElementById('myHeader');
-      const totop = document.getElementById('eb-scroll-to-top');
-      const sticky = header.offsetTop;
-      const scrollCallBack = window.addEventListener('scroll', () => {
-        setShowMenu(false);
-        if (window.pageYOffset > sticky) {
-          totop.classList.add('show');
-        } else {
-          header.classList.remove('sticky');
-          totop.classList.remove('show');
-        }
-      });
-      return () => {
-        window.removeEventListener('scroll', scrollCallBack);
-      };
-    }
-  }, []);
-
   return (
-    <header id="myHeader" className="navbar white">
+    <>
       <GlobalStyles />
-      <div className="container">
-        <div className="row w-100-nav">
-          <div className="logo px-0">
-            <div className="navbar-title navbar-item">
+      <Box px="3rem" as="header" position="fixed" w="100%" zIndex={200} id="myHeader" className="navbar2">
+        <Box maxW="2560px">
+          <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+            <HStack spacing={8} alignItems={'center'}>
               <Link href="/">
                 <a>
-                  <img
-                    src={theme === 'light' ? '/img/logo-light.svg' : '/img/logo-dark-prod.svg'}
-                    alt="ebisus bay logo"
-                    style={{ width: '44px', height: '40px' }}
-                  />
+                  <HStack
+                    as={'nav'}
+                    spacing={2}>
+                        <img
+                          src={theme === 'light' ? '/img/logo-light.svg' : '/img/logo-dark-prod.svg'}
+                          alt="ebisus bay logo"
+                          style={{ width: '44px', height: '40px' }}
+                        />
+                    <Text
+                      fontSize="md"
+                      pt={2}
+                      fontWeight="bold"
+                      color="white"
+                      minWidth="86px"
+                      display={{base: 'none', sm: 'block'}}
+                    >
+                      Ebisu's Bay
+                    </Text>
+                  </HStack>
                 </a>
               </Link>
-            </div>
-          </div>
-
-          {useMobileMenu ? (
-            <div className="breakpoint__l-down">
-              {showMenu && (
-                <div className="menu">
-                  <div className="menu">
-                    <div className="navbar-item">
-                      <Link href="/">
-                        <a>
-                          Home
-                          <span className="lines"></span>
-                        </a>
-                      </Link>
-                    </div>
-                    <div className="navbar-item">
-                      <Link href="/marketplace">
-                        <a>
-                          Marketplace
-                          <span className="lines"></span>
-                        </a>
-                      </Link>
-                    </div>
-                    <div className="navbar-item">
-                      <Link href="/collections">
-                        <a>
-                          Collections
-                          <span className="lines"></span>
-                        </a>
-                      </Link>
-                    </div>
-                    <div className="navbar-item">
-                      <Link href="/drops">
-                        <a>
-                          Drops
-                          <span className="lines"></span>
-                        </a>
-                      </Link>
-                    </div>
-                    <div className="navbar-item">
-                      <Link href="/stats">
-                        <a>
-                          Stats
-                          <span className="lines"></span>
-                        </a>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="breakpoint__xl-only ">
-              <div className="menu">
-                <div className="navbar-item">
-                  <Link href="/">
-                    <a>
-                      Home
-                      <span className="lines"></span>
-                    </a>
-                  </Link>
-                </div>
-                <div className="navbar-item">
-                  <Link href="/marketplace">
-                    <a>
-                      Marketplace
-                      <span className="lines"></span>
-                    </a>
-                  </Link>
-                </div>
-                <div className="navbar-item">
-                  <Link href="/collections">
-                    <a>
-                      Collections
-                      <span className="lines"></span>
-                    </a>
-                  </Link>
-                </div>
-                <div className="navbar-item">
-                  <Link href="/drops">
-                    <a>
-                      Drops
-                      <span className="lines"></span>
-                    </a>
-                  </Link>
-                </div>
-                <div className="navbar-item">
-                  <Link href="/stats">
-                    <a>
-                      Stats
-                      <span className="lines"></span>
-                    </a>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          )}
-          <div className="mainside d-flex">
-            <span onClick={toggleTheme} className="cursor-pointer me-3 my-auto">
+            </HStack>
+            <Flex alignItems={'center'} className="mainside">
+              <HStack
+                as={'nav'}
+                spacing={3}
+                display={{base: 'none', md: 'flex'}}
+                me={4}
+              >
+                <NavLink name={'Home'} to={'/'} />
+                <NavLink name={'Marketplace'} to={'/marketplace'} />
+                <NavLink name={'Collections'} to={'/collections'} />
+                <NavLink name={'Drops'} to={'/drops'} />
+                <NavLink name={'Stats'} to={'/stats'} />
+              </HStack>
+              <span onClick={toggleTheme} className="cursor-pointer me-3 my-auto">
               <FontAwesomeIcon icon={theme === 'dark' ? faMoon : faSun} color="#fff" />
             </span>
 
-            <span className={address ? '' : 'me-2'}>
+              <span className={address ? '' : 'me-2'}>
               <Cart />
             </span>
-            {isNotificationsEnabled && profile && (
-              <NotificationMenu />
-            )}
-            <span className="my-auto">
+              {isNotificationsEnabled && profile && (
+                <NotificationMenu />
+              )}
+              <span className="my-auto">
               <AccountMenu />
             </span>
-          </div>
-          <InvalidListingWarning size={'2x'} />
-        </div>
+              <IconButton
+                size={'md'}
+                icon={isOpen ? <CloseIcon/> : <HamburgerIcon/>}
+                aria-label={'Open Menu'}
+                display={{md: 'none'}}
+                onClick={isOpen ? onClose : onOpen}
+                color="white"
+                variant="unstyled"
+              />
+            </Flex>
+          </Flex>
 
-        <button className="nav-icon" onClick={() => setShowMenu(!showMenu)}>
-          <div className="menu-line white"></div>
-          <div className="menu-line1 white"></div>
-          <div className="menu-line2 white"></div>
-        </button>
-      </div>
-    </header>
+          {isOpen ? (
+            <Box pb={4} display={{md: 'none'}} textAlign="end">
+              <Stack as={'nav'} spacing={4}>
+                <NavLink name={'Home'} to={'/'} />
+                <NavLink name={'Marketplace'} to={'marketplace'} />
+                <NavLink name={'Collections'} to={'collections'} />
+                <NavLink name={'Drops'} to={'drops'} />
+                <NavLink name={'Stats'} to={'stats'} />
+              </Stack>
+            </Box>
+          ) : null}
+        </Box>
+      </Box>
+    </>
   );
 };
 export default Header;
