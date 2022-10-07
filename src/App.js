@@ -76,7 +76,7 @@ function App({ Component, pageProps }) {
       <div className="wraper">
         <GlobalStyles isDark={userTheme === 'dark'} />
         <Header />
-        <div style={{paddingTop:'84px'}}>
+        <div style={{paddingTop:'74px'}}>
           <Component {...pageProps} />
         </div>
         <ScrollToTopBtn />

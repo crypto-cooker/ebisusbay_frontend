@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {forwardRef} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Link from 'next/link';
 import styled, { createGlobalStyle } from 'styled-components';
@@ -32,15 +32,13 @@ const GlobalStyles = createGlobalStyle`
   }
 `;
 
-const NavLink = ({name, to}) => {
+const NavLink = ({name, to, onClick}) => {
   return (
-    <Box
-      rounded={'md'}
-      cursor={'pointer'}>
-      <Link href={to}>
+    <Link href={to}>
+      <a onClick={onClick}>
         {name}
-      </Link>
-    </Box>
+      </a>
+    </Link>
   );
 }
 
@@ -62,7 +60,7 @@ const Header = function () {
   return (
     <>
       <GlobalStyles />
-      <Box px="3rem" as="header" position="fixed" w="100%" zIndex={200} id="myHeader" className="navbar2">
+      <Box px={{base:2, md:"3rem"}} as="header" position="fixed" w="100%" zIndex={200} id="myHeader" className="navbar2">
         <Box maxW="2560px">
           <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
             <HStack spacing={8} alignItems={'center'}>
@@ -131,11 +129,11 @@ const Header = function () {
           {isOpen ? (
             <Box pb={4} display={{md: 'none'}} textAlign="end">
               <Stack as={'nav'} spacing={4}>
-                <NavLink name={'Home'} to={'/'} />
-                <NavLink name={'Marketplace'} to={'marketplace'} />
-                <NavLink name={'Collections'} to={'collections'} />
-                <NavLink name={'Drops'} to={'drops'} />
-                <NavLink name={'Stats'} to={'stats'} />
+                <NavLink name={'Home'} to={'/'} onClick={onClose} />
+                <NavLink name={'Marketplace'} to={'marketplace'} onClick={onClose} />
+                <NavLink name={'Collections'} to={'collections'} onClick={onClose} />
+                <NavLink name={'Drops'} to={'drops'} onClick={onClose} />
+                <NavLink name={'Stats'} to={'stats'} onClick={onClose} />
               </Stack>
             </Box>
           ) : null}
