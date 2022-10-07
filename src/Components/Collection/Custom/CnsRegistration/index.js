@@ -6,12 +6,22 @@ import {Alert, Collapse, Form} from "react-bootstrap";
 import Button from "@src/Components/components/common/Button";
 import {ethers} from "ethers";
 import {devLog} from "@src/utils";
-import {Heading, Skeleton, Text} from "@chakra-ui/react";
+import {Box, Heading, Link, Skeleton, Text} from "@chakra-ui/react";
+import styled from 'styled-components';
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 const readKit = new CNS(config.chain.id, readProvider);
 const referral = 'ebisusbay.cro';
+
+const StyledLink = styled(Link)`
+  text-decoration: none !important;
+
+  &:focus, &:hover, &:visited, &:link, &:active {
+    text-decoration: none !important;
+    color: inherit;
+  }
+`;
 
 export const CnsRegistration = () => {
   const user = useSelector((state) => state.user);
@@ -70,15 +80,26 @@ export const CnsRegistration = () => {
 
   return (
     <div className="container-fluid mt-3" style={{maxWidth: 600}}>
-      <div className="row mb-4">
-        <SvgComponent />
+      <div className="row mb-4 text-center">
+        <StyledLink href={`https://www.cronos.domains`} isExternal>
+          <Box align="center">
+            <SvgComponent />
+          </Box>
+        </StyledLink>
       </div>
       <div className="row">
         <div className="col mx-auto">
           {registrationComplete ? (
             <div className="text-center">
               <Heading as="h3" size="md">Registration Complete!</Heading>
-              <span>{domainName()} has successfully been registered</span>
+              <span>{domainName()} has successfully been registered. </span>
+              {user.address && (
+                <span className="color fw-bold">
+                  <a href={`https://www.cronos.domains/profile/${user.address}/domains`} target="_blank">
+                    Manage your domains
+                  </a>
+                </span>
+              )}
               <Button
                 type="legacy"
                 className="mx-auto mt-2"
