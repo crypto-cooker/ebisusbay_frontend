@@ -58,6 +58,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: $bgColor1;
 }
+body::-webkit-scrollbar {
+  display: none;
+}
 #routerhang {
   transform: unset !important;
   transform-origin: unset !important;
@@ -102,12 +105,6 @@ section.gl-legacy {
   display: block;
   width: 100%;
   background: $bgColor1;
-
-  .wraperitem {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
 }
 .m-2-hor {
   padding: 0 7%;
@@ -830,37 +827,15 @@ a {
   justify-content: center;
 }
 /*navbar*/
-.navbar {
-  padding: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
+.navbar2 {
+  padding-top: 10px;
+  padding-bottom: 10px;
   width: 100%;
-  height: auto;
-  display: flex;
   align-items: center;
   background: rgba(0, 0, 0, 0);
   border-bottom: solid 1px rgba(255, 255, 255, 0);
   z-index: 999;
   transition: all 0.6s ease;
-  &.white {
-    a {
-      color: $black;
-    }
-    .btn {
-      color: $black;
-      .lines {
-        top: 24px;
-      }
-    }
-  }
-  .w-100-nav {
-    margin: 0;
-    width: 100%;
-    justify-content: left;
-    align-items: center;
-    flex-wrap: nowrap;
-  }
   a {
     position: relative;
     font-size: 14px;
@@ -887,217 +862,6 @@ a {
         background: 0;
         cursor: default;
       }
-    }
-  }
-  .navbar-title {
-    margin-right: auto;
-    font-size: 150%;
-    padding: 12px 16px;
-  }
-  .navbar-item {
-    position: relative;
-    display: inline-block;
-    padding: 30px 6px;
-    height: max-content;
-    cursor: default;
-    .lines {
-      position: absolute;
-      top: 22px;
-      display: block;
-      width: 0;
-      border-bottom: 2px solid $blue;
-      transition: 0.7s;
-    }
-    &:hover {
-      .lines {
-        width: 90%;
-        transition: 0.7s;
-      }
-    }
-  }
-  .breakpoint__xl-only {
-    width: max-content;
-    margin-left: auto;
-  }
-  .logo {
-    width: max-content;
-    padding-right: 30px;
-    .navbar-item {
-      position: relative;
-      top: 0px;
-      left: 0px;
-      padding: 0;
-      width: max-content;
-      border-bottom: none;
-      a {
-        padding: 0;
-        .d-3,
-        .d-4 {
-          display: none;
-        }
-      }
-    }
-  }
-  .menu {
-    display: flex;
-    justify-content: flex-end;
-  }
-  .nav-icon {
-    display: none;
-  }
-  @media only screen and (max-width: 1199px) {
-    .m-2-hor {
-      padding: 0px 2%;
-    }
-    .menu {
-      display: block;
-      padding: 15px 0 10px;
-    }
-    &.navbar {
-      position: relative;
-      .logo {
-        position: relative;
-        left: -10px;
-        display: inline-block;
-      }
-      .search {
-        display: inline-block;
-        position: relative;
-        top: -9px;
-        #quick_search {
-          width: 100%;
-        }
-      }
-      .mainside {
-        position: absolute;
-        right: 60px;
-        top: 28px;
-      }
-      .dropdown-custom.btn {
-        color: $gray;
-        width: 100%;
-        text-align: left;
-        &::after {
-          float: right;
-          font-size: 0.9rem;
-        }
-      }
-    }
-    .w-100-nav {
-      display: block;
-      padding: 20px 2%;
-    }
-    .navbar-item {
-      display: block;
-      padding: 15px 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    }
-    .nav-icon {
-      position: absolute;
-      top: 35px;
-      right: 25px;
-      display: block;
-      width: 20px;
-      height: 10px;
-      padding-top: 13px;
-      line-height: 0;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
-      z-index: 9999;
-    }
-    .bg-nav-icon {
-      width: 32px;
-      height: 24px;
-      background: rgba(255, 255, 255, 0);
-      border-radius: 2px;
-      -moz-border-radius: 2px;
-      -webkit-border-radius: 2px;
-    }
-    #nav-icon span,
-    .nav-icon span {
-      display: none;
-      position: absolute;
-      top: 5px;
-      left: -40px;
-      font-size: 0.62rem;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-    .menu-line {
-      position: absolute;
-      width: 100%;
-      height: 2px;
-      top: 0px;
-      background-color: $black;
-    }
-    .menu-line1 {
-      position: absolute;
-      width: 100%;
-      height: 2px;
-      top: 5px;
-      background-color: $black;
-    }
-    .menu-line2 {
-      position: absolute;
-      width: 100%;
-      height: 2px;
-      top: 10px;
-      background-color: $black;
-    }
-    &.sticky {
-      position: absolute !important;
-    }
-  }
-  @media only screen and (max-width: 641px) {
-    &.navbar {
-      .search {
-        display: none;
-      }
-      .mainside {
-        a {
-          font-size: 13px;
-          padding: 4px 10px;
-        }
-      }
-      .logo {
-        img {
-          width: 90%;
-        }
-      }
-    }
-  }
-  &.sticky {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: #1b1b1b;
-    border-bottom: solid 1px #dddddd;
-    transition: all 0.6s ease;
-    &.white {
-      background: $white;
-      .btn {
-        color: $black;
-      }
-      a {
-        color: $black;
-      }
-    }
-  }
-  .search {
-    display: flex;
-    width: max-content;
-    padding-left: 30px;
-    #quick_search {
-      padding: 4px 11px;
-      border: none;
-      border-radius: 6px;
-      font-size: 15px;
-      background: rgba(131, 100, 226, 0.1);
-      width: 274px;
-      height: 34px;
-      outline: none;
     }
   }
 }
@@ -4855,10 +4619,7 @@ blockquote {
 
 // logout menu
 .mainside {
-  width: max-content;
-  padding-left: 0;
-  padding-right: 0;
-  a {
+  .connect-wal a {
     text-align: center;
     color: #fff !important;
     background: $blue;
@@ -4871,21 +4632,12 @@ blockquote {
     font-size: 14px;
     border: none;
     cursor: pointer;
+    margin-left: 4px;
     box-shadow: 2px 2px 20px 0px rgba(131, 100, 226, 0);
     transition: all 0.3s ease;
     &:hover {
       box-shadow: 2px 2px 20px 0px rgba(131, 100, 226, 0.5);
       transition: all 0.3s ease;
-    }
-  }
-  .connect-wal {
-    display: block;
-  }
-  .logout {
-    display: none;
-    a {
-      display: inline-block;
-      margin: 0 5px;
     }
   }
   .de-menu-notification {
