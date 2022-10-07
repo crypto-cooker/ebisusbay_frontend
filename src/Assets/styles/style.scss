@@ -4852,39 +4852,6 @@ blockquote {
 
 // logout menu
 .mainside {
-  width: max-content;
-  padding-left: 0;
-  padding-right: 0;
-  a {
-    text-align: center;
-    color: #fff !important;
-    background: $blue;
-    border-radius: 6px;
-    letter-spacing: normal;
-    outline: 0;
-    font-weight: 800;
-    text-decoration: none;
-    padding: 6px 20px;
-    font-size: 14px;
-    border: none;
-    cursor: pointer;
-    box-shadow: 2px 2px 20px 0px rgba(131, 100, 226, 0);
-    transition: all 0.3s ease;
-    &:hover {
-      box-shadow: 2px 2px 20px 0px rgba(131, 100, 226, 0.5);
-      transition: all 0.3s ease;
-    }
-  }
-  .connect-wal {
-    display: block;
-  }
-  .logout {
-    display: none;
-    a {
-      display: inline-block;
-      margin: 0 5px;
-    }
-  }
   .de-menu-notification {
     margin: 0 5px;
     position: relative;
