@@ -6,12 +6,23 @@ import {Alert, Collapse, Form} from "react-bootstrap";
 import Button from "@src/Components/components/common/Button";
 import {ethers} from "ethers";
 import {devLog} from "@src/utils";
-import {Heading, Skeleton, Text} from "@chakra-ui/react";
+import {Box, Flex, Heading, Skeleton, Text} from "@chakra-ui/react";
+import styled from 'styled-components';
+import Link from "next/link";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 const readKit = new CNS(config.chain.id, readProvider);
 const referral = 'ebisusbay.cro';
+
+const StyledLink = styled.a`
+  text-decoration: none !important;
+
+  &:focus, &:hover, &:visited, &:link, &:active {
+    text-decoration: none !important;
+    color: inherit;
+  }
+`;
 
 export const CnsRegistration = () => {
   const user = useSelector((state) => state.user);
@@ -70,22 +81,51 @@ export const CnsRegistration = () => {
 
   return (
     <div className="container-fluid mt-3" style={{maxWidth: 600}}>
-      <div className="row mb-4">
-        <SvgComponent />
+      <div className="row mb-4 text-center">
+        <StyledLink href={`https://www.cronos.domains`} target="_blank">
+          <Box align="center">
+            <SvgComponent />
+          </Box>
+        </StyledLink>
       </div>
       <div className="row">
         <div className="col mx-auto">
           {registrationComplete ? (
             <div className="text-center">
-              <Heading as="h3" size="md">Registration Complete!</Heading>
-              <span>{domainName()} has successfully been registered</span>
-              <Button
-                type="legacy"
-                className="mx-auto mt-2"
-                onClick={reset}
-              >
-                Register Another Domain
-              </Button>
+              <Heading as="h3" size="md" mb={4}>Registration Complete!</Heading>
+              <span>
+                {domainName()} has successfully been registered. To link your new domain to your Ebisu's Bay profile, first set it as a{' '}
+                <span className="color fw-bold">
+                  <a href={`https://www.cronos.domains/profile/${user.address}/settings`} target="_blank">
+                    Primary CNS Name
+                  </a>
+                </span>
+                , then sync it from your{' '}
+                <span className="color fw-bold">
+                  <Link href="/account/settings/profile">
+                    Edit Account
+                  </Link>
+                </span>
+                {' '}page
+              </span>
+              <Flex direction={{base:'column', sm:'row'}} justify="center" mt={4}>
+                {user.address && (
+                  <Box my="auto" className="color" fontWeight="bold">
+                    <a href={`https://www.cronos.domains/profile/${user.address}/domains`} target="_blank">
+                      Manage your domains
+                    </a>
+                  </Box>
+                )}
+                <Box ms={{base:0, sm:4}}>
+                  <Button
+                    type="legacy"
+                    className="mx-auto mt-2"
+                    onClick={reset}
+                  >
+                    Register another domain
+                  </Button>
+                </Box>
+              </Flex>
             </div>
           ) : (
             <>
