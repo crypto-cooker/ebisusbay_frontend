@@ -17,7 +17,7 @@ import {
   IconButton,
   Stack, Text,
   useColorMode,
-  useDisclosure
+  useDisclosure, useOutsideClick
 } from "@chakra-ui/react";
 import Cart from "@src/Components/v2/modules/navbar/cart";
 import {CloseIcon, HamburgerIcon} from "@chakra-ui/icons";
@@ -47,6 +47,12 @@ const Header = function () {
   const {isOpen, onOpen, onClose} = useDisclosure();
   const { colorMode, setColorMode } = useColorMode()
   const {theme, profile, address} = useSelector((state) => state.user);
+
+  const ref = React.useRef()
+  useOutsideClick({
+    ref: ref,
+    handler: onClose,
+  })
 
   const { Features } = Constants;
   const isNotificationsEnabled = useFeatureFlag(Features.CMS_NOTIFICATIONS);
@@ -127,7 +133,7 @@ const Header = function () {
           </Flex>
 
           {isOpen ? (
-            <Box pb={4} display={{md: 'none'}} textAlign="end">
+            <Box pb={4} display={{md: 'none'}} textAlign="end" ref={ref}>
               <Stack as={'nav'} spacing={4}>
                 <NavLink name={'Home'} to={'/'} onClick={onClose} />
                 <NavLink name={'Marketplace'} to={'marketplace'} onClick={onClose} />
