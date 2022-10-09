@@ -136,10 +136,10 @@ const Header = function () {
             <Box pb={4} display={{md: 'none'}} textAlign="end" ref={ref}>
               <Stack as={'nav'} spacing={4}>
                 <NavLink name={'Home'} to={'/'} onClick={onClose} />
-                <NavLink name={'Marketplace'} to={'marketplace'} onClick={onClose} />
-                <NavLink name={'Collections'} to={'collections'} onClick={onClose} />
-                <NavLink name={'Drops'} to={'drops'} onClick={onClose} />
-                <NavLink name={'Stats'} to={'stats'} onClick={onClose} />
+                <NavLink name={'Marketplace'} to={'/marketplace'} onClick={onClose} />
+                <NavLink name={'Collections'} to={'/collections'} onClick={onClose} />
+                <NavLink name={'Drops'} to={'/drops'} onClick={onClose} />
+                <NavLink name={'Stats'} to={'/stats'} onClick={onClose} />
               </Stack>
             </Box>
           ) : null}
