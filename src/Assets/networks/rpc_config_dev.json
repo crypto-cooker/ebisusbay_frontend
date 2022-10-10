@@ -9559,6 +9559,27 @@
         "escrow": false,
         "creativeCommons": true
       }
+    },
+    {
+      "name": "AI Experiments",
+      "slug": "ai-experiments",
+      "multiToken": false,
+      "address": "0x51eaf8c081Cca683A5542c438f9429CE46D238e4",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "\"In the middle of a dark and stormy night, Doctors set about creating laboratories in the various parallel universes, what they could not imagine, are the experiments that took place within them. Now mysterious creatures roam within these parallel universes, our Doctors have managed to photograph and classify 1800 beings from the other world.\" AI EXPERIMENTS is a collection of NFTs, on Cronos blockchain, which gives various benefits to owners. Discover more into DaoLabs.",
+        "verified": false,
+        "avatar": "/img/collections/ai-experiments/avatar.webp",
+        "card": "/img/collections/ai-experiments/card.webp",
+        "banner": "/img/collections/ai-experiments/banner.webp",
+        "maxSupply": 1800,
+        "website": "https://daogames.online/",
+        "twitter": "https://twitter.com/DrDaoClub",
+        "discord": "https://discord.gg/fyca4JYW7V",
+        "medium": "https://medium.com/@drdao.club",
+        "telegram": "https://t.me/DrDaoFounder"
+      }
     }
   ],
   "drops": [
