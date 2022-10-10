@@ -8162,7 +8162,7 @@
       "name": "Whale Family",
       "slug": "whalefam",
       "multiToken": false,
-      "address": "",
+      "address": "0xe6f571551dcc680E789925117Aeb8C183E83295b",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -12599,7 +12599,7 @@
         "gitbook": "https://drive.google.com/file/d/1va8ft-odC7VeQHOxume2viVvA8Kh7aYI/view",
         "instagram": "https://www.instagram.com/im_barbara_redekop/"
       },
-      "address": "",
+      "address": "0xe6f571551dcc680E789925117Aeb8C183E83295b",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 5555,
