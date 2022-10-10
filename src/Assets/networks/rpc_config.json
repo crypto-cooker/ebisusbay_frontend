@@ -9559,6 +9559,65 @@
         "escrow": false,
         "creativeCommons": true
       }
+    },
+    {
+      "name": "AI Experiments",
+      "slug": "ai-experiments",
+      "multiToken": false,
+      "address": "0x51eaf8c081Cca683A5542c438f9429CE46D238e4",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "\"In the middle of a dark and stormy night, Doctors set about creating laboratories in the various parallel universes, what they could not imagine, are the experiments that took place within them. Now mysterious creatures roam within these parallel universes, our Doctors have managed to photograph and classify 1800 beings from the other world.\" AI EXPERIMENTS is a collection of NFTs, on Cronos blockchain, which gives various benefits to owners. Discover more into DaoLabs.",
+        "verified": false,
+        "avatar": "/img/collections/ai-experiments/avatar.webp",
+        "card": "/img/collections/ai-experiments/card.webp",
+        "banner": "/img/collections/ai-experiments/banner.webp",
+        "maxSupply": 1800,
+        "website": "https://daogames.online/",
+        "twitter": "https://twitter.com/DrDaoClub",
+        "discord": "https://discord.gg/fyca4JYW7V",
+        "medium": "https://medium.com/@drdao.club",
+        "telegram": "https://t.me/DrDaoFounder"
+      }
+    },
+    {
+      "name": "Degenerated & Friends V1",
+      "slug": "degenerated-friends-v1",
+      "multiToken": false,
+      "address": "0xd79a37824bD86e4E945e8385480de3c45B7e5B08",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The first collaborative collection on Cronos, delivered by The Degenerated X CroDoo, this series of AI-generated wallpapers features art from six totally different and completely unique projects, together into one mint.",
+        "verified": false,
+        "avatar": "/img/collections/degenerated-friends-v1/avatar.webp",
+        "card": "/img/collections/degenerated-friends-v1/card.webp",
+        "banner": "/img/collections/degenerated-friends-v1/banner.webp",
+        "maxSupply": 3000,
+        "website": "https://babymonsters.ca/degendoo-mint/",
+        "twitter": "https://twitter.com/degenednfts",
+        "discord": "https://discord.gg/N5YXhNDJyz"
+      }
+    },
+    {
+      "name": "Defira Heroes",
+      "slug": "defira-heroes",
+      "multiToken": false,
+      "address": "0x49198cb9de084373300fa25f210ac2f26f85ad80",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Heroes are primeval spirits residing on the mystical plane that underpins the world of Defira. They are not only great warriors and masters of magic, but they also perform the vital jobs that make the world prosperous. They are summoned in a magical Wishing Ritual by combining the souls of two other heroes.",
+        "verified": false,
+        "avatar": "/img/collections/defira-heroes/avatar.webp",
+        "card": "/img/collections/defira-heroes/card.webp",
+        "banner": "/img/collections/defira-heroes/banner.webp",
+        "maxSupply": 5385,
+        "website": "https://game.defira.com/#/game/herohall?modal=hero-catalog/",
+        "twitter": "https://www.twitter.com/Defiraverse",
+        "discord": "https://discord.gg/rg4MjQfnfY"
+      }
     }
   ],
   "drops": [
