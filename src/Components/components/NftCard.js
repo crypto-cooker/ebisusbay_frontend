@@ -136,14 +136,14 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, collection
   };
 
   const handleAddToCart = () => {
-    console.log('ADD', nft);
     dispatch(addToCart({
       listingId: nft.market.id,
       name: nft.name,
       image: nft.image,
       price: nft.market.price,
       address: nft.address,
-      id: nft.id
+      id: nft.id,
+      rank: nft.rank
     }));
     toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
   };

@@ -75,7 +75,8 @@ export default function ListingsRow({ listing, nft }) {
       image: nft.image,
       price: listing.price,
       address: listing.nftAddress,
-      id: listing.nftId
+      id: listing.nftId,
+      rank: nft.rank
     }));
     toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
   };
