@@ -15,7 +15,7 @@ import MetaMaskOnboarding from "@metamask/onboarding";
 import { chainConnect, connectAccount } from "@src/GlobalState/User";
 import SweepFloorDialog from "@src/Components/Collection/CollectionTaskBar/SweepFloorDialog";
 import { toast } from 'react-toastify';
-import Modal from '@src/Components/components/Modal'
+import { Modal } from '@src/Components/components/chakra-components'
 
 import {
   useDisclosure,
@@ -111,7 +111,7 @@ export const CollectionTaskBar = ({ collection, onFilterToggle, onSortToggle }) 
         toast.success('Generated report');
       }
     else {
-      toast.error('Maximum number of reports generated');
+      toast.error('Error');
     }
   }
 
@@ -134,10 +134,10 @@ export const CollectionTaskBar = ({ collection, onFilterToggle, onSortToggle }) 
     return (
       <div className="w-100">
         <div className="d-flex justify-content-center">
-          <Button type="legacy" className="me-2" onClick={onClose}>
+          <Button type="legacy-outlined" className="me-2" onClick={onClose}>
             Cancel
           </Button>
-          <Button type="legacy-outlined" onClick={sendCollectionReport} disabled={!selectedReason}>
+          <Button type="legacy" onClick={sendCollectionReport} disabled={!selectedReason}>
             Report
           </Button>
         </div>

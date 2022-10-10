@@ -1,11 +1,11 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Contract, ethers } from 'ethers';
-import {faHeart as faHeartOutline} from '@fortawesome/free-regular-svg-icons';
-import {faCrow, faExternalLinkAlt, faHeart as faHeartSolid, faShare, faSync, faEllipsisH, faShareAlt} from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faHeartOutline } from '@fortawesome/free-regular-svg-icons';
+import { faCrow, faExternalLinkAlt, faHeart as faHeartSolid, faShare, faSync, faEllipsisH, faShareAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import {Badge, Spinner} from 'react-bootstrap';
+import { Badge, Spinner } from 'react-bootstrap';
 
 import ProfilePreview from '../components/ProfilePreview';
 import Footer from '../components/Footer';
@@ -34,8 +34,8 @@ import {
   isNftBlacklisted,
   isAnyWeirdApesCollection, isWeirdApesCollection, isEmptyObj,
 } from '@src/utils';
-import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
-import {connectAccount, chainConnect, retrieveProfile} from '@src/GlobalState/User';
+import { getNftDetails, refreshMetadata, tickFavorite } from '@src/GlobalState/nftSlice';
+import { connectAccount, chainConnect, retrieveProfile } from '@src/GlobalState/User';
 import { specialImageTransform } from '@src/hacks';
 import ListingItem from '../NftDetails/NFTTabListings/ListingItem';
 import PriceActionBar from '../NftDetails/PriceActionBar';
@@ -50,12 +50,12 @@ import { appConfig } from '@src/Config';
 import { hostedImage } from '@src/helpers/image';
 import Link from 'next/link';
 import axios from "axios";
-import Button, {LegacyOutlinedButton} from "@src/Components/components/common/Button";
-import {collectionRoyaltyPercent} from "@src/core/chain";
-import {ButtonGroup, Heading} from "@chakra-ui/react";
+import Button, { LegacyOutlinedButton } from "@src/Components/components/common/Button";
+import { collectionRoyaltyPercent } from "@src/core/chain";
+import { ButtonGroup, Heading, MenuButton as MenuButtonCK } from "@chakra-ui/react";
 import useToggleFavorite from "@src/Components/NftDetails/hooks/useToggleFavorite";
-import {toast} from "react-toastify";
-import  { MenuPopup } from '../components/chakra-components';
+import { toast } from "react-toastify";
+import { Menu } from '../components/chakra-components';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faSquareTwitter, faTelegram } from '@fortawesome/free-brands-svg-icons';
 import { getStats } from '@src/GlobalState/collectionSlice';
@@ -74,7 +74,7 @@ const tabs = {
 const Nft721 = ({ address, id }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const {nft, refreshing, favorites} = useSelector((state) => state.nft);
+  const { nft, refreshing, favorites } = useSelector((state) => state.nft);
 
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [offerType, setOfferType] = useState(OFFER_TYPE.none);
@@ -99,7 +99,7 @@ const Nft721 = ({ address, id }) => {
     asyncFunc();
     // eslint-disable-next-line
   }, [dispatch, collection]);
-  
+
   const collectionMetadata = useSelector((state) => {
     return collection?.metadata;
   });
@@ -108,7 +108,7 @@ const Nft721 = ({ address, id }) => {
   });
   const isLoading = useSelector((state) => state.nft.loading);
 
-  const [{ isLoading:isFavoriting, response, error }, toggleFavorite]  = useToggleFavorite();
+  const [{ isLoading: isFavoriting, response, error }, toggleFavorite] = useToggleFavorite();
 
   const copyLink = useCallback(() => {
     navigator.clipboard.writeText(window.location);
@@ -140,8 +140,52 @@ const Nft721 = ({ address, id }) => {
       type: 'event',
       handleClick: copyLink
     }
-  
+
   ];
+
+  const MenuItems = (
+    options.map(option => (
+      option.type === 'url' ?
+        (
+          <div >
+            <a href={`${option.url}${window.location}`} target='_blank' >
+              <div key={option.label} className='social_media_item'>
+                <div className='icon_container'>
+                  <FontAwesomeIcon icon={option.icon} style={{ height: 28 }} />
+                </div>
+                <div className='label_container'>
+                  <span>{option.label}</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+        )
+        :
+        (
+          <div className='social_media_item' onClick={option.handleClick} key={option.label}>
+            <div className='icon_container'>
+              <FontAwesomeIcon icon={option.icon} style={{ height: 28 }} />
+            </div>
+            <div className='label_container'>
+              <span>
+                {option.label}
+              </span>
+            </div>
+          </div>
+        )
+
+    )))
+
+
+  const MenuButton = () => {
+
+    return (
+      <MenuButtonCK as={LegacyOutlinedButton}>
+        <FontAwesomeIcon icon={faShareAlt} style={{ cursor: 'pointer' }} />
+      </MenuButtonCK>
+    )
+  }
 
   // Custom breeding considerations
   const [croCrowBreed, setCroCrowBreed] = useState(null);
@@ -277,7 +321,7 @@ const Nft721 = ({ address, id }) => {
           console.log(error);
         }
       } else {
-        setCustomProfile({name: null, description: null});
+        setCustomProfile({ name: null, description: null });
       }
     }
     getApeInfo();
@@ -344,7 +388,7 @@ const Nft721 = ({ address, id }) => {
           const uri = await contract.tokenURI(id);
           await axios.get(uri)
             .then((response) => {
-              setCustomProfile({name: response.data.name.length > 0 ? response.data.name : null, description: null});
+              setCustomProfile({ name: response.data.name.length > 0 ? response.data.name : null, description: null });
               setLazyHorseTraits([
                 response.data.attributes.find((trait) => trait.trait_type === 'Race Count'),
                 response.data.attributes.find((trait) => trait.trait_type === 'Breeded'),
@@ -354,7 +398,7 @@ const Nft721 = ({ address, id }) => {
           console.log(error);
         }
       } else {
-        setCustomProfile({name: null, description: null});
+        setCustomProfile({ name: null, description: null });
       }
     }
     getLazyHorseName();
@@ -494,40 +538,37 @@ const Nft721 = ({ address, id }) => {
               ) : (
                 <></>
               )}
-                <div className="mt-2" style={{ cursor: 'pointer' }}>
-                  <ButtonGroup size='sm' isAttached variant='outline'>
-                    <Button styleType="default-outlined" title="Refresh Metadata" onClick={onRefreshMetadata} disabled={refreshing}>
-                      <FontAwesomeIcon icon={faSync} spin={refreshing} />
+              <div className="mt-2" style={{ cursor: 'pointer' }}>
+                <ButtonGroup size='sm' isAttached variant='outline'>
+                  <Button styleType="default-outlined" title="Refresh Metadata" onClick={onRefreshMetadata} disabled={refreshing}>
+                    <FontAwesomeIcon icon={faSync} spin={refreshing} />
+                  </Button>
+                  <Button
+                    styleType="default-outlined"
+                    title={isFavorite() ? 'This item is in your favorites list' : 'Click to add to your favorites list'}
+                    onClick={onFavoriteClicked}
+                  >
+                    <div>
+                      <span className="me-1">{favorites}</span>
+                      {isFavorite() ? (
+                        <FontAwesomeIcon icon={faHeartSolid} style={{ color: '#dc143c' }} />
+                      ) : (
+                        <FontAwesomeIcon icon={faHeartOutline} />
+                      )}
+                    </div>
+                  </Button>
+                  {nft && nft.original_image && (
+                    <Button styleType="default-outlined" title="View Full Image" onClick={() =>
+                      typeof window !== 'undefined' &&
+                      window.open(specialImageTransform(address, fullImage()), '_blank')
+                    }>
+                      <FontAwesomeIcon icon={faExternalLinkAlt} />
                     </Button>
-                    <Button
-                      styleType="default-outlined"
-                      title={isFavorite() ? 'This item is in your favorites list' : 'Click to add to your favorites list'}
-                      onClick={onFavoriteClicked}
-                    >
-                      <div>
-                        <span className="me-1">{favorites}</span>
-                        {isFavorite() ? (
-                          <FontAwesomeIcon icon={faHeartSolid} style={{color:'#dc143c'}} />
-                        ) : (
-                          <FontAwesomeIcon icon={faHeartOutline} />
-                        )}
-                      </div>
-                    </Button>
-                    {nft && nft.original_image && (
-                      <Button styleType="default-outlined" title="View Full Image" onClick={() =>
-                        typeof window !== 'undefined' &&
-                        window.open(specialImageTransform(address, fullImage()), '_blank')
-                      }>
-                        <FontAwesomeIcon icon={faExternalLinkAlt} />
-                      </Button>
-                    )}
-                    <MenuPopup options={options}>
-                      <Button styleType="default-outlined">
-                        <FontAwesomeIcon icon={faShareAlt} style={{ cursor: 'pointer' }} />
-                      </Button>
-                    </MenuPopup>
-                  </ButtonGroup>
-                </div>
+                  )}
+                  <Menu MenuItems={MenuItems} MenuButton={MenuButton()} />
+
+                </ButtonGroup>
+              </div>
             </div>
             <div className="col-md-6">
               {nft && (
@@ -581,13 +622,13 @@ const Nft721 = ({ address, id }) => {
                   )}
                   {collection.listable && (
 
-                    <PriceActionBar 
-                      offerType={offerType} 
+                    <PriceActionBar
+                      offerType={offerType}
                       collectionName={collectionName}
                       isVerified={collectionMetadata?.verified}
-                      onOfferSelected={() => handleMakeOffer()} 
+                      onOfferSelected={() => handleMakeOffer()}
                       isOwner={caseInsensitiveCompare(user.address, nft.owner)}
-                      collectionStats={collectionStats}/>
+                      collectionStats={collectionStats} />
                   )}
 
                   <div className="row" style={{ gap: '2rem 0' }}>
@@ -660,7 +701,7 @@ const Nft721 = ({ address, id }) => {
                       {currentTab === tabs.properties && (
                         <div className="tab-1 onStep fadeIn">
                           {(nft.attributes && Array.isArray(nft.attributes) && nft.attributes.length > 0) ||
-                          (nft.properties && Array.isArray(nft.properties) && nft.properties.length > 0) ? (
+                            (nft.properties && Array.isArray(nft.properties) && nft.properties.length > 0) ? (
                             <div className="d-block mb-3">
                               <div className="row gx-3 gy-2">
                                 {nft.attributes &&
@@ -801,7 +842,7 @@ const Nft721 = ({ address, id }) => {
                                 <div>
                                   <a href={`${config.urls.explorer}address/${address}`} target="_blank">
                                     {shortAddress(address)}
-                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted"/>
+                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted" />
                                   </a>
                                 </div>
                               </div>
@@ -810,7 +851,7 @@ const Nft721 = ({ address, id }) => {
                                 <div>
                                   <a href={`${config.urls.explorer}token/${address}?a=${id}`} target="_blank">
                                     {id.length > 10 ? shortAddress(id) : id}
-                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted"/>
+                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted" />
                                   </a>
                                 </div>
                               </div>

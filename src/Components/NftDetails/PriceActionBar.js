@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { ethers } from 'ethers';
 import { toast } from 'react-toastify';
-import {createSuccessfulTransactionToastContent, isNftBlacklisted, isUserBlacklisted} from '@src/utils';
+import { createSuccessfulTransactionToastContent, isNftBlacklisted, isUserBlacklisted } from '@src/utils';
 import { Card, Spinner } from 'react-bootstrap';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import { chainConnect, connectAccount } from '@src/GlobalState/User';
 import { listingUpdated } from '@src/GlobalState/listingSlice';
 import { listingState } from '@src/core/api/enums';
-import {OFFER_TYPE} from "../Offer/MadeOffers/MadeOffersRow";
+import { OFFER_TYPE } from "../Offer/MadeOffers/MadeOffersRow";
 import Button from "../components/Button";
 import { useRouter } from "next/router";
 import MakeListingDialog from "@src/Components/MakeListing";
@@ -25,7 +25,7 @@ import {
   TableContainer,
 } from '@chakra-ui/react'
 
-import Modal from '../components/Modal'
+import { Modal } from '../components/chakra-components'
 
 import Constants from '../../constants'
 import useFeatureFlag from '../../hooks/useFeatureFlag';
@@ -133,26 +133,39 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
         <TableContainer>
           <Table variant='simple'>
             <Tbody>
-              <Tr>
-                <Td>Collections name</Td>
-                <Td>{collectionName}</Td>
-              </Tr>
-              <Tr>
-                <Td>Contract address</Td>
-                <Td>{shortAddress(collectionStats?.collection)}</Td>
-              </Tr>
-              <Tr>
-                <Td>Total Sales</Td>
-                <Td>{collectionStats?.numberOfSales}</Td>
-              </Tr>
-              <Tr>
-                <Td>Total Volume</Td>
-                <Td>{collectionStats?.totalVolume} CRO</Td>
-              </Tr>
-              <Tr>
-                <Td>Total Items</Td>
-                <Td>{collectionStats?.totalSupply}</Td>
-              </Tr>
+              {collectionStats ? (
+                <>
+                  <Tr>
+                    <Td>Collections name</Td>
+                    <Td>{collectionName}</Td>
+                  </Tr>
+                  <Tr>
+                    <Td>Contract address</Td>
+                    <Td>{shortAddress(collectionStats?.collection)}</Td>
+                  </Tr>
+                  <Tr>
+                    <Td>Total Sales</Td>
+                    <Td>{collectionStats?.numberOfSales}</Td>
+                  </Tr>
+                  <Tr>
+                    <Td>Total Volume</Td>
+                    <Td>{collectionStats?.totalVolume} CRO</Td>
+                  </Tr>
+                  <Tr>
+                    <Td>Total Items</Td>
+                    <Td>{collectionStats?.totalSupply}</Td>
+                  </Tr>
+                </>
+              ) : (
+                <Tr>
+                  <Td className="text-center">
+                    <Spinner animation="border" role="status" size="sm" className="ms-1">
+                      <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                  </Td>
+                </Tr>
+              )
+              }
             </Tbody>
           </Table>
         </TableContainer>
@@ -164,10 +177,10 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
     return (
       <div className="w-100">
         <div className="d-flex justify-content-center">
-          <Button type="legacy" className="me-2" onClick={onClose}>
+          <Button type="legacy-outlined" className="me-2" onClick={onClose}>
             Cancel
           </Button>
-          <Button type="legacy-outlined" onClick={executeBuy(listing?.price)}>
+          <Button type="legacy" onClick={executeBuy(listing?.price)}>
             Continue
           </Button>
         </div>
@@ -188,7 +201,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
                   <span className="d-flex fs-3 ms-1">
                     {listing ? (
                       <>
-                        <Image src="/img/logos/cdc_icon.svg" width={25} height={25} className="my-auto"/>
+                        <Image src="/img/logos/cdc_icon.svg" width={25} height={25} className="my-auto" />
                         <span className="ms-1">{ethers.utils.commify(listing.price)}</span>
                       </>
                     ) : (
@@ -269,7 +282,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
         listing={listing}
       />
       <div className='nftSaleForm'>
-        <Modal isCentered title={'This is an unverified collection'} body={ModalBody()} dialogActions={ModalFooter()} isOpen={isOpen} onClose={onClose}/>
+        <Modal isCentered title={'This is an unverified collection'} body={ModalBody()} dialogActions={ModalFooter()} isOpen={isOpen} onClose={onClose} />
       </div>
     </div>
   );
