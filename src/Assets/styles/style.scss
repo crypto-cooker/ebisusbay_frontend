@@ -5645,7 +5645,7 @@ iframe.metaverse {
       cursor: pointer;
       padding: 16px;
       border-bottom: 1px solid $borderColor1;
-
+      color: $textColor1 !important;
       &:hover {
         background: $bgColor3;
         color: #0d6efd;
