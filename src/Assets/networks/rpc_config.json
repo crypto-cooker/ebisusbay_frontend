@@ -9599,6 +9599,25 @@
         "twitter": "https://twitter.com/degenednfts",
         "discord": "https://discord.gg/N5YXhNDJyz"
       }
+    },
+    {
+      "name": "Defira Heroes",
+      "slug": "defira-heroes",
+      "multiToken": false,
+      "address": "0x49198cb9de084373300fa25f210ac2f26f85ad80",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Heroes are primeval spirits residing on the mystical plane that underpins the world of Defira. They are not only great warriors and masters of magic, but they also perform the vital jobs that make the world prosperous. They are summoned in a magical Wishing Ritual by combining the souls of two other heroes.",
+        "verified": false,
+        "avatar": "/img/collections/defira-heroes/avatar.webp",
+        "card": "/img/collections/defira-heroes/card.webp",
+        "banner": "/img/collections/defira-heroes/banner.webp",
+        "maxSupply": 5385,
+        "website": "https://game.defira.com/#/game/herohall?modal=hero-catalog/",
+        "twitter": "https://www.twitter.com/Defiraverse",
+        "discord": "https://discord.gg/rg4MjQfnfY"
+      }
     }
   ],
   "drops": [
