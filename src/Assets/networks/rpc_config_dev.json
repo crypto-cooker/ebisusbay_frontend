@@ -9580,6 +9580,25 @@
         "medium": "https://medium.com/@drdao.club",
         "telegram": "https://t.me/DrDaoFounder"
       }
+    },
+    {
+      "name": "Degenerated & Friends V1",
+      "slug": "degenerated-friends-v1",
+      "multiToken": false,
+      "address": "0xd79a37824bD86e4E945e8385480de3c45B7e5B08",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The first collaborative collection on Cronos, delivered by The Degenerated X CroDoo, this series of AI-generated wallpapers features art from six totally different and completely unique projects, together into one mint.",
+        "verified": false,
+        "avatar": "/img/collections/degenerated-friends-v1/avatar.webp",
+        "card": "/img/collections/degenerated-friends-v1/card.webp",
+        "banner": "/img/collections/degenerated-friends-v1/banner.webp",
+        "maxSupply": 3000,
+        "website": "https://babymonsters.ca/degendoo-mint/",
+        "twitter": "https://twitter.com/degenednfts",
+        "discord": "https://discord.gg/N5YXhNDJyz"
+      }
     }
   ],
   "drops": [
