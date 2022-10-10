@@ -196,12 +196,18 @@ const Cart = function () {
                         />
                       </Box>
                       <Box flex='1' ms={2}>
-                        <VStack align="left">
-
+                        <VStack align="left" spacing={0}>
                           <Link href={`/collection/${nft.address}/${nft.id}`} passHref>
                             <NftLink name={nft.name} />
                           </Link>
-                          <Text>{(nft.price)} CRO</Text>
+                          {nft.rank && (
+                            <Box>
+                              <Badge variant='solid' colorScheme='blue'>
+                                Rank: {nft.rank}
+                              </Badge>
+                            </Box>
+                          )}
+                          <Text>{commify(nft.price)} CRO</Text>
                           {invalidItems.includes(nft.listingId) && (
                             <Badge variant='outline' colorScheme='red'>
                               Listing has been sold
