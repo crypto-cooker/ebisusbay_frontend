@@ -7038,10 +7038,10 @@
     "invariant" "^2.2.4"
     "tslib" "^2.0.0"
 
-"react-toastify@^8.1.0":
-  "integrity" "sha512-Pg2Ju7NngAamarFvLwqrFomJ57u/Ay6i6zfLurt/qPynWkAkOthu6vxfqYpJCyNhHRhR4hu7+bySSeWWJu6PAg=="
-  "resolved" "https://registry.npmjs.org/react-toastify/-/react-toastify-8.2.0.tgz"
-  "version" "8.2.0"
+"react-toastify@^9.0.8":
+  "integrity" "sha512-EwM+teWt49HSHx+67qI08yLAW1zAsBxCXLCsUfxHYv1W7/R3ZLhrqKalh7j+kjgPna1h5LQMSMwns4tB4ww2yQ=="
+  "resolved" "https://registry.npmjs.org/react-toastify/-/react-toastify-9.0.8.tgz"
+  "version" "9.0.8"
   dependencies:
     "clsx" "^1.1.1"
 

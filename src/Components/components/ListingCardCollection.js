@@ -141,7 +141,7 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark })
 
   const handleRemoveFromCart = () => {
     dispatch(removeFromCart(listing.listingId));
-    toast.success('Removed to cart');
+    toast.success('Removed from cart');
   };
 
   const handleOpenOriginal = () => {

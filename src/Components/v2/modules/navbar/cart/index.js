@@ -1,7 +1,7 @@
 import React, {forwardRef, memo, useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faShoppingBag, faSync, faTrash} from '@fortawesome/free-solid-svg-icons';
+import {faShoppingBag, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {
   Badge,
   Box, Center,
@@ -11,7 +11,7 @@ import {
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
-  DrawerOverlay, Flex, Spacer, Text, useColorModeValue, VStack
+  DrawerOverlay, Flex, Spacer, Text, useBreakpointValue, useColorModeValue, VStack, Wrap
 } from "@chakra-ui/react";
 import {getListingsByIds} from "@src/core/api/next/listings";
 import {acknowledgePrompt, clearCart, removeFromCart, syncStorage} from "@src/GlobalState/cartSlice";
@@ -34,8 +34,18 @@ const Cart = function () {
   const cart = useSelector((state) => state.cart);
   const [showMenu, setShowMenu] = useState(false);
   const [executingBuy, setExecutingBuy] = useState(false);
+  const [soldItems, setSoldItems] = useState([]);
   const [invalidItems, setInvalidItems] = useState([]);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
+  const slideDirection = useBreakpointValue(
+    {
+      base: 'bottom',
+      md: 'right',
+    },
+    {
+      fallback: 'md',
+    },
+  )
 
   useEffect(() => {
     if (cart.shouldPrompt) {
@@ -43,6 +53,21 @@ const Cart = function () {
       dispatch(acknowledgePrompt());
     }
   }, [cart]);
+
+  useEffect(() => {
+    validateItems();
+  }, [cart]);
+
+  const validateItems = () => {
+    setInvalidItems([]);
+    const invalid = [];
+    for (let item of cart.nfts) {
+      if (isNaN(parseInt(item.price))) {
+        invalid.push(item.listingId);
+      }
+    }
+    setInvalidItems(invalid);
+  };
 
   const handleClose = () => {
     setShowMenu(false);
@@ -59,7 +84,10 @@ const Cart = function () {
   }, [showMenu]);
 
   const calculateTotalPrice = () => {
-    return cart.nfts.reduce((p, n) => p + parseInt(n.price), 0);
+    return cart.nfts.reduce((p, n) => {
+      const price = parseInt(n.price);
+      return p + isNaN(price) ? 0 : price;
+    }, 0);
   }
 
   const executeBuy = async () => {
@@ -89,10 +117,10 @@ const Cart = function () {
           const invalidItems = cart.nfts
             .filter((o) => o.listingId !== o)
             .map((o) => o.listingId);
-          setInvalidItems(invalidItems);
+          setSoldItems(invalidItems);
           return;
         }
-        setInvalidItems([]);
+        setSoldItems([]);
 
         await executeBuy();
       } catch (error) {
@@ -130,7 +158,7 @@ const Cart = function () {
         <Text fontWeight="bold" noOfLines={2}>{name}</Text>
       </a>
     )
-  })
+  });
 
   useEffect(() => {
     const onReceiveMessage = (e) => {
@@ -161,6 +189,7 @@ const Cart = function () {
         isOpen={showMenu}
         onClose={handleClose}
         size="sm"
+        placement={slideDirection}
       >
         <DrawerOverlay />
         <DrawerContent>
@@ -207,12 +236,25 @@ const Cart = function () {
                               </Badge>
                             </Box>
                           )}
-                          <Text>{commify(nft.price)} CRO</Text>
-                          {invalidItems.includes(nft.listingId) && (
-                            <Badge variant='outline' colorScheme='red'>
-                              Listing has been sold
-                            </Badge>
+                          {nft.price && (
+                            <Text>{commify(nft.price)} CRO</Text>
                           )}
+                          <Wrap>
+                            {soldItems.includes(nft.listingId) && (
+                              <Box>
+                                <Badge variant='outline' colorScheme='red'>
+                                  Listing sold
+                                </Badge>
+                              </Box>
+                            )}
+                            {invalidItems.includes(nft.listingId) && (
+                              <Box>
+                                <Badge variant='outline' colorScheme='red'>
+                                  Listing invalid
+                                </Badge>
+                              </Box>
+                            )}
+                          </Wrap>
                         </VStack>
                       </Box>
                       <Box ms={2} cursor="pointer" my="auto" onClick={() => handleRemoveItem(nft)}>
@@ -247,7 +289,7 @@ const Cart = function () {
                 className="w-100"
                 title="Refresh Metadata"
                 onClick={preparePurchase}
-                disabled={!cart.nfts.length > 0 || executingBuy}
+                disabled={!cart.nfts.length > 0 || executingBuy || invalidItems.length > 0 || soldItems.length > 0}
                 isLoading={executingBuy}
               >
                 Complete Purchase

@@ -6482,6 +6482,11 @@
         "twitter": "https://twitter.com/CroWitches",
         "discord": "https://discord.gg/VrC2e4GNVR",
         "telegram": "https://t.me/crowitches"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -9178,6 +9183,11 @@
         "twitter": "https://twitter.com/CroWitches",
         "discord": "https://discord.gg/VrC2e4GNVR",
         "telegram": "https://t.me/crowitches"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -9198,6 +9208,11 @@
         "twitter": "https://twitter.com/CroWitches",
         "discord": "https://discord.gg/VrC2e4GNVR",
         "telegram": "https://t.me/crowitches"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
