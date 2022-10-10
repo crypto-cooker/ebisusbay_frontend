@@ -11,7 +11,7 @@ import {
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
-  DrawerOverlay, Flex, Spacer, Text, useColorModeValue, VStack
+  DrawerOverlay, Flex, Spacer, Text, useBreakpointValue, useColorModeValue, VStack
 } from "@chakra-ui/react";
 import {getListingsByIds} from "@src/core/api/next/listings";
 import {acknowledgePrompt, clearCart, removeFromCart, syncStorage} from "@src/GlobalState/cartSlice";
@@ -36,6 +36,15 @@ const Cart = function () {
   const [executingBuy, setExecutingBuy] = useState(false);
   const [invalidItems, setInvalidItems] = useState([]);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
+  const slideDirection = useBreakpointValue(
+    {
+      base: 'bottom',
+      md: 'right',
+    },
+    {
+      fallback: 'md',
+    },
+  )
 
   useEffect(() => {
     if (cart.shouldPrompt) {
@@ -161,6 +170,7 @@ const Cart = function () {
         isOpen={showMenu}
         onClose={handleClose}
         size="sm"
+        placement={slideDirection}
       >
         <DrawerOverlay />
         <DrawerContent>
