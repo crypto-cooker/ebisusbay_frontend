@@ -150,7 +150,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, collection
 
   const handleRemoveFromCart = () => {
     dispatch(removeFromCart(nft.market.id));
-    toast.success('Removed to cart');
+    toast.success('Removed from cart');
   };
 
   const handleOpenOriginal = () => {
