@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {getNftsForAddress2} from "@src/core/api";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {Collapse, Spinner} from "react-bootstrap";
+import {Spinner} from "react-bootstrap";
 import MyNftCard from "@src/Components/components/MyNftCard";
 import {caseInsensitiveCompare, findCollectionByAddress} from "@src/utils";
 import NftCard from "@src/Components/components/NftCard";
@@ -19,6 +19,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faFilter} from "@fortawesome/free-solid-svg-icons";
 import useBreakpoint from "use-breakpoint";
 import TransferNftDialog from "@src/Components/Account/Profile/Dialogs/TransferNftDialog";
+import {addToBatchListingCart, removeFromBatchListingCart} from "@src/GlobalState/batchListingSlice";
 
 const knownContracts = appConfig('collections');
 
@@ -120,6 +121,8 @@ export default function Inventory({ address }) {
                           dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
                         }}
                         onCancelButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageCancelDialog(nft))}
+                        onAddToBatchListingButtonPressed={() => dispatch(addToBatchListingCart(nft))}
+                        onRemoveFromBatchListingButtonPressed={() => dispatch(removeFromBatchListingCart(nft))}
                         newTab={true}
                       />
                     ) : collection && (

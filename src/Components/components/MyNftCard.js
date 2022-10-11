@@ -2,17 +2,26 @@ import React, {memo, useState} from 'react';
 import { useRouter } from 'next/router';
 import { ethers } from 'ethers';
 import { toast } from 'react-toastify';
-import { faLink, faEllipsisH, faExchangeAlt, faTag, faTimes, faPen } from '@fortawesome/free-solid-svg-icons';
+import {
+  faLink,
+  faEllipsisH,
+  faExchangeAlt,
+  faTag,
+  faTimes,
+  faPen,
+  faPlusCircle, faCheckCircle
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import  { MenuPopup } from '../components/chakra-components';
 import AnyMedia from './AnyMedia';
 import {appConfig} from "@src/Config";
 import {nftCardUrl} from "@src/helpers/image";
-import {Badge, Box, Center, Flex, Heading, Spacer, Text} from "@chakra-ui/react";
+import {Badge, Box, Center, Flex, Heading, Icon, Spacer, Text} from "@chakra-ui/react";
 import Image from "next/image";
-import {round} from "@src/utils";
+import {caseInsensitiveCompare, round} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {darkTheme, lightTheme} from "@src/Theme/theme";
+import {useSelector} from "react-redux";
 
 const MyNftCard = ({
   nft,
@@ -25,18 +34,29 @@ const MyNftCard = ({
   onSellButtonPressed,
   onCancelButtonPressed,
   onUpdateButtonPressed,
+  onAddToBatchListingButtonPressed,
+  onRemoveFromBatchListingButtonPressed,
   newTab = false,
-  imgClass = 'marketplace',
 }) => {
   const history = useRouter();
   const [isHovered, setIsHovered] = useState(false);
+  const user = useSelector((state) => state.user);
+  const batchListingCart = useSelector((state) => state.batchListing);
 
   const navigateTo = (link) => {
-    if (newTab) {
+    if (batchListingCart.isDrawerOpen) {
+      if (isInBatchListingCart()) {
+        onRemoveFromBatchListingButtonPressed();
+      } else {
+        onAddToBatchListingButtonPressed();
+      }
+    } else if (newTab) {
       window.open(link, '_blank');
     } else {
       history.push(link);
     }
+
+
   };
 
   const nftUrl = () => {
@@ -89,6 +109,10 @@ const MyNftCard = ({
     return options;
   };
 
+  const isInBatchListingCart = () => {
+    return batchListingCart.nfts.some((o) => o.nft.id === nft.id && caseInsensitiveCompare(o.nft.address, nft.address));
+  };
+
   return (
     <Box
       className="card eb-nft__card h-100 shadow"
@@ -109,14 +133,45 @@ const MyNftCard = ({
         height="100%"
       >
         <Flex direction="column" height="100%">
-          <div className="card-img-container">
+          <div className="card-img-container position-relative">
+            {isInBatchListingCart() ? (
+              <Box
+                top={0}
+                right={0}
+                position="absolute"
+                zIndex={2}
+                p={2}
+                cursor="pointer"
+                onClick={onRemoveFromBatchListingButtonPressed}
+              >
+                <FontAwesomeIcon icon={faCheckCircle} size="xl"/>
+              </Box>
+            ) : (
+              <Box
+                _groupHover={{display:'inline', transition:'0.3s ease', opacity: 0.5}}
+                transition="0.3s ease"
+                display="inline"
+                top={0}
+                right={0}
+                position="absolute"
+                zIndex={2}
+                p={2}
+                opacity={0}
+                cursor="pointer"
+                onClick={onAddToBatchListingButtonPressed}
+              >
+                <FontAwesomeIcon icon={faPlusCircle} size="xl" />
+              </Box>
+            )}
             <Box
               _groupHover={{transform:'scale(1.05)', transition:'0.3s ease'}}
               transition="0.3s ease"
               transform="scale(1.0)"
+              onClick={() => navigateTo(nftUrl())}
+              cursor="pointer"
             >
               <AnyMedia image={nftCardUrl(nft.address, nft.image)}
-                        title={nft.name} url={nftUrl()}
+                        title={nft.name}
                         newTab={true}
                         className="card-img-top marketplace"
                         height={440}

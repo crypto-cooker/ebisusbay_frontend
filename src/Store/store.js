@@ -17,6 +17,7 @@ import { appInitializeStateReducer } from '../GlobalState/InitSlice';
 import offerReducer from '../GlobalState/offerSlice';
 import leaderBoardReducer from '../GlobalState/leaderBoardSlice';
 import cartReducer from '../GlobalState/cartSlice';
+import batchListingReducer from '../GlobalState/batchListingSlice';
 import { user } from '../GlobalState/User';
 
 const rootReducer = combineReducers({
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
   metaverse: metaverseReducer,
   leaderBoard: leaderBoardReducer,
   cart: cartReducer,
+  batchListing: batchListingReducer,
 });
 
 const reduxDevToolsComposeEnhancers =
