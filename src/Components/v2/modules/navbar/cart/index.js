@@ -86,7 +86,7 @@ const Cart = function () {
   const calculateTotalPrice = () => {
     return cart.nfts.reduce((p, n) => {
       const price = parseInt(n.price);
-      return p + isNaN(price) ? 0 : price;
+      return p + (isNaN(price) ? 0 : price);
     }, 0);
   }
 
