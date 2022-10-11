@@ -4384,6 +4384,38 @@
       "is1155": false,
       "published": true,
       "complete": false
+    },
+    {
+      "id": 122,
+      "slug": "lion-social-club",
+      "imgNft": "/img/drops/lion-social-club/drop.webp",
+      "imgPreview": "/img/drops/lion-social-club/drop.webp",
+      "imgAvatar": "/img/collections/lion-social-club/avatar.webp",
+      "imgBanner": "/img/collections/lion-social-club/banner.webp",
+      "title": "Lion Social Club",
+      "subtitle": "Lion Social Club is minting our first collection, each NFT is unique and holds special utility. LSC aims to bring a community based DEX and DAO that puts the community first and gives each holder a voice with our utility based roadmap.",
+      "description": "Benefits of Lion Social Club \uD83E\uDD81\nDAO governance voting in future tokens we launch to benefit the ecosystem.\n3% bonus in farming pool that earns $ROAR token. \nEntry in our giveaways\nRevenue sharing from secondary marketplace (4% from secondary marketplace + 4% to Lion Den DAO).\nFuture mints generate revenue for Gen 0 collection of Lion Social Club (Amount will be voted on).\nCustom 1 of 1 NFTs for top holders from our world renounced artist. \n\n\n20% Minted - 1000 CRO Giveaway to random holders.\n40% Minted - 5 LSC NFT Airdrop to random holder. \n60% Minted - 2500 CRO Giveaway to random holders.\n80% Minted - 2 Croskull Giveaway to random holders.\n100% Minted - 5000 CRO Giveaway to random holders.",
+      "author": {
+        "name": "Lion Social Club",
+        "website": "https://lionsocialclub.io/",
+        "twitter": "https://twitter.com/LionSocialClub",
+        "discord": "https://discord.gg/WdgfBzYTKX",
+        "medium": "https://lion-social.gitbook.io/lion-social-club/"
+      },
+      "address": "",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 100,
+      "totalSupply": 2500,
+      "cost": "500",
+      "memberCost": "420",
+      "whitelistCost": "420",
+      "foundersOnly": false,
+      "start": 1666468800000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
     }
   ]
 }
