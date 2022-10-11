@@ -9639,7 +9639,7 @@
       },
       "verification": {
         "doxx": "private",
-        "kyc": false,
+        "kyc": "ebisu",
         "escrow": false
       }
     },
@@ -9661,6 +9661,11 @@
         "twitter": "https://twitter.com/LionSocialClub",
         "discord": "https://discord.gg/WdgfBzYTKX",
         "medium": "https://lion-social.gitbook.io/lion-social-club/"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -9680,6 +9685,11 @@
         "website": "https://loveisgrey.art/",
         "discord": "https://discord.gg/t3DM6pNAWb",
         "instagram": "https://instagram.com/lov3is_grey"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -9699,6 +9709,11 @@
         "website": "https://thenewresistance.io/",
         "twitter": "https://twitter.com/TNR_NFT_GAME",
         "discord": "https://discord.gg/tnr"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
