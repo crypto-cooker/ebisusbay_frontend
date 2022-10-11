@@ -263,44 +263,44 @@ const Home = () => {
       </Jumbotron.Host>
       {mobile && JumbotronData()}
 
-      <section className="gl-legacy container no-bottom no-top">
-        <div className="row">
-          <div className="col-lg-12">
-            <div className="text-center pt-5">
-              <Heading>The Meanies</Heading>
-              <div className="small-border"></div>
-            </div>
-          </div>
-          <div className="col-lg-6 col-md-6 d-flex align-items-center">
-            <div className="mt-3" style={{color:getTheme(userTheme).colors.textColor3}}>
-              <p className="fs-5 mb-4">
-                The Meanies are a collection of 2,500 uniquely generated NFTs and the 2nd character of the Lost Toys project. Each NFT is based on 7 trait categories with different rarities. A Lost Toy NFT is not simply an NFT it is a key to unlocking over 15 utilities!
-              </p>
-            </div>
-          </div>
-          <div className="col-lg-6 col-md-6 pt-3">
-            <div className="mx-auto text-center">
-              <img
-                src={hostedImage('/img/promos/meanies.webp')}
-                alt="Meanies"
-                className="img-fluid"
-                width="100%"
-              />
-            </div>
-            <div className="d-flex flex-column align-middle">
-              <div className="d-flex justify-content-between flex-wrap">
-                <div className="flex-fill mx-auto mt-2" style={{maxWidth:300}}>
-                  <a href="/drops/the-meanies">
-                    <Button type="legacy" className="w-100">
-                       Mint Now
-                    </Button>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/*<section className="gl-legacy container no-bottom no-top">*/}
+      {/*  <div className="row">*/}
+      {/*    <div className="col-lg-12">*/}
+      {/*      <div className="text-center pt-5">*/}
+      {/*        <Heading>The Meanies</Heading>*/}
+      {/*        <div className="small-border"></div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*    <div className="col-lg-6 col-md-6 d-flex align-items-center">*/}
+      {/*      <div className="mt-3" style={{color:getTheme(userTheme).colors.textColor3}}>*/}
+      {/*        <p className="fs-5 mb-4">*/}
+      {/*          The Meanies are a collection of 2,500 uniquely generated NFTs and the 2nd character of the Lost Toys project. Each NFT is based on 7 trait categories with different rarities. A Lost Toy NFT is not simply an NFT it is a key to unlocking over 15 utilities!*/}
+      {/*        </p>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*    <div className="col-lg-6 col-md-6 pt-3">*/}
+      {/*      <div className="mx-auto text-center">*/}
+      {/*        <img*/}
+      {/*          src={hostedImage('/img/promos/meanies.webp')}*/}
+      {/*          alt="Meanies"*/}
+      {/*          className="img-fluid"*/}
+      {/*          width="100%"*/}
+      {/*        />*/}
+      {/*      </div>*/}
+      {/*      <div className="d-flex flex-column align-middle">*/}
+      {/*        <div className="d-flex justify-content-between flex-wrap">*/}
+      {/*          <div className="flex-fill mx-auto mt-2" style={{maxWidth:300}}>*/}
+      {/*            <a href="/drops/the-meanies">*/}
+      {/*              <Button type="legacy" className="w-100">*/}
+      {/*                 Mint Now*/}
+      {/*              </Button>*/}
+      {/*            </a>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</section>*/}
 
       <section className="gl-legacy container no-bottom">
         <div className="row">
