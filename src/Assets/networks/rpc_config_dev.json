@@ -9681,6 +9681,25 @@
         "discord": "https://discord.gg/t3DM6pNAWb",
         "instagram": "https://instagram.com/lov3is_grey"
       }
+    },
+    {
+      "name": "Renegade Monks",
+      "slug": "renegade-monks",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "☆ 1,000 Collectable Renegade Monks ☆\n\nMint your Monk and fight with The New Resistance!",
+        "verified": true,
+        "avatar": "/img/collections/renegade-monks/avatar.webp",
+        "card": "/img/collections/renegade-monks/card.webp",
+        "banner": "/img/collections/renegade-monks/banner.webp",
+        "maxSupply": 1337,
+        "website": "https://thenewresistance.io/",
+        "twitter": "https://twitter.com/TNR_NFT_GAME",
+        "discord": "https://discord.gg/tnr"
+      }
     }
   ],
   "drops": [
@@ -13223,6 +13242,37 @@
       "referral": false,
       "is1155": false,
       "published": false,
+      "complete": false
+    },
+    {
+      "id": 123,
+      "slug": "renegade-monks",
+      "imgNft": "/img/drops/renegade-monks/drop.webp",
+      "imgPreview": "/img/drops/renegade-monks/drop.webp",
+      "imgAvatar": "/img/collections/renegade-monks/avatar.webp",
+      "imgBanner": "/img/collections/renegade-monks/banner.webp",
+      "title": "Renegade Monks",
+      "subtitle": "☆ 1,000 Collectable Renegade Monks ☆\n\nMint your Monk and fight with The New Resistance!",
+      "description": "☆ 1,000 Collectable Renegade Monks ☆\n\n• 10 collectable Monks\n• Playable in-game on reveal\n• Renegades have varying rarities and stats\n• Unique weapons for each Renegade\n• Unique special abilities and ultimates\n• $25 worth of RP (Resistance Points) per NFT\n• $TNR token airdrops at TGE\n\n☆ Collect four Renegade Monks to unlock the Exotic Golden Buddha ☆",
+      "author": {
+        "name": "Renegade Monks",
+        "website": "https://thenewresistance.io/",
+        "twitter": "https://twitter.com/TNR_NFT_GAME",
+        "discord": "https://discord.gg/tnr"
+      },
+      "address": "",
+      "maxMintPerTx": 20,
+      "maxMintPerAddress": 20,
+      "totalSupply": 1337,
+      "cost": "450",
+      "memberCost": "400",
+      "whitelistCost": "400",
+      "foundersOnly": false,
+      "start": 1666900800000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
       "complete": false
     }
   ]
