@@ -9500,22 +9500,22 @@
       }
     },
     {
-      "name": "KillaCats",
-      "slug": "killacats",
+      "name": "KillaCatZ",
+      "slug": "killacatz",
       "multiToken": false,
       "address": "0x6DC9bfA5E2D8645aA5245CCCdA69e8BD0aBfEb5E",
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "KillaKatz - A Community Driven Rebirth Collection of 3000 Battle Hardened NFTs",
+        "description": "KillaKatZ - A Community Driven Rebirth Collection of 3000 Battle Hardened NFTs",
         "verified": false,
-        "avatar": "/img/collections/killacats/avatar.webp",
-        "card": "/img/collections/killacats/card.webp",
-        "banner": "/img/collections/killacats/banner.webp",
+        "avatar": "/img/collections/killacatz/avatar.webp",
+        "card": "/img/collections/killacatz/card.webp",
+        "banner": "/img/collections/killacatz/banner.webp",
         "maxSupply": 3000,
-        "website": "https://killacats.com/",
-        "twitter": "https://twitter.com/KillaCats",
-        "discord": "https://discord.gg/AVqDK99a"
+        "website": "http://killakatznft.com/",
+        "twitter": "https://twitter.com/KillaKatzNFT",
+        "discord": "https://discord.gg/EfK28j74"
       }
     },
     {

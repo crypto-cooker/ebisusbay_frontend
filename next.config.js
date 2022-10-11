@@ -100,6 +100,16 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/collection/killacats',
+        destination: '/collection/killacatz',
+        permanent: true,
+      },
+      {
+        source: '/collection/killacats/:id',
+        destination: '/collection/killacatz/:id',
+        permanent: true,
+      },
+      {
         source: '/mad-auction',
         destination: '/auctions/mad-auction',
         permanent: false,
