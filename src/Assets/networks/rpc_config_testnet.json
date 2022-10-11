@@ -1618,7 +1618,7 @@
       "multiToken": false,
       "address": "0x6D8E071C38a6386EA8BDBa0d4022C3c4645c1792",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300k CRO will be distributed to DAO members.",
         "verified": true,
@@ -1662,7 +1662,7 @@
       "multiToken": false,
       "address": "0xa2Dd607A92252daf79901d04c6eB871B95e31ddE",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "God hates all crofam!!! This is strictly a pfp project with no utility. Why no utility… because god hates you. Now go away.",
         "verified": true,
@@ -1705,7 +1705,7 @@
       "multiToken": false,
       "address": "0xFec1D8AcBCBaDDC00cec22D544854E2fD938cF05",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Trillionaire Trashcans - A 10,000 uniquely created PFP project coming to you. As you may have heard the TTC NFT project has some of the best giveaways the Cronos chain has seen. We pride ourselves on how much we can give back to the community; that’s why we will be giving away a LAMBO to one lucky minter. In order to be entered into the WenLambo giveaway, you must get lucky and mint 1 of 500 Trashcans that wear the Golden Key Earring!",
         "verified": true,
@@ -1729,7 +1729,7 @@
       "multiToken": false,
       "address": "0xbFFE791a74Ac0BC08a55853F9A41f6B073752e2F",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "World of Cats is a handcrafted collection of 4444 Unique NFTs created by the artist Tam4tik with utility that is tied to the real world.\nEach with their own identity to be discovered by its founder. \nIn its purest form, WORLD OF CATS is the art of storytelling.\nCurated By:  HiddenFishDAO™",
         "verified": true,
@@ -1753,7 +1753,7 @@
       "multiToken": false,
       "address": "0x449e8DcD04f7E232Ee669090799FA30aE778851d",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Meanies are a collection of 2,500 uniquely generated NFTs and the 2nd character of the Lost Toys project. Each NFT is based on 7 trait categories with different rarities. A Lost Toy NFT is not simply an NFT it is a key to unlocking over 15 utilities!",
         "verified": true,
@@ -1779,7 +1779,7 @@
       "multiToken": false,
       "address": "0xd324C3B5e160266A858c7B35968e7d9eAD8cfE59",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "5555 Lucky Finger Monkeys are about to hit Cronos. Lookout for the interactive platform!",
         "verified": true,
@@ -1802,7 +1802,7 @@
       "multiToken": false,
       "address": "0x0F23564e371c4321d760a58C4b40349f3C5F9850",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A collection of 1,888 access cards, featuring 3D Spiteful Sea Creatures - the turtle, octopus, and the shark. The character and purpose of the models reflects the desire of their owners - further develop and bring change to the NFT market and the Web3 space as a whole. Setting new standards and trends requires a group of convinced individuals who come together to set in motion a wave that will eventually sweep an entire sea with it.",
         "verified": true,
@@ -1827,7 +1827,7 @@
       "multiToken": false,
       "address": "0x52795c4B3aC043990076947013c71BE1eC0c3123",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "V2 Fighters are HERE! Now grab a Fighter you love, make upgrades, earn tokens and battle them out in a head to head fight!",
         "verified": true,
@@ -1873,7 +1873,7 @@
       "multiToken": false,
       "address": "0xFa6D6607E6850bBB10bD48370C99aB9C985BF759",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The \"Whale Family\" features a collection of 5,555 fun & vibrant Whale\nPFPs swimming on the Cronos blockchain with different levels of rarity \nfrom over 160 hand-drawn traits by Barbara Redekop.",
         "verified": true,
@@ -1899,7 +1899,7 @@
       "multiToken": false,
       "address": "0x04bc90269D272078B1d5f2CB9969836162ACE0AA",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Devil Loves Cro Fam is a pfp project only with no roadmap or utility. Unless you call going to hell a utility!",
         "verified": true,
@@ -1922,7 +1922,7 @@
       "multiToken": false,
       "address": "",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Evolution Hogs is a collection of 3333 characters generated randomly. All are on the Cronos Chain with unique identity and rarity.",
         "verified": true,
@@ -1938,6 +1938,45 @@
         "doxx": "private",
         "kyc": false,
         "escrow": false
+      }
+    },
+    {
+      "name": "Lion Social Club",
+      "slug": "lion-social-club",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Lion Social Club is minting our first collection, each NFT is unique and holds special utility. LSC aims to bring a community based DEX and DAO that puts the community first and gives each holder a voice with our utility based roadmap.",
+        "verified": true,
+        "avatar": "/img/collections/lion-social-club/avatar.webp",
+        "card": "/img/collections/lion-social-club/card.webp",
+        "banner": "/img/collections/lion-social-club/banner.webp",
+        "maxSupply": 2500,
+        "website": "https://lionsocialclub.io/",
+        "twitter": "https://twitter.com/LionSocialClub",
+        "discord": "https://discord.gg/WdgfBzYTKX",
+        "medium": "https://lion-social.gitbook.io/lion-social-club/"
+      }
+    },
+    {
+      "name": "Grey_hart's Broken Hearts",
+      "slug": "broken-hearts",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Broken Hearts collection is a line of 101 tarot cards created by the musician Grey_hart, using MIDJOURNEY’s AI software, all around the subject of a broken heart. Each 9x16 is a 1 of a kind image with varying themes and elements around heartbreak and the spiritual journey involved in getting through it. Some are astral guides, some spirit animals, some just metaphors and feelings made into imagery. If you’ve experienced heartbreak of any kind in your life, there’s sure to be an image that speaks to you in some form. ",
+        "verified": true,
+        "avatar": "/img/collections/broken-hearts/avatar.webp",
+        "card": "/img/collections/broken-hearts/card.webp",
+        "banner": "/img/collections/broken-hearts/banner.webp",
+        "maxSupply": 2500,
+        "website": "https://loveisgrey.art/",
+        "discord": "https://discord.gg/t3DM6pNAWb",
+        "instagram": "https://instagram.com/lov3is_grey"
       }
     }
   ],
@@ -4415,6 +4454,37 @@
       "referral": false,
       "is1155": false,
       "published": true,
+      "complete": false
+    },
+    {
+      "id": 122,
+      "slug": "broken-hearts",
+      "imgNft": "/img/drops/broken-hearts/drop.webp",
+      "imgPreview": "/img/drops/broken-hearts/drop.webp",
+      "imgAvatar": "/img/collections/broken-hearts/avatar.webp",
+      "imgBanner": "/img/collections/broken-hearts/banner.webp",
+      "title": "Grey_hart's Broken Hearts",
+      "subtitle": "The Broken Hearts collection is a line of 101 tarot cards created by the musician Grey_hart, using MIDJOURNEY’s AI software, all around the subject of a broken heart. Each 9x16 is a 1 of a kind image with varying themes and elements around heartbreak and the spiritual journey involved in getting through it. Some are astral guides, some spirit animals, some just metaphors and feelings made into imagery. If you’ve experienced heartbreak of any kind in your life, there’s sure to be an image that speaks to you in some form. ",
+      "description": "Grey_hart’s Broken Hearts NFT project is a visual art project that is bridging NFTs out of the metaverse and into the real world, by providing real-world utility to buying, holding and selling pieces of the collection. One of the main purposes of the project is to raise money for suicide prevention and mental illness awareness, while also providing additional startup funding to the music/visual projects of Grey_hart.\nA physical 18x32\" canvas print of your minted image(s) is included in mint cost!!",
+      "author": {
+        "name": "Grey_hart",
+        "website": "https://loveisgrey.art/",
+        "discord": "https://discord.gg/t3DM6pNAWb",
+        "instagram": "https://instagram.com/lov3is_grey"
+      },
+      "address": "",
+      "maxMintPerTx": 1,
+      "maxMintPerAddress": 2,
+      "totalSupply": 202,
+      "cost": "666",
+      "memberCost": "555",
+      "whitelistCost": "555",
+      "foundersOnly": false,
+      "start": 1667246400000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": false,
       "complete": false
     }
   ]

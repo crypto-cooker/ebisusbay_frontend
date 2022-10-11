@@ -9662,6 +9662,25 @@
         "discord": "https://discord.gg/WdgfBzYTKX",
         "medium": "https://lion-social.gitbook.io/lion-social-club/"
       }
+    },
+    {
+      "name": "Grey_hart's Broken Hearts",
+      "slug": "broken-hearts",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Broken Hearts collection is a line of 101 tarot cards created by the musician Grey_hart, using MIDJOURNEY’s AI software, all around the subject of a broken heart. Each 9x16 is a 1 of a kind image with varying themes and elements around heartbreak and the spiritual journey involved in getting through it. Some are astral guides, some spirit animals, some just metaphors and feelings made into imagery. If you’ve experienced heartbreak of any kind in your life, there’s sure to be an image that speaks to you in some form. ",
+        "verified": true,
+        "avatar": "/img/collections/broken-hearts/avatar.webp",
+        "card": "/img/collections/broken-hearts/card.webp",
+        "banner": "/img/collections/broken-hearts/banner.webp",
+        "maxSupply": 2500,
+        "website": "https://loveisgrey.art/",
+        "discord": "https://discord.gg/t3DM6pNAWb",
+        "instagram": "https://instagram.com/lov3is_grey"
+      }
     }
   ],
   "drops": [
@@ -13173,6 +13192,37 @@
       "referral": false,
       "is1155": false,
       "published": true,
+      "complete": false
+    },
+    {
+      "id": 122,
+      "slug": "broken-hearts",
+      "imgNft": "/img/drops/broken-hearts/drop.webp",
+      "imgPreview": "/img/drops/broken-hearts/drop.webp",
+      "imgAvatar": "/img/collections/broken-hearts/avatar.webp",
+      "imgBanner": "/img/collections/broken-hearts/banner.webp",
+      "title": "Grey_hart's Broken Hearts",
+      "subtitle": "The Broken Hearts collection is a line of 101 tarot cards created by the musician Grey_hart, using MIDJOURNEY’s AI software, all around the subject of a broken heart. Each 9x16 is a 1 of a kind image with varying themes and elements around heartbreak and the spiritual journey involved in getting through it. Some are astral guides, some spirit animals, some just metaphors and feelings made into imagery. If you’ve experienced heartbreak of any kind in your life, there’s sure to be an image that speaks to you in some form. ",
+      "description": "Grey_hart’s Broken Hearts NFT project is a visual art project that is bridging NFTs out of the metaverse and into the real world, by providing real-world utility to buying, holding and selling pieces of the collection. One of the main purposes of the project is to raise money for suicide prevention and mental illness awareness, while also providing additional startup funding to the music/visual projects of Grey_hart.\nA physical 18x32\" canvas print of your minted image(s) is included in mint cost!!",
+      "author": {
+        "name": "Grey_hart",
+        "website": "https://loveisgrey.art/",
+        "discord": "https://discord.gg/t3DM6pNAWb",
+        "instagram": "https://instagram.com/lov3is_grey"
+      },
+      "address": "",
+      "maxMintPerTx": 1,
+      "maxMintPerAddress": 2,
+      "totalSupply": 202,
+      "cost": "666",
+      "memberCost": "555",
+      "whitelistCost": "555",
+      "foundersOnly": false,
+      "start": 1667246400000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": false,
       "complete": false
     }
   ]
