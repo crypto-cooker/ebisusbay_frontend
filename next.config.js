@@ -101,12 +101,12 @@ const nextConfig = {
       },
       {
         source: '/collection/killacats',
-        destination: '/collection/killacatz',
+        destination: '/collection/killakatz',
         permanent: true,
       },
       {
         source: '/collection/killacats/:id',
-        destination: '/collection/killacatz/:id',
+        destination: '/collection/killakatz/:id',
         permanent: true,
       },
       {
