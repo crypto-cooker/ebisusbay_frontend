@@ -134,7 +134,7 @@ export const configData = {
       stake: '0x70A9989dd73B026B34462BE158963587dD9ca16f',
       offer: '0x8Dd84fb5d7f8A504BA2398243D768C604f8Daf5E',
       madAuction: '0x84356061d598A7bCE028dB6a37b14F84cf4A5905',
-      slothtyRugsurance: '0x99F3960E8219384BF0624D388cAD698d5A54AE6C',
+      slothtyRugsurance: '0xC54821941Bb036463bDB1eea781f9b29a7f98fAc',
     },
     tokens: {
       loot: {

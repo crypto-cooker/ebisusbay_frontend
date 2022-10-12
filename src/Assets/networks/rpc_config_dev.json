@@ -10005,6 +10005,45 @@
         "kyc": "ebisu",
         "escrow": false
       }
+    },
+    {
+      "name": "Bunny Blocks NFT",
+      "slug": "bunny-blocks-nft",
+      "multiToken": false,
+      "address": "0xF3D4cD84119CE89269760901AB93EC4D6bD5A534",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Bunny Blocks Finance is the first DEX on Cronos Chain to use a double reward token as native currency, each transaction is intended to remunerate our holders with $BUSD & $BBF.",
+        "verified": false,
+        "avatar": "/img/collections/bunny-blocks-nft/avatar.webp",
+        "banner": "/img/collections/bunny-blocks-nft/banner.webp",
+        "card": "/img/collections/bunny-blocks-nft/card.webp",
+        "maxSupply": 350,
+        "website": "https://www.bunnyblocks.finance/",
+        "twitter": "https://twitter.com/BunnyBlocks_Fi",
+        "telegram": "https://t.me/BunnyBlocksFinance"
+      }
+    },
+    {
+      "name": "Defiolio Lifetime Access NFT",
+      "slug": "defiolio-lifetime-access-nft",
+      "multiToken": false,
+      "address": "0xA68Abfc9DA70E7cF84E95945f44F646d15fE3084",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "This is an NFT that provides lifetime access to the Defiolio system and is also a cross-chain NFT that is able to be sent over to supported chains. Supported chains will be expanded upon as the project continues to develop. This will also be the only NFT collection that will have 25% profit-sharing!",
+        "verified": true,
+        "avatar": "/img/collections/defiolio-lifetime-access-nft/avatar.webp",
+        "banner": "/img/collections/defiolio-lifetime-access-nft/banner.webp",
+        "card": "/img/collections/defiolio-lifetime-access-nft/card.webp",
+        "maxSupply": 2000,
+        "website": "https://defiolio.com/",
+        "twitter": "https://twitter.com/DefiOlio",
+        "discord": "https://discord.gg/WxrA8Sj6q4",
+        "medium": "https://medium.com/@defiolio"
+      }
     }
   ],
   "drops": [
@@ -13558,7 +13597,7 @@
       "imgBanner": "/img/collections/renegade-monks/banner.webp",
       "title": "Renegade Monks",
       "subtitle": "☆ 1,337 Collectable Renegade Monks ☆\n\nMint your Monk and fight with The New Resistance!",
-      "description": "☆ 1,337 Collectable Renegade Monks ☆\n\n• 10 collectable Monks\n• Playable in-game on reveal\n• Renegades have varying rarities and stats\n• Unique weapons for each Renegade\n• Unique special abilities and ultimates\n• $25 worth of RP (Resistance Points) per NFT\n• $TNR token airdrops at TGE\n\n☆ Collect four Renegade Monks to unlock the Exotic Golden Buddha ☆",
+      "description": "☆ 1,337 Collectable Renegade Monks ☆\n\n• 10 collectable Monks\n• Playable in-game on reveal\n• Renegades have varying rarities and stats\n• Unique weapons for each Renegade\n• Unique special abilities and ultimates\n• $25 worth of RP (Resistance Points) per NFT\n• $TNR token airdrops at TGE\n\n☆ Collect 4 Renegade Monks to unlock exclusive in-game content ☆",
       "author": {
         "name": "Renegade Monks",
         "website": "https://thenewresistance.io/",

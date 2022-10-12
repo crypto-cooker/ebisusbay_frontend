@@ -7,7 +7,7 @@ const readProvider = new ethers.providers.JsonRpcProvider(appConfig('rpc.read'))
 let gatewayTools = new IPFSGatewayTools();
 const gateway = 'https://mygateway.mypinata.cloud';
 
-export const getSlothty721NftsFromWallet = async (collectionAddress, walletAddress) => {
+export const getCRC721NftsFromWallet = async (collectionAddress, walletAddress) => {
   const readContract = new Contract(collectionAddress, ERC721, readProvider);
 
   const count = await readContract.balanceOf(walletAddress);
@@ -30,7 +30,7 @@ export const getSlothty721NftsFromWallet = async (collectionAddress, walletAddre
   return nfts;
 };
 
-export const getSlothty721NftsFromIds = async (collectionAddress, tokenIds) => {
+export const getCRC721NftsFromIds = async (collectionAddress, tokenIds) => {
   const readContract = new Contract(collectionAddress, ERC721, readProvider);
 
   let nfts = [];
