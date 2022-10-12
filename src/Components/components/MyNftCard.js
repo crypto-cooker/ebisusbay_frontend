@@ -47,7 +47,7 @@ const MyNftCard = ({
     if (batchListingCart.isDrawerOpen) {
       if (isInBatchListingCart()) {
         onRemoveFromBatchListingButtonPressed();
-      } else {
+      } else if (canSell || canUpdate) {
         onAddToBatchListingButtonPressed();
       }
     } else if (newTab) {
@@ -158,7 +158,11 @@ const MyNftCard = ({
                 p={2}
                 opacity={0}
                 cursor="pointer"
-                onClick={onAddToBatchListingButtonPressed}
+                onClick={() => {
+                  if (canSell || canUpdate) {
+                    onAddToBatchListingButtonPressed()
+                  }
+                }}
               >
                 <FontAwesomeIcon icon={faPlusCircle} size="xl" />
               </Box>
