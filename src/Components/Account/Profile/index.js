@@ -18,8 +18,8 @@ import PageHead from "@src/Components/Head/PageHead";
 import {pushQueryString} from "@src/helpers/query";
 import {ethers} from "ethers";
 import {Badge} from "react-bootstrap";
-import {Box, Flex, Grid, GridItem, useColorModeValue} from "@chakra-ui/react";
-import { motion, useCycle } from 'framer-motion'
+import {Grid, GridItem, useColorModeValue} from "@chakra-ui/react";
+import { motion } from 'framer-motion'
 import {BatchListingDrawer} from "@src/Components/Account/Profile/Inventory/BatchListingDrawer";
 import {closeBatchListingCart} from "@src/GlobalState/batchListingSlice";
 
@@ -40,8 +40,6 @@ export default function Profile({ address, profile, tab }) {
   const batchListingCart = useSelector((state) => state.batchListing);
   const router = useRouter();
   const batchListingBorderColor = useColorModeValue('#000', '#FFF');
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [sidebarState, toggleSidebar] = useCycle('collapse', 'expand');
   const variants = {
     expand: { gridTemplateColumns: '1fr 358px' },
     collapse: { gridTemplateColumns: '1fr 0' },

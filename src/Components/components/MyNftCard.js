@@ -16,7 +16,7 @@ import  { MenuPopup } from '../components/chakra-components';
 import AnyMedia from './AnyMedia';
 import {appConfig} from "@src/Config";
 import {nftCardUrl} from "@src/helpers/image";
-import {Badge, Box, Center, Flex, Heading, Icon, Spacer, Text} from "@chakra-ui/react";
+import {Badge, Box, Center, Flex, Heading, Icon, Spacer, Text, useBreakpointValue} from "@chakra-ui/react";
 import Image from "next/image";
 import {caseInsensitiveCompare, round} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
@@ -43,6 +43,10 @@ const MyNftCard = ({
   const [isHovered, setIsHovered] = useState(false);
   const user = useSelector((state) => state.user);
   const batchListingCart = useSelector((state) => state.batchListing);
+  const canUseBatchListing = useBreakpointValue(
+    {base: false, md: true,},
+    {fallback: 'md'},
+  )
 
   const navigateTo = (link) => {
     if (batchListingCart.isDrawerOpen) {
@@ -135,38 +139,42 @@ const MyNftCard = ({
       >
         <Flex direction="column" height="100%">
           <div className="card-img-container position-relative">
-            {isInBatchListingCart() ? (
-              <Box
-                top={0}
-                right={0}
-                position="absolute"
-                zIndex={2}
-                p={2}
-                cursor="pointer"
-                onClick={onRemoveFromBatchListingButtonPressed}
-              >
-                <FontAwesomeIcon icon={faCheckCircle} size="xl" style={{background:'dodgerblue', color:'white'}} className="rounded-circle"/>
-              </Box>
-            ) : (
-              <Box
-                _groupHover={{display:'inline', transition:'0.3s ease', opacity: 1}}
-                transition="0.3s ease"
-                display="inline"
-                opacity={0}
-                top={0}
-                right={0}
-                position="absolute"
-                zIndex={2}
-                p={2}
-                cursor="pointer"
-                onClick={() => {
-                  if (canSell || canUpdate) {
-                    onAddToBatchListingButtonPressed()
-                  }
-                }}
-              >
-                <FontAwesomeIcon icon={faPlusCircle} size="xl" style={{background:'white', color:'grey'}} className="rounded-circle" />
-              </Box>
+            {canUseBatchListing && (
+              <>
+                {isInBatchListingCart() ? (
+                  <Box
+                    top={0}
+                    right={0}
+                    position="absolute"
+                    zIndex={2}
+                    p={2}
+                    cursor="pointer"
+                    onClick={onRemoveFromBatchListingButtonPressed}
+                  >
+                    <FontAwesomeIcon icon={faCheckCircle} size="xl" style={{background:'dodgerblue', color:'white'}} className="rounded-circle"/>
+                  </Box>
+                ) : (
+                  <Box
+                    _groupHover={{display:'inline', transition:'0.3s ease', opacity: 1}}
+                    transition="0.3s ease"
+                    display="inline"
+                    opacity={0}
+                    top={0}
+                    right={0}
+                    position="absolute"
+                    zIndex={2}
+                    p={2}
+                    cursor="pointer"
+                    onClick={() => {
+                      if (canSell || canUpdate) {
+                        onAddToBatchListingButtonPressed()
+                      }
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faPlusCircle} size="xl" style={{background:'white', color:'grey'}} className="rounded-circle" />
+                  </Box>
+                )}
+              </>
             )}
             <Box
               _groupHover={{transform:'scale(1.05)', transition:'0.3s ease'}}
