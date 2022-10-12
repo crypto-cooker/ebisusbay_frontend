@@ -50,12 +50,14 @@ import {getCollectionMetadata} from "@src/core/api";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 
 const config = appConfig();
+const floorThreshold = 5;
 
 export const BatchListingDrawer = ({onClose}) => {
   const dispatch = useDispatch();
   const batchListingCart = useSelector((state) => state.batchListing);
   const user = useSelector((state) => state.user);
-  const [executingListing, setExecutingListing] = useState(false);
+  const [executingCreateListing, setExecutingCreateListing] = useState(false);
+  const [showConfirmButton, setShowConfirmButton] = useState(false);
 
   const handleClose = () => {
     dispatch(closeBatchListingCart());
@@ -70,24 +72,50 @@ export const BatchListingDrawer = ({onClose}) => {
     dispatch(applyPriceToAll(price));
   }
 
-  const executeListing = async () => {
-    const filteredCartNfts = batchListingCart.nfts.filter((o) => {
-      return batchListingCart.extras[o.nft.address.toLowerCase()]?.approval;
-    });
-    const nftAddresses = filteredCartNfts.map((o) => o.nft.address);
-    const nftIds = filteredCartNfts.map((o) => o.nft.id);
-    const nftPrices = filteredCartNfts.map((o) => ethers.utils.parseEther(o.price));
+  const executeCreateListing = async () => {
+    try {
+      setExecutingCreateListing(true);
+      const filteredCartNfts = batchListingCart.nfts.filter((o) => {
+        return batchListingCart.extras[o.nft.address.toLowerCase()]?.approval;
+      });
+      const nftAddresses = filteredCartNfts.map((o) => o.nft.address);
+      const nftIds = filteredCartNfts.map((o) => o.nft.id);
+      const nftPrices = filteredCartNfts.map((o) => ethers.utils.parseEther(o.price));
 
-    Sentry.captureEvent({message: 'handleBatchListing', extra: {nftAddresses, nftIds, nftPrices}});
-    let tx = await user.marketContract.makeListings(nftAddresses, nftIds, nftPrices, txExtras);
-    let receipt = await tx.wait();
-    toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      Sentry.captureEvent({message: 'handleBatchListing', extra: {nftAddresses, nftIds, nftPrices}});
+      let tx = await user.marketContract.makeListings(nftAddresses, nftIds, nftPrices, txExtras);
+      let receipt = await tx.wait();
+      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+    } finally {
+      setExecutingCreateListing(false);
+    }
   }
 
   const prepareListing = async () => {
     try {
-      setExecutingListing(true);
-      await executeListing();
+      const nftFloorPrices = Object.entries(batchListingCart.extras).map(([k, v]) => {
+        return {address: k, floorPrice: v.floorPrice}
+      });
+      let floorWarning = false;
+      const nftPrices = batchListingCart.nfts.map((o) => {
+        const floorPriceObj = nftFloorPrices.find((fp) => caseInsensitiveCompare(fp.address, o.nft.address));
+        const isBelowFloor = (floorPriceObj.floorPrice !== 0 && ((floorPriceObj.floorPrice - Number(o.price)) / floorPriceObj.floorPrice) * 100 > floorThreshold);;
+        if (isBelowFloor) {
+          floorWarning = true;
+        }
+        return {
+          address: o.nft.address,
+          price: o.price,
+          ...floorPriceObj
+        }
+      });
+
+      if (floorWarning) {
+        setShowConfirmButton(true);
+      } else {
+        await executeCreateListing();
+      }
+
     } catch (error) {
       if (error.data) {
         toast.error(error.data.message);
@@ -97,13 +125,11 @@ export const BatchListingDrawer = ({onClose}) => {
         console.log(error);
         toast.error('Unknown Error');
       }
-    } finally {
-      setExecutingListing(false);
     }
   }
 
   return (
-    <Grid position="fixed" w="358px" h="calc(100vh - 74px)" templateRows="80px 1fr 69px">
+    <Grid position="fixed" w="358px" h="calc(100vh - 74px)" templateRows="80px 1fr auto">
       <GridItem px={6} py={4}>
         <Flex align="center">
           <Text fontSize="xl" fontWeight="semibold">
@@ -126,6 +152,7 @@ export const BatchListingDrawer = ({onClose}) => {
                 item={item}
                 onCascadePriceSelected={handleCascadePrices}
                 onApplyAllSelected={handleApplyAll}
+                disabled={showConfirmButton || executingCreateListing}
               />
             ))}
           </>
@@ -138,13 +165,40 @@ export const BatchListingDrawer = ({onClose}) => {
         )}
       </GridItem>
       <GridItem px={6} py={4}>
+        {showConfirmButton ? (
+          <>
+            {!executingCreateListing && (
+              <div className="alert alert-danger my-auto mb-2 fw-bold text-center">
+                Some items above are below their current floor price. Are you sure?
+              </div>
+            )}
+            {executingCreateListing && (
+              <div className="mb-2 text-center fst-italic">Please check your wallet for confirmation</div>
+            )}
+            <div className="d-flex">
+              <Button type="legacy"
+                      onClick={() => setShowConfirmButton(false)}
+                      disabled={executingCreateListing}
+                      className="me-2 flex-fill">
+                Go Back
+              </Button>
+              <Button type="legacy-outlined"
+                      onClick={executeCreateListing}
+                      isLoading={executingCreateListing}
+                      disabled={executingCreateListing}
+                      className="flex-fill">
+                I understand, continue
+              </Button>
+            </div>
+          </>
+        ) : (
           <Button
             type="legacy"
             className="w-100"
             onClick={prepareListing}
-            disabled={executingListing || batchListingCart.nfts.length < 1 || Object.values(batchListingCart.approvals).some((o) => !o)}
+            disabled={executingCreateListing || batchListingCart.nfts.length < 1 || Object.values(batchListingCart.approvals).some((o) => !o)}
           >
-            {executingListing ? (
+            {executingCreateListing ? (
               <>
                 Creating {batchListingCart.nfts.length === 1 ? 'Listing' : 'Listings'}...
                 <Spinner animation="border" role="status" size="sm" className="ms-1">
@@ -155,13 +209,14 @@ export const BatchListingDrawer = ({onClose}) => {
               <>Create {batchListingCart.nfts.length === 1 ? 'Listing' : 'Listings'}</>
             )}
           </Button>
+        )}
       </GridItem>
     </Grid>
   )
 }
 
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
-const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelected}) => {
+const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelected, disabled}) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
@@ -275,6 +330,7 @@ const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelecte
                       size="xs"
                       value={price}
                       onChange={handlePriceChange}
+                      disabled={disabled}
                     />
                     <ChakraButton
                       size='xs'
