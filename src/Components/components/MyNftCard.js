@@ -49,14 +49,14 @@ const MyNftCard = ({
         onRemoveFromBatchListingButtonPressed();
       } else if (canSell || canUpdate) {
         onAddToBatchListingButtonPressed();
+      } else {
+        toast.error('Item is currently not listable')
       }
     } else if (newTab) {
       window.open(link, '_blank');
     } else {
       history.push(link);
     }
-
-
   };
 
   const nftUrl = () => {
@@ -180,7 +180,7 @@ const MyNftCard = ({
                         className="card-img-top marketplace"
                         height={440}
                         width={440}
-                        video={nft.video ?? nft.animation_url}
+                        video={batchListingCart.nfts.length > 0 ? undefined : (nft.video ?? nft.animation_url)}
                         usePlaceholder={true}
               />
             </Box>
