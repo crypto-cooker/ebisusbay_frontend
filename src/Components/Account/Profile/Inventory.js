@@ -31,7 +31,7 @@ export default function Inventory({ address }) {
 
   const [collections, setCollections] = useState([]);
   const [collectionFilter, setCollectionFilter] = useState([]);
-  const [filtersVisible, setFiltersVisible] = useState(true);
+  const [filtersVisible, setFiltersVisible] = useState(false);
   const [useMobileMenu, setUseMobileMenu] = useState(false);
   const [hasManuallyToggledFilters, setHasManuallyToggledFilters] = useState(false);
   const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
@@ -145,9 +145,9 @@ export default function Inventory({ address }) {
   useEffect(() => {
     const isMobileSize = minWidth < BREAKPOINTS.m;
     setUseMobileMenu(isMobileSize);
-    if (!hasManuallyToggledFilters) {
-      setFiltersVisible(!isMobileSize);
-    }
+    // if (!hasManuallyToggledFilters) {
+    //   setFiltersVisible(!isMobileSize);
+    // }
   }, [breakpoint]);
 
   const toggleFilterVisibility = () => {
