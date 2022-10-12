@@ -67,9 +67,13 @@ export const BatchListingDrawer = ({onClose}) => {
     dispatch(clearBatchListingCart());
   };
   const handleCascadePrices = (startingItem, startingPrice) => {
+    if (!startingPrice) return;
+
     dispatch(cascadePrices({startingItem, startingPrice}));
   }
   const handleApplyAll = (price) => {
+    if (!price) return;
+
     dispatch(applyPriceToAll(price));
   }
 

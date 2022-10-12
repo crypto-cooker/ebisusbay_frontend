@@ -19,7 +19,7 @@ const batchListingSlice = createSlice({
       state.nfts = state.nfts.filter((o) => !(caseInsensitiveCompare(o.nft.address, nftToRemove.address) && o.nft.id === nftToRemove.id));
 
       const extras = state.extras;
-      delete extras[nftToRemove.address];
+      delete extras[nftToRemove.address.toLowerCase()];
       state.extras = extras;
     },
     clearBatchListingCart: (state) => {
