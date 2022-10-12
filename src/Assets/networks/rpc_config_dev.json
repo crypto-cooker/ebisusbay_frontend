@@ -10024,6 +10024,26 @@
         "twitter": "https://twitter.com/BunnyBlocks_Fi",
         "telegram": "https://t.me/BunnyBlocksFinance"
       }
+    },
+    {
+      "name": "Defiolio Lifetime Access NFT",
+      "slug": "defiolio-lifetime-access-nft",
+      "multiToken": false,
+      "address": "0xA68Abfc9DA70E7cF84E95945f44F646d15fE3084",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "This is an NFT that provides lifetime access to the Defiolio system and is also a cross-chain NFT that is able to be sent over to supported chains. Supported chains will be expanded upon as the project continues to develop. This will also be the only NFT collection that will have 25% profit-sharing!",
+        "verified": true,
+        "avatar": "/img/collections/defiolio-lifetime-access-nft/avatar.webp",
+        "banner": "/img/collections/defiolio-lifetime-access-nft/banner.webp",
+        "card": "/img/collections/defiolio-lifetime-access-nft/card.webp",
+        "maxSupply": 2000,
+        "website": "https://defiolio.com/",
+        "twitter": "https://twitter.com/DefiOlio",
+        "discord": "https://discord.gg/WxrA8Sj6q4",
+        "medium": "https://medium.com/@defiolio"
+      }
     }
   ],
   "drops": [
