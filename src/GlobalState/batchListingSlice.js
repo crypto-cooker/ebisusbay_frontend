@@ -7,6 +7,8 @@ const batchListingSlice = createSlice({
     nfts: [],
     isDrawerOpen: false,
     approvals: {},
+    floorPrices: {},
+    extras: {}
   },
   reducers: {
     addToBatchListingCart: (state, action) => {
@@ -67,7 +69,17 @@ const batchListingSlice = createSlice({
       });
     },
     setApproval: (state, action) => {
-      state.approvals = {...state.approvals, [action.payload.address]:action.payload.status}
+      const extra = state.extras[action.payload.address] ?? {};
+      extra.approval = action.payload.status;
+      state.extras[action.payload.address.toLowerCase()] = extra;
+    },
+    setFloorPrice: (state, action) => {
+      const extra = state.extras[action.payload.address] ?? {};
+      extra.floorPrice = action.payload.floorPrice;
+      state.extras[action.payload.address.toLowerCase()] = extra;
+    },
+    setExtras: (state, action) => {
+      state.extras[action.payload.address.toLowerCase()] = action.payload;
     }
   },
 });
@@ -82,6 +94,8 @@ export const {
   cascadePrices,
   applyPriceToAll,
   setApproval,
+  setFloorPrice,
+  setExtras
 } = batchListingSlice.actions;
 
 export default batchListingSlice.reducer;

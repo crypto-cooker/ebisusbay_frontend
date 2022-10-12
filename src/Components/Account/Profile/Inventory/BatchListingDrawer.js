@@ -3,13 +3,23 @@ import {
   Box,
   Button as ChakraButton,
   Center,
-  CloseButton, Collapse,
-  Flex, Grid, GridItem, Input, Menu, MenuButton, MenuItem, MenuList,
+  CloseButton,
+  Collapse,
+  Flex,
+  Grid,
+  GridItem,
+  Input,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Skeleton,
-  Spacer, Stack,
+  Spacer,
+  Stack,
   Text,
   useColorModeValue,
-  VStack, Wrap
+  VStack,
+  Wrap
 } from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
 import {Spinner} from "react-bootstrap";
@@ -21,12 +31,14 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEllipsisH, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {useDispatch, useSelector} from "react-redux";
 import {toast} from "react-toastify";
-import {
+import batchListingSlice, {
   applyPriceToAll,
   cascadePrices,
   clearBatchListingCart,
   closeBatchListingCart,
-  removeFromBatchListingCart, setApproval, updatePrice
+  removeFromBatchListingCart,
+  setApproval, setExtras, setFloorPrice,
+  updatePrice
 } from "@src/GlobalState/batchListingSlice";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import {Contract, ethers} from "ethers";
@@ -35,6 +47,7 @@ import {appConfig} from "@src/Config";
 import {caseInsensitiveCompare, createSuccessfulTransactionToastContent} from "@src/utils";
 import * as Sentry from "@sentry/react";
 import {txExtras} from "@src/core/constants";
+import {getCollectionMetadata} from "@src/core/api";
 
 const config = appConfig();
 
@@ -153,8 +166,9 @@ const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelecte
   const [price, setPrice] = useState('');
 
   // Approvals
-  const { approvals } = useSelector((state) => state.batchListing);
-  const approvalStatus = Object.entries(approvals).find(([key, value]) => caseInsensitiveCompare(key, item.nft.address))?.[1];
+  const extras = useSelector((state) => state.batchListing.extras[item.nft.address.toLowerCase()] ?? {});
+  const approvalStatus = extras.approval;
+  console.log('EXTERS', extras, approvalStatus)
   const [executingApproval, setExecutingApproval] = useState(false);
 
   const handleRemoveItem = () => {
@@ -174,8 +188,7 @@ const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelecte
 
   const checkApproval = async () => {
     const contract = new Contract(item.nft.address, ERC721, user.provider.getSigner());
-    const transferEnabled = await contract.isApprovedForAll(user.address, config.contracts.market);
-    return transferEnabled;
+    return await contract.isApprovedForAll(user.address, config.contracts.market);
   };
 
   const approveContract = useCallback(async () => {
@@ -203,9 +216,18 @@ const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelecte
 
   useEffect(() => {
     async function func() {
-      if (!Object.keys(approvals).includes(item.nft.address.toLowerCase())) {
+      if (!extras[item.nft.address.toLowerCase()]) {
+        const extras = {address: item.nft.address};
+
         const isApproved = await checkApproval();
-        dispatch(setApproval({address: item.nft.address, status: isApproved}));
+        extras.approval = isApproved;
+
+        const metadata = await getCollectionMetadata(item.nft.address);
+        if (metadata.collections.length > 0) {
+          extras.floorPrice = metadata.collections[0].floorPrice;
+        }
+
+        dispatch(setExtras(extras));
       }
     }
     func();
@@ -296,19 +318,30 @@ const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelecte
               </Stack>
             </Skeleton>
             <Collapse in={isDetailsOpen} animateOpacity>
-              <Wrap>
-                {item.nft.rank && (
-                  <Box>
-                    <Badge variant='solid' colorScheme='blue'>
-                      Rank: {item.nft.rank}
-                    </Badge>
-                  </Box>
-                )}
-              </Wrap>
+              <VStack spacing={0} mt={1}>
+                <Flex w="100%">
+                  {item.nft.rank && (
+                    <>
+                      <Text>Rank</Text>
+                      <Spacer/>
+                      <Text fontWeight="bold">{item.nft.rank}</Text>
+                    </>
+                  )}
+                </Flex>
+                <Flex w="100%">
+                  {item.nft.rank && (
+                    <>
+                      <Text>Floor</Text>
+                      <Spacer/>
+                      <Text fontWeight="bold">{extras.floorPrice} CRO</Text>
+                    </>
+                  )}
+                </Flex>
+              </VStack>
             </Collapse>
           </VStack>
         </Box>
-        <Box ms={2} cursor="pointer" my="auto" onClick={handleRemoveItem}>
+        <Box ms={2} cursor="pointer" onClick={handleRemoveItem}>
           <FontAwesomeIcon icon={faTrash}/>
         </Box>
       </Flex>
