@@ -4,7 +4,7 @@ import {
   Center,
   CloseButton,
   Collapse,
-  Flex,
+  Flex, FormControl, FormErrorMessage,
   Grid,
   GridItem,
   Input,
@@ -167,6 +167,7 @@ const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelecte
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [price, setPrice] = useState('');
+  const [invalid, setInvalid] = useState(false);
 
   // Approvals
   const extras = useSelector((state) => state.batchListing.extras[item.nft.address.toLowerCase()] ?? {});
@@ -180,7 +181,10 @@ const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelecte
   const handlePriceChange = useCallback((e) => {
     const newSalePrice = e.target.value;
     if (numberRegexValidation.test(newSalePrice) || newSalePrice === '') {
+      setInvalid(false);
       dispatch(updatePrice({nft: item.nft, price: newSalePrice}));
+    } else {
+      setInvalid(true);
     }
   }, [dispatch, item.nft, price]);
 
@@ -262,9 +266,9 @@ const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelecte
               <Text fontWeight="bold" noOfLines={1} cursor="pointer">{item.nft.name}</Text>
             </Link>
             <Skeleton isLoaded={typeof approvalStatus === 'boolean'}>
-              <Stack direction="row">
-                {approvalStatus ? (
-                  <>
+              {approvalStatus ? (
+                <FormControl isInvalid={invalid}>
+                  <Stack direction="row">
                     <Input
                       placeholder="Enter Price"
                       type="numeric"
@@ -287,6 +291,7 @@ const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelecte
                         transition='all 0.2s'
                         borderRadius='md'
                         borderWidth='1px'
+                        height={6}
                       >
                         <FontAwesomeIcon icon={faEllipsisH}/>
                       </MenuButton>
@@ -296,20 +301,20 @@ const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelecte
                         <MenuItem onClick={handleRemoveItem}>Remove</MenuItem>
                       </MenuList>
                     </Menu>
-                  </>
-                ) : (
-
-                  <ChakraButton
-                    size='xs'
-                    colorScheme='blue'
-                    onClick={approveContract}
-                    isLoading={executingApproval}
-                    loadingText="Approving..."
-                  >
-                    Approve Contract
-                  </ChakraButton>
-                )}
-              </Stack>
+                  </Stack>
+                  <FormErrorMessage fontSize='xs' mt={1}>Enter a valid number.</FormErrorMessage>
+                </FormControl>
+              ) : (
+                <ChakraButton
+                  size='xs'
+                  colorScheme='blue'
+                  onClick={approveContract}
+                  isLoading={executingApproval}
+                  loadingText="Approving..."
+                >
+                  Approve Contract
+                </ChakraButton>
+              )}
             </Skeleton>
             <Collapse in={isDetailsOpen} animateOpacity>
               <VStack spacing={0} mt={1}>
