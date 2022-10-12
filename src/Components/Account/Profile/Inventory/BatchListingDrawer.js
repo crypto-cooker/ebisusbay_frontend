@@ -61,9 +61,11 @@ export const BatchListingDrawer = ({onClose}) => {
   const [showConfirmButton, setShowConfirmButton] = useState(false);
 
   const handleClose = () => {
+    setShowConfirmButton(false);
     dispatch(closeBatchListingCart());
   };
   const handleClearCart = () => {
+    setShowConfirmButton(false);
     dispatch(clearBatchListingCart());
   };
   const handleCascadePrices = (startingItem, startingPrice) => {
@@ -96,7 +98,7 @@ export const BatchListingDrawer = ({onClose}) => {
       let tx = await user.marketContract.makeListings(nftAddresses, nftIds, nftPrices, txExtras);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      dispatch(clearBatchListingCart());
+      handleClearCart();
     } finally {
       setExecutingCreateListing(false);
     }
