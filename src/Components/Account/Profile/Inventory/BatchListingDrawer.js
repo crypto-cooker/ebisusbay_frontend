@@ -1,4 +1,5 @@
 import {
+  Alert, AlertDescription, AlertIcon,
   Box,
   Button as ChakraButton,
   Center,
@@ -80,7 +81,12 @@ export const BatchListingDrawer = ({onClose}) => {
       });
       const nftAddresses = filteredCartNfts.map((o) => o.nft.address);
       const nftIds = filteredCartNfts.map((o) => o.nft.id);
-      const nftPrices = filteredCartNfts.map((o) => ethers.utils.parseEther(o.price));
+      const nftPrices = filteredCartNfts.map((o) => ethers.utils.parseEther(o.price.toString()));
+
+      if (nftPrices.some((o) => !o.gt(0))) {
+        toast.error('0 priced item detected!');
+        return;
+      }
 
       Sentry.captureEvent({message: 'handleBatchListing', extra: {nftAddresses, nftIds, nftPrices}});
       let tx = await user.marketContract.makeListings(nftAddresses, nftIds, nftPrices, txExtras);
@@ -175,14 +181,17 @@ export const BatchListingDrawer = ({onClose}) => {
         {showConfirmButton ? (
           <>
             {!executingCreateListing && (
-              <div className="alert alert-danger my-auto mb-2 fw-bold text-center">
-                Some items above are below their current floor price. Are you sure?
-              </div>
+              <Alert status="error" mb={2}>
+                <AlertIcon />
+                <AlertDescription>Some items above are below their current floor price. Are you sure?</AlertDescription>
+              </Alert>
             )}
             {executingCreateListing && (
-              <div className="mb-2 text-center fst-italic">Please check your wallet for confirmation</div>
+              <Text mb={2} fontStyle="italic" fontSize="sm" align="center">
+                Please check your wallet for confirmation
+              </Text>
             )}
-            <div className="d-flex">
+            <Flex>
               <Button type="legacy"
                       onClick={() => setShowConfirmButton(false)}
                       disabled={executingCreateListing}
@@ -196,7 +205,7 @@ export const BatchListingDrawer = ({onClose}) => {
                       className="flex-fill">
                 I understand, continue
               </Button>
-            </div>
+            </Flex>
           </>
         ) : (
           <Button
