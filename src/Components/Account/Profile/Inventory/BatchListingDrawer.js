@@ -63,17 +63,20 @@ export const BatchListingDrawer = ({onClose}) => {
   const handleClearCart = () => {
     dispatch(clearBatchListingCart());
   };
-  const handleCascadePrices = (startingPrice) => {
-    dispatch(cascadePrices(startingPrice));
+  const handleCascadePrices = (startingItem, startingPrice) => {
+    dispatch(cascadePrices({startingItem, startingPrice}));
   }
   const handleApplyAll = (price) => {
     dispatch(applyPriceToAll(price));
   }
 
   const executeListing = async () => {
-    const nftAddresses = batchListingCart.nfts.map((o) => o.nft.address);
-    const nftIds = batchListingCart.nfts.map((o) => o.nft.id);
-    const nftPrices = batchListingCart.nfts.map((o) => ethers.utils.parseEther(o.price));
+    const filteredCartNfts = batchListingCart.nfts.filter((o) => {
+      return batchListingCart.extras[o.nft.address.toLowerCase()]?.approval;
+    });
+    const nftAddresses = filteredCartNfts.map((o) => o.nft.address);
+    const nftIds = filteredCartNfts.map((o) => o.nft.id);
+    const nftPrices = filteredCartNfts.map((o) => ethers.utils.parseEther(o.price));
 
     Sentry.captureEvent({message: 'handleBatchListing', extra: {nftAddresses, nftIds, nftPrices}});
     let tx = await user.marketContract.makeListings(nftAddresses, nftIds, nftPrices, txExtras);
@@ -289,7 +292,7 @@ const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelecte
                       </MenuButton>
                       <MenuList textAlign="right">
                         <MenuItem onClick={() => onApplyAllSelected(price)}>Apply price to all</MenuItem>
-                        <MenuItem onClick={() => onCascadePriceSelected(price)}>Cascade price</MenuItem>
+                        <MenuItem onClick={() => onCascadePriceSelected(item, price)}>Cascade price</MenuItem>
                         <MenuItem onClick={handleRemoveItem}>Remove</MenuItem>
                       </MenuList>
                     </Menu>

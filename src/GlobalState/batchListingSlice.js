@@ -55,8 +55,16 @@ const batchListingSlice = createSlice({
       }
     },
     cascadePrices: (state, action) => {
-      let currentPrice = action.payload;
-      state.nfts = state.nfts.map((o) => {
+      const startingItem = action.payload.startingItem;
+      let currentPrice = action.payload.startingPrice;
+      let startingIndex = null;
+      state.nfts = state.nfts.map((o, index) => {
+        const isStartingItem = caseInsensitiveCompare(o.nft.address, startingItem.nft.address) && o.nft.id === startingItem.nft.id;
+
+        if (isStartingItem) startingIndex = index;
+        else if (startingIndex === null) return o;
+        if (!state.extras[o.nft.address.toLowerCase()]?.approval) return o;
+
         const price = currentPrice > 1 ? currentPrice : 1;
         currentPrice--;
         return {nft: o.nft, price}
