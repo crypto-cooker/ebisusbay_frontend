@@ -1749,6 +1749,11 @@
         "twitter": "https://twitter.com/0xLuckless",
         "discord": "https://discord.gg/REbVZ9rACc",
         "medium": "https://medium.com/@0xLuckless"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -5236,6 +5241,11 @@
         "twitter": "https://twitter.com/0xLuckless",
         "discord": "https://discord.gg/REbVZ9rACc",
         "medium": "https://medium.com/@0xLuckless"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -9478,6 +9488,11 @@
         "discord": "https://discord.gg/BpAVk2Za2c",
         "medium": "https://medium.com/@0xLuckless",
         "instagram": "https://www.instagram.com/0xLuckless"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
