@@ -1,5 +1,4 @@
 import {
-  Badge,
   Box,
   Button as ChakraButton,
   Center,
@@ -18,8 +17,7 @@ import {
   Stack,
   Text,
   useColorModeValue,
-  VStack,
-  Wrap
+  VStack
 } from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
 import {Spinner} from "react-bootstrap";
@@ -31,13 +29,14 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEllipsisH, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {useDispatch, useSelector} from "react-redux";
 import {toast} from "react-toastify";
-import batchListingSlice, {
+import {
   applyPriceToAll,
   cascadePrices,
   clearBatchListingCart,
   closeBatchListingCart,
   removeFromBatchListingCart,
-  setApproval, setExtras, setFloorPrice,
+  setApproval,
+  setExtras,
   updatePrice
 } from "@src/GlobalState/batchListingSlice";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
@@ -48,6 +47,7 @@ import {caseInsensitiveCompare, createSuccessfulTransactionToastContent} from "@
 import * as Sentry from "@sentry/react";
 import {txExtras} from "@src/core/constants";
 import {getCollectionMetadata} from "@src/core/api";
+import {collectionRoyaltyPercent} from "@src/core/chain";
 
 const config = appConfig();
 
@@ -168,7 +168,6 @@ const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelecte
   // Approvals
   const extras = useSelector((state) => state.batchListing.extras[item.nft.address.toLowerCase()] ?? {});
   const approvalStatus = extras.approval;
-  console.log('EXTERS', extras, approvalStatus)
   const [executingApproval, setExecutingApproval] = useState(false);
 
   const handleRemoveItem = () => {
@@ -219,13 +218,14 @@ const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelecte
       if (!extras[item.nft.address.toLowerCase()]) {
         const extras = {address: item.nft.address};
 
-        const isApproved = await checkApproval();
-        extras.approval = isApproved;
+        extras.approval = await checkApproval();
 
         const metadata = await getCollectionMetadata(item.nft.address);
         if (metadata.collections.length > 0) {
           extras.floorPrice = metadata.collections[0].floorPrice;
         }
+
+        extras.royalty = await collectionRoyaltyPercent(item.nft.address, item.nft.id);
 
         dispatch(setExtras(extras));
       }
@@ -300,42 +300,36 @@ const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelecte
                     size='xs'
                     colorScheme='blue'
                     onClick={approveContract}
-                    disabled={executingApproval}
+                    isLoading={executingApproval}
+                    loadingText="Approving..."
                   >
-                    {executingApproval ? (
-                      <>
-                        Approving...
-                        <Spinner animation="border" role="status" size="sm" className="ms-1">
-                          <span className="visually-hidden">Loading...</span>
-                        </Spinner>
-                      </>
-                    ) : (
-                      <>Approve Contract</>
-                    )}
-
+                    Approve Contract
                   </ChakraButton>
                 )}
               </Stack>
             </Skeleton>
             <Collapse in={isDetailsOpen} animateOpacity>
               <VStack spacing={0} mt={1}>
+                {item.nft.rank && (
+                  <Flex w="100%">
+                    <Text>Rank</Text>
+                    <Spacer/>
+                    <Text fontWeight="bold">{item.nft.rank}</Text>
+                  </Flex>
+                )}
                 <Flex w="100%">
-                  {item.nft.rank && (
-                    <>
-                      <Text>Rank</Text>
-                      <Spacer/>
-                      <Text fontWeight="bold">{item.nft.rank}</Text>
-                    </>
-                  )}
+                  <>
+                    <Text>Floor</Text>
+                    <Spacer/>
+                    <Text fontWeight="bold">{extras.floorPrice ?? 0} CRO</Text>
+                  </>
                 </Flex>
                 <Flex w="100%">
-                  {item.nft.rank && (
-                    <>
-                      <Text>Floor</Text>
-                      <Spacer/>
-                      <Text fontWeight="bold">{extras.floorPrice} CRO</Text>
-                    </>
-                  )}
+                  <>
+                    <Text>Royalty</Text>
+                    <Spacer/>
+                    <Text fontWeight="bold">{extras.royalty ?? 'N/A'} %</Text>
+                  </>
                 </Flex>
               </VStack>
             </Collapse>
