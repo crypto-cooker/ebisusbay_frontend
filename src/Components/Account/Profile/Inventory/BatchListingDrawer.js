@@ -128,6 +128,13 @@ export const BatchListingDrawer = ({onClose}) => {
     }
   }
 
+  const canSubmit = () => {
+    return !executingCreateListing &&
+      batchListingCart.nfts.length > 0 &&
+      !Object.values(batchListingCart.extras).some((o) => !o.approval) &&
+      !batchListingCart.nfts.some((o) => !o.price || !parseInt(o.price) > 0);
+  }
+
   return (
     <Grid position="fixed" w="358px" h="calc(100vh - 74px)" templateRows="80px 1fr auto">
       <GridItem px={6} py={4}>
@@ -196,7 +203,7 @@ export const BatchListingDrawer = ({onClose}) => {
             type="legacy"
             className="w-100"
             onClick={prepareListing}
-            disabled={executingCreateListing || batchListingCart.nfts.length < 1 || Object.values(batchListingCart.approvals).some((o) => !o)}
+            disabled={!canSubmit()}
           >
             {executingCreateListing ? (
               <>

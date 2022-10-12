@@ -6,8 +6,6 @@ const batchListingSlice = createSlice({
   initialState: {
     nfts: [],
     isDrawerOpen: false,
-    approvals: {},
-    floorPrices: {},
     extras: {}
   },
   reducers: {
@@ -20,13 +18,13 @@ const batchListingSlice = createSlice({
       const nftToRemove = action.payload;
       state.nfts = state.nfts.filter((o) => !(caseInsensitiveCompare(o.nft.address, nftToRemove.address) && o.nft.id === nftToRemove.id));
 
-      const approvals = state.approvals;
-      delete approvals[nftToRemove.address];
-      state.approvals = approvals;
+      const extras = state.extras;
+      delete extras[nftToRemove.address];
+      state.extras = extras;
     },
     clearBatchListingCart: (state) => {
       state.nfts = [];
-      state.approvals = {};
+      state.extras = {};
     },
     openBatchListingCart: (state) => {
       state.isDrawerOpen = true;
@@ -34,7 +32,7 @@ const batchListingSlice = createSlice({
     closeBatchListingCart: (state) => {
       state.isDrawerOpen = false;
       state.nfts = [];
-      state.approvals = {};
+      state.extras = {};
     },
     minimizeBatchListingCart: (state) => {
       state.isDrawerOpen = false;
@@ -42,7 +40,7 @@ const batchListingSlice = createSlice({
     initialize: (state) => {
       state.isDrawerOpen = false;
       state.nfts = [];
-      state.approvals = {};
+      state.extras = {};
     },
     updatePrice: (state, action) => {
       const itemToModify = action.payload.nft;
