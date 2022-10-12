@@ -244,7 +244,7 @@ const Rugsurance = () => {
     <div>
       <PageHead
         title="SSC Rugsurance"
-        description="Peace of mind minting on Ebisu's Bay Marketplace"
+        description="Rugsured Spiteful Sea Club Access Cards"
         url="/ssc-rugsurance"
       />
 
@@ -267,7 +267,7 @@ const Rugsurance = () => {
               below must be returned to the original wallet to process a refund.
             </p>
             <p className="text-center fw-bold">
-              Deadline to claim your refund is April 6th at 11:59 GMT. After this, you will not be able to claim a
+              Deadline to claim your refund is December 31st at 11:59 GMT. After this, you will not be able to claim a
               refund!
             </p>
             {!isInitializing ? (
