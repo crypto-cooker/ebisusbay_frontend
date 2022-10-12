@@ -10005,6 +10005,25 @@
         "kyc": "ebisu",
         "escrow": false
       }
+    },
+    {
+      "name": "Bunny Blocks NFT",
+      "slug": "bunny-blocks-nft",
+      "multiToken": false,
+      "address": "0xF3D4cD84119CE89269760901AB93EC4D6bD5A534",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Bunny Blocks Finance is the first DEX on Cronos Chain to use a double reward token as native currency, each transaction is intended to remunerate our holders with $BUSD & $BBF.",
+        "verified": false,
+        "avatar": "/img/collections/bunny-blocks-nft/avatar.webp",
+        "banner": "/img/collections/bunny-blocks-nft/banner.webp",
+        "card": "/img/collections/bunny-blocks-nft/card.webp",
+        "maxSupply": 350,
+        "website": "https://www.bunnyblocks.finance/",
+        "twitter": "https://twitter.com/BunnyBlocks_Fi",
+        "telegram": "https://t.me/BunnyBlocksFinance"
+      }
     }
   ],
   "drops": [
