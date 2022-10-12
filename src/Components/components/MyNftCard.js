@@ -9,7 +9,7 @@ import {
   faTag,
   faTimes,
   faPen,
-  faPlusCircle, faCheckCircle
+  faPlusCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import  { MenuPopup } from '../components/chakra-components';
@@ -22,6 +22,7 @@ import {caseInsensitiveCompare, round} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {darkTheme, lightTheme} from "@src/Theme/theme";
 import {useSelector} from "react-redux";
+import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
 
 const MyNftCard = ({
   nft,
@@ -144,19 +145,19 @@ const MyNftCard = ({
                 cursor="pointer"
                 onClick={onRemoveFromBatchListingButtonPressed}
               >
-                <FontAwesomeIcon icon={faCheckCircle} size="xl"/>
+                <FontAwesomeIcon icon={faCheckCircle} size="xl" style={{background:'dodgerblue', color:'white'}} className="rounded-circle"/>
               </Box>
             ) : (
               <Box
-                _groupHover={{display:'inline', transition:'0.3s ease', opacity: 0.5}}
+                _groupHover={{display:'inline', transition:'0.3s ease', opacity: 1}}
                 transition="0.3s ease"
                 display="inline"
+                opacity={0}
                 top={0}
                 right={0}
                 position="absolute"
                 zIndex={2}
                 p={2}
-                opacity={0}
                 cursor="pointer"
                 onClick={() => {
                   if (canSell || canUpdate) {
@@ -164,7 +165,7 @@ const MyNftCard = ({
                   }
                 }}
               >
-                <FontAwesomeIcon icon={faPlusCircle} size="xl" />
+                <FontAwesomeIcon icon={faPlusCircle} size="xl" style={{background:'white', color:'grey'}} className="rounded-circle" />
               </Box>
             )}
             <Box
