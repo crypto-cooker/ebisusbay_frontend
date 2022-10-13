@@ -14,11 +14,20 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import  { MenuPopup } from '../components/chakra-components';
 import AnyMedia from './AnyMedia';
-import {appConfig} from "@src/Config";
 import {nftCardUrl} from "@src/helpers/image";
-import {Badge, Box, Center, Flex, Heading, Icon, Spacer, Text, useBreakpointValue} from "@chakra-ui/react";
+import {
+  Badge,
+  Box,
+  Center,
+  Flex,
+  Heading,
+  Spacer,
+  Text,
+  useBreakpointValue,
+  useClipboard
+} from "@chakra-ui/react";
 import Image from "next/image";
-import {caseInsensitiveCompare, round} from "@src/utils";
+import {appUrl, caseInsensitiveCompare, round} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {darkTheme, lightTheme} from "@src/Theme/theme";
 import {useSelector} from "react-redux";
@@ -40,13 +49,15 @@ const MyNftCard = ({
   newTab = false,
 }) => {
   const history = useRouter();
+  const nftUrl = appUrl(`/collection/${nft.address}/${nft.id}`);
   const [isHovered, setIsHovered] = useState(false);
   const user = useSelector((state) => state.user);
   const batchListingCart = useSelector((state) => state.batchListing);
   const canUseBatchListing = useBreakpointValue(
     {base: false, md: true,},
     {fallback: 'md'},
-  )
+  );
+  const { onCopy } = useClipboard(nftUrl);
 
   const navigateTo = (link) => {
     if (batchListingCart.isDrawerOpen) {
@@ -64,13 +75,9 @@ const MyNftCard = ({
     }
   };
 
-  const nftUrl = () => {
-    return `/collection/${nft.address}/${nft.id}`;
-  };
-
-  const onCopyLinkButtonPressed = (url) => () => {
-    navigator.clipboard.writeText(url);
-    toast.success('Copied!');
+  const onCopyLinkButtonPressed = () => {
+    onCopy();
+    toast.success('Link copied!');
   };
 
   const getOptions = () => {
@@ -115,7 +122,7 @@ const MyNftCard = ({
     options.push({
       icon: faLink,
       label: 'Copy link',
-      handleClick: onCopyLinkButtonPressed(new URL(nftUrl(), appConfig('urls.app'))),
+      handleClick: onCopyLinkButtonPressed,
     });
 
     return options;

@@ -9,15 +9,14 @@ import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
 import {darkTheme, getTheme, lightTheme} from '@src/Theme/theme';
 import { AnyMedia } from './AnyMedia';
 import { connectAccount, chainConnect } from '@src/GlobalState/User';
-import {createSuccessfulAddCartContent, round} from '@src/utils';
+import {appUrl, createSuccessfulAddCartContent, round} from '@src/utils';
 import {convertGateway, nftCardUrl} from "@src/helpers/image";
-import {Box, Flex, Heading, Spacer, Text} from "@chakra-ui/react";
+import {Box, Flex, Heading, Spacer, Text, useClipboard} from "@chakra-ui/react";
 import Image from "next/image";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {MenuPopup} from "@src/Components/components/chakra-components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-  faBolt,
   faEllipsisH,
   faExternalLink,
   faHand,
@@ -27,7 +26,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {addToCart, openCart, removeFromCart} from "@src/GlobalState/cartSlice";
 import {toast} from "react-toastify";
-import {appConfig} from "@src/Config";
 import {refreshMetadata} from "@src/GlobalState/nftSlice";
 import {specialImageTransform} from "@src/hacks";
 
@@ -56,12 +54,14 @@ const MakeBuy = styled.div`
 `;
 
 const ListingCard = ({ listing, imgClass = 'marketplace', watermark, address, collection }) => {
+  const nftUrl = appUrl(`/collection/${listing.nftAddress}/${listing.nftId}`);
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const cart = useSelector((state) => state.cart);
   const [isHovered, setIsHovered] = useState(false);
   const isInCart = cart.nfts.map((o) => o.listingId).includes(listing.listingId);
+  const { onCopy } = useClipboard(nftUrl);
 
   const getOptions = () => {
     const options = [];
@@ -151,8 +151,8 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark, address, co
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(`${appConfig('urls.app')}collection/${listing.nftAddress}/${listing.nftId}`);
-    toast.success('Address Copied!');
+    onCopy();
+    toast.success('Link copied!');
   };
 
   const getCorrectPrice = (price) => {

@@ -4451,7 +4451,7 @@
       "multiToken": false,
       "address": "0x954AbeA0471A04A26F5A953056Ea0Ae57f2395cB",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Bankroll Bear Society is an NFT project consisting of 5,000 Bears. Found on the Cronos chain. We are offering direct REAL-LIFE utilities. Our Bears are a VIP gateway into the Bankroll Universe and ecosystem.",
         "verified": true,
@@ -5498,6 +5498,11 @@
         "website": "https://carkayous.com/",
         "twitter": "https://twitter.com/carkayous",
         "discord": "https://discord.gg/carkayous"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -5919,7 +5924,8 @@
         "card": "/img/collections/possessed-pirates/card.png",
         "banner": "/img/collections/possessed-pirates/banner.png",
         "maxSupply": 100,
-        "twitter": "https://twitter.com/PosessedP",
+        "website": "https://www.possessedpirates.com/",
+        "twitter": "https://twitter.com/PossessedPirate",
         "discord": "https://discord.gg/dWpku7EWct"
       }
     },
@@ -6357,8 +6363,8 @@
         "banner": "/img/collections/trippy-treasure-chests/banner.png",
         "maxSupply": 2000,
         "website": "https://treasure.croarmy.app/",
-        "twitter": "https://twitter.com/PosessedP",
-        "discord": "https://discord.gg/dWpku7EWct"
+        "twitter": "https://twitter.com/PossessedPirate",
+        "discord": "https://discord.gg/cDK3AeEBMf"
       }
     },
     {
@@ -8348,6 +8354,11 @@
         "website": "https://carkayous.com/",
         "twitter": "https://twitter.com/carkayous",
         "discord": "https://discord.gg/carkayous"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -8915,7 +8926,7 @@
       "listable": true,
       "metadata": {
         "description": "Cronos Apes is the first ever NFT collection with an holders-exclusive Community in the Cronos chain. 6% of royalties income distributed to holders. Mutant serums coming soon…",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/cronos-apes/avatar.webp",
         "card": "/img/collections/cronos-apes/card.webp",
         "banner": "/img/collections/cronos-apes/banner.webp",
@@ -10043,6 +10054,49 @@
         "twitter": "https://twitter.com/DefiOlio",
         "discord": "https://discord.gg/WxrA8Sj6q4",
         "medium": "https://medium.com/@defiolio"
+      }
+    },
+    {
+      "name": "Carkayous - Tatcorns",
+      "slug": "carkayous-tatcorns",
+      "multiToken": false,
+      "address": "0xe0afa67d7E4F2329f81562DB9318837A28be83Ec",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Each Carkayous Tatcorn is worth a 1hr tattoo session. Collect at least 6 to have hotel + flight included",
+        "verified": true,
+        "avatar": "/img/collections/carkayous-tatcorns/avatar.webp",
+        "banner": "/img/collections/carkayous-tatcorns/banner.webp",
+        "card": "/img/collections/carkayous-tatcorns/card.webp",
+        "maxSupply": 0,
+        "website": "https://carkayous.com/",
+        "twitter": "https://twitter.com/carkayous",
+        "discord": "https://discord.gg/carkayous"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "name": "Cronos Captains",
+      "slug": "cronos-captains",
+      "multiToken": false,
+      "address": "0x604Ed3Cd5B9eaE0607211A33B15Ac08fA01b10ee",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Brought to you by Possessed Pirates. P2E game coming! Fully doxxed dev through croarmy!",
+        "verified": false,
+        "avatar": "/img/collections/cronos-captains/avatar.webp",
+        "card": "/img/collections/cronos-captains/card.webp",
+        "banner": "/img/collections/cronos-captains/banner.webp",
+        "maxSupply": 5555,
+        "website": "https://www.possessedpirates.com/",
+        "twitter": "https://twitter.com/PossessedPirate",
+        "discord": "https://discord.gg/cDK3AeEBMf"
       }
     }
   ],
@@ -12010,7 +12064,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false
+      "complete": true
     },
     {
       "id": 75,
