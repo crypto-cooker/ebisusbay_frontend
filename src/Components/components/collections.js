@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import Link from 'next/link';
 import { ethers } from 'ethers';
 import Blockies from 'react-blockies';
@@ -9,11 +9,12 @@ import { Form, Spinner } from 'react-bootstrap';
 import Footer from '@src/Components/components/Footer';
 import { getAllCollections } from '@src/GlobalState/collectionsSlice';
 import { debounce, siPrefixedNumber } from '@src/utils';
-import Image from "next/image";
 import {CdnImage} from "@src/Components/components/CdnImage";
 import {hostedImage} from "@src/helpers/image";
 import PageHead from "@src/Components/Head/PageHead";
 import {Heading} from "@chakra-ui/react";
+import LayeredIcon from "@src/Components/components/LayeredIcon";
+import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
 
 const GlobalStyles = createGlobalStyle`
   .mobile-view-list-item {
@@ -29,6 +30,19 @@ const GlobalStyles = createGlobalStyle`
     background-color: rgba(0,0,0,0.6);
     background-blend-mode: multiply;
   }
+`;
+
+const VerifiedIcon = styled.span`
+  font-size: 8px;
+  color: #ffffff;
+  background: $color;
+  border-radius: 100%;
+  -moz-border-radius: 100%;
+  -webkit-border-radius: 100%;
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  z-index:1000;
 `;
 
 const Collections = () => {
@@ -228,7 +242,7 @@ const Collections = () => {
                 {filteredCollections &&
                   filteredCollections.map((collection, index) => {
                     return (
-                      <tr key={index}>
+                      <tr key={collection.address}>
                         {tableMobileView && <td>{index + 1}</td>}
                         <th scope="row" className="row gap-4 border-bottom-0" style={{ paddingLeft: 0 }}>
                           <div className="col-12" style={{ paddingLeft: '75px' }}>
@@ -244,6 +258,11 @@ const Collections = () => {
                                     />
                                   ) : (
                                     <Blockies seed={collection.collection.toLowerCase()} size={10} scale={5} />
+                                  )}
+                                  {collection.metadata?.verified && (
+                                    <VerifiedIcon>
+                                      <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={7} />
+                                    </VerifiedIcon>
                                   )}
                                 </a>
                               </Link>
