@@ -146,7 +146,7 @@ const TopFilterBar = ({
       </div>
       <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12 px-2 mt-2">
         <div className="d-flex justify-content-end">
-          {showSwitch && isSwitchEnabled && <Switch isChecked={onlyVerified} setIsChecked={setOnlyVerified} checkedText={'Verified'} uncheckedText={'All'} />}
+          {showSwitch && isSwitchEnabled && <Switch isChecked={onlyVerified} setIsChecked={setOnlyVerified} text={'Only Verified'} />}
         </div>
       </div>
     </CollectionFilterBarContainer>
