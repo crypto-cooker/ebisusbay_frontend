@@ -5498,6 +5498,11 @@
         "website": "https://carkayous.com/",
         "twitter": "https://twitter.com/carkayous",
         "discord": "https://discord.gg/carkayous"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -8348,6 +8353,11 @@
         "website": "https://carkayous.com/",
         "twitter": "https://twitter.com/carkayous",
         "discord": "https://discord.gg/carkayous"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -10043,6 +10053,30 @@
         "twitter": "https://twitter.com/DefiOlio",
         "discord": "https://discord.gg/WxrA8Sj6q4",
         "medium": "https://medium.com/@defiolio"
+      }
+    },
+    {
+      "name": "Carkayous - Tatcorns",
+      "slug": "carkayous-tatcorns",
+      "multiToken": false,
+      "address": "0xe0afa67d7E4F2329f81562DB9318837A28be83Ec",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Each Carkayous Tatcorn is worth a 1hr tattoo session. Collect at least 6 to have hotel + flight included",
+        "verified": true,
+        "avatar": "/img/collections/carkayous-tatcorns/avatar.webp",
+        "banner": "/img/collections/carkayous-tatcorns/banner.webp",
+        "card": "/img/collections/carkayous-tatcorns/card.webp",
+        "maxSupply": 0,
+        "website": "https://carkayous.com/",
+        "twitter": "https://twitter.com/carkayous",
+        "discord": "https://discord.gg/carkayous"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "escrow": false
       }
     }
   ],
