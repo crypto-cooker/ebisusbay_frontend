@@ -4451,7 +4451,7 @@
       "multiToken": false,
       "address": "0x954AbeA0471A04A26F5A953056Ea0Ae57f2395cB",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Bankroll Bear Society is an NFT project consisting of 5,000 Bears. Found on the Cronos chain. We are offering direct REAL-LIFE utilities. Our Bears are a VIP gateway into the Bankroll Universe and ecosystem.",
         "verified": true,
@@ -12010,7 +12010,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false
+      "complete": true
     },
     {
       "id": 75,
