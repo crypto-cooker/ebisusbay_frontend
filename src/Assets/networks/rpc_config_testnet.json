@@ -1920,7 +1920,7 @@
       "name": "Evolution Hogs",
       "slug": "evolution-hogs",
       "multiToken": false,
-      "address": "",
+      "address": "0x5be9A14fE14F13954Ef44B5efDBbab1AD1f17Ac4",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -4428,7 +4428,7 @@
         "twitter": "https://twitter.com/zap7project",
         "discord": "https://discord.gg/tBgUbvsSZX"
       },
-      "address": "",
+      "address": "0x5be9A14fE14F13954Ef44B5efDBbab1AD1f17Ac4",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 100,
       "totalSupply": 3333,
