@@ -207,13 +207,13 @@ export const isLocalEnv = () => {
 }
 
 export const featureFlags = {
-  [Features.AUCTION_OPTION_SALE]: false,
-  [Features.CMS_NOTIFICATIONS]: true,
-  [Features.CMS_FULL_PROFILES]: true,
-  [Features.GET_COLLECTION_NEW_ENDPOINT]: false,
-  [Features.CMS_COLLECTIONS]: false,
-  [Features.VERIFIED_SWITCH_COLLECTION]: false,
-  [Features.VERIFIED_SWITCH_MARKETPLACE]: false,
-  [Features.INFINITE_QUERY_COLLECTION]: false,
-  [Features.UNVERIFIED_WARNING]: false,
+  [Features.AUCTION_OPTION_SALE]: false,          // Auction listing option
+  [Features.CMS_NOTIFICATIONS]: true,             // Notifications
+  [Features.CMS_FULL_PROFILES]: true,             // User Profiles
+  [Features.GET_COLLECTION_NEW_ENDPOINT]: true,   // Paginated collections endpoint
+  [Features.CMS_COLLECTIONS]: true,               // Collection editing
+  [Features.VERIFIED_SWITCH_COLLECTION]: true,    // Filter verified collections
+  [Features.VERIFIED_SWITCH_MARKETPLACE]: true,   // Filter verified in marketplace
+  [Features.INFINITE_QUERY_COLLECTION]: true,     // Paginated collections endpoint
+  [Features.UNVERIFIED_WARNING]: true,            // Warning when buying from unverified collection
 }
