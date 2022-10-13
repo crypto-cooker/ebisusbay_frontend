@@ -243,9 +243,9 @@ const Rugsurance = () => {
   return (
     <div>
       <PageHead
-        title="SSC Rugsurance"
-        description="Rugsured Spiteful Sea Club Access Cards"
-        url="/ssc-rugsurance"
+        title="SSC Refund"
+        description="Refund for Spiteful Sea Club Access Cards"
+        url="/ssc-refund"
       />
 
       <section className="jumbotron breadcumb no-bg tint">
@@ -253,7 +253,7 @@ const Rugsurance = () => {
           <div className="container">
             <div className="row m-10-hor">
               <div className="col-12">
-                <Heading as="h1" size="2xl" className="text-center">SSC Rugsurance</Heading>
+                <Heading as="h1" size="2xl" className="text-center">SSC Refund</Heading>
               </div>
             </div>
           </div>
