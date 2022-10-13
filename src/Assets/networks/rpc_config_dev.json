@@ -5924,7 +5924,8 @@
         "card": "/img/collections/possessed-pirates/card.png",
         "banner": "/img/collections/possessed-pirates/banner.png",
         "maxSupply": 100,
-        "twitter": "https://twitter.com/PosessedP",
+        "website": "https://www.possessedpirates.com/",
+        "twitter": "https://twitter.com/PossessedPirate",
         "discord": "https://discord.gg/dWpku7EWct"
       }
     },
@@ -6362,8 +6363,8 @@
         "banner": "/img/collections/trippy-treasure-chests/banner.png",
         "maxSupply": 2000,
         "website": "https://treasure.croarmy.app/",
-        "twitter": "https://twitter.com/PosessedP",
-        "discord": "https://discord.gg/dWpku7EWct"
+        "twitter": "https://twitter.com/PossessedPirate",
+        "discord": "https://discord.gg/cDK3AeEBMf"
       }
     },
     {
@@ -10077,6 +10078,25 @@
         "doxx": "public",
         "kyc": false,
         "escrow": false
+      }
+    },
+    {
+      "name": "Cronos Captains",
+      "slug": "cronos-captains",
+      "multiToken": false,
+      "address": "0x604Ed3Cd5B9eaE0607211A33B15Ac08fA01b10ee",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Brought to you by Possessed Pirates. P2E game coming! Fully doxxed dev through croarmy!",
+        "verified": false,
+        "avatar": "/img/collections/cronos-captains/avatar.webp",
+        "card": "/img/collections/cronos-captains/card.webp",
+        "banner": "/img/collections/cronos-captains/banner.webp",
+        "maxSupply": 5555,
+        "website": "https://www.possessedpirates.com/",
+        "twitter": "https://twitter.com/PossessedPirate",
+        "discord": "https://discord.gg/cDK3AeEBMf"
       }
     }
   ],
