@@ -37,7 +37,7 @@ import { hostedImage } from '@src/helpers/image';
 import { appConfig } from "@src/Config";
 import { collectionRoyaltyPercent } from "@src/core/chain";
 import Button, {LegacyOutlinedButton} from "@src/Components/components/common/Button";
-import { ButtonGroup, Heading } from "@chakra-ui/react";
+import {ButtonGroup, Heading, useClipboard} from "@chakra-ui/react";
 import { toast } from "react-toastify";
 import useToggleFavorite from "@src/Components/NftDetails/hooks/useToggleFavorite";
 import { faHeart as faHeartOutline } from "@fortawesome/free-regular-svg-icons";
@@ -59,6 +59,7 @@ const tabs = {
 const Nft1155 = ({ address, id }) => {
   const dispatch = useDispatch();
   const history = useRouter();
+  const { onCopy } = useClipboard(window.location);
 
   const { nft, refreshing, favorites } = useSelector((state) => state.nft);
   const soldListings = useSelector((state) =>
@@ -99,7 +100,7 @@ const Nft1155 = ({ address, id }) => {
   }, []);
 
   const copyLink = useCallback(() => {
-    navigator.clipboard.writeText(window.location);
+    onCopy();
     toast.info(`Link copied!`);
   }, [navigator, window.location])
 
