@@ -2,7 +2,7 @@ import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Contract, ethers } from 'ethers';
 import {faHeart as faHeartOutline} from '@fortawesome/free-regular-svg-icons';
-import {faCrow, faExternalLinkAlt, faHeart as faHeartSolid, faShare, faSync, faEllipsisH, faShareAlt} from '@fortawesome/free-solid-svg-icons';
+import {faCrow, faExternalLinkAlt, faHeart as faHeartSolid, faSync, faShareAlt} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import {Badge, Spinner} from 'react-bootstrap';
@@ -522,9 +522,9 @@ const Nft721 = ({ address, id }) => {
                       </Button>
                     )}
                     <MenuPopup options={options}>
-                      <Button styleType="default-outlined">
+                      <LegacyOutlinedButton className="m-0 text-nowrap p-4 pt-2 pb-2 btn-outline inline white">
                         <FontAwesomeIcon icon={faShareAlt} style={{ cursor: 'pointer' }} />
-                      </Button>
+                      </LegacyOutlinedButton>
                     </MenuPopup>
                   </ButtonGroup>
                 </div>

@@ -11,8 +11,10 @@ const batchListingSlice = createSlice({
   reducers: {
     addToBatchListingCart: (state, action) => {
       const nftToAdd = action.payload;
-      state.nfts.push({nft: nftToAdd, price: null});
-      state.isDrawerOpen = true;
+      if (!state.nfts.some((o) => caseInsensitiveCompare(o.nft.address, nftToAdd.address) && o.nft.id === nftToAdd.id)) {
+        state.nfts.push({nft: nftToAdd, price: null});
+        state.isDrawerOpen = true;
+      }
     },
     removeFromBatchListingCart: (state, action) => {
       const nftToRemove = action.payload;

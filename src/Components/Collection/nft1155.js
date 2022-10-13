@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { Contract, ethers } from 'ethers';
+import { ethers } from 'ethers';
 import { faExternalLinkAlt, faHeart as faHeartSolid, faSync, faShareAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Spinner } from 'react-bootstrap';
@@ -35,9 +35,8 @@ import NFTTabOffers from '../Offer/NFTTabOffers';
 import { AnyMedia } from '../components/AnyMedia';
 import { hostedImage } from '@src/helpers/image';
 import { appConfig } from "@src/Config";
-import Market from "@src/Contracts/Marketplace.json";
 import { collectionRoyaltyPercent } from "@src/core/chain";
-import Button from "@src/Components/components/common/Button";
+import Button, {LegacyOutlinedButton} from "@src/Components/components/common/Button";
 import { ButtonGroup, Heading } from "@chakra-ui/react";
 import { toast } from "react-toastify";
 import useToggleFavorite from "@src/Components/NftDetails/hooks/useToggleFavorite";
@@ -287,9 +286,9 @@ const Nft1155 = ({ address, id }) => {
                     </Button>
                   )}
                   <MenuPopup options={options}>
-                    <Button styleType="default-outlined">
+                    <LegacyOutlinedButton className="m-0 text-nowrap p-4 pt-2 pb-2 btn-outline inline white">
                       <FontAwesomeIcon icon={faShareAlt} style={{ cursor: 'pointer' }} />
-                    </Button>
+                    </LegacyOutlinedButton>
                   </MenuPopup>
                 </ButtonGroup>
               </div>

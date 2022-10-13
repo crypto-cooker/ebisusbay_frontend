@@ -9,7 +9,7 @@ import {
   faTag,
   faTimes,
   faPen,
-  faPlusCircle
+  faPlusCircle, faTags
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import  { MenuPopup } from '../components/chakra-components';
@@ -83,6 +83,13 @@ const MyNftCard = ({
         handleClick: onSellButtonPressed,
       });
     }
+    if (canUseBatchListing && (canSell || canUpdate)) {
+      options.push({
+        icon: faTags,
+        label: 'Sell in batch',
+        handleClick: onAddToBatchListingButtonPressed,
+      });
+    }
     if (canTransfer) {
       options.push({
         icon: faExchangeAlt,
@@ -153,7 +160,7 @@ const MyNftCard = ({
                   >
                     <FontAwesomeIcon icon={faCheckCircle} size="xl" style={{background:'dodgerblue', color:'white'}} className="rounded-circle"/>
                   </Box>
-                ) : (
+                ) : (canSell || canUpdate) && (
                   <Box
                     _groupHover={{display:'inline', transition:'0.3s ease', opacity: 1}}
                     transition="0.3s ease"

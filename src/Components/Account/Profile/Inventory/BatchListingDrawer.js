@@ -332,7 +332,7 @@ const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelecte
           style={{borderRadius: '20px'}}
         >
           <AnyMedia
-            image={ImageKitService.buildFixedWidthUrl(item.nft.image, 50, 50)}
+            image={ImageKitService.buildAvatarUrl(item.nft.image)}
             title={item.nft.name}
             usePlaceholder={false}
             className="img-rounded-8"
