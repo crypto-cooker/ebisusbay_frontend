@@ -194,7 +194,7 @@ const MyNftCard = ({
               _groupHover={{transform:'scale(1.05)', transition:'0.3s ease'}}
               transition="0.3s ease"
               transform="scale(1.0)"
-              onClick={() => navigateTo(nftUrl())}
+              onClick={() => navigateTo(nftUrl)}
               cursor="pointer"
             >
               <AnyMedia image={nftCardUrl(nft.address, nft.image)}
@@ -213,7 +213,7 @@ const MyNftCard = ({
           )}
           <div className="d-flex flex-column p-2 pb-1">
             <div className="card-title mt-auto">
-              <span onClick={() => navigateTo(nftUrl())} style={{ cursor: 'pointer' }}>
+              <span onClick={() => navigateTo(nftUrl)} style={{ cursor: 'pointer' }}>
                 {nft.count && nft.count > 0 ? (
                   <Heading as="h6" size="sm">
                     {nft.name} (x{nft.count})

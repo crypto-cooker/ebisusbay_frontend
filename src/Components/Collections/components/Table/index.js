@@ -11,10 +11,26 @@ import { CdnImage } from '@src/Components/components/CdnImage';
 import { hostedImage } from '@src/helpers/image';
 import useGetCollections from '../../hooks/useGetCollections';
 import { filter } from 'lodash';
+import styled from "styled-components";
+import LayeredIcon from "@src/Components/components/LayeredIcon";
+import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
 
 const mobileListBreakpoint = 1000;
 const PAGE_SIZE = 50;
 const tableMobileView = typeof window !== 'undefined' && window.innerWidth > mobileListBreakpoint;
+
+const VerifiedIcon = styled.span`
+  font-size: 8px;
+  color: #ffffff;
+  background: $color;
+  border-radius: 100%;
+  -moz-border-radius: 100%;
+  -webkit-border-radius: 100%;
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  z-index:1000;
+`;
 
 const Table = ({ timeFrame, searchTerms, onlyVerified }) => {
 
@@ -154,6 +170,11 @@ const Table = ({ timeFrame, searchTerms, onlyVerified }) => {
                               />
                             ) : (
                               <Blockies seed={collection.collection.toLowerCase()} size={10} scale={5} />
+                            )}
+                            {collection.metadata?.verified && (
+                              <VerifiedIcon>
+                                <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={7} />
+                              </VerifiedIcon>
                             )}
                           </a>
                         </Link>
