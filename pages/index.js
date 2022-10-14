@@ -20,9 +20,7 @@ import Button from '../src/Components/components/Button';
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {appConfig} from "@src/Config";
 import Head from "next/head";
-import {faDiscord, faTwitter} from "@fortawesome/free-brands-svg-icons";
 import {Box, Center, Heading, Text, VStack} from "@chakra-ui/react";
-import Image from "next/image";
 
 const fadeInUp = keyframes`
   0% {
@@ -92,8 +90,7 @@ const GlobalStyles = createGlobalStyle`
 const Jumbotron = {
   Host: styled.div`
     background-image: url(${({ isDark }) =>
-      isDark ? ImageKitService.buildBannerUrl('/img/background/seashrine-dark.webp') : ImageKitService.buildBannerUrl('/img/background/seashrine-light.webp')});
-    background-size: cover;
+    isDark ? ImageKitService.buildBannerUrl('/img/background/banner-dark.webp') : ImageKitService.buildBannerUrl('/img/background/Ebisus-bg-1_L.webp')});    background-size: cover;
     background-repeat: no-repeat;
     height: max(100vh, 800px);
     display: flex;
@@ -160,85 +157,74 @@ const Home = () => {
     return (
       <Jumbotron.Data>
         <Heading as="h6" size="sm">
-          <span className="text-uppercase color">Ebisu's Bay Presents: SeaShrine</span>
+          <span className="text-uppercase color">Ebisu's Bay Marketplace</span>
         </Heading>
-          <div className="d-flex">
-            <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
-              <Box minH={175} minW={150}>
-                <img src="https://cdn.ebisusbay.biz/dragon_animation_AiB8XEPbr.gif?tr=w-150"/>
-              </Box>
-            </Reveal>
-            <VStack>
-              <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
-                <Heading as="h1" size="xl">
-                  A community-based marketplace for rare art NFTs
-                </Heading>
-              </Reveal>
-              <Reveal className="onStep" keyframes={fadeInUp} delay={600} duration={900} triggerOnce>
-                <Text className="lead">
-                  Now is your chance to mint a VIP founding membership on SeaShrine an Aptos NFT marketplace brought to you by the same team behind Ebisu's Bay!
-                </Text>
-              </Reveal>
-            </VStack>
-          </div>
+        <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
+          <Heading as="h1" size="2xl">
+            Discover <span className="color">rare</span> digital art and collect NFTs
+          </Heading>
+        </Reveal>
+        <Reveal className="onStep" keyframes={fadeInUp} delay={600} duration={900} triggerOnce>
+          <p className="lead">
+            Ebisu's Bay is the first and largest NFT marketplace on Cronos. Create, buy, sell, trade and enjoy the #CroFam NFT
+            community.
+          </p>
+        </Reveal>
         <Reveal className="onStep call-to-action" keyframes={inline} delay={800} duration={900} triggerOnce>
-          <div
-            className="min-width-on-column mb-2 w-100 d-inline-flex flex-column flex-md-row flex-lg-column flex-xl-row gap-3 align-items-center"
-            style={mobile ? '' : {marginLeft:150}}
-          >
+          <div className="min-width-on-column mb-2 w-100 d-inline-flex flex-column flex-md-row flex-lg-column flex-xl-row gap-3   align-items-center">
             <span
-              onClick={() => window.open('https://seashrine.io/#mint', '_self')}
+              onClick={() => window.open('/marketplace', '_self')}
               className="m-0 text-nowrap p-4 pt-2 pb-2 btn-main inline lead"
             >
-              Mint Now
+              Explore
             </span>
-            {/*<Link href="/apply">*/}
-            {/*  <a>*/}
-            {/*    <Button type="legacy-outlined">Become a Creator</Button>*/}
-            {/*  </a>*/}
-            {/*</Link>*/}
+            <Link href="/apply">
+              <a>
+                <Button type="legacy-outlined">Become a Creator</Button>
+              </a>
+            </Link>
 
-            {/*<Button onClick={() => window.open(`/collection/founding-member`, '_self')} type="legacy-outlined">*/}
-            {/*  <FontAwesomeIcon icon={faFire} className="me-1" style={{ color: '#ff690e' }} />*/}
-            {/*  Become a Founding Member*/}
-            {/*</Button>*/}
+            <Button onClick={() => window.open(`/collection/founding-member`, '_self')} type="legacy-outlined">
+              <FontAwesomeIcon icon={faFire} className="me-1" style={{ color: '#ff690e' }} />
+              Become a Founding Member
+            </Button>
           </div>
         </Reveal>
-        {/*<Reveal className="onStep d-inline" keyframes={inline} delay={900} duration={1200} triggerOnce>*/}
-        {/*  <div className="row">*/}
-        {/*    <div className="spacer-single"></div>*/}
-        {/*    {marketData && (*/}
-        {/*      <div className="row">*/}
-        {/*        <div className="col-4 col-sm-4 col-md-4 col-12  mb30 ">*/}
-        {/*          <div className="de_count text-center text-md-start">*/}
-        {/*            <Heading as="h3" size="xl">*/}
-        {/*              <span>{siPrefixedNumber(Number(marketData.totalVolume).toFixed(0))}</span>*/}
-        {/*            </Heading>*/}
-        {/*            <h5 className="id-color">Volume</h5>*/}
-        {/*          </div>*/}
-        {/*        </div>*/}
+        <Reveal className="onStep d-inline" keyframes={inline} delay={900} duration={1200} triggerOnce>
+          <div className="row">
+            <div className="spacer-single"></div>
+            {marketData && (
+              <div className="row">
+                <div className="col-4 col-sm-4 col-md-4 col-12  mb30 ">
+                  <div className="de_count text-center text-md-start">
+                    <Heading as="h3" size="xl">
+                      <span>{siPrefixedNumber(Number(marketData.totalVolume).toFixed(0))}</span>
+                    </Heading>
+                    <h5 className="id-color">Volume</h5>
+                  </div>
+                </div>
 
-        {/*        <div className="col-4 col-sm-4 col-md-4 col-12 mb30 ">*/}
-        {/*          <div className="de_count text-center text-md-start">*/}
-        {/*            <Heading as="h3" size="xl">*/}
-        {/*              <span>{siPrefixedNumber(Number(marketData.totalSales).toFixed(0))}</span>*/}
-        {/*            </Heading>*/}
-        {/*            <h5 className="id-color">NFTs Sold</h5>*/}
-        {/*          </div>*/}
-        {/*        </div>*/}
+                <div className="col-4 col-sm-4 col-md-4 col-12 mb30 ">
+                  <div className="de_count text-center text-md-start">
+                    <Heading as="h3" size="xl">
+                      <span>{siPrefixedNumber(Number(marketData.totalSales).toFixed(0))}</span>
+                    </Heading>
+                    <h5 className="id-color">NFTs Sold</h5>
+                  </div>
+                </div>
 
-        {/*        <div className="col-4 col-sm-4 col-md-4 col-12 mb30 ">*/}
-        {/*          <div className="de_count text-center text-md-start">*/}
-        {/*            <Heading as="h3" size="xl">*/}
-        {/*              <span>{siPrefixedNumber(marketData.totalActive)}</span>*/}
-        {/*            </Heading>*/}
-        {/*            <h5 className="id-color">Active Listings</h5>*/}
-        {/*          </div>*/}
-        {/*        </div>*/}
-        {/*      </div>*/}
-        {/*    )}*/}
-        {/*  </div>*/}
-        {/*</Reveal>*/}
+                <div className="col-4 col-sm-4 col-md-4 col-12 mb30 ">
+                  <div className="de_count text-center text-md-start">
+                    <Heading as="h3" size="xl">
+                      <span>{siPrefixedNumber(marketData.totalActive)}</span>
+                    </Heading>
+                    <h5 className="id-color">Active Listings</h5>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </Reveal>
       </Jumbotron.Data>
     );
   };
@@ -263,44 +249,44 @@ const Home = () => {
       </Jumbotron.Host>
       {mobile && JumbotronData()}
 
-      <section className="gl-legacy container no-bottom no-top">
-        <div className="row">
-          <div className="col-lg-12">
-            <div className="text-center pt-5">
-              <Heading>The Meanies</Heading>
-              <div className="small-border"></div>
-            </div>
-          </div>
-          <div className="col-lg-6 col-md-6 d-flex align-items-center">
-            <div className="mt-3" style={{color:getTheme(userTheme).colors.textColor3}}>
-              <p className="fs-5 mb-4">
-                The Meanies are a collection of 2,500 uniquely generated NFTs and the 2nd character of the Lost Toys project. Each NFT is based on 7 trait categories with different rarities. A Lost Toy NFT is not simply an NFT it is a key to unlocking over 15 utilities!
-              </p>
-            </div>
-          </div>
-          <div className="col-lg-6 col-md-6 pt-3">
-            <div className="mx-auto text-center">
-              <img
-                src={hostedImage('/img/promos/meanies.webp')}
-                alt="Meanies"
-                className="img-fluid"
-                width="100%"
-              />
-            </div>
-            <div className="d-flex flex-column align-middle">
-              <div className="d-flex justify-content-between flex-wrap">
-                <div className="flex-fill mx-auto mt-2" style={{maxWidth:300}}>
-                  <a href="/drops/the-meanies">
-                    <Button type="legacy" className="w-100">
-                       Mint Now
-                    </Button>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/*<section className="gl-legacy container no-bottom no-top">*/}
+      {/*  <div className="row">*/}
+      {/*    <div className="col-lg-12">*/}
+      {/*      <div className="text-center pt-5">*/}
+      {/*        <Heading>The Meanies</Heading>*/}
+      {/*        <div className="small-border"></div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*    <div className="col-lg-6 col-md-6 d-flex align-items-center">*/}
+      {/*      <div className="mt-3" style={{color:getTheme(userTheme).colors.textColor3}}>*/}
+      {/*        <p className="fs-5 mb-4">*/}
+      {/*          The Meanies are a collection of 2,500 uniquely generated NFTs and the 2nd character of the Lost Toys project. Each NFT is based on 7 trait categories with different rarities. A Lost Toy NFT is not simply an NFT it is a key to unlocking over 15 utilities!*/}
+      {/*        </p>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*    <div className="col-lg-6 col-md-6 pt-3">*/}
+      {/*      <div className="mx-auto text-center">*/}
+      {/*        <img*/}
+      {/*          src={hostedImage('/img/promos/meanies.webp')}*/}
+      {/*          alt="Meanies"*/}
+      {/*          className="img-fluid"*/}
+      {/*          width="100%"*/}
+      {/*        />*/}
+      {/*      </div>*/}
+      {/*      <div className="d-flex flex-column align-middle">*/}
+      {/*        <div className="d-flex justify-content-between flex-wrap">*/}
+      {/*          <div className="flex-fill mx-auto mt-2" style={{maxWidth:300}}>*/}
+      {/*            <a href="/drops/the-meanies">*/}
+      {/*              <Button type="legacy" className="w-100">*/}
+      {/*                 Mint Now*/}
+      {/*              </Button>*/}
+      {/*            </a>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</section>*/}
 
       <section className="gl-legacy container no-bottom">
         <div className="row">

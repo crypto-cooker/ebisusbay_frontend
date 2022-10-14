@@ -2,17 +2,36 @@ import React, {memo, useState} from 'react';
 import { useRouter } from 'next/router';
 import { ethers } from 'ethers';
 import { toast } from 'react-toastify';
-import { faLink, faEllipsisH, faExchangeAlt, faTag, faTimes, faPen } from '@fortawesome/free-solid-svg-icons';
+import {
+  faLink,
+  faEllipsisH,
+  faExchangeAlt,
+  faTag,
+  faTimes,
+  faPen,
+  faPlusCircle, faTags
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import  { MenuPopup } from '../components/chakra-components';
 import AnyMedia from './AnyMedia';
-import {appConfig} from "@src/Config";
 import {nftCardUrl} from "@src/helpers/image";
-import {Badge, Box, Center, Flex, Heading, Spacer, Text} from "@chakra-ui/react";
+import {
+  Badge,
+  Box,
+  Center,
+  Flex,
+  Heading,
+  Spacer,
+  Text,
+  useBreakpointValue,
+  useClipboard
+} from "@chakra-ui/react";
 import Image from "next/image";
-import {round} from "@src/utils";
+import {appUrl, caseInsensitiveCompare, round} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {darkTheme, lightTheme} from "@src/Theme/theme";
+import {useSelector} from "react-redux";
+import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
 
 const MyNftCard = ({
   nft,
@@ -25,27 +44,40 @@ const MyNftCard = ({
   onSellButtonPressed,
   onCancelButtonPressed,
   onUpdateButtonPressed,
+  onAddToBatchListingButtonPressed,
+  onRemoveFromBatchListingButtonPressed,
   newTab = false,
-  imgClass = 'marketplace',
 }) => {
   const history = useRouter();
+  const nftUrl = appUrl(`/collection/${nft.address}/${nft.id}`);
   const [isHovered, setIsHovered] = useState(false);
+  const user = useSelector((state) => state.user);
+  const batchListingCart = useSelector((state) => state.batchListing);
+  const canUseBatchListing = useBreakpointValue(
+    {base: false, md: true,},
+    {fallback: 'md'},
+  );
+  const { onCopy } = useClipboard(nftUrl);
 
   const navigateTo = (link) => {
-    if (newTab) {
+    if (batchListingCart.isDrawerOpen) {
+      if (isInBatchListingCart()) {
+        onRemoveFromBatchListingButtonPressed();
+      } else if (canSell || canUpdate) {
+        onAddToBatchListingButtonPressed();
+      } else {
+        toast.error('Item is currently not listable')
+      }
+    } else if (newTab) {
       window.open(link, '_blank');
     } else {
       history.push(link);
     }
   };
 
-  const nftUrl = () => {
-    return `/collection/${nft.address}/${nft.id}`;
-  };
-
-  const onCopyLinkButtonPressed = (url) => () => {
-    navigator.clipboard.writeText(url);
-    toast.success('Copied!');
+  const onCopyLinkButtonPressed = () => {
+    onCopy();
+    toast.success('Link copied!');
   };
 
   const getOptions = () => {
@@ -56,6 +88,13 @@ const MyNftCard = ({
         icon: faTag,
         label: 'Sell',
         handleClick: onSellButtonPressed,
+      });
+    }
+    if (canUseBatchListing && (canSell || canUpdate)) {
+      options.push({
+        icon: faTags,
+        label: 'Sell in batch',
+        handleClick: onAddToBatchListingButtonPressed,
       });
     }
     if (canTransfer) {
@@ -83,10 +122,14 @@ const MyNftCard = ({
     options.push({
       icon: faLink,
       label: 'Copy link',
-      handleClick: onCopyLinkButtonPressed(new URL(nftUrl(), appConfig('urls.app'))),
+      handleClick: onCopyLinkButtonPressed,
     });
 
     return options;
+  };
+
+  const isInBatchListingCart = () => {
+    return batchListingCart.nfts.some((o) => o.nft.id === nft.id && caseInsensitiveCompare(o.nft.address, nft.address));
   };
 
   return (
@@ -109,19 +152,58 @@ const MyNftCard = ({
         height="100%"
       >
         <Flex direction="column" height="100%">
-          <div className="card-img-container">
+          <div className="card-img-container position-relative">
+            {canUseBatchListing && (
+              <>
+                {isInBatchListingCart() ? (
+                  <Box
+                    top={0}
+                    right={0}
+                    position="absolute"
+                    zIndex={2}
+                    p={2}
+                    cursor="pointer"
+                    onClick={onRemoveFromBatchListingButtonPressed}
+                  >
+                    <FontAwesomeIcon icon={faCheckCircle} size="xl" style={{background:'dodgerblue', color:'white'}} className="rounded-circle"/>
+                  </Box>
+                ) : (canSell || canUpdate) && (
+                  <Box
+                    _groupHover={{display:'inline', transition:'0.3s ease', opacity: 1}}
+                    transition="0.3s ease"
+                    display="inline"
+                    opacity={0}
+                    top={0}
+                    right={0}
+                    position="absolute"
+                    zIndex={2}
+                    p={2}
+                    cursor="pointer"
+                    onClick={() => {
+                      if (canSell || canUpdate) {
+                        onAddToBatchListingButtonPressed()
+                      }
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faPlusCircle} size="xl" style={{background:'white', color:'grey'}} className="rounded-circle" />
+                  </Box>
+                )}
+              </>
+            )}
             <Box
               _groupHover={{transform:'scale(1.05)', transition:'0.3s ease'}}
               transition="0.3s ease"
               transform="scale(1.0)"
+              onClick={() => navigateTo(nftUrl)}
+              cursor="pointer"
             >
               <AnyMedia image={nftCardUrl(nft.address, nft.image)}
-                        title={nft.name} url={nftUrl()}
+                        title={nft.name}
                         newTab={true}
                         className="card-img-top marketplace"
                         height={440}
                         width={440}
-                        video={nft.video ?? nft.animation_url}
+                        video={batchListingCart.nfts.length > 0 ? undefined : (nft.video ?? nft.animation_url)}
                         usePlaceholder={true}
               />
             </Box>
@@ -131,7 +213,7 @@ const MyNftCard = ({
           )}
           <div className="d-flex flex-column p-2 pb-1">
             <div className="card-title mt-auto">
-              <span onClick={() => navigateTo(nftUrl())} style={{ cursor: 'pointer' }}>
+              <span onClick={() => navigateTo(nftUrl)} style={{ cursor: 'pointer' }}>
                 {nft.count && nft.count > 0 ? (
                   <Heading as="h6" size="sm">
                     {nft.name} (x{nft.count})

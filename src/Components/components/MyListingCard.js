@@ -7,6 +7,8 @@ import { ethers } from 'ethers';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import {appConfig} from "../../Config";
 import Image from "next/image";
+import {appUrl} from "@src/utils";
+import {useClipboard} from "@chakra-ui/react";
 
 
 const MyListingCard = ({
@@ -16,14 +18,12 @@ const MyListingCard = ({
   onCancelButtonPressed,
   onUpdateButtonPressed,
 }) => {
-
-  const nftUrl = () => {
-    return `/collection/${nft.address}/${nft.id}`;
-  };
+  const nftUrl = appUrl(`/collection/${nft.address}/${nft.id}`);
+  const { onCopy } = useClipboard(nftUrl);
 
   const onCopyLinkButtonPressed = (url) => () => {
-    navigator.clipboard.writeText(url);
-    toast.success('Copied!');
+    onCopy();
+    toast.success('Link copied!');
   };
 
   return (
@@ -93,7 +93,7 @@ const MyListingCard = ({
           )}
           <button
             className="btn-main mx-1 mt-2"
-            onClick={onCopyLinkButtonPressed(new URL(nftUrl(), appConfig('urls.app')))}
+            onClick={onCopyLinkButtonPressed(new URL(nftUrl, appConfig('urls.app')))}
             style={{ cursor: 'pointer', color: 'black' }}
           >
             <FontAwesomeIcon icon={faLink} />

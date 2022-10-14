@@ -58,9 +58,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: $bgColor1;
 }
-body::-webkit-scrollbar {
-  display: none;
-}
 #routerhang {
   transform: unset !important;
   transform-origin: unset !important;
