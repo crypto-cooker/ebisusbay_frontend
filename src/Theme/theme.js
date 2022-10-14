@@ -89,5 +89,16 @@ const customTheme = extendTheme({
   colors: {
     gray: grayColor
   },
+  components: {
+    Switch: {
+      baseStyle: {
+        track: {
+          _checked: {
+            background: mode(lightTheme.textColor4, darkTheme.textColor4)
+          },
+        },
+      },
+    }
+  }
 })
 export default customTheme

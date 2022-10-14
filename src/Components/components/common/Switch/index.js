@@ -15,7 +15,6 @@ const Switch = ({ isChecked = false, setIsChecked, text = '', switchId = 'isVeri
         </FormLabel>
         <ChakraSwitch
           size="lg"
-          colorScheme="orange"
           id={switchId}
           checked={isChecked}
           onChange={updateIsChecked}
