@@ -10,11 +10,10 @@ import { chainConnect, connectAccount } from '@src/GlobalState/User';
 import { AnyMedia } from './AnyMedia';
 import {convertGateway, nftCardUrl} from "@src/helpers/image";
 import {appConfig} from "@src/Config";
-import {caseInsensitiveCompare, createSuccessfulAddCartContent} from "@src/utils";
-import {Box, Flex, Heading, Spacer, Text} from "@chakra-ui/react";
+import {appUrl, caseInsensitiveCompare, createSuccessfulAddCartContent} from "@src/utils";
+import {Box, Flex, Heading, Spacer, Text, useClipboard} from "@chakra-ui/react";
 import Image from "next/image";
 import {
-  faBolt,
   faEllipsisH,
   faExternalLink,
   faHand,
@@ -58,6 +57,7 @@ const MakeBuy = styled.div`
 `;
 
 const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark }) => {
+  const nftUrl = appUrl(`/collection/${listing.nftAddress}/${listing.nftId}`);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const cart = useSelector((state) => state.cart);
@@ -65,6 +65,7 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark })
   const [collection, setCollection] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
   const isInCart = cart.nfts.map((o) => o.listingId).includes(listing.listingId);
+  const { onCopy } = useClipboard(nftUrl);
 
   const getOptions = () => {
     const options = [];
@@ -141,7 +142,7 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark })
 
   const handleRemoveFromCart = () => {
     dispatch(removeFromCart(listing.listingId));
-    toast.success('Removed to cart');
+    toast.success('Removed from cart');
   };
 
   const handleOpenOriginal = () => {
@@ -155,8 +156,8 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark })
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(`${appConfig('urls.app')}collection/${listing.nftAddress}/${listing.nftId}`);
-    toast.success('Address Copied!');
+    onCopy();
+    toast.success('Link copied!');
   };
 
   const convertListingData = (listingData) => {

@@ -3,13 +3,15 @@ import { faBook, faCopy, faGlobe, faRocket } from '@fortawesome/free-solid-svg-i
 import { faDiscord, faInstagram, faMedium, faTelegram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import LayeredIcon from '../components/LayeredIcon';
 import { toast } from 'react-toastify';
-import {buildInstagramUrl, buildTwitterUrl, isCrosmocraftsCollection, isCrosmocraftsPartsCollection} from '../../utils';
+import {buildInstagramUrl, buildTwitterUrl, isCrosmocraftsCollection, isCrosmocraftsPartsCollection} from '@src/utils';
+import {useClipboard} from "@chakra-ui/react";
 
 const SocialsBar = ({ address, socials, showCopy = true }) => {
   const { website, twitter, discord, telegram, instagram, medium, gitbook } = socials;
+  const { onCopy } = useClipboard(address);
 
-  const handleCopy = (code) => () => {
-    navigator.clipboard.writeText(code);
+  const handleCopy = () => {
+    onCopy();
     toast.success('Address Copied!');
   };
 
@@ -56,7 +58,7 @@ const SocialsBar = ({ address, socials, showCopy = true }) => {
         </a>
       )}
       {showCopy && address && (
-        <span onClick={handleCopy(address)} style={{ cursor: 'pointer' }} title="Copy Address">
+        <span onClick={handleCopy} style={{ cursor: 'pointer' }} title="Copy Address">
           <LayeredIcon icon={faCopy} />
         </span>
       )}

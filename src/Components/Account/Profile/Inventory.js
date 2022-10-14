@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {getNftsForAddress2} from "@src/core/api";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {Collapse, Spinner} from "react-bootstrap";
+import {Spinner} from "react-bootstrap";
 import MyNftCard from "@src/Components/components/MyNftCard";
 import {caseInsensitiveCompare, findCollectionByAddress} from "@src/utils";
 import NftCard from "@src/Components/components/NftCard";
@@ -19,6 +19,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faFilter} from "@fortawesome/free-solid-svg-icons";
 import useBreakpoint from "use-breakpoint";
 import TransferNftDialog from "@src/Components/Account/Profile/Dialogs/TransferNftDialog";
+import {addToBatchListingCart, removeFromBatchListingCart} from "@src/GlobalState/batchListingSlice";
 
 const knownContracts = appConfig('collections');
 
@@ -30,7 +31,7 @@ export default function Inventory({ address }) {
 
   const [collections, setCollections] = useState([]);
   const [collectionFilter, setCollectionFilter] = useState([]);
-  const [filtersVisible, setFiltersVisible] = useState(true);
+  const [filtersVisible, setFiltersVisible] = useState(false);
   const [useMobileMenu, setUseMobileMenu] = useState(false);
   const [hasManuallyToggledFilters, setHasManuallyToggledFilters] = useState(false);
   const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
@@ -120,6 +121,8 @@ export default function Inventory({ address }) {
                           dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
                         }}
                         onCancelButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageCancelDialog(nft))}
+                        onAddToBatchListingButtonPressed={() => dispatch(addToBatchListingCart(nft))}
+                        onRemoveFromBatchListingButtonPressed={() => dispatch(removeFromBatchListingCart(nft))}
                         newTab={true}
                       />
                     ) : collection && (
@@ -142,9 +145,9 @@ export default function Inventory({ address }) {
   useEffect(() => {
     const isMobileSize = minWidth < BREAKPOINTS.m;
     setUseMobileMenu(isMobileSize);
-    if (!hasManuallyToggledFilters) {
-      setFiltersVisible(!isMobileSize);
-    }
+    // if (!hasManuallyToggledFilters) {
+    //   setFiltersVisible(!isMobileSize);
+    // }
   }, [breakpoint]);
 
   const toggleFilterVisibility = () => {

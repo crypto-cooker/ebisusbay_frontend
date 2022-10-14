@@ -2,7 +2,7 @@ import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Contract, ethers } from 'ethers';
 import { faHeart as faHeartOutline } from '@fortawesome/free-regular-svg-icons';
-import { faCrow, faExternalLinkAlt, faHeart as faHeartSolid, faShare, faSync, faEllipsisH, faShareAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCrow, faExternalLinkAlt, faHeart as faHeartSolid, faShare, faShareAlt, faSync, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import { Badge, Spinner } from 'react-bootstrap';
@@ -52,7 +52,7 @@ import Link from 'next/link';
 import axios from "axios";
 import Button, { LegacyOutlinedButton } from "@src/Components/components/common/Button";
 import { collectionRoyaltyPercent } from "@src/core/chain";
-import { ButtonGroup, Heading, MenuButton as MenuButtonCK } from "@chakra-ui/react";
+import { ButtonGroup, Heading, MenuButton as MenuButtonCK, useClipboard } from "@chakra-ui/react";
 import useToggleFavorite from "@src/Components/NftDetails/hooks/useToggleFavorite";
 import { toast } from "react-toastify";
 import { Menu } from '../components/chakra-components';
@@ -75,6 +75,7 @@ const Nft721 = ({ address, id }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const { nft, refreshing, favorites } = useSelector((state) => state.nft);
+  const { onCopy } = useClipboard(window.location);
 
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [offerType, setOfferType] = useState(OFFER_TYPE.none);
@@ -111,7 +112,7 @@ const Nft721 = ({ address, id }) => {
   const [{ isLoading: isFavoriting, response, error }, toggleFavorite] = useToggleFavorite();
 
   const copyLink = useCallback(() => {
-    navigator.clipboard.writeText(window.location);
+    onCopy();
     toast.info(`Link copied!`);
   }, [navigator, window.location])
 

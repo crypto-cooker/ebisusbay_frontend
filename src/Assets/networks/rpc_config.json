@@ -1749,6 +1749,11 @@
         "twitter": "https://twitter.com/0xLuckless",
         "discord": "https://discord.gg/REbVZ9rACc",
         "medium": "https://medium.com/@0xLuckless"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -4446,7 +4451,7 @@
       "multiToken": false,
       "address": "0x954AbeA0471A04A26F5A953056Ea0Ae57f2395cB",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Bankroll Bear Society is an NFT project consisting of 5,000 Bears. Found on the Cronos chain. We are offering direct REAL-LIFE utilities. Our Bears are a VIP gateway into the Bankroll Universe and ecosystem.",
         "verified": true,
@@ -5236,6 +5241,11 @@
         "twitter": "https://twitter.com/0xLuckless",
         "discord": "https://discord.gg/REbVZ9rACc",
         "medium": "https://medium.com/@0xLuckless"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -5488,6 +5498,11 @@
         "website": "https://carkayous.com/",
         "twitter": "https://twitter.com/carkayous",
         "discord": "https://discord.gg/carkayous"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -5909,7 +5924,8 @@
         "card": "/img/collections/possessed-pirates/card.png",
         "banner": "/img/collections/possessed-pirates/banner.png",
         "maxSupply": 100,
-        "twitter": "https://twitter.com/PosessedP",
+        "website": "https://www.possessedpirates.com/",
+        "twitter": "https://twitter.com/PossessedPirate",
         "discord": "https://discord.gg/dWpku7EWct"
       }
     },
@@ -6029,9 +6045,9 @@
         "card": "/img/collections/hype-hogs/card.png",
         "banner": "/img/collections/hype-hogs/banner.png",
         "maxSupply": 3333,
-        "website": "https://zap7art.club/toughlions",
+        "website": "https://zap7art.club/",
         "twitter": "https://twitter.com/ToughLions1111",
-        "discord": "https://discord.gg/8ssS2RWZvn"
+        "discord": "https://discord.gg/tBgUbvsSZX"
       },
       "verification": {
         "doxx": "private",
@@ -6347,8 +6363,8 @@
         "banner": "/img/collections/trippy-treasure-chests/banner.png",
         "maxSupply": 2000,
         "website": "https://treasure.croarmy.app/",
-        "twitter": "https://twitter.com/PosessedP",
-        "discord": "https://discord.gg/dWpku7EWct"
+        "twitter": "https://twitter.com/PossessedPirate",
+        "discord": "https://discord.gg/cDK3AeEBMf"
       }
     },
     {
@@ -6482,6 +6498,11 @@
         "twitter": "https://twitter.com/CroWitches",
         "discord": "https://discord.gg/VrC2e4GNVR",
         "telegram": "https://t.me/crowitches"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -8157,7 +8178,7 @@
       "name": "Whale Family",
       "slug": "whalefam",
       "multiToken": false,
-      "address": "",
+      "address": "0xe6f571551dcc680E789925117Aeb8C183E83295b",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -8333,6 +8354,11 @@
         "website": "https://carkayous.com/",
         "twitter": "https://twitter.com/carkayous",
         "discord": "https://discord.gg/carkayous"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "escrow": false
       }
     },
     {
@@ -8900,7 +8926,7 @@
       "listable": true,
       "metadata": {
         "description": "Cronos Apes is the first ever NFT collection with an holders-exclusive Community in the Cronos chain. 6% of royalties income distributed to holders. Mutant serums coming soon…",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/cronos-apes/avatar.webp",
         "card": "/img/collections/cronos-apes/card.webp",
         "banner": "/img/collections/cronos-apes/banner.webp",
@@ -9178,6 +9204,11 @@
         "twitter": "https://twitter.com/CroWitches",
         "discord": "https://discord.gg/VrC2e4GNVR",
         "telegram": "https://t.me/crowitches"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -9198,6 +9229,11 @@
         "twitter": "https://twitter.com/CroWitches",
         "discord": "https://discord.gg/VrC2e4GNVR",
         "telegram": "https://t.me/crowitches"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -9463,6 +9499,11 @@
         "discord": "https://discord.gg/BpAVk2Za2c",
         "medium": "https://medium.com/@0xLuckless",
         "instagram": "https://www.instagram.com/0xLuckless"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -9485,22 +9526,22 @@
       }
     },
     {
-      "name": "KillaCats",
-      "slug": "killacats",
+      "name": "KillaKatZ",
+      "slug": "killakatz",
       "multiToken": false,
       "address": "0x6DC9bfA5E2D8645aA5245CCCdA69e8BD0aBfEb5E",
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "KillaKatz - A Community Driven Rebirth Collection of 3000 Battle Hardened NFTs",
+        "description": "KillaKatZ - A Community Driven Rebirth Collection of 3000 Battle Hardened NFTs",
         "verified": false,
-        "avatar": "/img/collections/killacats/avatar.webp",
-        "card": "/img/collections/killacats/card.webp",
-        "banner": "/img/collections/killacats/banner.webp",
+        "avatar": "/img/collections/killakatz/avatar.webp",
+        "card": "/img/collections/killakatz/card.webp",
+        "banner": "/img/collections/killakatz/banner.webp",
         "maxSupply": 3000,
-        "website": "https://killacats.com/",
-        "twitter": "https://twitter.com/KillaCats",
-        "discord": "https://discord.gg/AVqDK99a"
+        "website": "http://killakatznft.com/",
+        "twitter": "https://twitter.com/KillaKatzNFT",
+        "discord": "https://discord.gg/EfK28j74"
       }
     },
     {
@@ -9543,6 +9584,519 @@
         "kyc": false,
         "escrow": false,
         "creativeCommons": true
+      }
+    },
+    {
+      "name": "AI Experiments",
+      "slug": "ai-experiments",
+      "multiToken": false,
+      "address": "0x51eaf8c081Cca683A5542c438f9429CE46D238e4",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "\"In the middle of a dark and stormy night, Doctors set about creating laboratories in the various parallel universes, what they could not imagine, are the experiments that took place within them. Now mysterious creatures roam within these parallel universes, our Doctors have managed to photograph and classify 1800 beings from the other world.\" AI EXPERIMENTS is a collection of NFTs, on Cronos blockchain, which gives various benefits to owners. Discover more into DaoLabs.",
+        "verified": false,
+        "avatar": "/img/collections/ai-experiments/avatar.webp",
+        "card": "/img/collections/ai-experiments/card.webp",
+        "banner": "/img/collections/ai-experiments/banner.webp",
+        "maxSupply": 1800,
+        "website": "https://daogames.online/",
+        "twitter": "https://twitter.com/DrDaoClub",
+        "discord": "https://discord.gg/fyca4JYW7V",
+        "medium": "https://medium.com/@drdao.club",
+        "telegram": "https://t.me/DrDaoFounder"
+      }
+    },
+    {
+      "name": "Degenerated & Friends V1",
+      "slug": "degenerated-friends-v1",
+      "multiToken": false,
+      "address": "0xd79a37824bD86e4E945e8385480de3c45B7e5B08",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The first collaborative collection on Cronos, delivered by The Degenerated X CroDoo, this series of AI-generated wallpapers features art from six totally different and completely unique projects, together into one mint.",
+        "verified": false,
+        "avatar": "/img/collections/degenerated-friends-v1/avatar.webp",
+        "card": "/img/collections/degenerated-friends-v1/card.webp",
+        "banner": "/img/collections/degenerated-friends-v1/banner.webp",
+        "maxSupply": 3000,
+        "website": "https://babymonsters.ca/degendoo-mint/",
+        "twitter": "https://twitter.com/degenednfts",
+        "discord": "https://discord.gg/N5YXhNDJyz"
+      }
+    },
+    {
+      "name": "Defira Heroes",
+      "slug": "defira-heroes",
+      "multiToken": false,
+      "address": "0x49198cb9de084373300fa25f210ac2f26f85ad80",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Heroes are primeval spirits residing on the mystical plane that underpins the world of Defira. They are not only great warriors and masters of magic, but they also perform the vital jobs that make the world prosperous. They are summoned in a magical Wishing Ritual by combining the souls of two other heroes.",
+        "verified": false,
+        "avatar": "/img/collections/defira-heroes/avatar.webp",
+        "card": "/img/collections/defira-heroes/card.webp",
+        "banner": "/img/collections/defira-heroes/banner.webp",
+        "maxSupply": 5385,
+        "website": "https://game.defira.com/#/game/herohall?modal=hero-catalog/",
+        "twitter": "https://www.twitter.com/Defiraverse",
+        "discord": "https://discord.gg/rg4MjQfnfY"
+      }
+    },
+    {
+      "name": "Evolution Hogs",
+      "slug": "evolution-hogs",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Evolution Hogs is a collection of 3333 characters generated randomly. All are on the Cronos Chain with unique identity and rarity.",
+        "verified": true,
+        "avatar": "/img/collections/evolution-hogs/avatar.webp",
+        "card": "/img/collections/evolution-hogs/card.webp",
+        "banner": "/img/collections/evolution-hogs/banner.webp",
+        "maxSupply": 3333,
+        "website": "https://zap7art.club/",
+        "twitter": "https://twitter.com/zap7project",
+        "discord": "https://discord.gg/tBgUbvsSZX"
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": "ebisu",
+        "escrow": false
+      }
+    },
+    {
+      "name": "Lion Social Club",
+      "slug": "lion-social-club",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Lion Social Club is minting our first collection, each NFT is unique and holds special utility. LSC aims to bring a community based DEX and DAO that puts the community first and gives each holder a voice with our utility based roadmap.",
+        "verified": true,
+        "avatar": "/img/collections/lion-social-club/avatar.webp",
+        "card": "/img/collections/lion-social-club/card.webp",
+        "banner": "/img/collections/lion-social-club/banner.webp",
+        "maxSupply": 2500,
+        "website": "https://lionsocialclub.io/",
+        "twitter": "https://twitter.com/LionSocialClub",
+        "discord": "https://discord.gg/WdgfBzYTKX",
+        "medium": "https://lion-social.gitbook.io/lion-social-club/"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
+      }
+    },
+    {
+      "name": "Grey_hart's Broken Hearts",
+      "slug": "broken-hearts",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Broken Hearts collection is a line of 101 tarot cards created by the musician Grey_hart, using MIDJOURNEY’s AI software, all around the subject of a broken heart. Each 9x16 is a 1 of a kind image with varying themes and elements around heartbreak and the spiritual journey involved in getting through it. Some are astral guides, some spirit animals, some just metaphors and feelings made into imagery. If you’ve experienced heartbreak of any kind in your life, there’s sure to be an image that speaks to you in some form. ",
+        "verified": true,
+        "avatar": "/img/collections/broken-hearts/avatar.webp",
+        "card": "/img/collections/broken-hearts/card.webp",
+        "banner": "/img/collections/broken-hearts/banner.webp",
+        "maxSupply": 2500,
+        "website": "https://loveisgrey.art/",
+        "discord": "https://discord.gg/t3DM6pNAWb",
+        "instagram": "https://instagram.com/lov3is_grey"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
+      }
+    },
+    {
+      "name": "Renegade Monks",
+      "slug": "renegade-monks",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "☆ 1,337 Collectable Renegade Monks ☆\n\nMint your Monk and fight with The New Resistance!",
+        "verified": true,
+        "avatar": "/img/collections/renegade-monks/avatar.webp",
+        "card": "/img/collections/renegade-monks/card.webp",
+        "banner": "/img/collections/renegade-monks/banner.webp",
+        "maxSupply": 1337,
+        "website": "https://thenewresistance.io/",
+        "twitter": "https://twitter.com/TNR_NFT_GAME",
+        "discord": "https://discord.gg/tnr"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
+      }
+    },
+    {
+      "name": "Boomer Squad - Room Components: Activity",
+      "slug": "boomer-squad-boom-rooms-activity",
+      "multiToken": false,
+      "address": "0x8Bff49Fc633e0A3eB879449B67500812B27a97B7",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Boom Rooms - Brought to you by the Boomer Squad team is the main source of distribution for our ecosystem utility token $SCRATCH. Take your Boom Rooms and place room components in them to build up your room score which determines how much $SCRATCH you will be generating. These rooms are fully customized, build your own NFTs with Room Components and show off some flare with the Boom Room Cosmetic Components!",
+        "verified": true,
+        "avatar": "/img/collections/boomer-squad-boom-rooms/avatar.webp",
+        "banner": "/img/collections/boomer-squad-boom-rooms/banner.webp",
+        "card": "/img/collections/boomer-squad-boom-rooms/card.webp",
+        "maxSupply": 7000,
+        "website": "https://www.boomersquad.io/",
+        "twitter": "https://twitter.com/BoomerSquadNFT1",
+        "discord": "https://discord.gg/boomersquad",
+        "medium": "https://medium.com/@BoomerSquadNFT"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
+      }
+    },
+    {
+      "name": "Boomer Squad - Room Components: Bed",
+      "slug": "boomer-squad-boom-rooms-bed",
+      "multiToken": false,
+      "address": "0x995d38004314836E48485D5fE328ebC17046FE68",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Boom Rooms - Brought to you by the Boomer Squad team is the main source of distribution for our ecosystem utility token $SCRATCH. Take your Boom Rooms and place room components in them to build up your room score which determines how much $SCRATCH you will be generating. These rooms are fully customized, build your own NFTs with Room Components and show off some flare with the Boom Room Cosmetic Components!",
+        "verified": true,
+        "avatar": "/img/collections/boomer-squad-boom-rooms/avatar.webp",
+        "banner": "/img/collections/boomer-squad-boom-rooms/banner.webp",
+        "card": "/img/collections/boomer-squad-boom-rooms/card.webp",
+        "maxSupply": 7000,
+        "website": "https://www.boomersquad.io/",
+        "twitter": "https://twitter.com/BoomerSquadNFT1",
+        "discord": "https://discord.gg/boomersquad",
+        "medium": "https://medium.com/@BoomerSquadNFT"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
+      }
+    },
+    {
+      "name": "Boomer Squad - Room Components: Building",
+      "slug": "boomer-squad-boom-rooms-building",
+      "multiToken": false,
+      "address": "0xc6a1f1034235F3B389bAb28B75719B3475Edf4AD",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Boom Rooms - Brought to you by the Boomer Squad team is the main source of distribution for our ecosystem utility token $SCRATCH. Take your Boom Rooms and place room components in them to build up your room score which determines how much $SCRATCH you will be generating. These rooms are fully customized, build your own NFTs with Room Components and show off some flare with the Boom Room Cosmetic Components!",
+        "verified": true,
+        "avatar": "/img/collections/boomer-squad-boom-rooms/avatar.webp",
+        "banner": "/img/collections/boomer-squad-boom-rooms/banner.webp",
+        "card": "/img/collections/boomer-squad-boom-rooms/card.webp",
+        "maxSupply": 7000,
+        "website": "https://www.boomersquad.io/",
+        "twitter": "https://twitter.com/BoomerSquadNFT1",
+        "discord": "https://discord.gg/boomersquad",
+        "medium": "https://medium.com/@BoomerSquadNFT"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
+      }
+    },
+    {
+      "name": "Boomer Squad - Room Components: Couch",
+      "slug": "boomer-squad-boom-rooms-couch",
+      "multiToken": false,
+      "address": "0xf27205535932c7490F227F5bED7e5f7212b455bb",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Boom Rooms - Brought to you by the Boomer Squad team is the main source of distribution for our ecosystem utility token $SCRATCH. Take your Boom Rooms and place room components in them to build up your room score which determines how much $SCRATCH you will be generating. These rooms are fully customized, build your own NFTs with Room Components and show off some flare with the Boom Room Cosmetic Components!",
+        "verified": true,
+        "avatar": "/img/collections/boomer-squad-boom-rooms/avatar.webp",
+        "banner": "/img/collections/boomer-squad-boom-rooms/banner.webp",
+        "card": "/img/collections/boomer-squad-boom-rooms/card.webp",
+        "maxSupply": 7000,
+        "website": "https://www.boomersquad.io/",
+        "twitter": "https://twitter.com/BoomerSquadNFT1",
+        "discord": "https://discord.gg/boomersquad",
+        "medium": "https://medium.com/@BoomerSquadNFT"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
+      }
+    },
+    {
+      "name": "Boomer Squad - Room Components: Desk",
+      "slug": "boomer-squad-boom-rooms-desk",
+      "multiToken": false,
+      "address": "0xEa71F7AFA9eEEee5De16ee64b76255E216952511",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Boom Rooms - Brought to you by the Boomer Squad team is the main source of distribution for our ecosystem utility token $SCRATCH. Take your Boom Rooms and place room components in them to build up your room score which determines how much $SCRATCH you will be generating. These rooms are fully customized, build your own NFTs with Room Components and show off some flare with the Boom Room Cosmetic Components!",
+        "verified": true,
+        "avatar": "/img/collections/boomer-squad-boom-rooms/avatar.webp",
+        "banner": "/img/collections/boomer-squad-boom-rooms/banner.webp",
+        "card": "/img/collections/boomer-squad-boom-rooms/card.webp",
+        "maxSupply": 7000,
+        "website": "https://www.boomersquad.io/",
+        "twitter": "https://twitter.com/BoomerSquadNFT1",
+        "discord": "https://discord.gg/boomersquad",
+        "medium": "https://medium.com/@BoomerSquadNFT"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
+      }
+    },
+    {
+      "name": "Boomer Squad - Room Components: Door",
+      "slug": "boomer-squad-boom-rooms-door",
+      "multiToken": false,
+      "address": "0xAE40d175F2cf9C6777c0E0830E17211c4F5A66D0",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Boom Rooms - Brought to you by the Boomer Squad team is the main source of distribution for our ecosystem utility token $SCRATCH. Take your Boom Rooms and place room components in them to build up your room score which determines how much $SCRATCH you will be generating. These rooms are fully customized, build your own NFTs with Room Components and show off some flare with the Boom Room Cosmetic Components!",
+        "verified": true,
+        "avatar": "/img/collections/boomer-squad-boom-rooms/avatar.webp",
+        "banner": "/img/collections/boomer-squad-boom-rooms/banner.webp",
+        "card": "/img/collections/boomer-squad-boom-rooms/card.webp",
+        "maxSupply": 7000,
+        "website": "https://www.boomersquad.io/",
+        "twitter": "https://twitter.com/BoomerSquadNFT1",
+        "discord": "https://discord.gg/boomersquad",
+        "medium": "https://medium.com/@BoomerSquadNFT"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
+      }
+    },
+    {
+      "name": "Boomer Squad - Room Components: Entertainment",
+      "slug": "boomer-squad-boom-rooms-entertainment",
+      "multiToken": false,
+      "address": "0x18550Cc44779EA72D6Fe6389D08D8Ab234f754CB",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Boom Rooms - Brought to you by the Boomer Squad team is the main source of distribution for our ecosystem utility token $SCRATCH. Take your Boom Rooms and place room components in them to build up your room score which determines how much $SCRATCH you will be generating. These rooms are fully customized, build your own NFTs with Room Components and show off some flare with the Boom Room Cosmetic Components!",
+        "verified": true,
+        "avatar": "/img/collections/boomer-squad-boom-rooms/avatar.webp",
+        "banner": "/img/collections/boomer-squad-boom-rooms/banner.webp",
+        "card": "/img/collections/boomer-squad-boom-rooms/card.webp",
+        "maxSupply": 7000,
+        "website": "https://www.boomersquad.io/",
+        "twitter": "https://twitter.com/BoomerSquadNFT1",
+        "discord": "https://discord.gg/boomersquad",
+        "medium": "https://medium.com/@BoomerSquadNFT"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
+      }
+    },
+    {
+      "name": "Boomer Squad - Room Components: Pet",
+      "slug": "boomer-squad-boom-rooms-pet",
+      "multiToken": false,
+      "address": "0x48D20305Ad156e44A0f93c3312A876E56c0e9f7E",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Boom Rooms - Brought to you by the Boomer Squad team is the main source of distribution for our ecosystem utility token $SCRATCH. Take your Boom Rooms and place room components in them to build up your room score which determines how much $SCRATCH you will be generating. These rooms are fully customized, build your own NFTs with Room Components and show off some flare with the Boom Room Cosmetic Components!",
+        "verified": true,
+        "avatar": "/img/collections/boomer-squad-boom-rooms/avatar.webp",
+        "banner": "/img/collections/boomer-squad-boom-rooms/banner.webp",
+        "card": "/img/collections/boomer-squad-boom-rooms/card.webp",
+        "maxSupply": 7000,
+        "website": "https://www.boomersquad.io/",
+        "twitter": "https://twitter.com/BoomerSquadNFT1",
+        "discord": "https://discord.gg/boomersquad",
+        "medium": "https://medium.com/@BoomerSquadNFT"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
+      }
+    },
+    {
+      "name": "Boomer Squad - Room Components: Table",
+      "slug": "boomer-squad-boom-rooms-table",
+      "multiToken": false,
+      "address": "0xb7109F93d780FD3f01eB7EbB0FE9436449F0D8EF",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Boom Rooms - Brought to you by the Boomer Squad team is the main source of distribution for our ecosystem utility token $SCRATCH. Take your Boom Rooms and place room components in them to build up your room score which determines how much $SCRATCH you will be generating. These rooms are fully customized, build your own NFTs with Room Components and show off some flare with the Boom Room Cosmetic Components!",
+        "verified": true,
+        "avatar": "/img/collections/boomer-squad-boom-rooms/avatar.webp",
+        "banner": "/img/collections/boomer-squad-boom-rooms/banner.webp",
+        "card": "/img/collections/boomer-squad-boom-rooms/card.webp",
+        "maxSupply": 7000,
+        "website": "https://www.boomersquad.io/",
+        "twitter": "https://twitter.com/BoomerSquadNFT1",
+        "discord": "https://discord.gg/boomersquad",
+        "medium": "https://medium.com/@BoomerSquadNFT"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
+      }
+    },
+    {
+      "name": "Boomer Squad - Room Components: Window",
+      "slug": "boomer-squad-boom-rooms-window",
+      "multiToken": false,
+      "address": "0xc5B294B557402f8706aED487e155773756A9c400",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Boom Rooms - Brought to you by the Boomer Squad team is the main source of distribution for our ecosystem utility token $SCRATCH. Take your Boom Rooms and place room components in them to build up your room score which determines how much $SCRATCH you will be generating. These rooms are fully customized, build your own NFTs with Room Components and show off some flare with the Boom Room Cosmetic Components!",
+        "verified": true,
+        "avatar": "/img/collections/boomer-squad-boom-rooms/avatar.webp",
+        "banner": "/img/collections/boomer-squad-boom-rooms/banner.webp",
+        "card": "/img/collections/boomer-squad-boom-rooms/card.webp",
+        "maxSupply": 7000,
+        "website": "https://www.boomersquad.io/",
+        "twitter": "https://twitter.com/BoomerSquadNFT1",
+        "discord": "https://discord.gg/boomersquad",
+        "medium": "https://medium.com/@BoomerSquadNFT"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
+      }
+    },
+    {
+      "name": "Boomer Squad - Room Components: Cosmetics",
+      "slug": "boomer-squad-boom-rooms-cosmetics",
+      "multiToken": false,
+      "address": "0x4AA9F792b51954A8903967375e854Ed7EE4bCBf0",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Boom Rooms - Brought to you by the Boomer Squad team is the main source of distribution for our ecosystem utility token $SCRATCH. Take your Boom Rooms and place room components in them to build up your room score which determines how much $SCRATCH you will be generating. These rooms are fully customized, build your own NFTs with Room Components and show off some flare with the Boom Room Cosmetic Components!",
+        "verified": true,
+        "avatar": "/img/collections/boomer-squad-boom-rooms/avatar.webp",
+        "banner": "/img/collections/boomer-squad-boom-rooms/banner.webp",
+        "card": "/img/collections/boomer-squad-boom-rooms/card.webp",
+        "maxSupply": 7000,
+        "website": "https://www.boomersquad.io/",
+        "twitter": "https://twitter.com/BoomerSquadNFT1",
+        "discord": "https://discord.gg/boomersquad",
+        "medium": "https://medium.com/@BoomerSquadNFT"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
+      }
+    },
+    {
+      "name": "Bunny Blocks NFT",
+      "slug": "bunny-blocks-nft",
+      "multiToken": false,
+      "address": "0xF3D4cD84119CE89269760901AB93EC4D6bD5A534",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Bunny Blocks Finance is the first DEX on Cronos Chain to use a double reward token as native currency, each transaction is intended to remunerate our holders with $BUSD & $BBF.",
+        "verified": false,
+        "avatar": "/img/collections/bunny-blocks-nft/avatar.webp",
+        "banner": "/img/collections/bunny-blocks-nft/banner.webp",
+        "card": "/img/collections/bunny-blocks-nft/card.webp",
+        "maxSupply": 350,
+        "website": "https://www.bunnyblocks.finance/",
+        "twitter": "https://twitter.com/BunnyBlocks_Fi",
+        "telegram": "https://t.me/BunnyBlocksFinance"
+      }
+    },
+    {
+      "name": "Defiolio Lifetime Access NFT",
+      "slug": "defiolio-lifetime-access-nft",
+      "multiToken": false,
+      "address": "0xA68Abfc9DA70E7cF84E95945f44F646d15fE3084",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "This is an NFT that provides lifetime access to the Defiolio system and is also a cross-chain NFT that is able to be sent over to supported chains. Supported chains will be expanded upon as the project continues to develop. This will also be the only NFT collection that will have 25% profit-sharing!",
+        "verified": true,
+        "avatar": "/img/collections/defiolio-lifetime-access-nft/avatar.webp",
+        "banner": "/img/collections/defiolio-lifetime-access-nft/banner.webp",
+        "card": "/img/collections/defiolio-lifetime-access-nft/card.webp",
+        "maxSupply": 2000,
+        "website": "https://defiolio.com/",
+        "twitter": "https://twitter.com/DefiOlio",
+        "discord": "https://discord.gg/WxrA8Sj6q4",
+        "medium": "https://medium.com/@defiolio"
+      }
+    },
+    {
+      "name": "Carkayous - Tatcorns",
+      "slug": "carkayous-tatcorns",
+      "multiToken": false,
+      "address": "0xe0afa67d7E4F2329f81562DB9318837A28be83Ec",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Each Carkayous Tatcorn is worth a 1hr tattoo session. Collect at least 6 to have hotel + flight included",
+        "verified": true,
+        "avatar": "/img/collections/carkayous-tatcorns/avatar.webp",
+        "banner": "/img/collections/carkayous-tatcorns/banner.webp",
+        "card": "/img/collections/carkayous-tatcorns/card.webp",
+        "maxSupply": 0,
+        "website": "https://carkayous.com/",
+        "twitter": "https://twitter.com/carkayous",
+        "discord": "https://discord.gg/carkayous"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "name": "Cronos Captains",
+      "slug": "cronos-captains",
+      "multiToken": false,
+      "address": "0x604Ed3Cd5B9eaE0607211A33B15Ac08fA01b10ee",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Brought to you by Possessed Pirates. P2E game coming! Fully doxxed dev through croarmy!",
+        "verified": false,
+        "avatar": "/img/collections/cronos-captains/avatar.webp",
+        "card": "/img/collections/cronos-captains/card.webp",
+        "banner": "/img/collections/cronos-captains/banner.webp",
+        "maxSupply": 5555,
+        "website": "https://www.possessedpirates.com/",
+        "twitter": "https://twitter.com/PossessedPirate",
+        "discord": "https://discord.gg/cDK3AeEBMf"
       }
     }
   ],
@@ -11510,7 +12064,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false
+      "complete": true
     },
     {
       "id": 75,
@@ -11678,8 +12232,8 @@
       "slug": "carkayous-feral-fish",
       "imgNft": "/img/drops/carkayous/drop.png",
       "imgPreview": "/img/drops/carkayous/drop.png",
-      "imgAvatar": "/img/collections/carkayous/avatar.png",
-      "imgBanner": "/img/collections/carkayous/banner.png",
+      "imgAvatar": "/img/collections/carkayous-feral-fish/avatar.png",
+      "imgBanner": "/img/collections/carkayous-feral-fish/banner.png",
       "title": "Carkayous",
       "subtitle": "Carkayous is a fictitious continent created by Jesse Smith (Ink Master | TV Celeb | Tattoo Artist) where his art lives. The goal of Expedition #9 is to further explore Killick Falls Lagoon where the Feral Fish lives. This is a 2,222 PFP collection with FREE Tattoos (flight and hotel included) as the primary utility.",
       "description": "Carkayous is a fictitious continent created by Jesse Smith (Ink Master | TV Celeb | Tattoo Artist) where his art lives. \n\nThe goal of Expedition #9 is to further explore Killick Falls Lagoon where the Feral Fish lives. This is a 2,222 PFP collection with FREE Tattoos (flight and hotel included) as the primary utility.\n\nCheck out all of the utilities here: https://www.carkayous.com/expedition-nine ",
@@ -12525,7 +13079,7 @@
         "gitbook": "https://drive.google.com/file/d/1va8ft-odC7VeQHOxume2viVvA8Kh7aYI/view",
         "instagram": "https://www.instagram.com/im_barbara_redekop/"
       },
-      "address": "",
+      "address": "0xe6f571551dcc680E789925117Aeb8C183E83295b",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 5555,
@@ -12728,7 +13282,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false
+      "complete": true
     },
     {
       "id": 114,
@@ -12795,7 +13349,7 @@
       "is1155": false,
       "published": true,
       "complete": false,
-      "featured": true,
+      "featured": false,
       "redirect": "https://seashrine.io/",
       "chain": "eth"
     },
@@ -12988,6 +13542,131 @@
       "memberCost": "30",
       "foundersOnly": false,
       "start": 1665000000000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 121,
+      "slug": "evolution-hogs",
+      "imgNft": "/img/drops/evolution-hogs/drop.webp",
+      "imgPreview": "/img/drops/evolution-hogs/drop.webp",
+      "imgAvatar": "/img/collections/evolution-hogs/avatar.webp",
+      "imgBanner": "/img/collections/evolution-hogs/banner.webp",
+      "title": "Evolution Hogs",
+      "subtitle": "Evolution Hogs is a collection of 3333 characters generated randomly. All are on the Cronos Chain with unique identity and rarity.",
+      "description": "Evolution Hogs, a collection of 3,333 different characters generated by the artist named \"ZAP7\". Each of character has different rarity parts and they all unique. Holders will be allowed to engage in a variety of community events such as random airdrops, customizing your Evolution Hogs, the opportunity to win a random prize, or numerous giveaways. Half of the royalties will be used to sweep the floor or to help grow the Hype Hogs community. come join us, find your rare hogs and let them be your avatar!",
+      "author": {
+        "name": "ZAP PROJECT",
+        "website": "https://zap7art.club/",
+        "twitter": "https://twitter.com/zap7project",
+        "discord": "https://discord.gg/tBgUbvsSZX"
+      },
+      "address": "",
+      "maxMintPerTx": 20,
+      "maxMintPerAddress": 100,
+      "totalSupply": 3333,
+      "cost": "185",
+      "memberCost": "175",
+      "whitelistCost": "165",
+      "foundersOnly": false,
+      "start": 1666036800000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 122,
+      "slug": "lion-social-club",
+      "imgNft": "/img/drops/lion-social-club/drop.webp",
+      "imgPreview": "/img/drops/lion-social-club/drop.webp",
+      "imgAvatar": "/img/collections/lion-social-club/avatar.webp",
+      "imgBanner": "/img/collections/lion-social-club/banner.webp",
+      "title": "Lion Social Club",
+      "subtitle": "Lion Social Club is minting our first collection, each NFT is unique and holds special utility. LSC aims to bring a community based DEX and DAO that puts the community first and gives each holder a voice with our utility based roadmap.",
+      "description": "Benefits of Lion Social Club \uD83E\uDD81\nDAO governance voting in future tokens we launch to benefit the ecosystem.\n3% bonus in farming pool that earns $ROAR token. \nEntry in our giveaways\nRevenue sharing from secondary marketplace (4% from secondary marketplace + 4% to Lion Den DAO).\nFuture mints generate revenue for Gen 0 collection of Lion Social Club (Amount will be voted on).\nCustom 1 of 1 NFTs for top holders from our world renounced artist. \n\n\n20% Minted - 1000 CRO Giveaway to random holders.\n40% Minted - 5 LSC NFT Airdrop to random holder. \n60% Minted - 2500 CRO Giveaway to random holders.\n80% Minted - 2 Croskull Giveaway to random holders.\n100% Minted - 5000 CRO Giveaway to random holders.",
+      "author": {
+        "name": "Lion Social Club",
+        "website": "https://lionsocialclub.io/",
+        "twitter": "https://twitter.com/LionSocialClub",
+        "discord": "https://discord.gg/WdgfBzYTKX",
+        "medium": "https://lion-social.gitbook.io/lion-social-club/"
+      },
+      "address": "",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 100,
+      "totalSupply": 2500,
+      "cost": "500",
+      "memberCost": "450",
+      "whitelistCost": "450",
+      "foundersOnly": false,
+      "start": 1666468800000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 122,
+      "slug": "broken-hearts",
+      "imgNft": "/img/drops/broken-hearts/drop.webp",
+      "imgPreview": "/img/drops/broken-hearts/drop.webp",
+      "imgAvatar": "/img/collections/broken-hearts/avatar.webp",
+      "imgBanner": "/img/collections/broken-hearts/banner.webp",
+      "title": "Grey_hart's Broken Hearts",
+      "subtitle": "The Broken Hearts collection is a line of 101 tarot cards created by the musician Grey_hart, using MIDJOURNEY’s AI software, all around the subject of a broken heart. Each 9x16 is a 1 of a kind image with varying themes and elements around heartbreak and the spiritual journey involved in getting through it. Some are astral guides, some spirit animals, some just metaphors and feelings made into imagery. If you’ve experienced heartbreak of any kind in your life, there’s sure to be an image that speaks to you in some form. ",
+      "description": "Grey_hart’s Broken Hearts NFT project is a visual art project that is bridging NFTs out of the metaverse and into the real world, by providing real-world utility to buying, holding and selling pieces of the collection. One of the main purposes of the project is to raise money for suicide prevention and mental illness awareness, while also providing additional startup funding to the music/visual projects of Grey_hart.\nA physical 18x32\" canvas print of your minted image(s) is included in mint cost!!",
+      "author": {
+        "name": "Grey_hart",
+        "website": "https://loveisgrey.art/",
+        "discord": "https://discord.gg/t3DM6pNAWb",
+        "instagram": "https://instagram.com/lov3is_grey"
+      },
+      "address": "",
+      "maxMintPerTx": 1,
+      "maxMintPerAddress": 2,
+      "totalSupply": 202,
+      "cost": "666",
+      "memberCost": "555",
+      "whitelistCost": "555",
+      "foundersOnly": false,
+      "start": 1667246400000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": false,
+      "complete": false
+    },
+    {
+      "id": 123,
+      "slug": "renegade-monks",
+      "imgNft": "/img/drops/renegade-monks/drop.webp",
+      "imgPreview": "/img/drops/renegade-monks/drop.webp",
+      "imgAvatar": "/img/collections/renegade-monks/avatar.webp",
+      "imgBanner": "/img/collections/renegade-monks/banner.webp",
+      "title": "Renegade Monks",
+      "subtitle": "☆ 1,337 Collectable Renegade Monks ☆\n\nMint your Monk and fight with The New Resistance!",
+      "description": "☆ 1,337 Collectable Renegade Monks ☆\n\n• 10 collectable Monks\n• Playable in-game on reveal\n• Renegades have varying rarities and stats\n• Unique weapons for each Renegade\n• Unique special abilities and ultimates\n• $25 worth of RP (Resistance Points) per NFT\n• $TNR token airdrops at TGE\n\n☆ Collect 4 Renegade Monks to unlock exclusive in-game content ☆",
+      "author": {
+        "name": "Renegade Monks",
+        "website": "https://thenewresistance.io/",
+        "twitter": "https://twitter.com/TNR_NFT_GAME",
+        "discord": "https://discord.gg/tnr"
+      },
+      "address": "",
+      "maxMintPerTx": 20,
+      "maxMintPerAddress": 20,
+      "totalSupply": 1337,
+      "cost": "450",
+      "memberCost": "400",
+      "whitelistCost": "400",
+      "foundersOnly": false,
+      "start": 1666900800000,
       "end": null,
       "referral": false,
       "is1155": false,

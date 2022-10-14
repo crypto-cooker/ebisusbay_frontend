@@ -13,6 +13,7 @@ import { initProvider } from './GlobalState/User';
 import { appInitializer } from './GlobalState/InitSlice';
 import { getTheme } from './Theme/theme';
 import {DefaultHead} from "./Components/Head/DefaultHead";
+import {useColorMode} from "@chakra-ui/react";
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -42,6 +43,7 @@ const GlobalStyles = createGlobalStyle`
 
 function App({ Component, pageProps }) {
   const dispatch = useDispatch();
+  const { colorMode } = useColorMode()
 
   const userTheme = useSelector((state) => {
     return state.user.theme;
@@ -80,7 +82,11 @@ function App({ Component, pageProps }) {
           <Component {...pageProps} />
         </div>
         <ScrollToTopBtn />
-        <ToastContainer position={toast.POSITION.BOTTOM_LEFT} hideProgressBar={true} />
+        <ToastContainer
+          position={toast.POSITION.BOTTOM_LEFT}
+          hideProgressBar={true}
+          theme={colorMode}
+        />
       </div>
     </ThemeProvider>
   );
