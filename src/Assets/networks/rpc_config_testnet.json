@@ -1800,7 +1800,7 @@
       "name": "Spiteful Sea Club Access Cards",
       "slug": "ssc-access-cards",
       "multiToken": false,
-      "address": "0x0F23564e371c4321d760a58C4b40349f3C5F9850",
+      "address": "0xdab24a4cfbc3bb5eef28adfffd6e48966cae9ac8",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -1920,7 +1920,7 @@
       "name": "Evolution Hogs",
       "slug": "evolution-hogs",
       "multiToken": false,
-      "address": "",
+      "address": "0x5be9A14fE14F13954Ef44B5efDBbab1AD1f17Ac4",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -4302,7 +4302,7 @@
         "discord": "https://discord.gg/7efQGdwW7r",
         "medium": "https://spiteful-sea-club.gitbook.io/spiteful-sea-club/"
       },
-      "address": "0x0F23564e371c4321d760a58C4b40349f3C5F9850",
+      "address": "0xdab24a4cfbc3bb5eef28adfffd6e48966cae9ac8",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 1888,
@@ -4428,7 +4428,7 @@
         "twitter": "https://twitter.com/zap7project",
         "discord": "https://discord.gg/tBgUbvsSZX"
       },
-      "address": "",
+      "address": "0x5be9A14fE14F13954Ef44B5efDBbab1AD1f17Ac4",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 100,
       "totalSupply": 3333,

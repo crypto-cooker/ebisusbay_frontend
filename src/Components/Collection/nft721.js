@@ -52,7 +52,7 @@ import Link from 'next/link';
 import axios from "axios";
 import Button, { LegacyOutlinedButton } from "@src/Components/components/common/Button";
 import { collectionRoyaltyPercent } from "@src/core/chain";
-import { ButtonGroup, Heading } from "@chakra-ui/react";
+import { ButtonGroup, Heading, useClipboard } from "@chakra-ui/react";
 import useToggleFavorite from "@src/Components/NftDetails/hooks/useToggleFavorite";
 import { toast } from "react-toastify";
 import { MenuPopup } from '../components/chakra-components';
@@ -76,6 +76,7 @@ const Nft721 = ({ address, id }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const { nft, refreshing, favorites } = useSelector((state) => state.nft);
+  const { onCopy } = useClipboard(window.location);
 
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [offerType, setOfferType] = useState(OFFER_TYPE.none);
@@ -124,7 +125,7 @@ const Nft721 = ({ address, id }) => {
   const [{ isLoading: isFavoriting, response, error: errorTF }, toggleFavorite] = useToggleFavorite();
 
   const copyLink = useCallback(() => {
-    navigator.clipboard.writeText(window.location);
+    onCopy();
     toast.info(`Link copied!`);
   }, [navigator, window.location])
 

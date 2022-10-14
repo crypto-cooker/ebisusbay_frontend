@@ -763,3 +763,7 @@ export const isNumeric = (str) => {
 export const stripSpaces = (str) => {
   return str.replace(/\W/g, '');
 }
+
+export const appUrl = (path) => {
+  return new URL(path, appConfig('urls.app'));
+}

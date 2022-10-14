@@ -9,6 +9,7 @@ import MetaMaskOnboarding from '@metamask/onboarding';
 import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
 import { connectAccount, chainConnect } from '@src/GlobalState/User';
 import {
+  appUrl,
   createSuccessfulAddCartContent,
   isNftBlacklisted,
   openWithCronosExplorer,
@@ -20,7 +21,7 @@ import {convertGateway, nftCardUrl} from '@src/helpers/image';
 import {
   Box, Flex,
   Heading, Spacer,
-  Text
+  Text, useClipboard
 } from "@chakra-ui/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
@@ -63,6 +64,7 @@ const MakeBuy = styled.div`
 `;
 
 const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, collection, canBuy = true }) => {
+  const nftUrl = appUrl(`/collection/${collection.slug}/${nft.id}`);
   const history = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -70,6 +72,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, collection
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const isInCart = nft.market?.id && cart.nfts.map((o) => o.listingId).includes(nft.market.id);
+  const { onCopy } = useClipboard(nftUrl);
 
   const getOptions = () => {
     const options = [];
@@ -164,8 +167,8 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, collection
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(`${appConfig('urls.app')}collection/${collection.slug}/${nft.id}`);
-    toast.success('Address Copied!');
+    onCopy();
+    toast.success('Link copied!');
   };
 
   const getIsNftListed = () => {

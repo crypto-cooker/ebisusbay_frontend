@@ -38,7 +38,7 @@ import {ImageKitService} from "@src/helpers/image";
 import classnames from "classnames";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import Button from "@src/Components/components/Button";
-import {Box, Flex, Heading, Link, Spacer, Text, Tooltip, VStack} from "@chakra-ui/react";
+import {Box, Flex, Heading, Link, Spacer, Text, Tooltip, useClipboard, VStack} from "@chakra-ui/react";
 import Image from "next/image";
 
 const StyledModal = styled(Modal)`
@@ -61,13 +61,10 @@ const Index = function () {
 
   const windowSize = useWindowSize();
   const [showMenu, setShowMenu] = useState(false);
-
-  const closeMenu = () => {
-    setShowMenu(false);
-  };
   const walletAddress = useSelector((state) => {
     return state.user.address;
   });
+  const { onCopy } = useClipboard(walletAddress);
 
   const correctChain = useSelector((state) => {
     return state.user.correctChain;
@@ -87,6 +84,10 @@ const Index = function () {
   const { data: balance, mutate } = useSWR(['getBalance', walletAddress, 'latest'], {
     fetcher: fetcher(user?.provider, ERC20),
   });
+
+  const closeMenu = () => {
+    setShowMenu(false);
+  };
 
   const identifier = user.profile.username ?? user.address;
   const username = () => {
@@ -158,15 +159,9 @@ const Index = function () {
     }
   };
 
-  const handleCopy = (code) => () => {
-    navigator.clipboard
-      .writeText(code)
-      .then(() => {
-        toast.success('Copied!');
-      })
-      .catch(() => {
-        toast.success('Unable to copy, please try again');
-      });
+  const handleCopy = () => {
+    onCopy();
+    toast.success('Address copied!');
   };
 
   const withdrawBalance = async () => {
@@ -297,7 +292,7 @@ const Index = function () {
                     {username()}
                   </div>
                   <div>
-                    <button className="btn_menu me-2" title="Copy Address" onClick={handleCopy(walletAddress)}>
+                    <button className="btn_menu me-2" title="Copy Address" onClick={handleCopy}>
                       <FontAwesomeIcon icon={faCopy} />
                     </button>
                     <button className="btn_menu me-2" title="Copy Address" onClick={() => window.open(`https://cronoscan.com/address/${user.address}`, '_blank')}>

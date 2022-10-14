@@ -65,6 +65,17 @@ export const getTheme = (mode) => {
   }
 };
 
+const grayColor = {
+  // 100: '#ff0000',
+  // 200: '#00ff00',
+  // 300: '#0000ff',
+  // 400: '#ffff00',
+  // 500: '#ff00ff',
+  // 600: '#00ffff',
+  700: '#212428',
+  // 800: '#000000',
+  // 900: '#888888',
+}
 
 const customTheme = extendTheme({
   config: {
@@ -75,21 +86,8 @@ const customTheme = extendTheme({
     heading: 'DM Sans, Helvetica, Arial, sans-serif',
     body: `DM Sans, Helvetica, Arial, sans-serif`,
   },
-  components: {
-    Modal: {
-      baseStyle: (props) => ({
-        dialog: {
-          bg: mode(lightTheme.bgColor1, darkTheme.bgColor1)(props)
-        }
-      })
-    },
-    Drawer: {
-      baseStyle: (props) => ({
-        dialog: {
-          bg: mode(lightTheme.bgColor1, darkTheme.bgColor1)(props)
-        }
-      })
-    },
-  }
+  colors: {
+    gray: grayColor
+  },
 })
 export default customTheme
