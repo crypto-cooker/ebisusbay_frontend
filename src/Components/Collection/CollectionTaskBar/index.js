@@ -20,10 +20,12 @@ import { Modal } from '@src/Components/components/chakra-components'
 import {
   useDisclosure,
   Select
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
 
-import useReportCollection from '@src/hooks/useReportCollection'
+import useReportCollection from '@src/hooks/useReportCollection';
 
+import useFeatureFlag from "@src/hooks/useFeatureFlag";
+import Constants from "@src/constants";
 
 const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
 const REASONSLIST = ['Fake collection or possible scam', 'Explicit or sensitive content', 'Spam', 'Other']
@@ -44,6 +46,9 @@ export const CollectionTaskBar = ({ collection, onFilterToggle, onSortToggle }) 
 
   const windowSize = useWindowSize();
   const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
+
+  const { Features } = Constants;
+  const isReportCollectionEnabled = useFeatureFlag(Features.REPORT_COLLECTION);
 
   useEffect(() => {
     setUseMobileMenu(minWidth < BREAKPOINTS.m);
@@ -106,10 +111,10 @@ export const CollectionTaskBar = ({ collection, onFilterToggle, onSortToggle }) 
     }
 
     const res = await createNewReport(user.address, { collectionAddress: collection.address, reason: selectedReason })
-    if (res){
-        onClose();
-        toast.success('Generated report');
-      }
+    if (res) {
+      onClose();
+      toast.success('Feedback Sent!');
+    }
     else {
       toast.error('Error');
     }
@@ -172,7 +177,7 @@ export const CollectionTaskBar = ({ collection, onFilterToggle, onSortToggle }) 
             <div className="flex-fill">
               <Button
                 type="legacy"
-                className="w-100"
+                className="w-100 h-100"
                 onClick={() => setCollectionOfferOpen(true)}
               >
                 Make collection offer
@@ -181,13 +186,27 @@ export const CollectionTaskBar = ({ collection, onFilterToggle, onSortToggle }) 
             <div className="flex-fill ms-2">
               <Button
                 type="legacy"
-                className="w-100 h-100"
+                className="w-100 h-100 d-flex flex-column justify-content align-items-center"
                 onClick={openSweepFloorDialog}
               >
                 <FontAwesomeIcon icon={faBroom} />
-                <span className="ms-2">Sweep</span>
+                <span>Sweep</span>
               </Button>
             </div>
+            {isReportCollectionEnabled && (
+            <div className="flex-fill ms-2">
+              <Button
+                type="legacy"
+                className="w-100 h-100 d-flex flex-column justify-content align-items-center"
+                onClick={() => {
+                  onOpen();
+                  setSelectedReason('');
+                }}
+              >
+                <FontAwesomeIcon icon={faFlag} />
+                <span>Report</span>
+              </Button>
+            </div>)}
           </div>
         </>
       ) : (
@@ -220,18 +239,20 @@ export const CollectionTaskBar = ({ collection, onFilterToggle, onSortToggle }) 
               <span className="ms-2">Sweep Floor</span>
             </Button>
           </div>
-          <div className="ms-2 my-auto">
-            <Button
-              type="legacy"
-              onClick={() => {
-                onOpen();
-                setSelectedReason('');
-              }}
-            >
-              <FontAwesomeIcon icon={faFlag} />
-              <span className="ms-2">Report</span>
-            </Button>
-          </div>
+
+          {isReportCollectionEnabled && (
+            <div className="ms-2 my-auto">
+              <Button
+                type="legacy"
+                onClick={() => {
+                  onOpen();
+                  setSelectedReason('');
+                }}
+              >
+                <FontAwesomeIcon icon={faFlag} />
+                <span className="ms-2">Report</span>
+              </Button>
+            </div>)}
         </div>
       )}
 
@@ -253,8 +274,9 @@ export const CollectionTaskBar = ({ collection, onFilterToggle, onSortToggle }) 
         />
       )}
 
-      <Modal isCentered title={'Report this collection'} body={ModalBody()} dialogActions={ModalFooter()} isOpen={isOpen} onClose={onClose} />
-
+      {isReportCollectionEnabled && (
+        <Modal isCentered title={'Report this collection'} body={ModalBody()} dialogActions={ModalFooter()} isOpen={isOpen} onClose={onClose} />
+      )}
     </>
   )
 }
