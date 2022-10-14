@@ -10098,6 +10098,26 @@
         "twitter": "https://twitter.com/PossessedPirate",
         "discord": "https://discord.gg/cDK3AeEBMf"
       }
+    },
+    {
+      "name": "CROtopia Characters",
+      "slug": "crotopia-characters",
+      "multiToken": true,
+      "address": "0xf19257e15eD11A4E3644d24402509b5144266265",
+      "onChain": false,
+      "listable": true,
+      "tokens": [{ "id": 1 }],
+      "metadata": {
+        "description": "Crotopia characters bring NFTs to life inside our metaverse.",
+        "verified": false,
+        "avatar": "/img/collections/crotopia-characters/avatar.webp",
+        "card": "/img/collections/crotopia-characters/card.webp",
+        "banner": "/img/collections/crotopia-characters/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://www.crotopia.xyz",
+        "twitter": "https://twitter.com/PrimateCronos",
+        "discord": "https://discord.gg/8GVHCGn7"
+      }
     }
   ],
   "drops": [
