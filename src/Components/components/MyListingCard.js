@@ -93,7 +93,7 @@ const MyListingCard = ({
           )}
           <button
             className="btn-main mx-1 mt-2"
-            onClick={onCopyLinkButtonPressed(new URL(nftUrl(), appConfig('urls.app')))}
+            onClick={onCopyLinkButtonPressed(new URL(nftUrl, appConfig('urls.app')))}
             style={{ cursor: 'pointer', color: 'black' }}
           >
             <FontAwesomeIcon icon={faLink} />
