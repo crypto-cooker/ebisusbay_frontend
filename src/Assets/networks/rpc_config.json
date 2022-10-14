@@ -8702,7 +8702,7 @@
       "multiToken": false,
       "address": "0xB6782F208ABe10E8962407d139f6698Bfc4FD13F",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Space Crxillions are the second NFT collection of CRODEX. They are the main characters of the Metaverse Hub Adventures along with the original Crxillion Club members, offering a variety of gamified DeFi utilities on Cronos.",
         "verified": true,
@@ -13172,7 +13172,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false
+      "complete": true
     },
     {
       "id": 111,
