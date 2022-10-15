@@ -3,6 +3,10 @@
     "name": "Crodex",
     "url": "https://swap.crodex.app/#/rewards/nft"
   },
+  "crodex-mhub": {
+    "name": "Crodex",
+    "url": "https://swap.crodex.app/#/mhub?page=adventure"
+  },
   "croskull": {
     "name": "CroSkull",
     "url": "https://app.croskull.com/"
