@@ -77,3 +77,12 @@ export const updateCard = async (query, body) => {
     throw error;
   }
 }
+
+export const reportCollection = async (address, signature, body) => {
+  try{
+    return await api.post(`collection/report`, body, {params: {address, signature}});
+  }
+  catch(error){
+    throw error;
+  }
+}

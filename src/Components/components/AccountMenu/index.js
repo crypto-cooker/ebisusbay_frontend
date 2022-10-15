@@ -2,7 +2,6 @@ import React, { memo, useEffect, useState } from 'react';
 import Blockies from 'react-blockies';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import useSWR from 'swr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBolt,
@@ -15,7 +14,7 @@ import {Modal, NavLink, Spinner, ModalTitle, Offcanvas} from 'react-bootstrap';
 import styled from 'styled-components';
 import {Contract, ethers} from 'ethers';
 import { ERC20 } from '@src/Contracts/Abis';
-import { fetcher, useInterval } from '@src/utils';
+import { useInterval } from '@src/utils';
 import styles from './accountmenu.module.scss';
 
 import {
@@ -40,6 +39,7 @@ import {useWindowSize} from "@src/hooks/useWindowSize";
 import Button from "@src/Components/components/Button";
 import {Box, Flex, Heading, Link, Spacer, Text, Tooltip, useClipboard, VStack} from "@chakra-ui/react";
 import Image from "next/image";
+import {useQuery} from "@tanstack/react-query";
 
 const StyledModal = styled(Modal)`
   .modal-content {
@@ -81,9 +81,9 @@ const Index = function () {
   const collectionsStats = useSelector((state) => state.collections.collections);
   const myNFTs = useSelector((state) => state.offer.myNFTs);
 
-  const { data: balance, mutate } = useSWR(['getBalance', walletAddress, 'latest'], {
-    fetcher: fetcher(user?.provider, ERC20),
-  });
+  const { data: balance } = useQuery(['getBalance', walletAddress, 'latest'], async () =>
+    await readProvider.getBalance(walletAddress)
+  );
 
   const closeMenu = () => {
     setShowMenu(false);
