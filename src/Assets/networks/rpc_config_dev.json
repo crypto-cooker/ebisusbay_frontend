@@ -10138,6 +10138,26 @@
         "twitter": "https://twitter.com/KillaKatzNFT",
         "discord": "https://discord.gg/EfK28j74"
       }
+    },
+    {
+      "name": "Fantastic Cat Rich Club",
+      "slug": "fantastic-cat-rich-club",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Fantastic Cat Rich Club is a collection of 5,555 unique Fantastic Cat NFTs, unique digital collectibles that live freely on the Cronos blockchain.",
+        "verified": true,
+        "avatar": "/img/collections/fantastic-cat-rich-club/avatar.webp",
+        "card": "/img/collections/fantastic-cat-rich-club/card.webp",
+        "banner": "/img/collections/fantastic-cat-rich-club/banner.webp",
+        "maxSupply": 5555,
+        "website": "https://www.fantasticcatrichclub.com/",
+        "discord": "https://discord.gg/utY5af7ubQ",
+        "medium": "https://medium.com/@fantasticcatrichclub",
+        "instagram": "https://www.instagram.com/fantasticcatrc/"
+      }
     }
   ],
   "drops": [
@@ -13711,6 +13731,38 @@
       "referral": false,
       "is1155": false,
       "published": true,
+      "complete": false
+    },
+    {
+      "id": 124,
+      "slug": "fantastic-cat-rich-club",
+      "imgNft": "/img/drops/fantastic-cat-rich-club/drop.webp",
+      "imgPreview": "/img/drops/fantastic-cat-rich-club/drop.webp",
+      "imgAvatar": "/img/collections/fantastic-cat-rich-club/avatar.webp",
+      "imgBanner": "/img/collections/fantastic-cat-rich-club/banner.webp",
+      "title": "Fantastic Cat Rich Club",
+      "subtitle": "THE NEW GENERATION OF HEROES FANTASTIC CAT\n\nA virus emerged around the world at the end of 2019. It caused diseases and reduced the living population significantly as a result of deaths due to these diseases. Decreasing the resources was actually only the beginning of the Metaverse transition...",
+      "description": "Fantastic Cat Rich Club is a collection of 5,555 unique Fantastic Cat NFTs, unique digital collectibles that live freely on the Cronos blockchain.\n\nFantastic Cat aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and Fantastic Cat Rich Club. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. When you buy a Fantastic Cat NFT, you not only buy a unique piece of art, but a ticket to enter the Fantastic Cat Rich Club, a growing community full of opportunities.\n\nYour Fantastic Cat will become your personal identity in our community, opening the door to additional benefits. All Fantastic Cat NFTs are stored on the Cronos blockchain and each owner is given full commercial use rights/ownership.",
+      "author": {
+        "name": "Meta Fantastic",
+        "website": "https://www.fantasticcatrichclub.com/",
+        "discord": "https://discord.gg/utY5af7ubQ",
+        "medium": "https://medium.com/@fantasticcatrichclub",
+        "instagram": "https://www.instagram.com/fantasticcatrc/"
+      },
+      "address": "",
+      "maxMintPerTx": 20,
+      "maxMintPerAddress": 100,
+      "totalSupply": 5555,
+      "cost": "250",
+      "memberCost": "200",
+      "whitelistCost": "200",
+      "foundersOnly": false,
+      "start": 1667505600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": false,
       "complete": false
     }
   ]
