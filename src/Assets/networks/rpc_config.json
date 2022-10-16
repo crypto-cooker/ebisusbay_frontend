@@ -1872,7 +1872,7 @@
       "listable": true,
       "metadata": {
         "description": "The official NFT of Cronodes",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/cronodes/avatar.png",
         "card": "/img/collections/cronodes/card.webp",
         "banner": "/img/collections/cronodes/banner.webp",
@@ -2585,7 +2585,7 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/cronosbotsociety/avatar.png",
         "card": "/img/collections/cronosbotsociety/card.png",
         "banner": "/img/collections/cronosbotsociety/banner.png",
@@ -2982,7 +2982,7 @@
       "multiToken": false,
       "address": "0xAE36CaD133c11E590bfA4c632A02f85965101BB7",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "verified": false,
         "avatar": "/img/collections/cronosbullsandbears/avatar.png",
@@ -3002,7 +3002,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/boarsgonewild/avatar.jpg",
         "banner": "/img/collections/boarsgonewild/banner.png",
         "card": "/img/collections/boarsgonewild/card.png",
@@ -3023,7 +3023,7 @@
       "listable": true,
       "metadata": {
         "description": "Display your NFTs in your Metaverse home, earn $RENT and make it a reality using AR with your Smartphone.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/cro-homes/avatar.webp",
         "banner": "/img/collections/cro-homes/banner.webp",
         "card": "/img/collections/cro-homes/card.webp",
@@ -3212,7 +3212,7 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/cronosgoats/badbillygoats/avatar.png",
         "card": "/img/collections/cronosgoats/badbillygoats/card.png",
         "banner": "/img/collections/cronosgoats/badbillygoats/banner.png",
@@ -3336,7 +3336,7 @@
       "listable": true,
       "metadata": {
         "description": "Braindead Monkeys have landed on earth to collect CRO and take it to the moon!",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/braindead-monkeys/avatar.webp",
         "card": "/img/collections/braindead-monkeys/card.webp",
         "banner": "/img/collections/braindead-monkeys/banner.webp",
@@ -3505,7 +3505,7 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/cro-homes/avatar.webp",
         "banner": "/img/collections/cro-homes/banner.webp",
         "card": "/img/collections/cro-homes/card.webp",
@@ -4049,7 +4049,7 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/toughlions/avatar.webp",
         "card": "/img/collections/toughlions/card.webp",
         "banner": "/img/collections/toughlions/banner.webp",
@@ -5869,7 +5869,7 @@
       "listable": true,
       "metadata": {
         "description": "\"Dr Dao achieved the impossible and found a window into parallel worlds, where with his parallel Dao Doctors, together they create the Dao Club\"  Dr Dao is a collection of 297 unique hand-drawn NFTs on Cronos Network Blockchains. The essence of \"Dao\" comes from two concepts related to the philosophy of the Dr Dao Club: DAO as a Decentralized Autonomous Organization and \"Dao\" as a term from East Asian philosophy, which represents the natural order of the universe, that unites all the individual elements into a single whole.  Dr Dao is not just art, to be owner of a Dr Dao’s NFT means to have access to: - Dr Dao Club - Incubator - Staking - Royalties sharing (50% every week) - Monthly lottery and \"Labottery\"  Hey doctors! Let’s team up!  The future is now. The future is Dao.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/dr-dao/avatar.png",
         "card": "/img/collections/dr-dao/card.jpeg",
         "banner": "/img/collections/dr-dao/banner.jpeg",
@@ -6085,7 +6085,7 @@
       "listable": false,
       "metadata": {
         "description": "CBS: Ballin Bots is a collection of 3,000 NFTs with striking artwork, a magnitude of traits and utility to go with it! A new era of the society is on the horizon, the Ballin Bots are currently being reprogrammed out of their hibernation chambers in order to advance the society into the future of finance…. The CBS coin, which they will personally spear head whilst the original CBS Bots carry on defending the Planet Cronos.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/cbs-ballin-bots/avatar.png",
         "card": "/img/collections/cbs-ballin-bots/card.png",
         "banner": "/img/collections/cbs-ballin-bots/banner.png",
@@ -6310,7 +6310,7 @@
       "listable": true,
       "metadata": {
         "description": "The Battle Among Mongoose is a unique P2E NFT game built exclusively for the Cronos network. The NFTs' scarcity with its unique attributes and tokenomics allows you to monetize your gaming experience with $MNG.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/the-battle-among-mongoose/avatar.png",
         "card": "/img/collections/the-battle-among-mongoose/card.png",
         "banner": "/img/collections/the-battle-among-mongoose/banner.png",
@@ -6725,7 +6725,7 @@
       "listable": true,
       "metadata": {
         "description": "Wicked beasts whose genetics consist of Goat & Boar DNA. Our Crossbreeds can be surprisingly sophisticated and you can see this in their swagger. This is a very limited collection that can only be obtained by minting a Bad Billy Goat or Boars Gone Wild NFT before July 12th. These beasts will power our Defi Game Cove and will be by far rarest in the ecosystem. Holders of the Crossbreeds will also receive discounts on the Crazy Crossbreed collection. Staking rewards for the collection will be generated by the Defi Game Cove.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/crossbreeds/avatar.webp",
         "card": "/img/collections/crossbreeds/card.webp",
         "banner": "/img/collections/crossbreeds/banner.webp",
@@ -7224,7 +7224,7 @@
       "listable": false,
       "metadata": {
         "description": "Daolist Pass is an NFT collection of 1500 pieces, with two principal utilities: direct access pass for the Whitelist with discount for next Dr Dao collections and for collections created by Dr Dao Lab (Incubator benefit), and P2R Booster on the DaoGames website (when it will be online), where you can generate an income of +5% in case of win or 5% of cashback in case of loss.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/daolist-pass-3d/avatar.webp",
         "card": "/img/collections/daolist-pass-3d/card.webp",
         "banner": "/img/collections/daolist-pass-3d/banner.webp",
@@ -7265,7 +7265,7 @@
       "listable": true,
       "metadata": {
         "description": "7,000 Apes sent to a mission on the moon. Now they are lost. Holding your ape allows you to claim 60% of all marketplace royalties.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/moon-crew-apes/avatar.webp",
         "card": "/img/collections/moon-crew-apes/card.webp",
         "banner": "/img/collections/moon-crew-apes/banner.webp",
@@ -7348,7 +7348,7 @@
       "listable": true,
       "metadata": {
         "description": "The CroDoo is an NFT project with a first generation of 5678 unique voodoo dolls PFP collectibles on Cronos blockchain. We aim for a long term project of which all holders of OG collection benefit from holding them.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/crodoo/avatar.webp",
         "card": "/img/collections/crodoo/card.webp",
         "banner": "/img/collections/crodoo/banner.webp",
@@ -7576,7 +7576,7 @@
       "listable": true,
       "metadata": {
         "description": "Our Artist will start drawing the based character Croodle Ape then add more then 120 traits, we love the doodle style. Then we build our discord channel and Twitter page. We start an aggressive marketing for the biggest free mint of the cronoschain history. Also running contests and giveaways on our socials to increase engagement.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/croodle-ape/avatar.webp",
         "card": "/img/collections/croodle-ape/card.webp",
         "banner": "/img/collections/croodle-ape/banner.webp",
@@ -7945,7 +7945,7 @@
       "listable": true,
       "metadata": {
         "description": "The monsters are scary, but what about their Babies ? We are cute and lovely \uD83D\uDC7B",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/baby-monsters/avatar.webp",
         "card": "/img/collections/baby-monsters/card.webp",
         "banner": "/img/collections/baby-monsters/banner.webp",
@@ -8685,7 +8685,7 @@
       "listable": false,
       "metadata": {
         "description": "The First Companion collection of the CRO Homes Project. Collect them all and create your own style!",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/cro-homes/avatar.webp",
         "banner": "/img/collections/cro-homes/banner.webp",
         "card": "/img/collections/cro-homes/card.webp",
@@ -8764,7 +8764,7 @@
       "listable": true,
       "metadata": {
         "description": "In the middle of a dark night, after many long years of painstaking work in the Dao Lab, Dr Dao achieved the impossible and found a way to create a window into parallel worlds. Teaming up with parallel Dao Doctors, they explore exciting new worlds together to discover different laboratories. Enjoy the Dao adventures and find your unique Dao Lab!",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/ai-labs/avatar.webp",
         "card": "/img/collections/ai-labs/card.webp",
         "banner": "/img/collections/ai-labs/banner.webp",
@@ -8908,7 +8908,7 @@
       "listable": true,
       "metadata": {
         "description": "\"In the end, everything in this world will be Corrupted...\" from the success of \"Croodle Ape\", 3000 mutated apes are born. More than 50 different traits with different levels of rarities designed by the previous collection. Mutate yourself for 80 CRO and get access to our amazing community!",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/mutant-croodle-ape/avatar.webp",
         "card": "/img/collections/mutant-croodle-ape/card.webp",
         "banner": "/img/collections/mutant-croodle-ape/banner.webp",
@@ -9413,7 +9413,7 @@
       "listable": true,
       "metadata": {
         "description": "Croodle Ape is not finished and now our second chapter is about to begin! \"Jungle Ape\" an exclusive collection of 500 primordial NFTs that can't be bought but can only be earned.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/jungle-ape/avatar.webp",
         "card": "/img/collections/jungle-ape/card.webp",
         "banner": "/img/collections/jungle-ape/banner.webp",
@@ -9596,7 +9596,7 @@
       "listable": false,
       "metadata": {
         "description": "\"In the middle of a dark and stormy night, Doctors set about creating laboratories in the various parallel universes, what they could not imagine, are the experiments that took place within them. Now mysterious creatures roam within these parallel universes, our Doctors have managed to photograph and classify 1800 beings from the other world.\" AI EXPERIMENTS is a collection of NFTs, on Cronos blockchain, which gives various benefits to owners. Discover more into DaoLabs.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/ai-experiments/avatar.webp",
         "card": "/img/collections/ai-experiments/card.webp",
         "banner": "/img/collections/ai-experiments/banner.webp",
@@ -10137,6 +10137,26 @@
         "website": "http://killakatznft.com/",
         "twitter": "https://twitter.com/KillaKatzNFT",
         "discord": "https://discord.gg/EfK28j74"
+      }
+    },
+    {
+      "name": "Fantastic Cat Rich Club",
+      "slug": "fantastic-cat-rich-club",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Fantastic Cat Rich Club is a collection of 5,555 unique Fantastic Cat NFTs, unique digital collectibles that live freely on the Cronos blockchain.",
+        "verified": true,
+        "avatar": "/img/collections/fantastic-cat-rich-club/avatar.webp",
+        "card": "/img/collections/fantastic-cat-rich-club/card.webp",
+        "banner": "/img/collections/fantastic-cat-rich-club/banner.webp",
+        "maxSupply": 5555,
+        "website": "https://www.fantasticcatrichclub.com/",
+        "discord": "https://discord.gg/utY5af7ubQ",
+        "medium": "https://medium.com/@fantasticcatrichclub",
+        "instagram": "https://www.instagram.com/fantasticcatrc/"
       }
     }
   ],
@@ -13711,6 +13731,38 @@
       "referral": false,
       "is1155": false,
       "published": true,
+      "complete": false
+    },
+    {
+      "id": 124,
+      "slug": "fantastic-cat-rich-club",
+      "imgNft": "/img/drops/fantastic-cat-rich-club/drop.webp",
+      "imgPreview": "/img/drops/fantastic-cat-rich-club/drop.webp",
+      "imgAvatar": "/img/collections/fantastic-cat-rich-club/avatar.webp",
+      "imgBanner": "/img/collections/fantastic-cat-rich-club/banner.webp",
+      "title": "Fantastic Cat Rich Club",
+      "subtitle": "THE NEW GENERATION OF HEROES FANTASTIC CAT\n\nA virus emerged around the world at the end of 2019. It caused diseases and reduced the living population significantly as a result of deaths due to these diseases. Decreasing the resources was actually only the beginning of the Metaverse transition...",
+      "description": "Fantastic Cat Rich Club is a collection of 5,555 unique Fantastic Cat NFTs, unique digital collectibles that live freely on the Cronos blockchain.\n\nFantastic Cat aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and Fantastic Cat Rich Club. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. When you buy a Fantastic Cat NFT, you not only buy a unique piece of art, but a ticket to enter the Fantastic Cat Rich Club, a growing community full of opportunities.\n\nYour Fantastic Cat will become your personal identity in our community, opening the door to additional benefits. All Fantastic Cat NFTs are stored on the Cronos blockchain and each owner is given full commercial use rights/ownership.",
+      "author": {
+        "name": "Meta Fantastic",
+        "website": "https://www.fantasticcatrichclub.com/",
+        "discord": "https://discord.gg/utY5af7ubQ",
+        "medium": "https://medium.com/@fantasticcatrichclub",
+        "instagram": "https://www.instagram.com/fantasticcatrc/"
+      },
+      "address": "",
+      "maxMintPerTx": 20,
+      "maxMintPerAddress": 100,
+      "totalSupply": 5555,
+      "cost": "250",
+      "memberCost": "200",
+      "whitelistCost": "200",
+      "foundersOnly": false,
+      "start": 1667505600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": false,
       "complete": false
     }
   ]
