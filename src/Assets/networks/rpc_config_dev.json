@@ -10104,10 +10104,10 @@
       "name": "CROtopia Characters",
       "slug": "crotopia-characters",
       "multiToken": true,
-      "address": "0xf19257e15eD11A4E3644d24402509b5144266265",
+      "address": "0xf3d56dB1789e1c95504be0dda92636C96539c0e1",
       "onChain": false,
       "listable": true,
-      "tokens": [{ "id": 1 }],
+      "tokens": [{ "id": 1 }, { "id": 2 }],
       "metadata": {
         "description": "Crotopia characters bring NFTs to life inside our metaverse.",
         "verified": false,
