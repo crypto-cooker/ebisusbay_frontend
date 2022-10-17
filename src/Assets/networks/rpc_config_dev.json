@@ -10173,6 +10173,24 @@
         "medium": "https://medium.com/@fantasticcatrichclub",
         "instagram": "https://www.instagram.com/fantasticcatrc/"
       }
+    },
+    {
+      "name": "Mutant Jungle Ape",
+      "slug": "mutant-jungle-ape",
+      "multiToken": false,
+      "address": "0x434c8845261d5cF942d62fcd6503569cE05798b3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Second generation of Jungle ape, part of the cronos NFT ecosystem croodle ape, based on the long term sustenible and passive income for their holder",
+        "verified": true,
+        "avatar": "/img/collections/mutant-jungle-ape/avatar.webp",
+        "card": "/img/collections/mutant-jungle-ape/card.webp",
+        "maxSupply": 500,
+        "website": "https://croodleape.com/",
+        "twitter": "https://www.twitter.com/croodleape",
+        "discord": "https://discord.gg/Tj97K4c4Y9"
+      }
     }
   ],
   "drops": [
