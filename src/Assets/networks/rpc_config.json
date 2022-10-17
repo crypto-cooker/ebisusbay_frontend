@@ -10191,6 +10191,30 @@
         "twitter": "https://www.twitter.com/croodleape",
         "discord": "https://discord.gg/Tj97K4c4Y9"
       }
+    },
+    {
+      "name": "Carkayous - Richmond Convention 2022",
+      "slug": "carkayous-richmond-convention-2022",
+      "multiToken": false,
+      "address": "0xD717708d012dCa8C3d108BD1E079f937C4A2C0cF",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Tickets for the Richmond Tattoo Art & Music Festival (https://richmondtattooconvention.com/)",
+        "verified": true,
+        "avatar": "/img/collections/carkayous-richmond-convention-2022/avatar.webp",
+        "banner": "/img/collections/carkayous-richmond-convention-2022/banner.webp",
+        "card": "/img/collections/carkayous-richmond-convention-2022/card.webp",
+        "maxSupply": 0,
+        "website": "https://carkayous.com/",
+        "twitter": "https://twitter.com/carkayous",
+        "discord": "https://discord.gg/carkayous"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "escrow": false
+      }
     }
   ],
   "drops": [
