@@ -1932,7 +1932,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/panelsproject/avatar.webp",
         "banner": "/img/collections/panelsproject/banner.webp",
         "card": "/img/collections/panelsproject/card.webp",
@@ -2032,7 +2032,7 @@
       "listable": true,
       "metadata": {
         "description": "Made with fighting spirit",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/bushicro/avatar.jpg",
         "card": "/img/collections/bushicro/card.jpg",
         "banner": "/img/collections/bushicro/banner.jpg",
@@ -2605,7 +2605,7 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/zombabies/avatar.png",
         "card": "/img/collections/zombabies/card.png",
         "banner": "/img/collections/zombabies/banner.png",
@@ -3068,7 +3068,7 @@
       "listable": true,
       "metadata": {
         "description": "Cronos Football Club is a GameFi protocol which first launched the first r2e game on the Cronos blockchain. The old collection is merged into a lower supplied collection. This new 5555 collection will have utility in all our upcoming projects.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/cronos-fc/avatar.webp",
         "card": "/img/collections/cronos-fc/card.webp",
         "banner": "/img/collections/cronos-fc/banner.webp",
@@ -3356,7 +3356,7 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/babycroge/avatar.png",
         "card": "/img/collections/babycroge/card.png",
         "banner": "/img/collections/babycroge/banner.png",
@@ -4068,7 +4068,7 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/sexy-sea-cows/avatar.webp",
         "card": "/img/collections/sexy-sea-cows/card.webp",
         "banner": "/img/collections/sexy-sea-cows/banner.webp",
@@ -4275,7 +4275,7 @@
       "listable": true,
       "metadata": {
         "description": "CroArmy is a collection of 1000 NFT's that pair with our $ARMY Token. The NFT's act as a membership to our treasury fund and will receive airdrops as the treasury profits.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/cro-army-soldier/avatar.webp",
         "card": "/img/collections/cro-army-soldier/card.webp",
         "banner": "/img/collections/cro-army-soldier/banner.webp",
@@ -4615,7 +4615,7 @@
       "listable": true,
       "metadata": {
         "description": "Holding a Burn NFT grants you access to receive airdrops when the treasury profits. CroArmy Burns are a collection of NFT's that burns our $ARMY supply and grant access to airdrops. Tax on secondary will be used to buyback and burn $ARMY supply",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/cro-army-burns/avatar.webp",
         "card": "/img/collections/cro-army-burns/card.webp",
         "banner": "/img/collections/cro-army-soldier/banner.webp",
@@ -4760,7 +4760,7 @@
       "listable": true,
       "metadata": {
         "description": "Red Saint is collection of 3,578 scarf ninjas. Mint and collect the one and only Red Saint.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/red-saint/avatar.webp",
         "card": "/img/collections/red-saint/card.webp",
         "banner": "/img/collections/red-saint/banner.webp",
@@ -5110,7 +5110,7 @@
       "listable": true,
       "metadata": {
         "description": "Hold up your Diamond Hand proudly, and show others you do not sell when the market trembles. This NFT will grant you royalties from 2 different collections.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/cro-army-diamond-hand/avatar.png",
         "card": "/img/collections/cro-army-diamond-hand/card.webp",
         "banner": "/img/collections/cro-army-diamond-hand/banner.webp",
@@ -5809,7 +5809,7 @@
       "listable": true,
       "metadata": {
         "description": "The Coalition is the replacement for our Panther. This was a proof of concept NFT that was massively successful. This will grant you DAO rights, highest \"dividends\" via airdrops, and whitelist for any launch we may sponsor.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/cro-army-coalition/avatar.png",
         "card": "/img/collections/cro-army-coalition/card.png",
         "banner": "/img/collections/cro-army-coalition/banner.png",
@@ -5830,7 +5830,7 @@
       "listable": true,
       "metadata": {
         "description": "BabyHop Baby Joey First NFT collection",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/baby-joey/avatar.jpg",
         "card": "/img/collections/baby-joey/card.jpg",
         "banner": "/img/collections/baby-joey/banner.jpg",
@@ -5850,7 +5850,7 @@
       "listable": true,
       "metadata": {
         "description": "5,000 Undead Space Apes on the Cronos Network. Royalties used for Community Prize Pools and Raffles.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/undead-space-apes/avatar.webp",
         "card": "/img/collections/undead-space-apes/card.webp",
         "banner": "/img/collections/undead-space-apes/banner.webp",
@@ -5919,7 +5919,7 @@
       "listable": true,
       "metadata": {
         "description": "In the seas of Cronos, heading to Ebisu's Bay. But something is wrong...there's something turning the crew into monsters...possessing them!",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/possessed-pirates/avatar.png",
         "card": "/img/collections/possessed-pirates/card.png",
         "banner": "/img/collections/possessed-pirates/banner.png",
@@ -6357,7 +6357,7 @@
       "listable": true,
       "metadata": {
         "description": "Offering passive income through staking, cross-chain investment returns, and royalties! Brought to you by: Possessed Pirates",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/trippy-treasure-chests/avatar.png",
         "card": "/img/collections/trippy-treasure-chests/card.png",
         "banner": "/img/collections/trippy-treasure-chests/banner.png",
@@ -6751,7 +6751,7 @@
       "listable": true,
       "metadata": {
         "description": "BTC CroArmy Miners. This NFT represents ownership to several Antminer rentals. We are currently renting Antminers with the funds pooled with this collection. Details can be found in our discord community.  Earn / Mine / Learn about BTC in the CroArmy",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/btc-cro-army-miners/avatar.webp",
         "card": "/img/collections/btc-cro-army-miners/card.webp",
         "banner": "/img/collections/btc-cro-army-miners/banner.webp",
@@ -6966,7 +6966,7 @@
       "listable": true,
       "metadata": {
         "description": "The second generation of Baby Croge NFTs are both adorable and have real utility in providing powerups in Baby Croge's arcade game, Baby Croge Pond.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/baby-croge-gen2/avatar.webp",
         "card": "/img/collections/baby-croge-gen2/card.webp",
         "banner": "/img/collections/baby-croge-gen2/banner.webp",
@@ -7007,7 +7007,7 @@
       "listable": true,
       "metadata": {
         "description": "Team Mustachios consists of 3 teams of 2222 units, yellow, green and blue for a total of 6666 unique NFTs. Unlike traditional stacking, we have innovated to give you an unprecedented experience. We therefore redistribute the royalties in a playful way by selecting a team each week as well as 2 traits from the collection. If your team is selected during the current week, you win but if you own one or even better 2 traits, you could win big.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/team-mustachios/avatar.webp",
         "card": "/img/collections/team-mustachios/card.webp",
         "banner": "/img/collections/team-mustachios/banner.webp",
@@ -7886,7 +7886,7 @@
       "listable": true,
       "metadata": {
         "description": "10,000 pfp generated with different traits and with different rarities, their name is AIKO BEANZ, one of the Official Collections of AIKOSociety. These little BEANZs will release benefits, gifts and more to their Holders.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/aiko-beanz/avatar.webp",
         "banner": "/img/collections/aiko-beanz/banner.webp",
         "card": "/img/collections/aiko-beanz/card.webp",
@@ -8244,7 +8244,7 @@
       "listable": true,
       "metadata": {
         "description": "Warrior’s story is the story of a justice vigilante who believes in greater good and joins forces against evils . In doing so, it achieves special boosted capabilities which makes its personalities to become stronger and invincible in the face of adversity.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/red-saint-warrior/avatar.webp",
         "banner": "/img/collections/red-saint-warrior/banner.webp",
         "card": "/img/collections/red-saint-warrior/card.webp",
@@ -8266,7 +8266,7 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/dripcro/avatar.webp",
         "banner": "/img/collections/dripcro/banner.webp",
         "card": "/img/collections/dripcro/card.webp",
@@ -8370,7 +8370,7 @@
       "listable": true,
       "metadata": {
         "description": "Degen NFT flippers are coming together to whale in tiered projects. Profit distribution. Airdrops. Community.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/cro-army-jarheads/avatar.webp",
         "card": "/img/collections/cro-army-jarheads/card.webp",
         "banner": "/img/collections/cro-army-jarheads/banner.webp",
@@ -8460,7 +8460,7 @@
       "listable": false,
       "metadata": {
         "description": "The Undead Founders Pass is the Genesis pass in the Undead ecosystem. The Founders Pass gives whitelist access to exclusive Undead collections and community benefits.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/undead-community-founders-pass/avatar.webp",
         "card": "/img/collections/undead-community-founders-pass/card.webp",
         "banner": "/img/collections/undead-community-founders-pass/banner.webp",
@@ -8547,7 +8547,7 @@
       "listable": true,
       "metadata": {
         "description": "The Only Place Where You Can Find Equality Is In The Cemetery.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/undead-cemetery-ad1/avatar.webp",
         "card": "/img/collections/undead-cemetery-ad1/card.webp",
         "banner": "/img/collections/undead-cemetery-ad1/banner.webp",
@@ -8889,7 +8889,7 @@
       "listable": true,
       "metadata": {
         "description": "The Crotech Friends have arrived on Cronos!  The second series from the Crotech Frontier collection - a story driven, ARG inspired NFT collection - the Crotech Friends are AI generated unique pieces of art, with zero traits, zero rarity ranks, every one is a true 1/1.  With a supply of 555 pieces, holders get 55% of the secondary market royalties, and access to a private Discord channel where the Crotech Frontier story will unfold. The Crotech Friends are here to help guide you as you travel to the Crotech Frontier.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/crotech-friends/avatar.webp",
         "card": "/img/collections/crotech-friends/card.webp",
         "banner": "/img/collections/crotech-friends/banner.webp",
@@ -9152,7 +9152,7 @@
       "listable": true,
       "metadata": {
         "description": "Welcome to the --Ninja_fu-- The Return of the Emblematic Warrior. There you have Strong and Solid Beast Ready to Fight.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/ninja-fu-warriors/avatar.webp",
         "card": "/img/collections/ninja-fu-warriors/card.webp",
         "banner": "/img/collections/ninja-fu-warriors/banner.webp",
@@ -9636,7 +9636,7 @@
       "listable": true,
       "metadata": {
         "description": "Heroes are primeval spirits residing on the mystical plane that underpins the world of Defira. They are not only great warriors and masters of magic, but they also perform the vital jobs that make the world prosperous. They are summoned in a magical Wishing Ritual by combining the souls of two other heroes.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/defira-heroes/avatar.webp",
         "card": "/img/collections/defira-heroes/card.webp",
         "banner": "/img/collections/defira-heroes/banner.webp",
@@ -10090,7 +10090,7 @@
       "listable": true,
       "metadata": {
         "description": "Brought to you by Possessed Pirates. P2E game coming! Fully doxxed dev through croarmy!",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/cronos-captains/avatar.webp",
         "card": "/img/collections/cronos-captains/card.webp",
         "banner": "/img/collections/cronos-captains/banner.webp",
@@ -10117,7 +10117,7 @@
       ],
       "metadata": {
         "description": "Crotopia characters bring NFTs to life inside our metaverse.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/crotopia-characters/avatar.webp",
         "card": "/img/collections/crotopia-characters/card.webp",
         "banner": "/img/collections/crotopia-characters/banner.webp",
