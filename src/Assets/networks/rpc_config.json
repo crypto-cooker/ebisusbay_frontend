@@ -9535,7 +9535,7 @@
       "listable": true,
       "metadata": {
         "description": "KillaKatZ - A Community Driven Rebirth Collection of 3000 Battle Hardened NFTs",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/killakatz/avatar.webp",
         "card": "/img/collections/killakatz/card.webp",
         "banner": "/img/collections/killakatz/banner.webp",
@@ -9543,6 +9543,10 @@
         "website": "http://killakatznft.com/",
         "twitter": "https://twitter.com/KillaKatzNFT",
         "discord": "https://discord.gg/EfK28j74"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu"
       }
     },
     {
@@ -10136,7 +10140,7 @@
       "listable": true,
       "metadata": {
         "description": "A KillaKatZ Degen Collection, Rioting Against the OG Rugging Founders!",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/killakatz-riot/avatar.webp",
         "card": "/img/collections/killakatz-riot/card.webp",
         "banner": "/img/collections/killakatz-riot/banner.webp",
@@ -10144,6 +10148,10 @@
         "website": "http://killakatznft.com/",
         "twitter": "https://twitter.com/KillaKatzNFT",
         "discord": "https://discord.gg/EfK28j74"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu"
       }
     },
     {
