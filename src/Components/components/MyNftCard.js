@@ -223,7 +223,7 @@ const MyNftCard = ({
                 )}
               </span>
             </div>
-            <p className="card-text">
+            <span className="card-text">
               {nft.listed && nft.price ? (
                 <div className="d-flex">
                   <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
@@ -234,7 +234,7 @@ const MyNftCard = ({
               ) : (
                 <>&nbsp;</>
               )}
-            </p>
+            </span>
 
             {isStaked && (
               <Badge variant='outline' colorScheme='orange'>
