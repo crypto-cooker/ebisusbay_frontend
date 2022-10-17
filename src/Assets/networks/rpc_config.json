@@ -7867,7 +7867,7 @@
       "listable": true,
       "metadata": {
         "description": "CroCaveman is a collection of 1000 unique, randomly generated NFTs launching on the Cronos Network.  We will be minting on the CroArmy Launchpad on the 23rd of August 2022 at a cost of 300 Cro (250 Cro Whitelist)  The aim of CroCaveman is to create a simple investment NFT. In which increasing monthly pay-outs can be rewarded to holders offering passive income, while treasury funds increase exponentially from continuous reinvestment. \"It's so easy a caveman could do it!\"",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/crocaveman/avatar.webp",
         "banner": "/img/collections/crocaveman/banner.webp",
         "card": "/img/collections/crocaveman/card.webp",
