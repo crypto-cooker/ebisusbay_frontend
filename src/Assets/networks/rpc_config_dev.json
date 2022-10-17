@@ -7867,7 +7867,7 @@
       "listable": true,
       "metadata": {
         "description": "CroCaveman is a collection of 1000 unique, randomly generated NFTs launching on the Cronos Network.  We will be minting on the CroArmy Launchpad on the 23rd of August 2022 at a cost of 300 Cro (250 Cro Whitelist)  The aim of CroCaveman is to create a simple investment NFT. In which increasing monthly pay-outs can be rewarded to holders offering passive income, while treasury funds increase exponentially from continuous reinvestment. \"It's so easy a caveman could do it!\"",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/crocaveman/avatar.webp",
         "banner": "/img/collections/crocaveman/banner.webp",
         "card": "/img/collections/crocaveman/card.webp",
@@ -10172,6 +10172,48 @@
         "discord": "https://discord.gg/utY5af7ubQ",
         "medium": "https://medium.com/@fantasticcatrichclub",
         "instagram": "https://www.instagram.com/fantasticcatrc/"
+      }
+    },
+    {
+      "name": "Mutant Jungle Ape",
+      "slug": "mutant-jungle-ape",
+      "multiToken": false,
+      "address": "0x434c8845261d5cF942d62fcd6503569cE05798b3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Second generation of Jungle ape, part of the cronos NFT ecosystem croodle ape, based on the long term sustenible and passive income for their holder",
+        "verified": true,
+        "avatar": "/img/collections/mutant-jungle-ape/avatar.webp",
+        "card": "/img/collections/mutant-jungle-ape/card.webp",
+        "maxSupply": 500,
+        "website": "https://croodleape.com/",
+        "twitter": "https://www.twitter.com/croodleape",
+        "discord": "https://discord.gg/Tj97K4c4Y9"
+      }
+    },
+    {
+      "name": "Carkayous - Richmond Convention 2022",
+      "slug": "carkayous-richmond-convention-2022",
+      "multiToken": false,
+      "address": "0xD717708d012dCa8C3d108BD1E079f937C4A2C0cF",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Tickets for the Richmond Tattoo Art & Music Festival (https://richmondtattooconvention.com/)",
+        "verified": true,
+        "avatar": "/img/collections/carkayous-richmond-convention-2022/avatar.webp",
+        "banner": "/img/collections/carkayous-richmond-convention-2022/banner.webp",
+        "card": "/img/collections/carkayous-richmond-convention-2022/card.webp",
+        "maxSupply": 0,
+        "website": "https://carkayous.com/",
+        "twitter": "https://twitter.com/carkayous",
+        "discord": "https://discord.gg/carkayous"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "escrow": false
       }
     }
   ],
@@ -13457,8 +13499,8 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
-      "complete": false,
+      "published": false,
+      "complete": true,
       "featured": false,
       "redirect": "https://cyborgswap.io/nft-drop/TheImmortalCyborgs"
     },
