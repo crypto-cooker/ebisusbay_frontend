@@ -13458,7 +13458,7 @@
       "referral": false,
       "is1155": false,
       "published": false,
-      "complete": false,
+      "complete": true,
       "featured": false,
       "redirect": "https://cyborgswap.io/nft-drop/TheImmortalCyborgs"
     },
