@@ -14,7 +14,6 @@ import * as DefiWalletConnectProvider from '@deficonnect/web3-provider';
 import {
   getNftRankings,
   getNftSalesForAddress,
-  getNftsForAddress,
   getNftsForAddress2,
   getUnfilteredListingsForAddress,
 } from '../core/api';
@@ -751,33 +750,6 @@ export const fetchNfts =
       dispatch(nftsFullyFetched());
     }
   };
-
-export const fetchChainNfts = (abortSignal) => async (dispatch, getState) => {
-  const state = getState();
-
-  const walletAddress = state.user.address;
-  const walletProvider = state.user.provider;
-
-  dispatch(fetchingNfts());
-  try {
-    const response = await getNftsForAddress(
-      walletAddress,
-      walletProvider,
-      (nfts) => {
-        dispatch(onNftsAdded(nfts));
-      },
-      abortSignal
-    );
-    if (abortSignal.aborted) return;
-    dispatch(setIsMember(response.isMember));
-    await addRanksToNfts(dispatch, getState);
-    dispatch(nftsFetched());
-  } catch (err) {
-    if (err.name === 'AbortError') {
-      console.log('aborting previous request');
-    }
-  }
-};
 
 const addRanksToNfts = async (dispatch, getState) => {
   let cSortedNfts = [];

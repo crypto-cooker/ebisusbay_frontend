@@ -40,9 +40,11 @@ import {CollectionVerificationRow} from "@src/Components/components/CollectionVe
 import {Box, Center, Heading, Text, useColorModeValue} from "@chakra-ui/react";
 import {mode} from "@chakra-ui/theme-tools";
 
+import {useQuery} from "@tanstack/react-query";
+import { getCollections } from "@src/core/api/next/collectioninfo";
+
 const config = appConfig();
 const drops = config.drops;
-const collections = config.collections;
 
 const fadeInUp = keyframes`
   0% {
@@ -137,9 +139,18 @@ const SingleDrop = () => {
   const drop = useSelector((state) => {
     return drops.find((n) => n.slug === slug);
   });
-  const collection = useSelector((state) => {
-    return collections.find((n) => n.slug === slug);
-  });
+
+  const { isLoading : isLoadingCollection, error, data, status: statusCollection } = useQuery(['Collections', slug], () =>
+    getCollections({slug}), true
+  )
+
+  const [collection, setCollection] = useState(null);
+
+  useEffect(()=> {
+    if(!isLoadingCollection && data) {
+      setCollection(data.data.collections[0])
+    }
+  }, [isLoadingCollection, data])
 
   const membership = useSelector((state) => {
     return state.memberships;
@@ -486,7 +497,17 @@ const SingleDrop = () => {
 
   return (
     <div>
-      <>
+      {isLoadingCollection || !collection ? (
+        <section className="container">
+          <div className="row mt-4">
+            <div className="col-lg-12 text-center">
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            </div>
+          </div>
+        </section>
+      ) : (<>
         <HeroSection
           className={`jumbotron h-vh tint`}
           style={{
@@ -795,7 +816,7 @@ const SingleDrop = () => {
             </div>
           </div>
         </section>
-      </>
+      </>)}
       <Footer />
     </div>
   );

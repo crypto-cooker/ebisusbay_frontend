@@ -15,7 +15,7 @@ import {hostedImage} from '@src/helpers/image';
 import PageHead from '../src/Components/Head/PageHead';
 import {Heading} from "@chakra-ui/react";
 
-const knownContracts = appConfig('collections');
+import { getCollections } from "@src/core/api/next/collectioninfo";
 
 const Drop = () => {
   const [ships, setShips] = useState([]);
@@ -34,7 +34,9 @@ const Drop = () => {
     await refreshDropDetails();
     try {
       if (user.provider) {
-        const spaceShipDrop = knownContracts.find((drop) => drop.slug === 'crosmocrafts');
+        const res = await getCollections({slug: 'crosmocrafts'});
+        const spaceShipDrop = res.data.collections[0];
+
         if (!spaceShipDrop.address) {
           setIsLoading(false);
           return;
@@ -62,7 +64,8 @@ const Drop = () => {
   }, [user.address, user.provider]);
 
   const refreshPartsBalance = async () => {
-    const shipItemDrop = knownContracts.find((drop) => drop.slug === 'crosmocrafts-parts');
+    const res = await getCollections({slug: 'crosmocrafts-parts'});
+    const shipItemDrop = res.data?.collections[0];
     let shipItem = await new ethers.Contract(shipItemDrop.address, ShipItemABI.abi, user.provider.getSigner());
     let ids = [];
     for (let i = 0; i < 9; i++) {
@@ -73,7 +76,8 @@ const Drop = () => {
   };
 
   const refreshDropDetails = async () => {
-    const spaceShipDrop = knownContracts.find((drop) => drop.slug === 'crosmocrafts');
+    const res = await getCollections({slug: 'crosmocrafts'});
+    const spaceShipDrop = res.data?.collections[0];
     const readProvider = new ethers.providers.JsonRpcProvider(appConfig('rpc.read'));
     let spaceShip = await new ethers.Contract(spaceShipDrop.address, ShipABI.abi, readProvider);
     const info = await spaceShip.getInfo();

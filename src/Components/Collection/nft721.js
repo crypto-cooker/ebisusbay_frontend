@@ -2,7 +2,7 @@ import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Contract, ethers } from 'ethers';
 import { faHeart as faHeartOutline } from '@fortawesome/free-regular-svg-icons';
-import { faCrow, faExternalLinkAlt, faHeart as faHeartSolid, faShare, faShareAlt, faSync, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
+import { faCrow, faExternalLinkAlt, faHeart as faHeartSolid, faShare, faSync, faEllipsisH, faShareAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import { Badge, Spinner } from 'react-bootstrap';
@@ -59,9 +59,10 @@ import { Menu } from '../components/chakra-components';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faSquareTwitter, faTelegram } from '@fortawesome/free-brands-svg-icons';
 import { getStats } from '@src/GlobalState/collectionSlice';
+import { useQuery } from "@tanstack/react-query";
+import { getCollections } from "@src/core/api/next/collectioninfo";
 
 const config = appConfig();
-const knownContracts = config.collections;
 const tabs = {
   properties: 'properties',
   powertraits: 'powertraits',
@@ -87,19 +88,31 @@ const Nft721 = ({ address, id }) => {
   );
 
   const powertraits = useSelector((state) => state.nft.nft?.powertraits);
-  const collection = useSelector((state) => {
-    return knownContracts.find((c) => caseInsensitiveCompare(c.address, address));
-  });
+
 
   const collectionStats = useSelector((state) => state.collection.stats);
 
   useEffect(() => {
-    async function asyncFunc() {
-      dispatch(getStats(collection, null, collection.mergedAddresses));
+    if (collection) {
+      async function asyncFunc() {
+        dispatch(getStats(collection, null, collection.mergedAddresses));
+      }
+      asyncFunc();
     }
-    asyncFunc();
     // eslint-disable-next-line
   }, [dispatch, collection]);
+
+  const { isLoading: isLoadingCollection, error, data, status } = useQuery(['Collections', address], () =>
+    getCollections({ address }), true
+  )
+
+  const [collection, setCollection] = useState(null);
+
+  useEffect(() => {
+    if (!isLoadingCollection && data) {
+      setCollection(data.data.collections[0])
+    }
+  }, [isLoadingCollection, data])
 
   const collectionMetadata = useSelector((state) => {
     return collection?.metadata;
@@ -109,7 +122,7 @@ const Nft721 = ({ address, id }) => {
   });
   const isLoading = useSelector((state) => state.nft.loading);
 
-  const [{ isLoading: isFavoriting, response, error }, toggleFavorite] = useToggleFavorite();
+  const [{ isLoading: isFavoriting, response, error: errorTF }, toggleFavorite] = useToggleFavorite();
 
   const copyLink = useCallback(() => {
     onCopy();
@@ -507,7 +520,7 @@ const Nft721 = ({ address, id }) => {
 
   return (
     <div>
-      {isLoading ? (
+      {isLoadingCollection || !collection ? (
         <section className="gl-legacy container">
           <div className="row mt-4">
             <div className="col-lg-12 text-center">
