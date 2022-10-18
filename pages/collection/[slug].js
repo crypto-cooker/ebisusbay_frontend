@@ -97,35 +97,21 @@ const Collection = ({ ssrCollection, query }) => {
 export const getServerSideProps = async ({ params, query }) => {
   const slug = params?.slug;
   let collection;
-  if (isAddress(slug)) {
-    const res = await fetch(`${config.urls.api}collectioninfo?address=${slug}`)
-    const json = await res.json();
-    collection = json.collections[0]
-  } else {
 
-    const res = await fetch(`${config.urls.api}collectioninfo?slug=${slug}`)
-    const json = await res.json();
-    collection = json.collections[0]
+  const queryKey = isAddress(slug) ? 'address' : 'slug';
+  const res = await fetch(`${config.urls.api}collectioninfo?${queryKey}=${slug}`);
+  if (!res.ok) {
+    return {
+      notFound: true
+    }
   }
+  const json = await res.json();
+  collection = json.collections[0];
 
   if (!collection) {
     return {
       notFound: true
     }
-  }
-
-  if (isAddress(slug)) {
-    return {
-      redirect: {
-        destination: `/collection/${collection.slug}`,
-        permanent: false,
-      },
-      props: {
-        slug: collection?.slug,
-        ssrCollection: collection,
-        query: query,
-      },
-    };
   }
 
   return {
