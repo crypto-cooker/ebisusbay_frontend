@@ -15,7 +15,7 @@ const CollectionFilterBarContainer = styled.div`
 `;
 
 const TopFilterBar = ({
-  showFilter = true,
+  showFilter = false,
   showSort = true,
   showSearch = true,
   showSwitch = false,
