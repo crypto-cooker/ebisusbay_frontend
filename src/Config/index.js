@@ -216,5 +216,5 @@ export const featureFlags = {
   [Features.VERIFIED_SWITCH_MARKETPLACE]: true,   // Filter verified in marketplace
   [Features.INFINITE_QUERY_COLLECTION]: true,     // Paginated collections endpoint
   [Features.UNVERIFIED_WARNING]: true,            // Warning when buying from unverified collection
-  [Features.REPORT_COLLECTION]: false,
+  [Features.REPORT_COLLECTION]: true,             // Report button on collection page
 }
