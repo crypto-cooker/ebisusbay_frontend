@@ -13,7 +13,7 @@ import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {
-  createSuccessfulTransactionToastContent,
+  createSuccessfulTransactionToastContent, isNftBlacklisted,
   isNumeric,
   mapAttributeString,
   round,
@@ -132,7 +132,7 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
     const listingsResults = await getListings(query);
     const listings = listingsResults.data.listings;
 
-    let filteredListings = listings;
+    let filteredListings = listings.filter((listing) => !isNftBlacklisted(listing.nftAddress, listing.nftId));
 
     //
     if ([sweepType.quantity, sweepType.budget].includes(tab) && parseInt(maxPricePerItem) > 0) {

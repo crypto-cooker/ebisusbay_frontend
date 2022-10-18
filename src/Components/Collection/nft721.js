@@ -52,10 +52,10 @@ import Link from 'next/link';
 import axios from "axios";
 import Button, { LegacyOutlinedButton } from "@src/Components/components/common/Button";
 import { collectionRoyaltyPercent } from "@src/core/chain";
-import { ButtonGroup, Heading, useClipboard } from "@chakra-ui/react";
+import { ButtonGroup, Heading, MenuButton as MenuButtonCK, useClipboard } from "@chakra-ui/react";
 import useToggleFavorite from "@src/Components/NftDetails/hooks/useToggleFavorite";
 import { toast } from "react-toastify";
-import { MenuPopup } from '../components/chakra-components';
+import { Menu } from '../components/chakra-components';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faSquareTwitter, faTelegram } from '@fortawesome/free-brands-svg-icons';
 import { getStats } from '@src/GlobalState/collectionSlice';
@@ -156,6 +156,50 @@ const Nft721 = ({ address, id }) => {
     }
 
   ];
+
+  const MenuItems = (
+    options.map(option => (
+      option.type === 'url' ?
+        (
+          <div >
+            <a href={`${option.url}${window.location}`} target='_blank' >
+              <div key={option.label} className='social_media_item'>
+                <div className='icon_container'>
+                  <FontAwesomeIcon icon={option.icon} style={{ height: 28 }} />
+                </div>
+                <div className='label_container'>
+                  <span>{option.label}</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+        )
+        :
+        (
+          <div className='social_media_item' onClick={option.handleClick} key={option.label}>
+            <div className='icon_container'>
+              <FontAwesomeIcon icon={option.icon} style={{ height: 28 }} />
+            </div>
+            <div className='label_container'>
+              <span>
+                {option.label}
+              </span>
+            </div>
+          </div>
+        )
+
+    )))
+
+
+  const MenuButton = () => {
+
+    return (
+      <MenuButtonCK as={LegacyOutlinedButton}>
+        <FontAwesomeIcon icon={faShareAlt} style={{ cursor: 'pointer' }} />
+      </MenuButtonCK>
+    )
+  }
 
   // Custom breeding considerations
   const [croCrowBreed, setCroCrowBreed] = useState(null);
@@ -535,11 +579,8 @@ const Nft721 = ({ address, id }) => {
                       <FontAwesomeIcon icon={faExternalLinkAlt} />
                     </Button>
                   )}
-                  <MenuPopup options={options}>
-                    <Button styleType="default-outlined">
-                      <FontAwesomeIcon icon={faShareAlt} style={{ cursor: 'pointer' }} />
-                    </Button>
-                  </MenuPopup>
+                  <Menu MenuItems={MenuItems} MenuButton={MenuButton()} />
+
                 </ButtonGroup>
               </div>
             </div>

@@ -716,30 +716,6 @@ export const rankingsLinkForCollection = (collection, id) => {
   return link;
 };
 
-/**
- * SWR fetcher for contracts, wallet functions
- * 
- * @param library
- * @param abi
- * @returns {(function(...[*]): (*))|*}
- */
-export const fetcher =
-  (library, abi) =>
-  (...args) => {
-    const [arg1, arg2, ...params] = args;
-    // it's a contract
-    if (utils.isAddress(arg1)) {
-      const address = arg1;
-      const method = arg2;
-      const contract = new ethers.Contract(address, abi, library.getSigner());
-      return contract[method](...params);
-    }
-    // it's a eth call
-    const method = arg1;
-    return library[method](arg2, ...params);
-  };
-
-
 export const buildTwitterUrl = (username) => {
   if (!username || username.startsWith('http')) return username;
 
@@ -767,3 +743,10 @@ export const stripSpaces = (str) => {
 export const appUrl = (path) => {
   return new URL(path, appConfig('urls.app'));
 }
+
+export const pluralize = (val, word, plural = word + 's') => {
+  const _pluralize = (num, word, plural = word + 's') =>
+    [1, -1].includes(Number(num)) ? word : plural;
+  if (typeof val === 'object') return (num, word) => _pluralize(num, word, val[word]);
+  return _pluralize(val, word, plural);
+};

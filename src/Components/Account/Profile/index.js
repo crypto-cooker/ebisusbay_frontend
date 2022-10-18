@@ -18,7 +18,7 @@ import PageHead from "@src/Components/Head/PageHead";
 import {pushQueryString} from "@src/helpers/query";
 import {ethers} from "ethers";
 import {Badge} from "react-bootstrap";
-import {Grid, GridItem, useColorModeValue} from "@chakra-ui/react";
+import {Grid, GridItem, useBreakpointValue, useColorModeValue} from "@chakra-ui/react";
 import { motion } from 'framer-motion'
 import {BatchListingDrawer} from "@src/Components/Account/Profile/Inventory/BatchListingDrawer";
 import {closeBatchListingCart} from "@src/GlobalState/batchListingSlice";
@@ -44,6 +44,10 @@ export default function Profile({ address, profile, tab }) {
     expand: { gridTemplateColumns: '1fr 358px' },
     collapse: { gridTemplateColumns: '1fr 0' },
   }
+  const useMobileCartView = useBreakpointValue(
+    {base: true, lg: false},
+    {fallback: 'lg'},
+  );
 
   const navigateTo = (route) => {
     router.push(route);
@@ -102,7 +106,7 @@ export default function Profile({ address, profile, tab }) {
         url={`/account/${address}`}
       />
       <MotionGrid
-        animate={batchListingCart.isDrawerOpen ? 'expand' : 'collapse'}
+        animate={batchListingCart.isDrawerOpen && !useMobileCartView ? 'expand' : 'collapse'}
         variants={variants}
         gridTemplateColumns="1fr 0"
       >
@@ -202,8 +206,13 @@ export default function Profile({ address, profile, tab }) {
             </div>
           </section>
         </GridItem>
-        <GridItem borderLeft="0.5px solid" borderLeftColor={batchListingBorderColor}>
-          <BatchListingDrawer onClose={() => dispatch(closeBatchListingCart())}/>
+        <GridItem borderLeft={useMobileCartView ? 'none' : '0.5px solid'} borderLeftColor={batchListingBorderColor}>
+          <BatchListingDrawer
+            onClose={() => dispatch(closeBatchListingCart())}
+            position="fixed"
+            w="358px"
+            h="calc(100vh - 74px)"
+          />
         </GridItem>
       </MotionGrid>
     </div>
