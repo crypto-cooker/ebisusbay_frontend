@@ -89,12 +89,12 @@ const MyNftCard = ({
         label: 'Sell',
         handleClick: onSellButtonPressed,
       });
+      options.push({
+        icon: faTags,
+        label: 'Sell in batch',
+        handleClick: onAddToBatchListingButtonPressed,
+      });
     }
-    options.push({
-      icon: faTags,
-      label: 'Sell in batch',
-      handleClick: onAddToBatchListingButtonPressed,
-    });
     if (canTransfer) {
       options.push({
         icon: faExchangeAlt,
