@@ -90,13 +90,11 @@ const MyNftCard = ({
         handleClick: onSellButtonPressed,
       });
     }
-    if (canUseBatchListing && (canSell || canUpdate)) {
-      options.push({
-        icon: faTags,
-        label: 'Sell in batch',
-        handleClick: onAddToBatchListingButtonPressed,
-      });
-    }
+    options.push({
+      icon: faTags,
+      label: 'Sell in batch',
+      handleClick: onAddToBatchListingButtonPressed,
+    });
     if (canTransfer) {
       options.push({
         icon: faExchangeAlt,
@@ -153,43 +151,41 @@ const MyNftCard = ({
       >
         <Flex direction="column" height="100%">
           <div className="card-img-container position-relative">
-            {canUseBatchListing && (
-              <>
-                {isInBatchListingCart() ? (
-                  <Box
-                    top={0}
-                    right={0}
-                    position="absolute"
-                    zIndex={2}
-                    p={2}
-                    cursor="pointer"
-                    onClick={onRemoveFromBatchListingButtonPressed}
-                  >
-                    <FontAwesomeIcon icon={faCheckCircle} size="xl" style={{background:'dodgerblue', color:'white'}} className="rounded-circle"/>
-                  </Box>
-                ) : (canSell || canUpdate) && (
-                  <Box
-                    _groupHover={{display:'inline', transition:'0.3s ease', opacity: 1}}
-                    transition="0.3s ease"
-                    display="inline"
-                    opacity={0}
-                    top={0}
-                    right={0}
-                    position="absolute"
-                    zIndex={2}
-                    p={2}
-                    cursor="pointer"
-                    onClick={() => {
-                      if (canSell || canUpdate) {
-                        onAddToBatchListingButtonPressed()
-                      }
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faPlusCircle} size="xl" style={{background:'white', color:'grey'}} className="rounded-circle" />
-                  </Box>
-                )}
-              </>
-            )}
+            <>
+              {isInBatchListingCart() ? (
+                <Box
+                  top={0}
+                  right={0}
+                  position="absolute"
+                  zIndex={2}
+                  p={2}
+                  cursor="pointer"
+                  onClick={onRemoveFromBatchListingButtonPressed}
+                >
+                  <FontAwesomeIcon icon={faCheckCircle} size="xl" style={{background:'dodgerblue', color:'white'}} className="rounded-circle"/>
+                </Box>
+              ) : (canSell || canUpdate) && (
+                <Box
+                  _groupHover={{display:'inline', transition:'0.3s ease', opacity: 1}}
+                  transition="0.3s ease"
+                  display="inline"
+                  opacity={0}
+                  top={0}
+                  right={0}
+                  position="absolute"
+                  zIndex={2}
+                  p={2}
+                  cursor="pointer"
+                  onClick={() => {
+                    if (canSell || canUpdate) {
+                      onAddToBatchListingButtonPressed()
+                    }
+                  }}
+                >
+                  <FontAwesomeIcon icon={faPlusCircle} size="xl" style={{background:'white', color:'grey'}} className="rounded-circle" />
+                </Box>
+              )}
+            </>
             <Box
               _groupHover={{transform:'scale(1.05)', transition:'0.3s ease'}}
               transition="0.3s ease"

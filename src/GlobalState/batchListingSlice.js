@@ -13,6 +13,9 @@ const batchListingSlice = createSlice({
       const nftToAdd = action.payload;
       if (!state.nfts.some((o) => caseInsensitiveCompare(o.nft.address, nftToAdd.address) && o.nft.id === nftToAdd.id)) {
         state.nfts.push({nft: nftToAdd, price: null});
+      }
+
+      if (state.nfts.length === 1) {
         state.isDrawerOpen = true;
       }
     },
@@ -98,6 +101,7 @@ export const {
   addToBatchListingCart,
   removeFromBatchListingCart,
   clearBatchListingCart,
+  openBatchListingCart,
   closeBatchListingCart,
   minimizeBatchListingCart,
   updatePrice,

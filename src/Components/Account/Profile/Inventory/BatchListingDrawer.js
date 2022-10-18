@@ -34,7 +34,6 @@ import {
   applyPriceToAll,
   cascadePrices,
   clearBatchListingCart,
-  closeBatchListingCart,
   removeFromBatchListingCart,
   setApproval,
   setExtras,
@@ -53,7 +52,7 @@ import {collectionRoyaltyPercent} from "@src/core/chain";
 const config = appConfig();
 const floorThreshold = 5;
 
-export const BatchListingDrawer = ({onClose}) => {
+export const BatchListingDrawer = ({onClose, ...gridProps}) => {
   const dispatch = useDispatch();
   const batchListingCart = useSelector((state) => state.batchListing);
   const user = useSelector((state) => state.user);
@@ -62,7 +61,7 @@ export const BatchListingDrawer = ({onClose}) => {
 
   const handleClose = () => {
     setShowConfirmButton(false);
-    dispatch(closeBatchListingCart());
+    onClose();
   };
   const handleClearCart = () => {
     setShowConfirmButton(false);
@@ -149,7 +148,7 @@ export const BatchListingDrawer = ({onClose}) => {
   }
 
   return (
-    <Grid position="fixed" w="358px" h="calc(100vh - 74px)" templateRows="80px 1fr auto">
+    <Grid templateRows="80px 1fr auto" {...gridProps}>
       <GridItem px={6} py={4}>
         <Flex align="center">
           <Text fontSize="xl" fontWeight="semibold">

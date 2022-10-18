@@ -17,13 +17,13 @@ import {MobileFilters} from "@src/Components/Account/Profile/Inventory/MobileFil
 import Button from "@src/Components/components/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faFilter} from "@fortawesome/free-solid-svg-icons";
-import useBreakpoint from "use-breakpoint";
 import TransferNftDialog from "@src/Components/Account/Profile/Dialogs/TransferNftDialog";
 import {addToBatchListingCart, removeFromBatchListingCart} from "@src/GlobalState/batchListingSlice";
+import {MobileBatchListing} from "@src/Components/Account/Profile/Inventory/MobileBatchListing";
+import {useBreakpointValue} from "@chakra-ui/react";
 
 const knownContracts = appConfig('collections');
 
-const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
 export default function Inventory({ address }) {
   const dispatch = useDispatch();
 
@@ -32,9 +32,10 @@ export default function Inventory({ address }) {
   const [collections, setCollections] = useState([]);
   const [collectionFilter, setCollectionFilter] = useState([]);
   const [filtersVisible, setFiltersVisible] = useState(false);
-  const [useMobileMenu, setUseMobileMenu] = useState(false);
-  const [hasManuallyToggledFilters, setHasManuallyToggledFilters] = useState(false);
-  const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
+  const useMobileMenu = useBreakpointValue(
+    {base: true, lg: false},
+    {fallback: 'lg'},
+  );
 
   const onFilterChange = (filterOption) => {
     setCollectionFilter(filterOption ?? []);
@@ -142,16 +143,7 @@ export default function Inventory({ address }) {
     );
   }, [data, error, status, address, user.address, filtersVisible]);
 
-  useEffect(() => {
-    const isMobileSize = minWidth < BREAKPOINTS.m;
-    setUseMobileMenu(isMobileSize);
-    // if (!hasManuallyToggledFilters) {
-    //   setFiltersVisible(!isMobileSize);
-    // }
-  }, [breakpoint]);
-
   const toggleFilterVisibility = () => {
-    setHasManuallyToggledFilters(true);
     setFiltersVisible(!filtersVisible)
   };
 
@@ -223,14 +215,7 @@ export default function Inventory({ address }) {
         />
       )}
       {useMobileMenu && (
-        <div className="d-flex fixed-bottom mx-2 my-2">
-          <div className="mx-auto">
-            <Button type="legacy" style={{height: '100%'}} onClick={() => setFiltersVisible(true)}>
-              <FontAwesomeIcon icon={faFilter} />
-              <span className="ms-2">Filters ({collectionFilter.length})</span>
-            </Button>
-          </div>
-        </div>
+        <MobileBatchListing />
       )}
     </>
   )
