@@ -1,7 +1,12 @@
 {
   "crodex": {
     "name": "Crodex",
-    "url": "https://swap.crodex.app/#/rewards/nft"
+    "url": "https://swap.crodex.app/#/rewards/nft",
+    "address": "0x4DF2947013D68BbDF1914815DB510d1eaf7b8e4e"
+  },
+  "crodex-mhub": {
+    "name": "Crodex",
+    "url": "https://swap.crodex.app/#/mhub?page=adventure"
   },
   "croskull": {
     "name": "CroSkull",
@@ -10,5 +15,10 @@
   "cyborgswap": {
     "name": "CyborgSwap",
     "url": "https://cyborgswap.io/nft-staking"
+  },
+  "mm-treehouse": {
+    "name": "MM Treehouse",
+    "url": "https://mmtreehouse.io/",
+    "address": "0x3bbfffb798b7bcba2726d3903468851163cf1aad"
   }
 }

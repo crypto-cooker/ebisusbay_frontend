@@ -1,8 +1,8 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   MyListingsCollectionPageActions, MyNftPageActions,
-} from '../../GlobalState/User';
+} from '@src/GlobalState/User';
 import { Form, Spinner } from 'react-bootstrap';
 import MyListingCard from './MyListingCard';
 import MyNftCancelDialog from './MyNftCancelDialog';
@@ -14,46 +14,52 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { useRouter } from 'next/router';
 import {getUnfilteredListingsForAddress} from "@src/core/api";
-import useSWRInfinite from "swr/infinite";
 import MakeListingDialog from "@src/Components/MakeListing";
+import {useInfiniteQuery} from "@tanstack/react-query";
 
-const fetcher = async (...args) => {
-  const [key, address, provider, page] = args;
-  return await getUnfilteredListingsForAddress(address, provider, page);
-};
 
 const MyListingsCollection = ({ walletAddress = null }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-
   const [showInvalidOnly, setShowInvalidOnly] = useState(false);
+  const [hasInvalidListings, setHasInvalidListings] = useState(false);
+
   const user = useSelector((state) => state.user);
-  const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite((index) => {
-    return ['MyListingsCollection', walletAddress, user.provider, index + 1]
-  }, fetcher);
 
-  const myListings = data ? [].concat(...data) : [];
-  const isLoadingInitialData = !data && !error;
-  const isLoadingMore =
-    isLoadingInitialData ||
-    (size > 0 && data && typeof data[size - 1] === "undefined");
-  const isEmpty = data?.[0]?.length === 0;
-  const isReachingEnd =
-    isEmpty || (data && data[data.length - 1]?.length < 50);
-  const isRefreshing = isValidating && data && data.length === size;
+  const fetcher = async ({ pageParam = 1 }) => {
+    const listings = await getUnfilteredListingsForAddress(walletAddress, user.provider, pageParam);
+    if (listings.some((value) => !value.valid)) {
+      setHasInvalidListings(true);
+    }
+    return listings
+      .filter((x) => x.listed)
+      .filter((x) => (showInvalidOnly ? !x.valid : true));
+  };
 
-  const filteredListings = myListings
-    .filter((x) => x.listed)
-    .filter((x) => (showInvalidOnly ? !x.valid : true));
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+    refetch,
+  } = useInfiniteQuery(['MySoldNftCollection', walletAddress], fetcher, {
+    getNextPageParam: (lastPage, pages) => {
+      return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
+    },
+    refetchOnWindowFocus: false
+  })
 
   const loadMore = () => {
-    setSize(size + 1);
+    fetchNextPage();
   };
 
   return (
     <>
-      {myListings.some((value) => !value.valid) && (
+      {hasInvalidListings && (
         <div className="alert alert-danger" role="alert">
           <span>
             {' '}
@@ -97,9 +103,9 @@ const MyListingsCollection = ({ walletAddress = null }) => {
       </div>
       <div className="row gap-3">
         <InfiniteScroll
-          dataLength={myListings.length}
+          dataLength={data?.pages ? data.pages.flat().length : 0}
           next={loadMore}
-          hasMore={!isReachingEnd}
+          hasMore={hasNextPage}
           style={{ overflow: 'hidden' }}
           loader={
             <div className="row">
@@ -111,34 +117,41 @@ const MyListingsCollection = ({ walletAddress = null }) => {
             </div>
           }
         >
-          <div className="card-group">
-            {myListings && filteredListings.map((listing, index) => (
-              <div key={index} className="d-item col-lg-6 col-md-12 mb-4 px-2">
-                <MyListingCard
-                  nft={listing}
-                  key={index}
-                  canCancel={listing.state === 0}
-                  canUpdate={listing.state === 0 && listing.isInWallet}
-                  onUpdateButtonPressed={() =>{
-                    dispatch(MyListingsCollectionPageActions.showMyNftPageListDialog(listing.nft, listing))
-                  }}
-                  onCancelButtonPressed={() =>
-                    dispatch(MyListingsCollectionPageActions.showMyNftPageCancelDialog(listing))
-                  }
-                  newTab={true}
-                />
-              </div>
-            ))}
-          </div>
+          {status === "loading" ? (
+            <div className="col-lg-12 text-center">
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            </div>
+          ) : status === "error" ? (
+            <p>Error: {error.message}</p>
+          ) : (
+            <div className="card-group">
+              {data && data.pages.map((pages, index) => (
+                <React.Fragment key={index}>
+                  {pages.map((listing, index) => (
+                    <div key={index} className="d-item col-lg-6 col-md-12 mb-4 px-2">
+                      <MyListingCard
+                        nft={listing}
+                        key={index}
+                        canCancel={listing.state === 0}
+                        canUpdate={listing.state === 0 && listing.isInWallet}
+                        onUpdateButtonPressed={() =>{
+                          dispatch(MyListingsCollectionPageActions.showMyNftPageListDialog(listing.nft, listing))
+                        }}
+                        onCancelButtonPressed={() =>
+                          dispatch(MyListingsCollectionPageActions.showMyNftPageCancelDialog(listing))
+                        }
+                        newTab={true}
+                      />
+                    </div>
+                  ))}
+                </React.Fragment>
+              ))}
+            </div>
+          )}
         </InfiniteScroll>
       </div>
-      {(isEmpty || (!isLoadingInitialData && !filteredListings.length > 0)) && (
-        <div className="row mt-4">
-          <div className="col-lg-12 text-center">
-            <span>Nothing to see here...</span>
-          </div>
-        </div>
-      )}
 
       <MyNftCancelDialog/>
       <InvalidListingsPopup navigateTo={false}/>

@@ -36,12 +36,12 @@ import { AnyMedia } from '../components/AnyMedia';
 import { hostedImage } from '@src/helpers/image';
 import { appConfig } from "@src/Config";
 import { collectionRoyaltyPercent } from "@src/core/chain";
-import Button, {LegacyOutlinedButton} from "@src/Components/components/common/Button";
-import {ButtonGroup, Heading, useClipboard} from "@chakra-ui/react";
+import Button, { LegacyOutlinedButton } from "@src/Components/components/common/Button";
+import { ButtonGroup, Heading, MenuButton as MenuButtonCK, useClipboard  } from "@chakra-ui/react";
 import { toast } from "react-toastify";
 import useToggleFavorite from "@src/Components/NftDetails/hooks/useToggleFavorite";
 import { faHeart as faHeartOutline } from "@fortawesome/free-regular-svg-icons";
-import { MenuPopup } from '../components/chakra-components';
+import { Menu } from '../components/chakra-components';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faSquareTwitter, faTelegram } from '@fortawesome/free-brands-svg-icons';
 import { getStats } from '@src/GlobalState/collectionSlice';
@@ -132,6 +132,49 @@ const Nft1155 = ({ address, id }) => {
 
   ];
 
+  const MenuItems = (
+    options.map(option => (
+      option.type === 'url' ?
+        (
+          <div >
+            <a href={`${option.url}${window.location}`} target='_blank' >
+              <div key={option.label} className='social_media_item'>
+                <div className='icon_container'>
+                  <FontAwesomeIcon icon={option.icon} style={{ height: 28 }} />
+                </div>
+                <div className='label_container'>
+                  <span>{option.label}</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+        )
+        :
+        (
+          <div className='social_media_item' onClick={option.handleClick} key={option.label}>
+            <div className='icon_container'>
+              <FontAwesomeIcon icon={option.icon} style={{ height: 28 }} />
+            </div>
+            <div className='label_container'>
+              <span>
+                {option.label}
+              </span>
+            </div>
+          </div>
+        )
+
+    )))
+
+  const MenuButton = () => {
+
+    return (
+      <MenuButtonCK as={LegacyOutlinedButton}>
+        <FontAwesomeIcon icon={faShareAlt} style={{ cursor: 'pointer' }} />
+      </MenuButtonCK>
+    )
+  }
+
   const fullImage = () => {
     if (nft.original_image.startsWith('ipfs://')) {
       const link = nft.original_image.split('://')[1];
@@ -156,7 +199,6 @@ const Nft1155 = ({ address, id }) => {
     asyncFunc();
     // eslint-disable-next-line
   }, [dispatch, collection]);
-  
 
   const [currentTab, setCurrentTab] = useState(tabs.properties);
   const handleTabChange = useCallback((tab) => {
@@ -286,11 +328,8 @@ const Nft1155 = ({ address, id }) => {
                       <FontAwesomeIcon icon={faExternalLinkAlt} />
                     </Button>
                   )}
-                  <MenuPopup options={options}>
-                    <LegacyOutlinedButton className="m-0 text-nowrap p-4 pt-2 pb-2 btn-outline inline white">
-                      <FontAwesomeIcon icon={faShareAlt} style={{ cursor: 'pointer' }} />
-                    </LegacyOutlinedButton>
-                  </MenuPopup>
+                  <Menu MenuItems={MenuItems} MenuButton={MenuButton()} />
+
                 </ButtonGroup>
               </div>
             </div>
