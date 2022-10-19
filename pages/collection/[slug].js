@@ -30,7 +30,7 @@ const Collection = ({ ssrCollection, query }) => {
     setRedirect(null);
 
     const res = await getCollections({slug});
-    const col = res.data?.collections?.[0]
+    let col = res.data?.collections?.[0]
 
     if (col) {
       if (!!col.mergedWith) {

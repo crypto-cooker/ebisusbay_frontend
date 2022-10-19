@@ -1,5 +1,5 @@
 import {
-  Box,
+  Box, Center,
   Flex,
   Input, InputGroup, InputLeftElement,
   Spinner,
@@ -9,7 +9,6 @@ import {
 import React, {useCallback, useState} from "react";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {useQuery} from "@tanstack/react-query";
-import {debounce} from "lodash";
 import {search} from "@src/core/api/next/search";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
 import {ImageKitService} from "@src/helpers/image";
@@ -17,6 +16,7 @@ import {commify} from "ethers/lib/utils";
 import {pluralize, round} from "@src/utils";
 import {useRouter} from "next/router";
 import {SearchIcon} from "@chakra-ui/icons";
+import useDebounce from "@src/core/hooks/useDebounce";
 
 const searchRegex = /^\w+([\s-_]\w+)*$/;
 const minChars = 3;
@@ -33,18 +33,19 @@ const Search = () => {
     ref: ref,
     handler: onClose,
   });
+  const debouncedSearch = useDebounce(value, 500);
 
-  const { data, status, refetch } = useQuery(['Search', value], () =>
-    search(value),
+  const { data, status, error, refetch } = useQuery(['Search', debouncedSearch], () =>
+    search(debouncedSearch),
     {
-      enabled: !!value && value.length >= minChars,
+      enabled: !!debouncedSearch && debouncedSearch.length >= minChars,
       refetchOnWindowFocus: false
     }
   );
 
-  const handleChange = debounce((event) => {
+  const handleChange = (event) => {
     const { value } = event.target;
-    if (!searchRegex.test(value)) return;
+    // if (!searchRegex.test(value)) return;
 
     setValue(value);
     if (value.length >= minChars && !isOpen) {
@@ -53,7 +54,7 @@ const Search = () => {
     if (value.length < minChars && isOpen) {
       onClose();
     }
-  }, 300);
+  };
 
   const handleFocus = () => {
     if (value && !isOpen) onOpen();
@@ -77,6 +78,7 @@ const Search = () => {
           w="100%"
           onChange={handleChange}
           onFocus={handleFocus}
+          value={value}
         />
       </InputGroup>
       <Box
@@ -91,11 +93,13 @@ const Search = () => {
       >
         <Box fontSize="12px">
           {status === "loading" ? (
-            <div className="col-lg-12 text-center">
+            <Center>
               <Spinner />
-            </div>
+            </Center>
           ) : status === "error" ? (
-            <p>Error: {error.message}</p>
+            <Center>
+              <Text>Error: {error.message}</Text>
+            </Center>
           ) : (
             <>
               <Text textTransform="uppercase" color={headingColor}>Collections</Text>
