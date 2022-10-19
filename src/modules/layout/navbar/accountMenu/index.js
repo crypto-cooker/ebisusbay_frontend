@@ -233,8 +233,8 @@ const Index = function () {
   return (
     <div>
       {!walletAddress && (
-        <div className="connect-wal">
-          <NavLink onClick={connectWalletPressed}>Connect Wallet</NavLink>
+        <div className="de-menu-notification" onClick={connectWalletPressed} style={{background: '#218cff', marginLeft:'5px'}}>
+          <FontAwesomeIcon icon={faWallet} />
         </div>
       )}
       {walletAddress && !correctChain && !user.showWrongChainModal && (
@@ -243,15 +243,13 @@ const Index = function () {
         </div>
       )}
       {walletAddress && correctChain && (
-        <div id="de-click-menu-profile" className="de-menu-profile">
-          <span onClick={() => setShowMenu(!showMenu)}>
-            {user.profile.profilePicture ? (
-              <img src={ImageKitService.buildAvatarUrl(user.profile.profilePicture)} alt={user.profile.username} />
-            ) : (
-              <Blockies seed={user.address} size={9} scale={4} style={{width:'10px'}}/>
-            )}
-          </span>
-        </div>
+        <Box className="de-menu-profile" onClick={() => setShowMenu(!showMenu)}>
+          {user.profile.profilePicture ? (
+            <img src={ImageKitService.buildAvatarUrl(user.profile.profilePicture)} alt={user.profile.username} />
+          ) : (
+            <Blockies seed={user.address} size={9} scale={4} style={{width:'10px'}}/>
+          )}
+        </Box>
       )}
 
       <StyledModal show={user.showWrongChainModal} onHide={onWrongChainModalClose}>

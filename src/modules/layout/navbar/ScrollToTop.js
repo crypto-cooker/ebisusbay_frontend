@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { faChevronUp, faCircle } from '@fortawesome/free-solid-svg-icons';
-import LayeredIcon from '../components/LayeredIcon';
+import LayeredIcon from '../../../Components/components/LayeredIcon';
 
 export default class ScrollToTop extends Component {
   constructor(props) {

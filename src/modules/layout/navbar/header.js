@@ -1,12 +1,12 @@
-import React, {forwardRef} from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Link from 'next/link';
-import styled, { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faBars, faHamburger, faMoon, faSun} from '@fortawesome/free-solid-svg-icons';
+import {faBars, faMoon, faSun} from '@fortawesome/free-solid-svg-icons';
 
-import AccountMenu from '../components/AccountMenu';
-import NotificationMenu from '../components/NotificationMenu';
+import AccountMenu from './accountMenu';
+import NotificationMenu from '../../../Components/components/NotificationMenu';
 import { setTheme } from '@src/GlobalState/User';
 import useFeatureFlag from "@src/hooks/useFeatureFlag";
 import Constants from "@src/constants";
@@ -14,15 +14,15 @@ import {
   Box,
   Flex,
   HStack,
-  IconButton,
-  Stack, Text,
+  IconButton, Input, Spacer,
+  Stack, Text, useBreakpointValue,
   useColorMode,
   useDisclosure, useOutsideClick
 } from "@chakra-ui/react";
 import Cart from "@src/Components/v2/modules/navbar/cart";
 import {CloseIcon, HamburgerIcon} from "@chakra-ui/icons";
-
-const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
+import Search from "@src/modules/layout/navbar/search";
+import MobileSearchDrawer from "@src/modules/layout/navbar/search/drawer";
 
 const GlobalStyles = createGlobalStyle`
   header#myHeader {
@@ -47,6 +47,10 @@ const Header = function () {
   const {isOpen, onOpen, onClose} = useDisclosure();
   const { colorMode, setColorMode } = useColorMode()
   const {theme, profile, address} = useSelector((state) => state.user);
+  const shouldUseMobileSearch = useBreakpointValue(
+    { base: true, md: false },
+    { fallback: 'md'},
+  );
 
   const ref = React.useRef()
   useOutsideClick({
@@ -66,60 +70,56 @@ const Header = function () {
   return (
     <>
       <GlobalStyles />
-      <Box px={{base:2, md:"3rem"}} as="header" position="fixed" w="100%" zIndex={200} id="myHeader" className="navbar2">
+      <Box px={{base:2, md:4}} as="header" position="fixed" w="100%" zIndex={200} id="myHeader" className="navbar2">
         <Box maxW="2560px">
-          <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-            <HStack spacing={8} alignItems={'center'}>
-              <Link href="/">
-                <a>
-                  <HStack
-                    as={'nav'}
-                    spacing={2}>
-                        <img
-                          src={theme === 'light' ? '/img/logo-light.svg' : '/img/logo-dark-prod.svg'}
-                          alt="ebisus bay logo"
-                          style={{ width: '44px', height: '40px' }}
-                        />
-                    <Text
-                      fontSize="lg"
-                      pt={2}
-                      fontWeight="normal"
-                      color="white"
-                      minWidth="97px"
-                      display={{base: 'none', sm: 'block'}}
-                    >
-                      Ebisu's Bay
-                    </Text>
-                  </HStack>
-                </a>
-              </Link>
-            </HStack>
+          <Flex h={16} alignItems={'center'}>
+            <Link href="/">
+              <a>
+                <HStack spacing={2}>
+                  <Box w="44px">
+                    <img
+                      src={theme === 'light' ? '/img/logo-light.svg' : '/img/logo-dark-prod.svg'}
+                      alt="ebisus bay logo"
+                    />
+                  </Box>
+                  <Text
+                    fontSize="lg"
+                    pt={2}
+                    fontWeight="normal"
+                    color="white"
+                    minW="97px"
+                    display={{base: 'none', sm: 'block'}}
+                  >
+                    Ebisu's Bay
+                  </Text>
+                </HStack>
+              </a>
+            </Link>
+            {!shouldUseMobileSearch && (
+              <Box w="100%" me={2}>
+                <Search />
+              </Box>
+            )}
+            <Spacer />
             <Flex alignItems={'center'} className="mainside">
               <HStack
                 as={'nav'}
                 spacing={3}
                 display={{base: 'none', md: 'flex'}}
-                me={4}
+                me={2}
               >
-                <NavLink name={'Home'} to={'/'} />
                 <NavLink name={'Marketplace'} to={'/marketplace'} />
                 <NavLink name={'Collections'} to={'/collections'} />
                 <NavLink name={'Drops'} to={'/drops'} />
                 <NavLink name={'Stats'} to={'/stats'} />
               </HStack>
-              <span onClick={toggleTheme} className="cursor-pointer me-3 my-auto">
-              <FontAwesomeIcon icon={theme === 'dark' ? faMoon : faSun} color="#fff" />
-            </span>
 
-              <span className={address ? '' : 'me-2'}>
+              {shouldUseMobileSearch && <MobileSearchDrawer />}
               <Cart />
-            </span>
-              {isNotificationsEnabled && profile && (
-                <NotificationMenu />
-              )}
+              {isNotificationsEnabled && profile && <NotificationMenu />}
               <span className="my-auto">
-              <AccountMenu />
-            </span>
+                <AccountMenu />
+              </span>
               <IconButton
                 size={'md'}
                 icon={isOpen ? <CloseIcon/> : <FontAwesomeIcon icon={faBars} />}
@@ -135,11 +135,13 @@ const Header = function () {
           {isOpen ? (
             <Box pb={4} display={{md: 'none'}} textAlign="end" ref={ref}>
               <Stack as={'nav'} spacing={4}>
-                <NavLink name={'Home'} to={'/'} onClick={onClose} />
                 <NavLink name={'Marketplace'} to={'/marketplace'} onClick={onClose} />
                 <NavLink name={'Collections'} to={'/collections'} onClick={onClose} />
                 <NavLink name={'Drops'} to={'/drops'} onClick={onClose} />
                 <NavLink name={'Stats'} to={'/stats'} onClick={onClose} />
+                <Box onClick={toggleTheme} fontSize="14px" fontWeight="bold" color="#fff" cursor="pointer">
+                  <FontAwesomeIcon icon={theme === 'dark' ? faMoon : faSun} color="#fff" className="me-2"/> Dark mode
+                </Box>
               </Stack>
             </Box>
           ) : null}
