@@ -102,29 +102,37 @@ const Search = () => {
             </Center>
           ) : (
             <>
-              <Text textTransform="uppercase" color={headingColor}>Collections</Text>
-              <VStack>
-                {data.data.collections.slice(0, 5).map((item) => (
-                  item.multiToken && item.tokens ? (
-                    Object.entries(item.tokens).map(([id, token]) => (
-                      <ResultCollection
-                        collection={token}
-                        floorPrice={item.stats.tokens[id].floor_price}
-                        onClick={handleCollectionClick}
-                      />
-                    ))
-                  ) : (
-                    <ResultCollection
-                      collection={item}
-                      floorPrice={item.stats.total.floorPrice}
-                      onClick={handleCollectionClick}
-                    />
-                  )
-                ))}
-              </VStack>
-              <Box mt={1}>
-                <Text className="text-muted">Press Enter to search all items</Text>
-              </Box>
+              {data.data.collections.length > 0 ? (
+                <>
+                  <Text textTransform="uppercase" color={headingColor}>Collections</Text>
+                  <VStack>
+                    {data.data.collections.slice(0, 5).map((item) => (
+                      item.multiToken && item.tokens ? (
+                        Object.entries(item.tokens).map(([id, token]) => (
+                          <ResultCollection
+                            collection={token}
+                            floorPrice={item.stats.tokens[id].floor_price}
+                            onClick={handleCollectionClick}
+                          />
+                        ))
+                      ) : (
+                        <ResultCollection
+                          collection={item}
+                          floorPrice={item.stats.total.floorPrice}
+                          onClick={handleCollectionClick}
+                        />
+                      )
+                    ))}
+                  </VStack>
+                  <Box mt={1}>
+                    <Text className="text-muted">Press Enter to search all items</Text>
+                  </Box>
+                </>
+              ) : (
+                <Center>
+                  <Text>No results found</Text>
+                </Center>
+              )}
             </>
           )}
         </Box>
