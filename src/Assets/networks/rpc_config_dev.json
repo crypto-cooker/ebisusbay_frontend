@@ -9733,7 +9733,7 @@
       "metadata": {
         "description": "☆ 1,337 Collectable Renegade Monks ☆\n\nMint your Monk and fight with The New Resistance!",
         "verified": true,
-        "avatar": "/img/collections/renegade-monks/avatar.webp",
+        "avatar": "/img/collections/renegade-monks/avatar.gif",
         "card": "/img/collections/renegade-monks/card.webp",
         "banner": "/img/collections/renegade-monks/banner.webp",
         "maxSupply": 1337,
@@ -13764,7 +13764,7 @@
       "slug": "renegade-monks",
       "imgNft": "/img/drops/renegade-monks/drop.webp",
       "imgPreview": "/img/drops/renegade-monks/drop.webp",
-      "imgAvatar": "/img/collections/renegade-monks/avatar.webp",
+      "imgAvatar": "/img/collections/renegade-monks/avatar.gif",
       "imgBanner": "/img/collections/renegade-monks/banner.webp",
       "title": "Renegade Monks",
       "subtitle": "☆ 1,337 Collectable Renegade Monks ☆\n\nMint your Monk and fight with The New Resistance!",
