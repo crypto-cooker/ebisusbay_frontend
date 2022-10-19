@@ -9742,7 +9742,7 @@
         "discord": "https://discord.gg/tnr"
       },
       "verification": {
-        "doxx": false,
+        "doxx": "public",
         "kyc": "ebisu",
         "escrow": false
       }
