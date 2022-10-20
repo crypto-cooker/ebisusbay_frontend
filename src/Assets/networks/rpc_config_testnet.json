@@ -1944,7 +1944,7 @@
       "name": "Lion Social Club",
       "slug": "lion-social-club",
       "multiToken": false,
-      "address": "",
+      "address": "0x4B02dBAF4Ee8b4B3137BC549e6158B4a502f01bf",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -1983,7 +1983,7 @@
       "name": "Renegade Monks",
       "slug": "renegade-monks",
       "multiToken": false,
-      "address": "",
+      "address": "0x515c31634975fE98e95bD39294693aE681e68979",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -4460,7 +4460,7 @@
         "discord": "https://discord.gg/WdgfBzYTKX",
         "medium": "https://lion-social.gitbook.io/lion-social-club/"
       },
-      "address": "",
+      "address": "0x4B02dBAF4Ee8b4B3137BC549e6158B4a502f01bf",
       "maxMintPerTx": 25,
       "maxMintPerAddress": 100,
       "totalSupply": 2500,
@@ -4522,7 +4522,7 @@
         "twitter": "https://twitter.com/TNR_NFT_GAME",
         "discord": "https://discord.gg/tnr"
       },
-      "address": "",
+      "address": "0x515c31634975fE98e95bD39294693aE681e68979",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 20,
       "totalSupply": 1337,

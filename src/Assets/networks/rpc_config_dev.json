@@ -6315,7 +6315,7 @@
         "card": "/img/collections/the-battle-among-mongoose/card.png",
         "banner": "/img/collections/the-battle-among-mongoose/banner.png",
         "maxSupply": 2022,
-        "website": "https://battle.saharadao.finance/",
+        "website": "https://nft.frontlinedao.finance/",
         "twitter": "https://twitter.com/SaharaDao",
         "discord": "https://discord.gg/gTz8yjpymd",
         "telegram": "https://t.me/SaharaDAOglobal",
@@ -9542,7 +9542,7 @@
         "maxSupply": 3000,
         "website": "http://killakatznft.com/",
         "twitter": "https://twitter.com/KillaKatzNFT",
-        "discord": "https://discord.gg/EfK28j74"
+        "discord": "https://discord.gg/NRwkcnHf8b"
       },
       "verification": {
         "doxx": false,
@@ -9733,7 +9733,7 @@
       "metadata": {
         "description": "☆ 1,337 Collectable Renegade Monks ☆\n\nMint your Monk and fight with The New Resistance!",
         "verified": true,
-        "avatar": "/img/collections/renegade-monks/avatar.webp",
+        "avatar": "/img/collections/renegade-monks/avatar.gif",
         "card": "/img/collections/renegade-monks/card.webp",
         "banner": "/img/collections/renegade-monks/banner.webp",
         "maxSupply": 1337,
@@ -9742,7 +9742,7 @@
         "discord": "https://discord.gg/tnr"
       },
       "verification": {
-        "doxx": false,
+        "doxx": "public",
         "kyc": "ebisu",
         "escrow": false
       }
@@ -10147,7 +10147,7 @@
         "maxSupply": 3000,
         "website": "http://killakatznft.com/",
         "twitter": "https://twitter.com/KillaKatzNFT",
-        "discord": "https://discord.gg/EfK28j74"
+        "discord": "https://discord.gg/NRwkcnHf8b"
       },
       "verification": {
         "doxx": false,
@@ -10214,6 +10214,46 @@
         "doxx": "public",
         "kyc": false,
         "escrow": false
+      }
+    },
+    {
+      "name": "Bored Candy",
+      "slug": "bored-candy",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Candy Citizens are bringing their sweetness to the Crofam. They won't rest until everyone cronos wallet has Candy.",
+        "verified": false,
+        "avatar": "/img/collections/bored-candy/avatar.webp",
+        "banner": "/img/collections/bored-candy/banner.webp",
+        "card": "/img/collections/bored-candy/card.webp",
+        "maxSupply": 10000,
+        "website": "https://candycity.finance/",
+        "twitter": "https://www.twitter.com/boredcandycity",
+        "discord": "https://discord.gg/boredcandycity",
+        "medium": "https://boredcandycity.medium.com/",
+        "telegram": "https://t.me/+Er5SXP0M70M1YWFk"
+      }
+    },
+    {
+      "name": "Cat Council",
+      "slug": "cat-council",
+      "multiToken": false,
+      "address": "0x5428CA00Dc6972696EE704aD7044eFDb5d54a7EA",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "500 Limited Cat Council on CRO. In the future, the world belongs to cats.",
+        "verified": false,
+        "avatar": "/img/collections/cat-council/avatar.webp",
+        "banner": "/img/collections/cat-council/banner.webp",
+        "card": "/img/collections/cat-council/card.webp",
+        "maxSupply": 500,
+        "website": "https://www.cat-council.com/",
+        "twitter": "https://www.twitter.com/CatCouncil_NFT",
+        "discord": "https://discord.gg/etRMyVf2Kw"
       }
     }
   ],
@@ -11576,7 +11616,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": false,
       "redirect": "https://nftlaunch.me/collection/slavikfruitfarm"
     },
@@ -13764,7 +13804,7 @@
       "slug": "renegade-monks",
       "imgNft": "/img/drops/renegade-monks/drop.webp",
       "imgPreview": "/img/drops/renegade-monks/drop.webp",
-      "imgAvatar": "/img/collections/renegade-monks/avatar.webp",
+      "imgAvatar": "/img/collections/renegade-monks/avatar.gif",
       "imgBanner": "/img/collections/renegade-monks/banner.webp",
       "title": "Renegade Monks",
       "subtitle": "☆ 1,337 Collectable Renegade Monks ☆\n\nMint your Monk and fight with The New Resistance!",
