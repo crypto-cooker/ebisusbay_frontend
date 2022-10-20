@@ -10215,6 +10215,27 @@
         "kyc": false,
         "escrow": false
       }
+    },
+    {
+      "name": "Bored Candy",
+      "slug": "bored-candy",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Candy Citizens are bringing their sweetness to the Crofam. They won't rest until everyone cronos wallet has Candy.",
+        "verified": false,
+        "avatar": "/img/collections/bored-candy/avatar.webp",
+        "banner": "/img/collections/bored-candy/banner.webp",
+        "card": "/img/collections/bored-candy/card.webp",
+        "maxSupply": 10000,
+        "website": "https://candycity.finance/",
+        "twitter": "https://www.twitter.com/boredcandycity",
+        "discord": "https://discord.gg/boredcandycity",
+        "medium": "https://boredcandycity.medium.com/",
+        "telegram": "https://t.me/+Er5SXP0M70M1YWFk"
+      }
     }
   ],
   "drops": [
