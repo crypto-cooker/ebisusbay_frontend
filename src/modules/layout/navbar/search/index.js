@@ -26,6 +26,8 @@ const Search = () => {
   const headingColor = useColorModeValue('black', 'gray.300');
   const searchIconColor = useColorModeValue('white', 'gray.300');
   const bgColor = useColorModeValue('white', 'gray.700');
+  const borderColor = useColorModeValue('gray.100', 'gray.800');
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [value, setValue] = React.useState('');
   const ref = React.useRef();
@@ -90,6 +92,8 @@ const Search = () => {
         px={2}
         py={4}
         display={isOpen ? 'block' : 'none'}
+        borderWidth="1px"
+        borderColor={borderColor}
       >
         <Box fontSize="12px">
           {status === "loading" ? (

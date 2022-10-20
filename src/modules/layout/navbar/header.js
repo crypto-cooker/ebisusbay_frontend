@@ -76,7 +76,7 @@ const Header = function () {
             <Link href="/">
               <a>
                 <HStack spacing={2}>
-                  <Box w="44px">
+                  <Box w="44px" pb={{base: 2, sm: 6}}>
                     <img
                       src={theme === 'light' ? '/img/logo-light.svg' : '/img/logo-dark-prod.svg'}
                       alt="ebisus bay logo"
@@ -84,7 +84,6 @@ const Header = function () {
                   </Box>
                   <Text
                     fontSize="lg"
-                    pt={2}
                     fontWeight="normal"
                     color="white"
                     minW="97px"

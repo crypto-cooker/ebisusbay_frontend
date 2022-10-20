@@ -6,7 +6,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBolt,
   faUser,
-  faEdit, faCoins, faCopy, faHeart, faDollarSign, faWallet, faSearch, faHand, faCircleInfo
+  faEdit,
+  faCoins,
+  faCopy,
+  faHeart,
+  faDollarSign,
+  faWallet,
+  faSearch,
+  faHand,
+  faCircleInfo,
+  faArrowsLeftRight,
+  faArrowRightArrowLeft
 } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import MetaMaskOnboarding from '@metamask/onboarding';
@@ -238,8 +248,8 @@ const Index = function () {
         </div>
       )}
       {walletAddress && !correctChain && !user.showWrongChainModal && (
-        <div className="connect-wal">
-          <NavLink onClick={onWrongChainModalChangeChain}>Switch network</NavLink>
+        <div className="de-menu-notification" onClick={onWrongChainModalChangeChain} style={{background: '#218cff', marginLeft:'5px'}}>
+          <FontAwesomeIcon icon={faArrowRightArrowLeft} />
         </div>
       )}
       {walletAddress && correctChain && (
