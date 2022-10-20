@@ -10236,6 +10236,25 @@
         "medium": "https://boredcandycity.medium.com/",
         "telegram": "https://t.me/+Er5SXP0M70M1YWFk"
       }
+    },
+    {
+      "name": "Cat Council",
+      "slug": "cat-council",
+      "multiToken": false,
+      "address": "0x5428CA00Dc6972696EE704aD7044eFDb5d54a7EA",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "500 Limited Cat Council on CRO. In the future, the world belongs to cats.",
+        "verified": false,
+        "avatar": "/img/collections/cat-council/avatar.webp",
+        "banner": "/img/collections/cat-council/banner.webp",
+        "card": "/img/collections/cat-council/card.webp",
+        "maxSupply": 500,
+        "website": "https://www.cat-council.com/",
+        "twitter": "https://www.twitter.com/CatCouncil_NFT",
+        "discord": "https://discord.gg/etRMyVf2Kw"
+      }
     }
   ],
   "drops": [
