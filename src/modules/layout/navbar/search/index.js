@@ -76,7 +76,7 @@ const Search = () => {
           children={<SearchIcon color={searchIconColor} />}
         />
         <Input
-          placeholder='Search collections'
+          placeholder="Search collections"
           w="100%"
           onChange={handleChange}
           onFocus={handleFocus}
@@ -94,6 +94,7 @@ const Search = () => {
         display={isOpen ? 'block' : 'none'}
         borderWidth="1px"
         borderColor={borderColor}
+        boxShadow="dark-lg"
       >
         <Box fontSize="12px">
           {status === "loading" ? (
