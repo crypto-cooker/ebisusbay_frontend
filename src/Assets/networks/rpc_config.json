@@ -9621,7 +9621,7 @@
       "listable": true,
       "metadata": {
         "description": "The first collaborative collection on Cronos, delivered by The Degenerated X CroDoo, this series of AI-generated wallpapers features art from six totally different and completely unique projects, together into one mint.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/degenerated-friends-v1/avatar.webp",
         "card": "/img/collections/degenerated-friends-v1/card.webp",
         "banner": "/img/collections/degenerated-friends-v1/banner.webp",
@@ -10300,6 +10300,22 @@
         "website": "https://www.crobotverse.com/",
         "twitter": "https://twitter.com/thecrobots",
         "discord": "https://discord.gg/crobots"
+      }
+    },
+    {
+      "name": "Skronos Syndicate",
+      "slug": "skronos-syndicate",
+      "multiToken": false,
+      "address": "0x69B0F59900E123Ad5D3AA37BB022fDe32A4d24B0",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A collection of 200 unique skulls on the Cronos blockchain. We are a closed group of elites with a single mission...join us to know \uD83D\uDC80",
+        "verified": false,
+        "maxSupply": 200,
+        "website": "https://skronos-syndicate.com/",
+        "twitter": "https://twitter.com/skronosNFT",
+        "discord": "https://discord.gg/VH78mEQ2cE"
       }
     }
   ],
