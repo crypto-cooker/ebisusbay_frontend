@@ -9678,7 +9678,7 @@
       "name": "Lion Social Club",
       "slug": "lion-social-club",
       "multiToken": false,
-      "address": "",
+      "address": "0xb4D807aD7BEf1cB6Ac99688F675AaDF38196CC47",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -13871,7 +13871,7 @@
         "discord": "https://discord.gg/WdgfBzYTKX",
         "medium": "https://lion-social.gitbook.io/lion-social-club/"
       },
-      "address": "",
+      "address": "0xb4D807aD7BEf1cB6Ac99688F675AaDF38196CC47",
       "maxMintPerTx": 25,
       "maxMintPerAddress": 100,
       "totalSupply": 2500,
