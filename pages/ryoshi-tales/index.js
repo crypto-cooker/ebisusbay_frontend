@@ -1,5 +1,6 @@
 import Footer from '../../src/Components/components/Footer';
-import { Heading, Text, Flex, Box, Image, Center } from "@chakra-ui/react";
+import { Heading, Text, Flex, Box, Image, Center, AspectRatio } from "@chakra-ui/react";
+import PageHead from '@src/Components/Head/PageHead';
 
 
 const ryoshiTalesInfo = [
@@ -50,7 +51,8 @@ const ryoshiTalesInfo = [
     image: {
       src: './img/ryoshiTales/world.png',
       alt: 'world',
-      description: 'The game counts with an isometric point of view, able to zoom the camera in or out to visualize specific buildings or characters in more detail.'
+      description: 'The game counts with an isometric point of view, able to zoom the camera in or out to visualize specific buildings or characters in more detail.',
+      direction: 'horizontal'
     }
   },
   {
@@ -142,8 +144,9 @@ const ryoshiTalesInfo = [
       }
     ],
     image: {
-      src: './img/ryoshiTales/KOI token Logo.svg',
-      alt: 'Dan Abramov'
+      src: './img/ryoshiTales/tokenLogo.svg',
+      alt: 'logo',
+      direction: 'horizontal'
     },
     
   },
@@ -158,8 +161,9 @@ const ryoshiTalesInfo = [
   {
 
     image: {
-      src: './img/ryoshiTales/KOI token Pie Chart.svg',
-      alt: 'pie chart'
+      src: './img/ryoshiTales/pieChart.svg',
+      alt: 'pie chart',
+      direction: 'horizontal'
     }
   },
 
@@ -169,53 +173,71 @@ const ryoshiTalesInfo = [
 const RyoshiTales = () => {
 
   return (
-    <div>
-      <Center w='100%' height='300px' bg='linear-gradient(to right, #F4F6E7 , #AED1CB)'>
-      <Image src={'./img/ryoshiTales/Ryoshi Tales Logo Color.svg'} alt={'logo'} width='240px'/>
-      </Center>
-      <section className="gl-legacy container mt-0">
-      {
-        ryoshiTalesInfo.map((section, i) => (
-          
-          <section key={i} style={{marginTop: (section.title && i > 0)? '120px' : '0px'}} >
+    <>
+      <PageHead
+        title='Ryoshi Tales'
+        description='Ryoshi Tales is a mobile resource management game with a chibi/cartoon aesthetic in which we will have to build a Japanese civilization from its inception in the prehistoric age, evolving all the way through the futurist age while producing, trading, and battling against other players.'
+        url='/ryoshi-tales'
+      />
+      <div>
+        <Center w='100%' height='300px' bg='linear-gradient(to right, #F4F6E7 , #AED1CB)'>
+          <Image src={'./img/ryoshiTales/logoColor.svg'} alt={'logo'} width='240px'/>
+        </Center>
+
+        <section className="gl-legacy container mt-0" >
+          <Center>
+            <Box
+              as='iframe'
+              src='https://cdn.ebisusbay.biz/Ryoshi_Tales_edit.mp4'
+              h={['200px', '240px','312px']}
+              sx={{
+                aspectRatio: '16/9'
+              }}/>
+          </Center>
+        {
+
+          ryoshiTalesInfo.map((section, i) => (
             
-            <Center flexDirection={['column','column', (i%2 === 0?  'row' : 'row-reverse') ]}>
-              {section.info && section.info.length > 0 && (
-              <Center w={['100%', '100%', (section.image && section.image.src)? '50%' : '100%']} flexDirection='column' p='16px 20px'>
-                {section.title && (
-                  <Heading as="h2" size="xl" align='center' mb='16px'>
-                    {section.title}
-                  </Heading>)}
-                {
-                  section.info.map((value, j)=>{
-                    switch( value.type ){
-                      case 'title':
-                        return (
-                          <Heading key={j} as="h2" size="sm" mb='8px' mt='24px' color='#91e1d9'>
-                            {value.data}
-                          </Heading>
-                        );
-                      case 'text':
-                        return (
-                          <Text key={j} textAlign='justify' fontSize='xl'>
-                            {value.data}
-                          </Text>
-                        )
-                    }
-                  })
-                } 
-              </Center>)}
-              {section.image && section.image.src && (
-              <Center  maxW={['100%', '100%', (section.info && section.info.length)? '50%' : '100%']} p='16px 28px'>
-                <Image w={['100%', '100%', (section.info && section.info.length > 0)? '100%' : '600px']} src={section.image.src} alt={section.image.alt} />
-              </Center>)}
-            </Center>
-          </section>
-        ))
-      }
-      </section>
-      <Footer />
-    </div>
+            <section key={i} style={{marginTop: (section.title)? '120px' : '0px'}} >
+              
+              <Center flexDirection={['column','column', (i%2 === 0?  'row' : 'row-reverse') ]}>
+                {section.info && section.info.length > 0 && (
+                <Center w={['100%', '100%', (section.image && section.image.src)? '50%' : '100%']} flexDirection='column' p='16px 20px'>
+                  {section.title && (
+                    <Heading as="h2" size="xl" align='center' mb='16px'>
+                      {section.title}
+                    </Heading>)}
+                  {
+                    section.info.map((value, j)=>{
+                      switch( value.type ){
+                        case 'title':
+                          return (
+                            <Heading key={j} as="h2" size="sm" mb='8px' mt='24px' color='#91e1d9'>
+                              {value.data}
+                            </Heading>
+                          );
+                        case 'text':
+                          return (
+                            <Text key={j} textAlign='justify' fontSize='xl' mb='16px'>
+                              {value.data}
+                            </Text>
+                          )
+                      }
+                    })
+                  } 
+                </Center>)}
+                {section.image && section.image.src && (
+                <Center  maxW={['100%', '100%', (section.info && section.info.length)? '50%' : '100%']} p={section.image.direction === 'horizontal'? ['0px', '16px 28px'] : '16px 28px'}>
+                  <Image w={section.image.direction === 'horizontal'? ['340px', '600px', (section.info && section.info.length > 0)? '100%' : '600px'] : '100%'} maxH='484px' src={section.image.src} alt={section.image.alt} />
+                </Center>)}
+              </Center>
+            </section>
+          ))
+        }
+        </section>
+        <Footer />
+      </div>
+    </>
   )
 }
 
