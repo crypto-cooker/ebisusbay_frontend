@@ -12,7 +12,8 @@ import { hostedImage } from "@src/helpers/image";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation, Pagination} from "swiper";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
-import {Heading} from "@chakra-ui/react";
+import {Heading, HStack, Text} from "@chakra-ui/react";
+import Image from "next/image";
 
 const tokens = appConfig('tokens')
 const drops = appConfig('drops');
@@ -220,13 +221,16 @@ export default class Responsive extends Component {
                               ) : (
                                 <Heading as="h3" size="md">{ethers.utils.commify(item.drop.cost)} {item.drop.chain ? 'ETH' : 'CRO'}</Heading>
                               ))}
-                              {!item.drop.cost && (
-                                <h3>TBA</h3>
-                              )}
                               {item.drop.erc20Cost && item.drop.erc20Token && (
-                                <Heading as="h3" size="md">
-                                  {ethers.utils.commify(item.drop.erc20Cost)} {tokens[item.drop.erc20Token].symbol}
-                                </Heading>
+                                <HStack mt={2} mb={4}>
+                                  {item.drop.erc20Icon && <Image src={hostedImage(`/img/tokens/${item.drop.erc20Token}.svg`)} width={40} height={40} />}
+                                  <Text fontSize="4xl" fontWeight="bold" lineHeight={1}>
+                                    {ethers.utils.commify(item.drop.erc20Cost)} {tokens[item.drop.erc20Token].symbol}
+                                  </Text>
+                                </HStack>
+                              )}
+                              {!item.drop.cost && !item.drop.erc20Cost && (
+                                <h3>TBA</h3>
                               )}
                               {item.drop.memberCost &&
                                 (Array.isArray(item.drop.memberCost) ? (
@@ -238,9 +242,11 @@ export default class Responsive extends Component {
                                   <Heading as="h5" size="sm">Members: {ethers.utils.commify(item.drop.memberCost)} {item.drop.chain ? 'ETH' : 'CRO'}</Heading>
                                 ))}
                               {item.drop.erc20MemberCost && item.drop.erc20Token && (
-                                <Heading as="h5" size="sm">
-                                  Members: {ethers.utils.commify(item.drop.erc20MemberCost)} {tokens[item.drop.erc20Token].symbol}
-                                </Heading>
+                                <HStack mt={2}>
+                                  <Text fontSize="md" fontWeight="bold" lineHeight={1} className="ms-0" >
+                                    Members: {ethers.utils.commify(item.drop.erc20MemberCost)} {tokens[item.drop.erc20Token].symbol}
+                                  </Text>
+                                </HStack>
                               )}
                               {item.drop.whitelistCost &&
                                 (Array.isArray(item.drop.whitelistCost) ? (

@@ -10255,6 +10255,33 @@
         "twitter": "https://www.twitter.com/CatCouncil_NFT",
         "discord": "https://discord.gg/etRMyVf2Kw"
       }
+    },
+    {
+      "name": "Ryoshi Tales Halloween",
+      "slug": "ryoshi-tales-halloween",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Holding this NFT grants reduced service fees, discounts on drops, early access to features and is stakeable in the service fee pool.",
+        "verified": true,
+        "avatar": "/img/collections/ryoshi-tales-halloween/avatar.webp",
+        "banner": "/img/collections/ryoshi-tales-halloween/banner.webp",
+        "card": "/img/collections/ryoshi-tales-halloween/card.webp",
+        "maxSupply": 2500,
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "hidden",
+        "escrow": false
+      }
     }
   ],
   "drops": [
@@ -13856,6 +13883,41 @@
       "whitelistCost": "200",
       "foundersOnly": false,
       "start": 1667505600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": false,
+      "complete": false
+    },
+    {
+      "id": 125,
+      "slug": "ryoshi-tales-halloween",
+      "imgNft": "/img/drops/ryoshi-tales-halloween/drop.webp",
+      "imgPreview": "/img/drops/ryoshi-tales-halloween/drop.webp",
+      "imgAvatar": "/img/collections/ryoshi-tales-halloween/avatar.webp",
+      "imgBanner": "/img/collections/ryoshi-tales-halloween/banner.webp",
+      "title": "Ryoshi Tales Halloween",
+      "subtitle": "Our very own Halloween collection, from the team at Ebisu’s Bay.\nBe careful with your minting selection, you might scare the friendly ghosts away!\nKeep them close for your protection, you’ll need them when you start to play,\nEbisu’s Bay’s latest projection; it’s almost game release day!",
+      "description": "Introducing the Halloween Ebisu’s Bay drop! Mint one of these limited edition Halloween ghouls and use them to play in our upcoming game [details here].\n\n2500 unique characters, [x] traits, truly unique characters that you’ll be able to use in game for some rewarding boosts (we don’t quite know what those are yet, but they’ll be great!)\n\nRyoshi characters will only be released this Halloween, so grab them if you dare and get ready to game on Ryoshi Tales!",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 100,
+      "totalSupply": 2500,
+      "erc20Cost": "10000",
+      "erc20MemberCost": "5000",
+      "erc20Token": "koi",
+      "erc20Icon": true,
+      "foundersOnly": false,
+      "start": 1667160000000,
       "end": null,
       "referral": false,
       "is1155": false,
