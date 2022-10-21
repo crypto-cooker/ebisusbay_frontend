@@ -10282,6 +10282,25 @@
         "kyc": "hidden",
         "escrow": false
       }
+    },
+    {
+      "name": "Crobotales",
+      "slug": "crobotales",
+      "multiToken": false,
+      "address": "0x8a1E50f22a1F13105414D5D647A53f8919E474b3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collectible series of imaginative narratives from the CrobotVerse.",
+        "verified": true,
+        "avatar": "/img/collections/crobotales/avatar.webp",
+        "card": "/img/collections/crobotales/card.webp",
+        "banner": "/img/collections/crobotales/banner.webp",
+        "maxSupply": 300,
+        "website": "https://www.crobotverse.com/",
+        "twitter": "https://twitter.com/thecrobots",
+        "discord": "https://discord.gg/crobots"
+      }
     }
   ],
   "drops": [
