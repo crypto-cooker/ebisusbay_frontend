@@ -10312,6 +10312,9 @@
       "metadata": {
         "description": "A collection of 200 unique skulls on the Cronos blockchain. We are a closed group of elites with a single mission...join us to know \uD83D\uDC80",
         "verified": false,
+        "avatar": "/img/collections/skronos-syndicate/avatar.webp",
+        "card": "/img/collections/skronos-syndicate/card.webp",
+        "banner": "/img/collections/skronos-syndicate/banner.webp",
         "maxSupply": 200,
         "website": "https://skronos-syndicate.com/",
         "twitter": "https://twitter.com/skronosNFT",
