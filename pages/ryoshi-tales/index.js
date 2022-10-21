@@ -1,6 +1,8 @@
 import Footer from '../../src/Components/components/Footer';
 import { Heading, Text, Box, Image, Center, Link } from "@chakra-ui/react";
 import PageHead from '@src/Components/Head/PageHead';
+import {hostedImage, ImageKitService} from "@src/helpers/image";
+import {useColorModeValue} from "@chakra-ui/color-mode";
 
 
 const ryoshiTalesInfo = [
@@ -25,7 +27,7 @@ const ryoshiTalesInfo = [
       },
     ],
     image: {
-      src: './img/ryoshiTales/synopsis.png',
+      src: hostedImage('/img/ryoshiTales/synopsis.png'),
       alt: 'synopsis'
     }
   },
@@ -38,7 +40,7 @@ const ryoshiTalesInfo = [
       }
     ],
     image: {
-      src: './img/ryoshiTales/characters.png',
+      src: hostedImage('/img/ryoshiTales/characters.png'),
       alt: 'characters'
     }
   },
@@ -57,7 +59,7 @@ const ryoshiTalesInfo = [
   },
   {
     image: {
-      src: './img/ryoshiTales/world.png',
+      src: hostedImage('/img/ryoshiTales/world.png'),
       alt: 'world',
       description: 'The game counts with an isometric point of view, able to zoom the camera in or out to visualize specific buildings or characters in more detail.',
       direction: 'horizontal'
@@ -88,7 +90,7 @@ const ryoshiTalesInfo = [
       }
     ],
       image: {
-        src: './img/ryoshiTales/tokenLogo.svg',
+        src: hostedImage('/img/ryoshiTales/tokenLogo.svg'),
         alt: 'logo',
         direction: 'horizontal'
       },
@@ -110,7 +112,7 @@ const ryoshiTalesInfo = [
   {
 
     image: {
-      src: './img/ryoshiTales/pieChart.svg',
+      src: hostedImage('/img/ryoshiTales/pieChart.svg'),
       alt: 'pie chart',
       direction: 'horizontal'
     }
@@ -138,10 +140,10 @@ const ryoshiTalesInfo = [
         type: 'text',
         data: 'We are happy to announce our good friends at Mad Meerkat Finance are hosting a launchpad for people to purchase KOI tokens.'
       },
-      {
-        type: 'text',
-        data: 'Our The launchpad release will take place on October 25th at 4 AM UTC, lasting 24 hours, so make sure to mark your calendars! '
-      },
+      // {
+      //   type: 'text',
+      //   data: 'The launchpad release will take place on October 25th at 4 AM UTC, lasting 24 hours, so make sure to mark your calendars! '
+      // },
     ]
   },
   /*{
@@ -159,6 +161,7 @@ const ryoshiTalesInfo = [
 
 
 const RyoshiTales = () => {
+  const primaryColor = useColorModeValue('#218cff', '#91e1d9');
 
   return (
     <>
@@ -166,9 +169,10 @@ const RyoshiTales = () => {
         title='Ryoshi Tales'
         description='Ryoshi Tales is a mobile resource management game with a chibi/cartoon aesthetic in which we will have to build a Japanese civilization from its inception in the prehistoric age, evolving all the way through the futurist age while producing, trading, and battling against other players.'
         url='/ryoshi-tales'
+        image={hostedImage('/img/ryoshiTales/preview.webp')}
       />
       <Center w='100%' height={300}>
-        <Image src={'./img/ryoshiTales/banner.png'} alt={'banner'} width='100%' height='100%' objectFit='cover'/>
+        <Image src={ImageKitService.buildBannerUrl('img/ryoshiTales/banner.png')} alt={'banner'} width='100%' height='100%' objectFit='cover'/>
       </Center>
       <div>
         <section className="gl-legacy container mt-0" >
@@ -199,7 +203,7 @@ const RyoshiTales = () => {
                       switch( value.type ){
                         case 'title':
                           return (
-                            <Heading key={j} textAlign='center' as="h2" size="md" mb='8px' mt='24px' color='#91e1d9'>
+                            <Heading key={j} textAlign='center' as="h2" size="md" mb='8px' mt='24px' color={primaryColor}>
                               {value.data}
                             </Heading>
                           );
@@ -211,15 +215,19 @@ const RyoshiTales = () => {
                           )
                         case 'link':
                           return (
-                            <Heading key={j} as="h2" size="md" mb='8px' mt='24px' color='#91e1d9' textAlign='center'>
-                              <Link color='#91e1d9' href={value.url} style={{ textDecoration: 'underline' }} textAlign='center'>
+                            <Heading key={j} as="h2" size="md" mb='8px' mt='24px' color={primaryColor} textAlign='center'>
+                              <Link color={primaryColor} href={value.url} style={{ textDecoration: 'underline' }} textAlign='center'>
                               {value.data}
                               </Link> 
                             </Heading>
                           );
                       }
                     })
-                  } 
+                  }
+
+                  <Text textAlign='center' fontSize='xl' mb='16px'>
+                    The <a href="https://mm.finance/launchpad" target="_blank" style={{color: primaryColor}} className="fw-bold">launchpad</a> release will take place on October 25th at 4 AM UTC, lasting 24 hours, so make sure to mark your calendars!
+                  </Text>
                 </Center>)}
                 {section.image && section.image.src && (
                 <Center  maxW={['100%', '100%', (section.info && section.info.length)? '50%' : '100%']} p={section.image.direction === 'horizontal'? ['0px', '16px 28px'] : '16px 28px'}>
