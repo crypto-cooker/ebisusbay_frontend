@@ -1064,7 +1064,7 @@
         "maxSupply": 6666,
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/croskull",
+        "discord": "https://discord.gg/q3nWxw8QRY",
         "medium": "https://medium.com/@croskullnft",
         "staking": "croskull"
       }
@@ -1475,7 +1475,7 @@
         "maxSupply": 333,
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/croskull",
+        "discord": "https://discord.gg/q3nWxw8QRY",
         "medium": "https://medium.com/@croskullnft"
       }
     },
@@ -1495,7 +1495,7 @@
         "maxSupply": 333,
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/croskull",
+        "discord": "https://discord.gg/q3nWxw8QRY",
         "medium": "https://medium.com/@croskullnft"
       }
     },
@@ -2419,7 +2419,7 @@
         "maxSupply": 2200,
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/croskull",
+        "discord": "https://discord.gg/q3nWxw8QRY",
         "medium": "https://medium.com/@croskullnft"
       }
     },
@@ -4094,7 +4094,7 @@
         "maxSupply": 333,
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/croskull",
+        "discord": "https://discord.gg/q3nWxw8QRY",
         "medium": "https://medium.com/@croskullnft"
       }
     },
@@ -4889,7 +4889,7 @@
         "maxSupply": 333,
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/croskull",
+        "discord": "https://discord.gg/q3nWxw8QRY",
         "medium": "https://medium.com/@croskullnft"
       }
     },
@@ -5283,7 +5283,7 @@
         "maxSupply": 2200,
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/croskull",
+        "discord": "https://discord.gg/q3nWxw8QRY",
         "medium": "https://medium.com/@croskullnft"
       }
     },
@@ -6545,7 +6545,7 @@
         "maxSupply": 2200,
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/croskull",
+        "discord": "https://discord.gg/q3nWxw8QRY",
         "medium": "https://medium.com/@croskullnft"
       }
     },
@@ -10349,6 +10349,26 @@
         "discord": "https://discord.gg/argofinance",
         "medium" : "https://argofinance.medium.com",
         "telegram": "https://t.me/Argo_Finance"
+      }
+    },
+    {
+      "name": "CroSkull Founder Pets",
+      "slug": "croskull-founder-pets",
+      "multiToken": false,
+      "address": "0xB9eCFF7e01a48C434a3B8A034906e4b34Da62f90",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Whoever was in the Whitelist at the time of the Croskull mint and had the role of \"BonesVille Settler\" in the Discord server, got the Founder Pet as a gift. It is a very rare pet and, because of its rarity and delicacy, cannot go on missions and cannot fight. However, every day he receives a free mystery box from the merchant.",
+        "verified": true,
+        "avatar": "/img/collections/croskull-founder-pets/avatar.webp",
+        "card": "/img/collections/croskull-founder-pets/card.webp",
+        "banner": "/img/collections/croskull-founder-pets/banner.webp",
+        "maxSupply": 93,
+        "website": "https://app.croskull.com/",
+        "twitter": "https://twitter.com/CroskullNFT",
+        "discord": "https://discord.gg/q3nWxw8QRY",
+        "medium": "https://medium.com/@croskullnft"
       }
     }
   ],
