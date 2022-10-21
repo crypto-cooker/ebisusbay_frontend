@@ -1,24 +1,28 @@
 import Footer from '../../src/Components/components/Footer';
-import { Heading, Text, Flex, Box, Image, Center, AspectRatio } from "@chakra-ui/react";
+import { Heading, Text, Box, Image, Center, Link } from "@chakra-ui/react";
 import PageHead from '@src/Components/Head/PageHead';
 
 
 const ryoshiTalesInfo = [
   {
-    title: 'Synopsis',
+    title: 'Overview',
     info: [
       {
         type: 'text',
-        data: 'Ryoshi Tales is a mobile resource management game with a chibi/cartoon aesthetic in which we will have to build a Japanese civilization from its inception in the prehistoric age, evolving all the way through the futurist age while producing, trading, and battling against other players. As a main characteristic, Ryoshi Tales boasts a large variety of tasks that can be undertaken based on resource gathering, that allows players to organize and manipulate the cycles of their city to their liking, while building structures, and creating unique items and units.'
-      },
-      {
-        type: 'title',
-        data: 'Platforms'
+        data: 'Ryoshi Tales is a mobile resource management game, playable on Android and iOS, best played on a tablet device!'
       },
       {
         type: 'text',
-        data: 'The main target platforms for Ryoshi Tales are Android and iOS. From inception, game design is aimed towards compatibility with tablet formats.'
-      }
+        data: 'With a chibi/cartoon aesthetic, users get to build a Japanese civilization from its inception.'
+      },
+      {
+        type: 'text',
+        data: 'Players get to see their civilization evolve all the way from the prehistoric age to future eras while producing, trading, and battling against other players.'
+      },
+      {
+        type: 'text',
+        data: 'Ryoshi Tales boasts a large variety of tasks that can be undertaken based on resource gathering, building structures, and creating unique items and units.'
+      },
     ],
     image: {
       src: './img/ryoshiTales/synopsis.png',
@@ -26,11 +30,11 @@ const ryoshiTalesInfo = [
     }
   },
   {
-    title: 'Characters',
+    title: 'Game Design',
     info: [
       {
         type: 'text',
-        data: 'There are many characters that we can create and administer throughout the game. Depending on their abilities they can help in different areas and with different tasks. They can better their stats in the different learning centers corresponding to each stat block.'
+        data: 'There are many characters that can be used throughout the game and, depending on their abilities, they can help in different areas and with different tasks. Also, users will be able to improve their characters’ stats in the different learning centers corresponding to each stat block.'
       }
     ],
     image: {
@@ -43,7 +47,11 @@ const ryoshiTalesInfo = [
     info: [
       {
         type: 'text',
-        data: 'The evolution of the island is divided in AGES that, at the same time, are made up of several PERIODS. In order to advance from one PERIOD to another, we need to meet certain building requisites and gather a certain amount of specific resources.'
+        data: 'The game takes place on Ebisu’s Islands. The evolution of the island is divided in AGES that, at the same time, are made up of several PERIODS.'
+      },
+      {
+        type: 'text',
+        data: 'In order to advance from one PERIOD to another, users need to meet certain building requisites and gather a certain amount of specific resources.'
       }
     ],
   },
@@ -60,104 +68,45 @@ const ryoshiTalesInfo = [
     info: [
       {
         type: 'text',
-        data: 'Taking into account that the design goal in Ryoshi Tales is to build and a game experience that combines simplicity with depth and that can generate long-term loyalty in players, the proposal of game and economy design aim to be a playable loop that contains two main instances: RESOURCE MANAGEMENT and COMBAT.'
+        data: 'The design goal in Ryoshi Tales is to build a game experience that combines simplicity with depth and that can generate long-term loyalty in players.'
       },
       {
         type: 'text',
-        data: 'Secondly, it integrates a competitive factor to the experience, which is one of the fundamental elements in making a game promote engagement.'
+        data: 'The game and economy design will be a playable loop that contains two main instances: RESOURCE MANAGEMENT and COMBAT.'
       },
       {
         type: 'text',
-        data: 'Thirdly, adding a combat stage to Ryoshi Tales constitutes a new medium term goal within the experience: the formation of an army and the training of its respective units.'
+        data: 'By integrating a competitive factor to the experience, the game promotes the players’  engagement.'
       },
       {
         type: 'text',
-        data: 'Lastly, the design of units, their appearance, equipment, and armaments constitute a new axis for monetization: skins, items, boosters, and unique objects that make up combat units.'
+        data: 'The combat stage in Ryoshi Tales is a medium term goal within the experience: players will be  able to form an army and train their respective units.'
+      },
+      {
+        type: 'text',
+        data: 'The design of units, their appearance, equipment, and armaments constitute a new axis for monetization: skins, items, boosters, and unique objects that make up combat units.'
       }
     ],
+      image: {
+        src: './img/ryoshiTales/tokenLogo.svg',
+        alt: 'logo',
+        direction: 'horizontal'
+      },
  
   },
   {
-    title: 'Game Mechanics',
+    title: 'About the Token',
     info: [
-      {
-        type: 'text',
-        data: 'Gameplay structure will be supported by the three primordial needs: survival, existence, and evolution in order to generate a product of grand engagement capable of generating loyalty in its audience, in combination with the three pillars mentioned in the design goals: expression, socialization, and learning. These are integrated into a system of intrinsic and extrinsic motivations that seek to call the attention of players due to playability and aesthetic attractiveness, and manage to keep them playing thanks to external motivations.'
-      },
-      {
-        type: 'title',
-        data: 'PLAYABLE LOOP'
-      },
-      {
-        type: 'text',
-        data: 'The playable core of Ryoshi Tales is made up of two (2) main moments/mechanics of the game: resource management and combat. There’s always some task to perform. To achieve this we’ll use all the elements of the loop: Collection > Production/Creation > Sale > Combat.'
-      },
-      {
-        type: 'title',
-        data: 'RESOURCE MANAGEMENT'
-      },
-      {
-        type: 'text',
-        data: 'Resource management is the first main experience of the game, and consists of three stages: collection, creation, and commerce.'
-      },
-      {
-        type: 'title',
-        data: 'GATHERING'
-      },
-      {
-        type: 'text',
-        data: 'Availability of resources is defined based on the era in which the civilization our island belongs to is in. As we evolve and gain knowledge, new resources become available. The process of extraction and gathering of all resources will be manual at the beginning of the game, and as we evolve, they can become automated. To begin with we will assign a basic unit to collection. We can upgrade the speed of gathering of our units, as well as all other stats. Further on we’ll be able to build structures that produce resources independently.'
-      },
-    ],
 
-  },
-  {
-    title: 'Tokenomics',
-    info: [
-      {
-        type: 'title',
-        data: 'About the Token'
-      },
       {
         type: 'text',
-        data: 'The KOI token was created to promote Ryoshi Tales native economy. It will use Cronos’ blockchain. It is mainly used as a game token.'
+        data: 'The KOI token was created to promote Ryoshi Tales’ native economy. It will use Cronos’ blockchain.'
       },
-      {
-        type: 'title',
-        data: 'How does it work?'
-      },
-      {
-        type: 'text',
-        data: 'It’s most popular use is for creating and developing an island and its civilization. KOI tokens will be able for purchase during some exchanges or can be earned within the game, and can be used to buy and exchange assets inside the game.'
-      },
-      {
-        type: 'title',
-        data: 'Stacking APR'
-      },
-      {
-        type: 'text',
-        data: 'KOI tokens can also be used for stacking APR, offering guaranteed return and a predictable source of income.'
-      },
-      {
-        type: 'text',
-        data: 'We aim for a coin that will work well within Ebisusbay environment as well as outside of the game.'
-      }
+
     ],
-    image: {
-      src: './img/ryoshiTales/tokenLogo.svg',
-      alt: 'logo',
-      direction: 'horizontal'
-    },
     
   },
-  {
-    info: [
-      {
-        type: 'text',
-        data: 'There will be a maximum KOI token supply limit. Its behaviour will be deflationary, which will promote it’s increase in value. Each time tokens are used to buy assets ingame, they get burned, meaning that supply decreases. Total token supply is directly linked to game usage. KOI token has real utility whithin the Ryoshi Tales metaverse, but it also has criptocurrency market value and will be used in some decentralized exchanges.'
-      }
-    ]
-  },
+  
   {
 
     image: {
@@ -166,7 +115,46 @@ const ryoshiTalesInfo = [
       direction: 'horizontal'
     }
   },
+  {
+    title: 'Limited supply',
+    info: [
+      {
+        type: 'title',
+        data: 'Deflationary behavior'
+      },
+      {
+        type: 'text',
+        data: 'Each time tokens are used to buy assets in game, they get burned.'
+      },
+      {
+        type: 'title',
+        data: 'KOI token has real utility within the Ryoshi Tales metaverse'
+      },
+      {
+        type: 'text',
+        data: 'KOI can be combined with in-game assets for Staking APRs, which will offer our community a way to accumulate additional $KOI.'
+      },
+      {
+        type: 'text',
+        data: 'We are happy to announce our good friends at Mad Meerkat Finance are hosting a launchpad for people to purchase KOI tokens.'
+      },
+      {
+        type: 'text',
+        data: 'Our The launchpad release will take place on October 25th at 4 AM UTC, lasting 24 hours, so make sure to mark your calendars! '
+      },
+    ]
+  },
+  /*{
+    title: 'Want to know more?',
+    info: [
+      {
+        type: 'link',
+        url: '#',
+        data: 'Download our pitch deck here'
+      },
+    ]
 
+  }*/
 ]
 
 
@@ -179,11 +167,10 @@ const RyoshiTales = () => {
         description='Ryoshi Tales is a mobile resource management game with a chibi/cartoon aesthetic in which we will have to build a Japanese civilization from its inception in the prehistoric age, evolving all the way through the futurist age while producing, trading, and battling against other players.'
         url='/ryoshi-tales'
       />
+      <Center w='100%' height={300}>
+        <Image src={'./img/ryoshiTales/banner.png'} alt={'banner'} width='100%' height='100%' objectFit='cover'/>
+      </Center>
       <div>
-        <Center w='100%' height='300px' bg='linear-gradient(to right, #F4F6E7 , #AED1CB)'>
-          <Image src={'./img/ryoshiTales/logoColor.svg'} alt={'logo'} width='240px'/>
-        </Center>
-
         <section className="gl-legacy container mt-0" >
           <Center>
             <Box
@@ -202,9 +189,9 @@ const RyoshiTales = () => {
               
               <Center flexDirection={['column','column', (i%2 === 0?  'row' : 'row-reverse') ]}>
                 {section.info && section.info.length > 0 && (
-                <Center w={['100%', '100%', (section.image && section.image.src)? '50%' : '100%']} flexDirection='column' p='16px 20px'>
+                <Center w={['100%', '100%', (section.image && section.image.src)? '50%' : '800px']} flexDirection='column' p='16px 20px'>
                   {section.title && (
-                    <Heading as="h2" size="xl" align='center' mb='16px'>
+                    <Heading as="h2" size="xl" textAlign='center' align={(section.image && section.image.src)? 'center': ''} mb='16px'>
                       {section.title}
                     </Heading>)}
                   {
@@ -212,16 +199,24 @@ const RyoshiTales = () => {
                       switch( value.type ){
                         case 'title':
                           return (
-                            <Heading key={j} as="h2" size="sm" mb='8px' mt='24px' color='#91e1d9'>
+                            <Heading key={j} textAlign='center' as="h2" size="md" mb='8px' mt='24px' color='#91e1d9'>
                               {value.data}
                             </Heading>
                           );
                         case 'text':
                           return (
-                            <Text key={j} textAlign='justify' fontSize='xl' mb='16px'>
+                            <Text key={j} textAlign='center' fontSize='xl' mb='16px' >
                               {value.data}
                             </Text>
                           )
+                        case 'link':
+                          return (
+                            <Heading key={j} as="h2" size="md" mb='8px' mt='24px' color='#91e1d9' textAlign='center'>
+                              <Link color='#91e1d9' href={value.url} style={{ textDecoration: 'underline' }} textAlign='center'>
+                              {value.data}
+                              </Link> 
+                            </Heading>
+                          );
                       }
                     })
                   } 
