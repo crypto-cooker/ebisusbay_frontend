@@ -10317,6 +10317,39 @@
         "twitter": "https://twitter.com/skronosNFT",
         "discord": "https://discord.gg/VH78mEQ2cE"
       }
+    },
+    {
+      "name": "Argonauts Odyssey",
+      "slug": "argonauts-odyssey",
+      "multiToken": true,
+      "tokens": [
+        { "id": 1 },
+        { "id": 2 },
+        { "id": 3 },
+        { "id": 4 },
+        { "id": 5 },
+        { "id": 6 },
+        { "id": 7 },
+        { "id": 8 },
+        { "id": 9 },
+        { "id": 10 }
+      ],
+      "address": "0xb67A1DE71c8506e4b6326d2a01c421F831b9754d",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Argonauts Odyssey NFT collection are reward NFTs airdropped during the Argonauts Odyssey event. During the Odyssey event, users can complete each week's quest, get weekly Odyssey NFT airdrop, and collect CRO from the Odyssey Treasure Chest at the end of the event.",
+        "verified": true,
+        "avatar": "/img/collections/argonauts-odyssey/avatar.webp",
+        "card": "/img/collections/argonauts-odyssey/card.webp",
+        "banner": "/img/collections/argonauts-odyssey/banner.webp",
+        "maxSupply": 10,
+        "website": "https://www.argofinance.money/nft",
+        "twitter": "https://twitter.com/ArgoProtocol",
+        "discord": "https://discord.gg/argofinance",
+        "medium" : "https://argofinance.medium.com",
+        "telegram": "https://t.me/Argo_Finance"
+      }
     }
   ],
   "drops": [
