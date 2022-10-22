@@ -224,10 +224,6 @@ const RyoshiTales = () => {
                       }
                     })
                   }
-
-                  <Text textAlign='center' fontSize='xl' mb='16px'>
-                    The <a href="https://mm.finance/launchpad" target="_blank" style={{color: primaryColor}} className="fw-bold">launchpad</a> release will take place on October 25th at 4 AM UTC, lasting 24 hours, so make sure to mark your calendars!
-                  </Text>
                 </Center>)}
                 {section.image && section.image.src && (
                 <Center  maxW={['100%', '100%', (section.info && section.info.length)? '50%' : '100%']} p={section.image.direction === 'horizontal'? ['0px', '16px 28px'] : '16px 28px'}>
@@ -237,6 +233,12 @@ const RyoshiTales = () => {
             </section>
           ))
         }
+
+          <Center flexDirection='column' p='16px 20px'>
+            <Text textAlign='center' fontSize='xl' mb='16px'>
+              The <a href="https://mm.finance/launchpad" target="_blank" style={{color: primaryColor}} className="fw-bold">launchpad</a> release will take place on October 25th at 4 AM UTC, lasting 24 hours, so make sure to mark your calendars!
+            </Text>
+          </Center>
         </section>
         <Footer />
       </div>
