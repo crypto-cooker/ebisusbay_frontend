@@ -682,24 +682,28 @@ const SingleDrop = () => {
                 <div className="d-flex flex-row">
                   <div className="me-4">
                     <Heading as="h6" size="sm" className="mb-1">Mint Price</Heading>
-                    <Heading as="h5" size="md">{round(regularCost)} CRO</Heading>
+                    {regularCost && (
+                      <Heading as="h5" size="md">{ethers.utils.commify(round(regularCost))} CRO</Heading>
+                    )}
                     {dropObject?.erc20Cost && dropObject?.erc20Token && (
-                      <Heading as="h5" size="md">{`${dropObject?.erc20Cost} ${config.tokens[dropObject.erc20Token].symbol}`}</Heading>
+                      <Heading as="h5" size="md">{`${ethers.utils.commify(round(dropObject?.erc20Cost))} ${config.tokens[dropObject.erc20Token].symbol}`}</Heading>
                     )}
                   </div>
                   {(memberCost || (dropObject?.erc20MemberCost && dropObject?.erc20Cost !== dropObject?.erc20MemberCost)) && (
                     <div className="me-4">
                       <Heading as="h6" size="sm" className="mb-1">Founding Member Price</Heading>
-                      <Heading as="h5" size="md">{round(memberCost)} CRO</Heading>
+                      {memberCost && (
+                        <Heading as="h5" size="md">{ethers.utils.commify(round(memberCost))} CRO</Heading>
+                      )}
                       {dropObject?.erc20MemberCost && dropObject?.erc20Cost !== dropObject?.erc20MemberCost && (
-                        <Heading as="h5" size="md">{`${dropObject?.erc20MemberCost} ${config.tokens[dropObject.erc20Token].symbol}`}</Heading>
+                        <Heading as="h5" size="md">{`${ethers.utils.commify(round(dropObject?.erc20MemberCost))} ${config.tokens[dropObject.erc20Token].symbol}`}</Heading>
                       )}
                     </div>
                   )}
                   {whitelistCost > 0 && (
                     <div className="me-4">
                       <Heading as="h6" size="sm" className="mb-1">Whitelist Price</Heading>
-                      <Heading as="h5" size="md">{round(whitelistCost)} CRO</Heading>
+                      <Heading as="h5" size="md">{ethers.utils.commify(round(whitelistCost))} CRO</Heading>
                     </div>
                   )}
                   {specialWhitelist && (
