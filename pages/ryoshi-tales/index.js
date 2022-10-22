@@ -247,7 +247,7 @@ const RyoshiTales = () => {
                   Want to know more?
                 </Heading>
                 <Heading as="h2" size="md" mb='8px' mt='24px' color={primaryColor} textAlign='center'>
-                  <Link color={primaryColor} href="https://cdn.ebisusbay.biz/ryoshi/pitch-deck_C228dofbV.pdf" target="_blank" style={{ textDecoration: 'underline' }} textAlign='center'>
+                  <Link color={primaryColor} href="https://cdn.ebisusbay.com/Ryoshi_Tales_Pitch_Deck.pdf" target="_blank" style={{ textDecoration: 'underline' }} textAlign='center'>
                     Download the pitch deck here
                   </Link>
                 </Heading>
