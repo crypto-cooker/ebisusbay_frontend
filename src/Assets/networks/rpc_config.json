@@ -10373,6 +10373,26 @@
         "discord": "https://discord.gg/q3nWxw8QRY",
         "medium": "https://medium.com/@croskullnft"
       }
+    },
+    {
+      "name": "Tata's Twisted Tonics",
+      "slug": "tatas-twisted-tonics",
+      "multiToken": false,
+      "address": "0x635fba916F2bE6f30c62E7439b046bFB1462A7ab",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A 100k piece collection centered around crypto knowledge, deflationary action and large staking pools. Mint price increases by 3cro every 10k until they cap at 30cro for the final 10k.  Rewards from royalties and staking pools will be airdropped every 14 days to holders’ wallets after 75% mint.",
+        "verified": false,
+        "avatar": "/img/collections/tatas-twisted-tonics/avatar.webp",
+        "card": "/img/collections/tatas-twisted-tonics/card.webp",
+        "banner": "/img/collections/tatas-twisted-tonics/banner.webp",
+        "maxSupply": 100000,
+        "website": "https://www.tatastwistedtonics.com/",
+        "twitter": "https://twitter.com/tatastonics",
+        "discord": "https://discord.gg/kA3Be57DY8",
+        "medium": "https://medium.com/@TatasTonics"
+      }
     }
   ],
   "drops": [
