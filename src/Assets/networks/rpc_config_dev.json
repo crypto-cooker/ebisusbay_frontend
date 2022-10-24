@@ -7953,6 +7953,11 @@
         "website": "https://babymonsters.ca/",
         "twitter": "https://twitter.com/babymonstersnft",
         "discord": "https://discord.gg/N5YXhNDJyz"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -9629,6 +9634,11 @@
         "website": "https://babymonsters.ca/degendoo-mint/",
         "twitter": "https://twitter.com/degenednfts",
         "discord": "https://discord.gg/N5YXhNDJyz"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
