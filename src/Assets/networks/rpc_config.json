@@ -6788,7 +6788,7 @@
       "multiToken": false,
       "address": "0xaa3cFC29BEaAdA4456B777Bfa7dcDfCBE0d122A9",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The purpose of the DAO is to accelerate the growth of Ebisu’s Bay platform and the entire Cronos ecosystem.",
         "verified": true,
