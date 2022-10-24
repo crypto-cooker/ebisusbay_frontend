@@ -163,19 +163,17 @@ export const CollectionTaskBar = ({ collection, onFilterToggle, onSortToggle }) 
         <>
           <div className="d-flex mb-2">
             <SearchBar />
-          </div>
-          <div className="d-flex mb-2">
-            <div className="col">
+            <div className="col ms-2">
               <Button type="legacy-outlined" className="w-100" style={{ height: '100%' }} onClick={onFilterToggle}>
                 <FontAwesomeIcon icon={faFilter} />
-
-                <span className="ms-2">Filter {activeFiltersCount() > 0 ? `(${activeFiltersCount()})` : ''}</span>
+                {activeFiltersCount() > 0 && (
+                  <span className="ms-2">({activeFiltersCount()})</span>
+                )}
               </Button>
             </div>
             <div className="col ms-2">
               <Button type="legacy-outlined" className="w-100" style={{ height: '100%' }} onClick={onSortToggle}>
                 <FontAwesomeIcon icon={faSort} />
-                <span className="ms-2">Sort</span>
               </Button>
             </div>
           </div>

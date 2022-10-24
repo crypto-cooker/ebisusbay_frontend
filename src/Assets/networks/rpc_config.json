@@ -7264,7 +7264,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "7,000 Apes sent to a mission on the moon. Now they are lost. Holding your ape allows you to claim 60% of all marketplace royalties.",
+        "description": "",
         "verified": true,
         "avatar": "/img/collections/moon-crew-apes/avatar.webp",
         "card": "/img/collections/moon-crew-apes/card.webp",
@@ -7953,6 +7953,11 @@
         "website": "https://babymonsters.ca/",
         "twitter": "https://twitter.com/babymonstersnft",
         "discord": "https://discord.gg/N5YXhNDJyz"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -9629,6 +9634,11 @@
         "website": "https://babymonsters.ca/degendoo-mint/",
         "twitter": "https://twitter.com/degenednfts",
         "discord": "https://discord.gg/N5YXhNDJyz"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
