@@ -6788,7 +6788,7 @@
       "multiToken": false,
       "address": "0xaa3cFC29BEaAdA4456B777Bfa7dcDfCBE0d122A9",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The purpose of the DAO is to accelerate the growth of Ebisu’s Bay platform and the entire Cronos ecosystem.",
         "verified": true,
@@ -7264,7 +7264,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "7,000 Apes sent to a mission on the moon. Now they are lost. Holding your ape allows you to claim 60% of all marketplace royalties.",
+        "description": "",
         "verified": true,
         "avatar": "/img/collections/moon-crew-apes/avatar.webp",
         "card": "/img/collections/moon-crew-apes/card.webp",
@@ -7953,6 +7953,11 @@
         "website": "https://babymonsters.ca/",
         "twitter": "https://twitter.com/babymonstersnft",
         "discord": "https://discord.gg/N5YXhNDJyz"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -9629,6 +9634,11 @@
         "website": "https://babymonsters.ca/degendoo-mint/",
         "twitter": "https://twitter.com/degenednfts",
         "discord": "https://discord.gg/N5YXhNDJyz"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -10220,7 +10230,7 @@
       "name": "Bored Candy",
       "slug": "bored-candy",
       "multiToken": false,
-      "address": "",
+      "address": "0xE1049178296ce004996AFb16B0816c5A95aC8482",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -10362,7 +10372,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Whoever was in the Whitelist at the time of the Croskull mint and had the role of \"BonesVille Settler\" in the Discord server, got the Founder Pet as a gift. It is a very rare pet and, because of its rarity and delicacy, cannot go on missions and cannot fight. However, every day he receives a free mystery box from the merchant.",
+        "description": "The Founder’s pet was a special reward to those who were whitelisted at the time of the CroSkull mint and had achieved the role of “Bonesville Settler” in the Discord server. The founder’s pet could only be claimed during the 15 day window announced by the team to those who were eligible. Being a rare and delicate pet, it does not participate in missions, however rewards its holders with a daily claimable mystery box from the merchant.",
         "verified": true,
         "avatar": "/img/collections/croskull-founder-pets/avatar.webp",
         "card": "/img/collections/croskull-founder-pets/card.webp",
@@ -10372,6 +10382,26 @@
         "twitter": "https://twitter.com/CroskullNFT",
         "discord": "https://discord.gg/q3nWxw8QRY",
         "medium": "https://medium.com/@croskullnft"
+      }
+    },
+    {
+      "name": "Tata's Twisted Tonics",
+      "slug": "tatas-twisted-tonics",
+      "multiToken": false,
+      "address": "0x635fba916F2bE6f30c62E7439b046bFB1462A7ab",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A 100k piece collection centered around crypto knowledge, deflationary action and large staking pools. Mint price increases by 3cro every 10k until they cap at 30cro for the final 10k.  Rewards from royalties and staking pools will be airdropped every 14 days to holders’ wallets after 50% mint.",
+        "verified": false,
+        "avatar": "/img/collections/tatas-twisted-tonics/avatar.webp",
+        "card": "/img/collections/tatas-twisted-tonics/card.webp",
+        "banner": "/img/collections/tatas-twisted-tonics/banner.webp",
+        "maxSupply": 100000,
+        "website": "https://www.tatastwistedtonics.com/",
+        "twitter": "https://twitter.com/tatastonics",
+        "discord": "https://discord.gg/kA3Be57DY8",
+        "medium": "https://medium.com/@TatasTonics"
       }
     }
   ],
@@ -13989,7 +14019,7 @@
       "imgBanner": "/img/collections/ryoshi-tales-halloween/banner.webp",
       "title": "Ryoshi Tales Halloween",
       "subtitle": "Our very own Halloween collection, from the team at Ebisu’s Bay.\nBe careful with your minting selection, you might scare the friendly ghosts away!\nKeep them close for your protection, you’ll need them when you start to play,\nEbisu’s Bay’s latest projection; it’s almost game release day!",
-      "description": "Introducing the Halloween Ebisu’s Bay drop! Mint one of these limited edition Halloween ghouls and use them to play in our upcoming game [details here].\n\n2500 unique characters, [x] traits, truly unique characters that you’ll be able to use in game for some rewarding boosts (we don’t quite know what those are yet, but they’ll be great!)\n\nRyoshi characters will only be released this Halloween, so grab them if you dare and get ready to game on Ryoshi Tales!",
+      "description": "Introducing the Halloween Ebisu’s Bay drop! Mint one of these limited edition Halloween ghouls and use them to play in our upcoming game: Ryoshi Tales.\n\n2500 unique characters, 50 traits, truly unique characters that you’ll be able to use in game for some rewarding boosts.\n\nRyoshi characters will only be released this Halloween and available for 48 hours, so grab them if you dare and get ready to game on Ryoshi Tales!",
       "author": {
         "name": "Ebisu's Bay",
         "website": "https://app.ebisusbay.com/",
@@ -14012,7 +14042,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": false,
+      "published": true,
       "complete": false
     }
   ]

@@ -239,6 +239,22 @@ const RyoshiTales = () => {
               The <a href="https://mm.finance/launchpad" target="_blank" style={{color: primaryColor}} className="fw-bold">launchpad</a> release will take place on October 25th at 4 AM UTC, lasting 24 hours, so make sure to mark your calendars!
             </Text>
           </Center>
+
+          <section style={{marginTop: '120px'}} >
+            <Center flexDirection={['column','column', 'row']}>
+              <Center w={['100%', '100%', '800px']} flexDirection='column' p='16px 20px'>
+                <Heading as="h2" size="xl" textAlign='center' mb='16px'>
+                  Want to know more?
+                </Heading>
+                <Heading as="h2" size="md" mb='8px' mt='24px' color={primaryColor} textAlign='center'>
+                  <Link color={primaryColor} href="https://cdn.ebisusbay.com/Ryoshi_Tales_Pitch_Deck.pdf" target="_blank" style={{ textDecoration: 'underline' }} textAlign='center'>
+                    Download the pitch deck here
+                  </Link>
+                </Heading>
+              </Center>
+            </Center>
+          </section>
+
         </section>
         <Footer />
       </div>
