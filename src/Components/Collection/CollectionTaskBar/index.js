@@ -188,17 +188,7 @@ export const CollectionTaskBar = ({ collection, onFilterToggle, onSortToggle }) 
                 onClick={() => setCollectionOfferOpen(true)}
               >
                 <FontAwesomeIcon icon={faHand} />
-                <span className="ms-1">Make offer</span>
-              </Button>
-            </div>
-            <div className="flex-fill ms-2">
-              <Button
-                type="legacy"
-                className="w-100 h-100"
-                onClick={() => setInstantSellOpen(true)}
-              >
-                <FontAwesomeIcon icon={faBoltLightning} />
-                <span className="ms-1">Sell</span>
+                <span className="ms-1">Make collection offer</span>
               </Button>
             </div>
             <div className="flex-fill ms-2">
@@ -226,6 +216,18 @@ export const CollectionTaskBar = ({ collection, onFilterToggle, onSortToggle }) 
                 </Button>
               </div>
             )}
+          </div>
+          <div className="d-flex mb-2">
+            <div className="flex-fill">
+              <Button
+                type="legacy"
+                className="w-100 h-100"
+                onClick={() => setInstantSellOpen(true)}
+              >
+                <FontAwesomeIcon icon={faBoltLightning} />
+                <span className="ms-1">Sell Instantly</span>
+              </Button>
+            </div>
           </div>
         </>
       ) : (
