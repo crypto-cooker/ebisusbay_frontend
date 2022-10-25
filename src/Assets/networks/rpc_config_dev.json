@@ -10418,7 +10418,7 @@
         "avatar": "/img/collections/alstoniaverse-access-card/avatar.webp",
         "card": "/img/collections/alstoniaverse-access-card/card.webp",
         "banner": "/img/collections/alstoniaverse-access-card/banner.webp",
-        "maxSupply": 2000,
+        "maxSupply": 3000,
         "website": "https://www.alstoniaverse.com/",
         "discord": "https://discord.gg/dteTFGaRr2"
       }
@@ -14123,10 +14123,10 @@
       "address": "",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 40,
-      "totalSupply": 2000,
-      "cost": "260",
-      "memberCost": "230",
-      "whitelistCost": "230",
+      "totalSupply": 3000,
+      "cost": "100",
+      "memberCost": "100",
+      "whitelistCost": "100",
       "foundersOnly": false,
       "start": 1667419200000,
       "end": null,
