@@ -13936,15 +13936,12 @@
       "maxMintPerTx": 1,
       "maxMintPerAddress": 2,
       "totalSupply": 202,
-      "cost": "666",
-      "memberCost": "555",
-      "whitelistCost": "555",
       "foundersOnly": false,
       "start": 1667246400000,
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": false,
+      "published": true,
       "complete": false
     },
     {
