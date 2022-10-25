@@ -10403,6 +10403,24 @@
         "discord": "https://discord.gg/kA3Be57DY8",
         "medium": "https://medium.com/@TatasTonics"
       }
+    },
+    {
+      "name": "AlstoniaVerse Access Card",
+      "slug": "alstoniaverse-access-card",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A 2,000 NFT access card collection on the CRONOS chain that provides holders' with virtual real-estate in the ALSTONIAVERSE!",
+        "verified": true,
+        "avatar": "/img/collections/alstoniaverse-access-card/avatar.webp",
+        "card": "/img/collections/alstoniaverse-access-card/card.webp",
+        "banner": "/img/collections/alstoniaverse-access-card/banner.webp",
+        "maxSupply": 2000,
+        "website": "https://www.alstoniaverse.com/",
+        "discord": "https://discord.gg/dteTFGaRr2"
+      }
     }
   ],
   "drops": [
@@ -14036,6 +14054,36 @@
       "erc20Icon": true,
       "foundersOnly": false,
       "start": 1667160000000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false
+    },
+    {
+      "id": 126,
+      "slug": "alstoniaverse-access-card",
+      "imgNft": "/img/drops/alstoniaverse-access-card/drop.webp",
+      "imgPreview": "/img/drops/alstoniaverse-access-card/drop.webp",
+      "imgAvatar": "/img/collections/alstoniaverse-access-card/avatar.webp",
+      "imgBanner": "/img/collections/alstoniaverse-access-card/banner.webp",
+      "title": "AlstoniaVerse Access Card",
+      "subtitle": "A 2,000 NFT access card collection on the CRONOS chain that provides holders' with virtual real-estate in the ALSTONIAVERSE!",
+      "description": "ALSTONIAVERSE is a browser-based metaverse, immersive social space where you can explore, build, and gather with others.\n\nATV Access Card benefit:\n-Own yourself a metaverse luxury property\n-Communication\n-Property rent\n-Virtual NFT gallery\n-Over 300 furniture & decoration\n-NFT staking with CRODEX\n-Auction house access\n-ATV event access\n-Avatar airdrops\nand much more",
+      "author": {
+        "name": "AlstoniaVerse",
+        "website": "https://www.alstoniaverse.com/",
+        "discord": "https://discord.gg/dteTFGaRr2"
+      },
+      "address": "",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 40,
+      "totalSupply": 2000,
+      "cost": "260",
+      "memberCost": "230",
+      "whitelistCost": "230",
+      "foundersOnly": false,
+      "start": 1667419200000,
       "end": null,
       "referral": false,
       "is1155": false,
