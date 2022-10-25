@@ -661,6 +661,9 @@ const SingleDrop = () => {
                 <div className="d-flex flex-row">
                   <div className="me-4">
                     <Heading as="h6" size="sm" className="mb-1">Mint Price</Heading>
+                    {!regularCost && !dropObject?.erc20Cost && (
+                      <Heading as="h5" size="md">TBA</Heading>
+                    )}
                     {regularCost && (
                       <Heading as="h5" size="md">{ethers.utils.commify(round(regularCost))} CRO</Heading>
                     )}
