@@ -46,6 +46,7 @@ const CollectionNftsGroup = ({
                   imgClass="collection"
                   collection={collection}
                   canBuy={!isNftBlacklisted(listing.address, listing.id) && collection.listable}
+                  is1155={collection.multiToken}
                 />
               </div>
             ))}
@@ -65,6 +66,7 @@ const CollectionNftsGroup = ({
                   imgClass="collection"
                   collection={collection}
                   canBuy={!isNftBlacklisted(listing.address, listing.id) && collection.listable}
+                  is1155={collection.multiToken}
                 />
               </div>
             ))}

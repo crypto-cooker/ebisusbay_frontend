@@ -66,7 +66,7 @@ const CollectionCronosverse = ({ collection }) => {
           isOpen={openMakeOfferDialog}
           onClose={() => setOpenMakeOfferDialog(false)}
           nftId={nftOffer.id}
-          collection={collection}
+          nftAddress={collection.address}
         />
       )}
     </div>

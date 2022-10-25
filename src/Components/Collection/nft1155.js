@@ -611,7 +611,7 @@ const Nft1155 = ({ address, id }) => {
           isOpen={openMakeOfferDialog}
           onClose={() => setOpenMakeOfferDialog(false)}
           nftId={id}
-          collection={collection}
+          nftAddress={address}
         />
       )}
       <Footer />
