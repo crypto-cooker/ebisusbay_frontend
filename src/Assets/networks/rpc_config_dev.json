@@ -10443,6 +10443,27 @@
         "telegram": "https://t.me/MetaWarzHQ",
         "instagram": "https://www.instagram.com/metawarz/"
       }
+    },
+    {
+      "name": "Patron NFT",
+      "slug": "patron-nft",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Patron NFT is 5000 unique dogs of Jack Russell Terrier breed, created to help victims of the war in Ukraine",
+        "verified": true,
+        "avatar": "/img/collections/patron-nft/avatar.webp",
+        "card": "/img/collections/patron-nft/card.webp",
+        "banner": "/img/collections/patron-nft/banner.webp",
+        "maxSupply": 5000,
+        "website": "https://allmylinks.com/patronnft/",
+        "twitter": "https://twitter.com/KAPVEYCRYPTO",
+        "discord": "https://discord.gg/PYUcxxS3",
+        "medium": "https://medium.com/@kapveycrypto",
+        "telegram": "https://t.me/KAPVEYCRYPTO"
+      }
     }
   ],
   "drops": [
@@ -14144,6 +14165,39 @@
       "referral": false,
       "is1155": false,
       "published": false,
+      "complete": false
+    },
+    {
+      "id": 128,
+      "slug": "patron-nft",
+      "imgNft": "/img/drops/patron-nft/drop.webp",
+      "imgPreview": "/img/drops/patron-nft/drop.webp",
+      "imgAvatar": "/img/collections/patron-nft/avatar.webp",
+      "imgBanner": "/img/collections/patron-nft/banner.webp",
+      "title": "Patron NFT",
+      "subtitle": "Patron NFT is 5000 unique dogs of Jack Russell Terrier breed, created to help victims of the war in Ukraine",
+      "description": "Patron NFT is the first collection to be developed into an entire metaverse. We plan to release the second version of the Patron NFT and make a drop for owners of both NFTs. Merchandise and a PatronCoin fan token will also be released.",
+      "author": {
+        "name": "KAPVEYCRYPTO",
+        "website": "https://allmylinks.com/patronnft/",
+        "twitter": "https://twitter.com/KAPVEYCRYPTO",
+        "discord": "https://discord.gg/PYUcxxS3",
+        "medium": "https://medium.com/@kapveycrypto",
+        "telegram": "https://t.me/KAPVEYCRYPTO"
+      },
+      "address": "",
+      "maxMintPerTx": 30,
+      "maxMintPerAddress": 30,
+      "totalSupply": 5000,
+      "cost": "30",
+      "memberCost": "30",
+      "whitelistCost": "30",
+      "foundersOnly": false,
+      "start": 1667851200000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
       "complete": false
     }
   ]
