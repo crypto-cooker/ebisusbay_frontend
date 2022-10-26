@@ -12063,6 +12063,12 @@
       "images": {
         "drop": "/img/drops/meerkats/drop.jpeg",
         "avatar": "/img/collections/meerkats/treehouse/avatar.png"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "escrow": false,
+        "verified": false
       }
     },
     {
@@ -12177,7 +12183,7 @@
     },
     {
       "id": 38,
-      "slug": "crono-godessess",
+      "slug": "crono-goddessess",
       "title": "Crono Godesses",
       "subtitle": "",
       "description": "",
@@ -12203,6 +12209,12 @@
       "images": {
         "drop": "",
         "avatar": "/img/collections/cronogods/godess/avatar.gif"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
       }
     },
     {
