@@ -219,6 +219,7 @@ export const BatchListingDrawer = ({onClose, ...gridProps}) => {
             className="w-100"
             onClick={prepareListing}
             disabled={!canSubmit()}
+            style={{marginBottom: 8}}
           >
             {executingCreateListing ? (
               <>
