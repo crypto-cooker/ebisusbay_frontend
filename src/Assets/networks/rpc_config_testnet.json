@@ -5349,6 +5349,10 @@
       "cost": "450",
       "memberCost": "400",
       "whitelistCost": "400",
+      "specialWhitelistCost": {
+        "name": "Meka of Krupt",
+        "value": "350"
+      },
       "foundersOnly": false,
       "start": 1665462277003,
       "end": null,

@@ -15434,6 +15434,10 @@
       "cost": "450",
       "memberCost": "400",
       "whitelistCost": "400",
+      "specialWhitelistCost": {
+        "name": "Meka of Krupt",
+        "value": "350"
+      },
       "foundersOnly": false,
       "start": 1666900800000,
       "end": null,
@@ -15491,7 +15495,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false,
+        "kyc": "ebisu",
         "escrow": false
       }
     },
@@ -15570,7 +15574,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false,
+        "kyc": "ebisu",
         "escrow": false
       }
     },
