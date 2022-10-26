@@ -1,14 +1,12 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-
 import CustomSlide from '../components/CustomSlide';
-import {appConfig} from "../../Config";
+import {appConfig} from "@src/Config";
 import Slider from '../components/Slider';
-export const drops = appConfig('drops');
-export const collections = appConfig('collections');
+
+const drops = appConfig('drops');
 
 const CurrentDrops = ({ useCarousel = true }) => {
   const dispatch = useDispatch();
@@ -19,11 +17,7 @@ const CurrentDrops = ({ useCarousel = true }) => {
 
   function arrangeCollections() {
     const liveDrops = drops.filter((d) => !d.complete && d.published && d.start && d.start < Date.now());
-    const dropCollections = liveDrops.map((d) => {
-      const collection = collections.find((c) => c.slug === d.slug);
-      return { collection, drop: d };
-    });
-    const cd = dropCollections.filter((d) => d.collection).sort((a, b) => (a.drop.start < b.drop.start ? 1 : -1));
+    const cd = liveDrops.filter((d) => d.collection).sort((a, b) => (a.start < b.start ? 1 : -1));
     setCurrentDrops(cd);
   }
 
@@ -59,18 +53,18 @@ const CurrentDrops = ({ useCarousel = true }) => {
         <div className="nft">
           <Slider size={currentDrops.length}>
             {currentDrops &&
-              currentDrops.map((item, index) => (
+              currentDrops.map((drop, index) => (
                   <CustomSlide
                     key={index}
                     index={index + 1}
-                    avatar={item.drop.images.avatar}
-                    banner={item.collection.metadata.card}
-                    title={item.drop.title}
-                    subtitle={item.drop.author.name}
-                    collectionId={item.drop.slug}
-                    url={item.drop.redirect ?? `/drops/${item.drop.slug}`}
-                    externalPage={!!item.drop.redirect}
-                    verified={item.collection.metadata.verified}
+                    avatar={drop.images.avatar}
+                    banner={drop.images.preview}
+                    title={drop.title}
+                    subtitle={drop.author.name}
+                    collectionId={drop.slug}
+                    url={drop.redirect ?? `/drops/${drop.slug}`}
+                    externalPage={!!drop.redirect}
+                    verified={drop.verification.verified}
                   />
               ))}
           </Slider>
@@ -80,19 +74,19 @@ const CurrentDrops = ({ useCarousel = true }) => {
           {currentDrops &&
             currentDrops
               .slice(showAll ? undefined : 0, showAll ? undefined : threePerRowSize ? 3 : 4)
-              .map((item, index) => (
+              .map((drop, index) => (
                 <div className="col-12 col-xs-6 col-md-4 col-lg-3" key={index}>
                   <CustomSlide
                     key={index}
                     index={index + 1}
-                    avatar={item.drop.images.avatar}
-                    banner={item.collection.metadata.card}
-                    title={item.drop.title}
-                    subtitle={item.drop.author.name}
-                    collectionId={item.drop.slug}
-                    url={item.drop.redirect ?? `/drops/${item.drop.slug}`}
-                    externalPage={!!item.drop.redirect}
-                    verified={item.collection.metadata.verified}
+                    avatar={drop.images.avatar}
+                    banner={drop.images.preview}
+                    title={drop.title}
+                    subtitle={drop.author.name}
+                    collectionId={drop.drop.slug}
+                    url={drop.redirect ?? `/drops/${drop.slug}`}
+                    externalPage={!!drop.redirect}
+                    verified={drop.verification.verified}
                   />
                 </div>
               ))}
