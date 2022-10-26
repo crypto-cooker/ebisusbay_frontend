@@ -232,4 +232,5 @@ export const featureFlags = {
   [Features.INFINITE_QUERY_COLLECTION]: true,     // Paginated collections endpoint
   [Features.UNVERIFIED_WARNING]: true,            // Warning when buying from unverified collection
   [Features.REPORT_COLLECTION]: true,             // Report button on collection page
+  [Features.NEW_CHAKRA_THEME]: false,              // Update theme
 }
