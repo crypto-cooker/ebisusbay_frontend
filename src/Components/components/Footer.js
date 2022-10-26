@@ -13,7 +13,7 @@ const Footer = () => {
   });
 
   return (
-    <footer className="footer-light" style={{zIndex:5, position: 'relative'}}>
+    <footer className="footer-light">
       <div className="container">
         <div className="row">
           <div className="col-md-3 col-sm-6 col-xs-1">

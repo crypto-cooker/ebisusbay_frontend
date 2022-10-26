@@ -98,7 +98,7 @@ export default function Profile({ address, profile, tab }) {
   }
 
   return (
-    <div className={styles.profile} style={{zIndex:1}}>
+    <div className={styles.profile} >
       <PageHead
         title={username()}
         description={profile.bio}
