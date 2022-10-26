@@ -8051,7 +8051,7 @@
       "listable": false,
       "metadata": {
         "description": "The Kaiju Talisman is a collection of 666 NFTs offering holders exclusive VIP benefits, with an optional upgrade path to obtain new perks.\nOnly those worthy enough shall obtain the fully upgraded \"Evolved Talisman\" and gain access to the mysterious Kaiju Lair.\n\nWho knows what lies inside...",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/kaiju-of-cronos/avatar.webp",
         "card": "/img/collections/kaiju-of-cronos/card.webp",
         "banner": "/img/collections/kaiju-of-cronos/banner.webp",
@@ -8059,6 +8059,11 @@
         "website": "https://kaijuofcronos.com/",
         "twitter": "https://twitter.com/KAIJU_OF_CRONOS",
         "discord": "https://discord.gg/fVX2Jb8mpb"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
