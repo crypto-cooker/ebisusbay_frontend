@@ -34,7 +34,7 @@ const Drop = ({ssrDrop, ssrCollection}) => {
         title={ssrDrop.title}
         description={ssrDrop.subtitle}
         url={`/drops/${ssrDrop.slug}`}
-        image={ssrCollection?.metadata.card ?? ssrDrop.imgNft}
+        image={ssrCollection?.metadata.card ?? ssrDrop.image.drop}
       />
       {ssrDrop && (
         <>

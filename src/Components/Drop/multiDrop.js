@@ -328,7 +328,7 @@ const MultiDrop = () => {
       <>
         <HeroSection
           className={`jumbotron h-vh tint`}
-          style={{ backgroundImage: `url(${drop.imgBanner ? drop.imgBanner : '/img/background/Ebisus-bg-1_L.webp'})` }}
+          style={{ backgroundImage: `url(${drop.images.banner ? drop.images.banner : '/img/background/Ebisus-bg-1_L.webp'})` }}
         >
           <div className="container">
             <div className="row align-items-center">
@@ -405,7 +405,7 @@ const MultiDrop = () => {
               <div className="d_profile de-flex">
                 <div className="de-flex-col">
                   <div className="profile_avatar">
-                    {drop.imgAvatar && <img src={drop.imgAvatar} alt={drop.author.name} />}
+                    {drop.images.avatar && <img src={drop.images.avatar} alt={drop.author.name} />}
                     <div className="profile_name">
                       <h4>
                         {drop.author.name}

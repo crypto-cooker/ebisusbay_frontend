@@ -35,7 +35,7 @@ const PastDrops = () => {
             <CustomSlide
               key={index}
               index={index + 1}
-              avatar={item.drop.imgAvatar}
+              avatar={item.drop.images.avatar}
               banner={item.collection.metadata.card ?? defaultCardImage}
               title={item.drop.title}
               collectionId={item.drop.slug}

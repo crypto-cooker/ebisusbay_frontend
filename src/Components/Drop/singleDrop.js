@@ -511,7 +511,7 @@ const SingleDrop = () => {
         <HeroSection
           className={`jumbotron h-vh tint`}
           style={{
-            backgroundImage: `url(${ImageKitService.buildBannerUrl(drop.imgBanner ?? hostedImage('/img/background/Ebisus-bg-1_L.webp'))})`
+            backgroundImage: `url(${ImageKitService.buildBannerUrl(drop.images.banner ?? hostedImage('/img/background/Ebisus-bg-1_L.webp'))})`
           }}
         >
           <div className="container">
@@ -603,14 +603,14 @@ const SingleDrop = () => {
         <section id="drop_detail" className="gl-legacy container no-top">
           <div className="row mt-md-5 pt-md-4">
             <div className="col-md-6 text-center mt-4 md-md-0">
-              <img src={hostedImage(drop.imgNft)} className="img-fluid img-rounded mb-sm-30" alt={drop.title} />
+              <img src={hostedImage(drop.images.drop)} className="img-fluid img-rounded mb-sm-30" alt={drop.title} />
             </div>
             <div className="col-md-6 mt-4 mt-md-0">
 
               <div className="de-flex mt-4 mt-sm-0 mb-2">
                 <div className="de-flex-col">
                   <div className="profile_avatar">
-                    {drop.imgAvatar && <img src={hostedImage(drop.imgAvatar)} alt={drop.author.name} />}
+                    {drop.images.avatar && <img src={hostedImage(drop.images.avatar)} alt={drop.author.name} />}
                     <div className="profile_name">
                       <Heading as="h4" size="md">
                         {drop.title}

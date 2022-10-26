@@ -5,7 +5,6 @@ import Slider from '../components/Slider';
 import CustomSlide from '../components/CustomSlide';
 import { appConfig } from "../../Config";
 
-const collections = appConfig('collections');
 const drops = appConfig('drops');
 
 const UpcomingDrops = () => {
@@ -16,15 +15,14 @@ const UpcomingDrops = () => {
   function arrangeCollections() {
     const nextDrops = drops.filter((d) => !d.complete && d.published && (!d.start || d.start > Date.now()));
     const dropCollections = nextDrops.map((d) => {
-      const collection = collections.find((c) => c.slug === d.slug);
-      return { collection, drop: d };
+      return { drop: d };
     });
 
     const dropsWithDate = dropCollections
-      .filter((d) => d.collection && d.drop.start)
+      .filter((d) => d.drop.start)
       .sort((a, b) => (a.drop.start > b.drop.start ? 1 : -1));
     const dropsWithoutDate = dropCollections
-      .filter((d) => d.collection && !d.drop.start)
+      .filter((d) => !d.drop.start)
       .sort((a, b) => (a.drop.name > b.drop.name ? 1 : -1));
 
     setUpcomingDrops([...dropsWithDate, ...dropsWithoutDate]);
@@ -41,14 +39,14 @@ const UpcomingDrops = () => {
           <CustomSlide
             key={index}
             index={index + 1}
-            avatar={item.drop.imgAvatar}
-            banner={item.collection.metadata.card}
+            avatar={item.drop.images.avatar}
+            banner={item.drop.images.preview}
             title={item.drop.title}
             subtitle={`${item.drop.start ? new Date(item.drop.start).toDateString() : 'TBA'}`}
             collectionId={item.drop.slug}
             url={item.drop.redirect ?? `/drops/${item.drop.slug}`}
             externalPage={!!item.drop.redirect}
-            verified={item.collection.metadata.verified}
+            verified={item.drop.verification.verified}
           />
         ))}
       </Slider>

@@ -63,7 +63,7 @@ const CurrentDrops = ({ useCarousel = true }) => {
                   <CustomSlide
                     key={index}
                     index={index + 1}
-                    avatar={item.drop.imgAvatar}
+                    avatar={item.drop.images.avatar}
                     banner={item.collection.metadata.card}
                     title={item.drop.title}
                     subtitle={item.drop.author.name}
@@ -85,7 +85,7 @@ const CurrentDrops = ({ useCarousel = true }) => {
                   <CustomSlide
                     key={index}
                     index={index + 1}
-                    avatar={item.drop.imgAvatar}
+                    avatar={item.drop.images.avatar}
                     banner={item.collection.metadata.card}
                     title={item.drop.title}
                     subtitle={item.drop.author.name}
