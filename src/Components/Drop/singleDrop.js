@@ -602,7 +602,7 @@ const SingleDrop = () => {
 
         <section id="drop_detail" className="gl-legacy container no-top">
           <div className="row mt-md-5 pt-md-4">
-            <div className="col-md-6 text-center">
+            <div className="col-md-6 text-center mt-4 md-md-0">
               <img src={hostedImage(drop.imgNft)} className="img-fluid img-rounded mb-sm-30" alt={drop.title} />
             </div>
             <div className="col-md-6 mt-4 mt-md-0">
@@ -682,6 +682,9 @@ const SingleDrop = () => {
                 <div className="d-flex flex-row">
                   <div className="me-4">
                     <Heading as="h6" size="sm" className="mb-1">Mint Price</Heading>
+                    {!regularCost && !dropObject?.erc20Cost && (
+                      <Heading as="h5" size="md">TBA</Heading>
+                    )}
                     {regularCost && (
                       <Heading as="h5" size="md">{ethers.utils.commify(round(regularCost))} CRO</Heading>
                     )}
