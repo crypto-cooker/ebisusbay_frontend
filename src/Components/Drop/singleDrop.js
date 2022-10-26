@@ -581,7 +581,7 @@ const SingleDrop = () => {
 
         <section id="drop_detail" className="gl-legacy container no-top">
           <div className="row mt-md-5 pt-md-4">
-            <div className="col-md-6 text-center">
+            <div className="col-md-6 text-center mt-4 md-md-0">
               <img src={hostedImage(drop.imgNft)} className="img-fluid img-rounded mb-sm-30" alt={drop.title} />
             </div>
             <div className="col-md-6 mt-4 mt-md-0">
