@@ -106,7 +106,6 @@ const Header = function () {
                 <NavLink name={'Collections'} to={'/collections'} />
                 <NavLink name={'Drops'} to={'/drops'} />
                 <NavLink name={'Stats'} to={'/stats'} />
-                <NavLink name={'Ryoshi Tales'} to={'/ryoshi-tales'} />
               </HStack>
               <span onClick={toggleTheme} className="cursor-pointer me-3 my-auto">
               <FontAwesomeIcon icon={theme === 'dark' ? faMoon : faSun} color="#fff" />
@@ -141,8 +140,6 @@ const Header = function () {
                 <NavLink name={'Collections'} to={'/collections'} onClick={onClose} />
                 <NavLink name={'Drops'} to={'/drops'} onClick={onClose} />
                 <NavLink name={'Stats'} to={'/stats'} onClick={onClose} />
-                <NavLink name={'Ryoshi Tales'} to={'/ryoshi-tales'} onClick={onClose}/>
-
               </Stack>
             </Box>
           ) : null}

@@ -106,7 +106,7 @@ export default class Responsive extends Component {
           d.start &&
           d.start > Date.now() &&
           d.start - Date.now() < timeToShowInHours &&
-          !!d.imgPreview &&
+          !!d.images.preview &&
           !topLevelKeys.includes(d.slug)
       )
       .sort((a, b) => (a.start > b.start ? 1 : -1));
@@ -117,7 +117,7 @@ export default class Responsive extends Component {
           d.published &&
           d.start &&
           d.start < Date.now() &&
-          !!d.imgPreview &&
+          !!d.images.preview &&
           !topLevelKeys.includes(d.slug)
       )
       .sort((a, b) => (a.start < b.start ? 1 : -1));
@@ -173,7 +173,7 @@ export default class Responsive extends Component {
                   <div className="nft__item_lg">
                     <div className="row align-items-center">
                       <div className="col-lg-6 text-center">
-                        <img src={hostedImage(item.drop.imgPreview)} className="img-fluid mx-auto" alt={item.drop.title} />
+                        <img src={hostedImage(item.drop.images.drop)} className="img-fluid mx-auto" alt={item.drop.title} />
                       </div>
                       <div className="col-lg-6">
                         <div className="d-desc">
@@ -187,8 +187,8 @@ export default class Responsive extends Component {
                           </div>
                           <div className="d-author">
                             <div className="author_list_pp">
-                              {item.drop.imgAvatar ? (
-                                <img className="lazy" src={hostedImage(item.drop.imgAvatar, true)} alt={item.drop.author.name} />
+                              {item.drop.images.avatar ? (
+                                <img className="lazy" src={hostedImage(item.drop.images.avatar, true)} alt={item.drop.author.name} />
                               ) : (
                                 <Blockies seed={item.drop.slug} size={10} scale={5} />
                               )}
