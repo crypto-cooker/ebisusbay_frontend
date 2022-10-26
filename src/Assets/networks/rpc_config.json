@@ -10409,7 +10409,7 @@
       "multiToken": false,
       "address": "0xE1049178296ce004996AFb16B0816c5A95aC8482",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Candy Citizens are bringing their sweetness to the Crofam. They won't rest until everyone cronos wallet has Candy.",
         "verified": false,
