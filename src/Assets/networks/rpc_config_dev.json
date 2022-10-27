@@ -9903,7 +9903,7 @@
       "multiToken": false,
       "address": "0x3Db9463829ADa318Be67cb7Ee475E9D1a1c34f7D",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "\u2606 1,337 Collectable Renegade Monks \u2606\n\nMint your Monk and fight with The New Resistance!",
         "verified": true,
@@ -15444,7 +15444,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/renegade-monks/drop.webp",
         "banner": "/img/collections/renegade-monks/banner.webp",
