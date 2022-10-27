@@ -61,6 +61,11 @@ export const configData = {
         symbol: 'KOI',
         address: '',
       },
+      dbf: {
+        name: 'DBF',
+        symbol: 'DBF',
+        address: '',
+      },
     },
     collections: rpcConfig.known_contracts,
     drops: rpcConfig.drops,
@@ -114,6 +119,11 @@ export const configData = {
         symbol: 'KOI',
         address: '',
       },
+      dbf: {
+        name: 'DBF',
+        symbol: 'DBF',
+        address: '',
+      },
     },
     collections: rpcConfigDev.known_contracts,
     drops: rpcConfigDev.drops,
@@ -160,6 +170,11 @@ export const configData = {
       koi: {
         name: 'KOI',
         symbol: 'KOI',
+        address: '',
+      },
+      dbf: {
+        name: 'DBF',
+        symbol: 'DBF',
         address: '',
       },
     },

@@ -117,7 +117,7 @@ const featuredAd = ads
   .sort((a, b) => a.weight < b.weight ? 1 : -1)
   .find((ad) => {
     const now = Date.now();
-    return now > millisecondTimestamp(ad.start) && now < millisecondTimestamp(ad.end);
+    return now > millisecondTimestamp(ad.start) && (!ad.end || now < millisecondTimestamp(ad.end));
   });
 
 const Home = () => {
