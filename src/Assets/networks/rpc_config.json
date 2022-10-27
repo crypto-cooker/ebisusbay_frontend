@@ -9901,7 +9901,7 @@
       "name": "Renegade Monks",
       "slug": "renegade-monks",
       "multiToken": false,
-      "address": "",
+      "address": "0x3Db9463829ADa318Be67cb7Ee475E9D1a1c34f7D",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -15427,7 +15427,7 @@
         "twitter": "https://twitter.com/TNR_NFT_GAME",
         "discord": "https://discord.gg/tnr"
       },
-      "address": "",
+      "address": "0x3Db9463829ADa318Be67cb7Ee475E9D1a1c34f7D",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 20,
       "totalSupply": 1337,
