@@ -10686,7 +10686,7 @@
       "name": "DegenPlanets",
       "slug": "degen-planets",
       "multiToken": false,
-      "address": "0x7BB5084Faa0Acb2f1adfF6f43E9ab2920b0E9f24",
+      "address": "0x46dC2f806c26549eBF4433a41cCb450514321e7c",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -15659,6 +15659,47 @@
         "doxx": false,
         "kyc": false,
         "escrow": false
+      }
+    },
+    {
+      "id": 129,
+      "slug": "degen-planets",
+      "title": "DegenPlanets",
+      "subtitle": "DegenPlanets is the second collection from Degen Brain Finance. Each NFT in this collection represents a piece of the DegenBrains Galaxy Learn2Earn game, where each NFT will eventually represent a single educational course.",
+      "description": "Degen Brain Finance is the first gamified Learn2Earn web3 project on Cronos that incorporates a Learn2Earn game (DegenBrains Galaxy), NFT Avatars (DegenBrains, DegenPlanets), staking utility, our own CRC-20 Token ($DBF), and a growing community of like-minded investors.\n\nDegenPlanet NFTs is the second collection from Degen Brain Finance. Each NFT in this collection represents a piece of the DegenBrains Galaxy Learn2Earn game, where each NFT will eventually represent a single educational course.\n\nOwning a DegenPlanet will grant the following perks within the DBF Ecosystem:\n\nStake your DegenPlanet inside the $DBF-CRO LP Farm to boost APR!\n\nGain access to DegenBrains Galaxy Beta features and new courses before anyone else!\n\n2x the DegenBrains level cap inside the DegenBrains Galaxy!\n\nStake your DegenPlanet inside the DegenBrains Galaxy to earn a new, non-monetary, in-game currency, Gems. \n\nReceive a 10% discount on DegenBrains Galaxy Mystery Boxes and leveling up your DegenBrains NFT.",
+      "author": {
+        "name": "DegenPlanets",
+        "website": "https://degenbrains.com/",
+        "twitter": "https://twitter.com/degenbrains",
+        "discord": "https://discord.gg/degenbrains",
+        "medium": "https://medium.com/@degenbrains"
+      },
+      "address": "0x46dC2f806c26549eBF4433a41cCb450514321e7c",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 2500,
+      "foundersOnly": false,
+      "start": 1667336400000,
+      "erc20Cost": "325",
+      "erc20Token": "dbf",
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": false,
+      "redirect": "https://www.degenbrain.finance/#/planets/",
+      "images": {
+        "drop": "/img/drops/degen-planets/drop.webp",
+        "banner": "/img/collections/degen-planets/banner.webp",
+        "avatar": "/img/collections/degen-planets/avatar.webp",
+        "preview": "/img/collections/degen-planets/card.webp"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
       }
     }
   ]
