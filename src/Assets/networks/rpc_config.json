@@ -10587,7 +10587,7 @@
       "multiToken": false,
       "address": "0x635fba916F2bE6f30c62E7439b046bFB1462A7ab",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "A 100k piece collection centered around crypto knowledge, deflationary action and large staking pools. Mint price increases by 3cro every 10k until they cap at 30cro for the final 10k.  Rewards from royalties and staking pools will be airdropped every 14 days to holders' wallets after 50% mint.",
         "verified": false,
