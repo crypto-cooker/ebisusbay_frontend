@@ -77,7 +77,7 @@
       "name": "Ryoshi Tales Halloween",
       "slug": "ryoshi-tales-halloween",
       "multiToken": false,
-      "address": "0xc7DB2f304B20f547642141C6AE78Ebe46F8B9FCc",
+      "address": "0xe51377a260043381b8B525D33B9fFBC601A1469b",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -5414,7 +5414,7 @@
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
       },
-      "address": "0xc7DB2f304B20f547642141C6AE78Ebe46F8B9FCc",
+      "address": "0xe51377a260043381b8B525D33B9fFBC601A1469b",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 100,
       "totalSupply": 2500,
