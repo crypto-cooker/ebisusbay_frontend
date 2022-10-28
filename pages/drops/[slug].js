@@ -7,6 +7,7 @@ import CronosverseDrop from '../../src/Components/Drop/CronosverseDrop';
 import {caseInsensitiveCompare} from "@src/utils";
 import {appConfig} from "@src/Config";
 import PageHead from "../../src/Components/Head/PageHead";
+import {hostedImage} from "@src/helpers/image";
 
 export const drops = appConfig('drops');
 export const collections = appConfig('collections');
@@ -34,7 +35,7 @@ const Drop = ({ssrDrop, ssrCollection}) => {
         title={ssrDrop.title}
         description={ssrDrop.subtitle}
         url={`/drops/${ssrDrop.slug}`}
-        image={ssrCollection?.metadata.card ?? ssrDrop.image.drop}
+        image={hostedImage(ssrCollection?.metadata.card ?? ssrDrop.image.drop)}
       />
       {ssrDrop && (
         <>
