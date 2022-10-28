@@ -10720,6 +10720,26 @@
         "twitter": "https://twitter.com/WeRtheUndead ",
         "discord": "https://discord.gg/undeadcommunity"
       }
+    },
+    {
+      "name": "Cronos Madafakas",
+      "slug": "cronos-madafakas",
+      "multiToken": false,
+      "address": "0x930fe8faaa81a3517267c66177429f10f31a1f92",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "During hard times, crypto crashes, global recession and geopolitical conflicts we are still fighting with the system.  We are MDFKS rats. We always try, we always find the way, we always survive.",
+        "verified": false,
+        "avatar": "/img/collections/cronos-madafakas/avatar.webp",
+        "card": "/img/collections/cronos-madafakas/card.webp",
+        "banner": "/img/collections/cronos-madafakas/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://cronos-mfks.netlify.app/",
+        "twitter": "https://twitter.com/MdfksR ",
+        "discord": "https://discord.gg/BkWbYepRJp",
+        "telegram": "https://t.me/CronosPolishMadafakas"
+      }
     }
   ],
   "drops": [
