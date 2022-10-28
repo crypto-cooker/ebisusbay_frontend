@@ -14213,7 +14213,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/crovilians/drop.webp",
         "banner": "/img/collections/crovilians/banner.webp",
