@@ -15546,7 +15546,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/ryoshi-tales-halloween/drop.webp",
         "banner": "/img/collections/ryoshi-tales-halloween/banner.webp",
