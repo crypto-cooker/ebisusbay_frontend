@@ -7045,7 +7045,7 @@
       "multiToken": false,
       "address": "0x130a6c2884325d302830179C691D328dDAd9b78C",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Crovilians are the citizens of The CronosVerse and have various traits representing the many societal roles required in both the metaverse and in the physical world. While each Crovilian's unique traits represent real life roles in our society, all Crovilians are created equal in terms of access to The CronosVerse. Holding a Crovilian NFT will grant access to The CronosVerse and allow the owner to create a custom avatar to be used in our metaverse.",
         "verified": true,
@@ -10449,7 +10449,7 @@
       "multiToken": false,
       "address": "0x54E61e2043f894475D17D344250F1983f7F7e6D3",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Our very own Halloween collection, from the team at Ebisu's Bay.",
         "verified": true,
