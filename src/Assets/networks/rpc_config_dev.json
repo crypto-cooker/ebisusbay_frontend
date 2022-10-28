@@ -2987,7 +2987,7 @@
         "maxSupply": 5000,
         "website": "https://slavikfruitfarm.io/",
         "twitter": "https://twitter.com/SlavikFruitFarm",
-        "discord": "https://discord.gg/sff"
+        "discord": "https://discord.gg/damg"
       }
     },
     {
@@ -10451,7 +10451,7 @@
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "Holding this NFT grants reduced service fees, discounts on drops, early access to features and is stakeable in the service fee pool.",
+        "description": "Our very own Halloween collection, from the team at Ebisu's Bay.",
         "verified": true,
         "avatar": "/img/collections/ryoshi-tales-halloween/avatar.webp",
         "banner": "/img/collections/ryoshi-tales-halloween/banner.webp",
@@ -10585,11 +10585,11 @@
       "name": "Tata's Twisted Tonics",
       "slug": "tatas-twisted-tonics",
       "multiToken": false,
-      "address": "0x635fba916F2bE6f30c62E7439b046bFB1462A7ab",
+      "address": "0x739b5380156Fa14C7956145048d52dF27EDedfCE",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
-        "description": "A 100k piece collection centered around crypto knowledge, deflationary action and large staking pools. Mint price increases by 3cro every 10k until they cap at 30cro for the final 10k.  Rewards from royalties and staking pools will be airdropped every 14 days to holders' wallets after 50% mint.",
+        "description": "Our project is truly one of a kind in the Cronos ecosystem. We are centered around 100k deflationary NFTs that are constantly working on building upon our already large staking and compounding pools. Along with very affordable mint prices (max price 30cro) we also offer something SPECIAL: a burning mechanism on our NFTs.  We will begin airdropping royalty and staking rewards at 50% mint completion!! LFT",
         "verified": false,
         "avatar": "/img/collections/tatas-twisted-tonics/avatar.webp",
         "card": "/img/collections/tatas-twisted-tonics/card.webp",
@@ -10597,7 +10597,7 @@
         "maxSupply": 100000,
         "website": "https://www.tatastwistedtonics.com/",
         "twitter": "https://twitter.com/tatastonics",
-        "discord": "https://discord.gg/kA3Be57DY8",
+        "discord": "https://discord.gg/n2zxSkg8jT",
         "medium": "https://medium.com/@TatasTonics"
       }
     },
@@ -10719,6 +10719,26 @@
         "website": "https://undeadcommunity.com",
         "twitter": "https://twitter.com/WeRtheUndead ",
         "discord": "https://discord.gg/undeadcommunity"
+      }
+    },
+    {
+      "name": "Cronos Madafakas",
+      "slug": "cronos-madafakas",
+      "multiToken": false,
+      "address": "0x930fe8faaa81a3517267c66177429f10f31a1f92",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "During hard times, crypto crashes, global recession and geopolitical conflicts we are still fighting with the system.  We are MDFKS rats. We always try, we always find the way, we always survive.",
+        "verified": false,
+        "avatar": "/img/collections/cronos-madafakas/avatar.webp",
+        "card": "/img/collections/cronos-madafakas/card.webp",
+        "banner": "/img/collections/cronos-madafakas/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://cronos-mfks.netlify.app/",
+        "twitter": "https://twitter.com/MdfksR ",
+        "discord": "https://discord.gg/BkWbYepRJp",
+        "telegram": "https://t.me/CronosPolishMadafakas"
       }
     }
   ],
@@ -15555,9 +15575,9 @@
       "maxMintPerTx": 40,
       "maxMintPerAddress": 40,
       "totalSupply": 3000,
-      "cost": "100",
-      "memberCost": "100",
-      "whitelistCost": "100",
+      "cost": "150",
+      "memberCost": "120",
+      "whitelistCost": "120",
       "foundersOnly": false,
       "start": 1667419200000,
       "end": null,

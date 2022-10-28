@@ -74,6 +74,33 @@
       }
     },
     {
+      "name": "Ryoshi Tales Halloween",
+      "slug": "ryoshi-tales-halloween",
+      "multiToken": false,
+      "address": "0xe51377a260043381b8B525D33B9fFBC601A1469b",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Our very own Halloween collection, from the team at Ebisu's Bay.",
+        "verified": true,
+        "avatar": "/img/collections/ryoshi-tales-halloween/avatar.webp",
+        "banner": "/img/collections/ryoshi-tales-halloween/banner.webp",
+        "card": "/img/collections/ryoshi-tales-halloween/card.webp",
+        "maxSupply": 2500,
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "hidden",
+        "escrow": false
+      }
+    },
+    {
       "slug": "basic-nft",
       "name": "Basic NFT",
       "multiToken": false,
@@ -5371,6 +5398,46 @@
         "doxx": false,
         "kyc": false,
         "escrow": false
+      }
+    },  {
+      "id": 125,
+      "slug": "ryoshi-tales-halloween",
+      "title": "Ryoshi Tales Halloween",
+      "subtitle": "Our very own Halloween collection, from the team at Ebisu's Bay.\nBe careful with your minting selection, you might scare the friendly ghosts away!\nKeep them close for your protection, you'll need them when you start to play,\nEbisu's Bay's latest projection; it's almost game release day!",
+      "description": "Introducing the Halloween Ebisu's Bay drop! Mint one of these limited edition Halloween ghouls and use them to play in our upcoming game: Ryoshi Tales.\n\n2500 unique characters, 50 traits, truly unique characters that you'll be able to use in game for some rewarding boosts.\n\nRyoshi characters will only be released this Halloween and available for 48 hours, so grab them if you dare and get ready to game on Ryoshi Tales!",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "0xe51377a260043381b8B525D33B9fFBC601A1469b",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 100,
+      "totalSupply": 2500,
+      "cost": "75",
+      "memberCost": "50",
+      "foundersOnly": false,
+      "start": 1665462277003,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/ryoshi-tales-halloween/drop.webp",
+        "banner": "/img/collections/ryoshi-tales-halloween/banner.webp",
+        "avatar": "/img/collections/ryoshi-tales-halloween/avatar.webp",
+        "preview": "/img/collections/ryoshi-tales-halloween/card.webp"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
       }
     }
   ]
