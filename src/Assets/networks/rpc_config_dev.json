@@ -15721,6 +15721,44 @@
         "escrow": false,
         "verified": true
       }
+    },{
+      "id": 130,
+      "slug": "munk-finance",
+      "title": "MunkFinance",
+      "subtitle": "An Exclusive Marketing agency that leverages the power of NFT Ownership to dominate Web3 Marketing.",
+      "description": "Join the Agency and earn income for engagement on your favorite social media platforms.",
+      "author": {
+        "name": "MunkFinance",
+        "website": "https://munk.finance/",
+        "twitter": "https://twitter.com/MunkFinance",
+        "discord": "https://discord.com/invite/PnVKeZBwmz"
+      },
+      "address": "",
+      "cost": "88.88",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 8888,
+      "foundersOnly": false,
+      "start": 1667336400000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": false,
+      "redirect": "https://mint.munk.finance",
+      "images": {
+        "drop": "/img/drops/munk-finance/drop.png",
+        "banner": "/img/collections/munk-finance/banner.webp",
+        "avatar": "/img/collections/munk-finance/avatar.webp",
+        "preview": "/img/collections/munk-finance/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
+      }
     }
   ]
 }
