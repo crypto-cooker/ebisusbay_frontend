@@ -10649,7 +10649,7 @@
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "Patron NFT is 5000 unique dogs of Jack Russell Terrier breed, created to help victims of the war in Ukraine",
+        "description": "Patron NFT is 4999 unique dogs of Jack Russell Terrier breed, created to help victims of the war in Ukraine",
         "verified": true,
         "avatar": "/img/collections/patron-nft/avatar.webp",
         "card": "/img/collections/patron-nft/card.webp",
@@ -10657,7 +10657,7 @@
         "maxSupply": 4999,
         "website": "https://allmylinks.com/patronnft/",
         "twitter": "https://twitter.com/KAPVEYCRYPTO",
-        "discord": "https://discord.gg/PYUcxxS3",
+        "discord": "https://discord.gg/qJsAtGqq",
         "medium": "https://medium.com/@kapveycrypto",
         "telegram": "https://t.me/KAPVEYCRYPTO"
       }
@@ -15644,13 +15644,13 @@
       "id": 128,
       "slug": "patron-nft",
       "title": "Patron NFT",
-      "subtitle": "Patron NFT is 5000 unique dogs of Jack Russell Terrier breed, created to help victims of the war in Ukraine",
+      "subtitle": "Patron NFT is 4999 unique dogs of Jack Russell Terrier breed, created to help victims of the war in Ukraine",
       "description": "Patron NFT is the first collection to be developed into an entire metaverse. We plan to release the second version of the Patron NFT and make a drop for owners of both NFTs. Merchandise and a PatronCoin fan token will also be released.",
       "author": {
         "name": "KAPVEYCRYPTO",
         "website": "https://allmylinks.com/patronnft/",
         "twitter": "https://twitter.com/KAPVEYCRYPTO",
-        "discord": "https://discord.gg/PYUcxxS3",
+        "discord": "https://discord.gg/qJsAtGqq",
         "medium": "https://medium.com/@kapveycrypto",
         "telegram": "https://t.me/KAPVEYCRYPTO"
       },
@@ -15721,7 +15721,7 @@
         "escrow": false,
         "verified": true
       }
-    },{
+    },    {
       "id": 130,
       "slug": "munk-finance",
       "title": "MunkFinance",
