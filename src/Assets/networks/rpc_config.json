@@ -10603,6 +10603,11 @@
         "twitter": "https://twitter.com/tatastonics",
         "discord": "https://discord.gg/n2zxSkg8jT",
         "medium": "https://medium.com/@TatasTonics"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
