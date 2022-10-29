@@ -10756,7 +10756,7 @@
       "multiToken": false,
       "address": "0x84E66B69e1C5c962C80D38FA2e8aEC09B20D5dCE",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "An Exclusive Marketing agency that leverages the power of NFT Ownership to dominate Web3 Marketing. Join the Agency and earn income for engagement on your favorite social media platforms.",
         "verified": false,
