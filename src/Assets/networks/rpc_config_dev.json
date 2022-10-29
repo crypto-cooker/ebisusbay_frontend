@@ -10759,6 +10759,25 @@
         "twitter": "https://twitter.com/MunkFinance",
         "discord": "https://discord.gg/PnVKeZBwmz"
       }
+    },
+    {
+      "name": "Team Movember",
+      "slug": "team-movember",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Team Movember 2022 is an initiative of Team Mustachios to raise funds for the Movember Foundation Charity. 2022 NFTs and 50% of the mint will go directly to the cause. Movember fundraisers are a global community of fired up Mo Bros and Mo Sisters – aka rock stars making a difference in mental health and suicide prevention, prostate cancer and testicular cancer.",
+        "verified": true,
+        "avatar": "/img/collections/team-movember/avatar.webp",
+        "card": "/img/collections/team-movember/card.webp",
+        "banner": "/img/collections/team-movember/banner.webp",
+        "maxSupply": 2022,
+        "website": "https://teammustachios.com/",
+        "twitter": "https://twitter.com/teammustachios",
+        "discord": "https://discord.gg/eH4SCJY5Qw"
+      }
     }
   ],
   "drops": [
@@ -15740,7 +15759,8 @@
         "escrow": false,
         "verified": true
       }
-    },    {
+    },
+    {
       "id": 130,
       "slug": "cromunk",
       "title": "Cromunk",
@@ -15777,6 +15797,44 @@
         "kyc": true,
         "escrow": false,
         "verified": true
+      }
+    },
+    {
+      "id": 128,
+      "slug": "team-movember",
+      "title": "Team Movember",
+      "subtitle": "Team Movember 2022 is an initiative of Team Mustachios to raise funds for the Movember Foundation Charity. 2022 NFTs and 50% of the mint will go directly to the cause. Movember fundraisers are a global community of fired up Mo Bros and Mo Sisters – aka rock stars making a difference in mental health and suicide prevention, prostate cancer and testicular cancer.",
+      "description": "By participating to this great cause, get your chance to win a part of the mint. \n\n20% will be distributed between minter of those NFTs:\n\nAny Team Movember: 5% of the mint divided between \uD83D\uDC49\uD83C\uDFFB 22 winners, selected by a BIG RAFFLE! (229 cro each)*\n\nEmerald Movember : 2% of the mint divided between \uD83D\uDC49\uD83C\uDFFB 3 winners (674 cro each)*\n\nPinky Movember: 3% of the mint divided between \uD83D\uDC49\uD83C\uDFFB 2 winners (1516 cro each)*\n\nGoldish Movember: 10% of the mint directly to \uD83D\uDC49\uD83C\uDFFB 1 winner (10 110 cro)*\n\n*example if the mint is sold out. If not, the mint will stop on the 1st of December.",
+      "author": {
+        "name": "Team Mustachios",
+        "website": "https://teammustachios.com/",
+        "twitter": "https://twitter.com/teammustachios",
+        "discord": "https://discord.gg/eH4SCJY5Qw"
+      },
+      "address": "",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 100,
+      "totalSupply": 2022,
+      "cost": "50",
+      "memberCost": "50",
+      "foundersOnly": false,
+      "start": 1667332800000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/team-movember/drop.webp",
+        "banner": "/img/collections/team-movember/banner.webp",
+        "avatar": "/img/collections/team-movember/avatar.webp",
+        "preview": "/img/collections/team-movember/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
       }
     }
   ]
