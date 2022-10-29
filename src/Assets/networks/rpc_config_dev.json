@@ -15822,9 +15822,9 @@
       },
       "verification": {
         "doxx": false,
-        "kyc": true,
+        "kyc": false,
         "escrow": false,
-        "verified": true
+        "verified": false
       }
     },
     {
