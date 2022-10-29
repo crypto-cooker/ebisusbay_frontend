@@ -10740,6 +10740,25 @@
         "discord": "https://discord.gg/BkWbYepRJp",
         "telegram": "https://t.me/CronosPolishMadafakas"
       }
+    },
+    {
+      "name": "Cromunk",
+      "slug": "cromunk",
+      "multiToken": false,
+      "address": "0x84E66B69e1C5c962C80D38FA2e8aEC09B20D5dCE",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "An Exclusive Marketing agency that leverages the power of NFT Ownership to dominate Web3 Marketing. Join the Agency and earn income for engagement on your favorite social media platforms.",
+        "verified": false,
+        "avatar": "/img/collections/cromunk/avatar.webp",
+        "card": "/img/collections/cromunk/card.webp",
+        "banner": "/img/collections/cromunk/banner.webp",
+        "maxSupply": 8888,
+        "website": "https://munk.finance/",
+        "twitter": "https://twitter.com/MunkFinance",
+        "discord": "https://discord.gg/PnVKeZBwmz"
+      }
     }
   ],
   "drops": [
@@ -15723,17 +15742,17 @@
       }
     },    {
       "id": 130,
-      "slug": "munk-finance",
-      "title": "MunkFinance",
+      "slug": "cromunk",
+      "title": "Cromunk",
       "subtitle": "An Exclusive Marketing agency that leverages the power of NFT Ownership to dominate Web3 Marketing.",
       "description": "Join the Agency and earn income for engagement on your favorite social media platforms.",
       "author": {
         "name": "MunkFinance",
         "website": "https://munk.finance/",
         "twitter": "https://twitter.com/MunkFinance",
-        "discord": "https://discord.com/invite/PnVKeZBwmz"
+        "discord": "https://discord.gg/PnVKeZBwmz"
       },
-      "address": "",
+      "address": "0x84E66B69e1C5c962C80D38FA2e8aEC09B20D5dCE",
       "cost": "88.88",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
@@ -15748,10 +15767,10 @@
       "featured": false,
       "redirect": "https://mint.munk.finance",
       "images": {
-        "drop": "/img/drops/munk-finance/drop.png",
-        "banner": "/img/collections/munk-finance/banner.webp",
-        "avatar": "/img/collections/munk-finance/avatar.webp",
-        "preview": "/img/collections/munk-finance/card.webp"
+        "drop": "/img/drops/cromunk/drop.webp",
+        "banner": "/img/collections/cromunk/banner.webp",
+        "avatar": "/img/collections/cromunk/avatar.webp",
+        "preview": "/img/collections/cromunk/card.webp"
       },
       "verification": {
         "doxx": false,
