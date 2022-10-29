@@ -10421,7 +10421,11 @@
         "twitter": "https://www.twitter.com/boredcandycity",
         "discord": "https://discord.gg/boredcandycity",
         "medium": "https://boredcandycity.medium.com/",
-        "telegram": "https://t.me/+Er5SXP0M70M1YWFk"
+        "telegram": "https://t.me/+Er5SXP0M70M1YWFk",
+        "rankings": {
+          "source": "rarity_sniper",
+          "slug": "bored-candy"
+        }
       }
     },
     {
@@ -10777,6 +10781,25 @@
         "website": "https://teammustachios.com/",
         "twitter": "https://twitter.com/teammustachios",
         "discord": "https://discord.gg/eH4SCJY5Qw"
+      }
+    },
+    {
+      "name": "Boss Frogz",
+      "slug": "boss-frogz",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Boss Frogz by Troopz is a 1812 piece algorithmically generated NFT collection. \n\nThe Boss Frogz are not to be messed with! They run the metaverse and you better be ready to pay up when they come knocking!\n\nThey are the proprietors of Moonshotz Bar & Grill ... if your name's not down... you're not getting in! ",
+        "verified": true,
+        "avatar": "/img/collections/boss-frogz/avatar.webp",
+        "card": "/img/collections/boss-frogz/card.webp",
+        "banner": "/img/collections/boss-frogz/banner.webp",
+        "maxSupply": 1812,
+        "website": "https://trooprz.army/",
+        "twitter": "https://twitter.com/trooprzarmy",
+        "discord": "https://discord.gg/Trooprz"
       }
     }
   ],
@@ -15800,7 +15823,7 @@
       }
     },
     {
-      "id": 128,
+      "id": 131,
       "slug": "team-movember",
       "title": "Team Movember",
       "subtitle": "Team Movember 2022 is an initiative of Team Mustachios to raise funds for the Movember Foundation Charity. 2022 NFTs and 50% of the mint will go directly to the cause. Movember fundraisers are a global community of fired up Mo Bros and Mo Sisters – aka rock stars making a difference in mental health and suicide prevention, prostate cancer and testicular cancer.",
@@ -15829,6 +15852,46 @@
         "banner": "/img/collections/team-movember/banner.webp",
         "avatar": "/img/collections/team-movember/avatar.webp",
         "preview": "/img/collections/team-movember/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "id": 132,
+      "slug": "boss-frogz",
+      "title": "Boss Frogz",
+      "subtitle": "Boss Frogz by Troopz is a 1812 piece algorithmically generated NFT collection. \n\nThe Boss Frogz are not to be messed with! They run the metaverse and you better be ready to pay up when they come knocking!\n\nThey are the proprietors of Moonshotz Bar & Grill ... if your name's not down... you're not getting in!",
+      "description": "Boss Frogz by Troopz is a 1812 piece algorithmically generated NFT collection. \n\nThe Boss Frogz are not to be messed with! They run the metaverse and you better be ready to pay up when they come knocking!\n\nThey are the proprietors of Moonshotz Bar & Grill ... if your name's not down... you're not getting in!",
+      "author": {
+        "name": "Trooprz",
+        "website": "https://trooprz.army/",
+        "twitter": "https://twitter.com/trooprzarmy",
+        "discord": "https://discord.gg/Trooprz"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 30,
+      "totalSupply": 1812,
+      "cost": "444",
+      "memberCost": "444",
+      "erc20Cost": "888",
+      "erc20Token": "trpz",
+      "foundersOnly": false,
+      "start": 1667419200000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/boss-frogz/drop.webp",
+        "banner": "/img/collections/boss-frogz/banner.webp",
+        "avatar": "/img/collections/boss-frogz/avatar.webp",
+        "preview": "/img/collections/boss-frogz/card.webp"
       },
       "verification": {
         "verified": true,
