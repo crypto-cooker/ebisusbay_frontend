@@ -10421,7 +10421,11 @@
         "twitter": "https://www.twitter.com/boredcandycity",
         "discord": "https://discord.gg/boredcandycity",
         "medium": "https://boredcandycity.medium.com/",
-        "telegram": "https://t.me/+Er5SXP0M70M1YWFk"
+        "telegram": "https://t.me/+Er5SXP0M70M1YWFk",
+        "rankings": {
+          "source": "rarity_sniper",
+          "slug": "bored-candy"
+        }
       }
     },
     {
@@ -10649,7 +10653,7 @@
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "Patron NFT is 5000 unique dogs of Jack Russell Terrier breed, created to help victims of the war in Ukraine",
+        "description": "Patron NFT is 4999 unique dogs of Jack Russell Terrier breed, created to help victims of the war in Ukraine",
         "verified": true,
         "avatar": "/img/collections/patron-nft/avatar.webp",
         "card": "/img/collections/patron-nft/card.webp",
@@ -10657,7 +10661,7 @@
         "maxSupply": 4999,
         "website": "https://allmylinks.com/patronnft/",
         "twitter": "https://twitter.com/KAPVEYCRYPTO",
-        "discord": "https://discord.gg/PYUcxxS3",
+        "discord": "https://discord.gg/qJsAtGqq",
         "medium": "https://medium.com/@kapveycrypto",
         "telegram": "https://t.me/KAPVEYCRYPTO"
       }
@@ -10739,6 +10743,63 @@
         "twitter": "https://twitter.com/MdfksR ",
         "discord": "https://discord.gg/BkWbYepRJp",
         "telegram": "https://t.me/CronosPolishMadafakas"
+      }
+    },
+    {
+      "name": "Cromunk",
+      "slug": "cromunk",
+      "multiToken": false,
+      "address": "0x84E66B69e1C5c962C80D38FA2e8aEC09B20D5dCE",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "An Exclusive Marketing agency that leverages the power of NFT Ownership to dominate Web3 Marketing. Join the Agency and earn income for engagement on your favorite social media platforms.",
+        "verified": false,
+        "avatar": "/img/collections/cromunk/avatar.webp",
+        "card": "/img/collections/cromunk/card.webp",
+        "banner": "/img/collections/cromunk/banner.webp",
+        "maxSupply": 8888,
+        "website": "https://munk.finance/",
+        "twitter": "https://twitter.com/MunkFinance",
+        "discord": "https://discord.gg/PnVKeZBwmz"
+      }
+    },
+    {
+      "name": "Team Movember",
+      "slug": "team-movember",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Team Movember 2022 is an initiative of Team Mustachios to raise funds for the Movember Foundation Charity. 2022 NFTs and 50% of the mint will go directly to the cause. Movember fundraisers are a global community of fired up Mo Bros and Mo Sisters – aka rock stars making a difference in mental health and suicide prevention, prostate cancer and testicular cancer.",
+        "verified": true,
+        "avatar": "/img/collections/team-movember/avatar.webp",
+        "card": "/img/collections/team-movember/card.webp",
+        "banner": "/img/collections/team-movember/banner.webp",
+        "maxSupply": 2022,
+        "website": "https://teammustachios.com/",
+        "twitter": "https://twitter.com/teammustachios",
+        "discord": "https://discord.gg/eH4SCJY5Qw"
+      }
+    },
+    {
+      "name": "Boss Frogz",
+      "slug": "boss-frogz",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Boss Frogz by Troopz is a 1812 piece algorithmically generated NFT collection. \n\nThe Boss Frogz are not to be messed with! They run the metaverse and you better be ready to pay up when they come knocking!\n\nThey are the proprietors of Moonshotz Bar & Grill ... if your name's not down... you're not getting in! ",
+        "verified": true,
+        "avatar": "/img/collections/boss-frogz/avatar.webp",
+        "card": "/img/collections/boss-frogz/card.webp",
+        "banner": "/img/collections/boss-frogz/banner.webp",
+        "maxSupply": 1812,
+        "website": "https://trooprz.army/",
+        "twitter": "https://twitter.com/trooprzarmy",
+        "discord": "https://discord.gg/Trooprz"
       }
     }
   ],
@@ -15644,13 +15705,13 @@
       "id": 128,
       "slug": "patron-nft",
       "title": "Patron NFT",
-      "subtitle": "Patron NFT is 5000 unique dogs of Jack Russell Terrier breed, created to help victims of the war in Ukraine",
+      "subtitle": "Patron NFT is 4999 unique dogs of Jack Russell Terrier breed, created to help victims of the war in Ukraine",
       "description": "Patron NFT is the first collection to be developed into an entire metaverse. We plan to release the second version of the Patron NFT and make a drop for owners of both NFTs. Merchandise and a PatronCoin fan token will also be released.",
       "author": {
         "name": "KAPVEYCRYPTO",
         "website": "https://allmylinks.com/patronnft/",
         "twitter": "https://twitter.com/KAPVEYCRYPTO",
-        "discord": "https://discord.gg/PYUcxxS3",
+        "discord": "https://discord.gg/qJsAtGqq",
         "medium": "https://medium.com/@kapveycrypto",
         "telegram": "https://t.me/KAPVEYCRYPTO"
       },
@@ -15720,6 +15781,123 @@
         "kyc": true,
         "escrow": false,
         "verified": true
+      }
+    },
+    {
+      "id": 130,
+      "slug": "cromunk",
+      "title": "Cromunk",
+      "subtitle": "An Exclusive Marketing agency that leverages the power of NFT Ownership to dominate Web3 Marketing.",
+      "description": "Join the Agency and earn income for engagement on your favorite social media platforms.",
+      "author": {
+        "name": "MunkFinance",
+        "website": "https://munk.finance/",
+        "twitter": "https://twitter.com/MunkFinance",
+        "discord": "https://discord.gg/PnVKeZBwmz"
+      },
+      "address": "0x84E66B69e1C5c962C80D38FA2e8aEC09B20D5dCE",
+      "cost": "88.88",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 8888,
+      "foundersOnly": false,
+      "start": 1666468800000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": false,
+      "redirect": "https://mint.munk.finance",
+      "images": {
+        "drop": "/img/drops/cromunk/drop.webp",
+        "banner": "/img/collections/cromunk/banner.webp",
+        "avatar": "/img/collections/cromunk/avatar.webp",
+        "preview": "/img/collections/cromunk/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
+      }
+    },
+    {
+      "id": 131,
+      "slug": "team-movember",
+      "title": "Team Movember",
+      "subtitle": "Team Movember 2022 is an initiative of Team Mustachios to raise funds for the Movember Foundation Charity. 2022 NFTs and 50% of the mint will go directly to the cause. Movember fundraisers are a global community of fired up Mo Bros and Mo Sisters – aka rock stars making a difference in mental health and suicide prevention, prostate cancer and testicular cancer.",
+      "description": "By participating to this great cause, get your chance to win a part of the mint. \n\n20% will be distributed between minter of those NFTs:\n\nAny Team Movember: 5% of the mint divided between \uD83D\uDC49\uD83C\uDFFB 22 winners, selected by a BIG RAFFLE! (229 cro each)*\n\nEmerald Movember : 2% of the mint divided between \uD83D\uDC49\uD83C\uDFFB 3 winners (674 cro each)*\n\nPinky Movember: 3% of the mint divided between \uD83D\uDC49\uD83C\uDFFB 2 winners (1516 cro each)*\n\nGoldish Movember: 10% of the mint directly to \uD83D\uDC49\uD83C\uDFFB 1 winner (10 110 cro)*\n\n*example if the mint is sold out. If not, the mint will stop on the 1st of December.",
+      "author": {
+        "name": "Team Mustachios",
+        "website": "https://teammustachios.com/",
+        "twitter": "https://twitter.com/teammustachios",
+        "discord": "https://discord.gg/eH4SCJY5Qw"
+      },
+      "address": "",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 100,
+      "totalSupply": 2022,
+      "cost": "50",
+      "memberCost": "50",
+      "foundersOnly": false,
+      "start": 1667332800000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/team-movember/drop.webp",
+        "banner": "/img/collections/team-movember/banner.webp",
+        "avatar": "/img/collections/team-movember/avatar.webp",
+        "preview": "/img/collections/team-movember/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "id": 132,
+      "slug": "boss-frogz",
+      "title": "Boss Frogz",
+      "subtitle": "Boss Frogz by Troopz is a 1812 piece algorithmically generated NFT collection. \n\nThe Boss Frogz are not to be messed with! They run the metaverse and you better be ready to pay up when they come knocking!\n\nThey are the proprietors of Moonshotz Bar & Grill ... if your name's not down... you're not getting in!",
+      "description": "Boss Frogz by Troopz is a 1812 piece algorithmically generated NFT collection. \n\nThe Boss Frogz are not to be messed with! They run the metaverse and you better be ready to pay up when they come knocking!\n\nThey are the proprietors of Moonshotz Bar & Grill ... if your name's not down... you're not getting in!",
+      "author": {
+        "name": "Trooprz",
+        "website": "https://trooprz.army/",
+        "twitter": "https://twitter.com/trooprzarmy",
+        "discord": "https://discord.gg/Trooprz"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 30,
+      "totalSupply": 1812,
+      "cost": "444",
+      "memberCost": "444",
+      "erc20Cost": "888",
+      "erc20Token": "trpz",
+      "foundersOnly": false,
+      "start": 1667419200000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/boss-frogz/drop.webp",
+        "banner": "/img/collections/boss-frogz/banner.webp",
+        "avatar": "/img/collections/boss-frogz/avatar.webp",
+        "preview": "/img/collections/boss-frogz/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
       }
     }
   ]
