@@ -1991,7 +1991,7 @@
       "name": "Grey_hart's Broken Hearts",
       "slug": "broken-hearts",
       "multiToken": false,
-      "address": "0xe63A4D40F11A424895c5939C052c223D9f7aF8Cc",
+      "address": "0x902b4C3B8F847bBdD2b1897FeBa15638baC5bafe",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -2007,10 +2007,10 @@
       }
     },
     {
-      "name": "Grey_hart's Broken Hearts 2",
-      "slug": "broken-hearts2",
+      "name": "Grey_hart's Broken Hearts - Text",
+      "slug": "broken-hearts-text",
       "multiToken": false,
-      "address": "0x74d833925854cC79A4B5a2B7CCF4751866C93F4c",
+      "address": "0x2a4c54c64487734080843188642c1ac48f772053",
       "onChain": false,
       "listable": true,
       "metadata": {
