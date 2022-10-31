@@ -15604,6 +15604,8 @@
       "maxMintPerTx": 1,
       "maxMintPerAddress": 2,
       "totalSupply": 202,
+      "cost": "6000",
+      "memberCost": "5000",
       "foundersOnly": false,
       "start": 1667246400000,
       "end": null,
