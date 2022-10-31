@@ -3179,7 +3179,7 @@
       "multiToken": false,
       "address": "0x3c47Ccb387768459D641dCe4dF556B3560a07855",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": false,
@@ -10805,6 +10805,25 @@
         "website": "https://trooprz.army/",
         "twitter": "https://twitter.com/trooprzarmy",
         "discord": "https://discord.gg/Trooprz"
+      }
+    },
+    {
+      "name": "Croshi World Cup NFT",
+      "slug": "croshi-world-cup-nft",
+      "multiToken": false,
+      "address": "0x685CA35bfd49Ed49624E1e779c462200c31aF044",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Croshi World Cup NFT",
+        "verified": false,
+        "avatar": "/img/collections/croshi-world-cup-nft/avatar.webp",
+        "card": "/img/collections/croshi-world-cup-nft/card.webp",
+        "banner": "/img/collections/croshi-world-cup-nft/banner.webp",
+        "maxSupply": 0,
+        "website": "https://www.croshi.com/",
+        "twitter": "https://twitter.com/croshiinu",
+        "telegram": "https://t.me/croshiinu"
       }
     }
   ],
