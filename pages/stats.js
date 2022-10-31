@@ -3,19 +3,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import { utils } from 'ethers';
 import Card from '../src/Components/Leaderboard/Card';
 import Table from '../src/Components/Leaderboard/Table';
-import { getAllLeaderBoard } from '../src/GlobalState/leaderBoardSlice';
-import { shortAddress } from '../src/utils';
+import { getAllLeaderBoard } from '@src/GlobalState/leaderBoardSlice';
+import { shortAddress } from '@src/utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import styles from '../src/Components/Leaderboard/styles.module.scss';
 import PageHead from "../src/Components/Head/PageHead";
 import Footer from "../src/Components/components/Footer";
 import {Badge} from "react-bootstrap";
-import { Modal, ModalTitle } from 'react-bootstrap';
-import styled from "styled-components";
 import {Navigation, Pagination} from "swiper";
 import {Swiper, SwiperSlide} from "swiper/react";
-import {Heading} from "@chakra-ui/react";
+import {
+  Button,
+  Heading,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter,
+  ModalHeader,
+  ModalOverlay, Text
+} from "@chakra-ui/react";
+import {ChevronDownIcon} from "@chakra-ui/icons";
 
 const headers = {
   totalVolume: ['User', 'Sales Volume', 'Buy Volume', 'Total Volume'],
@@ -23,16 +31,6 @@ const headers = {
   sellVolume: ['User', '# of Sales', 'Total Volume'],
   biggestSingleSale: ['User', 'Total Volume'],
 };
-
-const StyledModal = styled(Modal)`
-  .modal-content {
-    background: ${({ theme }) => theme.colors.bgColor1};
-  }
-`;
-
-const StyledModalTitle = styled(ModalTitle)`
-  color: ${({ theme }) => theme.colors.textColor3};
-`;
 
 export default function Stats() {
   const dispatch = useDispatch();
@@ -99,13 +97,33 @@ export default function Stats() {
               {/*<li id="sale" className={timeframe === 'custom' ? 'active' : ''} onClick={() => updateTimeframe('custom')}>*/}
               {/*  Competition*/}
               {/*</li>*/}
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  rightIcon={<ChevronDownIcon />}
+                  variant="outline"
+                  backgroundColor="#FF2D98"
+                  color="white"
+                  _hover={{ bg: '#FF2D98' }}
+                  _expanded={{ bg: '#FF2D98' }}
+                  _focus={{ bg: '#FF2D98' }}
+                >
+                  Bored Candy
+                </MenuButton>
+                <MenuList
+                  zIndex="2"
+                >
+                  <MenuItem onClick={() => updateTimeframe('custom2')}>Daily</MenuItem>
+                  <MenuItem onClick={() => updateTimeframe('custom')}>Overall</MenuItem>
+                </MenuList>
+              </Menu>
             </ul>
           </div>
         </div>
-        {timeframe === 'custom' && (
+        {(timeframe === 'custom' || timeframe === 'custom2') && false && (
           <div>
             <p>
-              Prizes up for grabs for the top 5 ranked wallets in each category! Competition runs from July 1st - 31st. &nbsp;
+              Daily prizes up for grabs for the top Bored Candy buyers and sellers! Competition runs from Nov 1st - 15th. &nbsp;
               <Badge bg="primary" onClick={() => setShowDialog(true)} className="cursor-pointer">More Info</Badge>
             </p>
           </div>
@@ -175,45 +193,21 @@ export default function Stats() {
           <Table headers={headers[type]} items={leaderBoard[type]} />
         </div>
       </section>
-      {timeframe === 'custom' &&
+      {(timeframe === 'custom' || timeframe === 'custom2') &&
         <p className="text-center small"><a href="https://cdn.ebisusbay.com/Contest_Terms_and_Conditions.html">Contest Terms and
           Conditions</a></p>
       }
 
-      <StyledModal show={showDialog} onHide={() => setShowDialog(false)}>
-        <Modal.Header>
-          <StyledModalTitle>Competition Details</StyledModalTitle>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Based on leaderboard results from July 1st - 31st, Ebisu's Bay will be awarding prizes in the following structure: </p>
-
-          <span className="fw-bold">Total Volume</span>
-          <ul>
-            <li>1st - 8,000 CRO</li>
-            <li>2nd - 5,000 CRO</li>
-            <li>3rd - 3,000 CRO</li>
-            <li>4th - 2,000 CRO</li>
-            <li>5th - 2,000 CRO</li>
-          </ul>
-
-          <span className="fw-bold">Total Buy, Sell and Biggest Single Sale</span>
-          <ul>
-            <li>1st - 4,000 CRO</li>
-            <li>2nd - 2,500 CRO</li>
-            <li>3rd - 1,500 CRO</li>
-            <li>4th - 1,000 CRO</li>
-            <li>5th - 1,000 CRO</li>
-          </ul>
-
-          <p>So get trading, climbing and finding your way into the prize money!</p>
-        </Modal.Body>
-
-        <Modal.Footer>
-          <button className="p-4 pt-2 pb-2 btn_menu inline white lead" onClick={() => setShowDialog(false)}>
-            Close
-          </button>
-        </Modal.Footer>
-      </StyledModal>
+      <Modal isOpen={showDialog} onClose={() => setShowDialog(false)}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Competition Details</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text>Ebisu’s Bay is going to be offering an exclusive 2 week long contest in collaboration with the Bored Candy City NFTs!</Text>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
 
       <Footer />
     </div>

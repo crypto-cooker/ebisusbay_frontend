@@ -9877,16 +9877,16 @@
       "name": "Grey_hart's Broken Hearts",
       "slug": "broken-hearts",
       "multiToken": false,
-      "address": "",
+      "address": "0xBF734e446eeB0aFD3C1681Bb014763E60125768b",
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "The Broken Hearts collection is a line of 101 tarot cards created by the musician Grey_hart, using MIDJOURNEY's AI software, all around the subject of a broken heart. Each 9x16 is a 1 of a kind image with varying themes and elements around heartbreak and the spiritual journey involved in getting through it. Some are astral guides, some spirit animals, some just metaphors and feelings made into imagery. If you've experienced heartbreak of any kind in your life, there's sure to be an image that speaks to you in some form. ",
+        "description": "The Broken Hearts collection is a line of 101 tarot cards created by the musician Grey_hart, using MIDJOURNEY's AI software, all around the subject of a broken heart. Each 9x16 is a 1 of a kind image with varying themes and elements around heartbreak and the spiritual journey involved in getting through it. Some are astral guides, some spirit animals, some just metaphors and feelings made into imagery. If you've experienced heartbreak of any kind in your life, there's sure to be an image that speaks to you in some form.",
         "verified": true,
         "avatar": "/img/collections/broken-hearts/avatar.webp",
         "card": "/img/collections/broken-hearts/card.webp",
         "banner": "/img/collections/broken-hearts/banner.webp",
-        "maxSupply": 2500,
+        "maxSupply": 101,
         "website": "https://loveisgrey.art/",
         "discord": "https://discord.gg/t3DM6pNAWb",
         "instagram": "https://instagram.com/lov3is_grey"
@@ -9895,6 +9895,25 @@
         "doxx": false,
         "kyc": "ebisu",
         "escrow": false
+      }
+    },
+    {
+      "name": "Grey_hart's Broken Hearts - Texts",
+      "slug": "broken-hearts-texts",
+      "multiToken": false,
+      "address": "0xf247533dfca6999097c959222d56b668c6a3052d",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Broken Hearts collection is a line of 101 tarot cards created by the musician Grey_hart, using MIDJOURNEY’s AI software, all around the subject of a broken heart. Each 9x16 is a 1 of a kind image with varying themes and elements around heartbreak and the spiritual journey involved in getting through it. Some are astral guides, some spirit animals, some just metaphors and feelings made into imagery. If you’ve experienced heartbreak of any kind in your life, there’s sure to be an image that speaks to you in some form.",
+        "verified": true,
+        "avatar": "/img/collections/broken-hearts/avatar.webp",
+        "card": "/img/collections/broken-hearts/card.webp",
+        "banner": "/img/collections/broken-hearts/banner.webp",
+        "maxSupply": 101,
+        "website": "https://loveisgrey.art/",
+        "discord": "https://discord.gg/t3DM6pNAWb",
+        "instagram": "https://instagram.com/lov3is_grey"
       }
     },
     {
@@ -10844,6 +10863,71 @@
         "twitter": "https://twitter.com/CroSwapOfficial",
         "discord": "https://discord.gg/croswap",
         "medium": "https://medium.com/@CroSwapDEX"
+      }
+    },
+    {
+      "name": "Seasonal Cats",
+      "slug": "seasonal-cats",
+      "multiToken": true,
+      "tokens": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
+        },
+        {
+          "id": 5
+        },
+        {
+          "id": 6
+        },
+        {
+          "id": 7
+        },
+        {
+          "id": 8
+        },
+        {
+          "id": 9
+        },
+        {
+          "id": 10
+        },
+        {
+          "id": 11
+        },
+        {
+          "id": 12
+        },
+        {
+          "id": 13
+        }
+      ],
+      "address": "0x7dE8BeC3ACf03997CDf3052c769571bbbBb7eE14",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Seasonal Cats have arrived to Cronos.\nA Special Airdrop Collection to our Holders.",
+        "verified": true,
+        "avatar": "/img/collections/seasonal-cats/avatar.webp",
+        "card": "/img/collections/seasonal-cats/card.webp",
+        "banner": "/img/collections/seasonal-cats/banner.webp",
+        "maxSupply": 13,
+        "website": "https://worldofcats.xyz/",
+        "twitter": "https://twitter.com/worldofcatsnft",
+        "discord": "https://discord.gg/worldofcats"
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": "ebisu",
+        "escrow": false
       }
     }
   ],
@@ -15516,7 +15600,7 @@
         "discord": "https://discord.gg/t3DM6pNAWb",
         "instagram": "https://instagram.com/lov3is_grey"
       },
-      "address": "",
+      "address": "0xBF734e446eeB0aFD3C1681Bb014763E60125768b",
       "maxMintPerTx": 1,
       "maxMintPerAddress": 2,
       "totalSupply": 202,
