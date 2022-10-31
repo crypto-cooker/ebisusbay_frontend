@@ -10792,7 +10792,7 @@
       "name": "Boss Frogz by Troopz",
       "slug": "trooprz-boss-frogz",
       "multiToken": false,
-      "address": "",
+      "address": "0x1553213678D71683e686b32716e8e33c0452b6c3",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -15877,7 +15877,7 @@
         "twitter": "https://twitter.com/trooprzarmy",
         "discord": "https://discord.gg/Trooprz"
       },
-      "address": "",
+      "address": "0x1553213678D71683e686b32716e8e33c0452b6c3",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 30,
       "totalSupply": 1812,
@@ -15886,7 +15886,7 @@
       "erc20Cost": "888",
       "erc20Token": "trpz",
       "foundersOnly": false,
-      "start": 1667408400000,
+      "start": 1667186445000,
       "end": null,
       "referral": false,
       "is1155": false,
