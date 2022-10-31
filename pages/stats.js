@@ -14,7 +14,7 @@ import {Badge} from "react-bootstrap";
 import {Navigation, Pagination} from "swiper";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {
-  Button,
+  Button, Center,
   Heading,
   Menu,
   MenuButton,
@@ -128,70 +128,78 @@ export default function Stats() {
             </p>
           </div>
         )}
-        <div className="d-flex gap-3 mt-lg-4 align-items-center justify-content-between">
-          <div className={`nft ${styles.dots}`}>
+        {(timeframe === 'custom' || timeframe === 'custom2') ? (
+          <Center mt={4}>
+            <Text>Bored Candy competition will be starting soon!</Text>
+          </Center>
+        ) : (
+          <>
+            <div className="d-flex gap-3 mt-lg-4 align-items-center justify-content-between">
+              <div className={`nft ${styles.dots}`}>
 
-            <Swiper
-              spaceBetween={10}
-              slidesPerView={1}
-              navigation={true}
-              loop={true}
-              modules={[Navigation, Pagination]}
-              className="mySwiper"
-              breakpoints={{
-                576: {
-                  slidesPerView: 2,
-                },
-                768: {
-                  slidesPerView: 3,
-                },
-                1200: {
-                  slidesPerView: 4,
-                },
-              }}
-            >
-              <SwiperSlide>
-                <Card
-                  title="Most Total Volume"
-                  onClick={() => setType('totalVolume')}
-                  totalVolume={utils.commify(leaderBoard?.totalVolume[0]?.totalVolume || 0)}
-                  name={shortAddress(leaderBoard?.totalVolume[0]?.address) || 0}
-                  active={type === 'totalVolume'}
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <Card
-                  title="Most Buy Volume"
-                  onClick={() => setType('buyVolume')}
-                  totalVolume={utils.commify(leaderBoard?.buyVolume[0]?.totalVolume || 0)}
-                  name={shortAddress(leaderBoard?.buyVolume[0]?.address) || 0}
-                  active={type === 'buyVolume'}
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <Card
-                  title="Most Sell Volume"
-                  onClick={() => setType('sellVolume')}
-                  totalVolume={utils.commify(leaderBoard?.sellVolume[0]?.totalVolume || 0)}
-                  name={shortAddress(leaderBoard?.sellVolume[0]?.address) || 0}
-                  active={type === 'sellVolume'}
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <Card
-                  title="Biggest Single Sale"
-                  onClick={() => setType('biggestSingleSale')}
-                  totalVolume={utils.commify(leaderBoard?.biggestSingleSale[0]?.totalVolume || 0)}
-                  name={shortAddress(leaderBoard?.biggestSingleSale[0]?.address) || 0}
-                  active={type === 'biggestSingleSale'}
-                />
-              </SwiperSlide>
-            </Swiper>
-          </div>
-        </div>
-        <div className="mt-4 table-responsive">
-          <Table headers={headers[type]} items={leaderBoard[type]} />
-        </div>
+                <Swiper
+                  spaceBetween={10}
+                  slidesPerView={1}
+                  navigation={true}
+                  loop={true}
+                  modules={[Navigation, Pagination]}
+                  className="mySwiper"
+                  breakpoints={{
+                    576: {
+                      slidesPerView: 2,
+                    },
+                    768: {
+                      slidesPerView: 3,
+                    },
+                    1200: {
+                      slidesPerView: 4,
+                    },
+                  }}
+                >
+                  <SwiperSlide>
+                    <Card
+                      title="Most Total Volume"
+                      onClick={() => setType('totalVolume')}
+                      totalVolume={utils.commify(leaderBoard?.totalVolume[0]?.totalVolume || 0)}
+                      name={shortAddress(leaderBoard?.totalVolume[0]?.address) || 0}
+                      active={type === 'totalVolume'}
+                    />
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <Card
+                      title="Most Buy Volume"
+                      onClick={() => setType('buyVolume')}
+                      totalVolume={utils.commify(leaderBoard?.buyVolume[0]?.totalVolume || 0)}
+                      name={shortAddress(leaderBoard?.buyVolume[0]?.address) || 0}
+                      active={type === 'buyVolume'}
+                    />
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <Card
+                      title="Most Sell Volume"
+                      onClick={() => setType('sellVolume')}
+                      totalVolume={utils.commify(leaderBoard?.sellVolume[0]?.totalVolume || 0)}
+                      name={shortAddress(leaderBoard?.sellVolume[0]?.address) || 0}
+                      active={type === 'sellVolume'}
+                    />
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <Card
+                      title="Biggest Single Sale"
+                      onClick={() => setType('biggestSingleSale')}
+                      totalVolume={utils.commify(leaderBoard?.biggestSingleSale[0]?.totalVolume || 0)}
+                      name={shortAddress(leaderBoard?.biggestSingleSale[0]?.address) || 0}
+                      active={type === 'biggestSingleSale'}
+                    />
+                  </SwiperSlide>
+                </Swiper>
+              </div>
+            </div>
+            <div className="mt-4 table-responsive">
+              <Table headers={headers[type]} items={leaderBoard[type]} />
+            </div>
+          </>
+        )}
       </section>
       {(timeframe === 'custom' || timeframe === 'custom2') &&
         <p className="text-center small"><a href="https://cdn.ebisusbay.com/Contest_Terms_and_Conditions.html">Contest Terms and
