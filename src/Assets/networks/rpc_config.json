@@ -10845,6 +10845,71 @@
         "discord": "https://discord.gg/croswap",
         "medium": "https://medium.com/@CroSwapDEX"
       }
+    },
+    {
+      "name": "Seasonal Cats",
+      "slug": "seasonal-cats",
+      "multiToken": true,
+      "tokens": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
+        },
+        {
+          "id": 5
+        },
+        {
+          "id": 6
+        },
+        {
+          "id": 7
+        },
+        {
+          "id": 8
+        },
+        {
+          "id": 9
+        },
+        {
+          "id": 10
+        },
+        {
+          "id": 11
+        },
+        {
+          "id": 12
+        },
+        {
+          "id": 13
+        }
+      ],
+      "address": "0x7dE8BeC3ACf03997CDf3052c769571bbbBb7eE14",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Seasonal Cats have arrived to Cronos.\nA Special Airdrop Collection to our Holders.",
+        "verified": true,
+        "avatar": "/img/collections/world-of-cats/avatar.webp",
+        "card": "/img/collections/world-of-cats/card.webp",
+        "banner": "/img/collections/world-of-cats/banner.webp",
+        "maxSupply": 13,
+        "website": "https://worldofcats.xyz/",
+        "twitter": "https://twitter.com/worldofcatsnft",
+        "discord": "https://discord.gg/worldofcats"
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": "ebisu",
+        "escrow": false
+      }
     }
   ],
   "drops": [
