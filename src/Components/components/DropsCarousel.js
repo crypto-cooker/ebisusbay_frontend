@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import Blockies from 'react-blockies';
 import { ethers } from 'ethers';
-import { faCheck, faCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCheck,
+  faCircle,
+  faExternalLinkAlt
+} from '@fortawesome/free-solid-svg-icons';
 
 import Clock from './Clock';
 import LayeredIcon from './LayeredIcon';
@@ -12,8 +16,9 @@ import { hostedImage } from "@src/helpers/image";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation, Pagination} from "swiper";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
-import {Heading, HStack, Text} from "@chakra-ui/react";
+import {Heading, HStack, Tag, Text} from "@chakra-ui/react";
 import Image from "next/image";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const tokens = appConfig('tokens')
 const drops = appConfig('drops');
@@ -172,6 +177,12 @@ export default class Responsive extends Component {
                       <div className="col-lg-6">
                         <div className="d-desc">
                           <Heading>{drop.title}</Heading>
+                          {item.drop.redirect && (
+                            <Tag>
+                              {/*<FontAwesomeIcon icon={faExclamationCircle} />*/}
+                              <span className="">Promoted</span>
+                            </Tag>
+                          )}
                           <CollectionVerificationRow
                             doxx={drop.verification?.doxx}
                             kyc={drop.verification?.kyc}
@@ -186,9 +197,11 @@ export default class Responsive extends Component {
                               ) : (
                                 <Blockies seed={drop.slug} size={10} scale={5} />
                               )}
-                              <VerifiedIcon>
-                                <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={7} />
-                              </VerifiedIcon>
+                              {item.drop.verification.verified && (
+                                <VerifiedIcon>
+                                  <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={7} />
+                                </VerifiedIcon>
+                              )}
                             </div>
                             <div className="author_list_info">
                               <div className="title">{drop.author.name}</div>
@@ -321,6 +334,9 @@ export default class Responsive extends Component {
                           <div className="d-buttons">
                           <span className="btn-main" onClick={() => this.navigateToDrop(drop)}>
                             View Drop
+                            {item.drop.redirect && (
+                              <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2" />
+                            )}
                           </span>
                           </div>
                         </div>

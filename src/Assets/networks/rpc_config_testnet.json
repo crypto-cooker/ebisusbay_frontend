@@ -74,6 +74,33 @@
       }
     },
     {
+      "name": "Ryoshi Tales Halloween",
+      "slug": "ryoshi-tales-halloween",
+      "multiToken": false,
+      "address": "0xe51377a260043381b8B525D33B9fFBC601A1469b",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Our very own Halloween collection, from the team at Ebisu's Bay.",
+        "verified": true,
+        "avatar": "/img/collections/ryoshi-tales-halloween/avatar.webp",
+        "banner": "/img/collections/ryoshi-tales-halloween/banner.webp",
+        "card": "/img/collections/ryoshi-tales-halloween/card.webp",
+        "maxSupply": 2500,
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "hidden",
+        "escrow": false
+      }
+    },
+    {
       "slug": "basic-nft",
       "name": "Basic NFT",
       "multiToken": false,
@@ -1964,7 +1991,26 @@
       "name": "Grey_hart's Broken Hearts",
       "slug": "broken-hearts",
       "multiToken": false,
-      "address": "",
+      "address": "0x902b4C3B8F847bBdD2b1897FeBa15638baC5bafe",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Broken Hearts collection is a line of 101 tarot cards created by the musician Grey_hart, using MIDJOURNEY’s AI software, all around the subject of a broken heart. Each 9x16 is a 1 of a kind image with varying themes and elements around heartbreak and the spiritual journey involved in getting through it. Some are astral guides, some spirit animals, some just metaphors and feelings made into imagery. If you’ve experienced heartbreak of any kind in your life, there’s sure to be an image that speaks to you in some form. ",
+        "verified": true,
+        "avatar": "/img/collections/broken-hearts/avatar.webp",
+        "card": "/img/collections/broken-hearts/card.webp",
+        "banner": "/img/collections/broken-hearts/banner.webp",
+        "maxSupply": 2500,
+        "website": "https://loveisgrey.art/",
+        "discord": "https://discord.gg/t3DM6pNAWb",
+        "instagram": "https://instagram.com/lov3is_grey"
+      }
+    },
+    {
+      "name": "Grey_hart's Broken Hearts - Text",
+      "slug": "broken-hearts-text",
+      "multiToken": false,
+      "address": "0x2a4c54c64487734080843188642c1ac48f772053",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -1996,6 +2042,25 @@
         "website": "https://thenewresistance.io/",
         "twitter": "https://twitter.com/TNR_NFT_GAME",
         "discord": "https://discord.gg/tnr"
+      }
+    },
+    {
+      "name": "Team Movember",
+      "slug": "team-movember",
+      "multiToken": false,
+      "address": "0x6AEc192705203eb4EE1106bA5bcf9a11f44397B1",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Team Movember 2022 is an initiative of Team Mustachios to raise funds for the Movember Foundation Charity. 2022 NFTs and 50% of the mint will go directly to the cause. Movember fundraisers are a global community of fired up Mo Bros and Mo Sisters – aka rock stars making a difference in mental health and suicide prevention, prostate cancer and testicular cancer.",
+        "verified": true,
+        "avatar": "/img/collections/team-movember/avatar.webp",
+        "card": "/img/collections/team-movember/card.webp",
+        "banner": "/img/collections/team-movember/banner.webp",
+        "maxSupply": 2022,
+        "website": "https://teammustachios.com/",
+        "twitter": "https://twitter.com/teammustachios",
+        "discord": "https://discord.gg/eH4SCJY5Qw"
       }
     }
   ],
@@ -5303,7 +5368,7 @@
         "discord": "https://discord.gg/t3DM6pNAWb",
         "instagram": "https://instagram.com/lov3is_grey"
       },
-      "address": "",
+      "address": "0x902b4C3B8F847bBdD2b1897FeBa15638baC5bafe",
       "maxMintPerTx": 1,
       "maxMintPerAddress": 2,
       "totalSupply": 202,
@@ -5311,11 +5376,11 @@
       "memberCost": "555",
       "whitelistCost": "555",
       "foundersOnly": false,
-      "start": 1665462277002,
+      "start": 1667109291000,
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": false,
+      "published": true,
       "complete": false,
       "images": {
         "drop": "/img/drops/broken-hearts/drop.webp",
@@ -5349,6 +5414,10 @@
       "cost": "450",
       "memberCost": "400",
       "whitelistCost": "400",
+      "specialWhitelistCost": {
+        "name": "Mekas of Krupt",
+        "value": "350"
+      },
       "foundersOnly": false,
       "start": 1665462277003,
       "end": null,
@@ -5361,6 +5430,85 @@
         "banner": "/img/collections/renegade-monks/banner.webp",
         "avatar": "/img/collections/renegade-monks/avatar.gif",
         "preview": "/img/collections/renegade-monks/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "id": 125,
+      "slug": "ryoshi-tales-halloween",
+      "title": "Ryoshi Tales Halloween",
+      "subtitle": "Our very own Halloween collection, from the team at Ebisu's Bay.\nBe careful with your minting selection, you might scare the friendly ghosts away!\nKeep them close for your protection, you'll need them when you start to play,\nEbisu's Bay's latest projection; it's almost game release day!",
+      "description": "Introducing the Halloween Ebisu's Bay drop! Mint one of these limited edition Halloween ghouls and use them to play in our upcoming game: Ryoshi Tales.\n\n2500 unique characters, 50 traits, truly unique characters that you'll be able to use in game for some rewarding boosts.\n\nRyoshi characters will only be released this Halloween and available for 48 hours, so grab them if you dare and get ready to game on Ryoshi Tales!",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "0xe51377a260043381b8B525D33B9fFBC601A1469b",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 100,
+      "totalSupply": 2500,
+      "cost": "75",
+      "memberCost": "50",
+      "foundersOnly": false,
+      "start": 1665462277003,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/ryoshi-tales-halloween/drop.webp",
+        "banner": "/img/collections/ryoshi-tales-halloween/banner.webp",
+        "avatar": "/img/collections/ryoshi-tales-halloween/avatar.webp",
+        "preview": "/img/collections/ryoshi-tales-halloween/card.webp"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
+      }
+    },
+    {
+      "id": 131,
+      "slug": "team-movember",
+      "title": "Team Movember",
+      "subtitle": "Team Movember 2022 is an initiative of Team Mustachios to raise funds for the Movember Foundation Charity. 2022 NFTs and 50% of the mint will go directly to the cause. Movember fundraisers are a global community of fired up Mo Bros and Mo Sisters – aka rock stars making a difference in mental health and suicide prevention, prostate cancer and testicular cancer.",
+      "description": "By participating to this great cause, get your chance to win a part of the mint. \n\n20% will be distributed between minter of those NFTs:\n\nAny Team Movember: 5% of the mint divided between \uD83D\uDC49\uD83C\uDFFB 22 winners, selected by a BIG RAFFLE! (229 cro each)*\n\nEmerald Movember : 2% of the mint divided between \uD83D\uDC49\uD83C\uDFFB 3 winners (674 cro each)*\n\nPinky Movember: 3% of the mint divided between \uD83D\uDC49\uD83C\uDFFB 2 winners (1516 cro each)*\n\nGoldish Movember: 10% of the mint directly to \uD83D\uDC49\uD83C\uDFFB 1 winner (10 110 cro)*\n\n*example if the mint is sold out. If not, the mint will stop on the 1st of December.",
+      "author": {
+        "name": "Team Mustachios",
+        "website": "https://teammustachios.com/",
+        "twitter": "https://twitter.com/teammustachios",
+        "discord": "https://discord.gg/eH4SCJY5Qw"
+      },
+      "address": "0x6AEc192705203eb4EE1106bA5bcf9a11f44397B1",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 100,
+      "totalSupply": 2022,
+      "cost": "50",
+      "memberCost": "50",
+      "foundersOnly": false,
+      "start": 1667181571000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/team-movember/drop.webp",
+        "banner": "/img/collections/team-movember/banner.webp",
+        "avatar": "/img/collections/team-movember/avatar.webp",
+        "preview": "/img/collections/team-movember/card.webp"
       },
       "verification": {
         "verified": true,

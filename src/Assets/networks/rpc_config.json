@@ -2979,7 +2979,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "5000 Fruit Farmers Living & Loving on Cronos. Each Farmer is an access pass into the SFF Ecosystem.",
+        "description": "Slavik Fruit Farms' collection consists of 5000 Fruit Farmers living and loving on the Cronos Blockchain.",
         "verified": true,
         "avatar": "/img/collections/slavikfruitfarm/avatar.webp",
         "banner": "/img/collections/slavikfruitfarm/banner.webp",
@@ -2987,7 +2987,7 @@
         "maxSupply": 5000,
         "website": "https://slavikfruitfarm.io/",
         "twitter": "https://twitter.com/SlavikFruitFarm",
-        "discord": "https://discord.gg/sff"
+        "discord": "https://discord.gg/damg"
       }
     },
     {
@@ -7045,7 +7045,7 @@
       "multiToken": false,
       "address": "0x130a6c2884325d302830179C691D328dDAd9b78C",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Crovilians are the citizens of The CronosVerse and have various traits representing the many societal roles required in both the metaverse and in the physical world. While each Crovilian's unique traits represent real life roles in our society, all Crovilians are created equal in terms of access to The CronosVerse. Holding a Crovilian NFT will grant access to The CronosVerse and allow the owner to create a custom avatar to be used in our metaverse.",
         "verified": true,
@@ -7312,7 +7312,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Ape Boys Elite Is A P2E Puzzle Game Collection of 3,333 Ape Boys Hosted On The Cronos Blockchain Network. Stake Your Ape And Earn $ETE.",
+        "description": "Ape Boys Elite Is A Collection Of 777 Digital Hand Drawn Apes On The Cronos Chain, Combining NFT Ownership, A DeFi - Economy, DAO Governance, And P2E Gaming, We're Turning The Multiverse Into A World We've Always Wished Existed.",
         "verified": false,
         "avatar": "/img/collections/ape-boys-elite/avatar.webp",
         "card": "/img/collections/ape-boys-elite/card.webp",
@@ -9901,9 +9901,9 @@
       "name": "Renegade Monks",
       "slug": "renegade-monks",
       "multiToken": false,
-      "address": "",
+      "address": "0x3Db9463829ADa318Be67cb7Ee475E9D1a1c34f7D",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "\u2606 1,337 Collectable Renegade Monks \u2606\n\nMint your Monk and fight with The New Resistance!",
         "verified": true,
@@ -10412,7 +10412,7 @@
       "listable": true,
       "metadata": {
         "description": "Candy Citizens are bringing their sweetness to the Crofam. They won't rest until every cronos wallet has Candy.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/bored-candy/avatar.webp",
         "banner": "/img/collections/bored-candy/banner.webp",
         "card": "/img/collections/bored-candy/card.webp",
@@ -10421,7 +10421,11 @@
         "twitter": "https://www.twitter.com/boredcandycity",
         "discord": "https://discord.gg/boredcandycity",
         "medium": "https://boredcandycity.medium.com/",
-        "telegram": "https://t.me/+Er5SXP0M70M1YWFk"
+        "telegram": "https://t.me/+Er5SXP0M70M1YWFk",
+        "rankings": {
+          "source": "rarity_sniper",
+          "slug": "bored-candy"
+        }
       }
     },
     {
@@ -10447,11 +10451,11 @@
       "name": "Ryoshi Tales Halloween",
       "slug": "ryoshi-tales-halloween",
       "multiToken": false,
-      "address": "",
+      "address": "0x54E61e2043f894475D17D344250F1983f7F7e6D3",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
-        "description": "Holding this NFT grants reduced service fees, discounts on drops, early access to features and is stakeable in the service fee pool.",
+        "description": "Our very own Halloween collection, from the team at Ebisu's Bay.",
         "verified": true,
         "avatar": "/img/collections/ryoshi-tales-halloween/avatar.webp",
         "banner": "/img/collections/ryoshi-tales-halloween/banner.webp",
@@ -10495,7 +10499,7 @@
       "multiToken": false,
       "address": "0x69B0F59900E123Ad5D3AA37BB022fDe32A4d24B0",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A collection of 200 unique skulls on the Cronos blockchain. We are a closed group of elites with a single mission...join us to know \ud83d\udc80",
         "verified": false,
@@ -10585,11 +10589,11 @@
       "name": "Tata's Twisted Tonics",
       "slug": "tatas-twisted-tonics",
       "multiToken": false,
-      "address": "0x635fba916F2bE6f30c62E7439b046bFB1462A7ab",
+      "address": "0x739b5380156Fa14C7956145048d52dF27EDedfCE",
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "A 100k piece collection centered around crypto knowledge, deflationary action and large staking pools. Mint price increases by 3cro every 10k until they cap at 30cro for the final 10k.  Rewards from royalties and staking pools will be airdropped every 14 days to holders' wallets after 50% mint.",
+        "description": "Our project is truly one of a kind in the Cronos ecosystem. We are centered around 100k deflationary NFTs that are constantly working on building upon our already large staking and compounding pools. Along with very affordable mint prices (max price 30cro) we also offer something SPECIAL: a burning mechanism on our NFTs.  We will begin airdropping royalty and staking rewards at 50% mint completion!! LFT",
         "verified": false,
         "avatar": "/img/collections/tatas-twisted-tonics/avatar.webp",
         "card": "/img/collections/tatas-twisted-tonics/card.webp",
@@ -10597,8 +10601,13 @@
         "maxSupply": 100000,
         "website": "https://www.tatastwistedtonics.com/",
         "twitter": "https://twitter.com/tatastonics",
-        "discord": "https://discord.gg/kA3Be57DY8",
+        "discord": "https://discord.gg/n2zxSkg8jT",
         "medium": "https://medium.com/@TatasTonics"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
@@ -10649,15 +10658,15 @@
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "Patron NFT is 5000 unique dogs of Jack Russell Terrier breed, created to help victims of the war in Ukraine",
+        "description": "Patron NFT is 4999 unique dogs of Jack Russell Terrier breed, created to help victims of the war in Ukraine",
         "verified": true,
         "avatar": "/img/collections/patron-nft/avatar.webp",
         "card": "/img/collections/patron-nft/card.webp",
         "banner": "/img/collections/patron-nft/banner.webp",
-        "maxSupply": 5000,
+        "maxSupply": 4999,
         "website": "https://allmylinks.com/patronnft/",
         "twitter": "https://twitter.com/KAPVEYCRYPTO",
-        "discord": "https://discord.gg/PYUcxxS3",
+        "discord": "https://discord.gg/hAubkeqbjk",
         "medium": "https://medium.com/@kapveycrypto",
         "telegram": "https://t.me/KAPVEYCRYPTO"
       }
@@ -10686,7 +10695,7 @@
       "name": "DegenPlanets",
       "slug": "degen-planets",
       "multiToken": false,
-      "address": "0x7BB5084Faa0Acb2f1adfF6f43E9ab2920b0E9f24",
+      "address": "0x46dC2f806c26549eBF4433a41cCb450514321e7c",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -10708,7 +10717,7 @@
       "multiToken": false,
       "address": "0x542055b71f0a3060e97F2aa293bA4E08c4e0d103",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Undead Pumpkin Head is a collectible NFT tailored around community, cryptocurrency, adventure, and supportive collaboration. Each Pumpkin Head resides on the Cronos blockchain as a one of a kind non-fungible token (NFT), containing a unique combination of 95 spooky hand drawn traits and horrifying attributes. Holding a Undead Pumpkin-Head NFT grants you access to secondary royalties, and a more passionate community that serves to build a more meaningful long-term connection, through co-creation, community, web3 fables, and dreaming.",
         "verified": true,
@@ -10719,6 +10728,83 @@
         "website": "https://undeadcommunity.com",
         "twitter": "https://twitter.com/WeRtheUndead ",
         "discord": "https://discord.gg/undeadcommunity"
+      }
+    },
+    {
+      "name": "Cronos Madafakas",
+      "slug": "cronos-madafakas",
+      "multiToken": false,
+      "address": "0x930fe8faaa81a3517267c66177429f10f31a1f92",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "During hard times, crypto crashes, global recession and geopolitical conflicts we are still fighting with the system.  We are MDFKS rats. We always try, we always find the way, we always survive.",
+        "verified": false,
+        "avatar": "/img/collections/cronos-madafakas/avatar.webp",
+        "card": "/img/collections/cronos-madafakas/card.webp",
+        "banner": "/img/collections/cronos-madafakas/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://cronos-mfks.netlify.app/",
+        "twitter": "https://twitter.com/MdfksR ",
+        "discord": "https://discord.gg/BkWbYepRJp",
+        "telegram": "https://t.me/CronosPolishMadafakas"
+      }
+    },
+    {
+      "name": "Cromunk",
+      "slug": "cromunk",
+      "multiToken": false,
+      "address": "0x84E66B69e1C5c962C80D38FA2e8aEC09B20D5dCE",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "An Exclusive Marketing agency that leverages the power of NFT Ownership to dominate Web3 Marketing. Join the Agency and earn income for engagement on your favorite social media platforms.",
+        "verified": false,
+        "avatar": "/img/collections/cromunk/avatar.webp",
+        "card": "/img/collections/cromunk/card.webp",
+        "banner": "/img/collections/cromunk/banner.webp",
+        "maxSupply": 8888,
+        "website": "https://munk.finance/",
+        "twitter": "https://twitter.com/MunkFinance",
+        "discord": "https://discord.gg/PnVKeZBwmz"
+      }
+    },
+    {
+      "name": "Team Movember",
+      "slug": "team-movember",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Team Movember 2022 is an initiative of Team Mustachios to raise funds for the Movember Foundation Charity. 2022 NFTs and 50% of the mint will go directly to the cause. Movember fundraisers are a global community of fired up Mo Bros and Mo Sisters – aka rock stars making a difference in mental health and suicide prevention, prostate cancer and testicular cancer.",
+        "verified": true,
+        "avatar": "/img/collections/team-movember/avatar.webp",
+        "card": "/img/collections/team-movember/card.webp",
+        "banner": "/img/collections/team-movember/banner.webp",
+        "maxSupply": 2022,
+        "website": "https://teammustachios.com/",
+        "twitter": "https://twitter.com/teammustachios",
+        "discord": "https://discord.gg/eH4SCJY5Qw"
+      }
+    },
+    {
+      "name": "Boss Frogz by Troopz",
+      "slug": "trooprz-boss-frogz",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Boss Frogz by Troopz is a 1812 piece algorithmically generated NFT collection. \n\nThe Boss Frogz are not to be messed with! They run the metaverse and you better be ready to pay up when they come knocking!\n\nThey are the proprietors of Moonshotz Bar & Grill ... if your name's not down... you're not getting in! ",
+        "verified": true,
+        "avatar": "/img/collections/trooprz-boss-frogz/avatar.webp",
+        "card": "/img/collections/trooprz-boss-frogz/card.webp",
+        "banner": "/img/collections/trooprz-boss-frogz/banner.webp",
+        "maxSupply": 1812,
+        "website": "https://trooprz.army/",
+        "twitter": "https://twitter.com/trooprzarmy",
+        "discord": "https://discord.gg/Trooprz"
       }
     }
   ],
@@ -14193,7 +14279,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/crovilians/drop.webp",
         "banner": "/img/collections/crovilians/banner.webp",
@@ -15305,7 +15391,7 @@
       "slug": "evolution-hogs",
       "title": "Evolution Hogs",
       "subtitle": "Evolution Hogs is a collection of 3333 characters generated randomly. All are on the Cronos Chain with unique identity and rarity.",
-      "description": "Evolution Hogs, a collection of 3,333 different characters generated by the artist named \"ZAP7\". Each of character has different rarity parts and they all unique. Holders will be allowed to engage in a variety of community events such as random airdrops, customizing your Evolution Hogs, the opportunity to win a random prize, or numerous giveaways. Half of the royalties will be used to sweep the floor or to help grow the Hype Hogs community. come join us, find your rare hogs and let them be your avatar!",
+      "description": "Evolution Hogs, a collection of 3,333 different characters generated by the artist named \"ZAP7\". Each of character has different rarity parts and they all unique. Holders will be allowed to engage in a variety of community events such as random airdrops, customizing your Evolution Hogs, the opportunity to win a random prize, or numerous giveaways. 50% of the royalties go back to holders from secondary market royalties or to help grow the Evolution Hogs community. come join us, find your rare hogs and let them be your avatar!",
       "author": {
         "name": "ZAP PROJECT",
         "website": "https://zap7art.club/",
@@ -15427,20 +15513,24 @@
         "twitter": "https://twitter.com/TNR_NFT_GAME",
         "discord": "https://discord.gg/tnr"
       },
-      "address": "",
+      "address": "0x3Db9463829ADa318Be67cb7Ee475E9D1a1c34f7D",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 20,
       "totalSupply": 1337,
       "cost": "450",
       "memberCost": "400",
       "whitelistCost": "400",
+      "specialWhitelistCost": {
+        "name": "Mekas of Krupt",
+        "value": "350"
+      },
       "foundersOnly": false,
       "start": 1666900800000,
       "end": null,
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/renegade-monks/drop.webp",
         "banner": "/img/collections/renegade-monks/banner.webp",
@@ -15476,7 +15566,7 @@
       "memberCost": "199",
       "whitelistCost": "199",
       "foundersOnly": false,
-      "start": 1667505600000,
+      "start": null,
       "end": null,
       "referral": false,
       "is1155": false,
@@ -15491,7 +15581,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false,
+        "kyc": "ebisu",
         "escrow": false
       }
     },
@@ -15510,19 +15600,19 @@
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
       },
-      "address": "",
+      "address": "0x54E61e2043f894475D17D344250F1983f7F7e6D3",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 100,
       "totalSupply": 2500,
       "cost": "75",
       "memberCost": "50",
       "foundersOnly": false,
-      "start": 1667160000000,
+      "start": 1666975897000,
       "end": null,
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/ryoshi-tales-halloween/drop.webp",
         "banner": "/img/collections/ryoshi-tales-halloween/banner.webp",
@@ -15551,9 +15641,9 @@
       "maxMintPerTx": 40,
       "maxMintPerAddress": 40,
       "totalSupply": 3000,
-      "cost": "100",
-      "memberCost": "100",
-      "whitelistCost": "100",
+      "cost": "150",
+      "memberCost": "120",
+      "whitelistCost": "120",
       "foundersOnly": false,
       "start": 1667419200000,
       "end": null,
@@ -15570,7 +15660,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false,
+        "kyc": "ebisu",
         "escrow": false
       }
     },
@@ -15620,20 +15710,20 @@
       "id": 128,
       "slug": "patron-nft",
       "title": "Patron NFT",
-      "subtitle": "Patron NFT is 5000 unique dogs of Jack Russell Terrier breed, created to help victims of the war in Ukraine",
+      "subtitle": "Patron NFT is 4999 unique dogs of Jack Russell Terrier breed, created to help victims of the war in Ukraine",
       "description": "Patron NFT is the first collection to be developed into an entire metaverse. We plan to release the second version of the Patron NFT and make a drop for owners of both NFTs. Merchandise and a PatronCoin fan token will also be released.",
       "author": {
         "name": "KAPVEYCRYPTO",
         "website": "https://allmylinks.com/patronnft/",
         "twitter": "https://twitter.com/KAPVEYCRYPTO",
-        "discord": "https://discord.gg/PYUcxxS3",
+        "discord": "https://discord.gg/qJsAtGqq",
         "medium": "https://medium.com/@kapveycrypto",
         "telegram": "https://t.me/KAPVEYCRYPTO"
       },
       "address": "",
       "maxMintPerTx": 30,
       "maxMintPerAddress": 30,
-      "totalSupply": 5000,
+      "totalSupply": 4999,
       "cost": "30",
       "memberCost": "30",
       "whitelistCost": "30",
@@ -15649,6 +15739,165 @@
         "banner": "/img/collections/patron-nft/banner.webp",
         "avatar": "/img/collections/patron-nft/avatar.webp",
         "preview": "/img/collections/patron-nft/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "id": 129,
+      "slug": "degen-planets",
+      "title": "DegenPlanets",
+      "subtitle": "DegenPlanets is the second collection from Degen Brain Finance. Each NFT in this collection represents a piece of the DegenBrains Galaxy Learn2Earn game, where each NFT will eventually represent a single educational course.",
+      "description": "Degen Brain Finance is the first gamified Learn2Earn web3 project on Cronos that incorporates a Learn2Earn game (DegenBrains Galaxy), NFT Avatars (DegenBrains, DegenPlanets), staking utility, our own CRC-20 Token ($DBF), and a growing community of like-minded investors.\n\nDegenPlanet NFTs is the second collection from Degen Brain Finance. Each NFT in this collection represents a piece of the DegenBrains Galaxy Learn2Earn game, where each NFT will eventually represent a single educational course.\n\nOwning a DegenPlanet will grant the following perks within the DBF Ecosystem:\n\nStake your DegenPlanet inside the $DBF-CRO LP Farm to boost APR!\n\nGain access to DegenBrains Galaxy Beta features and new courses before anyone else!\n\n2x the DegenBrains level cap inside the DegenBrains Galaxy!\n\nStake your DegenPlanet inside the DegenBrains Galaxy to earn a new, non-monetary, in-game currency, Gems. \n\nReceive a 10% discount on DegenBrains Galaxy Mystery Boxes and leveling up your DegenBrains NFT.",
+      "author": {
+        "name": "DegenPlanets",
+        "website": "https://degenbrains.com/",
+        "twitter": "https://twitter.com/degenbrains",
+        "discord": "https://discord.gg/degenbrains",
+        "medium": "https://medium.com/@degenbrains"
+      },
+      "address": "0x46dC2f806c26549eBF4433a41cCb450514321e7c",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 2500,
+      "foundersOnly": false,
+      "start": 1667336400000,
+      "erc20Cost": "325",
+      "erc20Token": "dbf",
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": false,
+      "redirect": "https://www.degenbrain.finance/#/planets/",
+      "images": {
+        "drop": "/img/drops/degen-planets/drop.webp",
+        "banner": "/img/collections/degen-planets/banner.webp",
+        "avatar": "/img/collections/degen-planets/avatar.webp",
+        "preview": "/img/collections/degen-planets/card.webp"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
+      }
+    },
+    {
+      "id": 130,
+      "slug": "cromunk",
+      "title": "Cromunk",
+      "subtitle": "An Exclusive Marketing agency that leverages the power of NFT Ownership to dominate Web3 Marketing.",
+      "description": "Join the Agency and earn income for engagement on your favorite social media platforms.",
+      "author": {
+        "name": "MunkFinance",
+        "website": "https://munk.finance/",
+        "twitter": "https://twitter.com/MunkFinance",
+        "discord": "https://discord.gg/PnVKeZBwmz"
+      },
+      "address": "0x84E66B69e1C5c962C80D38FA2e8aEC09B20D5dCE",
+      "cost": "88.88",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 8888,
+      "foundersOnly": false,
+      "start": 1666468800000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": false,
+      "redirect": "https://mint.munk.finance",
+      "images": {
+        "drop": "/img/drops/cromunk/drop.webp",
+        "banner": "/img/collections/cromunk/banner.webp",
+        "avatar": "/img/collections/cromunk/avatar.webp",
+        "preview": "/img/collections/cromunk/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "escrow": false,
+        "verified": false
+      }
+    },
+    {
+      "id": 131,
+      "slug": "team-movember",
+      "title": "Team Movember",
+      "subtitle": "Team Movember 2022 is an initiative of Team Mustachios to raise funds for the Movember Foundation Charity. 2022 NFTs and 50% of the mint will go directly to the cause. Movember fundraisers are a global community of fired up Mo Bros and Mo Sisters – aka rock stars making a difference in mental health and suicide prevention, prostate cancer and testicular cancer.",
+      "description": "By participating to this great cause, get your chance to win a part of the mint. \n\n20% will be distributed between minter of those NFTs:\n\nAny Team Movember: 5% of the mint divided between \uD83D\uDC49\uD83C\uDFFB 22 winners, selected by a BIG RAFFLE! (229 cro each)*\n\nEmerald Movember : 2% of the mint divided between \uD83D\uDC49\uD83C\uDFFB 3 winners (674 cro each)*\n\nPinky Movember: 3% of the mint divided between \uD83D\uDC49\uD83C\uDFFB 2 winners (1516 cro each)*\n\nGoldish Movember: 10% of the mint directly to \uD83D\uDC49\uD83C\uDFFB 1 winner (10 110 cro)*\n\n*example if the mint is sold out. If not, the mint will stop on the 1st of December.",
+      "author": {
+        "name": "Team Mustachios",
+        "website": "https://teammustachios.com/",
+        "twitter": "https://twitter.com/teammustachios",
+        "discord": "https://discord.gg/eH4SCJY5Qw"
+      },
+      "address": "",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 100,
+      "totalSupply": 2022,
+      "cost": "50",
+      "memberCost": "50",
+      "foundersOnly": false,
+      "start": 1667332800000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/team-movember/drop.webp",
+        "banner": "/img/collections/team-movember/banner.webp",
+        "avatar": "/img/collections/team-movember/avatar.webp",
+        "preview": "/img/collections/team-movember/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "id": 132,
+      "slug": "trooprz-boss-frogz",
+      "title": "Boss Frogz by Troopz",
+      "subtitle": "Boss Frogz by Troopz is a 1812 piece algorithmically generated NFT collection. \n\nThe Boss Frogz are not to be messed with! They run the metaverse and you better be ready to pay up when they come knocking!\n\nThey are the proprietors of Moonshotz Bar & Grill ... if your name's not down... you're not getting in!",
+      "description": "Boss Frogz by Troopz is a 1812 piece algorithmically generated NFT collection. \n\nThe Boss Frogz are not to be messed with! They run the metaverse and you better be ready to pay up when they come knocking!\n\nThey are the proprietors of Moonshotz Bar & Grill ... if your names not down... you're not getting in!\n\n- 1812 rare, unique and algorithmically generated Boss Frogz. \n\n- 8 $TRPZ Daily Staking Yield \n\n- Exclusive Boss Frogz Raffle Wheelz\n\n- Trait Based Raffle Wheelz for month of November\n\n- Unrevealed, never seen before, unique trait distribution",
+      "author": {
+        "name": "Trooprz",
+        "website": "https://trooprz.army/",
+        "twitter": "https://twitter.com/trooprzarmy",
+        "discord": "https://discord.gg/Trooprz"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 30,
+      "totalSupply": 1812,
+      "cost": "444",
+      "memberCost": "444",
+      "erc20Cost": "888",
+      "erc20Token": "trpz",
+      "foundersOnly": false,
+      "start": 1667408400000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "priceDescription": "First 24hrs is a $TRPZ token ONLY exclusive mint",
+      "images": {
+        "drop": "/img/drops/trooprz-boss-frogz/drop.webp",
+        "banner": "/img/collections/trooprz-boss-frogz/banner.webp",
+        "avatar": "/img/collections/trooprz-boss-frogz/avatar.webp",
+        "preview": "/img/collections/trooprz-boss-frogz/card.webp"
       },
       "verification": {
         "verified": true,
