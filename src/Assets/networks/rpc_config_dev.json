@@ -15885,6 +15885,7 @@
       "memberCost": "444",
       "erc20Cost": "888",
       "erc20Token": "trpz",
+      "abi": "trooprz-sketchz.json",
       "foundersOnly": false,
       "start": 1667186445000,
       "end": null,
