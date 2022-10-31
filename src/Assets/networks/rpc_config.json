@@ -10412,7 +10412,7 @@
       "listable": true,
       "metadata": {
         "description": "Candy Citizens are bringing their sweetness to the Crofam. They won't rest until every cronos wallet has Candy.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/bored-candy/avatar.webp",
         "banner": "/img/collections/bored-candy/banner.webp",
         "card": "/img/collections/bored-candy/card.webp",

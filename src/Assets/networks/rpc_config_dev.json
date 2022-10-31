@@ -10412,7 +10412,7 @@
       "listable": true,
       "metadata": {
         "description": "Candy Citizens are bringing their sweetness to the Crofam. They won't rest until every cronos wallet has Candy.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/bored-candy/avatar.webp",
         "banner": "/img/collections/bored-candy/banner.webp",
         "card": "/img/collections/bored-candy/card.webp",
@@ -10499,7 +10499,7 @@
       "multiToken": false,
       "address": "0x69B0F59900E123Ad5D3AA37BB022fDe32A4d24B0",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A collection of 200 unique skulls on the Cronos blockchain. We are a closed group of elites with a single mission...join us to know \ud83d\udc80",
         "verified": false,
