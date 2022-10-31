@@ -3179,7 +3179,7 @@
       "multiToken": false,
       "address": "0x3c47Ccb387768459D641dCe4dF556B3560a07855",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": false,
