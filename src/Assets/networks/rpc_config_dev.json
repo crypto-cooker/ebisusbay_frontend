@@ -10792,7 +10792,7 @@
       "name": "Team Movember",
       "slug": "team-movember",
       "multiToken": false,
-      "address": "",
+      "address": "0xd2717D785595eF80Dee68fD75a3CdD429adece35",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -15964,7 +15964,7 @@
         "twitter": "https://twitter.com/teammustachios",
         "discord": "https://discord.gg/eH4SCJY5Qw"
       },
-      "address": "",
+      "address": "0xd2717D785595eF80Dee68fD75a3CdD429adece35",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 100,
       "totalSupply": 2022,
