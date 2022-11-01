@@ -15,7 +15,7 @@ import {Navigation, Pagination} from "swiper";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {
   Button, Center,
-  Heading,
+  Heading, Link,
   Menu,
   MenuButton,
   MenuItem,
@@ -120,102 +120,94 @@ export default function Stats() {
             </ul>
           </div>
         </div>
-        {(timeframe === 'custom' || timeframe === 'custom2') && false && (
+        {(timeframe === 'custom' || timeframe === 'custom2') && (
           <div>
             <p>
               Daily prizes up for grabs for the top Bored Candy buyers and sellers! Competition runs from Nov 1st - 15th. &nbsp;
-              <Badge bg="primary" onClick={() => setShowDialog(true)} className="cursor-pointer">More Info</Badge>
+              <Link href="https://blog.ebisusbay.com/bored-candy-city-and-ebisus-bay-collaboration-5caa9f40cb64" isExternal>
+                <Badge bg="primary" className="cursor-pointer">More Info</Badge>
+              </Link>
             </p>
           </div>
         )}
-        {(timeframe === 'custom' || timeframe === 'custom2') ? (
-          <Center mt={4}>
-            <Text>Bored Candy competition will be starting soon!</Text>
-          </Center>
-        ) : (
-          <>
-            <div className="d-flex gap-3 mt-lg-4 align-items-center justify-content-between">
-              <div className={`nft ${styles.dots}`}>
+          <div className="d-flex gap-3 mt-lg-4 align-items-center justify-content-between">
+            <div className={`nft ${styles.dots}`}>
 
-                <Swiper
-                  spaceBetween={10}
-                  slidesPerView={1}
-                  navigation={true}
-                  loop={true}
-                  modules={[Navigation, Pagination]}
-                  className="mySwiper"
-                  breakpoints={{
-                    576: {
-                      slidesPerView: 2,
-                    },
-                    768: {
-                      slidesPerView: 3,
-                    },
-                    1200: {
-                      slidesPerView: 4,
-                    },
-                  }}
-                >
-                  <SwiperSlide>
-                    <Card
-                      title="Most Total Volume"
-                      onClick={() => setType('totalVolume')}
-                      totalVolume={utils.commify(leaderBoard?.totalVolume[0]?.totalVolume || 0)}
-                      name={shortAddress(leaderBoard?.totalVolume[0]?.address) || 0}
-                      active={type === 'totalVolume'}
-                    />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <Card
-                      title="Most Buy Volume"
-                      onClick={() => setType('buyVolume')}
-                      totalVolume={utils.commify(leaderBoard?.buyVolume[0]?.totalVolume || 0)}
-                      name={shortAddress(leaderBoard?.buyVolume[0]?.address) || 0}
-                      active={type === 'buyVolume'}
-                    />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <Card
-                      title="Most Sell Volume"
-                      onClick={() => setType('sellVolume')}
-                      totalVolume={utils.commify(leaderBoard?.sellVolume[0]?.totalVolume || 0)}
-                      name={shortAddress(leaderBoard?.sellVolume[0]?.address) || 0}
-                      active={type === 'sellVolume'}
-                    />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <Card
-                      title="Biggest Single Sale"
-                      onClick={() => setType('biggestSingleSale')}
-                      totalVolume={utils.commify(leaderBoard?.biggestSingleSale[0]?.totalVolume || 0)}
-                      name={shortAddress(leaderBoard?.biggestSingleSale[0]?.address) || 0}
-                      active={type === 'biggestSingleSale'}
-                    />
-                  </SwiperSlide>
-                </Swiper>
-              </div>
+              <Swiper
+                spaceBetween={10}
+                slidesPerView={1}
+                navigation={true}
+                loop={true}
+                modules={[Navigation, Pagination]}
+                className="mySwiper"
+                breakpoints={{
+                  576: {
+                    slidesPerView: 2,
+                  },
+                  768: {
+                    slidesPerView: 3,
+                  },
+                  1200: {
+                    slidesPerView: 4,
+                  },
+                }}
+              >
+                <SwiperSlide>
+                  <Card
+                    title="Most Total Volume"
+                    onClick={() => setType('totalVolume')}
+                    totalVolume={utils.commify(leaderBoard?.totalVolume[0]?.totalVolume || 0)}
+                    name={shortAddress(leaderBoard?.totalVolume[0]?.address) || 0}
+                    active={type === 'totalVolume'}
+                  />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <Card
+                    title="Most Buy Volume"
+                    onClick={() => setType('buyVolume')}
+                    totalVolume={utils.commify(leaderBoard?.buyVolume[0]?.totalVolume || 0)}
+                    name={shortAddress(leaderBoard?.buyVolume[0]?.address) || 0}
+                    active={type === 'buyVolume'}
+                  />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <Card
+                    title="Most Sell Volume"
+                    onClick={() => setType('sellVolume')}
+                    totalVolume={utils.commify(leaderBoard?.sellVolume[0]?.totalVolume || 0)}
+                    name={shortAddress(leaderBoard?.sellVolume[0]?.address) || 0}
+                    active={type === 'sellVolume'}
+                  />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <Card
+                    title="Biggest Single Sale"
+                    onClick={() => setType('biggestSingleSale')}
+                    totalVolume={utils.commify(leaderBoard?.biggestSingleSale[0]?.totalVolume || 0)}
+                    name={shortAddress(leaderBoard?.biggestSingleSale[0]?.address) || 0}
+                    active={type === 'biggestSingleSale'}
+                  />
+                </SwiperSlide>
+              </Swiper>
             </div>
-            <div className="mt-4 table-responsive">
-              <Table headers={headers[type]} items={leaderBoard[type]} />
-            </div>
-          </>
-        )}
+          </div>
+          <div className="mt-4 table-responsive">
+            <Table headers={headers[type]} items={leaderBoard[type]} />
+          </div>
       </section>
-      {(timeframe === 'custom' || timeframe === 'custom2') &&
-        <p className="text-center small"><a href="https://cdn.ebisusbay.com/Contest_Terms_and_Conditions.html">Contest Terms and
-          Conditions</a></p>
-      }
+      {/*<p className="text-center small"><a href="https://cdn.ebisusbay.com/Contest_Terms_and_Conditions.html">Contest Terms and*/}
+      {/*  Conditions</a></p>*/}
 
-      <Modal isOpen={showDialog} onClose={() => setShowDialog(false)}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Competition Details</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Text>Ebisu’s Bay is going to be offering an exclusive 2 week long contest in collaboration with the Bored Candy City NFTs!</Text>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+      {/*<Modal isOpen={showDialog} onClose={() => setShowDialog(false)}>*/}
+      {/*  <ModalOverlay />*/}
+      {/*  <ModalContent>*/}
+      {/*    <ModalHeader>Competition Details</ModalHeader>*/}
+      {/*    <ModalCloseButton />*/}
+      {/*    <ModalBody>*/}
+      {/*      <Text>Ebisu’s Bay is going to be offering an exclusive 2 week long contest in collaboration with the Bored Candy City NFTs!</Text>*/}
+      {/*    </ModalBody>*/}
+      {/*  </ModalContent>*/}
+      {/*</Modal>*/}
 
       <Footer />
     </div>
