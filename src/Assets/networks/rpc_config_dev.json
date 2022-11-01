@@ -10929,6 +10929,26 @@
         "kyc": "ebisu",
         "escrow": false
       }
+    },
+    {
+      "name": "Halloween BabyJoey",
+      "slug": "halloween-baby-joey",
+      "multiToken": false,
+      "address": "0xee40C7EeB6bA2E1B9Bf5caA73D29B133175aAF1F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "When a BabyJoeyNFT has a raging sugar rush and lands himself dead in the middle of an AI generator! 170 unique images with a Halloween theme.",
+        "verified": false,
+        "avatar": "/img/collections/halloween-baby-joey/avatar.webp",
+        "card": "/img/collections/halloween-baby-joey/card.webp",
+        "banner": "/img/collections/halloween-baby-joey/banner.webp",
+        "maxSupply": 170,
+        "website": "https://www.babyhop.finance/",
+        "twitter": "https://twitter.com/BabyHop__",
+        "discord": "https://discord.gg/fnVzKYPbg/",
+        "telegram": "https://t.me/BabyHopToken"
+      }
     }
   ],
   "drops": [
