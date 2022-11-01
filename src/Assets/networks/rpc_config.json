@@ -10949,6 +10949,44 @@
         "discord": "https://discord.gg/fnVzKYPbg/",
         "telegram": "https://t.me/BabyHopToken"
       }
+    },
+    {
+      "name": "Cronos Mutant Apes",
+      "slug": "cronos-mutant-apes",
+      "multiToken": false,
+      "address": "0x7D89dCC2f35403cFD9B07475826F9a14a340d06A",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "By owning one Cronos Mutant Ape you will have access to a lifetime passive income (6% of Marketplaces royalties). Burn one Mutant Serum to get a Cronos Mutant Ape. Exclusive collection of Cronos Apes.",
+        "verified": true,
+        "avatar": "/img/collections/cronos-mutant-apes/avatar.webp",
+        "card": "/img/collections/cronos-mutant-apes/card.webp",
+        "banner": "/img/collections/cronos-mutant-apes/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://www.cronosapesnft.com/",
+        "twitter": "https://www.twitter.com/cronosapesnft",
+        "discord": "https://discord.gg/cronosapes"
+      }
+    },
+    {
+      "name": "Cronos Mutant Apes - Serums",
+      "slug": "cronos-mutant-apes-serums",
+      "multiToken": false,
+      "address": "0x33e0b91c773D500FB4De87957740f5D200Be7371",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Burn one Mutant Serum to get a Cronos Mutant Ape. By owning one Cronos Mutant Ape you will have access to a lifetime passive income (6% of Marketplaces royalties). Exclusive collection of Cronos Apes.",
+        "verified": true,
+        "avatar": "/img/collections/cronos-mutant-apes-serums/avatar.webp",
+        "card": "/img/collections/cronos-mutant-apes-serums/card.webp",
+        "banner": "/img/collections/cronos-mutant-apes-serums/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://www.cronosapesnft.com/",
+        "twitter": "https://www.twitter.com/cronosapesnft",
+        "discord": "https://discord.gg/cronosapes"
+      }
     }
   ],
   "drops": [
