@@ -363,7 +363,8 @@ const SingleDrop = () => {
         }
 
         const gasPrice = parseUnits('5000', 'gwei');
-        const gasEstimate = await contract.estimateGas.mint(numToMint, {value: finalCost});
+        const gasEstimate = isErc20 ? await contract.estimateGas.mintWithToken(numToMint):
+          await contract.estimateGas.mint(numToMint, {value: finalCost});
         const gasLimit = gasEstimate.mul(2);
         let extra = {
           value: finalCost,
