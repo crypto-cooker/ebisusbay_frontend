@@ -9656,7 +9656,7 @@
       "multiToken": false,
       "address": "0x0d511FAA531d8D36aDE88daFcBbb9cE83Be42111",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "8K Resolution Artworks that are unique and unlike anything else on the blockchain, created with the power of A.I. and advanced editing techniques across multiple platforms to produce the highest quality artwork on Cronos. No roadmaps, no staking, no games, just art, community, and utility.",
         "verified": true,
