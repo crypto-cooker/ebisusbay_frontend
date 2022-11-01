@@ -10792,7 +10792,7 @@
       "name": "Team Movember",
       "slug": "team-movember",
       "multiToken": false,
-      "address": "",
+      "address": "0xd2717D785595eF80Dee68fD75a3CdD429adece35",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -10928,6 +10928,64 @@
         "doxx": "private",
         "kyc": "ebisu",
         "escrow": false
+      }
+    },
+    {
+      "name": "Halloween BabyJoey",
+      "slug": "halloween-baby-joey",
+      "multiToken": false,
+      "address": "0xee40C7EeB6bA2E1B9Bf5caA73D29B133175aAF1F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "When a BabyJoeyNFT has a raging sugar rush and lands himself dead in the middle of an AI generator! 170 unique images with a Halloween theme.",
+        "verified": false,
+        "avatar": "/img/collections/halloween-baby-joey/avatar.webp",
+        "card": "/img/collections/halloween-baby-joey/card.webp",
+        "banner": "/img/collections/halloween-baby-joey/banner.webp",
+        "maxSupply": 170,
+        "website": "https://www.babyhop.finance/",
+        "twitter": "https://twitter.com/BabyHop__",
+        "discord": "https://discord.gg/fnVzKYPbg/",
+        "telegram": "https://t.me/BabyHopToken"
+      }
+    },
+    {
+      "name": "Cronos Mutant Apes",
+      "slug": "cronos-mutant-apes",
+      "multiToken": false,
+      "address": "0x7D89dCC2f35403cFD9B07475826F9a14a340d06A",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "By owning one Cronos Mutant Ape you will have access to a lifetime passive income (6% of Marketplaces royalties). Burn one Mutant Serum to get a Cronos Mutant Ape. Exclusive collection of Cronos Apes.",
+        "verified": true,
+        "avatar": "/img/collections/cronos-mutant-apes/avatar.webp",
+        "card": "/img/collections/cronos-mutant-apes/card.webp",
+        "banner": "/img/collections/cronos-mutant-apes/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://www.cronosapesnft.com/",
+        "twitter": "https://www.twitter.com/cronosapesnft",
+        "discord": "https://discord.gg/cronosapes"
+      }
+    },
+    {
+      "name": "Cronos Mutant Apes - Serums",
+      "slug": "cronos-mutant-apes-serums",
+      "multiToken": false,
+      "address": "0x33e0b91c773D500FB4De87957740f5D200Be7371",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Burn one Mutant Serum to get a Cronos Mutant Ape. By owning one Cronos Mutant Ape you will have access to a lifetime passive income (6% of Marketplaces royalties). Exclusive collection of Cronos Apes.",
+        "verified": true,
+        "avatar": "/img/collections/cronos-mutant-apes-serums/avatar.webp",
+        "card": "/img/collections/cronos-mutant-apes-serums/card.webp",
+        "banner": "/img/collections/cronos-mutant-apes-serums/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://www.cronosapesnft.com/",
+        "twitter": "https://www.twitter.com/cronosapesnft",
+        "discord": "https://discord.gg/cronosapes"
       }
     }
   ],
@@ -15964,7 +16022,7 @@
         "twitter": "https://twitter.com/teammustachios",
         "discord": "https://discord.gg/eH4SCJY5Qw"
       },
-      "address": "",
+      "address": "0xd2717D785595eF80Dee68fD75a3CdD429adece35",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 100,
       "totalSupply": 2022,
