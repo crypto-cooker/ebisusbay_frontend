@@ -17,7 +17,7 @@ import Footer from '../components/Footer';
 import { connectAccount } from '../../GlobalState/User';
 import { fetchMemberInfo, fetchVipInfo } from '../../GlobalState/Memberships';
 import {
-  createSuccessfulTransactionToastContent, isCarkayousCollection,
+  createSuccessfulTransactionToastContent, isBossFrogzDrop, isCarkayousCollection,
   isCreaturesDrop,
   isCrosmocraftsPartsDrop,
   isCyberCloneDrop,
@@ -752,18 +752,20 @@ const SingleDrop = () => {
 
                     {canMintQuantity > 0 && (
                       <div className="d-flex flex-row mt-5">
-                        <button className="btn-main lead mb-5 mr15" onClick={() => mintNow(false)} disabled={minting}>
-                          {minting ? (
-                            <>
-                              Minting...
-                              <Spinner animation="border" role="status" size="sm" className="ms-1">
-                                <span className="visually-hidden">Loading...</span>
-                              </Spinner>
-                            </>
-                          ) : (
-                            <>{drop.maxMintPerTx && drop.maxMintPerTx > 1 ? <>Mint {numToMint}</> : <>Mint</>}</>
-                          )}
-                        </button>
+                        {!isBossFrogzDrop(drop.address) && (
+                          <button className="btn-main lead mb-5 mr15" onClick={() => mintNow(false)} disabled={minting}>
+                            {minting ? (
+                              <>
+                                Minting...
+                                <Spinner animation="border" role="status" size="sm" className="ms-1">
+                                  <span className="visually-hidden">Loading...</span>
+                                </Spinner>
+                              </>
+                            ) : (
+                              <>{drop.maxMintPerTx && drop.maxMintPerTx > 1 ? <>Mint {numToMint}</> : <>Mint</>}</>
+                            )}
+                          </button>
+                        )}
                         {drop.erc20Token && (
                           <button
                             className="btn-main lead mb-5 mr15 mx-1"
