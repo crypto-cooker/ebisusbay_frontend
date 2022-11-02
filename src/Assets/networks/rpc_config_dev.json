@@ -16120,8 +16120,6 @@
       "maxMintPerTx": 10,
       "maxMintPerAddress": 30,
       "totalSupply": 1812,
-      "cost": "444",
-      "memberCost": "444",
       "erc20Cost": "888",
       "erc20Token": "trpz",
       "abi": "trooprz-sketchz.json",
