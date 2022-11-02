@@ -10813,7 +10813,7 @@
       "multiToken": false,
       "address": "0xEB54ea91C92Ce404Ba7AD7B0EF2e36fD75C889A7",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Boss Frogz by Troopz is a 1812 piece algorithmically generated NFT collection. \n\nThe Boss Frogz are not to be messed with! They run the metaverse and you better be ready to pay up when they come knocking!\n\nThey are the proprietors of Moonshotz Bar & Grill ... if your name's not down... you're not getting in! ",
         "verified": true,
@@ -16129,7 +16129,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "priceDescription": "First 24hrs is a $TRPZ token ONLY exclusive mint",
       "images": {
         "drop": "/img/drops/trooprz-boss-frogz/drop.webp",
