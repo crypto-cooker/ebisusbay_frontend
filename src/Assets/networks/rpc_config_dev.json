@@ -3179,7 +3179,7 @@
       "multiToken": false,
       "address": "0x3c47Ccb387768459D641dCe4dF556B3560a07855",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "verified": false,
@@ -9656,7 +9656,7 @@
       "multiToken": false,
       "address": "0x0d511FAA531d8D36aDE88daFcBbb9cE83Be42111",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "8K Resolution Artworks that are unique and unlike anything else on the blockchain, created with the power of A.I. and advanced editing techniques across multiple platforms to produce the highest quality artwork on Cronos. No roadmaps, no staking, no games, just art, community, and utility.",
         "verified": true,
@@ -9877,16 +9877,16 @@
       "name": "Grey_hart's Broken Hearts",
       "slug": "broken-hearts",
       "multiToken": false,
-      "address": "",
+      "address": "0xBF734e446eeB0aFD3C1681Bb014763E60125768b",
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "The Broken Hearts collection is a line of 101 tarot cards created by the musician Grey_hart, using MIDJOURNEY's AI software, all around the subject of a broken heart. Each 9x16 is a 1 of a kind image with varying themes and elements around heartbreak and the spiritual journey involved in getting through it. Some are astral guides, some spirit animals, some just metaphors and feelings made into imagery. If you've experienced heartbreak of any kind in your life, there's sure to be an image that speaks to you in some form. ",
+        "description": "The Broken Hearts collection is a line of 101 tarot cards created by the musician Grey_hart, using MIDJOURNEY's AI software, all around the subject of a broken heart. Each 9x16 is a 1 of a kind image with varying themes and elements around heartbreak and the spiritual journey involved in getting through it. Some are astral guides, some spirit animals, some just metaphors and feelings made into imagery. If you've experienced heartbreak of any kind in your life, there's sure to be an image that speaks to you in some form.",
         "verified": true,
         "avatar": "/img/collections/broken-hearts/avatar.webp",
         "card": "/img/collections/broken-hearts/card.webp",
         "banner": "/img/collections/broken-hearts/banner.webp",
-        "maxSupply": 2500,
+        "maxSupply": 101,
         "website": "https://loveisgrey.art/",
         "discord": "https://discord.gg/t3DM6pNAWb",
         "instagram": "https://instagram.com/lov3is_grey"
@@ -9895,6 +9895,25 @@
         "doxx": false,
         "kyc": "ebisu",
         "escrow": false
+      }
+    },
+    {
+      "name": "Grey_hart's Broken Hearts - Texts",
+      "slug": "broken-hearts-texts",
+      "multiToken": false,
+      "address": "0xf247533dfca6999097c959222d56b668c6a3052d",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Broken Hearts collection is a line of 101 tarot cards created by the musician Grey_hart, using MIDJOURNEY’s AI software, all around the subject of a broken heart. Each 9x16 is a 1 of a kind image with varying themes and elements around heartbreak and the spiritual journey involved in getting through it. Some are astral guides, some spirit animals, some just metaphors and feelings made into imagery. If you’ve experienced heartbreak of any kind in your life, there’s sure to be an image that speaks to you in some form.",
+        "verified": true,
+        "avatar": "/img/collections/broken-hearts/avatar.webp",
+        "card": "/img/collections/broken-hearts/card.webp",
+        "banner": "/img/collections/broken-hearts/banner.webp",
+        "maxSupply": 101,
+        "website": "https://loveisgrey.art/",
+        "discord": "https://discord.gg/t3DM6pNAWb",
+        "instagram": "https://instagram.com/lov3is_grey"
       }
     },
     {
@@ -10773,7 +10792,7 @@
       "name": "Team Movember",
       "slug": "team-movember",
       "multiToken": false,
-      "address": "",
+      "address": "0xd2717D785595eF80Dee68fD75a3CdD429adece35",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -10805,6 +10824,224 @@
         "website": "https://trooprz.army/",
         "twitter": "https://twitter.com/trooprzarmy",
         "discord": "https://discord.gg/Trooprz"
+      }
+    },
+    {
+      "name": "Croshi World Cup NFT",
+      "slug": "croshi-world-cup-nft",
+      "multiToken": false,
+      "address": "0x685CA35bfd49Ed49624E1e779c462200c31aF044",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Croshi World Cup NFT",
+        "verified": false,
+        "avatar": "/img/collections/croshi-world-cup-nft/avatar.webp",
+        "card": "/img/collections/croshi-world-cup-nft/card.webp",
+        "banner": "/img/collections/croshi-world-cup-nft/banner.webp",
+        "maxSupply": 0,
+        "website": "https://www.croshi.com/",
+        "twitter": "https://twitter.com/croshiinu",
+        "telegram": "https://t.me/croshiinu"
+      }
+    },
+    {
+      "name": "CroSwap World Cup",
+      "slug": "croswap-world-cup",
+      "multiToken": false,
+      "address": "0xDB3550920A04fDc724bF3fEe21BFb0FCD36b32DF",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "CroSwap World Cup Sweepstakes NFT Country Cards",
+        "verified": true,
+        "avatar": "/img/collections/croswap-world-cup/avatar.webp",
+        "card": "/img/collections/croswap-world-cup/card.webp",
+        "banner": "/img/collections/croswap-world-cup/banner.webp",
+        "maxSupply": 0,
+        "website": "https://croswap.com/",
+        "twitter": "https://twitter.com/CroSwapOfficial",
+        "discord": "https://discord.gg/croswap",
+        "medium": "https://medium.com/@CroSwapDEX"
+      }
+    },
+    {
+      "name": "Seasonal Cats",
+      "slug": "seasonal-cats",
+      "multiToken": true,
+      "tokens": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
+        },
+        {
+          "id": 5
+        },
+        {
+          "id": 6
+        },
+        {
+          "id": 7
+        },
+        {
+          "id": 8
+        },
+        {
+          "id": 9
+        },
+        {
+          "id": 10
+        },
+        {
+          "id": 11
+        },
+        {
+          "id": 12
+        },
+        {
+          "id": 13
+        }
+      ],
+      "address": "0x7dE8BeC3ACf03997CDf3052c769571bbbBb7eE14",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Seasonal Cats have arrived to Cronos.\nA Special Airdrop Collection to our Holders.",
+        "verified": true,
+        "avatar": "/img/collections/seasonal-cats/avatar.webp",
+        "card": "/img/collections/seasonal-cats/card.webp",
+        "banner": "/img/collections/seasonal-cats/banner.webp",
+        "maxSupply": 13,
+        "website": "https://worldofcats.xyz/",
+        "twitter": "https://twitter.com/worldofcatsnft",
+        "discord": "https://discord.gg/worldofcats"
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": "ebisu",
+        "escrow": false
+      }
+    },
+    {
+      "name": "Halloween BabyJoey",
+      "slug": "halloween-baby-joey",
+      "multiToken": false,
+      "address": "0xee40C7EeB6bA2E1B9Bf5caA73D29B133175aAF1F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "When a BabyJoeyNFT has a raging sugar rush and lands himself dead in the middle of an AI generator! 170 unique images with a Halloween theme.",
+        "verified": false,
+        "avatar": "/img/collections/halloween-baby-joey/avatar.webp",
+        "card": "/img/collections/halloween-baby-joey/card.webp",
+        "banner": "/img/collections/halloween-baby-joey/banner.webp",
+        "maxSupply": 170,
+        "website": "https://www.babyhop.finance/",
+        "twitter": "https://twitter.com/BabyHop__",
+        "discord": "https://discord.gg/fnVzKYPbg/",
+        "telegram": "https://t.me/BabyHopToken"
+      }
+    },
+    {
+      "name": "Cronos Mutant Apes",
+      "slug": "cronos-mutant-apes",
+      "multiToken": false,
+      "address": "0x7D89dCC2f35403cFD9B07475826F9a14a340d06A",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "By owning one Cronos Mutant Ape you will have access to a lifetime passive income (6% of Marketplaces royalties). Burn one Mutant Serum to get a Cronos Mutant Ape. Exclusive collection of Cronos Apes.",
+        "verified": true,
+        "avatar": "/img/collections/cronos-mutant-apes/avatar.webp",
+        "card": "/img/collections/cronos-mutant-apes/card.webp",
+        "banner": "/img/collections/cronos-mutant-apes/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://www.cronosapesnft.com/",
+        "twitter": "https://www.twitter.com/cronosapesnft",
+        "discord": "https://discord.gg/cronosapes"
+      }
+    },
+    {
+      "name": "Cronos Mutant Apes - Serums",
+      "slug": "cronos-mutant-apes-serums",
+      "multiToken": false,
+      "address": "0x33e0b91c773D500FB4De87957740f5D200Be7371",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Burn one Mutant Serum to get a Cronos Mutant Ape. By owning one Cronos Mutant Ape you will have access to a lifetime passive income (6% of Marketplaces royalties). Exclusive collection of Cronos Apes.",
+        "verified": true,
+        "avatar": "/img/collections/cronos-mutant-apes-serums/avatar.webp",
+        "card": "/img/collections/cronos-mutant-apes-serums/card.webp",
+        "banner": "/img/collections/cronos-mutant-apes-serums/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://www.cronosapesnft.com/",
+        "twitter": "https://www.twitter.com/cronosapesnft",
+        "discord": "https://discord.gg/cronosapes"
+      }
+    },
+    {
+      "name": "Crofam Ladies",
+      "slug": "crofam-ladies",
+      "multiToken": false,
+      "address": "0xF5aF7B3C142aB5545717C7fB6a0Da8fBF6E68612",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Crofam Ladies is a collection consisting of 3685 NFTs.  Get your lady's full crown and send her to the miss election and get a guaranteed VIP drop.  Find 1 of 100 queen attributes and get a guaranteed VIP drop.  The first collection is just the beginning and will guarantee free drops.  The first free drop for all owners is coming soon, and it will be a classic collection that has more than 200 different items.  Sooner you staked out, the more you will gain. 5% of the mint's value goes to Crofam Ladies holders.  Add some beauty to your portfolio",
+        "verified": false,
+        "avatar": "/img/collections/crofam-ladies/avatar.webp",
+        "card": "/img/collections/crofam-ladies/card.webp",
+        "banner": "/img/collections/crofam-ladies/banner.webp",
+        "maxSupply": 3685,
+        "website": "https://crofamladies.netlify.app/",
+        "twitter": "https://www.twitter.com/CrofamLadies"
+      }
+    },
+    {
+      "name": "GrumpyGhosts",
+      "slug": "grumpyghosts",
+      "multiToken": false,
+      "address": "0x4aE3cc28cf28493D9175Bd95C9aC8B25586F6fCf",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "GrumpyGhosts are here to haunt Cronos.",
+        "verified": false,
+        "avatar": "/img/collections/grumpyghosts/avatar.webp",
+        "card": "/img/collections/grumpyghosts/card.webp",
+        "banner": "/img/collections/grumpyghosts/banner.webp",
+        "maxSupply": 666,
+        "website": "https://cromorphs.com/GrumpyGhosts/",
+        "twitter": "https://www.twitter.com/GrumpyGhostsNFT",
+        "discord": "https://discord.gg/C69yypwJfm"
+      }
+    },
+    {
+      "name": "The Resurrection by Dr. Boo",
+      "slug": "dr-boo-resurrection",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Resurrection potion can be deadly if I’m the wrong hands!!! Dr. Boo has been working hard in the lab to bring you the first of its kind mutant potion!!! If you own and nft and want to mutate it… then drink the juice.  You will get a resurrected version of your favorite nft!!  Don’t worry the host nft will not be harmed.",
+        "verified": true,
+        "avatar": "/img/collections/dr-boo-resurrection/avatar.webp",
+        "card": "/img/collections/dr-boo-resurrection/card.webp",
+        "banner": "/img/collections/dr-boo-resurrection/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://drbghosts.com/",
+        "twitter": "https://www.twitter.com/drbghosts",
+        "discord": "https://discord.gg/EFW8bAZW3J"
       }
     }
   ],
@@ -15477,10 +15714,12 @@
         "discord": "https://discord.gg/t3DM6pNAWb",
         "instagram": "https://instagram.com/lov3is_grey"
       },
-      "address": "",
+      "address": "0xBF734e446eeB0aFD3C1681Bb014763E60125768b",
       "maxMintPerTx": 1,
       "maxMintPerAddress": 2,
       "totalSupply": 202,
+      "cost": "6000",
+      "memberCost": "5000",
       "foundersOnly": false,
       "start": 1667246400000,
       "end": null,
@@ -15645,7 +15884,7 @@
       "memberCost": "120",
       "whitelistCost": "120",
       "foundersOnly": false,
-      "start": 1667419200000,
+      "start": null,
       "end": null,
       "referral": false,
       "is1155": false,
@@ -15832,14 +16071,14 @@
       "slug": "team-movember",
       "title": "Team Movember",
       "subtitle": "Team Movember 2022 is an initiative of Team Mustachios to raise funds for the Movember Foundation Charity. 2022 NFTs and 50% of the mint will go directly to the cause. Movember fundraisers are a global community of fired up Mo Bros and Mo Sisters – aka rock stars making a difference in mental health and suicide prevention, prostate cancer and testicular cancer.",
-      "description": "By participating to this great cause, get your chance to win a part of the mint. \n\n20% will be distributed between minter of those NFTs:\n\nAny Team Movember: 5% of the mint divided between \uD83D\uDC49\uD83C\uDFFB 22 winners, selected by a BIG RAFFLE! (229 cro each)*\n\nEmerald Movember : 2% of the mint divided between \uD83D\uDC49\uD83C\uDFFB 3 winners (674 cro each)*\n\nPinky Movember: 3% of the mint divided between \uD83D\uDC49\uD83C\uDFFB 2 winners (1516 cro each)*\n\nGoldish Movember: 10% of the mint directly to \uD83D\uDC49\uD83C\uDFFB 1 winner (10 110 cro)*\n\n*example if the mint is sold out. If not, the mint will stop on the 1st of December.",
+      "description": "The collection is not a based-trait collection. It's made of 5 differents NFTs.\n\nTeam Movember is a side-collection drop for charity and the Movember cause.\n\nYou participate to the cause and get a chance to win something to say thank you.\n\nBy participating to this great cause, get your chance to win a part of the mint. \n\n20% will be distributed between minter of those NFTs:\n\nAny Team Movember: 5% of the mint divided between \uD83D\uDC49\uD83C\uDFFB 22 winners, selected by a BIG RAFFLE! (229 cro each)*\n\nEmerald Movember : 2% of the mint divided between \uD83D\uDC49\uD83C\uDFFB 3 winners (674 cro each)*\n\nPinky Movember: 3% of the mint divided between \uD83D\uDC49\uD83C\uDFFB 2 winners (1516 cro each)*\n\nGoldish Movember: 10% of the mint directly to \uD83D\uDC49\uD83C\uDFFB 1 winner (10 110 cro)*\n\n*example if the mint is sold out. If not, the mint will stop on the 1st of December.",
       "author": {
         "name": "Team Mustachios",
         "website": "https://teammustachios.com/",
         "twitter": "https://twitter.com/teammustachios",
         "discord": "https://discord.gg/eH4SCJY5Qw"
       },
-      "address": "",
+      "address": "0xd2717D785595eF80Dee68fD75a3CdD429adece35",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 100,
       "totalSupply": 2022,
@@ -15899,6 +16138,44 @@
         "banner": "/img/collections/trooprz-boss-frogz/banner.webp",
         "avatar": "/img/collections/trooprz-boss-frogz/avatar.webp",
         "preview": "/img/collections/trooprz-boss-frogz/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "id": 133,
+      "slug": "dr-boo-resurrection",
+      "title": "The Resurrection by Dr. Boo",
+      "subtitle": "The Resurrection potion can be deadly if I’m the wrong hands!!! Dr. Boo has been working hard in the lab to bring you the first of its kind mutant potion!!! If you own and nft and want to mutate it… then drink the juice.  You will get a resurrected version of your favorite nft!!  Don’t worry the host nft will not be harmed.",
+      "description": "Mutate any nft you own...but don’t drink the juice yourself...this has not been tested on humans...successfully",
+      "author": {
+        "name": "Dr Boos Ghost",
+        "website": "https://drbghosts.com/",
+        "twitter": "https://www.twitter.com/drbghosts",
+        "discord": "https://discord.gg/EFW8bAZW3J"
+      },
+      "address": "",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 100,
+      "totalSupply": 10000,
+      "cost": "99",
+      "memberCost": "89",
+      "foundersOnly": false,
+      "start": null,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/dr-boo-resurrection/drop.webp",
+        "banner": "/img/collections/dr-boo-resurrection/banner.webp",
+        "avatar": "/img/collections/dr-boo-resurrection/avatar.webp",
+        "preview": "/img/collections/dr-boo-resurrection/card.webp"
       },
       "verification": {
         "verified": true,

@@ -2062,6 +2062,25 @@
         "twitter": "https://twitter.com/teammustachios",
         "discord": "https://discord.gg/eH4SCJY5Qw"
       }
+    },
+    {
+      "name": "The Resurrection by Dr. Boo",
+      "slug": "dr-boo-resurrection",
+      "multiToken": false,
+      "address": "0x563bC4E9F3F74B5EA972Ab7D97c9A9F276193C60",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Resurrection potion can be deadly if I’m the wrong hands!!! Dr. Boo has been working hard in the lab to bring you the first of its kind mutant potion!!! If you own and nft and want to mutate it… then drink the juice.  You will get a resurrected version of your favorite nft!!  Don’t worry the host nft will not be harmed.",
+        "verified": true,
+        "avatar": "/img/collections/dr-boo-resurrection/avatar.webp",
+        "card": "/img/collections/dr-boo-resurrection/card.webp",
+        "banner": "/img/collections/dr-boo-resurrection/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://drbghosts.com/",
+        "twitter": "https://www.twitter.com/drbghosts",
+        "discord": "https://discord.gg/EFW8bAZW3J"
+      }
     }
   ],
   "drops": [
@@ -5509,6 +5528,44 @@
         "banner": "/img/collections/team-movember/banner.webp",
         "avatar": "/img/collections/team-movember/avatar.webp",
         "preview": "/img/collections/team-movember/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "id": 133,
+      "slug": "dr-boo-resurrection",
+      "title": "The Resurrection by Dr. Boo",
+      "subtitle": "The Resurrection potion can be deadly if I’m the wrong hands!!! Dr. Boo has been working hard in the lab to bring you the first of its kind mutant potion!!! If you own and nft and want to mutate it… then drink the juice.  You will get a resurrected version of your favorite nft!!  Don’t worry the host nft will not be harmed.",
+      "description": "Mutate any nft you own...but don’t drink the juice yourself...this has not been tested on humans...successfully",
+      "author": {
+        "name": "Dr Boos Ghost",
+        "website": "https://drbghosts.com/",
+        "twitter": "https://www.twitter.com/drbghosts",
+        "discord": "https://discord.gg/EFW8bAZW3J"
+      },
+      "address": "0x563bC4E9F3F74B5EA972Ab7D97c9A9F276193C60",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 100,
+      "totalSupply": 10000,
+      "cost": "99",
+      "memberCost": "89",
+      "foundersOnly": false,
+      "start": 1667370245000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/dr-boo-resurrection/drop.webp",
+        "banner": "/img/collections/dr-boo-resurrection/banner.webp",
+        "avatar": "/img/collections/dr-boo-resurrection/avatar.webp",
+        "preview": "/img/collections/dr-boo-resurrection/card.webp"
       },
       "verification": {
         "verified": true,
