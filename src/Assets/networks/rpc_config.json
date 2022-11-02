@@ -10987,6 +10987,24 @@
         "twitter": "https://www.twitter.com/cronosapesnft",
         "discord": "https://discord.gg/cronosapes"
       }
+    },
+    {
+      "name": "Crofam Ladies",
+      "slug": "crofam-ladies",
+      "multiToken": false,
+      "address": "0xF5aF7B3C142aB5545717C7fB6a0Da8fBF6E68612",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Crofam Ladies is a collection consisting of 3685 NFTs.  Get your lady's full crown and send her to the miss election and get a guaranteed VIP drop.  Find 1 of 100 queen attributes and get a guaranteed VIP drop.  The first collection is just the beginning and will guarantee free drops.  The first free drop for all owners is coming soon, and it will be a classic collection that has more than 200 different items.  Sooner you staked out, the more you will gain. 5% of the mint's value goes to Crofam Ladies holders.  Add some beauty to your portfolio",
+        "verified": false,
+        "avatar": "/img/collections/crofam-ladies/avatar.webp",
+        "card": "/img/collections/crofam-ladies/card.webp",
+        "banner": "/img/collections/crofam-ladies/banner.webp",
+        "maxSupply": 3685,
+        "website": "https://crofamladies.netlify.app/",
+        "twitter": "https://www.twitter.com/CrofamLadies"
+      }
     }
   ],
   "drops": [
