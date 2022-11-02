@@ -2099,6 +2099,28 @@
         "website": "https://www.alstoniaverse.com/",
         "discord": "https://discord.gg/dteTFGaRr2"
       }
+    },
+    {
+      "name": "Rebel Punks",
+      "slug": "rebel-punks",
+      "multiToken": false,
+      "address": "0xa658fc75FC40B079345810503eb3E4Cca9Feae06",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Rebel Punks is an artistically hand drawn collection, pioneering a new hybrid Gaming Ecosystem, the Metawarz Shooter. The Rebel Punks are more than just collectibles, they carry endless possibilities and utilities. The art is derived from one faction of the Metawarz. Thus, they are the cornerstone of Metawarz Shooter ecosystem. Your Rebel serve as a membership card, and grants you access to members-only benefits.",
+        "verified": true,
+        "avatar": "/img/collections/rebel-punks/avatar.webp",
+        "card": "/img/collections/rebel-punks/card.webp",
+        "banner": "/img/collections/rebel-punks/banner.webp",
+        "maxSupply": 5000,
+        "website": "https://www.metawarz.io/RebelPunks/",
+        "twitter": "https://twitter.com/MetaWarz_io",
+        "discord": "https://discord.gg/xqyQ7M4k8p",
+        "medium": "https://medium.com/@metawarzhq",
+        "telegram": "https://t.me/MetaWarzHQ",
+        "instagram": "https://www.instagram.com/metawarz/"
+      }
     }
   ],
   "drops": [
@@ -5551,6 +5573,48 @@
         "verified": true,
         "doxx": false,
         "kyc": "ebisu",
+        "escrow": false
+      }
+    },
+    {
+      "id": 127,
+      "slug": "rebel-punks",
+      "title": "Rebel Punks",
+      "subtitle": "Rebel Punks is an artistically hand drawn collection, pioneering a new hybrid Gaming Ecosystem, the Metawarz Shooter. The Rebel Punks are more than just collectibles, they carry endless possibilities and utilities. The art is derived from one faction of the Metawarz. Thus, they are the cornerstone of Metawarz Shooter ecosystem. Your Rebel serve as a membership card, and grants you access to members-only benefits.",
+      "description": "The Rebel Punks is an art, utility focused and community driven NFT project. A collection of 5000 algorithmically generated NFTs. The Rebel Punks are more than just collectibles, they carry endless possibilities and utilities. The art is derived from one faction of the Metawarz. Thus, they are the cornerstone of Metawarz Shooter ecosystem.\n\nEach Rebel Punk is unique and exclusive based on 220+ traits. The objective is to build a greater inclusion, diverse and a strong community around a gaming ecosystem.  A community that will contribute, help build and flourish with one of the most ambitious Play-To-Earn project, the Metawarz Shooter. \n\nMetawarz Shooter is an immersive Cyberpunk themed First Person Shooter game with a unique gaming experience. A hybrid combination of both First-person shooter and Third-person shooter to bring the most optimized experience during the in-game play.\n\nMetawarz Shooter is developing an entertaining and enjoyable First Person Shooter game. Building a Free-to-Play, Play-to-Earn game that is truly supreme and fun, with appealing gaming graphics, a story-driven game design, and an engaging game experience. Creating real value for Rebel Punk holders by creating robust utilities, and backing the Rebel Punks with a gaming ecosystem.\n\nYour Rebel serves as a membership card, and grants you access to members-only benefits. Including but not limited to:\n\n\u2605 Mystery Box\n\u2605 Guaranteed $WARZ Token Private Sale Whitelist (Metawarz In-game currency)\n\u2605 Guaranteed Whitelist for all NFTs & In-Game Assets\n\u2605 Metawarz Shooter Close Beta-Test Access\n\u2605 In-Game Asset Lottery (Holders get a chance to win in-game assets)\n\u2605 Royalty Distribution\n\nRemember some Punks are cool, some are novel but some are just legendary. So snatch them up, Play, Earn and Proudly lead the rebellious life forevermore.",
+      "author": {
+        "name": "Metawarz Team",
+        "website": "https://www.metawarz.io/RebelPunks/",
+        "twitter": "https://twitter.com/MetaWarz_io",
+        "discord": "https://discord.gg/xqyQ7M4k8p",
+        "medium": "https://medium.com/@metawarzhq",
+        "telegram": "https://t.me/MetaWarzHQ",
+        "instagram": "https://www.instagram.com/metawarz/"
+      },
+      "address": "0xa658fc75FC40B079345810503eb3E4Cca9Feae06",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 100,
+      "totalSupply": 5000,
+      "cost": "480",
+      "memberCost": "440",
+      "whitelistCost": "400",
+      "foundersOnly": false,
+      "start": 1667422395000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/rebel-punks/drop.webp",
+        "banner": "/img/collections/rebel-punks/banner.webp",
+        "avatar": "/img/collections/rebel-punks/avatar.webp",
+        "preview": "/img/collections/rebel-punks/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
         "escrow": false
       }
     },
