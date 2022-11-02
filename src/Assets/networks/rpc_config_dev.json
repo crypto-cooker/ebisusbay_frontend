@@ -11005,6 +11005,25 @@
         "website": "https://crofamladies.netlify.app/",
         "twitter": "https://www.twitter.com/CrofamLadies"
       }
+    },
+    {
+      "name": "GrumpyGhosts",
+      "slug": "grumpyghosts",
+      "multiToken": false,
+      "address": "0x4aE3cc28cf28493D9175Bd95C9aC8B25586F6fCf",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "GrumpyGhosts are here to haunt Cronos.",
+        "verified": false,
+        "avatar": "/img/collections/grumpyghosts/avatar.webp",
+        "card": "/img/collections/grumpyghosts/card.webp",
+        "banner": "/img/collections/grumpyghosts/banner.webp",
+        "maxSupply": 666,
+        "website": "https://cromorphs.com/GrumpyGhosts/",
+        "twitter": "https://www.twitter.com/GrumpyGhostsNFT",
+        "discord": "https://discord.gg/C69yypwJfm"
+      }
     }
   ],
   "drops": [
