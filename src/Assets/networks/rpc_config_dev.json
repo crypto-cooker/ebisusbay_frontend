@@ -15884,7 +15884,7 @@
       "memberCost": "120",
       "whitelistCost": "120",
       "foundersOnly": false,
-      "start": null,
+      "start": 1667419200000,
       "end": null,
       "referral": false,
       "is1155": false,
