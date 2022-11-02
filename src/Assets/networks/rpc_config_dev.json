@@ -10675,7 +10675,7 @@
       "multiToken": false,
       "address": "",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Patron NFT is 4999 unique dogs of Jack Russell Terrier breed, created to help victims of the war in Ukraine",
         "verified": true,
@@ -16163,7 +16163,7 @@
       "cost": "99",
       "memberCost": "89",
       "foundersOnly": false,
-      "start": null,
+      "start": 1667505600000,
       "end": null,
       "referral": false,
       "is1155": false,
