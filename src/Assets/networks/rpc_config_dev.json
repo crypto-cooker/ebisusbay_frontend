@@ -10633,7 +10633,7 @@
       "name": "AlstoniaVerse Access Card",
       "slug": "alstoniaverse-access-card",
       "multiToken": false,
-      "address": "",
+      "address": "0x3C839Cb6d994edD48691C764207b8E783cDD58E0",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -15869,14 +15869,14 @@
       "id": 126,
       "slug": "alstoniaverse-access-card",
       "title": "AlstoniaVerse Access Card",
-      "subtitle": "A 2,000 NFT access card collection on the CRONOS chain that provides holders' with virtual real-estate in the ALSTONIAVERSE!",
+      "subtitle": "A 3,000 NFT access card collection on the CRONOS chain that provides holders' with virtual real-estate in the ALSTONIAVERSE!",
       "description": "ALSTONIAVERSE is a browser-based metaverse, immersive social space where you can explore, build, and gather with others.\n\nATV Access Card benefit:\n-Own yourself a metaverse luxury property\n-Communication\n-Property rent\n-Virtual NFT gallery\n-Over 300 furniture & decoration\n-NFT staking with CRODEX\n-Auction house access\n-ATV event access\n-Avatar airdrops\nand much more",
       "author": {
         "name": "AlstoniaVerse",
         "website": "https://www.alstoniaverse.com/",
         "discord": "https://discord.gg/dteTFGaRr2"
       },
-      "address": "",
+      "address": "0x3C839Cb6d994edD48691C764207b8E783cDD58E0",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 40,
       "totalSupply": 3000,
