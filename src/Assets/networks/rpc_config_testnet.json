@@ -2081,6 +2081,24 @@
         "twitter": "https://www.twitter.com/drbghosts",
         "discord": "https://discord.gg/EFW8bAZW3J"
       }
+    },
+    {
+      "name": "AlstoniaVerse Access Card",
+      "slug": "alstoniaverse-access-card",
+      "multiToken": false,
+      "address": "0x51Cd050BB937AD8f6aF35e4413c97073e9f73D2d",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A 2,000 NFT access card collection on the CRONOS chain that provides holders' with virtual real-estate in the ALSTONIAVERSE!",
+        "verified": true,
+        "avatar": "/img/collections/alstoniaverse-access-card/avatar.webp",
+        "card": "/img/collections/alstoniaverse-access-card/card.webp",
+        "banner": "/img/collections/alstoniaverse-access-card/banner.webp",
+        "maxSupply": 3000,
+        "website": "https://www.alstoniaverse.com/",
+        "discord": "https://discord.gg/dteTFGaRr2"
+      }
     }
   ],
   "drops": [
@@ -5496,6 +5514,44 @@
         "kyc": true,
         "escrow": false,
         "verified": true
+      }
+    },
+    {
+      "id": 126,
+      "slug": "alstoniaverse-access-card",
+      "title": "AlstoniaVerse Access Card",
+      "subtitle": "A 2,000 NFT access card collection on the CRONOS chain that provides holders' with virtual real-estate in the ALSTONIAVERSE!",
+      "description": "ALSTONIAVERSE is a browser-based metaverse, immersive social space where you can explore, build, and gather with others.\n\nATV Access Card benefit:\n-Own yourself a metaverse luxury property\n-Communication\n-Property rent\n-Virtual NFT gallery\n-Over 300 furniture & decoration\n-NFT staking with CRODEX\n-Auction house access\n-ATV event access\n-Avatar airdrops\nand much more",
+      "author": {
+        "name": "AlstoniaVerse",
+        "website": "https://www.alstoniaverse.com/",
+        "discord": "https://discord.gg/dteTFGaRr2"
+      },
+      "address": "0x51Cd050BB937AD8f6aF35e4413c97073e9f73D2d",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 40,
+      "totalSupply": 3000,
+      "cost": "150",
+      "memberCost": "120",
+      "whitelistCost": "120",
+      "foundersOnly": false,
+      "start": 1667408852000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/alstoniaverse-access-card/drop.webp",
+        "banner": "/img/collections/alstoniaverse-access-card/banner.webp",
+        "avatar": "/img/collections/alstoniaverse-access-card/avatar.webp",
+        "preview": "/img/collections/alstoniaverse-access-card/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
