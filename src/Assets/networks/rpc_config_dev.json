@@ -10811,7 +10811,7 @@
       "name": "Boss Frogz by Troopz",
       "slug": "trooprz-boss-frogz",
       "multiToken": false,
-      "address": "0x6C997FdCa4115C080b2B669b5058016C7d8D1760",
+      "address": "0xEB54ea91C92Ce404Ba7AD7B0EF2e36fD75C889A7",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -16116,7 +16116,7 @@
         "twitter": "https://twitter.com/trooprzarmy",
         "discord": "https://discord.gg/Trooprz"
       },
-      "address": "0x6C997FdCa4115C080b2B669b5058016C7d8D1760",
+      "address": "0xEB54ea91C92Ce404Ba7AD7B0EF2e36fD75C889A7",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 30,
       "totalSupply": 1812,
@@ -16126,7 +16126,7 @@
       "erc20Token": "trpz",
       "abi": "trooprz-sketchz.json",
       "foundersOnly": false,
-      "start": 1667186445000,
+      "start": 1667408400000,
       "end": null,
       "referral": false,
       "is1155": false,
