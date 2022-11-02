@@ -10987,6 +10987,62 @@
         "twitter": "https://www.twitter.com/cronosapesnft",
         "discord": "https://discord.gg/cronosapes"
       }
+    },
+    {
+      "name": "Crofam Ladies",
+      "slug": "crofam-ladies",
+      "multiToken": false,
+      "address": "0xF5aF7B3C142aB5545717C7fB6a0Da8fBF6E68612",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Crofam Ladies is a collection consisting of 3685 NFTs.  Get your lady's full crown and send her to the miss election and get a guaranteed VIP drop.  Find 1 of 100 queen attributes and get a guaranteed VIP drop.  The first collection is just the beginning and will guarantee free drops.  The first free drop for all owners is coming soon, and it will be a classic collection that has more than 200 different items.  Sooner you staked out, the more you will gain. 5% of the mint's value goes to Crofam Ladies holders.  Add some beauty to your portfolio",
+        "verified": false,
+        "avatar": "/img/collections/crofam-ladies/avatar.webp",
+        "card": "/img/collections/crofam-ladies/card.webp",
+        "banner": "/img/collections/crofam-ladies/banner.webp",
+        "maxSupply": 3685,
+        "website": "https://crofamladies.netlify.app/",
+        "twitter": "https://www.twitter.com/CrofamLadies"
+      }
+    },
+    {
+      "name": "GrumpyGhosts",
+      "slug": "grumpyghosts",
+      "multiToken": false,
+      "address": "0x4aE3cc28cf28493D9175Bd95C9aC8B25586F6fCf",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "GrumpyGhosts are here to haunt Cronos.",
+        "verified": false,
+        "avatar": "/img/collections/grumpyghosts/avatar.webp",
+        "card": "/img/collections/grumpyghosts/card.webp",
+        "banner": "/img/collections/grumpyghosts/banner.webp",
+        "maxSupply": 666,
+        "website": "https://cromorphs.com/GrumpyGhosts/",
+        "twitter": "https://www.twitter.com/GrumpyGhostsNFT",
+        "discord": "https://discord.gg/C69yypwJfm"
+      }
+    },
+    {
+      "name": "The Resurrection by Dr. Boo",
+      "slug": "dr-boo-resurrection",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Resurrection potion can be deadly if I’m the wrong hands!!! Dr. Boo has been working hard in the lab to bring you the first of its kind mutant potion!!! If you own and nft and want to mutate it… then drink the juice.  You will get a resurrected version of your favorite nft!!  Don’t worry the host nft will not be harmed.",
+        "verified": true,
+        "avatar": "/img/collections/dr-boo-resurrection/avatar.webp",
+        "card": "/img/collections/dr-boo-resurrection/card.webp",
+        "banner": "/img/collections/dr-boo-resurrection/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://drbghosts.com/",
+        "twitter": "https://www.twitter.com/drbghosts",
+        "discord": "https://discord.gg/EFW8bAZW3J"
+      }
     }
   ],
   "drops": [
@@ -15828,7 +15884,7 @@
       "memberCost": "120",
       "whitelistCost": "120",
       "foundersOnly": false,
-      "start": 1667419200000,
+      "start": null,
       "end": null,
       "referral": false,
       "is1155": false,
@@ -16081,6 +16137,44 @@
         "banner": "/img/collections/trooprz-boss-frogz/banner.webp",
         "avatar": "/img/collections/trooprz-boss-frogz/avatar.webp",
         "preview": "/img/collections/trooprz-boss-frogz/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "id": 133,
+      "slug": "dr-boo-resurrection",
+      "title": "The Resurrection by Dr. Boo",
+      "subtitle": "The Resurrection potion can be deadly if I’m the wrong hands!!! Dr. Boo has been working hard in the lab to bring you the first of its kind mutant potion!!! If you own and nft and want to mutate it… then drink the juice.  You will get a resurrected version of your favorite nft!!  Don’t worry the host nft will not be harmed.",
+      "description": "Mutate any nft you own...but don’t drink the juice yourself...this has not been tested on humans...successfully",
+      "author": {
+        "name": "Dr Boos Ghost",
+        "website": "https://drbghosts.com/",
+        "twitter": "https://www.twitter.com/drbghosts",
+        "discord": "https://discord.gg/EFW8bAZW3J"
+      },
+      "address": "",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 100,
+      "totalSupply": 10000,
+      "cost": "99",
+      "memberCost": "89",
+      "foundersOnly": false,
+      "start": null,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/dr-boo-resurrection/drop.webp",
+        "banner": "/img/collections/dr-boo-resurrection/banner.webp",
+        "avatar": "/img/collections/dr-boo-resurrection/avatar.webp",
+        "preview": "/img/collections/dr-boo-resurrection/card.webp"
       },
       "verification": {
         "verified": true,
