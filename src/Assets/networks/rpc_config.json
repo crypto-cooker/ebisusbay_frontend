@@ -16163,7 +16163,7 @@
       "cost": "99",
       "memberCost": "89",
       "foundersOnly": false,
-      "start": null,
+      "start": 1667505600000,
       "end": null,
       "referral": false,
       "is1155": false,
