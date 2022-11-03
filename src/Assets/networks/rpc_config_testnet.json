@@ -2067,7 +2067,7 @@
       "name": "The Resurrection by Dr. Boo",
       "slug": "dr-boo-resurrection",
       "multiToken": false,
-      "address": "0x563bC4E9F3F74B5EA972Ab7D97c9A9F276193C60",
+      "address": "0xcA2a705cd8c623Ed52848A272c8F8414Baeb918c",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -2120,6 +2120,86 @@
         "medium": "https://medium.com/@metawarzhq",
         "telegram": "https://t.me/MetaWarzHQ",
         "instagram": "https://www.instagram.com/metawarz/"
+      }
+    },
+    {
+      "name": "Patron NFT",
+      "slug": "patron-nft",
+      "multiToken": false,
+      "address": "0x0EfaD04B14cdFcCC5e322481663043441c0048d7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Patron NFT is 4999 unique dogs of Jack Russell Terrier breed, created to help victims of the war in Ukraine",
+        "verified": true,
+        "avatar": "/img/collections/patron-nft/avatar.webp",
+        "card": "/img/collections/patron-nft/card.webp",
+        "banner": "/img/collections/patron-nft/banner.webp",
+        "maxSupply": 4999,
+        "website": "https://allmylinks.com/patronnft/",
+        "twitter": "https://twitter.com/KAPVEYCRYPTO",
+        "discord": "https://discord.gg/hAubkeqbjk",
+        "medium": "https://medium.com/@kapveycrypto",
+        "telegram": "https://t.me/KAPVEYCRYPTO"
+      }
+    },
+    {
+      "name": "Cro Llamas",
+      "slug": "cro-llamas",
+      "multiToken": false,
+      "address": "0x068E74818582A542e35a37057b92f974F0823A50",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Cro Llamas is a NFT project created to share a cultural vision with a Llama themed art. We want to build a successful project that collecting Llama artwork is the main center of it.\n\nThe CRO Llamas used to live in their world called Llamaverse, a beautiful world where all llamas could live in harmony and wealth. One day, the twin gods, creators of the world, wanted to choose one of the llamas to become a new god and sit next to them, but to do so, the chosen one would need to go in an adventure.\n\n1200 Llamas were hand picked to participate on this quest!\nWhen they started their journey, they were sent to a world called Cronos Blockchain.",
+        "verified": true,
+        "avatar": "/img/collections/cro-llamas/avatar.webp",
+        "card": "/img/collections/cro-llamas/card.webp",
+        "banner": "/img/collections/cro-llamas/banner.webp",
+        "maxSupply": 1200,
+        "website": "https://www.crollamasnft.com/",
+        "instagram": "https://www.instagram.com/crollamasnft",
+        "discord": "https://discord.gg/zf425Fbg6d"
+      }
+    },
+    {
+      "name": "Crazy Crossbreeds",
+      "slug": "crazy-crossbreeds",
+      "multiToken": false,
+      "address": "0xf90f9C8448c8d147faC73695635f868D6c1f8f0b",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Crazy Crossbreeds are wicked beasts who's genetics consist of Goat & Boar DNA. These NFT's will powers our Defi Game Cove and will be by far the craziest beasts in our eco-system. Holders receive benefits through our DAO, Tools, Games, Mint, and upcoming Comic Book release. Join The Herd Today!",
+        "verified": true,
+        "avatar": "/img/collections/crazy-crossbreeds/avatar.webp",
+        "card": "/img/collections/crazy-crossbreeds/card.webp",
+        "banner": "/img/collections/crazy-crossbreeds/banner.webp",
+        "maxSupply": 4444,
+        "website": "https://crossbreeds.defigamecove.com/",
+        "twitter": "https://twitter.com/crossbreedsnft",
+        "discord": "https://discord.gg/jxyytxSJAZ",
+        "medium": "https://medium.com/@Crossbreeds"
+      }
+    },
+    {
+      "name": "Selfie Guys",
+      "slug": "selfie-guys",
+      "multiToken": false,
+      "address": "0x803F1caB2Bf0B13FbcaB54E993f552a0dd1AD28F",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Selfie Guys is a collection with many utilities! Grab yours now and join our amazing community!",
+        "verified": true,
+        "avatar": "/img/collections/selfie-guys/avatar.webp",
+        "card": "/img/collections/selfie-guys/card.webp",
+        "banner": "/img/collections/selfie-guys/banner.webp",
+        "maxSupply": 6666,
+        "website": "https://selfie-guys.com/",
+        "twitter": "https://twitter.com/Selfie_Guys_NFT",
+        "discord": "https://discord.gg/C7uGgYnTvM",
+        "medium": "https://medium.com/@selfie-guys-nft"
       }
     }
   ],
@@ -5619,6 +5699,47 @@
       }
     },
     {
+      "id": 128,
+      "slug": "patron-nft",
+      "title": "Patron NFT",
+      "subtitle": "Patron NFT is 4999 unique dogs of Jack Russell Terrier breed, created to help victims of the war in Ukraine",
+      "description": "Patron NFT is the first collection to be developed into an entire metaverse. We plan to release the second version of the Patron NFT and make a drop for owners of both NFTs. Merchandise and a PatronCoin fan token will also be released.",
+      "author": {
+        "name": "KAPVEYCRYPTO",
+        "website": "https://allmylinks.com/patronnft/",
+        "twitter": "https://twitter.com/KAPVEYCRYPTO",
+        "discord": "https://discord.gg/qJsAtGqq",
+        "medium": "https://medium.com/@kapveycrypto",
+        "telegram": "https://t.me/KAPVEYCRYPTO"
+      },
+      "address": "0x0EfaD04B14cdFcCC5e322481663043441c0048d7",
+      "maxMintPerTx": 30,
+      "maxMintPerAddress": 30,
+      "totalSupply": 4999,
+      "cost": "30",
+      "memberCost": "30",
+      "whitelistCost": "30",
+      "foundersOnly": false,
+      "start": 1667443559000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/patron-nft/drop.webp",
+        "banner": "/img/collections/patron-nft/banner.webp",
+        "avatar": "/img/collections/patron-nft/avatar.webp",
+        "preview": "/img/collections/patron-nft/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
       "id": 131,
       "slug": "team-movember",
       "title": "Team Movember",
@@ -5668,7 +5789,7 @@
         "twitter": "https://www.twitter.com/drbghosts",
         "discord": "https://discord.gg/EFW8bAZW3J"
       },
-      "address": "0x563bC4E9F3F74B5EA972Ab7D97c9A9F276193C60",
+      "address": "0xcA2a705cd8c623Ed52848A272c8F8414Baeb918c",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 100,
       "totalSupply": 10000,
@@ -5686,6 +5807,125 @@
         "banner": "/img/collections/dr-boo-resurrection/banner.webp",
         "avatar": "/img/collections/dr-boo-resurrection/avatar.webp",
         "preview": "/img/collections/dr-boo-resurrection/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "id": 134,
+      "slug": "cro-llamas",
+      "title": "Cro Llamas",
+      "subtitle": "Cro Llamas is a NFT project created to share a cultural vision with a Llama themed art. We want to build a successful project that collecting Llama artwork is the main center of it.\n\nThe CRO Llamas used to live in their world called Llamaverse, a beautiful world where all llamas could live in harmony and wealth. One day, the twin gods, creators of the world, wanted to choose one of the llamas to become a new god and sit next to them, but to do so, the chosen one would need to go in an adventure.",
+      "description": "Welcome to Llama World,\nMy vision is a successful project that collecting Llama themed artwork is the main center of it.\n\nFirst Play\n-CREATE SOCIAL MEDIAS AND DISCORD CHANNEL TO OUR LLAMAS.\n-THE FIRST 150 MEMBERS ON DISCORD WILL GET WHITELIST SPOTS.\n-All community feedback will be heard.\n\nThe Llamalliance\n-ORGANIC GROWTH OF A HEALTHIE COMMUNITY WHERE EVERYONE HELP EACH OTHER.\n-THE CRO LLAMAS WILL HAVE PARTNERSHIPS AND COLLABORATIONS WITH OTHERSbCRONOS PROJECTS.\n-10/1200 LLM AND 25 WHITELIST SPOTS WILL BE DRAW BY GIVEAWAYS TO ACTIVE MEMBERS ON DISCORD AND TWITTER.\n\n Llama Journey\n-1200 LLAMAS WILL BE REALEASED ON CRONOS BLOCKCHAIN.\n-WITH 50% OF THE MINTING THE 3 TOP HOLDERS OF EACH WEEK WILL GET 70 CRO / 60 CRO/ 50 CRO [Rewards timeline will be announced on the 50%].\n-STAKING POOLS WILL BE AVAILABLE FOR LLC MEMBERS FOR PASSIVE INCOME.\n-15/1200 ARE SPECIAL LLAMAS ASSURING PRIZES AND PERKS.\n\nLlama Camp\n- DAO \n- ALL HOLDERS WILL BE ABLE TO GIVE IDEAS FOR THE FUTERE OF THE PROJECT, LIKE CHOOSING PARTNERSHIPS AND COLLABORATIONS, ALWAYS BEING DECIDED BY VOTING.\n- LET’S GROW A STABLE ECOSYSTEM FOR THE CRO LLAMAS.\n- CREATION OF A SPACE OF TRADE ON DISCORD WHERE YOU CAN POST YOUR LLM LOOKING FOR A TRADE WITH ANOTHER HOLDER – PEER TO PEER.\n\n The Ascencion of the Llama God\n- WE PLAN TO DO CHARITY WITH 2% OF ROYALTIES TO VICTIMS OF HUNGER ON THIRD WOLRD COUNTRYS (WE ARE LOOKING FOR TRUSTED ORGANIZATIONS AND WE ACCEPT SUGGESTIONS).\n- 40% OF THE ROYALTIES WILL BE USED AS REWARD TO OUR MEMBERS.\n- FUTURE AIRDROPS, FORTUNE WHEELS AND RAFFLES FOR MEMBERS.\n\nNewcomers\n- CRO LLAMAS GENERATIONS 2.0 SOON",
+      "author": {
+        "name": "Glauco Guimarães da Silva dos Santos",
+        "website": "https://www.crollamasnft.com/",
+        "instagram": "https://www.instagram.com/crollamasnft",
+        "discord": "https://discord.gg/zf425Fbg6d"
+      },
+      "address": "0x068E74818582A542e35a37057b92f974F0823A50",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 100,
+      "totalSupply": 1200,
+      "cost": "290",
+      "memberCost": "280",
+      "whitelistCost": "270",
+      "foundersOnly": false,
+      "start": 1667445929000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/cro-llamas/drop.webp",
+        "banner": "/img/collections/cro-llamas/banner.webp",
+        "avatar": "/img/collections/cro-llamas/avatar.webp",
+        "preview": "/img/collections/cro-llamas/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "id": 135,
+      "slug": "crazy-crossbreeds",
+      "title": "Crazy Crossbreeds",
+      "subtitle": "Crazy Crossbreeds are wicked beasts who's genetics consist of Goat & Boar DNA. These NFT's will powers our Defi Game Cove and will be by far the craziest beasts in our eco-system. Holders receive benefits through our DAO, Tools, Games, Mint, and upcoming Comic Book release. Join The Herd Today!",
+      "description": "Crazy crossbreeds is a collection of 4444 wicked beasts that power the Defi Game Cove. The designs for our collection were created with the help of our community, making this our most eye popping collection to date. These beasts are a follow up to our Bad Billy Goat, Crossbreeds, Cronos Goats, and Boars Gone Wild NFT collections.\n\nHolders receive benefits through DAO, Tools, Games, Comics, and Mints. Holding a Crazy Crossbreed makes you a part owner of all the NFT's in the community DAO Wallet. Holder benefits will be generated by DeFi tools such as bulk NFT transfer and NFT swap. The last stage of Level One is the release of our IRL Comic Book collection that holders will accumulate rewards from, more details coming soon. Holders will also be rewarded by the use of our games inside Defi Game Cove. Come Join The Herd Today!\n\nLevel Two: Metaverse\nThe Cove, a Safe Haven for The Herd",
+      "author": {
+        "name": "Crossbreeds",
+        "website": "https://crossbreeds.defigamecove.com/",
+        "twitter": "https://twitter.com/crossbreedsnft",
+        "discord": "https://discord.gg/jxyytxSJAZ",
+        "medium": "https://medium.com/@Crossbreeds"
+      },
+      "address": "0xf90f9C8448c8d147faC73695635f868D6c1f8f0b",
+      "maxMintPerTx": 20,
+      "maxMintPerAddress": 100,
+      "totalSupply": 4444,
+      "cost": "450",
+      "memberCost": "360",
+      "whitelistCost": "360",
+      "foundersOnly": false,
+      "start": 1667446349000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/crazy-crossbreeds/drop.webp",
+        "banner": "/img/collections/crazy-crossbreeds/banner.webp",
+        "avatar": "/img/collections/crazy-crossbreeds/avatar.webp",
+        "preview": "/img/collections/crazy-crossbreeds/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "id": 136,
+      "slug": "selfie-guys",
+      "title": "Selfie Guys",
+      "subtitle": "Selfie Guys is a collection with many utilities! Grab yours now and join our amazing community!",
+      "description": "A collection of 6.666 Selfie Guys found their way on Cronos chain.\n \nEvery Selfie Guy NFT can be staked to earn $Selfie token. The Rest of our 10.000 collection can be minted in $Selfie after sold out!\n \nA lot more utilities of $Selfie token are: Raffles, NFT shop and different games.\n \nGrab yours now to join our WEB2 vs. WEB3 community!",
+      "author": {
+        "name": "Selfie Guys",
+        "website": "https://selfie-guys.com/",
+        "twitter": "https://twitter.com/Selfie_Guys_NFT",
+        "discord": "https://discord.gg/C7uGgYnTvM",
+        "medium": "https://medium.com/@selfie-guys-nft"
+      },
+      "address": "0x803F1caB2Bf0B13FbcaB54E993f552a0dd1AD28F",
+      "maxMintPerTx": 20,
+      "maxMintPerAddress": 100,
+      "totalSupply": 6666,
+      "cost": "99",
+      "memberCost": "88",
+      "whitelistCost": "88",
+      "foundersOnly": false,
+      "start": 1667447046000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/selfie-guys/drop.webp",
+        "banner": "/img/collections/selfie-guys/banner.webp",
+        "avatar": "/img/collections/selfie-guys/avatar.webp",
+        "preview": "/img/collections/selfie-guys/card.webp"
       },
       "verification": {
         "verified": true,
