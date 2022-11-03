@@ -2121,6 +2121,27 @@
         "telegram": "https://t.me/MetaWarzHQ",
         "instagram": "https://www.instagram.com/metawarz/"
       }
+    },
+    {
+      "name": "Patron NFT",
+      "slug": "patron-nft",
+      "multiToken": false,
+      "address": "0x0EfaD04B14cdFcCC5e322481663043441c0048d7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Patron NFT is 4999 unique dogs of Jack Russell Terrier breed, created to help victims of the war in Ukraine",
+        "verified": true,
+        "avatar": "/img/collections/patron-nft/avatar.webp",
+        "card": "/img/collections/patron-nft/card.webp",
+        "banner": "/img/collections/patron-nft/banner.webp",
+        "maxSupply": 4999,
+        "website": "https://allmylinks.com/patronnft/",
+        "twitter": "https://twitter.com/KAPVEYCRYPTO",
+        "discord": "https://discord.gg/hAubkeqbjk",
+        "medium": "https://medium.com/@kapveycrypto",
+        "telegram": "https://t.me/KAPVEYCRYPTO"
+      }
     }
   ],
   "drops": [
@@ -5610,6 +5631,47 @@
         "banner": "/img/collections/rebel-punks/banner.webp",
         "avatar": "/img/collections/rebel-punks/avatar.webp",
         "preview": "/img/collections/rebel-punks/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "id": 128,
+      "slug": "patron-nft",
+      "title": "Patron NFT",
+      "subtitle": "Patron NFT is 4999 unique dogs of Jack Russell Terrier breed, created to help victims of the war in Ukraine",
+      "description": "Patron NFT is the first collection to be developed into an entire metaverse. We plan to release the second version of the Patron NFT and make a drop for owners of both NFTs. Merchandise and a PatronCoin fan token will also be released.",
+      "author": {
+        "name": "KAPVEYCRYPTO",
+        "website": "https://allmylinks.com/patronnft/",
+        "twitter": "https://twitter.com/KAPVEYCRYPTO",
+        "discord": "https://discord.gg/qJsAtGqq",
+        "medium": "https://medium.com/@kapveycrypto",
+        "telegram": "https://t.me/KAPVEYCRYPTO"
+      },
+      "address": "0x0EfaD04B14cdFcCC5e322481663043441c0048d7",
+      "maxMintPerTx": 30,
+      "maxMintPerAddress": 30,
+      "totalSupply": 4999,
+      "cost": "30",
+      "memberCost": "30",
+      "whitelistCost": "30",
+      "foundersOnly": false,
+      "start": 1667443559000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/patron-nft/drop.webp",
+        "banner": "/img/collections/patron-nft/banner.webp",
+        "avatar": "/img/collections/patron-nft/avatar.webp",
+        "preview": "/img/collections/patron-nft/card.webp"
       },
       "verification": {
         "verified": true,
