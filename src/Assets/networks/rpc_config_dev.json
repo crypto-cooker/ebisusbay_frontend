@@ -11043,6 +11043,25 @@
         "twitter": "https://www.twitter.com/drbghosts",
         "discord": "https://discord.gg/EFW8bAZW3J"
       }
+    },
+    {
+      "name": "Cro Llamas",
+      "slug": "cro-llamas",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Cro Llamas is a NFT project created to share a cultural vision with a Llama themed art. We want to build a successful project that collecting Llama artwork is the main center of it.\n\nThe CRO Llamas used to live in their world called Llamaverse, a beautiful world where all llamas could live in harmony and wealth. One day, the twin gods, creators of the world, wanted to choose one of the llamas to become a new god and sit next to them, but to do so, the chosen one would need to go in an adventure.\n\n1200 Llamas were hand picked to participate on this quest!\nWhen they started their journey, they were sent to a world called Cronos Blockchain.",
+        "verified": true,
+        "avatar": "/img/collections/cro-llamas/avatar.webp",
+        "card": "/img/collections/cro-llamas/card.webp",
+        "banner": "/img/collections/cro-llamas/banner.webp",
+        "maxSupply": 1200,
+        "website": "https://www.crollamasnft.com/",
+        "instagram": "https://www.instagram.com/crollamasnft",
+        "discord": "https://discord.gg/zf425Fbg6d"
+      }
     }
   ],
   "drops": [
@@ -16174,6 +16193,45 @@
         "banner": "/img/collections/dr-boo-resurrection/banner.webp",
         "avatar": "/img/collections/dr-boo-resurrection/avatar.webp",
         "preview": "/img/collections/dr-boo-resurrection/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "id": 134,
+      "slug": "cro-llamas",
+      "title": "Cro Llamas",
+      "subtitle": "Cro Llamas is a NFT project created to share a cultural vision with a Llama themed art. We want to build a successful project that collecting Llama artwork is the main center of it.\n\nThe CRO Llamas used to live in their world called Llamaverse, a beautiful world where all llamas could live in harmony and wealth. One day, the twin gods, creators of the world, wanted to choose one of the llamas to become a new god and sit next to them, but to do so, the chosen one would need to go in an adventure.",
+      "description": "Welcome to Llama World,\nMy vision is a successful project that collecting Llama themed artwork is the main center of it.\n\nFirst Play\n-CREATE SOCIAL MEDIAS AND DISCORD CHANNEL TO OUR LLAMAS.\n-THE FIRST 150 MEMBERS ON DISCORD WILL GET WHITELIST SPOTS.\n-All community feedback will be heard.\n\nThe Llamalliance\n-ORGANIC GROWTH OF A HEALTHIE COMMUNITY WHERE EVERYONE HELP EACH OTHER.\n-THE CRO LLAMAS WILL HAVE PARTNERSHIPS AND COLLABORATIONS WITH OTHERSbCRONOS PROJECTS.\n-10/1200 LLM AND 25 WHITELIST SPOTS WILL BE DRAW BY GIVEAWAYS TO ACTIVE MEMBERS ON DISCORD AND TWITTER.\n\n Llama Journey\n-1200 LLAMAS WILL BE REALEASED ON CRONOS BLOCKCHAIN.\n-WITH 50% OF THE MINTING THE 3 TOP HOLDERS OF EACH WEEK WILL GET 70 CRO / 60 CRO/ 50 CRO [Rewards timeline will be announced on the 50%].\n-STAKING POOLS WILL BE AVAILABLE FOR LLC MEMBERS FOR PASSIVE INCOME.\n-15/1200 ARE SPECIAL LLAMAS ASSURING PRIZES AND PERKS.\n\nLlama Camp\n- DAO \n- ALL HOLDERS WILL BE ABLE TO GIVE IDEAS FOR THE FUTERE OF THE PROJECT, LIKE CHOOSING PARTNERSHIPS AND COLLABORATIONS, ALWAYS BEING DECIDED BY VOTING.\n- LET’S GROW A STABLE ECOSYSTEM FOR THE CRO LLAMAS.\n- CREATION OF A SPACE OF TRADE ON DISCORD WHERE YOU CAN POST YOUR LLM LOOKING FOR A TRADE WITH ANOTHER HOLDER – PEER TO PEER.\n\n The Ascencion of the Llama God\n- WE PLAN TO DO CHARITY WITH 2% OF ROYALTIES TO VICTIMS OF HUNGER ON THIRD WOLRD COUNTRYS (WE ARE LOOKING FOR TRUSTED ORGANIZATIONS AND WE ACCEPT SUGGESTIONS).\n- 40% OF THE ROYALTIES WILL BE USED AS REWARD TO OUR MEMBERS.\n- FUTURE AIRDROPS, FORTUNE WHEELS AND RAFFLES FOR MEMBERS.\n\nNewcomers\n- CRO LLAMAS GENERATIONS 2.0 SOON",
+      "author": {
+        "name": "Glauco Guimarães da Silva dos Santos",
+        "website": "https://www.crollamasnft.com/",
+        "instagram": "https://www.instagram.com/crollamasnft",
+        "discord": "https://discord.gg/zf425Fbg6d"
+      },
+      "address": "",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 100,
+      "totalSupply": 1200,
+      "cost": "290",
+      "memberCost": "280",
+      "whitelistCost": "270",
+      "foundersOnly": false,
+      "start": 1668024000000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/cro-llamas/drop.webp",
+        "banner": "/img/collections/cro-llamas/banner.webp",
+        "avatar": "/img/collections/cro-llamas/avatar.webp",
+        "preview": "/img/collections/cro-llamas/card.webp"
       },
       "verification": {
         "verified": true,
