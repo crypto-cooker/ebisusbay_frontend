@@ -10716,7 +10716,7 @@
       "multiToken": false,
       "address": "0x46dC2f806c26549eBF4433a41cCb450514321e7c",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "DegenPlanets is the second collection from Degen Brain Finance. Each NFT in this collection represents a piece of the DegenBrains Galaxy Learn2Earn game, where each NFT will eventually represent a single educational course.",
         "verified": false,
