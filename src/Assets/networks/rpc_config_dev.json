@@ -6610,7 +6610,7 @@
       "multiToken": false,
       "address": "0xd7eEc30A764B3Eed788e93de9fc69b432Dd54d16",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Cronos Lizards meet the BAD Bits and portal to a new universe - the BADverse! Join us as we take to the stars and explore.",
         "verified": true,
@@ -15663,7 +15663,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": false,
       "redirect": "https://cronoslizards.com/",
       "images": {
