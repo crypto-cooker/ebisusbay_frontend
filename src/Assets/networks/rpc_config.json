@@ -5600,7 +5600,7 @@
       "name": "Busy Bears Club",
       "slug": "busy-bears-club",
       "multiToken": false,
-      "address": "0x01A1b637f9c1A587b33143182186242e932F28A7",
+      "address": "0x4e42d23d4ca068bebe6985bcef741dc0ff87abb2",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -11149,7 +11149,32 @@
         "instagram": "https://www.instagram.com/pbf_nft"
       },
       "verification": {
-        "doxx": "private",
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "name": "Alpha Otters",
+      "slug": "alpha-otters",
+      "multiToken": false,
+      "address": "0x80f688A0eF8042c1Ce9e56181B6682141E286403",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Alpha Otters is inspired by the intellectual and forward-looking nature of the cute and loveable otters who love nothing more than basking in the sun and looking for their next meal. Their genesis collection consists of 888 of these sociable creatures on the Cronos blockchain and embodies the spirit of intellectual discourse and the desire to decipher alphas in a data-driven way. Each Alpha Otter grants you absolute ownership of your NFT and serves as your pass into the grander OtterTown ecosystem.",
+        "verified": false,
+        "avatar": "/img/collections/alpha-otters/avatar.webp",
+        "card": "/img/collections/alpha-otters/card.webp",
+        "banner": "/img/collections/alpha-otters/banner.webp",
+        "maxSupply": 888,
+        "website": "https://www.ottertown.xyz/",
+        "twitter": "https://twitter.com/ottertownnft",
+        "discord": "https://discord.gg/MNCbbXQeyb",
+        "medium": "https://medium.com/@ottertownnft"
+      },
+      "verification": {
+        "doxx": false,
         "kyc": false,
         "escrow": false
       }
