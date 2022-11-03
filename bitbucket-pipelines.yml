@@ -231,8 +231,8 @@ pipelines:
             # Login to ECR
             - *ecrlogin
             # Build container images and push to ECR repositorys and push to ECR repository
-            - *appcontainer_amd64
-            - *proxywebcontainer_amd64
+            - *appcontainer
+            - *proxywebcontainer
       - step:
          name: Deploy
          image: alpine:latest
@@ -244,7 +244,7 @@ pipelines:
          clone:
            enabled: false
          script:
-           # deploy dev-ebisusbay-web-amd64-us-east-1 / app.ebisusbay.biz
+           # deploy dev-ebisusbay-web-arm64-us-east-1 / app.ebisusbay.biz
            - apk add --no-cache curl
            - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"dev\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
     prod:
