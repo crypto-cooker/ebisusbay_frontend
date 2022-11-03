@@ -61,7 +61,7 @@
     "dompurify": "^2.4.0",
     "dotenv": "^10.0.0",
     "ethers": "^5.6.9",
-    "firebase": "^9.2.0",
+    "firebase": "^9.13.0",
     "formik": "^2.2.9",
     "framer-motion": "^7.5.2",
     "lodash": "^4.17.21",
