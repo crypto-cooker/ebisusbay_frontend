@@ -11029,7 +11029,7 @@
       "name": "The Resurrection by Dr. Boo",
       "slug": "dr-boo-resurrection",
       "multiToken": false,
-      "address": "",
+      "address": "0xeA2a5d420142791AC58c0d446A5386fA0AdE35B3",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -16291,7 +16291,7 @@
         "twitter": "https://www.twitter.com/drbghosts",
         "discord": "https://discord.gg/EFW8bAZW3J"
       },
-      "address": "",
+      "address": "0xeA2a5d420142791AC58c0d446A5386fA0AdE35B3",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 100,
       "totalSupply": 10000,
