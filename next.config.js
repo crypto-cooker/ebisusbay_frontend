@@ -125,6 +125,16 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/collection/seasonal-cats',
+        destination: '/collection/world-of-cats-seasonal',
+        permanent: true,
+      },
+      {
+        source: '/collection/seasonal-cats/:id',
+        destination: '/collection/world-of-cats-seasonal/:id',
+        permanent: true,
+      },
+      {
         source: '/mad-auction',
         destination: '/auctions/mad-auction',
         permanent: false,
