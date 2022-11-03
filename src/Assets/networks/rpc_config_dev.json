@@ -11059,6 +11059,7 @@
         "banner": "/img/collections/cro-llamas/banner.webp",
         "maxSupply": 1200,
         "website": "https://www.crollamasnft.com/",
+        "twitter": "https://twitter.com/LlamasCro",
         "instagram": "https://www.instagram.com/crollamasnft",
         "discord": "https://discord.gg/zf425Fbg6d"
       }
@@ -11111,7 +11112,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "",
+        "description": "Ready. Fangs. Go. CroClubs Vampires are joining the battle in CroClubs game. They are here to give you thrills!\n\nThe Vampire Club is a collection of 1500 unique NFTs and the second-ever collection from CroClubs after Werewolves. Holding a CroClubs Vampire NFT gives you access to our P2E turn-based game where you can battle your fellow vampires and werewolves. The game is live and being updated every week!",
         "verified": true,
         "avatar": "/img/collections/cro-clubs-vampires/avatar.webp",
         "card": "/img/collections/cro-clubs-vampires/card.webp",
@@ -11121,6 +11122,31 @@
         "twitter": "https://twitter.com/croclubs",
         "discord": "https://discord.gg/RWZSJwnG7Y",
         "medium": "https://medium.com/@croclubsio"
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "name": "Piggy Bank Finance",
+      "slug": "piggy-bank-finance",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Piggy Bank Finance (PBF) is a collection of 6,666 unique NFTs with over 200 hand-drawn traits on the Cronos blockchain.",
+        "verified": true,
+        "avatar": "/img/collections/piggy-bank-finance/avatar.webp",
+        "card": "/img/collections/piggy-bank-finance/card.webp",
+        "banner": "/img/collections/piggy-bank-finance/banner.webp",
+        "maxSupply": 1500,
+        "website": "https://pbfnft.com/",
+        "twitter": "https://twitter.com/pbf_nft",
+        "discord": "https://discord.gg/DwhzwGuBGb",
+        "instagram": "https://www.instagram.com/pbf_nft"
       },
       "verification": {
         "doxx": "private",
@@ -16275,6 +16301,7 @@
       "author": {
         "name": "Glauco Guimarães da Silva dos Santos",
         "website": "https://www.crollamasnft.com/",
+        "twitter": "https://twitter.com/LlamasCro",
         "instagram": "https://www.instagram.com/crollamasnft",
         "discord": "https://discord.gg/zf425Fbg6d"
       },
@@ -16386,17 +16413,17 @@
       }
     },
     {
-      "id": 136,
+      "id": 137,
       "slug": "cro-clubs-vampires",
       "title": "CroClubs - Vampires",
       "subtitle": "Ready. Fangs. Go. CroClubs Vampires are joining the battle in CroClubs game. They are here to give you thrills!\n\nThe Vampire Club is a collection of 1500 unique NFTs and the second-ever collection from CroClubs after Werewolves. Holding a CroClubs Vampire NFT gives you access to our P2E turn-based game where you can battle your fellow vampires and werewolves. The game is live and being updated every week!",
       "description": "The Vampire Club is the second collection in the CroClubs ecosystem. A limited collection of 1500 pieces.\n\nCroClubs is a broad ecosystem that grows every day. The Werewolf Club sold out within 90 minutes after its release and the staking was live after 24 hours. We met with our top holders to design their custom avatars and got amazing-looking Werewolves! The initial version of the game was released in September and now CroClubs Werewolf holders can gain coins by battling other NFT holders. \n\nGet yourself a CroClubs Vampire and join our spooky adventure!\n\nJoin our discord for latest updates and details about the airdrops to CroClubs Werewolf holders!",
       "author": {
         "name": "CroClubs",
-        "website": "https://selfie-guys.com/",
-        "twitter": "https://twitter.com/Selfie_Guys_NFT",
-        "discord": "https://discord.gg/C7uGgYnTvM",
-        "medium": "https://medium.com/@selfie-guys-nft"
+        "website": "https://www.croclubs.io/",
+        "twitter": "https://twitter.com/croclubs",
+        "discord": "https://discord.gg/RWZSJwnG7Y",
+        "medium": "https://medium.com/@croclubsio"
       },
       "address": "",
       "maxMintPerTx": 20,
@@ -16417,6 +16444,46 @@
         "banner": "/img/collections/cro-clubs-vampires/banner.webp",
         "avatar": "/img/collections/cro-clubs-vampires/avatar.webp",
         "preview": "/img/collections/cro-clubs-vampires/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "id": 138,
+      "slug": "piggy-bank-finance",
+      "title": "Piggy Bank Finance",
+      "subtitle": "Piggy Bank Finance (PBF) is a collection of 6,666 unique NFTs with over 200 hand-drawn traits on the Cronos blockchain.",
+      "description": "Founded by a group of NFT enthusiasts, PBF aims to deliver where many projects have fallen short.  A roadmap geared towards making profits with 100% of mint funds, aggressive buybacks to increase hodlers value, and a sustainable LP with 100% of secondary sales being funneled straight back into the project. This and much more is what you can expect when you join our team.\n\nThroughout the mint we will be doing random giveaways as well as achievement giveaways at 25%, 50%, 75% and 100%. Once the mint is complete, we will be giving away the Grand Prize of a 1968 Chevrolet Camaro (or Cronos Equivalent).",
+      "author": {
+        "name": "Piggy Bank Finance",
+        "website": "https://pbfnft.com/",
+        "twitter": "https://twitter.com/pbf_nft",
+        "discord": "https://discord.gg/DwhzwGuBGb",
+        "instagram": "https://www.instagram.com/pbf_nft"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 6666,
+      "cost": "550",
+      "memberCost": "500",
+      "whitelistCost": "500",
+      "foundersOnly": false,
+      "start": 1669060800000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/piggy-bank-finance/drop.webp",
+        "banner": "/img/collections/piggy-bank-finance/banner.webp",
+        "avatar": "/img/collections/piggy-bank-finance/avatar.webp",
+        "preview": "/img/collections/piggy-bank-finance/card.webp"
       },
       "verification": {
         "verified": true,
