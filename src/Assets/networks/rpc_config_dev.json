@@ -11082,6 +11082,26 @@
         "discord": "https://discord.gg/jxyytxSJAZ",
         "medium": "https://medium.com/@Crossbreeds"
       }
+    },
+    {
+      "name": "Selfie Guys",
+      "slug": "selfie-guys",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Selfie Guys is a collection with many utilities! Grab yours now and join our amazing community!",
+        "verified": true,
+        "avatar": "/img/collections/selfie-guys/avatar.webp",
+        "card": "/img/collections/selfie-guys/card.webp",
+        "banner": "/img/collections/selfie-guys/banner.webp",
+        "maxSupply": 6666,
+        "website": "https://selfie-guys.com/",
+        "twitter": "https://twitter.com/Selfie_Guys_NFT",
+        "discord": "https://discord.gg/C7uGgYnTvM",
+        "medium": "https://medium.com/@selfie-guys-nft"
+      }
     }
   ],
   "drops": [
@@ -16292,6 +16312,46 @@
         "banner": "/img/collections/crazy-crossbreeds/banner.webp",
         "avatar": "/img/collections/crazy-crossbreeds/avatar.webp",
         "preview": "/img/collections/crazy-crossbreeds/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "id": 136,
+      "slug": "selfie-guys",
+      "title": "Selfie Guys",
+      "subtitle": "Selfie Guys is a collection with many utilities! Grab yours now and join our amazing community!",
+      "description": "A collection of 6.666 Selfie Guys found their way on Cronos chain.\n \nEvery Selfie Guy NFT can be staked to earn $Selfie token. The Rest of our 10.000 collection can be minted in $Selfie after sold out!\n \nA lot more utilities of $Selfie token are: Raffles, NFT shop and different games.\n \nGrab yours now to join our WEB2 vs. WEB3 community!",
+      "author": {
+        "name": "Selfie Guys",
+        "website": "https://selfie-guys.com/",
+        "twitter": "https://twitter.com/Selfie_Guys_NFT",
+        "discord": "https://discord.gg/C7uGgYnTvM",
+        "medium": "https://medium.com/@selfie-guys-nft"
+      },
+      "address": "",
+      "maxMintPerTx": 20,
+      "maxMintPerAddress": 100,
+      "totalSupply": 6666,
+      "cost": "99",
+      "memberCost": "88",
+      "whitelistCost": "88",
+      "foundersOnly": false,
+      "start": 1668456000000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/selfie-guys/drop.webp",
+        "banner": "/img/collections/selfie-guys/banner.webp",
+        "avatar": "/img/collections/selfie-guys/avatar.webp",
+        "preview": "/img/collections/selfie-guys/card.webp"
       },
       "verification": {
         "verified": true,
