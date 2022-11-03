@@ -18,18 +18,19 @@ import {
   Stack,
   Text,
   useColorModeValue,
-  VStack
+  VStack,
+  Select,
 } from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
-import {Spinner} from "react-bootstrap";
-import React, {useCallback, useEffect, useState} from "react";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
-import {ImageKitService} from "@src/helpers/image";
+import { Spinner } from "react-bootstrap";
+import React, { useCallback, useEffect, useState } from "react";
+import { AnyMedia } from "@src/Components/components/AnyMedia";
+import { ImageKitService } from "@src/helpers/image";
 import Link from "next/link";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEllipsisH, faTrash} from "@fortawesome/free-solid-svg-icons";
-import {useDispatch, useSelector} from "react-redux";
-import {toast} from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEllipsisH, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import {
   applyPriceToAll,
   cascadePrices,
@@ -39,25 +40,33 @@ import {
   setExtras,
   updatePrice
 } from "@src/GlobalState/batchListingSlice";
-import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
-import {Contract, ethers} from "ethers";
-import {ERC721} from "@src/Contracts/Abis";
-import {appConfig} from "@src/Config";
-import {caseInsensitiveCompare, createSuccessfulTransactionToastContent} from "@src/utils";
+import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
+import { Contract, ethers } from "ethers";
+import { ERC721 } from "@src/Contracts/Abis";
+import { appConfig } from "@src/Config";
+import { caseInsensitiveCompare, createSuccessfulTransactionToastContent } from "@src/utils";
 import * as Sentry from "@sentry/react";
-import {txExtras} from "@src/core/constants";
-import {getCollectionMetadata} from "@src/core/api";
-import {collectionRoyaltyPercent} from "@src/core/chain";
+import { txExtras } from "@src/core/constants";
+import { getCollectionMetadata } from "@src/core/api";
+import { collectionRoyaltyPercent } from "@src/core/chain";
+import useCreateBundle from '@src/Components/Account/Settings/hooks/useCreateBundle';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import BundleDrawer from "./components/BundleDrawer";
 
 const config = appConfig();
 const floorThreshold = 5;
+const MAX_NFTS_IN_BUNDLE = 40;
 
-export const BatchListingDrawer = ({onClose, ...gridProps}) => {
+export const BatchListingDrawer = ({ onClose, ...gridProps }) => {
   const dispatch = useDispatch();
   const batchListingCart = useSelector((state) => state.batchListing);
   const user = useSelector((state) => state.user);
   const [executingCreateListing, setExecutingCreateListing] = useState(false);
   const [showConfirmButton, setShowConfirmButton] = useState(false);
+
+  const [actualForm, setActualForm] = useState('list');
+  const [createBundle, responseBundle] = useCreateBundle();
 
   const handleClose = () => {
     setShowConfirmButton(false);
@@ -70,7 +79,7 @@ export const BatchListingDrawer = ({onClose, ...gridProps}) => {
   const handleCascadePrices = (startingItem, startingPrice) => {
     if (!startingPrice) return;
 
-    dispatch(cascadePrices({startingItem, startingPrice}));
+    dispatch(cascadePrices({ startingItem, startingPrice }));
   }
   const handleApplyAll = (price) => {
     if (!price) return;
@@ -93,7 +102,7 @@ export const BatchListingDrawer = ({onClose, ...gridProps}) => {
         return;
       }
 
-      Sentry.captureEvent({message: 'handleBatchListing', extra: {nftAddresses, nftIds, nftPrices}});
+      Sentry.captureEvent({ message: 'handleBatchListing', extra: { nftAddresses, nftIds, nftPrices } });
       let tx = await user.marketContract.makeListings(nftAddresses, nftIds, nftPrices, txExtras);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -106,7 +115,7 @@ export const BatchListingDrawer = ({onClose, ...gridProps}) => {
   const prepareListing = async () => {
     try {
       const nftFloorPrices = Object.entries(batchListingCart.extras).map(([k, v]) => {
-        return {address: k, floorPrice: v.floorPrice}
+        return { address: k, floorPrice: v.floorPrice }
       });
       let floorWarning = false;
       const nftPrices = batchListingCart.nfts.map((o) => {
@@ -147,20 +156,94 @@ export const BatchListingDrawer = ({onClose, ...gridProps}) => {
       !batchListingCart.nfts.some((o) => !o.price || !parseInt(o.price) > 0);
   }
 
+  const validationForm = async () => {
+    const errors = await validateForm(values);
+    if (errors) {
+      const keysErrorsGroup = Object.keys(errors);
+      if (keysErrorsGroup.length > 0) {
+        setFieldTouched(`title`, true)
+        setFieldTouched(`description`, true)
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+    return false
+  }
+
+  const onSubmitBundle = async (e) => {
+    const anyErrors = await validationForm()
+    if(MAX_NFTS_IN_BUNDLE < batchListingCart.nfts.length){
+      toast.error(`Max ${MAX_NFTS_IN_BUNDLE} nfts`);
+    }
+    else{
+      if(anyErrors){
+        toast.error(`Error`);
+      }
+      else{
+        try{
+          const res = await createBundle({values, nfts: batchListingCart.nfts}, user.address)
+          toast.success('The bundle was created successfully');
+        }
+        catch(error){
+          toast.error(`Error`);
+        }
+      }
+    }
+  };
+
+  const initialValuesBundle = {
+    title: '',
+    description: '',
+  }
+
+  const bundleValidation = Yup.object().shape({
+    title: Yup.string().required('Required'),
+    description: Yup.string()
+
+  });
+
+  const formikProps = useFormik({
+    onSubmit: onSubmitBundle,
+    validationSchema: bundleValidation,
+    initialValues: initialValuesBundle,
+    enableReinitialize: true,
+  });
+  const {
+    values,
+    errors,
+    touched,
+    setFieldTouched,
+    handleBlur,
+    handleSubmit,
+    validateForm,
+  } = formikProps;
+
+  useEffect(()=> {
+    console.log('values::: ', errors)
+  }, [values])
+
   return (
-    <Grid templateRows="80px 1fr auto" {...gridProps}>
+    <Grid templateRows={actualForm == 'list' ? "60px 1fr auto" : "60px 212px 1fr auto"} {...gridProps}>
       <GridItem px={6} py={4}>
         <Flex align="center">
-          <Text fontSize="xl" fontWeight="semibold">
-            List for sale
-          </Text>
+          {/*TODO update*/}
+          <Select defaultValue={actualForm} onChange={(e) => { setActualForm(e.target.value) }}>
+            <option value={actualForm} disabled>{actualForm == 'list' ? 'List for sale' : 'Create a Bundle'}</option>
+            <option value='list'>List for sale</option>
+            <option value='bundle'>Create a Bundle</option>
+          </Select>
           <Spacer />
-          <CloseButton onClick={handleClose}/>
+          <CloseButton onClick={handleClose} />
         </Flex>
       </GridItem>
+      {/*TODO update*/}
+      {actualForm !== 'bundle'? (
+       <> 
       <GridItem px={6} py={4} overflowY="auto">
         <Flex mb={2}>
-          <Text fontWeight="bold">{batchListingCart.nfts.length} {batchListingCart.nfts.length === 1 ? 'Item' : 'Items'}</Text>
+          <Text fontWeight="bold" color={actualForm == 'bundle' && batchListingCart.nfts.length > 40 && 'red'}>{batchListingCart.nfts.length}{ actualForm == 'bundle' && `/${40}`} {batchListingCart.nfts.length === 1 ? 'Item' : 'Items'}</Text>
           <Spacer />
           <Text fontWeight="bold" onClick={handleClearCart} cursor="pointer">Clear all</Text>
         </Flex>
@@ -184,61 +267,72 @@ export const BatchListingDrawer = ({onClose, ...gridProps}) => {
         )}
       </GridItem>
       <GridItem px={6} py={4}>
-        {showConfirmButton ? (
-          <>
-            {!executingCreateListing && (
-              <Alert status="error" mb={2}>
-                <AlertIcon />
-                <AlertDescription>Some items above are below their current floor price. Are you sure?</AlertDescription>
-              </Alert>
-            )}
-            {executingCreateListing && (
-              <Text mb={2} fontStyle="italic" fontSize="sm" align="center">
-                Please check your wallet for confirmation
-              </Text>
-            )}
-            <Flex>
-              <Button type="legacy"
-                      onClick={() => setShowConfirmButton(false)}
-                      disabled={executingCreateListing}
-                      className="me-2 flex-fill">
-                Go Back
-              </Button>
-              <Button type="legacy-outlined"
-                      onClick={executeCreateListing}
-                      isLoading={executingCreateListing}
-                      disabled={executingCreateListing}
-                      className="flex-fill">
-                I understand, continue
-              </Button>
-            </Flex>
-          </>
-        ) : (
-          <Button
-            type="legacy"
-            className="w-100"
-            onClick={prepareListing}
-            disabled={!canSubmit()}
-          >
-            {executingCreateListing ? (
-              <>
-                Creating {batchListingCart.nfts.length === 1 ? 'Listing' : 'Listings'}...
-                <Spinner animation="border" role="status" size="sm" className="ms-1">
-                  <span className="visually-hidden">Loading...</span>
-                </Spinner>
-              </>
-            ) : (
-              <>Create {batchListingCart.nfts.length === 1 ? 'Listing' : 'Listings'}</>
-            )}
-          </Button>
-        )}
+        {/*TODO update*/}
+        { showConfirmButton ? (
+            <>
+              {!executingCreateListing && (
+                <Alert status="error" mb={2}>
+                  <AlertIcon />
+                  <AlertDescription>Some items above are below their current floor price. Are you sure?</AlertDescription>
+                </Alert>
+              )}
+              {executingCreateListing && (
+                <Text mb={2} fontStyle="italic" fontSize="sm" align="center">
+                  Please check your wallet for confirmation
+                </Text>
+              )}
+              <Flex>
+                <Button type="legacy"
+                  onClick={() => setShowConfirmButton(false)}
+                  disabled={executingCreateListing}
+                  className="me-2 flex-fill">
+                  Go Back
+                </Button>
+                <Button type="legacy-outlined"
+                  onClick={executeCreateListing}
+                  isLoading={executingCreateListing}
+                  disabled={executingCreateListing}
+                  className="flex-fill">
+                  I understand, continue
+                </Button>
+              </Flex>
+            </>
+          ) : (
+            <Button
+              type="legacy"
+              className="w-100"
+              onClick={prepareListing}
+              disabled={!canSubmit()}
+            >
+              {executingCreateListing ? (
+                <>
+                  Creating {batchListingCart.nfts.length === 1 ? 'Listing' : 'Listings'}...
+                  <Spinner animation="border" role="status" size="sm" className="ms-1">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
+                </>
+              ) : (
+                <>Create {batchListingCart.nfts.length === 1 ? 'Listing' : 'Listings'}</>
+              )}
+            </Button>
+          )
+      }
+
       </GridItem>
+
+    </>
+    ) 
+    :
+    (
+      <BundleDrawer/>
+    )
+  }
     </Grid>
   )
 }
 
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
-const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelected, disabled}) => {
+const BatchListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, disabled }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
@@ -259,7 +353,7 @@ const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelecte
     const newSalePrice = e.target.value;
     if (numberRegexValidation.test(newSalePrice) || newSalePrice === '') {
       setInvalid(false);
-      dispatch(updatePrice({nft: item.nft, price: newSalePrice}));
+      dispatch(updatePrice({ nft: item.nft, price: newSalePrice }));
     } else {
       setInvalid(true);
     }
@@ -281,7 +375,7 @@ const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelecte
       const tx = await contract.setApprovalForAll(config.contracts.market, true);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      dispatch(setApproval({address: item.nft.address, status: true}));
+      dispatch(setApproval({ address: item.nft.address, status: true }));
 
     } catch (error) {
       if (error.data) {
@@ -300,7 +394,7 @@ const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelecte
   useEffect(() => {
     async function func() {
       if (!extras[item.nft.address.toLowerCase()]) {
-        const extras = {address: item.nft.address};
+        const extras = { address: item.nft.address };
 
         extras.approval = await checkApproval();
 
@@ -320,7 +414,7 @@ const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelecte
   return (
     <Box
       key={`${item.nft.address}-${item.nft.id}`}
-      _hover={{background: hoverBackground}}
+      _hover={{ background: hoverBackground }}
       p={2}
       rounded="lg"
     >
@@ -328,7 +422,7 @@ const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelecte
         <Box
           width={50}
           height={50}
-          style={{borderRadius: '20px'}}
+          style={{ borderRadius: '20px' }}
         >
           <AnyMedia
             image={ImageKitService.buildAvatarUrl(item.nft.image)}
@@ -371,7 +465,7 @@ const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelecte
                         borderWidth='1px'
                         height={6}
                       >
-                        <FontAwesomeIcon icon={faEllipsisH}/>
+                        <FontAwesomeIcon icon={faEllipsisH} />
                       </MenuButton>
                       <MenuList textAlign="right">
                         <MenuItem onClick={() => onApplyAllSelected(price)}>Apply price to all</MenuItem>
@@ -399,21 +493,21 @@ const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelecte
                 {item.nft.rank && (
                   <Flex w="100%">
                     <Text>Rank</Text>
-                    <Spacer/>
+                    <Spacer />
                     <Text fontWeight="bold">{item.nft.rank}</Text>
                   </Flex>
                 )}
                 <Flex w="100%">
                   <>
                     <Text>Floor</Text>
-                    <Spacer/>
+                    <Spacer />
                     <Text fontWeight="bold">{extras.floorPrice ?? 0} CRO</Text>
                   </>
                 </Flex>
                 <Flex w="100%">
                   <>
                     <Text>Royalty</Text>
-                    <Spacer/>
+                    <Spacer />
                     <Text fontWeight="bold">{extras.royalty ?? 'N/A'} %</Text>
                   </>
                 </Flex>
@@ -422,7 +516,7 @@ const BatchListingDrawerItem = ({item, onCascadePriceSelected, onApplyAllSelecte
           </VStack>
         </Box>
         <Box ms={2} cursor="pointer" onClick={handleRemoveItem}>
-          <FontAwesomeIcon icon={faTrash}/>
+          <FontAwesomeIcon icon={faTrash} />
         </Box>
       </Flex>
     </Box>
