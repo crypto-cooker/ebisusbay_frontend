@@ -10866,8 +10866,8 @@
       }
     },
     {
-      "name": "Seasonal Cats",
-      "slug": "seasonal-cats",
+      "name": "World of Cats: Seasonal",
+      "slug": "world-of-cats-seasonal",
       "multiToken": true,
       "tokens": [
         {
@@ -10916,9 +10916,9 @@
       "metadata": {
         "description": "The Seasonal Cats have arrived to Cronos.\nA Special Airdrop Collection to our Holders.",
         "verified": true,
-        "avatar": "/img/collections/seasonal-cats/avatar.webp",
-        "card": "/img/collections/seasonal-cats/card.webp",
-        "banner": "/img/collections/seasonal-cats/banner.webp",
+        "avatar": "/img/collections/world-of-cats-seasonal/avatar.webp",
+        "card": "/img/collections/world-of-cats-seasonal/card.webp",
+        "banner": "/img/collections/world-of-cats-seasonal/banner.webp",
         "maxSupply": 13,
         "website": "https://worldofcats.xyz/",
         "twitter": "https://twitter.com/worldofcatsnft",
