@@ -10651,7 +10651,7 @@
       "name": "Rebel Punks",
       "slug": "rebel-punks",
       "multiToken": false,
-      "address": "",
+      "address": "0xc7E77C602D549747AB33C2F0137Cbcb42eeF2bB8",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -16053,7 +16053,7 @@
         "telegram": "https://t.me/MetaWarzHQ",
         "instagram": "https://www.instagram.com/metawarz/"
       },
-      "address": "",
+      "address": "0xc7E77C602D549747AB33C2F0137Cbcb42eeF2bB8",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 100,
       "totalSupply": 5000,
