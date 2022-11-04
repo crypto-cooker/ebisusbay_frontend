@@ -20,7 +20,8 @@ import {Spinner} from "react-bootstrap";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import {pushQueryString} from "@src/helpers/query";
 import {useRouter} from "next/router";
-import {Heading} from "@chakra-ui/react";
+import {Flex, Heading} from "@chakra-ui/react";
+import MintingButton from "@src/Components/Collection/MintingButton";
 
 
 const tabs = {
@@ -28,7 +29,7 @@ const tabs = {
   activity: 'activity'
 };
 
-const Collection1155 = ({ collection, tokenId = null, query }) => {
+const Collection1155 = ({ collection, tokenId = null, query, activeDrop = null }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -108,6 +109,10 @@ const Collection1155 = ({ collection, tokenId = null, query }) => {
     // eslint-disable-next-line
   }, [dispatch, collection]);
 
+  const handleMintingButtonClick = () => {
+    router.push(`/drops/${activeDrop.slug}`)
+  }
+
   return (
     <div>
       <section
@@ -138,10 +143,14 @@ const Collection1155 = ({ collection, tokenId = null, query }) => {
                 </div>
 
                 <div className="profile_name">
-                  <Heading as="h4" size="md">
-                    {collection.name}
-                    <div className="clearfix" />
-                  </Heading>
+                  <Flex justify="center" align="center" mb={4}>
+                    <Heading as="h4" size="md" my="auto">
+                      {collection.name}
+                    </Heading>
+                    {activeDrop && (
+                      <MintingButton onClick={handleMintingButtonClick} />
+                    )}
+                  </Flex>
                   <CollectionVerificationRow
                     doxx={collection.verification?.doxx}
                     kyc={collection.verification?.kyc}
