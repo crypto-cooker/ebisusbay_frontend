@@ -5708,3 +5708,20 @@ iframe.metaverse {
 
   }
 }
+
+@keyframes pulse-animation-light {
+  0% {
+    box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+  }
+}
+@keyframes pulse-animation-dark {
+  0% {
+    box-shadow: 0 0 0 0px rgba(100, 100, 100, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 20px rgba(100, 100, 100, 0);
+  }
+}
