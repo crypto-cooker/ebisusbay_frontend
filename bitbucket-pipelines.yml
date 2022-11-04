@@ -39,7 +39,7 @@ definitions:
           - 'self.hosted'
           - 'linux'
           - 'web'
-        size: 1x
+        size: 2x
         script:
           - *update
           - *version
@@ -91,7 +91,7 @@ pipelines:
             - 'self.hosted'
             - 'linux'
             - 'web'
-          size: 1x
+          size: 2x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -107,7 +107,7 @@ pipelines:
             - 'self.hosted'
             - 'linux'
             - 'web'
-          size: 1x
+          size: 2x
           artifacts:
             download: false
           clone:
@@ -158,7 +158,7 @@ pipelines:
             - 'self.hosted'
             - 'linux'
             - 'web'
-          size: 1x
+          size: 2x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -174,7 +174,7 @@ pipelines:
             - 'self.hosted'
             - 'linux'
             - 'web'
-          size: 1x
+          size: 2x
           artifacts:
             download: false
           clone:
@@ -224,7 +224,7 @@ pipelines:
             - 'self.hosted'
             - 'linux'
             - 'web'
-          size: 1x
+          size: 2x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -240,7 +240,7 @@ pipelines:
            - 'self.hosted'
            - 'linux'
            - 'web'
-         size: 1x
+         size: 2x
          clone:
            enabled: false
          script:
@@ -285,7 +285,7 @@ pipelines:
             - 'self.hosted'
             - 'linux'
             - 'web'
-          size: 1x
+          size: 2x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -301,7 +301,7 @@ pipelines:
            - 'self.hosted'
            - 'linux'
            - 'web'
-         size: 1x
+         size: 2x
          clone:
            enabled: false
          script:
