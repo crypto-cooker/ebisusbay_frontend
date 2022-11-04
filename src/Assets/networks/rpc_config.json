@@ -5602,7 +5602,7 @@
       "multiToken": false,
       "address": "0x4e42d23d4ca068bebe6985bcef741dc0ff87abb2",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Busy Bears are a unique and limited collection of 2653 NFT. Each BB represent single Cronos businessman and investor belongs to huge community in Mad City.",
         "verified": false,
