@@ -666,7 +666,7 @@ const SingleDrop = () => {
                       <Heading as="h5" size="md">TBA</Heading>
                     )}
                     {regularCost && (
-                      <Heading as="h5" size="md">{ethers.utils.commify(round(regularCost))} CRO</Heading>
+                      <Heading as="h5" size="md">{ethers.utils.commify(round(regularCost))} {dropObject?.costUnit ?? 'CRO'}</Heading>
                     )}
                     {dropObject?.erc20Cost && dropObject?.erc20Token && (
                       <Heading as="h5" size="md">{`${ethers.utils.commify(round(dropObject?.erc20Cost))} ${config.tokens[dropObject.erc20Token].symbol}`}</Heading>

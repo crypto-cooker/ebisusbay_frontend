@@ -50,7 +50,7 @@
         "maxSupply": 1000,
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
-        "discord": "https://discord.gg/ynrBrSkAFG",
+        "discord": "https://discord.gg/ebisusbay",
         "medium": "https://blog.ebisusbay.com/",
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
@@ -79,7 +79,7 @@
         "maxSupply": 1000,
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
-        "discord": "https://discord.gg/ynrBrSkAFG",
+        "discord": "https://discord.gg/ebisusbay",
         "medium": "https://blog.ebisusbay.com/",
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
@@ -108,7 +108,7 @@
         "maxSupply": 1,
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
-        "discord": "https://discord.gg/ynrBrSkAFG",
+        "discord": "https://discord.gg/ebisusbay",
         "medium": "https://blog.ebisusbay.com/",
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
@@ -163,7 +163,7 @@
         "maxSupply": 10000,
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
-        "discord": "https://discord.gg/ynrBrSkAFG",
+        "discord": "https://discord.gg/ebisusbay",
         "medium": "https://blog.ebisusbay.com/",
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
@@ -191,7 +191,7 @@
         "banner": "/img/collections/ebisu/banner.png",
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
-        "discord": "https://discord.gg/ynrBrSkAFG",
+        "discord": "https://discord.gg/ebisusbay",
         "medium": "https://blog.ebisusbay.com/",
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
@@ -444,7 +444,7 @@
         "maxSupply": 443,
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
-        "discord": "https://discord.gg/ynrBrSkAFG",
+        "discord": "https://discord.gg/ebisusbay",
         "medium": "https://blog.ebisusbay.com/"
       },
       "verification": {
@@ -9286,7 +9286,7 @@
         "maxSupply": 10000,
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
-        "discord": "https://discord.gg/ynrBrSkAFG",
+        "discord": "https://discord.gg/ebisusbay",
         "medium": "https://blog.ebisusbay.com/",
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
@@ -10482,7 +10482,7 @@
         "maxSupply": 2500,
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
-        "discord": "https://discord.gg/ynrBrSkAFG",
+        "discord": "https://discord.gg/ebisusbay",
         "medium": "https://blog.ebisusbay.com/",
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
@@ -11176,6 +11176,33 @@
       "verification": {
         "doxx": false,
         "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "name": "Ryoshi Tales VIP",
+      "slug": "ryoshi-tales-vip",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Alpha Otters is inspired by the intellectual and forward-looking nature of the cute and loveable otters who love nothing more than basking in the sun and looking for their next meal. Our genesis collection consists of 300 of these sociable creatures on the Cronos blockchain and embodies the spirit of intellectual discourse and the desire to decipher alphas in a data-driven way. Each Alpha Otter grants you absolute ownership of your NFT and serves as your pass into the grander Otter Town ecosystem.",
+        "verified": true,
+        "avatar": "/img/collections/ryoshi-tales-vip/avatar.webp",
+        "card": "/img/collections/ryoshi-tales-vip/card.webp",
+        "banner": "/img/collections/ryoshi-tales-vip/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "hidden",
         "escrow": false
       }
     }
@@ -15479,7 +15506,7 @@
         "name": "Ebisu's Bay",
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
-        "discord": "https://discord.gg/ynrBrSkAFG",
+        "discord": "https://discord.gg/ebisusbay",
         "medium": "https://blog.ebisusbay.com/",
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
@@ -15969,7 +15996,7 @@
         "name": "Ebisu's Bay",
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
-        "discord": "https://discord.gg/ynrBrSkAFG",
+        "discord": "https://discord.gg/ebisusbay",
         "medium": "https://blog.ebisusbay.com/",
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
@@ -16514,6 +16541,47 @@
         "verified": true,
         "doxx": false,
         "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "id": 139,
+      "slug": "ryoshi-tales-vip",
+      "title": "Ryoshi Tales VIP",
+      "subtitle": "Ryoshi Tales awaits all of our enthusiastic supporters. Get your hands on these exclusive Ryoshi Tales-themed VIP NFTs now! Coming with 8 different traits each with relevant attributes – body, background, tools, mouth, hair, miscellaneous, eyes, clothing – every NFT is completely unique. Don’t miss out on the opportunity to participate in our project’s evolution.",
+      "description": "As Ebisu’s Bay’s VIP Founding Member NFTs turn 1 year old and the marketplace enters into a new stage of its evolution, it is time for a birthday rebranding! With these new Ryoshi Tales VIPs, not only will you be able to obtain the same benefits and functionalities that you’ve been accustomed to with our legacy Ebisu’s Bay VIPs (reduced service fees, discounts on drops, early access to features and stakeable in the service fee pool), but you will also get additional intrinsic rarity features, as well as staking functions within Ryoshi Tales once the game has been released. Moreover, with a switch from the ERC-1155 to the 721 protocol, the token stands to gain better token gating opportunities. Get yours now and help Ebisu populate his islands in his upcoming GameFi experience!",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 10000,
+      "cost": "1",
+      "costUnit": "Ebisu's Bay VIP",
+      "foundersOnly": false,
+      "start": null,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/ryoshi-tales-vip/drop.webp",
+        "banner": "/img/drops/ryoshi-tales-vip/banner.webp",
+        "avatar": "/img/collections/ryoshi-tales-vip/avatar.webp",
+        "preview": "/img/collections/ryoshi-tales-vip/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": "public",
+        "kyc": "hidden",
         "escrow": false
       }
     }
