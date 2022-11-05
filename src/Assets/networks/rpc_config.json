@@ -7890,7 +7890,7 @@
       "listable": true,
       "metadata": {
         "description": "Join Chiverse, the future biggest living, collectable football universe! Be a manager - mint or buy players, staff & stadium cards. Create your own team, play matches and earn prizes!",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/chiverse-online/avatar.webp",
         "card": "/img/collections/chiverse-online/card.webp",
         "banner": "/img/collections/chiverse-online/banner.webp",
@@ -7898,6 +7898,11 @@
         "website": "https://chiverse.online/",
         "twitter": "https://twitter.com/ChiVerseOnline",
         "discord": "https://discord.gg/tWmKk7Htq3"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "escrow": false
       }
     },
     {
