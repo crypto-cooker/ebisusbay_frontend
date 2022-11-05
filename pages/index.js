@@ -388,6 +388,17 @@ const Home = () => {
               </a>
             </Center>
           </div>
+          <div className="col">
+            <Center>
+              <a href="https://defiolio.com/" target="_blank" rel="noreferrer">
+                <img
+                  src={hostedImage('/img/logos/defiolio.svg')}
+                  alt="Defiolio"
+                  width="150px"
+                />
+              </a>
+            </Center>
+          </div>
         </div>
       </section>
       <Footer />
