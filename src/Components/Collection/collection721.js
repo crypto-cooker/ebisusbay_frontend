@@ -165,7 +165,11 @@ const Collection721 = ({ collection, query, activeDrop = null}) => {
   };
 
   const handleMintingButtonClick = () => {
-    router.push(`/drops/${activeDrop.slug}`)
+    if (activeDrop.redirect) {
+      window.open(activeDrop.redirect, '_blank');
+    } else {
+      router.push(`/drops/${activeDrop.slug}`)
+    }
   }
 
   return (

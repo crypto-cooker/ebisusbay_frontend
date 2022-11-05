@@ -110,7 +110,11 @@ const Collection1155 = ({ collection, tokenId = null, query, activeDrop = null }
   }, [dispatch, collection]);
 
   const handleMintingButtonClick = () => {
-    router.push(`/drops/${activeDrop.slug}`)
+    if (activeDrop.redirect) {
+      window.open(activeDrop.redirect, '_blank');
+    } else {
+      router.push(`/drops/${activeDrop.slug}`)
+    }
   }
 
   return (
