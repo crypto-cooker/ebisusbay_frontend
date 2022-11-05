@@ -16178,7 +16178,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": false,
       "redirect": "https://www.degenbrain.finance/#/planets/",
       "images": {
