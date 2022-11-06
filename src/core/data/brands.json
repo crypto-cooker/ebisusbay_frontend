@@ -1,0 +1,66 @@
+[
+  {
+    "slug": "mad-meerkat-burrow",
+    "name": "Mad Meerkat Burrow",
+    "description": "The Mad Meerkat is inspired by the cheeky nature of the loveable rogues, who loves nothing more than cavorting together in the sun. An expansion from our OG Ethereum collection, these 10000 Next Gen Cro Meerkats will traverse the novel Cronos chain. Guided by the M.A.D values, we will embark on an adventure to explore and unlock all that lies within Cronos. With each Mad Meerkat sharing and learning from one another regardless the chain, it is our next step forward as one Burrow.",
+    "images": {
+      "banner": "/img/collections/meerkats/banner.webp"
+    },
+    "collections": [
+      "0x89dBC8Bd9a6037Cbd6EC66C4bF4189c9747B1C56",
+      "0xA19bFcE9BaF34b92923b71D487db9D0D051a88F8",
+      "0xDC5bBDb4A4b051BDB85B959eB3cBD1c8C0d0c105"
+    ],
+    "socials": {
+      "website": "https://madmeerkat.io/",
+      "twitter": "https://twitter.com/MadMeerkatNFT",
+      "discord": "https://discord.gg/madmeerkat",
+      "medium": "https://medium.com/@madmeerkat0"
+    }
+  },
+  {
+    "slug": "croskull",
+    "name": "CroSkull",
+    "description": "CroSkull is a collection of 6.666 uniquely generated NFTs stored on the Cronos Chain. Each CroSkull NFT is based on 6+ attributes with different rarities. A CroSkull is not simply a PFP but is also the key to the insane Dr. Jiko's laboratory experiments.",
+    "images": {
+      "banner": "/img/collections/croskull/banner.webp"
+    },
+    "collections": [
+      "0xF87A517A5CaecaA03d7cCa770789BdB61e09e05F",
+      "0xB929D3002208f405180D3C07616F88EDa45F3e14",
+      "0x508378E99F5527Acb6eB4f0fc22f954c5783e5F9",
+      "0x14e9ef197C0bfaf7C1328ebed7151f53616Af3C5",
+      "0xA9448e3e496f75488306195F34e49a7fCE5cbD0c",
+      "0xB77959DC7a12F7549ACC084Af01259Fc48813c89",
+      "0x6d54590Ed6950EcD3987778c004d4773a7e99dAC",
+      "0xB9eCFF7e01a48C434a3B8A034906e4b34Da62f90",
+      "0x54655D5468f072D5bcE1577c4a46F701C28a41A7"
+    ],
+    "socials": {
+      "website": "https://app.croskull.com/",
+      "twitter": "https://twitter.com/CroskullNFT",
+      "discord": "https://discord.gg/q3nWxw8QRY",
+      "medium": "https://medium.com/@croskullnft"
+    }
+  },
+  {
+    "slug": "weird-apes-club",
+    "name": "Weird Apes Club",
+    "description": "Genesis Weird Apes is a collection of 2500 NFTs randomly generated from 125 traits aimed to bring Weirdness all over the Cronos Chain! Not just a PFP but an entire ecosystem of advanced mechanisms of staking, breeding, renting, customization and more!\nWith every 2D ape you may burn $WAC to claim an additional new 3D Voxel ape with corresponding rank and traits. Voxel apes will play a key role within our P2E, Legends of Weirdonite.\nVisit our Discord to join our wonderful community!",
+    "images": {
+      "banner": "/img/collections/weirdapesclub/banner.webp"
+    },
+    "collections": [
+      "0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44",
+      "0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1",
+      "0x89F7114C73d5cef7d7EDCbDb14DaA092EB2194c9"
+    ],
+    "socials": {
+      "website": "https://weirdapes.com/",
+      "twitter": "https://twitter.com/WeirdApesClub",
+      "discord": "https://discord.gg/d6WvCpfn9W",
+      "medium": "https://medium.com/@WeirdApesClub",
+      "gitbook": "https://weirdape.gitbook.io/weird-apes-club/weird-apes-club/summary"
+    }
+  }
+]

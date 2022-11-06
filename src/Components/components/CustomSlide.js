@@ -5,7 +5,8 @@ import styled from 'styled-components';
 
 import LayeredIcon from './LayeredIcon';
 import {hostedImage} from "../../helpers/image";
-import {Heading} from "@chakra-ui/react";
+import {Heading, Text} from "@chakra-ui/react";
+import {useRouter} from "next/router";
 
 const VerifiedIcon = styled.span`
   font-size: 10px;
@@ -20,9 +21,15 @@ const VerifiedIcon = styled.span`
 `;
 
 const CustomSlide = ({ index, avatar, banner, title, subtitle, collectionId, url, verified, externalPage = false }) => {
+  const router = useRouter();
+
   const navigateTo = (url) => {
     if (url && typeof window !== 'undefined') {
-      window.open(url, externalPage ? '_blank' : '_self');
+      if (externalPage) {
+        window.open(url, '_blank');
+      } else {
+        router.push(url)
+      }
     }
   };
 
@@ -48,11 +55,11 @@ const CustomSlide = ({ index, avatar, banner, title, subtitle, collectionId, url
             )}
           </span>
         </div>
-        <div className="nft_coll_info">
+        <div className="nft_coll_info px-2">
           <span>
             <Heading as="h4" size="md">{title}</Heading>
           </span>
-          <span>{subtitle}</span>
+          <Text noOfLines={3} fontSize="14px">{subtitle}</Text>
         </div>
       </div>
     </div>
