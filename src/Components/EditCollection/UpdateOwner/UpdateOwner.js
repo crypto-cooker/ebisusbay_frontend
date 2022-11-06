@@ -3,6 +3,7 @@ import { RadioGroup } from '../../Form';
 
 import SetOwnerForm from './SetOwnerForm';
 import ClearOwnerForm from './ClearOwnerForm';
+import {Heading} from "@chakra-ui/react";
 
 const optionsRadioGroup = [{ value: 'setOwner', label: 'Transfer ownership' }, { value: 'clearOwner', label: 'Claim ownership' }]
 
@@ -19,7 +20,7 @@ const UpdateOwner = ({ address }) => {
       <div >
         <div className='row'>
           <div className='col-8'>
-            <h2>Ownership</h2>
+            <Heading as="h2" size="lg" mb={2}>Ownership</Heading>
             <div className='mb-3'>
               <RadioGroup name='radioGroupForm'
                 title='Select type'

@@ -1,10 +1,12 @@
 import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
-import { UpdateOwner, EditCollection as EditCollectionTap} from '@src/Components/EditCollection';
+import { UpdateOwner, EditCollection as EditCollectionTab} from '@src/Components/EditCollection';
+import Royalties from "@src/Components/EditCollection/Royalties/Royalties";
 
 const tabs = {
   editCollection: 'editCollection',
   setOwner: 'setOwner',
+  royalties: 'royalties'
 };
 
 const EditCollection = ({ tab }) => {
@@ -44,15 +46,21 @@ const EditCollection = ({ tab }) => {
                       <span onClick={() => handleTabChange(tabs.setOwner)}>Ownership</span>
                     </li>
                   )}
+                  <li className={`tab mb-2 ${currentTab === tabs.royalties ? 'active' : ''}`}>
+                    <span onClick={() => handleTabChange(tabs.royalties)}>Royalties</span>
+                  </li>
                 </ul>
               </div>
             </div>
             <div className="de_tab_content">
               {currentTab === tabs.editCollection && (
-                <EditCollectionTap address={collection} />
+                <EditCollectionTab address={collection} />
               )}
               {currentTab === tabs.setOwner && (
                 <UpdateOwner address={collection} />
+              )}
+              {currentTab === tabs.royalties && (
+                <Royalties address={collection} />
               )}
             </div>
           </div>
