@@ -44,19 +44,16 @@ import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import { Contract, ethers } from "ethers";
 import { ERC721 } from "@src/Contracts/Abis";
 import { appConfig } from "@src/Config";
-import { caseInsensitiveCompare, createSuccessfulTransactionToastContent } from "@src/utils";
+import {caseInsensitiveCompare, createSuccessfulTransactionToastContent} from "@src/utils";
 import * as Sentry from "@sentry/react";
 import { txExtras } from "@src/core/constants";
 import { getCollectionMetadata } from "@src/core/api";
 import { collectionRoyaltyPercent } from "@src/core/chain";
-import useCreateBundle from '@src/Components/Account/Settings/hooks/useCreateBundle';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import BundleDrawer from "./components/BundleDrawer";
 
 const config = appConfig();
 const floorThreshold = 5;
-const MAX_NFTS_IN_BUNDLE = 40;
+const MAX_NFTS_IN_CART = 40;
 
 export const BatchListingDrawer = ({ onClose, ...gridProps }) => {
   const dispatch = useDispatch();
@@ -66,7 +63,6 @@ export const BatchListingDrawer = ({ onClose, ...gridProps }) => {
   const [showConfirmButton, setShowConfirmButton] = useState(false);
 
   const [actualForm, setActualForm] = useState('list');
-  const [createBundle, responseBundle] = useCreateBundle();
 
   const handleClose = () => {
     setShowConfirmButton(false);
@@ -156,74 +152,6 @@ export const BatchListingDrawer = ({ onClose, ...gridProps }) => {
       !batchListingCart.nfts.some((o) => !o.price || !parseInt(o.price) > 0);
   }
 
-  const validationForm = async () => {
-    const errors = await validateForm(values);
-    if (errors) {
-      const keysErrorsGroup = Object.keys(errors);
-      if (keysErrorsGroup.length > 0) {
-        setFieldTouched(`title`, true)
-        setFieldTouched(`description`, true)
-        return true;
-      }
-      else {
-        return false;
-      }
-    }
-    return false
-  }
-
-  const onSubmitBundle = async (e) => {
-    const anyErrors = await validationForm()
-    if(MAX_NFTS_IN_BUNDLE < batchListingCart.nfts.length){
-      toast.error(`Max ${MAX_NFTS_IN_BUNDLE} nfts`);
-    }
-    else{
-      if(anyErrors){
-        toast.error(`Error`);
-      }
-      else{
-        try{
-          const res = await createBundle({values, nfts: batchListingCart.nfts}, user.address)
-          toast.success('The bundle was created successfully');
-        }
-        catch(error){
-          toast.error(`Error`);
-        }
-      }
-    }
-  };
-
-  const initialValuesBundle = {
-    title: '',
-    description: '',
-  }
-
-  const bundleValidation = Yup.object().shape({
-    title: Yup.string().required('Required'),
-    description: Yup.string()
-
-  });
-
-  const formikProps = useFormik({
-    onSubmit: onSubmitBundle,
-    validationSchema: bundleValidation,
-    initialValues: initialValuesBundle,
-    enableReinitialize: true,
-  });
-  const {
-    values,
-    errors,
-    touched,
-    setFieldTouched,
-    handleBlur,
-    handleSubmit,
-    validateForm,
-  } = formikProps;
-
-  useEffect(()=> {
-    console.log('values::: ', errors)
-  }, [values])
-
   return (
     <Grid templateRows={actualForm == 'list' ? "60px 1fr auto" : "60px 212px 1fr auto"} {...gridProps}>
       <GridItem px={6} py={4}>
@@ -241,89 +169,87 @@ export const BatchListingDrawer = ({ onClose, ...gridProps }) => {
       {/*TODO update*/}
       {actualForm !== 'bundle'? (
        <> 
-      <GridItem px={6} py={4} overflowY="auto">
-        <Flex mb={2}>
-          <Text fontWeight="bold" color={actualForm == 'bundle' && batchListingCart.nfts.length > 40 && 'red'}>{batchListingCart.nfts.length}{ actualForm == 'bundle' && `/${40}`} {batchListingCart.nfts.length === 1 ? 'Item' : 'Items'}</Text>
-          <Spacer />
-          <Text fontWeight="bold" onClick={handleClearCart} cursor="pointer">Clear all</Text>
-        </Flex>
-        {batchListingCart.nfts.length > 0 ? (
-          <>
-            {batchListingCart.nfts.map((item, key) => (
-              <BatchListingDrawerItem
-                item={item}
-                onCascadePriceSelected={handleCascadePrices}
-                onApplyAllSelected={handleApplyAll}
-                disabled={showConfirmButton || executingCreateListing}
-              />
-            ))}
-          </>
-        ) : (
-          <Box py={8}>
-            <Center>
-              <Text className="text-muted">Add items to get started</Text>
-            </Center>
-          </Box>
-        )}
-      </GridItem>
-      <GridItem px={6} py={4}>
-        {/*TODO update*/}
-        { showConfirmButton ? (
+        <GridItem px={6} py={4} overflowY="auto">
+          <Flex mb={2}>
+            <Text fontWeight="bold" color={batchListingCart.nfts.length > 40 && 'red'}>
+              {batchListingCart.nfts.length} / {MAX_NFTS_IN_CART} Items
+            </Text>
+            <Spacer />
+            <Text fontWeight="bold" onClick={handleClearCart} cursor="pointer">Clear all</Text>
+          </Flex>
+          {batchListingCart.nfts.length > 0 ? (
             <>
-              {!executingCreateListing && (
-                <Alert status="error" mb={2}>
-                  <AlertIcon />
-                  <AlertDescription>Some items above are below their current floor price. Are you sure?</AlertDescription>
-                </Alert>
-              )}
-              {executingCreateListing && (
-                <Text mb={2} fontStyle="italic" fontSize="sm" align="center">
-                  Please check your wallet for confirmation
-                </Text>
-              )}
-              <Flex>
-                <Button type="legacy"
-                  onClick={() => setShowConfirmButton(false)}
-                  disabled={executingCreateListing}
-                  className="me-2 flex-fill">
-                  Go Back
-                </Button>
-                <Button type="legacy-outlined"
-                  onClick={executeCreateListing}
-                  isLoading={executingCreateListing}
-                  disabled={executingCreateListing}
-                  className="flex-fill">
-                  I understand, continue
-                </Button>
-              </Flex>
+              {batchListingCart.nfts.map((item, key) => (
+                <BatchListingDrawerItem
+                  item={item}
+                  onCascadePriceSelected={handleCascadePrices}
+                  onApplyAllSelected={handleApplyAll}
+                  disabled={showConfirmButton || executingCreateListing}
+                />
+              ))}
             </>
           ) : (
-            <Button
-              type="legacy"
-              className="w-100"
-              onClick={prepareListing}
-              disabled={!canSubmit()}
-            >
-              {executingCreateListing ? (
-                <>
-                  Creating {batchListingCart.nfts.length === 1 ? 'Listing' : 'Listings'}...
-                  <Spinner animation="border" role="status" size="sm" className="ms-1">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>
-                </>
-              ) : (
-                <>Create {batchListingCart.nfts.length === 1 ? 'Listing' : 'Listings'}</>
-              )}
-            </Button>
-          )
-      }
-
-      </GridItem>
-
-    </>
-    ) 
-    :
-    (
+            <Box py={8}>
+              <Center>
+                <Text className="text-muted">Add items to get started</Text>
+              </Center>
+            </Box>
+          )}
+        </GridItem>
+        <GridItem px={6} py={4}>
+          {/*TODO update*/}
+          { showConfirmButton ? (
+              <>
+                {!executingCreateListing && (
+                  <Alert status="error" mb={2}>
+                    <AlertIcon />
+                    <AlertDescription>Some items above are below their current floor price. Are you sure?</AlertDescription>
+                  </Alert>
+                )}
+                {executingCreateListing && (
+                  <Text mb={2} fontStyle="italic" fontSize="sm" align="center">
+                    Please check your wallet for confirmation
+                  </Text>
+                )}
+                <Flex>
+                  <Button type="legacy"
+                    onClick={() => setShowConfirmButton(false)}
+                    disabled={executingCreateListing}
+                    className="me-2 flex-fill">
+                    Go Back
+                  </Button>
+                  <Button type="legacy-outlined"
+                    onClick={executeCreateListing}
+                    isLoading={executingCreateListing}
+                    disabled={executingCreateListing}
+                    className="flex-fill">
+                    I understand, continue
+                  </Button>
+                </Flex>
+              </>
+            ) : (
+              <Button
+                type="legacy"
+                className="w-100"
+                onClick={prepareListing}
+                disabled={!canSubmit()}
+              >
+                {executingCreateListing ? (
+                  <>
+                    Creating {batchListingCart.nfts.length === 1 ? 'Listing' : 'Listings'}...
+                    <Spinner animation="border" role="status" size="sm" className="ms-1">
+                      <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                  </>
+                ) : (
+                  <>Create {batchListingCart.nfts.length === 1 ? 'Listing' : 'Listings'}</>
+                )}
+              </Button>
+            )
+        }
+        </GridItem>
+      </>
+    ) : (
       <BundleDrawer/>
     )
   }
