@@ -1,5 +1,4 @@
 import moment from 'moment';
-import { ethers, utils } from 'ethers';
 import blacklist from './core/configs/blacklist.json';
 import attributes from './core/configs/attributes.json';
 import { useEffect, useRef } from 'react';
@@ -344,25 +343,8 @@ export function newlineText(text) {
   return text.split('\n').map((str, i) => <p key={i} className="mb-3">{str}</p>);
 }
 
-export const isCroniesDrop = (address) => {
-  return isDrop(address, 'cronies');
-};
-
 export const isFounderDrop = (address) => {
   return isDrop(address, 'founding-member');
-};
-
-export const isFounderCollection = (address) => {
-  const collection = collections.find((c) => caseInsensitiveCompare(c.address, address));
-  return collection && ['vip-founding-member', 'founding-member'].includes(collection.slug);
-};
-
-export const isCrognomesDrop = (address) => {
-  return isDrop(address, 'crognomes-member');
-};
-
-export const isCrognomidesDrop = (address) => {
-  return isDrop(address, 'crognomides');
 };
 
 export const isMagBrewVikingsDrop = (address) => {
@@ -389,106 +371,114 @@ export const isCyberCloneDrop = (address) => {
   return isDrop(address, 'cyber-clone');
 };
 
+export const isBossFrogzDrop = (address) => {
+  return isDrop(address, 'trooprz-boss-frogz');
+};
+
 export const isDrop = (address, slug) => {
   const drop = drops.find((d) => d.slug === slug);
   return drop && caseInsensitiveCompare(drop.address, address);
 };
 
-export const isCollection = (address, slug) => {
-  if (Array.isArray(slug)) {
-    return collections.some((c) => slug.includes(c.slug) && caseInsensitiveCompare(c.address, address));
-  }
-
-  const collection = collections.find((c) => c.slug === slug);
-  return collection && caseInsensitiveCompare(collection.address, address);
+export const isCollection = (address, matchesSlug, matchesAddress) => {
+  const slugs = Array.isArray(matchesSlug) ? matchesSlug : [matchesSlug];
+  const addresses = Array.isArray(matchesAddress) ? matchesAddress : [matchesAddress];
+  return (
+    slugs.some((s) => caseInsensitiveCompare(s, address)) ||
+    addresses.some((a) => caseInsensitiveCompare(a, address))
+  );
 };
 
 export const isCroCrowCollection = (address) => {
-  return isCollection(address, 'cro-crow');
+  return isCollection(address, 'cro-crow', '0xe4ab77ed89528d90e6bcf0e1ac99c58da24e79d5');
 };
 
 export const isCrognomidesCollection = (address) => {
-  return isCollection(address, 'crognomides');
+  return isCollection(address, 'crognomides', '0x9AE196176b528680B75C7aea2FBd72456FDFAE17');
 };
 
 export const isMetapixelsCollection = (address) => {
-  return isCollection(address, 'metapixels');
+  return isCollection(address, 'metapixels', '0x19e1f891002240fbea77ccc2adb6e73b93b3b97a');
 };
 
 export const isSouthSideAntsCollection = (address) => {
-  return isCollection(address, 'south-side-ants');
+  return isCollection(address, 'south-side-ants', '0x5219cA4b335bA51aB717E474F31D803381D09d24');
 };
 
 export const isAntMintPassCollection = (address) => {
-  return isCollection(address, 'ant-mint-pass');
+  return isCollection(address, 'ant-mint-pass', '0x844DaCD5A52DB9368E6C606f739599598031da84');
 };
 
 export const isCrosmocraftsPartsCollection = (address) => {
-  return isCollection(address, 'crosmocrafts-parts');
+  return isCollection(address, 'crosmocrafts-parts', '0xf49C94E09E506aCcbe553b673FEe4F44efb06D55');
 };
 
 export const isCrosmocraftsCollection = (address) => {
-  return isCollection(address, 'crosmocrafts');
+  return isCollection(address, 'crosmocrafts', '0xC6373d6F369A9FfE7D93B21F2A5b0E16291d996D');
 };
 
 export const isWeirdApesCollection = (address) => {
-  return isCollection(address, 'weird-apes-club');
+  return isCollection(address, 'weird-apes-club', '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44');
 };
 
 export const isBabyWeirdApesCollection = (address) => {
-  return isCollection(address, 'baby-weird-apes');
+  return isCollection(address, 'baby-weird-apes', '0x89F7114C73d5cef7d7EDCbDb14DaA092EB2194c9');
 };
 
 export const isLadyWeirdApesCollection = (address) => {
-  return isCollection(address, 'lady-weird-apes');
+  return isCollection(address, 'lady-weird-apes', '0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1');
 };
 
 export const isAnyWeirdApesCollection = (address) => {
-  return isCollection(address, [
-    'weird-apes-club',
-    'baby-weird-apes',
-    'lady-weird-apes'
-  ]);
+  return isCollection(
+    address,
+    [
+      'weird-apes-club',
+      'baby-weird-apes',
+      'lady-weird-apes'
+    ],
+    [
+      '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44',
+      '0x89F7114C73d5cef7d7EDCbDb14DaA092EB2194c9',
+      '0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1'
+    ]
+  );
 };
 
 export const isCronosVerseCollection = (address) => {
-  return isCollection(address, 'cronosverse');
+  return isCollection(address, 'cronosverse', '0x0aCDA31Cf1F301a7Eb8f988D47F708FbA058F8f5');
 };
 
 export const isEvoSkullCollection = (address) => {
-  return isCollection(address, 'evo-skull');
+  return isCollection(address, 'evo-skull', '0xbf4E430cD0ce8b93d4760958fe4ae66cDaCDB6c6');
 };
 
 export const isCroSkullPetsCollection = (address) => {
-  return isCollection(address, 'croskull-pets');
+  return isCollection(address, 'croskull-pets', '0xB77959DC7a12F7549ACC084Af01259Fc48813c89');
 };
 
 export const isCroniesCollection = (address) => {
-  return isCollection(address, 'cronies');
-};
-
-export const isIcyValkyriesCollection = (address) => {
-  return isCollection(address, 'icy-valkyries');
+  return isCollection(address, 'cronies', '0xD961956B319A10CBdF89409C0aE7059788A4DaBb');
 };
 
 export const isCarkayousCollection = (address) => {
-  return isCollection(address, 'carkayous');
+  return isCollection(address, 'carkayous-feral-fish', '0x72af9c869a4759e6d50e9656c0741b395532c3dd');
 };
 
 export const isLazyHorseCollection = (address) => {
-  return isCollection(address, 'lazy-horse');
+  return isCollection(address, 'lazy-horse', '0xD504ed871d33dbD4f56f523A37dceC86Ee918cb6');
 };
 
 export const isLazyHorsePonyCollection = (address) => {
-  return isCollection(address, 'lazy-horse-pony');
+  return isCollection(address, 'lazy-horse-pony', '0x7d0259070B5f513CA543afb6a906d42af5884B1B');
 };
 
 export const isCnsCollection = (address) => {
-  return isCollection(address, 'cronos-name-service');
+  return isCollection(address, 'cronos-name-service', '0x15F7A67075C8b0883c355814Aa4e6C1e19994Af3');
 };
 
 export const isSscCollection = (address) => {
-  return isCollection(address, 'ssc-access-cards');
+  return isCollection(address, 'ssc-access-cards', '0x45Fe45e5623a129d652F15962d901C7B609e5194');
 };
 
 export const percentage = (partialValue, totalValue) => {

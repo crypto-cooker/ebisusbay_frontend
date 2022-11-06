@@ -29,15 +29,16 @@ import {
   ModalOverlay
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
+import {getCollection, getCollections} from "@src/core/api/next/collectioninfo";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 const floorThreshold = 25;
 
-export default function MakeOfferDialog({ isOpen, nft:defaultNft, collection, onClose, nftId }) {
+export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nftAddress }) {
   const walletAddress = useSelector((state) => state.user.address);
 
-  const [nft, setNft] = useState(defaultNft);
+  const [nft, setNft] = useState(initialNft);
   const [offerPrice, setOfferPrice] = useState(null);
   const [floorPrice, setFloorPrice] = useState(0);
   const [priceError, setPriceError] = useState(false);
@@ -78,10 +79,10 @@ export default function MakeOfferDialog({ isOpen, nft:defaultNft, collection, on
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (collection && user.provider && (nft || nftId)) {
+    if (user.provider && (nft || nftId) && nftAddress) {
       asyncFunc();
     }
-  }, [collection, user.provider, nft, nftId]);
+  }, [user.provider, nft, nftId, nftAddress]);
 
   const wrappedOfferContract = () => {
     return offerContract ?? new Contract(config.contracts.offer, Offer.abi, user.provider.getSigner());
@@ -95,20 +96,19 @@ export default function MakeOfferDialog({ isOpen, nft:defaultNft, collection, on
     try {
       setIsLoading(true);
       setPriceError(null);
-      const collectionAddress = collection.address;
-      const marketContract = wrappedMarketContract();
 
       let fetchedNft = nft;
       if (!nft) {
-        const tmpNft = await getNft(collectionAddress, nftId);
+        const tmpNft = await getNft(nftAddress, nftId);
         fetchedNft = tmpNft.nft;
         setNft(tmpNft.nft);
       }
 
-      const floorToken = collection.multiToken ? {type: 'tokenId', value: fetchedNft.id ?? fetchedNft.nftId} : undefined;
-      const floorPrice = await getCollectionMetadata(collectionAddress, null, floorToken);
-      if (floorPrice.collections.length > 0) {
-        setFloorPrice(floorPrice.collections[0].floorPrice ?? 0);
+      const collection = await getCollection(nftAddress);
+      if (collection.multiToken) {
+        setFloorPrice(collection.stats.tokens[fetchedNft.id ?? fetchedNft.nftId].floor_price ?? 0);
+      } else {
+        setFloorPrice(collection.stats.total.floorPrice ?? 0);
       }
 
       const filteredOffers = await getFilteredOffers(
@@ -117,7 +117,7 @@ export default function MakeOfferDialog({ isOpen, nft:defaultNft, collection, on
         walletAddress
       );
       setExistingOffer(filteredOffers.data?.find((o) => o.state.toString() === offerState.ACTIVE.toString()))
-      const royalties = await collectionRoyaltyPercent(collectionAddress, fetchedNft.id ?? fetchedNft.nftId);
+      const royalties = await collectionRoyaltyPercent(nftAddress, fetchedNft.id ?? fetchedNft.nftId);
       setRoyalty(royalties);
 
       setIsLoading(false);
@@ -138,11 +138,10 @@ export default function MakeOfferDialog({ isOpen, nft:defaultNft, collection, on
     if (!validateInput()) return;
 
     try {
-      const collectionAddress = collection.address;
       const price = ethers.utils.parseEther(offerPrice.toString());
 
       setExecutingCreateListing(true);
-      Sentry.captureEvent({message: 'handleCreateOffer', extra: {address: collectionAddress, price}});
+      Sentry.captureEvent({message: 'handleCreateOffer', extra: {address: nftAddress, price}});
       const contract = wrappedOfferContract();
       let tx;
       if (existingOffer) {
@@ -206,7 +205,7 @@ export default function MakeOfferDialog({ isOpen, nft:defaultNft, collection, on
     return true;
   }
 
-  if (!collection) return <></>;
+  if (!nftAddress) return <></>;
 
   return (
     <Modal onClose={onClose} isOpen={isOpen} size="2xl" isCentered>

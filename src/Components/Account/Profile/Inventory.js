@@ -22,8 +22,6 @@ import {addToBatchListingCart, removeFromBatchListingCart} from "@src/GlobalStat
 import {MobileBatchListing} from "@src/Components/Account/Profile/Inventory/MobileBatchListing";
 import {useBreakpointValue} from "@chakra-ui/react";
 
-const knownContracts = appConfig('collections');
-
 export default function Inventory({ address }) {
   const dispatch = useDispatch();
 
@@ -100,7 +98,6 @@ export default function Inventory({ address }) {
           {data.pages.map((items, index) => (
             <React.Fragment key={index}>
               {items.map((nft, index) => {
-                const collection = knownContracts.find((c) => caseInsensitiveCompare(c.address, nft.address));
                 return (
                   <div
                     className={`d-item ${filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2'}  mb-4`}
@@ -126,11 +123,10 @@ export default function Inventory({ address }) {
                         onRemoveFromBatchListingButtonPressed={() => dispatch(removeFromBatchListingCart(nft))}
                         newTab={true}
                       />
-                    ) : collection && (
+                    ) : (
                       <NftCard
                         listing={nft}
                         imgClass="collection"
-                        collection={collection}
                       />
                     )}
                   </div>

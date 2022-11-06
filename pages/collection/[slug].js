@@ -14,7 +14,7 @@ const collectionTypes = {
 };
 const config = appConfig();
 
-const Collection = ({ ssrCollection, query, redirect }) => {
+const Collection = ({ ssrCollection, query, redirect, activeDrop }) => {
   const router = useRouter();
   const { slug } = router.query;
 
@@ -44,13 +44,13 @@ const Collection = ({ ssrCollection, query, redirect }) => {
           {type === collectionTypes.ERC1155 ? (
             <>
               {ssrCollection.split ? (
-                <Collection1155 collection={ssrCollection} tokenId={ssrCollection.id} query={query} />
+                <Collection1155 collection={ssrCollection} tokenId={ssrCollection.id} query={query} activeDrop={activeDrop} />
               ) : (
-                <Collection1155 collection={ssrCollection} query={query} />
+                <Collection1155 collection={ssrCollection} query={query} activeDrop={activeDrop} />
               )}
             </>
           ) : (
-            <Collection721 collection={ssrCollection} query={query} />
+            <Collection721 collection={ssrCollection} query={query} activeDrop={activeDrop} />
           )}
         </>
       )}
@@ -93,10 +93,14 @@ export const getServerSideProps = async ({ params, query }) => {
   if (collection.slug === 'founding-member') collection.id = 1;
   if (collection.slug === 'vip-founding-member') collection.id = 2;
 
+  const activeDrop = appConfig('drops')
+    .find((drop) => caseInsensitiveCompare(collection.address, drop.address) && !drop.complete);
+
   return {
     props: {
       slug: collection?.slug,
       ssrCollection: collection,
+      activeDrop: activeDrop ?? null,
       query: query,
       redirect: !caseInsensitiveCompare(collection.slug, slug),
     },

@@ -50,6 +50,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/drops/boss-frogz',
+        destination: '/drops/trooprz-boss-frogz',
+        permanent: true,
+      },
+      {
         source: '/collection/mad-treehouse',
         destination: '/collection/mm-treehouse',
         permanent: true,
@@ -107,6 +112,26 @@ const nextConfig = {
       {
         source: '/collection/killacats/:id',
         destination: '/collection/killakatz/:id',
+        permanent: true,
+      },
+      {
+        source: '/collection/boss-frogz',
+        destination: '/collection/trooprz-boss-frogz',
+        permanent: true,
+      },
+      {
+        source: '/collection/boss-frogz/:id',
+        destination: '/collection/trooprz-boss-frogz/:id',
+        permanent: true,
+      },
+      {
+        source: '/collection/seasonal-cats',
+        destination: '/collection/world-of-cats-seasonal',
+        permanent: true,
+      },
+      {
+        source: '/collection/seasonal-cats/:id',
+        destination: '/collection/world-of-cats-seasonal/:id',
         permanent: true,
       },
       {

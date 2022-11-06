@@ -1,5 +1,4 @@
 import Profile from '@src/Components/Account/Profile';
-import Footer from '@src/Components/components/Footer';
 import {caseInsensitiveCompare} from "@src/utils";
 import {getProfile} from "@src/core/cms/endpoints/profile";
 
@@ -7,7 +6,6 @@ export default function Account({ address, profile, query }) {
   return (
     <>
       <Profile address={address} profile={profile} tab={query?.tab} />
-      <Footer />
     </>
   );
 }

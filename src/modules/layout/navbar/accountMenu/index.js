@@ -63,7 +63,6 @@ const StyledModalTitle = styled(ModalTitle)`
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-const cnsusdContract = '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233';
 
 const Index = function () {
   const dispatch = useDispatch();
@@ -210,7 +209,7 @@ const Index = function () {
   const [cnsBalance, setCnsBalance] = useState(0);
   useEffect(() => {
     async function stuff() {
-      const c = new Contract(cnsusdContract, ERC20, readProvider);
+      const c = new Contract(config.contracts.cnsusd, ERC20, readProvider);
       const info = await c.balanceOf(user.address);
       setCnsBalance(round(ethers.utils.formatEther(info)));
     }

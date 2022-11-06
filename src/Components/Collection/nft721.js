@@ -939,8 +939,8 @@ const Nft721 = ({ address, id }) => {
         <MakeOfferDialog
           isOpen={openMakeOfferDialog}
           onClose={() => setOpenMakeOfferDialog(false)}
-          nft={nft}
-          collection={collection}
+          initialNft={nft}
+          nftAddress={address}
         />
       )}
       <Footer />

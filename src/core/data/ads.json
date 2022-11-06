@@ -1,6 +1,22 @@
 [
   {
-    "name": "Fury Quack Gang1",
+    "name": "SeaShrine Founding Member VIP",
+    "image": "/img/promos/seashrine.webp",
+    "description": "SeaShrine is a new marketplace founded and built by the same team behind the Cronos success, Ebisu’s Bay. With upcoming feature parity with their previous endeavor, the team looks to replicate their accomplishments and to recreate a Gold Standard for marketplaces on the new Aptos blockchain. Embark on this journey with us by minting a VIP Founding Member NFT now!",
+    "page": "front",
+    "weight": 1,
+    "start": 1666895575,
+    "end": null,
+    "links": [
+      {
+        "label": "More Info",
+        "url": "https://seashrine.io/",
+        "external": true
+      }
+    ]
+  },
+  {
+    "name": "Fury Quack Gang",
     "image": "/img/promos/quack.webp",
     "description": "\"It's us, against all.\"\n\nThe Fury Quack Gang is an NFTs sub-collection of the Fury Mouse Gang. Counting 3500 Fury Ducks. Like the mice, at night the fury takes hold of them and they ravage everything in their path. These creatures are the enemies number 1 of the Fury Mouse Gang and they want to rule on the World. \"Best art work on Cronos.\"\n\nRally, or die.",
     "page": "front",
@@ -10,7 +26,24 @@
     "links": [
       {
         "label": "Mint Now",
-        "url": "https://furyquackgang.com/"
+        "url": "https://furyquackgang.com/",
+        "external": true
+      }
+    ]
+  },
+  {
+    "name": "Cronos Fighters V2",
+    "image": "/img/collections/cronos-fighters-v2/card.webp",
+    "description": "The baddest fighters in the world are now minting. Earn $FYTE tokens, use them in the Fighters Marketplace, buying the top NFTS and Allowlists. Mint a Fighter, join the FIGHTERSVERSE!",
+    "page": "front",
+    "weight": 1,
+    "start": 1667433600,
+    "end": 1667692800,
+    "links": [
+      {
+        "label": "Mint Now",
+        "url": "/drops/cronos-fighters-v2",
+        "external": false
       }
     ]
   }
