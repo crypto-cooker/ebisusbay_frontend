@@ -158,7 +158,6 @@ export const BatchListingDrawer = ({ onClose, ...gridProps }) => {
         <Flex align="center">
           {/*TODO update*/}
           <Select defaultValue={actualForm} onChange={(e) => { setActualForm(e.target.value) }}>
-            <option value={actualForm} disabled>{actualForm == 'list' ? 'List for sale' : 'Create a Bundle'}</option>
             <option value='list'>List for sale</option>
             <option value='bundle'>Create a Bundle</option>
           </Select>
