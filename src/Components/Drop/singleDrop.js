@@ -17,7 +17,7 @@ import Footer from '../components/Footer';
 import { connectAccount } from '../../GlobalState/User';
 import { fetchMemberInfo, fetchVipInfo } from '../../GlobalState/Memberships';
 import {
-  createSuccessfulTransactionToastContent, isCarkayousCollection,
+  createSuccessfulTransactionToastContent, isBossFrogzDrop, isCarkayousCollection,
   isCreaturesDrop,
   isCrosmocraftsPartsDrop,
   isCyberCloneDrop,
@@ -374,7 +374,8 @@ const SingleDrop = () => {
         }
 
         const gasPrice = parseUnits('5000', 'gwei');
-        const gasEstimate = await contract.estimateGas.mint(numToMint, {value: finalCost});
+        const gasEstimate = isErc20 ? await contract.estimateGas.mintWithToken(numToMint):
+          await contract.estimateGas.mint(numToMint, {value: finalCost});
         const gasLimit = gasEstimate.mul(2);
         let extra = {
           value: finalCost,
@@ -686,7 +687,7 @@ const SingleDrop = () => {
                       <Heading as="h5" size="md">TBA</Heading>
                     )}
                     {regularCost && (
-                      <Heading as="h5" size="md">{ethers.utils.commify(round(regularCost))} CRO</Heading>
+                      <Heading as="h5" size="md">{ethers.utils.commify(round(regularCost))} {dropObject?.costUnit ?? 'CRO'}</Heading>
                     )}
                     {dropObject?.erc20Cost && dropObject?.erc20Token && (
                       <Heading as="h5" size="md">{`${ethers.utils.commify(round(dropObject?.erc20Cost))} ${config.tokens[dropObject.erc20Token].symbol}`}</Heading>
@@ -772,18 +773,20 @@ const SingleDrop = () => {
 
                     {canMintQuantity > 0 && (
                       <div className="d-flex flex-row mt-5">
-                        <button className="btn-main lead mb-5 mr15" onClick={() => mintNow(false)} disabled={minting}>
-                          {minting ? (
-                            <>
-                              Minting...
-                              <Spinner animation="border" role="status" size="sm" className="ms-1">
-                                <span className="visually-hidden">Loading...</span>
-                              </Spinner>
-                            </>
-                          ) : (
-                            <>{drop.maxMintPerTx && drop.maxMintPerTx > 1 ? <>Mint {numToMint}</> : <>Mint</>}</>
-                          )}
-                        </button>
+                        {!isBossFrogzDrop(drop.address) && (
+                          <button className="btn-main lead mb-5 mr15" onClick={() => mintNow(false)} disabled={minting}>
+                            {minting ? (
+                              <>
+                                Minting...
+                                <Spinner animation="border" role="status" size="sm" className="ms-1">
+                                  <span className="visually-hidden">Loading...</span>
+                                </Spinner>
+                              </>
+                            ) : (
+                              <>{drop.maxMintPerTx && drop.maxMintPerTx > 1 ? <>Mint {numToMint}</> : <>Mint</>}</>
+                            )}
+                          </button>
+                        )}
                         {drop.erc20Token && (
                           <button
                             className="btn-main lead mb-5 mr15 mx-1"
