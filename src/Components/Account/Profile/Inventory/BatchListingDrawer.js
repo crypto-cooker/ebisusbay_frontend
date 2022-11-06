@@ -99,7 +99,7 @@ export const BatchListingDrawer = ({ onClose, ...gridProps }) => {
       }
 
       Sentry.captureEvent({ message: 'handleBatchListing', extra: { nftAddresses, nftIds, nftPrices } });
-      let tx = await user.marketContract.makeListings(nftAddresses, nftIds, nftPrices, txExtras);
+      let tx = await user.contractService.market.makeListings(nftAddresses, nftIds, nftPrices, txExtras);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       handleClearCart();

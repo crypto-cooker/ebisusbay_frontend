@@ -219,7 +219,7 @@ const Rugsurance = () => {
   useEffect(() => {
     async function asyncFunc() {
       if (!user.connectingWallet) {
-        if (user.membershipContract && user.provider) {
+        if (user.contractService?.membership && user.provider) {
           try {
             const sscAddress = knownContracts.find((c) => c.slug === targetSlug).address;
             const sscContract = new Contract(sscAddress, ERC721, user.provider.getSigner());

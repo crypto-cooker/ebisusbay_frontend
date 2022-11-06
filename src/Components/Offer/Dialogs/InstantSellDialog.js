@@ -55,7 +55,7 @@ export default function InstantSellDialog({ onClose, isOpen, collection}) {
   const [chosenCollectionNft, setChosenCollectionNft] = useState(null);
 
   const user = useSelector((state) => state.user);
-  const {marketContract, offerContract} = user;
+  const {contractService} = user;
 
   const isBelowFloorPrice = (price) => {
     return (floorPrice !== 0 && ((floorPrice - Number(price)) / floorPrice) * 100 > floorThreshold);
@@ -79,15 +79,11 @@ export default function InstantSellDialog({ onClose, isOpen, collection}) {
     }
   }, [user.provider]);
 
-  const wrappedMarketContract = () => {
-    return marketContract ?? new Contract(config.contracts.market, Market.abi, user.provider.getSigner());
-  };
-
   const getInitialProps = async () => {
     try {
       setIsLoading(true);
       const marketContractAddress = config.contracts.market;
-      const marketContract = wrappedMarketContract();
+      const marketContract = contractService.market;
 
       const walletNfts = await getQuickWallet(user.address, {pageSize: 1000, collection:collection.address});
       setCollectionNfts(walletNfts.data.filter((nft) => !isNftBlacklisted(nft.address ?? nft.nftAddress, nft.id ?? nft.nftId)));
@@ -141,7 +137,7 @@ export default function InstantSellDialog({ onClose, isOpen, collection}) {
   const handleApproval = async (e) => {
     e.preventDefault();
     try {
-      const marketContractAddress = marketContract.address;
+      const marketContractAddress = config.contracts.market;
       const contract = new Contract(collection.address, ERC721, user.provider.getSigner());
       setExecutingApproval(true);
       const tx = await contract.setApprovalForAll(marketContractAddress, true);
@@ -171,7 +167,7 @@ export default function InstantSellDialog({ onClose, isOpen, collection}) {
 
       setExecutingAcceptOffer(true);
       Sentry.captureEvent({message: 'handleInstantSell', extra: {nftAddress: collection.address, price}});
-      const tx = await offerContract.acceptCollectionOffer(offer.nftAddress, offer.offerIndex, chosenCollectionNft.nftId, txExtras);
+      const tx = await contractService.offer.acceptCollectionOffer(offer.nftAddress, offer.offerIndex, chosenCollectionNft.nftId, txExtras);
 
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));

@@ -43,7 +43,7 @@ export default function ListingsRow({ listing, nft }) {
   const runFunction = async (fn) => {
     if (user.address) {
       try {
-        const receipt = await fn(user.marketContract);
+        const receipt = await fn(user.contractService.market);
         dispatch(getNftDetails(listing.nftAddress, listing.nftId));
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       } catch (error) {

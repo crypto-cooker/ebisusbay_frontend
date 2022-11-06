@@ -1,10 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Contract, ethers, BigNumber } from 'ethers';
-import Membership from '../Contracts/EbisusBayMembership.json';
-import StakeABI from '../Contracts/Stake.json';
-import Market from '../Contracts/Marketplace.json';
-import Auction from '../Contracts/DegenAuction.json';
-import Offer from '../Contracts/Offer.json';
+import { ethers, BigNumber } from 'ethers';
 import Web3Modal from 'web3modal';
 
 import detectEthereumProvider from '@metamask/detect-provider';
@@ -25,16 +20,15 @@ import {
   isUserBlacklisted,
   sliceIntoChunks,
 } from '../utils';
-import { nanoid } from 'nanoid';
 import { appAuthInitFinished } from './InitSlice';
 import { captureException } from '@sentry/react';
 import { setThemeInStorage } from '../helpers/storage';
 import { getAllOffers } from '../core/subgraph';
 import { offerState } from '../core/api/enums';
-import { txExtras } from '../core/constants';
 import { appConfig } from '../Config';
 import { MarketFilterCollection } from '../Components/Models/market-filters.model';
 import {getProfile} from "@src/core/cms/endpoints/profile";
+import UserContractService from "@src/core/contractService";
 
 const config = appConfig();
 
@@ -59,11 +53,7 @@ const userSlice = createSlice({
     authSignature: null,
 
     // Contracts
-    membershipContract: null,
-    marketContract: null,
-    stakeContract: null,
-    auctionContract: null,
-    offerContract: null,
+    contractService: null,
 
     correctChain: false,
     showWrongChainModal: false,
@@ -111,20 +101,15 @@ const userSlice = createSlice({
   },
   reducers: {
     accountChanged(state, action) {
-      state.membershipContract = action.payload.membershipContract;
-      state.stakeContract = action.payload.stakeContract;
-
       state.balance = action.payload.balance;
       state.code = action.payload.code;
       state.rewards = action.payload.rewards;
       state.isMember = action.payload.isMember;
       state.vipCount = action.payload.vipCount;
       state.stakeCount = action.payload.stakeCount;
-      state.marketContract = action.payload.marketContract;
       state.marketBalance = action.payload.marketBalance;
       state.stakingRewards = action.payload.stakingRewards;
-      state.auctionContract = action.payload.auctionContract;
-      state.offerContract = action.payload.offerContract;
+      state.contractService = action.payload.contractService;
       state.gettingContractData = false;
     },
 
@@ -139,7 +124,6 @@ const userSlice = createSlice({
     onProvider(state, action) {
       state.provider = action.payload.provider;
       state.needsOnboard = action.payload.needsOnboard;
-      state.membershipContract = action.payload.membershipContract;
       state.correctChain = action.payload.correctChain;
     },
 
@@ -327,6 +311,7 @@ const userSlice = createSlice({
       state.myUnfilteredListings = [];
       state.profile = {};
       state.authSignature = null;
+      state.contractService = null;
     },
     onThemeChanged(state, action) {
       state.theme = action.payload;
@@ -549,37 +534,28 @@ export const connectAccount =
         window.location.reload();
       });
 
-      let mc;
-      let cc;
-      let sc;
       let code;
       let balance;
       let rewards;
       let ownedFounder = 0;
       let ownedVip = 0;
-      let market;
-      let auction;
-      let offer;
       let sales;
       let stakeCount = 0;
       let stakingRewards = 0;
+      let contractService;
 
       dispatch(retrieveProfile());
 
       if (signer && correctChain) {
-        mc = new Contract(config.contracts.membership, Membership.abi, signer);
-        sc = new Contract(config.contracts.stake, StakeABI.abi, signer);
-        const rawCode = await mc.codes(address);
+        contractService = new UserContractService(signer);
+        const rawCode = await contractService.membership.codes(address);
         code = ethers.utils.parseBytes32String(rawCode);
-        rewards = ethers.utils.formatEther(await mc.payments(address));
-        ownedFounder = await mc.balanceOf(address, 1);
-        ownedVip = await mc.balanceOf(address, 2);
-        stakeCount = await sc.amountStaked(address);
-        market = new Contract(config.contracts.market, Market.abi, signer);
-        auction = new Contract(config.contracts.madAuction, Auction.abi, signer);
-        offer = new Contract(config.contracts.offer, Offer.abi, signer);
-        sales = ethers.utils.formatEther(await market.payments(address));
-        stakingRewards = ethers.utils.formatEther(await sc.getReward(address));
+        rewards = ethers.utils.formatEther(await contractService.membership.payments(address));
+        ownedFounder = await contractService.membership.balanceOf(address, 1);
+        ownedVip = await contractService.membership.balanceOf(address, 2);
+        stakeCount = await contractService.staking.amountStaked(address);
+        sales = ethers.utils.formatEther(await contractService.market.payments(address));
+        stakingRewards = ethers.utils.formatEther(await contractService.staking.getReward(address));
 
         try {
           balance = ethers.utils.formatEther(await provider.getBalance(address));
@@ -594,19 +570,15 @@ export const connectAccount =
           web3modal: web3Modal,
           needsOnboard: false,
           correctChain: correctChain,
-          membershipContract: mc,
-          stakeContract: sc,
           code: code,
           balance: balance,
           rewards: rewards,
           isMember: ownedVip > 0 || ownedFounder > 0 || stakeCount > 0,
           vipCount: ownedVip ? ownedVip.toNumber() : ownedVip,
           stakeCount: stakeCount ? stakeCount.toNumber() : stakeCount,
-          marketContract: market,
-          auctionContract: auction,
-          offerContract: offer,
           marketBalance: sales,
           stakingRewards: stakingRewards,
+          contractService: contractService
         })
       );
     } catch (error) {
@@ -888,7 +860,7 @@ export class AccountMenuActions {
   static withdrawRewards = () => async (dispatch, getState) => {
     const { user } = getState();
     try {
-      const tx = await user.membershipContract.withdrawPayments(user.address);
+      const tx = await user.contractService.membership.withdrawPayments(user.address);
       const receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       dispatch(withdrewRewards());
@@ -909,7 +881,7 @@ export class AccountMenuActions {
     const { user } = getState();
     try {
       dispatch(withdrawingMarketBalance());
-      const tx = await user.marketContract.withdrawPayments(user.address);
+      const tx = await user.contractService.market.withdrawPayments(user.address);
       const receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       dispatch(withdrewMarketBalance({ success: true }));
@@ -932,7 +904,7 @@ export class AccountMenuActions {
     const { user } = getState();
     try {
       dispatch(harvestingStakingRewards());
-      const tx = await user.stakeContract.harvest(user.address);
+      const tx = await user.contractService.staking.harvest(user.address);
       const receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       dispatch(harvestedStakingRewards({ success: true }));
@@ -1004,7 +976,7 @@ export class MyNftCancelDialogActions {
     ({ listingId, address, id }) =>
     async (dispatch, getState) => {
       const state = getState();
-      const marketContract = state.user.marketContract;
+      const marketContract = state.user.contractService.market;
       try {
         let tx = await marketContract.cancelListing(listingId);
 

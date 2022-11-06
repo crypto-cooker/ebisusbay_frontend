@@ -35,9 +35,9 @@ const MyStaking = () => {
 
   // Allow exception to be thrown for other functions to catch it
   const setApprovalForAll = async () => {
-    const isApproved = await user.membershipContract.isApprovedForAll(user.stakeContract.address, user.address);
+    const isApproved = await user.contractService.membership.isApprovedForAll(user.contractService.staking.address, user.address);
     if (!isApproved) {
-      let tx = await user.membershipContract.setApprovalForAll(user.stakeContract.address, true, txExtras);
+      let tx = await user.contractService.membership.setApprovalForAll(user.contractService.staking.address, true, txExtras);
       await tx.wait();
     }
   };
@@ -61,14 +61,14 @@ const MyStaking = () => {
   };
 
   const stake = async (quantity) => {
-    if (!user.stakeContract || quantity === 0) return;
+    if (!user.contractService.staking || quantity === 0) return;
     if (quantity > vipCount) {
       toast.error('You do not have enough available VIPs');
       return;
     }
     try {
       if (!isApproved) await approve();
-      const tx = await user.stakeContract.stake(quantity, txExtras);
+      const tx = await user.contractService.staking.stake(quantity, txExtras);
       const receipt = await tx.wait();
       dispatch(setStakeCount(stakeCount + quantity));
       dispatch(setVIPCount(vipCount - quantity));
@@ -79,13 +79,13 @@ const MyStaking = () => {
   };
 
   const unStake = async (quantity) => {
-    if (!user.stakeContract || quantity <= 0) return;
+    if (!user.contractService.staking || quantity <= 0) return;
     if (quantity > stakeCount) {
       toast.error('You do not have enough available VIPs');
       return;
     }
     try {
-      const tx = await user.stakeContract.unstake(quantity, { gasPrice: 5000000000000 });
+      const tx = await user.contractService.staking.unstake(quantity, { gasPrice: 5000000000000 });
       const receipt = await tx.wait();
       dispatch(setStakeCount(stakeCount - quantity));
       dispatch(setVIPCount(vipCount + quantity));
@@ -99,7 +99,7 @@ const MyStaking = () => {
   useEffect(() => {
     async function checkApproval() {
       try {
-        const isApproved = await user.membershipContract.isApprovedForAll(user.address, user.stakeContract.address);
+        const isApproved = await user.contractService.membership.isApprovedForAll(user.address, user.contractService.staking.address);
         setIsApproved(isApproved);
       } catch (e) {
         console.log(e);
@@ -107,7 +107,7 @@ const MyStaking = () => {
         setIsInitializing(false);
       }
     }
-    if (!user.connectingWallet && user.membershipContract) {
+    if (!user.connectingWallet && user.contractService?.membership) {
       checkApproval();
     }
     // eslint-disable-next-line
@@ -330,19 +330,19 @@ const RewardsCard = () => {
   const [globalStakedTotal, setglobalStakedTotal] = useState(0);
 
   const getRewardsInfo = async () => {
-    if (!user.stakeContract) return;
+    if (!user.contractService?.staking) return;
 
     if (!firstRunComplete) {
       setRewardsInfoLoading(true);
     }
 
     try {
-      const mGlobalStakedTotal = await user.stakeContract.totalStaked();
+      const mGlobalStakedTotal = await user.contractService.staking.totalStaked();
       setglobalStakedTotal(parseInt(mGlobalStakedTotal));
 
-      const mUserPendingRewards = await user.stakeContract.getReward(user.address);
-      const mGlobalPaidRewards = await user.stakeContract.rewardsPaid();
-      const mUserReleasedRewards = await user.stakeContract.getReleasedReward(user.address);
+      const mUserPendingRewards = await user.contractService.staking.getReward(user.address);
+      const mGlobalPaidRewards = await user.contractService.staking.rewardsPaid();
+      const mUserReleasedRewards = await user.contractService.staking.getReleasedReward(user.address);
 
       setUserPendingRewards(ethers.utils.formatEther(mUserPendingRewards));
       setUserReleasedRewards(ethers.utils.formatEther(mUserReleasedRewards));
@@ -356,15 +356,15 @@ const RewardsCard = () => {
   };
 
   const harvest = async () => {
-    if (!user.stakeContract) return;
+    if (!user.contractService?.staking) return;
 
     try {
       setIsHarvesting(true);
-      const amountToHarvest = await user.stakeContract.getReward(user.address);
+      const amountToHarvest = await user.contractService.staking.getReward(user.address);
 
       if (amountToHarvest.gt(0)) {
         try {
-          const tx = await user.stakeContract.harvest(user.address, txExtras);
+          const tx = await user.contractService.staking.harvest(user.address, txExtras);
           const receipt = await tx.wait();
           await getRewardsInfo();
           toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));

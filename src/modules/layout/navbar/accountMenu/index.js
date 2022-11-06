@@ -121,8 +121,8 @@ const Index = function () {
   useInterval(() => {
     async function func() {
       if (user && !user.connectingWallet && user.provider) {
-        const sales = ethers.utils.formatEther(await user.marketContract.payments(walletAddress));
-        const stakingRewards = ethers.utils.formatEther(await user.stakeContract.getReward(walletAddress));
+        const sales = ethers.utils.formatEther(await user.contractService.market.payments(walletAddress));
+        const stakingRewards = ethers.utils.formatEther(await user.contractService.staking.getReward(walletAddress));
         dispatch(
           balanceUpdated({
             marketBalance: sales || 0,
