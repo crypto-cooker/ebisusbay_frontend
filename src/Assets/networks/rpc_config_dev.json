@@ -11210,6 +11210,30 @@
         "kyc": "hidden",
         "escrow": false
       }
+    },
+    {
+      "name": "Prime Ape",
+      "slug": "prime-ape",
+      "multiToken": false,
+      "address": "0xF04fA6f70FF99727622646eDC0d60901B9850631",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Prime ape is a collection of 3000 apes running wildly on the chronos blockchain. Our goal, is a reflection of our ambition. Being one of the best collection of the entire blockchain!",
+        "verified": false,
+        "avatar": "/img/collections/prime-ape/avatar.webp",
+        "card": "/img/collections/prime-ape/card.webp",
+        "banner": "/img/collections/prime-ape/banner.webp",
+        "maxSupply": 3000,
+        "website": "https://primeapecro.com/",
+        "twitter": "https://twitter.com/primeapecro",
+        "discord": "https://discord.gg/xnfKsmHRxf"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
+      }
     }
   ],
   "drops": [
