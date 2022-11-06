@@ -6,7 +6,8 @@ const batchListingSlice = createSlice({
   initialState: {
     nfts: [],
     isDrawerOpen: false,
-    extras: {}
+    extras: {},
+    extrasBundle: {}
   },
   reducers: {
     addToBatchListingCart: (state, action) => {
@@ -86,6 +87,11 @@ const batchListingSlice = createSlice({
       extra.approval = action.payload.status;
       state.extras[action.payload.address.toLowerCase()] = extra;
     },
+    setApprovalBundle: (state, action) => {
+      const extra = state.extras[action.payload.address] ?? {};
+      extra.approval = action.payload.status;
+      state.extrasBundle[action.payload.address.toLowerCase()] = extra;
+    },
     setFloorPrice: (state, action) => {
       const extra = state.extras[action.payload.address] ?? {};
       extra.floorPrice = action.payload.floorPrice;
@@ -93,7 +99,10 @@ const batchListingSlice = createSlice({
     },
     setExtras: (state, action) => {
       state.extras[action.payload.address.toLowerCase()] = action.payload;
-    }
+    },
+    setExtrasBundle: (state, action) => {
+      state.extrasBundle[action.payload.address.toLowerCase()] = action.payload;
+    },
   },
 });
 
@@ -109,7 +118,9 @@ export const {
   applyPriceToAll,
   setApproval,
   setFloorPrice,
-  setExtras
+  setExtras,
+  setExtrasBundle,
+  setApprovalBundle
 } = batchListingSlice.actions;
 
 export default batchListingSlice.reducer;
