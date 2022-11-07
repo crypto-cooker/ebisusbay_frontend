@@ -5,8 +5,9 @@ import styled from 'styled-components';
 
 import LayeredIcon from './LayeredIcon';
 import {hostedImage} from "../../helpers/image";
-import {Heading, Text} from "@chakra-ui/react";
+import {Box, Heading, Text} from "@chakra-ui/react";
 import {useRouter} from "next/router";
+import {useColorModeValue} from "@chakra-ui/color-mode";
 
 const VerifiedIcon = styled.span`
   font-size: 10px;
@@ -22,6 +23,7 @@ const VerifiedIcon = styled.span`
 
 const CustomSlide = ({ index, avatar, banner, title, subtitle, collectionId, url, verified, externalPage = false }) => {
   const router = useRouter();
+  const hoverBgColor = useColorModeValue('#FFFFFF', '#404040');
 
   const navigateTo = (url) => {
     if (url && typeof window !== 'undefined') {
@@ -34,8 +36,10 @@ const CustomSlide = ({ index, avatar, banner, title, subtitle, collectionId, url
   };
 
   return (
-    <div className="itm" key={index}>
-      <div className="nft_coll cursor-pointer" onClick={() => navigateTo(url)}>
+    <Box className="itm" key={index}>
+      <Box className="nft_coll cursor-pointer" onClick={() => navigateTo(url)} _hover={{
+        backgroundColor: hoverBgColor
+      }} shadow="lg">
         <div className="nft_wrap">
           <span>
             <img src={hostedImage(banner)} className="lazy img-fluid" alt={title} />
@@ -55,14 +59,14 @@ const CustomSlide = ({ index, avatar, banner, title, subtitle, collectionId, url
             )}
           </span>
         </div>
-        <div className="nft_coll_info px-2">
+        <div className="nft_coll_info">
           <span>
             <Heading as="h4" size="md">{title}</Heading>
           </span>
-          <Text noOfLines={3} fontSize="14px">{subtitle}</Text>
+          <Text noOfLines={3} fontSize="14px" px={2}>{subtitle}</Text>
         </div>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

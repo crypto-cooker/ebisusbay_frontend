@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PageHead from "../../src/Components/Head/PageHead";
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import brands from '@src/core/data/brands.json';
@@ -7,6 +7,7 @@ import {Box, Button, Center, Heading, SimpleGrid, Text, useBreakpointValue} from
 import CustomSlide from "@src/Components/components/CustomSlide";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
 import Footer from "@src/Components/components/Footer";
+import {caseInsensitiveCompare} from "@src/utils";
 
 const Brand = ({ brand, collections }) => {
   const [viewMore, setViewMore] = useState(false);
@@ -91,9 +92,21 @@ export const getServerSideProps = async ({ params, query }) => {
   const brand = brands.find((brand) => brand.slug === slug);
 
   // @todo: replace with API query once /collectioninfo supports multiple addresses
-  const brandCollections = brand.collections.map((address) => address.toLowerCase());
+  const brandKeyedAddresses = brand.collections.map((address, key) => {
+    return {
+      address: address.toLowerCase(),
+      position: key
+    }
+  });
+  const brandAddresses = brandKeyedAddresses.map((o) => o.address);
   const allCollections = appConfig('collections');
-  const collections = allCollections.filter((c) => brandCollections.includes(c.address.toLowerCase()));
+  const collections = allCollections
+    .filter((c) => brandAddresses.includes(c.address.toLowerCase()))
+    .map((c) => {
+      c.position = brandKeyedAddresses.find((o) => caseInsensitiveCompare(o.address, c.address)).position;
+      return c;
+    })
+    .sort((a, b) => a.position > b.position ? 1 : -1);
 
   if (!brand) {
     return {
