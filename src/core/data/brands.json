@@ -63,5 +63,34 @@
       "medium": "https://medium.com/@WeirdApesClub",
       "gitbook": "https://weirdape.gitbook.io/weird-apes-club/weird-apes-club/summary"
     }
+  },
+  {
+    "slug": "boomer-squad",
+    "name": "Boomer Squad",
+    "description": "Collection of 8008 Boomers using crypto in the only way they know how. Everyone has felt like our Boomers at some point in their crypto journey but just like everyone else they will figure it out eventually. Founded by a fully doxed team of 11, Boomer Squad was established to build an ecosystem of on chain games, events, collections, and ecosystem developments that reflects value back to our Gen 0 Boomers through our Verified Distribution Contract called the \"Mattress Fund\" and Boomer DAO. Check out our GitBook for a full breakdown of everything already established and in the works in our ecosystem",
+    "images": {
+      "banner": "/img/collections/boomer-squad/banner.webp"
+    },
+    "collections": [
+      "0xb650279e3d726B0c75C984cAA55341cB87A7F501",
+      "0x8Dd9975c78423480a6188F55B0767fbF4478b001",
+      "0x8Bff49Fc633e0A3eB879449B67500812B27a97B7",
+      "0x995d38004314836E48485D5fE328ebC17046FE68",
+      "0xc6a1f1034235F3B389bAb28B75719B3475Edf4AD",
+      "0xf27205535932c7490F227F5bED7e5f7212b455bb",
+      "0xEa71F7AFA9eEEee5De16ee64b76255E216952511",
+      "0xAE40d175F2cf9C6777c0E0830E17211c4F5A66D0",
+      "0x18550Cc44779EA72D6Fe6389D08D8Ab234f754CB",
+      "0x48D20305Ad156e44A0f93c3312A876E56c0e9f7E",
+      "0xb7109F93d780FD3f01eB7EbB0FE9436449F0D8EF",
+      "0xc5B294B557402f8706aED487e155773756A9c400",
+      "0x4AA9F792b51954A8903967375e854Ed7EE4bCBf0"
+    ],
+    "socials": {
+      "website": "https://www.boomersquad.io/",
+      "twitter": "https://twitter.com/BoomerSquadNFT1",
+      "discord": "https://discord.gg/boomersquad",
+      "medium": "https://medium.com/@BoomerSquadNFT"
+    }
   }
 ]
