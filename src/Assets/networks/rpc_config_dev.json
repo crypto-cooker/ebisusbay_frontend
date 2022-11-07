@@ -7300,7 +7300,7 @@
       "multiToken": false,
       "address": "0x4E6795D725e26E340865140a870C25d1e413A118",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The B.A.D Founders Passport gives you ownership in Baby Alien Division's current and future growth. Receive a lifetime of free NFTs, airdrops, mint royalties, and whitelists.",
         "verified": true,
