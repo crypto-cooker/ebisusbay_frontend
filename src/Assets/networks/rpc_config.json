@@ -14090,7 +14090,7 @@
       "name": "Patron NFT",
       "slug": "patron-nft",
       "multiToken": false,
-      "address": "",
+      "address": "0xcD4FF80bE264b26C96F7b6d89703F2a26688Aee3",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -19721,7 +19721,7 @@
         "medium": "https://medium.com/@kapveycrypto",
         "telegram": "https://t.me/KAPVEYCRYPTO"
       },
-      "address": "",
+      "address": "0xcD4FF80bE264b26C96F7b6d89703F2a26688Aee3",
       "maxMintPerTx": 30,
       "maxMintPerAddress": 30,
       "totalSupply": 4999,
