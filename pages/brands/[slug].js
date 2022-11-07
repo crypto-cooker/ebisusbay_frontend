@@ -39,6 +39,7 @@ const Brand = ({ brand, collections, stats }) => {
         position="relative"
         minH="300px"
         shadow="0 1px 25px black"
+        color="white"
       >
         <Box
           style={{
@@ -54,11 +55,11 @@ const Brand = ({ brand, collections, stats }) => {
         />
         <SimpleGrid columns={{base: 1, md: 2}} position="relative" bottom={0} px={10} pt={{base: '75px', md:'40px'}} pb={4}>
           <Box>
-            <Heading color="white">{brand.name}</Heading>
+            <Heading color="inherit">{brand.name}</Heading>
             <SocialsBar
               socials={brand.socials}
             />
-            <Text maxW="800px" mt={1} color="white" noOfLines={viewMore ? 0 : {base: 3, md: 5}}>
+            <Text maxW="800px" mt={1} noOfLines={viewMore ? 0 : {base: 3, md: 5}}>
               {brand.description}
             </Text>
             {isClippingDescription && !viewMore && (
