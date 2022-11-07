@@ -50,7 +50,13 @@
         "twitter": "https://twitter.com/EbisusBay",
         "discord": "https://discord.gg/ynrBrSkAFG",
         "medium": "https://blog.ebisusbay.com/",
-        "instagram": "https://www.instagram.com/ebisusbayofficial"
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -70,7 +76,13 @@
         "maxSupply": 1000,
         "website": "",
         "twitter": "",
-        "discord": ""
+        "discord": "",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -92,12 +104,13 @@
         "discord": "https://discord.gg/ynrBrSkAFG",
         "medium": "https://blog.ebisusbay.com/",
         "instagram": "https://www.instagram.com/ebisusbayofficial",
-        "telegram": "https://t.me/ebisusbay"
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
       },
       "verification": {
         "doxx": "public",
         "kyc": "hidden",
-        "escrow": false
+        "verified": true
       }
     },
     {
@@ -116,7 +129,13 @@
         "maxSupply": 1000,
         "website": "",
         "twitter": "",
-        "discord": ""
+        "discord": "",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -135,7 +154,13 @@
         "maxSupply": 1000,
         "website": "",
         "twitter": "",
-        "discord": ""
+        "discord": "",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -154,7 +179,13 @@
         "maxSupply": 1000,
         "website": "",
         "twitter": "",
-        "discord": ""
+        "discord": "",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -173,7 +204,13 @@
         "maxSupply": 1000,
         "website": "",
         "twitter": "",
-        "discord": ""
+        "discord": "",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -189,7 +226,13 @@
         "avatar": "/img/collections/deplone/avatar.jpg",
         "banner": "/img/collections/deplone/page_banner.jpg",
         "card": "/img/drops/deplone/drop.gif",
-        "maxSupply": 2000
+        "maxSupply": 2000,
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -205,7 +248,13 @@
         "avatar": "/img/collections/lazyhorse/avatar.png",
         "card": "/img/collections/lazyhorse/card.png",
         "banner": "/img/collections/lazyhorse/banner.png",
-        "maxSupply": 2000
+        "maxSupply": 2000,
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -221,7 +270,13 @@
         "avatar": "/img/collections/crougars/avatar.png",
         "card": "/img/collections/crougars/card.gif",
         "banner": "/img/collections/crougars/banner.webp",
-        "maxSupply": 2000
+        "maxSupply": 2000,
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -237,7 +292,13 @@
         "maxSupply": 2000,
         "avatar": "/img/collections/lazyhorse/avatar.png",
         "card": "/img/collections/lazyhorse/card.png",
-        "banner": "/img/collections/lazyhorse/banner.png"
+        "banner": "/img/collections/lazyhorse/banner.png",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -253,7 +314,13 @@
         "maxSupply": 2000,
         "avatar": "/img/collections/barbara/spacecrystalunicorns/avatar.jpg",
         "card": "/img/collections/barbara/spacecrystalunicorns/card.jpg",
-        "banner": "/img/collections/barbara/spacecrystalunicorns/banner.jpg"
+        "banner": "/img/collections/barbara/spacecrystalunicorns/banner.jpg",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -272,7 +339,13 @@
         "maxSupply": 2000,
         "website": "https://www.crognomes.com/",
         "twitter": "https://twitter.com/CroGnomes",
-        "discord": "https://discord.gg/WkRgkSQ2hJ"
+        "discord": "https://discord.gg/WkRgkSQ2hJ",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -287,7 +360,13 @@
         "verified": true,
         "avatar": "/img/collections/anuah/avatar.png",
         "card": "/img/collections/anuah/card.webp",
-        "banner": "/img/collections/anuah/banner.webp"
+        "banner": "/img/collections/anuah/banner.webp",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -306,7 +385,13 @@
         "maxSupply": 1500,
         "website": "https://www.cronogods.com/",
         "twitter": "https://twitter.com/CronoGods",
-        "discord": "https://discord.gg/nQVhNmkY8g"
+        "discord": "https://discord.gg/nQVhNmkY8g",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -326,7 +411,15 @@
         "website": "https://www.mariescyborgs.io/",
         "twitter": "https://twitter.com/mariescyborgs",
         "discord": "https://discord.gg/mariescyborgs",
-        "telegram": "https://t.me/mariescyborgs"
+        "telegram": "https://t.me/mariescyborgs",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -347,7 +440,13 @@
         "twitter": "https://twitter.com/MAGBrewVikings",
         "discord": "https://discord.gg/xPN84dsmuC",
         "instagram": "https://instagram.com/magbrewvikings/",
-        "tiktok": "https://vm.tiktok.com/ZM87xo3ok/"
+        "tiktok": "https://vm.tiktok.com/ZM87xo3ok/",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -367,7 +466,13 @@
         "website": "https://www.thelaboratory.io/",
         "twitter": "https://twitter.com/thelaboratoryio",
         "discord": "https://discord.gg/thelaboratory",
-        "medium": "https://medium.com/@TheLaboratoryIO"
+        "medium": "https://medium.com/@TheLaboratoryIO",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -387,7 +492,13 @@
         "website": "https://www.thelaboratory.io/",
         "twitter": "https://twitter.com/thelaboratoryio",
         "discord": "https://discord.gg/thelaboratory",
-        "medium": "https://medium.com/@TheLaboratoryIO"
+        "medium": "https://medium.com/@TheLaboratoryIO",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -407,7 +518,13 @@
         "website": "https://www.recklessrobotsnft.com/",
         "twitter": "https://twitter.com/recklessrobotsnft",
         "discord": "https://discord.gg/recklessrobotsnft",
-        "medium": "https://medium.com/@recklessrobotsnft"
+        "medium": "https://medium.com/@recklessrobotsnft",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -427,7 +544,13 @@
         "website": "https://www.thelaboratory.io/",
         "twitter": "https://twitter.com/thelaboratoryio",
         "discord": "https://discord.gg/thelaboratory",
-        "medium": "https://medium.com/@TheLaboratoryIO"
+        "medium": "https://medium.com/@TheLaboratoryIO",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -446,7 +569,15 @@
         "maxSupply": 4444,
         "twitter": "https://twitter.com/creaturesxcl",
         "website": "https://www.cultcreatures.xyz/",
-        "discord": "https://discord.gg/creaturegang"
+        "discord": "https://discord.gg/creaturegang",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -465,7 +596,13 @@
         "website": "https://www.aliennft.ca/",
         "twitter": "https://twitter.com/aliennft",
         "discord": "https://discord.gg/aliennft",
-        "medium": "https://medium.com/@aliennft"
+        "medium": "https://medium.com/@aliennft",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -485,7 +622,13 @@
         "website": "https://cyborgswap.io/",
         "twitter": "https://twitter.com/chronoswap",
         "discord": "https://discord.gg/chronoswap",
-        "medium": "https://medium.com/@chronoswap"
+        "medium": "https://medium.com/@chronoswap",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -505,7 +648,13 @@
         "website": "https://www.crosmonauts.club/",
         "twitter": "https://twitter.com/crosmonaut",
         "discord": "https://discord.gg/yhyJjZ2uWk",
-        "medium": "https://medium.com/@crosmonaut"
+        "medium": "https://medium.com/@crosmonaut",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -525,7 +674,13 @@
         "website": "https://cronospb.com/",
         "twitter": "https://twitter.com/PrimateCronos",
         "discord": "https://discord.gg/qXxkanCKBB",
-        "medium": "https://medium.com/cronos-monkey-business"
+        "medium": "https://medium.com/cronos-monkey-business",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -545,7 +700,13 @@
         "website": "https://croslothty.com/",
         "twitter": "https://twitter.com/Slothtynft",
         "discord": "http://discord.gg/wkq88dHDyA",
-        "telegram": "https://t.me/croslothty"
+        "telegram": "https://t.me/croslothty",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -564,7 +725,13 @@
         "maxSupply": 1000,
         "website": "",
         "twitter": "",
-        "discord": ""
+        "discord": "",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -583,7 +750,13 @@
         "maxSupply": 2500,
         "website": "https://lolitandfriends.io/",
         "twitter": "https://twitter.com/lolita_nft",
-        "discord": "https://discord.com/invite/g6jquqSmMw"
+        "discord": "https://discord.com/invite/g6jquqSmMw",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -603,7 +776,13 @@
         "website": "http://www.thesportsnft.io/",
         "twitter": "https://twitter.com/TheSportsNFT",
         "discord": "https://discord.gg/6XYv63jc9Z",
-        "medium": "https://medium.com/@thesportsnft"
+        "medium": "https://medium.com/@thesportsnft",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -621,7 +800,13 @@
         "website": "http://fightersnft.io/",
         "twitter": "https://twitter.com/FightersNFT",
         "medium": "https://medium.com/@shahabs/nft-collectors-fighters-are-coming-593cb9865e20",
-        "discord": "http://discord.gg/Bb39m7BBBR"
+        "discord": "http://discord.gg/Bb39m7BBBR",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -641,7 +826,13 @@
         "website": "https://www.bigbadwolves.club/",
         "twitter": "https://twitter.com/BigBadWolves_MC",
         "discord": "https://discord.gg/9GetF5Nc5x",
-        "medium": "https://t.me/bigbadwolves_nft"
+        "medium": "https://t.me/bigbadwolves_nft",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -660,7 +851,13 @@
         "maxSupply": 2250,
         "website": "https://nobuddiesnft.com/",
         "twitter": "https://twitter.com/NoBuddiesNFT",
-        "discord": "https://discord.gg/W5TDF7jC34"
+        "discord": "https://discord.gg/W5TDF7jC34",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -681,7 +878,13 @@
         "twitter": "https://twitter.com/marbleverse_io",
         "discord": "https://discord.gg/marbleverse",
         "telegram": "https://t.me/marbleverse_io",
-        "medium": "https://medium.com/@marbleverse_io"
+        "medium": "https://medium.com/@marbleverse_io",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -701,7 +904,13 @@
         "website": "https://www.lazyhorseraceclub.com",
         "twitter": "https://twitter.com/LazyHorseRC",
         "discord": "https://discord.gg/lhrc",
-        "medium": "https://medium.com/@lazyhorseraceclub"
+        "medium": "https://medium.com/@lazyhorseraceclub",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -720,7 +929,13 @@
         "maxSupply": 1208,
         "website": "https://thecronosverse.com/",
         "twitter": "https://twitter.com/thecronosverse",
-        "discord": "https://discord.gg/HfCHkvNy6K"
+        "discord": "https://discord.gg/HfCHkvNy6K",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -739,7 +954,13 @@
         "maxSupply": 2666,
         "website": "https://www.hypednftclub.com/crosuccubus",
         "twitter": "https://twitter.com/CroSuccubus",
-        "discord": "https://discord.gg/ruKabM5A4U"
+        "discord": "https://discord.gg/ruKabM5A4U",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -759,7 +980,13 @@
         "twitter": "https://twitter.com/The_Crobees",
         "website": "https://www.crobees.com/",
         "discord": "discord.gg/BdYExfEJ8v",
-        "medium": "https://medium.com/the-crobees"
+        "medium": "https://medium.com/the-crobees",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -778,7 +1005,13 @@
         "maxSupply": 1111,
         "website": "",
         "twitter": "",
-        "discord": ""
+        "discord": "",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -799,7 +1032,13 @@
         "twitter": "https://twitter.com/playkardia",
         "discord": "https://discord.gg/kardia",
         "telegram": "https://t.me/kardianft",
-        "medium": "https://medium.com/@playkardia/"
+        "medium": "https://medium.com/@playkardia/",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -820,7 +1059,13 @@
         "twitter": "https://twitter.com/MonkeyOfAnarkey",
         "discord": "https://discord.gg/wxYhYkVhNN",
         "telegram": "https://t.me/monkeyoa",
-        "medium": "https://medium.com/@monkeyoa"
+        "medium": "https://medium.com/@monkeyoa",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -840,7 +1085,13 @@
         "website": "https://www.lazyhorseraceclub.com",
         "twitter": "https://twitter.com/LazyHorseRC",
         "discord": "https://discord.gg/lhrc",
-        "medium": "https://medium.com/@lazyhorseraceclub"
+        "medium": "https://medium.com/@lazyhorseraceclub",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -860,7 +1111,13 @@
         "website": "https://www.panelsproject.com/",
         "twitter": "https://twitter.com/PanelsProject",
         "discord": "https://discord.gg/cWdCce8XAx",
-        "medium": "https://medium.com/panels-project"
+        "medium": "https://medium.com/panels-project",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -880,7 +1137,13 @@
         "website": "https://www.croclubs.io/",
         "twitter": "https://twitter.com/croclubs",
         "discord": "http://discord.gg/RWZSJwnG7Y",
-        "medium": "https://medium.com/@croclubsio"
+        "medium": "https://medium.com/@croclubsio",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -897,7 +1160,13 @@
         "banner": "/img/collections/likehumans/banner.webp",
         "card": "/img/collections/likehumans/card.webp",
         "maxSupply": 60,
-        "website": "https://twitter.com/AtuchinArt"
+        "website": "https://twitter.com/AtuchinArt",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -917,7 +1186,13 @@
         "website": "http://instagram.com/deplone-",
         "twitter": "http://twitter.com/deplone3",
         "discord": "https://discord.gg/MYE5hnC9mq",
-        "medium": "https://medium.com/@deplone3"
+        "medium": "https://medium.com/@deplone3",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -936,7 +1211,13 @@
         "maxSupply": 10000,
         "website": "https://selfiesofthemultiverse.com/",
         "twitter": "https://twitter.com/SelfieVerseNFT",
-        "discord": "http://www.discord.gg/selfiesofthemultiverse"
+        "discord": "http://www.discord.gg/selfiesofthemultiverse",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -955,7 +1236,13 @@
         "maxSupply": 3000,
         "website": "http://www.artgroupink.com/",
         "twitter": "https://twitter.com/Ugonzo_Art",
-        "discord": "https://discord.gg/wj72JCGdF4"
+        "discord": "https://discord.gg/wj72JCGdF4",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -974,7 +1261,13 @@
         "maxSupply": 2500,
         "website": "https://www.hypednftclub.com/croofthrones",
         "twitter": "https://twitter.com/Croofthrones",
-        "discord": "https://discord.gg/pYCaAwpZ"
+        "discord": "https://discord.gg/pYCaAwpZ",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -993,7 +1286,13 @@
         "maxSupply": 3000,
         "website": "http://xtremejunkies.io/",
         "twitter": "https://twitter.com/mepyDoo",
-        "discord": "https://discord.gg/qCVUfNSzsb"
+        "discord": "https://discord.gg/qCVUfNSzsb",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1011,7 +1310,13 @@
         "banner": "/img/collections/croppelganger/banner.webp",
         "maxSupply": 26,
         "website": "https://www.instagram.com/sophilixart/",
-        "twitter": "https://twitter.com/Sophienfts"
+        "twitter": "https://twitter.com/Sophienfts",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1032,7 +1337,13 @@
         "twitter": "https://twitter.com/CrowboysGameFi",
         "discord": "https://discord.gg/crowboys",
         "medium": "https://medium.com/@crowboysonline",
-        "telegram": "https://t.me/crowboys"
+        "telegram": "https://t.me/crowboys",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1052,7 +1363,13 @@
         "website": "https://www.betamascots.com/",
         "twitter": "https://twitter.com/TheSportsNFT",
         "discord": "https://discord.gg/9Exq5ECpDv",
-        "medium": "https://medium.com/@thesportsnft"
+        "medium": "https://medium.com/@thesportsnft",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1072,14 +1389,24 @@
         "twitter": "https://twitter.com/DovesGhetto",
         "website": "https://ghettodoves.com/",
         "discord": "https://discord.gg/ghetto-doves",
-        "medium": "https://medium.com/@gd_29360/welcome-to-the-city-of-new-york-d940fff215c1"
+        "medium": "https://medium.com/@gd_29360/welcome-to-the-city-of-new-york-d940fff215c1",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
       "name": "Ghetto Doves: The Self Titled Drop - VIP",
       "slug": "ghetto-doves-vip",
       "multiToken": true,
-      "tokens": [{ "id": 1 }],
+      "tokens": [
+        {
+          "id": 1
+        }
+      ],
       "address": "0x2fAe3a245CAE5e863faA3954E74F486BC08E25ff",
       "onChain": false,
       "listable": true,
@@ -1093,7 +1420,13 @@
         "twitter": "https://twitter.com/DovesGhetto",
         "website": "https://ghettodoves.com/",
         "discord": "https://discord.gg/ghetto-doves",
-        "medium": "https://medium.com/@gd_29360/welcome-to-the-city-of-new-york-d940fff215c1"
+        "medium": "https://medium.com/@gd_29360/welcome-to-the-city-of-new-york-d940fff215c1",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1113,7 +1446,13 @@
         "twitter": "https://twitter.com/CyberCloneNFT",
         "website": "https://cyber-clone.com/",
         "discord": "https://discord.gg/rKnGgUDgYD",
-        "medium": "https://medium.com/cyber-clone"
+        "medium": "https://medium.com/cyber-clone",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1132,7 +1471,13 @@
         "maxSupply": 5000,
         "website": "http://www.bankrollbearsociety.com/",
         "twitter": "https://twitter.com/Bankrollbears",
-        "discord": "http://discord.gg/bankrollbearsociety"
+        "discord": "http://discord.gg/bankrollbearsociety",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1143,7 +1488,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Looneycorns is the first of 5 unique toys/NFTs from the Lost Toy collection. Each toy character represents a childhood favourite that has been lost over time and needs a new home. \n\nEach of the 2,200 Looneycorns NFT have a different rarity level and to ensure that each one is totally unique, we have also gone the â€œextra-mileâ€ and created over 120 traits which would easily make up a collection of 5,000 NFTs!",
+        "description": "Looneycorns is the first of 5 unique toys/NFTs from the Lost Toy collection. Each toy character represents a childhood favourite that has been lost over time and needs a new home. \n\nEach of the 2,200 Looneycorns NFT have a different rarity level and to ensure that each one is totally unique, we have also gone the \u00e2\u20ac\u0153extra-mile\u00e2\u20ac\u009d and created over 120 traits which would easily make up a collection of 5,000 NFTs!",
         "verified": true,
         "avatar": "/img/collections/looneycorns/avatar.webp",
         "card": "/img/collections/looneycorns/card.webp",
@@ -1151,7 +1496,13 @@
         "maxSupply": 2200,
         "website": "https://www.losttoys.io/",
         "twitter": "https://www.twitter.com/looneycornsnft",
-        "discord": "https://discord.gg/Tdd9TZRMxn"
+        "discord": "https://discord.gg/Tdd9TZRMxn",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1171,7 +1522,13 @@
         "website": "https://drbghosts.com/",
         "twitter": "https://twitter.com/drbghosts",
         "discord": "https://discord.gg/EFW8bAZW3J",
-        "medium": "https://medium.com/@drbooghosts"
+        "medium": "https://medium.com/@drbooghosts",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1190,7 +1547,13 @@
         "maxSupply": 5000,
         "website": "https://www.hipposyndicate.com/",
         "twitter": "https://twitter.com/HippoSyndicate",
-        "discord": "https://discord.gg/9j7ryEgX3K"
+        "discord": "https://discord.gg/9j7ryEgX3K",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1211,7 +1574,13 @@
         "twitter": "https://twitter.com/phenixfinance",
         "discord": "https://discord.gg/phenix",
         "medium": "https://medium.com/@phenixfinance.marketing",
-        "telegram": "https://t.me/phenixfinance"
+        "telegram": "https://t.me/phenixfinance",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1231,7 +1600,13 @@
         "website": "https://www.icysquidgame.com/",
         "twitter": "https://twitter.com/IcySquidGame",
         "discord": "https://discord.gg/jFX4RNrFGu",
-        "medium": "https://medium.com/@icysquidgame"
+        "medium": "https://medium.com/@icysquidgame",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1250,7 +1625,13 @@
         "maxSupply": 2222,
         "website": "https://carkayous.com/",
         "twitter": "https://twitter.com/carkayous",
-        "discord": "https://discord.gg/carkayous"
+        "discord": "https://discord.gg/carkayous",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1269,7 +1650,13 @@
         "maxSupply": 2200,
         "website": "https://www.losttoys.io/",
         "twitter": "https://www.twitter.com/looneycornsnft",
-        "discord": "https://discord.gg/Tdd9TZRMxn"
+        "discord": "https://discord.gg/Tdd9TZRMxn",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1288,7 +1675,13 @@
         "maxSupply": 10000,
         "website": "https://www.cybersquad.app/",
         "twitter": "https://twitter.com/CyberSquadd",
-        "discord": "https://discord.gg/cybersquad"
+        "discord": "https://discord.gg/cybersquad",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1300,7 +1693,13 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": false
+        "verified": false,
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1320,7 +1719,13 @@
         "website": "https://aristodognft.com/",
         "twitter": "https://twitter.com/AristoDogNFT",
         "discord": "https://discord.gg/aristodog",
-        "medium": "https://medium.com/aristodog"
+        "medium": "https://medium.com/aristodog",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1339,7 +1744,13 @@
         "maxSupply": 3000,
         "website": "https://apocalypse-nft.io/",
         "twitter": "https://twitter.com/ada_apocalypse",
-        "discord": "https://discord.gg/fDcyEcgSDg"
+        "discord": "https://discord.gg/fDcyEcgSDg",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1358,7 +1769,13 @@
         "maxSupply": 3333,
         "website": "https://zap7art.club/toughlions",
         "twitter": "https://twitter.com/ToughLions1111",
-        "discord": "https://discord.gg/8ssS2RWZvn"
+        "discord": "https://discord.gg/8ssS2RWZvn",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1378,7 +1795,13 @@
         "twitter": "https://twitter.com/EbisusBay",
         "discord": "https://discord.gg/ynrBrSkAFG",
         "medium": "https://blog.ebisusbay.com/",
-        "instagram": "https://www.instagram.com/ebisusbayofficial"
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1389,7 +1812,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "The Fury Mouse Gang is an NFT project with a first generation of 2500 unique mice gang PFP collectibles. At night the fury takes hold of them and they ravage everything in their path. These creatures rule their world. The ambition is huge: to become the number 1 project on Cronos. Our community is linked around a story and a brotherhood between the members of the Gang. We want our members to live an unique experience, never seen on Cronos.. So if you canâ€™t beat the gang, join us, before it is too late.",
+        "description": "The Fury Mouse Gang is an NFT project with a first generation of 2500 unique mice gang PFP collectibles. At night the fury takes hold of them and they ravage everything in their path. These creatures rule their world. The ambition is huge: to become the number 1 project on Cronos. Our community is linked around a story and a brotherhood between the members of the Gang. We want our members to live an unique experience, never seen on Cronos.. So if you can\u00e2\u20ac\u2122t beat the gang, join us, before it is too late.",
         "verified": true,
         "avatar": "/img/collections/fury-mouse-gang/avatar.png",
         "card": "/img/collections/fury-mouse-gang/card.png",
@@ -1397,7 +1820,13 @@
         "maxSupply": 2500,
         "website": "https://furymousegang.com/",
         "twitter": "https://twitter.com/FuryMouseGang",
-        "discord": "https://discord.gg/fmg"
+        "discord": "https://discord.gg/fmg",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1417,7 +1846,13 @@
         "website": "https://www.battlereadyboyz.io/",
         "twitter": "https://twitter.com/BattleReadyBoyz",
         "discord": "https://discord.gg/q4FQ4ukffB",
-        "medium": "https://medium.com/@battlereadyboyz/battle-ready-boyz-56a5eee494fa"
+        "medium": "https://medium.com/@battlereadyboyz/battle-ready-boyz-56a5eee494fa",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1438,7 +1873,13 @@
         "twitter": "https://twitter.com/ApesUtopia",
         "discord": "https://discord.gg/CBmUVWusQQ",
         "medium": "https://medium.com/@apesutopia",
-        "telegram": "https://t.me/+AvEkD1pZfdEzZDgx"
+        "telegram": "https://t.me/+AvEkD1pZfdEzZDgx",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1449,7 +1890,13 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "verified": false
+        "verified": false,
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1460,7 +1907,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Everybody's not friends is a handcrafted set of unique and rare 1/1 collectible characters and animations created by timebeam. This is a community driven passion project. The purpose of this project is to build a community which promotes friendship through aÂ set of humorous 3D cartoon characters,Â animations and monthly live streamed brawls.",
+        "description": "Everybody's not friends is a handcrafted set of unique and rare 1/1 collectible characters and animations created by timebeam. This is a community driven passion project. The purpose of this project is to build a community which promotes friendship through a\u00c2 set of humorous 3D cartoon characters,\u00c2 animations and monthly live streamed brawls.",
         "verified": true,
         "avatar": "/img/collections/everybodysnf/avatar.png",
         "card": "/img/collections/everybodysnf/card.png",
@@ -1468,7 +1915,13 @@
         "maxSupply": 200,
         "website": "https://timebeam.myportfolio.com/everybodys-friends",
         "twitter": "https://twitter.com/everybdyfriends",
-        "discord": "https://discord.com/invite/3MmDxXpB5P"
+        "discord": "https://discord.com/invite/3MmDxXpB5P",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1488,7 +1941,13 @@
         "website": "https://www.noodlesclub.com/",
         "twitter": "https://twitter.com/noodlesclubnft",
         "discord": "https://discord.gg/HTsURzuJVt",
-        "medium": "https://medium.com/@noodlesclubnft"
+        "medium": "https://medium.com/@noodlesclubnft",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1508,7 +1967,13 @@
         "website": "https://www.tradingfxvps.com/nft-vps/",
         "twitter": "https://twitter.com/TradingfxvpsO",
         "discord": "https://discord.gg/ryborgsnft",
-        "medium": "https://www.tradingfxvps.com/nft-vps/utility/"
+        "medium": "https://www.tradingfxvps.com/nft-vps/utility/",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1519,7 +1984,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "The Crovilians are the citizens of The CronosVerse and have various traits representing the many societal roles required in both the metaverse and in the physical world. While each Crovilianâ€™s unique traits represent real life roles in our society, all Crovilians are created equal in terms of access to The CronosVerse. Holding a Crovilian NFT will grant access to The CronosVerse and allow the owner to create a custom avatar to be used in our metaverse.",
+        "description": "The Crovilians are the citizens of The CronosVerse and have various traits representing the many societal roles required in both the metaverse and in the physical world. While each Crovilian\u00e2\u20ac\u2122s unique traits represent real life roles in our society, all Crovilians are created equal in terms of access to The CronosVerse. Holding a Crovilian NFT will grant access to The CronosVerse and allow the owner to create a custom avatar to be used in our metaverse.",
         "verified": true,
         "avatar": "/img/collections/crovilians/avatar.webp",
         "card": "/img/collections/crovilians/card.webp",
@@ -1527,7 +1992,13 @@
         "maxSupply": 8000,
         "website": "https://thecronosverse.com/",
         "twitter": "https://twitter.com/TheCronosVerse",
-        "discord": "https://discord.gg/E9Mzzy9Hex"
+        "discord": "https://discord.gg/E9Mzzy9Hex",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1547,7 +2018,13 @@
         "website": "https://cyber-clone.com/",
         "twitter": "https://twitter.com/CyberCloneNFT",
         "discord": "https://discord.gg/rKnGgUDgYD",
-        "medium": "https://medium.com/cyber-clone"
+        "medium": "https://medium.com/cyber-clone",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1566,7 +2043,13 @@
         "maxSupply": 666,
         "website": "https://www.pocketdemons.com/",
         "twitter": "https://twitter.com/PocketDemonsNFT",
-        "discord": "https://discord.gg/sdgRtxt8vJ"
+        "discord": "https://discord.gg/sdgRtxt8vJ",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1586,7 +2069,13 @@
         "website": "https://linktr.ee/crohamsternft/",
         "twitter": "https://twitter.com/cro_hamster",
         "discord": "https://discord.gg/sj4cHPrdVk",
-        "medium": "https://medium.com/@CroHamsterNFT"
+        "medium": "https://medium.com/@CroHamsterNFT",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1598,7 +2087,13 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true
+        "verified": true,
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1617,7 +2112,13 @@
         "maxSupply": 10000,
         "website": "https://www.gymkongz.com/",
         "twitter": "https://twitter.com/gymkongz",
-        "discord": "https://discord.gg/qJru6Av9h3"
+        "discord": "https://discord.gg/qJru6Av9h3",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1628,7 +2129,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "CroKami is a universe comprising our Manga series, NFT collection, and lore-connected game. We have set out to create a special ecosystem in which players can battle each other in game using their NFTâ€™s, or AI in a street-fighter style arena and earn $PACK -our real world cryptocurrency and in-game currency. Play and earn!",
+        "description": "CroKami is a universe comprising our Manga series, NFT collection, and lore-connected game. We have set out to create a special ecosystem in which players can battle each other in game using their NFT\u00e2\u20ac\u2122s, or AI in a street-fighter style arena and earn $PACK -our real world cryptocurrency and in-game currency. Play and earn!",
         "verified": true,
         "avatar": "/img/collections/crokami/avatar.webp",
         "card": "/img/collections/crokami/card.webp",
@@ -1636,7 +2137,13 @@
         "maxSupply": 3333,
         "website": "https://www.crokami.com/",
         "twitter": "https://twitter.com/cro_kami",
-        "discord": "https://discord.gg/sTeeDrWkSW"
+        "discord": "https://discord.gg/sTeeDrWkSW",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1656,12 +2163,13 @@
         "website": "https://cronos-women.com/",
         "twitter": "https://twitter.com/Cronos_Women",
         "discord": "https://discord.gg/CronosWomen",
-        "medium": "https://medium.com/@veliikb"
+        "medium": "https://medium.com/@veliikb",
+        "categories": []
       },
       "verification": {
         "doxx": true,
         "kyc": "phenix",
-        "escrow": false
+        "verified": true
       }
     },
     {
@@ -1680,7 +2188,13 @@
         "maxSupply": 0,
         "website": "https://carkayous.com/",
         "twitter": "https://twitter.com/carkayous",
-        "discord": "https://discord.gg/carkayous"
+        "discord": "https://discord.gg/carkayous",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1691,19 +2205,20 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "God hates all crofam!!! This is strictly a pfp project with no utility. Why no utility… because god hates you. Now go away.",
+        "description": "God hates all crofam!!! This is strictly a pfp project with no utility. Why no utility\u2026 because god hates you. Now go away.",
         "verified": true,
         "avatar": "/img/collections/god-hates-crofam/avatar.webp",
         "card": "/img/collections/god-hates-crofam/card.webp",
         "banner": "/img/collections/god-hates-crofam/banner.webp",
         "maxSupply": 50,
-        "twitter": "https://twitter.com/ghcfnft"
+        "twitter": "https://twitter.com/ghcfnft",
+        "categories": []
       },
       "verification": {
         "doxx": "private",
         "kyc": false,
-        "escrow": false,
-        "creativeCommons": true
+        "creativeCommons": true,
+        "verified": true
       }
     },
     {
@@ -1723,7 +2238,13 @@
         "twitter": "https://twitter.com/Cronos_domains",
         "discord": "https://bit.ly/3sXzV9l",
         "medium": "https://bit.ly/3wl1PN2",
-        "telegram": "https://bit.ly/3LaM1Sx"
+        "telegram": "https://bit.ly/3LaM1Sx",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1734,7 +2255,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Trillionaire Trashcans - A 10,000 uniquely created PFP project coming to you. As you may have heard the TTC NFT project has some of the best giveaways the Cronos chain has seen. We pride ourselves on how much we can give back to the community; that’s why we will be giving away a LAMBO to one lucky minter. In order to be entered into the WenLambo giveaway, you must get lucky and mint 1 of 500 Trashcans that wear the Golden Key Earring!",
+        "description": "Trillionaire Trashcans - A 10,000 uniquely created PFP project coming to you. As you may have heard the TTC NFT project has some of the best giveaways the Cronos chain has seen. We pride ourselves on how much we can give back to the community; that\u2019s why we will be giving away a LAMBO to one lucky minter. In order to be entered into the WenLambo giveaway, you must get lucky and mint 1 of 500 Trashcans that wear the Golden Key Earring!",
         "verified": true,
         "avatar": "/img/collections/trillionaire-trashcans/avatar.webp",
         "banner": "/img/collections/trillionaire-trashcans/banner.webp",
@@ -1742,12 +2263,13 @@
         "maxSupply": 10000,
         "website": "https://ttcnft.io/",
         "twitter": "https://twitter.com/TrillTrashCans",
-        "discord": "https://discord.gg/fSyrkT2pjc"
+        "discord": "https://discord.gg/fSyrkT2pjc",
+        "categories": []
       },
       "verification": {
         "doxx": "private",
         "kyc": "phenix",
-        "escrow": false
+        "verified": true
       }
     },
     {
@@ -1758,7 +2280,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "World of Cats is a handcrafted collection of 4444 Unique NFTs created by the artist Tam4tik with utility that is tied to the real world.\nEach with their own identity to be discovered by its founder. \nIn its purest form, WORLD OF CATS is the art of storytelling.\nCurated By:  HiddenFishDAO™",
+        "description": "World of Cats is a handcrafted collection of 4444 Unique NFTs created by the artist Tam4tik with utility that is tied to the real world.\nEach with their own identity to be discovered by its founder. \nIn its purest form, WORLD OF CATS is the art of storytelling.\nCurated By:  HiddenFishDAO\u2122",
         "verified": true,
         "avatar": "/img/collections/world-of-cats/avatar.webp",
         "card": "/img/collections/world-of-cats/card.webp",
@@ -1766,12 +2288,13 @@
         "maxSupply": 4444,
         "website": "https://worldofcats.xyz/",
         "twitter": "https://twitter.com/worldofcatsnft",
-        "discord": "https://discord.gg/worldofcats"
+        "discord": "https://discord.gg/worldofcats",
+        "categories": []
       },
       "verification": {
         "doxx": "private",
         "kyc": "ebisu",
-        "escrow": false
+        "verified": true
       }
     },
     {
@@ -1792,12 +2315,13 @@
         "twitter": "https://www.twitter.com/losttoysnft",
         "discord": "https://discord.gg/Tdd9TZRMxn",
         "medium": "https://hello-143.gitbook.io/lost-toys-nft/",
-        "instagram": "https://www.instagram.com/losttoysnft/"
+        "instagram": "https://www.instagram.com/losttoysnft/",
+        "categories": []
       },
       "verification": {
         "doxx": "private",
         "kyc": false,
-        "escrow": false
+        "verified": true
       }
     },
     {
@@ -1815,12 +2339,13 @@
         "banner": "/img/collections/finger-monkeys/banner.webp",
         "maxSupply": 5555,
         "website": "https://www.specterofart.com/FingerMonkeys",
-        "discord": "https://discord.gg/CcwFDwPuuh"
+        "discord": "https://discord.gg/CcwFDwPuuh",
+        "categories": []
       },
       "verification": {
         "doxx": false,
         "kyc": "phenix",
-        "escrow": false
+        "verified": true
       }
     },
     {
@@ -1840,12 +2365,13 @@
         "website": "https://www.spitefulseaclub.com/",
         "twitter": "https://www.twitter.com/spitefulseanft",
         "discord": "https://discord.gg/7efQGdwW7r",
-        "medium": "https://spiteful-sea-club.gitbook.io/spiteful-sea-club/"
+        "medium": "https://spiteful-sea-club.gitbook.io/spiteful-sea-club/",
+        "categories": []
       },
       "verification": {
         "doxx": false,
         "kyc": "phenix",
-        "escrow": false
+        "verified": true
       }
     },
     {
@@ -1865,12 +2391,13 @@
         "website": "http://fightersnft.io/",
         "twitter": "https://twitter.com/FightersNFT",
         "medium": "https://medium.com/@shahabs/nft-collectors-fighters-are-coming-593cb9865e20",
-        "discord": "http://discord.gg/Bb39m7BBBR"
+        "discord": "http://discord.gg/Bb39m7BBBR",
+        "categories": []
       },
       "verification": {
         "doxx": "private",
         "kyc": false,
-        "escrow": false
+        "verified": true
       }
     },
     {
@@ -1891,7 +2418,13 @@
         "twitter": "https://twitter.com/0xLuckless",
         "discord": "https://discord.gg/BpAVk2Za2c",
         "medium": "https://medium.com/@0xLuckless",
-        "instagram": "https://www.instagram.com/0xLuckless"
+        "instagram": "https://www.instagram.com/0xLuckless",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1912,12 +2445,13 @@
         "twitter": "https://twitter.com/WhaleFamNFT",
         "discord": "https://discord.gg/khRfPKDFwg",
         "gitbook": "https://drive.google.com/file/d/1va8ft-odC7VeQHOxume2viVvA8Kh7aYI/view",
-        "instagram": "https://www.instagram.com/im_barbara_redekop/"
+        "instagram": "https://www.instagram.com/im_barbara_redekop/",
+        "categories": []
       },
       "verification": {
         "doxx": "public",
         "kyc": "ebisu",
-        "escrow": false
+        "verified": true
       }
     },
     {
@@ -1934,13 +2468,14 @@
         "card": "/img/collections/devil-loves-crofam/card.webp",
         "banner": "/img/collections/devil-loves-crofam/banner.webp",
         "maxSupply": 10000,
-        "twitter": "https://twitter.com/ghcfnft"
+        "twitter": "https://twitter.com/ghcfnft",
+        "categories": []
       },
       "verification": {
         "doxx": "private",
         "kyc": false,
-        "escrow": false,
-        "creativeCommons": true
+        "creativeCommons": true,
+        "verified": true
       }
     },
     {
@@ -1959,12 +2494,13 @@
         "maxSupply": 3333,
         "website": "https://zap7art.club/",
         "twitter": "https://twitter.com/zap7project",
-        "discord": "https://discord.gg/tBgUbvsSZX"
+        "discord": "https://discord.gg/tBgUbvsSZX",
+        "categories": []
       },
       "verification": {
         "doxx": "private",
         "kyc": false,
-        "escrow": false
+        "verified": true
       }
     },
     {
@@ -1984,7 +2520,13 @@
         "website": "https://lionsocialclub.io/",
         "twitter": "https://twitter.com/LionSocialClub",
         "discord": "https://discord.gg/WdgfBzYTKX",
-        "medium": "https://lion-social.gitbook.io/lion-social-club/"
+        "medium": "https://lion-social.gitbook.io/lion-social-club/",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -1995,7 +2537,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "The Broken Hearts collection is a line of 101 tarot cards created by the musician Grey_hart, using MIDJOURNEY’s AI software, all around the subject of a broken heart. Each 9x16 is a 1 of a kind image with varying themes and elements around heartbreak and the spiritual journey involved in getting through it. Some are astral guides, some spirit animals, some just metaphors and feelings made into imagery. If you’ve experienced heartbreak of any kind in your life, there’s sure to be an image that speaks to you in some form. ",
+        "description": "The Broken Hearts collection is a line of 101 tarot cards created by the musician Grey_hart, using MIDJOURNEY\u2019s AI software, all around the subject of a broken heart. Each 9x16 is a 1 of a kind image with varying themes and elements around heartbreak and the spiritual journey involved in getting through it. Some are astral guides, some spirit animals, some just metaphors and feelings made into imagery. If you\u2019ve experienced heartbreak of any kind in your life, there\u2019s sure to be an image that speaks to you in some form. ",
         "verified": true,
         "avatar": "/img/collections/broken-hearts/avatar.webp",
         "card": "/img/collections/broken-hearts/card.webp",
@@ -2003,7 +2545,13 @@
         "maxSupply": 2500,
         "website": "https://loveisgrey.art/",
         "discord": "https://discord.gg/t3DM6pNAWb",
-        "instagram": "https://instagram.com/lov3is_grey"
+        "instagram": "https://instagram.com/lov3is_grey",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -2014,7 +2562,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "The Broken Hearts collection is a line of 101 tarot cards created by the musician Grey_hart, using MIDJOURNEY’s AI software, all around the subject of a broken heart. Each 9x16 is a 1 of a kind image with varying themes and elements around heartbreak and the spiritual journey involved in getting through it. Some are astral guides, some spirit animals, some just metaphors and feelings made into imagery. If you’ve experienced heartbreak of any kind in your life, there’s sure to be an image that speaks to you in some form. ",
+        "description": "The Broken Hearts collection is a line of 101 tarot cards created by the musician Grey_hart, using MIDJOURNEY\u2019s AI software, all around the subject of a broken heart. Each 9x16 is a 1 of a kind image with varying themes and elements around heartbreak and the spiritual journey involved in getting through it. Some are astral guides, some spirit animals, some just metaphors and feelings made into imagery. If you\u2019ve experienced heartbreak of any kind in your life, there\u2019s sure to be an image that speaks to you in some form. ",
         "verified": true,
         "avatar": "/img/collections/broken-hearts/avatar.webp",
         "card": "/img/collections/broken-hearts/card.webp",
@@ -2022,7 +2570,13 @@
         "maxSupply": 2500,
         "website": "https://loveisgrey.art/",
         "discord": "https://discord.gg/t3DM6pNAWb",
-        "instagram": "https://instagram.com/lov3is_grey"
+        "instagram": "https://instagram.com/lov3is_grey",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -2033,7 +2587,7 @@
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "☆ 1,000 Collectable Renegade Monks ☆\n\nMint your Monk and fight with The New Resistance!",
+        "description": "\u2606 1,000 Collectable Renegade Monks \u2606\n\nMint your Monk and fight with The New Resistance!",
         "verified": true,
         "avatar": "/img/collections/renegade-monks/avatar.webp",
         "card": "/img/collections/renegade-monks/card.webp",
@@ -2041,7 +2595,13 @@
         "maxSupply": 1337,
         "website": "https://thenewresistance.io/",
         "twitter": "https://twitter.com/TNR_NFT_GAME",
-        "discord": "https://discord.gg/tnr"
+        "discord": "https://discord.gg/tnr",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -2052,7 +2612,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Team Movember 2022 is an initiative of Team Mustachios to raise funds for the Movember Foundation Charity. 2022 NFTs and 50% of the mint will go directly to the cause. Movember fundraisers are a global community of fired up Mo Bros and Mo Sisters – aka rock stars making a difference in mental health and suicide prevention, prostate cancer and testicular cancer.",
+        "description": "Team Movember 2022 is an initiative of Team Mustachios to raise funds for the Movember Foundation Charity. 2022 NFTs and 50% of the mint will go directly to the cause. Movember fundraisers are a global community of fired up Mo Bros and Mo Sisters \u2013 aka rock stars making a difference in mental health and suicide prevention, prostate cancer and testicular cancer.",
         "verified": true,
         "avatar": "/img/collections/team-movember/avatar.webp",
         "card": "/img/collections/team-movember/card.webp",
@@ -2060,7 +2620,13 @@
         "maxSupply": 2022,
         "website": "https://teammustachios.com/",
         "twitter": "https://twitter.com/teammustachios",
-        "discord": "https://discord.gg/eH4SCJY5Qw"
+        "discord": "https://discord.gg/eH4SCJY5Qw",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -2071,7 +2637,7 @@
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "The Resurrection potion can be deadly if I’m the wrong hands!!! Dr. Boo has been working hard in the lab to bring you the first of its kind mutant potion!!! If you own and nft and want to mutate it… then drink the juice.  You will get a resurrected version of your favorite nft!!  Don’t worry the host nft will not be harmed.",
+        "description": "The Resurrection potion can be deadly if I\u2019m the wrong hands!!! Dr. Boo has been working hard in the lab to bring you the first of its kind mutant potion!!! If you own and nft and want to mutate it\u2026 then drink the juice.  You will get a resurrected version of your favorite nft!!  Don\u2019t worry the host nft will not be harmed.",
         "verified": true,
         "avatar": "/img/collections/dr-boo-resurrection/avatar.webp",
         "card": "/img/collections/dr-boo-resurrection/card.webp",
@@ -2079,7 +2645,13 @@
         "maxSupply": 10000,
         "website": "https://drbghosts.com/",
         "twitter": "https://www.twitter.com/drbghosts",
-        "discord": "https://discord.gg/EFW8bAZW3J"
+        "discord": "https://discord.gg/EFW8bAZW3J",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -2097,7 +2669,13 @@
         "banner": "/img/collections/alstoniaverse-access-card/banner.webp",
         "maxSupply": 3000,
         "website": "https://www.alstoniaverse.com/",
-        "discord": "https://discord.gg/dteTFGaRr2"
+        "discord": "https://discord.gg/dteTFGaRr2",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -2119,7 +2697,13 @@
         "discord": "https://discord.gg/xqyQ7M4k8p",
         "medium": "https://medium.com/@metawarzhq",
         "telegram": "https://t.me/MetaWarzHQ",
-        "instagram": "https://www.instagram.com/metawarz/"
+        "instagram": "https://www.instagram.com/metawarz/",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -2140,7 +2724,13 @@
         "twitter": "https://twitter.com/KAPVEYCRYPTO",
         "discord": "https://discord.gg/hAubkeqbjk",
         "medium": "https://medium.com/@kapveycrypto",
-        "telegram": "https://t.me/KAPVEYCRYPTO"
+        "telegram": "https://t.me/KAPVEYCRYPTO",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -2159,7 +2749,13 @@
         "maxSupply": 1200,
         "website": "https://www.crollamasnft.com/",
         "instagram": "https://www.instagram.com/crollamasnft",
-        "discord": "https://discord.gg/zf425Fbg6d"
+        "discord": "https://discord.gg/zf425Fbg6d",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -2179,7 +2775,13 @@
         "website": "https://crossbreeds.defigamecove.com/",
         "twitter": "https://twitter.com/crossbreedsnft",
         "discord": "https://discord.gg/jxyytxSJAZ",
-        "medium": "https://medium.com/@Crossbreeds"
+        "medium": "https://medium.com/@Crossbreeds",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     },
     {
@@ -2199,7 +2801,13 @@
         "website": "https://selfie-guys.com/",
         "twitter": "https://twitter.com/Selfie_Guys_NFT",
         "discord": "https://discord.gg/C7uGgYnTvM",
-        "medium": "https://medium.com/@selfie-guys-nft"
+        "medium": "https://medium.com/@selfie-guys-nft",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],

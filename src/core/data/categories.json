@@ -1,0 +1,34 @@
+[
+  {
+    "key": "art",
+    "label": "Art"
+  },
+  {
+    "key": "collectibles",
+    "label": "Collectibles"
+  },
+  {
+    "key": "gaming",
+    "label": "Gaming"
+  },
+  {
+    "key": "virtual-worlds",
+    "label": "Virtual Worlds"
+  },
+  {
+    "key": "music",
+    "label": "Music"
+  },
+  {
+    "key": "utility",
+    "label": "Utility"
+  },
+  {
+    "key": "domain-names",
+    "label": "Domain Names"
+  },
+  {
+    "key": "sports",
+    "label": "Sports"
+  }
+]
