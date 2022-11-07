@@ -392,7 +392,7 @@ const Home = () => {
             <Center>
               <a href="https://defiolio.com/" target="_blank" rel="noreferrer">
                 <img
-                  src={hostedImage('/img/logos/defiolio.webp')}
+                  src={hostedImage(userTheme === 'light' ? '/img/logos/defiolio.webp' : '/img/logos/defiolio-white.webp')}
                   alt="Defiolio"
                   width="150px"
                 />
