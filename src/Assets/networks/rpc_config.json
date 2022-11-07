@@ -13256,6 +13256,30 @@
         "kyc": false,
         "verified": false
       }
+    },
+    {
+      "name": "CroCow",
+      "slug": "crocow",
+      "multiToken": false,
+      "address": "0x5F0c7C7FFb8173f86011a0d718d850A52769FF4B",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CroCow, a collection of 8000 different pixel characters created by our artist. Each NFT is based on 7 layers (over 130 traits) with different rarities. The main idea is to enable pixel fans passive income, while having fun.",
+        "verified": false,
+        "avatar": "/img/collections/crocow/avatar.webp",
+        "card": "/img/collections/crocow/card.webp",
+        "banner": "/img/collections/crocow/banner.webp",
+        "maxSupply": 8000,
+        "twitter": "https://twitter.com/crocownft",
+        "discord": "https://discord.gg/eTP8H6A7WF",
+        "medium": "https://crocow.gitbook.io/white-paper"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
     }
   ],
   "drops": [
