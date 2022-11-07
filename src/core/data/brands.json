@@ -1,5 +1,28 @@
 [
   {
+    "slug": "ebisus-bay",
+    "name": "Ebisu's Bay",
+    "description": "Discover rare digital art and collect NFTs. Ebisu's Bay is the first and largest NFT marketplace on Cronos. Create, buy, sell, trade and enjoy the #CroFam NFT community.",
+    "images": {
+      "banner": "/img/collections/ebisu/banner.png"
+    },
+    "collections": [
+      "0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5",
+      "0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29",
+      "0x008d4Ab1D8fbC7823422a7cCFe3f1D73c09760Ab",
+      "0xD961956B319A10CBdF89409C0aE7059788A4DaBb",
+      "0x54E61e2043f894475D17D344250F1983f7F7e6D3"
+    ],
+    "socials": {
+      "website": "https://app.ebisusbay.com/",
+      "twitter": "https://twitter.com/EbisusBay",
+      "discord": "https://discord.gg/ebisusbay",
+      "medium": "https://blog.ebisusbay.com/",
+      "instagram": "https://www.instagram.com/ebisusbayofficial",
+      "telegram": "https://t.me/ebisusbay"
+    }
+  },
+  {
     "slug": "mad-meerkat-burrow",
     "name": "Mad Meerkat Burrow",
     "description": "The Mad Meerkat is inspired by the cheeky nature of the loveable rogues, who loves nothing more than cavorting together in the sun. An expansion from our OG Ethereum collection, these 10000 Next Gen Cro Meerkats will traverse the novel Cronos chain. Guided by the M.A.D values, we will embark on an adventure to explore and unlock all that lies within Cronos. With each Mad Meerkat sharing and learning from one another regardless the chain, it is our next step forward as one Burrow.",
@@ -91,6 +114,93 @@
       "twitter": "https://twitter.com/BoomerSquadNFT1",
       "discord": "https://discord.gg/boomersquad",
       "medium": "https://medium.com/@BoomerSquadNFT"
+    }
+  },
+  {
+    "slug": "argonauts",
+    "name": "Argonauts",
+    "description": "Argonauts is a collection of 8,888 unique utility-enabled characters that represents your unique identity on the Cronos chain. Each Argonaut holder gets access to utility across the Argo Protocol platform, exclusive treasure chest events, activated partnership experiences, future collections, and more.",
+    "images": {
+      "banner": "/img/collections/argonauts/banner.webp"
+    },
+    "collections": [
+      "0xa996aD2b9f240F78b063E47F552037658c4563d1",
+      "0x8ac06d8CF5B371bf57723C050C1969f0f23Dbf98",
+      "0xc3cf2416a69351bf336ff671ad46d92efee4ea75",
+      "0x0A37674F61a9345f32E277b15E3C9603cDe710f6",
+      "0xb67A1DE71c8506e4b6326d2a01c421F831b9754d"
+    ],
+    "socials": {
+      "website": "https://www.argofinance.money/nft",
+      "twitter": "https://twitter.com/ArgoProtocol",
+      "discord": "https://discord.gg/argofinance",
+      "medium": "https://argofinance.medium.com",
+      "telegram": "https://t.me/Argo_Finance"
+    }
+  },
+  {
+    "slug": "trooprz",
+    "name": "Trooprz",
+    "description": "Trooprz have got your back",
+    "images": {
+      "banner": "/img/collections/trooprz/banner.jpeg"
+    },
+    "collections": [
+      "0x51112Bf32B9a1C64716DF2e6b82e63a04Bd384Fd",
+      "0xea4DF145322ec9dFCE037b062b08083141c6af8f",
+      "0xbabdFDD5f88035C9FbA58Be1b5c76DcFC6A847f3",
+      "0x96628048830a499b156aBdC04cC169C18c3A17f2",
+      "0xB82F6B5a4491D38292DFCd6706aa12DD5701D7e2",
+      "0xA35f40e45FFF953F477700C83D550D35F11B42aB",
+      "0x2FfF5FE8a3e13A10509E4297DF9d1fdaF1eE7DC4",
+      "0xEB54ea91C92Ce404Ba7AD7B0EF2e36fD75C889A7"
+    ],
+    "socials": {
+      "website": "https://trooprz.army/",
+      "twitter": "https://twitter.com/trooprzarmy",
+      "discord": "https://discord.gg/trooprz"
+    }
+  },
+  {
+    "slug": "baby-alien-division",
+    "name": "Baby Alien Division",
+    "description": "",
+    "images": {
+      "banner": "/img/collections/babyaliendivision/spaceships/banner.webp"
+    },
+    "collections": [
+      "0xbe5F02b6fD5C1e714f0bdd28B6a119827D8b6c61",
+      "0x1A8C07dd1933433cDdBE3123b583695AE3C56b9b",
+      "0x4E6795D725e26E340865140a870C25d1e413A118",
+      "0xA217d6feEf38F9f2D139300E0C4adF42cf96F4C3",
+      "0xd7eEc30A764B3Eed788e93de9fc69b432Dd54d16"
+    ],
+    "socials": {
+      "website": "https://badaliens.io/",
+      "twitter": "https://twitter.com/BAD_Cronos",
+      "discord": "https://discord.gg/qKBy2azf69",
+      "medium": "https://medium.com/@babyaliendivision"
+    }
+  },
+  {
+    "slug": "dg-pals",
+    "name": "D.G.Pals",
+    "description": "D.G.P: New World Beta LIVE 23rd May & D.G.P: Legends Beta LIVE 31st May 2022!\nWelcome to the D.G.Verse! Backed by Crypto.com Capital and Spartan Group, D.G.Pals is one of the first to redefine Web3 gaming with the first Interoperable NFT on the Cronos chain. The D.G.Pals Genesis Collection is the most privileged set of 10,000 NFT collection. Genesis NFT holders will be empowered with resources, airdrops and other perks to help the D.G.Pals Team build the D.G.Verse. You can check out how, by owning a Genesis D.G.Pal NFT, you can help expand Panterra, grow the player base and contribute to development on the D.G.Pals Whitepaper or website. On top of these exclusive privileges, these Genesis D.G.Pal NFTs can also participate in all of the games in the D.G.Verse like every other D.G.Pal NFTs.",
+    "images": {
+      "banner": "/img/collections/dgpals/banner.png"
+    },
+    "collections": [
+      "0xeFc73c41EF829C0B87E3245aCF033b867cCD0F84",
+      "0x86aabe05e885108a8797314e817488c26f0601a1",
+      "0xa072bB6F648a4271ba9CbaF1319Fc373eF907f29",
+      "0x500cdf7a96a612BEb9e018035a3E89180a6732fE",
+      "0x70D3ee9b000f9210C1Ce1bD2A80cBAEBe209aeb7"
+    ],
+    "socials": {
+      "website": "https://dgpals.io/",
+      "twitter": "https://twitter.com/officialdgpals",
+      "discord": "https://discord.gg/dgpals",
+      "medium": "https://medium.com/officialdgpals"
     }
   }
 ]

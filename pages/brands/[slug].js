@@ -2,18 +2,29 @@ import React, { useState } from 'react';
 import PageHead from "../../src/Components/Head/PageHead";
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import brands from '@src/core/data/brands.json';
-import {appConfig} from "@src/Config";
-import {Box, Button, Center, Heading, SimpleGrid, Text, useBreakpointValue} from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center, Flex,
+  Heading,
+  SimpleGrid,
+  Stack,
+  Stat, StatHelpText,
+  StatLabel, StatNumber,
+  Text,
+  useBreakpointValue
+} from "@chakra-ui/react";
 import CustomSlide from "@src/Components/components/CustomSlide";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
 import Footer from "@src/Components/components/Footer";
-import {caseInsensitiveCompare} from "@src/utils";
+import EndpointProxyService from "@src/services/endpoint-proxy.service";
+import {caseInsensitiveCompare, siPrefixedNumber} from "@src/utils";
 
-const Brand = ({ brand, collections }) => {
+const Brand = ({ brand, collections, stats }) => {
   const [viewMore, setViewMore] = useState(false);
   const isClippingDescription = useBreakpointValue(
-    {base: true, sm: false},
-    {fallback: 'sm'}
+    {base: brand.description.length > 150, md: brand.description.length > 225},
+    {fallback: 'md'}
   )
 
   return (
@@ -40,24 +51,33 @@ const Brand = ({ brand, collections }) => {
           h="100%"
           position="absolute"
           w="100%"
-        >
-
-        </Box>
-        <Box position="relative" bottom={0} px={10} pt={{base: '75px', md:'40px'}} pb={4}>
-          <Heading color="white">{brand.name}</Heading>
-          <SocialsBar
-            socials={brand.socials}
-          />
-          <Text maxW="800px" mt={1} color="white" noOfLines={{base: viewMore ? 0 : 3, sm: 0}}>
-            {brand.description}
-          </Text>
-          {brand.description.length > 150 && isClippingDescription && !viewMore && (
-            <Button size="xs" colorScheme="blue" onClick={() => setViewMore(true)}>
-              View More
-            </Button>
-          )}
-        </Box>
-        <div className="mainbreadcumb"></div>
+        />
+        <SimpleGrid columns={{base: 1, md: 2}} position="relative" bottom={0} px={10} pt={{base: '75px', md:'40px'}} pb={4}>
+          <Box>
+            <Heading color="white">{brand.name}</Heading>
+            <SocialsBar
+              socials={brand.socials}
+            />
+            <Text maxW="800px" mt={1} color="white" noOfLines={viewMore ? 0 : {base: 3, md: 5}}>
+              {brand.description}
+            </Text>
+            {isClippingDescription && !viewMore && (
+              <Button size="xs" colorScheme="blue" onClick={() => setViewMore(true)}>
+                View More
+              </Button>
+            )}
+          </Box>
+          <Flex my="auto" ms={{base: 0, md: 2}} justify={{base: 'start', md: 'end'}} mt={{base: 2, md: 'auto'}}>
+            <SimpleGrid columns={{base: 2, sm: 4, md: 2, lg: 4}} spacing={3}>
+              {Object.entries(stats).map(([key, stat]) => (
+                <Stat key={key}>
+                  <StatLabel>{stat.label}</StatLabel>
+                  <StatNumber>{siPrefixedNumber(stat.value)}</StatNumber>
+                </Stat>
+              ))}
+            </SimpleGrid>
+          </Flex>
+        </SimpleGrid>
       </Box>
 
       <Box mt={6}>
@@ -91,7 +111,12 @@ export const getServerSideProps = async ({ params, query }) => {
   const slug = params?.slug;
   const brand = brands.find((brand) => brand.slug === slug);
 
-  // @todo: replace with API query once /collectioninfo supports multiple addresses
+  if (!brand) {
+    return {
+      notFound: true
+    }
+  }
+
   const brandKeyedAddresses = brand.collections.map((address, key) => {
     return {
       address: address.toLowerCase(),
@@ -99,25 +124,48 @@ export const getServerSideProps = async ({ params, query }) => {
     }
   });
   const brandAddresses = brandKeyedAddresses.map((o) => o.address);
-  const allCollections = appConfig('collections');
-  const collections = allCollections
-    .filter((c) => brandAddresses.includes(c.address.toLowerCase()))
+  const endpointService = new EndpointProxyService();
+  const collections = await endpointService.getCollections({address: brandAddresses.join(',')});
+  const sortedCollections = collections.data.collections
     .map((c) => {
       c.position = brandKeyedAddresses.find((o) => caseInsensitiveCompare(o.address, c.address)).position;
       return c;
     })
     .sort((a, b) => a.position > b.position ? 1 : -1);
 
-  if (!brand) {
-    return {
-      notFound: true
+  let initialStats = {
+    items: {
+      label: 'Items',
+      value: 0,
+    },
+    listings: {
+      label: 'Active Listings',
+      value: 0,
+    },
+    complete: {
+      label: 'Sales',
+      value: 0,
+    },
+    volume: {
+      label: 'Volume',
+      value: 0,
     }
   }
 
+  const stats = sortedCollections.reduce((p, n) => {
+    p.items.value += Number(n.totalSupply ?? 0);
+    p.listings.value += Number(n.stats.total.active ?? 0);
+    p.complete.value += Number(n.stats.total.complete ?? 0);
+    p.volume.value += Number(n.stats.total.volume ?? 0);
+    return p;
+  }, initialStats);
+
+  console.log(stats);
   return {
     props: {
       brand: brand,
-      collections: collections,
+      collections: sortedCollections,
+      stats: stats,
       query: query,
     },
   };
