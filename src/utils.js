@@ -495,6 +495,13 @@ export const isSscCollection = (address) => {
   return isCollection(address, 'ssc-access-cards');
 };
 
+export const isEbVipCollection = (address, id) => {
+  const collection = collections.find((c) => c.slug === 'vip-founding-member');
+  return collection &&
+    caseInsensitiveCompare(collection.address, address) &&
+    collection.id.toString() === id.toString();
+};
+
 export const percentage = (partialValue, totalValue) => {
   if (!totalValue || totalValue === 0) return 0;
   return Math.floor((100 * partialValue) / totalValue);
