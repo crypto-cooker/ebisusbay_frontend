@@ -1,8 +1,14 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { ethers } from 'ethers';
-import { faExternalLinkAlt, faHeart as faHeartSolid, faSync, faShareAlt } from '@fortawesome/free-solid-svg-icons';
+import {ethers} from 'ethers';
+import {
+  faExternalLinkAlt,
+  faHeart as faHeartSolid,
+  faSync,
+  faShareAlt,
+  faBullhorn
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Spinner } from 'react-bootstrap';
 import MetaMaskOnboarding from '@metamask/onboarding';
@@ -13,7 +19,7 @@ import {
   caseInsensitiveCompare,
   findCollectionByAddress,
   humanize,
-  isCrosmocraftsPartsDrop, isEmptyObj,
+  isCrosmocraftsPartsDrop, isEbVipCollection, isEmptyObj,
   mapAttributeString,
   millisecondTimestamp, rankingsLinkForCollection, rankingsLogoForCollection, rankingsTitleForCollection,
   relativePrecision,
@@ -37,7 +43,7 @@ import { hostedImage } from '@src/helpers/image';
 import { appConfig } from "@src/Config";
 import { collectionRoyaltyPercent } from "@src/core/chain";
 import Button, { LegacyOutlinedButton } from "@src/Components/components/common/Button";
-import { ButtonGroup, Heading, MenuButton as MenuButtonCK, useClipboard  } from "@chakra-ui/react";
+import {Box, ButtonGroup, Flex, Heading, Link, MenuButton as MenuButtonCK, Text, useClipboard} from "@chakra-ui/react";
 import { toast } from "react-toastify";
 import useToggleFavorite from "@src/Components/NftDetails/hooks/useToggleFavorite";
 import { faHeart as faHeartOutline } from "@fortawesome/free-regular-svg-icons";
@@ -269,6 +275,19 @@ const Nft1155 = ({ address, id }) => {
 
   return (
     <div>
+      {isEbVipCollection(address, id) && (
+        <Box className="promo">
+          <Flex justify="center" px={3}>
+            <FontAwesomeIcon icon={faBullhorn} className="my-auto"/>
+            <Text ms={2}>
+              Ebisu's Bay VIP Founding Member will soon be migrating to the new Ryoshi Tales VIP collection.{' '}
+              <Link href="https://blog.ebisusbay.com/ebisus-bay-vip-split-506b05c619c7" isExternal fontWeight="bold">
+                Learn more
+              </Link>
+            </Text>
+          </Flex>
+        </Box>
+      )}
       {isLoading ? (
         <section className="gl-legacy container">
           <div className="row mt-4">
@@ -281,6 +300,7 @@ const Nft1155 = ({ address, id }) => {
         </section>
       ) : (
         <section className="gl-legacy container">
+
           <div className="row">
             <div className="col-md-6 text-center">
               {nft ? (

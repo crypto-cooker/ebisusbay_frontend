@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { faCheck, faCircle } from '@fortawesome/free-solid-svg-icons';
+import {faBullhorn, faCheck, faCircle} from '@fortawesome/free-solid-svg-icons';
 import Blockies from 'react-blockies';
 
 import Footer from '../components/Footer';
 import CollectionListingsGroup from '../components/CollectionListingsGroup';
 import LayeredIcon from '../components/LayeredIcon';
 import {init, fetchListings, getStats, updateTab} from '@src/GlobalState/collectionSlice';
-import { isCrosmocraftsPartsCollection } from '@src/utils';
+import {isCrosmocraftsPartsCollection, isEbVipCollection} from '@src/utils';
 import SocialsBar from './SocialsBar';
 import { CollectionSortOption } from '../Models/collection-sort-option.model';
 import CollectionInfoBar from '../components/CollectionInfoBar';
@@ -20,8 +20,9 @@ import {Spinner} from "react-bootstrap";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import {pushQueryString} from "@src/helpers/query";
 import {useRouter} from "next/router";
-import {Flex, Heading} from "@chakra-ui/react";
+import {Box, Flex, Heading, Link, Text} from "@chakra-ui/react";
 import MintingButton from "@src/Components/Collection/MintingButton";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
 const tabs = {
@@ -119,6 +120,19 @@ const Collection1155 = ({ collection, tokenId = null, query, activeDrop = null }
 
   return (
     <div>
+      {isEbVipCollection(collection.address, tokenId) && (
+        <Box className="promo">
+          <Flex justify="center" px={3}>
+            <FontAwesomeIcon icon={faBullhorn} className="my-auto"/>
+            <Text ms={2}>
+              Ebisu's Bay VIP Founding Member will soon be migrating to the new Ryoshi Tales VIP collection.{' '}
+              <Link href="https://blog.ebisusbay.com/ebisus-bay-vip-split-506b05c619c7" isExternal fontWeight="bold">
+                Learn more
+              </Link>
+            </Text>
+          </Flex>
+        </Box>
+      )}
       <section
         id="profile_banner"
         className="jumbotron breadcumb no-bg"
