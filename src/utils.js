@@ -393,6 +393,10 @@ export const isBossFrogzDrop = (address) => {
   return isDrop(address, 'trooprz-boss-frogz');
 };
 
+export const isRyoshiVipDrop = (address) => {
+  return isDrop(address, 'ryoshi-tales-vip');
+};
+
 export const isDrop = (address, slug) => {
   const drop = drops.find((d) => d.slug === slug);
   return drop && caseInsensitiveCompare(drop.address, address);
