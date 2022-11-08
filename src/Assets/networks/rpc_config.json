@@ -12404,36 +12404,6 @@
       }
     },
     {
-      "name": "SeaShrine Founding Member VIP",
-      "slug": "seashrine-vip",
-      "multiToken": false,
-      "address": "",
-      "onChain": false,
-      "listable": false,
-      "metadata": {
-        "description": "SeaShrine is a new marketplace founded and built by the same team behind the Cronos success, Ebisu's Bay. With upcoming feature parity with their previous endeavor, the team looks to replicate their accomplishments and to recreate a Gold Standard for marketplaces on the new Aptos blockchain. Embark on this journey with us by minting a VIP Founding Member NFT now!",
-        "verified": true,
-        "avatar": "/img/drops/seashrine-vip/avatar.webp",
-        "card": "/img/drops/seashrine-vip/card.webp",
-        "banner": "/img/drops/seashrine-vip/banner.webp",
-        "maxSupply": 10000,
-        "website": "https://app.ebisusbay.com/",
-        "twitter": "https://twitter.com/EbisusBay",
-        "discord": "https://discord.gg/ebisusbay",
-        "medium": "https://blog.ebisusbay.com/",
-        "instagram": "https://www.instagram.com/ebisusbayofficial",
-        "telegram": "https://t.me/ebisusbay",
-        "categories": [
-          "collectibles"
-        ]
-      },
-      "verification": {
-        "verified": true,
-        "doxx": false,
-        "kyc": false
-      }
-    },
-    {
       "name": "Immortal Cyborgs",
       "slug": "immortal-cyborgs",
       "multiToken": false,
@@ -14732,7 +14702,7 @@
       "multiToken": false,
       "address": "",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Ryoshi Tales awaits all of our enthusiastic supporters. Get your hands on these exclusive Ryoshi Tales-themed VIP NFTs now! Coming with 8 different traits each with relevant attributes – body, background, tools, mouth, hair, miscellaneous, eyes, clothing – every NFT is completely unique. Don’t miss out on the opportunity to participate in our project’s evolution.",
         "verified": true,
@@ -14804,6 +14774,66 @@
         "doxx": false,
         "kyc": false,
         "verified": false
+      }
+    },
+    {
+      "name": "Ebisu's Bay - Legacy VIP Founding Member",
+      "slug": "legacy-vip-founding-member",
+      "onChain": false,
+      "address": "",
+      "multiToken": false,
+      "listable": true,
+      "metadata": {
+        "description": "Art collectible version of the original Ebisu's Bay VIP Founding Member.",
+        "verified": true,
+        "avatar": "/img/avatar.jpg",
+        "card": "/img/collections/ebisu/card.webp",
+        "banner": "/img/collections/ebisu/banner.png",
+        "maxSupply": 1000,
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "hidden",
+        "verified": true
+      }
+    },
+    {
+      "name": "SeaShrine VIP",
+      "slug": "seashrine-vip",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Begin your journey to SeaShrine, the Ebisu's Bay sister marketplace on Aptos, and take advantage of many amazing features such as reduced service fees, access to beta features, exclusive airdrops, and more. Holders can soon redeem this NFT for an equivalent NFT on the Aptos chain.",
+        "verified": true,
+        "avatar": "/img/drops/seashrine-vip/avatar.webp",
+        "card": "/img/drops/seashrine-vip/card.webp",
+        "banner": "/img/drops/seashrine-vip/banner.webp",
+        "maxSupply": 1000,
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "hidden",
+        "verified": true
       }
     }
   ],
