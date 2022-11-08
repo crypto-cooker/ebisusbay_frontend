@@ -81,7 +81,7 @@ const CurrentDrops = ({ useCarousel = true }) => {
             currentDrops
               .slice(showAll ? undefined : 0, showAll ? undefined : threePerRowSize ? 3 : 4)
               .map((item, index) => (
-                <div className="col-12 col-xs-6 col-md-4 col-lg-3" key={index}>
+                <div className="col-12 col-xs-6 col-md-4 col-lg-3 my-2" key={index}>
                   <CustomSlide
                     key={index}
                     index={index + 1}

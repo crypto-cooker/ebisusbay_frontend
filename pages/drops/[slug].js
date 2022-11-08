@@ -4,10 +4,11 @@ import { useRouter } from 'next/router';
 import MultiDrop from '../../src/Components/Drop/multiDrop';
 import SingleDrop from '../../src/Components/Drop/singleDrop';
 import CronosverseDrop from '../../src/Components/Drop/CronosverseDrop';
-import {caseInsensitiveCompare} from "@src/utils";
+import {caseInsensitiveCompare, isRyoshiVipDrop} from "@src/utils";
 import {appConfig} from "@src/Config";
 import PageHead from "../../src/Components/Head/PageHead";
 import {hostedImage} from "@src/helpers/image";
+import RyoshiDrop from "@src/Components/Drop/ryoshiDrop";
 
 export const drops = appConfig('drops');
 export const collections = appConfig('collections');
@@ -43,6 +44,8 @@ const Drop = ({ssrDrop, ssrCollection}) => {
             <MultiDrop drop={ssrDrop} />
           ) : isMultiPrice ? (
             <CronosverseDrop drop={ssrDrop} />
+          ) : isRyoshiVipDrop(ssrDrop.address) ? (
+            <RyoshiDrop drop={ssrDrop} />
           ) : (
             <SingleDrop drop={ssrDrop} />
           )}

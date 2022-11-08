@@ -2809,6 +2809,88 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Ryoshi Tales VIP",
+      "slug": "ryoshi-tales-vip",
+      "multiToken": false,
+      "address": "0xCF7aedEbC5223c4C620625A560300582B77D8719",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Ryoshi Tales awaits all of our enthusiastic supporters. Get your hands on these exclusive Ryoshi Tales-themed VIP NFTs now! Coming with 8 different traits each with relevant attributes – body, background, tools, mouth, hair, miscellaneous, eyes, clothing – every NFT is completely unique. Don’t miss out on the opportunity to participate in our project’s evolution.",
+        "verified": true,
+        "avatar": "/img/collections/ryoshi-tales-vip/avatar.webp",
+        "card": "/img/collections/ryoshi-tales-vip/card.webp",
+        "banner": "/img/collections/ryoshi-tales-vip/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "hidden",
+        "verified": true
+      }
+    },
+    {
+      "slug": "legacy-vip-founding-member",
+      "name": "Legacy Ebisu's Bay VIP",
+      "onChain": false,
+      "address": "0xa937e814A2c5e99E9e86c4F34162c4F012F75a52",
+      "multiToken": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "verified": true,
+        "avatar": "/img/avatar.jpg",
+        "card": "/img/collections/ebisu/card.webp",
+        "maxSupply": 1000,
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "slug": "sea-dragon",
+      "name": "SeaShrine VIP",
+      "onChain": false,
+      "address": "0xe7c594926cEb73B0669c72bfb641c5b7Cde0a4aE",
+      "multiToken": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "verified": true,
+        "avatar": "/img/avatar.jpg",
+        "card": "/img/collections/ebisu/card.webp",
+        "maxSupply": 1000,
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
@@ -6539,6 +6621,47 @@
         "verified": true,
         "doxx": false,
         "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "id": 139,
+      "slug": "ryoshi-tales-vip",
+      "title": "Ryoshi Tales VIP",
+      "subtitle": "Ryoshi Tales awaits all of our enthusiastic supporters. Get your hands on these exclusive Ryoshi Tales-themed VIP NFTs now! Coming with 8 different traits each with relevant attributes – body, background, tools, mouth, hair, miscellaneous, eyes, clothing – every NFT is completely unique. Don’t miss out on the opportunity to participate in our project’s evolution.",
+      "description": "As Ebisu’s Bay’s VIP Founding Member NFTs turn 1 year old and the marketplace enters into a new stage of its evolution, it is time for a birthday rebranding! With these new Ryoshi Tales VIPs, not only will you be able to obtain the same benefits and functionalities that you’ve been accustomed to with our legacy Ebisu’s Bay VIPs (reduced service fees, discounts on drops, early access to features and stakeable in the service fee pool), but you will also get additional intrinsic rarity features, as well as staking functions within Ryoshi Tales once the game has been released. Moreover, with a switch from the ERC-1155 to the 721 protocol, the token stands to gain better token gating opportunities. Get yours now and help Ebisu populate his islands in his upcoming GameFi experience!",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "0xCF7aedEbC5223c4C620625A560300582B77D8719",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 10000,
+      "cost": "1",
+      "costUnit": "Ebisu's Bay VIP",
+      "foundersOnly": false,
+      "start": 1667863561000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/ryoshi-tales-vip/drop.webp",
+        "banner": "/img/drops/ryoshi-tales-vip/banner.webp",
+        "avatar": "/img/collections/ryoshi-tales-vip/avatar.webp",
+        "preview": "/img/collections/ryoshi-tales-vip/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": "public",
+        "kyc": "hidden",
         "escrow": false
       }
     }
