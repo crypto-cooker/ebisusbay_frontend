@@ -22,6 +22,7 @@ import SocialsBar from "@src/Components/Collection/SocialsBar";
 import Footer from "@src/Components/components/Footer";
 import EndpointProxyService from "@src/services/endpoint-proxy.service";
 import {caseInsensitiveCompare, siPrefixedNumber} from "@src/utils";
+import {useColorModeValue} from "@chakra-ui/color-mode";
 
 const Brand = ({ brand, collections, stats }) => {
   const [viewMore, setViewMore] = useState(false);
@@ -29,6 +30,7 @@ const Brand = ({ brand, collections, stats }) => {
     {base: brand.description.length > 150, md: brand.description.length > 225},
     {fallback: 'md'}
   )
+  const bannerBgColor= useColorModeValue('black', 'transparent');
 
   return (
     <>
@@ -43,6 +45,7 @@ const Brand = ({ brand, collections, stats }) => {
         minH="300px"
         shadow="0 1px 25px black"
         color="white"
+        backgroundColor={bannerBgColor}
       >
         <Box
           style={{
@@ -51,7 +54,7 @@ const Brand = ({ brand, collections, stats }) => {
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover'
           }}
-          filter='brightness(0.4)'
+          filter='brightness(0.3) blur(8px)'
           h="100%"
           position="absolute"
           w="100%"
@@ -84,52 +87,50 @@ const Brand = ({ brand, collections, stats }) => {
         </SimpleGrid>
       </Box>
 
-      <Box mt={6} mx={8}>
+      <Box mt={6} mx={8} maxW="2560px">
         <Box>
           <Center>
             <Heading as="h2" size="xl" mb={4}>Collections</Heading>
           </Center>
         </Box>
-        <SimpleGrid columns={{base: 1, sm: 2, md: 3, lg: 4}} gap={4}>
+        <SimpleGrid columns={{base: 1, sm: 2, md: 3, lg: 4}} gap={{base: 4, '2xl': 8}}>
           {collections.map((collection, index) => (
             <CustomSlide
               key={index}
               index={index + 1}
               banner={collection.metadata.card}
-              avatar={collection.metadata.avatar}
               title={collection.name}
               subtitle={
-              <Box>
-                <Text noOfLines={2} fontSize="xs" px={2}>{collection.metadata.description}</Text>
-                <Wrap mt={2} justify="center" spacing={5}>
-                  <WrapItem>
-                    <Stat size="sm">
-                      <StatLabel fontSize="xs">Items</StatLabel>
-                      <StatNumber>{collection.totalSupply ? siPrefixedNumber(collection.totalSupply) : '-'}</StatNumber>
-                    </Stat>
-                  </WrapItem>
-                  <WrapItem>
-                    <Stat size="sm">
-                      <StatLabel fontSize="xs">Active</StatLabel>
-                      <StatNumber>{siPrefixedNumber(collection.stats.total.active)}</StatNumber>
-                    </Stat>
-                  </WrapItem>
-                  <WrapItem>
-                    <Stat size="sm">
-                      <StatLabel fontSize="xs">Sales</StatLabel>
-                      <StatNumber>{siPrefixedNumber(collection.stats.total.complete)}</StatNumber>
-                    </Stat>
-                  </WrapItem>
-                  <WrapItem>
-                    <Stat size="sm">
-                      <StatLabel fontSize="xs">Volume</StatLabel>
-                      <StatNumber>{siPrefixedNumber(collection.stats.total.volume)}</StatNumber>
-                    </Stat>
-                  </WrapItem>
-                </Wrap>
-              </Box>
+                <Box>
+                  <Text noOfLines={2} fontSize="xs" px={2}>{collection.metadata.description}</Text>
+                  <Wrap mt={2} justify="center" spacing={5}>
+                    <WrapItem>
+                      <Stat size="sm">
+                        <StatLabel fontSize="xs">Items</StatLabel>
+                        <StatNumber>{collection.totalSupply ? siPrefixedNumber(collection.totalSupply) : '-'}</StatNumber>
+                      </Stat>
+                    </WrapItem>
+                    <WrapItem>
+                      <Stat size="sm">
+                        <StatLabel fontSize="xs">Active</StatLabel>
+                        <StatNumber>{siPrefixedNumber(collection.stats.total.active)}</StatNumber>
+                      </Stat>
+                    </WrapItem>
+                    <WrapItem>
+                      <Stat size="sm">
+                        <StatLabel fontSize="xs">Sales</StatLabel>
+                        <StatNumber>{siPrefixedNumber(collection.stats.total.complete)}</StatNumber>
+                      </Stat>
+                    </WrapItem>
+                    <WrapItem>
+                      <Stat size="sm">
+                        <StatLabel fontSize="xs">Volume</StatLabel>
+                        <StatNumber>{siPrefixedNumber(collection.stats.total.volume)}</StatNumber>
+                      </Stat>
+                    </WrapItem>
+                  </Wrap>
+                </Box>
               }
-              collectionId={collection.slug ?? collection.address}
               url={`/collection/${collection.slug ?? collection.address}`}
               verified={collection.metadata.verified}
             />
