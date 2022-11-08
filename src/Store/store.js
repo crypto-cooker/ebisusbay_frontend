@@ -18,6 +18,7 @@ import offerReducer from '../GlobalState/offerSlice';
 import leaderBoardReducer from '../GlobalState/leaderBoardSlice';
 import cartReducer from '../GlobalState/cartSlice';
 import batchListingReducer from '../GlobalState/batchListingSlice';
+import ryoshiStakingReducer from '../GlobalState/ryoshiStakingCartSlice';
 import { user } from '../GlobalState/User';
 
 const rootReducer = combineReducers({
@@ -36,6 +37,7 @@ const rootReducer = combineReducers({
   leaderBoard: leaderBoardReducer,
   cart: cartReducer,
   batchListing: batchListingReducer,
+  ryoshiStakingCart: ryoshiStakingReducer,
 });
 
 const reduxDevToolsComposeEnhancers =

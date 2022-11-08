@@ -17,14 +17,14 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { getTheme } from '../../Theme/theme';
 import {hostedImage} from "../../helpers/image";
-import {AnyMedia} from "./AnyMedia";
+import {AnyMedia} from "../components/AnyMedia";
 import {Heading} from "@chakra-ui/react";
 
 const txExtras = {
   gasPrice: ethers.utils.parseUnits('5000', 'gwei'),
 };
 
-const MyStaking = () => {
+const LegacyStaking = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const stakeCount = user.stakeCount;
@@ -149,7 +149,7 @@ const MyStaking = () => {
           </div>
           <div className="col-md-8">
             <div className="item_info">
-              <Heading>VIP Founding Member Staking</Heading>
+              <Heading>Legacy VIP Founding Member Staking</Heading>
               <div className="my-2">
                 Earn rewards generated through platform sales &#128640; {/*<a*/}
                 {/*  href="https://blog.ebisusbay.com/founding-member-vip-staking-6f7405a68eed"*/}
@@ -243,7 +243,7 @@ const MyStaking = () => {
   );
 };
 
-export default memo(MyStaking);
+export default memo(LegacyStaking);
 
 const StakeCard = ({ stake, threshold, buttonName, buttonActionName }) => {
   const [quantity, setQuantity] = useState(1);
