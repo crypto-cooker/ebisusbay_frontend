@@ -36,8 +36,8 @@ const CustomSlide = ({ index, avatar, banner, title, subtitle, collectionId, url
   };
 
   return (
-    <Box className="itm" key={index}>
-      <Box className="nft_coll cursor-pointer" onClick={() => navigateTo(url)} _hover={{
+    <Box key={index} h="100%">
+      <Box className="nft_coll cursor-pointer h-100" onClick={() => navigateTo(url)} _hover={{
         backgroundColor: hoverBgColor
       }} shadow="lg">
         <div className="nft_wrap">
@@ -63,7 +63,11 @@ const CustomSlide = ({ index, avatar, banner, title, subtitle, collectionId, url
           <span>
             <Heading as="h4" size="md">{title}</Heading>
           </span>
-          <Text noOfLines={3} fontSize="14px" px={2}>{subtitle}</Text>
+          {typeof subtitle === 'string' ? (
+            <Text noOfLines={3} fontSize="14px" px={2}>{subtitle}</Text>
+          ) : (
+            <>{subtitle}</>
+          )}
         </div>
       </Box>
     </Box>

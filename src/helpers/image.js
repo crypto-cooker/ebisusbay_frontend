@@ -111,7 +111,7 @@ export class ImageKitService {
   }
 
   buildUrl() {
-    if (isLocalEnv() && this.imageUrl.startsWith('/')) return this.imageUrl;
+    if (isLocalEnv() && this.imageUrl?.startsWith('/')) return this.imageUrl;
     if(!this.imageUrl || this.imageUrl.startsWith('data')) return this.imageUrl;
 
     const cdn = appConfig('urls.cdn');

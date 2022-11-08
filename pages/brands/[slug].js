@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import PageHead from "../../src/Components/Head/PageHead";
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import brands from '@src/core/data/brands.json';
 import {
   Box,
   Button,
-  Center, Flex,
+  Center,
+  Flex,
   Heading,
   SimpleGrid,
-  Stack,
-  Stat, StatHelpText,
-  StatLabel, StatNumber,
+  Stat,
+  StatLabel,
+  StatNumber,
   Text,
-  useBreakpointValue
+  useBreakpointValue,
+  Wrap,
+  WrapItem
 } from "@chakra-ui/react";
 import CustomSlide from "@src/Components/components/CustomSlide";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
@@ -81,13 +84,13 @@ const Brand = ({ brand, collections, stats }) => {
         </SimpleGrid>
       </Box>
 
-      <Box mt={6}>
+      <Box mt={6} mx={8}>
         <Box>
           <Center>
-            <Heading as="h2" size="xl" mb={2}>Collections</Heading>
+            <Heading as="h2" size="xl" mb={4}>Collections</Heading>
           </Center>
         </Box>
-        <SimpleGrid columns={{base: 1, sm: 2, md: 3, lg: 4}}>
+        <SimpleGrid columns={{base: 1, sm: 2, md: 3, lg: 4}} gap={4}>
           {collections.map((collection, index) => (
             <CustomSlide
               key={index}
@@ -95,7 +98,37 @@ const Brand = ({ brand, collections, stats }) => {
               banner={collection.metadata.card}
               avatar={collection.metadata.avatar}
               title={collection.name}
-              subtitle={collection.metadata.description}
+              subtitle={
+              <Box>
+                <Text noOfLines={2} fontSize="xs" px={2}>{collection.metadata.description}</Text>
+                <Wrap mt={2} justify="center" spacing={5}>
+                  <WrapItem>
+                    <Stat size="sm">
+                      <StatLabel fontSize="xs">Items</StatLabel>
+                      <StatNumber>{siPrefixedNumber(collection.totalSupply)}</StatNumber>
+                    </Stat>
+                  </WrapItem>
+                  <WrapItem>
+                    <Stat size="sm">
+                      <StatLabel fontSize="xs">Active</StatLabel>
+                      <StatNumber>{siPrefixedNumber(collection.stats.total.active)}</StatNumber>
+                    </Stat>
+                  </WrapItem>
+                  <WrapItem>
+                    <Stat size="sm">
+                      <StatLabel fontSize="xs">Sales</StatLabel>
+                      <StatNumber>{siPrefixedNumber(collection.stats.total.complete)}</StatNumber>
+                    </Stat>
+                  </WrapItem>
+                  <WrapItem>
+                    <Stat size="sm">
+                      <StatLabel fontSize="xs">Volume</StatLabel>
+                      <StatNumber>{siPrefixedNumber(collection.stats.total.volume)}</StatNumber>
+                    </Stat>
+                  </WrapItem>
+                </Wrap>
+              </Box>
+              }
               collectionId={collection.slug ?? collection.address}
               url={`/collection/${collection.slug ?? collection.address}`}
               verified={collection.metadata.verified}
