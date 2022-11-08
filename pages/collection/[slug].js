@@ -114,7 +114,7 @@ export const getServerSideProps = async ({ params, query }) => {
   }
 
   const activeDrop = appConfig('drops')
-    .find((drop) => caseInsensitiveCompare(collection.address, drop.address) && !drop.complete);
+    .find((drop) => !!collection.address && caseInsensitiveCompare(collection.address, drop.address) && !drop.complete);
 
   return {
     props: {
