@@ -105,7 +105,7 @@ const Brand = ({ brand, collections, stats }) => {
                   <WrapItem>
                     <Stat size="sm">
                       <StatLabel fontSize="xs">Items</StatLabel>
-                      <StatNumber>{siPrefixedNumber(collection.totalSupply)}</StatNumber>
+                      <StatNumber>{collection.totalSupply ? siPrefixedNumber(collection.totalSupply) : '-'}</StatNumber>
                     </Stat>
                   </WrapItem>
                   <WrapItem>
