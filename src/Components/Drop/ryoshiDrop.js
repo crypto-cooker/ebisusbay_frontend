@@ -441,7 +441,7 @@ const RyoshiDrop = ({drop}) => {
                 </div>
 
                 <p className="my-2" style={{ color: getTheme(userTheme).colors.textColor3 }}>
-                  * 1 Ebisu's Bay VIP will be swapped for 10 Ryoshi Tales VIP
+                  * 1 Ebisu's Bay VIP will be swapped for 10 Ryoshi Tales VIP, 1 SeaShrine VIP, and 1 collectible Ebisu's Bay VIP
                 </p>
 
                 <div className="spacer-40"></div>

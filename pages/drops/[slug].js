@@ -44,7 +44,7 @@ const Drop = ({ssrDrop, ssrCollection}) => {
             <MultiDrop drop={ssrDrop} />
           ) : isMultiPrice ? (
             <CronosverseDrop drop={ssrDrop} />
-          ) : isRyoshiVipDrop(ssrDrop.address) ? (
+          ) : ssrDrop.slug === 'ryoshi-tales-vip' ? (
             <RyoshiDrop drop={ssrDrop} />
           ) : (
             <SingleDrop drop={ssrDrop} />

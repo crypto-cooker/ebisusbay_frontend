@@ -42,22 +42,26 @@ const CustomSlide = ({ index, avatar, banner, title, subtitle, collectionId, url
       }} shadow="lg">
         <div className="nft_wrap">
           <span>
-            <img src={hostedImage(banner)} className="lazy img-fluid" alt={title} />
+            <img src={hostedImage(banner)} className="lazy img-fluid w-100" alt={title} />
           </span>
         </div>
         <div className="nft_coll_pp">
-          <span>
-            {avatar ? (
-              <img className="lazy" src={hostedImage(avatar, true)} alt={title} />
-            ) : (
-              <Blockies seed={collectionId} size={10} scale={6} />
-            )}
-            {verified && (
-              <VerifiedIcon>
-                <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={7} />
-              </VerifiedIcon>
-            )}
-          </span>
+          {avatar || collectionId ? (
+            <span>
+              {avatar ? (
+                <img className="lazy" src={hostedImage(avatar, true)} alt={title} />
+              ) : (
+                <Blockies seed={collectionId} size={10} scale={6} />
+              )}
+              {verified && (
+                <VerifiedIcon>
+                  <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={7} />
+                </VerifiedIcon>
+              )}
+            </span>
+          ) : (
+            <Box h="30px"></Box>
+          )}
         </div>
         <div className="nft_coll_info">
           <span>
