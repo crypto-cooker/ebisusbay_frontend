@@ -35,7 +35,7 @@ const Brand = ({ brand, collections, stats }) => {
       <PageHead
         title={brand.name}
         description={brand.description}
-        url={`/brand/${brand.slug}`}
+        url={`/brands/${brand.slug}`}
         image={hostedImage(brand.images.banner)}
       />
       <Box
