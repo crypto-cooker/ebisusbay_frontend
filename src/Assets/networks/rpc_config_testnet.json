@@ -2839,6 +2839,58 @@
         "kyc": "hidden",
         "verified": true
       }
+    },
+    {
+      "slug": "legacy-vip-founding-member",
+      "name": "Legacy Ebisu's Bay VIP",
+      "onChain": false,
+      "address": "0xa937e814A2c5e99E9e86c4F34162c4F012F75a52",
+      "multiToken": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "verified": true,
+        "avatar": "/img/avatar.jpg",
+        "card": "/img/collections/ebisu/card.webp",
+        "maxSupply": 1000,
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "slug": "sea-dragon",
+      "name": "SeaShrine VIP",
+      "onChain": false,
+      "address": "0xe7c594926cEb73B0669c72bfb641c5b7Cde0a4aE",
+      "multiToken": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "verified": true,
+        "avatar": "/img/avatar.jpg",
+        "card": "/img/collections/ebisu/card.webp",
+        "maxSupply": 1000,
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [

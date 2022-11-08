@@ -178,19 +178,15 @@ const RyoshiDrop = ({drop}) => {
         const cost = await ryoshiContract.mintCost(user.address);
         let finalCost = cost.mul(numToMint);
 
-        console.log('a')
         const isApprovedRyoshi = await ryoshiContract.isApprovedForAll(user.address, config.contracts.membership);
-        console.log('b', isApprovedRyoshi)
         if (!isApprovedRyoshi) {
           const tx = await ryoshiContract.setApprovalForAll(config.contracts.membership, true);
           await tx.wait();
         }
 
-        console.log('c')
         const vipCollection = collections.find((c) => c.slug === 'vip-founding-member');
         const vipContract = await new ethers.Contract(vipCollection.address, ERC1155, user.provider.getSigner());
         const isApprovedVip = await vipContract.isApprovedForAll(user.address, drop.address);
-        console.log('d', isApprovedVip)
         if (!isApprovedVip) {
           const tx = await vipContract.setApprovalForAll(drop.address, true);
           await tx.wait();
