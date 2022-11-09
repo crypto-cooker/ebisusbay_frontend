@@ -3,12 +3,13 @@ import React, {useState} from 'react';
 import Footer from '../src/Components/components/Footer';
 import LegacyStaking from '@src/Components/Staking/LegacyStaking';
 import withAuth from '../src/Components/withAuth';
-import {Grid, GridItem, Heading, useColorModeValue} from "@chakra-ui/react";
+import {Box, Container, Grid, GridItem, Heading, useColorModeValue} from "@chakra-ui/react";
 import RyoshiStaking from "@src/Components/Staking/RyoshiStaking";
 import {motion} from "framer-motion";
 import {useDispatch, useSelector} from "react-redux";
 import {closeBatch} from "@src/GlobalState/ryoshiStakingCartSlice";
 import {BatchStakingDrawer} from "@src/Components/Staking/BatchStakingDrawer";
+import RewardsCard from "@src/Components/Staking/RewardsCard";
 
 const MotionGrid = motion(Grid)
 const tabs = {
@@ -45,18 +46,22 @@ const MyStaking = () => {
               <div className="container">
                 <div className="row m-10-hor">
                   <div className="col-12 text-center">
-                    <Heading as="h1" size="2xl" className="text-center">My Staking</Heading>
+                    <Heading as="h1" size="2xl" className="text-center">Ryoshi VIP Staking</Heading>
                   </div>
                 </div>
               </div>
             </div>
           </section>
 
-          <section className="gl-legacy container">
+          <Container my={4}>
+            <RewardsCard />
+          </Container>
+
+          <section className="container">
             <div className="de_tab">
               <ul className="de_nav mb-2">
                 <li className={`tab ${openMenu === tabs.ryoshi ? 'active' : ''} my-1`}>
-                  <span onClick={handleBtnClick(tabs.ryoshi)}>Ryoshi VIP</span>
+                  <span onClick={handleBtnClick(tabs.ryoshi)}>Ryoshi Tales VIP</span>
                 </li>
                 <li className={`tab ${openMenu === tabs.legacy ? 'active' : ''} my-1`}>
                   <span onClick={handleBtnClick(tabs.legacy)}>Legacy VIP</span>
