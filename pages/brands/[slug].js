@@ -59,7 +59,7 @@ const Brand = ({ brand, collections, stats }) => {
           position="absolute"
           w="100%"
         />
-        <SimpleGrid columns={{base: 1, md: 2}} position="relative" bottom={0} px={10} pt={{base: '75px', md:'40px'}} pb={4}>
+        <SimpleGrid columns={{base: 1, md: 2}} position="relative" bottom={0} px={10} pt={{base: '75px', md:'40px'}} pb={4} maxW="2560px">
           <Box>
             <Heading color="inherit">{brand.name}</Heading>
             <SocialsBar
@@ -162,6 +162,7 @@ export const getServerSideProps = async ({ params, query }) => {
   const brandAddresses = brandKeyedAddresses.map((o) => o.address);
   const endpointService = new EndpointProxyService();
   const collections = await endpointService.getCollections({address: brandAddresses.join(',')});
+
   const sortedCollections = collections.data.collections
     .map((c) => {
       c.position = brandKeyedAddresses.find((o) => caseInsensitiveCompare(o.address, c.address)).position;
@@ -175,7 +176,7 @@ export const getServerSideProps = async ({ params, query }) => {
       value: 0,
     },
     listings: {
-      label: 'Active Listings',
+      label: 'Active',
       value: 0,
     },
     complete: {
@@ -196,7 +197,6 @@ export const getServerSideProps = async ({ params, query }) => {
     return p;
   }, initialStats);
 
-  console.log(stats);
   return {
     props: {
       brand: brand,
