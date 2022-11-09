@@ -14884,6 +14884,56 @@
         "kyc": false,
         "verified": false
       }
+    },
+    {
+      "name": "Carkayous - Golden Acorns",
+      "slug": "carkayous-golden-acorns",
+      "multiToken": false,
+      "address": "0x7781b08298d7EDD97354989307A37cFd79BeB175",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Golden Acorns can be used as discounts (in the form of rebates) on all future NFTs by Carkayous. They have an initial value of $15 but overtime gains $15 in value while also visually evolving.",
+        "verified": true,
+        "avatar": "/img/collections/carkayous-golden-acorns/avatar.webp",
+        "banner": "/img/collections/carkayous-golden-acorns/banner.webp",
+        "card": "/img/collections/carkayous-golden-acorns/card.webp",
+        "maxSupply": 0,
+        "website": "https://carkayous.com/",
+        "twitter": "https://twitter.com/carkayous",
+        "discord": "https://discord.gg/carkayous",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Carkayous - Expedition 8 Compositions",
+      "slug": "carkayous-expedition-8-compositions",
+      "multiToken": false,
+      "address": "0x384A13ca5eA3BF799387DAf3dB0140AE66a7f3f0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "This is where mini and full compositions will live.",
+        "verified": true,
+        "avatar": "/img/collections/carkayous-expedition-8-compositions/avatar.webp",
+        "banner": "/img/collections/carkayous-expedition-8-compositions/banner.webp",
+        "card": "/img/collections/carkayous-expedition-8-compositions/card.webp",
+        "maxSupply": 0,
+        "website": "https://carkayous.com/",
+        "twitter": "https://twitter.com/carkayous",
+        "discord": "https://discord.gg/carkayous",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "verified": true
+      }
     }
   ],
   "drops": [
