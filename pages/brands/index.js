@@ -58,7 +58,7 @@ const Brands = ({ brand, collections, stats }) => {
                   transition:'0.5s ease',
                 }}
               >
-                <Text align="center" fontSize="xl" fontWeight="semibold">
+                <Text align="center" fontSize="xl" fontWeight="semibold" color="white">
                   {brand.name}
                 </Text>
               </Box>
