@@ -22,6 +22,7 @@
       "instagram": "https://www.instagram.com/ebisusbayofficial",
       "telegram": "https://t.me/ebisusbay"
     },
+    "categories": [],
     "style": {}
   },
   {
@@ -43,12 +44,13 @@
       "discord": "https://discord.gg/madmeerkat",
       "medium": "https://medium.com/@madmeerkat0"
     },
+    "categories": [],
     "style": {}
   },
   {
     "slug": "croskull",
     "name": "CroSkull",
-    "description": "CroSkull is a collection of 6.666 uniquely generated NFTs stored on the Cronos Chain. Each CroSkull NFT is based on 6+ attributes with different rarities. A CroSkull is not simply a PFP but is also the key to the insane Dr. Jiko's laboratory experiments.",
+    "description": "CroSkulls, EVOs, Eggs, Pets, Staking, Missions, and much more. Everything will take shape in this mysterious ecosystem called the Underworld. Get the key to the insane Bonesville's laboratory experiments.",
     "images": {
       "banner": "/img/collections/croskull/banner.webp"
     },
@@ -69,6 +71,7 @@
       "discord": "https://discord.gg/q3nWxw8QRY",
       "medium": "https://medium.com/@croskullnft"
     },
+    "categories": [],
     "style": {}
   },
   {
@@ -90,6 +93,7 @@
       "twitter": "https://twitter.com/HiddenFishDAO",
       "medium": "https://blog.hidethefish.com"
     },
+    "categories": [],
     "style": {}
   },
   {
@@ -111,6 +115,7 @@
       "medium": "https://medium.com/@WeirdApesClub",
       "gitbook": "https://weirdape.gitbook.io/weird-apes-club/weird-apes-club/summary"
     },
+    "categories": [],
     "style": {}
   },
   {
@@ -141,6 +146,7 @@
       "discord": "https://discord.gg/boomersquad",
       "medium": "https://medium.com/@BoomerSquadNFT"
     },
+    "categories": [],
     "style": {}
   },
   {
@@ -164,6 +170,7 @@
       "medium": "https://argofinance.medium.com",
       "telegram": "https://t.me/Argo_Finance"
     },
+    "categories": [],
     "style": {}
   },
   {
@@ -188,6 +195,7 @@
       "twitter": "https://twitter.com/trooprzarmy",
       "discord": "https://discord.gg/trooprz"
     },
+    "categories": [],
     "style": {}
   },
   {
@@ -210,6 +218,7 @@
       "discord": "https://discord.gg/qKBy2azf69",
       "medium": "https://medium.com/@babyaliendivision"
     },
+    "categories": [],
     "style": {}
   },
   {
@@ -232,6 +241,7 @@
       "discord": "https://discord.gg/dgpals",
       "medium": "https://medium.com/officialdgpals"
     },
+    "categories": [],
     "style": {}
   },
   {
@@ -255,6 +265,7 @@
       "twitter": "https://twitter.com/degenednfts",
       "discord": "https://discord.gg/N5YXhNDJyz"
     },
+    "categories": [],
     "style": {}
   },
   {
@@ -277,6 +288,7 @@
       "twitter": "https://twitter.com/carkayous",
       "discord": "https://discord.gg/carkayous"
     },
+    "categories": [],
     "style": {}
   },
   {
@@ -298,6 +310,7 @@
       "medium": "https://hello-143.gitbook.io/lost-toys-nft/",
       "instagram": "https://www.instagram.com/losttoysnft/"
     },
+    "categories": [],
     "style": {}
   },
   {
@@ -317,6 +330,7 @@
       "twitter": "https://twitter.com/zap7project",
       "discord": "https://discord.gg/tBgUbvsSZX"
     },
+    "categories": [],
     "style": {}
   }
 ]
