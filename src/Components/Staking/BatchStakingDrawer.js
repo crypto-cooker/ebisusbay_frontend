@@ -58,8 +58,14 @@ export const BatchStakingDrawer = ({onClose, ...gridProps}) => {
         return ryoshiStakingCart.extras[o.nft.address.toLowerCase()]?.approval;
       });
       const nftAddresses = filteredCartNfts.map((o) => o.nft.id);
-      console.log('staking..', nftAddresses)
-      let tx = await user.stakeContract.stakeRyoshi(nftAddresses);
+      console.log(ryoshiStakingCart.context, nftAddresses)
+
+      let tx;
+      if (ryoshiStakingCart.context === 'stake') {
+        tx = await user.stakeContract.stakeRyoshi(nftAddresses);
+      } else {
+        tx = await user.stakeContract.unstakeRyoshi(nftAddresses);
+      }
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       handleClearCart();
@@ -168,7 +174,7 @@ export const BatchStakingDrawer = ({onClose, ...gridProps}) => {
                 </Spinner>
               </>
             ) : (
-              <>Stake {pluralize(ryoshiStakingCart.nfts.length, 'NFT')}</>
+              <>{ryoshiStakingCart.context === 'stake' ? 'Stake' : 'Unstake'} {pluralize(ryoshiStakingCart.nfts.length, 'NFT')}</>
             )}
           </Button>
         )}

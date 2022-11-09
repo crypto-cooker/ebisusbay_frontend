@@ -183,7 +183,7 @@ const RyoshiStakingNftCard = ({
                 visibility="hidden"
               >
                 {isStaked ? (
-                  <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={onRemoveFromCartButtonPressed}>Unstake</Text>
+                  <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={onAddToCartButtonPressed}>Unstake</Text>
                 ) : canStake && (
                   <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={onAddToCartButtonPressed}>Stake</Text>
                 )}

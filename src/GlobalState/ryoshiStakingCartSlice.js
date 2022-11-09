@@ -6,6 +6,7 @@ const ryoshiStakingCartSlice = createSlice({
   initialState: {
     nfts: [],
     isDrawerOpen: false,
+    context: 'stake',
     extras: {}
   },
   reducers: {
@@ -56,6 +57,9 @@ const ryoshiStakingCartSlice = createSlice({
     },
     setExtras: (state, action) => {
       state.extras[action.payload.address.toLowerCase()] = action.payload;
+    },
+    setCartContext: (state, action) => {
+      state.context = action.payload;
     }
   },
 });
@@ -68,7 +72,8 @@ export const {
   openCart,
   minimizeCart,
   setApproval,
-  setExtras
+  setExtras,
+  setCartContext
 } = ryoshiStakingCartSlice.actions;
 
 export default ryoshiStakingCartSlice.reducer;
