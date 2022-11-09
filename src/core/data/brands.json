@@ -4,7 +4,8 @@
     "name": "Ebisu's Bay",
     "description": "Discover rare digital art and collect NFTs. Ebisu's Bay is the first and largest NFT marketplace on Cronos. Create, buy, sell, trade and enjoy the #CroFam NFT community.",
     "images": {
-      "banner": "/img/collections/ebisu/banner.png"
+      "banner": "/img/brands/ebisus-bay/banner.webp",
+      "preview": "/img/collections/ebisu/banner.png"
     },
     "collections": [
       "0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5",
@@ -20,7 +21,8 @@
       "medium": "https://blog.ebisusbay.com/",
       "instagram": "https://www.instagram.com/ebisusbayofficial",
       "telegram": "https://t.me/ebisusbay"
-    }
+    },
+    "style": {}
   },
   {
     "slug": "mad-meerkat-burrow",
@@ -40,7 +42,8 @@
       "twitter": "https://twitter.com/MadMeerkatNFT",
       "discord": "https://discord.gg/madmeerkat",
       "medium": "https://medium.com/@madmeerkat0"
-    }
+    },
+    "style": {}
   },
   {
     "slug": "croskull",
@@ -65,7 +68,29 @@
       "twitter": "https://twitter.com/CroskullNFT",
       "discord": "https://discord.gg/q3nWxw8QRY",
       "medium": "https://medium.com/@croskullnft"
-    }
+    },
+    "style": {}
+  },
+  {
+    "slug": "hidden-fish",
+    "name": "Hidden Fish",
+    "description": "The purpose of the DAO is to accelerate the growth of Ebisu's Bay platform and the entire Cronos ecosystem.",
+    "images": {
+      "banner": "/img/collections/hidden-fish-fm-vip/banner.webp",
+      "preview": "/img/collections/hidden-fish-fm-vip/card.webp"
+    },
+    "collections": [
+      "0x90665eEd780C027CDef63C31C8dFa296aE168E5A",
+      "0xaa3cFC29BEaAdA4456B777Bfa7dcDfCBE0d122A9",
+      "0x4Ce0B9608006533dA056170f1efe8eEa771e0d19",
+      "0x7dE8BeC3ACf03997CDf3052c769571bbbBb7eE14"
+    ],
+    "socials": {
+      "website": "https://hidethefish.com/",
+      "twitter": "https://twitter.com/HiddenFishDAO",
+      "medium": "https://blog.hidethefish.com"
+    },
+    "style": {}
   },
   {
     "slug": "weird-apes-club",
@@ -85,7 +110,8 @@
       "discord": "https://discord.gg/d6WvCpfn9W",
       "medium": "https://medium.com/@WeirdApesClub",
       "gitbook": "https://weirdape.gitbook.io/weird-apes-club/weird-apes-club/summary"
-    }
+    },
+    "style": {}
   },
   {
     "slug": "boomer-squad",
@@ -114,12 +140,13 @@
       "twitter": "https://twitter.com/BoomerSquadNFT1",
       "discord": "https://discord.gg/boomersquad",
       "medium": "https://medium.com/@BoomerSquadNFT"
-    }
+    },
+    "style": {}
   },
   {
     "slug": "argonauts",
     "name": "Argonauts",
-    "description": "Argonauts is a collection of 8,888 unique utility-enabled characters that represents your unique identity on the Cronos chain. Each Argonaut holder gets access to utility across the Argo Protocol platform, exclusive treasure chest events, activated partnership experiences, future collections, and more.",
+    "description": "The Argonauts brand features various NFT collections under the NFT arm of Argo Finance. At it's core, the Argonauts collection is a collection of 8,888 unique utility-enabled characters that represents your unique identity on the Cronos chain. The Argonauts will be the centrepiece of Argo, providing users with massive utility across the suite of Argo products.",
     "images": {
       "banner": "/img/collections/argonauts/banner.webp"
     },
@@ -136,7 +163,8 @@
       "discord": "https://discord.gg/argofinance",
       "medium": "https://argofinance.medium.com",
       "telegram": "https://t.me/Argo_Finance"
-    }
+    },
+    "style": {}
   },
   {
     "slug": "trooprz",
@@ -159,7 +187,8 @@
       "website": "https://trooprz.army/",
       "twitter": "https://twitter.com/trooprzarmy",
       "discord": "https://discord.gg/trooprz"
-    }
+    },
+    "style": {}
   },
   {
     "slug": "baby-alien-division",
@@ -180,7 +209,8 @@
       "twitter": "https://twitter.com/BAD_Cronos",
       "discord": "https://discord.gg/qKBy2azf69",
       "medium": "https://medium.com/@babyaliendivision"
-    }
+    },
+    "style": {}
   },
   {
     "slug": "dg-pals",
@@ -201,6 +231,92 @@
       "twitter": "https://twitter.com/officialdgpals",
       "discord": "https://discord.gg/dgpals",
       "medium": "https://medium.com/officialdgpals"
-    }
+    },
+    "style": {}
+  },
+  {
+    "slug": "the-degenerated-nfts",
+    "name": "The Degenerated NFTs",
+    "description": "The Degenerated NFTs is a collective of artists / founders who teamed up to deliver the best quality AI product to the Cronos chain, the future is now \uD83D\uDC8E",
+    "images": {
+      "banner": "/img/brands/the-degenerated-nfts/banner.webp"
+    },
+    "collections": [
+      "0xd79a37824bD86e4E945e8385480de3c45B7e5B08",
+      "0x776BeF0d43Acdc2b49c6885C6d15F9A5308252b2",
+      "0xDa997f6c50306F886ce730B65bb1BFc977B89e8D",
+      "0x7d24acf59b211904c9713c9d901643e20fc81904",
+      "0x56Db07fB1F560c2486527Da02c2fF1D276C2aec4",
+      "0x69B0F59900E123Ad5D3AA37BB022fDe32A4d24B0",
+      "0x8333624EEb54E0c9FF6C96D41645d60463CE9b22"
+    ],
+    "socials": {
+      "website": "https://thedegenerated.art/",
+      "twitter": "https://twitter.com/degenednfts",
+      "discord": "https://discord.gg/N5YXhNDJyz"
+    },
+    "style": {}
+  },
+  {
+    "slug": "carkayous",
+    "name": "Carkayous",
+    "description": "Carkayous is a fictitious continent created by Jesse Smith (Ink Master | TV Celeb | Tattoo Artist) where his art lives.",
+    "images": {
+      "banner": "/img/collections/carkayous-feral-fish/banner.webp"
+    },
+    "collections": [
+      "0x72af9c869a4759e6d50e9656c0741b395532c3dd",
+      "0x6c2757ee563d063cce48bd06b130292fe530e76d",
+      "0xe0afa67d7E4F2329f81562DB9318837A28be83Ec",
+      "0xD717708d012dCa8C3d108BD1E079f937C4A2C0cF",
+      "0x7781b08298d7EDD97354989307A37cFd79BeB175",
+      "0x384A13ca5eA3BF799387DAf3dB0140AE66a7f3f0"
+    ],
+    "socials": {
+      "website": "https://carkayous.com/",
+      "twitter": "https://twitter.com/carkayous",
+      "discord": "https://discord.gg/carkayous"
+    },
+    "style": {}
+  },
+  {
+    "slug": "lost-toys",
+    "name": "Lost Toys",
+    "description": "",
+    "images": {
+      "banner": "/img/collections/lost-toys-vip/banner.png"
+    },
+    "collections": [
+      "0xEB850b8F7d00B4FaF242888Bef7EfbF229eb1e41",
+      "0x714F995CC3f551fc6e3f3D4C4955C51bBdC8be6f",
+      "0xE310Bd632bf98923E03144455C7645ee13353b97"
+    ],
+    "socials": {
+      "website": "https://www.losttoys.io/",
+      "twitter": "https://www.twitter.com/losttoysnft",
+      "discord": "https://discord.gg/Tdd9TZRMxn",
+      "medium": "https://hello-143.gitbook.io/lost-toys-nft/",
+      "instagram": "https://www.instagram.com/losttoysnft/"
+    },
+    "style": {}
+  },
+  {
+    "slug": "zap-projects",
+    "name": "Zap Projects",
+    "description": "",
+    "images": {
+      "banner": "/img/brands/zap-projects/banner.webp"
+    },
+    "collections": [
+      "0xb242399f3f52fcfa8b09d7d6e4C3DBe84D0644fc",
+      "0xF257E02D8c5c9a405589F99859f8b28b0Ccc5474",
+      "0x63dF2BB08bcc9807c0ef5BD0C169FF3b4b289543"
+    ],
+    "socials": {
+      "website": "https://zap7art.club/",
+      "twitter": "https://twitter.com/zap7project",
+      "discord": "https://discord.gg/tBgUbvsSZX"
+    },
+    "style": {}
   }
 ]

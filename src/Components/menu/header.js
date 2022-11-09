@@ -101,9 +101,9 @@ const Header = function () {
                 display={{base: 'none', md: 'flex'}}
                 me={4}
               >
-                <NavLink name={'Home'} to={'/'} />
                 <NavLink name={'Marketplace'} to={'/marketplace'} />
                 <NavLink name={'Collections'} to={'/collections'} />
+                <NavLink name={'Brands'} to={'/brands'} />
                 <NavLink name={'Drops'} to={'/drops'} />
                 <NavLink name={'Stats'} to={'/stats'} />
               </HStack>
@@ -135,9 +135,9 @@ const Header = function () {
           {isOpen ? (
             <Box pb={4} display={{md: 'none'}} textAlign="end" ref={ref}>
               <Stack as={'nav'} spacing={4}>
-                <NavLink name={'Home'} to={'/'} onClick={onClose} />
                 <NavLink name={'Marketplace'} to={'/marketplace'} onClick={onClose} />
                 <NavLink name={'Collections'} to={'/collections'} onClick={onClose} />
+                <NavLink name={'Brands'} to={'/brands'} onClick={onClose} />
                 <NavLink name={'Drops'} to={'/drops'} onClick={onClose} />
                 <NavLink name={'Stats'} to={'/stats'} onClick={onClose} />
               </Stack>

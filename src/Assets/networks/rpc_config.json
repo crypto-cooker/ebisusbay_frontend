@@ -70,8 +70,17 @@
       "onChain": false,
       "address": "0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29",
       "multiToken": true,
-      "split": false,
-      "id": 1,
+      "tokens": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        }
+      ],
       "listable": true,
       "metadata": {
         "description": "Happy Valentine's Day from ebisusbay.com staff! We \u2764 you!",
@@ -93,68 +102,6 @@
       "verification": {
         "doxx": "public",
         "kyc": "hidden",
-        "verified": true
-      }
-    },
-    {
-      "name": "Ebisu's Valentine",
-      "slug": "ebisu-valentine-rare",
-      "onChain": false,
-      "address": "0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29",
-      "multiToken": true,
-      "id": 2,
-      "split": false,
-      "listable": true,
-      "metadata": {
-        "description": "Happy Valentine's Day from ebisusbay.com staff! We \u2764 you!",
-        "verified": true,
-        "avatar": "/img/avatar.jpg",
-        "card": "/img/collections/ebisu/card.webp",
-        "banner": "/img/collections/ebisu/banner.png",
-        "maxSupply": 1,
-        "website": "https://app.ebisusbay.com/",
-        "twitter": "https://twitter.com/EbisusBay",
-        "discord": "https://discord.gg/ebisusbay",
-        "medium": "https://blog.ebisusbay.com/",
-        "instagram": "https://www.instagram.com/ebisusbayofficial",
-        "telegram": "https://t.me/ebisusbay",
-        "categories": [
-          "collectibles"
-        ]
-      },
-      "verification": {
-        "doxx": "public",
-        "kyc": "hidden",
-        "verified": true
-      }
-    },
-    {
-      "name": "Fobos Whale",
-      "slug": "fobos-whale",
-      "onChain": false,
-      "address": "0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29",
-      "multiToken": true,
-      "split": false,
-      "id": 3,
-      "listable": true,
-      "metadata": {
-        "description": "Happy Valentine's Day from ebisusbay.com staff! We \u2764 you!",
-        "verified": true,
-        "maxSupply": 1,
-        "avatar": "/img/collections/barbara/dodgerdogs/avatar.png",
-        "banner": "/img/collections/barbara/dodgerdogs/banner.webp",
-        "card": "/img/collections/barbara/dodgerdogs/card.png",
-        "website": "https://crypto.com/nft/profile/vredekop",
-        "twitter": "https://twitter.com/BarbaraRedekop",
-        "discord": "https://discord.gg/khRfPKDFwg",
-        "instagram": "https://www.instagram.com/im_barbara_redekop/",
-        "categories": [
-          "collectibles"
-        ]
-      },
-      "verification": {
-        "doxx": "public",
-        "kyc": "ebisu",
         "verified": true
       }
     },
@@ -13877,7 +13824,7 @@
       "listable": true,
       "metadata": {
         "description": "A collection of 200 unique skulls on the Cronos blockchain. We are a closed group of elites with a single mission...join us to know \ud83d\udc80",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/skronos-syndicate/avatar.webp",
         "card": "/img/collections/skronos-syndicate/card.webp",
         "banner": "/img/collections/skronos-syndicate/banner.webp",
@@ -13888,9 +13835,9 @@
         "categories": []
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": "private"
       }
     },
     {
@@ -14472,6 +14419,7 @@
         "maxSupply": 3685,
         "website": "https://crofamladies.netlify.app/",
         "twitter": "https://www.twitter.com/CrofamLadies",
+        "discord": "https://discord.gg/4ZwwXghGEj",
         "categories": []
       },
       "verification": {
@@ -14833,6 +14781,106 @@
       "verification": {
         "doxx": "public",
         "kyc": "hidden",
+        "verified": true
+      }
+    },
+    {
+      "name": "Baby Wyverns",
+      "slug": "baby-wyverns",
+      "multiToken": false,
+      "address": "0x8333624EEb54E0c9FF6C96D41645d60463CE9b22",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "There is a Baby Wyvern for each of us, but will you find your forever companion ? \uD83D\uDC32",
+        "verified": false,
+        "avatar": "/img/collections/baby-wyverns/avatar.webp",
+        "card": "/img/collections/baby-wyverns/card.webp",
+        "banner": "/img/collections/baby-wyverns/banner.webp",
+        "maxSupply": 666,
+        "website": "https://babymonsters.ca/wyverns-mint",
+        "twitter": "https://twitter.com/babymonstersnft",
+        "discord": "https://discord.gg/N5YXhNDJyz",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "The Rich Kids",
+      "slug": "the-rich-kids",
+      "multiToken": false,
+      "address": "0xe1a45c2bBEe96Fe94dcad20d0553b6EEEC3c028b",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Rich Kids is a three part set of 10,000 boys, 10,000 girls, and 10,000 jets. All building on each other to create a unique ecosystem exploring the debauchery of the upper class at their worst.",
+        "verified": false,
+        "avatar": "/img/collections/the-rich-kids/avatar.webp",
+        "card": "/img/collections/the-rich-kids/card.webp",
+        "banner": "/img/collections/the-rich-kids/banner.webp",
+        "maxSupply": 30000,
+        "website": "https://www.trknft.com/",
+        "twitter": "https://twitter.com/TRK_CRO",
+        "discord": "https://discord.gg/C2nYz7Ajpp",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Carkayous - Golden Acorns",
+      "slug": "carkayous-golden-acorns",
+      "multiToken": false,
+      "address": "0x7781b08298d7EDD97354989307A37cFd79BeB175",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Golden Acorns can be used as discounts (in the form of rebates) on all future NFTs by Carkayous. They have an initial value of $15 but overtime gains $15 in value while also visually evolving.",
+        "verified": true,
+        "avatar": "/img/collections/carkayous-golden-acorns/avatar.webp",
+        "banner": "/img/collections/carkayous-golden-acorns/banner.webp",
+        "card": "/img/collections/carkayous-golden-acorns/card.webp",
+        "maxSupply": 0,
+        "website": "https://carkayous.com/",
+        "twitter": "https://twitter.com/carkayous",
+        "discord": "https://discord.gg/carkayous",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Carkayous - Expedition 8 Compositions",
+      "slug": "carkayous-expedition-8-compositions",
+      "multiToken": false,
+      "address": "0x384A13ca5eA3BF799387DAf3dB0140AE66a7f3f0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "This is where mini and full compositions will live.",
+        "verified": true,
+        "avatar": "/img/collections/carkayous-expedition-8-compositions/avatar.webp",
+        "banner": "/img/collections/carkayous-expedition-8-compositions/banner.webp",
+        "card": "/img/collections/carkayous-expedition-8-compositions/card.webp",
+        "maxSupply": 0,
+        "website": "https://carkayous.com/",
+        "twitter": "https://twitter.com/carkayous",
+        "discord": "https://discord.gg/carkayous",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
         "verified": true
       }
     }
@@ -18623,7 +18671,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": false,
       "redirect": "https://mint.hidethefish.com/",
       "images": {

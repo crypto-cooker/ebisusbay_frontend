@@ -9,8 +9,8 @@
     "end": null,
     "links": [
       {
-        "label": "More Info",
-        "url": "https://seashrine.io/",
+        "label": "Mint Now",
+        "url": "https://seashrine.io/mint",
         "external": true
       }
     ]
@@ -37,8 +37,8 @@
     "description": "The baddest fighters in the world are now minting. Earn $FYTE tokens, use them in the Fighters Marketplace, buying the top NFTS and Allowlists. Mint a Fighter, join the FIGHTERSVERSE!",
     "page": "front",
     "weight": 1,
-    "start": 1667433600,
-    "end": 1667692800,
+    "start": 1667962024,
+    "end": 1668134824,
     "links": [
       {
         "label": "Mint Now",

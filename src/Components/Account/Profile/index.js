@@ -42,7 +42,7 @@ export default function Profile({ address, profile, tab }) {
   const batchListingBorderColor = useColorModeValue('#000', '#FFF');
   const variants = {
     expand: { gridTemplateColumns: '1fr 358px' },
-    collapse: { gridTemplateColumns: '1fr 0' },
+    collapse: { gridTemplateColumns: '1fr 0px' },
   }
   const useMobileCartView = useBreakpointValue(
     {base: true, lg: false},

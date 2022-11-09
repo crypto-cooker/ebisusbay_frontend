@@ -23,14 +23,28 @@ import Footer from "@src/Components/components/Footer";
 import EndpointProxyService from "@src/services/endpoint-proxy.service";
 import {caseInsensitiveCompare, siPrefixedNumber} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
+import {appConfig} from "@src/Config";
+import MintingButton from "@src/Components/Collection/MintingButton";
+import {useRouter} from "next/router";
+
+const drops = appConfig('drops');
 
 const Brand = ({ brand, collections, stats }) => {
+  const router = useRouter();
   const [viewMore, setViewMore] = useState(false);
   const isClippingDescription = useBreakpointValue(
     {base: brand.description.length > 150, md: brand.description.length > 225},
     {fallback: 'md'}
   )
   const bannerBgColor= useColorModeValue('black', 'transparent');
+
+  const handleMintingButtonClick = (drop) => {
+    if (drop.redirect) {
+      window.open(drop.redirect, '_blank');
+    } else {
+      router.push(`/drops/${drop.slug}`)
+    }
+  }
 
   return (
     <>
@@ -54,12 +68,12 @@ const Brand = ({ brand, collections, stats }) => {
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover'
           }}
-          filter='brightness(0.3) blur(8px)'
+          filter='brightness(0.3)'
           h="100%"
           position="absolute"
           w="100%"
         />
-        <SimpleGrid columns={{base: 1, md: 2}} position="relative" bottom={0} px={10} pt={{base: '75px', md:'40px'}} pb={4}>
+        <SimpleGrid columns={{base: 1, md: 2}} position="relative" bottom={0} px={10} pt={{base: '75px', md:'40px'}} pb={4} maxW="2560px">
           <Box>
             <Heading color="inherit">{brand.name}</Heading>
             <SocialsBar
@@ -87,11 +101,12 @@ const Brand = ({ brand, collections, stats }) => {
         </SimpleGrid>
       </Box>
 
-      <Box mt={6} mx={8} maxW="2560px">
+      <Box as="section" className="gl-legacy no-top" mt={6} mx={8} maxW="2560px">
         <Box>
           <Center>
-            <Heading as="h2" size="xl" mb={4}>Collections</Heading>
+            <Heading>Collections</Heading>
           </Center>
+          <div className="small-border"></div>
         </Box>
         <SimpleGrid columns={{base: 1, sm: 2, md: 3, lg: 4}} gap={{base: 4, '2xl': 8}}>
           {collections.map((collection, index) => (
@@ -100,6 +115,10 @@ const Brand = ({ brand, collections, stats }) => {
               index={index + 1}
               banner={collection.metadata.card}
               title={collection.name}
+              contextComponent={collection.drop && !collection.drop.complete ?
+                <MintingButton onClick={() => handleMintingButtonClick(collection.drop)}/> :
+                undefined
+              }
               subtitle={
                 <Box>
                   <Text noOfLines={2} fontSize="xs" px={2}>{collection.metadata.description}</Text>
@@ -161,12 +180,30 @@ export const getServerSideProps = async ({ params, query }) => {
   const brandAddresses = brandKeyedAddresses.map((o) => o.address);
   const endpointService = new EndpointProxyService();
   const collections = await endpointService.getCollections({address: brandAddresses.join(',')});
-  const sortedCollections = collections.data.collections
+  let splitCollections = [];
+  let sortedCollections = collections.data.collections
     .map((c) => {
       c.position = brandKeyedAddresses.find((o) => caseInsensitiveCompare(o.address, c.address)).position;
+      const drop = drops.find((d) => d.slug === c.slug);
+      c.drop = drop ?? null;
+
+      if (c.slug === 'founding-member') {
+        const vip = c.tokens[2];
+        vip.stats = {
+          total: c.stats.tokens[2]
+        }
+        vip.totalSupply = 1000;
+        splitCollections.push(vip);
+
+        c.stats = {
+          total: c.stats.tokens[1],
+        };
+        c.totalSupply = 10000;
+      }
       return c;
     })
     .sort((a, b) => a.position > b.position ? 1 : -1);
+  sortedCollections = [...splitCollections, ...sortedCollections];
 
   let initialStats = {
     items: {
@@ -174,7 +211,7 @@ export const getServerSideProps = async ({ params, query }) => {
       value: 0,
     },
     listings: {
-      label: 'Active Listings',
+      label: 'Active',
       value: 0,
     },
     complete: {
@@ -195,7 +232,6 @@ export const getServerSideProps = async ({ params, query }) => {
     return p;
   }, initialStats);
 
-  console.log(stats);
   return {
     props: {
       brand: brand,
