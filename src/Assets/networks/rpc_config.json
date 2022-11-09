@@ -13888,9 +13888,9 @@
         "categories": []
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": "private"
       }
     },
     {
@@ -14472,6 +14472,7 @@
         "maxSupply": 3685,
         "website": "https://crofamladies.netlify.app/",
         "twitter": "https://www.twitter.com/CrofamLadies",
+        "discord": "https://discord.gg/4ZwwXghGEj",
         "categories": []
       },
       "verification": {
