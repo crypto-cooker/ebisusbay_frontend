@@ -14861,6 +14861,29 @@
         "kyc": false,
         "verified": false
       }
+    },
+    {
+      "name": "The Rich Kids",
+      "slug": "the-rich-kids",
+      "multiToken": false,
+      "address": "0xe1a45c2bBEe96Fe94dcad20d0553b6EEEC3c028b",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Rich Kids is a three part set of 10,000 boys, 10,000 girls, and 10,000 jets. All building on each other to create a unique ecosystem exploring the debauchery of the upper class at their worst.",
+        "verified": false,
+        "avatar": "/img/collections/the-rich-kids/avatar.webp",
+        "maxSupply": 30000,
+        "website": "https://www.trknft.com/",
+        "twitter": "https://twitter.com/TRK_CRO",
+        "discord": "https://discord.gg/C2nYz7Ajpp",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
     }
   ],
   "drops": [
