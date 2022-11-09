@@ -54,7 +54,7 @@ const Brand = ({ brand, collections, stats }) => {
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover'
           }}
-          filter='brightness(0.3) blur(8px)'
+          filter='brightness(0.3)'
           h="100%"
           position="absolute"
           w="100%"
@@ -87,11 +87,12 @@ const Brand = ({ brand, collections, stats }) => {
         </SimpleGrid>
       </Box>
 
-      <Box mt={6} mx={8} maxW="2560px">
+      <Box as="section" className="gl-legacy no-top" mt={6} mx={8} maxW="2560px">
         <Box>
           <Center>
-            <Heading as="h2" size="xl" mb={4}>Collections</Heading>
+            <Heading>Collections</Heading>
           </Center>
+          <div className="small-border"></div>
         </Box>
         <SimpleGrid columns={{base: 1, sm: 2, md: 3, lg: 4}} gap={{base: 4, '2xl': 8}}>
           {collections.map((collection, index) => (

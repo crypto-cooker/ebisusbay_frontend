@@ -20,7 +20,8 @@
       "medium": "https://blog.ebisusbay.com/",
       "instagram": "https://www.instagram.com/ebisusbayofficial",
       "telegram": "https://t.me/ebisusbay"
-    }
+    },
+    "style": {}
   },
   {
     "slug": "mad-meerkat-burrow",
@@ -40,7 +41,8 @@
       "twitter": "https://twitter.com/MadMeerkatNFT",
       "discord": "https://discord.gg/madmeerkat",
       "medium": "https://medium.com/@madmeerkat0"
-    }
+    },
+    "style": {}
   },
   {
     "slug": "croskull",
@@ -65,7 +67,8 @@
       "twitter": "https://twitter.com/CroskullNFT",
       "discord": "https://discord.gg/q3nWxw8QRY",
       "medium": "https://medium.com/@croskullnft"
-    }
+    },
+    "style": {}
   },
   {
     "slug": "weird-apes-club",
@@ -85,7 +88,8 @@
       "discord": "https://discord.gg/d6WvCpfn9W",
       "medium": "https://medium.com/@WeirdApesClub",
       "gitbook": "https://weirdape.gitbook.io/weird-apes-club/weird-apes-club/summary"
-    }
+    },
+    "style": {}
   },
   {
     "slug": "boomer-squad",
@@ -114,7 +118,8 @@
       "twitter": "https://twitter.com/BoomerSquadNFT1",
       "discord": "https://discord.gg/boomersquad",
       "medium": "https://medium.com/@BoomerSquadNFT"
-    }
+    },
+    "style": {}
   },
   {
     "slug": "argonauts",
@@ -136,7 +141,8 @@
       "discord": "https://discord.gg/argofinance",
       "medium": "https://argofinance.medium.com",
       "telegram": "https://t.me/Argo_Finance"
-    }
+    },
+    "style": {}
   },
   {
     "slug": "trooprz",
@@ -159,7 +165,8 @@
       "website": "https://trooprz.army/",
       "twitter": "https://twitter.com/trooprzarmy",
       "discord": "https://discord.gg/trooprz"
-    }
+    },
+    "style": {}
   },
   {
     "slug": "baby-alien-division",
@@ -180,7 +187,8 @@
       "twitter": "https://twitter.com/BAD_Cronos",
       "discord": "https://discord.gg/qKBy2azf69",
       "medium": "https://medium.com/@babyaliendivision"
-    }
+    },
+    "style": {}
   },
   {
     "slug": "dg-pals",
@@ -201,6 +209,29 @@
       "twitter": "https://twitter.com/officialdgpals",
       "discord": "https://discord.gg/dgpals",
       "medium": "https://medium.com/officialdgpals"
-    }
+    },
+    "style": {}
+  },
+  {
+    "slug": "the-degenerated-nfts",
+    "name": "The Degenerated NFTs",
+    "description": "The first collaborative collection on Cronos, delivered by The Degenerated X CroDoo, this series of AI-generated wallpapers features art from six totally different and completely unique projects, together into one mint.",
+    "images": {
+      "banner": "/img/brands/the-degenerated-nfts/banner.webp"
+    },
+    "collections": [
+      "0xd79a37824bD86e4E945e8385480de3c45B7e5B08",
+      "0x776BeF0d43Acdc2b49c6885C6d15F9A5308252b2",
+      "0xDa997f6c50306F886ce730B65bb1BFc977B89e8D",
+      "0x7d24acf59b211904c9713c9d901643e20fc81904",
+      "0x56Db07fB1F560c2486527Da02c2fF1D276C2aec4",
+      "0x69B0F59900E123Ad5D3AA37BB022fDe32A4d24B0"
+    ],
+    "socials": {
+      "website": "https://thedegenerated.art/",
+      "twitter": "https://twitter.com/degenednfts",
+      "discord": "https://discord.gg/N5YXhNDJyz"
+    },
+    "style": {}
   }
 ]
