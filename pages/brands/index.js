@@ -24,7 +24,7 @@ const Brands = ({ brand, collections, stats }) => {
       />
       <Header title={'Brands'} />
       <Box mt={4} maxW="2560px" mx="auto">
-        <SimpleGrid columns={{base: 1, sm: 2, md: 3, lg: 4}} gap={4} mx={6}>
+        <SimpleGrid columns={{base: 1, md: 2, lg: 3, xl: 4}} gap={4} mx={6}>
           {brands.map((brand) => (
             <Box
               h="200px"
@@ -36,7 +36,7 @@ const Brands = ({ brand, collections, stats }) => {
               onClick={() => navigate(brand.slug)}
             >
               <Box
-                backgroundImage={brand.images.banner}
+                backgroundImage={hostedImage(brand.images.banner)}
                 backgroundSize="cover"
                 h="100%"
                 _groupHover={{
