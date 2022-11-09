@@ -234,5 +234,27 @@
       "discord": "https://discord.gg/N5YXhNDJyz"
     },
     "style": {}
+  },
+  {
+    "slug": "carkayous",
+    "name": "Carkayous",
+    "description": "Carkayous is a fictitious continent created by Jesse Smith (Ink Master | TV Celeb | Tattoo Artist) where his art lives.",
+    "images": {
+      "banner": "/img/collections/carkayous-feral-fish/banner.webp"
+    },
+    "collections": [
+      "0x72af9c869a4759e6d50e9656c0741b395532c3dd",
+      "0x6c2757ee563d063cce48bd06b130292fe530e76d",
+      "0xe0afa67d7E4F2329f81562DB9318837A28be83Ec",
+      "0xD717708d012dCa8C3d108BD1E079f937C4A2C0cF",
+      "0x7781b08298d7EDD97354989307A37cFd79BeB175",
+      "0x384A13ca5eA3BF799387DAf3dB0140AE66a7f3f0"
+    ],
+    "socials": {
+      "website": "https://carkayous.com/",
+      "twitter": "https://twitter.com/carkayous",
+      "discord": "https://discord.gg/carkayous"
+    },
+    "style": {}
   }
 ]
