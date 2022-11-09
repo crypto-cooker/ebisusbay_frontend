@@ -13877,7 +13877,7 @@
       "listable": true,
       "metadata": {
         "description": "A collection of 200 unique skulls on the Cronos blockchain. We are a closed group of elites with a single mission...join us to know \ud83d\udc80",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/skronos-syndicate/avatar.webp",
         "card": "/img/collections/skronos-syndicate/card.webp",
         "banner": "/img/collections/skronos-syndicate/banner.webp",
@@ -14834,6 +14834,104 @@
       "verification": {
         "doxx": "public",
         "kyc": "hidden",
+        "verified": true
+      }
+    },
+    {
+      "name": "Baby Wyverns",
+      "slug": "baby-wyverns",
+      "multiToken": false,
+      "address": "0x8333624EEb54E0c9FF6C96D41645d60463CE9b22",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "There is a Baby Wyvern for each of us, but will you find your forever companion ? \uD83D\uDC32",
+        "verified": false,
+        "avatar": "/img/collections/baby-wyverns/avatar.webp",
+        "card": "/img/collections/baby-wyverns/card.webp",
+        "banner": "/img/collections/baby-wyverns/banner.webp",
+        "maxSupply": 666,
+        "website": "https://babymonsters.ca/wyverns-mint",
+        "twitter": "https://twitter.com/babymonstersnft",
+        "discord": "https://discord.gg/N5YXhNDJyz",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "The Rich Kids",
+      "slug": "the-rich-kids",
+      "multiToken": false,
+      "address": "0xe1a45c2bBEe96Fe94dcad20d0553b6EEEC3c028b",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Rich Kids is a three part set of 10,000 boys, 10,000 girls, and 10,000 jets. All building on each other to create a unique ecosystem exploring the debauchery of the upper class at their worst.",
+        "verified": false,
+        "avatar": "/img/collections/the-rich-kids/avatar.webp",
+        "maxSupply": 30000,
+        "website": "https://www.trknft.com/",
+        "twitter": "https://twitter.com/TRK_CRO",
+        "discord": "https://discord.gg/C2nYz7Ajpp",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Carkayous - Golden Acorns",
+      "slug": "carkayous-golden-acorns",
+      "multiToken": false,
+      "address": "0x7781b08298d7EDD97354989307A37cFd79BeB175",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Golden Acorns can be used as discounts (in the form of rebates) on all future NFTs by Carkayous. They have an initial value of $15 but overtime gains $15 in value while also visually evolving.",
+        "verified": true,
+        "avatar": "/img/collections/carkayous-golden-acorns/avatar.webp",
+        "banner": "/img/collections/carkayous-golden-acorns/banner.webp",
+        "card": "/img/collections/carkayous-golden-acorns/card.webp",
+        "maxSupply": 0,
+        "website": "https://carkayous.com/",
+        "twitter": "https://twitter.com/carkayous",
+        "discord": "https://discord.gg/carkayous",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Carkayous - Expedition 8 Compositions",
+      "slug": "carkayous-expedition-8-compositions",
+      "multiToken": false,
+      "address": "0x384A13ca5eA3BF799387DAf3dB0140AE66a7f3f0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "This is where mini and full compositions will live.",
+        "verified": true,
+        "avatar": "/img/collections/carkayous-expedition-8-compositions/avatar.webp",
+        "banner": "/img/collections/carkayous-expedition-8-compositions/banner.webp",
+        "card": "/img/collections/carkayous-expedition-8-compositions/card.webp",
+        "maxSupply": 0,
+        "website": "https://carkayous.com/",
+        "twitter": "https://twitter.com/carkayous",
+        "discord": "https://discord.gg/carkayous",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
         "verified": true
       }
     }
