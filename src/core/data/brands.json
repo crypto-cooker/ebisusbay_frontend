@@ -4,7 +4,8 @@
     "name": "Ebisu's Bay",
     "description": "Discover rare digital art and collect NFTs. Ebisu's Bay is the first and largest NFT marketplace on Cronos. Create, buy, sell, trade and enjoy the #CroFam NFT community.",
     "images": {
-      "banner": "/img/collections/ebisu/banner.png"
+      "banner": "/img/brands/ebisus-bay/banner.webp",
+      "preview": "/img/collections/ebisu/banner.png"
     },
     "collections": [
       "0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5",
@@ -254,6 +255,27 @@
       "website": "https://carkayous.com/",
       "twitter": "https://twitter.com/carkayous",
       "discord": "https://discord.gg/carkayous"
+    },
+    "style": {}
+  },
+  {
+    "slug": "lost-toys",
+    "name": "Lost Toys",
+    "description": "Carkayous is a fictitious continent created by Jesse Smith (Ink Master | TV Celeb | Tattoo Artist) where his art lives.",
+    "images": {
+      "banner": "/img/collections/lost-toys-vip/banner.png"
+    },
+    "collections": [
+      "0xEB850b8F7d00B4FaF242888Bef7EfbF229eb1e41",
+      "0x714F995CC3f551fc6e3f3D4C4955C51bBdC8be6f",
+      "0xE310Bd632bf98923E03144455C7645ee13353b97"
+    ],
+    "socials": {
+      "website": "https://www.losttoys.io/",
+      "twitter": "https://www.twitter.com/losttoysnft",
+      "discord": "https://discord.gg/Tdd9TZRMxn",
+      "medium": "https://hello-143.gitbook.io/lost-toys-nft/",
+      "instagram": "https://www.instagram.com/losttoysnft/"
     },
     "style": {}
   }

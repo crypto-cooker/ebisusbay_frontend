@@ -36,7 +36,7 @@ const Brands = ({ brand, collections, stats }) => {
               onClick={() => navigate(brand.slug)}
             >
               <Box
-                backgroundImage={hostedImage(brand.images.banner)}
+                backgroundImage={hostedImage(brand.images.preview ?? brand.images.banner)}
                 backgroundSize="cover"
                 h="100%"
                 _groupHover={{
