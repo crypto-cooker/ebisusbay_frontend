@@ -180,15 +180,28 @@ export const getServerSideProps = async ({ params, query }) => {
   const brandAddresses = brandKeyedAddresses.map((o) => o.address);
   const endpointService = new EndpointProxyService();
   const collections = await endpointService.getCollections({address: brandAddresses.join(',')});
-
-  const sortedCollections = collections.data.collections
+  let splitCollections = [];
+  let sortedCollections = collections.data.collections
     .map((c) => {
       c.position = brandKeyedAddresses.find((o) => caseInsensitiveCompare(o.address, c.address)).position;
       const drop = drops.find((d) => d.slug === c.slug);
       c.drop = drop ?? null;
+
+      if (c.slug === 'founding-member') {
+        const vip = c.tokens[2];
+        vip.stats = {
+          total: c.stats.tokens[2]
+        }
+        splitCollections.push(vip);
+
+        c.stats = {
+          total: c.stats.tokens[1]
+        };
+      }
       return c;
     })
     .sort((a, b) => a.position > b.position ? 1 : -1);
+  sortedCollections = [...sortedCollections, ...splitCollections];
 
   let initialStats = {
     items: {

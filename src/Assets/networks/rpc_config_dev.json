@@ -70,8 +70,17 @@
       "onChain": false,
       "address": "0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29",
       "multiToken": true,
-      "split": false,
-      "id": 1,
+      "tokens": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        }
+      ],
       "listable": true,
       "metadata": {
         "description": "Happy Valentine's Day from ebisusbay.com staff! We \u2764 you!",
@@ -93,68 +102,6 @@
       "verification": {
         "doxx": "public",
         "kyc": "hidden",
-        "verified": true
-      }
-    },
-    {
-      "name": "Ebisu's Valentine",
-      "slug": "ebisu-valentine-rare",
-      "onChain": false,
-      "address": "0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29",
-      "multiToken": true,
-      "id": 2,
-      "split": false,
-      "listable": true,
-      "metadata": {
-        "description": "Happy Valentine's Day from ebisusbay.com staff! We \u2764 you!",
-        "verified": true,
-        "avatar": "/img/avatar.jpg",
-        "card": "/img/collections/ebisu/card.webp",
-        "banner": "/img/collections/ebisu/banner.png",
-        "maxSupply": 1,
-        "website": "https://app.ebisusbay.com/",
-        "twitter": "https://twitter.com/EbisusBay",
-        "discord": "https://discord.gg/ebisusbay",
-        "medium": "https://blog.ebisusbay.com/",
-        "instagram": "https://www.instagram.com/ebisusbayofficial",
-        "telegram": "https://t.me/ebisusbay",
-        "categories": [
-          "collectibles"
-        ]
-      },
-      "verification": {
-        "doxx": "public",
-        "kyc": "hidden",
-        "verified": true
-      }
-    },
-    {
-      "name": "Fobos Whale",
-      "slug": "fobos-whale",
-      "onChain": false,
-      "address": "0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29",
-      "multiToken": true,
-      "split": false,
-      "id": 3,
-      "listable": true,
-      "metadata": {
-        "description": "Happy Valentine's Day from ebisusbay.com staff! We \u2764 you!",
-        "verified": true,
-        "maxSupply": 1,
-        "avatar": "/img/collections/barbara/dodgerdogs/avatar.png",
-        "banner": "/img/collections/barbara/dodgerdogs/banner.webp",
-        "card": "/img/collections/barbara/dodgerdogs/card.png",
-        "website": "https://crypto.com/nft/profile/vredekop",
-        "twitter": "https://twitter.com/BarbaraRedekop",
-        "discord": "https://discord.gg/khRfPKDFwg",
-        "instagram": "https://www.instagram.com/im_barbara_redekop/",
-        "categories": [
-          "collectibles"
-        ]
-      },
-      "verification": {
-        "doxx": "public",
-        "kyc": "ebisu",
         "verified": true
       }
     },
