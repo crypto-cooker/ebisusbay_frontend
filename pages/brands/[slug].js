@@ -192,16 +192,18 @@ export const getServerSideProps = async ({ params, query }) => {
         vip.stats = {
           total: c.stats.tokens[2]
         }
+        vip.totalSupply = 1000;
         splitCollections.push(vip);
 
         c.stats = {
-          total: c.stats.tokens[1]
+          total: c.stats.tokens[1],
         };
+        c.totalSupply = 10000;
       }
       return c;
     })
     .sort((a, b) => a.position > b.position ? 1 : -1);
-  sortedCollections = [...sortedCollections, ...splitCollections];
+  sortedCollections = [...splitCollections, ...sortedCollections];
 
   let initialStats = {
     items: {
