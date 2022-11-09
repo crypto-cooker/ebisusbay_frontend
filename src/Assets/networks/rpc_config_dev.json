@@ -14836,6 +14836,31 @@
         "kyc": "hidden",
         "verified": true
       }
+    },
+    {
+      "name": "Baby Wyverns",
+      "slug": "baby-wyverns",
+      "multiToken": false,
+      "address": "0x8333624EEb54E0c9FF6C96D41645d60463CE9b22",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "There is a Baby Wyvern for each of us, but will you find your forever companion ? \uD83D\uDC32",
+        "verified": false,
+        "avatar": "/img/collections/baby-wyverns/avatar.webp",
+        "card": "/img/collections/baby-wyverns/card.webp",
+        "banner": "/img/collections/baby-wyverns/banner.webp",
+        "maxSupply": 666,
+        "website": "https://babymonsters.ca/wyverns-mint",
+        "twitter": "https://twitter.com/babymonstersnft",
+        "discord": "https://discord.gg/N5YXhNDJyz",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
     }
   ],
   "drops": [
