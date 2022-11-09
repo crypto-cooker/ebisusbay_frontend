@@ -28,6 +28,7 @@ const Brands = () => {
         <SimpleGrid columns={{base: 1, md: 2, lg: 3, xl: 4}} gap={4} mx={6}>
           {brands.map((brand) => (
             <Box
+              key={brand.slug}
               h="200px"
               overflow="hidden"
               position="relative"
