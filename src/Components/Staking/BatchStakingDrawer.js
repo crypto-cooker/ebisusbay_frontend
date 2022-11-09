@@ -1,21 +1,16 @@
 import {
-  Alert, AlertDescription, AlertIcon,
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Box,
   Button as ChakraButton,
   Center,
   CloseButton,
-  Collapse,
-  Flex, FormControl, FormErrorMessage,
+  Flex,
   Grid,
   GridItem,
-  Input,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Skeleton,
   Spacer,
-  Stack,
   Text,
   useColorModeValue,
   VStack
@@ -27,18 +22,11 @@ import {AnyMedia} from "@src/Components/components/AnyMedia";
 import {ImageKitService} from "@src/helpers/image";
 import Link from "next/link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEllipsisH, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import {useDispatch, useSelector} from "react-redux";
 import {toast} from "react-toastify";
-import {
-  clearBatchListingCart,
-  removeFromBatchListingCart,
-  setApproval,
-  setExtras,
-  updatePrice
-} from "@src/GlobalState/batchListingSlice";
-import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
-import {Contract, ethers} from "ethers";
+import {clearCart, setApproval, setExtras} from "@src/GlobalState/ryoshiStakingCartSlice";
+import {Contract} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {appConfig} from "@src/Config";
 import {createSuccessfulTransactionToastContent, pluralize} from "@src/utils";
@@ -60,7 +48,7 @@ export const BatchStakingDrawer = ({onClose, ...gridProps}) => {
   };
   const handleClearCart = () => {
     setShowConfirmButton(false);
-    dispatch(clearBatchListingCart());
+    dispatch(clearCart());
   };
 
   const executeAction = async () => {
@@ -121,7 +109,7 @@ export const BatchStakingDrawer = ({onClose, ...gridProps}) => {
         {ryoshiStakingCart.nfts.length > 0 ? (
           <>
             {ryoshiStakingCart.nfts.map((item, key) => (
-              <BatchListingDrawerItem
+              <BatchStakingDrawerItem
                 item={item}
                 disabled={showConfirmButton || executingAction}
               />
@@ -189,20 +177,19 @@ export const BatchStakingDrawer = ({onClose, ...gridProps}) => {
   )
 }
 
-const numberRegexValidation = /^[1-9]+[0-9]*$/;
-const BatchListingDrawerItem = ({item, disabled}) => {
+const BatchStakingDrawerItem = ({item, disabled}) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const [invalid, setInvalid] = useState(false);
 
   // Approvals
-  const extras = useSelector((state) => state.batchListing.extras[item.nft.address.toLowerCase()] ?? {});
+  const extras = useSelector((state) => state.ryoshiStakingCart.extras[item.nft.address.toLowerCase()] ?? {});
   const approvalStatus = extras.approval;
   const [executingApproval, setExecutingApproval] = useState(false);
 
   const handleRemoveItem = () => {
-    dispatch(removeFromBatchListingCart(item.nft));
+    dispatch(removeFromBatch(item.nft));
   };
 
   const checkApproval = async () => {
@@ -280,9 +267,15 @@ const BatchListingDrawerItem = ({item, disabled}) => {
             </Link>
             <Skeleton isLoaded={typeof approvalStatus === 'boolean'}>
               {approvalStatus ? (
-                <Box>
-                  STAKED
-                </Box>
+                <>
+                  {item.nft.rank && (
+                    <Flex w="100%">
+                      <Text>Rank</Text>
+                      <Spacer/>
+                      <Text fontWeight="bold">{item.nft.rank}</Text>
+                    </Flex>
+                  )}
+                </>
               ) : (
                 <ChakraButton
                   size='xs'

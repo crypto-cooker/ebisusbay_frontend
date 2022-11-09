@@ -1,43 +1,15 @@
-import React, { memo, useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import {MyNftPageActions, setStakeCount, setVIPCount} from '../../GlobalState/User';
-import { Form, Spinner } from 'react-bootstrap';
-import { toast } from 'react-toastify';
-import {
-  caseInsensitiveCompare,
-  createSuccessfulTransactionToastContent,
-  round,
-  siPrefixedNumber,
-  useInterval
-} from '../../utils';
-import { ethers } from 'ethers';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faBatteryEmpty,
-  faBatteryFull,
-  faBatteryHalf,
-  faBatteryQuarter,
-  faBatteryThreeQuarters,
-  faBolt,
-  faExternalLinkAlt,
-} from '@fortawesome/free-solid-svg-icons';
-import { getTheme } from '../../Theme/theme';
-import {hostedImage} from "../../helpers/image";
-import {AnyMedia} from "../components/AnyMedia";
-import {Box, Button, ButtonGroup, Heading, Menu, MenuButton, MenuItem, MenuList, Text} from "@chakra-ui/react";
+import React, {memo, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {Spinner} from 'react-bootstrap';
+import {ethers} from 'ethers';
+import {Box, Heading, Text} from "@chakra-ui/react";
 import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
-import {getOwnerCollections} from "@src/core/api/next/collectioninfo";
 import {getStakedRyoshi} from "@src/core/subgraph/staking";
-import {getQuickWallet} from "@src/core/api/endpoints/wallets";
 import {appConfig} from "@src/Config";
 import InfiniteScroll from "react-infinite-scroll-component";
-import NftCard from "@src/Components/components/NftCard";
 import RyoshiStakingNftCard from "@src/Components/components/RyoshiStakingNftCard";
 import {getNftsForAddress2} from "@src/core/api";
-import MyNftCard from "@src/Components/components/MyNftCard";
-import {addToBatchListingCart, removeFromBatchListingCart} from "@src/GlobalState/batchListingSlice";
-import {addToBatch, removeFromBatch} from "@src/GlobalState/ryoshiStakingCartSlice";
-import {ChevronDownIcon} from "@chakra-ui/icons";
+import {addToCart, clearCart, closeCart, removeFromCart} from "@src/GlobalState/ryoshiStakingCartSlice";
 import {sortAndFetchCollectionDetails} from "@src/core/api/endpoints/fullcollections";
 import {FullCollectionsQuery} from "@src/core/api/queries/fullcollections";
 
@@ -53,24 +25,28 @@ const displayTypes = {
 };
 
 const RyoshiStaking = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const [displayType, setDisplayType] = useState(displayTypes.unstaked)
   const { data, status, refetch } = useQuery(['RyoshiStaking', user.address], () =>
     getStakedRyoshi(user.address), !!user.address
   )
 
-  console.log('DATA', data);
+  const handleDisplayTypeClick = (value) => {
+    setDisplayType(value);
+    dispatch(clearCart());
+  }
 
   return (
     <Box>
       <Heading>Ryoshi Tales VIP Staking</Heading>
       <Text>Earn rewards generated through platform sales &#128640;</Text>
-      <Box align="end">
+      <Box align="end" mt={2}>
         <ul className="activity-filter">
-          <li id="sale" className={displayType === displayTypes.unstaked ? 'active' : ''} onClick={() => setDisplayType(displayTypes.unstaked)}>
+          <li id="sale" className={displayType === displayTypes.unstaked ? 'active' : ''} onClick={() => handleDisplayTypeClick(displayTypes.unstaked)}>
             Unstaked
           </li>
-          <li id="sale" className={displayType === displayTypes.staked ? 'active' : ''} onClick={() => setDisplayType(displayTypes.staked)}>
+          <li id="sale" className={displayType === displayTypes.staked ? 'active' : ''} onClick={() => handleDisplayTypeClick(displayTypes.staked)}>
             Staked
           </li>
         </ul>
@@ -163,8 +139,8 @@ const UnstakedRyoshiNftList = ({onSelect}) => {
                             nft={nft}
                             canStake={true}
                             isStaked={false}
-                            onAddToBatchButtonPressed={() => dispatch(addToBatch(nft))}
-                            onRemoveBatchButtonPressed={() => dispatch(removeFromBatch(nft))}
+                            onAddToCartButtonPressed={() => dispatch(addToCart(nft))}
+                            onRemoveFromCartButtonPressed={() => dispatch(removeFromCart(nft))}
                           />
                         </div>
                       )
@@ -263,8 +239,8 @@ const StakedRyoshiList = () => {
                             nft={nft}
                             canStake={true}
                             isStaked={false}
-                            onAddToBatchButtonPressed={() => dispatch(addToBatch(nft))}
-                            onRemoveBatchButtonPressed={() => dispatch(removeFromBatch(nft))}
+                            onAddToCartButtonPressed={() => dispatch(addToCart(nft))}
+                            onRemoveFromCartButtonPressed={() => dispatch(removeFromCart(nft))}
                           />
                         </div>
                       )

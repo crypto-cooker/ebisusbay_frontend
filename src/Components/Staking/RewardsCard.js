@@ -3,7 +3,6 @@ import React, {useEffect, useState} from "react";
 import {ethers} from "ethers";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, round, siPrefixedNumber, useInterval} from "@src/utils";
-import {Heading} from "@chakra-ui/react";
 import {Spinner} from "react-bootstrap";
 import {getTheme} from "@src/Theme/theme";
 
@@ -93,7 +92,6 @@ const RewardsCard = () => {
     <div className="col">
       <div className="card eb-nft__card h-100 shadow px-4">
         <div className="card-body d-flex flex-column">
-          <Heading as="h5" size="md" className="mb-2">Rewards</Heading>
           {rewardsInfoLoading ? (
             <Spinner animation="border" role="status" size="sm" className="mx-auto">
               <span className="visually-hidden">Loading...</span>

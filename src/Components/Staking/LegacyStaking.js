@@ -1,11 +1,11 @@
-import React, { memo, useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setStakeCount, setVIPCount } from '../../GlobalState/User';
-import { Form, Spinner } from 'react-bootstrap';
-import { toast } from 'react-toastify';
-import { createSuccessfulTransactionToastContent, round, siPrefixedNumber, useInterval } from '../../utils';
-import { ethers } from 'ethers';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {memo, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {setStakeCount, setVIPCount} from '@src/GlobalState/User';
+import {Form, Spinner} from 'react-bootstrap';
+import {toast} from 'react-toastify';
+import {createSuccessfulTransactionToastContent} from '@src/utils';
+import {ethers} from 'ethers';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
   faBatteryEmpty,
   faBatteryFull,
@@ -13,13 +13,10 @@ import {
   faBatteryQuarter,
   faBatteryThreeQuarters,
   faBolt,
-  faExternalLinkAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import { getTheme } from '../../Theme/theme';
-import {hostedImage} from "../../helpers/image";
+import {hostedImage} from "@src/helpers/image";
 import {AnyMedia} from "../components/AnyMedia";
-import {Box, Heading, Text} from "@chakra-ui/react";
-import RewardsCard from "@src/Components/Staking/RewardsCard";
+import {Box, Heading, HStack, Link, Tag, Text} from "@chakra-ui/react";
 
 const txExtras = {
   gasPrice: ethers.utils.parseUnits('5000', 'gwei'),
@@ -138,20 +135,28 @@ const LegacyStaking = () => {
 
   return (
     <>
-      <Box className="">
-        <div className="row item_info">
+      <Box>
+        <div className="row">
           <Heading>Legacy VIP Founding Member Staking</Heading>
-          <Text my={2}>Earn rewards generated through platform sales &#128640;</Text>
           {isApproved && (
-            <div className="item_info_counts">
-              <div>
-                <DynamicBattery /> VIPs Staked {stakeCount}
-              </div>
-              <div>
-                <FontAwesomeIcon icon={faBolt} /> VIPs Available: {vipCount}
-              </div>
-            </div>
+            <HStack spacing={2} my={2}>
+              <Tag>
+                <DynamicBattery />
+                <Text ms={1}>VIPs Staked {stakeCount}</Text>
+              </Tag>
+              <Tag>
+                <FontAwesomeIcon icon={faBolt} />
+                <Text ms={1}>VIPs Available: {vipCount}</Text>
+              </Tag>
+            </HStack>
           )}
+          <Text my={2}>
+            The original VIP Founding Member NFTs are migrating to the Ryoshi Tales VIP collection.
+            Starting on November 11th, holders will need to migrate them in order to retain the same benefits as before.{' '}
+            <Link href="https://blog.ebisusbay.com/ebisus-bay-vip-split-506b05c619c7" isExternal>
+              <span className="color">Learn more</span>
+            </Link>
+          </Text>
         </div>
         <div className="row">
           <div className="col-md-4 text-center">

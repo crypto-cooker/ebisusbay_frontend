@@ -3,13 +3,15 @@ import React, {useState} from 'react';
 import Footer from '../src/Components/components/Footer';
 import LegacyStaking from '@src/Components/Staking/LegacyStaking';
 import withAuth from '../src/Components/withAuth';
-import {Box, Container, Grid, GridItem, Heading, useColorModeValue} from "@chakra-ui/react";
+import {Box, Container, Grid, GridItem, Heading, useBreakpointValue, useColorModeValue} from "@chakra-ui/react";
 import RyoshiStaking from "@src/Components/Staking/RyoshiStaking";
 import {motion} from "framer-motion";
 import {useDispatch, useSelector} from "react-redux";
-import {closeBatch} from "@src/GlobalState/ryoshiStakingCartSlice";
+import {closeCart} from "@src/GlobalState/ryoshiStakingCartSlice";
 import {BatchStakingDrawer} from "@src/Components/Staking/BatchStakingDrawer";
 import RewardsCard from "@src/Components/Staking/RewardsCard";
+import PageHead from "@src/Components/Head/PageHead";
+import {MobileBatchStaking} from "@src/Components/Staking/MobileBatchStaking";
 
 const MotionGrid = motion(Grid)
 const tabs = {
@@ -28,14 +30,22 @@ const MyStaking = () => {
   };
   const variants = {
     expand: { gridTemplateColumns: '1fr 358px' },
-    collapse: { gridTemplateColumns: '1fr 0' },
+    collapse: { gridTemplateColumns: '1fr 0px' },
   }
+  const useMobileCartView = useBreakpointValue(
+    {base: true, lg: false},
+    {fallback: 'lg'},
+  );
 
   return (
-    <div>
-
+    <Box>
+      <PageHead
+        title="Ebisu's Bay VIP Staking"
+        description="Earn rewards generated through platform sales &#128640;"
+        url={`/staking`}
+      />
       <MotionGrid
-        animate={ryoshiStakingCart.isDrawerOpen ? 'expand' : 'collapse'}
+        animate={ryoshiStakingCart.isDrawerOpen && !useMobileCartView ? 'expand' : 'collapse'}
         variants={variants}
         gridTemplateColumns="1fr 0"
       >
@@ -80,16 +90,19 @@ const MyStaking = () => {
           </section>
           <Footer />
         </GridItem>
-        <GridItem borderLeft={'0.5px solid'} borderLeftColor={batchListingBorderColor}>
+        <GridItem borderLeft={useMobileCartView ? 'none' : '0.5px solid'} borderLeftColor={batchListingBorderColor}>
           <BatchStakingDrawer
-            onClose={() => dispatch(closeBatch())}
+            onClose={() => dispatch(closeCart())}
             position="fixed"
             w="358px"
             h="calc(100vh - 74px)"
           />
         </GridItem>
       </MotionGrid>
-    </div>
+      {useMobileCartView && (
+        <MobileBatchStaking />
+      )}
+    </Box>
   );
 };
 

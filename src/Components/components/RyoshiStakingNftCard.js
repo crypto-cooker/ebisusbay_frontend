@@ -1,26 +1,13 @@
 import React, {memo, useState} from 'react';
-import { useRouter } from 'next/router';
-import { ethers } from 'ethers';
-import { toast } from 'react-toastify';
-import {
-  faLink,
-  faEllipsisH,
-  faPlusCircle, faTags
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import  { MenuPopup } from '../components/chakra-components';
+import {useRouter} from 'next/router';
+import {ethers} from 'ethers';
+import {toast} from 'react-toastify';
+import {faEllipsisH, faLink, faPlusCircle, faTags} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {MenuPopup} from '../components/chakra-components';
 import AnyMedia from './AnyMedia';
 import {nftCardUrl} from "@src/helpers/image";
-import {
-  Badge,
-  Box,
-  Center,
-  Flex,
-  Heading,
-  Spacer,
-  Text,
-  useClipboard
-} from "@chakra-ui/react";
+import {Badge, Box, Center, Flex, Heading, Spacer, Text, useClipboard} from "@chakra-ui/react";
 import Image from "next/image";
 import {appUrl, caseInsensitiveCompare, round} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
@@ -32,14 +19,14 @@ const RyoshiStakingNftCard = ({
    nft,
    canStake = false,
    isStaked = false,
-   onAddToBatchButtonPressed,
-   onRemoveBatchButtonPressed,
+   onAddToCartButtonPressed,
+   onRemoveFromCartButtonPressed,
  }) => {
   const history = useRouter();
   const nftUrl = appUrl(`/collection/${nft.address}/${nft.id}`);
   const [isHovered, setIsHovered] = useState(false);
   const user = useSelector((state) => state.user);
-  const batchListingCart = useSelector((state) => state.batchListing);
+  const ryoshiStakingCart = useSelector((state) => state.ryoshiStakingCart);
   const { onCopy } = useClipboard(nftUrl);
 
   const onCopyLinkButtonPressed = () => {
@@ -54,13 +41,13 @@ const RyoshiStakingNftCard = ({
       options.push({
         icon: faTags,
         label: 'Remove from stake',
-        handleClick: onAddToBatchButtonPressed,
+        handleClick: onAddToCartButtonPressed,
       });
     } else if (canStake) {
       options.push({
         icon: faTags,
         label: 'Add to stake',
-        handleClick: onAddToBatchButtonPressed,
+        handleClick: onAddToCartButtonPressed,
       });
     }
 
@@ -73,8 +60,8 @@ const RyoshiStakingNftCard = ({
     return options;
   };
 
-  const isInBatchListingCart = () => {
-    return batchListingCart.nfts.some((o) => o.nft.id === nft.id && caseInsensitiveCompare(o.nft.address, nft.address));
+  const isInCart = () => {
+    return ryoshiStakingCart.nfts.some((o) => o.nft.id === nft.id && caseInsensitiveCompare(o.nft.address, nft.address));
   };
 
   return (
@@ -99,7 +86,7 @@ const RyoshiStakingNftCard = ({
         <Flex direction="column" height="100%">
           <div className="card-img-container position-relative">
             <>
-              {isInBatchListingCart() ? (
+              {isInCart() ? (
                 <Box
                   top={0}
                   right={0}
@@ -107,7 +94,7 @@ const RyoshiStakingNftCard = ({
                   zIndex={2}
                   p={2}
                   cursor="pointer"
-                  onClick={onRemoveBatchButtonPressed}
+                  onClick={onRemoveFromCartButtonPressed}
                 >
                   <FontAwesomeIcon icon={faCheckCircle} size="xl" style={{background:'dodgerblue', color:'white'}} className="rounded-circle"/>
                 </Box>
@@ -123,7 +110,7 @@ const RyoshiStakingNftCard = ({
                   zIndex={2}
                   p={2}
                   cursor="pointer"
-                  onClick={onAddToBatchButtonPressed}
+                  onClick={onAddToCartButtonPressed}
                 >
                   <FontAwesomeIcon icon={faPlusCircle} size="xl" style={{background:'white', color:'grey'}} className="rounded-circle" />
                 </Box>
@@ -134,6 +121,7 @@ const RyoshiStakingNftCard = ({
               transition="0.3s ease"
               transform="scale(1.0)"
               cursor="pointer"
+              onClick={() => {isInCart() ? onRemoveFromCartButtonPressed() : onAddToCartButtonPressed()}}
             >
               <AnyMedia image={nftCardUrl(nft.address, nft.image)}
                         title={nft.name}
@@ -141,7 +129,7 @@ const RyoshiStakingNftCard = ({
                         className="card-img-top marketplace"
                         height={440}
                         width={440}
-                        video={batchListingCart.nfts.length > 0 ? undefined : (nft.video ?? nft.animation_url)}
+                        video={ryoshiStakingCart.nfts.length > 0 ? undefined : (nft.video ?? nft.animation_url)}
                         usePlaceholder={true}
               />
             </Box>
@@ -195,9 +183,9 @@ const RyoshiStakingNftCard = ({
                 visibility="hidden"
               >
                 {isStaked ? (
-                  <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={onRemoveBatchButtonPressed}>Unstake</Text>
+                  <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={onRemoveFromCartButtonPressed}>Unstake</Text>
                 ) : canStake && (
-                  <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={onAddToBatchButtonPressed}>Stake</Text>
+                  <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={onAddToCartButtonPressed}>Stake</Text>
                 )}
               </Box>
               <MenuPopup options={getOptions()}>

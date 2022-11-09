@@ -9,7 +9,7 @@ const ryoshiStakingCartSlice = createSlice({
     extras: {}
   },
   reducers: {
-    addToBatch: (state, action) => {
+    addToCart: (state, action) => {
       const nftToAdd = action.payload;
       if (!state.nfts.some((o) => caseInsensitiveCompare(o.nft.address, nftToAdd.address) && o.nft.id === nftToAdd.id)) {
         state.nfts.push({nft: nftToAdd, price: null});
@@ -19,7 +19,7 @@ const ryoshiStakingCartSlice = createSlice({
         state.isDrawerOpen = true;
       }
     },
-    removeFromBatch: (state, action) => {
+    removeFromCart: (state, action) => {
       const nftToRemove = action.payload;
       state.nfts = state.nfts.filter((o) => !(caseInsensitiveCompare(o.nft.address, nftToRemove.address) && o.nft.id === nftToRemove.id));
 
@@ -29,19 +29,19 @@ const ryoshiStakingCartSlice = createSlice({
         state.extras = extras;
       }
     },
-    clearBatch: (state) => {
+    clearCart: (state) => {
       state.nfts = [];
       state.extras = {};
     },
-    openBatch: (state) => {
+    openCart: (state) => {
       state.isDrawerOpen = true;
     },
-    closeBatch: (state) => {
+    closeCart: (state) => {
       state.isDrawerOpen = false;
       state.nfts = [];
       state.extras = {};
     },
-    minimizeBatch: (state) => {
+    minimizeCart: (state) => {
       state.isDrawerOpen = false;
     },
     initialize: (state) => {
@@ -61,12 +61,12 @@ const ryoshiStakingCartSlice = createSlice({
 });
 
 export const {
-  addToBatch,
-  removeFromBatch,
-  clearBatch,
-  openBatch,
-  closeBatch,
-  minimizeBatch,
+  addToCart,
+  removeFromCart,
+  clearCart,
+  closeCart,
+  openCart,
+  minimizeCart,
   setApproval,
   setExtras
 } = ryoshiStakingCartSlice.actions;
