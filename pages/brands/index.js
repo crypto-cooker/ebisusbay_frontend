@@ -1,5 +1,5 @@
 import brands from "@src/core/data/brands.json";
-import {Box, Center, Heading, LinkBox, LinkOverlay, SimpleGrid, Text} from "@chakra-ui/react";
+import {Box, Center, Heading, LinkBox, LinkOverlay, SimpleGrid, Text, useMediaQuery} from "@chakra-ui/react";
 import Footer from "@src/Components/components/Footer";
 import NextLink from 'next/link';
 import {useRouter} from "next/router";
@@ -10,6 +10,7 @@ import Header from "@src/Components/Collections/components/Header";
 
 const Brands = ({ brand, collections, stats }) => {
   const router = useRouter();
+  const [supportsHover] = useMediaQuery('(hover: hover)')
 
   const navigate = (slug) => {
     router.push(`/brands/${slug}`)
@@ -46,18 +47,20 @@ const Brands = ({ brand, collections, stats }) => {
                   transform: 'scale(1.1)'
                 }}
                 transition="0.5s ease"
+                filter={supportsHover ? undefined : 'brightness(0.6)'}
               />
               <Box
                 position="absolute"
                 top="50%"
                 left={0}
                 w="100%"
-                filter="opacity(0)"
+                filter={supportsHover ? 'opacity(0)' : 'opacity(1)'}
                 transition="0.5s ease"
                 _groupHover={{
                   filter: 'opacity(1)',
                   transition:'0.5s ease',
                 }}
+                backdropFilter={supportsHover ? undefined : 'blur(3px)'}
               >
                 <Text align="center" fontSize="xl" fontWeight="semibold" color="white">
                   {brand.name}
