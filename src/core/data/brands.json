@@ -4,7 +4,8 @@
     "name": "Ebisu's Bay",
     "description": "Discover rare digital art and collect NFTs. Ebisu's Bay is the first and largest NFT marketplace on Cronos. Create, buy, sell, trade and enjoy the #CroFam NFT community.",
     "images": {
-      "banner": "/img/collections/ebisu/banner.png"
+      "banner": "/img/brands/ebisus-bay/banner.webp",
+      "preview": "/img/collections/ebisu/banner.png"
     },
     "collections": [
       "0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5",
@@ -67,6 +68,27 @@
       "twitter": "https://twitter.com/CroskullNFT",
       "discord": "https://discord.gg/q3nWxw8QRY",
       "medium": "https://medium.com/@croskullnft"
+    },
+    "style": {}
+  },
+  {
+    "slug": "hidden-fish",
+    "name": "Hidden Fish",
+    "description": "The purpose of the DAO is to accelerate the growth of Ebisu's Bay platform and the entire Cronos ecosystem.",
+    "images": {
+      "banner": "/img/collections/hidden-fish-fm-vip/banner.webp",
+      "preview": "/img/collections/hidden-fish-fm-vip/card.webp"
+    },
+    "collections": [
+      "0x90665eEd780C027CDef63C31C8dFa296aE168E5A",
+      "0xaa3cFC29BEaAdA4456B777Bfa7dcDfCBE0d122A9",
+      "0x4Ce0B9608006533dA056170f1efe8eEa771e0d19",
+      "0x7dE8BeC3ACf03997CDf3052c769571bbbBb7eE14"
+    ],
+    "socials": {
+      "website": "https://hidethefish.com/",
+      "twitter": "https://twitter.com/HiddenFishDAO",
+      "medium": "https://blog.hidethefish.com"
     },
     "style": {}
   },
@@ -215,7 +237,7 @@
   {
     "slug": "the-degenerated-nfts",
     "name": "The Degenerated NFTs",
-    "description": "The first collaborative collection on Cronos, delivered by The Degenerated X CroDoo, this series of AI-generated wallpapers features art from six totally different and completely unique projects, together into one mint.",
+    "description": "The Degenerated NFTs is a collective of artists / founders who teamed up to deliver the best quality AI product to the Cronos chain, the future is now \uD83D\uDC8E",
     "images": {
       "banner": "/img/brands/the-degenerated-nfts/banner.webp"
     },
@@ -254,6 +276,46 @@
       "website": "https://carkayous.com/",
       "twitter": "https://twitter.com/carkayous",
       "discord": "https://discord.gg/carkayous"
+    },
+    "style": {}
+  },
+  {
+    "slug": "lost-toys",
+    "name": "Lost Toys",
+    "description": "",
+    "images": {
+      "banner": "/img/collections/lost-toys-vip/banner.png"
+    },
+    "collections": [
+      "0xEB850b8F7d00B4FaF242888Bef7EfbF229eb1e41",
+      "0x714F995CC3f551fc6e3f3D4C4955C51bBdC8be6f",
+      "0xE310Bd632bf98923E03144455C7645ee13353b97"
+    ],
+    "socials": {
+      "website": "https://www.losttoys.io/",
+      "twitter": "https://www.twitter.com/losttoysnft",
+      "discord": "https://discord.gg/Tdd9TZRMxn",
+      "medium": "https://hello-143.gitbook.io/lost-toys-nft/",
+      "instagram": "https://www.instagram.com/losttoysnft/"
+    },
+    "style": {}
+  },
+  {
+    "slug": "zap-projects",
+    "name": "Zap Projects",
+    "description": "",
+    "images": {
+      "banner": "/img/brands/zap-projects/banner.webp"
+    },
+    "collections": [
+      "0xb242399f3f52fcfa8b09d7d6e4C3DBe84D0644fc",
+      "0xF257E02D8c5c9a405589F99859f8b28b0Ccc5474",
+      "0x63dF2BB08bcc9807c0ef5BD0C169FF3b4b289543"
+    ],
+    "socials": {
+      "website": "https://zap7art.club/",
+      "twitter": "https://twitter.com/zap7project",
+      "discord": "https://discord.gg/tBgUbvsSZX"
     },
     "style": {}
   }

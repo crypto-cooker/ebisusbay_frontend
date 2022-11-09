@@ -4,7 +4,7 @@ import { faCheck, faCircle } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 
 import LayeredIcon from './LayeredIcon';
-import {hostedImage} from "../../helpers/image";
+import {hostedImage} from "@src/helpers/image";
 import {Box, Heading, Text} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import {useColorModeValue} from "@chakra-ui/color-mode";
@@ -21,7 +21,7 @@ const VerifiedIcon = styled.span`
   right: 2px;
 `;
 
-const CustomSlide = ({ index, avatar, banner, title, subtitle, collectionId, url, verified, externalPage = false }) => {
+const CustomSlide = ({ index, avatar, banner, title, subtitle, collectionId, url, verified, externalPage = false, contextComponent }) => {
   const router = useRouter();
   const hoverBgColor = useColorModeValue('#FFFFFF', '#404040');
 
@@ -37,15 +37,20 @@ const CustomSlide = ({ index, avatar, banner, title, subtitle, collectionId, url
 
   return (
     <Box key={index} h="100%">
-      <Box className="nft_coll cursor-pointer h-100" onClick={() => navigateTo(url)} _hover={{
+      <Box className="nft_coll cursor-pointer h-100" _hover={{
         backgroundColor: hoverBgColor
       }} shadow="lg">
-        <div className="nft_wrap">
-          <span>
+        <div className="nft_wrap position-relative">
+          <span onClick={() => navigateTo(url)}>
             <img src={hostedImage(banner)} className="lazy img-fluid w-100" alt={title} />
           </span>
+          {contextComponent && (
+            <div className="position-absolute top-0 end-0 m-2">
+              {contextComponent}
+            </div>
+          )}
         </div>
-        <div className="nft_coll_pp">
+        <div className="nft_coll_pp" onClick={() => navigateTo(url)}>
           {avatar || collectionId ? (
             <span>
               {avatar ? (
@@ -63,7 +68,7 @@ const CustomSlide = ({ index, avatar, banner, title, subtitle, collectionId, url
             <Box h="30px"></Box>
           )}
         </div>
-        <div className="nft_coll_info">
+        <div className="nft_coll_info" onClick={() => navigateTo(url)}>
           <span>
             <Heading as="h4" size="md">{title}</Heading>
           </span>

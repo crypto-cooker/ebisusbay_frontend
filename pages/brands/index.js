@@ -1,5 +1,5 @@
 import brands from "@src/core/data/brands.json";
-import {Box, Center, LinkBox, LinkOverlay, SimpleGrid, Text} from "@chakra-ui/react";
+import {Box, Center, Heading, LinkBox, LinkOverlay, SimpleGrid, Text} from "@chakra-ui/react";
 import Footer from "@src/Components/components/Footer";
 import NextLink from 'next/link';
 import {useRouter} from "next/router";
@@ -36,8 +36,9 @@ const Brands = ({ brand, collections, stats }) => {
               onClick={() => navigate(brand.slug)}
             >
               <Box
-                backgroundImage={hostedImage(brand.images.banner)}
+                backgroundImage={hostedImage(brand.images.preview ?? brand.images.banner)}
                 backgroundSize="cover"
+                backgroundPosition="50% 50%"
                 h="100%"
                 _groupHover={{
                   filter: 'brightness(0.3) blur(5px)',
@@ -65,8 +66,8 @@ const Brands = ({ brand, collections, stats }) => {
             </Box>
           ))}
         </SimpleGrid>
-        <Footer />
       </Box>
+      <Footer />
     </>
   )
 }
