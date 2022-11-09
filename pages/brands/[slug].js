@@ -23,14 +23,28 @@ import Footer from "@src/Components/components/Footer";
 import EndpointProxyService from "@src/services/endpoint-proxy.service";
 import {caseInsensitiveCompare, siPrefixedNumber} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
+import {appConfig} from "@src/Config";
+import MintingButton from "@src/Components/Collection/MintingButton";
+import {useRouter} from "next/router";
+
+const drops = appConfig('drops');
 
 const Brand = ({ brand, collections, stats }) => {
+  const router = useRouter();
   const [viewMore, setViewMore] = useState(false);
   const isClippingDescription = useBreakpointValue(
     {base: brand.description.length > 150, md: brand.description.length > 225},
     {fallback: 'md'}
   )
   const bannerBgColor= useColorModeValue('black', 'transparent');
+
+  const handleMintingButtonClick = (drop) => {
+    if (drop.redirect) {
+      window.open(drop.redirect, '_blank');
+    } else {
+      router.push(`/drops/${drop.slug}`)
+    }
+  }
 
   return (
     <>
@@ -101,6 +115,10 @@ const Brand = ({ brand, collections, stats }) => {
               index={index + 1}
               banner={collection.metadata.card}
               title={collection.name}
+              contextComponent={collection.drop && !collection.drop.complete ?
+                <MintingButton onClick={() => handleMintingButtonClick(collection.drop)}/> :
+                undefined
+              }
               subtitle={
                 <Box>
                   <Text noOfLines={2} fontSize="xs" px={2}>{collection.metadata.description}</Text>
@@ -166,6 +184,8 @@ export const getServerSideProps = async ({ params, query }) => {
   const sortedCollections = collections.data.collections
     .map((c) => {
       c.position = brandKeyedAddresses.find((o) => caseInsensitiveCompare(o.address, c.address)).position;
+      const drop = drops.find((d) => d.slug === c.slug);
+      c.drop = drop ?? null;
       return c;
     })
     .sort((a, b) => a.position > b.position ? 1 : -1);
