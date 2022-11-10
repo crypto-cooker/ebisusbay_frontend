@@ -75,6 +75,26 @@
     "style": {}
   },
   {
+    "slug": "crypto-com",
+    "name": "Crypto.com",
+    "description": "Own the culture you love. A leading NFT marketplace featuring exclusive collections from A-list creators.",
+    "images": {
+      "banner": "/img/brands/crypto-com/banner.webp",
+      "preview": "/img/brands/crypto-com/preview.webp"
+    },
+    "collections": [
+      "0xEa1635a0E9344d933DF42c0Fd494d39bcE865Dc4",
+      "0xE3D53fb80c8Cda7Bb9B7207cb6B186172BD323cf"
+    ],
+    "socials": {
+      "website": "https://crypto.com/nft/",
+      "twitter": "https://twitter.com/cryptocomnft",
+      "discord": "https://discord.gg/cryptocom"
+    },
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "hidden-fish",
     "name": "Hidden Fish",
     "description": "The purpose of the DAO is to accelerate the growth of Ebisu's Bay platform and the entire Cronos ecosystem.",
@@ -97,23 +117,50 @@
     "style": {}
   },
   {
-    "slug": "weird-apes-club",
-    "name": "Weird Apes Club",
-    "description": "Genesis Weird Apes is a breedable collection randomly generated from 125 traits aimed to bring Weirdness all over the Cronos Chain! Not just a PFP but an entire ecosystem of advanced mechanisms of staking, breeding, renting, customization and more!\nWith every 2D ape you may burn $WAC to claim an additional new 3D Voxel ape with corresponding rank and traits. Voxel apes will play a key role within our P2E, Legends of Weirdonite.\nVisit our Discord to join our wonderful community!",
+    "slug": "cro-crow",
+    "name": "CRO CROW",
+    "description": "",
     "images": {
-      "banner": "/img/collections/weirdapesclub/banner.webp"
+      "banner": "/img/collections/crocrow/banner.webp",
+      "preview": "/img/collections/crocrow/card.webp"
     },
     "collections": [
-      "0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44",
-      "0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1",
-      "0x89F7114C73d5cef7d7EDCbDb14DaA092EB2194c9"
+      "0xe4ab77ed89528d90e6bcf0e1ac99c58da24e79d5",
+      "0xd33CFeF82377fef83703B9D84151a477B08Ab3b8",
+      "0x65AB0251d29c9C473c8d01BFfa2966F891fB1181",
+      "0x13d13e2410A34Bfe5502D50ea4FCFBd591D7589E"
     ],
     "socials": {
-      "website": "https://weirdapes.com/",
-      "twitter": "https://twitter.com/WeirdApesClub",
-      "discord": "https://discord.gg/d6WvCpfn9W",
-      "medium": "https://medium.com/@WeirdApesClub",
-      "gitbook": "https://weirdape.gitbook.io/weird-apes-club/weird-apes-club/summary"
+      "website": "https://crocrow.com",
+      "twitter": "https://twitter.com/cronoscrocrow",
+      "discord": "https://discord.gg/8GMWgWB5u8",
+      "telegram": "https://t.me/crocrownft",
+      "medium": "https://medium.com/@cronoscrocrow"
+    },
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "trooprz",
+    "name": "Trooprz",
+    "description": "Trooprz have got your back",
+    "images": {
+      "banner": "/img/collections/trooprz/banner.jpeg"
+    },
+    "collections": [
+      "0x51112Bf32B9a1C64716DF2e6b82e63a04Bd384Fd",
+      "0xea4DF145322ec9dFCE037b062b08083141c6af8f",
+      "0xbabdFDD5f88035C9FbA58Be1b5c76DcFC6A847f3",
+      "0x96628048830a499b156aBdC04cC169C18c3A17f2",
+      "0xB82F6B5a4491D38292DFCd6706aa12DD5701D7e2",
+      "0xA35f40e45FFF953F477700C83D550D35F11B42aB",
+      "0x2FfF5FE8a3e13A10509E4297DF9d1fdaF1eE7DC4",
+      "0xEB54ea91C92Ce404Ba7AD7B0EF2e36fD75C889A7"
+    ],
+    "socials": {
+      "website": "https://trooprz.army/",
+      "twitter": "https://twitter.com/trooprzarmy",
+      "discord": "https://discord.gg/trooprz"
     },
     "categories": [],
     "style": {}
@@ -150,6 +197,28 @@
     "style": {}
   },
   {
+    "slug": "weird-apes-club",
+    "name": "Weird Apes Club",
+    "description": "Genesis Weird Apes is a breedable collection randomly generated from 125 traits aimed to bring Weirdness all over the Cronos Chain! Not just a PFP but an entire ecosystem of advanced mechanisms of staking, breeding, renting, customization and more!\nWith every 2D ape you may burn $WAC to claim an additional new 3D Voxel ape with corresponding rank and traits. Voxel apes will play a key role within our P2E, Legends of Weirdonite.\nVisit our Discord to join our wonderful community!",
+    "images": {
+      "banner": "/img/collections/weirdapesclub/banner.webp"
+    },
+    "collections": [
+      "0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44",
+      "0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1",
+      "0x89F7114C73d5cef7d7EDCbDb14DaA092EB2194c9"
+    ],
+    "socials": {
+      "website": "https://weirdapes.com/",
+      "twitter": "https://twitter.com/WeirdApesClub",
+      "discord": "https://discord.gg/d6WvCpfn9W",
+      "medium": "https://medium.com/@WeirdApesClub",
+      "gitbook": "https://weirdape.gitbook.io/weird-apes-club/weird-apes-club/summary"
+    },
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "argonauts",
     "name": "Argonauts",
     "description": "The Argonauts brand features various NFT collections under the NFT arm of Argo Finance. At it's core, the Argonauts collection is a collection of 8,888 unique utility-enabled characters that represents your unique identity on the Cronos chain. The Argonauts will be the centrepiece of Argo, providing users with massive utility across the suite of Argo products.",
@@ -174,26 +243,24 @@
     "style": {}
   },
   {
-    "slug": "trooprz",
-    "name": "Trooprz",
-    "description": "Trooprz have got your back",
+    "slug": "dg-pals",
+    "name": "D.G.Pals",
+    "description": "D.G.P: New World Beta LIVE 23rd May & D.G.P: Legends Beta LIVE 31st May 2022!\nWelcome to the D.G.Verse! Backed by Crypto.com Capital and Spartan Group, D.G.Pals is one of the first to redefine Web3 gaming with the first Interoperable NFT on the Cronos chain. The D.G.Pals Genesis Collection is the most privileged set of 10,000 NFT collection. Genesis NFT holders will be empowered with resources, airdrops and other perks to help the D.G.Pals Team build the D.G.Verse. You can check out how, by owning a Genesis D.G.Pal NFT, you can help expand Panterra, grow the player base and contribute to development on the D.G.Pals Whitepaper or website. On top of these exclusive privileges, these Genesis D.G.Pal NFTs can also participate in all of the games in the D.G.Verse like every other D.G.Pal NFTs.",
     "images": {
-      "banner": "/img/collections/trooprz/banner.jpeg"
+      "banner": "/img/collections/dgpals/banner.png"
     },
     "collections": [
-      "0x51112Bf32B9a1C64716DF2e6b82e63a04Bd384Fd",
-      "0xea4DF145322ec9dFCE037b062b08083141c6af8f",
-      "0xbabdFDD5f88035C9FbA58Be1b5c76DcFC6A847f3",
-      "0x96628048830a499b156aBdC04cC169C18c3A17f2",
-      "0xB82F6B5a4491D38292DFCd6706aa12DD5701D7e2",
-      "0xA35f40e45FFF953F477700C83D550D35F11B42aB",
-      "0x2FfF5FE8a3e13A10509E4297DF9d1fdaF1eE7DC4",
-      "0xEB54ea91C92Ce404Ba7AD7B0EF2e36fD75C889A7"
+      "0xeFc73c41EF829C0B87E3245aCF033b867cCD0F84",
+      "0x86aabe05e885108a8797314e817488c26f0601a1",
+      "0xa072bB6F648a4271ba9CbaF1319Fc373eF907f29",
+      "0x500cdf7a96a612BEb9e018035a3E89180a6732fE",
+      "0x70D3ee9b000f9210C1Ce1bD2A80cBAEBe209aeb7"
     ],
     "socials": {
-      "website": "https://trooprz.army/",
-      "twitter": "https://twitter.com/trooprzarmy",
-      "discord": "https://discord.gg/trooprz"
+      "website": "https://dgpals.io/",
+      "twitter": "https://twitter.com/officialdgpals",
+      "discord": "https://discord.gg/dgpals",
+      "medium": "https://medium.com/officialdgpals"
     },
     "categories": [],
     "style": {}
@@ -217,29 +284,6 @@
       "twitter": "https://twitter.com/BAD_Cronos",
       "discord": "https://discord.gg/qKBy2azf69",
       "medium": "https://medium.com/@babyaliendivision"
-    },
-    "categories": [],
-    "style": {}
-  },
-  {
-    "slug": "dg-pals",
-    "name": "D.G.Pals",
-    "description": "D.G.P: New World Beta LIVE 23rd May & D.G.P: Legends Beta LIVE 31st May 2022!\nWelcome to the D.G.Verse! Backed by Crypto.com Capital and Spartan Group, D.G.Pals is one of the first to redefine Web3 gaming with the first Interoperable NFT on the Cronos chain. The D.G.Pals Genesis Collection is the most privileged set of 10,000 NFT collection. Genesis NFT holders will be empowered with resources, airdrops and other perks to help the D.G.Pals Team build the D.G.Verse. You can check out how, by owning a Genesis D.G.Pal NFT, you can help expand Panterra, grow the player base and contribute to development on the D.G.Pals Whitepaper or website. On top of these exclusive privileges, these Genesis D.G.Pal NFTs can also participate in all of the games in the D.G.Verse like every other D.G.Pal NFTs.",
-    "images": {
-      "banner": "/img/collections/dgpals/banner.png"
-    },
-    "collections": [
-      "0xeFc73c41EF829C0B87E3245aCF033b867cCD0F84",
-      "0x86aabe05e885108a8797314e817488c26f0601a1",
-      "0xa072bB6F648a4271ba9CbaF1319Fc373eF907f29",
-      "0x500cdf7a96a612BEb9e018035a3E89180a6732fE",
-      "0x70D3ee9b000f9210C1Ce1bD2A80cBAEBe209aeb7"
-    ],
-    "socials": {
-      "website": "https://dgpals.io/",
-      "twitter": "https://twitter.com/officialdgpals",
-      "discord": "https://discord.gg/dgpals",
-      "medium": "https://medium.com/officialdgpals"
     },
     "categories": [],
     "style": {}
@@ -374,50 +418,6 @@
       "website": "https://zap7art.club/",
       "twitter": "https://twitter.com/zap7project",
       "discord": "https://discord.gg/tBgUbvsSZX"
-    },
-    "categories": [],
-    "style": {}
-  },
-  {
-    "slug": "cro-crow",
-    "name": "CRO CROW",
-    "description": "",
-    "images": {
-      "banner": "/img/collections/crocrow/banner.webp",
-      "preview": "/img/collections/crocrow/card.webp"
-    },
-    "collections": [
-      "0xe4ab77ed89528d90e6bcf0e1ac99c58da24e79d5",
-      "0xd33CFeF82377fef83703B9D84151a477B08Ab3b8",
-      "0x65AB0251d29c9C473c8d01BFfa2966F891fB1181",
-      "0x13d13e2410A34Bfe5502D50ea4FCFBd591D7589E"
-    ],
-    "socials": {
-      "website": "https://crocrow.com",
-      "twitter": "https://twitter.com/cronoscrocrow",
-      "discord": "https://discord.gg/8GMWgWB5u8",
-      "telegram": "https://t.me/crocrownft",
-      "medium": "https://medium.com/@cronoscrocrow"
-    },
-    "categories": [],
-    "style": {}
-  },
-  {
-    "slug": "crypto-com",
-    "name": "Crypto.com",
-    "description": "Own the culture you love. A leading NFT marketplace featuring exclusive collections from A-list creators.",
-    "images": {
-      "banner": "/img/brands/crypto-com/banner.webp",
-      "preview": "/img/brands/crypto-com/preview.webp"
-    },
-    "collections": [
-      "0xEa1635a0E9344d933DF42c0Fd494d39bcE865Dc4",
-      "0xE3D53fb80c8Cda7Bb9B7207cb6B186172BD323cf"
-    ],
-    "socials": {
-      "website": "https://crypto.com/nft/",
-      "twitter": "https://twitter.com/cryptocomnft",
-      "discord": "https://discord.gg/cryptocom"
     },
     "categories": [],
     "style": {}
