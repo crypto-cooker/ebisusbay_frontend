@@ -130,13 +130,13 @@ const RewardsCard = () => {
             <>
               <div className="row">
                 <div className="col-12 col-sm-4 text-center">
-                  <div>Total Staked</div>
+                  <div>Global Staked</div>
                   <div className="fw-bold" style={{ color: getTheme(userTheme).colors.textColor3 }}>
                     {globalStakedTotal}
                   </div>
                 </div>
                 <div className="col-12 col-sm-4 mt-1 mt-sm-0 text-center">
-                  <div>Total Harvested</div>
+                  <div>Global Harvested</div>
                   <div className="fw-bold" style={{ color: getTheme(userTheme).colors.textColor3 }}>
                     {siPrefixedNumber(round(Number(globalPaidRewards)))} CRO
                   </div>
