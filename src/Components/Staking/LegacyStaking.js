@@ -58,23 +58,23 @@ const LegacyStaking = () => {
     }
   };
 
-  const stake = async (quantity) => {
-    if (!user.stakeContract || quantity === 0) return;
-    if (quantity > vipCount) {
-      toast.error('You do not have enough available VIPs');
-      return;
-    }
-    try {
-      if (!isApproved) await approve();
-      const tx = await user.stakeContract.stake(quantity, txExtras);
-      const receipt = await tx.wait();
-      dispatch(setStakeCount(stakeCount + quantity));
-      dispatch(setVIPCount(vipCount - quantity));
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-    } catch (err) {
-      toast.error(err.message);
-    }
-  };
+  // const stake = async (quantity) => {
+  //   if (!user.stakeContract || quantity === 0) return;
+  //   if (quantity > vipCount) {
+  //     toast.error('You do not have enough available VIPs');
+  //     return;
+  //   }
+  //   try {
+  //     if (!isApproved) await approve();
+  //     const tx = await user.stakeContract.stake(quantity, txExtras);
+  //     const receipt = await tx.wait();
+  //     dispatch(setStakeCount(stakeCount + quantity));
+  //     dispatch(setVIPCount(vipCount - quantity));
+  //     toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+  //   } catch (err) {
+  //     toast.error(err.message);
+  //   }
+  // };
 
   const unStake = async (quantity) => {
     if (!user.stakeContract || quantity <= 0) return;
@@ -111,16 +111,16 @@ const LegacyStaking = () => {
     // eslint-disable-next-line
   }, [user.connectingWallet]);
 
-  const PromptToPurchase = () => {
-    return (
-      <p className="text-center" style={{ color: 'black' }}>
-        You do not have any VIP Founding Member NFTs. Pick some up in the{' '}
-        <a href="/collection/vip-founding-member" className="fw-bold">
-          secondary marketplace
-        </a>
-      </p>
-    );
-  };
+  // const PromptToPurchase = () => {
+  //   return (
+  //     <p className="text-center" style={{ color: 'black' }}>
+  //       You do not have any VIP Founding Member NFTs. Pick some up in the{' '}
+  //       <a href="/collection/vip-founding-member" className="fw-bold">
+  //         secondary marketplace
+  //       </a>
+  //     </p>
+  //   );
+  // };
 
   const DynamicBattery = () => {
     if (!(stakeCount + vipCount > 0)) return <FontAwesomeIcon icon={faBatteryEmpty} />;
@@ -171,7 +171,7 @@ const LegacyStaking = () => {
             <div className="item_info">
               {!isInitializing && isApproved && (
                 <>
-                  {stakeCount + vipCount > 0 ? (
+                  {stakeCount + vipCount > 0 && (
                     <>
                       <div className="row g-3">
                         <div>
@@ -188,8 +188,6 @@ const LegacyStaking = () => {
                         </div>
                       </div>
                     </>
-                  ) : (
-                    <PromptToPurchase />
                   )}
                 </>
               )}
