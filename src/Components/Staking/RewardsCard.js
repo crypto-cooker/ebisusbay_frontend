@@ -9,6 +9,7 @@ import StakeABI from "@src/Contracts/Stake.json";
 import {appConfig} from "@src/Config";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
+import {txExtras} from "@src/core/constants";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
