@@ -245,6 +245,29 @@
     "style": {}
   },
   {
+    "slug": "cronos-primate-business",
+    "name": "Cronos Primate Business",
+    "description": "3 generations of uniquely generated primates that make up the Primate World. The original Cronos Primate Business is a collection of 1000 primates that sold out in two minutes. The Primates along with Gorillas and Corrupted give staking, raffles, giveaways and more.\n\nCrotopia is the Metaverse being built by Cronos Primate Business. The OG pass is your key to the metaverse and includes free skin airdrops for life.",
+    "images": {
+      "banner": "/img/collections/cronosmb/banner.webp"
+    },
+    "collections": [
+      "0x939b90c529F0e3a2C187E1b190Ca966a95881FDe",
+      "0x241a175BDE39D6a2C6fA7ba9ed8F9Ac2C7F2741D",
+      "0xc843f18d5605654391e7eDBEa250f6838C3e8936",
+      "0xA68825768bDB7a2161422e3CcAF1973FF88f8E66",
+      "0x67474fDBebe7A973356b6791c7D7F70264298C0A"
+    ],
+    "socials": {
+      "website": "https://www.cronospb.com/",
+      "twitter": "https://twitter.com/PrimateCronos",
+      "discord": "https://discord.gg/X4shERMUwf",
+      "medium": "https://medium.com/cronos-monkey-business"
+    },
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "the-degenerated-nfts",
     "name": "The Degenerated NFTs",
     "description": "The Degenerated NFTs is a collective of artists / founders who teamed up to deliver the best quality AI product to the Cronos chain, the future is now \uD83D\uDC8E",
@@ -264,6 +287,27 @@
       "website": "https://thedegenerated.art/",
       "twitter": "https://twitter.com/degenednfts",
       "discord": "https://discord.gg/N5YXhNDJyz"
+    },
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "0xluckless",
+    "name": "0xLuckless",
+    "description": "",
+    "images": {
+      "banner": "/img/collections/0xluckless/banner.webp"
+    },
+    "collections": [
+      "0xd0B45e7bFcc58C99203E60a363E2574e01B0a581",
+      "0xad350404b1564c732f3ed6673cfd8bdf93206a97",
+      "0x0d511FAA531d8D36aDE88daFcBbb9cE83Be42111"
+    ],
+    "socials": {
+      "website": "https://0xluckless.com",
+      "twitter": "https://twitter.com/0xLuckless",
+      "discord": "https://discord.gg/REbVZ9rACc",
+      "medium": "https://medium.com/@0xLuckless"
     },
     "categories": [],
     "style": {}

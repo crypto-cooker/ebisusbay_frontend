@@ -44,7 +44,7 @@ const Brands = () => {
                 h="100%"
                 _groupHover={{
                   filter: 'brightness(0.3) blur(5px)',
-                  transition:'0.5s ease',
+                  transition:'0.5s ease-out',
                   transform: 'scale(1.1)'
                 }}
                 transition="0.5s ease"
@@ -57,7 +57,7 @@ const Brands = () => {
                 left={0}
                 w="100%"
                 filter={supportsHover ? 'opacity(0)' : 'opacity(1)'}
-                transition="0.5s ease"
+                transition="0.5s ease-out"
                 _groupHover={{
                   filter: 'opacity(1)',
                   transition:'0.5s ease',
