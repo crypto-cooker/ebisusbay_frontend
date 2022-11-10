@@ -19,11 +19,11 @@ const Brands = () => {
   return (
     <>
       <PageHead
-        title="Brands"
+        title="NFT Brands"
         description="Showcasing the most prominent brands on the Cronos chain"
         url={`/brands`}
       />
-      <Header title={'Brands'} />
+      <Header title="Brands" subtitle="Showcasing the most prominent brands on the Cronos chain" />
       <Box mt={4} maxW="2560px" mx="auto">
         <SimpleGrid columns={{base: 1, md: 2, lg: 3, xl: 4}} gap={4} mx={6}>
           {brands.map((brand) => (
