@@ -249,7 +249,8 @@
     "name": "Cronos Primate Business",
     "description": "3 generations of uniquely generated primates that make up the Primate World. The original Cronos Primate Business is a collection of 1000 primates that sold out in two minutes. The Primates along with Gorillas and Corrupted give staking, raffles, giveaways and more.\n\nCrotopia is the Metaverse being built by Cronos Primate Business. The OG pass is your key to the metaverse and includes free skin airdrops for life.",
     "images": {
-      "banner": "/img/collections/cronosmb/banner.webp"
+      "banner": "/img/brands/cronos-primate-business/banner.webp",
+      "preview": "/img/brands/cronos-primate-business/preview.webp"
     },
     "collections": [
       "0x939b90c529F0e3a2C187E1b190Ca966a95881FDe",
