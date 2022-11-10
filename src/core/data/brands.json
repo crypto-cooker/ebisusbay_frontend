@@ -22,6 +22,7 @@
       "instagram": "https://www.instagram.com/ebisusbayofficial",
       "telegram": "https://t.me/ebisusbay"
     },
+    "categories": [],
     "style": {}
   },
   {
@@ -43,12 +44,13 @@
       "discord": "https://discord.gg/madmeerkat",
       "medium": "https://medium.com/@madmeerkat0"
     },
+    "categories": [],
     "style": {}
   },
   {
     "slug": "croskull",
     "name": "CroSkull",
-    "description": "CroSkull is a collection of 6.666 uniquely generated NFTs stored on the Cronos Chain. Each CroSkull NFT is based on 6+ attributes with different rarities. A CroSkull is not simply a PFP but is also the key to the insane Dr. Jiko's laboratory experiments.",
+    "description": "CroSkulls, EVOs, Eggs, Pets, Staking, Missions, and much more. Everything will take shape in this mysterious ecosystem called the Underworld. Get the key to the insane Bonesville's laboratory experiments.",
     "images": {
       "banner": "/img/collections/croskull/banner.webp"
     },
@@ -69,6 +71,27 @@
       "discord": "https://discord.gg/q3nWxw8QRY",
       "medium": "https://medium.com/@croskullnft"
     },
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "crypto-com",
+    "name": "Crypto.com",
+    "description": "Own the culture you love. A leading NFT marketplace featuring exclusive collections from A-list creators.",
+    "images": {
+      "banner": "/img/brands/crypto-com/banner.webp",
+      "preview": "/img/brands/crypto-com/preview.webp"
+    },
+    "collections": [
+      "0xEa1635a0E9344d933DF42c0Fd494d39bcE865Dc4",
+      "0xE3D53fb80c8Cda7Bb9B7207cb6B186172BD323cf"
+    ],
+    "socials": {
+      "website": "https://crypto.com/nft/",
+      "twitter": "https://twitter.com/cryptocomnft",
+      "discord": "https://discord.gg/cryptocom"
+    },
+    "categories": [],
     "style": {}
   },
   {
@@ -90,27 +113,56 @@
       "twitter": "https://twitter.com/HiddenFishDAO",
       "medium": "https://blog.hidethefish.com"
     },
+    "categories": [],
     "style": {}
   },
   {
-    "slug": "weird-apes-club",
-    "name": "Weird Apes Club",
-    "description": "Genesis Weird Apes is a breedable collection randomly generated from 125 traits aimed to bring Weirdness all over the Cronos Chain! Not just a PFP but an entire ecosystem of advanced mechanisms of staking, breeding, renting, customization and more!\nWith every 2D ape you may burn $WAC to claim an additional new 3D Voxel ape with corresponding rank and traits. Voxel apes will play a key role within our P2E, Legends of Weirdonite.\nVisit our Discord to join our wonderful community!",
+    "slug": "cro-crow",
+    "name": "CRO CROW",
+    "description": "",
     "images": {
-      "banner": "/img/collections/weirdapesclub/banner.webp"
+      "banner": "/img/collections/crocrow/banner.webp",
+      "preview": "/img/collections/crocrow/card.webp"
     },
     "collections": [
-      "0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44",
-      "0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1",
-      "0x89F7114C73d5cef7d7EDCbDb14DaA092EB2194c9"
+      "0xe4ab77ed89528d90e6bcf0e1ac99c58da24e79d5",
+      "0xd33CFeF82377fef83703B9D84151a477B08Ab3b8",
+      "0x65AB0251d29c9C473c8d01BFfa2966F891fB1181",
+      "0x13d13e2410A34Bfe5502D50ea4FCFBd591D7589E"
     ],
     "socials": {
-      "website": "https://weirdapes.com/",
-      "twitter": "https://twitter.com/WeirdApesClub",
-      "discord": "https://discord.gg/d6WvCpfn9W",
-      "medium": "https://medium.com/@WeirdApesClub",
-      "gitbook": "https://weirdape.gitbook.io/weird-apes-club/weird-apes-club/summary"
+      "website": "https://crocrow.com",
+      "twitter": "https://twitter.com/cronoscrocrow",
+      "discord": "https://discord.gg/8GMWgWB5u8",
+      "telegram": "https://t.me/crocrownft",
+      "medium": "https://medium.com/@cronoscrocrow"
     },
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "trooprz",
+    "name": "Trooprz",
+    "description": "Trooprz have got your back",
+    "images": {
+      "banner": "/img/collections/trooprz/banner.jpeg"
+    },
+    "collections": [
+      "0x51112Bf32B9a1C64716DF2e6b82e63a04Bd384Fd",
+      "0xea4DF145322ec9dFCE037b062b08083141c6af8f",
+      "0xbabdFDD5f88035C9FbA58Be1b5c76DcFC6A847f3",
+      "0x96628048830a499b156aBdC04cC169C18c3A17f2",
+      "0xB82F6B5a4491D38292DFCd6706aa12DD5701D7e2",
+      "0xA35f40e45FFF953F477700C83D550D35F11B42aB",
+      "0x2FfF5FE8a3e13A10509E4297DF9d1fdaF1eE7DC4",
+      "0xEB54ea91C92Ce404Ba7AD7B0EF2e36fD75C889A7"
+    ],
+    "socials": {
+      "website": "https://trooprz.army/",
+      "twitter": "https://twitter.com/trooprzarmy",
+      "discord": "https://discord.gg/trooprz"
+    },
+    "categories": [],
     "style": {}
   },
   {
@@ -141,6 +193,29 @@
       "discord": "https://discord.gg/boomersquad",
       "medium": "https://medium.com/@BoomerSquadNFT"
     },
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "weird-apes-club",
+    "name": "Weird Apes Club",
+    "description": "Genesis Weird Apes is a breedable collection randomly generated from 125 traits aimed to bring Weirdness all over the Cronos Chain! Not just a PFP but an entire ecosystem of advanced mechanisms of staking, breeding, renting, customization and more!\nWith every 2D ape you may burn $WAC to claim an additional new 3D Voxel ape with corresponding rank and traits. Voxel apes will play a key role within our P2E, Legends of Weirdonite.\nVisit our Discord to join our wonderful community!",
+    "images": {
+      "banner": "/img/collections/weirdapesclub/banner.webp"
+    },
+    "collections": [
+      "0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44",
+      "0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1",
+      "0x89F7114C73d5cef7d7EDCbDb14DaA092EB2194c9"
+    ],
+    "socials": {
+      "website": "https://weirdapes.com/",
+      "twitter": "https://twitter.com/WeirdApesClub",
+      "discord": "https://discord.gg/d6WvCpfn9W",
+      "medium": "https://medium.com/@WeirdApesClub",
+      "gitbook": "https://weirdape.gitbook.io/weird-apes-club/weird-apes-club/summary"
+    },
+    "categories": [],
     "style": {}
   },
   {
@@ -164,52 +239,7 @@
       "medium": "https://argofinance.medium.com",
       "telegram": "https://t.me/Argo_Finance"
     },
-    "style": {}
-  },
-  {
-    "slug": "trooprz",
-    "name": "Trooprz",
-    "description": "Trooprz have got your back",
-    "images": {
-      "banner": "/img/collections/trooprz/banner.jpeg"
-    },
-    "collections": [
-      "0x51112Bf32B9a1C64716DF2e6b82e63a04Bd384Fd",
-      "0xea4DF145322ec9dFCE037b062b08083141c6af8f",
-      "0xbabdFDD5f88035C9FbA58Be1b5c76DcFC6A847f3",
-      "0x96628048830a499b156aBdC04cC169C18c3A17f2",
-      "0xB82F6B5a4491D38292DFCd6706aa12DD5701D7e2",
-      "0xA35f40e45FFF953F477700C83D550D35F11B42aB",
-      "0x2FfF5FE8a3e13A10509E4297DF9d1fdaF1eE7DC4",
-      "0xEB54ea91C92Ce404Ba7AD7B0EF2e36fD75C889A7"
-    ],
-    "socials": {
-      "website": "https://trooprz.army/",
-      "twitter": "https://twitter.com/trooprzarmy",
-      "discord": "https://discord.gg/trooprz"
-    },
-    "style": {}
-  },
-  {
-    "slug": "baby-alien-division",
-    "name": "Baby Alien Division",
-    "description": "",
-    "images": {
-      "banner": "/img/collections/babyaliendivision/spaceships/banner.webp"
-    },
-    "collections": [
-      "0xbe5F02b6fD5C1e714f0bdd28B6a119827D8b6c61",
-      "0x1A8C07dd1933433cDdBE3123b583695AE3C56b9b",
-      "0x4E6795D725e26E340865140a870C25d1e413A118",
-      "0xA217d6feEf38F9f2D139300E0C4adF42cf96F4C3",
-      "0xd7eEc30A764B3Eed788e93de9fc69b432Dd54d16"
-    ],
-    "socials": {
-      "website": "https://badaliens.io/",
-      "twitter": "https://twitter.com/BAD_Cronos",
-      "discord": "https://discord.gg/qKBy2azf69",
-      "medium": "https://medium.com/@babyaliendivision"
-    },
+    "categories": [],
     "style": {}
   },
   {
@@ -232,6 +262,54 @@
       "discord": "https://discord.gg/dgpals",
       "medium": "https://medium.com/officialdgpals"
     },
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "baby-alien-division",
+    "name": "Baby Alien Division",
+    "description": "",
+    "images": {
+      "banner": "/img/collections/babyaliendivision/spaceships/banner.webp"
+    },
+    "collections": [
+      "0xbe5F02b6fD5C1e714f0bdd28B6a119827D8b6c61",
+      "0x1A8C07dd1933433cDdBE3123b583695AE3C56b9b",
+      "0x4E6795D725e26E340865140a870C25d1e413A118",
+      "0xA217d6feEf38F9f2D139300E0C4adF42cf96F4C3",
+      "0xd7eEc30A764B3Eed788e93de9fc69b432Dd54d16"
+    ],
+    "socials": {
+      "website": "https://badaliens.io/",
+      "twitter": "https://twitter.com/BAD_Cronos",
+      "discord": "https://discord.gg/qKBy2azf69",
+      "medium": "https://medium.com/@babyaliendivision"
+    },
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "cronos-primate-business",
+    "name": "Cronos Primate Business",
+    "description": "3 generations of uniquely generated primates that make up the Primate World. The original Cronos Primate Business is a collection of 1000 primates that sold out in two minutes. The Primates along with Gorillas and Corrupted give staking, raffles, giveaways and more.\n\nCrotopia is the Metaverse being built by Cronos Primate Business. The OG pass is your key to the metaverse and includes free skin airdrops for life.",
+    "images": {
+      "banner": "/img/brands/cronos-primate-business/banner.webp",
+      "preview": "/img/brands/cronos-primate-business/preview.webp"
+    },
+    "collections": [
+      "0x939b90c529F0e3a2C187E1b190Ca966a95881FDe",
+      "0x241a175BDE39D6a2C6fA7ba9ed8F9Ac2C7F2741D",
+      "0xc843f18d5605654391e7eDBEa250f6838C3e8936",
+      "0xA68825768bDB7a2161422e3CcAF1973FF88f8E66",
+      "0x67474fDBebe7A973356b6791c7D7F70264298C0A"
+    ],
+    "socials": {
+      "website": "https://www.cronospb.com/",
+      "twitter": "https://twitter.com/PrimateCronos",
+      "discord": "https://discord.gg/X4shERMUwf",
+      "medium": "https://medium.com/cronos-monkey-business"
+    },
+    "categories": [],
     "style": {}
   },
   {
@@ -255,6 +333,28 @@
       "twitter": "https://twitter.com/degenednfts",
       "discord": "https://discord.gg/N5YXhNDJyz"
     },
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "0xluckless",
+    "name": "0xLuckless",
+    "description": "",
+    "images": {
+      "banner": "/img/collections/0xluckless/banner.webp"
+    },
+    "collections": [
+      "0xd0B45e7bFcc58C99203E60a363E2574e01B0a581",
+      "0xad350404b1564c732f3ed6673cfd8bdf93206a97",
+      "0x0d511FAA531d8D36aDE88daFcBbb9cE83Be42111"
+    ],
+    "socials": {
+      "website": "https://0xluckless.com",
+      "twitter": "https://twitter.com/0xLuckless",
+      "discord": "https://discord.gg/REbVZ9rACc",
+      "medium": "https://medium.com/@0xLuckless"
+    },
+    "categories": [],
     "style": {}
   },
   {
@@ -277,6 +377,7 @@
       "twitter": "https://twitter.com/carkayous",
       "discord": "https://discord.gg/carkayous"
     },
+    "categories": [],
     "style": {}
   },
   {
@@ -298,6 +399,7 @@
       "medium": "https://hello-143.gitbook.io/lost-toys-nft/",
       "instagram": "https://www.instagram.com/losttoysnft/"
     },
+    "categories": [],
     "style": {}
   },
   {
@@ -317,6 +419,7 @@
       "twitter": "https://twitter.com/zap7project",
       "discord": "https://discord.gg/tBgUbvsSZX"
     },
+    "categories": [],
     "style": {}
   }
 ]

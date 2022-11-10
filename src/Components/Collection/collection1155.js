@@ -23,6 +23,7 @@ import {useRouter} from "next/router";
 import {Box, Flex, Heading, Link, Text} from "@chakra-ui/react";
 import MintingButton from "@src/Components/Collection/MintingButton";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import NextLink from "next/link";
 
 
 const tabs = {
@@ -125,10 +126,16 @@ const Collection1155 = ({ collection, tokenId = null, query, activeDrop = null }
           <Flex justify="center" px={3}>
             <FontAwesomeIcon icon={faBullhorn} className="my-auto"/>
             <Text ms={2}>
-              Ebisu's Bay VIP Founding Member will soon be migrating to the new Ryoshi Tales VIP collection.{' '}
-              <Link href="https://blog.ebisusbay.com/ebisus-bay-vip-split-506b05c619c7" isExternal fontWeight="bold">
-                Learn more
-              </Link>
+              Ebisu's Bay VIP Founding Member will be migrating to the new Ryoshi Tales VIP collection on Friday Nov 11th.{' '}
+              <Box align="center">
+                <Link href="https://blog.ebisusbay.com/ebisus-bay-vip-split-506b05c619c7" isExternal fontWeight="bold">
+                  Learn more
+                </Link>
+                <span className="mx-2">|</span>
+                <NextLink href="/drops/ryoshi-tales-vip" >
+                  <Link fontWeight="bold">View drop</Link>
+                </NextLink>
+              </Box>
             </Text>
           </Flex>
         </Box>

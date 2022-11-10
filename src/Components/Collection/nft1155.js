@@ -51,6 +51,7 @@ import { Menu } from '../components/chakra-components';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faSquareTwitter, faTelegram } from '@fortawesome/free-brands-svg-icons';
 import { getStats } from '@src/GlobalState/collectionSlice';
+import NextLink from 'next/link';
 
 const config = appConfig();
 const tabs = {
@@ -280,10 +281,16 @@ const Nft1155 = ({ address, id }) => {
           <Flex justify="center" px={3}>
             <FontAwesomeIcon icon={faBullhorn} className="my-auto"/>
             <Text ms={2}>
-              Ebisu's Bay VIP Founding Member will soon be migrating to the new Ryoshi Tales VIP collection.{' '}
-              <Link href="https://blog.ebisusbay.com/ebisus-bay-vip-split-506b05c619c7" isExternal fontWeight="bold">
-                Learn more
-              </Link>
+              Ebisu's Bay VIP Founding Member will be migrating to the new Ryoshi Tales VIP collection on Friday Nov 11th.{' '}
+              <Box align="center">
+                <Link href="https://blog.ebisusbay.com/ebisus-bay-vip-split-506b05c619c7" isExternal fontWeight="bold">
+                  Learn more
+                </Link>
+                <span className="mx-2">|</span>
+                <NextLink href="/drops/ryoshi-tales-vip" >
+                  <Link fontWeight="bold">View drop</Link>
+                </NextLink>
+              </Box>
             </Text>
           </Flex>
         </Box>
