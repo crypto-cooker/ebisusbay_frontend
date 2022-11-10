@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import Footer from '../src/Components/components/Footer';
 import LegacyStaking from '@src/Components/Staking/LegacyStaking';
 import withAuth from '../src/Components/withAuth';
-import {Box, Container, Grid, GridItem, Heading, useBreakpointValue, useColorModeValue} from "@chakra-ui/react";
+import {Box, Container, Grid, GridItem, Heading, Text, useBreakpointValue, useColorModeValue} from "@chakra-ui/react";
 import RyoshiStaking from "@src/Components/Staking/RyoshiStaking";
 import {motion} from "framer-motion";
 import {useDispatch, useSelector} from "react-redux";
@@ -38,7 +38,7 @@ const MyStaking = () => {
   );
 
   return (
-    <Box>
+    <>
       <PageHead
         title="Ebisu's Bay VIP Staking"
         description="Earn rewards generated through platform sales &#128640;"
@@ -56,7 +56,8 @@ const MyStaking = () => {
               <div className="container">
                 <div className="row m-10-hor">
                   <div className="col-12 text-center">
-                    <Heading as="h1" size="2xl" className="text-center">Ryoshi VIP Staking</Heading>
+                    <Heading as="h1" size="2xl" className="text-center">Ryoshi Tales VIP Staking</Heading>
+                    <Text>Earn rewards generated through platform sales &#128640;</Text>
                   </div>
                 </div>
               </div>
@@ -102,7 +103,7 @@ const MyStaking = () => {
       {useMobileCartView && (
         <MobileBatchStaking />
       )}
-    </Box>
+    </>
   );
 };
 

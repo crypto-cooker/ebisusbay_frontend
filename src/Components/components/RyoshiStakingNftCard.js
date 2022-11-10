@@ -2,7 +2,7 @@ import React, {memo, useState} from 'react';
 import {useRouter} from 'next/router';
 import {ethers} from 'ethers';
 import {toast} from 'react-toastify';
-import {faEllipsisH, faLink, faPlusCircle, faTags} from '@fortawesome/free-solid-svg-icons';
+import {faEllipsisH, faInfoCircle, faLink, faMinus, faPlus, faPlusCircle} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {MenuPopup} from '../components/chakra-components';
 import AnyMedia from './AnyMedia';
@@ -22,39 +22,50 @@ const RyoshiStakingNftCard = ({
    onAddToCartButtonPressed,
    onRemoveFromCartButtonPressed,
  }) => {
-  const history = useRouter();
+  const router = useRouter();
   const nftUrl = appUrl(`/collection/${nft.address}/${nft.id}`);
   const [isHovered, setIsHovered] = useState(false);
   const user = useSelector((state) => state.user);
   const ryoshiStakingCart = useSelector((state) => state.ryoshiStakingCart);
   const { onCopy } = useClipboard(nftUrl);
 
-  const onCopyLinkButtonPressed = () => {
+  const handleCopyLinkButtonPressed = () => {
     onCopy();
     toast.success('Link copied!');
   };
+
+  const handleViewDetailsButtonPressed = () => {
+    router.push(nftUrl)
+  };
+
 
   const getOptions = () => {
     const options = [];
 
     if (isStaked) {
       options.push({
-        icon: faTags,
-        label: 'Remove from stake',
+        icon: faMinus,
+        label: 'Unstake',
         handleClick: onAddToCartButtonPressed,
       });
     } else if (canStake) {
       options.push({
-        icon: faTags,
-        label: 'Add to stake',
+        icon: faPlus,
+        label: 'Stake',
         handleClick: onAddToCartButtonPressed,
       });
     }
 
     options.push({
+      icon: faInfoCircle,
+      label: 'View Details',
+      handleClick: handleViewDetailsButtonPressed,
+    });
+
+    options.push({
       icon: faLink,
       label: 'Copy link',
-      handleClick: onCopyLinkButtonPressed,
+      handleClick: handleCopyLinkButtonPressed,
     });
 
     return options;
