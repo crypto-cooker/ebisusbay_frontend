@@ -47,6 +47,11 @@ export class ImageKitService {
     return kit.buildUrl();
   }
 
+  static buildBannerPreviewUrl(imageUrl) {
+    const kit = ImageKitService.from(imageUrl).setNamed('wide_preview');
+    return kit.buildUrl();
+  }
+
   static buildBannerUrl(imageUrl) {
     const kit = ImageKitService.from(imageUrl)
       .setWidth(1920)

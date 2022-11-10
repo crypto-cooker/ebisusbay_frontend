@@ -3,7 +3,7 @@ import {Box, SimpleGrid, Text, useMediaQuery, VStack, Wrap, WrapItem} from "@cha
 import Footer from "@src/Components/components/Footer";
 import {useRouter} from "next/router";
 import PageHead from "@src/Components/Head/PageHead";
-import {hostedImage} from "@src/helpers/image";
+import {hostedImage, ImageKitService} from "@src/helpers/image";
 import React from "react";
 import Header from "@src/Components/Collections/components/Header";
 import categories from "@src/core/data/categories.json";
@@ -38,7 +38,7 @@ const Brands = () => {
               onClick={() => navigate(brand.slug)}
             >
               <Box
-                backgroundImage={hostedImage(brand.images.preview ?? brand.images.banner)}
+                backgroundImage={ImageKitService.buildBannerPreviewUrl(brand.images.preview ?? brand.images.banner)}
                 backgroundSize="cover"
                 backgroundPosition="50% 50%"
                 h="100%"
