@@ -12,6 +12,8 @@ import {getNftsForAddress2} from "@src/core/api";
 import {addToCart, clearCart, closeCart, removeFromCart, setCartContext} from "@src/GlobalState/ryoshiStakingCartSlice";
 import {sortAndFetchCollectionDetails} from "@src/core/api/endpoints/fullcollections";
 import {FullCollectionsQuery} from "@src/core/api/queries/fullcollections";
+import MetaMaskOnboarding from "@metamask/onboarding";
+import {chainConnect, connectAccount} from "@src/GlobalState/User";
 
 const txExtras = {
   gasPrice: ethers.utils.parseUnits('5000', 'gwei'),
@@ -39,26 +41,57 @@ const RyoshiStaking = () => {
     dispatch(setCartContext(context))
   }
 
+  const connectWalletPressed = () => {
+    if (user.needsOnboard) {
+      const onboarding = new MetaMaskOnboarding();
+      onboarding.startOnboarding();
+    } else if (!user.address) {
+      dispatch(connectAccount());
+    } else if (!user.correctChain) {
+      dispatch(chainConnect());
+    }
+  };
+
   return (
     <Box>
       <Heading>Ryoshi Tales VIP Staking</Heading>
-      <Text>Earn rewards generated through platform sales &#128640;</Text>
-      <Box align="end" mt={2}>
-        <ul className="activity-filter">
-          <li id="sale" className={displayType === displayTypes.unstaked ? 'active' : ''} onClick={() => handleDisplayTypeClick(displayTypes.unstaked)}>
-            Unstaked
-          </li>
-          <li id="sale" className={displayType === displayTypes.staked ? 'active' : ''} onClick={() => handleDisplayTypeClick(displayTypes.staked)}>
-            Staked
-          </li>
-        </ul>
-      </Box>
-      {displayType === displayTypes.unstaked && (
-        <UnstakedRyoshiNftList />
+      <Text>Stake any of your Ryoshi Tales VIP NFTs below and enjoy rewards generated through platform sales. </Text>
+
+      {user.address ? (
+        <>
+          <Box mt={4}>
+            <ul className="activity-filter">
+              <li id="sale" className={displayType === displayTypes.unstaked ? 'active' : ''} onClick={() => handleDisplayTypeClick(displayTypes.unstaked)}>
+                Unstaked
+              </li>
+              <li id="sale" className={displayType === displayTypes.staked ? 'active' : ''} onClick={() => handleDisplayTypeClick(displayTypes.staked)}>
+                Staked
+              </li>
+            </ul>
+          </Box>
+          {displayType === displayTypes.unstaked && (
+            <UnstakedRyoshiNftList />
+          )}
+          {displayType === displayTypes.staked && (
+            <StakedRyoshiList />
+          )}
+        </>
+      ) : (
+        <div className="row mt-4">
+          <div className="col-lg-12 text-center">
+            <span>Connect wallet below to start staking</span>
+
+            <button
+              className="btn-main lead mx-auto"
+              onClick={connectWalletPressed}
+              style={{ width: 'auto' }}
+            >
+              Connect
+            </button>
+          </div>
+        </div>
       )}
-      {displayType === displayTypes.staked && (
-        <StakedRyoshiList />
-      )}
+
     </Box>
   );
 };

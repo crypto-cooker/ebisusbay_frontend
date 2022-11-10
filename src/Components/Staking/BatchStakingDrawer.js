@@ -25,7 +25,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import {useDispatch, useSelector} from "react-redux";
 import {toast} from "react-toastify";
-import {clearCart, setApproval, setExtras} from "@src/GlobalState/ryoshiStakingCartSlice";
+import {clearCart, removeFromCart, setApproval, setExtras} from "@src/GlobalState/ryoshiStakingCartSlice";
 import {Contract} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {appConfig} from "@src/Config";
@@ -58,7 +58,6 @@ export const BatchStakingDrawer = ({onClose, ...gridProps}) => {
         return ryoshiStakingCart.extras[o.nft.address.toLowerCase()]?.approval;
       });
       const nftAddresses = filteredCartNfts.map((o) => o.nft.id);
-      console.log(ryoshiStakingCart.context, nftAddresses)
 
       let tx;
       if (ryoshiStakingCart.context === 'stake') {
@@ -100,7 +99,7 @@ export const BatchStakingDrawer = ({onClose, ...gridProps}) => {
       <GridItem px={6} py={4}>
         <Flex align="center">
           <Text fontSize="xl" fontWeight="semibold">
-            Staking cart
+            Items to {ryoshiStakingCart.context === 'stake' ? 'stake' : 'unstake'}
           </Text>
           <Spacer />
           <CloseButton onClick={handleClose}/>
@@ -195,10 +194,11 @@ const BatchStakingDrawerItem = ({item, disabled}) => {
   const [executingApproval, setExecutingApproval] = useState(false);
 
   const handleRemoveItem = () => {
-    dispatch(removeFromBatch(item.nft));
+    dispatch(removeFromCart(item.nft));
   };
 
   const checkApproval = async () => {
+    if (!user.provider) return false;
     const contract = new Contract(item.nft.address, ERC721, user.provider.getSigner());
     return await contract.isApprovedForAll(user.address, config.contracts.stake);
   };

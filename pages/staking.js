@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import Footer from '../src/Components/components/Footer';
 import LegacyStaking from '@src/Components/Staking/LegacyStaking';
@@ -21,6 +21,7 @@ const tabs = {
 
 const MyStaking = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   const ryoshiStakingCart = useSelector((state) => state.ryoshiStakingCart);
 
   const batchListingBorderColor = useColorModeValue('#000', '#FFF');
@@ -36,6 +37,12 @@ const MyStaking = () => {
     {base: true, lg: false},
     {fallback: 'lg'},
   );
+
+  useEffect(() => {
+    if (!user.address && ryoshiStakingCart.isDrawerOpen) {
+      dispatch(closeCart());
+    }
+  }, [user.address]);
 
   return (
     <>
@@ -56,7 +63,7 @@ const MyStaking = () => {
               <div className="container">
                 <div className="row m-10-hor">
                   <div className="col-12 text-center">
-                    <Heading as="h1" size="2xl" className="text-center">Ryoshi Tales VIP Staking</Heading>
+                    <Heading as="h1" size="2xl" className="text-center">VIP Staking</Heading>
                     <Text>Earn rewards generated through platform sales &#128640;</Text>
                   </div>
                 </div>
@@ -107,4 +114,4 @@ const MyStaking = () => {
   );
 };
 
-export default withAuth(MyStaking);
+export default MyStaking;
