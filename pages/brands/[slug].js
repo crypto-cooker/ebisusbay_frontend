@@ -52,7 +52,7 @@ const Brand = ({ brand, collections, stats }) => {
         title={brand.name}
         description={brand.description}
         url={`/brands/${brand.slug}`}
-        image={hostedImage(brand.images.banner)}
+        image={hostedImage(brand.images.preview ?? brand.images.banner)}
       />
       <Box
         position="relative"
@@ -63,7 +63,7 @@ const Brand = ({ brand, collections, stats }) => {
       >
         <Box
           style={{
-            backgroundImage: `url(${ImageKitService.buildBannerUrl(brand.images.banner ?? '')})`,
+            backgroundImage: `url(${ImageKitService.buildBannerUrl(brand.images.banner ?? brand.images.preview ?? '')})`,
             backgroundPosition: '50% 50%',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover'
