@@ -1,14 +1,14 @@
 import brands from "@src/core/data/brands.json";
-import {Box, Center, Heading, LinkBox, LinkOverlay, SimpleGrid, Text, useMediaQuery} from "@chakra-ui/react";
+import {Box, SimpleGrid, Text, useMediaQuery, VStack, Wrap, WrapItem} from "@chakra-ui/react";
 import Footer from "@src/Components/components/Footer";
-import NextLink from 'next/link';
 import {useRouter} from "next/router";
 import PageHead from "@src/Components/Head/PageHead";
 import {hostedImage} from "@src/helpers/image";
 import React from "react";
 import Header from "@src/Components/Collections/components/Header";
+import categories from "@src/core/data/categories.json";
 
-const Brands = ({ brand, collections, stats }) => {
+const Brands = () => {
   const router = useRouter();
   const [supportsHover] = useMediaQuery('(hover: hover)')
 
@@ -28,6 +28,7 @@ const Brands = ({ brand, collections, stats }) => {
         <SimpleGrid columns={{base: 1, md: 2, lg: 3, xl: 4}} gap={4} mx={6}>
           {brands.map((brand) => (
             <Box
+              key={brand.slug}
               h="200px"
               overflow="hidden"
               position="relative"
@@ -43,19 +44,20 @@ const Brands = ({ brand, collections, stats }) => {
                 h="100%"
                 _groupHover={{
                   filter: 'brightness(0.3) blur(5px)',
-                  transition:'0.5s ease',
+                  transition:'0.5s ease-out',
                   transform: 'scale(1.1)'
                 }}
                 transition="0.5s ease"
                 filter={supportsHover ? undefined : 'brightness(0.6)'}
               />
-              <Box
+              <VStack
                 position="absolute"
                 top="50%"
+                transform="translate(0, -50%)"
                 left={0}
                 w="100%"
                 filter={supportsHover ? 'opacity(0)' : 'opacity(1)'}
-                transition="0.5s ease"
+                transition="0.5s ease-out"
                 _groupHover={{
                   filter: 'opacity(1)',
                   transition:'0.5s ease',
@@ -65,7 +67,16 @@ const Brands = ({ brand, collections, stats }) => {
                 <Text align="center" fontSize="xl" fontWeight="semibold" color="white">
                   {brand.name}
                 </Text>
-              </Box>
+                <Wrap>
+                  <WrapItem>
+                    {brand.categories.map((cat) => (
+                      <div className="eb-de_countdown text-center" style={{backgroundColor: 'transparent', color: 'white'}}>
+                        {categories.find((c) => c.key === cat)?.label}
+                      </div>
+                    ))}
+                  </WrapItem>
+                </Wrap>
+              </VStack>
             </Box>
           ))}
         </SimpleGrid>
