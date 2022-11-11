@@ -20241,8 +20241,6 @@
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 10000,
-      "erc20Cost": "1",
-      "costUnit": "Ebisu's Bay VIP",
       "foundersOnly": false,
       "start": 1668200400000,
       "end": null,

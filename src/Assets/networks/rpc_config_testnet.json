@@ -6643,8 +6643,6 @@
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 10000,
-      "cost": "1",
-      "costUnit": "Ebisu's Bay VIP",
       "foundersOnly": false,
       "start": 1667863561000,
       "end": null,
