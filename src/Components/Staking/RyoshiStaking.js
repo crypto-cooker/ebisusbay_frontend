@@ -197,12 +197,11 @@ const StakedRyoshiList = () => {
 
   const fetcher = async ({ pageParam = 1 }) => {
     const stakedRyoshis = await getStakedRyoshi(user.address);
-    const ids = stakedRyoshis.data.ryoshiStaked;
-    console.log('IDS', ids);
+    const ids = stakedRyoshis.data?.ryoshiStaked ?? [];
     if (ids.length === 0) return [];
 
     const query = FullCollectionsQuery.createApiQuery({address: ryoshiCollectionAddress, token: ids});
-    const data = await sortAndFetchCollectionDetails(1, null, query);
+    const data = await sortAndFetchCollectionDetails(pageParam, null, query);
     return data.response;
   };
 
@@ -220,11 +219,10 @@ const StakedRyoshiList = () => {
     fetcher,
     {
       getNextPageParam: (lastPage, pages) => {
-        return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
+        return pages[pages.length - 1].nfts.length > 0 ? pages.length + 1 : undefined;
       },
       refetchOnWindowFocus: false
     })
-
 
   const loadMore = () => {
     fetchNextPage();
