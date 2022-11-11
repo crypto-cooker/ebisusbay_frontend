@@ -96,6 +96,7 @@ const RyoshiDrop = ({drop}) => {
   const [maxSupply, setMaxSupply] = useState(0);
   const [totalSupply, setTotalSupply] = useState(0);
   const [canMintQuantity, setCanMintQuantity] = useState(0);
+  const [mintingState, setMintingState] = useState(null);
 
   // useEffect(() => {
   //   logEvent(getAnalytics(), 'screen_view', {
@@ -185,6 +186,7 @@ const RyoshiDrop = ({drop}) => {
   const mintNow = async () => {
     if (user.address) {
       setMinting(true);
+      setMintingState("Swapping...");
       const ryoshiContract = await new ethers.Contract(drop.address, abi, user.provider.getSigner());
       try {
         const cost = await ryoshiContract.mintCost(user.address);
@@ -192,6 +194,7 @@ const RyoshiDrop = ({drop}) => {
 
         const isApprovedRyoshi = await ryoshiContract.isApprovedForAll(user.address, config.contracts.membership);
         if (!isApprovedRyoshi) {
+          setMintingState("Approving Ryoshi Contract...");
           const tx = await ryoshiContract.setApprovalForAll(config.contracts.membership, true);
           await tx.wait();
         }
@@ -200,9 +203,11 @@ const RyoshiDrop = ({drop}) => {
         const vipContract = await new ethers.Contract(vipCollection.address, ERC1155, user.provider.getSigner());
         const isApprovedVip = await vipContract.isApprovedForAll(user.address, drop.address);
         if (!isApprovedVip) {
+          setMintingState("Approving VIP Contract...");
           const tx = await vipContract.setApprovalForAll(drop.address, true);
           await tx.wait();
         }
+        setMintingState("Swapping...");
 
         // const gasPrice = parseUnits('5000', 'gwei');
         // const gasEstimate = await contract.estimateGas.mintWithToken(numToMint);
@@ -257,6 +262,7 @@ const RyoshiDrop = ({drop}) => {
         }
       } finally {
         setMinting(false);
+        setMintingState(null);
       }
     } else {
       dispatch(connectAccount());
@@ -482,7 +488,7 @@ const RyoshiDrop = ({drop}) => {
                             <button className="btn-main lead w-100" onClick={() => mintNow(false)} disabled={minting}>
                               {minting ? (
                                 <>
-                                  Swapping...
+                                  {mintingState ?? 'Swapping...'}
                                   <Spinner animation="border" role="status" size="sm" className="ms-1">
                                     <span className="visually-hidden">Loading...</span>
                                   </Spinner>

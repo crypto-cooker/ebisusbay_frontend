@@ -14648,7 +14648,7 @@
       "name": "Ryoshi Tales VIP",
       "slug": "ryoshi-tales-vip",
       "multiToken": false,
-      "address": "0x0456e105c3e469aeEf2B43E8c39591B21658b53b",
+      "address": "0xE49709A3B59d708f50AA3712F2E5a84b7707664C",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -14728,7 +14728,7 @@
       "name": "Ebisu's Bay - Legacy VIP Founding Member (Art Collectible)",
       "slug": "legacy-vip-founding-member",
       "onChain": false,
-      "address": "0x02e14045863ec462c2eb4a5412cb90f71b4f18c7",
+      "address": "0xf54abdcba21e7a740f98307a561b605cb3fdcf63",
       "multiToken": false,
       "listable": true,
       "metadata": {
@@ -14758,7 +14758,7 @@
       "name": "SeaShrine VIP",
       "slug": "seashrine-vip",
       "multiToken": false,
-      "address": "0xea3d7d781b08e0f9a01dc3281983fb23cb35db8d",
+      "address": "0x584a16905ca9cb10c0a2a9caa8e37a64de48c506",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -20237,7 +20237,7 @@
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
       },
-      "address": "0x0456e105c3e469aeEf2B43E8c39591B21658b53b",
+      "address": "0xE49709A3B59d708f50AA3712F2E5a84b7707664C",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 10000,
