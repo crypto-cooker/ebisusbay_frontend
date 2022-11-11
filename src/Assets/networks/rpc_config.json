@@ -14510,7 +14510,7 @@
       "name": "Crazy Crossbreeds",
       "slug": "crazy-crossbreeds",
       "multiToken": false,
-      "address": "",
+      "address": "0x4AEef4fbe0e32b9b0aEF6c43DD2625BCA5B9501A",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -20075,7 +20075,7 @@
         "discord": "https://discord.gg/jxyytxSJAZ",
         "medium": "https://medium.com/@Crossbreeds"
       },
-      "address": "",
+      "address": "0x4AEef4fbe0e32b9b0aEF6c43DD2625BCA5B9501A",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 100,
       "totalSupply": 4444,
