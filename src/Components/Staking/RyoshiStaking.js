@@ -14,13 +14,13 @@ import {sortAndFetchCollectionDetails} from "@src/core/api/endpoints/fullcollect
 import {FullCollectionsQuery} from "@src/core/api/queries/fullcollections";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
+import {CollectionSortOption} from "@src/Components/Models/collection-sort-option.model";
 
 const txExtras = {
   gasPrice: ethers.utils.parseUnits('5000', 'gwei'),
 };
 
 const ryoshiCollectionAddress = appConfig('collections').find((c) => c.slug === 'ryoshi-tales-vip').address;
-const knownContracts = appConfig('collections');
 const displayTypes = {
   staked: 'staked',
   unstaked: 'unstaked'
@@ -29,7 +29,7 @@ const displayTypes = {
 const RyoshiStaking = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const [displayType, setDisplayType] = useState(displayTypes.unstaked)
+  const [displayType, setDisplayType] = useState(displayTypes.staked)
   const { data, status, refetch } = useQuery(['RyoshiStaking', user.address], () =>
     getStakedRyoshi(user.address), !!user.address
   )
@@ -61,11 +61,11 @@ const RyoshiStaking = () => {
         <>
           <Box mt={4}>
             <ul className="activity-filter">
-              <li id="sale" className={displayType === displayTypes.unstaked ? 'active' : ''} onClick={() => handleDisplayTypeClick(displayTypes.unstaked)}>
-                Unstaked
-              </li>
               <li id="sale" className={displayType === displayTypes.staked ? 'active' : ''} onClick={() => handleDisplayTypeClick(displayTypes.staked)}>
                 Staked
+              </li>
+              <li id="sale" className={displayType === displayTypes.unstaked ? 'active' : ''} onClick={() => handleDisplayTypeClick(displayTypes.unstaked)}>
+                Unstaked
               </li>
             </ul>
           </Box>
@@ -201,7 +201,12 @@ const StakedRyoshiList = () => {
     if (ids.length === 0) return [];
 
     const query = FullCollectionsQuery.createApiQuery({address: ryoshiCollectionAddress, token: ids});
-    const data = await sortAndFetchCollectionDetails(pageParam, null, query);
+    const sort = CollectionSortOption.fromJson({
+      key: 'rank',
+      direction: 'asc',
+      label: 'Rare to Common',
+    });
+    const data = await sortAndFetchCollectionDetails(pageParam, sort, query);
     return data.response;
   };
 
