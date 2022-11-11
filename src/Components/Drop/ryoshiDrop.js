@@ -287,8 +287,7 @@ const RyoshiDrop = ({drop}) => {
       step: 1,
       defaultValue: numToMint,
       min: 1,
-      // max: canMintQuantity,
-      max: 4,
+      max: canMintQuantity,
       precision: 0,
       onChange(valueAsString, valueAsNumber) {
         setNumToMint(valueAsString);
@@ -473,7 +472,7 @@ const RyoshiDrop = ({drop}) => {
                     </Text>
                     {status === statuses.LIVE && !drop.complete && (
                       <Box mt={2}>
-                        {/*{canMintQuantity > 0 && (*/}
+                        {canMintQuantity > 0 && (
                           <Stack direction={{base:'column', lg:'row'}} spacing={2}>
                             <HStack minW="150px">
                               <Button {...dec}>-</Button>
@@ -493,7 +492,7 @@ const RyoshiDrop = ({drop}) => {
                               )}
                               </button>
                           </Stack>
-                        {/*)}*/}
+                        )}
                         {canMintQuantity === 0 && !user.address && !drop.complete && (
                           <button className="btn-main lead w-100" onClick={connectWalletPressed}>
                             Connect Wallet
