@@ -8049,7 +8049,7 @@
       "multiToken": false,
       "address": "0xb38E7852fD0CDB05d4Ba01F3318C3d31A4d5e843",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Dragons of the West is a collection of 4,444 Chinese Dragons inspired by the hit TV show \"Avatar: The Last Airbender\". These dragons are used in our turn-based card strategy P2E game available on mobile and PC.",
         "verified": false,
@@ -14141,7 +14141,7 @@
       "multiToken": false,
       "address": "0x84E66B69e1C5c962C80D38FA2e8aEC09B20D5dCE",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "An Exclusive Marketing agency that leverages the power of NFT Ownership to dominate Web3 Marketing. Join the Agency and earn income for engagement on your favorite social media platforms.",
         "verified": false,
