@@ -13,7 +13,7 @@ import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
 
 import Footer from '../components/Footer';
-import { connectAccount } from '@src/GlobalState/User';
+import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import { fetchMemberInfo, fetchVipInfo } from '@src/GlobalState/Memberships';
 import {
   createSuccessfulTransactionToastContent, isBossFrogzDrop,
@@ -30,7 +30,19 @@ import {parseUnits} from "ethers/lib/utils";
 import {appConfig} from "@src/Config";
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
-import {Box, Heading, ListItem, Text, UnorderedList, useColorModeValue} from "@chakra-ui/react";
+import {
+  Box,
+  Button, Flex,
+  Heading,
+  HStack, Input,
+  ListItem, SimpleGrid, Stack,
+  Text,
+  UnorderedList,
+  useColorModeValue,
+  useNumberInput
+} from "@chakra-ui/react";
+import MetaMaskOnboarding from "@metamask/onboarding";
+import Link from "next/link";
 
 const config = appConfig();
 const collections = config.collections;
@@ -259,6 +271,32 @@ const RyoshiDrop = ({drop}) => {
     return dateString;
   };
 
+  const connectWalletPressed = () => {
+    if (user.needsOnboard) {
+      const onboarding = new MetaMaskOnboarding();
+      onboarding.startOnboarding();
+    } else if (!user.address) {
+      dispatch(connectAccount());
+    } else if (!user.correctChain) {
+      dispatch(chainConnect());
+    }
+  };
+
+  const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
+    useNumberInput({
+      step: 1,
+      defaultValue: numToMint,
+      min: 1,
+      max: canMintQuantity,
+      precision: 0,
+      onChange(valueAsString, valueAsNumber) {
+        setNumToMint(valueAsString);
+      }
+    })
+  const inc = getIncrementButtonProps()
+  const dec = getDecrementButtonProps()
+  const input = getInputProps()
+
   return (
     <div>
       <>
@@ -395,24 +433,73 @@ const RyoshiDrop = ({drop}) => {
                 creativeCommons={collection.verification?.creativeCommons}
               />
 
-              <div className="item_info">
+              <div className="item_info ps-0">
 
-                {status === statuses.UNSET || status === statuses.NOT_STARTED || drop.complete ? (
-                  <div>
-                    <div className="fs-6 fw-bold mb-1">Supply: {ethers.utils.commify(maxSupply.toString())}</div>
-                  </div>
-                ) : (
-                  <div>
-                    <div className="fs-6 fw-bold mb-1 text-end">
-                      {percentage(totalSupply.toString(), maxSupply.toString())}% swapped (
-                      {ethers.utils.commify(totalSupply.toString())} / {ethers.utils.commify(maxSupply.toString())})
+                <div className="card eb-nft__card h-100 shadow px-4  mt-2">
+                  <div className="card-body d-flex flex-column">
+
+
+                    <div className="d-flex flex-row">
+                      <div className="me-4">
+                        <Heading as="h6" size="sm" className="mb-1">Swap Price</Heading>
+                        <Heading as="h5" size="md">1 Ebisu's Bay VIP</Heading>
+                      </div>
                     </div>
-                    <ProgressBar
-                      now={percentage(totalSupply.toString(), maxSupply.toString())}
-                      style={{ height: '4px' }}
-                    />
+                    {status === statuses.UNSET || status === statuses.NOT_STARTED || drop.complete ? (
+                      <div>
+                        <div className="fs-6 fw-bold mb-1">Supply: {ethers.utils.commify(maxSupply.toString())}</div>
+                      </div>
+                    ) : (
+                      <div>
+                        <div className="fs-6 fw-bold mb-1 mt-3 text-start text-md-end">
+                          {percentage(totalSupply.toString(), maxSupply.toString())}% swapped (
+                          {ethers.utils.commify(totalSupply.toString())} / {ethers.utils.commify(maxSupply.toString())})
+                        </div>
+                        <ProgressBar
+                          now={percentage(totalSupply.toString(), maxSupply.toString())}
+                          style={{ height: '4px' }}
+                        />
+                      </div>
+                    )}
+
+                    <Text fontSize="sm" my={2} style={{ color: getTheme(userTheme).colors.textColor3 }}>
+                      1 Ebisu's Bay VIP will be swapped for 10 Ryoshi Tales VIP, 1 SeaShrine VIP, and 1 collectible
+                      Ebisu's Bay VIP. Make sure to <Link href="/staking">unstake</Link> before swapping
+                    </Text>
+                    {status === statuses.LIVE && !drop.complete && (
+                      <Box mt={2}>
+                        {canMintQuantity > 0 && (
+                          <Stack direction={{base:'column', lg:'row'}} spacing={2}>
+                            <HStack minW="150px">
+                              <Button {...dec}>-</Button>
+                              <Input {...input} />
+                              <Button {...inc}>+</Button>
+                            </HStack>
+                            <button className="btn-main lead w-100" onClick={() => mintNow(false)} disabled={minting}>
+                              {minting ? (
+                                <>
+                                  Swapping...
+                                  <Spinner animation="border" role="status" size="sm" className="ms-1">
+                                    <span className="visually-hidden">Loading...</span>
+                                  </Spinner>
+                                </>
+                              ) : (
+                                <>{drop.maxMintPerTx && drop.maxMintPerTx > 1 ? <>Swap {numToMint}</> : <>Swap</>}</>
+                              )}
+                              </button>
+                          </Stack>
+                        )}
+                        {canMintQuantity === 0 && !user.address && !drop.complete && (
+                          <button className="btn-main lead w-100" onClick={connectWalletPressed}>
+                            Connect Wallet
+                          </button>
+                        )}
+                      </Box>
+                    )}
+                    {status === statuses.SOLD_OUT && <p className="mt-5">SWAP HAS SOLD OUT</p>}
+                    {status === statuses.EXPIRED && <p className="mt-5">SWAP HAS ENDED</p>}
                   </div>
-                )}
+                </div>
 
                 <div className="mt-3 mb-4">
                   <Text fontWeight="bold" fontSize="2xl">It is time for a birthday rebranding!</Text>
@@ -439,17 +526,6 @@ const RyoshiDrop = ({drop}) => {
                   </Box>
                 )}
 
-                <div className="d-flex flex-row">
-                  <div className="me-4">
-                    <Heading as="h6" size="sm" className="mb-1">Swap Price</Heading>
-                    <Heading as="h5" size="md">1 Ebisu's Bay VIP</Heading>
-                  </div>
-                </div>
-
-                <p className="my-2" style={{ color: getTheme(userTheme).colors.textColor3 }}>
-                  * 1 Ebisu's Bay VIP will be swapped for 10 Ryoshi Tales VIP, 1 SeaShrine VIP, and 1 collectible Ebisu's Bay VIP
-                </p>
-
                 <div className="spacer-40"></div>
 
                 {status === statuses.LIVE && drop.end && (
@@ -472,45 +548,6 @@ const RyoshiDrop = ({drop}) => {
                     <Heading as="h3" size="md">TBA</Heading>
                   </div>
                 )}
-                {status === statuses.LIVE && !drop.complete && (
-                  <>
-                    {canMintQuantity > 1 && (
-                      <div>
-                        <Form.Label>Quantity</Form.Label>
-                        <Form.Range
-                          value={numToMint}
-                          min="1"
-                          max={canMintQuantity}
-                          onChange={(e) => setNumToMint(e.target.value)}
-                        />
-                      </div>
-                    )}
-
-                    {canMintQuantity > 0 && (
-                      <div className="d-flex flex-row mt-5">
-                        {!isBossFrogzDrop(drop.address) && (
-                          <button className="btn-main lead mb-5 mr15" onClick={() => mintNow(false)} disabled={minting}>
-                            {minting ? (
-                              <>
-                                Minting...
-                                <Spinner animation="border" role="status" size="sm" className="ms-1">
-                                  <span className="visually-hidden">Loading...</span>
-                                </Spinner>
-                              </>
-                            ) : (
-                              <>{drop.maxMintPerTx && drop.maxMintPerTx > 1 ? <>Mint {numToMint}</> : <>Mint</>}</>
-                            )}
-                          </button>
-                        )}
-                      </div>
-                    )}
-                    {canMintQuantity === 0 && !user.address && !drop.complete && (
-                      <p className="mt-5">CONNECT WALLET TO MINT</p>
-                    )}
-                  </>
-                )}
-                {status === statuses.SOLD_OUT && <p className="mt-5">MINT HAS SOLD OUT</p>}
-                {status === statuses.EXPIRED && <p className="mt-5">MINT HAS ENDED</p>}
               </div>
             </div>
           </div>
