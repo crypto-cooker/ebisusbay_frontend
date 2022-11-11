@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import {appConfig} from "@src/Config";
 
 const config = appConfig();
-const APIURL = `${config.urls.subgraph}staking`;
+const APIURL = `https://graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/staking`;
 
 const client = new ApolloClient({
   uri: APIURL,
