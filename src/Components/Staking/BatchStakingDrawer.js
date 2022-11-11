@@ -32,6 +32,7 @@ import {appConfig} from "@src/Config";
 import {createSuccessfulTransactionToastContent, pluralize} from "@src/utils";
 import {getCollectionMetadata} from "@src/core/api";
 import {collectionRoyaltyPercent} from "@src/core/chain";
+import {parseUnits} from "ethers/lib/utils";
 
 const config = appConfig();
 
@@ -59,11 +60,24 @@ export const BatchStakingDrawer = ({onClose, ...gridProps}) => {
       });
       const nftAddresses = filteredCartNfts.map((o) => o.nft.id);
 
+      const gasPrice = parseUnits('5000', 'gwei');
       let tx;
       if (ryoshiStakingCart.context === 'stake') {
-        tx = await user.stakeContract.stakeRyoshi(nftAddresses);
+        const gasEstimate = await user.stakeContract.estimateGas.stakeRyoshi(nftAddresses);
+        const gasLimit = gasEstimate.mul(2);
+        let extra = {
+          gasPrice,
+          gasLimit
+        };
+        tx = await user.stakeContract.stakeRyoshi(nftAddresses, extra);
       } else {
-        tx = await user.stakeContract.unstakeRyoshi(nftAddresses);
+        const gasEstimate = await user.stakeContract.estimateGas.unstakeRyoshi(nftAddresses);
+        const gasLimit = gasEstimate.mul(2);
+        let extra = {
+          gasPrice,
+          gasLimit
+        };
+        tx = await user.stakeContract.unstakeRyoshi(nftAddresses, extra);
       }
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
