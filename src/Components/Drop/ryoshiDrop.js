@@ -404,7 +404,7 @@ const RyoshiDrop = ({drop}) => {
                 ) : (
                   <div>
                     <div className="fs-6 fw-bold mb-1 text-end">
-                      {percentage(totalSupply.toString(), maxSupply.toString())}% minted (
+                      {percentage(totalSupply.toString(), maxSupply.toString())}% swapped (
                       {ethers.utils.commify(totalSupply.toString())} / {ethers.utils.commify(maxSupply.toString())})
                     </div>
                     <ProgressBar
@@ -439,23 +439,9 @@ const RyoshiDrop = ({drop}) => {
                   </Box>
                 )}
 
-                {isCrosmocraftsPartsDrop(drop.address) && (
-                  <div className="mb-4">
-                    <span>Once you have minted your parts, you can&nbsp;</span>
-                    <div className="nft__item_action d-inline-block" style={{ fontSize: '16px' }}>
-                      <span
-                        onClick={() => typeof window !== 'undefined' && window.open('/build-ship', '_self')}
-                        style={{ cursor: 'pointer' }}
-                      >
-                        build your Crosmocraft
-                      </span>
-                    </div>
-                  </div>
-                )}
-
                 <div className="d-flex flex-row">
                   <div className="me-4">
-                    <Heading as="h6" size="sm" className="mb-1">Mint Price</Heading>
+                    <Heading as="h6" size="sm" className="mb-1">Swap Price</Heading>
                     <Heading as="h5" size="md">1 Ebisu's Bay VIP</Heading>
                   </div>
                 </div>
