@@ -446,7 +446,7 @@ const RyoshiDrop = ({drop}) => {
                       </div>
                     </div>
                     {status === statuses.UNSET || status === statuses.NOT_STARTED || drop.complete ? (
-                      <div>
+                      <div className="mt-2">
                         <div className="fs-6 fw-bold mb-1">Supply: {ethers.utils.commify(maxSupply.toString())}</div>
                       </div>
                     ) : (
