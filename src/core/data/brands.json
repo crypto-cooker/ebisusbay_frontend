@@ -52,7 +52,8 @@
     "name": "CroSkull",
     "description": "CroSkulls, EVOs, Eggs, Pets, Staking, Missions, and much more. Everything will take shape in this mysterious ecosystem called the Underworld. Get the key to the insane Bonesville's laboratory experiments.",
     "images": {
-      "banner": "/img/collections/croskull/banner.webp"
+      "banner": "/img/brands/croskull/banner.webp",
+      "preview": "/img/brands/croskull/preview.webp"
     },
     "collections": [
       "0xF87A517A5CaecaA03d7cCa770789BdB61e09e05F",
