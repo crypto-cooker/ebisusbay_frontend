@@ -14730,7 +14730,7 @@
       "onChain": false,
       "address": "0xf54abdcba21e7a740f98307a561b605cb3fdcf63",
       "multiToken": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "Art collectible version of the original Ebisu's Bay VIP Founding Member.",
         "verified": true,
