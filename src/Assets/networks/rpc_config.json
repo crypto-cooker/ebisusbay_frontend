@@ -33,7 +33,7 @@
   },
   "known_contracts": [
     {
-      "name": "Ebisu's Bay - VIP Founding Member",
+      "name": "Ebisu's Bay - Legacy VIP Founding Member",
       "slug": "vip-founding-member",
       "onChain": false,
       "address": "0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5",
@@ -14725,7 +14725,7 @@
       }
     },
     {
-      "name": "Ebisu's Bay - Legacy VIP Founding Member",
+      "name": "Ebisu's Bay - Legacy VIP Founding Member (Art Collectible)",
       "slug": "legacy-vip-founding-member",
       "onChain": false,
       "address": "0x02e14045863ec462c2eb4a5412cb90f71b4f18c7",

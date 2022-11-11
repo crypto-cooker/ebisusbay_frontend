@@ -73,10 +73,10 @@ const RewardsCard = () => {
     try {
       setIsHarvesting(true);
       const amountToHarvest = await stakeContract.getReward(user.address);
-
       if (amountToHarvest.gt(0)) {
         try {
-          const tx = await stakeContract.harvest(user.address, txExtras);
+          const writeContract = new Contract(config.contracts.stake, StakeABI.abi, user.provider.getSigner());
+          const tx = await writeContract.harvest(user.address, txExtras);
           const receipt = await tx.wait();
           await getRewardsInfo();
           toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));

@@ -435,7 +435,11 @@ const RyoshiDrop = ({drop}) => {
 
               <div className="item_info ps-0">
 
-                <div className="card eb-nft__card h-100 shadow mt-2">
+                <div className="card eb-nft__card h-100 shadow mt-2" style={{
+                  borderColor:getTheme(userTheme).colors.borderColor3,
+                  borderWidth:'2px',
+                  backgroundColor:getTheme(userTheme).colors.bgColor5
+                }}>
                   <div className="card-body d-flex flex-column">
 
 
