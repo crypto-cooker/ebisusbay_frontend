@@ -340,18 +340,16 @@ const Index = function () {
                   </div>
                 </span>
               </div>
-              {(user.vipCount > 0 || user.stakeCount > 0) && (
-                <div className="col">
-                  <span onClick={() => navigateTo(`/staking`)}>
-                    <div className={styles.col}>
-                      <span>
-                        <FontAwesomeIcon icon={faBolt} />
-                      </span>
-                      <span className="ms-2">My Staking</span>
-                    </div>
-                  </span>
-                </div>
-              )}
+              <div className="col">
+                <span onClick={() => navigateTo(`/staking`)}>
+                  <div className={styles.col}>
+                    <span>
+                      <FontAwesomeIcon icon={faBolt} />
+                    </span>
+                    <span className="ms-2">Staking</span>
+                  </div>
+                </span>
+              </div>
               <div className="col">
                 <span onClick={() => navigateTo(`/account/${walletAddress}`, {tab:'listings'})}>
                   <div className={styles.col}>

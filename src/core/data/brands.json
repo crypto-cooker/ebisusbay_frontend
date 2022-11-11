@@ -268,6 +268,26 @@
     "style": {}
   },
   {
+    "slug": "crodex",
+    "name": "CRODEX",
+    "description": "OG Crxillions and Space Crxillions are Crodex's non-fungible token (NFT) collections of hyper-realistic felines. They are multi-dimensional crypto assets that will enable you to actively utilize your NFTs as yield generators, boosters or tickets for Metaverse Hub adventures and games with various offerings.",
+    "images": {
+      "banner": "/img/brands/crodex/banner.webp"
+    },
+    "collections": [
+      "0xE1bAa24525B5f48F9B9df54802E44E85c0D81099",
+      "0xB6782F208ABe10E8962407d139f6698Bfc4FD13F"
+    ],
+    "socials": {
+      "website": "https://swap.crodex.app/#/mhub",
+      "twitter": "https://twitter.com/crodexapp",
+      "discord": "https://discord.gg/7HwpTF63y5",
+      "telegram": "https://t.me/crodexofficial"
+    },
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "baby-alien-division",
     "name": "Baby Alien Division",
     "description": "",

@@ -248,7 +248,7 @@ export default class Responsive extends Component {
                                   </Text>
                                 </HStack>
                               )}
-                              {!item.drop.cost && !item.drop.erc20Cost && (
+                              {!item.drop.cost && !item.drop.erc20Cost && item.drop.slug !== 'ryoshi-tales-vip' && (
                                 <h3>TBA</h3>
                               )}
                               {item.drop.memberCost &&
