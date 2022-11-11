@@ -435,7 +435,7 @@ const RyoshiDrop = ({drop}) => {
 
               <div className="item_info ps-0">
 
-                <div className="card eb-nft__card h-100 shadow px-4  mt-2">
+                <div className="card eb-nft__card h-100 shadow mt-2">
                   <div className="card-body d-flex flex-column">
 
 
@@ -462,7 +462,7 @@ const RyoshiDrop = ({drop}) => {
                       </div>
                     )}
 
-                    <Text fontSize="sm" my={2} style={{ color: getTheme(userTheme).colors.textColor3 }}>
+                    <Text fontSize="sm" my={2}>
                       1 Ebisu's Bay VIP will be swapped for 10 Ryoshi Tales VIP, 1 SeaShrine VIP, and 1 collectible
                       Ebisu's Bay VIP. Make sure to <Link href="/staking">unstake</Link> before swapping
                     </Text>
@@ -498,6 +498,27 @@ const RyoshiDrop = ({drop}) => {
                     )}
                     {status === statuses.SOLD_OUT && <p className="mt-5">SWAP HAS SOLD OUT</p>}
                     {status === statuses.EXPIRED && <p className="mt-5">SWAP HAS ENDED</p>}
+
+                    {status === statuses.LIVE && drop.end && (
+                      <div className="me-4">
+                        <Heading as="h6" size="sm" className="mb-1">{status === statuses.EXPIRED ? <>Minting Ended</> : <>Minting Ends</>}</Heading>
+                        <Heading as="h3" size="md">{convertTime(drop.end)}</Heading>
+                      </div>
+                    )}
+                    {status === statuses.NOT_STARTED && drop.start && (
+                      <div className="me-4">
+                        <Heading as="h6" size="sm" className="mb-1">Minting Starts</Heading>
+                        <Heading as="h3" size="md">
+                          {new Date(drop.start).toDateString()}, {new Date(drop.start).toTimeString()}
+                        </Heading>
+                      </div>
+                    )}
+                    {status === statuses.NOT_STARTED && !drop.start && (
+                      <div className="me-4">
+                        <Heading as="h6" size="sm" className="mb-1">Minting Starts</Heading>
+                        <Heading as="h3" size="md">TBA</Heading>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -524,29 +545,6 @@ const RyoshiDrop = ({drop}) => {
                       {drop.disclaimer}
                     </Text>
                   </Box>
-                )}
-
-                <div className="spacer-40"></div>
-
-                {status === statuses.LIVE && drop.end && (
-                  <div className="me-4">
-                    <Heading as="h6" size="sm" className="mb-1">{status === statuses.EXPIRED ? <>Minting Ended</> : <>Minting Ends</>}</Heading>
-                    <Heading as="h3" size="md">{convertTime(drop.end)}</Heading>
-                  </div>
-                )}
-                {status === statuses.NOT_STARTED && drop.start && (
-                  <div className="me-4">
-                    <Heading as="h6" size="sm" className="mb-1">Minting Starts</Heading>
-                    <Heading as="h3" size="md">
-                      {new Date(drop.start).toDateString()}, {new Date(drop.start).toTimeString()}
-                    </Heading>
-                  </div>
-                )}
-                {status === statuses.NOT_STARTED && !drop.start && (
-                  <div className="me-4">
-                    <Heading as="h6" size="sm" className="mb-1">Minting Starts</Heading>
-                    <Heading as="h3" size="md">TBA</Heading>
-                  </div>
                 )}
               </div>
             </div>
