@@ -30,7 +30,7 @@ import {parseUnits} from "ethers/lib/utils";
 import {appConfig} from "@src/Config";
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
-import {Box, Heading, Text, useColorModeValue} from "@chakra-ui/react";
+import {Box, Heading, ListItem, Text, UnorderedList, useColorModeValue} from "@chakra-ui/react";
 
 const config = appConfig();
 const collections = config.collections;
@@ -333,7 +333,12 @@ const RyoshiDrop = ({drop}) => {
                   <Heading as="h1" size="2xl" className="col-white mb-4">{drop.title}</Heading>
                 </Reveal>
                 <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
-                  <div className="lead col-white mb-4">{newlineText(drop.subtitle)}</div>
+                  <div className="lead col-white mb-4">
+                    <Text>Ryoshi Tales awaits all of our enthusiastic supporters.</Text>
+                    <Text mt={2} fontWeight="bold">Get your hands on these exclusive Ryoshi Tales-themed VIP NFTs now!</Text>
+                    <Text mt={2}>Coming with 8 different traits each with relevant attributes – body, background, tools, mouth, hair, miscellaneous, eyes, clothing... <u>every NFT is completely unique.</u></Text>
+                    <Text mt={2}>Don’t miss out on the opportunity to participate in our project’s evolution.</Text>
+                  </div>
                 </Reveal>
                 {drop.foundersOnly && (
                   <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
@@ -364,7 +369,7 @@ const RyoshiDrop = ({drop}) => {
               <div className="de-flex mt-4 mt-sm-0 mb-2">
                 <div className="de-flex-col">
                   <div className="profile_avatar">
-                    {drop.images.avatar && <img src={hostedImage(drop.images.avatar)} alt={drop.author.name} />}
+                    {drop.images.avatar && <img src={hostedImage(drop.images.avatar)} alt={drop.author.name} style={{height:'100%'}}/>}
                     <div className="profile_name">
                       <Heading as="h4" size="md">
                         {drop.title}
@@ -399,7 +404,7 @@ const RyoshiDrop = ({drop}) => {
                 ) : (
                   <div>
                     <div className="fs-6 fw-bold mb-1 text-end">
-                      {percentage(totalSupply.toString(), maxSupply.toString())}% minted (
+                      {percentage(totalSupply.toString(), maxSupply.toString())}% swapped (
                       {ethers.utils.commify(totalSupply.toString())} / {ethers.utils.commify(maxSupply.toString())})
                     </div>
                     <ProgressBar
@@ -409,7 +414,22 @@ const RyoshiDrop = ({drop}) => {
                   </div>
                 )}
 
-                <div className="mt-3 mb-4">{newlineText(drop.description)}</div>
+                <div className="mt-3 mb-4">
+                  <Text fontWeight="bold" fontSize="2xl">It is time for a birthday rebranding!</Text>
+                  <Text mt={2}>As Ebisu's Bay’s VIP Founding Member NFTs turn 1 year old, our marketplace enters into a new stage of its evolution. </Text>
+                  <Text mt={2}>With these new Ryoshi Tales VIPs, you will be able to obtain the <strong>same benefits and functionalities compared to our legacy Ebisu’s Bay VIPs:</strong></Text>
+                  <UnorderedList ms={6}>
+                    <ListItem>reduced service fees</ListItem>
+                    <ListItem>discounts on drops</ListItem>
+                    <ListItem>early access to features</ListItem>
+                    <ListItem>staking to earn CRO</ListItem>
+                  </UnorderedList>
+                  <Text mt={2} fontWeight="bold">AND!</Text>
+                  <Text mt={2}>You will also get intrinsic rarity features, with <strong>additional staking functions</strong> within Ryoshi Tales once the game has been released.</Text>
+                  <Text mt={2}>Moreover, with a switch from the ERC-1155 to the ERC-721 protocol, the token stands to gain better token gating opportunities. </Text>
+                  <Text mt={2} fontWeight="bold" fontSize="2xl">Get yours now and help Ebisu populate his islands in his upcoming GameFi experience!
+                  </Text>
+                </div>
 
                 {drop.disclaimer && (
                   <Box bg={useColorModeValue('gray.100','gray.700')} rounded={'lg'} my="4">
@@ -419,23 +439,9 @@ const RyoshiDrop = ({drop}) => {
                   </Box>
                 )}
 
-                {isCrosmocraftsPartsDrop(drop.address) && (
-                  <div className="mb-4">
-                    <span>Once you have minted your parts, you can&nbsp;</span>
-                    <div className="nft__item_action d-inline-block" style={{ fontSize: '16px' }}>
-                      <span
-                        onClick={() => typeof window !== 'undefined' && window.open('/build-ship', '_self')}
-                        style={{ cursor: 'pointer' }}
-                      >
-                        build your Crosmocraft
-                      </span>
-                    </div>
-                  </div>
-                )}
-
                 <div className="d-flex flex-row">
                   <div className="me-4">
-                    <Heading as="h6" size="sm" className="mb-1">Mint Price</Heading>
+                    <Heading as="h6" size="sm" className="mb-1">Swap Price</Heading>
                     <Heading as="h5" size="md">1 Ebisu's Bay VIP</Heading>
                   </div>
                 </div>
