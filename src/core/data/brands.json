@@ -342,7 +342,8 @@
     "name": "0xLuckless",
     "description": "",
     "images": {
-      "banner": "/img/collections/0xluckless/banner.webp"
+      "banner": "/img/brands/0xluckless/banner.webp",
+      "preview": "/img/brands/0xluckless/preview.webp"
     },
     "collections": [
       "0xd0B45e7bFcc58C99203E60a363E2574e01B0a581",
@@ -363,7 +364,8 @@
     "name": "Carkayous",
     "description": "Carkayous is a fictitious continent created by Jesse Smith (Ink Master | TV Celeb | Tattoo Artist) where his art lives.",
     "images": {
-      "banner": "/img/collections/carkayous-feral-fish/banner.webp"
+      "banner": "/img/brands/carkayous/banner.webp",
+      "preview": "/img/brands/carkayous/preview.webp"
     },
     "collections": [
       "0x72af9c869a4759e6d50e9656c0741b395532c3dd",
