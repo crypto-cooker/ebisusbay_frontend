@@ -209,11 +209,13 @@ const RyoshiDrop = ({drop}) => {
         }
         setMintingState("Swapping...");
 
-        // const gasPrice = parseUnits('5000', 'gwei');
-        // const gasEstimate = await contract.estimateGas.mintWithToken(numToMint);
-        // const gasLimit = gasEstimate.mul(2);
+        const gasPrice = parseUnits('5000', 'gwei');
+        const gasEstimate = await ryoshiContract.estimateGas.mintWithToken(numToMint);
+        const gasLimit = gasEstimate.mul(2);
         let extra = {
           value: finalCost,
+          gasPrice,
+          gasLimit
         };
 
         const response = await ryoshiContract.mintWithToken(numToMint, extra);
