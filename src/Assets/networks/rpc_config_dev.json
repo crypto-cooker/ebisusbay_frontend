@@ -14883,6 +14883,36 @@
         "kyc": false,
         "verified": true
       }
+    },
+    {
+      "name": "CRO CROW NEST",
+      "slug": "cro-crow-nest",
+      "multiToken": false,
+      "address": "0x937879726455531dB135F9b8D88F38dF5D4Eb13b",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The crows have built these nests all around the world, even on places where you would think it would be unlikely to find one like a volcanic floor, floating on top of a river, or even on places far beyond the physical realm we live in.",
+        "verified": true,
+        "avatar": "/img/collections/cro-crow-nest/avatar.webp",
+        "banner": "/img/collections/cro-crow-nest/banner.webp",
+        "card": "/img/collections/cro-crow-nest/card.webp",
+        "maxSupply": 777,
+        "website": "https://crocrow.com",
+        "twitter": "https://twitter.com/cronoscrocrow",
+        "discord": "https://discord.gg/8a8Xm4wwR9",
+        "telegram": "https://t.me/crocrownft",
+        "medium": "https://medium.com/@cronoscrocrow",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
