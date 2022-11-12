@@ -465,6 +465,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
+        "description": "CRO CROW is the very first NFT deployed on the Cronos Chain.\n\nEdition #1 was minted on block #946, just 1 hour and 27 minutes after Cronos was launched.\n\nThe CRO CROW Ecosystem revolves around this historic NFT and the art of Alemf, the artist behind the crows and some other side collections.\n\nThese NFTs can be staked to The Forest to passively earn $CRO which is automatically distributed from secondary market royalties and other sources of income.\n\nCAW CAW!",
         "verified": true,
         "avatar": "/img/collections/crocrow/avatar.webp",
         "banner": "/img/collections/crocrow/banner.webp",
