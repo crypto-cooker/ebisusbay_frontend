@@ -14914,6 +14914,34 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Trappazoids",
+      "slug": "trappazoids",
+      "multiToken": false,
+      "address": "0x266F8324EEe7CD663dD25837322aF985b80bF841",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Trappazoids is a randomly generated NFT collection which has more than 180 hand drawn traits living on the Cronos Chain. Max. Supply: 1111 Public Price: 300 CRO WL Price: 250 CRO Mint is live! Utility: • Continuous giveaways for holders. • Stake available on Crodex. • $CRO Cashback events. • Alpha NFT Research Channel Access • Custom Trappazoids • HQ merch drops • TrapPass Cards for 10x Trappazoids holders to have access to an upcoming unprecedented website on Cronos Chain. • Legendary utility is a big tray of Turkish Pistachio Baklava for 10x Trappazoids holders. \uD83E\uDD24\uD83D\uDE0B Check out the roadmap and the whitepaper to learn more about Trappazoids.",
+        "verified": false,
+        "avatar": "/img/collections/trappazoids/avatar.webp",
+        "banner": "/img/collections/trappazoids/banner.webp",
+        "card": "/img/collections/trappazoids/card.webp",
+        "maxSupply": 1111,
+        "website": "https://trappazoids.com",
+        "twitter": "https://twitter.com/trappazoids",
+        "discord": "https://discord.gg/bAKrMvRVYf",
+        "medium": "https://medium.com/@trappazoids",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
