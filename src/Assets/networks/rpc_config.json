@@ -465,6 +465,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
+        "description": "CRO CROW is the very first NFT deployed on the Cronos Chain.\n\nEdition #1 was minted on block #946, just 1 hour and 27 minutes after Cronos was launched.\n\nThe CRO CROW Ecosystem revolves around this historic NFT and the art of Alemf, the artist behind the crows and some other side collections.\n\nThese NFTs can be staked to The Forest to passively earn $CRO which is automatically distributed from secondary market royalties and other sources of income.\n\nCAW CAW!",
         "verified": true,
         "avatar": "/img/collections/crocrow/avatar.webp",
         "banner": "/img/collections/crocrow/banner.webp",
@@ -8051,12 +8052,12 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Dragons of the West is a collection of 4,444 Chinese Dragons inspired by the hit TV show \"Avatar: The Last Airbender\". These dragons are used in our turn-based card strategy P2E game available on mobile and PC.",
+        "description": "Dragons of the West is a collection of 1,233 Chinese Dragons inspired by the hit TV show \"Avatar: The Last Airbender\". These dragons are used in our turn-based card strategy P2E game available on mobile and PC.",
         "verified": false,
         "avatar": "/img/collections/dragons-of-the-west/avatar.png",
         "card": "/img/collections/dragons-of-the-west/card.png",
         "banner": "/img/collections/dragons-of-the-west/banner.png",
-        "maxSupply": 4444,
+        "maxSupply": 1233,
         "website": "https://www.dragonsofthewestnft.com/",
         "twitter": "https://twitter.com/DragonsoftheW",
         "discord": "https://discord.gg/Jdpdg3bpVA",
@@ -14882,6 +14883,94 @@
         "doxx": "public",
         "kyc": false,
         "verified": true
+      }
+    },
+    {
+      "name": "CRO CROW NEST",
+      "slug": "cro-crow-nest",
+      "multiToken": false,
+      "address": "0x937879726455531dB135F9b8D88F38dF5D4Eb13b",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The crows have built these nests all around the world, even on places where you would think it would be unlikely to find one like a volcanic floor, floating on top of a river, or even on places far beyond the physical realm we live in.",
+        "verified": true,
+        "avatar": "/img/collections/cro-crow-nest/avatar.webp",
+        "banner": "/img/collections/cro-crow-nest/banner.webp",
+        "card": "/img/collections/cro-crow-nest/card.webp",
+        "maxSupply": 777,
+        "website": "https://crocrow.com",
+        "twitter": "https://twitter.com/cronoscrocrow",
+        "discord": "https://discord.gg/8a8Xm4wwR9",
+        "telegram": "https://t.me/crocrownft",
+        "medium": "https://medium.com/@cronoscrocrow",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Trappazoids",
+      "slug": "trappazoids",
+      "multiToken": false,
+      "address": "0x266F8324EEe7CD663dD25837322aF985b80bF841",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Trappazoids is a randomly generated NFT collection which has more than 180 hand drawn traits living on the Cronos Chain. Max. Supply: 1111 Public Price: 300 CRO WL Price: 250 CRO Mint is live! Utility: • Continuous giveaways for holders. • Stake available on Crodex. • $CRO Cashback events. • Alpha NFT Research Channel Access • Custom Trappazoids • HQ merch drops • TrapPass Cards for 10x Trappazoids holders to have access to an upcoming unprecedented website on Cronos Chain. • Legendary utility is a big tray of Turkish Pistachio Baklava for 10x Trappazoids holders. \uD83E\uDD24\uD83D\uDE0B Check out the roadmap and the whitepaper to learn more about Trappazoids.",
+        "verified": false,
+        "avatar": "/img/collections/trappazoids/avatar.webp",
+        "banner": "/img/collections/trappazoids/banner.webp",
+        "card": "/img/collections/trappazoids/card.webp",
+        "maxSupply": 1111,
+        "website": "https://trappazoids.com",
+        "twitter": "https://twitter.com/trappazoids",
+        "discord": "https://discord.gg/bAKrMvRVYf",
+        "medium": "https://medium.com/@trappazoids",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CRO CROW Customs",
+      "slug": "cro-crow-customs",
+      "multiToken": false,
+      "address": "0xccc777777ac85999fc9fe355f25cd908060ec9ea",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "NFTs reserved for special members of the CRO CROW community",
+        "verified": true,
+        "avatar": "/img/collections/cro-crow-customs/avatar.webp",
+        "banner": "/img/collections/cro-crow-customs/banner.webp",
+        "card": "/img/collections/cro-crow-customs/card.webp",
+        "maxSupply": 0,
+        "website": "https://crocrow.com",
+        "twitter": "https://twitter.com/cronoscrocrow",
+        "discord": "https://discord.gg/8a8Xm4wwR9",
+        "telegram": "https://t.me/crocrownft",
+        "medium": "https://medium.com/@cronoscrocrow",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],

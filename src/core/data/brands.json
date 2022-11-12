@@ -119,18 +119,42 @@
     "style": {}
   },
   {
+    "slug": "dg-pals",
+    "name": "D.G.Pals",
+    "description": "D.G.P: New World Beta LIVE 23rd May & D.G.P: Legends Beta LIVE 31st May 2022!\nWelcome to the D.G.Verse! Backed by Crypto.com Capital and Spartan Group, D.G.Pals is one of the first to redefine Web3 gaming with the first Interoperable NFT on the Cronos chain. The D.G.Pals Genesis Collection is the most privileged set of 10,000 NFT collection. Genesis NFT holders will be empowered with resources, airdrops and other perks to help the D.G.Pals Team build the D.G.Verse. You can check out how, by owning a Genesis D.G.Pal NFT, you can help expand Panterra, grow the player base and contribute to development on the D.G.Pals Whitepaper or website. On top of these exclusive privileges, these Genesis D.G.Pal NFTs can also participate in all of the games in the D.G.Verse like every other D.G.Pal NFTs.",
+    "images": {
+      "banner": "/img/collections/dgpals/banner.png"
+    },
+    "collections": [
+      "0xeFc73c41EF829C0B87E3245aCF033b867cCD0F84",
+      "0x86aabe05e885108a8797314e817488c26f0601a1",
+      "0xa072bB6F648a4271ba9CbaF1319Fc373eF907f29",
+      "0x500cdf7a96a612BEb9e018035a3E89180a6732fE",
+      "0x70D3ee9b000f9210C1Ce1bD2A80cBAEBe209aeb7"
+    ],
+    "socials": {
+      "website": "https://dgpals.io/",
+      "twitter": "https://twitter.com/officialdgpals",
+      "discord": "https://discord.gg/dgpals",
+      "medium": "https://medium.com/officialdgpals"
+    },
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "cro-crow",
     "name": "CRO CROW",
-    "description": "",
+    "description": "CRO CROW is the very first NFT deployed on the Cronos Chain.\n\nEdition #1 was minted on block #946, just 1 hour and 27 minutes after Cronos was launched.\n\nThe CRO CROW Ecosystem revolves around this historic NFT and the art of Alemf, the artist behind the crows and some other side collections.\n\nThese NFTs can be staked to The Forest to passively earn $CRO which is automatically distributed from secondary market royalties and other sources of income.\n\nCAW CAW!",
     "images": {
-      "banner": "/img/collections/crocrow/banner.webp",
-      "preview": "/img/collections/crocrow/card.webp"
+      "banner": "/img/collections/cro-crow/banner.webp"
     },
     "collections": [
       "0xe4ab77ed89528d90e6bcf0e1ac99c58da24e79d5",
-      "0xd33CFeF82377fef83703B9D84151a477B08Ab3b8",
       "0x65AB0251d29c9C473c8d01BFfa2966F891fB1181",
-      "0x13d13e2410A34Bfe5502D50ea4FCFBd591D7589E"
+      "0x937879726455531dB135F9b8D88F38dF5D4Eb13b",
+      "0x0f1439a290e86a38157831fe27a3dcd302904055",
+      "0x13d13e2410A34Bfe5502D50ea4FCFBd591D7589E",
+      "0xd33CFeF82377fef83703B9D84151a477B08Ab3b8"
     ],
     "socials": {
       "website": "https://crocrow.com",
@@ -199,28 +223,6 @@
     "style": {}
   },
   {
-    "slug": "weird-apes-club",
-    "name": "Weird Apes Club",
-    "description": "Genesis Weird Apes is a breedable collection randomly generated from 125 traits aimed to bring Weirdness all over the Cronos Chain! Not just a PFP but an entire ecosystem of advanced mechanisms of staking, breeding, renting, customization and more!\nWith every 2D ape you may burn $WAC to claim an additional new 3D Voxel ape with corresponding rank and traits. Voxel apes will play a key role within our P2E, Legends of Weirdonite.\nVisit our Discord to join our wonderful community!",
-    "images": {
-      "banner": "/img/collections/weirdapesclub/banner.webp"
-    },
-    "collections": [
-      "0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44",
-      "0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1",
-      "0x89F7114C73d5cef7d7EDCbDb14DaA092EB2194c9"
-    ],
-    "socials": {
-      "website": "https://weirdapes.com/",
-      "twitter": "https://twitter.com/WeirdApesClub",
-      "discord": "https://discord.gg/d6WvCpfn9W",
-      "medium": "https://medium.com/@WeirdApesClub",
-      "gitbook": "https://weirdape.gitbook.io/weird-apes-club/weird-apes-club/summary"
-    },
-    "categories": [],
-    "style": {}
-  },
-  {
     "slug": "argonauts",
     "name": "Argonauts",
     "description": "The Argonauts brand features various NFT collections under the NFT arm of Argo Finance. At it's core, the Argonauts collection is a collection of 8,888 unique utility-enabled characters that represents your unique identity on the Cronos chain. The Argonauts will be the centrepiece of Argo, providing users with massive utility across the suite of Argo products.",
@@ -245,24 +247,47 @@
     "style": {}
   },
   {
-    "slug": "dg-pals",
-    "name": "D.G.Pals",
-    "description": "D.G.P: New World Beta LIVE 23rd May & D.G.P: Legends Beta LIVE 31st May 2022!\nWelcome to the D.G.Verse! Backed by Crypto.com Capital and Spartan Group, D.G.Pals is one of the first to redefine Web3 gaming with the first Interoperable NFT on the Cronos chain. The D.G.Pals Genesis Collection is the most privileged set of 10,000 NFT collection. Genesis NFT holders will be empowered with resources, airdrops and other perks to help the D.G.Pals Team build the D.G.Verse. You can check out how, by owning a Genesis D.G.Pal NFT, you can help expand Panterra, grow the player base and contribute to development on the D.G.Pals Whitepaper or website. On top of these exclusive privileges, these Genesis D.G.Pal NFTs can also participate in all of the games in the D.G.Verse like every other D.G.Pal NFTs.",
+    "slug": "cronos-primate-business",
+    "name": "Cronos Primate Business",
+    "description": "3 generations of uniquely generated primates that make up the Primate World. The original Cronos Primate Business is a collection of 1000 primates that sold out in two minutes. The Primates along with Gorillas and Corrupted give staking, raffles, giveaways and more.\n\nCrotopia is the Metaverse being built by Cronos Primate Business. The OG pass is your key to the metaverse and includes free skin airdrops for life.",
     "images": {
-      "banner": "/img/collections/dgpals/banner.png"
+      "banner": "/img/brands/cronos-primate-business/banner.webp",
+      "preview": "/img/brands/cronos-primate-business/preview.webp"
     },
     "collections": [
-      "0xeFc73c41EF829C0B87E3245aCF033b867cCD0F84",
-      "0x86aabe05e885108a8797314e817488c26f0601a1",
-      "0xa072bB6F648a4271ba9CbaF1319Fc373eF907f29",
-      "0x500cdf7a96a612BEb9e018035a3E89180a6732fE",
-      "0x70D3ee9b000f9210C1Ce1bD2A80cBAEBe209aeb7"
+      "0x939b90c529F0e3a2C187E1b190Ca966a95881FDe",
+      "0x241a175BDE39D6a2C6fA7ba9ed8F9Ac2C7F2741D",
+      "0xc843f18d5605654391e7eDBEa250f6838C3e8936",
+      "0xA68825768bDB7a2161422e3CcAF1973FF88f8E66",
+      "0x67474fDBebe7A973356b6791c7D7F70264298C0A"
     ],
     "socials": {
-      "website": "https://dgpals.io/",
-      "twitter": "https://twitter.com/officialdgpals",
-      "discord": "https://discord.gg/dgpals",
-      "medium": "https://medium.com/officialdgpals"
+      "website": "https://www.cronospb.com/",
+      "twitter": "https://twitter.com/PrimateCronos",
+      "discord": "https://discord.gg/X4shERMUwf",
+      "medium": "https://medium.com/cronos-monkey-business"
+    },
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "weird-apes-club",
+    "name": "Weird Apes Club",
+    "description": "Genesis Weird Apes is a breedable collection randomly generated from 125 traits aimed to bring Weirdness all over the Cronos Chain! Not just a PFP but an entire ecosystem of advanced mechanisms of staking, breeding, renting, customization and more!\nWith every 2D ape you may burn $WAC to claim an additional new 3D Voxel ape with corresponding rank and traits. Voxel apes will play a key role within our P2E, Legends of Weirdonite.\nVisit our Discord to join our wonderful community!",
+    "images": {
+      "banner": "/img/collections/weirdapesclub/banner.webp"
+    },
+    "collections": [
+      "0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44",
+      "0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1",
+      "0x89F7114C73d5cef7d7EDCbDb14DaA092EB2194c9"
+    ],
+    "socials": {
+      "website": "https://weirdapes.com/",
+      "twitter": "https://twitter.com/WeirdApesClub",
+      "discord": "https://discord.gg/d6WvCpfn9W",
+      "medium": "https://medium.com/@WeirdApesClub",
+      "gitbook": "https://weirdape.gitbook.io/weird-apes-club/weird-apes-club/summary"
     },
     "categories": [],
     "style": {}
@@ -306,30 +331,6 @@
       "twitter": "https://twitter.com/BAD_Cronos",
       "discord": "https://discord.gg/qKBy2azf69",
       "medium": "https://medium.com/@babyaliendivision"
-    },
-    "categories": [],
-    "style": {}
-  },
-  {
-    "slug": "cronos-primate-business",
-    "name": "Cronos Primate Business",
-    "description": "3 generations of uniquely generated primates that make up the Primate World. The original Cronos Primate Business is a collection of 1000 primates that sold out in two minutes. The Primates along with Gorillas and Corrupted give staking, raffles, giveaways and more.\n\nCrotopia is the Metaverse being built by Cronos Primate Business. The OG pass is your key to the metaverse and includes free skin airdrops for life.",
-    "images": {
-      "banner": "/img/brands/cronos-primate-business/banner.webp",
-      "preview": "/img/brands/cronos-primate-business/preview.webp"
-    },
-    "collections": [
-      "0x939b90c529F0e3a2C187E1b190Ca966a95881FDe",
-      "0x241a175BDE39D6a2C6fA7ba9ed8F9Ac2C7F2741D",
-      "0xc843f18d5605654391e7eDBEa250f6838C3e8936",
-      "0xA68825768bDB7a2161422e3CcAF1973FF88f8E66",
-      "0x67474fDBebe7A973356b6791c7D7F70264298C0A"
-    ],
-    "socials": {
-      "website": "https://www.cronospb.com/",
-      "twitter": "https://twitter.com/PrimateCronos",
-      "discord": "https://discord.gg/X4shERMUwf",
-      "medium": "https://medium.com/cronos-monkey-business"
     },
     "categories": [],
     "style": {}
@@ -381,25 +382,22 @@
     "style": {}
   },
   {
-    "slug": "carkayous",
-    "name": "Carkayous",
-    "description": "Carkayous is a fictitious continent created by Jesse Smith (Ink Master | TV Celeb | Tattoo Artist) where his art lives.",
+    "slug": "croodle-ape",
+    "name": "Croodle Ape",
+    "description": "Cronos NFTs ecosystem focus on passive income and long-term sustainability",
     "images": {
-      "banner": "/img/brands/carkayous/banner.webp",
-      "preview": "/img/brands/carkayous/preview.webp"
+      "banner": "/img/brands/croodle-ape/banner.webp"
     },
     "collections": [
-      "0x72af9c869a4759e6d50e9656c0741b395532c3dd",
-      "0x6c2757ee563d063cce48bd06b130292fe530e76d",
-      "0xe0afa67d7E4F2329f81562DB9318837A28be83Ec",
-      "0xD717708d012dCa8C3d108BD1E079f937C4A2C0cF",
-      "0x7781b08298d7EDD97354989307A37cFd79BeB175",
-      "0x384A13ca5eA3BF799387DAf3dB0140AE66a7f3f0"
+      "0xf3a7baeadf59f6900c0202a4680d958b9ad4b713",
+      "0x84Fd887B14442C070a9B63a966D15a2C98E03FA2",
+      "0xfcE5A6571fA0495d28f9D305945E74bA4dDEAD62",
+      "0x434c8845261d5cF942d62fcd6503569cE05798b3"
     ],
     "socials": {
-      "website": "https://carkayous.com/",
-      "twitter": "https://twitter.com/carkayous",
-      "discord": "https://discord.gg/carkayous"
+      "website": "https://croodleape.com/",
+      "twitter": "https://www.twitter.com/croodleape",
+      "discord": "https://discord.gg/Tj97K4c4Y9"
     },
     "categories": [],
     "style": {}
@@ -442,6 +440,30 @@
       "website": "https://zap7art.club/",
       "twitter": "https://twitter.com/zap7project",
       "discord": "https://discord.gg/tBgUbvsSZX"
+    },
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "carkayous",
+    "name": "Carkayous",
+    "description": "Carkayous is a fictitious continent created by Jesse Smith (Ink Master | TV Celeb | Tattoo Artist) where his art lives.",
+    "images": {
+      "banner": "/img/brands/carkayous/banner.webp",
+      "preview": "/img/brands/carkayous/preview.webp"
+    },
+    "collections": [
+      "0x72af9c869a4759e6d50e9656c0741b395532c3dd",
+      "0x6c2757ee563d063cce48bd06b130292fe530e76d",
+      "0xe0afa67d7E4F2329f81562DB9318837A28be83Ec",
+      "0xD717708d012dCa8C3d108BD1E079f937C4A2C0cF",
+      "0x7781b08298d7EDD97354989307A37cFd79BeB175",
+      "0x384A13ca5eA3BF799387DAf3dB0140AE66a7f3f0"
+    ],
+    "socials": {
+      "website": "https://carkayous.com/",
+      "twitter": "https://twitter.com/carkayous",
+      "discord": "https://discord.gg/carkayous"
     },
     "categories": [],
     "style": {}
