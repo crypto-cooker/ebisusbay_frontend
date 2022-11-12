@@ -14942,6 +14942,36 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "CRO CROW Customs",
+      "slug": "cro-crow-customs",
+      "multiToken": false,
+      "address": "0xccc777777ac85999fc9fe355f25cd908060ec9ea",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "NFTs reserved for special members of the CRO CROW community",
+        "verified": true,
+        "avatar": "/img/collections/cro-crow-customs/avatar.webp",
+        "banner": "/img/collections/cro-crow-customs/banner.webp",
+        "card": "/img/collections/cro-crow-customs/card.webp",
+        "maxSupply": 0,
+        "website": "https://crocrow.com",
+        "twitter": "https://twitter.com/cronoscrocrow",
+        "discord": "https://discord.gg/8a8Xm4wwR9",
+        "telegram": "https://t.me/crocrownft",
+        "medium": "https://medium.com/@cronoscrocrow",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
