@@ -19729,7 +19729,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/alstoniaverse-access-card/drop.webp",
         "banner": "/img/collections/alstoniaverse-access-card/banner.webp",
