@@ -171,7 +171,7 @@ const UnstakedRyoshiNftList = ({onSelect}) => {
           ) : (
             <>
               <div className="card-group row g-3">
-                {data.pages[0]?.nfts?.length > 0 ? (
+                {data.pages[0]?.length > 0 ? (
                   <>
                     {data.pages.map((items, index) => (
                       <React.Fragment key={index}>
@@ -249,8 +249,6 @@ const StakedRyoshiList = () => {
   const loadMore = () => {
     fetchNextPage();
   };
-
-  console.log('DATA2', status, data);
 
   return (
     <div className="d-flex">
