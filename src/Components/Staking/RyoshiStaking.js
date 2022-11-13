@@ -2,7 +2,7 @@ import React, {memo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Spinner} from 'react-bootstrap';
 import {ethers} from 'ethers';
-import {Box, Heading, Text} from "@chakra-ui/react";
+import {Box, Center, Heading, Text} from "@chakra-ui/react";
 import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
 import {getStakedRyoshi} from "@src/core/subgraph/staking";
 import {appConfig} from "@src/Config";
@@ -15,6 +15,7 @@ import {FullCollectionsQuery} from "@src/core/api/queries/fullcollections";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {CollectionSortOption} from "@src/Components/Models/collection-sort-option.model";
+import Link from "next/link";
 
 const txExtras = {
   gasPrice: ethers.utils.parseUnits('5000', 'gwei'),
@@ -75,6 +76,15 @@ const RyoshiStaking = () => {
           {displayType === displayTypes.staked && (
             <StakedRyoshiList />
           )}
+          <Box mt={4} align="center">
+            Looking for more Ryoshi VIPs to stake? Swap a Legacy VIP on the&nbsp;
+            <Link href="/drops/ryoshi-tales-vip">
+              <span className="color cursor-pointer fw-bold">drop page</span>
+            </Link>, or pick some up on the&nbsp;
+            <Link href="/collection/ryoshi-tales-vip">
+              <span className="color cursor-pointer fw-bold">secondary market</span>
+            </Link>
+          </Box>
         </>
       ) : (
         <div className="row mt-4">
@@ -161,27 +171,34 @@ const UnstakedRyoshiNftList = ({onSelect}) => {
           ) : (
             <>
               <div className="card-group row g-3">
-
-                {data.pages.map((items, index) => (
-                  <React.Fragment key={index}>
-                    {items.map((nft, index) => {
-                      return (
-                        <div
-                          className={`d-item col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2 mb-4`}
-                          key={`${nft.address}-${nft.id}-${index}`}
-                        >
-                          <RyoshiStakingNftCard
-                            nft={nft}
-                            canStake={true}
-                            isStaked={false}
-                            onAddToCartButtonPressed={() => dispatch(addToCart(nft))}
-                            onRemoveFromCartButtonPressed={() => dispatch(removeFromCart(nft))}
-                          />
-                        </div>
-                      )
-                    })}
-                  </React.Fragment>
-                ))}
+                {data.pages[0]?.nfts?.length > 0 ? (
+                  <>
+                    {data.pages.map((items, index) => (
+                      <React.Fragment key={index}>
+                        {items.map((nft, index) => {
+                          return (
+                            <div
+                              className={`d-item col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2 mb-4`}
+                              key={`${nft.address}-${nft.id}-${index}`}
+                            >
+                              <RyoshiStakingNftCard
+                                nft={nft}
+                                canStake={true}
+                                isStaked={false}
+                                onAddToCartButtonPressed={() => dispatch(addToCart(nft))}
+                                onRemoveFromCartButtonPressed={() => dispatch(removeFromCart(nft))}
+                              />
+                            </div>
+                          )
+                        })}
+                      </React.Fragment>
+                    ))}
+                  </>
+                ) : (
+                  <Center>
+                    No unstaked Ryoshi VIPs found.
+                  </Center>
+                )}
               </div>
             </>
           )}
@@ -233,7 +250,7 @@ const StakedRyoshiList = () => {
     fetchNextPage();
   };
 
-  // console.log('DATA2', data);
+  console.log('DATA2', status, data);
 
   return (
     <div className="d-flex">
@@ -264,26 +281,34 @@ const StakedRyoshiList = () => {
           ) : (
             <>
               <div className="card-group row g-3">
-                {data.pages.map((items, index) => (
-                  <React.Fragment key={index}>
-                    {items.nfts?.map((nft, index) => {
-                      return (
-                        <div
-                          className={`d-item col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2 mb-4`}
-                          key={`${nft.address}-${nft.id}-${index}`}
-                        >
-                          <RyoshiStakingNftCard
-                            nft={nft}
-                            canStake={true}
-                            isStaked={true}
-                            onAddToCartButtonPressed={() => dispatch(addToCart(nft))}
-                            onRemoveFromCartButtonPressed={() => dispatch(removeFromCart(nft))}
-                          />
-                        </div>
-                      )
-                    })}
-                  </React.Fragment>
-                ))}
+                {data.pages[0]?.nfts?.length > 0 ? (
+                  <>
+                    {data.pages.map((items, index) => (
+                      <React.Fragment key={index}>
+                        {items.nfts?.map((nft, index) => {
+                          return (
+                            <div
+                              className={`d-item col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2 mb-4`}
+                              key={`${nft.address}-${nft.id}-${index}`}
+                            >
+                              <RyoshiStakingNftCard
+                                nft={nft}
+                                canStake={true}
+                                isStaked={true}
+                                onAddToCartButtonPressed={() => dispatch(addToCart(nft))}
+                                onRemoveFromCartButtonPressed={() => dispatch(removeFromCart(nft))}
+                              />
+                            </div>
+                          )
+                        })}
+                      </React.Fragment>
+                    ))}
+                  </>
+                ) : (
+                  <Center>
+                    No staked Ryoshi VIPs found.
+                  </Center>
+                )}
               </div>
             </>
           )}

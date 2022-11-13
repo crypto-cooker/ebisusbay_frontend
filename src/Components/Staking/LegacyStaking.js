@@ -150,77 +150,79 @@ const LegacyStaking = () => {
               </Tag>
             </HStack>
           )}
-          <Text my={2}>
-            The original VIP Founding Member NFTs are migrating to the Ryoshi Tales VIP collection.
-            Starting on November 11th, holders will need to migrate them in order to retain the same benefits as before.{' '}
-            <Link href="https://blog.ebisusbay.com/ebisus-bay-vip-split-506b05c619c7" isExternal>
-              <span className="color">Learn more</span>
-            </Link>
-          </Text>
         </div>
         <div className="row">
           <div className="col-md-4 text-center">
             <AnyMedia
-              video={hostedImage('QmX97CwY2NcmPmdS6XtcqLFMV2JGEjnEWjxBQbj4Q6NC2i.mp4')}
+              video="https://cdn.ebisusbay.com/QmX97CwY2NcmPmdS6XtcqLFMV2JGEjnEWjxBQbj4Q6NC2i.mp4"
               videoProps={
                 {autoPlay: true}
               }
             />
           </div>
           <div className="col-md-8">
-            <div className="item_info">
-              {!isInitializing && isApproved && (
-                <>
-                  {stakeCount + vipCount > 0 && (
-                    <>
-                      <div className="row g-3">
-                        <div>
-                          <div className="row g-3">
-                            <div className="col">
-                              <StakeCard
-                                buttonName="Unstake"
-                                buttonActionName="Unstaking..."
-                                threshold={stakeCount}
-                                stake={unStake}
-                              />
-                            </div>
+            <Box mt={{base: 2, md: 0}}>
+              The original VIP Founding Member collection is migrating to the Ryoshi Tales VIP collection.
+              Holders now need to migrate in order to retain the same benefits as before.{' '}
+              <Link href="https://blog.ebisusbay.com/ebisus-bay-vip-split-506b05c619c7" isExternal>
+                <span className="color fw-bold">Learn more</span>
+              </Link>
+            </Box>
+            {!isInitializing && isApproved && (
+              <>
+                {stakeCount + vipCount > 0 ? (
+                  <>
+                    <div className="row g-3">
+                      <div>
+                        <div className="row g-3">
+                          <div className="col">
+                            <StakeCard
+                              buttonName="Unstake"
+                              buttonActionName="Unstaking..."
+                              threshold={stakeCount}
+                              stake={unStake}
+                            />
                           </div>
                         </div>
                       </div>
-                    </>
-                  )}
-                </>
-              )}
-              {!isInitializing && !isApproved && (
-                <div className="card eb-nft__card h-100 shadow px-4">
-                  <div className="card-body d-flex flex-row justify-content-center">
-                    <span className="my-auto">
-                      <button className="btn-main lead me-2" onClick={approve}>
-                        {isApproving ? (
-                          <>
-                            Approving...
-                            <Spinner animation="border" role="status" size="sm" className="ms-1">
-                              <span className="visually-hidden">Loading...</span>
-                            </Spinner>
-                          </>
-                        ) : (
-                          <>Approve</>
-                        )}
-                      </button>
-                    </span>
-                    <span className="my-auto text-center">Please approve the staking contract to continue</span>
-                  </div>
+                    </div>
+                  </>
+                ) : (
+                  <Box align="center" mt={6}>
+                    No Legacy VIPs found.
+                  </Box>
+                )}
+              </>
+            )}
+            {!isInitializing && !isApproved && (
+              <div className="card eb-nft__card h-100 shadow px-4">
+                <div className="card-body d-flex flex-row justify-content-center">
+                  <span className="my-auto">
+                    <button className="btn-main lead me-2" onClick={approve}>
+                      {isApproving ? (
+                        <>
+                          Approving...
+                          <Spinner animation="border" role="status" size="sm" className="ms-1">
+                            <span className="visually-hidden">Loading...</span>
+                          </Spinner>
+                        </>
+                      ) : (
+                        <>Approve</>
+                      )}
+                    </button>
+                  </span>
+                  <span className="my-auto text-center">Please approve the staking contract to continue</span>
                 </div>
-              )}
+              </div>
+            )}
 
-              {isInitializing && (
-                <div className="text-center">
-                  <Spinner animation="border" role="status" className="ms-1">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>
-                </div>
-              )}
-            </div>
+            {isInitializing && (
+              <div className="text-center">
+                <Spinner animation="border" role="status" className="ms-1">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </div>
+            )}
           </div>
         </div>
       </Box>

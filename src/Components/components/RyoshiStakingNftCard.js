@@ -38,6 +38,17 @@ const RyoshiStakingNftCard = ({
     router.push(nftUrl)
   };
 
+  const navigateTo = (link) => {
+    if (ryoshiStakingCart.isDrawerOpen) {
+      if (isInCart()) {
+        onRemoveFromCartButtonPressed();
+      } else {
+        onAddToCartButtonPressed();
+      }
+    } else {
+      window.open(link, '_blank');
+    }
+  };
 
   const getOptions = () => {
     const options = [];
@@ -132,7 +143,7 @@ const RyoshiStakingNftCard = ({
               transition="0.3s ease"
               transform="scale(1.0)"
               cursor="pointer"
-              onClick={() => {isInCart() ? onRemoveFromCartButtonPressed() : onAddToCartButtonPressed()}}
+              onClick={() => navigateTo(nftUrl)}
             >
               <AnyMedia image={nftCardUrl(nft.address, nft.image)}
                         title={nft.name}
@@ -150,7 +161,7 @@ const RyoshiStakingNftCard = ({
           )}
           <div className="d-flex flex-column p-2 pb-1">
             <div className="card-title mt-auto">
-              <span>
+              <span onClick={() => navigateTo(nftUrl)} style={{ cursor: 'pointer' }}>
                 {nft.count && nft.count > 0 ? (
                   <Heading as="h6" size="sm">
                     {nft.name} (x{nft.count})
