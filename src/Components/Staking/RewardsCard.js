@@ -10,6 +10,7 @@ import {appConfig} from "@src/Config";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {txExtras} from "@src/core/constants";
+import {Box, SimpleGrid} from "@chakra-ui/react";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -25,7 +26,10 @@ const RewardsCard = () => {
   const [firstRunComplete, setFirstRunComplete] = useState(false);
   const [isHarvesting, setIsHarvesting] = useState(false);
   const [rewardsInfoLoading, setRewardsInfoLoading] = useState(false);
+
+  // Stats
   const [userPendingRewards, setUserPendingRewards] = useState(0);
+  const [userStakedTotal, setUserStakedTotal] = useState(0);
   const [userReleasedRewards, setUserReleasedRewards] = useState(0);
   const [globalPaidRewards, setGlobalPaidRewards] = useState(0);
   const [globalStakedTotal, setGlobalStakedTotal] = useState(0);
@@ -59,9 +63,11 @@ const RewardsCard = () => {
     try {
       const mUserPendingRewards = await stakeContract.getReward(user.address);
       const mUserReleasedRewards = await stakeContract.getReleasedReward(user.address);
+      const mUserStakedTotal = await stakeContract.amountRyoshiStaked(user.address);
 
       setUserPendingRewards(ethers.utils.formatEther(mUserPendingRewards));
       setUserReleasedRewards(ethers.utils.formatEther(mUserReleasedRewards));
+      setUserStakedTotal(mUserStakedTotal);
     } catch (error) {
       console.log(error);
     }
@@ -128,26 +134,34 @@ const RewardsCard = () => {
             </Spinner>
           ) : (
             <>
-              <div className="row">
-                <div className="col-12 col-sm-4 text-center">
-                  <div>Global Staked</div>
-                  <div className="fw-bold" style={{ color: getTheme(userTheme).colors.textColor3 }}>
-                    {globalStakedTotal}
-                  </div>
-                </div>
-                <div className="col-12 col-sm-4 mt-1 mt-sm-0 text-center">
-                  <div>Global Harvested</div>
-                  <div className="fw-bold" style={{ color: getTheme(userTheme).colors.textColor3 }}>
-                    {siPrefixedNumber(round(Number(globalPaidRewards)))} CRO
-                  </div>
-                </div>
-                <div className="col-12 col-sm-4 mt-1 mt-sm-0 text-center">
-                  <div>My Harvest</div>
-                  <div className="fw-bold" style={{ color: getTheme(userTheme).colors.textColor3 }}>
-                    {user.address ? `${siPrefixedNumber(round(Number(userReleasedRewards)))} CRO` : '-'}
-                  </div>
-                </div>
-              </div>
+              <Box>
+                <SimpleGrid columns={{base: 1, sm: 2, md: 4}} align="center">
+                  <Box>
+                    <div>Global Staked</div>
+                    <div className="fw-bold" style={{ color: getTheme(userTheme).colors.textColor3 }}>
+                      {globalStakedTotal}
+                    </div>
+                  </Box>
+                  <Box>
+                    <div>Global Harvested</div>
+                    <div className="fw-bold" style={{ color: getTheme(userTheme).colors.textColor3 }}>
+                      {siPrefixedNumber(round(Number(globalPaidRewards)))} CRO
+                    </div>
+                  </Box>
+                  <Box>
+                    <div>My Stake</div>
+                    <div className="fw-bold" style={{ color: getTheme(userTheme).colors.textColor3 }}>
+                      {user.address ? `${siPrefixedNumber(round(Number(userStakedTotal)))}` : '-'}
+                    </div>
+                  </Box>
+                  <Box>
+                    <div>My Harvest</div>
+                    <div className="fw-bold" style={{ color: getTheme(userTheme).colors.textColor3 }}>
+                      {user.address ? `${siPrefixedNumber(round(Number(userReleasedRewards)))} CRO` : '-'}
+                    </div>
+                  </Box>
+                </SimpleGrid>
+              </Box>
               {user.address && (
                 <div className="mt-4">
                   {userPendingRewards > 0 ? (

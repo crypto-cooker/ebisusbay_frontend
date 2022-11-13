@@ -182,6 +182,7 @@ export const getServerSideProps = async ({ params, query }) => {
   const collections = await endpointService.getCollections({address: brandAddresses.join(',')});
   let splitCollections = [];
   let sortedCollections = collections.data.collections
+    .filter((c) => !!c.metadata && Object.keys(c.metadata).length > 0)
     .map((c) => {
       c.position = brandKeyedAddresses.find((o) => caseInsensitiveCompare(o.address, c.address)).position;
       const drop = drops.find((d) => d.slug === c.slug);
@@ -203,7 +204,7 @@ export const getServerSideProps = async ({ params, query }) => {
       return c;
     })
     .sort((a, b) => a.position > b.position ? 1 : -1);
-  sortedCollections = [...splitCollections, ...sortedCollections];
+  sortedCollections.splice(sortedCollections.length - 1, 0, ...splitCollections);
 
   let initialStats = {
     items: {

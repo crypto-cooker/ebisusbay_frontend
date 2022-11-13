@@ -8,11 +8,14 @@
       "preview": "/img/collections/ebisu/banner.png"
     },
     "collections": [
+      "0xE49709A3B59d708f50AA3712F2E5a84b7707664C",
       "0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5",
+      "0x584a16905ca9cb10c0a2a9caa8e37a64de48c506",
+      "0x54E61e2043f894475D17D344250F1983f7F7e6D3",
       "0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29",
       "0x008d4Ab1D8fbC7823422a7cCFe3f1D73c09760Ab",
       "0xD961956B319A10CBdF89409C0aE7059788A4DaBb",
-      "0x54E61e2043f894475D17D344250F1983f7F7e6D3"
+      "0xf54abdcba21e7a740f98307a561b605cb3fdcf63"
     ],
     "socials": {
       "website": "https://app.ebisusbay.com/",
