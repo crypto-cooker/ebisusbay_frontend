@@ -9809,7 +9809,7 @@
       "multiToken": false,
       "address": "0x49D85f22b6c65593018355D7B090164A06F8090b",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Black Cat is a collection of 311 unique NFTs reserved for the Lucky Spookies holders that gain access to exclusive initiatives within the community. Black cats were created to give everyone the opportunity to be owned by a mini-panther.",
         "verified": false,
