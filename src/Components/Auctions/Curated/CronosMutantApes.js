@@ -1,11 +1,47 @@
 import React from 'react';
-
 import Footer from '../../components/Footer';
 import CuratedAuctionCollection from "./CuratedAuctionCollection";
 import PageHead from "../../Head/PageHead";
-import {Heading} from "@chakra-ui/react";
+import {Box, Heading} from "@chakra-ui/react";
 import Image from "next/image";
-import ReactPlayer from "react-player";
+import dynamic from "next/dynamic";
+import {ImageKitService} from "@src/helpers/image";
+import Reveal from "react-awesome-reveal";
+import styled from "styled-components";
+import {keyframes} from "@emotion/react";
+
+const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
+const HeroSection = styled.section`
+  border-radius: 0;
+  margin: 0;
+  padding: 0 0;
+  background-size: cover;
+  width: 100%;
+  min-height: 75vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .h-vh {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    background-position: center;
+    background-size: cover;
+  }
+`;
+const fadeInUp = keyframes`
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(40px);
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+`;
 
 const CronosMutantApesAuction = () => {
   const name = 'Legendary Mutant Serum Auction';
@@ -24,55 +60,64 @@ const CronosMutantApesAuction = () => {
         url="/mutant-serum"
         image={image}
       />
-      <section className="no-bottom shadow-lg" style={{
-        backgroundImage:`url(${background})`,
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
-        color:'white'
-      }}>
+      <HeroSection
+        className={`jumbotron tint`}
+        style={{
+          backgroundImage: `url(${ImageKitService.buildBannerUrl(background)})`
+        }}
+      >
         <div className="container">
-          <div className="row">
-            <div className="col-md-6 my-auto">
-              <Heading as="h2" size="xl" className="mb-2" style={{color:'white'}}>
-                {name}
-                <span className="ms-2">
-                   <Image src={image} width={30} height={30} />
-                </span>
-              </Heading>
-              <p>
-                This is your last chance to get one of the 10 Legendary Serums from Cronos Mutant Apes!<br />
-                By burning this special Serum you are guaranteed to get one of the 10 Legendary Mutant Apes. <br />
-                To do so, you'll just need to hold 1 Cronos Apes and use this DAPP: <a href="https://app.cronosapesnft.com/lab" target="_blank">https://app.cronosapesnft.com/lab</a>
-              </p>
+          <div className="row align-items-center">
+            <div className="col-lg-6">
+              <div className="spacer-single"></div>
+              <div className="spacer-double"></div>
+              <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
+                <div>
+                  <Heading as="h1" size="2xl" className="col-white mb-4">{name}</Heading>
+                </div>
+              </Reveal>
+              <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
+                <div className="lead col-white mb-4">
+                  This is your last chance to get one of the 10 Legendary Serums from Cronos Mutant Apes!<br />
+                  By burning this special Serum you are guaranteed to get one of the 10 Legendary Mutant Apes. <br />
+                  To do so, you'll just need to hold 1 Cronos Apes and use this DAPP: <a href="https://app.cronosapesnft.com/lab" target="_blank">https://app.cronosapesnft.com/lab</a>
+                </div>
+              </Reveal>
+              <div className="spacer-10"></div>
             </div>
-            <div className="col-md-6 text-center my-auto">
-              <div className="player-wrapper">
-                <ReactPlayer
-                  className="react-player"
-                  controls
-                  url={video}
-                  config={{
-                    file: {
-                      attributes: {
-                        onContextMenu: (e) => e.preventDefault(),
-                        controlsList: 'nodownload',
+            <div className="col-lg-6 mb-4 mb-sm-0">
+              <Reveal className="onStep" keyframes={fadeInUp} delay={600} duration={900} triggerOnce>
+                <Box className="player-wrapper">
+                  <ReactPlayer
+                    className="react-player"
+                    controls
+                    url={video}
+                    config={{
+                      file: {
+                        attributes: {
+                          onContextMenu: (e) => e.preventDefault(),
+                          controlsList: 'nodownload',
+                        },
                       },
-                    },
-                  }}
-                  muted={true}
-                  playing={true}
-                  loop={true}
-                  width="100%"
-                  height="100%"
-                />
-              </div>
+                    }}
+                    muted={true}
+                    playing={true}
+                    loop={true}
+                    width="100%"
+                    height="100%"
+                  />
+                </Box>
+              </Reveal>
             </div>
           </div>
         </div>
-      </section>
+      </HeroSection>
       <section className="gl-legacy container pt-5">
         <div className="row">
-          <div className="col-lg-12 pt-3">
+          <div className="col-12 col-md-4 text-center">
+            <Image src={image} width={350} height={350} />
+          </div>
+          <div className="col-12 col-md-8 pt-3">
             <CuratedAuctionCollection collectionId="0x33e0b91c773d500fb4de87957740f5d200be7371" />
           </div>
         </div>
