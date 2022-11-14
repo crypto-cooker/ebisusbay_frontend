@@ -46,7 +46,7 @@ const fadeInUp = keyframes`
 const CronosMutantApesAuction = () => {
   const name = 'Legendary Mutant Serum Auction';
   const description = 'This is your last chance to get one of the 10 Legendary Serums from Cronos Mutant Apes! \n' +
-    'By burning this special Serum you are guaranteed to get one of the 10 Legendary Mutant Apes. \n' +
+    'By burning this special Serum you are guaranteed to get one of the 10 Legendary Mutant Apes (Last Sale: 100K CRO). \n' +
     'To do so, you\'ll just need to hold 1 Cronos Apes and use this DAPP: https://app.cronosapesnft.com/lab.';
   const image = 'https://cdn.ebisusbay.biz/collections/mutant-serum_Lrqx04cXt.gif';
   const background = 'https://cdn.ebisusbay.biz/collections/mutant-serum-auction_pTRuSIxBd.png';
@@ -79,7 +79,7 @@ const CronosMutantApesAuction = () => {
               <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
                 <div className="lead col-white mb-4">
                   This is your last chance to get one of the 10 Legendary Serums from Cronos Mutant Apes!<br />
-                  By burning this special Serum you are guaranteed to get one of the 10 Legendary Mutant Apes. <br />
+                  By burning this special Serum you are guaranteed to get one of the 10 Legendary Mutant Apes (Last Sale: 100K CRO). <br />
                   To do so, you'll just need to hold 1 Cronos Apes and use this DAPP: <a href="https://app.cronosapesnft.com/lab" target="_blank">https://app.cronosapesnft.com/lab</a>
                 </div>
               </Reveal>
