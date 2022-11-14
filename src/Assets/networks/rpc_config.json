@@ -14539,7 +14539,7 @@
       "name": "Selfie Guys",
       "slug": "selfie-guys",
       "multiToken": false,
-      "address": "",
+      "address": "0xDc01bE48163Cb07231Ec6c5C5a1e694FFAF3A724",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -20204,7 +20204,7 @@
         "discord": "https://discord.gg/C7uGgYnTvM",
         "medium": "https://medium.com/@selfie-guys-nft"
       },
-      "address": "",
+      "address": "0xDc01bE48163Cb07231Ec6c5C5a1e694FFAF3A724",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 100,
       "totalSupply": 6666,
