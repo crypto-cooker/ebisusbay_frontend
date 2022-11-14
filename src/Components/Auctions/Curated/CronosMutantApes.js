@@ -73,14 +73,14 @@ const CronosMutantApesAuction = () => {
               <div className="spacer-double"></div>
               <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
                 <div>
-                  <Heading as="h1" size="2xl" className="col-white mb-4">{name}</Heading>
+                  <Heading as="h1" size="xl" className="col-white mb-4">{name}</Heading>
                 </div>
               </Reveal>
               <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
                 <div className="lead col-white mb-4">
-                  This is your last chance to get one of the 10 Legendary Serums from Cronos Mutant Apes!<br />
-                  By burning this special Serum you are guaranteed to get one of the 10 Legendary Mutant Apes (Last Sale: 100K CRO). <br />
-                  To do so, you'll just need to hold 1 Cronos Apes and use this DAPP: <a href="https://app.cronosapesnft.com/lab" target="_blank">https://app.cronosapesnft.com/lab</a>
+                  <p>This is your last chance to get one of the 10 Legendary Serums from Cronos Mutant Apes!</p>
+                  <p>By burning this special Serum you are guaranteed to get one of the 10 Legendary Mutant Apes (Last Sale: 100K CRO).</p>
+                  <p>To do so, you'll just need to hold 1 Cronos Apes and use this DAPP: <a href="https://app.cronosapesnft.com/lab" target="_blank">https://app.cronosapesnft.com/lab</a></p>
                 </div>
               </Reveal>
               <div className="spacer-10"></div>
