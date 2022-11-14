@@ -5,6 +5,7 @@ import AuctionComponent from '../../src/Components/components/AuctionComponent';
 import MadAuction from "../../src/Components/Auctions/Curated/MadAuction";
 import Blood4NftAuction from "../../src/Components/Auctions/Curated/Blood4NftAuction";
 import WorldOfCatsAuction from "@src/Components/Auctions/Curated/WorldOfCats";
+import CronosMutantApesAuction from "@src/Components/Auctions/Curated/CronosMutantApes";
 
 const Auction = ({id}) => {
   if (id === 'mad-auction') {
@@ -13,7 +14,9 @@ const Auction = ({id}) => {
     return (<Blood4NftAuction />);
   } else if (id === 'world-of-cats') {
     return (<WorldOfCatsAuction />);
-  } else {
+  } else if (id === 'mutant-serum') {
+    return (<CronosMutantApesAuction />);
+  }  else {
     return (<AuctionComponent id={id} />);
   }
 };

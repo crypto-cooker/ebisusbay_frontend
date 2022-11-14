@@ -5,35 +5,67 @@ import CuratedAuctionCollection from "./CuratedAuctionCollection";
 import PageHead from "../../Head/PageHead";
 import {Heading} from "@chakra-ui/react";
 import Image from "next/image";
+import ReactPlayer from "react-player";
 
-const WorldOfCatsAuction = () => {
-  const name = 'World of Cats Auction';
-  const description = 'Special customized World Of Cats auctioned for charity. 100% of the proceeds go to World Of Cats charity fund, which will then be given forward to cat shelters. Winner of this auction gets airdropped token id 0 from the World Of Cats collection & can design his own personalized NFT.';
-  const image = 'https://cdn.ebisusbay.com/collections/woc-prereveal_yJ1SI3qFp.png';
+const CronosMutantApesAuction = () => {
+  const name = 'Legendary Mutant Serum Auction';
+  const description = 'This is your last chance to get one of the 10 Legendary Serums from Cronos Mutant Apes! \n' +
+    'By burning this special Serum you are guaranteed to get one of the 10 Legendary Mutant Apes. \n' +
+    'To do so, you\'ll just need to hold 1 Cronos Apes and use this DAPP: https://app.cronosapesnft.com/lab.';
+  const image = 'https://cdn.ebisusbay.biz/collections/mutant-serum_Lrqx04cXt.gif';
+  const background = 'https://cdn.ebisusbay.biz/collections/mutant-serum-auction_pTRuSIxBd.png';
+  const video = 'https://cdn.ebisusbay.biz/collections/mutant-serum-auction_43Ax4cE8B.mp4';
 
   return (
     <>
       <PageHead
         title={name}
         description={description}
-        url="/world-of-cats"
+        url="/mutant-serum"
         image={image}
       />
-      <section className="no-bottom shadow-lg" style={{background:'black', color:'white'}}>
+      <section className="no-bottom shadow-lg" style={{
+        backgroundImage:`url(${background})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        color:'white'
+      }}>
         <div className="container">
           <div className="row">
-            <div className="col-sm-6 my-auto">
-              <div className="text-center">
-                <Heading as="h2" size="xl" className="mb-2" style={{color:'white'}}>{name}</Heading>
-                <p>{description}</p>
-              </div>
+            <div className="col-md-6 my-auto">
+              <Heading as="h2" size="xl" className="mb-2" style={{color:'white'}}>
+                {name}
+                <span className="ms-2">
+                   <Image src={image} width={30} height={30} />
+                </span>
+              </Heading>
+              <p>
+                This is your last chance to get one of the 10 Legendary Serums from Cronos Mutant Apes!<br />
+                By burning this special Serum you are guaranteed to get one of the 10 Legendary Mutant Apes. <br />
+                To do so, you'll just need to hold 1 Cronos Apes and use this DAPP: <a href="https://app.cronosapesnft.com/lab" target="_blank">https://app.cronosapesnft.com/lab</a>
+              </p>
             </div>
-            <div className="col-sm-6  text-center">
-              <Image
-                src={image}
-                width={168}
-                height={300}
-              />
+            <div className="col-md-6 text-center my-auto">
+              <div className="player-wrapper">
+                <ReactPlayer
+                  className="react-player"
+                  controls
+                  url={video}
+                  config={{
+                    file: {
+                      attributes: {
+                        onContextMenu: (e) => e.preventDefault(),
+                        controlsList: 'nodownload',
+                      },
+                    },
+                  }}
+                  muted={true}
+                  playing={true}
+                  loop={true}
+                  width="100%"
+                  height="100%"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -41,7 +73,7 @@ const WorldOfCatsAuction = () => {
       <section className="gl-legacy container pt-5">
         <div className="row">
           <div className="col-lg-12 pt-3">
-            <CuratedAuctionCollection collectionId="0x4Ce0B9608006533dA056170f1efe8eEa771e0d19" />
+            <CuratedAuctionCollection collectionId="0x33e0b91c773d500fb4de87957740f5d200be7371" />
           </div>
         </div>
       </section>
@@ -49,4 +81,4 @@ const WorldOfCatsAuction = () => {
     </>
   );
 };
-export default WorldOfCatsAuction;
+export default CronosMutantApesAuction;
