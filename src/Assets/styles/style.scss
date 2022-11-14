@@ -5582,3 +5582,82 @@ iframe.metaverse {
 
   }
 }
+
+.swiper{
+
+  .index-counter{
+    width: 60px;
+    height: 28px;
+    position: absolute;
+    z-index: 3;
+    top: 4%;
+    left: 4%;
+    background-color: rgba(159, 159, 159, 0.4);
+    backdrop-filter: blur(10px);
+    border-radius: 6px;
+    color: white;
+    font-weight: 900;
+    outline: 0;
+    font-size: 14px;
+    padding: 2px 8px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .swiper-button-next, .swiper-button-prev {
+    opacity: 0;
+    top: 54%;
+    width: 30px !important;
+    height: 30px !important;
+    font-weight: 900 !important;
+    border: none !important;
+    background-color: rgba(159, 159, 159, 0.4) !important;
+    backdrop-filter: blur(10px);
+    color: white !important;;
+
+
+    &::after {
+      font-size: 12px !important;
+    }
+
+  }
+
+  .swiper-button-next{
+    right: 8px !important;
+  }
+
+  .swiper-button-prev{
+    left: 8px !important;
+  }
+
+  &:hover {
+    .swiper-button-next, .swiper-button-prev {
+      opacity: 1;
+      transition: opacity 0.5s ;
+    }
+  }
+
+}
+
+.bundle-images-container {
+
+  border: solid 2px;
+  border-radius: 5px;
+
+  .main-image {
+    border-bottom: solid;
+  }
+
+  .image-menu {
+    border-top: solid;
+    overflow-x: scroll;
+
+      .active{
+        border-radius: 5px;
+        border: solid 2px;
+        color: white
+      }
+
+  }
+
+  
+}
