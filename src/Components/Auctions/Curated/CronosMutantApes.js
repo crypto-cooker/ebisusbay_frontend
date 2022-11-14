@@ -1,8 +1,7 @@
 import React from 'react';
 import Footer from '../../components/Footer';
-import CuratedAuctionCollection from "./CuratedAuctionCollection";
 import PageHead from "../../Head/PageHead";
-import {Box, Heading} from "@chakra-ui/react";
+import {Box, Container, Heading} from "@chakra-ui/react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import {ImageKitService} from "@src/helpers/image";
@@ -49,7 +48,7 @@ const CronosMutantApesAuction = () => {
     'By burning this special Serum you are guaranteed to get one of the 10 Legendary Mutant Apes (Last Sale: 100K CRO). \n' +
     'To do so, you\'ll just need to hold 1 Cronos Apes and use this DAPP: https://app.cronosapesnft.com/lab.';
   const image = 'https://cdn.ebisusbay.biz/collections/mutant-serum_Lrqx04cXt.gif';
-  const background = 'https://cdn.ebisusbay.biz/collections/mutant-serum-auction_pTRuSIxBd.png';
+  const background = 'https://app.cronosapesnft.com/images/background-image.gif';
   const video = 'https://cdn.ebisusbay.biz/collections/mutant-serum-auction_43Ax4cE8B.mp4';
 
   return (
@@ -66,7 +65,7 @@ const CronosMutantApesAuction = () => {
           backgroundImage: `url(${ImageKitService.buildBannerUrl(background)})`
         }}
       >
-        <div className="container">
+        <Container maxW='2560px' mx="1.75em" my={2}>
           <div className="row align-items-center">
             <div className="col-lg-6">
               <div className="spacer-single"></div>
@@ -81,6 +80,9 @@ const CronosMutantApesAuction = () => {
                   <p>This is your last chance to get one of the 10 Legendary Serums from Cronos Mutant Apes!</p>
                   <p>By burning this special Serum you are guaranteed to get one of the 10 Legendary Mutant Apes (Last Sale: 100K CRO).</p>
                   <p>To do so, you'll just need to hold 1 Cronos Apes and use this DAPP: <a href="https://app.cronosapesnft.com/lab" target="_blank">https://app.cronosapesnft.com/lab</a></p>
+                  <div className="mt-4">
+                    <Image src={image} width={350} height={350} />
+                  </div>
                 </div>
               </Reveal>
               <div className="spacer-10"></div>
@@ -110,15 +112,30 @@ const CronosMutantApesAuction = () => {
               </Reveal>
             </div>
           </div>
-        </div>
+        </Container>
       </HeroSection>
       <section className="gl-legacy container pt-5">
         <div className="row">
-          <div className="col-12 col-md-4 text-center">
-            <Image src={image} width={350} height={350} />
-          </div>
-          <div className="col-12 col-md-8 pt-3">
-            <CuratedAuctionCollection collectionId="0x33e0b91c773d500fb4de87957740f5d200be7371" />
+          <div className="col-12 pt-3">
+            <>
+              <div className="col-lg-12">
+                <div className="text-center">
+                  <Heading as="h2" size="xl" className="mb-2">Active Auctions</Heading>
+                </div>
+              </div>
+              <div className="col-lg-12 pt-3">
+                <div className="text-center">Auction coming soon!</div>
+              </div>
+
+              <div className="col-lg-12 mt-4">
+                <div className="text-center">
+                  <Heading as="h2" size="xl" className="mb-2">Completed Auctions</Heading>
+                </div>
+              </div>
+              <div className="col-lg-12 pt-3">
+                <div className="text-center">No completed auctions</div>
+              </div>
+            </>
           </div>
         </div>
       </section>
