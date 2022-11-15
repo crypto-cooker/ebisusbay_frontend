@@ -25,6 +25,7 @@
       "instagram": "https://www.instagram.com/ebisusbayofficial",
       "telegram": "https://t.me/ebisusbay"
     },
+    "featured": true,
     "categories": [],
     "style": {}
   },
@@ -47,6 +48,7 @@
       "discord": "https://discord.gg/madmeerkat",
       "medium": "https://medium.com/@madmeerkat0"
     },
+    "featured": true,
     "categories": [],
     "style": {}
   },
@@ -76,6 +78,7 @@
       "discord": "https://discord.gg/q3nWxw8QRY",
       "medium": "https://medium.com/@croskullnft"
     },
+    "featured": true,
     "categories": [],
     "style": {}
   },
@@ -96,6 +99,7 @@
       "twitter": "https://twitter.com/cryptocomnft",
       "discord": "https://discord.gg/cryptocom"
     },
+    "featured": true,
     "categories": [],
     "style": {}
   },
@@ -118,6 +122,7 @@
       "twitter": "https://twitter.com/HiddenFishDAO",
       "medium": "https://blog.hidethefish.com"
     },
+    "featured": true,
     "categories": [],
     "style": {}
   },
@@ -141,6 +146,7 @@
       "discord": "https://discord.gg/dgpals",
       "medium": "https://medium.com/officialdgpals"
     },
+    "featured": true,
     "categories": [],
     "style": {}
   },
@@ -167,6 +173,7 @@
       "telegram": "https://t.me/crocrownft",
       "medium": "https://medium.com/@cronoscrocrow"
     },
+    "featured": true,
     "categories": [],
     "style": {}
   },
@@ -192,6 +199,7 @@
       "twitter": "https://twitter.com/trooprzarmy",
       "discord": "https://discord.gg/trooprz"
     },
+    "featured": true,
     "categories": [],
     "style": {}
   },
@@ -223,6 +231,7 @@
       "discord": "https://discord.gg/boomersquad",
       "medium": "https://medium.com/@BoomerSquadNFT"
     },
+    "featured": true,
     "categories": [],
     "style": {}
   },
@@ -247,6 +256,7 @@
       "medium": "https://argofinance.medium.com",
       "telegram": "https://t.me/Argo_Finance"
     },
+    "featured": true,
     "categories": [],
     "style": {}
   },
@@ -271,6 +281,7 @@
       "discord": "https://discord.gg/X4shERMUwf",
       "medium": "https://medium.com/cronos-monkey-business"
     },
+    "featured": true,
     "categories": [],
     "style": {}
   },
@@ -293,6 +304,7 @@
       "medium": "https://medium.com/@WeirdApesClub",
       "gitbook": "https://weirdape.gitbook.io/weird-apes-club/weird-apes-club/summary"
     },
+    "featured": true,
     "categories": [],
     "style": {}
   },
@@ -313,6 +325,7 @@
       "discord": "https://discord.gg/7HwpTF63y5",
       "telegram": "https://t.me/crodexofficial"
     },
+    "featured": true,
     "categories": [],
     "style": {}
   },
@@ -336,6 +349,7 @@
       "discord": "https://discord.gg/qKBy2azf69",
       "medium": "https://medium.com/@babyaliendivision"
     },
+    "featured": true,
     "categories": [],
     "style": {}
   },
@@ -360,6 +374,7 @@
       "twitter": "https://twitter.com/degenednfts",
       "discord": "https://discord.gg/N5YXhNDJyz"
     },
+    "featured": true,
     "categories": [],
     "style": {}
   },
@@ -382,6 +397,7 @@
       "discord": "https://discord.gg/REbVZ9rACc",
       "medium": "https://medium.com/@0xLuckless"
     },
+    "featured": true,
     "categories": [],
     "style": {}
   },
@@ -403,6 +419,7 @@
       "twitter": "https://www.twitter.com/croodleape",
       "discord": "https://discord.gg/Tj97K4c4Y9"
     },
+    "featured": true,
     "categories": [],
     "style": {}
   },
@@ -425,6 +442,29 @@
       "medium": "https://hello-143.gitbook.io/lost-toys-nft/",
       "instagram": "https://www.instagram.com/losttoysnft/"
     },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "cronos-apes",
+    "name": "Cronos Apes",
+    "description": "The Cronos Apes brand features various iconic NFT collection. Each NFT of these collections has been uniquely and randomly generated from a fully animated traits set. Each NFT gives access to an exclusive Community and set of utilities, such as the distribution of earnings. If you are searching for the most iconic Apes collection on the Cronos Chain, you are in the right place. Join the #CronosApesArmy now!",
+    "images": {
+      "banner": "/img/brands/cronos-apes/banner.webp",
+      "preview": "/img/brands/cronos-apes/preview.webp"
+    },
+    "collections": [
+      "0x5Cb9a12d31CF751ACc58B12B47cc4E093A6AB580",
+      "0x7D89dCC2f35403cFD9B07475826F9a14a340d06A",
+      "0x33e0b91c773D500FB4De87957740f5D200Be7371"
+    ],
+    "socials": {
+      "website": "https://www.cronosapesnft.com/",
+      "twitter": "https://www.twitter.com/cronosapesnft",
+      "discord": "https://discord.gg/G3JkKJAYVB"
+    },
+    "featured": true,
     "categories": [],
     "style": {}
   },
@@ -445,6 +485,7 @@
       "twitter": "https://twitter.com/zap7project",
       "discord": "https://discord.gg/tBgUbvsSZX"
     },
+    "featured": true,
     "categories": [],
     "style": {}
   },
@@ -468,6 +509,31 @@
       "website": "https://carkayous.com/",
       "twitter": "https://twitter.com/carkayous",
       "discord": "https://discord.gg/carkayous"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "daolab",
+    "name": "DaoLab",
+    "description": "The DaoLabs project is an Ecosystem inspired by two concepts:\n• Dao is a decentralized autonomous organization and\n• Dao (Tao) as a term from East Asian philosophy, which represents the natural order of the universe, the greater whole, that unites all the individual elements of the universe.\nDr Dao, main collection, was born with the aim of uniting artists, developers and builders to improve Cronos Projects, providing Incubator services and giving a percentage back from minting revenues.",
+    "images": {
+      "banner": "/img/brands/daolab/banner.webp",
+      "preview": "/img/brands/daolab/preview.webp"
+    },
+    "collections": [
+      "0x28238122BECBE1D727F2D23631eD83d6cbe833Bc",
+      "0x1C7F4fE849e52B013242CDCb0C88f6A3c2Ea28aF",
+      "0x44aa4cB2efF7167A306449EDe9b550e57Ca33036",
+      "0x51eaf8c081Cca683A5542c438f9429CE46D238e4"
+    ],
+    "socials": {
+      "website": "https://daogames.online/",
+      "twitter": "https://twitter.com/DrDaoClub",
+      "discord": "https://discord.gg/fyca4JYW7V",
+      "medium": "https://medium.com/@drdao.club",
+      "telegram": "https://t.me/DrDaoFounder"
     },
     "categories": [],
     "style": {}

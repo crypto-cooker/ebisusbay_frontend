@@ -13,7 +13,7 @@ const client = new ApolloClient({
 export const getStakedRyoshi = async (walletAddress) => {
   const stakingQueryy = `
   query {
-    account(id: "${walletAddress}") {
+    account(id: "${walletAddress.toLowerCase()}") {
       id
       ryoshiStaked
       numberRyoshiStaked

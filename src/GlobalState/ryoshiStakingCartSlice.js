@@ -6,7 +6,7 @@ const ryoshiStakingCartSlice = createSlice({
   initialState: {
     nfts: [],
     isDrawerOpen: false,
-    context: 'stake',
+    context: 'unstake',
     extras: {}
   },
   reducers: {

@@ -216,20 +216,26 @@ export function mapAttributeString(str, address, category, makeHuman = false) {
  * Converts a number to use SI prefixed notation
  *
  * @param num
+ * @param exclude
  * @returns {string|number}
  */
-export function siPrefixedNumber(num) {
+export function siPrefixedNumber(num, exclude = 5) {
+  if (!num) return 0;
+
+  const wholeNumbers = Math.round(Number(num)).toString().length;
+  const shouldPrefix = wholeNumbers > exclude;
+
   // Twelve Zeroes for Trillions
-  return Math.abs(Number(num)) >= 1.0e12
+  return Math.abs(Number(num)) >= 1.0e12 && shouldPrefix
     ? Number((Math.abs(Number(num)) / 1.0e12).toFixed(2)) + 'T'
     : // Nine Zeroes for Billions
-    Math.abs(Number(num)) >= 1.0e9
+    Math.abs(Number(num)) >= 1.0e9 && shouldPrefix
       ? Number((Math.abs(Number(num)) / 1.0e9).toFixed(2)) + 'B'
       : // Six Zeroes for Millions
-    Math.abs(Number(num)) >= 1.0e6
+    Math.abs(Number(num)) >= 1.0e6 && shouldPrefix
       ? Number((Math.abs(Number(num)) / 1.0e6).toFixed(2)) + 'M'
       : // Three Zeroes for Thousands
-    Math.abs(Number(num)) >= 1.0e3
+    Math.abs(Number(num)) >= 1.0e3 && shouldPrefix
       ? Number((Math.abs(Number(num)) / 1.0e3).toFixed(2)) + 'K'
       : Number(Math.abs(Number(num)));
 }

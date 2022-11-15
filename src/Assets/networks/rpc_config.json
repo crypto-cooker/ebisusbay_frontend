@@ -12114,7 +12114,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Cronos Apes is the first ever NFT collection with an holders-exclusive Community in the Cronos chain. 6% of royalties income distributed to holders. Mutant serums coming soon\u2026",
+        "description": "Cronos Apes is the first ever NFT collection with an holders-exclusive Community in the Cronos chain. 6% of royalties income distributed to holders.",
         "verified": true,
         "avatar": "/img/collections/cronos-apes/avatar.webp",
         "card": "/img/collections/cronos-apes/card.webp",
@@ -14969,6 +14969,34 @@
       },
       "verification": {
         "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "BadMeerkat",
+      "slug": "badmeerkat",
+      "multiToken": false,
+      "address": "0x22B2f2223d26f27c27494efbF4E6646812193a43",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "\uD83C\uDFA8Fan Art collection of Mad Meerkats. 500 unique #Badmeerkat NFTs are coming!! \uD83C\uDD95 traits \uD83C\uDD95 personality \uD83D\uDFF0 degen!!!",
+        "verified": false,
+        "avatar": "/img/collections/badmeerkat/avatar.webp",
+        "banner": "/img/collections/badmeerkat/banner.webp",
+        "card": "/img/collections/badmeerkat/card.webp",
+        "maxSupply": 500,
+        "website": "https://linktr.ee/badmeerkat",
+        "twitter": "https://twitter.com/badmeerkatnft",
+        "discord": "https://discord.gg/wcJ4vvZb4H",
+        "categories": [
+          "art",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
         "doxx": false,
         "kyc": false
       }
