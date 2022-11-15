@@ -471,5 +471,29 @@
     },
     "categories": [],
     "style": {}
+  },
+  {
+    "slug": "daolab",
+    "name": "DaoLab",
+    "description": "The DaoLabs project is an Ecosystem inspired by two concepts:\n• Dao is a decentralized autonomous organization and\n• Dao (Tao) as a term from East Asian philosophy, which represents the natural order of the universe, the greater whole, that unites all the individual elements of the universe.\nDr Dao, main collection, was born with the aim of uniting artists, developers and builders to improve Cronos Projects, providing Incubator services and giving a percentage back from minting revenues.",
+    "images": {
+      "banner": "/img/brands/daolab/banner.webp",
+      "preview": "/img/brands/daolab/preview.webp"
+    },
+    "collections": [
+      "0x28238122BECBE1D727F2D23631eD83d6cbe833Bc",
+      "0x1C7F4fE849e52B013242CDCb0C88f6A3c2Ea28aF",
+      "0x44aa4cB2efF7167A306449EDe9b550e57Ca33036",
+      "0x51eaf8c081Cca683A5542c438f9429CE46D238e4"
+    ],
+    "socials": {
+      "website": "https://daogames.online/",
+      "twitter": "https://twitter.com/DrDaoClub",
+      "discord": "https://discord.gg/fyca4JYW7V",
+      "medium": "https://medium.com/@drdao.club",
+      "telegram": "https://t.me/DrDaoFounder"
+    },
+    "categories": [],
+    "style": {}
   }
 ]
