@@ -36,7 +36,7 @@ const HotCollections = () => {
               title={item.name}
               collectionId={item.address}
               url={`/collection/${item.slug}`}
-              verified={item.verification.verified}
+              verified={item.metadata.verified}
             />
           ))}
       </Slider>

@@ -333,7 +333,7 @@ const Listing = () => {
                       title={collection.name}
                       avatar={hostedImage(collection.metadata.avatar, true)}
                       address={listing.nftAddress}
-                      verified={collection.verification.verified}
+                      verified={collection.metadata.verified}
                       to={`/collection/${collection.slug}`}
                     />
                     {typeof listing.nft.rank !== 'undefined' && listing.nft.rank !== null && (

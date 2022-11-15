@@ -264,7 +264,7 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
                       ) : (
                         <Blockies seed={collection.address.toLowerCase()} size={15} scale={10} />
                       )}
-                      {collection.verification.verified && (
+                      {collection.metadata.verified && (
                         <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={8} stackClass="eb-avatar_badge" />
                       )}
                     </div>
