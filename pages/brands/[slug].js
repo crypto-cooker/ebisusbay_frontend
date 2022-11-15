@@ -151,7 +151,7 @@ const Brand = ({ brand, collections, stats }) => {
                 </Box>
               }
               url={`/collection/${collection.slug ?? collection.address}`}
-              verified={collection.metadata.verified}
+              verified={collection.verification.verified}
             />
           ))}
         </SimpleGrid>

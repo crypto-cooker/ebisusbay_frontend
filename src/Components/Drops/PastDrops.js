@@ -40,7 +40,7 @@ const PastDrops = () => {
               title={item.drop.title}
               collectionId={item.drop.slug}
               url={`/collection/${item.collection.slug}`}
-              verified={item.collection.metadata.verified}
+              verified={item.collection.verification.verified}
             />
           ))}
       </Slider>

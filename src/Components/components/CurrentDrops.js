@@ -70,7 +70,7 @@ const CurrentDrops = ({ useCarousel = true }) => {
                     collectionId={item.drop.slug}
                     url={item.drop.redirect ?? `/drops/${item.drop.slug}`}
                     externalPage={!!item.drop.redirect}
-                    verified={item.collection.metadata.verified}
+                    verified={item.collection.verification.verified}
                   />
               ))}
           </Slider>
@@ -92,7 +92,7 @@ const CurrentDrops = ({ useCarousel = true }) => {
                     collectionId={item.drop.slug}
                     url={item.drop.redirect ?? `/drops/${item.drop.slug}`}
                     externalPage={!!item.drop.redirect}
-                    verified={item.collection.metadata.verified}
+                    verified={item.collection.verification.verified}
                   />
                 </div>
               ))}

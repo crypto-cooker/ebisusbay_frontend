@@ -108,7 +108,7 @@ const AuctionComponent = (props) => {
                         title={collection.name}
                         avatar={hostedImage(collection.metadata.avatar, true)}
                         address={listing.nftAddress}
-                        verified={collection.metadata.verified}
+                        verified={collection.verification.verified}
                         to={`/collection/${collection.slug}`}
                       />
                     </div>

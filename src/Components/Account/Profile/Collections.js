@@ -121,7 +121,7 @@ export default function Collections({ address }) {
                               <span>
                                 Status
                               </span>
-                              <span className="text-end">{collection.metadata.verified ? 'Verified' : 'Unverified'}</span>
+                              <span className="text-end">{collection.verification.verified ? 'Verified' : 'Unverified'}</span>
                             </div>
                             <div className="col-12 mobile-view-list-item">
                               <span>
@@ -142,7 +142,7 @@ export default function Collections({ address }) {
                           </div>
                         )}
                       </th>
-                      {tableMobileView && <td>{collection.metadata.verified ? 'Verified' : 'Unverified'}</td>}
+                      {tableMobileView && <td>{collection.verification.verified ? 'Verified' : 'Unverified'}</td>}
                       {tableMobileView && <td>{collection.metadata.lastUpdated}</td>}
                       {tableMobileView && (
                         <td>
