@@ -1,7 +1,6 @@
-import React, {memo, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Spinner} from 'react-bootstrap';
-import {ethers} from 'ethers';
 import {Box, Center, Heading, Text} from "@chakra-ui/react";
 import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
 import {getStakedRyoshi} from "@src/core/subgraph/staking";
@@ -9,17 +8,13 @@ import {appConfig} from "@src/Config";
 import InfiniteScroll from "react-infinite-scroll-component";
 import RyoshiStakingNftCard from "@src/Components/components/RyoshiStakingNftCard";
 import {getNftsForAddress2} from "@src/core/api";
-import {addToCart, clearCart, closeCart, removeFromCart, setCartContext} from "@src/GlobalState/ryoshiStakingCartSlice";
+import {addToCart, clearCart, removeFromCart, setCartContext} from "@src/GlobalState/ryoshiStakingCartSlice";
 import {sortAndFetchCollectionDetails} from "@src/core/api/endpoints/fullcollections";
 import {FullCollectionsQuery} from "@src/core/api/queries/fullcollections";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {CollectionSortOption} from "@src/Components/Models/collection-sort-option.model";
 import Link from "next/link";
-
-const txExtras = {
-  gasPrice: ethers.utils.parseUnits('5000', 'gwei'),
-};
 
 const ryoshiCollectionAddress = appConfig('collections').find((c) => c.slug === 'ryoshi-tales-vip').address;
 const displayTypes = {
@@ -37,9 +32,6 @@ const RyoshiStaking = () => {
 
   const handleDisplayTypeClick = (value) => {
     setDisplayType(value);
-    dispatch(clearCart());
-    const context = value === displayTypes.staked ? 'unstake' : 'stake';
-    dispatch(setCartContext(context))
   }
 
   const connectWalletPressed = () => {
@@ -52,6 +44,12 @@ const RyoshiStaking = () => {
       dispatch(chainConnect());
     }
   };
+
+  useEffect(() => {
+    dispatch(clearCart());
+    const context = displayType === displayTypes.staked ? 'unstake' : 'stake';
+    dispatch(setCartContext(context))
+  }, [displayType])
 
   return (
     <Box>
@@ -139,8 +137,6 @@ const UnstakedRyoshiNftList = ({onSelect}) => {
   const loadMore = () => {
     fetchNextPage();
   };
-
-  // console.log('DATA2', data);
 
   return (
     <div className="d-flex">

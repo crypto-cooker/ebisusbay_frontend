@@ -8,7 +8,7 @@ import React from "react";
 import Header from "@src/Components/Collections/components/Header";
 import categories from "@src/core/data/categories.json";
 
-const Brands = () => {
+const Brands = ({ssrBrands}) => {
   const router = useRouter();
   const [supportsHover] = useMediaQuery('(hover: hover)')
 
@@ -26,7 +26,7 @@ const Brands = () => {
       <Header title="Brands" subtitle="Showcasing the most prominent brands on the Cronos chain" />
       <Box mt={4} maxW="2560px" mx="auto">
         <SimpleGrid columns={{base: 1, md: 2, lg: 3, xl: 4}} gap={4} mx={6}>
-          {brands.map((brand) => (
+          {ssrBrands.map((brand) => (
             <Box
               key={brand.slug}
               h="200px"
@@ -87,9 +87,11 @@ const Brands = () => {
 }
 
 export const getServerSideProps = async ({ params, query }) => {
+  const filteredBrands = brands.filter((b) => b.featured);
+
   return {
     props: {
-      brands
+      ssrBrands: filteredBrands
     },
   };
 };

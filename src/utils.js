@@ -217,20 +217,21 @@ export function mapAttributeString(str, address, category, makeHuman = false) {
  * Converts a number to use SI prefixed notation
  *
  * @param num
+ * @param minimum
  * @returns {string|number}
  */
-export function siPrefixedNumber(num) {
+export function siPrefixedNumber(num, minimum = 6) {
   // Twelve Zeroes for Trillions
-  return Math.abs(Number(num)) >= 1.0e12
+  return Math.abs(Number(num)) >= 1.0e12 && minimum <= 12
     ? Number((Math.abs(Number(num)) / 1.0e12).toFixed(2)) + 'T'
     : // Nine Zeroes for Billions
-    Math.abs(Number(num)) >= 1.0e9
+    Math.abs(Number(num)) >= 1.0e9 && minimum <= 9
       ? Number((Math.abs(Number(num)) / 1.0e9).toFixed(2)) + 'B'
       : // Six Zeroes for Millions
-    Math.abs(Number(num)) >= 1.0e6
+    Math.abs(Number(num)) >= 1.0e6 && minimum <= 6
       ? Number((Math.abs(Number(num)) / 1.0e6).toFixed(2)) + 'M'
       : // Three Zeroes for Thousands
-    Math.abs(Number(num)) >= 1.0e3
+    Math.abs(Number(num)) >= 1.0e3 && minimum <= 3
       ? Number((Math.abs(Number(num)) / 1.0e3).toFixed(2)) + 'K'
       : Number(Math.abs(Number(num)));
 }
