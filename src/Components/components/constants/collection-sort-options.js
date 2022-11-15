@@ -9,32 +9,32 @@ const sort = [
   {
     key: 'price',
     direction: 'desc',
-    label: 'Price (High to Low)',
+    label: 'Price: High to Low',
   },
   {
     key: 'price',
     direction: 'asc',
-    label: 'Price (Low to High)',
+    label: 'Price: Low to High',
   },
   {
     key: 'rank',
     direction: 'asc',
-    label: 'Rank (High to Low)',
+    label: 'Rare to Common',
   },
   {
     key: 'rank',
     direction: 'desc',
-    label: 'Rank (Low to High)',
+    label: 'Common to Rare',
   },
   {
     key: 'id',
     direction: 'desc',
-    label: 'Token ID (High to Low)',
+    label: 'Token ID: High to Low',
   },
   {
     key: 'id',
     direction: 'asc',
-    label: 'Token ID (Low to High)',
+    label: 'Token ID: Low to High',
   },
 ];
 

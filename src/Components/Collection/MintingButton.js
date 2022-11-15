@@ -1,4 +1,4 @@
-import {Button, Text} from "@chakra-ui/react";
+import {Button, HStack, Text} from "@chakra-ui/react";
 import {SunIcon} from "@chakra-ui/icons";
 import React from "react";
 import {useColorModeValue} from "@chakra-ui/color-mode";
@@ -16,9 +16,12 @@ const MintingButton = ({onClick}) => {
       colorScheme="orange"
       onClick={onClick}
       animation={`${pulseColorClass} 1.5s infinite`}
+      align
     >
-      <SunIcon />
-      <Text ms={2} my="auto">Minting</Text>
+      <HStack spacing={2}>
+        <SunIcon />
+        <Text>Minting</Text>
+      </HStack>
     </Button>
   )
 }

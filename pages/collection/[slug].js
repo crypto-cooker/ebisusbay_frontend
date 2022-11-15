@@ -94,7 +94,7 @@ export const getServerSideProps = async ({ params, query }) => {
   if (collection.slug === 'vip-founding-member') collection.id = 2;
 
   const activeDrop = appConfig('drops')
-    .find((drop) => caseInsensitiveCompare(collection.address, drop.address) && !drop.complete);
+    .find((drop) => !!collection.address && caseInsensitiveCompare(collection.address, drop.address) && !drop.complete);
 
   return {
     props: {

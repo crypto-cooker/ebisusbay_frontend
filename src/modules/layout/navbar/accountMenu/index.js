@@ -348,18 +348,16 @@ const Index = function () {
                   </div>
                 </span>
               </div>
-              {(user.vipCount > 0 || user.stakeCount > 0) && (
-                <div className="col">
-                  <span onClick={() => navigateTo(`/staking`)}>
-                    <div className={styles.col}>
-                      <span>
-                        <FontAwesomeIcon icon={faBolt} />
-                      </span>
-                      <span className="ms-2">My Staking</span>
-                    </div>
-                  </span>
-                </div>
-              )}
+              <div className="col">
+                <span onClick={() => navigateTo(`/staking`)}>
+                  <div className={styles.col}>
+                    <span>
+                      <FontAwesomeIcon icon={faBolt} />
+                    </span>
+                    <span className="ms-2">Staking</span>
+                  </div>
+                </span>
+              </div>
               <div className="col">
                 <span onClick={() => navigateTo(`/account/${walletAddress}`, {tab:'listings'})}>
                   <div className={styles.col}>
@@ -462,44 +460,42 @@ const Index = function () {
                 )}
               </div>
             </div>
-            {(user.vipCount > 0 || user.stakeCount > 0) && (
-              <div className="d-flex mt-2">
-                <div className="flex-fill">
-                  <div className="text-muted">Staking Rewards</div>
-                  <div className="">
-                    {!user.connectingWallet ? (
-                      <>
-                        {user.stakingRewards ? (
-                          <>
-                            <span className="d-wallet-value">
-                              {ethers.utils.commify(round(user.stakingRewards, 2))} CRO
-                            </span>
-                          </>
-                        ) : (
-                          <span className="d-wallet-value">0.0 CRO</span>
-                        )}
-                      </>
-                    ) : (
-                      <span>
-                        <Spinner animation="border" role="status" size={'sm'}>
-                          <span className="visually-hidden">Loading...</span>
-                        </Spinner>
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="my-auto">
-                  {user.stakingRewards > 0 && (
-                    <Button type="legacy"
-                            onClick={harvestStakingRewards}
-                            isLoading={user.harvestingStakingRewards}
-                            disabled={user.harvestingStakingRewards}>
-                      Harvest
-                    </Button>
+            <div className="d-flex mt-2">
+              <div className="flex-fill">
+                <div className="text-muted">Staking Rewards</div>
+                <div className="">
+                  {!user.connectingWallet ? (
+                    <>
+                      {user.stakingRewards ? (
+                        <>
+                          <span className="d-wallet-value">
+                            {ethers.utils.commify(round(user.stakingRewards, 2))} CRO
+                          </span>
+                        </>
+                      ) : (
+                        <span className="d-wallet-value">0.0 CRO</span>
+                      )}
+                    </>
+                  ) : (
+                    <span>
+                      <Spinner animation="border" role="status" size={'sm'}>
+                        <span className="visually-hidden">Loading...</span>
+                      </Spinner>
+                    </span>
                   )}
                 </div>
               </div>
-            )}
+              <div className="my-auto">
+                {user.stakingRewards > 0 && (
+                  <Button type="legacy"
+                          onClick={harvestStakingRewards}
+                          isLoading={user.harvestingStakingRewards}
+                          disabled={user.harvestingStakingRewards}>
+                    Harvest
+                  </Button>
+                )}
+              </div>
+            </div>
             <div className="d-flex mt-2">
               <div className="flex-fill">
                 <Flex>

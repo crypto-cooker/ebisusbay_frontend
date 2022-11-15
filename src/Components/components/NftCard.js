@@ -79,7 +79,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, is1155 = f
       handleClick: handleMakeOffer,
     });
 
-    if (nft.market) {
+    if (nft.market && collection.listable) {
       if (isInCart) {
         options.push({
           icon: faShoppingBag,
@@ -259,7 +259,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, is1155 = f
                     _groupHover={{visibility:'visible', color:lightTheme.textColor1}}
                     visibility="hidden"
                   >
-                    {nft.market?.price ? (
+                    {nft.market?.price && collection.listable ? (
                       <>
                         {isInCart ? (
                           <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={handleRemoveFromCart}>Remove From Cart</Text>

@@ -221,17 +221,17 @@ export function mapAttributeString(str, address, category, makeHuman = false) {
 export function siPrefixedNumber(num) {
   // Twelve Zeroes for Trillions
   return Math.abs(Number(num)) >= 1.0e12
-    ? (Math.abs(Number(num)) / 1.0e12).toFixed(2) + 'T'
+    ? Number((Math.abs(Number(num)) / 1.0e12).toFixed(2)) + 'T'
     : // Nine Zeroes for Billions
     Math.abs(Number(num)) >= 1.0e9
-      ? (Math.abs(Number(num)) / 1.0e9).toFixed(2) + 'B'
+      ? Number((Math.abs(Number(num)) / 1.0e9).toFixed(2)) + 'B'
       : // Six Zeroes for Millions
     Math.abs(Number(num)) >= 1.0e6
-      ? (Math.abs(Number(num)) / 1.0e6).toFixed(2) + 'M'
+      ? Number((Math.abs(Number(num)) / 1.0e6).toFixed(2)) + 'M'
       : // Three Zeroes for Thousands
     Math.abs(Number(num)) >= 1.0e3
-      ? (Math.abs(Number(num)) / 1.0e3).toFixed(2) + 'K'
-      : Math.abs(Number(num));
+      ? Number((Math.abs(Number(num)) / 1.0e3).toFixed(2)) + 'K'
+      : Number(Math.abs(Number(num)));
 }
 
 export function shortAddress(address) {
@@ -375,6 +375,10 @@ export const isBossFrogzDrop = (address) => {
   return isDrop(address, 'trooprz-boss-frogz');
 };
 
+export const isRyoshiVipDrop = (address) => {
+  return isDrop(address, 'ryoshi-tales-vip');
+};
+
 export const isDrop = (address, slug) => {
   const drop = drops.find((d) => d.slug === slug);
   return drop && caseInsensitiveCompare(drop.address, address);
@@ -479,6 +483,13 @@ export const isCnsCollection = (address) => {
 
 export const isSscCollection = (address) => {
   return isCollection(address, 'ssc-access-cards', '0x45Fe45e5623a129d652F15962d901C7B609e5194');
+};
+
+export const isEbVipCollection = (address, id) => {
+  const collection = collections.find((c) => c.slug === 'vip-founding-member');
+  return collection &&
+    caseInsensitiveCompare(collection.address, address) &&
+    collection.id.toString() === id.toString();
 };
 
 export const percentage = (partialValue, totalValue) => {

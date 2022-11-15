@@ -47,6 +47,11 @@ export class ImageKitService {
     return kit.buildUrl();
   }
 
+  static buildBannerPreviewUrl(imageUrl) {
+    const kit = ImageKitService.from(imageUrl).setNamed('wide_preview');
+    return kit.buildUrl();
+  }
+
   static buildBannerUrl(imageUrl) {
     const kit = ImageKitService.from(imageUrl)
       .setWidth(1920)
@@ -111,7 +116,7 @@ export class ImageKitService {
   }
 
   buildUrl() {
-    if (isLocalEnv()) return this.imageUrl;
+    if (isLocalEnv() && this.imageUrl?.startsWith('/')) return this.imageUrl;
     if(!this.imageUrl || this.imageUrl.startsWith('data')) return this.imageUrl;
 
     const cdn = appConfig('urls.cdn');

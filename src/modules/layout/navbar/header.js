@@ -109,6 +109,7 @@ const Header = function () {
               >
                 <NavLink name={'Marketplace'} to={'/marketplace'} />
                 <NavLink name={'Collections'} to={'/collections'} />
+                <NavLink name={'Brands'} to={'/brands'} />
                 <NavLink name={'Drops'} to={'/drops'} />
                 <NavLink name={'Stats'} to={'/stats'} />
               </HStack>
@@ -136,6 +137,7 @@ const Header = function () {
               <Stack as={'nav'} spacing={4}>
                 <NavLink name={'Marketplace'} to={'/marketplace'} onClick={onClose} />
                 <NavLink name={'Collections'} to={'/collections'} onClick={onClose} />
+                <NavLink name={'Brands'} to={'/brands'} onClick={onClose} />
                 <NavLink name={'Drops'} to={'/drops'} onClick={onClose} />
                 <NavLink name={'Stats'} to={'/stats'} onClick={onClose} />
 

@@ -90,7 +90,7 @@ const HeroSection = styled.section`
   }
 `;
 
-const SingleDrop = () => {
+const SingleDrop = ({drop}) => {
   const router = useRouter();
   const { slug } = router.query;
 
@@ -136,9 +136,6 @@ const SingleDrop = () => {
     return state.user;
   });
 
-  const drop = useSelector((state) => {
-    return drops.find((n) => n.slug === slug);
-  });
 
   const { isLoading : isLoadingCollection, error, data, status: statusCollection } = useQuery(['Collections', slug], () =>
     getCollections({slug}), true

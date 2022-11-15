@@ -218,7 +218,13 @@ export default class Responsive extends Component {
                           </div>
                           <div className="d-attr">
                             <div className="col">
-                              <span className="d-title">Mint Price</span>
+                              {item.drop.slug === 'ryoshi-tales-vip' ? (
+                                <>
+                                  <span className="d-title">VIP-only Mint Price</span>
+                                  <Heading as="h3" size="md">1 Ebisu's Bay VIP</Heading>
+                                </>
+                              ) : <span className="d-title">Mint Price</span>}
+
                               {drop.cost &&
                                 (Array.isArray(drop.cost) ? (
                                 <Heading as="h3" size="md">
@@ -236,7 +242,7 @@ export default class Responsive extends Component {
                                   </Text>
                                 </HStack>
                               )}
-                              {!drop.cost && !drop.erc20Cost && (
+                              {!drop.cost && !drop.erc20Cost && drop.slug !== 'ryoshi-tales-vip' && (
                                 <h3>TBA</h3>
                               )}
                               {drop.memberCost &&
