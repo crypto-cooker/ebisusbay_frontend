@@ -4,7 +4,7 @@ import {getNftsForAddress2} from "@src/core/api";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {Spinner} from "react-bootstrap";
 import MyNftCard from "@src/Components/components/MyNftCard";
-import {caseInsensitiveCompare, findCollectionByAddress} from "@src/utils";
+import {caseInsensitiveCompare, findCollectionByAddress, isNftBlacklisted} from "@src/utils";
 import NftCard from "@src/Components/components/NftCard";
 import {appConfig} from "@src/Config";
 import {MyNftPageActions} from "@src/GlobalState/User";
@@ -125,8 +125,9 @@ export default function Inventory({ address }) {
                       />
                     ) : (
                       <NftCard
-                        listing={nft}
+                        nft={nft}
                         imgClass="collection"
+                        canBuy={!isNftBlacklisted(nft.address, nft.id) && nft.collection.listable}
                       />
                     )}
                   </div>

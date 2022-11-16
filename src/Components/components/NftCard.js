@@ -60,7 +60,7 @@ const MakeBuy = styled.div`
   align-items: center;
 `;
 
-const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, is1155 = false }) => {
+const NftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false, canBuy = true }) => {
   const nftUrl = appUrl(`/collection/${nft.address}/${nft.id}`);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -79,7 +79,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, is1155 = f
       handleClick: handleMakeOffer,
     });
 
-    if (nft.market && collection.listable) {
+    if (nft.market && canBuy) {
       if (isInCart) {
         options.push({
           icon: faShoppingBag,
@@ -259,7 +259,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, is1155 = f
                     _groupHover={{visibility:'visible', color:lightTheme.textColor1}}
                     visibility="hidden"
                   >
-                    {nft.market?.price && collection.listable ? (
+                    {nft.market?.price && canBuy ? (
                       <>
                         {isInCart ? (
                           <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={handleRemoveFromCart}>Remove From Cart</Text>

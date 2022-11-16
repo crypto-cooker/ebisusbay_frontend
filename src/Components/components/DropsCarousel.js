@@ -177,7 +177,7 @@ export default class Responsive extends Component {
                       <div className="col-lg-6">
                         <div className="d-desc">
                           <Heading>{drop.title}</Heading>
-                          {item.drop.redirect && (
+                          {drop.redirect && (
                             <Tag>
                               {/*<FontAwesomeIcon icon={faExclamationCircle} />*/}
                               <span className="">Promoted</span>
@@ -197,7 +197,7 @@ export default class Responsive extends Component {
                               ) : (
                                 <Blockies seed={drop.slug} size={10} scale={5} />
                               )}
-                              {item.drop.verification.verified && (
+                              {drop.verification.verified && (
                                 <VerifiedIcon>
                                   <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={7} />
                                 </VerifiedIcon>
@@ -218,7 +218,7 @@ export default class Responsive extends Component {
                           </div>
                           <div className="d-attr">
                             <div className="col">
-                              {item.drop.slug === 'ryoshi-tales-vip' ? (
+                              {drop.slug === 'ryoshi-tales-vip' ? (
                                 <>
                                   <span className="d-title">VIP-only Mint Price</span>
                                   <Heading as="h3" size="md">1 Ebisu's Bay VIP</Heading>
@@ -340,7 +340,7 @@ export default class Responsive extends Component {
                           <div className="d-buttons">
                           <span className="btn-main" onClick={() => this.navigateToDrop(drop)}>
                             View Drop
-                            {item.drop.redirect && (
+                            {drop.redirect && (
                               <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2" />
                             )}
                           </span>

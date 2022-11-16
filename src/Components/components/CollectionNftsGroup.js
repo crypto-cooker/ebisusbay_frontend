@@ -8,7 +8,6 @@ import {isNftBlacklisted} from "../../utils";
 const CollectionNftsGroup = ({
   showLoadMore = true,
   listings = [],
-  royalty,
   canLoadMore = false,
   loadMore,
   collection,
@@ -42,9 +41,8 @@ const CollectionNftsGroup = ({
             listings.map((listing, index) => (
               <div key={index} className="d-item col-xxl-2 col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12">
                 <NftCard
-                  listing={listing}
+                  nft={listing}
                   imgClass="collection"
-                  collection={collection}
                   canBuy={!isNftBlacklisted(listing.address, listing.id) && collection.listable}
                   is1155={collection.multiToken}
                 />
@@ -61,10 +59,8 @@ const CollectionNftsGroup = ({
             listings.map((listing, index) => (
               <div key={index} className="d-item col-xxl-2 col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12 mb-4 px-2">
                 <NftCard
-                  royalty={royalty}
-                  listing={listing}
+                  nft={listing}
                   imgClass="collection"
-                  collection={collection}
                   canBuy={!isNftBlacklisted(listing.address, listing.id) && collection.listable}
                   is1155={collection.multiToken}
                 />
