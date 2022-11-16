@@ -142,7 +142,7 @@ export const configData = {
       app: 'https://testapp.ebisusbay.biz/',
       cdn: 'https://cdn.ebisusbay.biz/test/',
       subgraph: 'https://testgraph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
-      cms: 'https://cms.ebisusbay.biz/api/',
+      cms: 'https://testcms.ebisusbay.biz/api/',
       explorer: 'https://testnet.cronoscan.com/',
     },
     rpc: {
