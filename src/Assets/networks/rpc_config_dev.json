@@ -12218,7 +12218,7 @@
       "multiToken": false,
       "address": "0x1375D3D2169C66d325514EB61933A08c276Ca531",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A Collection of 2500 PFP NFTs, Chefz are the hottest JPEGs to hit the Cronos Chain. Use the Chefz to spice up your visit to the restaurant. Brought to you by The Cronos Steakhouse.",
         "verified": false,
