@@ -284,13 +284,13 @@ const Collections = () => {
                                 <span>
                                   Volume {timeframe !== null && <span className="badge bg-secondary">{timeframe}</span>}
                                 </span>
-                                <span className="text-end">{siPrefixedNumber(collectionVolume(collection))} CRO</span>
+                                <span className="text-end">{siPrefixedNumber(collectionVolume(collection), 3)} CRO</span>
                               </div>
                               <div className="col-12 mobile-view-list-item" onClick={() => sortCollections('sales')}>
                                 <span>
                                   Sales {timeframe !== null && <span className="badge bg-secondary">{timeframe}</span>}
                                 </span>
-                                <span className="text-end">{siPrefixedNumber(collectionSales(collection))}</span>
+                                <span className="text-end">{siPrefixedNumber(collectionSales(collection), 3)}</span>
                               </div>
                               <div
                                 className="col-12 mobile-view-list-item"
@@ -320,8 +320,8 @@ const Collections = () => {
                             </div>
                           )}
                         </th>
-                        {tableMobileView && <td>{siPrefixedNumber(collectionVolume(collection))} CRO</td>}
-                        {tableMobileView && <td>{siPrefixedNumber(collectionSales(collection))}</td>}
+                        {tableMobileView && <td>{siPrefixedNumber(collectionVolume(collection), 3)} CRO</td>}
+                        {tableMobileView && <td>{siPrefixedNumber(collectionSales(collection), 3)}</td>}
                         {tableMobileView && (
                           <td>{collection.numberActive > 0 ? `${collectionFloorPriceValue(collection)} CRO` : '-'}</td>
                         )}
