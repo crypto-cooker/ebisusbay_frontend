@@ -12218,7 +12218,7 @@
       "multiToken": false,
       "address": "0x1375D3D2169C66d325514EB61933A08c276Ca531",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A Collection of 2500 PFP NFTs, Chefz are the hottest JPEGs to hit the Cronos Chain. Use the Chefz to spice up your visit to the restaurant. Brought to you by The Cronos Steakhouse.",
         "verified": false,
@@ -12975,7 +12975,7 @@
       "multiToken": false,
       "address": "0x51eaf8c081Cca683A5542c438f9429CE46D238e4",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "\"In the middle of a dark and stormy night, Doctors set about creating laboratories in the various parallel universes, what they could not imagine, are the experiments that took place within them. Now mysterious creatures roam within these parallel universes, our Doctors have managed to photograph and classify 1800 beings from the other world.\" AI EXPERIMENTS is a collection of NFTs, on Cronos blockchain, which gives various benefits to owners. Discover more into DaoLabs.",
         "verified": true,
@@ -14483,7 +14483,7 @@
       "name": "Cro Llamas",
       "slug": "cro-llamas",
       "multiToken": false,
-      "address": "",
+      "address": "0x78aB4BEC90AB44D537acDCF93652d1cb36f89b71",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -19766,7 +19766,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "images": {
         "drop": "/img/drops/fantastic-cat-rich-club/drop.webp",
@@ -20152,7 +20152,7 @@
         "instagram": "https://www.instagram.com/crollamasnft",
         "discord": "https://discord.gg/zf425Fbg6d"
       },
-      "address": "",
+      "address": "0x78aB4BEC90AB44D537acDCF93652d1cb36f89b71",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 100,
       "totalSupply": 1200,
