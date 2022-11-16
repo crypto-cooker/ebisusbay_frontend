@@ -165,7 +165,7 @@ export default function Inventory({ address }) {
                           onRemoveFromBatchListingButtonPressed={() => dispatch(removeFromBatchListingCart(nft))}
                           newTab={true}
                         />
-                      ) : collection && (
+                      ) :  (
                         <NftCard
                           listing={nft}
                           imgClass="collection"
