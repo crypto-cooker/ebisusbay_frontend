@@ -14483,7 +14483,7 @@
       "name": "Cro Llamas",
       "slug": "cro-llamas",
       "multiToken": false,
-      "address": "",
+      "address": "0x78aB4BEC90AB44D537acDCF93652d1cb36f89b71",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -20152,7 +20152,7 @@
         "instagram": "https://www.instagram.com/crollamasnft",
         "discord": "https://discord.gg/zf425Fbg6d"
       },
-      "address": "",
+      "address": "0x78aB4BEC90AB44D537acDCF93652d1cb36f89b71",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 100,
       "totalSupply": 1200,
