@@ -19766,7 +19766,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "images": {
         "drop": "/img/drops/fantastic-cat-rich-club/drop.webp",
