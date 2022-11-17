@@ -91,26 +91,26 @@ export default function Stats({pageHead, initialTimeframe}) {
               {/*<li id="sale" className={timeframe === 'custom' ? 'active' : ''} onClick={() => updateTimeframe('custom')}>*/}
               {/*  Competition*/}
               {/*</li>*/}
-              <Menu>
-                <MenuButton
-                  as={Button}
-                  rightIcon={<ChevronDownIcon />}
-                  variant="outline"
-                  backgroundColor="#FF2D98"
-                  color="white"
-                  _hover={{ bg: '#FF2D98' }}
-                  _expanded={{ bg: '#FF2D98' }}
-                  _focus={{ bg: '#FF2D98' }}
-                >
-                  Bored Candy
-                </MenuButton>
-                <MenuList
-                  zIndex="2"
-                >
-                  <MenuItem onClick={() => updateTimeframe('bc-1d')}>Daily</MenuItem>
-                  <MenuItem onClick={() => updateTimeframe('bc-all')}>Overall</MenuItem>
-                </MenuList>
-              </Menu>
+              {/*<Menu>*/}
+              {/*  <MenuButton*/}
+              {/*    as={Button}*/}
+              {/*    rightIcon={<ChevronDownIcon />}*/}
+              {/*    variant="outline"*/}
+              {/*    backgroundColor="#FF2D98"*/}
+              {/*    color="white"*/}
+              {/*    _hover={{ bg: '#FF2D98' }}*/}
+              {/*    _expanded={{ bg: '#FF2D98' }}*/}
+              {/*    _focus={{ bg: '#FF2D98' }}*/}
+              {/*  >*/}
+              {/*    Bored Candy*/}
+              {/*  </MenuButton>*/}
+              {/*  <MenuList*/}
+              {/*    zIndex="2"*/}
+              {/*  >*/}
+              {/*    <MenuItem onClick={() => updateTimeframe('bc-1d')}>Daily</MenuItem>*/}
+              {/*    <MenuItem onClick={() => updateTimeframe('bc-all')}>Overall</MenuItem>*/}
+              {/*  </MenuList>*/}
+              {/*</Menu>*/}
             </ul>
           </div>
         </div>

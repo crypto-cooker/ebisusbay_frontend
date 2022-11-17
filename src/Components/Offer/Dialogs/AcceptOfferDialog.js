@@ -14,7 +14,6 @@ import {createSuccessfulTransactionToastContent, isNftBlacklisted} from "@src/ut
 import {appConfig} from "@src/Config";
 import Market from "@src/Contracts/Marketplace.json";
 import * as Sentry from '@sentry/react';
-import {txExtras} from "@src/core/constants";
 import {getQuickWallet} from "@src/core/api/endpoints/wallets";
 import Select from "react-select";
 import {getTheme} from "@src/Theme/theme";
@@ -167,9 +166,9 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
       Sentry.captureEvent({message: 'handleAcceptOffer', extra: {nftAddress, nftId, price}});
       let tx;
       if (isCollectionOffer) {
-        tx = await offerContract.acceptCollectionOffer(offer.nftAddress, offer.offerIndex, chosenCollectionNft.nftId, txExtras);
+        tx = await offerContract.acceptCollectionOffer(offer.nftAddress, offer.offerIndex, chosenCollectionNft.nftId);
       } else {
-        tx = await offerContract.acceptOffer(offer.hash, offer.offerIndex, txExtras);
+        tx = await offerContract.acceptOffer(offer.hash, offer.offerIndex);
       }
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
