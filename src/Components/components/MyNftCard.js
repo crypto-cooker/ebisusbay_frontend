@@ -91,7 +91,7 @@ const MyNftCard = ({
       });
       options.push({
         icon: faTags,
-        label: 'Sell in batch',
+        label: 'Add to batch',
         handleClick: onAddToBatchListingButtonPressed,
       });
     }

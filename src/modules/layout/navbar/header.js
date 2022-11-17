@@ -109,9 +109,9 @@ const Header = function () {
               >
                 <NavLink name={'Marketplace'} to={'/marketplace'} />
                 <NavLink name={'Collections'} to={'/collections'} />
+                <NavLink name={'Brands'} to={'/brands'} />
                 <NavLink name={'Drops'} to={'/drops'} />
                 <NavLink name={'Stats'} to={'/stats'} />
-                <NavLink name={'Ryoshi Tales'} to={'/ryoshi-tales'} />
               </HStack>
 
               {shouldUseMobileSearch && <MobileSearchDrawer />}
@@ -137,9 +137,10 @@ const Header = function () {
               <Stack as={'nav'} spacing={4}>
                 <NavLink name={'Marketplace'} to={'/marketplace'} onClick={onClose} />
                 <NavLink name={'Collections'} to={'/collections'} onClick={onClose} />
+                <NavLink name={'Brands'} to={'/brands'} onClick={onClose} />
                 <NavLink name={'Drops'} to={'/drops'} onClick={onClose} />
                 <NavLink name={'Stats'} to={'/stats'} onClick={onClose} />
-                <NavLink name={'Ryoshi Tales'} to={'/ryoshi-tales'} onClick={onClose}/>
+
                 <Box onClick={toggleTheme} fontSize="14px" fontWeight="bold" color="#fff" cursor="pointer">
                   <FontAwesomeIcon icon={theme === 'dark' ? faMoon : faSun} color="#fff" className="me-2"/> Dark mode
                 </Box>

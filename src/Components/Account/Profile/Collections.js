@@ -11,6 +11,8 @@ import { hostedImage } from "@src/helpers/image";
 import Constants from '@src/constants';
 import {useQuery} from "@tanstack/react-query";
 import {getOwnerCollections} from "@src/core/cms/next/collections";
+import {Text, VStack} from "@chakra-ui/react";
+import {shortAddress} from "@src/utils";
 const { Features } = Constants;
 
 const mobileListBreakpoint = 1000;
@@ -108,11 +110,12 @@ export default function Collections({ address }) {
                               </a>
                             </Link>
                           </div>
-                          <span>
+                          <VStack align="start">
                             <Link href={`/collection/${collection.slug}`}>
                               <a>{collection?.name ?? 'Unknown'}</a>
                             </Link>
-                          </span>
+                            <Text>{shortAddress(collection.address)}</Text>
+                          </VStack>
                         </div>
 
                         {!tableMobileView && (

@@ -28,7 +28,8 @@ import {MobileFilters} from "@src/Components/Collection/CollectionTaskBar/Mobile
 import {FilterResultsBar} from "@src/Components/Collection/FilterResultsBar";
 import {MobileSort} from "@src/Components/Collection/CollectionTaskBar/MobileSort";
 import {CnsRegistration} from "@src/Components/Collection/Custom/CnsRegistration";
-import {Heading} from "@chakra-ui/react";
+import {Flex, Heading} from "@chakra-ui/react";
+import MintingButton from "@src/Components/Collection/MintingButton";
 
 const NegativeMargin = styled.div`
   margin-left: -1.75rem !important;
@@ -47,7 +48,7 @@ const tabs = {
 };
 
 const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
-const Collection721 = ({ collection,  query }) => {
+const Collection721 = ({ collection, query, activeDrop = null}) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -163,6 +164,14 @@ const Collection721 = ({ collection,  query }) => {
     setFiltersVisible(!filtersVisible)
   };
 
+  const handleMintingButtonClick = () => {
+    if (activeDrop.redirect) {
+      window.open(activeDrop.redirect, '_blank');
+    } else {
+      router.push(`/drops/${activeDrop.slug}`)
+    }
+  }
+
   return (
     <div>
       <section
@@ -193,10 +202,14 @@ const Collection721 = ({ collection,  query }) => {
                 </div>
 
                 <div className="profile_name">
-                  <Heading as="h4" size="md">
-                    {collection.name}
-                    <div className="clearfix" />
-                  </Heading>
+                  <Flex justify="center" align="center" mb={4}>
+                    <Heading as="h4" size="md" my="auto">
+                      {collection.name}
+                    </Heading>
+                    {activeDrop && (
+                      <MintingButton onClick={handleMintingButtonClick} />
+                    )}
+                  </Flex>
                   <CollectionVerificationRow
                     doxx={collection.verification?.doxx}
                     kyc={collection.verification?.kyc}

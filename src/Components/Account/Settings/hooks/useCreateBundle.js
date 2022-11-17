@@ -6,7 +6,7 @@ import useCreateSigner from './useCreateSigner';
 import {useSelector} from "react-redux";
 import {appConfig} from "@src/Config";
 import Bundle from "@src/Contracts/Bundle.json";
-import { createBundle as createBundleRequest } from '@src/core/cms/endpoints/blundles';
+import { createBundle as createBundleRequest } from '@src/core/cms/endpoints/bundles';
 
 const useCreateBundle = () => {
   const [response, setResponse] = useState({

@@ -13,7 +13,7 @@ const Footer = () => {
   });
 
   return (
-    <footer className="footer-light">
+    <footer className="footer-light mt-4">
       <div className="container">
         <div className="row">
           <div className="col-md-3 col-sm-6 col-xs-1">
@@ -44,7 +44,7 @@ const Footer = () => {
               <Heading as="h5" size="md">Resources</Heading>
               <ul>
                 <li><a href="https://status.ebisusbay.com/" target="_blank" rel="noreferrer">Platform Status</a></li>
-                <li><a href="https://faq.ebisusbay.com/" target="_blank" rel="noreferrer">FAQ</a></li>
+                <li><a href="https://docs.ebisusbay.com/" target="_blank" rel="noreferrer">FAQ</a></li>
                 <li><a href="https://blog.ebisusbay.com/" target="_blank" rel="noreferrer">Blog</a></li>
                 <li><a href="https://almurraydesign.com/cryptocrows.html#!/Ebisus-Bay/c/130146020" target="_blank" rel="noreferrer">Merchandise</a></li>
                 <li><a href="https://cdn.ebisusbay.com/terms-of-service.html" target="_blank" rel="noreferrer">Terms of Service</a></li>

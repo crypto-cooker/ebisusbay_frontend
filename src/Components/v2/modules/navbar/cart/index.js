@@ -94,7 +94,7 @@ const Cart = function () {
     const listingIds = cart.nfts.map((o) => o.listingId);
     const totalPrice = calculateTotalPrice();
     let price = ethers.utils.parseUnits(totalPrice.toString());
-    let tx = await user.marketContract.makePurchases(listingIds, {
+    let tx = await user.contractService.market.makePurchases(listingIds, {
       value: price,
     });
     let receipt = await tx.wait();

@@ -18,6 +18,18 @@ export const getCollections = async (query) => {
   }
 }
 
+export const getCollection = async (address) => {
+  try{
+    const params = {...defaults, ...{address}};
+
+    const collections = await api.get(`collections`, {params});
+    return collections.data.collections[0];
+  }
+  catch(error){
+    throw error;
+  }
+}
+
 export const getOwnerCollections = async (address, query) => {
   return getCollections({owner: address, ...query});
 }

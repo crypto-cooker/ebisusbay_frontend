@@ -270,7 +270,7 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark })
           isOpen={openMakeOfferDialog}
           onClose={() => setOpenMakeOfferDialog(false)}
           nftId={listing.nftId}
-          collection={collection}
+          nftAddress={listing.nftAddress}
         />
       )}
     </>

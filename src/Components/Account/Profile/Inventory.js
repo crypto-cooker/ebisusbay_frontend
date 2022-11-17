@@ -4,7 +4,7 @@ import { getNftsForAddress2 } from "@src/core/api";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Spinner } from "react-bootstrap";
 import MyNftCard from "@src/Components/components/MyNftCard";
-import { caseInsensitiveCompare, findCollectionByAddress } from "@src/utils";
+import { caseInsensitiveCompare, findCollectionByAddress, isNftBlacklisted } from "@src/utils";
 import NftCard from "@src/Components/components/NftCard";
 import NftBundleCard from "@src/Components/components/NftBundleCard";
 import { appConfig } from "@src/Config";
@@ -23,8 +23,6 @@ import { addToBatchListingCart, removeFromBatchListingCart, setRefetchNfts } fro
 import { MobileBatchListing } from "@src/Components/Account/Profile/Inventory/MobileBatchListing";
 import { useBreakpointValue } from "@chakra-ui/react";
 import MyBundleCard from './Inventory/components/MyBundleCard';
-
-const knownContracts = appConfig('collections');
 
 export default function Inventory({ address }) {
   const dispatch = useDispatch();
@@ -107,7 +105,6 @@ export default function Inventory({ address }) {
           {data.pages.map((items, index) => (
             <React.Fragment key={index}>
               {items.map((nft, index) => {
-                const collection = knownContracts.find((c) => caseInsensitiveCompare(c.address, nft.address));
                 if(nft.symbol && nft.symbol == 'Bundle'){
                   return (
                     <div
@@ -172,7 +169,7 @@ export default function Inventory({ address }) {
                         <NftCard
                           listing={nft}
                           imgClass="collection"
-                          collection={collection}
+                          canBuy={!isNftBlacklisted(nft.address, nft.id) && nft.collection.listable}
                         />
                       )}
                     </div>

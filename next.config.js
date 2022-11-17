@@ -30,6 +30,11 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/brand/:slug',
+        destination: '/brands/:slug',
+        permanent: true,
+      },
+      {
         source: '/drops/founding-member',
         destination: '/collection/founding-member',
         permanent: true,
@@ -47,6 +52,11 @@ const nextConfig = {
       {
         source: '/drops/painted-pandas',
         destination: '/drops/painted-pandaz',
+        permanent: true,
+      },
+      {
+        source: '/drops/boss-frogz',
+        destination: '/drops/trooprz-boss-frogz',
         permanent: true,
       },
       {
@@ -107,6 +117,26 @@ const nextConfig = {
       {
         source: '/collection/killacats/:id',
         destination: '/collection/killakatz/:id',
+        permanent: true,
+      },
+      {
+        source: '/collection/boss-frogz',
+        destination: '/collection/trooprz-boss-frogz',
+        permanent: true,
+      },
+      {
+        source: '/collection/boss-frogz/:id',
+        destination: '/collection/trooprz-boss-frogz/:id',
+        permanent: true,
+      },
+      {
+        source: '/collection/seasonal-cats',
+        destination: '/collection/world-of-cats-seasonal',
+        permanent: true,
+      },
+      {
+        source: '/collection/seasonal-cats/:id',
+        destination: '/collection/world-of-cats-seasonal/:id',
         permanent: true,
       },
       {

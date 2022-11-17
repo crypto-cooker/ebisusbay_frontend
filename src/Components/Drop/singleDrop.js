@@ -17,7 +17,7 @@ import Footer from '../components/Footer';
 import { connectAccount } from '../../GlobalState/User';
 import { fetchMemberInfo, fetchVipInfo } from '../../GlobalState/Memberships';
 import {
-  createSuccessfulTransactionToastContent, isCarkayousCollection,
+  createSuccessfulTransactionToastContent, isBossFrogzDrop, isCarkayousCollection,
   isCreaturesDrop,
   isCrosmocraftsPartsDrop,
   isCyberCloneDrop,
@@ -90,7 +90,7 @@ const HeroSection = styled.section`
   }
 `;
 
-const SingleDrop = () => {
+const SingleDrop = ({drop}) => {
   const router = useRouter();
   const { slug } = router.query;
 
@@ -136,9 +136,6 @@ const SingleDrop = () => {
     return state.user;
   });
 
-  const drop = useSelector((state) => {
-    return drops.find((n) => n.slug === slug);
-  });
 
   const { isLoading : isLoadingCollection, error, data, status: statusCollection } = useQuery(['Collections', slug], () =>
     getCollections({slug}), true
@@ -374,7 +371,8 @@ const SingleDrop = () => {
         }
 
         const gasPrice = parseUnits('5000', 'gwei');
-        const gasEstimate = await contract.estimateGas.mint(numToMint, {value: finalCost});
+        const gasEstimate = isErc20 ? await contract.estimateGas.mintWithToken(numToMint):
+          await contract.estimateGas.mint(numToMint, {value: finalCost});
         const gasLimit = gasEstimate.mul(2);
         let extra = {
           value: finalCost,
@@ -511,7 +509,7 @@ const SingleDrop = () => {
         <HeroSection
           className={`jumbotron h-vh tint`}
           style={{
-            backgroundImage: `url(${ImageKitService.buildBannerUrl(drop.imgBanner ?? hostedImage('/img/background/Ebisus-bg-1_L.webp'))})`
+            backgroundImage: `url(${ImageKitService.buildBannerUrl(drop.images.banner ?? hostedImage('/img/background/Ebisus-bg-1_L.webp'))})`
           }}
         >
           <div className="container">
@@ -602,15 +600,15 @@ const SingleDrop = () => {
 
         <section id="drop_detail" className="gl-legacy container no-top">
           <div className="row mt-md-5 pt-md-4">
-            <div className="col-md-6 text-center">
-              <img src={hostedImage(drop.imgNft)} className="img-fluid img-rounded mb-sm-30" alt={drop.title} />
+            <div className="col-md-6 text-center mt-4 md-md-0">
+              <img src={hostedImage(drop.images.drop)} className="img-fluid img-rounded mb-sm-30" alt={drop.title} />
             </div>
             <div className="col-md-6 mt-4 mt-md-0">
 
               <div className="de-flex mt-4 mt-sm-0 mb-2">
                 <div className="de-flex-col">
                   <div className="profile_avatar">
-                    {drop.imgAvatar && <img src={hostedImage(drop.imgAvatar)} alt={drop.author.name} />}
+                    {drop.images.avatar && <img src={hostedImage(drop.images.avatar)} alt={drop.author.name} />}
                     <div className="profile_name">
                       <Heading as="h4" size="md">
                         {drop.title}
@@ -682,8 +680,11 @@ const SingleDrop = () => {
                 <div className="d-flex flex-row">
                   <div className="me-4">
                     <Heading as="h6" size="sm" className="mb-1">Mint Price</Heading>
+                    {!regularCost && !dropObject?.erc20Cost && (
+                      <Heading as="h5" size="md">TBA</Heading>
+                    )}
                     {regularCost && (
-                      <Heading as="h5" size="md">{ethers.utils.commify(round(regularCost))} CRO</Heading>
+                      <Heading as="h5" size="md">{ethers.utils.commify(round(regularCost))} {dropObject?.costUnit ?? 'CRO'}</Heading>
                     )}
                     {dropObject?.erc20Cost && dropObject?.erc20Token && (
                       <Heading as="h5" size="md">{`${ethers.utils.commify(round(dropObject?.erc20Cost))} ${config.tokens[dropObject.erc20Token].symbol}`}</Heading>
@@ -769,18 +770,20 @@ const SingleDrop = () => {
 
                     {canMintQuantity > 0 && (
                       <div className="d-flex flex-row mt-5">
-                        <button className="btn-main lead mb-5 mr15" onClick={() => mintNow(false)} disabled={minting}>
-                          {minting ? (
-                            <>
-                              Minting...
-                              <Spinner animation="border" role="status" size="sm" className="ms-1">
-                                <span className="visually-hidden">Loading...</span>
-                              </Spinner>
-                            </>
-                          ) : (
-                            <>{drop.maxMintPerTx && drop.maxMintPerTx > 1 ? <>Mint {numToMint}</> : <>Mint</>}</>
-                          )}
-                        </button>
+                        {!isBossFrogzDrop(drop.address) && (
+                          <button className="btn-main lead mb-5 mr15" onClick={() => mintNow(false)} disabled={minting}>
+                            {minting ? (
+                              <>
+                                Minting...
+                                <Spinner animation="border" role="status" size="sm" className="ms-1">
+                                  <span className="visually-hidden">Loading...</span>
+                                </Spinner>
+                              </>
+                            ) : (
+                              <>{drop.maxMintPerTx && drop.maxMintPerTx > 1 ? <>Mint {numToMint}</> : <>Mint</>}</>
+                            )}
+                          </button>
+                        )}
                         {drop.erc20Token && (
                           <button
                             className="btn-main lead mb-5 mr15 mx-1"

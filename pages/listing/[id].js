@@ -186,7 +186,7 @@ const Listing = () => {
           price = ethers.utils.parseEther(price);
         }
 
-        const tx = await user.marketContract.makePurchase(listing.listingId, {
+        const tx = await user.contractService.market.makePurchase(listing.listingId, {
           value: price,
         });
         const receipt = await tx.wait();

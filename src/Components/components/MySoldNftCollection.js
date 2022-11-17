@@ -2,12 +2,9 @@ import React, { memo } from 'react';
 import { Spinner } from 'react-bootstrap';
 import SoldNftCard from './SoldNftCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { caseInsensitiveCompare } from '@src/utils';
-import {appConfig} from "@src/Config";
 import {getNftSalesForAddress} from "@src/core/api";
 import {useInfiniteQuery} from "@tanstack/react-query";
 
-const knownContracts = appConfig('collections');
 
 const MySoldNftCollection = ({ walletAddress = null }) => {
 
@@ -65,13 +62,11 @@ const MySoldNftCollection = ({ walletAddress = null }) => {
             <React.Fragment key={index}>
               {pages.map((listing, index) => {
                 if (!listing.nft) {
-                  const contract = knownContracts.find((c) => caseInsensitiveCompare(c.address, listing.nftAddress));
                   listing = {
                     ...listing,
                     ...{
                       nft: {
                         missing: true,
-                        name: `${contract?.name ?? listing.nftAddress} #${listing.nftId}`,
                       },
                     },
                   };

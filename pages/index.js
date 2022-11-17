@@ -117,7 +117,7 @@ const featuredAd = ads
   .sort((a, b) => a.weight < b.weight ? 1 : -1)
   .find((ad) => {
     const now = Date.now();
-    return now > millisecondTimestamp(ad.start) && now < millisecondTimestamp(ad.end);
+    return now > millisecondTimestamp(ad.start) && (!ad.end || now < millisecondTimestamp(ad.end));
   });
 
 const Home = () => {
@@ -283,7 +283,7 @@ const Home = () => {
                 <div className="d-flex justify-content-between flex-wrap">
                   <div className="flex-fill mx-auto mt-2" style={{maxWidth:300}}>
                     {featuredAd.links.map((link) => (
-                      <a href={link.url} target="_blank" rel="noreferrer">
+                      <a href={link.url} target={link.external ? '_blank' : '_self'} rel="noreferrer">
                         <Button type="legacy" className="w-100">
                           {link.label}
                         </Button>
@@ -383,6 +383,17 @@ const Home = () => {
                 <img
                   src={hostedImage(userTheme === 'light' ? '/img/logos/crodex.png' : '/img/logos/crodex-white.png')}
                   alt="CRODEX"
+                  width="150px"
+                />
+              </a>
+            </Center>
+          </div>
+          <div className="col">
+            <Center>
+              <a href="https://defiolio.com/" target="_blank" rel="noreferrer">
+                <img
+                  src={hostedImage(userTheme === 'light' ? '/img/logos/defiolio.webp' : '/img/logos/defiolio-white.webp')}
+                  alt="Defiolio"
                   width="150px"
                 />
               </a>

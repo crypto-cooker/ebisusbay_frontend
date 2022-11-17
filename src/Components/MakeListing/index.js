@@ -56,7 +56,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
   const windowSize = useWindowSize();
   const isAuctionOptionEnabled = useFeatureFlag(Features.AUCTION_OPTION_SALE);
   const user = useSelector((state) => state.user);
-  const {marketContract} = user;
+  const {contractService} = user;
 
   const changeSaleType = (type) => {
     switch (type) {
@@ -119,10 +119,6 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
     }
   }, [nft, user.provider]);
 
-  const wrappedMarketContract = () => {
-    return marketContract ?? new Contract(config.contracts.market, Market.abi, user.provider.getSigner());
-  };
-
   const getInitialProps = async () => {
     try {
       setIsLoading(true);
@@ -130,7 +126,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
       const nftAddress = nft.address ?? nft.nftAddress;
       const nftId = nft.id ?? nft.nftId;
       const marketContractAddress = config.contracts.market;
-      const marketContract = wrappedMarketContract();
+      const marketContract = user.contractService.market;
       setSalePrice(listing ? Math.round(listing.price) : null)
 
       const floorPrice = await getCollectionMetadata(nftAddress);
@@ -170,7 +166,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
     e.preventDefault();
     try {
       const nftAddress = nft.address ?? nft.nftAddress;
-      const marketContractAddress = marketContract.address;
+      const marketContractAddress = config.contracts.market;
       const contract = new Contract(nftAddress, ERC721, user.provider.getSigner());
       setExecutingApproval(true);
       const tx = await contract.setApprovalForAll(marketContractAddress, true);
@@ -203,7 +199,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
 
       setExecutingCreateListing(true);
       Sentry.captureEvent({message: 'handleCreateListing', extra: {nftAddress, nftId, price}});
-      let tx = await marketContract.makeListing(nftAddress, nftId, price, txExtras);
+      let tx = await contractService.market.makeListing(nftAddress, nftId, price, txExtras);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       setExecutingCreateListing(false);

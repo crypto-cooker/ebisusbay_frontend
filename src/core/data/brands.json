@@ -1,0 +1,541 @@
+[
+  {
+    "slug": "ebisus-bay",
+    "name": "Ebisu's Bay",
+    "description": "Discover rare digital art and collect NFTs. Ebisu's Bay is the first and largest NFT marketplace on Cronos. Create, buy, sell, trade and enjoy the #CroFam NFT community.",
+    "images": {
+      "banner": "/img/brands/ebisus-bay/banner.webp",
+      "preview": "/img/collections/ebisu/banner.png"
+    },
+    "collections": [
+      "0xE49709A3B59d708f50AA3712F2E5a84b7707664C",
+      "0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5",
+      "0x584a16905ca9cb10c0a2a9caa8e37a64de48c506",
+      "0x54E61e2043f894475D17D344250F1983f7F7e6D3",
+      "0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29",
+      "0x008d4Ab1D8fbC7823422a7cCFe3f1D73c09760Ab",
+      "0xD961956B319A10CBdF89409C0aE7059788A4DaBb",
+      "0xf54abdcba21e7a740f98307a561b605cb3fdcf63"
+    ],
+    "socials": {
+      "website": "https://app.ebisusbay.com/",
+      "twitter": "https://twitter.com/EbisusBay",
+      "discord": "https://discord.gg/ebisusbay",
+      "medium": "https://blog.ebisusbay.com/",
+      "instagram": "https://www.instagram.com/ebisusbayofficial",
+      "telegram": "https://t.me/ebisusbay"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "mad-meerkat-burrow",
+    "name": "Mad Meerkat Burrow",
+    "description": "The Mad Meerkat is inspired by the cheeky nature of the loveable rogues, who loves nothing more than cavorting together in the sun. An expansion from our OG Ethereum collection, these 10000 Next Gen Cro Meerkats will traverse the novel Cronos chain. Guided by the M.A.D values, we will embark on an adventure to explore and unlock all that lies within Cronos. With each Mad Meerkat sharing and learning from one another regardless the chain, it is our next step forward as one Burrow.",
+    "images": {
+      "banner": "https://cdn.ebisusbay.biz/brands/mad-meerkat-burrow/background_J956_btjN.webp"
+    },
+    "collections": [
+      "0x89dBC8Bd9a6037Cbd6EC66C4bF4189c9747B1C56",
+      "0xDC5bBDb4A4b051BDB85B959eB3cBD1c8C0d0c105",
+      "0xA19bFcE9BaF34b92923b71D487db9D0D051a88F8",
+      "0x23721073592FB452C556fB9322bA4dF6A6675050"
+    ],
+    "socials": {
+      "website": "https://madmeerkat.io/",
+      "twitter": "https://twitter.com/MadMeerkatNFT",
+      "discord": "https://discord.gg/madmeerkat",
+      "medium": "https://medium.com/@madmeerkat0"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "croskull",
+    "name": "CroSkull",
+    "description": "CroSkulls, EVOs, Eggs, Pets, Staking, Missions, and much more. Everything will take shape in this mysterious ecosystem called the Underworld. Get the key to the insane Bonesville's laboratory experiments.",
+    "images": {
+      "banner": "/img/brands/croskull/banner.webp",
+      "preview": "/img/brands/croskull/preview.webp"
+    },
+    "collections": [
+      "0xF87A517A5CaecaA03d7cCa770789BdB61e09e05F",
+      "0xbf4E430cD0ce8b93d4760958fe4ae66cDaCDB6c6",
+      "0x14e9ef197C0bfaf7C1328ebed7151f53616Af3C5",
+      "0x6d54590Ed6950EcD3987778c004d4773a7e99dAC",
+      "0xB77959DC7a12F7549ACC084Af01259Fc48813c89",
+      "0x54655D5468f072D5bcE1577c4a46F701C28a41A7",
+      "0xB9eCFF7e01a48C434a3B8A034906e4b34Da62f90",
+      "0xB929D3002208f405180D3C07616F88EDa45F3e14",
+      "0x508378E99F5527Acb6eB4f0fc22f954c5783e5F9",
+      "0xA9448e3e496f75488306195F34e49a7fCE5cbD0c"
+    ],
+    "socials": {
+      "website": "https://app.croskull.com/",
+      "twitter": "https://twitter.com/CroskullNFT",
+      "discord": "https://discord.gg/q3nWxw8QRY",
+      "medium": "https://medium.com/@croskullnft"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "crypto-com",
+    "name": "Crypto.com",
+    "description": "Own the culture you love. A leading NFT marketplace featuring exclusive collections from A-list creators.",
+    "images": {
+      "banner": "/img/brands/crypto-com/banner.webp",
+      "preview": "/img/brands/crypto-com/preview.webp"
+    },
+    "collections": [
+      "0xEa1635a0E9344d933DF42c0Fd494d39bcE865Dc4",
+      "0xE3D53fb80c8Cda7Bb9B7207cb6B186172BD323cf"
+    ],
+    "socials": {
+      "website": "https://crypto.com/nft/",
+      "twitter": "https://twitter.com/cryptocomnft",
+      "discord": "https://discord.gg/cryptocom"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "hidden-fish",
+    "name": "Hidden Fish",
+    "description": "The purpose of the DAO is to accelerate the growth of Ebisu's Bay platform and the entire Cronos ecosystem.",
+    "images": {
+      "banner": "/img/collections/hidden-fish-fm-vip/banner.webp",
+      "preview": "/img/collections/hidden-fish-fm-vip/card.webp"
+    },
+    "collections": [
+      "0x90665eEd780C027CDef63C31C8dFa296aE168E5A",
+      "0xaa3cFC29BEaAdA4456B777Bfa7dcDfCBE0d122A9",
+      "0x4Ce0B9608006533dA056170f1efe8eEa771e0d19",
+      "0x7dE8BeC3ACf03997CDf3052c769571bbbBb7eE14"
+    ],
+    "socials": {
+      "website": "https://hidethefish.com/",
+      "twitter": "https://twitter.com/HiddenFishDAO",
+      "medium": "https://blog.hidethefish.com"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "dg-pals",
+    "name": "D.G.Pals",
+    "description": "D.G.P: New World Beta LIVE 23rd May & D.G.P: Legends Beta LIVE 31st May 2022!\nWelcome to the D.G.Verse! Backed by Crypto.com Capital and Spartan Group, D.G.Pals is one of the first to redefine Web3 gaming with the first Interoperable NFT on the Cronos chain. The D.G.Pals Genesis Collection is the most privileged set of 10,000 NFT collection. Genesis NFT holders will be empowered with resources, airdrops and other perks to help the D.G.Pals Team build the D.G.Verse. You can check out how, by owning a Genesis D.G.Pal NFT, you can help expand Panterra, grow the player base and contribute to development on the D.G.Pals Whitepaper or website. On top of these exclusive privileges, these Genesis D.G.Pal NFTs can also participate in all of the games in the D.G.Verse like every other D.G.Pal NFTs.",
+    "images": {
+      "banner": "/img/collections/dgpals/banner.png"
+    },
+    "collections": [
+      "0xeFc73c41EF829C0B87E3245aCF033b867cCD0F84",
+      "0x86aabe05e885108a8797314e817488c26f0601a1",
+      "0xa072bB6F648a4271ba9CbaF1319Fc373eF907f29",
+      "0x500cdf7a96a612BEb9e018035a3E89180a6732fE",
+      "0x70D3ee9b000f9210C1Ce1bD2A80cBAEBe209aeb7"
+    ],
+    "socials": {
+      "website": "https://dgpals.io/",
+      "twitter": "https://twitter.com/officialdgpals",
+      "discord": "https://discord.gg/dgpals",
+      "medium": "https://medium.com/officialdgpals"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "cro-crow",
+    "name": "CRO CROW",
+    "description": "CRO CROW is the very first NFT deployed on the Cronos Chain.\n\nEdition #1 was minted on block #946, just 1 hour and 27 minutes after Cronos was launched.\n\nThe CRO CROW Ecosystem revolves around this historic NFT and the art of Alemf, the artist behind the crows and some other side collections.\n\nThese NFTs can be staked to The Forest to passively earn $CRO which is automatically distributed from secondary market royalties and other sources of income.\n\nCAW CAW!",
+    "images": {
+      "banner": "/img/brands/cro-crow/banner.webp"
+    },
+    "collections": [
+      "0xe4ab77ed89528d90e6bcf0e1ac99c58da24e79d5",
+      "0x65AB0251d29c9C473c8d01BFfa2966F891fB1181",
+      "0x937879726455531dB135F9b8D88F38dF5D4Eb13b",
+      "0x0f1439a290e86a38157831fe27a3dcd302904055",
+      "0x13d13e2410A34Bfe5502D50ea4FCFBd591D7589E",
+      "0xd33CFeF82377fef83703B9D84151a477B08Ab3b8",
+      "0xccc777777ac85999fc9fe355f25cd908060ec9ea"
+    ],
+    "socials": {
+      "website": "https://crocrow.com",
+      "twitter": "https://twitter.com/cronoscrocrow",
+      "discord": "https://discord.gg/8GMWgWB5u8",
+      "telegram": "https://t.me/crocrownft",
+      "medium": "https://medium.com/@cronoscrocrow"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "trooprz",
+    "name": "Trooprz",
+    "description": "Trooprz have got your back",
+    "images": {
+      "banner": "/img/collections/trooprz/banner.jpeg"
+    },
+    "collections": [
+      "0x51112Bf32B9a1C64716DF2e6b82e63a04Bd384Fd",
+      "0xea4DF145322ec9dFCE037b062b08083141c6af8f",
+      "0xbabdFDD5f88035C9FbA58Be1b5c76DcFC6A847f3",
+      "0x96628048830a499b156aBdC04cC169C18c3A17f2",
+      "0xB82F6B5a4491D38292DFCd6706aa12DD5701D7e2",
+      "0xA35f40e45FFF953F477700C83D550D35F11B42aB",
+      "0x2FfF5FE8a3e13A10509E4297DF9d1fdaF1eE7DC4",
+      "0xEB54ea91C92Ce404Ba7AD7B0EF2e36fD75C889A7"
+    ],
+    "socials": {
+      "website": "https://trooprz.army/",
+      "twitter": "https://twitter.com/trooprzarmy",
+      "discord": "https://discord.gg/trooprz"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "boomer-squad",
+    "name": "Boomer Squad",
+    "description": "Collection of 8008 Boomers using crypto in the only way they know how. Everyone has felt like our Boomers at some point in their crypto journey but just like everyone else they will figure it out eventually. Founded by a fully doxed team of 11, Boomer Squad was established to build an ecosystem of on chain games, events, collections, and ecosystem developments that reflects value back to our Gen 0 Boomers through our Verified Distribution Contract called the \"Mattress Fund\" and Boomer DAO. Check out our GitBook for a full breakdown of everything already established and in the works in our ecosystem",
+    "images": {
+      "banner": "/img/collections/boomer-squad/banner.webp"
+    },
+    "collections": [
+      "0xb650279e3d726B0c75C984cAA55341cB87A7F501",
+      "0x8Dd9975c78423480a6188F55B0767fbF4478b001",
+      "0x8Bff49Fc633e0A3eB879449B67500812B27a97B7",
+      "0x995d38004314836E48485D5fE328ebC17046FE68",
+      "0xc6a1f1034235F3B389bAb28B75719B3475Edf4AD",
+      "0xf27205535932c7490F227F5bED7e5f7212b455bb",
+      "0xEa71F7AFA9eEEee5De16ee64b76255E216952511",
+      "0xAE40d175F2cf9C6777c0E0830E17211c4F5A66D0",
+      "0x18550Cc44779EA72D6Fe6389D08D8Ab234f754CB",
+      "0x48D20305Ad156e44A0f93c3312A876E56c0e9f7E",
+      "0xb7109F93d780FD3f01eB7EbB0FE9436449F0D8EF",
+      "0xc5B294B557402f8706aED487e155773756A9c400",
+      "0x4AA9F792b51954A8903967375e854Ed7EE4bCBf0"
+    ],
+    "socials": {
+      "website": "https://www.boomersquad.io/",
+      "twitter": "https://twitter.com/BoomerSquadNFT1",
+      "discord": "https://discord.gg/boomersquad",
+      "medium": "https://medium.com/@BoomerSquadNFT"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "argonauts",
+    "name": "Argonauts",
+    "description": "The Argonauts brand features various NFT collections under the NFT arm of Argo Finance. At it's core, the Argonauts collection is a collection of 8,888 unique utility-enabled characters that represents your unique identity on the Cronos chain. The Argonauts will be the centrepiece of Argo, providing users with massive utility across the suite of Argo products.",
+    "images": {
+      "banner": "/img/collections/argonauts/banner.webp"
+    },
+    "collections": [
+      "0xa996aD2b9f240F78b063E47F552037658c4563d1",
+      "0x8ac06d8CF5B371bf57723C050C1969f0f23Dbf98",
+      "0xc3cf2416a69351bf336ff671ad46d92efee4ea75",
+      "0x0A37674F61a9345f32E277b15E3C9603cDe710f6",
+      "0xb67A1DE71c8506e4b6326d2a01c421F831b9754d"
+    ],
+    "socials": {
+      "website": "https://www.argofinance.money/nft",
+      "twitter": "https://twitter.com/ArgoProtocol",
+      "discord": "https://discord.gg/argofinance",
+      "medium": "https://argofinance.medium.com",
+      "telegram": "https://t.me/Argo_Finance"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "cronos-primate-business",
+    "name": "Cronos Primate Business",
+    "description": "3 generations of uniquely generated primates that make up the Primate World. The original Cronos Primate Business is a collection of 1000 primates that sold out in two minutes. The Primates along with Gorillas and Corrupted give staking, raffles, giveaways and more.\n\nCrotopia is the Metaverse being built by Cronos Primate Business. The OG pass is your key to the metaverse and includes free skin airdrops for life.",
+    "images": {
+      "banner": "/img/brands/cronos-primate-business/banner.webp",
+      "preview": "/img/brands/cronos-primate-business/preview.webp"
+    },
+    "collections": [
+      "0x939b90c529F0e3a2C187E1b190Ca966a95881FDe",
+      "0x241a175BDE39D6a2C6fA7ba9ed8F9Ac2C7F2741D",
+      "0xc843f18d5605654391e7eDBEa250f6838C3e8936",
+      "0xA68825768bDB7a2161422e3CcAF1973FF88f8E66",
+      "0x67474fDBebe7A973356b6791c7D7F70264298C0A"
+    ],
+    "socials": {
+      "website": "https://www.cronospb.com/",
+      "twitter": "https://twitter.com/PrimateCronos",
+      "discord": "https://discord.gg/X4shERMUwf",
+      "medium": "https://medium.com/cronos-monkey-business"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "weird-apes-club",
+    "name": "Weird Apes Club",
+    "description": "Genesis Weird Apes is a breedable collection randomly generated from 125 traits aimed to bring Weirdness all over the Cronos Chain! Not just a PFP but an entire ecosystem of advanced mechanisms of staking, breeding, renting, customization and more!\nWith every 2D ape you may burn $WAC to claim an additional new 3D Voxel ape with corresponding rank and traits. Voxel apes will play a key role within our P2E, Legends of Weirdonite.\nVisit our Discord to join our wonderful community!",
+    "images": {
+      "banner": "/img/collections/weirdapesclub/banner.webp"
+    },
+    "collections": [
+      "0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44",
+      "0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1",
+      "0x89F7114C73d5cef7d7EDCbDb14DaA092EB2194c9"
+    ],
+    "socials": {
+      "website": "https://weirdapes.com/",
+      "twitter": "https://twitter.com/WeirdApesClub",
+      "discord": "https://discord.gg/d6WvCpfn9W",
+      "medium": "https://medium.com/@WeirdApesClub",
+      "gitbook": "https://weirdape.gitbook.io/weird-apes-club/weird-apes-club/summary"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "crodex",
+    "name": "CRODEX",
+    "description": "OG Crxillions and Space Crxillions are Crodex's non-fungible token (NFT) collections of hyper-realistic felines. They are multi-dimensional crypto assets that will enable you to actively utilize your NFTs as yield generators, boosters or tickets for Metaverse Hub adventures and games with various offerings.",
+    "images": {
+      "banner": "/img/brands/crodex/banner.webp"
+    },
+    "collections": [
+      "0xE1bAa24525B5f48F9B9df54802E44E85c0D81099",
+      "0xB6782F208ABe10E8962407d139f6698Bfc4FD13F"
+    ],
+    "socials": {
+      "website": "https://swap.crodex.app/#/mhub",
+      "twitter": "https://twitter.com/crodexapp",
+      "discord": "https://discord.gg/7HwpTF63y5",
+      "telegram": "https://t.me/crodexofficial"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "baby-alien-division",
+    "name": "Baby Alien Division",
+    "description": "",
+    "images": {
+      "banner": "/img/collections/babyaliendivision/spaceships/banner.webp"
+    },
+    "collections": [
+      "0xbe5F02b6fD5C1e714f0bdd28B6a119827D8b6c61",
+      "0x1A8C07dd1933433cDdBE3123b583695AE3C56b9b",
+      "0x4E6795D725e26E340865140a870C25d1e413A118",
+      "0xA217d6feEf38F9f2D139300E0C4adF42cf96F4C3",
+      "0xd7eEc30A764B3Eed788e93de9fc69b432Dd54d16"
+    ],
+    "socials": {
+      "website": "https://badaliens.io/",
+      "twitter": "https://twitter.com/BAD_Cronos",
+      "discord": "https://discord.gg/qKBy2azf69",
+      "medium": "https://medium.com/@babyaliendivision"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "the-degenerated-nfts",
+    "name": "The Degenerated NFTs",
+    "description": "The Degenerated NFTs is a collective of artists / founders who teamed up to deliver the best quality AI product to the Cronos chain, the future is now \uD83D\uDC8E",
+    "images": {
+      "banner": "/img/brands/the-degenerated-nfts/banner.webp"
+    },
+    "collections": [
+      "0xd79a37824bD86e4E945e8385480de3c45B7e5B08",
+      "0x776BeF0d43Acdc2b49c6885C6d15F9A5308252b2",
+      "0xDa997f6c50306F886ce730B65bb1BFc977B89e8D",
+      "0x7d24acf59b211904c9713c9d901643e20fc81904",
+      "0x56Db07fB1F560c2486527Da02c2fF1D276C2aec4",
+      "0x69B0F59900E123Ad5D3AA37BB022fDe32A4d24B0",
+      "0x8333624EEb54E0c9FF6C96D41645d60463CE9b22"
+    ],
+    "socials": {
+      "website": "https://thedegenerated.art/",
+      "twitter": "https://twitter.com/degenednfts",
+      "discord": "https://discord.gg/N5YXhNDJyz"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "0xluckless",
+    "name": "0xLuckless",
+    "description": "",
+    "images": {
+      "banner": "/img/brands/0xluckless/banner.webp",
+      "preview": "/img/brands/0xluckless/preview.webp"
+    },
+    "collections": [
+      "0xd0B45e7bFcc58C99203E60a363E2574e01B0a581",
+      "0xad350404b1564c732f3ed6673cfd8bdf93206a97",
+      "0x0d511FAA531d8D36aDE88daFcBbb9cE83Be42111"
+    ],
+    "socials": {
+      "website": "https://0xluckless.com",
+      "twitter": "https://twitter.com/0xLuckless",
+      "discord": "https://discord.gg/REbVZ9rACc",
+      "medium": "https://medium.com/@0xLuckless"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "croodle-ape",
+    "name": "Croodle Ape",
+    "description": "Cronos NFTs ecosystem focus on passive income and long-term sustainability",
+    "images": {
+      "banner": "/img/brands/croodle-ape/banner.webp"
+    },
+    "collections": [
+      "0xf3a7baeadf59f6900c0202a4680d958b9ad4b713",
+      "0x84Fd887B14442C070a9B63a966D15a2C98E03FA2",
+      "0xfcE5A6571fA0495d28f9D305945E74bA4dDEAD62",
+      "0x434c8845261d5cF942d62fcd6503569cE05798b3"
+    ],
+    "socials": {
+      "website": "https://croodleape.com/",
+      "twitter": "https://www.twitter.com/croodleape",
+      "discord": "https://discord.gg/Tj97K4c4Y9"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "lost-toys",
+    "name": "Lost Toys",
+    "description": "",
+    "images": {
+      "banner": "/img/collections/lost-toys-vip/banner.png"
+    },
+    "collections": [
+      "0xEB850b8F7d00B4FaF242888Bef7EfbF229eb1e41",
+      "0x714F995CC3f551fc6e3f3D4C4955C51bBdC8be6f",
+      "0xE310Bd632bf98923E03144455C7645ee13353b97"
+    ],
+    "socials": {
+      "website": "https://www.losttoys.io/",
+      "twitter": "https://www.twitter.com/losttoysnft",
+      "discord": "https://discord.gg/Tdd9TZRMxn",
+      "medium": "https://hello-143.gitbook.io/lost-toys-nft/",
+      "instagram": "https://www.instagram.com/losttoysnft/"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "cronos-apes",
+    "name": "Cronos Apes",
+    "description": "The Cronos Apes brand features various iconic NFT collection. Each NFT of these collections has been uniquely and randomly generated from a fully animated traits set. Each NFT gives access to an exclusive Community and set of utilities, such as the distribution of earnings. If you are searching for the most iconic Apes collection on the Cronos Chain, you are in the right place. Join the #CronosApesArmy now!",
+    "images": {
+      "banner": "/img/brands/cronos-apes/banner.webp",
+      "preview": "/img/brands/cronos-apes/preview.webp"
+    },
+    "collections": [
+      "0x5Cb9a12d31CF751ACc58B12B47cc4E093A6AB580",
+      "0x7D89dCC2f35403cFD9B07475826F9a14a340d06A",
+      "0x33e0b91c773D500FB4De87957740f5D200Be7371"
+    ],
+    "socials": {
+      "website": "https://www.cronosapesnft.com/",
+      "twitter": "https://www.twitter.com/cronosapesnft",
+      "discord": "https://discord.gg/G3JkKJAYVB"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "zap-projects",
+    "name": "Zap Projects",
+    "description": "",
+    "images": {
+      "banner": "/img/brands/zap-projects/banner.webp"
+    },
+    "collections": [
+      "0xb242399f3f52fcfa8b09d7d6e4C3DBe84D0644fc",
+      "0xF257E02D8c5c9a405589F99859f8b28b0Ccc5474",
+      "0x63dF2BB08bcc9807c0ef5BD0C169FF3b4b289543"
+    ],
+    "socials": {
+      "website": "https://zap7art.club/",
+      "twitter": "https://twitter.com/zap7project",
+      "discord": "https://discord.gg/tBgUbvsSZX"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "carkayous",
+    "name": "Carkayous",
+    "description": "Carkayous is a fictitious continent created by Jesse Smith (Ink Master | TV Celeb | Tattoo Artist) where his art lives.",
+    "images": {
+      "banner": "/img/brands/carkayous/banner.webp",
+      "preview": "/img/brands/carkayous/preview.webp"
+    },
+    "collections": [
+      "0x72af9c869a4759e6d50e9656c0741b395532c3dd",
+      "0x6c2757ee563d063cce48bd06b130292fe530e76d",
+      "0xe0afa67d7E4F2329f81562DB9318837A28be83Ec",
+      "0xD717708d012dCa8C3d108BD1E079f937C4A2C0cF",
+      "0x7781b08298d7EDD97354989307A37cFd79BeB175",
+      "0x384A13ca5eA3BF799387DAf3dB0140AE66a7f3f0"
+    ],
+    "socials": {
+      "website": "https://carkayous.com/",
+      "twitter": "https://twitter.com/carkayous",
+      "discord": "https://discord.gg/carkayous"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "daolab",
+    "name": "DaoLab",
+    "description": "The DaoLabs project is an Ecosystem inspired by two concepts:\n• Dao is a decentralized autonomous organization and\n• Dao (Tao) as a term from East Asian philosophy, which represents the natural order of the universe, the greater whole, that unites all the individual elements of the universe.\nDr Dao, main collection, was born with the aim of uniting artists, developers and builders to improve Cronos Projects, providing Incubator services and giving a percentage back from minting revenues.",
+    "images": {
+      "banner": "/img/brands/daolab/banner.webp",
+      "preview": "/img/brands/daolab/preview.webp"
+    },
+    "collections": [
+      "0x28238122BECBE1D727F2D23631eD83d6cbe833Bc",
+      "0x1C7F4fE849e52B013242CDCb0C88f6A3c2Ea28aF",
+      "0x44aa4cB2efF7167A306449EDe9b550e57Ca33036",
+      "0x51eaf8c081Cca683A5542c438f9429CE46D238e4"
+    ],
+    "socials": {
+      "website": "https://daogames.online/",
+      "twitter": "https://twitter.com/DrDaoClub",
+      "discord": "https://discord.gg/fyca4JYW7V",
+      "medium": "https://medium.com/@drdao.club",
+      "telegram": "https://t.me/DrDaoFounder"
+    },
+    "categories": [],
+    "style": {}
+  }
+]

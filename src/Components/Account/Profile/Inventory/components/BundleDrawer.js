@@ -163,7 +163,9 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
       </GridItem>
       <GridItem px={6} py={4} overflowY="auto">
         <Flex mb={2}>
-          <Text fontWeight="bold" color={actualForm == 'bundle' && batchListingCart.nfts.length > 40 && 'red'}>{batchListingCart.nfts.length}{actualForm == 'bundle' && `/${40}`} {batchListingCart.nfts.length === 1 ? 'Item' : 'Items'}</Text>
+          <Text fontWeight="bold" color={batchListingCart.nfts.length > 40 && 'red'}>
+            {batchListingCart.nfts.length} / {MAX_NFTS_IN_BUNDLE} Items
+          </Text>
           <Spacer />
           <Text fontWeight="bold" onClick={handleClearCart} cursor="pointer">Clear all</Text>
         </Flex>
