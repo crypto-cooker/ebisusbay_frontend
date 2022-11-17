@@ -26,13 +26,11 @@ import {
   isUserBlacklisted,
   sliceIntoChunks,
 } from '../utils';
-import { nanoid } from 'nanoid';
 import { appAuthInitFinished } from './InitSlice';
 import { captureException } from '@sentry/react';
 import { setThemeInStorage } from '../helpers/storage';
 import { getAllOffers } from '../core/subgraph';
 import { offerState } from '../core/api/enums';
-import { txExtras } from '../core/constants';
 import { appConfig } from '../Config';
 import { MarketFilterCollection } from '../Components/Models/market-filters.model';
 import {getProfile} from "@src/core/cms/endpoints/profile";

@@ -8,7 +8,6 @@ import Button from "@src/Components/components/Button";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {specialImageTransform} from "@src/hacks";
 import {useSelector} from "react-redux";
-import {txExtras} from "@src/core/constants";
 import {toast} from "react-toastify";
 import * as Sentry from "@sentry/react";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
@@ -38,9 +37,9 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
       Sentry.captureEvent({message: 'handleCancelOffer', extra: {address: collection.address}});
       let tx;
       if (isCollectionOffer) {
-        tx = await offerContract.cancelCollectionOffer(offer.nftAddress, offer.offerIndex, txExtras);
+        tx = await offerContract.cancelCollectionOffer(offer.nftAddress, offer.offerIndex);
       } else {
-        tx = await offerContract.cancelOffer(offer.hash, offer.offerIndex, txExtras);
+        tx = await offerContract.cancelOffer(offer.hash, offer.offerIndex);
       }
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));

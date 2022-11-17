@@ -6,7 +6,6 @@ import Button from "@src/Components/components/Button";
 import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {txExtras} from "@src/core/constants";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
 import {appConfig} from "@src/Config";
 import Offer from "@src/Contracts/Offer.json";
@@ -148,17 +147,11 @@ export default function MakeOfferDialog({ isOpen, nft:defaultNft, collection, on
       if (existingOffer) {
         const newPrice = parseInt(offerPrice) - parseInt(existingOffer.price)
         tx = await contract.updateOffer(existingOffer.hash, existingOffer.offerIndex, {
-          ...{
-            value: ethers.utils.parseEther(newPrice.toString()),
-          },
-          ...txExtras,
+          value: ethers.utils.parseEther(newPrice.toString())
         });
       } else {
         tx = await contract.makeOffer(nft.address ?? nft.nftAddress, nft.id ?? nft.nftId, {
-          ...{
-            value: ethers.utils.parseEther(offerPrice.toString()),
-          },
-          ...txExtras,
+          value: ethers.utils.parseEther(offerPrice.toString())
         });
       }
       let receipt = await tx.wait();

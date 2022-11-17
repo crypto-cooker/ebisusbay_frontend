@@ -45,7 +45,6 @@ import {ERC721} from "@src/Contracts/Abis";
 import {appConfig} from "@src/Config";
 import {caseInsensitiveCompare, createSuccessfulTransactionToastContent} from "@src/utils";
 import * as Sentry from "@sentry/react";
-import {txExtras} from "@src/core/constants";
 import {getCollectionMetadata} from "@src/core/api";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 
@@ -94,7 +93,7 @@ export const BatchListingDrawer = ({onClose, ...gridProps}) => {
       }
 
       Sentry.captureEvent({message: 'handleBatchListing', extra: {nftAddresses, nftIds, nftPrices}});
-      let tx = await user.marketContract.makeListings(nftAddresses, nftIds, nftPrices, txExtras);
+      let tx = await user.marketContract.makeListings(nftAddresses, nftIds, nftPrices);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       handleClearCart();

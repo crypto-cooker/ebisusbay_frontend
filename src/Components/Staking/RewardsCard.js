@@ -7,9 +7,6 @@ import {Spinner} from "react-bootstrap";
 import {getTheme} from "@src/Theme/theme";
 import StakeABI from "@src/Contracts/Stake.json";
 import {appConfig} from "@src/Config";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {txExtras} from "@src/core/constants";
 import {Box, SimpleGrid} from "@chakra-ui/react";
 
 const config = appConfig();
@@ -82,7 +79,7 @@ const RewardsCard = () => {
       if (amountToHarvest.gt(0)) {
         try {
           const writeContract = new Contract(config.contracts.stake, StakeABI.abi, user.provider.getSigner());
-          const tx = await writeContract.harvest(user.address, txExtras);
+          const tx = await writeContract.harvest(user.address);
           const receipt = await tx.wait();
           await getRewardsInfo();
           toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));

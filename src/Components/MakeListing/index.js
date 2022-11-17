@@ -14,7 +14,6 @@ import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {ERC721} from "@src/Contracts/Abis";
-import {txExtras} from "@src/core/constants";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
 import {appConfig} from "@src/Config";
 import Market from "@src/Contracts/Marketplace.json";
@@ -203,7 +202,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
 
       setExecutingCreateListing(true);
       Sentry.captureEvent({message: 'handleCreateListing', extra: {nftAddress, nftId, price}});
-      let tx = await marketContract.makeListing(nftAddress, nftId, price, txExtras);
+      let tx = await marketContract.makeListing(nftAddress, nftId, price);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       setExecutingCreateListing(false);
