@@ -15000,6 +15000,34 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "BadMeerkat DEGEN",
+      "slug": "badmeerkat-degen",
+      "multiToken": false,
+      "address": "0xdc9B6e10E0648E2258afe6705690C1E81cf933d7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "More DEGEN than ever. Second generation of the fan art collection **BadMeerkat**",
+        "verified": false,
+        "avatar": "/img/collections/badmeerkat-degen/avatar.webp",
+        "banner": "/img/collections/badmeerkat-degen/banner.webp",
+        "card": "/img/collections/badmeerkat-degen/card.webp",
+        "maxSupply": 500,
+        "website": "https://linktr.ee/badmeerkat",
+        "twitter": "https://twitter.com/badmeerkatnft",
+        "discord": "https://discord.gg/wcJ4vvZb4H",
+        "categories": [
+          "art",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
