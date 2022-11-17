@@ -24,8 +24,9 @@ import {
   applyPriceToAll,
   cascadePrices,
   clearBatchListingCart,
-
+  setRefetchNfts,
 } from "@src/GlobalState/batchListingSlice";
+
 
 import { appConfig } from "@src/Config";
 import useCreateBundle from '@src/Components/Account/Settings/hooks/useCreateBundle';
@@ -42,7 +43,7 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
   const user = useSelector((state) => state.user);
   const [executingCreateListing, setExecutingCreateListing] = useState(false);
   const [showConfirmButton, setShowConfirmButton] = useState(false);
-
+  const [isCreating, setIsCreating]=  useState(false);
   const [actualForm, setActualForm] = useState('list');
 
   const [createBundle, responseBundle] = useCreateBundle();
@@ -90,12 +91,17 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
       }
       else {
         try {
+          setIsCreating(true);
           const res = await createBundle({ values, nfts: batchListingCart.nfts })
+          setIsCreating(false)
           toast.success('The bundle was created successfully');
+          dispatch(setRefetchNfts(true))
+          dispatch(clearBatchListingCart())
         }
         catch (error) {
           toast.error(`Error`);
         }
+        setIsCreating(false)
       }
     }
   };
@@ -189,8 +195,13 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
           className="w-100"
           onClick={handleSubmit}
           disabled={errors.length > 0}
+          isLoading={isCreating}
         >
-          Create Bundle
+          {!isCreating? 
+            'Create Bundle'  
+            : 
+            'Creating Bundle'
+            }
         </Button>
       </GridItem>
     </>

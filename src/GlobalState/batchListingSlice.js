@@ -7,7 +7,8 @@ const batchListingSlice = createSlice({
     nfts: [],
     isDrawerOpen: false,
     extras: {},
-    extrasBundle: {}
+    extrasBundle: {},
+    refetchNfts: false,
   },
   reducers: {
     addToBatchListingCart: (state, action) => {
@@ -103,6 +104,9 @@ const batchListingSlice = createSlice({
     setExtrasBundle: (state, action) => {
       state.extrasBundle[action.payload.address.toLowerCase()] = action.payload;
     },
+    setRefetchNfts: (state, action) => {
+      state.refetchNfts = action.payload;
+    },
   },
 });
 
@@ -120,7 +124,8 @@ export const {
   setFloorPrice,
   setExtras,
   setExtrasBundle,
-  setApprovalBundle
+  setApprovalBundle,
+  setRefetchNfts
 } = batchListingSlice.actions;
 
 export default batchListingSlice.reducer;

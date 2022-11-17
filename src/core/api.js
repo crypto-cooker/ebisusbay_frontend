@@ -603,11 +603,11 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
       return sameId && sameAddress;
     });
   };
-
   const writeContracts = [];
   return await Promise.all(
     results
       .filter((nft) => {
+        if(nft.symbol && nft.symbol == 'Bundle') return true
         const matchedContract = findCollectionByAddress(nft.nftAddress, nft.nftId);
         if (!matchedContract) return false;
 
@@ -616,6 +616,17 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
         return matchedContract && hasBalance;
       })
       .map(async (nft) => {
+        if(nft.symbol && nft.symbol == 'Bundle'){
+          return {
+            address: nft.nftAddress,
+            description: nft.metadata?.description,
+            id: nft.nftId,
+            title: nft.metadata?.title,
+            nfts: nft.metadata?.nfts,
+            symbol: 'Bundle'
+          }
+        }
+        else{
         const knownContract = findCollectionByAddress(nft.nftAddress, nft.nftId);
 
         let key = knownContract.address;
@@ -697,7 +708,7 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
           canTransfer: canTransfer,
           isStaked: isStaked,
         };
-      })
+      }})
   );
 }
 
