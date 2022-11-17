@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import { Navigation } from "swiper";
-import { Center } from "@chakra-ui/react";
+import { Center, Box } from "@chakra-ui/react";
 
 export default function Slider({ children, size }) {
 
@@ -11,21 +11,21 @@ export default function Slider({ children, size }) {
   return (
     <>
     {size > 0 && (
-      <Swiper
-        navigation={true}
-        modules={[Navigation]}
-        className="mySwiper"
-        onSlideChange={({ activeIndex }) => setCurrentIndex(activeIndex)}
-        activeIndex={3}
-        onSwiper={(swiper) => console.log(swiper)}>
+      <Box maxW={'75vw'}>
+        <Swiper
+          navigation={true}
+          modules={[Navigation]}
+          className="mySwiper"
+          onSlideChange={({ activeIndex }) => setCurrentIndex(activeIndex)}>
 
-        <Center className="index-counter">
-          {`${currentIndex + 1} of ${size}`}
-        </Center>
+          <Center className="index-counter">
+            {`${currentIndex + 1} of ${size}`}
+          </Center>
 
-        {children.map((c) => <SwiperSlide>{c}</SwiperSlide>)}
+          {children.map((c) => <SwiperSlide>{c}</SwiperSlide>)}
 
-      </Swiper>
+        </Swiper>
+      </Box>
     )}
     </>
   );

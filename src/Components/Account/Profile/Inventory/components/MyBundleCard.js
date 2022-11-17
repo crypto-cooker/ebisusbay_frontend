@@ -9,22 +9,21 @@ import {
   faTag,
   faTimes,
   faPen,
-  faPlusCircle, faTags
+  faPlusCircle, faTags, faArrowUpFromBracket
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MenuPopup } from '@src/Components/components/chakra-components';
 import AnyMedia from '@src/Components/components/AnyMedia';
 import { nftCardUrl } from "@src/helpers/image";
 import {
-  Badge,
   Box,
-  Center,
   Flex,
   Heading,
   Spacer,
   Text,
   useBreakpointValue,
-  useClipboard
+  useClipboard,
+  useDisclosure
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { appUrl, caseInsensitiveCompare, round } from "@src/utils";
@@ -33,6 +32,7 @@ import { darkTheme, lightTheme } from "@src/Theme/theme";
 import { useSelector } from "react-redux";
 import { faCheckCircle } from "@fortawesome/free-regular-svg-icons";
 import Slider from './Slider';
+import UnwrapBundleDialog from '@src/Components/UnwrapBundleDialog';
 
 const MyNftCard = ({
   nft,
@@ -58,6 +58,7 @@ const MyNftCard = ({
     { fallback: 'md' },
   );
   const { onCopy } = useClipboard(nftUrl);
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   const navigateTo = (link) => {
     if (batchListingCart.isDrawerOpen) {
@@ -122,6 +123,12 @@ const MyNftCard = ({
       label: 'Copy link',
       handleClick: onCopyLinkButtonPressed,
     });
+      options.push({
+        icon: faArrowUpFromBracket,
+        label: 'Unwrap bundle',
+        handleClick: onOpen,
+      })
+    
 
     return options;
   };
@@ -261,6 +268,8 @@ const MyNftCard = ({
           </Box>
         </Flex>
       </Box>
+      <UnwrapBundleDialog isOpen={isOpen} onClose={onClose} nftBundle={nft}/>
+
     </Box>
 
   );
