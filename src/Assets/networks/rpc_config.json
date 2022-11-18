@@ -15033,7 +15033,7 @@
       "name": "CroWorld Cup",
       "slug": "cro-world-cup",
       "multiToken": false,
-      "address": "",
+      "address": "0xF1576866233679c9F2A1cB7600BcE25B0A23fA87",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -20441,7 +20441,7 @@
         "name": "CroWorld Cup",
         "twitter": "https://www.twitter.com/croworldcup"
       },
-      "address": "",
+      "address": "0xF1576866233679c9F2A1cB7600BcE25B0A23fA87",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 100,
       "totalSupply": 960,
