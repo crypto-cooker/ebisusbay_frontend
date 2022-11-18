@@ -15028,6 +15028,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "CroWorld Cup",
+      "slug": "cro-world-cup",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CroWorld Cup is a nft project celebrating the biggest soccer tournament in the world.  There are 32 countries battling for the title.  So are you.  Each mint will be a flag representing a country.  If your country wins.. you win.  First place country nft holders win $7500* split over each NFT.  2nd Place wins $2500* split over every nft holder.  THere are 30 flags per country so for every winning flag you can win $333.33 for first place and $83.33 per flag.  Own 2 flags get double winnings\n\nAll country flags that lose, will be dropped an NFT 1-2 weeks after the tournament ends.  These NFTs will be your ticket to future games.\n\n*These numbers are based on minting out.  Should we not mint out the first place team will get 50% of the pot and 2nd place will get 20% of the pot.",
+        "verified": false,
+        "avatar": "/img/collections/cro-world-cup/avatar.webp",
+        "banner": "/img/collections/cro-world-cup/banner.webp",
+        "card": "/img/collections/cro-world-cup/card.webp",
+        "maxSupply": 960,
+        "twitter": "https://www.twitter.com/croworldcup",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
@@ -20403,6 +20428,42 @@
         "verified": true,
         "doxx": "public",
         "kyc": "hidden",
+        "escrow": false
+      }
+    },
+    {
+      "id": 140,
+      "slug": "cro-world-cup",
+      "title": "CroWorld Cup",
+      "subtitle": "Let’s get ready for the best world sports tournament ever!! Mint your flag and root for your country!",
+      "description": "CroWorld Cup is a nft project celebrating the biggest soccer tournament in the world.  There are 32 countries battling for the title.  So are you.  Each mint will be a flag representing a country.  If your country wins.. you win.  First place country nft holders win $7500* split over each NFT.  2nd Place wins $2500* split over every nft holder.  THere are 30 flags per country so for every winning flag you can win $333.33 for first place and $83.33 per flag.  Own 2 flags get double winnings\n\nAll country flags that lose, will be dropped an NFT 1-2 weeks after the tournament ends.  These NFTs will be your ticket to future games.\n\n*These numbers are based on minting out.  Should we not mint out the first place team will get 50% of the pot and 2nd place will get 20% of the pot.",
+      "author": {
+        "name": "CroWorld Cup",
+        "twitter": "https://www.twitter.com/croworldcup"
+      },
+      "address": "",
+      "maxMintPerTx": 20,
+      "maxMintPerAddress": 100,
+      "totalSupply": 960,
+      "cost": "299",
+      "memberCost": "285",
+      "foundersOnly": false,
+      "start": 1668801600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/cro-world-cup/drop.webp",
+        "banner": "/img/collections/cro-world-cup/banner.webp",
+        "avatar": "/img/collections/cro-world-cup/avatar.webp",
+        "preview": "/img/collections/cro-world-cup/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
         "escrow": false
       }
     }
