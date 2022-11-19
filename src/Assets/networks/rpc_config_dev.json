@@ -15053,6 +15053,33 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "CronosOG Apes",
+      "slug": "cronosog-apes",
+      "multiToken": false,
+      "address": "0x48A81b2120EA832CEcd83f35eC5F84D4c7249B50",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collection of 1200 AI Apes designed to add the personality and looks of the true OG of the 1920's. This is the first installment from the CronosOG Collections and was made with the investors of the Cronos blockchain from its early beginnings to the current day in mind. The OG Ape has seen the fud, been in a rug, had some great success and or is just building his future in the shadows. In any case there is an Ape in this collection that represents that investor. In addition these OG's are also the key to gaining 60% royalties from secondary sales and 10% of each mint that CronosOG puts out in the future. So grab that fedora, use them getaway sticks and meet us down at the speakeasy.",
+        "verified": false,
+        "avatar": "/img/collections/cronosog-apes/avatar.webp",
+        "banner": "/img/collections/cronosog-apes/banner.webp",
+        "card": "/img/collections/cronosog-apes/card.webp",
+        "maxSupply": 1200,
+        "website": "https://cronosogcollections.com/",
+        "twitter": "https://www.twitter.com/og_cronos",
+        "discord": "https://discord.gg/cGAyAP47QF",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
