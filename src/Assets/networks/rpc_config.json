@@ -15108,6 +15108,34 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Multi Dimensional Crystals",
+      "slug": "multi-dimensional-crystals",
+      "multiToken": false,
+      "address": "0xa9c0d40bb15B265abBe087e5E74f193c253985e5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A multi-color crystal with many use cases in the Loaded Companions roadmap",
+        "verified": false,
+        "avatar": "/img/collections/multi-dimensional-crystals/avatar.webp",
+        "banner": "/img/collections/multi-dimensional-crystals/banner.webp",
+        "card": "/img/collections/multi-dimensional-crystals/card.webp",
+        "maxSupply": 505,
+        "website": "https://loadedcompanions.netlify.app/#crystals/",
+        "twitter": "https://twitter.com/LoadedCompanion",
+        "discord": "https://discord.gg/D7fDCF5kV9",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
