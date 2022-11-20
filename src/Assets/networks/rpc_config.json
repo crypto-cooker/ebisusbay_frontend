@@ -15080,6 +15080,34 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Buds",
+      "slug": "buds",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Buds, A collection of 4420 PFPs with great utility to hit our Cronons Blockchains! With funding to help go towards patients access more affordable medicinal cannabis, V.I.Buds founder token holders have the added benefits of 2 free mints every drop we have, available on CDC",
+        "verified": true,
+        "avatar": "/img/collections/buds/avatar.webp",
+        "banner": "/img/collections/buds/banner.webp",
+        "card": "/img/collections/buds/card.webp",
+        "maxSupply": 2210,
+        "website": "https://buds-meta.com/",
+        "twitter": "https://twitter.com/BudsMeta",
+        "discord": "https://discord.gg/7NrZw7sn",
+        "instagram": "https://www.instagram.com/buds.meta.420",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
@@ -20491,6 +20519,46 @@
         "verified": true,
         "doxx": false,
         "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "id": 141,
+      "slug": "buds",
+      "title": "Buds",
+      "subtitle": "Buds, A collection of 4420 PFPs with great utility to hit our Cronons Blockchains! With funding to help go towards patients access more affordable medicinal cannabis, V.I.Buds founder token holders have the added benefits of 2 free mints every drop we have, available on CDC",
+      "description": "With non-monetized staking to buy custom resin Herb Grinders, Rolling Trays, Stash Jars, Custom apparel and so much more. holders of our 2210 O.Gs will benefit from community royalties as well as group discussions on how the projects is going and which direction, they want to see it go next. We plan on getting our own licensing down the track so O.G holders will have the benefit of that added investment opportunity, just by holding!",
+      "author": {
+        "name": "BudsMeta",
+        "website": "https://buds-meta.com/",
+        "twitter": "https://twitter.com/BudsMeta",
+        "discord": "https://discord.gg/7NrZw7sn",
+        "instagram": "https://www.instagram.com/buds.meta.420"
+      },
+      "address": "",
+      "maxMintPerTx": 50,
+      "maxMintPerAddress": 100,
+      "totalSupply": 2210,
+      "cost": "420",
+      "memberCost": "320",
+      "whitelistCost": "330",
+      "foundersOnly": false,
+      "start": 1669320000000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/buds/drop.webp",
+        "banner": "/img/collections/buds/banner.webp",
+        "avatar": "/img/collections/buds/avatar.webp",
+        "preview": "/img/collections/buds/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
         "escrow": false
       }
     }
