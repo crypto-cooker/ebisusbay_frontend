@@ -115,7 +115,7 @@ const Header = function () {
                 <NavLink name={'Stats'} to={'/stats'} />
               </HStack>
 
-              {shouldUseMobileSearch && <MobileSearchDrawer />}
+              {shouldUseMobileSearch && isGlobalSearchEnabled && <MobileSearchDrawer />}
               <Cart />
               {isNotificationsEnabled && profile && <NotificationMenu />}
               <span className="my-auto">
