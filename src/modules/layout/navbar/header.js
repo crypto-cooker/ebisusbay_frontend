@@ -60,6 +60,7 @@ const Header = function () {
 
   const { Features } = Constants;
   const isNotificationsEnabled = useFeatureFlag(Features.CMS_NOTIFICATIONS);
+  const isGlobalSearchEnabled = useFeatureFlag(Features.GLOBAL_SEARCH);
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
@@ -94,7 +95,7 @@ const Header = function () {
                 </HStack>
               </a>
             </Link>
-            {!shouldUseMobileSearch && (
+            {!shouldUseMobileSearch && isGlobalSearchEnabled && (
               <Box w="100%" me={2}>
                 <Search />
               </Box>

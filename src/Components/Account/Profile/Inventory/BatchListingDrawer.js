@@ -49,6 +49,8 @@ import * as Sentry from "@sentry/react";
 import { getCollectionMetadata } from "@src/core/api";
 import { collectionRoyaltyPercent } from "@src/core/chain";
 import BundleDrawer from "./components/BundleDrawer";
+import useFeatureFlag from "@src/hooks/useFeatureFlag";
+import Constants from "@src/constants";
 
 const config = appConfig();
 const floorThreshold = 5;
@@ -60,6 +62,9 @@ export const BatchListingDrawer = ({ onClose, ...gridProps }) => {
   const user = useSelector((state) => state.user);
   const [executingCreateListing, setExecutingCreateListing] = useState(false);
   const [showConfirmButton, setShowConfirmButton] = useState(false);
+
+  const { Features } = Constants;
+  const useBundles = useFeatureFlag(Features.BUNDLES);
 
   const [actualForm, setActualForm] = useState('list');
 
@@ -158,7 +163,9 @@ export const BatchListingDrawer = ({ onClose, ...gridProps }) => {
           {/*TODO update*/}
           <Select defaultValue={actualForm} onChange={(e) => { setActualForm(e.target.value) }}>
             <option value='list'>List for sale</option>
-            <option value='bundle'>Create a Bundle</option>
+            {useBundles && (
+              <option value='bundle'>Create a Bundle</option>
+            )}
           </Select>
           <Spacer />
           <CloseButton onClick={handleClose} />
