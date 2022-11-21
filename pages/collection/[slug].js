@@ -30,10 +30,6 @@ const Collection = ({ ssrCollection, query, activeDrop }) => {
     setRedirect(null);
     let col = knownContracts.find((c) => c.slug === slug);
     if (col) {
-      if (!!col.mergedWith) {
-        let redirectToCollection = knownContracts.find((c) => caseInsensitiveCompare(c.address, col.mergedWith));
-        setRedirect(redirectToCollection.slug);
-      }
       setCollection(col);
       if (isCronosVerseCollection(col.address)) setType(collectionTypes.ERC721);
       else setType(col.multiToken ? collectionTypes.ERC1155 : collectionTypes.ERC721);

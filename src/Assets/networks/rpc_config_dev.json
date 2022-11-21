@@ -1845,7 +1845,6 @@
       "slug": "weird-apes-club-v1",
       "multiToken": false,
       "address": "0x7D5f8F9560103E1ad958A6Ca43d49F954055340a",
-      "mergedWith": "0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -1875,9 +1874,6 @@
       "slug": "weird-apes-club",
       "multiToken": false,
       "address": "0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44",
-      "mergedAddresses": [
-        "0x7D5f8F9560103E1ad958A6Ca43d49F954055340a"
-      ],
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -10821,9 +10817,9 @@
         ]
       },
       "verification": {
+        "verified": true,
         "doxx": false,
-        "kyc": "ebisu",
-        "verified": true
+        "kyc": true
       }
     },
     {
@@ -13016,9 +13012,9 @@
         "categories": []
       },
       "verification": {
+        "verified": true,
         "doxx": false,
-        "kyc": "ebisu",
-        "verified": true
+        "kyc": true
       }
     },
     {
@@ -14595,7 +14591,7 @@
       "name": "Piggy Bank Finance",
       "slug": "piggy-bank-finance",
       "multiToken": false,
-      "address": "",
+      "address": "0xA0edf26589AD4318DAb2354629541cfFd3e5EBDf",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -14793,7 +14789,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "There is a Baby Wyvern for each of us, but will you find your forever companion ? \uD83D\uDC32",
+        "description": "There is a Baby Wyvern for each of us \uD83D\uDC32\nGiving 50% royalties back to holders and GameFi utilities. \n\nCome find your forever companion and join our community \uD83D\uDD25",
         "verified": false,
         "avatar": "/img/collections/baby-wyverns/avatar.webp",
         "card": "/img/collections/baby-wyverns/card.webp",
@@ -14805,9 +14801,9 @@
         "categories": []
       },
       "verification": {
+        "verified": true,
         "doxx": false,
-        "kyc": false,
-        "verified": false
+        "kyc": true
       }
     },
     {
@@ -15089,7 +15085,7 @@
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "Buds, A collection of 4420 PFPs with great utility to hit our Cronons Blockchains! With funding to help go towards patients access more affordable medicinal cannabis, V.I.Buds founder token holders have the added benefits of 2 free mints every drop we have, available on CDC",
+        "description": "A Collection of 4420 PFPs to hit our Cronos blockchains, with planned donations to clinics, Holder Royalties pay outs, exclusive holder competitions, custom merch, app development and potential business investment opportunity for our O.G 4420 Buds holders, as well as plenty of live team chats! Our team is excited to bring you all along with us! let's better our medicinal cannabis industry 1 Bud at a time we look forward to providing greatness to our CroFam and the world.\nWe have planned an app development to help link patients, doctors and clinics to full cultivator information (what's used in the process, THC/CBD info, also trying to help recognizing the various cultivars and terpenes with DNA as well to optimize therapy outcomes.\n\nFuture plans for Buds is an import/export licensing to help regulate a more affordable medicinal option on our Aussie market, with the full potential to explore possible Cultivation licensing in the future! \n\nLets Break The Stigma!",
         "verified": true,
         "avatar": "/img/collections/buds/avatar.webp",
         "banner": "/img/collections/buds/banner.webp",
@@ -20448,7 +20444,7 @@
         "discord": "https://discord.gg/DwhzwGuBGb",
         "instagram": "https://www.instagram.com/pbf_nft"
       },
-      "address": "",
+      "address": "0xA0edf26589AD4318DAb2354629541cfFd3e5EBDf",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 6666,
@@ -20554,8 +20550,8 @@
       "id": 141,
       "slug": "buds",
       "title": "Buds",
-      "subtitle": "Buds, A collection of 4420 PFPs with great utility to hit our Cronons Blockchains! With funding to help go towards patients access more affordable medicinal cannabis, V.I.Buds founder token holders have the added benefits of 2 free mints every drop we have, available on CDC",
-      "description": "With non-monetized staking to buy custom resin Herb Grinders, Rolling Trays, Stash Jars, Custom apparel and so much more. holders of our 2210 O.Gs will benefit from community royalties as well as group discussions on how the projects is going and which direction, they want to see it go next. We plan on getting our own licensing down the track so O.G holders will have the benefit of that added investment opportunity, just by holding!",
+      "subtitle": "Metabuds is a project for the people! 4420 cannaboid characters helping our medicinal cannabis industry one bud at a time. We bring to cronos non-monetized token reward shop and app development, royalty givebacks, potential to be apart of the medical canna industry, a Cronos cross over comic, ranking and minting prizes as well as full designed merch collection and custom accessories.",
+      "description": "Metabuds aims to deliver a non-monetized stake for holders to purchase custom resin merch, custom NFTs and smoking accessories available on our future Dapp. we hope to bring you something temporary in the meantime that the cro-fam can all benefit from.\n Which include: Custom resin accessories (Grinder, rolling trays, stash jars ect) , Buds merch (jumpers, bags, hats, shirts, socks) and so much more\nHolders or the community have three different options of purchasing merch. \n* Non-monetized stake\n* V.I.Buds Care package drops \n* And cash purchase sales\n\nA full clothing collection is currently being designed!\n\nBuds will also deliver a royalty bonus based off secondary sales (5%), as well as a % cash sales on our merchandise range, we hope to be among the first to tie in our future cannabis company into our original Buds holders, or at least supply a bonus and % off products and the potential for us to help supply a cheaper alternative for them and get the necessary approvals/licenses. Buds can benefit from live discord chats and Custom roll nights with giveaways, plan on our Cronos multiverse Comic collaborating different projects on our blockchains",
       "author": {
         "name": "BudsMeta",
         "website": "https://buds-meta.com/",
@@ -20579,7 +20575,7 @@
       "complete": false,
       "images": {
         "drop": "/img/drops/buds/drop.webp",
-        "banner": "/img/collections/buds/banner.webp",
+        "banner": "/img/drops/buds/banner.webp",
         "avatar": "/img/collections/buds/avatar.webp",
         "preview": "/img/collections/buds/card.webp"
       },

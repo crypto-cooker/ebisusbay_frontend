@@ -173,14 +173,11 @@ export const fetchListings =
     dispatch(listingsLoading());
 
     const address = state.collection.query.filter.address;
-    const weirdApes = Array.isArray(address);
-    const knownContract = weirdApes
-      ? null
-      : knownContracts.find((c) => caseInsensitiveCompare(c.address, address));
+    const knownContract = knownContracts.find((c) => caseInsensitiveCompare(c.address, address));
     const fallbackContracts = ['red-skull-potions', 'cronos-fc'];
     const pageSizeOverride = findAllListings ? 1208 : null;
 
-    if (weirdApes || fallbackContracts.includes(knownContract.slug)) {
+    if (fallbackContracts.includes(knownContract.slug)) {
       const { response, cancelled } = await sortAndFetchListings(
         state.collection.query.page + 1,
         state.collection.query.sort,
@@ -269,7 +266,6 @@ export const getStats =
   (collection, id = null, extraAddresses = null) =>
   async (dispatch) => {
     try {
-      const mergedAddresses = extraAddresses ? [collection.address, ...extraAddresses] : collection.address;
       var response;
       if (id != null) {
         // const newStats = await getCollections({address: mergedAddresses});
@@ -286,19 +282,19 @@ export const getStats =
         //     }
         //   ]
         // };
-        response = await getCollectionMetadata(mergedAddresses, null, {
+        response = await getCollectionMetadata(collection.address, null, {
           type: 'tokenId',
           value: id,
         });
-      } else if (Array.isArray(mergedAddresses)) {
-        response = await getCollectionMetadata(mergedAddresses);
+      } else if (Array.isArray(collection.address)) {
+        response = await getCollectionMetadata(collection.address);
       } else {
-        const newStats = await getCollections({address: mergedAddresses});
+        const newStats = await getCollections({address: collection.address});
         const sCollection = newStats.data.collections[0];
         response = {
           collections: [
             {
-              collection: mergedAddresses,
+              collection: collection.address,
               totalSupply: sCollection.totalSupply,
               totalVolume: sCollection.stats.total.volume,
               numberOfSales: sCollection.stats.total.complete,

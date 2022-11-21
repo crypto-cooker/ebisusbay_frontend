@@ -91,9 +91,7 @@ const Collection721 = ({ collection, query, activeDrop = null}) => {
     sortOption.label = 'By Price';
 
     const filterOption = preservedQuery ? CollectionFilters.fromQuery(preservedQuery) : CollectionFilters.default();
-    filterOption.address = collection.mergedAddresses
-      ? [collection.address, ...collection.mergedAddresses]
-      : collection.address;
+    filterOption.address = collection.address;
 
     dispatch(init(filterOption, sortOption));
     dispatch(fetchListings());
@@ -130,7 +128,7 @@ const Collection721 = ({ collection, query, activeDrop = null}) => {
 
   useEffect(() => {
     async function asyncFunc() {
-      dispatch(getStats(collection, null, collection.mergedAddresses));
+      dispatch(getStats(collection));
     }
     asyncFunc();
     // eslint-disable-next-line
@@ -249,7 +247,7 @@ const Collection721 = ({ collection, query, activeDrop = null}) => {
                   <a href="/collection/weird-apes-club-v2">
                     <span className="color">here </span>
                   </a>
-                  for the newer, migrated contract until these pages are unified
+                  for the newer, migrated contract
                 </div>
               </div>
             )}
