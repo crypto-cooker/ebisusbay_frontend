@@ -171,18 +171,13 @@ export const fetchListings =
     dispatch(listingsLoading());
 
     const address = state.collection.query.filter.address;
-    const weirdApes = Array.isArray(address);
     const res = await getCollections({address});
-    const contract = res?.data?.collections[0]
+    const knownContract = res?.data?.collections[0];
 
-    const knownContract = weirdApes
-      ? null
-      : 
-      contract
     const fallbackContracts = ['red-skull-potions', 'cronos-fc'];
     const pageSizeOverride = findAllListings ? 1208 : null;
 
-    if (weirdApes || fallbackContracts.includes(knownContract.slug)) {
+    if (fallbackContracts.includes(knownContract.slug)) {
       const { response, cancelled } = await sortAndFetchListings(
         state.collection.query.page + 1,
         state.collection.query.sort,

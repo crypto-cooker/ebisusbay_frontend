@@ -63,11 +63,8 @@ export const getAllCollections =
             }
 
             if (contract) {
-
               if (contract.mergedAddresses) {
-
                 mergeStats(contract, response, index);
-
               }
               response.collections[index].name = contract.name;
               response.collections[index].slug = contract.slug;
