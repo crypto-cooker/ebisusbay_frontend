@@ -14595,7 +14595,7 @@
       "name": "Piggy Bank Finance",
       "slug": "piggy-bank-finance",
       "multiToken": false,
-      "address": "",
+      "address": "0xA0edf26589AD4318DAb2354629541cfFd3e5EBDf",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -20448,7 +20448,7 @@
         "discord": "https://discord.gg/DwhzwGuBGb",
         "instagram": "https://www.instagram.com/pbf_nft"
       },
-      "address": "",
+      "address": "0xA0edf26589AD4318DAb2354629541cfFd3e5EBDf",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 6666,
