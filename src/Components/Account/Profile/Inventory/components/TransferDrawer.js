@@ -14,7 +14,7 @@ import Button from "@src/Components/components/Button";
 import {Spinner} from "react-bootstrap";
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {clearBatchListingCart} from "@src/GlobalState/batchListingSlice";
+import {clearBatchListingCart, setRefetchNfts} from "@src/GlobalState/batchListingSlice";
 import {ethers} from "ethers";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, pluralize, shortAddress} from "@src/utils";
@@ -42,6 +42,13 @@ export const TransferDrawer = () => {
     dispatch(clearBatchListingCart());
   };
 
+  const resetDrawer = () => {
+    handleClearCart();
+    handleReset();
+    setRecipient(null);
+    setMappedCnsAddress(null);
+  }
+
   const executeTransfer = async () => {
     if (!recipient) return;
 
@@ -57,7 +64,8 @@ export const TransferDrawer = () => {
       let tx = await user.contractService.market.bulkTransfer(nftAddresses, nftIds, recipient);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      handleClearCart();
+      resetDrawer();
+      dispatch(setRefetchNfts(true))
     } finally {
       setExecutingTransfer(false);
     }
@@ -137,6 +145,7 @@ export const TransferDrawer = () => {
     setFieldTouched,
     setFieldError,
     handleBlur,
+    handleReset,
     handleSubmit,
     validateForm,
   } = formikProps;
