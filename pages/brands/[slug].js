@@ -109,7 +109,7 @@ const Brand = ({ brand, collections, stats }) => {
           <div className="small-border"></div>
         </Box>
         <SimpleGrid columns={{base: 1, sm: 2, md: 3, lg: 4}} gap={{base: 4, '2xl': 8}}>
-          {collections.map((collection, index) => (
+          {collections.filter((c) => !c.hidden).map((collection, index) => (
             <CustomSlide
               key={index}
               index={index + 1}
@@ -177,6 +177,13 @@ export const getServerSideProps = async ({ params, query }) => {
       position: key
     }
   });
+  brandKeyedAddresses.push(...brand.hidden.map((address, key) => {
+    return {
+      address: address.toLowerCase(),
+      position: (key + 100)
+    }
+  }));
+
   const brandAddresses = brandKeyedAddresses.map((o) => o.address);
   const endpointService = new EndpointProxyService();
   const collections = await endpointService.getCollections({address: brandAddresses.join(',')});
@@ -187,6 +194,7 @@ export const getServerSideProps = async ({ params, query }) => {
       c.position = brandKeyedAddresses.find((o) => caseInsensitiveCompare(o.address, c.address)).position;
       const drop = drops.find((d) => d.slug === c.slug);
       c.drop = drop ?? null;
+      c.hidden = brand.hidden.includes(c.address);
 
       if (c.slug === 'founding-member') {
         const vip = c.tokens[2];
@@ -233,6 +241,18 @@ export const getServerSideProps = async ({ params, query }) => {
     return p;
   }, initialStats);
 
+
+  // Weird Apes stats merge
+  sortedCollections.map((c) => {
+    if (caseInsensitiveCompare(c.address, '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44')) {
+      const v1Collection = collections.data.collections.find((v1c) => caseInsensitiveCompare(v1c.address, '0x7D5f8F9560103E1ad958A6Ca43d49F954055340a'));
+      c.stats.total.active = Number(c.stats.total.active) + Number(v1Collection.stats.total.active)
+      c.stats.total.complete = Number(c.stats.total.complete) + Number(v1Collection.stats.total.complete)
+      c.stats.total.volume = Number(c.stats.total.volume) + Number(v1Collection.stats.total.volume)
+    }
+    return c;
+  });
+  
   return {
     props: {
       brand: brand,
