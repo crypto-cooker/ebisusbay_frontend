@@ -7992,7 +7992,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Create a community of aristocrats, driven by the community.\n\nFirst 100% utility project, our goal is to greatly improve the experience of cronos users.",
+        "description": "We are a community of aristocrats, who are not satisfied with being one more of the bunch. Inspired, driven, and led by the community, we are building a 100% utility project, with the goal of making a sustainable ecosystem for the Cronos blockchain family, the #CroFam",
         "verified": false,
         "avatar": "/img/collections/aristodog/avatar.png",
         "card": "/img/collections/aristodog/card.png",
@@ -12218,7 +12218,7 @@
       "multiToken": false,
       "address": "0x1375D3D2169C66d325514EB61933A08c276Ca531",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A Collection of 2500 PFP NFTs, Chefz are the hottest JPEGs to hit the Cronos Chain. Use the Chefz to spice up your visit to the restaurant. Brought to you by The Cronos Steakhouse.",
         "verified": false,
@@ -12975,7 +12975,7 @@
       "multiToken": false,
       "address": "0x51eaf8c081Cca683A5542c438f9429CE46D238e4",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "\"In the middle of a dark and stormy night, Doctors set about creating laboratories in the various parallel universes, what they could not imagine, are the experiments that took place within them. Now mysterious creatures roam within these parallel universes, our Doctors have managed to photograph and classify 1800 beings from the other world.\" AI EXPERIMENTS is a collection of NFTs, on Cronos blockchain, which gives various benefits to owners. Discover more into DaoLabs.",
         "verified": true,
@@ -13973,7 +13973,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -14483,7 +14483,7 @@
       "name": "Cro Llamas",
       "slug": "cro-llamas",
       "multiToken": false,
-      "address": "",
+      "address": "0x78aB4BEC90AB44D537acDCF93652d1cb36f89b71",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -14504,7 +14504,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -14532,7 +14532,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -14560,7 +14560,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -14999,6 +14999,142 @@
         "verified": false,
         "doxx": false,
         "kyc": false
+      }
+    },
+    {
+      "name": "BadMeerkat DEGEN",
+      "slug": "badmeerkat-degen",
+      "multiToken": false,
+      "address": "0xdc9B6e10E0648E2258afe6705690C1E81cf933d7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "More DEGEN than ever. Second generation of the fan art collection **BadMeerkat**",
+        "verified": false,
+        "avatar": "/img/collections/badmeerkat-degen/avatar.webp",
+        "banner": "/img/collections/badmeerkat-degen/banner.webp",
+        "card": "/img/collections/badmeerkat-degen/card.webp",
+        "maxSupply": 500,
+        "website": "https://linktr.ee/badmeerkat",
+        "twitter": "https://twitter.com/badmeerkatnft",
+        "discord": "https://discord.gg/wcJ4vvZb4H",
+        "categories": [
+          "art",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CroWorld Cup",
+      "slug": "cro-world-cup",
+      "multiToken": false,
+      "address": "0xF1576866233679c9F2A1cB7600BcE25B0A23fA87",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CroWorld Cup is a nft project celebrating the biggest soccer tournament in the world.  There are 32 countries battling for the title.  So are you.  Each mint will be a flag representing a country.  If your country wins.. you win.  First place country nft holders win $7500* split over each NFT.  2nd Place wins $2500* split over every nft holder.  THere are 30 flags per country so for every winning flag you can win $333.33 for first place and $83.33 per flag.  Own 2 flags get double winnings\n\nAll country flags that lose, will be dropped an NFT 1-2 weeks after the tournament ends.  These NFTs will be your ticket to future games.\n\n*These numbers are based on minting out.  Should we not mint out the first place team will get 50% of the pot and 2nd place will get 20% of the pot.",
+        "verified": false,
+        "avatar": "/img/collections/cro-world-cup/avatar.webp",
+        "banner": "/img/collections/cro-world-cup/banner.webp",
+        "card": "/img/collections/cro-world-cup/card.webp",
+        "maxSupply": 960,
+        "twitter": "https://www.twitter.com/croworldcup",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CronosOG Apes",
+      "slug": "cronosog-apes",
+      "multiToken": false,
+      "address": "0x48A81b2120EA832CEcd83f35eC5F84D4c7249B50",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collection of 1200 AI Apes designed to add the personality and looks of the true OG of the 1920's. This is the first installment from the CronosOG Collections and was made with the investors of the Cronos blockchain from its early beginnings to the current day in mind. The OG Ape has seen the fud, been in a rug, had some great success and or is just building his future in the shadows. In any case there is an Ape in this collection that represents that investor. In addition these OG's are also the key to gaining 60% royalties from secondary sales and 10% of each mint that CronosOG puts out in the future. So grab that fedora, use them getaway sticks and meet us down at the speakeasy.",
+        "verified": false,
+        "avatar": "/img/collections/cronosog-apes/avatar.webp",
+        "banner": "/img/collections/cronosog-apes/banner.webp",
+        "card": "/img/collections/cronosog-apes/card.webp",
+        "maxSupply": 1200,
+        "website": "https://cronosogcollections.com/",
+        "twitter": "https://www.twitter.com/og_cronos",
+        "discord": "https://discord.gg/cGAyAP47QF",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Buds",
+      "slug": "buds",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A Collection of 4420 PFPs to hit our Cronos blockchains, with planned donations to clinics, Holder Royalties pay outs, exclusive holder competitions, custom merch, app development and potential business investment opportunity for our O.G 4420 Buds holders, as well as plenty of live team chats! Our team is excited to bring you all along with us! let's better our medicinal cannabis industry 1 Bud at a time we look forward to providing greatness to our CroFam and the world.\nWe have planned an app development to help link patients, doctors and clinics to full cultivator information (what's used in the process, THC/CBD info, also trying to help recognizing the various cultivars and terpenes with DNA as well to optimize therapy outcomes.\n\nFuture plans for Buds is an import/export licensing to help regulate a more affordable medicinal option on our Aussie market, with the full potential to explore possible Cultivation licensing in the future! \n\nLets Break The Stigma!",
+        "verified": true,
+        "avatar": "/img/collections/buds/avatar.webp",
+        "banner": "/img/collections/buds/banner.webp",
+        "card": "/img/collections/buds/card.webp",
+        "maxSupply": 2210,
+        "website": "https://buds-meta.com/",
+        "twitter": "https://twitter.com/BudsMeta",
+        "discord": "https://discord.gg/7NrZw7sn",
+        "instagram": "https://www.instagram.com/buds.meta.420",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Multi Dimensional Crystals",
+      "slug": "multi-dimensional-crystals",
+      "multiToken": false,
+      "address": "0xa9c0d40bb15B265abBe087e5E74f193c253985e5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A multi-color crystal with many use cases in the Loaded Companions roadmap",
+        "verified": false,
+        "avatar": "/img/collections/multi-dimensional-crystals/avatar.webp",
+        "banner": "/img/collections/multi-dimensional-crystals/banner.webp",
+        "card": "/img/collections/multi-dimensional-crystals/card.webp",
+        "maxSupply": 505,
+        "website": "https://loadedcompanions.netlify.app/#crystals/",
+        "twitter": "https://twitter.com/LoadedCompanion",
+        "discord": "https://discord.gg/D7fDCF5kV9",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
       }
     }
   ],
@@ -19766,7 +19902,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "images": {
         "drop": "/img/drops/fantastic-cat-rich-club/drop.webp",
@@ -19856,7 +19992,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": "ebisu",
+        "kyc": true,
         "escrow": false
       }
     },
@@ -20006,8 +20142,8 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
-      "complete": false,
+      "published": false,
+      "complete": true,
       "featured": false,
       "redirect": "https://mint.munk.finance",
       "images": {
@@ -20152,7 +20288,7 @@
         "instagram": "https://www.instagram.com/crollamasnft",
         "discord": "https://discord.gg/zf425Fbg6d"
       },
-      "address": "",
+      "address": "0x78aB4BEC90AB44D537acDCF93652d1cb36f89b71",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 100,
       "totalSupply": 1200,
@@ -20175,7 +20311,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false,
+        "kyc": true,
         "escrow": false
       }
     },
@@ -20215,7 +20351,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false,
+        "kyc": true,
         "escrow": false
       }
     },
@@ -20255,7 +20391,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false,
+        "kyc": true,
         "escrow": false
       }
     },
@@ -20304,7 +20440,7 @@
       "slug": "piggy-bank-finance",
       "title": "Piggy Bank Finance",
       "subtitle": "Piggy Bank Finance (PBF) is a collection of 6,666 unique NFTs with over 200 hand-drawn traits on the Cronos blockchain.",
-      "description": "Founded by a group of NFT enthusiasts, PBF aims to deliver where many projects have fallen short.  A roadmap geared towards making profits with 100% of mint funds, aggressive buybacks to increase hodlers value, and a sustainable LP with 100% of secondary sales being funneled straight back into the project. This and much more is what you can expect when you join our team.\n\nThroughout the mint we will be doing random giveaways as well as achievement giveaways at 25%, 50%, 75% and 100%. Once the mint is complete, we will be giving away the Grand Prize of a 1968 Chevrolet Camaro (or Cronos Equivalent).",
+      "description": "Founded by a group of NFT enthusiasts, PBF aims to deliver where many projects have fallen short.  A roadmap geared towards making profits with 100% of mint funds, aggressive buybacks to increase hodlers value, and a sustainable LP with 100% of secondary sales being funneled straight back into the project. This and much more is what you can expect when you join our team.\n\nThroughout the mint we will be doing random giveaways as well as achievement giveaways at 25%, 50%, 75% and 100%.",
       "author": {
         "name": "Piggy Bank Finance",
         "website": "https://pbfnft.com/",
@@ -20316,9 +20452,9 @@
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 6666,
-      "cost": "550",
-      "memberCost": "500",
-      "whitelistCost": "500",
+      "cost": "225",
+      "memberCost": "200",
+      "whitelistCost": "200",
       "foundersOnly": false,
       "start": 1669060800000,
       "end": null,
@@ -20375,6 +20511,82 @@
         "verified": true,
         "doxx": "public",
         "kyc": "hidden",
+        "escrow": false
+      }
+    },
+    {
+      "id": 140,
+      "slug": "cro-world-cup",
+      "title": "CroWorld Cup",
+      "subtitle": "Let’s get ready for the best world sports tournament ever!! Mint your flag and root for your country!",
+      "description": "CroWorld Cup is a nft project celebrating the biggest soccer tournament in the world.  There are 32 countries battling for the title.  So are you.  Each mint will be a flag representing a country.  If your country wins.. you win.  First place country nft holders win $7500* split over each NFT.  2nd Place wins $2500* split over every nft holder.  THere are 30 flags per country so for every winning flag you can win $333.33 for first place and $83.33 per flag.  Own 2 flags get double winnings\n\nAll country flags that lose, will be dropped an NFT 1-2 weeks after the tournament ends.  These NFTs will be your ticket to future games.\n\n*These numbers are based on minting out.  Should we not mint out the first place team will get 50% of the pot and 2nd place will get 20% of the pot.",
+      "author": {
+        "name": "CroWorld Cup",
+        "twitter": "https://www.twitter.com/croworldcup"
+      },
+      "address": "0xF1576866233679c9F2A1cB7600BcE25B0A23fA87",
+      "maxMintPerTx": 20,
+      "maxMintPerAddress": 100,
+      "totalSupply": 960,
+      "cost": "299",
+      "memberCost": "285",
+      "foundersOnly": false,
+      "start": 1668801600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/cro-world-cup/drop.webp",
+        "banner": "/img/collections/cro-world-cup/banner.webp",
+        "avatar": "/img/collections/cro-world-cup/avatar.webp",
+        "preview": "/img/collections/cro-world-cup/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "id": 141,
+      "slug": "buds",
+      "title": "Buds",
+      "subtitle": "A Collection of 4420 PFPs to hit our Cronos blockchains, with planned donations to clinics, Holder Royalties pay outs, exclusive holder competitions, custom merch, app development and potential business investment opportunity for our O.G 4420 Buds holders, as well as plenty of live team chats!",
+      "description": "Metabuds aims to deliver a non-monetized stake for holders to purchase custom resin merch, custom NFTs and smoking accessories available on our future Dapp. we hope to bring you something temporary in the meantime that the cro-fam can all benefit from.\n Which include: Custom resin accessories (Grinder, rolling trays, stash jars ect) , Buds merch (jumpers, bags, hats, shirts, socks) and so much more\nHolders or the community have three different options of purchasing merch. \n* Non-monetized stake\n* V.I.Buds Care package drops \n* And cash purchase sales\n\nA full clothing collection is currently being designed!\n\nBuds will also deliver a royalty bonus based off secondary sales (5%), as well as a % cash sales on our merchandise range, we hope to be among the first to tie in our future cannabis company into our original Buds holders, or at least supply a bonus and % off products and the potential for us to help supply a cheaper alternative for them and get the necessary approvals/licenses. Buds can benefit from live discord chats and Custom roll nights with giveaways, plan on our Cronos multiverse Comic collaborating different projects on our blockchains",
+      "author": {
+        "name": "BudsMeta",
+        "website": "https://buds-meta.com/",
+        "twitter": "https://twitter.com/BudsMeta",
+        "discord": "https://discord.gg/7NrZw7sn",
+        "instagram": "https://www.instagram.com/buds.meta.420"
+      },
+      "address": "",
+      "maxMintPerTx": 50,
+      "maxMintPerAddress": 100,
+      "totalSupply": 2210,
+      "cost": "420",
+      "memberCost": "320",
+      "whitelistCost": "330",
+      "foundersOnly": false,
+      "start": 1669320000000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/buds/drop.webp",
+        "banner": "/img/drops/buds/banner.webp",
+        "avatar": "/img/collections/buds/avatar.webp",
+        "preview": "/img/collections/buds/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
         "escrow": false
       }
     }

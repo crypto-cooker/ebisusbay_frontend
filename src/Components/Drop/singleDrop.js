@@ -1,50 +1,38 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import Head from 'next/head';
-import { ethers, constants } from 'ethers';
-import { toast } from 'react-toastify';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {ethers} from 'ethers';
 import Countdown from 'react-countdown';
-import { getAnalytics, logEvent } from '@firebase/analytics';
-import { keyframes } from '@emotion/react';
+import {keyframes} from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
-import { useRouter } from 'next/router';
-import {Form, OverlayTrigger, ProgressBar, Spinner, Tooltip} from 'react-bootstrap';
+import {useRouter} from 'next/router';
 import ReactPlayer from 'react-player';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
 
 import Footer from '../components/Footer';
-import { connectAccount } from '../../GlobalState/User';
-import { fetchMemberInfo, fetchVipInfo } from '../../GlobalState/Memberships';
+import {fetchMemberInfo, fetchVipInfo} from '@src/GlobalState/Memberships';
 import {
-  createSuccessfulTransactionToastContent, isBossFrogzDrop, isCarkayousCollection,
-  isCreaturesDrop,
-  isCrosmocraftsPartsDrop,
+  isCarkayousCollection,
   isCyberCloneDrop,
   isFounderDrop,
   isFounderVipDrop,
-  isMagBrewVikingsDrop, isSscCollection,
+  isMagBrewVikingsDrop,
+  isSscCollection,
   newlineText,
-  percentage, round,
-} from '../../utils';
-import { dropState as statuses } from '../../core/api/enums';
-import {EbisuDropAbi, ERC20} from '../../Contracts/Abis';
-import { getTheme } from '../../Theme/theme';
+} from '@src/utils';
+import {dropState as statuses} from '../../core/api/enums';
+import {EbisuDropAbi, ERC20} from '@src/Contracts/Abis';
 import SocialsBar from '../Collection/SocialsBar';
-import {parseUnits} from "ethers/lib/utils";
-import {appConfig} from "../../Config";
-import {hostedImage, ImageKitService} from "../../helpers/image";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faAddressCard, faLock, faUserShield} from "@fortawesome/free-solid-svg-icons";
+import {appConfig} from "@src/Config";
+import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
-import {Box, Center, Heading, Text, useColorModeValue} from "@chakra-ui/react";
-import {mode} from "@chakra-ui/theme-tools";
+import {Heading} from "@chakra-ui/react";
+import {MintBox} from "@src/Components/Drop/MintBox";
 
 import {useQuery} from "@tanstack/react-query";
 import { getCollections } from "@src/core/api/next/collectioninfo";
 
 const config = appConfig();
-const drops = config.drops;
 
 const fadeInUp = keyframes`
   0% {
@@ -57,18 +45,7 @@ const fadeInUp = keyframes`
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }
-`;
-// const inline = keyframes`
-//   0% {
-//     opacity: 0;
-//   }
-//   100% {
-//     opacity: 1;
-//   }
-//   .d-inline{
-//     display: inline-block;
-//    }
-// `;
+`
 
 const HeroSection = styled.section`
   border-radius: 0;
@@ -98,9 +75,6 @@ const SingleDrop = ({drop}) => {
   const dispatch = useDispatch();
 
   // const [loading, setLoading] = useState(true);
-  const [minting, setMinting] = useState(false);
-  const [mintingERC20, setMintingERC20] = useState(false);
-  const [referral, setReferral] = useState('');
   const [dropObject, setDropObject] = useState(null);
   const [status, setStatus] = useState(statuses.UNSET);
   const [numToMint, setNumToMint] = useState(1);
@@ -151,10 +125,6 @@ const SingleDrop = ({drop}) => {
 
   const membership = useSelector((state) => {
     return state.memberships;
-  });
-
-  const userTheme = useSelector((state) => {
-    return state.user.theme;
   });
 
   useEffect(() => {
@@ -304,39 +274,6 @@ const SingleDrop = ({drop}) => {
     else setStatus(statuses.NOT_STARTED);
   };
 
-  const handleChangeReferralCode = (event) => {
-    const { value } = event.target;
-    setReferral(value);
-  };
-
-  const calculateCost = async (user, isErc20) => {
-    if (isCreaturesDrop(drop.address)) {
-      return ethers.utils.parseEther('333');
-    }
-
-    if (isUsingDefaultDropAbi(dropObject.abi) || isUsingAbiFile(dropObject.abi)) {
-      let readContract = await new ethers.Contract(dropObject.address, abi, readProvider);
-      if (abi.find((m) => m.name === 'cost')) {
-        return await readContract.cost(user.address);
-      }
-      return await readContract.mintCost(user.address);
-    }
-
-    const memberCost = ethers.utils.parseEther(isErc20 === true ? dropObject.erc20MemberCost : dropObject.memberCost);
-    const regCost = ethers.utils.parseEther(isErc20 === true ? dropObject.erc20Cost : dropObject.cost);
-    let cost;
-    if (dropObject.abi.join().includes('isReducedTime()')) {
-      const readContract = await new ethers.Contract(dropObject.address, dropObject.abi, readProvider);
-      const isReduced = await readContract.isReducedTime();
-      cost = isReduced ? memberCost : regCost;
-    } else if (user.isMember) {
-      cost = memberCost;
-    } else {
-      cost = regCost;
-    }
-    return cost;
-  };
-
   const isUsingAbiFile = (dropAbi) => {
     return typeof dropAbi === 'string' && dropAbi.length > 0;
   };
@@ -344,154 +281,6 @@ const SingleDrop = ({drop}) => {
   const isUsingDefaultDropAbi = (dropAbi) => {
     return typeof dropAbi === 'undefined' || dropAbi.length === 0;
   };
-
-  const mintNow = async (isErc20 = false) => {
-    if (user.address) {
-      if (!dropObject.writeContract) {
-        return;
-      }
-      if (isErc20 === true) {
-        setMintingERC20(true);
-      } else {
-        setMinting(true);
-      }
-      const contract = dropObject.writeContract;
-      try {
-        const cost = await calculateCost(user, isErc20);
-        let finalCost = cost.mul(numToMint);
-        if (isCreaturesDrop(drop.address)) {
-          finalCost = finalCost.sub(cost.mul(Math.floor(numToMint / 4)));
-        }
-
-        if (isErc20 === true) {
-          const allowance = await dropObject.erc20ReadContract.allowance(user.address, dropObject.address);
-          if (allowance.sub(finalCost) < 0) {
-            await dropObject.erc20Contract.approve(dropObject.address, constants.MaxUint256);
-          }
-        }
-
-        const gasPrice = parseUnits('5000', 'gwei');
-        const gasEstimate = isErc20 ? await contract.estimateGas.mintWithToken(numToMint):
-          await contract.estimateGas.mint(numToMint, {value: finalCost});
-        const gasLimit = gasEstimate.mul(2);
-        let extra = {
-          value: finalCost,
-          gasPrice,
-          gasLimit
-        };
-
-        var response;
-        if (dropObject.is1155) {
-          if (dropObject.title === 'Founding Member') {
-            if (referral) {
-              finalCost = finalCost.sub(ethers.utils.parseEther(dropObject.discount).mul(numToMint));
-              extra = {
-                value: finalCost,
-                gasPrice: ethers.utils.parseUnits('5000', 'gwei'),
-              };
-            }
-            const ref32 = ethers.utils.formatBytes32String(referral);
-            response = await contract.mint(1, numToMint, ref32, extra);
-          } else if (isFounderVipDrop(dropObject.address)) {
-            const ref32 = ethers.utils.formatBytes32String(referral);
-            response = await contract.mint(2, numToMint, ref32, extra);
-          } else {
-            response = await contract.mint(numToMint, extra);
-          }
-        } else {
-          if (isUsingDefaultDropAbi(dropObject.abi) || isUsingAbiFile(dropObject.abi)) {
-            if (isErc20) {
-              delete extra['value']
-              response = await contract.mintWithToken(numToMint, extra);
-            } else {
-              response = await contract.mint(numToMint, extra);
-            }
-          } else {
-            let method;
-            for (const abiMethod of dropObject.abi) {
-              if (abiMethod.includes('mint') && !abiMethod.includes('view')) method = abiMethod;
-            }
-
-
-
-            if (method.includes('address') && method.includes('uint256')) {
-              if (isErc20 === true) {
-                response = await contract.mintWithLoot(user.address, numToMint);
-              } else {
-                response = await contract.mint(user.address, numToMint, extra);
-              }
-            } else {
-              console.log(`contract ${contract}  num: ${numToMint}   extra ${extra}`);
-              if (isErc20 === true) {
-                response = await contract.mintWithLoot(numToMint);
-              } else {
-                response = await contract.mint(numToMint, extra);
-              }
-            }
-          }
-        }
-        const receipt = await response.wait();
-        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-
-        {
-          const dropObjectAnalytics = {
-            address: dropObject.address,
-            id: dropObject.id,
-            title: dropObject.title,
-            slug: dropObject.slug,
-            author_name: dropObject.author.name,
-            author_link: dropObject.author.link,
-            maxMintPerTx: dropObject.maxMintPerTx,
-            totalSupply: dropObject.totalSupply,
-            cost: dropObject.cost,
-            memberCost: dropObject.memberCost,
-            foundersOnly: dropObject.foundersOnly,
-          };
-
-          const purchaseAnalyticParams = {
-            currency: 'CRO',
-            value: ethers.utils.formatEther(finalCost),
-            transaction_id: receipt.transactionHash,
-            quantity: numToMint,
-            items: [dropObjectAnalytics],
-          };
-
-          logEvent(getAnalytics(), 'purchase', purchaseAnalyticParams);
-        }
-
-        await retrieveDropInfo();
-      } catch (error) {
-        Sentry.captureException(error);
-        if (error.data) {
-          console.log(error);
-          toast.error(error.data.message);
-        } else if (error.message) {
-          console.log(error);
-          toast.error(error.message);
-        } else {
-          console.log(error);
-          toast.error('Unknown Error');
-        }
-      } finally {
-        if (isErc20 === true) {
-          setMintingERC20(false);
-        } else {
-          setMinting(false);
-        }
-      }
-    } else {
-      dispatch(connectAccount());
-    }
-  };
-
-  const convertTime = (time) => {
-    let date = new Date(time);
-    const fullDateString = date.toLocaleString('default', { timeZone: 'UTC' });
-    const month = date.toLocaleString('default', { month: 'long', timeZone: 'UTC' });
-    let dateString = `${fullDateString.split(', ')[1]} ${date.getUTCDate()} ${month} ${date.getUTCFullYear()} UTC`;
-    return dateString;
-  };
-
 
   return (
     <div>
@@ -636,189 +425,25 @@ const SingleDrop = ({drop}) => {
 
               <div className="item_info">
 
-                {status === statuses.UNSET || status === statuses.NOT_STARTED || drop.complete ? (
-                  <div>
-                    <div className="fs-6 fw-bold mb-1">Supply: {ethers.utils.commify(maxSupply.toString())}</div>
-                  </div>
-                ) : (
-                  <div>
-                    <div className="fs-6 fw-bold mb-1 text-end">
-                      {percentage(totalSupply.toString(), maxSupply.toString())}% minted (
-                      {ethers.utils.commify(totalSupply.toString())} / {ethers.utils.commify(maxSupply.toString())})
-                    </div>
-                    <ProgressBar
-                      now={percentage(totalSupply.toString(), maxSupply.toString())}
-                      style={{ height: '4px' }}
-                    />
-                  </div>
-                )}
+                <MintBox
+                  drop={dropObject}
+                  abi={abi}
+                  status={status}
+                  totalSupply={totalSupply}
+                  maxSupply={maxSupply}
+                  priceDescription={drop.priceDescription}
+                  onMintSuccess={async () => {
+                    await retrieveDropInfo()
+                  }}
+                  canMintQuantity={canMintQuantity}
+                  regularCost={regularCost}
+                  memberCost={memberCost}
+                  whitelistCost={whitelistCost}
+                  specialWhitelist={specialWhitelist}
+                />
+
 
                 <div className="mt-3 mb-4">{newlineText(drop.description)}</div>
-
-                {drop.disclaimer && (
-                  <Box bg={useColorModeValue('gray.100','gray.700')} rounded={'lg'} my="4">
-                    <Text fontWeight="bold" p="4" className="text-center">
-                      {drop.disclaimer}
-                    </Text>
-                  </Box>
-                )}
-
-                {isCrosmocraftsPartsDrop(drop.address) && (
-                  <div className="mb-4">
-                    <span>Once you have minted your parts, you can&nbsp;</span>
-                    <div className="nft__item_action d-inline-block" style={{ fontSize: '16px' }}>
-                      <span
-                        onClick={() => typeof window !== 'undefined' && window.open('/build-ship', '_self')}
-                        style={{ cursor: 'pointer' }}
-                      >
-                        build your Crosmocraft
-                      </span>
-                    </div>
-                  </div>
-                )}
-
-                <div className="d-flex flex-row">
-                  <div className="me-4">
-                    <Heading as="h6" size="sm" className="mb-1">Mint Price</Heading>
-                    {!regularCost && !dropObject?.erc20Cost && (
-                      <Heading as="h5" size="md">TBA</Heading>
-                    )}
-                    {regularCost && (
-                      <Heading as="h5" size="md">{ethers.utils.commify(round(regularCost))} {dropObject?.costUnit ?? 'CRO'}</Heading>
-                    )}
-                    {dropObject?.erc20Cost && dropObject?.erc20Token && (
-                      <Heading as="h5" size="md">{`${ethers.utils.commify(round(dropObject?.erc20Cost))} ${config.tokens[dropObject.erc20Token].symbol}`}</Heading>
-                    )}
-                  </div>
-                  {(memberCost || (dropObject?.erc20MemberCost && dropObject?.erc20Cost !== dropObject?.erc20MemberCost)) && (
-                    <div className="me-4">
-                      <Heading as="h6" size="sm" className="mb-1">Founding Member Price</Heading>
-                      {memberCost && (
-                        <Heading as="h5" size="md">{ethers.utils.commify(round(memberCost))} CRO</Heading>
-                      )}
-                      {dropObject?.erc20MemberCost && dropObject?.erc20Cost !== dropObject?.erc20MemberCost && (
-                        <Heading as="h5" size="md">{`${ethers.utils.commify(round(dropObject?.erc20MemberCost))} ${config.tokens[dropObject.erc20Token].symbol}`}</Heading>
-                      )}
-                    </div>
-                  )}
-                  {whitelistCost > 0 && (
-                    <div className="me-4">
-                      <Heading as="h6" size="sm" className="mb-1">Whitelist Price</Heading>
-                      <Heading as="h5" size="md">{ethers.utils.commify(round(whitelistCost))} CRO</Heading>
-                    </div>
-                  )}
-                  {specialWhitelist && (
-                    <div className="me-4">
-                      <Heading as="h6" size="sm" className="mb-1">{specialWhitelist.name}</Heading>
-                      <Heading as="h5" size="md">{specialWhitelist.value} CRO</Heading>
-                    </div>
-                  )}
-                </div>
-
-                {drop.priceDescription && (
-                  <p className="my-2" style={{ color: getTheme(userTheme).colors.textColor3 }}>
-                    *{drop.priceDescription}
-                  </p>
-                )}
-
-                <div className="spacer-40"></div>
-
-                {status === statuses.LIVE && drop.end && (
-                  <div className="me-4">
-                    <Heading as="h6" size="sm" className="mb-1">{status === statuses.EXPIRED ? <>Minting Ended</> : <>Minting Ends</>}</Heading>
-                    <Heading as="h3" size="md">{convertTime(drop.end)}</Heading>
-                  </div>
-                )}
-                {status === statuses.NOT_STARTED && drop.start && (
-                  <div className="me-4">
-                    <Heading as="h6" size="sm" className="mb-1">Minting Starts</Heading>
-                    <Heading as="h3" size="md">
-                      {new Date(drop.start).toDateString()}, {new Date(drop.start).toTimeString()}
-                    </Heading>
-                  </div>
-                )}
-                {status === statuses.NOT_STARTED && !drop.start && (
-                  <div className="me-4">
-                    <Heading as="h6" size="sm" className="mb-1">Minting Starts</Heading>
-                    <Heading as="h3" size="md">TBA</Heading>
-                  </div>
-                )}
-                {status === statuses.LIVE && !drop.complete && (
-                  <>
-                    {canMintQuantity > 1 && (
-                      <div>
-                        <Form.Label>Quantity</Form.Label>
-                        <Form.Range
-                          value={numToMint}
-                          min="1"
-                          max={canMintQuantity}
-                          onChange={(e) => setNumToMint(e.target.value)}
-                        />
-                      </div>
-                    )}
-                    {dropObject?.referral && (
-                      <Form.Group className="mb-3" controlId="formReferralCode">
-                        <Form.Label>Referral Code</Form.Label>
-                        <Form.Control
-                          onChange={handleChangeReferralCode}
-                          type="text"
-                          placeholder="Enter Referral Code"
-                        />
-                        <Form.Text className="text-muted" />
-                      </Form.Group>
-                    )}
-
-                    {canMintQuantity > 0 && (
-                      <div className="d-flex flex-row mt-5">
-                        {!isBossFrogzDrop(drop.address) && (
-                          <button className="btn-main lead mb-5 mr15" onClick={() => mintNow(false)} disabled={minting}>
-                            {minting ? (
-                              <>
-                                Minting...
-                                <Spinner animation="border" role="status" size="sm" className="ms-1">
-                                  <span className="visually-hidden">Loading...</span>
-                                </Spinner>
-                              </>
-                            ) : (
-                              <>{drop.maxMintPerTx && drop.maxMintPerTx > 1 ? <>Mint {numToMint}</> : <>Mint</>}</>
-                            )}
-                          </button>
-                        )}
-                        {drop.erc20Token && (
-                          <button
-                            className="btn-main lead mb-5 mr15 mx-1"
-                            onClick={() => mintNow(true)}
-                            disabled={mintingERC20}
-                          >
-                            {mintingERC20 ? (
-                              <>
-                                Minting...
-                                <Spinner animation="border" role="status" size="sm" className="ms-1">
-                                  <span className="visually-hidden">Loading...</span>
-                                </Spinner>
-                              </>
-                            ) : (
-                              <>
-                                {drop.maxMintPerTx && drop.maxMintPerTx > 1 ? (
-                                  <>
-                                    Mint {numToMint} with {config.tokens[drop.erc20Token].symbol}
-                                  </>
-                                ) : (
-                                  <>{maxMintPerTx > 1 ? <>Mint {numToMint}</> : <>Mint</>}</>
-                                )}
-                              </>
-                            )}
-                          </button>
-                        )}
-                      </div>
-                    )}
-                    {canMintQuantity === 0 && !user.address && !drop.complete && (
-                      <p className="mt-5">CONNECT WALLET TO MINT</p>
-                    )}
-                  </>
-                )}
-                {status === statuses.SOLD_OUT && <p className="mt-5">MINT HAS SOLD OUT</p>}
-                {status === statuses.EXPIRED && <p className="mt-5">MINT HAS ENDED</p>}
               </div>
             </div>
           </div>

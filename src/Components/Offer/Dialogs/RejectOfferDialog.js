@@ -8,7 +8,6 @@ import Button from "@src/Components/components/Button";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {specialImageTransform} from "@src/hacks";
 import {useSelector} from "react-redux";
-import {txExtras} from "@src/core/constants";
 import {toast} from "react-toastify";
 import * as Sentry from "@sentry/react";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
@@ -41,7 +40,7 @@ export const RejectOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
       } else if (collection.multiToken) {
         throw new Error('Cannot reject a public offer');
       } else {
-        const tx = await offerContract.rejectOffer(offer.hash, offer.offerIndex, txExtras);
+        const tx = await offerContract.rejectOffer(offer.hash, offer.offerIndex);
         let receipt = await tx.wait();
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
         setExecutingRejectOffer(false);
