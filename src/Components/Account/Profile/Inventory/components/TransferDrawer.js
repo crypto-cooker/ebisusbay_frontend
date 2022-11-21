@@ -26,7 +26,7 @@ import {useFormik} from "formik";
 import * as Filter from "bad-words";
 import {getCnsAddress, isCnsName} from "@src/helpers/cns";
 
-const MAX_NFTS_IN_CART = 40;
+const MAX_NFTS_IN_CART = 100;
 
 export const TransferDrawer = () => {
   const dispatch = useDispatch();
@@ -164,12 +164,13 @@ export const TransferDrawer = () => {
             onChange={handleChange}
             onBlur={handleBlur}
             type={'text'}
+            disabled={showConfirmButton || executingTransfer}
           />
         </Flex>
       </GridItem>
       <GridItem px={6} py={4} overflowY="auto">
         <Flex mb={2}>
-          <Text fontWeight="bold" color={batchListingCart.nfts.length > 40 && 'red'}>
+          <Text fontWeight="bold" color={batchListingCart.nfts.length > MAX_NFTS_IN_CART && 'red'}>
             {batchListingCart.nfts.length} / {MAX_NFTS_IN_CART} Items
           </Text>
           <Spacer />
