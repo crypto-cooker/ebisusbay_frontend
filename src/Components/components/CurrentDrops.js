@@ -17,7 +17,7 @@ const CurrentDrops = ({ useCarousel = true }) => {
 
   function arrangeCollections() {
     const liveDrops = drops.filter((d) => !d.complete && d.published && d.start && d.start < Date.now());
-    const cd = liveDrops.filter((d) => d.collection).sort((a, b) => (a.start < b.start ? 1 : -1));
+    const cd = liveDrops.sort((a, b) => (a.start < b.start ? 1 : -1));
     setCurrentDrops(cd);
   }
 
@@ -83,7 +83,7 @@ const CurrentDrops = ({ useCarousel = true }) => {
                     banner={drop.images.preview}
                     title={drop.title}
                     subtitle={drop.author.name}
-                    collectionId={drop.drop.slug}
+                    collectionId={drop.slug}
                     url={drop.redirect ?? `/drops/${drop.slug}`}
                     externalPage={!!drop.redirect}
                     verified={drop.verification.verified}

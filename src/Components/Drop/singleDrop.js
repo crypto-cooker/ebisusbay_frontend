@@ -31,6 +31,7 @@ import {MintBox} from "@src/Components/Drop/MintBox";
 
 import {useQuery} from "@tanstack/react-query";
 import { getCollections } from "@src/core/api/next/collectioninfo";
+import {Spinner} from "react-bootstrap";
 
 const config = appConfig();
 
@@ -109,19 +110,6 @@ const SingleDrop = ({drop}) => {
   const user = useSelector((state) => {
     return state.user;
   });
-
-
-  const { isLoading : isLoadingCollection, error, data, status: statusCollection } = useQuery(['Collections', slug], () =>
-    getCollections({slug}), true
-  )
-
-  const [collection, setCollection] = useState(null);
-
-  useEffect(()=> {
-    if(!isLoadingCollection && data) {
-      setCollection(data.data.collections[0])
-    }
-  }, [isLoadingCollection, data])
 
   const membership = useSelector((state) => {
     return state.memberships;
@@ -285,171 +273,158 @@ const SingleDrop = ({drop}) => {
 
   return (
     <div>
-      {isLoadingCollection || !collection ? (
-        <section className="container">
-          <div className="row mt-4">
-            <div className="col-lg-12 text-center">
-              <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            </div>
-          </div>
-        </section>
-      ) : (<>
-        <HeroSection
-          className={`jumbotron h-vh tint`}
-          style={{
-            backgroundImage: `url(${ImageKitService.buildBannerUrl(drop.images.banner ?? hostedImage('/img/background/Ebisus-bg-1_L.webp'))})`
-          }}
-        >
-          <div className="container">
-            <div className="row align-items-center">
-              <div className={`col-lg-6 mb-4 mb-sm-0 ${drop.mediaPosition === 'left' ? 'order-1' : 'order-2'}`}>
-                <Reveal className="onStep" keyframes={fadeInUp} delay={600} duration={900} triggerOnce>
-                  <>
-                    {drop.video && (
-                      <div className="player-wrapper">
-                        <ReactPlayer
-                          className="react-player"
-                          controls
-                          url={drop.video}
-                          config={{
-                            file: {
-                              attributes: {
-                                onContextMenu: (e) => e.preventDefault(),
-                                controlsList: 'nodownload',
-                              },
+      <HeroSection
+        className={`jumbotron h-vh tint`}
+        style={{
+          backgroundImage: `url(${ImageKitService.buildBannerUrl(drop.images.banner ?? hostedImage('/img/background/Ebisus-bg-1_L.webp'))})`
+        }}
+      >
+        <div className="container">
+          <div className="row align-items-center">
+            <div className={`col-lg-6 mb-4 mb-sm-0 ${drop.mediaPosition === 'left' ? 'order-1' : 'order-2'}`}>
+              <Reveal className="onStep" keyframes={fadeInUp} delay={600} duration={900} triggerOnce>
+                <>
+                  {drop.video && (
+                    <div className="player-wrapper">
+                      <ReactPlayer
+                        className="react-player"
+                        controls
+                        url={drop.video}
+                        config={{
+                          file: {
+                            attributes: {
+                              onContextMenu: (e) => e.preventDefault(),
+                              controlsList: 'nodownload',
                             },
-                          }}
-                          muted={true}
-                          playing={true}
-                          loop={true}
-                          width="100%"
-                          height="100%"
-                        />
-                      </div>
-                    )}
+                          },
+                        }}
+                        muted={true}
+                        playing={true}
+                        loop={true}
+                        width="100%"
+                        height="100%"
+                      />
+                    </div>
+                  )}
 
-                    {drop.slug === 'psycho-golden-lady' || drop.slug === 'smash-stunts' ? (
-                      <>
-                        {new Date() > 1651449600000 && new Date() < 1651464000000 && (
-                          <div dangerouslySetInnerHTML={{ __html: drop.embed }} />
-                        )}
-                      </>
-                    ) : (
-                      <>{drop.embed && <div dangerouslySetInnerHTML={{ __html: drop.embed }} />}</>
-                    )}
-                  </>
-                </Reveal>
-              </div>
-              <div className={`col-lg-6 ${drop.mediaPosition === 'left' ? 'order-2' : 'order-1'}`}>
-                <div className="spacer-single"></div>
-                <div className="spacer-double"></div>
+                  {drop.slug === 'psycho-golden-lady' || drop.slug === 'smash-stunts' ? (
+                    <>
+                      {new Date() > 1651449600000 && new Date() < 1651464000000 && (
+                        <div dangerouslySetInnerHTML={{ __html: drop.embed }} />
+                      )}
+                    </>
+                  ) : (
+                    <>{drop.embed && <div dangerouslySetInnerHTML={{ __html: drop.embed }} />}</>
+                  )}
+                </>
+              </Reveal>
+            </div>
+            <div className={`col-lg-6 ${drop.mediaPosition === 'left' ? 'order-2' : 'order-1'}`}>
+              <div className="spacer-single"></div>
+              <div className="spacer-double"></div>
 
-                {status === statuses.LIVE && drop.end && (
-                  <Reveal className="onStep" keyframes={fadeInUp} delay={600} duration={900} triggerOnce>
-                    <p className="lead col-white">
-                      Ends in: <Countdown date={drop.end} />
-                    </p>
-                  </Reveal>
-                )}
-                {status === statuses.NOT_STARTED && drop.start && (
-                  <Reveal className="onStep" keyframes={fadeInUp} delay={600} duration={900} triggerOnce>
-                    <Heading as="h4" size="md" className="col-white">
-                      Starts in:{' '}
-                      <span className="text-uppercase color">
-                        <Countdown date={drop.start} />
-                      </span>
-                    </Heading>
-                  </Reveal>
-                )}
-                <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
-                  <Heading as="h1" size="2xl" className="col-white mb-4">{drop.title}</Heading>
+              {status === statuses.LIVE && drop.end && (
+                <Reveal className="onStep" keyframes={fadeInUp} delay={600} duration={900} triggerOnce>
+                  <p className="lead col-white">
+                    Ends in: <Countdown date={drop.end} />
+                  </p>
                 </Reveal>
-                <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
-                  <div className="lead col-white mb-4">{newlineText(drop.subtitle)}</div>
+              )}
+              {status === statuses.NOT_STARTED && drop.start && (
+                <Reveal className="onStep" keyframes={fadeInUp} delay={600} duration={900} triggerOnce>
+                  <Heading as="h4" size="md" className="col-white">
+                    Starts in:{' '}
+                    <span className="text-uppercase color">
+                      <Countdown date={drop.start} />
+                    </span>
+                  </Heading>
                 </Reveal>
-                {drop.foundersOnly && (
-                  <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
-                    <Heading as="h1" size="2xl" className="col-white">{drop.title}</Heading>
-                    {drop.foundersOnly && <Heading as="h3" size="md" className="col-white">Founding Member Presale</Heading>}
-                  </Reveal>
-                )}
+              )}
+              <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
+                <Heading as="h1" size="2xl" className="col-white mb-4">{drop.title}</Heading>
+              </Reveal>
+              <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
+                <div className="lead col-white mb-4">{newlineText(drop.subtitle)}</div>
+              </Reveal>
+              {drop.foundersOnly && (
                 <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
-                  <div>
-                    <a href="#drop_detail" className="btn-main">
-                      View Drop
-                    </a>
-                  </div>
+                  <Heading as="h1" size="2xl" className="col-white">{drop.title}</Heading>
+                  {drop.foundersOnly && <Heading as="h3" size="md" className="col-white">Founding Member Presale</Heading>}
                 </Reveal>
-                <div className="spacer-10"></div>
-              </div>
+              )}
+              <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
+                <div>
+                  <a href="#drop_detail" className="btn-main">
+                    View Drop
+                  </a>
+                </div>
+              </Reveal>
+              <div className="spacer-10"></div>
             </div>
           </div>
-        </HeroSection>
+        </div>
+      </HeroSection>
 
-        <section id="drop_detail" className="gl-legacy container no-top">
-          <div className="row mt-md-5 pt-md-4">
-            <div className="col-md-6 text-center mt-4 md-md-0">
-              <img src={hostedImage(drop.images.drop)} className="img-fluid img-rounded mb-sm-30" alt={drop.title} />
-            </div>
-            <div className="col-md-6 mt-4 mt-md-0">
+      <section id="drop_detail" className="gl-legacy container no-top">
+        <div className="row mt-md-5 pt-md-4">
+          <div className="col-md-6 text-center mt-4 md-md-0">
+            <img src={hostedImage(drop.images.drop)} className="img-fluid img-rounded mb-sm-30" alt={drop.title} />
+          </div>
+          <div className="col-md-6 mt-4 mt-md-0">
 
-              <div className="de-flex mt-4 mt-sm-0 mb-2">
-                <div className="de-flex-col">
-                  <div className="profile_avatar">
-                    {drop.images.avatar && <img src={hostedImage(drop.images.avatar)} alt={drop.author.name} />}
-                    <div className="profile_name">
-                      <Heading as="h4" size="md">
-                        {drop.title}
-                        {drop.author.link ? (
-                          <span className="profile_username">
-                            <a href={drop.author.link} target="_blank" rel="noreferrer">
-                              View Website
-                            </a>
-                          </span>
-                        ) : (
-                          <SocialsBar address={drop.address} socials={drop.author} />
-                        )}
-                      </Heading>
-                    </div>
+            <div className="de-flex mt-4 mt-sm-0 mb-2">
+              <div className="de-flex-col">
+                <div className="profile_avatar">
+                  {drop.images.avatar && <img src={hostedImage(drop.images.avatar)} alt={drop.author.name} />}
+                  <div className="profile_name">
+                    <Heading as="h4" size="md">
+                      {drop.title}
+                      {drop.author.link ? (
+                        <span className="profile_username">
+                          <a href={drop.author.link} target="_blank" rel="noreferrer">
+                            View Website
+                          </a>
+                        </span>
+                      ) : (
+                        <SocialsBar address={drop.address} socials={drop.author} />
+                      )}
+                    </Heading>
                   </div>
                 </div>
               </div>
+            </div>
 
-              <CollectionVerificationRow
-                doxx={collection.verification?.doxx}
-                kyc={collection.verification?.kyc}
-                escrow={collection.verification?.escrow}
-                creativeCommons={collection.verification?.creativeCommons}
+            <CollectionVerificationRow
+              doxx={drop.verification.doxx}
+              kyc={drop.verification.kyc}
+              escrow={drop.verification.escrow}
+              creativeCommons={drop.verification.creativeCommons}
+            />
+
+            <div className="item_info">
+
+              <MintBox
+                drop={dropObject}
+                abi={abi}
+                status={status}
+                totalSupply={totalSupply}
+                maxSupply={maxSupply}
+                priceDescription={drop.priceDescription}
+                onMintSuccess={async () => {
+                  await retrieveDropInfo()
+                }}
+                canMintQuantity={canMintQuantity}
+                regularCost={regularCost}
+                memberCost={memberCost}
+                whitelistCost={whitelistCost}
+                specialWhitelist={specialWhitelist}
               />
 
-              <div className="item_info">
-
-                <MintBox
-                  drop={dropObject}
-                  abi={abi}
-                  status={status}
-                  totalSupply={totalSupply}
-                  maxSupply={maxSupply}
-                  priceDescription={drop.priceDescription}
-                  onMintSuccess={async () => {
-                    await retrieveDropInfo()
-                  }}
-                  canMintQuantity={canMintQuantity}
-                  regularCost={regularCost}
-                  memberCost={memberCost}
-                  whitelistCost={whitelistCost}
-                  specialWhitelist={specialWhitelist}
-                />
-
-
-                <div className="mt-3 mb-4">{newlineText(drop.description)}</div>
-              </div>
+              <div className="mt-3 mb-4">{newlineText(drop.description)}</div>
             </div>
           </div>
-        </section>
-      </>)}
+        </div>
+      </section>
       <Footer />
     </div>
   );

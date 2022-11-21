@@ -36,7 +36,7 @@ const Drop = ({ssrDrop, ssrCollection}) => {
         title={ssrDrop.title}
         description={ssrDrop.subtitle}
         url={`/drops/${ssrDrop.slug}`}
-        image={hostedImage(ssrCollection?.metadata.card ?? ssrDrop.image.drop)}
+        image={hostedImage(ssrCollection?.metadata.card ?? ssrDrop.images.drop)}
       />
       {ssrDrop && (
         <>
@@ -60,7 +60,7 @@ export const getServerSideProps = async ({ params }) => {
   const drop = drops.find((c) => caseInsensitiveCompare(c.slug, slug));
   const res = await fetch(`${config.urls.api}collectioninfo?slug=${slug}`)
   const json = await res.json();
-  const collection = json.collections[0]
+  const collection = json.collections[0] ?? null;
 
   if (!drop) {
     return {
