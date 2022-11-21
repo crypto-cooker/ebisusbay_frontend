@@ -1,5 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {
+  Badge,
   Box, Collapse,
   Flex,
   FormControl, FormErrorMessage,
@@ -79,13 +80,7 @@ export const TransferDrawerItem = ({ item }) => {
         const extras = { address: item.nft.address };
 
         extras.approval = await checkApproval();
-
-        const metadata = await getCollectionMetadata(item.nft.address);
-        if (metadata.collections.length > 0) {
-          extras.floorPrice = metadata.collections[0].floorPrice;
-        }
-
-        extras.royalty = await collectionRoyaltyPercent(item.nft.address, item.nft.id);
+        extras.canTransfer = !item.nft.isStaked;
 
         dispatch(setExtras(extras));
       }
@@ -119,8 +114,14 @@ export const TransferDrawerItem = ({ item }) => {
               <Text fontWeight="bold" noOfLines={1} cursor="pointer">{item.nft.name}</Text>
             </Link>
             <Skeleton isLoaded={typeof approvalStatus === 'boolean'}>
-              {approvalStatus ? (
+              {approvalStatus && extras.canTransfer ? (
                 <></>
+              ) : !extras.canTransfer ? (
+                <Box>
+                  <Badge variant='outline' colorScheme='red'>
+                    Staked, Cannot Transfer
+                  </Badge>
+                </Box>
               ) : (
                 <ChakraButton
                   size='xs'

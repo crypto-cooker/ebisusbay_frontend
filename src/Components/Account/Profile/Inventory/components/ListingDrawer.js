@@ -107,7 +107,8 @@ export const ListingDrawer = () => {
     return !executingCreateListing &&
       batchListingCart.nfts.length > 0 &&
       !Object.values(batchListingCart.extras).some((o) => !o.approval) &&
-      !batchListingCart.nfts.some((o) => !o.price || !parseInt(o.price) > 0);
+      !batchListingCart.nfts.some((o) => !o.price || !parseInt(o.price) > 0) &&
+      !batchListingCart.nfts.some((o) => !o.nft.listable || o.nft.isStaked);
   }
 
   return (

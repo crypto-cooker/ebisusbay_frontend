@@ -1,5 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {
+  Badge,
   Box, Collapse,
   Flex,
   FormControl, FormErrorMessage,
@@ -104,6 +105,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
         }
 
         extras.royalty = await collectionRoyaltyPercent(item.nft.address, item.nft.id);
+        extras.canList = item.nft.listable && !item.nft.isStaked;
 
         dispatch(setExtras(extras));
       }
@@ -137,7 +139,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
               <Text fontWeight="bold" noOfLines={1} cursor="pointer">{item.nft.name}</Text>
             </Link>
             <Skeleton isLoaded={typeof approvalStatus === 'boolean'}>
-              {approvalStatus ? (
+              {approvalStatus && extras.canList ? (
                 <FormControl isInvalid={invalid}>
                   <Stack direction="row">
                     <Input
@@ -176,6 +178,12 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
                   </Stack>
                   <FormErrorMessage fontSize='xs' mt={1}>Enter a valid number.</FormErrorMessage>
                 </FormControl>
+              ) : !extras.canList ? (
+                <Box>
+                  <Badge variant='outline' colorScheme='red'>
+                    Not Listable
+                  </Badge>
+                </Box>
               ) : (
                 <ChakraButton
                   size='xs'

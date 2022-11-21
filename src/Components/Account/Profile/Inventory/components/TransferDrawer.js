@@ -105,7 +105,8 @@ export const TransferDrawer = () => {
   const canSubmit = () => {
     return !executingTransfer &&
       batchListingCart.nfts.length > 0 &&
-      !Object.values(batchListingCart.extras).some((o) => !o.approval);
+      !Object.values(batchListingCart.extras).some((o) => !o.approval) &&
+      !batchListingCart.nfts.some((o) => o.nft.isStaked);
   }
 
   const validationForm = async () => {
