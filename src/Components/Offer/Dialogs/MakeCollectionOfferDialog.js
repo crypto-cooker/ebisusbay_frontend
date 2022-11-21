@@ -44,7 +44,7 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
 
   const windowSize = useWindowSize();
   const user = useSelector((state) => state.user);
-  const {offerContract, marketContract} = user;
+  const {contractService} = user;
 
   const isAboveFloorPrice = (price) => {
     return (parseInt(floorPrice) > 0 && ((Number(price) - floorPrice) / floorPrice) * 100 > floorThreshold);
@@ -77,20 +77,11 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
     }
   }, [collection, user.provider]);
 
-  const wrappedOfferContract = () => {
-    return offerContract ?? new Contract(config.contracts.offer, Offer.abi, user.provider.getSigner());
-  };
-
-  const wrappedMarketContract = () => {
-    return marketContract ?? new Contract(config.contracts.market, Market.abi, user.provider.getSigner());
-  };
-
   const getInitialProps = async () => {
     try {
       setIsLoading(true);
       setPriceError(null);
       const collectionAddress = collection.address;
-      const marketContract = wrappedMarketContract();
 
       const floorPrice = await getCollectionMetadata(collectionAddress);
       if (floorPrice.collections.length > 0) {
@@ -123,7 +114,7 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
 
       setExecutingCreateListing(true);
       Sentry.captureEvent({message: 'handleCreateOffer', extra: {address: collectionAddress, price}});
-      const contract = wrappedOfferContract();
+      const contract = contractService.offer;;
 
       let tx;
       if (existingOffer) {

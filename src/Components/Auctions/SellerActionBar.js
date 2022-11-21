@@ -61,11 +61,7 @@ const SellerActionBar = () => {
   const runFunction = async (fn) => {
     if (user.address) {
       try {
-        let writeContract = await new ethers.Contract(
-          config.contracts.madAuction,
-          AuctionContract.abi,
-          user.provider.getSigner()
-        );
+        let writeContract = user.contractService.auction;
         const receipt = await fn(writeContract);
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
         dispatch(getAuctionDetails(listing.getAuctionId));

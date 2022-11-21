@@ -29,7 +29,7 @@ import {getQuickWallet} from "./api/endpoints/wallets";
 
 import Constants from '../constants'
 import useFeatureFlag from '../hooks/useFeatureFlag';
-import {getCollections} from "@src/core/api/next/collectioninfo";
+import { getCollections } from "@src/core/api/next/collectioninfo";
 
 const config = appConfig();
 let gatewayTools = new IPFSGatewayTools();
@@ -248,361 +248,6 @@ export async function getCollectionPowertraits(contractAddress) {
   return null;
 }
 
-export async function getNftsForAddress(walletAddress, walletProvider, onNftLoaded, abortSignal) {
-  if (!walletAddress || !walletProvider) {
-    return;
-  }
-  // const walletBlacklisted = isUserBlacklisted(walletAddress);
-
-  const signer = walletProvider.getSigner();
-
-  let listings = await getAllListingsForUser(walletAddress);
-
-  //  Helper function
-  const getListing = (address, id) => {
-    return listings.find((listing) => {
-      const sameId = ethers.BigNumber.from(listing['nftId']).eq(id);
-      const sameAddress = listing['nftAddress'].toLowerCase() === address.toLowerCase();
-      return sameId && sameAddress;
-    });
-  };
-
-  let response = {
-    nfts: [],
-    isMember: false,
-  };
-
-  await Promise.all(
-    knownContracts
-      .filter((c) => !!c.address)
-      .map(async (knownContract) => {
-        try {
-          if (abortSignal.aborted) {
-            return Promise.reject(new DOMException('Aborted', 'AbortError'));
-          }
-          const address = knownContract.address;
-          const listable = knownContract.listable;
-          const isMetaPixels = isMetapixelsCollection(address);
-          const isSouthSideAnts = isSouthSideAntsCollection(address);
-
-          if (knownContract.multiToken) {
-            const ids = knownContract.tokens?.map((t) => t.id) ?? [knownContract.id];
-
-            for (const id of ids) {
-              let canTransfer = true;
-              let canSell = true;
-              const listed = !!getListing(address, id);
-              const listingId = listed ? getListing(address, id).listingId : null;
-              const price = listed ? getListing(address, id).price : null;
-              // let erc1155Listings = getERC1155Listings(address, id);
-
-              const readContract = new Contract(knownContract.address, ERC1155, readProvider);
-              const writeContract = new Contract(knownContract.address, ERC1155, signer);
-
-              readContract.connect(readProvider);
-              writeContract.connect(signer);
-
-              let count = await readContract.balanceOf(walletAddress, id);
-              count = count.toNumber();
-              if (knownContract.address === config.contracts.membership && count > 0) {
-                response.isMember = true;
-              }
-              if (count === 0) {
-                return;
-              }
-
-              let uri = await readContract.uri(id);
-
-              if (gatewayTools.containsCID(uri)) {
-                try {
-                  uri = gatewayTools.convertToDesiredGateway(uri, gateway);
-                } catch (error) {
-                  //console.log(error);
-                }
-              }
-
-              const json = await (await fetch(uri)).json();
-              const name = json.name;
-              const image = gatewayTools.containsCID(json.image)
-                ? gatewayTools.convertToDesiredGateway(json.image, gateway)
-                : json.image;
-              const description = json.description;
-              const properties = json.properties;
-
-              const nft = {
-                name: name,
-                id: id,
-                image: image,
-                video: json.animation_url ?? (image.split('.').pop() === 'mp4' ? image : null),
-                count: count,
-                description: description,
-                properties: properties,
-                contract: writeContract,
-                address: knownContract.address,
-                multiToken: true,
-                listable,
-                listed,
-                listingId,
-                price,
-                canSell: canSell,
-                canTransfer: canTransfer,
-              };
-
-              onNftLoaded([nft]);
-            }
-            /*
-            for (const item of erc1155Listings) {
-              let nft = {
-                name: name,
-                id: id,
-                image: image,
-                description: description,
-                properties: properties,
-                contract: contract,
-                address: knownContract.address,
-                multiToken: true,
-                listable,
-                listed: true,
-                listingId: item.listingId,
-                price: item.price,
-                canSell: canSell,
-                canTransfer: canTransfer
-              };
-              onNftLoaded([nft]);
-            }
-            for (let i = 0; i < count - erc1155Listings.length; i++) {
-              if (erc1155Listings.length == 1) {
-                canSell = false;
-              }
-              if (erc1155Listings == 0 && i != 0) {
-                canSell = false;
-              }
-              console.log(canSell);
-              let nft = {
-                name: name,
-                id: id,
-                image: image,
-                description: description,
-                properties: properties,
-                contract: contract,
-                address: knownContract.address,
-                multiToken: true,
-                listable,
-                canSell: canSell,
-                canTransfer: canTransfer
-              };
-              onNftLoaded([nft]);
-            } */
-          } else {
-            const writeContract = (() => {
-              if (isMetaPixels) {
-                return new Contract(address, MetaPixelsAbi, signer);
-              }
-              return new Contract(address, ERC721, signer);
-            })();
-
-            const readContract = (() => {
-              if (isMetaPixels) {
-                return new Contract(address, MetaPixelsAbi, readProvider);
-              }
-              if (isSouthSideAnts) {
-                return new Contract(address, SouthSideAntsReadAbi, readProvider);
-              }
-              return new Contract(address, ERC721, readProvider);
-            })();
-
-            readContract.connect(readProvider);
-            writeContract.connect(signer);
-
-            const count = await readContract.balanceOf(walletAddress);
-            let ids = [];
-            if (count > 0) {
-              try {
-                if (isSouthSideAnts) {
-                  ids = await readContract.getNftByUser(walletAddress);
-                } else {
-                  await readContract.tokenOfOwnerByIndex(walletAddress, 0);
-                }
-              } catch (error) {
-                ids = await readContract.walletOfOwner(walletAddress);
-              }
-            }
-            for (let i = 0; i < count; i++) {
-              let canTransfer = true;
-              let canSell = true;
-              let id;
-              if (ids.length === 0) {
-                try {
-                  id = await readContract.tokenOfOwnerByIndex(walletAddress, i);
-                } catch (error) {
-                  continue;
-                }
-              } else {
-                id = ids[i];
-              }
-              const nftBlacklisted = isNftBlacklisted(address, id);
-              if (nftBlacklisted) {
-                canTransfer = false;
-                canSell = false;
-              }
-
-              const listed = !!getListing(address, id);
-              const listingId = listed ? getListing(address, id).listingId : null;
-              const price = listed ? getListing(address, id).price : null;
-
-              const uri = await (async () => {
-                if (knownContract.name === 'Ant Mint Pass') {
-                  //  fix for https://ebisusbay.atlassian.net/browse/WEB-166
-                  //  ant mint pass contract hard coded to this uri for now - remove this when CSS goes live
-                  return 'https://gateway.pinata.cloud/ipfs/QmWLqeupPQsb4MTtJFjxEniQ1F67gpQCzuszwhZHFx6rUM';
-                }
-
-                if (knownContract.name === 'Red Skull Potions') {
-                  // fix for CroSkull's Red Skull Potions
-                  return `https://gateway.pinata.cloud/ipfs/QmQd9sFZv9aTenGD4q4LWDQWnkM4CwBtJSL82KLveJUNTT/${id}`;
-                }
-                if (isMetaPixels) {
-                  return await readContract.lands(id);
-                }
-
-                return await readContract.tokenURI(id);
-              })();
-
-              if (isMetaPixels) {
-                const numberId = id instanceof BigNumber ? id.toNumber() : id;
-                const image = `${uri.image}`.startsWith('https://')
-                  ? uri.image
-                  : `https://ipfs.metaversepixels.app/ipfs/${uri.image}`;
-                const description = uri.detail;
-                const name = `${knownContract.name} ${id}`;
-                const properties = {};
-                const nft = {
-                  id: numberId,
-                  name,
-                  image,
-                  description,
-                  properties,
-                  contract: writeContract,
-                  address,
-                  multiToken: false,
-                  listable: true,
-                  transferable: false,
-                  listed,
-                  listingId,
-                  price,
-                  canSell: canSell,
-                  canTransfer: canTransfer,
-                };
-                onNftLoaded([nft]);
-                continue;
-              }
-
-              if (knownContract.onChain) {
-                const json = Buffer.from(uri.split(',')[1], 'base64');
-                const parsed = JSON.parse(json);
-                const name = parsed.name;
-                const image = dataURItoBlob(parsed.image, 'image/svg+xml');
-                const desc = parsed.description;
-                const properties = parsed.properties ? parsed.properties : parsed.attributes;
-                const nft = {
-                  id: id,
-                  name: name,
-                  image: URL.createObjectURL(image),
-                  description: desc,
-                  properties: properties,
-                  contract: writeContract,
-                  address: knownContract.address,
-                  multiToken: false,
-                  listable,
-                  listed,
-                  listingId,
-                  price,
-                  canSell: canSell,
-                  canTransfer: canTransfer,
-                };
-                onNftLoaded([nft]);
-              } else {
-                const checkedUri = (() => {
-                  try {
-                    if (gatewayTools.containsCID(uri) && !uri.startsWith('ar')) {
-                      return gatewayTools.convertToDesiredGateway(uri, gateway);
-                    }
-
-                    if (uri.startsWith('ar')) {
-                      return `https://arweave.net/${uri.substring(5)}`;
-                    }
-
-                    return uri;
-                  } catch (e) {
-                    return uri;
-                  }
-                })();
-
-                let json;
-                if (checkedUri.includes('unrevealed')) {
-                  json = {
-                    id: id,
-                    name: knownContract.name + ' ' + id,
-                    description: 'Unrevealed!',
-                    image: '',
-                    video: '',
-                    contract: writeContract,
-                    address: knownContract.address,
-                    multiToken: false,
-                    properties: [],
-                    listable,
-                    listed,
-                    listingId,
-                    price,
-                    canSell: canSell,
-                    canTransfer: canTransfer,
-                  };
-                } else {
-                  json = await (await fetch(checkedUri)).json();
-                }
-                const image = convertIpfsResource(json.image, json.tooltip);
-                const video = convertIpfsResource(json.animation_url, json.tooltip);
-                let isStaked;
-
-                if (address === '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44') {
-                  if (await readContract.stakedApes(id)) {
-                    canTransfer = false;
-                    canSell = false;
-                    isStaked = true;
-                  }
-                }
-                const nft = {
-                  id: id,
-                  name: json.name,
-                  image: image,
-                  video: video,
-                  description: json.description,
-                  properties: json.properties ? json.properties : json.attributes,
-                  contract: writeContract,
-                  address: knownContract.address,
-                  multiToken: false,
-                  listable,
-                  listed,
-                  listingId,
-                  price,
-                  canTransfer: canTransfer,
-                  canSell: canSell,
-                  isStaked: isStaked,
-                };
-                onNftLoaded([nft]);
-              }
-            }
-          }
-        } catch (error) {
-          console.log('error fetching ' + knownContract.name);
-          console.log(error);
-          Sentry.captureException(error);
-        }
-      })
-  );
-
-  return response;
-}
 
 export async function getUnfilteredListingsForAddress(walletAddress, walletProvider, page) {
   let query = {
@@ -958,11 +603,11 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
       return sameId && sameAddress;
     });
   };
-
   const writeContracts = [];
   return await Promise.all(
     results
       .filter((nft) => {
+        if(nft.symbol && nft.symbol == 'Bundle') return true
         const matchedContract = findCollectionByAddress(nft.nftAddress, nft.nftId);
         if (!matchedContract) return false;
 
@@ -971,6 +616,17 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
         return matchedContract && hasBalance;
       })
       .map(async (nft) => {
+        if(nft.symbol && nft.symbol == 'Bundle'){
+          return {
+            address: nft.nftAddress,
+            description: nft.metadata?.description,
+            id: nft.nftId,
+            title: nft.metadata?.title,
+            nfts: nft.metadata?.nfts,
+            symbol: 'Bundle'
+          }
+        }
+        else{
         const knownContract = findCollectionByAddress(nft.nftAddress, nft.nftId);
 
         let key = knownContract.address;
@@ -1052,7 +708,7 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
           canTransfer: canTransfer,
           isStaked: isStaked,
         };
-      })
+      }})
   );
 }
 

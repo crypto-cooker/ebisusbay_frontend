@@ -25,7 +25,7 @@ import {getTheme} from "@src/Theme/theme";
 
 export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffer, nft, offer}) => {
   const [isLoading, setIsLoading] = useState(false);
-  const offerContract = useSelector((state) => state.user.offerContract);
+  const offerContract = useSelector((state) => state.user.contractService.offer);
   const [executingCancelOffer, setExecutingCancelOffer] = useState(false);
   const user = useSelector((state) => state.user);
 

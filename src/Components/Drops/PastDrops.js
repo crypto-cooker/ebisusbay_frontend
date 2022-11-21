@@ -3,10 +3,9 @@ import { useDispatch } from 'react-redux';
 import Slider from '../components/Slider';
 
 import CustomSlide from '../components/CustomSlide';
-import { appConfig } from "../../Config";
+import { appConfig } from "@src/Config";
 
 const drops = appConfig('drops');
-const collections = appConfig('collections');
 const defaultCardImage = '/img/collections/default/card.jpg';
 
 const PastDrops = () => {
@@ -16,11 +15,8 @@ const PastDrops = () => {
 
   function arrangeCollections() {
     const completedDrops = drops.filter((d) => d.complete && d.published);
-    const dropCollections = completedDrops.map((d) => {
-      const collection = collections.find((c) => c.slug === d.slug);
-      return { collection, drop: d };
-    });
-    setPastDrops(dropCollections.filter((d) => d.collection).sort((a, b) => (a.drop.start < b.drop.start ? 1 : -1)));
+    const dropCollections = completedDrops.sort((a, b) => (a.start < b.start ? 1 : -1));
+    setPastDrops(dropCollections);
   }
 
   useEffect(() => {
@@ -31,16 +27,16 @@ const PastDrops = () => {
     <div className="nft">
       <Slider size={pastDrops.length}>
         {pastDrops &&
-          pastDrops.map((item, index) => (
+          pastDrops.map((drop, index) => (
             <CustomSlide
               key={index}
               index={index + 1}
-              avatar={item.drop.images.avatar}
-              banner={item.collection.metadata.card ?? defaultCardImage}
-              title={item.drop.title}
-              collectionId={item.drop.slug}
-              url={`/collection/${item.collection.slug}`}
-              verified={item.collection.metadata.verified}
+              avatar={drop.images.avatar}
+              banner={drop.images.preview ?? defaultCardImage}
+              title={drop.title}
+              collectionId={drop.slug}
+              url={`/collection/${drop.slug}`}
+              verified={drop.verification.verified}
             />
           ))}
       </Slider>

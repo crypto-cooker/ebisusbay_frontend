@@ -109,11 +109,7 @@ const ManageAuctionList = () => {
     }
 
     if (user.address) {
-      let writeContract = await new ethers.Contract(
-        config.contracts.madAuction,
-        AuctionContract.abi,
-        user.provider.getSigner()
-      );
+      let writeContract = user.contractService.auction;
       try {
         setExecutingStart(true);
         const tx = await writeContract.start(selectedAuction.getAuctionHash, selectedAuction.getAuctionIndex, runTime);
@@ -154,11 +150,7 @@ const ManageAuctionList = () => {
 
   const handleReturnBids = async (auction) => {
     if (user.address) {
-      let writeContract = await new ethers.Contract(
-        config.contracts.madAuction,
-        AuctionContract.abi,
-        user.provider.getSigner()
-      );
+      let writeContract = user.contractServicec.auction;
       try {
         setExecutingStart(true);
         const tx = await writeContract.returnBidsToWallets(auction.getAuctionHash, auction.getAuctionIndex);

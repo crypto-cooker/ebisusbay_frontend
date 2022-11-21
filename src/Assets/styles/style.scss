@@ -4725,6 +4725,7 @@ blockquote {
   .de-menu-profile {
     position: relative;
     cursor: pointer;
+    width: 38px;
     img {
       width: 38px;
       border-radius: 30px;
@@ -4732,133 +4733,6 @@ blockquote {
       -webkit-border-radius: 30px;
       margin-left: 5px;
       margin-bottom: 2px;
-    }
-    .popshow {
-      cursor: default;
-      width: 250px;
-      position: absolute;
-      background: $bgColor1;
-      border-radius: 5px;
-      overflow: hidden;
-      inset: 50px auto auto -200px;
-      padding: 20px;
-      animation: smoothDrop 0.2s ease;
-      -webkit-animation: smoothDrop 0.2s ease;
-      box-shadow: 2px 2px 30px 0px $colorBoxShadow1;
-      z-index: 1;
-      .d-name {
-        margin-bottom: 15px;
-        h4 {
-          font-weight: bold;
-          display: block;
-          margin: 0;
-          margin-top: 0px;
-          padding: 0;
-          font-size: 16px;
-          margin-top: 5px;
-        }
-        span.name {
-          color: $blue;
-          cursor: pointer;
-        }
-      }
-      .d-balance {
-        font-size: 14px;
-        margin-bottom: 15px;
-        h4 {
-          font-weight: bold;
-          display: block;
-          margin: 0;
-          margin-top: 0px;
-          padding: 0;
-          font-size: 16px;
-          margin-top: 5px;
-        }
-      }
-      .d-wallet {
-        font-size: 14px;
-        margin-bottom: 15px;
-        h4 {
-          font-weight: bold;
-          display: block;
-          margin: 0;
-          margin-top: 0px;
-          padding: 0;
-          font-size: 16px;
-          margin-top: 5px;
-        }
-        .d-wallet-address {
-          display: inline-block;
-          max-width: 64%;
-          overflow: hidden;
-          color: $textColor1;
-        }
-        .d-wallet-value {
-          color: $textColor1;
-        }
-        #btn_copy {
-          margin-left: 15px;
-        }
-      }
-      .d-line {
-        margin: 15px 0 15px 0;
-        border-top: solid 1px #bbbbbb;
-      }
-      .de-submenu-profile {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-
-        li {
-          padding: 5px 0;
-
-          & > span {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            cursor: pointer;
-
-            &:hover {
-              box-shadow: none;
-            }
-
-            & > span:first-child {
-              background: #eee;
-              font-size: 0.9rem;
-              border-radius: 50%;
-              width: 28px;
-              height: 28px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            }
-
-            & > span:last-child {
-              color: $textColor1;
-              background: none;
-              padding: 0;
-              font-weight: bold;
-              font-size: 14px;
-              display: block;
-              text-align: left;
-            }
-          }
-
-          &.my-offers-menu-item {
-            position: relative;
-
-            .notification-badge {
-              position: absolute;
-              top: 5px;
-              left: -5px;
-              width: 10px;
-              height: 10px;
-              border-radius: 10px;
-              background-color: $bgColor2;
-            }
-          }
-        }
-      }
     }
   }
 }
@@ -5704,6 +5578,85 @@ iframe.metaverse {
     }
 
   }
+}
+
+.swiper{
+
+  .index-counter{
+    width: 60px;
+    height: 28px;
+    position: absolute;
+    z-index: 3;
+    top: 4%;
+    left: 4%;
+    background-color: rgba(159, 159, 159, 0.4);
+    backdrop-filter: blur(10px);
+    border-radius: 6px;
+    color: white;
+    font-weight: 900;
+    outline: 0;
+    font-size: 14px;
+    padding: 2px 8px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .swiper-button-next, .swiper-button-prev {
+    opacity: 0;
+    top: 54%;
+    width: 30px !important;
+    height: 30px !important;
+    font-weight: 900 !important;
+    border: none !important;
+    background-color: rgba(159, 159, 159, 0.4) !important;
+    backdrop-filter: blur(10px);
+    color: white !important;;
+
+
+    &::after {
+      font-size: 12px !important;
+    }
+
+  }
+
+  .swiper-button-next{
+    right: 8px !important;
+  }
+
+  .swiper-button-prev{
+    left: 8px !important;
+  }
+
+  &:hover {
+    .swiper-button-next, .swiper-button-prev {
+      opacity: 1;
+      transition: opacity 0.5s ;
+    }
+  }
+
+}
+
+.bundle-images-container {
+
+  border: solid 2px;
+  border-radius: 5px;
+
+  .main-image {
+    border-bottom: solid;
+  }
+
+  .image-menu {
+    border-top: solid;
+    overflow-x: scroll;
+
+      .active{
+        border-radius: 5px;
+        border: solid 2px;
+        color: white
+      }
+
+  }
+
+  
 }
 
 @keyframes pulse-animation-light {

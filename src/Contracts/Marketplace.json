@@ -5,11 +5,6 @@
   "abi": [
     {
       "inputs": [],
-      "stateMutability": "nonpayable",
-      "type": "constructor"
-    },
-    {
-      "inputs": [],
       "name": "InvalidERC721TransferAmount",
       "type": "error"
     },
@@ -497,6 +492,29 @@
     {
       "inputs": [
         {
+          "internalType": "address[]",
+          "name": "_tokens",
+          "type": "address[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "_ids",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "address",
+          "name": "_to",
+          "type": "address"
+        }
+      ],
+      "name": "bulkTransfer",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "address",
           "name": "_contract",
           "type": "address"
@@ -798,6 +816,40 @@
           "internalType": "struct Marketplace.Royalty",
           "name": "",
           "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_contract",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_price",
+          "type": "uint256"
+        }
+      ],
+      "name": "getStandardNFTRoyalty",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "ipHolder",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "royaltyAmount",
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -1393,6 +1445,29 @@
           "internalType": "address",
           "name": "_nftContract",
           "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_paymentAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "uint16",
+          "name": "_fee",
+          "type": "uint16"
+        }
+      ],
+      "name": "registerRoyaltyAsOwner",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_nftContract",
+          "type": "address"
         }
       ],
       "name": "removeRoyalty",
@@ -1469,6 +1544,19 @@
         }
       ],
       "name": "setMembershipStaker",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_ryoshi",
+          "type": "address"
+        }
+      ],
+      "name": "setRyoshi",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -1640,7 +1728,7 @@
       "inputs": [],
       "name": "withdraw",
       "outputs": [],
-      "stateMutability": "payable",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {

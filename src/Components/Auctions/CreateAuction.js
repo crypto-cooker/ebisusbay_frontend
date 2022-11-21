@@ -23,7 +23,7 @@ const CreateAuction = () => {
     try {
       setExecuting(true);
       await setApprovalForAll();
-      const tx = await user.auctionContract.createAuction(nftAddress, nftId, bid);
+      const tx = await user.contractService.auction.createAuction(nftAddress, nftId, bid);
       const receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       setNftAddress('');
@@ -45,10 +45,10 @@ const CreateAuction = () => {
 
   const setApprovalForAll = async () => {
     try {
-      const isApproved = await user.auctionContract.isApproved(nftAddress, user.address);
+      const isApproved = await user.contractService.auction.isApproved(nftAddress, user.address);
       if (!isApproved) {
         let writeContract = await new ethers.Contract(nftAddress, ERC721, user.provider.getSigner());
-        let tx = await writeContract.setApprovalForAll(user.auctionContract.address, true);
+        let tx = await writeContract.setApprovalForAll(user.contractService.auction.address, true);
         await tx.wait();
       }
     } catch (error) {

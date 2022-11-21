@@ -53,7 +53,7 @@ const MakeBuy = styled.div`
   align-items: center;
 `;
 
-const ListingCard = ({ listing, imgClass = 'marketplace', watermark, address, collection }) => {
+const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
   const nftUrl = appUrl(`/collection/${listing.nftAddress}/${listing.nftId}`);
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const dispatch = useDispatch();
@@ -233,19 +233,19 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark, address, co
               <div>&nbsp;</div>
             )}
             <div className="d-flex flex-column justify-content-between p-2 pb-1">
-              {collection && (
-                <Link href={`/collection/${collection.slug}`}>
+              {listing.collection && (
+                <Link href={`/collection/${listing.collection.slug}`}>
                   <a>
                     <h6
                       className="card-title mt-auto fw-normal"
                       style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
                     >
-                      {collection.name}
+                      {listing.collection.name}
                     </h6>
                   </a>
                 </Link>
               )}
-              <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
+              <Link href={`/collection/${listing.collection.slug}/${listing.nftId}`}>
                 <a>
                   <Heading as="h6" size="sm" className="card-title mt-auto">{listing.nft.name}</Heading>
                 </a>
@@ -290,7 +290,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark, address, co
           isOpen={openMakeOfferDialog}
           onClose={() => setOpenMakeOfferDialog(false)}
           nftId={listing.nftId}
-          collection={collection}
+          nftAddress={listing.nftAddress}
         />
       )}
     </>

@@ -91,13 +91,13 @@ const MultiDrop = () => {
     // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    dispatch(fetchMemberInfo());
-    if (process.env.NODE_ENV === 'development') {
-      dispatch(fetchVipInfo());
-    }
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchMemberInfo());
+  //   if (process.env.NODE_ENV === 'development') {
+  //     dispatch(fetchVipInfo());
+  //   }
+  //   // eslint-disable-next-line
+  // }, []);
 
   const user = useSelector((state) => {
     return state.user;

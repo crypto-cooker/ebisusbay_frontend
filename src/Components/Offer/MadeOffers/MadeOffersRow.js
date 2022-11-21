@@ -152,7 +152,7 @@ export default function TableRow({ data }) {
           isOpen={!!offerType}
           onClose={() => handleOffer(OFFER_TYPE.none)}
           nftId={nftId}
-          collection={collectionData}
+          nftAddress={nftAddress}
         />
       )}
       {!!offerType && offerType === OFFER_TYPE.update && !nftId && (

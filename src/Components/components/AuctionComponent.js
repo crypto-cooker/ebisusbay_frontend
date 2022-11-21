@@ -15,9 +15,10 @@ import ProfilePreview from '../components/ProfilePreview';
 import { appConfig } from '../../Config';
 import { hostedImage } from '../../helpers/image';
 import {Heading} from "@chakra-ui/react";
+import {useQuery} from "@tanstack/react-query";
+import { getCollections } from "@src/core/api/next/collectioninfo";
 
 const config = appConfig();
-const knownContracts = config.collections;
 
 const AuctionComponent = (props) => {
   const router = useRouter();
@@ -29,9 +30,17 @@ const AuctionComponent = (props) => {
   const powertraits = useSelector((state) => state.auction.powertraits);
   const isLoading = useSelector((state) => state.auction.loading);
 
-  const collection = useSelector((state) => {
-    return knownContracts.find((c) => c.address.toLowerCase() === listing?.nftAddress.toLowerCase());
-  });
+  const { isLoading : isLoadingCollection, error, data, status } = useQuery(['Collections', listing?.nftAddress.toLowerCase()], () =>
+    getCollections({address: listing?.nftAddress.toLowerCase()}), true
+  )
+
+  const [collection, setCollection] = useState(null);
+
+  useEffect(()=> {
+    if(!isLoadingCollection && data) {
+      setCollection(data.data?.collections[0])
+    }
+  }, [isLoadingCollection, data])
 
   useEffect(() => {
     dispatch(getAuctionDetails(id));
@@ -65,8 +74,10 @@ const AuctionComponent = (props) => {
   return (
     <>
       <div>
-        {isLoading ? (
+        {isLoading && isLoadingCollection? (
           <section className="gl-legacy container">
+        
+
             <div className="row mt-4">
               <div className="col-lg-12 text-center">
                 <Spinner animation="border" role="status">

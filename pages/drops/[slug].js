@@ -11,7 +11,7 @@ import {hostedImage} from "@src/helpers/image";
 import RyoshiDrop from "@src/Components/Drop/ryoshiDrop";
 
 export const drops = appConfig('drops');
-export const collections = appConfig('collections');
+const config = appConfig();
 
 const Drop = ({ssrDrop, ssrCollection}) => {
   const router = useRouter();
@@ -36,7 +36,7 @@ const Drop = ({ssrDrop, ssrCollection}) => {
         title={ssrDrop.title}
         description={ssrDrop.subtitle}
         url={`/drops/${ssrDrop.slug}`}
-        image={hostedImage(ssrCollection?.metadata.card ?? ssrDrop.image.drop)}
+        image={hostedImage(ssrCollection?.metadata.card ?? ssrDrop.images.drop)}
       />
       {ssrDrop && (
         <>
@@ -58,7 +58,9 @@ const Drop = ({ssrDrop, ssrCollection}) => {
 export const getServerSideProps = async ({ params }) => {
   const slug = params?.slug;
   const drop = drops.find((c) => caseInsensitiveCompare(c.slug, slug));
-  const collection = collections.find((c) => caseInsensitiveCompare(c.slug, slug));
+  const res = await fetch(`${config.urls.api}collectioninfo?slug=${slug}`)
+  const json = await res.json();
+  const collection = json.collections[0] ?? null;
 
   if (!drop) {
     return {
