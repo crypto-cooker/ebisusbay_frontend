@@ -2916,6 +2916,34 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Piggy Bank Finance",
+      "slug": "piggy-bank-finance",
+      "multiToken": false,
+      "address": "0xF0ce06Ac2bB27d14177aAB1b52f1C0D0A780e14f",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Piggy Bank Finance (PBF) is a collection of 6,666 unique NFTs with over 200 hand-drawn traits on the Cronos blockchain.",
+        "verified": true,
+        "avatar": "/img/collections/piggy-bank-finance/avatar.webp",
+        "card": "/img/collections/piggy-bank-finance/card.webp",
+        "banner": "/img/collections/piggy-bank-finance/banner.webp",
+        "maxSupply": 1500,
+        "website": "https://pbfnft.com/",
+        "twitter": "https://twitter.com/pbf_nft",
+        "discord": "https://discord.gg/DwhzwGuBGb",
+        "instagram": "https://www.instagram.com/pbf_nft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
     }
   ],
   "drops": [
@@ -3638,7 +3666,7 @@
       "is1155": true,
       "foundersOnly": false,
       "published": true,
-      "featured": true,
+      "featured": false,
       "complete": false,
       "images": {
         "drop": "/img/drops/vip/drop.webp",
@@ -6641,6 +6669,46 @@
         "banner": "/img/collections/selfie-guys/banner.webp",
         "avatar": "/img/collections/selfie-guys/avatar.webp",
         "preview": "/img/collections/selfie-guys/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "id": 138,
+      "slug": "piggy-bank-finance",
+      "title": "Piggy Bank Finance",
+      "subtitle": "Piggy Bank Finance (PBF) is a collection of 6,666 unique NFTs with over 200 hand-drawn traits on the Cronos blockchain.",
+      "description": "Founded by a group of NFT enthusiasts, PBF aims to deliver where many projects have fallen short.  A roadmap geared towards making profits with 100% of mint funds, aggressive buybacks to increase hodlers value, and a sustainable LP with 100% of secondary sales being funneled straight back into the project. This and much more is what you can expect when you join our team.\n\nThroughout the mint we will be doing random giveaways as well as achievement giveaways at 25%, 50%, 75% and 100%.",
+      "author": {
+        "name": "Piggy Bank Finance",
+        "website": "https://pbfnft.com/",
+        "twitter": "https://twitter.com/pbf_nft",
+        "discord": "https://discord.gg/DwhzwGuBGb",
+        "instagram": "https://www.instagram.com/pbf_nft"
+      },
+      "address": "0xF0ce06Ac2bB27d14177aAB1b52f1C0D0A780e14f",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 6666,
+      "cost": "225",
+      "memberCost": "200",
+      "whitelistCost": "200",
+      "foundersOnly": false,
+      "start": 1669005090000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/piggy-bank-finance/drop.webp",
+        "banner": "/img/collections/piggy-bank-finance/banner.webp",
+        "avatar": "/img/collections/piggy-bank-finance/avatar.webp",
+        "preview": "/img/collections/piggy-bank-finance/card.webp"
       },
       "verification": {
         "verified": true,
