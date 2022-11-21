@@ -53,6 +53,7 @@ export const TransferDrawer = () => {
     if (!recipient) return;
 
     try {
+      setShowConfirmButton(false);
       setExecutingTransfer(true);
       const filteredCartNfts = batchListingCart.nfts.filter((o) => {
         return batchListingCart.extras[o.nft.address.toLowerCase()]?.approval;
@@ -197,7 +198,7 @@ export const TransferDrawer = () => {
             {!executingTransfer && (
               <Alert status="error" mb={2}>
                 <AlertIcon />
-                <AlertDescription>Transferring {pluralize(batchListingCart.nfts.length, 'item')}. Please double check the receiving address before continuing</AlertDescription>
+                <AlertDescription>Transferring {batchListingCart.nfts.length} {pluralize(batchListingCart.nfts.length, 'item')}. Please double check the receiving address before continuing</AlertDescription>
               </Alert>
             )}
             {executingTransfer && (
@@ -222,23 +223,30 @@ export const TransferDrawer = () => {
             </Flex>
           </>
         ) : (
-          <Button
-            type="legacy"
-            className="w-100"
-            onClick={handleSubmit}
-            disabled={!canSubmit()}
-          >
-            {executingTransfer ? (
-              <>
-                Transferring {pluralize(batchListingCart.nfts.length, 'Item')}...
-                <Spinner animation="border" role="status" size="sm" className="ms-1">
-                  <span className="visually-hidden">Loading...</span>
-                </Spinner>
-              </>
-            ) : (
-              <>Transfer {pluralize(batchListingCart.nfts.length, 'Item')}</>
+          <>
+            {executingTransfer && (
+              <Text mb={2} fontStyle="italic" fontSize="sm" align="center">
+                Please check your wallet for confirmation
+              </Text>
             )}
-          </Button>
+            <Button
+              type="legacy"
+              className="w-100"
+              onClick={handleSubmit}
+              disabled={!canSubmit()}
+            >
+              {executingTransfer ? (
+                <>
+                  Transferring {pluralize(batchListingCart.nfts.length, 'Item')}...
+                  <Spinner animation="border" role="status" size="sm" className="ms-1">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
+                </>
+              ) : (
+                <>Transfer {pluralize(batchListingCart.nfts.length, 'Item')}</>
+              )}
+            </Button>
+          </>
         )
         }
       </GridItem>

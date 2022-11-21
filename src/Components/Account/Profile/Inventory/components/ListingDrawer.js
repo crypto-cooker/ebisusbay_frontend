@@ -16,6 +16,7 @@ import {
 
 const config = appConfig();
 const MAX_NFTS_IN_CART = 40;
+const floorThreshold = 5;
 
 export const ListingDrawer = () => {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ export const ListingDrawer = () => {
 
   const executeCreateListing = async () => {
     try {
+      setShowConfirmButton(false);
       setExecutingCreateListing(true);
       const filteredCartNfts = batchListingCart.nfts.filter((o) => {
         return batchListingCart.extras[o.nft.address.toLowerCase()]?.approval;
@@ -169,23 +171,30 @@ export const ListingDrawer = () => {
             </Flex>
           </>
         ) : (
-          <Button
-            type="legacy"
-            className="w-100"
-            onClick={prepareListing}
-            disabled={!canSubmit()}
-          >
-            {executingCreateListing ? (
-              <>
-                Creating {pluralize(batchListingCart.nfts.length, 'Listing')}...
-                <Spinner animation="border" role="status" size="sm" className="ms-1">
-                  <span className="visually-hidden">Loading...</span>
-                </Spinner>
-              </>
-            ) : (
-              <>Create {pluralize(batchListingCart.nfts.length, 'Listing')}</>
+          <>
+            {executingCreateListing && (
+              <Text mb={2} fontStyle="italic" fontSize="sm" align="center">
+                Please check your wallet for confirmation
+              </Text>
             )}
-          </Button>
+            <Button
+              type="legacy"
+              className="w-100"
+              onClick={prepareListing}
+              disabled={!canSubmit()}
+            >
+              {executingCreateListing ? (
+                <>
+                  Creating {pluralize(batchListingCart.nfts.length, 'Listing')}...
+                  <Spinner animation="border" role="status" size="sm" className="ms-1">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
+                </>
+              ) : (
+                <>Create {pluralize(batchListingCart.nfts.length, 'Listing')}</>
+              )}
+            </Button>
+          </>
         )
         }
       </GridItem>
