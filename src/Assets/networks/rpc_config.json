@@ -10821,9 +10821,9 @@
         ]
       },
       "verification": {
+        "verified": true,
         "doxx": false,
-        "kyc": "ebisu",
-        "verified": true
+        "kyc": true
       }
     },
     {
@@ -13016,9 +13016,9 @@
         "categories": []
       },
       "verification": {
+        "verified": true,
         "doxx": false,
-        "kyc": "ebisu",
-        "verified": true
+        "kyc": true
       }
     },
     {
@@ -14793,7 +14793,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "There is a Baby Wyvern for each of us, but will you find your forever companion ? \uD83D\uDC32",
+        "description": "There is a Baby Wyvern for each of us \uD83D\uDC32\nGiving 50% royalties back to holders and GameFi utilities. \n\nCome find your forever companion and join our community \uD83D\uDD25",
         "verified": false,
         "avatar": "/img/collections/baby-wyverns/avatar.webp",
         "card": "/img/collections/baby-wyverns/card.webp",
@@ -14805,9 +14805,9 @@
         "categories": []
       },
       "verification": {
+        "verified": true,
         "doxx": false,
-        "kyc": false,
-        "verified": false
+        "kyc": true
       }
     },
     {
