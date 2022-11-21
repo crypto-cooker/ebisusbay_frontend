@@ -20,6 +20,7 @@ import BundleDrawer from "./components/BundleDrawer";
 import useFeatureFlag from "@src/hooks/useFeatureFlag";
 import Constants from "@src/constants";
 import {ListingDrawer} from "@src/Components/Account/Profile/Inventory/components/ListingDrawer";
+import {TransferDrawer} from "@src/Components/Account/Profile/Inventory/components/TransferDrawer";
 
 const MAX_NFTS_IN_CART = 40;
 
@@ -30,12 +31,17 @@ const actions = {
 };
 
 export const BatchListingDrawer = ({ onClose, ...gridProps }) => {
-  const batchListingCart = useSelector((state) => state.batchListing);
-
   const { Features } = Constants;
   const useBundles = useFeatureFlag(Features.BUNDLES);
 
   const [actualForm, setActualForm] = useState(actions.listing);
+
+  const gridTemplateRows = () => {
+    if (actualForm === actions.bundle) return '60px 212px 1fr auto';
+    if (actualForm === actions.transfer) return '60px auto 1fr auto';
+
+    return '60px 1fr auto';
+  }
 
   const handleClose = () => {
     // setShowConfirmButton(false);
@@ -43,7 +49,7 @@ export const BatchListingDrawer = ({ onClose, ...gridProps }) => {
   };
 
   return (
-    <Grid templateRows={actualForm === actions.listing ? "60px 1fr auto" : "60px 212px 1fr auto"} {...gridProps}>
+    <Grid templateRows={gridTemplateRows} {...gridProps}>
       <GridItem px={6} py={4}>
         <Flex align="center">
           {/*TODO update*/}
@@ -60,6 +66,7 @@ export const BatchListingDrawer = ({ onClose, ...gridProps }) => {
       </GridItem>
       {actualForm === actions.listing && <ListingDrawer />}
       {actualForm === actions.bundle && <BundleDrawer />}
+      {actualForm === actions.transfer && <TransferDrawer />}
     </Grid>
   )
 }
