@@ -95,7 +95,7 @@ const Nft721 = ({ address, id }) => {
 
   useEffect(() => {
     async function asyncFunc() {
-      dispatch(getStats(collection, null, collection.mergedAddresses));
+      dispatch(getStats(collection));
     }
     asyncFunc();
     // eslint-disable-next-line

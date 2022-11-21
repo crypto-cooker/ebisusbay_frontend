@@ -1845,7 +1845,6 @@
       "slug": "weird-apes-club-v1",
       "multiToken": false,
       "address": "0x7D5f8F9560103E1ad958A6Ca43d49F954055340a",
-      "mergedWith": "0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -1875,9 +1874,6 @@
       "slug": "weird-apes-club",
       "multiToken": false,
       "address": "0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44",
-      "mergedAddresses": [
-        "0x7D5f8F9560103E1ad958A6Ca43d49F954055340a"
-      ],
       "onChain": false,
       "listable": true,
       "metadata": {
