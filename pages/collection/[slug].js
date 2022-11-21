@@ -92,7 +92,9 @@ export const getServerSideProps = async ({ params, query }) => {
 
   if (collection.slug === 'founding-member') collection.id = 1;
   if (collection.slug === 'vip-founding-member') collection.id = 2;
-
+  if (collection.slug === 'weird-apes-club') collection.mergedAddresses = ['0x7D5f8F9560103E1ad958A6Ca43d49F954055340a'];
+  if (collection.slug === 'weird-apes-club-v1') collection.mergedWith = ['0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44'];
+  
   const activeDrop = appConfig('drops')
     .find((drop) => !!collection.address && caseInsensitiveCompare(collection.address, drop.address) && !drop.complete);
 
