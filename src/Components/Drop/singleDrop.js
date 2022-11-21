@@ -98,13 +98,13 @@ const SingleDrop = ({drop}) => {
   //   // eslint-disable-next-line
   // }, []);
 
-  useEffect(() => {
-    dispatch(fetchMemberInfo());
-    if (process.env.NODE_ENV === 'development') {
-      dispatch(fetchVipInfo());
-    }
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchMemberInfo());
+  //   if (process.env.NODE_ENV === 'development') {
+  //     dispatch(fetchVipInfo());
+  //   }
+  //   // eslint-disable-next-line
+  // }, []);
 
   const user = useSelector((state) => {
     return state.user;
@@ -177,59 +177,60 @@ const SingleDrop = ({drop}) => {
       }
     }
     try {
-      if (isFounderDrop(currentDrop.address)) {
-        setDropInfo(currentDrop, membership.founders.count);
-        calculateStatus(currentDrop, membership.founders.count, currentDrop.totalSupply);
-      } else if (isFounderVipDrop(currentDrop.address)) {
-        setDropInfo(currentDrop, membership.vips.count);
-        calculateStatus(currentDrop, membership.vips.count, currentDrop.totalSupply);
-      } else if (isMagBrewVikingsDrop(currentDrop.address)) {
-        let readContract = await new ethers.Contract(currentDrop.address, abi, readProvider);
-        const supply = await readContract.totalSupply();
-        setDropInfo(currentDrop, supply.toString());
-        const canMint = user.address ? await readContract.canMint(user.address) : 0;
-        setCanMintQuantity(canMint);
-        calculateStatus(currentDrop, supply, currentDrop.totalSupply);
-      } else if (isCyberCloneDrop(drop.address)) {
+      // if (isFounderDrop(currentDrop.address)) {
+      //   setDropInfo(currentDrop, membership.founders.count);
+      //   calculateStatus(currentDrop, membership.founders.count, currentDrop.totalSupply);
+      // } else if (isFounderVipDrop(currentDrop.address)) {
+      //   setDropInfo(currentDrop, membership.vips.count);
+      //   calculateStatus(currentDrop, membership.vips.count, currentDrop.totalSupply);
+      // } else
+      // if (isMagBrewVikingsDrop(currentDrop.address)) {
+      //   let readContract = await new ethers.Contract(currentDrop.address, abi, readProvider);
+      //   const supply = await readContract.totalSupply();
+      //   setDropInfo(currentDrop, supply.toString());
+      //   const canMint = user.address ? await readContract.canMint(user.address) : 0;
+      //   setCanMintQuantity(canMint);
+      //   calculateStatus(currentDrop, supply, currentDrop.totalSupply);
+      // } else if (isCyberCloneDrop(drop.address)) {
+      //   let readContract = await new ethers.Contract(currentDrop.address, abi, readProvider);
+      //   const infos = await readContract.getInfo();
+      //   const canMint = user.address ? await readContract.canMint(user.address) : 0;
+      //   setDropInfoFromContract(infos, canMint);
+      //   setMaxSupply(1000);
+      //   calculateStatus(currentDrop, infos.totalSupply, currentDrop.totalSupply);
+      // } else if (isCarkayousCollection(drop.address)) {
+      //   let readContract = await new ethers.Contract(currentDrop.address, abi, readProvider);
+      //   const infos = await readContract.getInfo();
+      //   const canMint = user.address ? await readContract.canMint(user.address) : 0;
+      //   setDropInfoFromContract(infos, canMint);
+      //   setMaxSupply(2222);
+      //   calculateStatus(currentDrop, infos.totalSupply, currentDrop.totalSupply);
+      // } else if (isSscCollection(drop.address)) {
+      //   let readContract = await new ethers.Contract(currentDrop.address, abi, readProvider);
+      //   const infos = await readContract.getInfo();
+      //   const canMint = user.address ? await readContract.canMint(user.address) : 0;
+      //   setDropInfoFromContract(infos, canMint);
+      //   setMemberCost(600);
+      //   setWhitelistCost(600);
+      //   setMaxSupply(1888);
+      //   calculateStatus(currentDrop, infos.totalSupply, currentDrop.totalSupply);
+      // } else {
+      if (currentDrop.address && (isUsingDefaultDropAbi(currentDrop.abi) || isUsingAbiFile(currentDrop.abi))) {
         let readContract = await new ethers.Contract(currentDrop.address, abi, readProvider);
         const infos = await readContract.getInfo();
         const canMint = user.address ? await readContract.canMint(user.address) : 0;
         setDropInfoFromContract(infos, canMint);
-        setMaxSupply(1000);
-        calculateStatus(currentDrop, infos.totalSupply, currentDrop.totalSupply);
-      } else if (isCarkayousCollection(drop.address)) {
-        let readContract = await new ethers.Contract(currentDrop.address, abi, readProvider);
-        const infos = await readContract.getInfo();
-        const canMint = user.address ? await readContract.canMint(user.address) : 0;
-        setDropInfoFromContract(infos, canMint);
-        setMaxSupply(2222);
-        calculateStatus(currentDrop, infos.totalSupply, currentDrop.totalSupply);
-      } else if (isSscCollection(drop.address)) {
-        let readContract = await new ethers.Contract(currentDrop.address, abi, readProvider);
-        const infos = await readContract.getInfo();
-        const canMint = user.address ? await readContract.canMint(user.address) : 0;
-        setDropInfoFromContract(infos, canMint);
-        setMemberCost(600);
-        setWhitelistCost(600);
-        setMaxSupply(1888);
-        calculateStatus(currentDrop, infos.totalSupply, currentDrop.totalSupply);
+        calculateStatus(currentDrop, infos.totalSupply, infos.maxSupply);
       } else {
-        if (currentDrop.address && (isUsingDefaultDropAbi(currentDrop.abi) || isUsingAbiFile(currentDrop.abi))) {
-          let readContract = await new ethers.Contract(currentDrop.address, abi, readProvider);
-          const infos = await readContract.getInfo();
-          const canMint = user.address ? await readContract.canMint(user.address) : 0;
-          setDropInfoFromContract(infos, canMint);
-          calculateStatus(currentDrop, infos.totalSupply, infos.maxSupply);
-        } else {
-          let readContract = await new ethers.Contract(currentDrop.address, abi, readProvider);
-          const currentSupply = await readContract.totalSupply();
-          setDropInfo(currentDrop, currentSupply);
-          calculateStatus(currentDrop, currentSupply, currentDrop.totalSupply);
-        }
-        if (drop.specialWhitelistCost) {
-          setSpecialWhitelist(drop.specialWhitelistCost);
-        }
+        let readContract = await new ethers.Contract(currentDrop.address, abi, readProvider);
+        const currentSupply = await readContract.totalSupply();
+        setDropInfo(currentDrop, currentSupply);
+        calculateStatus(currentDrop, currentSupply, currentDrop.totalSupply);
       }
+      if (drop.specialWhitelistCost) {
+        setSpecialWhitelist(drop.specialWhitelistCost);
+      }
+      // }
     } catch (error) {
       console.log(error);
       Sentry.captureException(error);

@@ -102,7 +102,7 @@ const userSlice = createSlice({
   reducers: {
     accountChanged(state, action) {
       state.balance = action.payload.balance;
-      state.code = action.payload.code;
+      // state.code = action.payload.code;
       state.rewards = action.payload.rewards;
       state.isMember = action.payload.isMember;
       state.vipCount = action.payload.vipCount;
@@ -534,7 +534,7 @@ export const connectAccount =
         window.location.reload();
       });
 
-      let code;
+      // let code;
       let balance;
       let rewards;
       let ownedFounder = 0;
@@ -548,8 +548,8 @@ export const connectAccount =
 
       if (signer && correctChain) {
         contractService = new UserContractService(signer);
-        const rawCode = await contractService.membership.codes(address);
-        code = ethers.utils.parseBytes32String(rawCode);
+        // const rawCode = await contractService.membership.codes(address);
+        // code = ethers.utils.parseBytes32String(rawCode);
         rewards = ethers.utils.formatEther(await contractService.membership.payments(address));
         ownedFounder = await contractService.membership.balanceOf(address, 1);
         ownedVip = await contractService.membership.balanceOf(address, 2);
@@ -570,7 +570,7 @@ export const connectAccount =
           web3modal: web3Modal,
           needsOnboard: false,
           correctChain: correctChain,
-          code: code,
+          // code: code,
           balance: balance,
           rewards: rewards,
           isMember: ownedVip > 0 || ownedFounder > 0 || stakeCount > 0,
