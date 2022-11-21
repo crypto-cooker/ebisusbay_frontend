@@ -252,7 +252,7 @@ export const getServerSideProps = async ({ params, query }) => {
     }
     return c;
   });
-  
+
   return {
     props: {
       brand: brand,

@@ -266,6 +266,7 @@ export const getStats =
   (collection, id = null, extraAddresses = null) =>
   async (dispatch) => {
     try {
+      const mergedAddresses = extraAddresses ? [collection.address, ...extraAddresses] : collection.address;
       var response;
       if (id != null) {
         // const newStats = await getCollections({address: mergedAddresses});
@@ -282,19 +283,19 @@ export const getStats =
         //     }
         //   ]
         // };
-        response = await getCollectionMetadata(collection.address, null, {
+        response = await getCollectionMetadata(mergedAddresses, null, {
           type: 'tokenId',
           value: id,
         });
-      } else if (Array.isArray(collection.address)) {
-        response = await getCollectionMetadata(collection.address);
+      } else if (Array.isArray(mergedAddresses)) {
+        response = await getCollectionMetadata(mergedAddresses);
       } else {
-        const newStats = await getCollections({address: collection.address});
+        const newStats = await getCollections({address: mergedAddresses});
         const sCollection = newStats.data.collections[0];
         response = {
           collections: [
             {
-              collection: collection.address,
+              collection: mergedAddresses,
               totalSupply: sCollection.totalSupply,
               totalVolume: sCollection.stats.total.volume,
               numberOfSales: sCollection.stats.total.complete,
