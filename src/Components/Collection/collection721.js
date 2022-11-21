@@ -128,7 +128,7 @@ const Collection721 = ({ collection, query, activeDrop = null}) => {
 
   useEffect(() => {
     async function asyncFunc() {
-      dispatch(getStats(collection));
+      dispatch(getStats(collection, null, collection.mergedAddresses));
     }
     asyncFunc();
     // eslint-disable-next-line
