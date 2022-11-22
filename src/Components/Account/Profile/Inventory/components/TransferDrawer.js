@@ -67,6 +67,15 @@ export const TransferDrawer = () => {
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       resetDrawer();
       dispatch(setRefetchNfts(true))
+    } catch (error) {
+      if (error.data) {
+        toast.error(error.data.message);
+      } else if (error.message) {
+        toast.error(error.message);
+      } else {
+        console.log(error);
+        toast.error('Unknown Error');
+      }
     } finally {
       setExecutingTransfer(false);
     }

@@ -43,8 +43,9 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
 
   // Approvals
   const extras = useSelector((state) => state.batchListing.extras[item.nft.address.toLowerCase()] ?? {});
-  const approvalStatus = extras.approval;
+  const { approval: approvalStatus, canList } = extras;
   const [executingApproval, setExecutingApproval] = useState(false);
+  const [initializing, setInitializing] = useState(false);
 
   const handleRemoveItem = () => {
     dispatch(removeFromBatchListingCart(item.nft));
@@ -94,20 +95,25 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
 
   useEffect(() => {
     async function func() {
-      if (!extras[item.nft.address.toLowerCase()]) {
-        const extras = { address: item.nft.address };
+      try {
+        setInitializing(true);
+        if (!extras[item.nft.address.toLowerCase()]) {
+          const extras = { address: item.nft.address };
 
-        extras.approval = await checkApproval();
+          extras.approval = await checkApproval();
 
-        const metadata = await getCollectionMetadata(item.nft.address);
-        if (metadata.collections.length > 0) {
-          extras.floorPrice = metadata.collections[0].floorPrice;
+          const metadata = await getCollectionMetadata(item.nft.address);
+          if (metadata.collections.length > 0) {
+            extras.floorPrice = metadata.collections[0].floorPrice;
+          }
+
+          extras.royalty = await collectionRoyaltyPercent(item.nft.address, item.nft.id);
+          extras.canList = item.nft.listable && !item.nft.isStaked;
+
+          dispatch(setExtras(extras));
         }
-
-        extras.royalty = await collectionRoyaltyPercent(item.nft.address, item.nft.id);
-        extras.canList = item.nft.listable && !item.nft.isStaked;
-
-        dispatch(setExtras(extras));
+      } finally {
+        setInitializing(false);
       }
     }
     func();
@@ -138,8 +144,8 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
             <Link href={`/collection/${item.nft.address}/${item.nft.id}`}>
               <Text fontWeight="bold" noOfLines={1} cursor="pointer">{item.nft.name}</Text>
             </Link>
-            <Skeleton isLoaded={typeof approvalStatus === 'boolean'}>
-              {approvalStatus && extras.canList ? (
+            <Skeleton isLoaded={!initializing}>
+              {approvalStatus && canList ? (
                 <FormControl isInvalid={invalid}>
                   <Stack direction="row">
                     <Input
@@ -178,7 +184,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
                   </Stack>
                   <FormErrorMessage fontSize='xs' mt={1}>Enter a valid number.</FormErrorMessage>
                 </FormControl>
-              ) : !extras.canList ? (
+              ) : !canList ? (
                 <Box>
                   <Badge variant='outline' colorScheme='red'>
                     Not Listable
