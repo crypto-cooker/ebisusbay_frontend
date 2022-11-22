@@ -60,21 +60,26 @@ const Collection = ({ ssrCollection, query, redirect, activeDrop }) => {
 
 export const getServerSideProps = async ({ params, query }) => {
   const slug = params?.slug;
-  const queryKey = isAddress(slug) ? 'address' : 'slug';
-  const res = await fetch(`${config.urls.api}collectioninfo?${queryKey}=${slug}`);
 
-  let collection;
-  if (res.ok) {
-    const json = await res.json();
-    collection = json.collections[0];
-  }
+  // @todo fix with autolistings
+  // const queryKey = isAddress(slug) ? 'address' : 'slug';
+  // const res = await fetch(`${config.urls.api}collectioninfo?${queryKey}=${slug}`);
+  //
+  // let collection;
+  // if (res.ok) {
+  //   const json = await res.json();
+  //   collection = json.collections[0];
+  // }
+  //
+  // // might only be needed for vip collection
+  // if (!collection) {
+  //   console.log('collection not found for slug', slug);
+  //   collection = appConfig('collections')
+  //     .find((c) => caseInsensitiveCompare(c.slug, slug) || caseInsensitiveCompare(c.address, slug));
+  // }
 
-  // might only be needed for vip collection
-  if (!collection) {
-    console.log('collection not found for slug', slug);
-    collection = appConfig('collections')
-      .find((c) => caseInsensitiveCompare(c.slug, slug) || caseInsensitiveCompare(c.address, slug));
-  }
+  const collection = appConfig('collections')
+    .find((c) => caseInsensitiveCompare(c.slug, slug) || caseInsensitiveCompare(c.address, slug));
 
   if (!collection) {
     return {
