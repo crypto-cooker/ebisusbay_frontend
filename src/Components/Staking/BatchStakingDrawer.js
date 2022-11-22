@@ -63,21 +63,21 @@ export const BatchStakingDrawer = ({onClose, ...gridProps}) => {
       const gasPrice = parseUnits('5000', 'gwei');
       let tx;
       if (ryoshiStakingCart.context === 'stake') {
-        const gasEstimate = await user.stakeContract.estimateGas.stakeRyoshi(nftAddresses);
+        const gasEstimate = await user.contractService.staking.estimateGas.stakeRyoshi(nftAddresses);
         const gasLimit = gasEstimate.mul(2);
         let extra = {
           gasPrice,
           gasLimit
         };
-        tx = await user.stakeContract.stakeRyoshi(nftAddresses, extra);
+        tx = await user.contractService.staking.stakeRyoshi(nftAddresses, extra);
       } else {
-        const gasEstimate = await user.stakeContract.estimateGas.unstakeRyoshi(nftAddresses);
+        const gasEstimate = await user.contractService.staking.estimateGas.unstakeRyoshi(nftAddresses);
         const gasLimit = gasEstimate.mul(2);
         let extra = {
           gasPrice,
           gasLimit
         };
-        tx = await user.stakeContract.unstakeRyoshi(nftAddresses, extra);
+        tx = await user.contractService.staking.unstakeRyoshi(nftAddresses, extra);
       }
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
