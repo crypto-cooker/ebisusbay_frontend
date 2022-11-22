@@ -1,13 +1,14 @@
 import React, { memo, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { init, fetchListings, sortListings, searchListings } from '@src/GlobalState/marketplaceSlice';
+import { init, fetchListings, filterListings, sortListings, searchListings } from '../../GlobalState/marketplaceSlice';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Spinner, Table } from 'react-bootstrap';
 import { SortOption } from '../Models/sort-option.model';
-import { debounce, shortAddress, timeSince } from '@src/utils';
+import { debounce, shortAddress, timeSince } from '../../utils';
 import Link from 'next/link';
 import { ethers } from 'ethers';
 import TopFilterBar from './TopFilterBar';
+import { marketPlaceCollectionFilterOptions } from './constants/filter-options';
 import { sortOptions } from './constants/sort-options';
 import {MarketFilters} from "../Models/market-filters.model";
 
@@ -19,6 +20,9 @@ const SalesCollection = ({
   cacheName = null,
 }) => {
   const dispatch = useDispatch();
+
+  // const mobileListBreakpoint = 768;
+  // const [tableMobileView, setTableMobileView] = useState(window.innerWidth > mobileListBreakpoint);
 
   const listings = useSelector((state) => {
     return state.marketplace.listings;
@@ -79,8 +83,11 @@ const SalesCollection = ({
     }
   };
 
-  const selectDefaultSearchValue = marketplace.query.filter.search ?? '';
+  const selectDefaultFilterValue = marketplace.query.filter.collection ?? MarketFilters.default();
   const selectDefaultSortValue = marketplace.query.sort ?? defaultSort();
+  const selectDefaultSearchValue = marketplace.query.filter.search ?? '';
+
+  const selectFilterOptions = marketPlaceCollectionFilterOptions;
   const selectSortOptions = useSelector((state) => {
     return sortOptions
       .filter((s) => state.marketplace.hasRank || s.key !== 'rank')
@@ -91,6 +98,14 @@ const SalesCollection = ({
         return o;
       });
   });
+
+  const onFilterChange = useCallback(
+    (filterOption) => {
+      dispatch(filterListings(filterOption, cacheName, true));
+    },
+    // eslint-disable-next-line
+    [dispatch]
+  );
 
   const onSortChange = useCallback(
     (sortOption) => {
@@ -113,11 +128,16 @@ const SalesCollection = ({
       <div className="row">
         <div className="col-lg-12">
           <TopFilterBar
+            showFilter={!collectionId}
             showSort={true}
             sortOptions={[SortOption.default(), ...selectSortOptions]}
+            filterOptions={[MarketFilters.default(), ...selectFilterOptions]}
             defaultSortValue={selectDefaultSortValue}
+            defaultFilterValue={selectDefaultFilterValue}
             defaultSearchValue={selectDefaultSearchValue}
+            filterPlaceHolder="Filter Collection..."
             sortPlaceHolder="Sort Listings..."
+            onFilterChange={onFilterChange}
             onSortChange={onSortChange}
             onSearch={onSearch}
           />
