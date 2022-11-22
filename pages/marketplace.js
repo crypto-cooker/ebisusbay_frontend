@@ -4,11 +4,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import ListingCollection from '../src/Components/components/ListingCollection';
 import Footer from '../src/Components/components/Footer';
 import TopFilterBar from '../src/Components/components/TopFilterBar';
-import { sortOptions } from '@src/Components/components/constants/sort-options';
+import { sortOptions } from '../src/Components/components/constants/sort-options';
+import { marketPlaceCollectionFilterOptions } from '../src/Components/components/constants/filter-options';
 import SalesCollection from '../src/Components/components/SalesCollection';
-import { getMarketData, searchListings, sortListings, filterListingsByVerification } from '@src/GlobalState/marketplaceSlice';
-import { debounce, siPrefixedNumber } from '@src/utils';
-import { SortOption } from '@src/Components/Models/sort-option.model';
+import { filterListings, getMarketData, searchListings, sortListings, filterListingsByVerification } from '../src/GlobalState/marketplaceSlice';
+import { debounce, siPrefixedNumber } from '../src/utils';
+import { SortOption } from '../src/Components/Models/sort-option.model';
+import { MarketFilterCollection } from "../src/Components/Models/market-filters.model";
 import PageHead from "../src/Components/Head/PageHead";
 import {Heading} from "@chakra-ui/react";
 
@@ -41,8 +43,11 @@ const Marketplace = () => {
     // eslint-disable-next-line
   }, []);
 
-  const selectDefaultSearchValue = marketplace.query.filter.search ?? '';
+  const selectDefaultFilterValue = marketplace.query.filter.collection ?? MarketFilterCollection.default();
   const selectDefaultSortValue = marketplace.query.sort ?? SortOption.default();
+  const selectDefaultSearchValue = marketplace.query.filter.search ?? '';
+
+  const selectFilterOptions = marketPlaceCollectionFilterOptions;
   const selectSortOptions = useSelector((state) => {
     if (state.marketplace.hasRank) {
       return sortOptions;
@@ -56,6 +61,13 @@ const Marketplace = () => {
   useEffect(() => {
     dispatch(filterListingsByVerification(false, onlyVerified ? 1 : null));
   }, [onlyVerified])
+
+  const onFilterChange = useCallback(
+    (filterOption) => {
+      dispatch(filterListings(filterOption, cacheName));
+    },
+    [dispatch]
+  );
 
   const onSortChange = useCallback(
     (sortOption) => {
@@ -127,12 +139,17 @@ const Marketplace = () => {
                 <div className="row">
                   <div className="col-lg-12">
                     <TopFilterBar
+                      showFilter={true}
                       showSort={true}
                       showSwitch={true}
                       sortOptions={[SortOption.default(), ...selectSortOptions]}
+                      filterOptions={[{ value: null, label: 'All' }, ...selectFilterOptions]}
                       defaultSortValue={selectDefaultSortValue}
+                      defaultFilterValue={selectDefaultFilterValue}
                       defaultSearchValue={selectDefaultSearchValue}
+                      filterPlaceHolder="Filter Collection..."
                       sortPlaceHolder="Sort Listings..."
+                      onFilterChange={onFilterChange}
                       onSortChange={onSortChange}
                       onSearch={onSearch}
                       onlyVerified={onlyVerified}
