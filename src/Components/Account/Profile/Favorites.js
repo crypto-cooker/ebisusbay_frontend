@@ -4,6 +4,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import {Spinner} from "react-bootstrap";
 import NftCard from "@src/Components/components/NftCard";
 import {useQuery} from "@tanstack/react-query";
+import {isNftBlacklisted} from "@src/utils";
 
 export default function Favorites({ address }) {
 
@@ -47,9 +48,9 @@ export default function Favorites({ address }) {
                 key={`${nft.address}-${nft.id}`}
               >
                 <NftCard
-                  listing={nft}
+                  nft={nft}
                   imgClass="collection"
-                  collection={nft.collection}
+                  canBuy={!isNftBlacklisted(nft.address, nft.id) && nft.collection.listable}
                 />
               </div>
             ))}

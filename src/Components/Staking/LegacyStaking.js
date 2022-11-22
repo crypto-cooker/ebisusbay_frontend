@@ -17,11 +17,13 @@ import {
 import {hostedImage} from "@src/helpers/image";
 import {AnyMedia} from "../components/AnyMedia";
 import {Box, Heading, HStack, Link, Tag, Text} from "@chakra-ui/react";
+import {appConfig} from "@src/Config";
 
 const txExtras = {
   gasPrice: ethers.utils.parseUnits('5000', 'gwei'),
 };
-
+const config = appConfig();
+const stakingAddress = config.contracts.stake
 const LegacyStaking = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -33,9 +35,9 @@ const LegacyStaking = () => {
 
   // Allow exception to be thrown for other functions to catch it
   const setApprovalForAll = async () => {
-    const isApproved = await user.membershipContract.isApprovedForAll(user.stakeContract.address, user.address);
+    const isApproved = await user.membershipContract.isApprovedForAll(config.contracts.stake, user.address);
     if (!isApproved) {
-      let tx = await user.membershipContract.setApprovalForAll(user.stakeContract.address, true, txExtras);
+      let tx = await user.membershipContract.setApprovalForAll(config.contracts.stake, true, txExtras);
       await tx.wait();
     }
   };
@@ -77,13 +79,13 @@ const LegacyStaking = () => {
   // };
 
   const unStake = async (quantity) => {
-    if (!user.stakeContract || quantity <= 0) return;
+    if (!user.contractService || quantity <= 0) return;
     if (quantity > stakeCount) {
       toast.error('You do not have enough available VIPs');
       return;
     }
     try {
-      const tx = await user.stakeContract.unstake(quantity, { gasPrice: 5000000000000 });
+      const tx = await user.contractService.staking.unstake(quantity, { gasPrice: 5000000000000 });
       const receipt = await tx.wait();
       dispatch(setStakeCount(stakeCount - quantity));
       dispatch(setVIPCount(vipCount + quantity));
@@ -97,7 +99,7 @@ const LegacyStaking = () => {
   useEffect(() => {
     async function checkApproval() {
       try {
-        const isApproved = await user.membershipContract.isApprovedForAll(user.address, user.stakeContract.address);
+        const isApproved = await user.membershipContract.isApprovedForAll(user.address, config.contracts.stake);
         setIsApproved(isApproved);
       } catch (e) {
         console.log(e);

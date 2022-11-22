@@ -63,7 +63,7 @@ const MyNftCard = ({
     if (batchListingCart.isDrawerOpen) {
       if (isInBatchListingCart()) {
         onRemoveFromBatchListingButtonPressed();
-      } else if (canSell || canUpdate) {
+      } else if (canTransfer) {
         onAddToBatchListingButtonPressed();
       } else {
         toast.error('Item is currently not listable')
@@ -89,13 +89,13 @@ const MyNftCard = ({
         label: 'Sell',
         handleClick: onSellButtonPressed,
       });
-      options.push({
-        icon: faTags,
-        label: 'Sell in batch',
-        handleClick: onAddToBatchListingButtonPressed,
-      });
     }
     if (canTransfer) {
+      options.push({
+        icon: faTags,
+        label: 'Add to batch',
+        handleClick: onAddToBatchListingButtonPressed,
+      });
       options.push({
         icon: faExchangeAlt,
         label: 'Transfer',
@@ -164,7 +164,7 @@ const MyNftCard = ({
                 >
                   <FontAwesomeIcon icon={faCheckCircle} size="xl" style={{background:'dodgerblue', color:'white'}} className="rounded-circle"/>
                 </Box>
-              ) : (canSell || canUpdate) && (
+              ) : (canTransfer) && (
                 <Box
                   _groupHover={{display:'inline', transition:'0.3s ease', opacity: 1}}
                   transition="0.3s ease"
@@ -177,7 +177,7 @@ const MyNftCard = ({
                   p={2}
                   cursor="pointer"
                   onClick={() => {
-                    if (canSell || canUpdate) {
+                    if (canTransfer) {
                       onAddToBatchListingButtonPressed()
                     }
                   }}

@@ -1,7 +1,6 @@
 import React, { memo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { ethers } from 'ethers';
 import MetaMaskOnboarding from '@metamask/onboarding';
@@ -12,7 +11,6 @@ import {
   appUrl,
   createSuccessfulAddCartContent,
   isNftBlacklisted,
-  openWithCronosExplorer,
   round,
   siPrefixedNumber
 } from '@src/utils';
@@ -36,7 +34,6 @@ import {MenuPopup} from "@src/Components/components/chakra-components";
 import {addToCart, openCart, removeFromCart} from "@src/GlobalState/cartSlice";
 import {toast} from "react-toastify";
 import {refreshMetadata} from "@src/GlobalState/nftSlice";
-import {appConfig} from "@src/Config";
 import {specialImageTransform} from "@src/hacks";
 
 const Watermarked = styled.div`
@@ -63,9 +60,8 @@ const MakeBuy = styled.div`
   align-items: center;
 `;
 
-const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, collection, canBuy = true }) => {
-  const nftUrl = appUrl(`/collection/${collection.slug}/${nft.id}`);
-  const history = useRouter();
+const NftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false, canBuy = true }) => {
+  const nftUrl = appUrl(`/collection/${nft.address}/${nft.id}`);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const cart = useSelector((state) => state.cart);
@@ -83,7 +79,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, collection
       handleClick: handleMakeOffer,
     });
 
-    if (nft.market && collection.listable) {
+    if (nft.market && canBuy) {
       if (isInCart) {
         options.push({
           icon: faShoppingBag,
@@ -211,7 +207,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, collection
                       image={nftCardUrl(nft.address, nft.image)}
                       className={`card-img-top ${imgClass}`}
                       title={nft.name}
-                      url={`/collection/${collection.slug}/${nft.id}`}
+                      url={`/collection/${nft.address}/${nft.id}`}
                       width={440}
                       height={440}
                       video={nft.video ?? nft.animation_url}
@@ -223,7 +219,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, collection
                     image={nftCardUrl(nft.address, nft.image)}
                     className={`card-img-top ${imgClass}`}
                     title={nft.name}
-                    url={`/collection/${collection.slug}/${nft.id}`}
+                    url={`/collection/${nft.address}/${nft.id}`}
                     width={440}
                     height={440}
                     video={nft.video ?? nft.animation_url}
@@ -234,14 +230,14 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, collection
             </div>
             {nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{nft.rank}</div>}
             <div className="d-flex flex-column justify-content-between p-2 pb-1">
-              <Link href={`/collection/${collection.slug}/${nft.id}`}>
+              <Link href={`/collection/${nft.address}/${nft.id}`}>
                 <a>
                   <Heading as="h6" size="sm" className="card-title mt-auto">{nft.name}</Heading>
                 </a>
               </Link>
               {getIsNftListed() && (
                 <MakeBuy>
-                  {collection.multiToken && <div>Floor:</div>}
+                  {is1155 && <div>Floor:</div>}
                   <div className="d-flex">
                     <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
                     <span className="ms-1">
@@ -263,7 +259,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, collection
                     _groupHover={{visibility:'visible', color:lightTheme.textColor1}}
                     visibility="hidden"
                   >
-                    {nft.market?.price && collection.listable ? (
+                    {nft.market?.price && canBuy ? (
                       <>
                         {isInCart ? (
                           <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={handleRemoveFromCart}>Remove From Cart</Text>
@@ -287,8 +283,8 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, collection
         <MakeOfferDialog
           isOpen={openMakeOfferDialog}
           onClose={() => setOpenMakeOfferDialog(false)}
-          nft={nft}
-          collection={collection}
+          initialNft={nft}
+          nftAddress={nft.address ?? nft.nftAddress}
         />
       )}
     </>

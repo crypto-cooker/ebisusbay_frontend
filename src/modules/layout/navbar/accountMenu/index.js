@@ -6,7 +6,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBolt,
   faUser,
-  faEdit, faCoins, faCopy, faHeart, faDollarSign, faWallet, faSearch, faHand, faCircleInfo
+  faEdit,
+  faCoins,
+  faCopy,
+  faHeart,
+  faDollarSign,
+  faWallet,
+  faSearch,
+  faHand,
+  faArrowRightArrowLeft, faMoon, faSun
 } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import MetaMaskOnboarding from '@metamask/onboarding';
@@ -37,7 +45,7 @@ import {ImageKitService} from "@src/helpers/image";
 import classnames from "classnames";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import Button from "@src/Components/components/Button";
-import {Box, Flex, Heading, Link, Spacer, Text, Tooltip, useClipboard, VStack} from "@chakra-ui/react";
+import {Box, Flex, Heading, Link, Spacer, Text, Tooltip, useClipboard, useColorMode, VStack} from "@chakra-ui/react";
 import Image from "next/image";
 import {useQuery} from "@tanstack/react-query";
 
@@ -58,6 +66,7 @@ const Index = function () {
   const dispatch = useDispatch();
   const history = useRouter();
 
+  const { colorMode, setColorMode } = useColorMode();
   const windowSize = useWindowSize();
   const [showMenu, setShowMenu] = useState(false);
   const walletAddress = useSelector((state) => {
@@ -111,8 +120,8 @@ const Index = function () {
   useInterval(() => {
     async function func() {
       if (user && !user.connectingWallet && user.provider) {
-        const sales = ethers.utils.formatEther(await user.marketContract.payments(walletAddress));
-        const stakingRewards = ethers.utils.formatEther(await user.stakeContract.getReward(walletAddress));
+        const sales = ethers.utils.formatEther(await user.contractService.market.payments(walletAddress));
+        const stakingRewards = ethers.utils.formatEther(await user.contractService.staking.getReward(walletAddress));
         dispatch(
           balanceUpdated({
             marketBalance: sales || 0,
@@ -209,6 +218,12 @@ const Index = function () {
     }
   }, [user.address]);
 
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    dispatch(setTheme(newTheme));
+    setColorMode(newTheme);
+  };
+
   const SvgComponent = (props) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -232,25 +247,23 @@ const Index = function () {
   return (
     <div>
       {!walletAddress && (
-        <div className="connect-wal">
-          <NavLink onClick={connectWalletPressed}>Connect Wallet</NavLink>
+        <div className="de-menu-notification" onClick={connectWalletPressed} style={{background: '#218cff', marginLeft:'5px'}}>
+          <FontAwesomeIcon icon={faWallet} />
         </div>
       )}
       {walletAddress && !correctChain && !user.showWrongChainModal && (
-        <div className="connect-wal">
-          <NavLink onClick={onWrongChainModalChangeChain}>Switch network</NavLink>
+        <div className="de-menu-notification" onClick={onWrongChainModalChangeChain} style={{background: '#218cff', marginLeft:'5px'}}>
+          <FontAwesomeIcon icon={faArrowRightArrowLeft} />
         </div>
       )}
       {walletAddress && correctChain && (
-        <div id="de-click-menu-profile" className="de-menu-profile">
-          <span onClick={() => setShowMenu(!showMenu)}>
-            {user.profile.profilePicture ? (
-              <img src={ImageKitService.buildAvatarUrl(user.profile.profilePicture)} alt={user.profile.username} />
-            ) : (
-              <Blockies seed={user.address} size={9} scale={4} style={{width:'10px'}}/>
-            )}
-          </span>
-        </div>
+        <Box className="de-menu-profile" onClick={() => setShowMenu(!showMenu)}>
+          {user.profile.profilePicture ? (
+            <img src={ImageKitService.buildAvatarUrl(user.profile.profilePicture)} alt={user.profile.username} />
+          ) : (
+            <Blockies seed={user.address} size={9} scale={4} style={{width:'10px'}}/>
+          )}
+        </Box>
       )}
 
       <StyledModal show={user.showWrongChainModal} onHide={onWrongChainModalClose}>
@@ -377,6 +390,16 @@ const Index = function () {
                         <FontAwesomeIcon icon={faHeart} />
                       </span>
                       <span className="ms-2">Favorites</span>
+                  </div>
+                </span>
+              </div>
+              <div className="col">
+                <span onClick={toggleTheme}>
+                  <div className={styles.col}>
+                      <span>
+                        <FontAwesomeIcon icon={theme === 'dark' ? faMoon : faSun} />
+                      </span>
+                      <span className="ms-2">Dark mode</span>
                   </div>
                 </span>
               </div>

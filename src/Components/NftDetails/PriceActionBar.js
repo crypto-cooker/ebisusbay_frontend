@@ -77,7 +77,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
   const runFunction = async (fn) => {
     if (user.address) {
       try {
-        const receipt = await fn(user.marketContract);
+        const receipt = await fn(user.contractService.market);
         dispatch(
           listingUpdated({
             listing: {

@@ -108,7 +108,6 @@ const ListingCollection = ({
                     watermark={
                       isMetapixelsCollection(listing.nftAddress) ? '/img/collections/metapixels/avatar.png' : null
                     }
-                    collection={findCollectionByAddress(listing.nftAddress, listing.nftId)}
                   />
                 )}
               </div>
@@ -132,7 +131,6 @@ const ListingCollection = ({
                     watermark={
                       isMetapixelsCollection(listing.nftAddress) ? '/img/collections/metapixels/avatar.png' : null
                     }
-                    collection={findCollectionByAddress(listing.nftAddress, listing.nftId)}
                   />
                 )}
               </div>

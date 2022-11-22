@@ -7,15 +7,19 @@ import Nft721 from '../../../src/Components/Collection/nft721';
 import {appConfig} from "@src/Config";
 import PageHead from "../../../src/Components/Head/PageHead";
 import {getNft} from "@src/core/api/endpoints/nft";
-const knownContracts = appConfig('collections')
+import { getCollections } from "@src/core/api/next/collectioninfo"
+
+const config = appConfig();
 
 const Nft = ({ slug, id, nft }) => {
   const [type, setType] = useState('721');
   const [collection, setCollection] = useState(null);
   const [initialized, setInitialized] = useState(false);
 
-  useEffect(() => {
-    let col = knownContracts.find((c) => c.slug === slug);
+  const getCollection = async() => {
+    const res = await getCollections({ slug });
+    const col = res.data?.collections?.[0];
+    
     if (col) {
       setCollection(col);
       setType(col.multiToken ? '1155' : '721');
@@ -28,6 +32,10 @@ const Nft = ({ slug, id, nft }) => {
       }
     }
     setInitialized(true);
+  }
+
+  useEffect(() => {    
+    getCollection();
   }, [slug, id]);
 
   const getTraits = (anNFT) => {
@@ -99,9 +107,13 @@ export const getServerSideProps = async ({ params }) => {
   const tokenId = params?.id;
   let collection;
   if (isAddress(slug)) {
-    collection = knownContracts.find((c) => c?.address.toLowerCase() === slug.toLowerCase());
+    const res = await fetch(`${config.urls.api}collectioninfo?address=${slug}`);
+    const json = await res.json();
+    collection = json.collections[0]
   } else {
-    collection = knownContracts.find((c) => c?.slug.toLowerCase() === slug.toLowerCase());
+    const res = await fetch(`${config.urls.api}collectioninfo?slug=${slug}`);
+    const json = await res.json();
+    collection = json.collections[0]
   }
 
   let nft;

@@ -157,6 +157,7 @@ export const configData = {
       offer: '0x8Dd84fb5d7f8A504BA2398243D768C604f8Daf5E',
       madAuction: '0x84356061d598A7bCE028dB6a37b14F84cf4A5905',
       slothtyRugsurance: '0xC54821941Bb036463bDB1eea781f9b29a7f98fAc',
+      bundle: '0x8522B1243c93f2fc8012bD21b86f48B4f482E3b6',
       cnsusd: '0x263818f9693548446A41ad7025923612b490CB0D'
     },
     tokens: {
@@ -240,14 +241,17 @@ export const isLocalEnv = () => {
 }
 
 export const featureFlags = {
-  [Features.AUCTION_OPTION_SALE]: false,
-  [Features.CMS_NOTIFICATIONS]: true,
-  [Features.CMS_FULL_PROFILES]: true,
-  [Features.GET_COLLECTION_NEW_ENDPOINT]: false,
-  [Features.CMS_COLLECTIONS]: false,
-  [Features.VERIFIED_SWITCH_COLLECTION]: false,
-  [Features.VERIFIED_SWITCH_MARKETPLACE]: false,
-  [Features.INFINITE_QUERY_COLLECTION]: false,
-  [Features.UNVERIFIED_WARNING]: false,
-  [Features.REPORT_COLLECTION]: false,
+  [Features.AUCTION_OPTION_SALE]: false,          // Auction listing option
+  [Features.CMS_NOTIFICATIONS]: true,             // Notifications
+  [Features.CMS_FULL_PROFILES]: true,             // User Profiles
+  [Features.GET_COLLECTION_NEW_ENDPOINT]: false,   // Paginated collections endpoint
+  [Features.CMS_COLLECTIONS]: false,               // Collection editing
+  [Features.VERIFIED_SWITCH_COLLECTION]: false,    // Filter verified collections
+  [Features.VERIFIED_SWITCH_MARKETPLACE]: false,   // Filter verified in marketplace
+  [Features.INFINITE_QUERY_COLLECTION]: false,     // Paginated collections endpoint
+  [Features.UNVERIFIED_WARNING]: false,            // Warning when buying from unverified collection
+  [Features.REPORT_COLLECTION]: false,             // Report button on collection page
+  [Features.NEW_CHAKRA_THEME]: false,             // Update theme
+  [Features.GLOBAL_SEARCH]: false,                // Global search bar
+  [Features.BUNDLES]: false,                      // Bundles
 }

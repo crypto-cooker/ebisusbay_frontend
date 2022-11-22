@@ -1,40 +1,41 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {getNftsForAddress2} from "@src/core/api";
+import React, { useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { getNftsForAddress2 } from "@src/core/api";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {Spinner} from "react-bootstrap";
+import { Spinner } from "react-bootstrap";
 import MyNftCard from "@src/Components/components/MyNftCard";
-import {caseInsensitiveCompare, findCollectionByAddress} from "@src/utils";
+import { caseInsensitiveCompare, findCollectionByAddress, isNftBlacklisted } from "@src/utils";
 import NftCard from "@src/Components/components/NftCard";
-import {appConfig} from "@src/Config";
-import {MyNftPageActions} from "@src/GlobalState/User";
+import NftBundleCard from "@src/Components/components/NftBundleCard";
+import { appConfig } from "@src/Config";
+import { MyNftPageActions } from "@src/GlobalState/User";
 import MyNftCancelDialog from "@src/Components/components/MyNftCancelDialog";
-import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
-import {useInfiniteQuery} from "@tanstack/react-query";
+import { getWalletOverview } from "@src/core/api/endpoints/walletoverview";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import MakeListingDialog from "@src/Components/MakeListing";
-import {CollectionFilter} from "@src/Components/Account/Profile/Inventory/CollectionFilter";
-import {MobileFilters} from "@src/Components/Account/Profile/Inventory/MobileFilters";
+import { CollectionFilter } from "@src/Components/Account/Profile/Inventory/CollectionFilter";
+import { MobileFilters } from "@src/Components/Account/Profile/Inventory/MobileFilters";
 import Button from "@src/Components/components/Button";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faAngleLeft, faFilter} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleLeft, faFilter } from "@fortawesome/free-solid-svg-icons";
 import TransferNftDialog from "@src/Components/Account/Profile/Dialogs/TransferNftDialog";
-import {addToBatchListingCart, removeFromBatchListingCart} from "@src/GlobalState/batchListingSlice";
-import {MobileBatchListing} from "@src/Components/Account/Profile/Inventory/MobileBatchListing";
-import {useBreakpointValue} from "@chakra-ui/react";
-
-const knownContracts = appConfig('collections');
+import { addToBatchListingCart, removeFromBatchListingCart, setRefetchNfts } from "@src/GlobalState/batchListingSlice";
+import { MobileBatchListing } from "@src/Components/Account/Profile/Inventory/MobileBatchListing";
+import { useBreakpointValue } from "@chakra-ui/react";
+import MyBundleCard from './Inventory/components/MyBundleCard';
 
 export default function Inventory({ address }) {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user);
+  const batchListingCart = useSelector((state) => state.batchListing);
 
   const [collections, setCollections] = useState([]);
   const [collectionFilter, setCollectionFilter] = useState([]);
   const [filtersVisible, setFiltersVisible] = useState(false);
   const useMobileMenu = useBreakpointValue(
-    {base: true, lg: false},
-    {fallback: 'lg'},
+    { base: true, lg: false },
+    { fallback: 'lg' },
   );
 
   const onFilterChange = (filterOption) => {
@@ -84,6 +85,11 @@ export default function Inventory({ address }) {
     func();
   }, [address]);
 
+  useEffect(() => {
+    if (batchListingCart.refetchNfts) refetch()
+    dispatch(setRefetchNfts(false))
+  }, [batchListingCart.refetchNfts]);
+
   const historyContent = useMemo(() => {
     return status === "loading" ? (
       <div className="col-lg-12 text-center">
@@ -96,46 +102,81 @@ export default function Inventory({ address }) {
     ) : (
       <>
         <div className="card-group row g-3">
-
           {data.pages.map((items, index) => (
             <React.Fragment key={index}>
               {items.map((nft, index) => {
-                const collection = knownContracts.find((c) => caseInsensitiveCompare(c.address, nft.address));
-                return (
-                  <div
-                    className={`d-item ${filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2'}  mb-4`}
-                    key={`${nft.address}-${nft.id}-${nft.listed}-${index}`}
-                  >
-                    {caseInsensitiveCompare(address, user.address) ? (
-                      <MyNftCard
-                        nft={nft}
-                        canTransfer={nft.canTransfer}
-                        canSell={nft.listable && !nft.listed && nft.canSell}
-                        isStaked={nft.isStaked}
-                        canCancel={nft.listed && nft.listingId}
-                        canUpdate={nft.listable && nft.listed}
-                        onTransferButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageTransferDialog(nft))}
-                        onSellButtonPressed={() => {
-                          dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
-                        }}
-                        onUpdateButtonPressed={() => {
-                          dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
-                        }}
-                        onCancelButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageCancelDialog(nft))}
-                        onAddToBatchListingButtonPressed={() => dispatch(addToBatchListingCart(nft))}
-                        onRemoveFromBatchListingButtonPressed={() => dispatch(removeFromBatchListingCart(nft))}
-                        newTab={true}
-                      />
-                    ) : collection && (
-                      <NftCard
-                        listing={nft}
-                        imgClass="collection"
-                        collection={collection}
-                      />
-                    )}
-                  </div>
-                )
+                if(nft.symbol && nft.symbol == 'Bundle'){
+                  return (
+                    <div
+                      className={`d-item ${filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2'}  mb-4`}
+                      key={`${nft.address}-${nft.id}-${index}`}
+                    >
+                      {caseInsensitiveCompare(address, user.address) ? (
+                        <MyBundleCard
+                          nft={nft}
+                          canTransfer={true}
+                          canSell={true}
+                          canCancel={true}
+                          canUpdate={true}
+                          onTransferButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageTransferDialog(nft))}
+                          onSellButtonPressed={() => {
+                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
+                          }}
+                          onUpdateButtonPressed={() => {
+                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
+                          }}
+                          onCancelButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageCancelDialog(nft))}
+                          onAddToBatchListingButtonPressed={() => dispatch(addToBatchListingCart(nft))}
+                          onRemoveFromBatchListingButtonPressed={() => dispatch(removeFromBatchListingCart(nft))}
+                          newTab={true}
+                        />
+                      ) : (
+                        <NftBundleCard 
+                          listing={nft}
+                          imgClass="collection"
+                        />
+                      )}
+                    </div>
+                  )
+                }
+                else{
+                  return (
+                    <div
+                      className={`d-item ${filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2'}  mb-4`}
+                      key={`${nft.address}-${nft.id}-${nft.listed}-${index}`}
+                    >
+                      {caseInsensitiveCompare(address, user.address) ? (
+                        <MyNftCard
+                          nft={nft}
+                          canTransfer={nft.canTransfer}
+                          canSell={nft.listable && !nft.listed && nft.canSell}
+                          isStaked={nft.isStaked}
+                          canCancel={nft.listed && nft.listingId}
+                          canUpdate={nft.listable && nft.listed}
+                          onTransferButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageTransferDialog(nft))}
+                          onSellButtonPressed={() => {
+                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
+                          }}
+                          onUpdateButtonPressed={() => {
+                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
+                          }}
+                          onCancelButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageCancelDialog(nft))}
+                          onAddToBatchListingButtonPressed={() => dispatch(addToBatchListingCart(nft))}
+                          onRemoveFromBatchListingButtonPressed={() => dispatch(removeFromBatchListingCart(nft))}
+                          newTab={true}
+                        />
+                      ) : (
+                        <NftCard
+                          nft={nft}
+                          imgClass="collection"
+                          canBuy={!isNftBlacklisted(nft.address, nft.id)}
+                        />
+                      )}
+                    </div>
+                  )
+                }
               })}
+              
             </React.Fragment>
           ))}
         </div>
@@ -152,7 +193,7 @@ export default function Inventory({ address }) {
       <div className="d-flex">
         {filtersVisible && !useMobileMenu && (
           <div className="m-0 p-0">
-            <div className="me-4 px-2" style={{width: 320}}>
+            <div className="me-4 px-2" style={{ width: 320 }}>
               <CollectionFilter
                 collections={collections}
                 currentFilter={collectionFilter}

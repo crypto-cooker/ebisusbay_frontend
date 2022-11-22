@@ -60,7 +60,6 @@ export const editCollectionFormFields = [
         isRequired: false,
         placeholder: 'Enter Discord ID',
         description: '',
-        addOn: '@',
       },
       {
         type: FormType.field,
@@ -79,6 +78,7 @@ export const editCollectionFormFields = [
         isRequired: false,
         placeholder: 'Enter Instagram Handle',
         description: '',
+        addOn: '@',
       },
       {
         type: FormType.field,
