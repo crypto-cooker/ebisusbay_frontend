@@ -618,7 +618,7 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
         return matchedContract && hasBalance;
       })
       .map(async (nft) => {
-        if(nft.symbol && nft.symbol == 'Bundle'){
+        if(nft.symbol && nft.symbol == 'Bundle' && nft.metadata?.nfts){
           return {
             address: nft.nftAddress,
             description: nft.metadata?.description,

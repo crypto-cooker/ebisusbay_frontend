@@ -202,13 +202,13 @@ const MyNftCard = ({
                 _groupHover={{ transform: 'scale(1.05)', transition: '0.3s ease' }}
                 transition="0.3s ease"
                 transform="scale(1.0)"
-                onClick={() => navigateTo(nftUrl)}
                 cursor="pointer"
               >
                 <AnyMedia image={nftCardUrl(nft.id, nft.image)}
                   title={nft.id}
-                  newTab={true}
+                  newTab={false}
                   className="card-img-top marketplace"
+                  url={`/bundle/${nft.id}`}
                   height={440}
                   width={440}
                   video={batchListingCart.nfts.length > 0 ? undefined : (nft.video ?? nft.animation_url)}

@@ -5,9 +5,7 @@ import { Flex, Center, Box } from "@chakra-ui/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, FreeMode, Thumbs } from "swiper";
 
-
 const ImageContainer = ({ nft }) => {
-
   const [currentIndex, setCurrentIndex] = useState(0)
   const sliderRef = useRef(null)
 
@@ -36,7 +34,7 @@ const ImageContainer = ({ nft }) => {
             </Center>
 
             {nft.nfts.map((nft) => (
-              <SwiperSlide>
+              <SwiperSlide key={nft.id}>
                 <Flex className='main-image' flexDir='column'>
                   <AnyMedia
                     image={specialImageTransform('0xe94ac1647bF99FE299B2aDcF53FcF57153C23Fe1', nft.image)}
@@ -54,7 +52,7 @@ const ImageContainer = ({ nft }) => {
         <Flex className='image-menu' padding='8px' >
           <Flex>
             {nft.nfts.map((nft, index) => (
-              <Box className={currentIndex === index ? 'active' : ''} w='72px' marginRight='16px' onClick={() => { selectImage(index) }}>
+              <Box key={nft.id} className={currentIndex === index ? 'active' : ''} w='72px' marginRight='16px' onClick={() => { selectImage(index) }}>
                 <AnyMedia
                   image={specialImageTransform(nft.address, nft.image)}
                   video={nft.video ?? nft.animation_url}
