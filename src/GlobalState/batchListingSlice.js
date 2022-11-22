@@ -84,17 +84,17 @@ const batchListingSlice = createSlice({
       });
     },
     setApproval: (state, action) => {
-      const extra = state.extras[action.payload.address] ?? {};
+      const extra = state.extras[action.payload.address.toLowerCase()] ?? {};
       extra.approval = action.payload.status;
       state.extras[action.payload.address.toLowerCase()] = extra;
     },
     setApprovalBundle: (state, action) => {
-      const extra = state.extras[action.payload.address] ?? {};
+      const extra = state.extras[action.payload.address.toLowerCase()] ?? {};
       extra.approval = action.payload.status;
       state.extrasBundle[action.payload.address.toLowerCase()] = extra;
     },
     setFloorPrice: (state, action) => {
-      const extra = state.extras[action.payload.address] ?? {};
+      const extra = state.extras[action.payload.address.toLowerCase()] ?? {};
       extra.floorPrice = action.payload.floorPrice;
       state.extras[action.payload.address.toLowerCase()] = extra;
     },

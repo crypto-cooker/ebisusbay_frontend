@@ -39,8 +39,9 @@ export const TransferDrawerItem = ({ item }) => {
 
   // Approvals
   const extras = useSelector((state) => state.batchListing.extras[item.nft.address.toLowerCase()] ?? {});
-  const approvalStatus = extras.approval;
+  const { approval: approvalStatus, canTransfer} = extras;
   const [executingApproval, setExecutingApproval] = useState(false);
+  const [initializing, setInitializing] = useState(false);
 
   const handleRemoveItem = () => {
     dispatch(removeFromBatchListingCart(item.nft));
@@ -76,13 +77,18 @@ export const TransferDrawerItem = ({ item }) => {
 
   useEffect(() => {
     async function func() {
-      if (!extras[item.nft.address.toLowerCase()]) {
-        const extras = { address: item.nft.address };
+      setInitializing(true);
+      try {
+        if (!extras[item.nft.address.toLowerCase()]) {
+          const extras = { address: item.nft.address };
 
-        extras.approval = await checkApproval();
-        extras.canTransfer = !item.nft.isStaked;
+          extras.approval = await checkApproval();
+          extras.canTransfer = !item.nft.isStaked;
 
-        dispatch(setExtras(extras));
+          dispatch(setExtras(extras));
+        }
+      } finally {
+        setInitializing(false);
       }
     }
     func();
@@ -113,10 +119,10 @@ export const TransferDrawerItem = ({ item }) => {
             <Link href={`/collection/${item.nft.address}/${item.nft.id}`}>
               <Text fontWeight="bold" noOfLines={1} cursor="pointer">{item.nft.name}</Text>
             </Link>
-            <Skeleton isLoaded={typeof approvalStatus === 'boolean'}>
-              {approvalStatus && extras.canTransfer ? (
+            <Skeleton isLoaded={!initializing}>
+              {approvalStatus && canTransfer ? (
                 <></>
-              ) : !extras.canTransfer ? (
+              ) : !canTransfer ? (
                 <Box>
                   <Badge variant='outline' colorScheme='red'>
                     Staked, Cannot Transfer
