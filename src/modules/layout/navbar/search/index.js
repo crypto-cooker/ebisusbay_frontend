@@ -13,13 +13,17 @@ import {search} from "@src/core/api/next/search";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
 import {ImageKitService} from "@src/helpers/image";
 import {commify} from "ethers/lib/utils";
-import {pluralize, round} from "@src/utils";
+import {caseInsensitiveCompare, pluralize, round} from "@src/utils";
 import {useRouter} from "next/router";
 import {SearchIcon} from "@chakra-ui/icons";
 import useDebounce from "@src/core/hooks/useDebounce";
+import {appConfig} from "@src/Config";
 
 const searchRegex = /^\w+([\s-_]\w+)*$/;
 const minChars = 3;
+
+// @todo remove for autolistings
+const knownContracts = appConfig('collections');
 
 const Search = () => {
   const router = useRouter();
@@ -37,11 +41,24 @@ const Search = () => {
   });
   const debouncedSearch = useDebounce(value, 500);
 
-  const { data, status, error, refetch } = useQuery(['Search', debouncedSearch], () =>
-    search(debouncedSearch),
+  const { data, status, error, refetch } = useQuery(
+    ['Search', debouncedSearch],
+    () => search(debouncedSearch),
     {
       enabled: !!debouncedSearch && debouncedSearch.length >= minChars,
-      refetchOnWindowFocus: false
+      refetchOnWindowFocus: false,
+      select: (d) => {
+        // console.log(d);
+        return d.data.collections
+          .filter((collection) =>{
+            let validTokenCount = true;
+            // if (collection.tokens) {
+            //   validTokenCount = collection.tokens.filter((t) => Object.keys(t).length > 1).length > 0;
+            // }
+            return knownContracts.find((c) => caseInsensitiveCompare(c.address, collection.address)) && validTokenCount;
+          })
+
+      }
     }
   );
 
@@ -67,6 +84,8 @@ const Search = () => {
     setValue('');
     router.push(`/collection/${collection.address}`);
   }, [onClose, router, setValue]);
+
+  // console.log('DATA', data);
 
   return (
     <Box position="relative" maxW="500px" ref={ref}>
@@ -107,19 +126,17 @@ const Search = () => {
             </Center>
           ) : (
             <>
-              {data.data.collections.length > 0 ? (
+              {data?.length > 0 ? (
                 <>
                   <Text textTransform="uppercase" color={headingColor}>Collections</Text>
                   <VStack>
-                    {data.data.collections.slice(0, 5).map((item) => (
+                    {data.slice(0, 5).map((item) => (
                       item.multiToken && item.tokens ? (
-                        Object.entries(item.tokens).map(([id, token]) => (
-                          <ResultCollection
-                            collection={token}
-                            floorPrice={item.stats.tokens[id].floor_price}
-                            onClick={handleCollectionClick}
-                          />
-                        ))
+                        <ResultCollection
+                          collection={item}
+                          floorPrice={item.stats.total.floorPrice}
+                          onClick={handleCollectionClick}
+                        />
                       ) : (
                         <ResultCollection
                           collection={item}
