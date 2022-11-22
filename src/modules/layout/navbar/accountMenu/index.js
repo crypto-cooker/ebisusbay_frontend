@@ -14,9 +14,7 @@ import {
   faWallet,
   faSearch,
   faHand,
-  faCircleInfo,
-  faArrowsLeftRight,
-  faArrowRightArrowLeft
+  faArrowRightArrowLeft, faMoon, faSun
 } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import MetaMaskOnboarding from '@metamask/onboarding';
@@ -47,7 +45,7 @@ import {ImageKitService} from "@src/helpers/image";
 import classnames from "classnames";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import Button from "@src/Components/components/Button";
-import {Box, Flex, Heading, Link, Spacer, Text, Tooltip, useClipboard, VStack} from "@chakra-ui/react";
+import {Box, Flex, Heading, Link, Spacer, Text, Tooltip, useClipboard, useColorMode, VStack} from "@chakra-ui/react";
 import Image from "next/image";
 import {useQuery} from "@tanstack/react-query";
 
@@ -68,6 +66,7 @@ const Index = function () {
   const dispatch = useDispatch();
   const history = useRouter();
 
+  const { colorMode, setColorMode } = useColorMode();
   const windowSize = useWindowSize();
   const [showMenu, setShowMenu] = useState(false);
   const walletAddress = useSelector((state) => {
@@ -218,6 +217,12 @@ const Index = function () {
       stuff();
     }
   }, [user.address]);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    dispatch(setTheme(newTheme));
+    setColorMode(newTheme);
+  };
 
   const SvgComponent = (props) => (
     <svg
@@ -385,6 +390,16 @@ const Index = function () {
                         <FontAwesomeIcon icon={faHeart} />
                       </span>
                       <span className="ms-2">Favorites</span>
+                  </div>
+                </span>
+              </div>
+              <div className="col">
+                <span onClick={toggleTheme}>
+                  <div className={styles.col}>
+                      <span>
+                        <FontAwesomeIcon icon={theme === 'dark' ? faMoon : faSun} />
+                      </span>
+                      <span className="ms-2">Dark mode</span>
                   </div>
                 </span>
               </div>
