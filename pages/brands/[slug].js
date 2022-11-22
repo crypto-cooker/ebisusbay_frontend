@@ -177,12 +177,14 @@ export const getServerSideProps = async ({ params, query }) => {
       position: key
     }
   });
-  brandKeyedAddresses.push(...brand.hidden.map((address, key) => {
-    return {
-      address: address.toLowerCase(),
-      position: (key + 100)
-    }
-  }));
+  if (brand.hidden) {
+    brandKeyedAddresses.push(...brand.hidden.map((address, key) => {
+      return {
+        address: address.toLowerCase(),
+        position: (key + 100)
+      }
+    }));
+  }
 
   const brandAddresses = brandKeyedAddresses.map((o) => o.address);
   const endpointService = new EndpointProxyService();
@@ -194,7 +196,7 @@ export const getServerSideProps = async ({ params, query }) => {
       c.position = brandKeyedAddresses.find((o) => caseInsensitiveCompare(o.address, c.address)).position;
       const drop = drops.find((d) => d.slug === c.slug);
       c.drop = drop ?? null;
-      c.hidden = brand.hidden.includes(c.address);
+      c.hidden = brand.hidden?.includes(c.address) ?? false;
 
       if (c.slug === 'founding-member') {
         const vip = c.tokens[2];
