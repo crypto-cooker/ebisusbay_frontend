@@ -10169,7 +10169,7 @@
         "maxSupply": 10000,
         "website": "https://crypto.com/nft/loaded-lions/",
         "twitter": "https://twitter.com/loadedlions_CDC",
-        "discord": "https://discord.gg/6BkA8TBvRZ",
+        "discord": "https://discord.gg/cryptocom",
         "instagram": "https://instagram.com/cryptocomnft",
         "categories": [
           "collectibles"
@@ -10198,6 +10198,7 @@
         "website": "https://crypto.com/nft/loaded-lions?tab=cyber+cubs/",
         "twitter": "https://twitter.com/loadedlions_cdc",
         "discord": "https://discord.gg/cryptocom",
+        "instagram": "https://instagram.com/cryptocomnft",
         "categories": [
           "collectibles"
         ]
@@ -15189,6 +15190,34 @@
         "verified": true,
         "doxx": false,
         "kyc": true
+      }
+    },
+    {
+      "name": "Match Ready Lions",
+      "slug": "match-ready-lions",
+      "multiToken": false,
+      "address": "0xcCEf054E827A5e867194aD2cfBf8A83545D00cBF",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "As an official sponsor of FIFA World Cup Qatar 2022™ and to celebrate the first anniversary of the Loaded Lions, we have a special gift prepared for all Mane Netizens.\n\nThese limited edition NFTs form a follow-up collection for the Loaded Lions, consisting of 10,000 \"Match Ready Lion\" collectibles. Each Match Ready Lion showcases your Loaded Lion rocking a special FIFA World Cup Qatar 2022™ kit of your choice. Get yourself and your fabulous feline match ready for the world's biggest football tournament!\n\nPlease note: these NFTs are not part of the main “Loaded Lions” collection. Holders of this collectible will *not* be eligible for Mane Net benefits. Please see this blog for more details: https://crypto.com/product-news/match-ready-lions-airdrop",
+        "verified": true,
+        "avatar": "/img/collections/match-ready-lions/avatar.webp",
+        "banner": "/img/collections/match-ready-lions/banner.webp",
+        "card": "/img/collections/match-ready-lions/card.webp",
+        "maxSupply": 10000,
+        "website": "https://crypto.com/nft/loaded-lions/",
+        "twitter": "https://twitter.com/loadedlions_CDC",
+        "discord": "https://discord.gg/cryptocom",
+        "instagram": "https://instagram.com/cryptocomnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
