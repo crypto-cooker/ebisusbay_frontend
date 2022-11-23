@@ -48,8 +48,8 @@ const Header = function () {
   const { colorMode, setColorMode } = useColorMode()
   const {theme, profile, address} = useSelector((state) => state.user);
   const shouldUseMobileSearch = useBreakpointValue(
-    { base: true, md: false },
-    { fallback: 'md'},
+    { base: true, lg: false },
+    { fallback: 'lg'},
   );
 
   const ref = React.useRef()
@@ -96,7 +96,7 @@ const Header = function () {
               </a>
             </Link>
             {!shouldUseMobileSearch && isGlobalSearchEnabled && (
-              <Box w="100%" me={2}>
+              <Box w="100%" me={2} ms={4}>
                 <Search />
               </Box>
             )}

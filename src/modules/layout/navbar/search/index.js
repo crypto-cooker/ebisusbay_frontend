@@ -3,7 +3,7 @@ import {
   Flex,
   Input, InputGroup, InputLeftElement,
   Spinner,
-  Text, useDisclosure, useOutsideClick,
+  Text, useColorMode, useDisclosure, useOutsideClick,
   VStack
 } from "@chakra-ui/react";
 import React, {useCallback, useState} from "react";
@@ -18,9 +18,11 @@ import {useRouter} from "next/router";
 import {SearchIcon} from "@chakra-ui/icons";
 import useDebounce from "@src/core/hooks/useDebounce";
 import {appConfig} from "@src/Config";
+import ResultCollection from "@src/modules/layout/navbar/search/row";
 
 const searchRegex = /^\w+([\s-_]\w+)*$/;
 const minChars = 3;
+const maxVisible = 5;
 
 // @todo remove for autolistings
 const knownContracts = appConfig('collections');
@@ -31,6 +33,10 @@ const Search = () => {
   const searchIconColor = useColorModeValue('white', 'gray.300');
   const bgColor = useColorModeValue('white', 'gray.700');
   const borderColor = useColorModeValue('gray.100', 'gray.800');
+  const inputBorderColor = useColorModeValue('gray.300', 'gray.600');
+  const inputBorderColorFocused = useColorModeValue('gray.100', 'blue.500');
+  const inputVariant = useColorModeValue('flushed', 'outline');
+  const { colorMode, setColorMode } = useColorMode();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [value, setValue] = React.useState('');
@@ -57,7 +63,6 @@ const Search = () => {
             // }
             return knownContracts.find((c) => caseInsensitiveCompare(c.address, collection.address)) && validTokenCount;
           })
-
       }
     }
   );
@@ -100,6 +105,11 @@ const Search = () => {
           onChange={handleChange}
           onFocus={handleFocus}
           value={value}
+          borderColor={inputBorderColor}
+          focusBorderColor={inputBorderColorFocused}
+          color="white"
+          _placeholder={{ color: 'gray.300' }}
+          variant={inputVariant}
         />
       </InputGroup>
       <Box
@@ -131,24 +141,16 @@ const Search = () => {
                   <Text textTransform="uppercase" color={headingColor}>Collections</Text>
                   <VStack>
                     {data.slice(0, 5).map((item) => (
-                      item.multiToken && item.tokens ? (
-                        <ResultCollection
-                          collection={item}
-                          floorPrice={item.stats.total.floorPrice}
-                          onClick={handleCollectionClick}
-                        />
-                      ) : (
-                        <ResultCollection
-                          collection={item}
-                          floorPrice={item.stats.total.floorPrice}
-                          onClick={handleCollectionClick}
-                        />
-                      )
+                      <ResultCollection
+                        collection={item}
+                        floorPrice={item.stats.total.floorPrice}
+                        onClick={handleCollectionClick}
+                      />
                     ))}
                   </VStack>
-                  <Box mt={1}>
-                    <Text className="text-muted">Press Enter to search all items</Text>
-                  </Box>
+                  {/*<Box mt={1}>*/}
+                  {/*  <Text className="text-muted">Press Enter to search all items</Text>*/}
+                  {/*</Box>*/}
                 </>
               ) : (
                 <Center>
@@ -164,54 +166,3 @@ const Search = () => {
 };
 
 export default Search;
-
-const ResultCollection = ({collection, floorPrice, onClick}) => {
-  const hoverBackground = useColorModeValue('gray.100', '#424242');
-
-  const handleClick = useCallback(() => {
-    onClick(collection);
-  }, [onClick, collection]);
-
-  return (
-    <Box
-      key={`${collection.address}`}
-      _hover={{background: hoverBackground}}
-      p={2}
-      rounded="lg"
-      w="100%"
-      fontSize="12px"
-      cursor="pointer"
-      onClick={handleClick}
-    >
-      <Flex>
-        <Box
-          width={50}
-          height={50}
-          style={{borderRadius: '20px'}}
-        >
-          {collection.metadata && (
-            <AnyMedia
-              image={ImageKitService.buildAvatarUrl(collection.metadata.avatar)}
-              title={collection.name}
-              usePlaceholder={false}
-              className="img-rounded-8"
-            />
-          )}
-        </Box>
-        <Box flex='1' ms={2} fontSize="14px">
-          <VStack align="left" spacing={0}>
-            <Text fontWeight="bold" noOfLines={1}>{collection.name}</Text>
-            {collection.totalSupply && (
-              <Text noOfLines={1} className="text-muted">{commify(collection.totalSupply)} {pluralize(collection.totalSupply, 'item')}</Text>
-            )}
-          </VStack>
-        </Box>
-        {floorPrice && (
-          <Box ms={2} my="auto" className="text-muted">
-            {commify(round(floorPrice))} CRO
-          </Box>
-        )}
-      </Flex>
-    </Box>
-  )
-}
