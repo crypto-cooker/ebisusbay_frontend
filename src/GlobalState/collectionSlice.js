@@ -172,7 +172,8 @@ export const fetchListings =
 
     const address = state.collection.query.filter.address;
     const res = await getCollections({address});
-    const knownContract = res?.data?.collections[0];
+    const knownContract = res?.data?.collections[0] ??
+      appConfig('collections').find((c) => caseInsensitiveCompare(c.address, address));
 
     const fallbackContracts = ['red-skull-potions', 'cronos-fc'];
     const pageSizeOverride = findAllListings ? 1208 : null;

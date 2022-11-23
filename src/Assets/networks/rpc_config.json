@@ -15246,6 +15246,33 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "TENNISSHOTMETAVERSE3.0",
+      "slug": "tennisshotmetaverse3-0",
+      "multiToken": false,
+      "address": "0x630a537D4019B88e3CffB248085f5e2C53b5Feea",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Tennis Shot 3.0 is a collection of 1000 unique examples of tennis players in the metaverse with unique characteristics.",
+        "verified": false,
+        "avatar": "/img/collections/tennisshotmetaverse3-0/avatar.webp",
+        "banner": "/img/collections/tennisshotmetaverse3-0/banner.webp",
+        "card": "/img/collections/tennisshotmetaverse3-0/card.webp",
+        "maxSupply": 1000,
+        "website": "https://tennisshot30metaverse.com/",
+        "twitter": "https://twitter.com/tennisshot30",
+        "discord": "https://discord.gg/3NHv85S4",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
