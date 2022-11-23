@@ -10343,9 +10343,9 @@
         "card": "/img/collections/sou-sou-bears/card.webp",
         "banner": "/img/collections/sou-sou-bears/banner.webp",
         "maxSupply": 100,
-        "website": "https://ipfs.io/ipfs/QmX47Zv8vcVxDc6AWB1izX1h8B2oKkx1z5kZPN1xtAB5E6/",
         "twitter": "https://twitter.com/sousoubears",
-        "discord": "https://discord.gg/mKkPJYK4fs",
+        "discord": "https://discord.gg/2c5fdQM8xA",
+        "medium": "https://medium.com/@sousoubears/sou-sou-bears-degens-nft-drop-1cf7ff1fb407",
         "categories": [
           "collectibles"
         ]
@@ -15216,6 +15216,33 @@
       },
       "verification": {
         "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Sou-Sou Bears Degens",
+      "slug": "sou-sou-bears-degens",
+      "multiToken": false,
+      "address": "0x4FBb16c096b52Adebdfa7fA71a74F492fDdD722D",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Every Degen needs a Sou-Sou Bear to Pave the way for the Bull Run. The Bear Market is not over until The Sou-Sou Bears say Sou!",
+        "verified": false,
+        "avatar": "/img/collections/sou-sou-bears-degens/avatar.webp",
+        "banner": "/img/collections/sou-sou-bears-degens/banner.webp",
+        "card": "/img/collections/sou-sou-bears-degens/card.webp",
+        "maxSupply": 1000,
+        "twitter": "https://twitter.com/sousoubears",
+        "discord": "https://discord.gg/2c5fdQM8xA",
+        "medium": "https://medium.com/@sousoubears/sou-sou-bears-degens-nft-drop-1cf7ff1fb407",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
         "doxx": false,
         "kyc": false
       }
