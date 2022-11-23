@@ -15111,31 +15111,31 @@
       }
     },
     {
-      "name": "Multi Dimensional Crystals",
-      "slug": "multi-dimensional-crystals",
+      "name": "Loaded Companions",
+      "slug": "loaded-companions",
       "multiToken": false,
       "address": "0xa9c0d40bb15B265abBe087e5E74f193c253985e5",
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "A multi-color crystal with many use cases in the Loaded Companions roadmap",
+        "description": "The Journey through the Metaverse can be unpredictable at times. This is why everyone needs a Loaded Companion. One to serenade you with sweet love songs, to roll you joints, even deploy freaking laser beams at anything that stands in CRO’s way. This is why we started Loaded Companions and why we are dedicated to enhancing the Cronos community. A portion of the mint proceeds along with ALL royalties we accrue on secondary sales will be donated to the Loaded Companions Community Fund which allocation will be voted upon via our DAO.",
         "verified": false,
-        "avatar": "/img/collections/multi-dimensional-crystals/avatar.webp",
-        "banner": "/img/collections/multi-dimensional-crystals/banner.webp",
-        "card": "/img/collections/multi-dimensional-crystals/card.webp",
-        "maxSupply": 505,
-        "website": "https://loadedcompanions.netlify.app/#crystals/",
+        "avatar": "/img/collections/loaded-companions/avatar.webp",
+        "banner": "/img/collections/loaded-companions/banner.webp",
+        "card": "/img/collections/loaded-companions/card.webp",
+        "maxSupply": 5000,
+        "website": "https://linktr.ee/loadedcompanions",
         "twitter": "https://twitter.com/LoadedCompanion",
-        "discord": "https://discord.gg/D7fDCF5kV9",
+        "discord": "https://discord.gg/hfqtz9KFeJ",
         "categories": [
           "collectibles",
           "utility"
         ]
       },
       "verification": {
-        "verified": true,
+        "verified": false,
         "doxx": false,
-        "kyc": true
+        "kyc": false
       }
     },
     {
