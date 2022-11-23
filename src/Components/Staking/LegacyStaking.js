@@ -35,9 +35,9 @@ const LegacyStaking = () => {
 
   // Allow exception to be thrown for other functions to catch it
   const setApprovalForAll = async () => {
-    const isApproved = await user.membershipContract.isApprovedForAll(config.contracts.stake, user.address);
+    const isApproved = await user.contractService.membership.isApprovedForAll(config.contracts.stake, user.address);
     if (!isApproved) {
-      let tx = await user.membershipContract.setApprovalForAll(config.contracts.stake, true, txExtras);
+      let tx = await user.contractService.membership.setApprovalForAll(config.contracts.stake, true, txExtras);
       await tx.wait();
     }
   };
@@ -99,7 +99,7 @@ const LegacyStaking = () => {
   useEffect(() => {
     async function checkApproval() {
       try {
-        const isApproved = await user.membershipContract.isApprovedForAll(user.address, config.contracts.stake);
+        const isApproved = await user.contractService.membership.isApprovedForAll(user.address, config.contracts.stake);
         setIsApproved(isApproved);
       } catch (e) {
         console.log(e);
@@ -107,7 +107,7 @@ const LegacyStaking = () => {
         setIsInitializing(false);
       }
     }
-    if (!user.connectingWallet && user.membershipContract) {
+    if (!user.connectingWallet && user.contractService.membership) {
       checkApproval();
     }
     // eslint-disable-next-line
