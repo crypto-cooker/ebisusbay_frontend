@@ -43,9 +43,9 @@ const userSlice = createSlice({
     gettingContractData: true,
     // code: '',
     isMember: false,
-    founderCount: 0,
-    vipCount: 0,
-    stakeCount: 0,
+    // founderCount: 0,
+    // vipCount: 0,
+    // stakeCount: 0,
     needsOnboard: false,
     isStaking: false,
 
@@ -105,8 +105,8 @@ const userSlice = createSlice({
       // state.code = action.payload.code;
       // state.rewards = action.payload.rewards;
       state.isMember = action.payload.isMember;
-      state.vipCount = action.payload.vipCount;
-      state.stakeCount = action.payload.stakeCount;
+      // state.vipCount = action.payload.vipCount;
+      // state.stakeCount = action.payload.stakeCount;
       state.marketBalance = action.payload.marketBalance;
       state.stakingRewards = action.payload.stakingRewards;
       state.gettingContractData = false;
@@ -302,8 +302,8 @@ const userSlice = createSlice({
       state.marketBalance = null;
       state.stakingRewards = null;
       state.isMember = false;
-      state.vipCount = 0;
-      state.stakeCount = 0;
+      // state.vipCount = 0;
+      // state.stakeCount = 0;
       state.fetchingNfts = false;
       state.nftsFullyFetched = false;
       state.nftsInitialized = false;
@@ -330,12 +330,12 @@ const userSlice = createSlice({
         state.stakingRewards = action.payload.stakingRewards;
       }
     },
-    setVIPCount(state, action) {
-      state.vipCount = action.payload;
-    },
-    setStakeCount(state, action) {
-      state.stakeCount = action.payload;
-    },
+    // setVIPCount(state, action) {
+    //   state.vipCount = action.payload;
+    // },
+    // setStakeCount(state, action) {
+    //   state.stakeCount = action.payload;
+    // },
     onOutstandingOffersFound(state, action) {
       state.hasOutstandingOffers = action.payload;
     },
@@ -383,8 +383,8 @@ export const {
   elonContract,
   onThemeChanged,
   balanceUpdated,
-  setVIPCount,
-  setStakeCount,
+  // setVIPCount,
+  // setStakeCount,
   onOutstandingOffersFound,
   setProfile,
 } = userSlice.actions;
@@ -541,11 +541,12 @@ export const connectAccount =
       // let code;
       let balance;
       // let rewards;
-      let ownedFounder = 0;
-      let ownedVip = 0;
+      // let ownedFounder = 0;
+      // let ownedVip = 0;
       let sales;
-      let stakeCount = 0;
+      // let stakeCount = 0;
       let stakingRewards = 0;
+      let isMember = false;
 
       dispatch(retrieveProfile());
 
@@ -555,12 +556,12 @@ export const connectAccount =
         // const rawCode = await contractService.membership.codes(address);
         // code = ethers.utils.parseBytes32String(rawCode);
         // rewards = ethers.utils.formatEther(await contractService.membership.payments(address));
-        // console.log('rewards', rewards.toString());
-        ownedFounder = await contractService.membership.balanceOf(address, 1);
-        ownedVip = await contractService.membership.balanceOf(address, 2);
-        stakeCount = await contractService.staking.amountStaked(address);
+        // ownedFounder = await contractService.membership.balanceOf(address, 1);
+        // ownedVip = await contractService.membership.balanceOf(address, 2);
+        // stakeCount = await contractService.staking.amountStaked(address);
         sales = ethers.utils.formatEther(await contractService.market.payments(address));
         stakingRewards = ethers.utils.formatEther(await contractService.staking.getReward(address));
+        isMember = await contractService.market.isMember(address);
 
         try {
           balance = ethers.utils.formatEther(await provider.getBalance(address));
@@ -578,11 +579,9 @@ export const connectAccount =
           // code: code,
           balance: balance,
           // rewards: rewards,
-          isMember: ownedVip > 0 || ownedFounder > 0 || stakeCount > 0,
-          vipCount: ownedVip ? ownedVip.toNumber() : ownedVip,
-          stakeCount: stakeCount ? stakeCount.toNumber() : stakeCount,
+          isMember,
           marketBalance: sales,
-          stakingRewards: stakingRewards,
+          stakingRewards: stakingRewards
         })
       );
     } catch (error) {
