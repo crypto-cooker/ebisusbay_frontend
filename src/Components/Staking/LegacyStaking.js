@@ -1,6 +1,5 @@
 import React, {memo, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {setStakeCount, setVIPCount} from '@src/GlobalState/User';
 import {Form, Spinner} from 'react-bootstrap';
 import {toast} from 'react-toastify';
 import {createSuccessfulTransactionToastContent} from '@src/utils';
@@ -27,11 +26,11 @@ const stakingAddress = config.contracts.stake
 const LegacyStaking = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const stakeCount = user.stakeCount;
-  const vipCount = user.vipCount;
   const [isApproved, setIsApproved] = useState(false);
   const [isApproving, setIsApproving] = useState(false);
   const [isInitializing, setIsInitializing] = useState(true);
+  const [stakeCount, setStakeCount] = useState(0);
+  const [vipCount, setVipCount] = useState(0);
 
   // Allow exception to be thrown for other functions to catch it
   const setApprovalForAll = async () => {
@@ -87,8 +86,8 @@ const LegacyStaking = () => {
     try {
       const tx = await user.contractService.staking.unstake(quantity, { gasPrice: 5000000000000 });
       const receipt = await tx.wait();
-      dispatch(setStakeCount(stakeCount - quantity));
-      dispatch(setVIPCount(vipCount + quantity));
+      setStakeCount(stakeCount - quantity);
+      setVipCount(vipCount + quantity);
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
     } catch (err) {
       toast.error(err.message);
@@ -101,13 +100,20 @@ const LegacyStaking = () => {
       try {
         const isApproved = await user.contractService.membership.isApprovedForAll(user.address, config.contracts.stake);
         setIsApproved(isApproved);
+
+        const stakeCount = await user.contractService.staking.amountStaked(user.address);
+        setStakeCount(Number(stakeCount));
+
+        const vipCount = await user.contractService.membership.balanceOf(user.address, 2)
+        setVipCount(Number(vipCount));
+
       } catch (e) {
         console.log(e);
       } finally {
         setIsInitializing(false);
       }
     }
-    if (!user.connectingWallet && user.contractService.membership) {
+    if (!user.connectingWallet && user.contractService) {
       checkApproval();
     }
     // eslint-disable-next-line

@@ -41,11 +41,11 @@ const userSlice = createSlice({
     web3modal: null,
     connectingWallet: false,
     gettingContractData: true,
-    code: '',
+    // code: '',
     isMember: false,
-    founderCount: 0,
-    vipCount: 0,
-    stakeCount: 0,
+    // founderCount: 0,
+    // vipCount: 0,
+    // stakeCount: 0,
     needsOnboard: false,
     isStaking: false,
 
@@ -60,7 +60,7 @@ const userSlice = createSlice({
 
     // Primary Balances
     balance: null,
-    rewards: null,
+    // rewards: null,
     marketBalance: null,
     withdrawingMarketBalance: false,
     stakingRewards: null,
@@ -103,13 +103,12 @@ const userSlice = createSlice({
     accountChanged(state, action) {
       state.balance = action.payload.balance;
       // state.code = action.payload.code;
-      state.rewards = action.payload.rewards;
+      // state.rewards = action.payload.rewards;
       state.isMember = action.payload.isMember;
-      state.vipCount = action.payload.vipCount;
-      state.stakeCount = action.payload.stakeCount;
+      // state.vipCount = action.payload.vipCount;
+      // state.stakeCount = action.payload.stakeCount;
       state.marketBalance = action.payload.marketBalance;
       state.stakingRewards = action.payload.stakingRewards;
-      state.contractService = action.payload.contractService;
       state.gettingContractData = false;
     },
 
@@ -133,6 +132,10 @@ const userSlice = createSlice({
       state.web3modal = action.payload.web3modal;
       state.correctChain = action.payload.correctChain;
       state.needsOnboard = action.payload.needsOnboard;
+    },
+
+    onContractServiceInitialized(state, action) {
+      state.contractService = action.payload;
     },
 
     fetchingNfts(state, action) {
@@ -236,12 +239,12 @@ const userSlice = createSlice({
     connectingWallet(state, action) {
       state.connectingWallet = action.payload.connecting;
     },
-    registeredCode(state, action) {
-      state.code = action.payload;
-    },
-    withdrewRewards(state) {
-      state.rewards = 0;
-    },
+    // registeredCode(state, action) {
+    //   state.code = action.payload;
+    // },
+    // withdrewRewards(state) {
+    //   state.rewards = 0;
+    // },
     withdrawingMarketBalance(state) {
       state.withdrawingMarketBalance = true;
     },
@@ -295,12 +298,12 @@ const userSlice = createSlice({
       state.address = '';
       state.provider = null;
       state.balance = null;
-      state.rewards = null;
+      // state.rewards = null;
       state.marketBalance = null;
       state.stakingRewards = null;
       state.isMember = false;
-      state.vipCount = 0;
-      state.stakeCount = 0;
+      // state.vipCount = 0;
+      // state.stakeCount = 0;
       state.fetchingNfts = false;
       state.nftsFullyFetched = false;
       state.nftsInitialized = false;
@@ -327,12 +330,12 @@ const userSlice = createSlice({
         state.stakingRewards = action.payload.stakingRewards;
       }
     },
-    setVIPCount(state, action) {
-      state.vipCount = action.payload;
-    },
-    setStakeCount(state, action) {
-      state.stakeCount = action.payload;
-    },
+    // setVIPCount(state, action) {
+    //   state.vipCount = action.payload;
+    // },
+    // setStakeCount(state, action) {
+    //   state.stakeCount = action.payload;
+    // },
     onOutstandingOffersFound(state, action) {
       state.hasOutstandingOffers = action.payload;
     },
@@ -351,6 +354,7 @@ export const {
   onNftLoading,
   onNftsAdded,
   onNftsReplace,
+  onContractServiceInitialized,
   nftsFetched,
   nftsFullyFetched,
   onNftLoaded,
@@ -364,8 +368,8 @@ export const {
   clearMySales,
   connectingWallet,
   onCorrectChain,
-  registeredCode,
-  withdrewRewards,
+  // registeredCode,
+  // withdrewRewards,
   withdrawingMarketBalance,
   withdrewMarketBalance,
   harvestingStakingRewards,
@@ -379,8 +383,8 @@ export const {
   elonContract,
   onThemeChanged,
   balanceUpdated,
-  setVIPCount,
-  setStakeCount,
+  // setVIPCount,
+  // setStakeCount,
   onOutstandingOffersFound,
   setProfile,
 } = userSlice.actions;
@@ -536,26 +540,28 @@ export const connectAccount =
 
       // let code;
       let balance;
-      let rewards;
-      let ownedFounder = 0;
-      let ownedVip = 0;
+      // let rewards;
+      // let ownedFounder = 0;
+      // let ownedVip = 0;
       let sales;
-      let stakeCount = 0;
+      // let stakeCount = 0;
       let stakingRewards = 0;
-      let contractService;
+      let isMember = false;
 
       dispatch(retrieveProfile());
 
       if (signer && correctChain) {
-        contractService = new UserContractService(signer);
+        const contractService = new UserContractService(signer);
+        dispatch(onContractServiceInitialized(contractService));
         // const rawCode = await contractService.membership.codes(address);
         // code = ethers.utils.parseBytes32String(rawCode);
-        rewards = ethers.utils.formatEther(await contractService.membership.payments(address));
-        ownedFounder = await contractService.membership.balanceOf(address, 1);
-        ownedVip = await contractService.membership.balanceOf(address, 2);
-        stakeCount = await contractService.staking.amountStaked(address);
+        // rewards = ethers.utils.formatEther(await contractService.membership.payments(address));
+        // ownedFounder = await contractService.membership.balanceOf(address, 1);
+        // ownedVip = await contractService.membership.balanceOf(address, 2);
+        // stakeCount = await contractService.staking.amountStaked(address);
         sales = ethers.utils.formatEther(await contractService.market.payments(address));
         stakingRewards = ethers.utils.formatEther(await contractService.staking.getReward(address));
+        isMember = await contractService.market.isMember(address);
 
         try {
           balance = ethers.utils.formatEther(await provider.getBalance(address));
@@ -572,13 +578,10 @@ export const connectAccount =
           correctChain: correctChain,
           // code: code,
           balance: balance,
-          rewards: rewards,
-          isMember: ownedVip > 0 || ownedFounder > 0 || stakeCount > 0,
-          vipCount: ownedVip ? ownedVip.toNumber() : ownedVip,
-          stakeCount: stakeCount ? stakeCount.toNumber() : stakeCount,
+          // rewards: rewards,
+          isMember,
           marketBalance: sales,
-          stakingRewards: stakingRewards,
-          contractService: contractService
+          stakingRewards: stakingRewards
         })
       );
     } catch (error) {
@@ -857,25 +860,25 @@ export const retrieveProfile = () => async (dispatch, getState) => {
 };
 
 export class AccountMenuActions {
-  static withdrawRewards = () => async (dispatch, getState) => {
-    const { user } = getState();
-    try {
-      const tx = await user.contractService.membership.withdrawPayments(user.address);
-      const receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      dispatch(withdrewRewards());
-      dispatch(updateBalance());
-    } catch (error) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        console.log(error);
-        toast.error('Unknown Error');
-      }
-    }
-  };
+  // static withdrawRewards = () => async (dispatch, getState) => {
+  //   const { user } = getState();
+  //   try {
+  //     const tx = await user.contractService.membership.withdrawPayments(user.address);
+  //     const receipt = await tx.wait();
+  //     toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+  //     dispatch(withdrewRewards());
+  //     dispatch(updateBalance());
+  //   } catch (error) {
+  //     if (error.data) {
+  //       toast.error(error.data.message);
+  //     } else if (error.message) {
+  //       toast.error(error.message);
+  //     } else {
+  //       console.log(error);
+  //       toast.error('Unknown Error');
+  //     }
+  //   }
+  // };
 
   static withdrawMarketBalance = () => async (dispatch, getState) => {
     const { user } = getState();
