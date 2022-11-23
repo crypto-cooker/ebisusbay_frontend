@@ -2944,6 +2944,33 @@
         "kyc": false,
         "verified": true
       }
+    },
+    {
+      "name": "Meta Planet Club",
+      "slug": "meta-planet-club",
+      "multiToken": false,
+      "address": "0xA9806E1F6Aa8FdF47470c06a2c1f563CFA501690",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Welcome to the club\n5,555 planets ready to be explored...\nSomewhere far away in the universe, Meta Planet Club appears. A collection of 5,555 algorithmically generated psychedelic planets, offering its community a friendly ecosystem for life on the Web3.",
+        "verified": true,
+        "avatar": "/img/collections/meta-planet-club/avatar.webp",
+        "banner": "/img/collections/meta-planet-club/banner.webp",
+        "card": "/img/collections/meta-planet-club/card.webp",
+        "maxSupply": 5555,
+        "website": "https://metaplanetclub.com/",
+        "discord": "https://discord.gg/J6rjwwcYa3",
+        "instagram": "https://www.instagram.com/metaplanetclub",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
@@ -6789,6 +6816,44 @@
         "verified": true,
         "doxx": false,
         "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "id": 142,
+      "slug": "meta-planet-club",
+      "title": "Meta Planet Club",
+      "subtitle": "Welcome to the club\n5,555 planets ready to be explored...\nSomewhere far away in the universe, Meta Planet Club appears. A collection of 5,555 algorithmically generated psychedelic planets, offering its community a friendly ecosystem for life on the Web3.",
+      "description": "Leaving in the past the fact of being just a PFP... the beginning of a new era is part of a project built in the Cronos ecosystem. The club provides distinction, profitability, and functionality, from an original NFT clothing brand to a Dapp that generates passive income to the holders.\nThe artwork is based on nice and personalized planets, which have different attributes, such as: mouths, eyes, rings, accessories, backgrounds, and more... At the same time, these attributes have many variations, allowing to generate a lot of crazy variations of planets.\nOur roadmap is composed of 7 different stages: The Big Bang (Algorithmic generation of Meta Planet), The Expansion (Marketing and community grow stage), The Arriving (Drop day), Moonland Distribution (For holders), Clothing Brand Creation (Online Shop), Metaverse (Sandbox), My System App (Dapp for holders only).\nAfter the Drop, those lucky ones who have got the \"Certificated Moon\" attribute on their planet, will be able to claim a real moon land, which will be 1 hectare, and the title will be in the name of the NFT owner.\nMore info on our website www.metaplanetclub.com",
+      "author": {
+        "name": "Meta Planet Club",
+        "website": "https://metaplanetclub.com/",
+        "discord": "https://discord.gg/J6rjwwcYa3",
+        "instagram": "https://www.instagram.com/metaplanetclub"
+      },
+      "address": "0xA9806E1F6Aa8FdF47470c06a2c1f563CFA501690",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 5555,
+      "cost": "250",
+      "memberCost": "200",
+      "foundersOnly": false,
+      "start": 1669622400000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/meta-planet-club/drop.webp",
+        "banner": "/img/drops/meta-planet-club/banner.webp",
+        "avatar": "/img/collections/meta-planet-club/avatar.webp",
+        "preview": "/img/collections/meta-planet-club/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
         "escrow": false
       }
     }
