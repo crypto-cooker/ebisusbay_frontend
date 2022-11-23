@@ -15144,7 +15144,7 @@
       "multiToken": false,
       "address": "0xf8D969a553F2ca0a77553B02a4fCBe486A5c1735",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A collection of 10,000 manatees each with a letter that has a special purpose.",
         "verified": true,
