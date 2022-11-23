@@ -41,7 +41,7 @@ const userSlice = createSlice({
     web3modal: null,
     connectingWallet: false,
     gettingContractData: true,
-    code: '',
+    // code: '',
     isMember: false,
     founderCount: 0,
     vipCount: 0,
@@ -60,7 +60,7 @@ const userSlice = createSlice({
 
     // Primary Balances
     balance: null,
-    rewards: null,
+    // rewards: null,
     marketBalance: null,
     withdrawingMarketBalance: false,
     stakingRewards: null,
@@ -103,7 +103,7 @@ const userSlice = createSlice({
     accountChanged(state, action) {
       state.balance = action.payload.balance;
       // state.code = action.payload.code;
-      state.rewards = action.payload.rewards;
+      // state.rewards = action.payload.rewards;
       state.isMember = action.payload.isMember;
       state.vipCount = action.payload.vipCount;
       state.stakeCount = action.payload.stakeCount;
@@ -239,12 +239,12 @@ const userSlice = createSlice({
     connectingWallet(state, action) {
       state.connectingWallet = action.payload.connecting;
     },
-    registeredCode(state, action) {
-      state.code = action.payload;
-    },
-    withdrewRewards(state) {
-      state.rewards = 0;
-    },
+    // registeredCode(state, action) {
+    //   state.code = action.payload;
+    // },
+    // withdrewRewards(state) {
+    //   state.rewards = 0;
+    // },
     withdrawingMarketBalance(state) {
       state.withdrawingMarketBalance = true;
     },
@@ -298,7 +298,7 @@ const userSlice = createSlice({
       state.address = '';
       state.provider = null;
       state.balance = null;
-      state.rewards = null;
+      // state.rewards = null;
       state.marketBalance = null;
       state.stakingRewards = null;
       state.isMember = false;
@@ -368,8 +368,8 @@ export const {
   clearMySales,
   connectingWallet,
   onCorrectChain,
-  registeredCode,
-  withdrewRewards,
+  // registeredCode,
+  // withdrewRewards,
   withdrawingMarketBalance,
   withdrewMarketBalance,
   harvestingStakingRewards,
@@ -540,7 +540,7 @@ export const connectAccount =
 
       // let code;
       let balance;
-      let rewards;
+      // let rewards;
       let ownedFounder = 0;
       let ownedVip = 0;
       let sales;
@@ -554,7 +554,8 @@ export const connectAccount =
         dispatch(onContractServiceInitialized(contractService));
         // const rawCode = await contractService.membership.codes(address);
         // code = ethers.utils.parseBytes32String(rawCode);
-        rewards = ethers.utils.formatEther(await contractService.membership.payments(address));
+        // rewards = ethers.utils.formatEther(await contractService.membership.payments(address));
+        // console.log('rewards', rewards.toString());
         ownedFounder = await contractService.membership.balanceOf(address, 1);
         ownedVip = await contractService.membership.balanceOf(address, 2);
         stakeCount = await contractService.staking.amountStaked(address);
@@ -576,7 +577,7 @@ export const connectAccount =
           correctChain: correctChain,
           // code: code,
           balance: balance,
-          rewards: rewards,
+          // rewards: rewards,
           isMember: ownedVip > 0 || ownedFounder > 0 || stakeCount > 0,
           vipCount: ownedVip ? ownedVip.toNumber() : ownedVip,
           stakeCount: stakeCount ? stakeCount.toNumber() : stakeCount,
@@ -860,25 +861,25 @@ export const retrieveProfile = () => async (dispatch, getState) => {
 };
 
 export class AccountMenuActions {
-  static withdrawRewards = () => async (dispatch, getState) => {
-    const { user } = getState();
-    try {
-      const tx = await user.contractService.membership.withdrawPayments(user.address);
-      const receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      dispatch(withdrewRewards());
-      dispatch(updateBalance());
-    } catch (error) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        console.log(error);
-        toast.error('Unknown Error');
-      }
-    }
-  };
+  // static withdrawRewards = () => async (dispatch, getState) => {
+  //   const { user } = getState();
+  //   try {
+  //     const tx = await user.contractService.membership.withdrawPayments(user.address);
+  //     const receipt = await tx.wait();
+  //     toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+  //     dispatch(withdrewRewards());
+  //     dispatch(updateBalance());
+  //   } catch (error) {
+  //     if (error.data) {
+  //       toast.error(error.data.message);
+  //     } else if (error.message) {
+  //       toast.error(error.message);
+  //     } else {
+  //       console.log(error);
+  //       toast.error('Unknown Error');
+  //     }
+  //   }
+  // };
 
   static withdrawMarketBalance = () => async (dispatch, getState) => {
     const { user } = getState();
