@@ -109,7 +109,6 @@ const userSlice = createSlice({
       state.stakeCount = action.payload.stakeCount;
       state.marketBalance = action.payload.marketBalance;
       state.stakingRewards = action.payload.stakingRewards;
-      state.contractService = action.payload.contractService;
       state.gettingContractData = false;
     },
 
@@ -133,6 +132,10 @@ const userSlice = createSlice({
       state.web3modal = action.payload.web3modal;
       state.correctChain = action.payload.correctChain;
       state.needsOnboard = action.payload.needsOnboard;
+    },
+
+    onContractServiceInitialized(state, action) {
+      state.contractService = action.payload;
     },
 
     fetchingNfts(state, action) {
@@ -351,6 +354,7 @@ export const {
   onNftLoading,
   onNftsAdded,
   onNftsReplace,
+  onContractServiceInitialized,
   nftsFetched,
   nftsFullyFetched,
   onNftLoaded,
@@ -542,12 +546,12 @@ export const connectAccount =
       let sales;
       let stakeCount = 0;
       let stakingRewards = 0;
-      let contractService;
 
       dispatch(retrieveProfile());
 
       if (signer && correctChain) {
-        contractService = new UserContractService(signer);
+        const contractService = new UserContractService(signer);
+        dispatch(onContractServiceInitialized(contractService));
         // const rawCode = await contractService.membership.codes(address);
         // code = ethers.utils.parseBytes32String(rawCode);
         rewards = ethers.utils.formatEther(await contractService.membership.payments(address));
@@ -578,7 +582,6 @@ export const connectAccount =
           stakeCount: stakeCount ? stakeCount.toNumber() : stakeCount,
           marketBalance: sales,
           stakingRewards: stakingRewards,
-          contractService: contractService
         })
       );
     } catch (error) {
