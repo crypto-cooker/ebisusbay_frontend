@@ -248,12 +248,12 @@ const Index = function () {
     <div>
       {!walletAddress && (
         <div className="de-menu-notification" onClick={connectWalletPressed} style={{background: '#218cff', marginLeft:'5px'}}>
-          <FontAwesomeIcon icon={faWallet} />
+          <FontAwesomeIcon icon={faWallet} color="white" />
         </div>
       )}
       {walletAddress && !correctChain && !user.showWrongChainModal && (
         <div className="de-menu-notification" onClick={onWrongChainModalChangeChain} style={{background: '#218cff', marginLeft:'5px'}}>
-          <FontAwesomeIcon icon={faArrowRightArrowLeft} />
+          <FontAwesomeIcon icon={faArrowRightArrowLeft} color="white" />
         </div>
       )}
       {walletAddress && correctChain && (

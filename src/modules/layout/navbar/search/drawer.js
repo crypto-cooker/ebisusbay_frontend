@@ -1,12 +1,21 @@
 import {
-  Box, Center,
+  Box,
+  Center,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
-  DrawerContent, DrawerFooter,
+  DrawerContent,
   DrawerHeader,
-  DrawerOverlay, Flex,
-  Input, InputGroup, InputLeftElement, Spinner, Text, useDisclosure, VStack
+  DrawerOverlay,
+  IconButton,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
+  Spinner,
+  Text,
+  useDisclosure,
+  VStack
 } from "@chakra-ui/react";
 import React, {useCallback} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -16,7 +25,7 @@ import {useQuery} from "@tanstack/react-query";
 import {search} from "@src/core/api/next/search";
 import {caseInsensitiveCompare} from "@src/utils";
 import useDebounce from "@src/core/hooks/useDebounce";
-import {SearchIcon} from "@chakra-ui/icons";
+import {CloseIcon, SearchIcon} from "@chakra-ui/icons";
 import {appConfig} from "@src/Config";
 import {useRouter} from "next/router";
 import {useColorModeValue} from "@chakra-ui/color-mode";
@@ -57,12 +66,15 @@ const MobileSearchDrawer = () => {
     }
   );
 
-
   const handleChange = (event) => {
     const { value } = event.target;
     // if (!searchRegex.test(value)) return;
 
     setValue(value);
+  };
+
+  const handleClear = () => {
+    setValue('');
   };
 
   const handleCollectionClick = useCallback((collection) => {
@@ -100,6 +112,18 @@ const MobileSearchDrawer = () => {
                 onChange={handleChange}
                 value={value}
               />
+              {value.length && (
+                <InputRightElement
+                  children={
+                    <IconButton
+                      variant="unstyled"
+                      icon={<CloseIcon w={3} h={3} />}
+                      aria-label="Close search"
+                      onClick={handleClear}
+                    />
+                  }
+                />
+              )}
             </InputGroup>
           </DrawerHeader>
 
