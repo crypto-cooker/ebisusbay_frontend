@@ -1,6 +1,6 @@
 import {
-  Box,
-  Center,
+  Box, Button,
+  Center, CloseButton,
   IconButton,
   Input,
   InputGroup,
@@ -13,21 +13,23 @@ import {
   useOutsideClick,
   VStack
 } from "@chakra-ui/react";
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {useQuery} from "@tanstack/react-query";
 import {search} from "@src/core/api/next/search";
 import {caseInsensitiveCompare} from "@src/utils";
 import {useRouter} from "next/router";
-import {CloseIcon, SearchIcon} from "@chakra-ui/icons";
+import {ChevronDownIcon, CloseIcon, SearchIcon} from "@chakra-ui/icons";
 import useDebounce from "@src/core/hooks/useDebounce";
 import {appConfig} from "@src/Config";
 import ResultCollection from "@src/modules/layout/navbar/search/row";
 import Scrollbars from "react-custom-scrollbars-2";
+import {addToSearchVisitsInStorage, getSearchVisitsInStorage, removeSearchVisitFromStorage} from "@src/helpers/storage";
 
 const searchRegex = /^\w+([\s-_]\w+)*$/;
 const minChars = 3;
-const maxVisible = 5;
+const defaultMaxVisible = 5;
+const maxVisible = 25;
 
 // @todo remove for autolistings
 const knownContracts = appConfig('collections');
@@ -41,11 +43,13 @@ const Search = () => {
   const inputBorderColor = useColorModeValue('gray.300', 'gray.600');
   const inputBorderColorFocused = useColorModeValue('gray.100', 'blue.500');
   const inputVariant = useColorModeValue('flushed', 'outline');
-  const { colorMode, setColorMode } = useColorMode();
+
+  const [maxResults, setMaxResults] = useState(defaultMaxVisible);
+  const [searchVisits, setSearchVisits] = useState([]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [value, setValue] = React.useState('');
-  const ref = React.useRef();
+  const [value, setValue] = useState('');
+  const ref = useRef();
   useOutsideClick({
     ref: ref,
     handler: onClose,
@@ -71,36 +75,65 @@ const Search = () => {
       }
     }
   );
+  const hasDisplayableContent = searchVisits.length > 0 || (data && data.length > 0);
 
   const handleChange = (event) => {
     const { value } = event.target;
-    // if (!searchRegex.test(value)) return;
-
     setValue(value);
-    if (value.length >= minChars && !isOpen) {
-      onOpen();
-    }
-    if (value.length < minChars && isOpen) {
-      onClose();
-    }
   };
 
   const handleFocus = () => {
-    if (value && !isOpen) onOpen();
+    const currentVisits = getRelevantVisits();
+    setSearchVisits(currentVisits);
+
+    if (hasDisplayableContent && !isOpen) onOpen();
   };
 
   const handleClear = () => {
     setValue('');
+    setMaxResults(defaultMaxVisible);
     onClose();
   };
 
   const handleCollectionClick = useCallback((collection) => {
+    addToSearchVisitsInStorage(collection);
     onClose();
     setValue('');
     router.push(`/collection/${collection.address}`);
   }, [onClose, router, setValue]);
 
-  // console.log('DATA', data);
+  const handleRemoveVisit = (collection) => {
+    removeSearchVisitFromStorage(collection.address);
+    const remainingVisits = getRelevantVisits();
+    setSearchVisits(remainingVisits);
+    if (remainingVisits?.length < 1 && (!data || data.length < 1)) onClose();
+  };
+
+  const getRelevantVisits = () => {
+    const visits = getSearchVisitsInStorage();
+
+    if (value && value.length >= minChars) {
+      return visits.filter((item) => {
+        return item.name.toLowerCase().includes(value.toLowerCase());
+      });
+    }
+
+    return visits;
+  };
+
+  useEffect(() => {
+    setSearchVisits(getRelevantVisits());
+
+    if (value.length >= minChars && !isOpen) {
+      onOpen();
+    }
+    if (value.length < minChars && isOpen && !hasDisplayableContent) {
+      onClose();
+    }
+    if (value.length < 1) {
+      setMaxResults(defaultMaxVisible);
+    }
+  }, [value]);
 
   return (
     <Box position="relative" maxW="500px" ref={ref}>
@@ -123,14 +156,7 @@ const Search = () => {
         />
         {value.length && (
           <InputRightElement
-            children={
-              <IconButton
-                variant="unstyled"
-                icon={<CloseIcon w={3} h={3} />}
-                aria-label="Close search"
-                onClick={handleClear}
-              />
-            }
+            children={<CloseButton onClick={handleClear} />}
           />
         )}
       </InputGroup>
@@ -151,39 +177,63 @@ const Search = () => {
           universal
         >
           <Box fontSize="12px" p={2}>
-            {status === "loading" ? (
-              <Center>
-                <Spinner />
-              </Center>
-            ) : status === "error" ? (
-              <Center>
-                <Text>Error: {error.message}</Text>
-              </Center>
-            ) : (
-              <>
-                {data?.length > 0 ? (
-                  <>
-                    <Text textTransform="uppercase" ms={1} color={headingColor}>Collections</Text>
-                    <VStack>
-                      {data.slice(0, 50).map((item) => (
-                        <ResultCollection
-                          collection={item}
-                          floorPrice={item.stats.total.floorPrice}
-                          onClick={handleCollectionClick}
-                        />
-                      ))}
-                    </VStack>
-                    {/*<Box mt={1}>*/}
-                    {/*  <Text className="text-muted">Press Enter to search all items</Text>*/}
-                    {/*</Box>*/}
-                  </>
-                ) : (
-                  <Center>
-                    <Text>No results found</Text>
-                  </Center>
-                )}
-              </>
+            {searchVisits.length > 0 && (
+              <Box mb={2}>
+                <Text textTransform="uppercase" ms={1} color={headingColor}>Recent</Text>
+                <VStack>
+                  {searchVisits.slice(0, 5).map((item) => (
+                    <ResultCollection
+                      collection={item}
+                      onClick={handleCollectionClick}
+                      useCloseButton={true}
+                      onRemove={handleRemoveVisit}
+                    />
+                  ))}
+                </VStack>
+              </Box>
             )}
+            <Box display={value?.length >= minChars ? 'inherit' : 'none'}>
+              {status === "loading" ? (
+                <Center>
+                  <Spinner />
+                </Center>
+              ) : status === "error" ? (
+                <Center>
+                  <Text>Error: {error.message}</Text>
+                </Center>
+              ) : (
+                <>
+                  {data?.length > 0 ? (
+                    <Box>
+                      <Text textTransform="uppercase" ms={1} color={headingColor}>Collections</Text>
+                      <VStack>
+                        {data.slice(0, maxResults).map((item) => (
+                          <ResultCollection
+                            collection={item}
+                            floorPrice={item.stats.total.floorPrice}
+                            onClick={handleCollectionClick}
+                          />
+                        ))}
+                      </VStack>
+                      {maxResults < maxVisible && maxResults < data.length && (
+                        <Box mt={2} ms={1}>
+                          <Button variant="link" onClick={() => setMaxResults(maxVisible)} rightIcon={<ChevronDownIcon />}>
+                            View More
+                          </Button>
+                        </Box>
+                      )}
+                      {/*<Box mt={1}>*/}
+                      {/*  <Text className="text-muted">Press Enter to search all items</Text>*/}
+                      {/*</Box>*/}
+                    </Box>
+                  ) : (
+                    <Center>
+                      <Text>No results found</Text>
+                    </Center>
+                  )}
+                </>
+              )}
+            </Box>
           </Box>
         </Scrollbars>
       </Box>

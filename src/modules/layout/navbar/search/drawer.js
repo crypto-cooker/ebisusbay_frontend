@@ -17,7 +17,7 @@ import {
   useDisclosure,
   VStack
 } from "@chakra-ui/react";
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
 import {useSelector} from "react-redux";
@@ -30,6 +30,7 @@ import {appConfig} from "@src/Config";
 import {useRouter} from "next/router";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import ResultCollection from "@src/modules/layout/navbar/search/row";
+import {addToSearchVisitsInStorage, getSearchVisitsInStorage, removeSearchVisitFromStorage} from "@src/helpers/storage";
 
 const minChars = 3;
 
@@ -43,10 +44,10 @@ const MobileSearchDrawer = () => {
   const [value, setValue] = React.useState('');
   const searchIconColor = useColorModeValue('black', 'gray.300');
   const headingColor = useColorModeValue('black', 'gray.300');
-
+  const [searchVisits, setSearchVisits] = useState([]);
   const debouncedSearch = useDebounce(value, 500);
 
-  const { data, status, error, refetch, isFetching } = useQuery(
+  const { data, status, error, refetch } = useQuery(
     ['Search', debouncedSearch],
     () => search(debouncedSearch),
     {
@@ -68,8 +69,6 @@ const MobileSearchDrawer = () => {
 
   const handleChange = (event) => {
     const { value } = event.target;
-    // if (!searchRegex.test(value)) return;
-
     setValue(value);
   };
 
@@ -78,10 +77,34 @@ const MobileSearchDrawer = () => {
   };
 
   const handleCollectionClick = useCallback((collection) => {
+    addToSearchVisitsInStorage(collection);
     onClose();
     setValue('');
     router.push(`/collection/${collection.address}`);
   }, [onClose, router, setValue]);
+
+  const handleRemoveVisit = (collection) => {
+    removeSearchVisitFromStorage(collection.address);
+    const remainingVisits = getRelevantVisits();
+    setSearchVisits(remainingVisits);
+    if (remainingVisits?.length < 1 && (!data || data.length < 1)) onClose();
+  };
+
+  const getRelevantVisits = () => {
+    const visits = getSearchVisitsInStorage();
+
+    if (value && value.length >= minChars) {
+      return visits.filter((item) => {
+        return item.name.toLowerCase().includes(value.toLowerCase());
+      });
+    }
+
+    return visits;
+  };
+
+  useEffect(() => {
+    setSearchVisits(getRelevantVisits());
+  }, [value]);
 
   return (
     <>
@@ -128,6 +151,21 @@ const MobileSearchDrawer = () => {
           </DrawerHeader>
 
           <DrawerBody>
+            {searchVisits.length > 0 && (
+              <Box mb={2} fontSize="12px">
+                <Text textTransform="uppercase" ms={1} color={headingColor}>Recent</Text>
+                <VStack>
+                  {searchVisits.slice(0, 5).map((item) => (
+                    <ResultCollection
+                      collection={item}
+                      onClick={handleCollectionClick}
+                      useCloseButton={true}
+                      onRemove={handleRemoveVisit}
+                    />
+                  ))}
+                </VStack>
+              </Box>
+            )}
             {value.length >= minChars && (
               <Box fontSize="12px">
                 {status === "loading" ? (
