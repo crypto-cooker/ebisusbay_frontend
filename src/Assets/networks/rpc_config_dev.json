@@ -15355,6 +15355,136 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Crooked Penguin Cronos Club",
+      "slug": "crooked-penguin-cronos-club",
+      "multiToken": false,
+      "address": "0x519D5DBE54A1066a77601870De997D8Fd4B4274E",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Penguins come in a joyful range of colors, traits and sizes with a collection size of 350. 5th in the #Crooked adventure Penguins Stay #Crooked",
+        "verified": false,
+        "avatar": "/img/collections/crooked-penguin-cronos-club/avatar.webp",
+        "banner": "/img/collections/crooked-penguin-cronos-club/banner.webp",
+        "card": "/img/collections/crooked-penguin-cronos-club/card.webp",
+        "maxSupply": 500,
+        "twitter": "https://twitter.com/Sw33percrypto",
+        "discord": "https://discord.gg/zWv4D5sUqJ",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crooked Coyote Cronos Club",
+      "slug": "crooked-coyote-cronos-club",
+      "multiToken": false,
+      "address": "0xfcc59535ad26bb6f3de799a6f34b8497fb6d1ec0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A community-driven collectibles project featuring AI Generated art.  Coyotes come in a joyful range of colors, traits and sizes with a collection  size of 300. Each Coyote allows its owner to vote on further development. Hold 3 Coyotes.",
+        "verified": false,
+        "avatar": "/img/collections/crooked-coyote-cronos-club/avatar.webp",
+        "banner": "/img/collections/crooked-coyote-cronos-club/banner.webp",
+        "card": "/img/collections/crooked-coyote-cronos-club/card.webp",
+        "maxSupply": 500,
+        "twitter": "https://twitter.com/Sw33percrypto",
+        "discord": "https://discord.gg/zWv4D5sUqJ",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crooked Caribou Cronos Club",
+      "slug": "crooked-caribou-cronos-club",
+      "multiToken": false,
+      "address": "0xe9fb6b30f2C83DCe21be33BA336b73dBca2DFCb1",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Caribou come in a joyful range of colors, traits and sizes with a collection size of 500. 3rd in the #Crooked adventure Caribous Stay #Crooked",
+        "verified": false,
+        "avatar": "/img/collections/crooked-caribou-cronos-club/avatar.webp",
+        "banner": "/img/collections/crooked-caribou-cronos-club/banner.webp",
+        "card": "/img/collections/crooked-caribou-cronos-club/card.webp",
+        "maxSupply": 500,
+        "twitter": "https://twitter.com/Sw33percrypto",
+        "discord": "https://discord.gg/zWv4D5sUqJ",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crooked Meerkat Cronos Club",
+      "slug": "crooked-meerkat-cronos-club",
+      "multiToken": false,
+      "address": "0x9AaD19f3736Bb7b8e8ed9E6ea67f758f4cb0e8F9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A community-driven collectibles project featuring AI Generated art.   Meerkats are the 3rd collection in the crooked line they come in a joyful range of colors, traits and sizes with a collection size of 500.  Each Meerkat is part of the #crooked adventure. Hold 3 Meerkats and collect on future airdrops.",
+        "verified": false,
+        "avatar": "/img/collections/crooked-meerkat-cronos-club/avatar.webp",
+        "banner": "/img/collections/crooked-meerkat-cronos-club/banner.webp",
+        "card": "/img/collections/crooked-meerkat-cronos-club/card.webp",
+        "maxSupply": 500,
+        "twitter": "https://twitter.com/Sw33percrypto",
+        "discord": "https://discord.gg/zWv4D5sUqJ",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crooked Elephant Cronos Club",
+      "slug": "crooked-elephant-cronos-club",
+      "multiToken": false,
+      "address": "0x67e12E09f9cc5B0009486138Cb3Fd1935701c0C7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A community-driven collectibles project featuring AI Generated art.   Elephants are the 4th collection in the crooked line they come in a joyful range of colors, traits and sizes with a collection size of 500.  Each Elephant is part of the #crooked adventure. Hold 3 Elephants and collect on future airdrops.",
+        "verified": false,
+        "avatar": "/img/collections/crooked-elephant-cronos-club/avatar.webp",
+        "banner": "/img/collections/crooked-elephant-cronos-club/banner.webp",
+        "card": "/img/collections/crooked-elephant-cronos-club/card.webp",
+        "maxSupply": 500,
+        "twitter": "https://twitter.com/Sw33percrypto",
+        "discord": "https://discord.gg/zWv4D5sUqJ",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
