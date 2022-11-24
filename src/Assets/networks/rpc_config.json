@@ -15301,6 +15301,33 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Degen Ape Cronos Club",
+      "slug": "degen-ape-cronos-club",
+      "multiToken": false,
+      "address": "0x47C4184a9c5Ad620D5243c850A33833a3Cd010f5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "7777 Degen Apes looking for a degen holder on the cronos network. Join the degen club today!",
+        "verified": false,
+        "avatar": "/img/collections/degen-ape-cronos-club/avatar.webp",
+        "banner": "/img/collections/degen-ape-cronos-club/banner.webp",
+        "card": "/img/collections/degen-ape-cronos-club/card.webp",
+        "maxSupply": 7777,
+        "website": "https://degenapecronos.club/",
+        "twitter": "https://twitter.com/DegenApeCronos",
+        "discord": "https://discord.gg/QWa8Yw6zvu",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
