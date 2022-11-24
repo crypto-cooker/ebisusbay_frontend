@@ -15273,6 +15273,34 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Wetland Razzles",
+      "slug": "wetland-razzles",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Brought to you by CROugar Kingdom! Weekly Twitter and Discord giveaways for an entire year!  Maybe you will be a big winner! Get your Wetland Razzle Tix and tune in for the fun!",
+        "verified": true,
+        "avatar": "/img/collections/wetland-razzles/avatar.webp",
+        "banner": "/img/collections/wetland-razzles/banner.webp",
+        "card": "/img/collections/wetland-razzles/card.webp",
+        "maxSupply": 1000,
+        "website": "https://crougarkingdom.com/",
+        "twitter": "https://twitter.com/game_atthetable",
+        "discord": "https://discord.gg/4R3wrrpSj2",
+        "medium": "https://medium.com/@crougar",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
@@ -20757,6 +20785,46 @@
         "banner": "/img/drops/meta-planet-club/banner.webp",
         "avatar": "/img/collections/meta-planet-club/avatar.webp",
         "preview": "/img/collections/meta-planet-club/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 142,
+      "slug": "wetland-razzles",
+      "title": "Wetland Razzles",
+      "subtitle": "Brought to you by CROugar Kingdom! Weekly Twitter and Discord giveaways for an entire year!  Maybe you will be a big winner! Get your Wetland Razzle Tix and tune in for the fun!",
+      "description": "So you are curious about the origins of the Razzle? Have you heard of Ohla Village? It is where the Razzle was born. A beautiful, yet isolated settlement hidden amongst the hills and tributaries beyond the maw of Monte Anima. There, a small group of Crougars has lived for what could be 1200 years. No one really knows how long for sure...\n\nA razzle is part giveaway and part raffle. Minting a Razzle NFT is just like buying a raffle ticket. The difference is that that one Razzle ticket is all you need to participate during the entire season of giveaways!",
+      "author": {
+        "name": "CROugar Kingdom",
+        "website": "https://crougarkingdom.com/",
+        "twitter": "https://twitter.com/game_atthetable",
+        "discord": "https://discord.gg/4R3wrrpSj2",
+        "medium": "https://medium.com/@crougar"
+      },
+      "address": "",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 100,
+      "totalSupply": 10000,
+      "cost": "100",
+      "memberCost": "90",
+      "whitelistCost": "75",
+      "foundersOnly": false,
+      "start": 1669838400000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": false,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/wetland-razzles/drop.webp",
+        "banner": "/img/drops/wetland-razzles/banner.webp",
+        "avatar": "/img/collections/wetland-razzles/avatar.webp",
+        "preview": "/img/collections/wetland-razzles/card.webp"
       },
       "verification": {
         "verified": true,
