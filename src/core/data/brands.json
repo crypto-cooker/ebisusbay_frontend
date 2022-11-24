@@ -540,5 +540,25 @@
     },
     "categories": [],
     "style": {}
+  },
+  {
+    "slug": "baby-joey-nft",
+    "name": "BabyJoey NFT",
+    "description": "Bringing together the BabyJoeyNFT collections under one brand page. Brought to you by The BabyHop project. Play to earn, royalty distributions and much more!",
+    "images": {
+      "banner": "/img/brands/baby-joey-nft/banner.webp"
+    },
+    "collections": [
+      "0x04eE3890b7d6c5e1D9B7FEcd19bADA7Fa60A2770",
+      "0xee40C7EeB6bA2E1B9Bf5caA73D29B133175aAF1F"
+    ],
+    "socials": {
+      "website": "https://www.babyhop.finance/",
+      "twitter": "https://twitter.com/BabyHop__",
+      "discord": "https://discord.gg/fnVzKYPbg/",
+      "telegram": "https://t.me/BabyHopToken"
+    },
+    "categories": [],
+    "style": {}
   }
 ]
