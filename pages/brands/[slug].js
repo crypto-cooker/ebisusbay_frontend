@@ -93,7 +93,7 @@ const Brand = ({ brand, collections, stats }) => {
               {Object.entries(stats).map(([key, stat]) => (
                 <Stat key={key}>
                   <StatLabel>{stat.label}</StatLabel>
-                  <StatNumber>{siPrefixedNumber(stat.value)}</StatNumber>
+                  <StatNumber>{siPrefixedNumber(stat.value, 4)}</StatNumber>
                 </Stat>
               ))}
             </SimpleGrid>
