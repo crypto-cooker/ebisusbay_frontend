@@ -1,24 +1,29 @@
 import {
-  Box, Center,
-  Flex,
-  Input, InputGroup, InputLeftElement,
+  Box,
+  Center,
+  IconButton,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
   Spinner,
-  Text, useColorMode, useDisclosure, useOutsideClick,
+  Text,
+  useColorMode,
+  useDisclosure,
+  useOutsideClick,
   VStack
 } from "@chakra-ui/react";
-import React, {useCallback, useState} from "react";
+import React, {useCallback} from "react";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {useQuery} from "@tanstack/react-query";
 import {search} from "@src/core/api/next/search";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
-import {ImageKitService} from "@src/helpers/image";
-import {commify} from "ethers/lib/utils";
-import {caseInsensitiveCompare, pluralize, round} from "@src/utils";
+import {caseInsensitiveCompare} from "@src/utils";
 import {useRouter} from "next/router";
-import {SearchIcon} from "@chakra-ui/icons";
+import {CloseIcon, SearchIcon} from "@chakra-ui/icons";
 import useDebounce from "@src/core/hooks/useDebounce";
 import {appConfig} from "@src/Config";
 import ResultCollection from "@src/modules/layout/navbar/search/row";
+import Scrollbars from "react-custom-scrollbars-2";
 
 const searchRegex = /^\w+([\s-_]\w+)*$/;
 const minChars = 3;
@@ -84,6 +89,11 @@ const Search = () => {
     if (value && !isOpen) onOpen();
   };
 
+  const handleClear = () => {
+    setValue('');
+    onClose();
+  };
+
   const handleCollectionClick = useCallback((collection) => {
     onClose();
     setValue('');
@@ -111,6 +121,18 @@ const Search = () => {
           _placeholder={{ color: 'gray.300' }}
           variant={inputVariant}
         />
+        {value.length && (
+          <InputRightElement
+            children={
+              <IconButton
+                variant="unstyled"
+                icon={<CloseIcon w={3} h={3} />}
+                aria-label="Close search"
+                onClick={handleClear}
+              />
+            }
+          />
+        )}
       </InputGroup>
       <Box
         position="absolute"
@@ -118,48 +140,52 @@ const Search = () => {
         w="100%"
         mt={1}
         rounded="md"
-        px={2}
-        py={4}
         display={isOpen ? 'block' : 'none'}
         borderWidth="1px"
         borderColor={borderColor}
         boxShadow="dark-lg"
       >
-        <Box fontSize="12px">
-          {status === "loading" ? (
-            <Center>
-              <Spinner />
-            </Center>
-          ) : status === "error" ? (
-            <Center>
-              <Text>Error: {error.message}</Text>
-            </Center>
-          ) : (
-            <>
-              {data?.length > 0 ? (
-                <>
-                  <Text textTransform="uppercase" color={headingColor}>Collections</Text>
-                  <VStack>
-                    {data.slice(0, 5).map((item) => (
-                      <ResultCollection
-                        collection={item}
-                        floorPrice={item.stats.total.floorPrice}
-                        onClick={handleCollectionClick}
-                      />
-                    ))}
-                  </VStack>
-                  {/*<Box mt={1}>*/}
-                  {/*  <Text className="text-muted">Press Enter to search all items</Text>*/}
-                  {/*</Box>*/}
-                </>
-              ) : (
-                <Center>
-                  <Text>No results found</Text>
-                </Center>
-              )}
-            </>
-          )}
-        </Box>
+        <Scrollbars
+          autoHeight
+          autoHeightMax="calc(100vh - 74px)"
+          universal
+        >
+          <Box fontSize="12px" p={2}>
+            {status === "loading" ? (
+              <Center>
+                <Spinner />
+              </Center>
+            ) : status === "error" ? (
+              <Center>
+                <Text>Error: {error.message}</Text>
+              </Center>
+            ) : (
+              <>
+                {data?.length > 0 ? (
+                  <>
+                    <Text textTransform="uppercase" ms={1} color={headingColor}>Collections</Text>
+                    <VStack>
+                      {data.slice(0, 50).map((item) => (
+                        <ResultCollection
+                          collection={item}
+                          floorPrice={item.stats.total.floorPrice}
+                          onClick={handleCollectionClick}
+                        />
+                      ))}
+                    </VStack>
+                    {/*<Box mt={1}>*/}
+                    {/*  <Text className="text-muted">Press Enter to search all items</Text>*/}
+                    {/*</Box>*/}
+                  </>
+                ) : (
+                  <Center>
+                    <Text>No results found</Text>
+                  </Center>
+                )}
+              </>
+            )}
+          </Box>
+        </Scrollbars>
       </Box>
     </Box>
   )

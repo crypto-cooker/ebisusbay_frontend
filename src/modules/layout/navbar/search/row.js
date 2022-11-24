@@ -1,10 +1,10 @@
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import React, {useCallback} from "react";
-import {Box, Flex, Text, VStack} from "@chakra-ui/react";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {Box, Flex, Image, Text, VStack} from "@chakra-ui/react";
 import {ImageKitService} from "@src/helpers/image";
 import {commify} from "ethers/lib/utils";
 import {pluralize, round} from "@src/utils";
+import NextImage from "next/image";
 
 const ResultCollection = ({collection, floorPrice, onClick}) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
@@ -31,11 +31,10 @@ const ResultCollection = ({collection, floorPrice, onClick}) => {
           style={{borderRadius: '20px'}}
         >
           {collection.metadata && (
-            <AnyMedia
-              image={ImageKitService.buildAvatarUrl(collection.metadata.avatar)}
-              title={collection.name}
-              usePlaceholder={false}
-              className="img-rounded-8"
+            <Image
+              src={ImageKitService.buildAvatarUrl(collection.metadata.avatar)}
+              alt={collection.name}
+              rounded="md"
             />
           )}
         </Box>
@@ -48,9 +47,12 @@ const ResultCollection = ({collection, floorPrice, onClick}) => {
           </VStack>
         </Box>
         {floorPrice > 0 && (
-          <Box ms={2} my="auto" className="text-muted">
-            {commify(round(floorPrice))} CRO
-          </Box>
+          <Flex ms={2} my="auto" className="text-muted">
+            <NextImage src="/img/logos/cdc_icon.svg" width={16} height={16} />
+            <span className="ms-1">
+              {commify(round(floorPrice))}
+            </span>
+          </Flex>
         )}
       </Flex>
     </Box>
