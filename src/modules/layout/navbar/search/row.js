@@ -1,17 +1,24 @@
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import React, {useCallback} from "react";
-import {Box, Flex, Image, Text, VStack} from "@chakra-ui/react";
+import {Box, CloseButton, Flex, IconButton, Image, Text, VStack} from "@chakra-ui/react";
 import {ImageKitService} from "@src/helpers/image";
 import {commify} from "ethers/lib/utils";
 import {pluralize, round} from "@src/utils";
 import NextImage from "next/image";
+import {CloseIcon} from "@chakra-ui/icons";
 
-const ResultCollection = ({collection, floorPrice, onClick}) => {
+const ResultCollection = ({collection, floorPrice, onClick, onRemove, useCloseButton = false}) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
+  const hoverColor = useColorModeValue('black', 'white');
 
   const handleClick = useCallback(() => {
     onClick(collection);
   }, [onClick, collection]);
+
+  const handleRemove = useCallback((e) => {
+    e.stopPropagation();
+    onRemove(collection);
+  }, [onRemove, collection]);
 
   return (
     <Box
@@ -46,12 +53,20 @@ const ResultCollection = ({collection, floorPrice, onClick}) => {
             )}
           </VStack>
         </Box>
-        {floorPrice > 0 && (
+        {(useCloseButton || floorPrice > 0) && (
           <Flex ms={2} my="auto" className="text-muted">
-            <NextImage src="/img/logos/cdc_icon.svg" width={16} height={16} />
-            <span className="ms-1">
-              {commify(round(floorPrice))}
-            </span>
+            {useCloseButton ? (
+              <>
+                <CloseButton onClick={handleRemove} _hover={{color: hoverColor}} />
+              </>
+            ) : floorPrice > 0 && (
+              <>
+                <NextImage src="/img/logos/cdc_icon.svg" width={16} height={16} />
+                <span className="ms-1">
+                  {commify(round(floorPrice))}
+                </span>
+              </>
+            )}
           </Flex>
         )}
       </Flex>

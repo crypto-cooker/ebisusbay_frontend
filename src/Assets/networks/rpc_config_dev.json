@@ -12870,7 +12870,7 @@
       "multiToken": false,
       "address": "0xcc293ddd68df5f3389a2f020edb032525c78a592",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Octo Pirate Skull is a collection of 2888 unique hand-drawn Pirate warriors. Pirates who sailed to Cronos Island to conquer it. Each of the Octo Pirates has utility in staking and P2E game. Join us before it's too late.",
         "verified": false,
@@ -15236,7 +15236,7 @@
         "maxSupply": 1000,
         "twitter": "https://twitter.com/sousoubears",
         "discord": "https://discord.gg/2c5fdQM8xA",
-        "medium": "https://medium.com/@sousoubears/sou-sou-bears-degens-nft-drop-1cf7ff1fb407",
+        "medium": "https://medium.com/@sousoubears",
         "categories": [
           "collectibles"
         ]
@@ -15264,6 +15264,88 @@
         "website": "https://tennisshot30metaverse.com/",
         "twitter": "https://twitter.com/tennisshot30",
         "discord": "https://discord.gg/3NHv85S4",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Wetland Razzles",
+      "slug": "wetland-razzles",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Brought to you by CROugar Kingdom! Weekly Twitter and Discord giveaways for an entire year!  Maybe you will be a big winner! Get your Wetland Razzle Tix and tune in for the fun!",
+        "verified": true,
+        "avatar": "/img/collections/wetland-razzles/avatar.webp",
+        "banner": "/img/collections/wetland-razzles/banner.webp",
+        "card": "/img/collections/wetland-razzles/card.webp",
+        "maxSupply": 1000,
+        "website": "https://crougarkingdom.com/",
+        "twitter": "https://twitter.com/game_atthetable",
+        "discord": "https://discord.gg/4R3wrrpSj2",
+        "medium": "https://medium.com/@crougar",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Degen Ape Cronos Club",
+      "slug": "degen-ape-cronos-club",
+      "multiToken": false,
+      "address": "0x47C4184a9c5Ad620D5243c850A33833a3Cd010f5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "7777 Degen Apes looking for a degen holder on the cronos network. Join the degen club today!",
+        "verified": false,
+        "avatar": "/img/collections/degen-ape-cronos-club/avatar.webp",
+        "banner": "/img/collections/degen-ape-cronos-club/banner.webp",
+        "card": "/img/collections/degen-ape-cronos-club/card.webp",
+        "maxSupply": 7777,
+        "website": "https://degenapecronos.club/",
+        "twitter": "https://twitter.com/DegenApeCronos",
+        "discord": "https://discord.gg/QWa8Yw6zvu",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Sou-Sou Bears Babies",
+      "slug": "sou-sou-bears-babies",
+      "multiToken": false,
+      "address": "0xfb0C11b27275B06e6b185D896b586C0985eEC149",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Born and Raised in the Bear Market By Degenerate Bearish Dads, The Sou-Sou Bears are on the Prowl, Searching the Cronoverse for their Mamas.",
+        "verified": false,
+        "avatar": "/img/collections/sou-sou-bears-babies/avatar.webp",
+        "banner": "/img/collections/sou-sou-bears-babies/banner.webp",
+        "card": "/img/collections/sou-sou-bears-babies/card.webp",
+        "maxSupply": 500,
+        "twitter": "https://twitter.com/sousoubears",
+        "discord": "https://discord.gg/rMR6YNw7ME",
+        "medium": "https://medium.com/@sousoubears",
         "categories": [
           "collectibles"
         ]
@@ -20757,6 +20839,46 @@
         "banner": "/img/drops/meta-planet-club/banner.webp",
         "avatar": "/img/collections/meta-planet-club/avatar.webp",
         "preview": "/img/collections/meta-planet-club/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 142,
+      "slug": "wetland-razzles",
+      "title": "Wetland Razzles",
+      "subtitle": "Brought to you by CROugar Kingdom! Weekly Twitter and Discord giveaways for an entire year!  Maybe you will be a big winner! Get your Wetland Razzle Tix and tune in for the fun!",
+      "description": "So you are curious about the origins of the Razzle? Have you heard of Ohla Village? It is where the Razzle was born. A beautiful, yet isolated settlement hidden amongst the hills and tributaries beyond the maw of Monte Anima. There, a small group of Crougars has lived for what could be 1200 years. No one really knows how long for sure...\n\nA razzle is part giveaway and part raffle. Minting a Razzle NFT is just like buying a raffle ticket. The difference is that that one Razzle ticket is all you need to participate during the entire season of giveaways!",
+      "author": {
+        "name": "CROugar Kingdom",
+        "website": "https://crougarkingdom.com/",
+        "twitter": "https://twitter.com/game_atthetable",
+        "discord": "https://discord.gg/4R3wrrpSj2",
+        "medium": "https://medium.com/@crougar"
+      },
+      "address": "",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 100,
+      "totalSupply": 10000,
+      "cost": "100",
+      "memberCost": "90",
+      "whitelistCost": "75",
+      "foundersOnly": false,
+      "start": 1669838400000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": false,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/wetland-razzles/drop.webp",
+        "banner": "/img/drops/wetland-razzles/banner.webp",
+        "avatar": "/img/collections/wetland-razzles/avatar.webp",
+        "preview": "/img/collections/wetland-razzles/card.webp"
       },
       "verification": {
         "verified": true,
