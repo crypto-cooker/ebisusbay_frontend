@@ -14,6 +14,7 @@ import { appInitializer } from './GlobalState/InitSlice';
 import { getTheme } from './Theme/theme';
 import {DefaultHead} from "./Components/Head/DefaultHead";
 import {useColorMode} from "@chakra-ui/react";
+import {syncCartStorage} from "@src/GlobalState/cartSlice";
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -70,6 +71,10 @@ function App({ Component, pageProps }) {
       const loader = document.getElementById('initialLoader');
       if (loader) loader.style.display = 'none';
     }
+  }, []);
+
+  useEffect(() => {
+    dispatch(syncCartStorage());
   }, []);
 
   return (

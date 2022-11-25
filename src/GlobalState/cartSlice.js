@@ -1,11 +1,10 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {addToCartInStorage, clearCartInStorage, getCartInStorage, removeFromCartInStorage} from "@src/helpers/storage";
 
-const data = typeof window !== "undefined" ? getCartInStorage() : []
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
-    nfts: data,
+    nfts: [],
     shouldPrompt: false,
   },
   reducers: {
@@ -31,12 +30,17 @@ const cartSlice = createSlice({
     openCart: (state) => {
       state.shouldPrompt = true;
     },
-    syncStorage: (state) => {
-      state.nfts = getCartInStorage();
+    populateCart: (state, action) => {
+      state.nfts = action.payload;
     }
   },
 });
 
-export const { addToCart, removeFromCart, clearCart, acknowledgePrompt, openCart, syncStorage } = cartSlice.actions;
+export const { addToCart, removeFromCart, clearCart, acknowledgePrompt, openCart, populateCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
+
+export const syncCartStorage = () => (dispatch) => {
+  const nfts = getCartInStorage();
+  dispatch(populateCart(nfts));
+}

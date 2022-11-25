@@ -14,7 +14,7 @@ import {
   DrawerOverlay, Flex, Spacer, Text, useBreakpointValue, useColorModeValue, VStack, Wrap
 } from "@chakra-ui/react";
 import {getListingsByIds} from "@src/core/api/next/listings";
-import {acknowledgePrompt, clearCart, removeFromCart, syncStorage} from "@src/GlobalState/cartSlice";
+import {acknowledgePrompt, clearCart, removeFromCart, syncCartStorage} from "@src/GlobalState/cartSlice";
 import {ImageKitService} from "@src/helpers/image";
 import {commify} from "ethers/lib/utils";
 import {ethers} from "ethers";
@@ -164,7 +164,7 @@ const Cart = function () {
     const onReceiveMessage = (e) => {
       const { key } = e;
       if (key === LOCAL_STORAGE_ITEMS.cart) {
-        dispatch(syncStorage());
+        dispatch(syncCartStorage());
       }
     };
     if (typeof window !== 'undefined') {
@@ -179,7 +179,7 @@ const Cart = function () {
     <div>
       <div className="de-menu-notification" onClick={openMenu}>
         {cart.nfts.length > 0 && (
-          <div className="d-count">{cart.nfts.length > 99 ? '+' : cart.nfts.length}</div>
+          <div className="d-count">{cart.nfts.length > 9 ? '+' : cart.nfts.length}</div>
         )}
         <span>
           <FontAwesomeIcon icon={faShoppingBag} color={user.theme === 'dark' ? '#000' : '#000'} />

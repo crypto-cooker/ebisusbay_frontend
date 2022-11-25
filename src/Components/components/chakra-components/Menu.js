@@ -15,9 +15,9 @@ const Menu = ({MenuButton, MenuItems = []}) => {
     <MenuCK bg={getTheme(userTheme).colors.bgColor1} >
       {MenuButton}
       <MenuList bg={getTheme(userTheme).colors.bgColor1} zIndex={2}>
-        {MenuItems.map((item) => {
+        {MenuItems.map((item, key) => {
           return (
-            <MenuItem >{item}</MenuItem>
+            <MenuItem key={key}>{item}</MenuItem>
           )
         })}
       </MenuList>
