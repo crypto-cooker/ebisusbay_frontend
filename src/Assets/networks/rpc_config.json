@@ -7511,7 +7511,10 @@
         "website": "https://busybears.club/",
         "twitter": "https://twitter.com/BusyBearsClub",
         "discord": "https://discord.gg/5Y4mjweQR6",
-        "categories": []
+        "categories": [],
+        "rankings": {
+          "source": "provided"
+        }
       },
       "verification": {
         "verified": false,
@@ -11010,7 +11013,10 @@
         "instagram": "https://www.instagram.com/crohogsnft",
         "categories": [
           "utility"
-        ]
+        ],
+        "rankings": {
+          "source": "provided"
+        }
       },
       "verification": {
         "doxx": "private",
@@ -12233,7 +12239,10 @@
         "medium": "https://medium.com/@CronoSteakHouse",
         "categories": [
           "utility"
-        ]
+        ],
+        "rankings": {
+          "source": "provided"
+        }
       },
       "verification": {
         "verified": false,
@@ -12636,7 +12645,10 @@
         "discord": "https://discord.gg/hTmdgXHC",
         "categories": [
           "utility"
-        ]
+        ],
+        "rankings": {
+          "source": "provided"
+        }
       },
       "verification": {
         "verified": false,
@@ -15321,7 +15333,10 @@
         "discord": "https://discord.gg/QWa8Yw6zvu",
         "categories": [
           "collectibles"
-        ]
+        ],
+        "rankings": {
+          "source": "provided"
+        }
       },
       "verification": {
         "verified": false,
