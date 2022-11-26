@@ -468,7 +468,8 @@ export async function getNftFromFile(collectionId, nftId) {
       const video = convertIpfsResource(json.animation_url, json.tooltip);
 
       let isStaked = false;
-      if (collectionId === '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44') {
+      if (caseInsensitiveCompare(collectionId, '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44') ||
+        caseInsensitiveCompare(collectionId, '0x490A0b87191f678af7926043c59f040D4968033c')) {
         if (await contract.stakedApes(nftId)) {
           canTransfer = false;
           canSell = false;
