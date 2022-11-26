@@ -111,6 +111,7 @@ export async function getCollectionMetadata(contractAddress, sort, filter) {
   let query = {
     sortBy: 'totalVolume',
     direction: 'desc',
+    pageSize: 1000
   };
   if (filter != null) query[filter.type] = filter.value;
   if (sort != null && sort.type != null) {
