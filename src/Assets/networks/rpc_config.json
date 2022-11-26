@@ -1881,7 +1881,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Genesis Weird Apes is a collection of 2500 NFTs randomly generated from 125 traits aimed to bring Weirdness all over the Cronos Chain! Not just a PFP but an entire ecosystem of advanced mechanisms of staking, breeding, renting, customization and more!\nWith every 2D ape you may burn $WAC to claim an additional new 3D Voxel ape with corresponding rank and traits. Voxel apes will play a key role within our P2E, Legends of Weirdonite.\nVisit our Discord to join our wonderful community!",
+        "description": "Genesis Weird Apes is first ever Apes NFT collection on the Cronos Chain! It consists of 2500 unique Weird Apes randomly generated from ~125 unique traits mixed to bring Weirdness all over the Cronos Jungle! Weird Apes are not just PFPs, granting access to an ecosystem of revolutionary utilities including staking, breeding, renting, customization and, with the release of Legends Of Weirdonite, our P2E, 1:1 claim of Voxel Weird Apes that will preserve their traits!\nVisit our Discord to join our wonderful community!",
         "verified": true,
         "avatar": "/img/collections/weirdapesclub/avatar.webp",
         "card": "/img/collections/weirdapesclub/card.webp",
@@ -3537,7 +3537,7 @@
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "",
+        "description": "Lady Weird Apes is a collection of 2000 NFTs randomly generated from ~125 Traits.\nEach Lady is able to give birth up to 3 Baby Weird Apes by breeding with a Genesis.\nEach breedable Lady can be rented out earning $WAC and, once released LoW, each Lady in staking will reward its holder with 5 vials per day in addition to the opportunity to claim the corresponding Voxel Weird Ape preserving her traits!\nVisit our Discord to join our wonderful community!",
         "verified": true,
         "avatar": "/img/collections/weirdapesclub/avatar.webp",
         "card": "/img/collections/weirdapesclub/ladies/card.webp",
@@ -4288,7 +4288,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Baby Weird Apes will inherit rarity and some traits from parents, there will also be a random mutation that can give the baby brand new traits for a total number of 300+ traits. A Baby Weird Ape can be customized by changing the name and the bio. Every Baby can be staked to yield 5 Blue Vials per day in Legends of Weirdonite as the game releases.",
+        "description": "Baby Weird Apes is a collection of 6000 Baby Apes generated from the breeding of a Genesis and a Lady Weird Apes. Baby Weird Apes will inherit traits from both their parents and the weirdest ones will have random mutations that will give them new unique traits, for a total of over 300 traits! Through Romantic Wapes you can generate a bio-engineered Baby without owning the parents! Once released LoW, each Baby in staking will reward its holder with 5 vials per day in addition to the opportunity to claim the corresponding Voxel of the Baby Ape preserving his/her traits!\nVisit our Discord to join our wonderful community!",
         "verified": true,
         "avatar": "/img/collections/weirdapesclub/avatar.webp",
         "card": "/img/collections/weirdapesclub/baby/card.webp",
@@ -15617,7 +15617,7 @@
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "Weird Apes are truly weird creatures: faithful among themselves but wise enough to recognise both the Dionysian value of the ecstasy of the senses and the Apollonian value of technical progress. In order to bring these two dimensions together that many of our Wapes decide to become Romantic! Romantic Wapes are a collection deriving from the consensual agreement between Genesis and Lady Weird Apes, which combine them into 1 random WAPE out of a maximum of 4500 pieces, sum of their respective supplies. When a user rents a Genesis or a Lady Weird Ape to earn $WAC, the Wape turns Romantic! You can convert a Romantic Wape into the corresponding Weird Ape on our DApp whenever you wish! Yields in $WAC are sent directly to the Romantic Wape holder at the time of breeding. Romantic Wapes give access to all the utilities of the corresponding Weird Apes.",
+        "description": "Weird Apes are truly weird creatures: faithful among themselves but wise enough to recognise both the Dionysian value of the ecstasy of the senses and the Apollonian value of technical progress.\nIn order to bring these two dimensions together that many of our Wapes decide to become Romantic!\nRomantic Wapes are a collection deriving from the consensual agreement between Genesis and Lady Weird Apes, which combine them into 1 random WAPE out of a maximum of 4500 pieces, sum of their respective supplies.\nWhen a user rents a Genesis or a Lady Weird Ape to earn $WAC, the Wape turns Romantic! You can convert a Romantic Wape into the corresponding Weird Ape on our DApp whenever you wish! Yields in $WAC are sent directly to the Romantic Wape holder at the time of breeding. Romantic Wapes give access to all the utilities of the corresponding Weird Apes.",
         "verified": true,
         "avatar": "/img/collections/romantic-wapes/avatar.webp",
         "card": "/img/collections/romantic-wapes/card.webp",
