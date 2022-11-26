@@ -115,7 +115,7 @@ const MobileSearchDrawer = () => {
       </div>
       <Drawer
         isOpen={isOpen}
-        placement="bottom"
+        placement="right"
         onClose={onClose}
         size="full"
       >
