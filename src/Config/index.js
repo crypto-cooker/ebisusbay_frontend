@@ -252,6 +252,6 @@ export const featureFlags = {
   [Features.UNVERIFIED_WARNING]: false,            // Warning when buying from unverified collection
   [Features.REPORT_COLLECTION]: false,             // Report button on collection page
   [Features.NEW_CHAKRA_THEME]: false,             // Update theme
-  [Features.GLOBAL_SEARCH]: true,                // Global search bar
+  [Features.GLOBAL_SEARCH]: false,                // Global search bar
   [Features.BUNDLES]: false,                      // Bundles
 }
