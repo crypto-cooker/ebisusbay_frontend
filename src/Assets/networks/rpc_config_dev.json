@@ -15311,7 +15311,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -15507,7 +15507,7 @@
       "multiToken": false,
       "address": "0xE864DF5F24c09662A611A86AA3dF572860b11b60",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Dracro Mogul is the older Brother of Washington Mogul. Bringing the New America NFT Comic Book to life we take a deep dive into the life of The Moguls. 30% of all proceeds goes back to New America NFT Holders. Join our Discord and get creative with the comic book story idea and earn rewards. Be a part of creating the next character in the collection. Dracro Mogul will be added to our P2E Game Kill For Cro thats scheduled to release Q1 of 2023. Beta version even sooner.",
         "verified": false,
@@ -15636,6 +15636,34 @@
         "doxx": "private",
         "kyc": "ebisu",
         "verified": true
+      }
+    },
+    {
+      "name": "CroSwap Quartermasters",
+      "slug": "croswap-quartermasters",
+      "multiToken": false,
+      "address": "0x333580e4B59E74243451c531c29121c02F8E3102",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Quartermaster Collection is the second CroSwap Utility NFT after the CroSwap Founders NFT collection.  The Quartermaster Collection will have a max supply of 10,000 NFTs and have 160+ unique attributes for you to collect!",
+        "verified": true,
+        "avatar": "/img/collections/croswap-quartermasters/avatar.webp",
+        "card": "/img/collections/croswap-quartermasters/card.webp",
+        "banner": "/img/collections/croswap-quartermasters/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://croswap.com/",
+        "twitter": "https://twitter.com/CroSwapOfficial",
+        "discord": "https://discord.gg/croswap",
+        "medium": "https://medium.com/@CroSwapDEX",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
@@ -21130,7 +21158,7 @@
       }
     },
     {
-      "id": 142,
+      "id": 143,
       "slug": "wetland-razzles",
       "title": "Wetland Razzles",
       "subtitle": "Brought to you by CROugar Kingdom! Weekly Twitter and Discord giveaways for an entire year!  Maybe you will be a big winner! Get your Wetland Razzle Tix and tune in for the fun!",
@@ -21154,11 +21182,11 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": false,
+      "published": true,
       "complete": false,
       "images": {
         "drop": "/img/drops/wetland-razzles/drop.webp",
-        "banner": "/img/drops/wetland-razzles/banner.webp",
+        "banner": "/img/collections/wetland-razzles/banner.webp",
         "avatar": "/img/collections/wetland-razzles/avatar.webp",
         "preview": "/img/collections/wetland-razzles/card.webp"
       },
