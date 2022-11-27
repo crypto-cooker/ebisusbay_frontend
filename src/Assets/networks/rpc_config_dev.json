@@ -15637,6 +15637,34 @@
         "kyc": "ebisu",
         "verified": true
       }
+    },
+    {
+      "name": "CroSwap Quartermasters",
+      "slug": "croswap-quartermasters",
+      "multiToken": false,
+      "address": "0x333580e4B59E74243451c531c29121c02F8E3102",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Quartermaster Collection is the second CroSwap Utility NFT after the CroSwap Founders NFT collection.  The Quartermaster Collection will have a max supply of 10,000 NFTs and have 160+ unique attributes for you to collect!",
+        "verified": true,
+        "avatar": "/img/collections/croswap-quartermasters/avatar.webp",
+        "card": "/img/collections/croswap-quartermasters/card.webp",
+        "banner": "/img/collections/croswap-quartermasters/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://croswap.com/",
+        "twitter": "https://twitter.com/CroSwapOfficial",
+        "discord": "https://discord.gg/croswap",
+        "medium": "https://medium.com/@CroSwapDEX",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
