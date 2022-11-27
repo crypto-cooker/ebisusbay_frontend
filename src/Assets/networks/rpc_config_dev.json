@@ -15311,7 +15311,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -21130,7 +21130,7 @@
       }
     },
     {
-      "id": 142,
+      "id": 143,
       "slug": "wetland-razzles",
       "title": "Wetland Razzles",
       "subtitle": "Brought to you by CROugar Kingdom! Weekly Twitter and Discord giveaways for an entire year!  Maybe you will be a big winner! Get your Wetland Razzle Tix and tune in for the fun!",
@@ -21154,11 +21154,11 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": false,
+      "published": true,
       "complete": false,
       "images": {
         "drop": "/img/drops/wetland-razzles/drop.webp",
-        "banner": "/img/drops/wetland-razzles/banner.webp",
+        "banner": "/img/collections/wetland-razzles/banner.webp",
         "avatar": "/img/collections/wetland-razzles/avatar.webp",
         "preview": "/img/collections/wetland-razzles/card.webp"
       },
