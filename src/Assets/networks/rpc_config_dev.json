@@ -15561,7 +15561,7 @@
       "multiToken": false,
       "address": "0x7D8f0a2b275C0b22720A6Fc3b5a65AF84D9C55C5",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "CrofamLadiesRETRO is a collection consisting of 10 000 NFT.  11 traits and over 200 elements  CrofamLadiesVIP drop for TOP 200 CrofamLadiesRETRO holders  5% mint royalties for CrofamLadiesRETRO holders  10% Market Royalty Fee - We will buy CrofamLadiesRETRO from floor price and burn it  Part of the profits will be used to the CrofamLadiesVIP staking",
         "verified": false,
