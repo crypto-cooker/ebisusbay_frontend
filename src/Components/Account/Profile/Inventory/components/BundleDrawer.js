@@ -78,8 +78,12 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
 
   const onSubmitBundle = async (e) => {
     const anyErrors = await validationForm()
-    if (MAX_NFTS_IN_BUNDLE < batchListingCart.nfts.length) {
-      toast.error(`Max ${MAX_NFTS_IN_BUNDLE} nfts`);
+    if (MAX_NFTS_IN_BUNDLE < batchListingCart.nfts.length || 1 >= batchListingCart.nfts.length) {
+      if (MAX_NFTS_IN_BUNDLE < batchListingCart.nfts.length) {
+        toast.error(`Max ${MAX_NFTS_IN_BUNDLE} nfts`);
+      }else{
+        toast.error(`Min 2 nfts`);
+      }
     }
     else {
       if (anyErrors) {
@@ -93,6 +97,7 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
           toast.success('The bundle was created successfully');
           dispatch(setRefetchNfts(true))
           dispatch(clearBatchListingCart())
+          resetForm();
         }
         catch (error) {
           toast.error(`Error`);
@@ -129,6 +134,7 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
     handleBlur,
     handleSubmit,
     validateForm,
+    resetForm
   } = formikProps;
 
   return (
