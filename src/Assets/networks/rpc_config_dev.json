@@ -14170,7 +14170,7 @@
       },
       "verification": {
         "verified": false,
-        "doxx": false,
+        "doxx": true,
         "kyc": false
       }
     },
@@ -20699,8 +20699,8 @@
       "referral": false,
       "is1155": false,
       "published": false,
-      "complete": true,
-      "featured": false,
+      "complete": false,
+      "featured": true,
       "redirect": "https://mint.munk.finance",
       "images": {
         "drop": "/img/drops/cromunk/drop.webp",
@@ -20709,7 +20709,7 @@
         "preview": "/img/collections/cromunk/card.webp"
       },
       "verification": {
-        "doxx": false,
+        "doxx": true,
         "kyc": false,
         "escrow": false,
         "verified": false
