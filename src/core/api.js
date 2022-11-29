@@ -609,7 +609,7 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
   return await Promise.all(
     results
       .filter((nft) => {
-        if(nft.symbol && nft.symbol == 'Bundle') return true
+        if(nft.symbol && nft.symbol == 'Bundle' && nft.metadata?.nfts) return true
         const matchedContract = findCollectionByAddress(nft.nftAddress, nft.nftId);
         if (!matchedContract) return false;
 
@@ -618,14 +618,25 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
         return matchedContract && hasBalance;
       })
       .map(async (nft) => {
-        if(nft.symbol && nft.symbol == 'Bundle' && nft.metadata?.nfts){
+        if(nft.symbol && nft.symbol == 'Bundle' ){
+
+          const listed = !!getListing(nft.nftAddress, nft.nftId);
+          const listingId = listed ? getListing(nft.nftAddress, nft.nftId).listingId : null;
+          const price = listed ? getListing(nft.nftAddress, nft.nftId).price : null;
+
           return {
             address: nft.nftAddress,
             description: nft.metadata?.description,
             id: nft.nftId,
             title: nft.metadata?.title,
             nfts: nft.metadata?.nfts,
-            symbol: 'Bundle'
+            slug: nft.metadata?.slug,
+            symbol: 'Bundle',
+            listed,
+            listingId,
+            price,
+            canSell: true,
+            listable: true,
           }
         }
         else{

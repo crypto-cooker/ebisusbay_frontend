@@ -195,7 +195,7 @@ const MyNftCard = ({
             </>
             <Slider size={nft.nfts?.length}>
 
-              {nft.nfts?.map((nft) =>
+              {nft.nfts?.map((currentNft) =>
 
 
               (<Box
@@ -204,14 +204,14 @@ const MyNftCard = ({
                 transform="scale(1.0)"
                 cursor="pointer"
               >
-                <AnyMedia image={nftCardUrl(nft.id, nft.image)}
-                  title={nft.id}
+                <AnyMedia image={nftCardUrl(currentNft.id, currentNft.image)}
+                  title={currentNft.id}
                   newTab={false}
                   className="card-img-top marketplace"
-                  url={`/bundle/${nft.id}`}
+                  url={`/bundle/${nft.slug}`}
                   height={440}
                   width={440}
-                  video={batchListingCart.nfts.length > 0 ? undefined : (nft.video ?? nft.animation_url)}
+                  video={batchListingCart.nfts.length > 0 ? undefined : (currentNft.video ?? currentNft.animation_url)}
                   usePlaceholder={true}
                 />
 

@@ -71,14 +71,14 @@ const BundleDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, di
 
   const checkApproval = async () => {
     const contract = new Contract(item.nft.address, ERC721, user.provider.getSigner());
-    return await contract.isApprovedForAll(user.address, config.contracts.bundle);
+    return await contract.isApprovedForAll(user.address, config.contracts.market);
   };
 
   const approveContract = useCallback(async () => {
     try {
       setExecutingApproval(true);
       const contract = new Contract(item.nft.address, ERC721, user.provider.getSigner());
-      const tx = await contract.setApprovalForAll(config.contracts.bundle, true);
+      const tx = await contract.setApprovalForAll(config.contracts.market, true);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       dispatch(setApprovalBundle({ address: item.nft.address, status: true }));

@@ -20,7 +20,7 @@ const MenuPopup = ({ children, options = [] }) => {
       <PopoverTrigger>
         {React.cloneElement(children)}
       </PopoverTrigger>
-      <PopoverContent width='240px' bg={getTheme(userTheme).colors.bgColor1}>
+      <PopoverContent maxH='260px' overflow='scroll' width='240px' bg={getTheme(userTheme).colors.bgColor1}>
         <PopoverBody p='0'>
           <div className='social_media_popup'>
             <ul>

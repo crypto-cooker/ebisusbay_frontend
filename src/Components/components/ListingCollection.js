@@ -10,6 +10,7 @@ import { SortOption } from '../Models/sort-option.model';
 import HiddenCard from './HiddenCard';
 import { findCollectionByAddress, isMetapixelsCollection } from '../../utils';
 import {MarketFilters} from "../Models/market-filters.model";
+import ListingBundleCard from './ListingBundleCard';
 
 const ListingCollection = ({
   limitSize,
@@ -101,14 +102,22 @@ const ListingCollection = ({
               <div key={index} className="d-item col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12 mb-4 px-2">
                 {listing.special ? (
                   <HiddenCard />
-                ) : (
+                ) : (!listing.nft.nfts? (
                   <ListingCard
                     listing={listing}
                     imgClass="marketplace"
                     watermark={
                       isMetapixelsCollection(listing.nftAddress) ? '/img/collections/metapixels/avatar.png' : null
                     }
+                  />):(
+                    <ListingBundleCard
+                    listing={listing}
+                    imgClass="marketplace"
+                    watermark={
+                      isMetapixelsCollection(listing.nftAddress) ? '/img/collections/metapixels/avatar.png' : null
+                    }
                   />
+                  )
                 )}
               </div>
             ))}

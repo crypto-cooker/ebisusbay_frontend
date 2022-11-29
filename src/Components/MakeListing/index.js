@@ -30,6 +30,7 @@ import {
   ModalOverlay
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
+import ImageContainer from "@src/Components/Bundle/ImagesContainer";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -247,7 +248,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
       <ModalOverlay />
       <ModalContent>
         <ModalHeader className="text-center">
-          {listing ? 'Update' : 'Sell'} {nft.name}
+          {listing ? 'Update' : 'Sell'} {nft.symbol === 'Bundle'? nft.title : nft.name}
         </ModalHeader>
         <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
         {!isLoading ? (
@@ -255,14 +256,18 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
             <ModalBody>
               <div className="nftSaleForm row gx-3">
                 <div className="col-12 col-sm-6 mb-2 mb-sm-0">
-                  <AnyMedia
+                  { nft.symbol === 'Bundle'? (
+                    <ImageContainer nft={nft} />
+                  )
+                  :
+                  (<AnyMedia
                     image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
                     video={nft.video ?? nft.animation_url}
                     videoProps={{ height: 'auto', autoPlay: true }}
                     title={nft.name}
                     usePlaceholder={false}
                     className="img-fluid img-rounded"
-                  />
+                  />)}
                 </div>
                 <div className="col-12 col-sm-6">
                   <h3>Sale Type</h3>

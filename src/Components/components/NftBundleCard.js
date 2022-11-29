@@ -202,7 +202,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, canBuy = t
           <Flex direction="column" height="100%">
             <div className="card-img-container">
             <Slider size={nft.nfts?.length}>
-              {nft.nfts?.map((nft)=> (
+              {nft.nfts?.map((currentNft)=> (
                 <Box
                 _groupHover={{ transform: 'scale(1.05)', transition: '0.3s ease' }}
                 transition="0.3s ease"
@@ -211,25 +211,25 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, canBuy = t
                 {watermark ? (
                   <Watermarked watermark={watermark}>
                     <AnyMedia
-                      image={nftCardUrl(nft.address, nft.image)}
+                      image={nftCardUrl(currentNft.address, currentNft.image)}
                       className={`card-img-top ${imgClass}`}
-                      title={nft.title}
-                      url={`/collection/${nft.id}`}
+                      title={currentNft.title}
+                      url={`/bundle/${nft.slug}`}
                       width={440}
                       height={440}
-                      video={nft.video ?? nft.animation_url}
+                      video={currentNft.video ?? currentNft.animation_url}
                       usePlaceholder={true}
                     />
                   </Watermarked>
                 ) : (
                   <AnyMedia
-                    image={nftCardUrl(nft.address, nft.image)}
+                    image={nftCardUrl(currentNft.address, currentNft.image)}
                     className={`card-img-top ${imgClass}`}
-                    title={nft.title}
-                    url={`/collection/${nft.id}`}
+                    title={currentNft.title}
+                    url={`/bundle/${nft.slug}`}
                     width={440}
                     height={440}
-                    video={nft.video ?? nft.animation_url}
+                    video={currentNft.video ?? currentNft.animation_url}
                     usePlaceholder={true}
                   />
                 )}

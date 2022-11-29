@@ -20,7 +20,6 @@ const useUnwrapBundle = () => {
   const user = useSelector((state) => state.user);
 
   const unwrapBundle = async (bundleId) => {
-    console.log('bundleId', bundleId)
     setResponse({
       ...response,
       loading: true,
@@ -38,6 +37,7 @@ const useUnwrapBundle = () => {
 
         const newBundle = await bundleContract.unwrap(bundleId) 
         let tbAwait = await newBundle.wait();
+        await new Promise(resolve => setTimeout(resolve, 5000));
 
         setResponse({
           ...response,

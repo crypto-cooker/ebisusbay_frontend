@@ -124,6 +124,7 @@ const Cart = function () {
 
         await executeBuy();
       } catch (error) {
+        console.log('ERROR:: ', error)
         if (error.data) {
           toast.error(error.data.message);
         } else if (error.message) {
@@ -225,10 +226,18 @@ const Cart = function () {
                         />
                       </Box>
                       <Box flex='1' ms={2}>
+                        
                         <VStack align="left" spacing={0}>
-                          <Link href={`/collection/${nft.address}/${nft.id}`} passHref>
+                         {!nft.isBundle? (<Link href={`/collection/${nft.address}/${nft.id}`} passHref>
                             <NftLink name={nft.name} />
-                          </Link>
+                          </Link>)
+                          :
+                          (
+                            <Link href={`/bundle/${nft.slug}`} passHref>
+                              <NftLink name={nft.name} />
+                            </Link>
+                          )
+                          }
                           {nft.rank && (
                             <Box>
                               <Badge variant='solid' colorScheme='blue'>

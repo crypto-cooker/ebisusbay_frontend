@@ -131,13 +131,22 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
           width={50}
           height={50}
           style={{ borderRadius: '20px' }}
-        >
+        > 
+        { item.nft.symbol && item.nft.symbol === 'Bundle'?(
           <AnyMedia
+          image={ImageKitService.buildAvatarUrl(item.nft.nfts[0].image)}
+          title={item.nft.name}
+          usePlaceholder={false}
+          className="img-rounded-8"
+          />
+        )
+        :
+          (<AnyMedia
             image={ImageKitService.buildAvatarUrl(item.nft.image)}
             title={item.nft.name}
             usePlaceholder={false}
             className="img-rounded-8"
-          />
+          />)}
         </Box>
         <Box flex='1' ms={2} fontSize="14px">
           <VStack align="left" spacing={0}>

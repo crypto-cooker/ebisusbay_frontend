@@ -114,10 +114,11 @@ export default function Inventory({ address }) {
                       {caseInsensitiveCompare(address, user.address) ? (
                         <MyBundleCard
                           nft={nft}
-                          canTransfer={true}
-                          canSell={true}
-                          canCancel={true}
-                          canUpdate={true}
+                          canTransfer={nft.canTransfer}
+                          canSell={nft.listable && !nft.listed && nft.canSell}
+                          isStaked={nft.isStaked}
+                          canCancel={nft.listed && nft.listingId}
+                          canUpdate={nft.listable && nft.listed}
                           onTransferButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageTransferDialog(nft))}
                           onSellButtonPressed={() => {
                             dispatch(MyNftPageActions.showMyNftPageListDialog(nft))

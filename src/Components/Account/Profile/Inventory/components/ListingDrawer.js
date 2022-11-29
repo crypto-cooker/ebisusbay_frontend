@@ -125,6 +125,7 @@ export const ListingDrawer = () => {
           <>
             {batchListingCart.nfts.map((item, key) => (
               <ListingDrawerItem
+                key={key}
                 item={item}
                 onCascadePriceSelected={handleCascadePrices}
                 onApplyAllSelected={handleApplyAll}

@@ -3,8 +3,10 @@ import React, { useState, useCallback } from "react";
 import { AnyMedia } from '@src/Components/components/AnyMedia'
 import { specialImageTransform } from '@src/hacks';
 import Link from "next/link";
-import {shortAddress} from "@src/utils";
+import {shortAddress, timeSince} from "@src/utils";
 import NFTTabOffers from '@src/Components/Offer/NFTTabOffers';
+import ListingItem from "../NftDetails/NFTTabListings/ListingItem";
+import { Contract, ethers } from 'ethers';
 
 const tabs = {
   properties: 'properties',
@@ -54,57 +56,6 @@ const Tabs = ({ nft }) => {
       {
         nft ? (
           <div className="de_tab_content" style={{maxWidth: '600px'}}>
-            {/* {currentTab === tabs.properties && (
-              <div className="tab-1 onStep fadeIn">
-                {(nft.attributes && Array.isArray(nft.attributes) && nft.attributes.length > 0) ||
-                  (nft.properties && Array.isArray(nft.properties) && nft.properties.length > 0) ? (
-                  <div className="d-block mb-3">
-                    <div className="row gx-3 gy-2">
-                      {nft.attributes &&
-                        Array.isArray(nft.attributes) &&
-                        nft.attributes
-                          .filter((a) => a.value !== 'None')
-                          .map((data, i) => {
-                            return (
-                              <Trait
-                                key={i}
-                                title={data.trait_type}
-                                value={data.value}
-                                percent={data.percent}
-                                occurrence={data.occurrence}
-                                type={data.display_type}
-                                collectionAddress={address}
-                                collectionSlug={collection.slug}
-                                queryKey="traits"
-                              />
-                            );
-                          })}
-                      {nft.properties &&
-                        Array.isArray(nft.properties) &&
-                        nft.properties.map((data, i) => {
-                          return (
-                            <Trait
-                              key={i}
-                              title={data.trait_type}
-                              value={data.value}
-                              percent={data.percent}
-                              occurrence={data.occurrence}
-                              type={data.display_type}
-                              collectionAddress={address}
-                              collectionSlug={collection.slug}
-                              queryKey="traits"
-                            />
-                          );
-                        })}
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    <span>No traits found for this item</span>
-                  </>
-                )}
-              </div>
-            )} */}
             {currentTab === tabs.history && (
               <div className="listing-tab tab-3 onStep fadeIn">
                 {listingHistory && listingHistory.length > 0 ? (
