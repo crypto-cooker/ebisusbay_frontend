@@ -3940,7 +3940,7 @@
       },
       "verification": {
         "verified": true,
-        "doxx": false,
+        "doxx": true,
         "kyc": false
       }
     },
@@ -13728,7 +13728,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Candy Citizens are bringing their sweetness to the Crofam. They won't rest until every cronos wallet has Candy.",
+        "description": "Bored Candy NFTs are the official NFT collection of Bored Candy City, the newest Cronos Chain ecosystem comprised of $CANDY token, a DEX & AMM, Play 2 Earn Web3 Games and the first P2E Mobile Game listed in App Store & Play Store.\nThese NFTs can be staked in the DEX for a fixed amount of $CANDY per day OR for a share of 25% of ALL games revenues OR to boost farms APRs by up to 25%.\nThey will also bare utility in the web3 and mobile games in the future.",
         "verified": true,
         "avatar": "/img/collections/bored-candy/avatar.webp",
         "banner": "/img/collections/bored-candy/banner.webp",
@@ -15644,7 +15644,7 @@
       "multiToken": false,
       "address": "0x333580e4B59E74243451c531c29121c02F8E3102",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Quartermaster Collection is the second CroSwap Utility NFT after the CroSwap Founders NFT collection.  The Quartermaster Collection will have a max supply of 10,000 NFTs and have 160+ unique attributes for you to collect!",
         "verified": true,
@@ -15658,6 +15658,33 @@
         "medium": "https://medium.com/@CroSwapDEX",
         "categories": [
           "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Spoon's Misfits",
+      "slug": "spoons-misfits",
+      "multiToken": false,
+      "address": "0x254c76deB8F7eCBAB0eA67C5AC54B2266a306Ef9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Extremely limited Extremely Rare NFTs An ongoing collection of CronosOG DogelonSpoon's smaller creations and things that didn't quite make a mint. This collection is not for immediate retail but is a collection firstly dedicated to the CronosOG holders in the way og giveaways and prizes but allowed to be sold on a marketplace.",
+        "verified": true,
+        "avatar": "/img/collections/spoons-misfits/avatar.webp",
+        "banner": "/img/collections/spoons-misfits/banner.webp",
+        "card": "/img/collections/spoons-misfits/card.webp",
+        "maxSupply": 60,
+        "website": "https://cronosogcollections.com/",
+        "twitter": "https://www.twitter.com/og_cronos",
+        "discord": "https://discord.gg/cGAyAP47QF",
+        "categories": [
+          "collectibles"
         ]
       },
       "verification": {
