@@ -15644,7 +15644,7 @@
       "multiToken": false,
       "address": "0x333580e4B59E74243451c531c29121c02F8E3102",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Quartermaster Collection is the second CroSwap Utility NFT after the CroSwap Founders NFT collection.  The Quartermaster Collection will have a max supply of 10,000 NFTs and have 160+ unique attributes for you to collect!",
         "verified": true,
