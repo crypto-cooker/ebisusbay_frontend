@@ -253,5 +253,5 @@ export const featureFlags = {
   [Features.REPORT_COLLECTION]: false,             // Report button on collection page
   [Features.NEW_CHAKRA_THEME]: false,             // Update theme
   [Features.GLOBAL_SEARCH]: true,                // Global search bar
-  [Features.BUNDLES]: false,                      // Bundles
+  [Features.BUNDLES]: true,                      // Bundles
 }
