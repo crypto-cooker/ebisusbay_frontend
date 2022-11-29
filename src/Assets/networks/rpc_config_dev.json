@@ -15665,6 +15665,33 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Spoon's Misfits",
+      "slug": "spoons-misfits",
+      "multiToken": false,
+      "address": "0x254c76deB8F7eCBAB0eA67C5AC54B2266a306Ef9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Extremely limited Extremely Rare NFTs An ongoing collection of CronosOG DogelonSpoon's smaller creations and things that didn't quite make a mint. This collection is not for immediate retail but is a collection firstly dedicated to the CronosOG holders in the way og giveaways and prizes but allowed to be sold on a marketplace.",
+        "verified": true,
+        "avatar": "/img/collections/spoons-misfits/avatar.webp",
+        "banner": "/img/collections/spoons-misfits/banner.webp",
+        "card": "/img/collections/spoons-misfits/card.webp",
+        "maxSupply": 60,
+        "website": "https://cronosogcollections.com/",
+        "twitter": "https://www.twitter.com/og_cronos",
+        "discord": "https://discord.gg/cGAyAP47QF",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
