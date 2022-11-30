@@ -15746,6 +15746,30 @@
         "kyc": false,
         "verified": false
       }
+    },
+    {
+      "name": "Baby Demon Legion",
+      "slug": "baby-demon-legion",
+      "multiToken": false,
+      "address": "0xd05c62Dc7941B243cffCb7d3eF483279F21b08F0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Baby Demon Legion, a collection airdropped exclusively to holders of the original Cronos Demon Legion NFTs.",
+        "verified": true,
+        "avatar": "/img/collections/baby-demon-legion/avatar.webp",
+        "card": "/img/collections/baby-demon-legion/card.webp",
+        "banner": "/img/collections/baby-demon-legion/banner.webp",
+        "maxSupply": 555,
+        "twitter": "https://twitter.com/DemonLegionNFT",
+        "discord": "https://discord.gg/tgrn3t6nnd",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
