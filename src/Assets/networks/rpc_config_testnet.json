@@ -2976,7 +2976,7 @@
       "name": "Wetland Razzles",
       "slug": "wetland-razzles",
       "multiToken": false,
-      "address": "0x086882D61BC0f2Cb93d5901BdBA5714ee9621C82",
+      "address": "0xd8bf8736e181553b2feAF6F69Dd3474d03edabcb",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -6967,7 +6967,7 @@
         "discord": "https://discord.gg/4R3wrrpSj2",
         "medium": "https://medium.com/@crougar"
       },
-      "address": "0x086882D61BC0f2Cb93d5901BdBA5714ee9621C82",
+      "address": "0xd8bf8736e181553b2feAF6F69Dd3474d03edabcb",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 100,
       "totalSupply": 10000,
