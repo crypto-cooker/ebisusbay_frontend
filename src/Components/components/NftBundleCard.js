@@ -65,7 +65,7 @@ const MakeBuy = styled.div`
 `;
 
 const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, canBuy = true }) => {
-  const nftUrl = appUrl(`/collection/${nft.id}`);
+  const nftUrl = appUrl(`/bundle/${nft.slug}`);
   const history = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -240,7 +240,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, canBuy = t
               </div>
             {nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{nft.rank}</div>}
             <div className="d-flex flex-column justify-content-between p-2 pb-1">
-              <Link href={`/collection/${nft.id}`}>
+              <Link href={`/bundle/${nft.slug}`}>
                 <a>
                   <Heading as="h6" size="sm" className="card-title mt-auto">{nft.title}</Heading>
                 </a>
