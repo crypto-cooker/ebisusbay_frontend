@@ -15110,7 +15110,7 @@
         "maxSupply": 2210,
         "website": "https://buds-meta.com/",
         "twitter": "https://twitter.com/BudsMeta",
-        "discord": "https://discord.gg/7NrZw7sn",
+        "discord": "https://discord.gg/JvQ88sgkJY",
         "instagram": "https://www.instagram.com/buds.meta.420",
         "categories": [
           "collectibles"
@@ -21194,7 +21194,7 @@
         "name": "BudsMeta",
         "website": "https://buds-meta.com/",
         "twitter": "https://twitter.com/BudsMeta",
-        "discord": "https://discord.gg/7NrZw7sn",
+        "discord": "https://discord.gg/JvQ88sgkJY",
         "instagram": "https://www.instagram.com/buds.meta.420"
       },
       "address": "",
@@ -21205,7 +21205,7 @@
       "memberCost": "320",
       "whitelistCost": "330",
       "foundersOnly": false,
-      "start": null,
+      "start": 1669924800000,
       "end": null,
       "referral": false,
       "is1155": false,
