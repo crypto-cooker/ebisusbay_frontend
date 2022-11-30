@@ -15692,6 +15692,33 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "0xLuckless v1.6",
+      "slug": "0xluckless-v1-6",
+      "multiToken": false,
+      "address": "0xb9efdd70E93DbE4C700a229deCAf09e24C4Aef8C",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "8K Resolution Artworks that are unique and unlike anything else on the blockchain, created with the power of A.I. and advanced editing techniques across multiple platforms to produce the highest quality artwork on Cronos. No roadmaps, no staking, no games, just art, community, and utility.",
+        "verified": true,
+        "avatar": "/img/collections/0xluckless-v1-6/avatar.webp",
+        "card": "/img/collections/0xluckless-v1-6/card.webp",
+        "banner": "/img/collections/0xluckless-v1-6/banner.webp",
+        "maxSupply": 4,
+        "website": "https://0xluckless.com",
+        "twitter": "https://twitter.com/0xLuckless",
+        "discord": "https://discord.gg/BpAVk2Za2c",
+        "medium": "https://medium.com/@0xLuckless",
+        "instagram": "https://www.instagram.com/0xLuckless",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "ebisu",
+        "verified": true
+      }
     }
   ],
   "drops": [
