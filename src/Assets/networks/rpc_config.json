@@ -15712,12 +15712,39 @@
         "discord": "https://discord.gg/BpAVk2Za2c",
         "medium": "https://medium.com/@0xLuckless",
         "instagram": "https://www.instagram.com/0xLuckless",
-        "categories": []
+        "categories": [
+          "art"
+        ]
       },
       "verification": {
         "doxx": "public",
         "kyc": "ebisu",
         "verified": true
+      }
+    },
+    {
+      "name": "Trollfam",
+      "slug": "trollfam",
+      "multiToken": false,
+      "address": "0x04B5aBBcA29c2750bFDCfeA20fC1511913711D22",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Trollfam is built from a community of Trollcoin holders. You are Trollcoin, we are Trollfam!",
+        "verified": false,
+        "avatar": "/img/collections/trollfam/avatar.webp",
+        "card": "/img/collections/trollfam/card.webp",
+        "banner": "/img/collections/trollfam/banner.webp",
+        "maxSupply": 5555,
+        "website": "https://trollcoin.clubcro.com/",
+        "twitter": "https://twitter.com/club_cro",
+        "discord": "https://discord.gg/u3USwUZ8nT",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
       }
     }
   ],
