@@ -240,7 +240,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                     image={nftCardUrl(currentNft.id, currentNft.image)}
                     className={`card-img-top ${imgClass}`}
                     title={currentNft.id}
-                    url={`/bundle/${listing.slug}`}
+                    url={`/bundle/${listing.nft.slug}`}
                     height={440}
                     width={440}
                   />

@@ -51,7 +51,7 @@ const Bundle = ({ bundle }) => {
             <Heading as="h2" size="xl" >
               {bundle.title}
             </Heading>
-            <Text textAlign='justify' maxH='200px' overflow='scroll'>
+            <Text textAlign='justify'>
               {bundle.description}
             </Text>
 
