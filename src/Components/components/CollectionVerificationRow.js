@@ -32,7 +32,7 @@ export const CollectionVerificationRow = ({doxx, kyc, escrow, creativeCommons, c
 
   return (
     <div className={`d-flex ${center ? 'justify-content-center' : ''}`}>
-      {doxx && doxx === 'public' && (
+      {(doxx === true || doxx === 'public') && (
         <OverlayTrigger
           placement="top"
           delay={{ show: 100, hide: 100 }}

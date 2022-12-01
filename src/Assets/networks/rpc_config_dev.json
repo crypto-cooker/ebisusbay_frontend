@@ -14180,7 +14180,7 @@
       "multiToken": false,
       "address": "0xd2717D785595eF80Dee68fD75a3CdD429adece35",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Team Movember 2022 is an initiative of Team Mustachios to raise funds for the Movember Foundation Charity. 2022 NFTs and 50% of the mint will go directly to the cause. Movember fundraisers are a global community of fired up Mo Bros and Mo Sisters \u2013 aka rock stars making a difference in mental health and suicide prevention, prostate cancer and testicular cancer.",
         "verified": true,
@@ -20778,7 +20778,7 @@
       "is1155": false,
       "published": true,
       "complete": false,
-      "featured": false,
+      "featured": true,
       "redirect": "https://mint.munk.finance",
       "images": {
         "drop": "/img/drops/cromunk/drop.webp",
@@ -20817,7 +20817,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/team-movember/drop.webp",
         "banner": "/img/collections/team-movember/banner.webp",
