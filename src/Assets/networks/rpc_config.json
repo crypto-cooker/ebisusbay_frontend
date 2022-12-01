@@ -14255,7 +14255,7 @@
       "multiToken": false,
       "address": "0xDB3550920A04fDc724bF3fEe21BFb0FCD36b32DF",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "CroSwap World Cup Sweepstakes NFT Country Cards",
         "verified": true,
