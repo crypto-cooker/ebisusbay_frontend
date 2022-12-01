@@ -11788,7 +11788,7 @@
       "multiToken": false,
       "address": "0xBA51Cbe289c808B2Da3ef51DdF617076A49A0eA8",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The First Companion collection of the CRO Homes Project. Collect them all and create your own style!",
         "verified": true,
@@ -14255,7 +14255,7 @@
       "multiToken": false,
       "address": "0xDB3550920A04fDc724bF3fEe21BFb0FCD36b32DF",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "CroSwap World Cup Sweepstakes NFT Country Cards",
         "verified": true,
@@ -15098,7 +15098,7 @@
       "name": "Buds",
       "slug": "buds",
       "multiToken": false,
-      "address": "",
+      "address": "0x2F29a990DCf380632b15893Cc8435eD9C1C88544",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -21197,7 +21197,7 @@
         "discord": "https://discord.gg/JvQ88sgkJY",
         "instagram": "https://www.instagram.com/buds.meta.420"
       },
-      "address": "",
+      "address": "0x2F29a990DCf380632b15893Cc8435eD9C1C88544",
       "maxMintPerTx": 50,
       "maxMintPerAddress": 100,
       "totalSupply": 2210,

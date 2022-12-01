@@ -15098,7 +15098,7 @@
       "name": "Buds",
       "slug": "buds",
       "multiToken": false,
-      "address": "",
+      "address": "0x2F29a990DCf380632b15893Cc8435eD9C1C88544",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -21197,7 +21197,7 @@
         "discord": "https://discord.gg/JvQ88sgkJY",
         "instagram": "https://www.instagram.com/buds.meta.420"
       },
-      "address": "",
+      "address": "0x2F29a990DCf380632b15893Cc8435eD9C1C88544",
       "maxMintPerTx": 50,
       "maxMintPerAddress": 100,
       "totalSupply": 2210,
