@@ -3940,7 +3940,7 @@
       },
       "verification": {
         "verified": true,
-        "doxx": false,
+        "doxx": true,
         "kyc": false
       }
     },
@@ -13728,7 +13728,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Candy Citizens are bringing their sweetness to the Crofam. They won't rest until every cronos wallet has Candy.",
+        "description": "Bored Candy NFTs are the official NFT collection of Bored Candy City, the newest Cronos Chain ecosystem comprised of $CANDY token, a DEX & AMM, Play 2 Earn Web3 Games and the first P2E Mobile Game listed in App Store & Play Store.\nThese NFTs can be staked in the DEX for a fixed amount of $CANDY per day OR for a share of 25% of ALL games revenues OR to boost farms APRs by up to 25%.\nThey will also bare utility in the web3 and mobile games in the future.",
         "verified": true,
         "avatar": "/img/collections/bored-candy/avatar.webp",
         "banner": "/img/collections/bored-candy/banner.webp",
@@ -14170,7 +14170,7 @@
       },
       "verification": {
         "verified": false,
-        "doxx": false,
+        "doxx": true,
         "kyc": false
       }
     },
@@ -15110,7 +15110,7 @@
         "maxSupply": 2210,
         "website": "https://buds-meta.com/",
         "twitter": "https://twitter.com/BudsMeta",
-        "discord": "https://discord.gg/7NrZw7sn",
+        "discord": "https://discord.gg/JvQ88sgkJY",
         "instagram": "https://www.instagram.com/buds.meta.420",
         "categories": [
           "collectibles"
@@ -15290,7 +15290,7 @@
       "name": "Wetland Razzles",
       "slug": "wetland-razzles",
       "multiToken": false,
-      "address": "",
+      "address": "0xE97e0636abA2A02E7aB523fc6dE726C3525DBc39",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -15644,7 +15644,7 @@
       "multiToken": false,
       "address": "0x333580e4B59E74243451c531c29121c02F8E3102",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Quartermaster Collection is the second CroSwap Utility NFT after the CroSwap Founders NFT collection.  The Quartermaster Collection will have a max supply of 10,000 NFTs and have 160+ unique attributes for you to collect!",
         "verified": true,
@@ -15659,6 +15659,111 @@
         "categories": [
           "utility"
         ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Spoon's Misfits",
+      "slug": "spoons-misfits",
+      "multiToken": false,
+      "address": "0x254c76deB8F7eCBAB0eA67C5AC54B2266a306Ef9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Extremely limited Extremely Rare NFTs An ongoing collection of CronosOG DogelonSpoon's smaller creations and things that didn't quite make a mint. This collection is not for immediate retail but is a collection firstly dedicated to the CronosOG holders in the way og giveaways and prizes but allowed to be sold on a marketplace.",
+        "verified": true,
+        "avatar": "/img/collections/spoons-misfits/avatar.webp",
+        "banner": "/img/collections/spoons-misfits/banner.webp",
+        "card": "/img/collections/spoons-misfits/card.webp",
+        "maxSupply": 60,
+        "website": "https://cronosogcollections.com/",
+        "twitter": "https://www.twitter.com/og_cronos",
+        "discord": "https://discord.gg/cGAyAP47QF",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "0xLuckless v1.6",
+      "slug": "0xluckless-v1-6",
+      "multiToken": false,
+      "address": "0xb9efdd70E93DbE4C700a229deCAf09e24C4Aef8C",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Version 1.6 secret collection for 0xLuckless Project Genesis holders. This collection consists of one of one pieces that were redeemed for IRL canvas art provided by EvergreenKings.com",
+        "verified": true,
+        "avatar": "/img/collections/0xluckless-v1-6/avatar.webp",
+        "card": "/img/collections/0xluckless-v1-6/card.webp",
+        "banner": "/img/collections/0xluckless-v1-6/banner.webp",
+        "maxSupply": 4,
+        "website": "https://0xluckless.com",
+        "twitter": "https://twitter.com/0xLuckless",
+        "discord": "https://discord.gg/BpAVk2Za2c",
+        "medium": "https://medium.com/@0xLuckless",
+        "instagram": "https://www.instagram.com/0xLuckless",
+        "categories": [
+          "art"
+        ]
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "ebisu",
+        "verified": true
+      }
+    },
+    {
+      "name": "Trollfam",
+      "slug": "trollfam",
+      "multiToken": false,
+      "address": "0x04B5aBBcA29c2750bFDCfeA20fC1511913711D22",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Trollfam is built from a community of Trollcoin holders. You are Trollcoin, we are Trollfam!",
+        "verified": false,
+        "avatar": "/img/collections/trollfam/avatar.webp",
+        "card": "/img/collections/trollfam/card.webp",
+        "banner": "/img/collections/trollfam/banner.webp",
+        "maxSupply": 5555,
+        "website": "https://trollcoin.clubcro.com/",
+        "twitter": "https://twitter.com/club_cro",
+        "discord": "https://discord.gg/u3USwUZ8nT",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Baby Demon Legion",
+      "slug": "baby-demon-legion",
+      "multiToken": false,
+      "address": "0xd05c62Dc7941B243cffCb7d3eF483279F21b08F0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Baby Demon Legion, a collection airdropped exclusively to holders of the original Cronos Demon Legion NFTs.",
+        "verified": true,
+        "avatar": "/img/collections/baby-demon-legion/avatar.webp",
+        "card": "/img/collections/baby-demon-legion/card.webp",
+        "banner": "/img/collections/baby-demon-legion/banner.webp",
+        "maxSupply": 555,
+        "twitter": "https://twitter.com/DemonLegionNFT",
+        "discord": "https://discord.gg/tgrn3t6nnd",
+        "categories": []
       },
       "verification": {
         "verified": true,
@@ -20667,12 +20772,12 @@
       "maxMintPerAddress": 100,
       "totalSupply": 8888,
       "foundersOnly": false,
-      "start": 1666468800000,
+      "start": 1669837993000,
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": false,
-      "complete": true,
+      "published": true,
+      "complete": false,
       "featured": false,
       "redirect": "https://mint.munk.finance",
       "images": {
@@ -20682,7 +20787,7 @@
         "preview": "/img/collections/cromunk/card.webp"
       },
       "verification": {
-        "doxx": false,
+        "doxx": true,
         "kyc": false,
         "escrow": false,
         "verified": false
@@ -21089,7 +21194,7 @@
         "name": "BudsMeta",
         "website": "https://buds-meta.com/",
         "twitter": "https://twitter.com/BudsMeta",
-        "discord": "https://discord.gg/7NrZw7sn",
+        "discord": "https://discord.gg/JvQ88sgkJY",
         "instagram": "https://www.instagram.com/buds.meta.420"
       },
       "address": "",
@@ -21100,7 +21205,7 @@
       "memberCost": "320",
       "whitelistCost": "330",
       "foundersOnly": false,
-      "start": null,
+      "start": 1669924800000,
       "end": null,
       "referral": false,
       "is1155": false,
@@ -21171,7 +21276,7 @@
         "discord": "https://discord.gg/4R3wrrpSj2",
         "medium": "https://medium.com/@crougar"
       },
-      "address": "",
+      "address": "0xE97e0636abA2A02E7aB523fc6dE726C3525DBc39",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 100,
       "totalSupply": 10000,
