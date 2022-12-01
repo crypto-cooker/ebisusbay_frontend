@@ -11788,7 +11788,7 @@
       "multiToken": false,
       "address": "0xBA51Cbe289c808B2Da3ef51DdF617076A49A0eA8",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The First Companion collection of the CRO Homes Project. Collect them all and create your own style!",
         "verified": true,
