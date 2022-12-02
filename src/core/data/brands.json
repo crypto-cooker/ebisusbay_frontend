@@ -334,6 +334,28 @@
     "style": {}
   },
   {
+    "slug": "cro-homes",
+    "name": "CRO Homes",
+    "description": "Your place in the Metaverse",
+    "images": {
+      "banner": "/img/collections/cro-homes/banner.webp"
+    },
+    "collections": [
+      "0x59b554B12B80cAc8629Bf541a2D6359639AF2A63",
+      "0x5F4e5C60955E71A5FD7cE31d366421262caA5FC7",
+      "0xBA51Cbe289c808B2Da3ef51DdF617076A49A0eA8"
+    ],
+    "socials": {
+      "website": "https://cro.homes",
+      "twitter": "https://twitter.com/CROHomesNFT",
+      "discord": "https://discord.gg/crohomes",
+      "medium": "https://medium.com/@CROHomes"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "baby-alien-division",
     "name": "Baby Alien Division",
     "description": "",
