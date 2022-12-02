@@ -15770,6 +15770,30 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Croyotes",
+      "slug": "croyotes",
+      "multiToken": false,
+      "address": "0x1C07f47da4Cfc08f23ACdf4eC930476CF5E240B5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The croyotes are BACC’s crazy future friends bringing amazing utility to cronosbay",
+        "verified": false,
+        "avatar": "/img/collections/croyotes/avatar.webp",
+        "card": "/img/collections/croyotes/card.webp",
+        "banner": "/img/collections/croyotes/banner.webp",
+        "maxSupply": 20000,
+        "twitter": "https://twitter.com/baccfinance",
+        "discord": "https://discord.gg/bK8mfZbK",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
