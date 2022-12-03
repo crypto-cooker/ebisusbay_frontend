@@ -15863,7 +15863,7 @@
         "avatar": "/img/collections/cronos-y00ts/avatar.webp",
         "card": "/img/collections/cronos-y00ts/card.webp",
         "banner": "/img/collections/cronos-y00ts/banner.webp",
-        "maxSupply": 705,
+        "maxSupply": 500,
         "website": "https://crosea.io/drop/cronos-y00ts",
         "twitter": "https://twitter.com/cronosyoots",
         "discord": "https://discord.gg/wnqsAeqPTs",
@@ -15875,6 +15875,33 @@
         "verified": false,
         "doxx": false,
         "kyc": false
+      }
+    },
+    {
+      "name": "BAM - Baby Alien Mutants",
+      "slug": "baby-alien-mutants",
+      "multiToken": false,
+      "address": "0x11984C500B477e83891f7cDb4246734387764E20",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "BOOM! CRASH! The Space Lab has exploded and is covered in ichor! It seems we have learned how to mutate the Baby Aliens.",
+        "verified": true,
+        "avatar": "/img/collections/baby-alien-mutants/avatar.webp",
+        "card": "/img/collections/baby-alien-mutants/card.webp",
+        "banner": "/img/collections/baby-alien-mutants/banner.webp",
+        "maxSupply": 3333,
+        "website": "https://bam.badaliens.io/",
+        "twitter": "https://twitter.com/BAD__nfts",
+        "discord": "https://discord.gg/badaliens",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "verified": true
       }
     }
   ],
