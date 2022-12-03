@@ -15822,6 +15822,33 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Crotech Evolution",
+      "slug": "crotech-evolution",
+      "multiToken": false,
+      "address": "0x89679300771B8E54bD13D1c0a9031E3f3BaD71eF",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The second series from the Crotech Frontier - the Crotech Evolution is here.",
+        "verified": true,
+        "avatar": "/img/collections/crotech-evolution/avatar.webp",
+        "card": "/img/collections/crotech-evolution/card.webp",
+        "banner": "/img/collections/crotech-evolution/banner.webp",
+        "maxSupply": 705,
+        "website": "https://thedegenerated.art/collection/3-crotech-evolution#",
+        "twitter": "https://twitter.com/CrotechFrontier",
+        "discord": "https://discord.gg/5n8H3wkhDs",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
