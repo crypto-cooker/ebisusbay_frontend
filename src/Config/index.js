@@ -157,7 +157,7 @@ export const configData = {
       offer: '0x8Dd84fb5d7f8A504BA2398243D768C604f8Daf5E',
       madAuction: '0x84356061d598A7bCE028dB6a37b14F84cf4A5905',
       slothtyRugsurance: '0xC54821941Bb036463bDB1eea781f9b29a7f98fAc',
-      bundle: '0x78998B9B009e6414bc47e9BCF5eC9934E0008b82',
+      bundle: '0x5c84f948ee09e7eec0bcb253cd7e9c99778e091a',
       cnsusd: '0x263818f9693548446A41ad7025923612b490CB0D'
     },
     tokens: {
