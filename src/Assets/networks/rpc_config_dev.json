@@ -15849,6 +15849,82 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Cronos y00ts",
+      "slug": "cronos-y00ts",
+      "multiToken": false,
+      "address": "0xf8c82cc093D22f6dC782F0D781f4770E17266C23",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Cronos y00ts is a generative art project of 500 NFTs. it is our love letter to the Web3 community. designed to be aesthetic. engineered to be functional. curated to contain the best community of builders and creators on the internet.  Cronos y00ts is ready to bring a new wave into the #crofam",
+        "verified": false,
+        "avatar": "/img/collections/cronos-y00ts/avatar.webp",
+        "card": "/img/collections/cronos-y00ts/card.webp",
+        "banner": "/img/collections/cronos-y00ts/banner.webp",
+        "maxSupply": 500,
+        "website": "https://crosea.io/drop/cronos-y00ts",
+        "twitter": "https://twitter.com/cronosyoots",
+        "discord": "https://discord.gg/wnqsAeqPTs",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "BAM - Baby Alien Mutants",
+      "slug": "baby-alien-mutants",
+      "multiToken": false,
+      "address": "0x11984C500B477e83891f7cDb4246734387764E20",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "BOOM! CRASH! The Space Lab has exploded and is covered in ichor! It seems we have learned how to mutate the Baby Aliens.",
+        "verified": true,
+        "avatar": "/img/collections/baby-alien-mutants/avatar.webp",
+        "card": "/img/collections/baby-alien-mutants/card.webp",
+        "banner": "/img/collections/baby-alien-mutants/banner.webp",
+        "maxSupply": 3333,
+        "website": "https://bam.badaliens.io/",
+        "twitter": "https://twitter.com/BAD__nfts",
+        "discord": "https://discord.gg/badaliens",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Cronos Tycoon OG",
+      "slug": "cronos-tycoon-og",
+      "multiToken": false,
+      "address": "0xAa218ebAad3163Fb524053F3F0CBCa2e1F80a469",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Saving rugs one NFT at a time and real life businesses",
+        "verified": false,
+        "avatar": "/img/collections/cronos-tycoon-og/avatar.webp",
+        "maxSupply": 500,
+        "twitter": "https://twitter.com/CronosTycoon",
+        "discord": "https://discord.gg/25QHtFqcCt",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
@@ -19243,7 +19319,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/noodles-club/drop.webp",
         "banner": "/img/collections/noodles-club/banner.webp",
