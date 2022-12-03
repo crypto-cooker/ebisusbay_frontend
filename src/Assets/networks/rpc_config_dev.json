@@ -15849,6 +15849,33 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Cronos y00ts",
+      "slug": "cronos-y00ts",
+      "multiToken": false,
+      "address": "0xf8c82cc093D22f6dC782F0D781f4770E17266C23",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Cronos y00ts is a generative art project of 500 NFTs. it is our love letter to the Web3 community. designed to be aesthetic. engineered to be functional. curated to contain the best community of builders and creators on the internet.  Cronos y00ts is ready to bring a new wave into the #crofam",
+        "verified": false,
+        "avatar": "/img/collections/cronos-y00ts/avatar.webp",
+        "card": "/img/collections/cronos-y00ts/card.webp",
+        "banner": "/img/collections/cronos-y00ts/banner.webp",
+        "maxSupply": 705,
+        "website": "https://crosea.io/drop/cronos-y00ts",
+        "twitter": "https://twitter.com/cronosyoots",
+        "discord": "https://discord.gg/wnqsAeqPTs",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
