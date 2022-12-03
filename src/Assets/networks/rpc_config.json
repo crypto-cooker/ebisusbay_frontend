@@ -15126,7 +15126,7 @@
       "name": "Loaded Companions",
       "slug": "loaded-companions",
       "multiToken": false,
-      "address": "0xa9c0d40bb15B265abBe087e5E74f193c253985e5",
+      "address": "0x7892ef96126bed4a0ca25a3231c0aede64e047a4",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -15136,7 +15136,7 @@
         "banner": "/img/collections/loaded-companions/banner.webp",
         "card": "/img/collections/loaded-companions/card.webp",
         "maxSupply": 5000,
-        "website": "https://linktr.ee/loadedcompanions",
+        "website": "https://loadedcompanions.com/",
         "twitter": "https://twitter.com/LoadedCompanion",
         "discord": "https://discord.gg/hfqtz9KFeJ",
         "categories": [
@@ -15148,6 +15148,34 @@
         "verified": false,
         "doxx": false,
         "kyc": false
+      }
+    },
+    {
+      "name": "Multi Dimensional Crystals",
+      "slug": "multi-dimensional-crystals",
+      "multiToken": false,
+      "address": "0xa9c0d40bb15B265abBe087e5E74f193c253985e5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A multi-color crystal with many use cases in the Loaded Companions roadmap",
+        "verified": false,
+        "avatar": "/img/collections/loaded-companions/avatar.webp",
+        "banner": "/img/collections/loaded-companions/banner.webp",
+        "card": "/img/collections/loaded-companions/card.webp",
+        "maxSupply": 505,
+        "website": "https://loadedcompanions.netlify.app/#crystals/",
+        "twitter": "https://twitter.com/LoadedCompanion",
+        "discord": "https://discord.gg/hfqtz9KFeJ",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
       }
     },
     {
