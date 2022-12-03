@@ -15903,6 +15903,28 @@
         "kyc": false,
         "verified": true
       }
+    },
+    {
+      "name": "Cronos Tycoon OG",
+      "slug": "cronos-tycoon-og",
+      "multiToken": false,
+      "address": "0xAa218ebAad3163Fb524053F3F0CBCa2e1F80a469",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Saving rugs one NFT at a time and real life businesses",
+        "verified": false,
+        "avatar": "/img/collections/cronos-tycoon-og/avatar.webp",
+        "maxSupply": 500,
+        "twitter": "https://twitter.com/CronosTycoon",
+        "discord": "https://discord.gg/25QHtFqcCt",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
