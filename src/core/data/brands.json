@@ -584,5 +584,24 @@
     },
     "categories": [],
     "style": {}
+  },
+  {
+    "slug": "crofam-ladies",
+    "name": "CrofamLadies",
+    "description": "The beautiful side of #crofam.",
+    "images": {
+      "banner": "/img/brands/crofam-ladies/banner.webp"
+    },
+    "collections": [
+      "0xF5aF7B3C142aB5545717C7fB6a0Da8fBF6E68612",
+      "0x7D8f0a2b275C0b22720A6Fc3b5a65AF84D9C55C5"
+    ],
+    "socials": {
+      "website": "https://crofamladies.netlify.app/",
+      "twitter": "https://www.twitter.com/CrofamLadies",
+      "discord": "https://discord.gg/4ZwwXghGEj"
+    },
+    "categories": [],
+    "style": {}
   }
 ]
