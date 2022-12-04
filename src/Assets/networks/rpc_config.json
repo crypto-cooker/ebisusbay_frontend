@@ -13075,7 +13075,7 @@
         "maxSupply": 3333,
         "website": "https://zap7art.club/",
         "twitter": "https://twitter.com/zap7project",
-        "discord": "https://discord.gg/tBgUbvsSZX",
+        "discord": "https://discord.gg/s5kBQRy87d",
         "categories": []
       },
       "verification": {
@@ -15918,6 +15918,31 @@
         "maxSupply": 500,
         "twitter": "https://twitter.com/CronosTycoon",
         "discord": "https://discord.gg/25QHtFqcCt",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Liminals Kingdom",
+      "slug": "liminals-kingdom",
+      "multiToken": false,
+      "address": "0x9Ce2c5D443483037Ba4eBeA6c96B45B40c3b458c",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Liminals are reborn again, a collection of nfts are dropped  with gods trapped  inside .Separated by three phases necessary in order to gain their godly essence back.Eggs, and Liminals and ultimate  and Banta form each consisting of  nfts each. Mint will be in three phases:First Eggs,then Liminals and finally the Ultimate form and Banta collection.",
+        "verified": false,
+        "avatar": "/img/collections/liminals-kingdom/avatar.webp",
+        "card": "/img/collections/liminals-kingdom/card.webp",
+        "banner": "/img/collections/liminals-kingdom/banner.webp",
+        "maxSupply": 447,
+        "website": "https://liminalsworld.com/",
+        "twitter": "https://twitter.com/liminalskingdom",
+        "discord": "https://discord.gg/nBupzhXZ3w",
         "categories": []
       },
       "verification": {
