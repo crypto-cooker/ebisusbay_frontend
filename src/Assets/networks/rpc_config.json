@@ -12374,11 +12374,11 @@
         "banner": "/img/collections/immortal-cyborgs/banner.webp",
         "card": "/img/collections/immortal-cyborgs/card.webp",
         "maxSupply": 10000,
-        "website": "https://nfc.market/",
+        "website": "https://cyborgswap.io/nft-drop/TheImmortalCyborgs",
         "twitter": "https://twitter.com/CyborgSwapDEX",
-        "discord": "discord.gg/Ku6A7tJSVp",
+        "discord": "discord.gg/theimmortalcyborgs",
         "medium": "https://cyborgswap.medium.com/",
-        "telegram": "https://t.me/+IQJY2ugWLaVmODVk",
+        "telegram": "https://t.me/chronoswap_chat",
         "categories": [
           "collectibles"
         ]
@@ -15944,6 +15944,63 @@
         "twitter": "https://twitter.com/liminalskingdom",
         "discord": "https://discord.gg/nBupzhXZ3w",
         "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crooks Legends",
+      "slug": "crooks-legends",
+      "multiToken": false,
+      "address": "0x44102B7AB3e2B8edF77D188cd2B173ECBDA60967",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Crooks Legends invading the Cronos Chain on their mission to become the most sustainable passive income project.",
+        "verified": false,
+        "avatar": "/img/collections/crooks-legends/avatar.webp",
+        "card": "/img/collections/crooks-legends/card.webp",
+        "banner": "/img/collections/crooks-legends/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://app.crooks.finance/nft",
+        "twitter": "https://twitter.com/crooksfinance",
+        "discord": "https://discord.gg/crooksfinance",
+        "medium": "https://medium.com/@crooksfinance",
+        "telegram": "https://t.me/crookstoken",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "MetaPlanets: MetaStars",
+      "slug": "metaplanets-metastars",
+      "multiToken": false,
+      "address": "0xA32fd8462E7A8FE6aF5Db74a011D3b8D1A2f470c",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Metaplanets is an nft project, counting for the first generation called \"big bang\" 600 metaplanets. Our planets are in a 2d cartoon/semi realistic style. But our project is not only to make a simple collection. Our plans are much bigger and our vision much more ambitious. As stated in our roadmap, our second generation \"expansion\" will have 2000 metaplanets, realized in 3d. The owners of the 600 Metaplanets of the \"Big Bang\" collection will be airdrop 3D metaplanets . A lot of utility ! As example : the holders of at least 5 metaplanets, will receive after sold out, a metastar, this star will allow them to complete their planetary systems and add a multiplier to staking potential ! Much more to discover on our website.",
+        "verified": false,
+        "avatar": "/img/collections/metaplanets-metastars/avatar.webp",
+        "card": "/img/collections/metaplanets-metastars/card.webp",
+        "banner": "/img/collections/metaplanets-metastars/banner.webp",
+        "maxSupply": 100,
+        "website": "https://the-metaplanets.com/",
+        "twitter": "https://twitter.com/MetaPlanets_NFT",
+        "discord": "https://discord.gg/6VgTfbm3xW",
+        "medium": "https://medium.com/@themetaplanets/the-metaplanetss-omniverse-97902ae01fc6",
+        "categories": [
+          "collectibles"
+        ]
       },
       "verification": {
         "verified": false,
