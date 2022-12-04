@@ -15950,6 +15950,35 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Crooks Legends",
+      "slug": "crooks-legends",
+      "multiToken": false,
+      "address": "0x44102B7AB3e2B8edF77D188cd2B173ECBDA60967",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Crooks Legends invading the Cronos Chain on their mission to become the most sustainable passive income project.",
+        "verified": false,
+        "avatar": "/img/collections/crooks-legends/avatar.webp",
+        "card": "/img/collections/crooks-legends/card.webp",
+        "banner": "/img/collections/crooks-legends/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://app.crooks.finance/nft",
+        "twitter": "https://twitter.com/crooksfinance",
+        "discord": "https://discord.gg/crooksfinance",
+        "medium": "https://medium.com/@crooksfinance",
+        "telegram": "https://t.me/crookstoken",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
