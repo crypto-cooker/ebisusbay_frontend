@@ -16049,6 +16049,30 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Crown Punk",
+      "slug": "crown-punk",
+      "multiToken": false,
+      "address": "0x6742faf1635ce6B69BE80a8e4e9F442d2a1850Ae",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Handmade Collection of 250 unique Crown Punks created by 10 year old girl Ada who loves to draw and play with modern graphics editors. Already now Ada was happy to create number of unique NFT PFP as well as thousands of lands/artifacts in creative games like Minecraft & other. A perfect PFP NFT for everyone!!!",
+        "verified": false,
+        "avatar": "/img/collections/crown-punk/avatar.webp",
+        "card": "/img/collections/crown-punk/card.webp",
+        "banner": "/img/collections/crown-punk/banner.webp",
+        "maxSupply": 250,
+        "twitter": "https://twitter.com/CPNFT_CrownPunk",
+        "discord": "https://discord.gg/UDWmUeGj",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
