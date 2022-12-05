@@ -16073,6 +16073,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "C³: Cronos Crow Crew",
+      "slug": "c3-cronos-crow-crew",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "C³ is a brand of 3000 PFP crow characters granting holders utility and revenue. Bringing powerful set of trading and analytical tools. It's the first project that allows holders to browse the Cronos NFT space efficiently and have fun in our Crowgame . Join C³DAO to get access to all those benefits.",
+        "verified": true,
+        "avatar": "/img/collections/c3-cronos-crow-crew/avatar.webp",
+        "card": "/img/collections/c3-cronos-crow-crew/card.webp",
+        "banner": "/img/collections/c3-cronos-crow-crew/banner.webp",
+        "maxSupply": 3000,
+        "website": "https://crowcrew.xyz/",
+        "twitter": "https://twitter.com/CCrowcrew",
+        "discord": "https://discord.gg/WvyKv2svbF",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
@@ -21598,6 +21623,45 @@
         "banner": "/img/collections/wetland-razzles/banner.webp",
         "avatar": "/img/collections/wetland-razzles/avatar.webp",
         "preview": "/img/collections/wetland-razzles/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 144,
+      "slug": "c3-cronos-crow-crew",
+      "title": "C³: Cronos Crow Crew",
+      "subtitle": "C³ is a brand of 3000 PFP crow characters granting holders utility and revenue. Bringing powerful set of trading and analytical tools. It's the first project that allows holders to browse the Cronos NFT space efficiently and have fun in our Crowgame . Join C³DAO to get access to all those benefits.",
+      "description": " C³ is a collection of 3000 fine art crow characters granting utility and revenue to its holders. By purchasing a C³ NFT, you gain access to the C³DAO, which includes several benefits :\n\nAnalytics platform  \n\nMint funds will be immediately used to complete the Insight analytics platform, that will improve your trading experience. Follow smart money inflows, social media engagements, and fined the gem.\n\nC³DAO \n\nBy entering the C³DAO, you gain voting power for governance and investments decision. A DAO wallet fund will be set up in order to fructify mint funds, and share revenue with holders. An investment proposal for seed round in fintech will be made to the C³DAO after its establishment.\n\nCrowGame\n\nThe CrowGame is a gamified staking, read more on our whitepaper : Crow game \n\nRevenue sharing \n\nWeb3 is about empowering people and giving back to the community. With our products and marketplace fees creating revenue, sharing will be organized by the C³DAO.\n\nSee you soon!",
+      "author": {
+        "name": "C³: Cronos Crow Crew",
+        "website": "https://crowcrew.xyz/",
+        "twitter": "https://twitter.com/CCrowcrew",
+        "discord": "https://discord.gg/WvyKv2svbF"
+      },
+      "address": "",
+      "maxMintPerTx": 20,
+      "maxMintPerAddress": 100,
+      "totalSupply": 3000,
+      "cost": "650",
+      "memberCost": "500",
+      "whitelistCost": "500",
+      "foundersOnly": false,
+      "start": 1670529600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/c3-cronos-crow-crew/drop.webp",
+        "banner": "/img/collections/c3-cronos-crow-crew/banner.webp",
+        "avatar": "/img/collections/c3-cronos-crow-crew/avatar.webp",
+        "preview": "/img/collections/c3-cronos-crow-crew/card.webp"
       },
       "verification": {
         "verified": true,
