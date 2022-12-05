@@ -48,10 +48,10 @@ const useCreateBundle = () => {
           nftImages: []
         })
         const newBundle = await bundleContract.wrap(arrays.tokens, arrays.ids, formData.values.title, formData.values.description)
-        let tbAwait = await newBundle.wait();
-        let idBundle = tbAwait.events[tbAwait.events.length - 1].args[0]
-        idBundle = parseInt(idBundle["_hex"], 16)
-        const res = await createBundleRequest(user.address, signatureInStorage, {id: idBundle, title: formData.values.title, description: formData.values.description, nftImages: [...arrays.nftImages]})
+        // let tbAwait = await newBundle.wait();
+        // let idBundle = tbAwait.events[tbAwait.events.length - 1].args[0]
+        // idBundle = parseInt(idBundle["_hex"], 16)
+        // const res = await createBundleRequest(user.address, signatureInStorage, {id: idBundle, title: formData.values.title, description: formData.values.description, nftImages: [...arrays.nftImages]})
 
         setResponse({
           ...response,
