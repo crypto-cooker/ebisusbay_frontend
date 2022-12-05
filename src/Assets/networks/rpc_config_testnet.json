@@ -3038,9 +3038,9 @@
       "metadata": {
         "description": "Ebisu's Bay bundle contract",
         "verified": true,
-        "avatar": "/img/collections/ryoshi-tales-vip/avatar.webp",
-        "card": "/img/collections/ryoshi-tales-vip/card.webp",
-        "banner": "/img/collections/ryoshi-tales-vip/banner.webp",
+        "avatar": "/img/avatar.jpg",
+        "card": "/img/collections/ebisu/card.webp",
+        "banner": "/img/collections/ebisu/banner.png",
         "maxSupply": 10000,
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",

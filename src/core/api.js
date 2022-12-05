@@ -628,7 +628,7 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
             address: nft.nftAddress,
             description: nft.metadata?.description,
             id: nft.nftId,
-            title: nft.title,
+            name: nft.name,
             nfts: nft.nfts,
             slug: nft.slug,
             listed,

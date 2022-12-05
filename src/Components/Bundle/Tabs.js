@@ -120,8 +120,12 @@ const Tabs = ({ nft }) => {
                         />
                       </Box>
                       <Stack>
-                        <Text>Address: {nft.address}</Text>
-                        <Text>Id: {nft.id}</Text>
+                        {nft.collection && (
+                          <Link href={`/collection/${nft.address}`}>
+                            {nft.collectionName}
+                          </Link>
+                        )}
+                        <Text>{nft.nftAddress}</Text>
                       </Stack>
 
                     </Flex>

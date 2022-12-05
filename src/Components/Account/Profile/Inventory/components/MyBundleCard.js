@@ -223,10 +223,10 @@ const MyNftCard = ({
               <span onClick={() => navigateTo(nftUrl)} style={{ cursor: 'pointer' }}>
                 {nft.count && nft.count > 0 ? (
                   <Heading as="h6" size="sm">
-                    {nft.title} (x{nft.count})
+                    {nft.name} (x{nft.count})
                   </Heading>
                 ) : (
-                  <Heading as="h6" size="sm">{nft.title}</Heading>
+                  <Heading as="h6" size="sm">{nft.name}</Heading>
                 )}
               </span>
             </div>

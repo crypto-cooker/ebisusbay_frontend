@@ -242,7 +242,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, canBuy = t
             <div className="d-flex flex-column justify-content-between p-2 pb-1">
               <Link href={`/bundle/${nft.slug}`}>
                 <a>
-                  <Heading as="h6" size="sm" className="card-title mt-auto">{nft.title}</Heading>
+                  <Heading as="h6" size="sm" className="card-title mt-auto">{nft.name}</Heading>
                 </a>
               </Link>
               {getIsNftListed() && (

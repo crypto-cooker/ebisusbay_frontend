@@ -49,7 +49,7 @@ const Bundle = ({ bundle }) => {
           </Flex>
           <Flex className='item_info' width={['100%', '100%', '60%']} flexDir='column' padding='0px 20px' gap='20px'>
             <Heading as="h2" size="xl" >
-              {bundle.title}
+              {bundle.name}
             </Heading>
             <Text textAlign='justify'>
               {bundle.description}
@@ -59,7 +59,7 @@ const Bundle = ({ bundle }) => {
 
               <PriceActionBar
                 offerType={offerType}
-                collectionName={bundle.title}
+                collectionName={bundle.name}
                 isVerified={true}
                 onOfferSelected={() => handleMakeOffer()}
                 isOwner={caseInsensitiveCompare(user.address, bundle.owner)}
@@ -77,21 +77,34 @@ const Bundle = ({ bundle }) => {
 
 export const getServerSideProps = async ({ params }) => {
   const slug = params?.slug;
-  const res = await getBundle(slug);
-  const bundle = {
-    address: res.data.bundle.bundle.address,
-    description: res.data.bundle.bundle.token.metadata.description,
-    id: res.data.bundle.bundle.id,
-    title: res.data.bundle.bundle.token.metadata.title,
-    nfts: res.data.bundle.bundle.token.metadata.nfts,
-    listings: res.data.bundle.bundle.listings,
-    owner: res.data.bundle.owner
+  try {
+    const res = await getBundle(slug);
+
+    if (!res) {
+      return {
+        notFound: true
+      }
+    }
+
+    const bundle = {
+      address: res.data.bundle.bundle.address,
+      description: res.data.bundle.bundle.token.metadata.description,
+      id: res.data.bundle.bundle.id,
+      name: res.data.bundle.bundle.token.metadata.name,
+      nfts: res.data.bundle.bundle.token.metadata.nfts,
+      listings: res.data.bundle.bundle.listings,
+      owner: res.data.bundle.owner
+    }
+    return {
+      props: {
+        bundle
+      },
+    };
+  } catch (e) {
+    return {
+      notFound: true
+    }
   }
-  return {
-    props: {
-      bundle
-    },
-  };
 };
 
 export default Bundle;

@@ -268,7 +268,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
               )}
               <Link href={`/bundle/${listing.nft.slug}`}>
                 <a>
-                  <Heading as="h6" size="sm" className="card-title mt-auto">{listing.nft.title}</Heading>
+                  <Heading as="h6" size="sm" className="card-title mt-auto">{listing.nft.name}</Heading>
                 </a>
               </Link>
               <MakeBuy>

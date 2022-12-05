@@ -248,7 +248,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
       <ModalOverlay />
       <ModalContent>
         <ModalHeader className="text-center">
-          {listing ? 'Update' : 'Sell'} {isBundle(nft.address ?? nft.nftAddress) ? nft.title : nft.name}
+          {listing ? 'Update' : 'Sell'} {nft.name}
         </ModalHeader>
         <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
         {!isLoading ? (
