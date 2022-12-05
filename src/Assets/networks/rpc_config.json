@@ -16007,6 +16007,28 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "BCK Founder",
+      "slug": "bck-founder",
+      "multiToken": false,
+      "address": "0x5B13FcD864FEDD8bFB1684456eDBa9bEf50A7837",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "BCK Founder NFTs will grant it holder 1 free NFT from all collections released in the BCK Series per a wallet. More Details in the Discord Group.",
+        "verified": false,
+        "avatar": "/img/collections/bck-founder/avatar.webp",
+        "maxSupply": 150,
+        "twitter": "https://twitter.com/BChainKingdom",
+        "discord": "https://discord.gg/4J7Wseu4DC",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
