@@ -16126,6 +16126,34 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "D.G.Pals Special Edition",
+      "slug": "dg-pals-se",
+      "multiToken": false,
+      "address": "0x8fb4483d92c045336974c4f8c96ad9b1fae8ac64",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome to the D.G.Verse! Backed by Crypto.com Capital and Spartan Group, D.G.Pals is one of the first to redefine Web3 gaming with the first Interoperable NFT on the Cronos chain. The Special Edition Collection consists mainly of crossover characters from collaborations with other IPs. These NFTs will be able to participate in all of the games in the D.G.Verse. Do check out the D.G.Pals website for more information on the collection.",
+        "verified": true,
+        "avatar": "/img/collections/dg-pals-se/avatar.webp",
+        "card": "/img/collections/dg-pals-se/card.webp",
+        "banner": "/img/collections/dg-pals-se/banner.webp",
+        "maxSupply": 100000,
+        "website": "https://dgpals.io/",
+        "twitter": "https://twitter.com/officialdgpals",
+        "discord": "https://discord.gg/dgpals",
+        "medium": "https://medium.com/officialdgpals",
+        "categories": [
+          "gaming"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
