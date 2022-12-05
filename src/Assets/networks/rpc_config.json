@@ -16181,6 +16181,33 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Cockheadz by Design",
+      "slug": "cockheadz-by-design",
+      "multiToken": false,
+      "address": "0x7e24f993eF87B32F28d5C51F6ED3a997506b78c6",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Cockheadz posters are all unique and offer your entry into bi-weekly discord give-aways and raffles. They also get you a Whitelist spot on all further mints . All proceeds from the poster sale will go towards providing community raffles, giveaway's and building the foundations for our mint ONE .. The founders edition.",
+        "verified": false,
+        "avatar": "/img/collections/cockheadz-by-design/avatar.webp",
+        "card": "/img/collections/cockheadz-by-design/card.webp",
+        "banner": "/img/collections/cockheadz-by-design/banner.webp",
+        "maxSupply": 1111,
+        "website": "https://cockheadznft.com/",
+        "twitter": "https://twitter.com/cockheadznft",
+        "discord": "https://discord.gg/ASxRBjbK8Y",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
