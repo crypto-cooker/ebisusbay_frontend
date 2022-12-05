@@ -604,5 +604,26 @@
     },
     "categories": [],
     "style": {}
+  },
+  {
+    "slug": "badmeerkat",
+    "name": "BadMeerkat",
+    "description": "3 Fan Art collection of MadMeerkat \uD83C\uDD95 Traits \uD83C\uDD95 Personality \uD83D\uDFF0 Degen",
+    "images": {
+      "banner": "/img/brands/badmeerkat/banner.webp",
+      "preview": "/img/brands/badmeerkat/preview.webp"
+    },
+    "collections": [
+      "0x22B2f2223d26f27c27494efbF4E6646812193a43",
+      "0xdc9B6e10E0648E2258afe6705690C1E81cf933d7",
+      "0x302789418f6A5DfDe9faB3b8FE9Bc4EEe020E84F"
+    ],
+    "socials": {
+      "website": "https://linktr.ee/badmeerkat",
+      "twitter": "https://twitter.com/badmeerkatnft",
+      "discord": "https://discord.gg/wcJ4vvZb4H"
+    },
+    "categories": [],
+    "style": {}
   }
 ]
