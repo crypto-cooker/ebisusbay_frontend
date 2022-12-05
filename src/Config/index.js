@@ -39,6 +39,7 @@ export const configData = {
       offer: '0x016b347aeb70cc45e3bbaf324feb3c7c464e18b0',
       madAuction: '0x47E79264A9d1343C04F4A56922bE7e6177aE03a0',
       slothtyRugsurance: '0x73063E236EadC1e511FbE7313C6D8C5c651009E9',
+      bundle: '',
       cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233'
     },
     tokens: {
@@ -98,6 +99,7 @@ export const configData = {
       offer: '0x016b347aeb70cc45e3bbaf324feb3c7c464e18b0',
       madAuction: '0x47E79264A9d1343C04F4A56922bE7e6177aE03a0',
       slothtyRugsurance: '0x73063E236EadC1e511FbE7313C6D8C5c651009E9',
+      bundle: '',
       cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233'
     },
     tokens: {

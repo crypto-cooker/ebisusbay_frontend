@@ -14,7 +14,7 @@ import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {ERC721} from "@src/Contracts/Abis";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
 import {appConfig} from "@src/Config";
 import Market from "@src/Contracts/Marketplace.json";
 import {useWindowSize} from "@src/hooks/useWindowSize";
@@ -248,7 +248,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
       <ModalOverlay />
       <ModalContent>
         <ModalHeader className="text-center">
-          {listing ? 'Update' : 'Sell'} {nft.symbol === 'Bundle'? nft.title : nft.name}
+          {listing ? 'Update' : 'Sell'} {isBundle(nft.address ?? nft.nftAddress) ? nft.title : nft.name}
         </ModalHeader>
         <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
         {!isLoading ? (
@@ -256,7 +256,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
             <ModalBody>
               <div className="nftSaleForm row gx-3">
                 <div className="col-12 col-sm-6 mb-2 mb-sm-0">
-                  { nft.symbol === 'Bundle'? (
+                  { isBundle(nft.address ?? nft.nftAddress) ? (
                     <ImageContainer nft={nft} />
                   )
                   :

@@ -18,7 +18,7 @@ import {removeFromBatchListingCart, setApproval, setExtras, updatePrice} from "@
 import {Contract} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
 import {getCollectionMetadata} from "@src/core/api";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
@@ -132,7 +132,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
           height={50}
           style={{ borderRadius: '20px' }}
         > 
-        { item.nft.symbol && item.nft.symbol === 'Bundle'?(
+        { isBundle(item.nft.address) ? (
           <AnyMedia
           image={ImageKitService.buildAvatarUrl(item.nft.nfts[0].image)}
           title={item.nft.name}
