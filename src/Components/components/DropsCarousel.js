@@ -94,9 +94,10 @@ export default class Responsive extends Component {
   }
 
   arrangeCollections() {
-    const timeToShowInHours = 3600000 * 12;
-    const maxShowTimeInDays = 3600000 * 24 * 2;
-    const defaultMaxCount = 5;
+    const timeToShowInHours = 3600000 * 12;     // Threshold to display upcoming drops
+    const maxShowTimeInDays = 3600000 * 24 * 2; // Threshold to show live drops
+    const maxFreshnessInHours = 3600000 * 8;    // Threshold to label live drops as "stale"
+    const defaultMaxCount = 5;                  // Maximum drops on the carousel
 
     const topLevelDrops = drops.filter((d) => !d.complete && d.featured)
       .sort((a, b) => (a.start < b.start ? 1 : -1));
@@ -142,7 +143,11 @@ export default class Responsive extends Component {
         })
         .reverse();
     }
-    this.featuredDrops = [...topLevelDrops, ...upcomingDrops, ...liveDrops];
+
+    const liveFreshDrops = liveDrops.filter((d) => Date.now() - d.start <= maxFreshnessInHours);
+    const liveStaleDrops = liveDrops.filter((d) => Date.now() - d.start > maxFreshnessInHours);
+
+    this.featuredDrops = [...upcomingDrops,  ...liveFreshDrops, ...topLevelDrops, ...liveStaleDrops];
   }
 
   navigateToDrop(drop) {
@@ -178,7 +183,7 @@ export default class Responsive extends Component {
                         <div className="d-desc">
                           <Heading>{drop.title}</Heading>
                           {drop.redirect && (
-                            <Tag>
+                            <Tag mb={2}>
                               {/*<FontAwesomeIcon icon={faExclamationCircle} />*/}
                               <span className="">Promoted</span>
                             </Tag>

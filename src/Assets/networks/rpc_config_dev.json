@@ -7984,7 +7984,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -9803,7 +9803,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -11788,7 +11788,7 @@
       "multiToken": false,
       "address": "0xBA51Cbe289c808B2Da3ef51DdF617076A49A0eA8",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The First Companion collection of the CRO Homes Project. Collect them all and create your own style!",
         "verified": true,
@@ -11920,7 +11920,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -12374,11 +12374,11 @@
         "banner": "/img/collections/immortal-cyborgs/banner.webp",
         "card": "/img/collections/immortal-cyborgs/card.webp",
         "maxSupply": 10000,
-        "website": "https://nfc.market/",
+        "website": "https://cyborgswap.io/nft-drop/TheImmortalCyborgs",
         "twitter": "https://twitter.com/CyborgSwapDEX",
-        "discord": "discord.gg/Ku6A7tJSVp",
+        "discord": "discord.gg/theimmortalcyborgs",
         "medium": "https://cyborgswap.medium.com/",
-        "telegram": "https://t.me/+IQJY2ugWLaVmODVk",
+        "telegram": "https://t.me/chronoswap_chat",
         "categories": [
           "collectibles"
         ]
@@ -13006,7 +13006,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -13075,7 +13075,7 @@
         "maxSupply": 3333,
         "website": "https://zap7art.club/",
         "twitter": "https://twitter.com/zap7project",
-        "discord": "https://discord.gg/tBgUbvsSZX",
+        "discord": "https://discord.gg/s5kBQRy87d",
         "categories": []
       },
       "verification": {
@@ -14180,7 +14180,7 @@
       "multiToken": false,
       "address": "0xd2717D785595eF80Dee68fD75a3CdD429adece35",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Team Movember 2022 is an initiative of Team Mustachios to raise funds for the Movember Foundation Charity. 2022 NFTs and 50% of the mint will go directly to the cause. Movember fundraisers are a global community of fired up Mo Bros and Mo Sisters \u2013 aka rock stars making a difference in mental health and suicide prevention, prostate cancer and testicular cancer.",
         "verified": true,
@@ -14255,7 +14255,7 @@
       "multiToken": false,
       "address": "0xDB3550920A04fDc724bF3fEe21BFb0FCD36b32DF",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "CroSwap World Cup Sweepstakes NFT Country Cards",
         "verified": true,
@@ -15098,7 +15098,7 @@
       "name": "Buds",
       "slug": "buds",
       "multiToken": false,
-      "address": "",
+      "address": "0x2F29a990DCf380632b15893Cc8435eD9C1C88544",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -15126,7 +15126,7 @@
       "name": "Loaded Companions",
       "slug": "loaded-companions",
       "multiToken": false,
-      "address": "0xa9c0d40bb15B265abBe087e5E74f193c253985e5",
+      "address": "0x7892ef96126bed4a0ca25a3231c0aede64e047a4",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -15136,7 +15136,7 @@
         "banner": "/img/collections/loaded-companions/banner.webp",
         "card": "/img/collections/loaded-companions/card.webp",
         "maxSupply": 5000,
-        "website": "https://linktr.ee/loadedcompanions",
+        "website": "https://loadedcompanions.com/",
         "twitter": "https://twitter.com/LoadedCompanion",
         "discord": "https://discord.gg/hfqtz9KFeJ",
         "categories": [
@@ -15148,6 +15148,34 @@
         "verified": false,
         "doxx": false,
         "kyc": false
+      }
+    },
+    {
+      "name": "Multi Dimensional Crystals",
+      "slug": "multi-dimensional-crystals",
+      "multiToken": false,
+      "address": "0xa9c0d40bb15B265abBe087e5E74f193c253985e5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A multi-color crystal with many use cases in the Loaded Companions roadmap",
+        "verified": false,
+        "avatar": "/img/collections/loaded-companions/avatar.webp",
+        "banner": "/img/collections/loaded-companions/banner.webp",
+        "card": "/img/collections/loaded-companions/card.webp",
+        "maxSupply": 505,
+        "website": "https://loadedcompanions.netlify.app/#crystals/",
+        "twitter": "https://twitter.com/LoadedCompanion",
+        "discord": "https://discord.gg/hfqtz9KFeJ",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
       }
     },
     {
@@ -15767,6 +15795,416 @@
       },
       "verification": {
         "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Croyotes",
+      "slug": "croyotes",
+      "multiToken": false,
+      "address": "0x1C07f47da4Cfc08f23ACdf4eC930476CF5E240B5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The croyotes are BACC’s crazy future friends bringing amazing utility to cronosbay",
+        "verified": false,
+        "avatar": "/img/collections/croyotes/avatar.webp",
+        "card": "/img/collections/croyotes/card.webp",
+        "banner": "/img/collections/croyotes/banner.webp",
+        "maxSupply": 20000,
+        "twitter": "https://twitter.com/baccfinance",
+        "discord": "https://discord.gg/bK8mfZbK",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crotech Evolution",
+      "slug": "crotech-evolution",
+      "multiToken": false,
+      "address": "0x89679300771B8E54bD13D1c0a9031E3f3BaD71eF",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The second series from the Crotech Frontier - the Crotech Evolution is here.",
+        "verified": true,
+        "avatar": "/img/collections/crotech-evolution/avatar.webp",
+        "card": "/img/collections/crotech-evolution/card.webp",
+        "banner": "/img/collections/crotech-evolution/banner.webp",
+        "maxSupply": 705,
+        "website": "https://thedegenerated.art/collection/3-crotech-evolution#",
+        "twitter": "https://twitter.com/CrotechFrontier",
+        "discord": "https://discord.gg/5n8H3wkhDs",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Cronos y00ts",
+      "slug": "cronos-y00ts",
+      "multiToken": false,
+      "address": "0xf8c82cc093D22f6dC782F0D781f4770E17266C23",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Cronos y00ts is a generative art project of 500 NFTs. it is our love letter to the Web3 community. designed to be aesthetic. engineered to be functional. curated to contain the best community of builders and creators on the internet.  Cronos y00ts is ready to bring a new wave into the #crofam",
+        "verified": false,
+        "avatar": "/img/collections/cronos-y00ts/avatar.webp",
+        "card": "/img/collections/cronos-y00ts/card.webp",
+        "banner": "/img/collections/cronos-y00ts/banner.webp",
+        "maxSupply": 500,
+        "website": "https://crosea.io/drop/cronos-y00ts",
+        "twitter": "https://twitter.com/cronosyoots",
+        "discord": "https://discord.gg/wnqsAeqPTs",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "BAM - Baby Alien Mutants",
+      "slug": "baby-alien-mutants",
+      "multiToken": false,
+      "address": "0x11984C500B477e83891f7cDb4246734387764E20",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "BOOM! CRASH! The Space Lab has exploded and is covered in ichor! It seems we have learned how to mutate the Baby Aliens.",
+        "verified": true,
+        "avatar": "/img/collections/baby-alien-mutants/avatar.webp",
+        "card": "/img/collections/baby-alien-mutants/card.webp",
+        "banner": "/img/collections/baby-alien-mutants/banner.webp",
+        "maxSupply": 3333,
+        "website": "https://bam.badaliens.io/",
+        "twitter": "https://twitter.com/BAD__nfts",
+        "discord": "https://discord.gg/badaliens",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Cronos Tycoon OG",
+      "slug": "cronos-tycoon-og",
+      "multiToken": false,
+      "address": "0xAa218ebAad3163Fb524053F3F0CBCa2e1F80a469",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Saving rugs one NFT at a time and real life businesses",
+        "verified": false,
+        "avatar": "/img/collections/cronos-tycoon-og/avatar.webp",
+        "maxSupply": 500,
+        "twitter": "https://twitter.com/CronosTycoon",
+        "discord": "https://discord.gg/25QHtFqcCt",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Liminals Kingdom",
+      "slug": "liminals-kingdom",
+      "multiToken": false,
+      "address": "0x9Ce2c5D443483037Ba4eBeA6c96B45B40c3b458c",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Liminals are reborn again, a collection of nfts are dropped  with gods trapped  inside .Separated by three phases necessary in order to gain their godly essence back.Eggs, and Liminals and ultimate  and Banta form each consisting of  nfts each. Mint will be in three phases:First Eggs,then Liminals and finally the Ultimate form and Banta collection.",
+        "verified": false,
+        "avatar": "/img/collections/liminals-kingdom/avatar.webp",
+        "card": "/img/collections/liminals-kingdom/card.webp",
+        "banner": "/img/collections/liminals-kingdom/banner.webp",
+        "maxSupply": 447,
+        "website": "https://liminalsworld.com/",
+        "twitter": "https://twitter.com/liminalskingdom",
+        "discord": "https://discord.gg/nBupzhXZ3w",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crooks Legends",
+      "slug": "crooks-legends",
+      "multiToken": false,
+      "address": "0x44102B7AB3e2B8edF77D188cd2B173ECBDA60967",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Crooks Legends invading the Cronos Chain on their mission to become the most sustainable passive income project.",
+        "verified": false,
+        "avatar": "/img/collections/crooks-legends/avatar.webp",
+        "card": "/img/collections/crooks-legends/card.webp",
+        "banner": "/img/collections/crooks-legends/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://app.crooks.finance/nft",
+        "twitter": "https://twitter.com/crooksfinance",
+        "discord": "https://discord.gg/crooksfinance",
+        "medium": "https://medium.com/@crooksfinance",
+        "telegram": "https://t.me/crookstoken",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "MetaPlanets: MetaStars",
+      "slug": "metaplanets-metastars",
+      "multiToken": true,
+      "tokens": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
+        },
+        {
+          "id": 5
+        },
+        {
+          "id": 6
+        }
+      ],
+      "address": "0xA32fd8462E7A8FE6aF5Db74a011D3b8D1A2f470c",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Metaplanets is an nft project, counting for the first generation called \"big bang\" 600 metaplanets. Our planets are in a 2d cartoon/semi realistic style. But our project is not only to make a simple collection. Our plans are much bigger and our vision much more ambitious. As stated in our roadmap, our second generation \"expansion\" will have 2000 metaplanets, realized in 3d. The owners of the 600 Metaplanets of the \"Big Bang\" collection will be airdrop 3D metaplanets . A lot of utility ! As example : the holders of at least 5 metaplanets, will receive after sold out, a metastar, this star will allow them to complete their planetary systems and add a multiplier to staking potential ! Much more to discover on our website.",
+        "verified": false,
+        "avatar": "/img/collections/metaplanets-metastars/avatar.webp",
+        "card": "/img/collections/metaplanets-metastars/card.webp",
+        "banner": "/img/collections/metaplanets-metastars/banner.webp",
+        "maxSupply": 100,
+        "website": "https://the-metaplanets.com/",
+        "twitter": "https://twitter.com/MetaPlanets_NFT",
+        "discord": "https://discord.gg/6VgTfbm3xW",
+        "medium": "https://medium.com/@themetaplanets/the-metaplanetss-omniverse-97902ae01fc6",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "BCK Founder",
+      "slug": "bck-founder",
+      "multiToken": false,
+      "address": "0x5B13FcD864FEDD8bFB1684456eDBa9bEf50A7837",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "BCK Founder NFTs will grant it holder 1 free NFT from all collections released in the BCK Series per a wallet. More Details in the Discord Group.",
+        "verified": false,
+        "avatar": "/img/collections/bck-founder/avatar.webp",
+        "maxSupply": 150,
+        "twitter": "https://twitter.com/BChainKingdom",
+        "discord": "https://discord.gg/4J7Wseu4DC",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crown Punk",
+      "slug": "crown-punk",
+      "multiToken": false,
+      "address": "0x6742faf1635ce6B69BE80a8e4e9F442d2a1850Ae",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Handmade Collection of 250 unique Crown Punks created by 10 year old girl Ada who loves to draw and play with modern graphics editors. Already now Ada was happy to create number of unique NFT PFP as well as thousands of lands/artifacts in creative games like Minecraft & other. A perfect PFP NFT for everyone!!!",
+        "verified": false,
+        "avatar": "/img/collections/crown-punk/avatar.webp",
+        "card": "/img/collections/crown-punk/card.webp",
+        "banner": "/img/collections/crown-punk/banner.webp",
+        "maxSupply": 250,
+        "twitter": "https://twitter.com/CPNFT_CrownPunk",
+        "discord": "https://discord.gg/UDWmUeGj",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "C³: Cronos Crow Crew",
+      "slug": "c3-cronos-crow-crew",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "C³ is a brand of 3000 PFP crow characters granting holders utility and revenue. Bringing powerful set of trading and analytical tools. It's the first project that allows holders to browse the Cronos NFT space efficiently and have fun in our Crowgame . Join C³DAO to get access to all those benefits.",
+        "verified": true,
+        "avatar": "/img/collections/c3-cronos-crow-crew/avatar.webp",
+        "card": "/img/collections/c3-cronos-crow-crew/card.webp",
+        "banner": "/img/collections/c3-cronos-crow-crew/banner.webp",
+        "maxSupply": 3000,
+        "website": "https://crowcrew.xyz/",
+        "twitter": "https://twitter.com/CCrowcrew",
+        "discord": "https://discord.gg/WvyKv2svbF",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "RedefinedBulls",
+      "slug": "redefinedbulls",
+      "multiToken": false,
+      "address": "0x0085015ecdAD34078CEB82C6FA84B3d2BAbfE5b0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A NFT Collection of 1,505 hand-drawn Bulls roaming around the Cronos Blockchain. It is a project with the aim of rewarding it’s community by sharing up to 60% of our “Royalties” from mints and secondary sales. With this utility, RedefinedBulls will be able to steadily reward its owners by just holding it. But we won’t stop there, future plans include: A clothing brand and merchandise where a percentage of the sales will also be distributed among the holders, a crypto vault dedicated to reward holders with a certain number of bulls, implementation of a Bull Token, and project expansion into other blockchains. We believe that we can attain true passive-income with these perks and with the help of our community, it’ll be a sustainable and healthy project where everyone benefit from their NFT. We are not just like any other NFT projects out there, we will stay true to our mission and it’ll be like that as long as blockchain exists. WE ARE BULLISH!",
+        "verified": false,
+        "avatar": "/img/collections/redefinedbulls/avatar.webp",
+        "card": "/img/collections/redefinedbulls/card.webp",
+        "banner": "/img/collections/redefinedbulls/banner.webp",
+        "maxSupply": 1505,
+        "website": "https://redefined-bulls.netlify.app/",
+        "twitter": "https://twitter.com/redefinedbulls",
+        "discord": "https://discord.gg/fztQSBjEBw",
+        "medium": "https://medium.com/@redefinedbullsnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "D.G.Pals Special Edition",
+      "slug": "dg-pals-se",
+      "multiToken": false,
+      "address": "0x8fb4483d92c045336974c4f8c96ad9b1fae8ac64",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome to the D.G.Verse! Backed by Crypto.com Capital and Spartan Group, D.G.Pals is one of the first to redefine Web3 gaming with the first Interoperable NFT on the Cronos chain. The Special Edition Collection consists mainly of crossover characters from collaborations with other IPs. These NFTs will be able to participate in all of the games in the D.G.Verse. Do check out the D.G.Pals website for more information on the collection.",
+        "verified": true,
+        "avatar": "/img/collections/dg-pals-se/avatar.webp",
+        "card": "/img/collections/dg-pals-se/card.webp",
+        "banner": "/img/collections/dg-pals-se/banner.webp",
+        "maxSupply": 100000,
+        "website": "https://dgpals.io/",
+        "twitter": "https://twitter.com/officialdgpals",
+        "discord": "https://discord.gg/dgpals",
+        "medium": "https://medium.com/officialdgpals",
+        "categories": [
+          "gaming"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "BOB Adventures 2",
+      "slug": "bob-adventures-2",
+      "multiToken": false,
+      "address": "0x4ab89f361a7db22beee8df47630c52b9167f7bb7",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "BOB Adventure generation 2 is a collection of 2222 hand-drawn unique and limited NFTs with 250+ different traits that has different rarities. BOBs main mission is to build strong community and offer passive income to all BOB holders. We offer 100% secondary sale royalty share, yes 100% goes back to community. All BOB holders will get automatic WL for future drops.",
+        "verified": false,
+        "avatar": "/img/collections/bob-adventures-2/avatar.webp",
+        "card": "/img/collections/bob-adventures-2/card.webp",
+        "banner": "/img/collections/bob-adventures-2/banner.webp",
+        "maxSupply": 2222,
+        "website": "https://bob-adventures.netlify.app/",
+        "twitter": "https://twitter.com/CroBobAdventure",
+        "discord": "https://discord.gg/kemzRExMju",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Cockheadz by Design",
+      "slug": "cockheadz-by-design",
+      "multiToken": false,
+      "address": "0x7e24f993eF87B32F28d5C51F6ED3a997506b78c6",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Cockheadz posters are all unique and offer your entry into bi-weekly discord give-aways and raffles. They also get you a Whitelist spot on all further mints . All proceeds from the poster sale will go towards providing community raffles, giveaway's and building the foundations for our mint ONE .. The founders edition.",
+        "verified": false,
+        "avatar": "/img/collections/cockheadz-by-design/avatar.webp",
+        "card": "/img/collections/cockheadz-by-design/card.webp",
+        "banner": "/img/collections/cockheadz-by-design/banner.webp",
+        "maxSupply": 1111,
+        "website": "https://cockheadznft.com/",
+        "twitter": "https://twitter.com/cockheadznft",
+        "discord": "https://discord.gg/ASxRBjbK8Y",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
         "doxx": false,
         "kyc": false
       }
@@ -19164,7 +19602,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/noodles-club/drop.webp",
         "banner": "/img/collections/noodles-club/banner.webp",
@@ -19645,7 +20083,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": false,
       "priceDescription": "Whitelist-only presale for the first hour (limit 5 per address). Public sale after presale ends",
       "images": {
@@ -20777,7 +21215,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": false,
       "redirect": "https://mint.munk.finance",
       "images": {
@@ -20817,7 +21255,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/team-movember/drop.webp",
         "banner": "/img/collections/team-movember/banner.webp",
@@ -21197,7 +21635,7 @@
         "discord": "https://discord.gg/JvQ88sgkJY",
         "instagram": "https://www.instagram.com/buds.meta.420"
       },
-      "address": "",
+      "address": "0x2F29a990DCf380632b15893Cc8435eD9C1C88544",
       "maxMintPerTx": 50,
       "maxMintPerAddress": 100,
       "totalSupply": 2210,
@@ -21295,6 +21733,45 @@
         "banner": "/img/collections/wetland-razzles/banner.webp",
         "avatar": "/img/collections/wetland-razzles/avatar.webp",
         "preview": "/img/collections/wetland-razzles/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 144,
+      "slug": "c3-cronos-crow-crew",
+      "title": "C³: Cronos Crow Crew",
+      "subtitle": "C³ is a brand of 3000 PFP crow characters granting holders utility and revenue. Bringing powerful set of trading and analytical tools. It's the first project that allows holders to browse the Cronos NFT space efficiently and have fun in our Crowgame . Join C³DAO to get access to all those benefits.",
+      "description": " C³ is a collection of 3000 fine art crow characters granting utility and revenue to its holders. By purchasing a C³ NFT, you gain access to the C³DAO, which includes several benefits :\n\nAnalytics platform  \n\nMint funds will be immediately used to complete the Insight analytics platform, that will improve your trading experience. Follow smart money inflows, social media engagements, and fined the gem.\n\nC³DAO \n\nBy entering the C³DAO, you gain voting power for governance and investments decision. A DAO wallet fund will be set up in order to fructify mint funds, and share revenue with holders. An investment proposal for seed round in fintech will be made to the C³DAO after its establishment.\n\nCrowGame\n\nThe CrowGame is a gamified staking, read more on our whitepaper : Crow game \n\nRevenue sharing \n\nWeb3 is about empowering people and giving back to the community. With our products and marketplace fees creating revenue, sharing will be organized by the C³DAO.\n\nSee you soon!",
+      "author": {
+        "name": "C³: Cronos Crow Crew",
+        "website": "https://crowcrew.xyz/",
+        "twitter": "https://twitter.com/CCrowcrew",
+        "discord": "https://discord.gg/WvyKv2svbF"
+      },
+      "address": "",
+      "maxMintPerTx": 20,
+      "maxMintPerAddress": 100,
+      "totalSupply": 3000,
+      "cost": "650",
+      "memberCost": "500",
+      "whitelistCost": "500",
+      "foundersOnly": false,
+      "start": 1670529600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/c3-cronos-crow-crew/drop.webp",
+        "banner": "/img/collections/c3-cronos-crow-crew/banner.webp",
+        "avatar": "/img/collections/c3-cronos-crow-crew/avatar.webp",
+        "preview": "/img/collections/c3-cronos-crow-crew/card.webp"
       },
       "verification": {
         "verified": true,
