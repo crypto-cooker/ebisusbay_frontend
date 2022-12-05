@@ -16098,6 +16098,34 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "RedefinedBulls",
+      "slug": "redefinedbulls",
+      "multiToken": false,
+      "address": "0x0085015ecdAD34078CEB82C6FA84B3d2BAbfE5b0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A NFT Collection of 1,505 hand-drawn Bulls roaming around the Cronos Blockchain. It is a project with the aim of rewarding it’s community by sharing up to 60% of our “Royalties” from mints and secondary sales. With this utility, RedefinedBulls will be able to steadily reward its owners by just holding it. But we won’t stop there, future plans include: A clothing brand and merchandise where a percentage of the sales will also be distributed among the holders, a crypto vault dedicated to reward holders with a certain number of bulls, implementation of a Bull Token, and project expansion into other blockchains. We believe that we can attain true passive-income with these perks and with the help of our community, it’ll be a sustainable and healthy project where everyone benefit from their NFT. We are not just like any other NFT projects out there, we will stay true to our mission and it’ll be like that as long as blockchain exists. WE ARE BULLISH!",
+        "verified": false,
+        "avatar": "/img/collections/redefinedbulls/avatar.webp",
+        "card": "/img/collections/redefinedbulls/card.webp",
+        "banner": "/img/collections/redefinedbulls/banner.webp",
+        "maxSupply": 1505,
+        "website": "https://redefined-bulls.netlify.app/",
+        "twitter": "https://twitter.com/redefinedbulls",
+        "discord": "https://discord.gg/fztQSBjEBw",
+        "medium": "https://medium.com/@redefinedbullsnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
