@@ -15983,16 +15983,36 @@
     {
       "name": "MetaPlanets: MetaStars",
       "slug": "metaplanets-metastars",
-      "multiToken": false,
+      "multiToken": true,
+      "tokens": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
+        },
+        {
+          "id": 5
+        },
+        {
+          "id": 6
+        }
+      ],
       "address": "0xA32fd8462E7A8FE6aF5Db74a011D3b8D1A2f470c",
       "onChain": false,
       "listable": true,
       "metadata": {
         "description": "Metaplanets is an nft project, counting for the first generation called \"big bang\" 600 metaplanets. Our planets are in a 2d cartoon/semi realistic style. But our project is not only to make a simple collection. Our plans are much bigger and our vision much more ambitious. As stated in our roadmap, our second generation \"expansion\" will have 2000 metaplanets, realized in 3d. The owners of the 600 Metaplanets of the \"Big Bang\" collection will be airdrop 3D metaplanets . A lot of utility ! As example : the holders of at least 5 metaplanets, will receive after sold out, a metastar, this star will allow them to complete their planetary systems and add a multiplier to staking potential ! Much more to discover on our website.",
         "verified": false,
-        "avatar": "/img/collections/metaplanets-metastars/avatar.png",
-        "card": "/img/collections/metaplanets-metastars/card.png",
-        "banner": "/img/collections/metaplanets-metastars/banner.png",
+        "avatar": "/img/collections/metaplanets-metastars/avatar.webp",
+        "card": "/img/collections/metaplanets-metastars/card.webp",
+        "banner": "/img/collections/metaplanets-metastars/banner.webp",
         "maxSupply": 100,
         "website": "https://the-metaplanets.com/",
         "twitter": "https://twitter.com/MetaPlanets_NFT",
@@ -16001,6 +16021,52 @@
         "categories": [
           "collectibles"
         ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "BCK Founder",
+      "slug": "bck-founder",
+      "multiToken": false,
+      "address": "0x5B13FcD864FEDD8bFB1684456eDBa9bEf50A7837",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "BCK Founder NFTs will grant it holder 1 free NFT from all collections released in the BCK Series per a wallet. More Details in the Discord Group.",
+        "verified": false,
+        "avatar": "/img/collections/bck-founder/avatar.webp",
+        "maxSupply": 150,
+        "twitter": "https://twitter.com/BChainKingdom",
+        "discord": "https://discord.gg/4J7Wseu4DC",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crown Punk",
+      "slug": "crown-punk",
+      "multiToken": false,
+      "address": "0x6742faf1635ce6B69BE80a8e4e9F442d2a1850Ae",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Handmade Collection of 250 unique Crown Punks created by 10 year old girl Ada who loves to draw and play with modern graphics editors. Already now Ada was happy to create number of unique NFT PFP as well as thousands of lands/artifacts in creative games like Minecraft & other. A perfect PFP NFT for everyone!!!",
+        "verified": false,
+        "avatar": "/img/collections/crown-punk/avatar.webp",
+        "card": "/img/collections/crown-punk/card.webp",
+        "banner": "/img/collections/crown-punk/banner.webp",
+        "maxSupply": 250,
+        "twitter": "https://twitter.com/CPNFT_CrownPunk",
+        "discord": "https://discord.gg/UDWmUeGj",
+        "categories": []
       },
       "verification": {
         "verified": false,
