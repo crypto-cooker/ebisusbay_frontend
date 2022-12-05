@@ -16098,6 +16098,116 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "RedefinedBulls",
+      "slug": "redefinedbulls",
+      "multiToken": false,
+      "address": "0x0085015ecdAD34078CEB82C6FA84B3d2BAbfE5b0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A NFT Collection of 1,505 hand-drawn Bulls roaming around the Cronos Blockchain. It is a project with the aim of rewarding it’s community by sharing up to 60% of our “Royalties” from mints and secondary sales. With this utility, RedefinedBulls will be able to steadily reward its owners by just holding it. But we won’t stop there, future plans include: A clothing brand and merchandise where a percentage of the sales will also be distributed among the holders, a crypto vault dedicated to reward holders with a certain number of bulls, implementation of a Bull Token, and project expansion into other blockchains. We believe that we can attain true passive-income with these perks and with the help of our community, it’ll be a sustainable and healthy project where everyone benefit from their NFT. We are not just like any other NFT projects out there, we will stay true to our mission and it’ll be like that as long as blockchain exists. WE ARE BULLISH!",
+        "verified": false,
+        "avatar": "/img/collections/redefinedbulls/avatar.webp",
+        "card": "/img/collections/redefinedbulls/card.webp",
+        "banner": "/img/collections/redefinedbulls/banner.webp",
+        "maxSupply": 1505,
+        "website": "https://redefined-bulls.netlify.app/",
+        "twitter": "https://twitter.com/redefinedbulls",
+        "discord": "https://discord.gg/fztQSBjEBw",
+        "medium": "https://medium.com/@redefinedbullsnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "D.G.Pals Special Edition",
+      "slug": "dg-pals-se",
+      "multiToken": false,
+      "address": "0x8fb4483d92c045336974c4f8c96ad9b1fae8ac64",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome to the D.G.Verse! Backed by Crypto.com Capital and Spartan Group, D.G.Pals is one of the first to redefine Web3 gaming with the first Interoperable NFT on the Cronos chain. The Special Edition Collection consists mainly of crossover characters from collaborations with other IPs. These NFTs will be able to participate in all of the games in the D.G.Verse. Do check out the D.G.Pals website for more information on the collection.",
+        "verified": true,
+        "avatar": "/img/collections/dg-pals-se/avatar.webp",
+        "card": "/img/collections/dg-pals-se/card.webp",
+        "banner": "/img/collections/dg-pals-se/banner.webp",
+        "maxSupply": 100000,
+        "website": "https://dgpals.io/",
+        "twitter": "https://twitter.com/officialdgpals",
+        "discord": "https://discord.gg/dgpals",
+        "medium": "https://medium.com/officialdgpals",
+        "categories": [
+          "gaming"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "BOB Adventures 2",
+      "slug": "bob-adventures-2",
+      "multiToken": false,
+      "address": "0x4ab89f361a7db22beee8df47630c52b9167f7bb7",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "BOB Adventure generation 2 is a collection of 2222 hand-drawn unique and limited NFTs with 250+ different traits that has different rarities. BOBs main mission is to build strong community and offer passive income to all BOB holders. We offer 100% secondary sale royalty share, yes 100% goes back to community. All BOB holders will get automatic WL for future drops.",
+        "verified": false,
+        "avatar": "/img/collections/bob-adventures-2/avatar.webp",
+        "card": "/img/collections/bob-adventures-2/card.webp",
+        "banner": "/img/collections/bob-adventures-2/banner.webp",
+        "maxSupply": 2222,
+        "website": "https://bob-adventures.netlify.app/",
+        "twitter": "https://twitter.com/CroBobAdventure",
+        "discord": "https://discord.gg/kemzRExMju",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Cockheadz by Design",
+      "slug": "cockheadz-by-design",
+      "multiToken": false,
+      "address": "0x7e24f993eF87B32F28d5C51F6ED3a997506b78c6",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Cockheadz posters are all unique and offer your entry into bi-weekly discord give-aways and raffles. They also get you a Whitelist spot on all further mints . All proceeds from the poster sale will go towards providing community raffles, giveaway's and building the foundations for our mint ONE .. The founders edition.",
+        "verified": false,
+        "avatar": "/img/collections/cockheadz-by-design/avatar.webp",
+        "card": "/img/collections/cockheadz-by-design/card.webp",
+        "banner": "/img/collections/cockheadz-by-design/banner.webp",
+        "maxSupply": 1111,
+        "website": "https://cockheadznft.com/",
+        "twitter": "https://twitter.com/cockheadznft",
+        "discord": "https://discord.gg/ASxRBjbK8Y",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
@@ -19973,7 +20083,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": false,
       "priceDescription": "Whitelist-only presale for the first hour (limit 5 per address). Public sale after presale ends",
       "images": {
