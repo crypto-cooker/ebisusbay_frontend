@@ -15983,7 +15983,27 @@
     {
       "name": "MetaPlanets: MetaStars",
       "slug": "metaplanets-metastars",
-      "multiToken": false,
+      "multiToken": true,
+      "tokens": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
+        },
+        {
+          "id": 5
+        },
+        {
+          "id": 6
+        }
+      ],
       "address": "0xA32fd8462E7A8FE6aF5Db74a011D3b8D1A2f470c",
       "onChain": false,
       "listable": true,
