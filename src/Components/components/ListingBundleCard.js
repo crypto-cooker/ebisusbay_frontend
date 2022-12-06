@@ -56,7 +56,7 @@ const MakeBuy = styled.div`
 `;
 
 const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
-  const nftUrl = appUrl(`/collection/${listing.nftAddress}/${listing.nftId}`);
+  const nftUrl = appUrl(`/collection/${listing.collection.slug}/${listing.nftId}`);
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -230,7 +230,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                       image={nftCardUrl(currentNft.id, currentNft.image)}
                       className={`card-img-top ${imgClass}`}
                       title={currentNft.id}
-                      url={`/bundle/${listing.nft.slug}`}
+                      url={nftUrl}
                       height={440}
                       width={440}
                     />
@@ -240,7 +240,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                     image={nftCardUrl(currentNft.id, currentNft.image)}
                     className={`card-img-top ${imgClass}`}
                     title={currentNft.id}
-                    url={`/bundle/${listing.nft.slug}`}
+                    url={nftUrl}
                     height={440}
                     width={440}
                   />
@@ -266,7 +266,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                   </a>
                 </Link>
               )}
-              <Link href={`/bundle/${listing.nft.slug}`}>
+              <Link href={nftUrl}>
                 <a>
                   <Heading as="h6" size="sm" className="card-title mt-auto">{listing.nft.name}</Heading>
                 </a>

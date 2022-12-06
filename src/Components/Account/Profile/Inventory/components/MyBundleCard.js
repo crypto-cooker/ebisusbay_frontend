@@ -49,7 +49,7 @@ const MyNftCard = ({
   newTab = false,
 }) => {
   const history = useRouter();
-  const nftUrl = appUrl(`/bundle/${nft.slug}`);
+  const nftUrl = appUrl(`/collection/${nft.address}/${nft.id}`);
   const [isHovered, setIsHovered] = useState(false);
   const user = useSelector((state) => state.user);
   const batchListingCart = useSelector((state) => state.batchListing);

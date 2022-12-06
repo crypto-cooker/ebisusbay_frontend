@@ -237,7 +237,7 @@ const Cart = function () {
                           </Link>)
                           :
                           (
-                            <Link href={`/bundle/${nft.slug}`} passHref>
+                            <Link href={`/collection/${nft.address}/${nft.id}`} passHref>
                               <NftLink name={nft.name} />
                             </Link>
                           )
