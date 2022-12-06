@@ -1,18 +1,14 @@
 import {
   Box,
   Center,
-
   Flex,
-  
   GridItem,
   Spacer,
   Text,
-
   Textarea,
-  FormLabel, FormHelperText,
 } from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -24,12 +20,12 @@ import {
 } from "@src/GlobalState/batchListingSlice";
 
 
-import { appConfig } from "@src/Config";
 import useCreateBundle from '@src/Components/Account/Settings/hooks/useCreateBundle';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { FormControl as FormControlCK } from '@src/Components/components/chakra-components'
 import BundleDrawerItem from "./BundleDrawerItem";
+import {isBundle} from "@src/utils";
 
 const MAX_NFTS_IN_BUNDLE = 40;
 
@@ -37,10 +33,8 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
   const dispatch = useDispatch();
   const batchListingCart = useSelector((state) => state.batchListing);
   const user = useSelector((state) => state.user);
-  const [executingCreateListing, setExecutingCreateListing] = useState(false);
   const [showConfirmButton, setShowConfirmButton] = useState(false);
-  const [isCreating, setIsCreating]=  useState(false);
-  const [actualForm, setActualForm] = useState('list');
+  const [executingCreateBundle, setExecutingCreateBundle] = useState(false);
 
   const [createBundle, responseBundle] = useCreateBundle();
 
@@ -91,18 +85,17 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
       }
       else {
         try {
-          setIsCreating(true);
+          setExecutingCreateBundle(true);
           const res = await createBundle({ values, nfts: batchListingCart.nfts })
-          setIsCreating(false)
           toast.success('The bundle was created successfully');
           dispatch(setRefetchNfts(true))
           dispatch(clearBatchListingCart())
           resetForm();
-        }
-        catch (error) {
+        } catch (error) {
           toast.error(`Error`);
+        } finally {
+          setExecutingCreateBundle(false);
         }
-        setIsCreating(false)
       }
     }
   };
@@ -136,6 +129,13 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
     validateForm,
     resetForm
   } = formikProps;
+
+  const canSubmit = () => {
+    return !executingCreateBundle &&
+      batchListingCart.nfts.length > 0 &&
+      !Object.values(batchListingCart.extras).some((o) => !o.approval) &&
+      !batchListingCart.nfts.some((o) => o.nft.isStaked || isBundle(o.nft.address));
+  }
 
   return (
     <>
@@ -178,7 +178,7 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
                 item={item}
                 onCascadePriceSelected={handleCascadePrices}
                 onApplyAllSelected={handleApplyAll}
-                disabled={showConfirmButton || executingCreateListing}
+                disabled={showConfirmButton || executingCreateBundle}
               />
             ))}
           </>
@@ -196,10 +196,10 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
           type="legacy"
           className="w-100"
           onClick={handleSubmit}
-          disabled={errors.length > 0}
-          isLoading={isCreating}
+          disabled={!canSubmit() || errors.length > 0}
+          isLoading={executingCreateBundle}
         >
-          {!isCreating? 
+          {!executingCreateBundle?
             'Create Bundle'  
             : 
             'Creating Bundle'

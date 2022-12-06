@@ -1,11 +1,11 @@
 import {
+  Badge,
   Box,
   Button as ChakraButton,
   Collapse,
-  Flex, 
+  Flex,
   Skeleton,
   Spacer,
-  Stack,
   Text,
   useColorModeValue,
   VStack,
@@ -17,23 +17,18 @@ import { AnyMedia } from "@src/Components/components/AnyMedia";
 import { ImageKitService } from "@src/helpers/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisH, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import {
   removeFromBatchListingCart,
   updatePrice,
-  setApprovalBundle,
-  setExtrasBundle
+  setExtras, setApproval
 } from "@src/GlobalState/batchListingSlice";
-import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
-import { Contract, ethers } from "ethers";
+import { Contract } from "ethers";
 import { ERC721 } from "@src/Contracts/Abis";
 import { appConfig } from "@src/Config";
-import { caseInsensitiveCompare, createSuccessfulTransactionToastContent } from "@src/utils";
-
-import { getCollectionMetadata } from "@src/core/api";
-import { collectionRoyaltyPercent } from "@src/core/chain";
+import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -47,9 +42,10 @@ const BundleDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, di
   const [invalid, setInvalid] = useState(false);
 
   // Approvals
-  const extras = useSelector((state) => state.batchListing.extrasBundle[item.nft.address.toLowerCase()] ?? {});
-  const approvalStatus = extras.approval;
+  const extras = useSelector((state) => state.batchListing.extras[item.nft.address.toLowerCase()] ?? {});
+  const { approval: approvalStatus, canList } = extras;
   const [executingApproval, setExecutingApproval] = useState(false);
+  const [initializing, setInitializing] = useState(false);
 
   const handleRemoveItem = () => {
     dispatch(removeFromBatchListingCart(item.nft));
@@ -81,7 +77,7 @@ const BundleDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, di
       const tx = await contract.setApprovalForAll(config.contracts.market, true);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      dispatch(setApprovalBundle({ address: item.nft.address, status: true }));
+      dispatch(setApproval({ address: item.nft.address, status: true }));
 
     } catch (error) {
       if (error.data) {
@@ -99,19 +95,18 @@ const BundleDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, di
 
   useEffect(() => {
     async function func() {
-      if (!extras[item.nft.address.toLowerCase()]) {
-        const extrasBundle = { address: item.nft.address };
+      try {
+        setInitializing(true);
+        if (!extras[item.nft.address.toLowerCase()]) {
+          const extras = { address: item.nft.address };
 
-        extrasBundle.approval = await checkApproval();
+          extras.approval = await checkApproval();
+          extras.canList = item.nft.listable && !item.nft.isStaked;
 
-        const metadata = await getCollectionMetadata(item.nft.address);
-        if (metadata.collections.length > 0) {
-          extrasBundle.floorPrice = metadata.collections[0].floorPrice;
+          dispatch(setExtras(extras));
         }
-
-        extrasBundle.royalty = await collectionRoyaltyPercent(item.nft.address, item.nft.id);
-
-        dispatch(setExtrasBundle(extrasBundle));
+      } finally {
+        setInitializing(false);
       }
     }
     func();
@@ -142,9 +137,23 @@ const BundleDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, di
             <Link href={`/collection/${item.nft.address}/${item.nft.id}`}>
               <Text fontWeight="bold" noOfLines={1} cursor="pointer">{item.nft.name}</Text>
             </Link>
-            <Skeleton isLoaded={typeof approvalStatus === 'boolean'}>
+            <Skeleton isLoaded={!initializing}>
               {approvalStatus ? (
-                <></>
+                <>
+                  {isBundle(item.nft.address) ? (
+                    <Box>
+                      <Badge variant='outline' colorScheme='red'>
+                        Can't Nest Bundles
+                      </Badge>
+                    </Box>
+                  ) : (!canList) && (
+                    <Box>
+                      <Badge variant='outline' colorScheme='red'>
+                        Not Listable
+                      </Badge>
+                    </Box>
+                  )}
+                </>
               ) : (
                 <ChakraButton
                   size='xs'
