@@ -235,7 +235,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, canBuy = t
                 )}
               </Box>
               ))}
-              
+
             </Slider>
               </div>
             {nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{nft.rank}</div>}
@@ -293,7 +293,6 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, canBuy = t
           isOpen={openMakeOfferDialog}
           onClose={() => setOpenMakeOfferDialog(false)}
           nft={nft}
-          collection={collection}
         />
       )}
     </>

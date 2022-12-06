@@ -169,7 +169,7 @@ export const ListingDrawer = () => {
       !Object.values(batchListingCart.extras).some((o) => !o.approval) &&
       (isBundling || !batchListingCart.nfts.some((o) => !o.price || !parseInt(o.price) > 0)) &&
       (!isBundling || isApprovedForBundling) &&
-      !batchListingCart.nfts.some((o) => !o.nft.listable || o.nft.isStaked || isBundle(o.nft.address));
+      !batchListingCart.nfts.some((o) => !o.nft.listable || o.nft.isStaked || (isBundling && isBundle(o.nft.address)));
   }
 
   const onBundleToggled = useCallback((e) => {

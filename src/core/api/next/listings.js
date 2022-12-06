@@ -1,4 +1,5 @@
 import axios from "axios";
+import {ListingsQuery} from "@src/core/api/queries/listings";
 
 const api = axios.create({
   baseURL: '/api',
@@ -6,6 +7,8 @@ const api = axios.create({
 
 export const getListingsByCollection = async (address, listingsQuery) => {
   try{
+    if (!listingsQuery) listingsQuery = ListingsQuery.default();
+
     listingsQuery.collection = address;
     return await api.get(`listings`, {params: listingsQuery.toApi()});
   }

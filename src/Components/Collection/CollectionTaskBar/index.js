@@ -22,6 +22,7 @@ import useReportCollection from '@src/hooks/useReportCollection';
 import useFeatureFlag from "@src/hooks/useFeatureFlag";
 import Constants from "@src/constants";
 import InstantSellDialog from "@src/Components/Offer/Dialogs/InstantSellDialog";
+import {isBundle} from "@src/utils";
 
 const REASONSLIST = ['Fake collection or possible scam', 'Explicit or sensitive content', 'Spam', 'Other']
 
@@ -241,14 +242,16 @@ export const CollectionTaskBar = ({ collection, onFilterToggle, onSortToggle }) 
           <div className="ms-2">
             <SortDropdown />
           </div>
-          <div className="ms-2 my-auto">
-            <Button
-              type="legacy"
-              onClick={openCollectionOfferDialog}
-            >
-              Make collection offer
-            </Button>
-          </div>
+          {!isBundle(collection.address) && (
+            <div className="ms-2 my-auto">
+              <Button
+                type="legacy"
+                onClick={openCollectionOfferDialog}
+              >
+                Make collection offer
+              </Button>
+            </div>
+          )}
           <div className="ms-2 my-auto">
             <Button
               type="legacy"

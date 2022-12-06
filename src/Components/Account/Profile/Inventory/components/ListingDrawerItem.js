@@ -156,7 +156,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
             <Skeleton isLoaded={!initializing}>
               {approvalStatus ? (
                 <>
-                  {isBundle(item.nft.address) ? (
+                  {isBundling && isBundle(item.nft.address) ? (
                     <Box>
                       <Badge variant='outline' colorScheme='red'>
                         Can't Nest Bundles
