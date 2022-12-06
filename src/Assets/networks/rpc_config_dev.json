@@ -12117,7 +12117,7 @@
       "name": "Cronos Apes",
       "slug": "cronos-apes",
       "multiToken": false,
-      "address": "0x5Cb9a12d31CF751ACc58B12B47cc4E093A6AB580",
+      "address": "0x50a6aA29b9E99c9B8b81069a12EeFeDAC85919B7",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -15221,6 +15221,7 @@
         "maxSupply": 5555,
         "website": "https://metaplanetclub.com/",
         "twitter": "https://twitter.com/ClubMetaPlanet",
+        "discord": "https://discord.gg/ppyFMH7xWS",
         "instagram": "https://www.instagram.com/metaplanetclub",
         "categories": [
           "collectibles"
@@ -21672,6 +21673,7 @@
         "name": "Meta Planet Club",
         "website": "https://metaplanetclub.com/",
         "twitter": "https://twitter.com/ClubMetaPlanet",
+        "discord": "https://discord.gg/ppyFMH7xWS",
         "instagram": "https://www.instagram.com/metaplanetclub"
       },
       "address": "0x092636A145b3349Dc6026cC439d97Ca6b0655378",
