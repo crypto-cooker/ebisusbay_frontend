@@ -1,13 +1,18 @@
 import {useDispatch, useSelector} from "react-redux";
 import {
   Badge,
-  Box, Collapse,
+  Box,
+  Collapse,
   Flex,
-  FormControl, FormErrorMessage,
+  FormControl,
+  FormErrorMessage,
   Input,
   Menu,
-  MenuButton, MenuItem, MenuList,
-  Skeleton, Spacer,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Skeleton,
+  Spacer,
   Stack,
   Text,
   useColorModeValue,
@@ -149,9 +154,21 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
               <Text fontWeight="bold" noOfLines={1} cursor="pointer">{item.nft.name}</Text>
             </Link>
             <Skeleton isLoaded={!initializing}>
-              {approvalStatus && canList ? (
+              {approvalStatus ? (
                 <>
-                  {!isBundling && (
+                  {isBundle(item.nft.address) ? (
+                    <Box>
+                      <Badge variant='outline' colorScheme='red'>
+                        Can't Nest Bundles
+                      </Badge>
+                    </Box>
+                  ) : (!canList) ? (
+                    <Box>
+                      <Badge variant='outline' colorScheme='red'>
+                        Not Listable
+                      </Badge>
+                    </Box>
+                  ) : !isBundling && (
                     <FormControl isInvalid={invalid}>
                       <Stack direction="row">
                         <Input
@@ -192,12 +209,6 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
                     </FormControl>
                   )}
                 </>
-              ) : !canList ? (
-                <Box>
-                  <Badge variant='outline' colorScheme='red'>
-                    Not Listable
-                  </Badge>
-                </Box>
               ) : (
                 <ChakraButton
                   size='xs'

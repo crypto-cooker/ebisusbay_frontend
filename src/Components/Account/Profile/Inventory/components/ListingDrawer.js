@@ -14,18 +14,18 @@ import {
 } from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
 import {Spinner} from "react-bootstrap";
-import React, {useCallback, useRef, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {applyPriceToAll, cascadePrices, clearBatchListingCart} from "@src/GlobalState/batchListingSlice";
 import {Contract, ethers} from "ethers";
 import {toast} from "react-toastify";
-import {caseInsensitiveCompare, createSuccessfulTransactionToastContent, pluralize} from "@src/utils";
+import {caseInsensitiveCompare, createSuccessfulTransactionToastContent, isBundle, pluralize} from "@src/utils";
 import * as Sentry from "@sentry/react";
 import {appConfig} from "@src/Config";
 import {ListingDrawerItem} from "@src/Components/Account/Profile/Inventory/components/ListingDrawerItem";
-import useCreateBundle from "@src/Components/Account/Settings/hooks/useCreateBundle";
 import ListingBundleDrawerForm from "@src/Components/Account/Profile/Inventory/components/ListingBundleDrawerForm";
 import Bundle from "@src/Contracts/Bundle.json";
+import {ERC721} from "@src/Contracts/Abis";
 
 const config = appConfig();
 const MAX_NFTS_IN_CART = 40;
@@ -40,7 +40,44 @@ export const ListingDrawer = () => {
   const [showConfirmButton, setShowConfirmButton] = useState(false);
   const [isBundling, setIsBundling] = useState(false);
   const formRef = useRef(null);
-  const [createBundle, responseBundle] = useCreateBundle();
+
+  const [isApprovedForBundling, setIsApprovedForBundling] = useState(false);
+  const [executingBundleApproval, setExecutingBundleApproval] = useState(false);
+
+  useEffect(() => {
+    async function func() {
+      const approval = await checkBundleApproval();
+      setIsApprovedForBundling(approval);
+    }
+    func();
+  }, []);
+
+  const checkBundleApproval = async () => {
+    const contract = new Contract(config.contracts.bundle, ERC721, user.provider.getSigner());
+    return await contract.isApprovedForAll(user.address, config.contracts.market);
+  };
+
+  const approveBundleContract = useCallback(async () => {
+    try {
+      setExecutingBundleApproval(true);
+      const contract = new Contract(config.contracts.bundle, ERC721, user.provider.getSigner());
+      const tx = await contract.setApprovalForAll(config.contracts.market, true);
+      let receipt = await tx.wait();
+      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      setIsApprovedForBundling(true);
+    } catch (error) {
+      if (error.data) {
+        toast.error(error.data.message);
+      } else if (error.message) {
+        toast.error(error.message);
+      } else {
+        toast.error('Unknown Error');
+      }
+      console.log(error);
+    } finally {
+      setExecutingBundleApproval(false);
+    }
+  }, [config.contracts, user]);
 
   const handleClearCart = () => {
     setShowConfirmButton(false);
@@ -127,27 +164,17 @@ export const ListingDrawer = () => {
 
   const canSubmit = () => {
     return !executingCreateListing &&
+      !executingBundleApproval &&
       batchListingCart.nfts.length > 0 &&
       !Object.values(batchListingCart.extras).some((o) => !o.approval) &&
       (isBundling || !batchListingCart.nfts.some((o) => !o.price || !parseInt(o.price) > 0)) &&
-      !batchListingCart.nfts.some((o) => !o.nft.listable || o.nft.isStaked);
+      (!isBundling || isApprovedForBundling) &&
+      !batchListingCart.nfts.some((o) => !o.nft.listable || o.nft.isStaked || isBundle(o.nft.address));
   }
 
-  const [price, setPrice] = useState('');
-  const [invalidPrice, setInvalidPrice] = useState(false);
   const onBundleToggled = useCallback((e) => {
     setIsBundling(e.target.checked);
   }, [setIsBundling, isBundling]);
-  const handlePriceChange = useCallback((e) => {
-    const newSalePrice = e.target.value;
-    if (numberRegexValidation.test(newSalePrice) || newSalePrice === '') {
-      setInvalidPrice(false);
-      setPrice(newSalePrice);
-    } else {
-      setInvalidPrice(true);
-    }
-  }, [dispatch, invalidPrice, price]);
-
 
   const onSubmitListingBundle = async (values) => {
     try {
@@ -168,7 +195,6 @@ export const ListingDrawer = () => {
       }});
       const price = ethers.utils.parseEther(values.price.toString());
 
-      console.log('submit', nftAddresses, nftIds, values.title, values.description, price.toString())
       const bundleContract = new Contract(config.contracts.bundle, Bundle.abi, user.provider.getSigner());
       const tx = await bundleContract.wrapAndList(nftAddresses, nftIds, values.title, values.description, price)
       const receipt = await tx.wait();
@@ -190,7 +216,32 @@ export const ListingDrawer = () => {
           <Switch id='list-bundle-toggle' isChecked={isBundling} onChange={onBundleToggled}/>
         </FormControl>
         {isBundling && (
-          <ListingBundleDrawerForm ref={formRef} onSubmit={onSubmitListingBundle} />
+          <Box mb={4}>
+            {isApprovedForBundling ? (
+              <ListingBundleDrawerForm ref={formRef} onSubmit={onSubmitListingBundle} />
+            ) : (
+              <>
+                <Text fontSize="sm" align="center">Ebisu's Bay needs approval to transfer this bundle on your behalf once sold</Text>
+                <Button
+                  type="legacy"
+                  className="w-100"
+                  onClick={approveBundleContract}
+                  disabled={executingBundleApproval}
+                >
+                  {executingBundleApproval ? (
+                    <>
+                      Approving...
+                      <Spinner animation="border" role="status" size="sm" className="ms-1">
+                        <span className="visually-hidden">Loading...</span>
+                      </Spinner>
+                    </>
+                  ) : (
+                    <>Approve</>
+                  )}
+                </Button>
+              </>
+            )}
+          </Box>
         )}
         <Flex mb={2}>
           <Text fontWeight="bold" color={batchListingCart.nfts.length > 40 && 'red'}>
