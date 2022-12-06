@@ -17,7 +17,7 @@ import { AnyMedia } from "@src/Components/components/AnyMedia";
 import { ImageKitService } from "@src/helpers/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import {faBoxOpen, faTrash} from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import {
@@ -125,12 +125,16 @@ const BundleDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, di
           height={50}
           style={{ borderRadius: '20px' }}
         >
-          <AnyMedia
-            image={ImageKitService.buildAvatarUrl(item.nft.image)}
-            title={item.nft.name}
-            usePlaceholder={false}
-            className="img-rounded-8"
-          />
+          {isBundle(item.nft.address) ? (
+            <FontAwesomeIcon icon={faBoxOpen} size="2x"/>
+          ) : (
+            <AnyMedia
+              image={ImageKitService.buildAvatarUrl(item.nft.image)}
+              title={item.nft.name}
+              usePlaceholder={false}
+              className="img-rounded-8"
+            />
+          )}
         </Box>
         <Box flex='1' ms={2} fontSize="14px">
           <VStack align="left" spacing={0}>

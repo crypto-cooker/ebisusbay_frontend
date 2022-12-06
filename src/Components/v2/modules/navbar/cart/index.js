@@ -1,7 +1,7 @@
 import React, {forwardRef, memo, useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faShoppingBag, faTrash} from '@fortawesome/free-solid-svg-icons';
+import {faBox, faBoxOpen, faLayerGroup, faShoppingBag, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {
   Badge,
   Box, Center,
@@ -19,7 +19,7 @@ import {ImageKitService} from "@src/helpers/image";
 import {commify} from "ethers/lib/utils";
 import {ethers} from "ethers";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import Button from "@src/Components/components/common/Button";
@@ -218,12 +218,16 @@ const Cart = function () {
                         height={100}
                         style={{borderRadius: '20px'}}
                       >
-                        <AnyMedia
-                          image={ImageKitService.buildFixedWidthUrl(nft.image, 100, 100)}
-                          title={nft.name}
-                          usePlaceholder={false}
-                          className="img-rounded-8"
-                        />
+                        {isBundle(nft.address) ? (
+                          <FontAwesomeIcon icon={faBoxOpen} size="3x"/>
+                        ) : (
+                          <AnyMedia
+                            image={ImageKitService.buildFixedWidthUrl(nft.image, 100, 100)}
+                            title={nft.name}
+                            usePlaceholder={false}
+                            className="img-rounded-8"
+                          />
+                        )}
                       </Box>
                       <Box flex='1' ms={2}>
                         

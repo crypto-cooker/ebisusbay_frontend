@@ -27,7 +27,7 @@ import Link from "next/link";
 import {Button as ChakraButton} from "@chakra-ui/button";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEllipsisH, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faBoxOpen, faEllipsisH, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {appConfig} from "@src/Config";
 
 const config = appConfig();
@@ -132,21 +132,16 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
           height={50}
           style={{ borderRadius: '20px' }}
         > 
-        { isBundle(item.nft.address) ? (
+        {isBundle(item.nft.address) ? (
+          <FontAwesomeIcon icon={faBoxOpen} size="2x"/>
+        ) : (
           <AnyMedia
-          image={ImageKitService.buildAvatarUrl(item.nft.nfts[0].image)}
-          title={item.nft.name}
-          usePlaceholder={false}
-          className="img-rounded-8"
-          />
-        )
-        :
-          (<AnyMedia
             image={ImageKitService.buildAvatarUrl(item.nft.image)}
             title={item.nft.name}
             usePlaceholder={false}
             className="img-rounded-8"
-          />)}
+          />
+        )}
         </Box>
         <Box flex='1' ms={2} fontSize="14px">
           <VStack align="left" spacing={0}>
