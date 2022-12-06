@@ -194,28 +194,25 @@ const MyNftCard = ({
               )}
             </>
             <Slider size={nft.nfts?.length}>
-
-              {nft.nfts?.map((currentNft) =>
-
-
-              (<Box
-                _groupHover={{ transform: 'scale(1.05)', transition: '0.3s ease' }}
-                transition="0.3s ease"
-                transform="scale(1.0)"
-                cursor="pointer"
-              >
-                <AnyMedia image={nftCardUrl(currentNft.id, currentNft.image)}
-                  title={currentNft.id}
-                  newTab={false}
-                  className="card-img-top marketplace"
-                  url={`/bundle/${nft.slug}`}
-                  height={440}
-                  width={440}
-                  video={batchListingCart.nfts.length > 0 ? undefined : (currentNft.video ?? currentNft.animation_url)}
-                  usePlaceholder={true}
-                />
-
-              </Box>))}
+              {nft.nfts?.map((currentNft) => (
+                <Box
+                  _groupHover={{ transform: 'scale(1.05)', transition: '0.3s ease' }}
+                  transition="0.3s ease"
+                  transform="scale(1.0)"
+                  onClick={() => navigateTo(nftUrl)}
+                  cursor="pointer"
+                >
+                  <AnyMedia image={nftCardUrl(currentNft.id, currentNft.image)}
+                    title={currentNft.id}
+                    newTab={false}
+                    className="card-img-top marketplace"
+                    height={440}
+                    width={440}
+                    video={batchListingCart.nfts.length > 0 ? undefined : (currentNft.video ?? currentNft.animation_url)}
+                    usePlaceholder={true}
+                  />
+                </Box>
+              ))}
             </Slider>
           </div>
           <div className="d-flex flex-column p-2 pb-1">

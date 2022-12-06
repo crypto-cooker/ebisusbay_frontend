@@ -27,7 +27,9 @@ const Tabs = ({ nft }) => {
 
   const [currentTab, setCurrentTab] = useState(tabs.properties);
   const [babyWeirdApeBreed, setBabyWeirdApeBreed] = useState(null);
-  const [listingHistory, setListingHistory] = useState(nft.listings)
+  const listingHistory = useSelector((state) =>
+    state.nft.history.filter((i) => i.state === 1).sort((a, b) => (a.saleTime < b.saleTime ? 1 : -1))
+  );
 
   const handleTabChange = useCallback((tab) => {
     setCurrentTab(tab);

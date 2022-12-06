@@ -82,7 +82,7 @@ const Nft = ({ slug, id, nft, collection }) => {
       {initialized && collection && (
         <>
           {isBundle(collection.address) ? (
-            <NftBundle bundle={nft} />
+            <Nft721 address={collection.address} id={id} isBundle={true} />
           ) : type === '1155' ? (
             <Nft1155 address={collection.address} id={id} />
           ) : (

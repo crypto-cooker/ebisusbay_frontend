@@ -3029,8 +3029,8 @@
       }
     },
     {
-      "name": "Ebisu's Bay NFT Bundle",
-      "slug": "nft-bundle",
+      "name": "Ebisu's Bay NFT Bundles",
+      "slug": "nft-bundles",
       "multiToken": false,
       "address": "0x8d7C2801684A9C6E32663e3e5ede3b31f226b054",
       "onChain": false,

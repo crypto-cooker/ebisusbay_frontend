@@ -32,7 +32,7 @@ import {
   isLazyHorsePonyCollection,
   isLadyWeirdApesCollection,
   isNftBlacklisted,
-  isAnyWeirdApesCollection, isWeirdApesCollection, isEmptyObj,
+  isAnyWeirdApesCollection, isWeirdApesCollection, isEmptyObj, appUrl,
 } from '@src/utils';
 import { getNftDetails, refreshMetadata, tickFavorite } from '@src/GlobalState/nftSlice';
 import { connectAccount, chainConnect, retrieveProfile } from '@src/GlobalState/User';
@@ -52,7 +52,7 @@ import Link from 'next/link';
 import axios from "axios";
 import Button, { LegacyOutlinedButton } from "@src/Components/components/common/Button";
 import { collectionRoyaltyPercent } from "@src/core/chain";
-import { ButtonGroup, Heading, MenuButton as MenuButtonCK, useClipboard } from "@chakra-ui/react";
+import {Box, ButtonGroup, Flex, Heading, MenuButton as MenuButtonCK, Stack, Text, useClipboard} from "@chakra-ui/react";
 import useToggleFavorite from "@src/Components/NftDetails/hooks/useToggleFavorite";
 import { toast } from "react-toastify";
 import { Menu } from '../components/chakra-components';
@@ -61,6 +61,8 @@ import { faFacebook, faSquareTwitter, faTelegram } from '@fortawesome/free-brand
 import { getStats } from '@src/GlobalState/collectionSlice';
 import { useQuery } from "@tanstack/react-query";
 import { getCollections } from "@src/core/api/next/collectioninfo";
+import {ImageContainer} from "@src/Components/Bundle";
+import {getTheme} from "@src/Theme/theme";
 
 const config = appConfig();
 const tabs = {
@@ -70,13 +72,14 @@ const tabs = {
   offers: 'offers',
   info: 'info',
   breeding: 'breeding',
+  items: 'items',
 };
 
-const Nft721 = ({ address, id }) => {
+const Nft721 = ({ address, id, isBundle = false }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const { nft, refreshing, favorites } = useSelector((state) => state.nft);
-  const { onCopy } = useClipboard(window.location);
+  const { onCopy } = useClipboard(appUrl(`/collection/${address}/${id}`));
 
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [offerType, setOfferType] = useState(OFFER_TYPE.none);
@@ -455,7 +458,7 @@ const Nft721 = ({ address, id }) => {
     return nft.original_image;
   };
 
-  const [currentTab, setCurrentTab] = React.useState(tabs.properties);
+  const [currentTab, setCurrentTab] = React.useState(isBundle ? tabs.items : tabs.properties);
   const handleTabChange = useCallback((tab) => {
     setCurrentTab(tab);
   }, []);
@@ -520,7 +523,7 @@ const Nft721 = ({ address, id }) => {
 
   return (
     <div>
-      {isLoadingCollection || !collection ? (
+      {isLoading || isLoadingCollection || !collection ? (
         <section className="gl-legacy container">
           <div className="row mt-4">
             <div className="col-lg-12 text-center">
@@ -535,7 +538,9 @@ const Nft721 = ({ address, id }) => {
           <div className="row">
             <div className="col-md-6 text-center">
               {nft ? (
-                nft.useIframe ? (
+                isBundle ? (
+                  <ImageContainer nft={nft} />
+                ) : nft.useIframe ? (
                   <iframe width="100%" height="636" src={nft.iframeSource} title="nft" />
                 ) : (
                   <>
@@ -687,9 +692,15 @@ const Nft721 = ({ address, id }) => {
 
                   <div className="de_tab">
                     <ul className="de_nav nft_tabs_options">
-                      <li className={`tab ${currentTab === tabs.properties ? 'active' : ''}`}>
-                        <span onClick={() => handleTabChange(tabs.properties)}>Properties</span>
-                      </li>
+                      {isBundle ? (
+                        <li className={`tab ${currentTab === tabs.items ? 'active' : ''}`}>
+                          <span onClick={() => handleTabChange(tabs.items)}>Items</span>
+                        </li>
+                      ) : (
+                        <li className={`tab ${currentTab === tabs.properties ? 'active' : ''}`}>
+                          <span onClick={() => handleTabChange(tabs.properties)}>Properties</span>
+                        </li>
+                      )}
                       {((powertraits && powertraits.length > 0) || (evoSkullTraits && evoSkullTraits.length > 0)) && (
                         <li className={`tab ${currentTab === tabs.powertraits ? 'active' : ''}`}>
                           <span onClick={() => handleTabChange(tabs.powertraits)}>In-Game Attributes</span>
@@ -701,9 +712,11 @@ const Nft721 = ({ address, id }) => {
                       <li className={`tab ${currentTab === tabs.offers ? 'active' : ''}`}>
                         <span onClick={() => handleTabChange(tabs.offers)}>Offers</span>
                       </li>
-                      <li className={`tab ${currentTab === tabs.info ? 'active' : ''}`}>
-                        <span onClick={() => handleTabChange(tabs.info)}>Info</span>
-                      </li>
+                      {!isBundle && (
+                        <li className={`tab ${currentTab === tabs.info ? 'active' : ''}`}>
+                          <span onClick={() => handleTabChange(tabs.info)}>Info</span>
+                        </li>
+                      )}
                       {babyWeirdApeBreed && (
                         <li className={`tab ${currentTab === tabs.breeding ? 'active' : ''}`}>
                           <span onClick={() => handleTabChange(tabs.breeding)}>Breed Info</span>
@@ -927,6 +940,49 @@ const Nft721 = ({ address, id }) => {
                           </div>
                         </div>
                       )}
+
+                      {currentTab === tabs.items && (
+                        <Flex flexDir='column' gap='8px' maxH='340ox' overflowY='auto'>
+                          {nft.nfts.map((nft, i) => (
+                            <Box p='16px' key={i}>
+                              <Flex gap='15px'>
+                                <Box w='72px'>
+                                  <AnyMedia
+                                    image={specialImageTransform('0xe94ac1647bF99FE299B2aDcF53FcF57153C23Fe1', nft.image)}
+                                    video={nft.video ?? nft.animation_url}
+                                    videoProps={{ height: 'auto', autoPlay: true }}
+                                    title={'title'}
+                                    usePlaceholder={false}
+                                    className="img-fluid img-rounded mb-sm-30"
+                                  />
+                                </Box>
+                                <Stack>
+                                  {nft.collectionName && (
+                                    <Link href={`/collection/${nft.address}`}>
+                                      <a>
+                                        <h6
+                                          className="card-title mt-auto fw-normal mb-0"
+                                          style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
+                                        >
+                                          {nft.name}
+                                        </h6>
+                                      </a>
+                                    </Link>
+                                  )}
+                                  <Link href={`/collection/${nft.address}/${nft.id}`}>
+                                    <a>
+                                      <Text fontWeight='bold'>{nft.name}</Text>
+                                    </a>
+                                  </Link>
+                                </Stack>
+
+                              </Flex>
+                            </Box>
+                          ))
+                          }
+                        </Flex>
+                      )}
+
                     </div>
                   </div>
                 </div>

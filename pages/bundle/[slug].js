@@ -12,9 +12,21 @@ import { useSelector, useDispatch } from 'react-redux';
 import { caseInsensitiveCompare } from '@src/utils';
 import { getNftDetails } from '@src/GlobalState/nftSlice';
 import NftBundle from "@src/Components/Collection/nftBundle";
+import PageHead from "@src/Components/Head/PageHead";
+import Nft721 from "@src/Components/Collection/nft721";
 
 const Bundle = ({ bundle }) => {
-  return <NftBundle bundle={bundle} />
+  return (
+    <>
+      <PageHead
+        title={bundle.name}
+        url={`/collection/${bundle.address}/${bundle.id}`}
+      />
+      {useHasHydrated() && (
+        <Nft721 address={bundle.address} id={bundle.id} isBundle={true} />
+      )}
+    </>
+  );
 }
 
 export const getServerSideProps = async ({ params }) => {
