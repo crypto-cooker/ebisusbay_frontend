@@ -1,22 +1,36 @@
-import {Alert, AlertDescription, AlertIcon, Box, Center, Flex, GridItem, Spacer, Text} from "@chakra-ui/react";
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  Box,
+  Center,
+  Flex,
+  FormControl,
+  FormLabel,
+  GridItem,
+  Spacer,
+  Switch,
+  Text
+} from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
 import {Spinner} from "react-bootstrap";
-import React, {useState} from "react";
+import React, {useCallback, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {applyPriceToAll, cascadePrices, clearBatchListingCart} from "@src/GlobalState/batchListingSlice";
-import {ethers} from "ethers";
+import {Contract, ethers} from "ethers";
 import {toast} from "react-toastify";
 import {caseInsensitiveCompare, createSuccessfulTransactionToastContent, pluralize} from "@src/utils";
 import * as Sentry from "@sentry/react";
 import {appConfig} from "@src/Config";
-import {
-  BatchListingDrawerItem,
-  ListingDrawerItem
-} from "@src/Components/Account/Profile/Inventory/components/ListingDrawerItem";
+import {ListingDrawerItem} from "@src/Components/Account/Profile/Inventory/components/ListingDrawerItem";
+import useCreateBundle from "@src/Components/Account/Settings/hooks/useCreateBundle";
+import ListingBundleDrawerForm from "@src/Components/Account/Profile/Inventory/components/ListingBundleDrawerForm";
+import Bundle from "@src/Contracts/Bundle.json";
 
 const config = appConfig();
 const MAX_NFTS_IN_CART = 40;
 const floorThreshold = 5;
+const numberRegexValidation = /^[1-9]+[0-9]*$/;
 
 export const ListingDrawer = () => {
   const dispatch = useDispatch();
@@ -24,6 +38,9 @@ export const ListingDrawer = () => {
   const batchListingCart = useSelector((state) => state.batchListing);
   const [executingCreateListing, setExecutingCreateListing] = useState(false);
   const [showConfirmButton, setShowConfirmButton] = useState(false);
+  const [isBundling, setIsBundling] = useState(false);
+  const formRef = useRef(null);
+  const [createBundle, responseBundle] = useCreateBundle();
 
   const handleClearCart = () => {
     setShowConfirmButton(false);
@@ -68,6 +85,11 @@ export const ListingDrawer = () => {
 
   const prepareListing = async () => {
     try {
+      if (isBundling) {
+        formRef.current.submitForm();
+        return;
+      }
+
       const nftFloorPrices = Object.entries(batchListingCart.extras).map(([k, v]) => {
         return { address: k, floorPrice: v.floorPrice }
       });
@@ -107,13 +129,69 @@ export const ListingDrawer = () => {
     return !executingCreateListing &&
       batchListingCart.nfts.length > 0 &&
       !Object.values(batchListingCart.extras).some((o) => !o.approval) &&
-      !batchListingCart.nfts.some((o) => !o.price || !parseInt(o.price) > 0) &&
+      (isBundling || !batchListingCart.nfts.some((o) => !o.price || !parseInt(o.price) > 0)) &&
       !batchListingCart.nfts.some((o) => !o.nft.listable || o.nft.isStaked);
   }
+
+  const [price, setPrice] = useState('');
+  const [invalidPrice, setInvalidPrice] = useState(false);
+  const onBundleToggled = useCallback((e) => {
+    setIsBundling(e.target.checked);
+  }, [setIsBundling, isBundling]);
+  const handlePriceChange = useCallback((e) => {
+    const newSalePrice = e.target.value;
+    if (numberRegexValidation.test(newSalePrice) || newSalePrice === '') {
+      setInvalidPrice(false);
+      setPrice(newSalePrice);
+    } else {
+      setInvalidPrice(true);
+    }
+  }, [dispatch, invalidPrice, price]);
+
+
+  const onSubmitListingBundle = async (values) => {
+    try {
+      setShowConfirmButton(false);
+      setExecutingCreateListing(true);
+      const filteredCartNfts = batchListingCart.nfts.filter((o) => {
+        return batchListingCart.extras[o.nft.address.toLowerCase()]?.approval;
+      });
+      const nftAddresses = filteredCartNfts.map((o) => o.nft.address);
+      const nftIds = filteredCartNfts.map((o) => o.nft.id);
+
+      Sentry.captureEvent({ message: 'handleBatchBundleListing', extra: {
+          nftAddresses,
+          nftIds,
+          title: values.title,
+          description: values.description,
+          price: values.price
+      }});
+      const price = ethers.utils.parseEther(values.price.toString());
+
+      console.log('submit', nftAddresses, nftIds, values.title, values.description, price.toString())
+      const bundleContract = new Contract(config.contracts.bundle, Bundle.abi, user.provider.getSigner());
+      const tx = await bundleContract.wrapAndList(nftAddresses, nftIds, values.title, values.description, price)
+      const receipt = await tx.wait();
+      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+
+      handleClearCart();
+    } finally {
+      setExecutingCreateListing(false);
+    }
+  };
 
   return (
     <>
       <GridItem px={6} py={4} overflowY="auto">
+        <FormControl display='flex' alignItems='center' mb={2}>
+          <FormLabel htmlFor='list-bundle-toggle' mb='0'>
+            List as bundle
+          </FormLabel>
+          <Switch id='list-bundle-toggle' isChecked={isBundling} onChange={onBundleToggled}/>
+        </FormControl>
+        {isBundling && (
+          <ListingBundleDrawerForm ref={formRef} onSubmit={onSubmitListingBundle} />
+        )}
         <Flex mb={2}>
           <Text fontWeight="bold" color={batchListingCart.nfts.length > 40 && 'red'}>
             {batchListingCart.nfts.length} / {MAX_NFTS_IN_CART} Items
@@ -130,6 +208,7 @@ export const ListingDrawer = () => {
                 onCascadePriceSelected={handleCascadePrices}
                 onApplyAllSelected={handleApplyAll}
                 disabled={showConfirmButton || executingCreateListing}
+                isBundling={isBundling}
               />
             ))}
           </>

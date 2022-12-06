@@ -33,7 +33,7 @@ import {appConfig} from "@src/Config";
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 
-export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, disabled }) => {
+export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, disabled, isBundling = false }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
@@ -150,44 +150,48 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
             </Link>
             <Skeleton isLoaded={!initializing}>
               {approvalStatus && canList ? (
-                <FormControl isInvalid={invalid}>
-                  <Stack direction="row">
-                    <Input
-                      placeholder="Enter Price"
-                      type="numeric"
-                      size="xs"
-                      value={price}
-                      onChange={handlePriceChange}
-                      disabled={disabled}
-                    />
-                    <ChakraButton
-                      size='xs'
-                      transition='all 0.2s'
-                      borderRadius='md'
-                      borderWidth='1px'
-                      onClick={() => setIsDetailsOpen(!isDetailsOpen)}
-                    >
-                      {isDetailsOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
-                    </ChakraButton>
-                    <Menu>
-                      <MenuButton
-                        px={2}
-                        transition='all 0.2s'
-                        borderRadius='md'
-                        borderWidth='1px'
-                        height={6}
-                      >
-                        <FontAwesomeIcon icon={faEllipsisH} />
-                      </MenuButton>
-                      <MenuList textAlign="right">
-                        <MenuItem onClick={() => onApplyAllSelected(price)}>Apply price to all</MenuItem>
-                        <MenuItem onClick={() => onCascadePriceSelected(item, price)}>Cascade price</MenuItem>
-                        <MenuItem onClick={handleRemoveItem}>Remove</MenuItem>
-                      </MenuList>
-                    </Menu>
-                  </Stack>
-                  <FormErrorMessage fontSize='xs' mt={1}>Enter a valid number.</FormErrorMessage>
-                </FormControl>
+                <>
+                  {!isBundling && (
+                    <FormControl isInvalid={invalid}>
+                      <Stack direction="row">
+                        <Input
+                          placeholder="Enter Price"
+                          type="numeric"
+                          size="xs"
+                          value={price}
+                          onChange={handlePriceChange}
+                          disabled={disabled}
+                        />
+                        <ChakraButton
+                          size='xs'
+                          transition='all 0.2s'
+                          borderRadius='md'
+                          borderWidth='1px'
+                          onClick={() => setIsDetailsOpen(!isDetailsOpen)}
+                        >
+                          {isDetailsOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                        </ChakraButton>
+                        <Menu>
+                          <MenuButton
+                            px={2}
+                            transition='all 0.2s'
+                            borderRadius='md'
+                            borderWidth='1px'
+                            height={6}
+                          >
+                            <FontAwesomeIcon icon={faEllipsisH} />
+                          </MenuButton>
+                          <MenuList textAlign="right">
+                            <MenuItem onClick={() => onApplyAllSelected(price)}>Apply price to all</MenuItem>
+                            <MenuItem onClick={() => onCascadePriceSelected(item, price)}>Cascade price</MenuItem>
+                            <MenuItem onClick={handleRemoveItem}>Remove</MenuItem>
+                          </MenuList>
+                        </Menu>
+                      </Stack>
+                      <FormErrorMessage fontSize='xs' mt={1}>Enter a valid number.</FormErrorMessage>
+                    </FormControl>
+                  )}
+                </>
               ) : !canList ? (
                 <Box>
                   <Badge variant='outline' colorScheme='red'>
