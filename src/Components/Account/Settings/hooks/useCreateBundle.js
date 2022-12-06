@@ -48,6 +48,7 @@ const useCreateBundle = () => {
           nftImages: []
         })
         const newBundle = await bundleContract.wrap(arrays.tokens, arrays.ids, formData.values.title, formData.values.description)
+        await newBundle.wait();
         // let tbAwait = await newBundle.wait();
         // let idBundle = tbAwait.events[tbAwait.events.length - 1].args[0]
         // idBundle = parseInt(idBundle["_hex"], 16)

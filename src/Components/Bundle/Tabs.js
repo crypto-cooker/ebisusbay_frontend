@@ -7,6 +7,8 @@ import {shortAddress, timeSince} from "@src/utils";
 import NFTTabOffers from '@src/Components/Offer/NFTTabOffers';
 import ListingItem from "../NftDetails/NFTTabListings/ListingItem";
 import { Contract, ethers } from 'ethers';
+import {getTheme} from "@src/Theme/theme";
+import {useSelector} from "react-redux";
 
 const tabs = {
   properties: 'properties',
@@ -19,6 +21,9 @@ const tabs = {
 };
 
 const Tabs = ({ nft }) => {
+  const user = useSelector((state) => {
+    return state.user;
+  });
 
   const [currentTab, setCurrentTab] = useState(tabs.properties);
   const [babyWeirdApeBreed, setBabyWeirdApeBreed] = useState(null);
@@ -106,9 +111,8 @@ const Tabs = ({ nft }) => {
             {currentTab === tabs.items && (
               <Flex flexDir='column' gap='8px' maxH='340ox' overflow='scroll'>
                 {nft.nfts.map((nft, i) => (
-                  <Link href={`/collection/${nft.address}/${nft.id}`}>
-                  <Box p='16px' key={i} cursor='pointer' >
-                    <Flex gap='20px'>
+                  <Box p='16px' key={i}>
+                    <Flex gap='15px'>
                       <Box w='72px'>
                         <AnyMedia
                           image={specialImageTransform('0xe94ac1647bF99FE299B2aDcF53FcF57153C23Fe1', nft.image)}
@@ -120,17 +124,27 @@ const Tabs = ({ nft }) => {
                         />
                       </Box>
                       <Stack>
-                        {nft.collection && (
+                        {nft.collectionName && (
                           <Link href={`/collection/${nft.address}`}>
-                            {nft.collectionName}
+                            <a>
+                              <h6
+                                className="card-title mt-auto fw-normal mb-0"
+                                style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
+                              >
+                                {nft.name}
+                              </h6>
+                            </a>
                           </Link>
                         )}
-                        <Text>{nft.nftAddress}</Text>
+                        <Link href={`/collection/${nft.address}/${nft.id}`}>
+                          <a>
+                            <Text fontWeight='bold'>{nft.name}</Text>
+                          </a>
+                        </Link>
                       </Stack>
 
                     </Flex>
                   </Box>
-                  </Link>
                 ))
                 }
               </Flex>
