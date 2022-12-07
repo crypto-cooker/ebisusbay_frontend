@@ -1,7 +1,5 @@
-import { useState } from 'react';
-import {Contract, ethers} from "ethers";
-
-import { getAuthSignerInStorage } from '@src/helpers/storage';
+import {useState} from 'react';
+import {Contract} from "ethers";
 import useCreateSigner from './useCreateSigner';
 import {useSelector} from "react-redux";
 import {appConfig} from "@src/Config";
@@ -25,44 +23,26 @@ const useUnwrapBundle = () => {
       loading: true,
       error: null,
     });
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
+    try {
+      const bundleContract = new Contract(config.contracts.bundle, Bundle.abi, user.provider.getSigner());
+      const newBundle = await bundleContract.unwrap(bundleId)
+      await newBundle.wait();
 
-        const bundleContract = new Contract(config.contracts.bundle, Bundle.abi, user.provider.getSigner());
-
-        const newBundle = await bundleContract.unwrap(bundleId) 
-        let tbAwait = await newBundle.wait();
-        await new Promise(resolve => setTimeout(resolve, 5000));
-
-        setResponse({
-          ...response,
-          loading: false,
-          error: null,
-        });
-
-        return true;
-      } catch (error) {
-        console.log(error)
-        setResponse({
-          ...response,
-          loading: false,
-          error: error,
-        });
-        throw error;
-      }
-    } else {
       setResponse({
-        isLoading: false,
-        response: [],
-        error: { message: 'Something went wrong' },
+        ...response,
+        loading: false,
+        error: null,
       });
 
-      throw new Error();
+      return true;
+    } catch (error) {
+      console.log(error)
+      setResponse({
+        ...response,
+        loading: false,
+        error: error,
+      });
+      throw error;
     }
   };
 

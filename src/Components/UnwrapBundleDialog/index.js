@@ -70,6 +70,7 @@ const UnwrapBundleDialog = ({ isOpen, onClose, nftBundle }) => {
               <Button type="legacy"
                 className="w-100"
                 onClick={unwrapNftEvent}
+                disabled={isLoading}
               >
                 {isLoading ? (
                   <>

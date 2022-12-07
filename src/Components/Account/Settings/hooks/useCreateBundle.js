@@ -24,7 +24,6 @@ const useCreateBundle = () => {
       error: null,
     });
     try {
-
       const bundleContract = new Contract(config.contracts.bundle, Bundle.abi, user.provider.getSigner());
       const newBundle = await bundleContract.wrap(tokens, ids, title, description)
       await newBundle.wait();

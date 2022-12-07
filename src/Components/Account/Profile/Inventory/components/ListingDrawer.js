@@ -41,57 +41,21 @@ export const ListingDrawer = () => {
   const [isBundling, setIsBundling] = useState(false);
   const formRef = useRef(null);
 
-  const [isApprovedForBundling, setIsApprovedForBundling] = useState(false);
-  const [executingBundleApproval, setExecutingBundleApproval] = useState(false);
-
-  useEffect(() => {
-    async function func() {
-      const approval = await checkBundleApproval();
-      setIsApprovedForBundling(approval);
-    }
-    func();
-  }, []);
-
-  const checkBundleApproval = async () => {
-    const contract = new Contract(config.contracts.bundle, ERC721, user.provider.getSigner());
-    return await contract.isApprovedForAll(user.address, config.contracts.market);
-  };
-
-  const approveBundleContract = useCallback(async () => {
-    try {
-      setExecutingBundleApproval(true);
-      const contract = new Contract(config.contracts.bundle, ERC721, user.provider.getSigner());
-      const tx = await contract.setApprovalForAll(config.contracts.market, true);
-      let receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      setIsApprovedForBundling(true);
-    } catch (error) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        toast.error('Unknown Error');
-      }
-      console.log(error);
-    } finally {
-      setExecutingBundleApproval(false);
-    }
-  }, [config.contracts, user]);
-
   const handleClearCart = () => {
     setShowConfirmButton(false);
     dispatch(clearBatchListingCart());
   };
   const handleCascadePrices = (startingItem, startingPrice) => {
     if (!startingPrice) return;
-
     dispatch(cascadePrices({ startingItem, startingPrice }));
   }
   const handleApplyAll = (price) => {
     if (!price) return;
-
     dispatch(applyPriceToAll(price));
+  }
+  const resetDrawer = () => {
+    handleClearCart();
+    setIsBundling(false);
   }
 
   const executeCreateListing = async () => {
@@ -114,7 +78,7 @@ export const ListingDrawer = () => {
       let tx = await user.contractService.market.makeListings(nftAddresses, nftIds, nftPrices);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      handleClearCart();
+      resetDrawer();
     } finally {
       setExecutingCreateListing(false);
     }
@@ -164,11 +128,9 @@ export const ListingDrawer = () => {
 
   const canSubmit = () => {
     return !executingCreateListing &&
-      !executingBundleApproval &&
       batchListingCart.nfts.length > 0 &&
       !Object.values(batchListingCart.extras).some((o) => !o.approval) &&
       (isBundling || !batchListingCart.nfts.some((o) => !o.price || !parseInt(o.price) > 0)) &&
-      (!isBundling || isApprovedForBundling) &&
       !batchListingCart.nfts.some((o) => !o.nft.listable || o.nft.isStaked || (isBundling && isBundle(o.nft.address)));
   }
 
@@ -199,8 +161,7 @@ export const ListingDrawer = () => {
       const tx = await bundleContract.wrapAndList(nftAddresses, nftIds, values.title, values.description, price)
       const receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-
-      handleClearCart();
+      resetDrawer();
     } finally {
       setExecutingCreateListing(false);
     }
@@ -217,30 +178,7 @@ export const ListingDrawer = () => {
         </FormControl>
         {isBundling && (
           <Box mb={4}>
-            {isApprovedForBundling ? (
-              <ListingBundleDrawerForm ref={formRef} onSubmit={onSubmitListingBundle} />
-            ) : (
-              <>
-                <Text fontSize="sm" align="center">Ebisu's Bay needs approval to transfer this bundle on your behalf once sold</Text>
-                <Button
-                  type="legacy"
-                  className="w-100"
-                  onClick={approveBundleContract}
-                  disabled={executingBundleApproval}
-                >
-                  {executingBundleApproval ? (
-                    <>
-                      Approving...
-                      <Spinner animation="border" role="status" size="sm" className="ms-1">
-                        <span className="visually-hidden">Loading...</span>
-                      </Spinner>
-                    </>
-                  ) : (
-                    <>Approve</>
-                  )}
-                </Button>
-              </>
-            )}
+            <ListingBundleDrawerForm ref={formRef} onSubmit={onSubmitListingBundle} />
           </Box>
         )}
         <Flex mb={2}>

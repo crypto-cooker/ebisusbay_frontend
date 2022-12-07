@@ -964,7 +964,7 @@ const Nft721 = ({ address, id, isBundle = false }) => {
                                           className="card-title mt-auto fw-normal mb-0"
                                           style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
                                         >
-                                          {nft.name}
+                                          {nft.collectionName}
                                         </h6>
                                       </a>
                                     </Link>
