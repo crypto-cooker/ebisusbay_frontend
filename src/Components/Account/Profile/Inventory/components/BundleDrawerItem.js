@@ -1,44 +1,52 @@
 import {
   Badge,
   Box,
+  Button,
   Button as ChakraButton,
   Collapse,
-  Flex, Image,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  HStack,
+  Image,
+  Input,
   Skeleton,
   Spacer,
+  Stack,
   Text,
   useColorModeValue,
+  useNumberInput,
   VStack,
-
 } from "@chakra-ui/react";
 
-import React, { useCallback, useEffect, useState } from "react";
-import { AnyMedia } from "@src/Components/components/AnyMedia";
-import { ImageKitService } from "@src/helpers/image";
+import React, {useCallback, useEffect, useState} from "react";
+import {ImageKitService} from "@src/helpers/image";
 import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBoxOpen, faTrash} from "@fortawesome/free-solid-svg-icons";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import {useDispatch, useSelector} from "react-redux";
+import {toast} from "react-toastify";
 import {
   removeFromBatchListingCart,
-  updatePrice,
-  setExtras, setApproval
+  setApproval,
+  setExtras,
+  update1155Quantity
 } from "@src/GlobalState/batchListingSlice";
-import { Contract } from "ethers";
-import { ERC721 } from "@src/Contracts/Abis";
-import { appConfig } from "@src/Config";
+import {Contract} from "ethers";
+import {ERC721} from "@src/Contracts/Abis";
+import {appConfig} from "@src/Config";
 import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 
-const BundleDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, disabled }) => {
+const BundleDrawerItem = ({ item, disabled }) => {
+  console.log('item', item)
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-  const [price, setPrice] = useState('');
+  const [quantity, setQuantity] = useState('');
   const [invalid, setInvalid] = useState(false);
 
   // Approvals
@@ -51,19 +59,9 @@ const BundleDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, di
     dispatch(removeFromBatchListingCart(item.nft));
   };
 
-  const handlePriceChange = useCallback((e) => {
-    const newSalePrice = e.target.value;
-    if (numberRegexValidation.test(newSalePrice) || newSalePrice === '') {
-      setInvalid(false);
-      dispatch(updatePrice({ nft: item.nft, price: newSalePrice }));
-    } else {
-      setInvalid(true);
-    }
-  }, [dispatch, item.nft, price]);
-
   useEffect(() => {
-    setPrice(item.price);
-  }, [item.price]);
+    setQuantity(item.quantity);
+  }, [item.quantity]);
 
   const checkApproval = async () => {
     const contract = new Contract(item.nft.address, ERC721, user.provider.getSigner());
@@ -112,6 +110,28 @@ const BundleDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, di
     func();
   }, []);
 
+  const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
+    useNumberInput({
+      step: 1,
+      defaultValue: 1,
+      min: 1,
+      max: 10,
+      precision: 0,
+      isDisabled: disabled,
+      onChange(valueAsString, valueAsNumber) {
+        const newQuantity = valueAsNumber;
+        if (numberRegexValidation.test(newQuantity) || newQuantity === '') {
+          setInvalid(false);
+          dispatch(update1155Quantity({ nft: item.nft, quantity: newQuantity }));
+        } else {
+          setInvalid(true);
+        }
+      }
+    })
+  const inc = getIncrementButtonProps()
+  const dec = getDecrementButtonProps()
+  const input = getInputProps()
+
   return (
     <Box
       key={`${item.nft.address}-${item.nft.id}`}
@@ -149,12 +169,28 @@ const BundleDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, di
                         Can't Nest Bundles
                       </Badge>
                     </Box>
-                  ) : (!canList) && (
+                  ) : (!canList) ? (
                     <Box>
                       <Badge variant='outline' colorScheme='red'>
                         Not Listable
                       </Badge>
                     </Box>
+                  ) : (item.nft.multiToken) && (
+                    <FormControl isInvalid={invalid}>
+                      <Stack direction="row">
+                        <HStack>
+                          <Text>Qty:</Text>
+                          <Button size="xs" {...dec}>-</Button>
+                          <Input
+                            placeholder="Enter Quantity"
+                            size="xs"
+                            {...input}
+                          />
+                          <Button size="xs" {...inc}>+</Button>
+                        </HStack>
+                      </Stack>
+                      <FormErrorMessage fontSize='xs' mt={1}>Enter a valid number.</FormErrorMessage>
+                    </FormControl>
                   )}
                 </>
               ) : (

@@ -4,12 +4,7 @@ import React, {useRef, useState} from "react";
 
 import {useDispatch, useSelector} from "react-redux";
 import {toast} from "react-toastify";
-import {
-  applyPriceToAll,
-  cascadePrices,
-  clearBatchListingCart,
-  setRefetchNfts,
-} from "@src/GlobalState/batchListingSlice";
+import {clearBatchListingCart, setRefetchNfts,} from "@src/GlobalState/batchListingSlice";
 
 
 import useCreateBundle from '@src/Components/Account/Settings/hooks/useCreateBundle';
@@ -33,21 +28,30 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
     setShowConfirmButton(false);
     dispatch(clearBatchListingCart());
   };
-  const handleCascadePrices = (startingItem, startingPrice) => {
-    if (!startingPrice) return;
-
-    dispatch(cascadePrices({ startingItem, startingPrice }));
-  }
-  const handleApplyAll = (price) => {
-    if (!price) return;
-
-    dispatch(applyPriceToAll(price));
-  }
 
   const onSubmitBundle = async (values) => {
     const validated = await formRef.current.validate();
-    if (MAX_NFTS_IN_BUNDLE < batchListingCart.nfts.length || MIN_NFTS_IN_BUNDLE > batchListingCart.nfts.length) {
-      if (MAX_NFTS_IN_BUNDLE < batchListingCart.nfts.length) {
+    const arrays = batchListingCart.nfts.reduce((object, nft) => {
+      const addresses = [nft.nft.address];
+      const ids = [nft.nft.id];
+      if (nft.nft.multiToken && nft.quantity > 1) {
+        for (let qty = 1; qty < nft.quantity; qty++) {
+          addresses.push(nft.nft.address);
+          ids.push(nft.nft.id);
+        }
+      }
+
+      return {
+        tokens: [...object.tokens, ...addresses],
+        ids: [...object.ids, ...ids]
+      }
+    }, {
+      tokens: [],
+      ids: []
+    });
+
+    if (MAX_NFTS_IN_BUNDLE < arrays.tokens.length || MIN_NFTS_IN_BUNDLE > arrays.tokens.length) {
+      if (MAX_NFTS_IN_BUNDLE < arrays.tokens.length) {
         toast.error(`Max ${MAX_NFTS_IN_BUNDLE} NFTs`);
       }else{
         toast.error(`Need at least ${MIN_NFTS_IN_BUNDLE} NFTs to bundle`);
@@ -60,15 +64,6 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
       else {
         try {
           setExecutingCreateBundle(true);
-          const arrays = batchListingCart.nfts.reduce((object, nft)=> {
-            return {
-              tokens: [...object.tokens, nft.nft.address],
-              ids: [...object.ids, nft.nft.id]
-            }
-          }, {
-            tokens: [],
-            ids: []
-          });
           await createBundle(arrays.tokens, arrays.ids, values.title, values.description)
           toast.success('The bundle was created successfully');
           dispatch(setRefetchNfts(true))
@@ -115,8 +110,6 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
             {batchListingCart.nfts.map((item, key) => (
               <BundleDrawerItem
                 item={item}
-                onCascadePriceSelected={handleCascadePrices}
-                onApplyAllSelected={handleApplyAll}
                 disabled={showConfirmButton || executingCreateBundle}
               />
             ))}
@@ -130,7 +123,6 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
         )}
       </GridItem>
       <GridItem px={6} py={4}>
-
         <Button
           type="legacy"
           className="w-100"

@@ -14,7 +14,7 @@ const batchListingSlice = createSlice({
     addToBatchListingCart: (state, action) => {
       const nftToAdd = action.payload;
       if (!state.nfts.some((o) => caseInsensitiveCompare(o.nft.address, nftToAdd.address) && o.nft.id === nftToAdd.id)) {
-        state.nfts.push({nft: nftToAdd, price: null});
+        state.nfts.push({nft: nftToAdd, price: null, quantity: null});
       }
 
       if (state.nfts.length === 1) {
@@ -58,6 +58,16 @@ const batchListingSlice = createSlice({
       if (foundIndex >= 0) {
         const nft = state.nfts[foundIndex]
         nft.price = price;
+        state.nfts[foundIndex] = nft;
+      }
+    },
+    update1155Quantity: (state, action) => {
+      const itemToModify = action.payload.nft;
+      const quantity = action.payload.quantity;
+      const foundIndex = state.nfts.findIndex((o) => caseInsensitiveCompare(o.nft.address, itemToModify.address) && o.nft.id === itemToModify.id);
+      if (foundIndex >= 0 && itemToModify.multiToken) {
+        const nft = state.nfts[foundIndex]
+        nft.quantity = quantity;
         state.nfts[foundIndex] = nft;
       }
     },
@@ -110,6 +120,7 @@ export const {
   closeBatchListingCart,
   minimizeBatchListingCart,
   updatePrice,
+  update1155Quantity,
   cascadePrices,
   applyPriceToAll,
   setApproval,
