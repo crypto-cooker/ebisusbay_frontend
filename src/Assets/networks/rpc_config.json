@@ -12283,7 +12283,7 @@
       "multiToken": false,
       "address": "0xE310Bd632bf98923E03144455C7645ee13353b97",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Meanies are a collection of 2,500 uniquely generated NFTs and the 2nd character of the Lost Toys project. Each NFT is based on 7 trait categories with different rarities. A Lost Toy NFT is not simply an NFT it is a key to unlocking over 15 utilities!",
         "verified": true,
@@ -20405,7 +20405,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": false,
       "images": {
         "drop": "/img/drops/the-meanies/drop.webp",
