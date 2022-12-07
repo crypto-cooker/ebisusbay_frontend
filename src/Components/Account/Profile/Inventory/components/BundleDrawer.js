@@ -18,6 +18,7 @@ import {isBundle} from "@src/utils";
 import BundleDrawerForm from "@src/Components/Account/Profile/Inventory/components/BundleDrawerForm";
 
 const MAX_NFTS_IN_BUNDLE = 40;
+const MIN_NFTS_IN_BUNDLE = 2;
 
 export const BundleDrawer = ({ onClose, ...gridProps }) => {
   const dispatch = useDispatch();
@@ -45,11 +46,11 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
 
   const onSubmitBundle = async (values) => {
     const validated = await formRef.current.validate();
-    if (MAX_NFTS_IN_BUNDLE < batchListingCart.nfts.length || 1 >= batchListingCart.nfts.length) {
+    if (MAX_NFTS_IN_BUNDLE < batchListingCart.nfts.length || MIN_NFTS_IN_BUNDLE > batchListingCart.nfts.length) {
       if (MAX_NFTS_IN_BUNDLE < batchListingCart.nfts.length) {
-        toast.error(`Max ${MAX_NFTS_IN_BUNDLE} nfts`);
+        toast.error(`Max ${MAX_NFTS_IN_BUNDLE} NFTs`);
       }else{
-        toast.error(`Min 2 nfts`);
+        toast.error(`Need at least ${MIN_NFTS_IN_BUNDLE} NFTs to bundle`);
       }
     }
     else {

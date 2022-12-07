@@ -29,6 +29,7 @@ import {ERC721} from "@src/Contracts/Abis";
 
 const config = appConfig();
 const MAX_NFTS_IN_CART = 40;
+const MIN_NFTS_IN_BUNDLE = 2;
 const floorThreshold = 5;
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 
@@ -139,6 +140,11 @@ export const ListingDrawer = () => {
   }, [setIsBundling, isBundling]);
 
   const onSubmitListingBundle = async (values) => {
+    if (batchListingCart.nfts.length < MIN_NFTS_IN_BUNDLE) {
+      toast.error(`Need at least ${MIN_NFTS_IN_BUNDLE} NFTs to bundle`);
+      return;
+    }
+
     try {
       setShowConfirmButton(false);
       setExecutingCreateListing(true);
