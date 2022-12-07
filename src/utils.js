@@ -500,8 +500,8 @@ export const isEbVipCollection = (address, id) => {
     collection.id.toString() === id.toString();
 };
 
-export const isBundle = (address) => {
-  return caseInsensitiveCompare(address, config.contracts.bundle)
+export const isBundle = (addressOrSlug) => {
+  return caseInsensitiveCompare(addressOrSlug, config.contracts.bundle) || addressOrSlug === 'nft-bundles';
 }
 
 export const percentage = (partialValue, totalValue) => {
