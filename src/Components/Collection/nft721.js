@@ -958,7 +958,7 @@ const Nft721 = ({ address, id, isBundle = false }) => {
                                 </Box>
                                 <Stack>
                                   {nft.collectionName && (
-                                    <Link href={`/collection/${nft.address}`}>
+                                    <Link href={`/collection/${nft.collectionSlug ?? nft.address}`}>
                                       <a>
                                         <h6
                                           className="card-title mt-auto fw-normal mb-0"
