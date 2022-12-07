@@ -75,10 +75,10 @@ const tabs = {
   items: 'items',
 };
 
-const Nft721 = ({ address, id, isBundle = false }) => {
+const Nft721 = ({ address, id, nft, isBundle = false }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const { nft, refreshing, favorites } = useSelector((state) => state.nft);
+  const { refreshing, favorites, loading:isLoading } = useSelector((state) => state.nft);
   const { onCopy } = useClipboard(appUrl(`/collection/${address}/${id}`));
 
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
@@ -123,7 +123,6 @@ const Nft721 = ({ address, id, isBundle = false }) => {
   const collectionName = useSelector((state) => {
     return collection?.name;
   });
-  const isLoading = useSelector((state) => state.nft.loading);
 
   const [{ isLoading: isFavoriting, response, error: errorTF }, toggleFavorite] = useToggleFavorite();
 
@@ -458,10 +457,11 @@ const Nft721 = ({ address, id, isBundle = false }) => {
     return nft.original_image;
   };
 
-  const [currentTab, setCurrentTab] = React.useState(isBundle ? tabs.items : tabs.properties);
+  const [currentTab, setCurrentTab] = useState(tabs.properties);
+  useEffect(() => { setCurrentTab(isBundle ? tabs.items : tabs.properties)}, [isBundle] )
   const handleTabChange = useCallback((tab) => {
     setCurrentTab(tab);
-  }, []);
+  }, [isBundle, currentTab]);
 
   const handleMakeOffer = () => {
     if (user.address) {
