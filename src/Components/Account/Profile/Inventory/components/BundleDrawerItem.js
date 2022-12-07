@@ -3,7 +3,7 @@ import {
   Box,
   Button as ChakraButton,
   Collapse,
-  Flex,
+  Flex, Image,
   Skeleton,
   Spacer,
   Text,
@@ -101,7 +101,7 @@ const BundleDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, di
           const extras = { address: item.nft.address };
 
           extras.approval = await checkApproval();
-          extras.canList = item.nft.listable && !item.nft.isStaked;
+          extras.canList = !item.nft.isStaked;
 
           dispatch(setExtras(extras));
         }
@@ -128,11 +128,10 @@ const BundleDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, di
           {isBundle(item.nft.address) ? (
             <FontAwesomeIcon icon={faBoxOpen} size="2x"/>
           ) : (
-            <AnyMedia
-              image={ImageKitService.buildAvatarUrl(item.nft.image)}
-              title={item.nft.name}
-              usePlaceholder={false}
-              className="img-rounded-8"
+            <Image
+              src={ImageKitService.buildAvatarUrl(item.nft.image)}
+              alt={item.nft.name}
+              rounded="md"
             />
           )}
         </Box>

@@ -3,7 +3,7 @@ import {
   Badge,
   Box, Collapse,
   Flex,
-  FormControl, FormErrorMessage,
+  FormControl, FormErrorMessage, Image,
   Input,
   Menu,
   MenuButton, MenuItem, MenuList,
@@ -110,11 +110,10 @@ export const TransferDrawerItem = ({ item }) => {
           {isBundle(item.nft.address) ? (
             <FontAwesomeIcon icon={faBoxOpen} size="2x"/>
           ) : (
-            <AnyMedia
-              image={ImageKitService.buildAvatarUrl(item.nft.image)}
-              title={item.nft.name}
-              usePlaceholder={false}
-              className="img-rounded-8"
+            <Image
+              src={ImageKitService.buildAvatarUrl(item.nft.image)}
+              alt={item.nft.name}
+              rounded="md"
             />
           )}
         </Box>

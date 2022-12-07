@@ -5,7 +5,7 @@ import {
   Collapse,
   Flex,
   FormControl,
-  FormErrorMessage,
+  FormErrorMessage, Image,
   Input,
   Menu,
   MenuButton,
@@ -140,11 +140,10 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
         {isBundle(item.nft.address) ? (
           <FontAwesomeIcon icon={faBoxOpen} size="2x"/>
         ) : (
-          <AnyMedia
-            image={ImageKitService.buildAvatarUrl(item.nft.image)}
-            title={item.nft.name}
-            usePlaceholder={false}
-            className="img-rounded-8"
+          <Image
+            src={ImageKitService.buildAvatarUrl(item.nft.image)}
+            alt={item.nft.name}
+            rounded="md"
           />
         )}
         </Box>
