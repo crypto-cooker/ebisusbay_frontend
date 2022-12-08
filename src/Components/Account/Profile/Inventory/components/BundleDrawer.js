@@ -109,6 +109,7 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
           <>
             {batchListingCart.nfts.map((item, key) => (
               <BundleDrawerItem
+                key={key}
                 item={item}
                 disabled={showConfirmButton || executingCreateBundle}
               />

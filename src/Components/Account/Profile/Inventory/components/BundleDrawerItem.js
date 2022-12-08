@@ -41,7 +41,6 @@ const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 
 const BundleDrawerItem = ({ item, disabled }) => {
-  console.log('item', item)
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
