@@ -81,7 +81,7 @@ console.log('data', data);
                   {items.data.listings.map((listing, index) => {
                     return (
                       <div
-                        className={`d-item col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2 mb-4`}
+                        className="d-item col-xxl-2 col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12 mb-4 px-2"
                         key={`${listing.address}-${listing.id}-${index}`}
                       >
                         <ListingBundleCard
