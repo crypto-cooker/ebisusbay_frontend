@@ -16162,7 +16162,7 @@
       "multiToken": false,
       "address": "0x4ab89f361a7db22beee8df47630c52b9167f7bb7",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "BOB Adventure generation 2 is a collection of 2222 hand-drawn unique and limited NFTs with 250+ different traits that has different rarities. BOBs main mission is to build strong community and offer passive income to all BOB holders. We offer 100% secondary sale royalty share, yes 100% goes back to community. All BOB holders will get automatic WL for future drops.",
         "verified": false,
