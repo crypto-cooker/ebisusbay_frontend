@@ -21,3 +21,7 @@ export const getCollections = async (query) => {
 export const getOwnerCollections = async (address, query) => {
   return getCollections({owner: address, ...query});
 }
+
+export const getBundle = async (slug) => {
+  return await api.get('bundle', {params: {slug}})
+}

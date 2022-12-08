@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Collection1155 from '../../src/Components/Collection/collection1155';
 import Collection721 from '../../src/Components/Collection/collection721';
-import {caseInsensitiveCompare, isAddress, isCollection} from '@src/utils';
+import {caseInsensitiveCompare, isAddress, isBundle, isCollection} from '@src/utils';
 import {appConfig} from "@src/Config";
 import PageHead from "../../src/Components/Head/PageHead";
 import {hostedImage} from "@src/helpers/image";
@@ -60,6 +60,15 @@ const Collection = ({ ssrCollection, query, redirect, activeDrop }) => {
 
 export const getServerSideProps = async ({ params, query }) => {
   const slug = params?.slug;
+
+  if (isBundle(slug)) {
+    return {
+      redirect: {
+        destination: `/`,
+        permanent: false,
+      },
+    }
+  }
 
   // @todo fix with autolistings
   // const queryKey = isAddress(slug) ? 'address' : 'slug';

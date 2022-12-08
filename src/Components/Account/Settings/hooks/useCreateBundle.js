@@ -1,12 +1,9 @@
-import { useState } from 'react';
-import {Contract, ethers} from "ethers";
-
-import { getAuthSignerInStorage } from '@src/helpers/storage';
+import {useState} from 'react';
+import {Contract} from "ethers";
 import useCreateSigner from './useCreateSigner';
 import {useSelector} from "react-redux";
 import {appConfig} from "@src/Config";
 import Bundle from "@src/Contracts/Bundle.json";
-import { createBundle as createBundleRequest } from '@src/core/cms/endpoints/bundles';
 
 const useCreateBundle = () => {
   const [response, setResponse] = useState({
@@ -20,63 +17,32 @@ const useCreateBundle = () => {
 
   const user = useSelector((state) => state.user);
 
-  const createBundle = async (formData) => {
+  const createBundle = async (tokens, ids, title, description, createListing = false) => {
     setResponse({
       ...response,
       loading: true,
       error: null,
     });
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
+    try {
+      const bundleContract = new Contract(config.contracts.bundle, Bundle.abi, user.provider.getSigner());
+      const newBundle = await bundleContract.wrap(tokens, ids, title, description)
+      await newBundle.wait();
 
-        const bundleContract = new Contract(config.contracts.bundle, Bundle.abi, user.provider.getSigner());
-
-        const arrays = formData.nfts.reduce((object, nft)=> {
-          return {
-            tokens: [...object.tokens, nft.nft.address],
-            ids: [...object.ids, nft.nft.id],
-            nftImages: [...object.nftImages, {image: nft.nft.image, address: nft.nft.address, id: nft.nft.id}]
-          }
-        }, {
-          tokens: [],
-          ids: [],
-          nftImages: []
-        })
-        const newBundle = await bundleContract.wrap(arrays.tokens, arrays.ids) 
-        let tbAwait = await newBundle.wait();
-        let idBundle = tbAwait.events[tbAwait.events.length - 1].args[0]
-        idBundle = parseInt(idBundle["_hex"], 16)
-        const res = await createBundleRequest(user.address, signatureInStorage, {id: idBundle, title: formData.values.title, description: formData.values.description, nftImages: [...arrays.nftImages]})
-
-        setResponse({
-          ...response,
-          loading: false,
-          error: null,
-        });
-
-        return true;
-      } catch (error) {
-        console.log(error)
-        setResponse({
-          ...response,
-          loading: false,
-          error: error,
-        });
-        throw error;
-      }
-    } else {
       setResponse({
-        isLoading: false,
-        response: [],
-        error: { message: 'Something went wrong' },
+        ...response,
+        loading: false,
+        error: null,
       });
 
-      throw new Error();
+      return true;
+    } catch (error) {
+      console.log(error)
+      setResponse({
+        ...response,
+        loading: false,
+        error: error,
+      });
+      throw error;
     }
   };
 

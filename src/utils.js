@@ -8,8 +8,9 @@ import { hostedImage } from './helpers/image';
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import {commify} from "ethers/lib/utils";
 
-const drops = appConfig('drops');
-const collections = appConfig('collections');
+const config = appConfig();
+const drops = config.drops;
+const collections = config.collections;
 
 const gateway = 'https://mygateway.mypinata.cloud';
 
@@ -498,6 +499,10 @@ export const isEbVipCollection = (address, id) => {
     caseInsensitiveCompare(collection.address, address) &&
     collection.id.toString() === id.toString();
 };
+
+export const isBundle = (addressOrSlug) => {
+  return caseInsensitiveCompare(addressOrSlug, config.contracts.bundle) || addressOrSlug === 'nft-bundles';
+}
 
 export const percentage = (partialValue, totalValue) => {
   if (!totalValue || totalValue === 0) return 0;

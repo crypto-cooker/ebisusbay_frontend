@@ -1,161 +1,101 @@
-import {
-  Box,
-  Center,
-
-  Flex,
-  
-  GridItem,
-  Spacer,
-  Text,
-
-  Textarea,
-  FormLabel, FormHelperText,
-} from "@chakra-ui/react";
+import {Box, Center, Flex, GridItem, Spacer, Text,} from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
-import React, { useCallback, useEffect, useState } from "react";
+import React, {useRef, useState} from "react";
 
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import {
-  applyPriceToAll,
-  cascadePrices,
-  clearBatchListingCart,
-  setRefetchNfts,
-} from "@src/GlobalState/batchListingSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {toast} from "react-toastify";
+import {clearBatchListingCart, setRefetchNfts,} from "@src/GlobalState/batchListingSlice";
 
 
-import { appConfig } from "@src/Config";
 import useCreateBundle from '@src/Components/Account/Settings/hooks/useCreateBundle';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { FormControl as FormControlCK } from '@src/Components/components/chakra-components'
 import BundleDrawerItem from "./BundleDrawerItem";
+import {isBundle} from "@src/utils";
+import BundleDrawerForm from "@src/Components/Account/Profile/Inventory/components/BundleDrawerForm";
 
 const MAX_NFTS_IN_BUNDLE = 40;
+const MIN_NFTS_IN_BUNDLE = 2;
 
 export const BundleDrawer = ({ onClose, ...gridProps }) => {
   const dispatch = useDispatch();
   const batchListingCart = useSelector((state) => state.batchListing);
   const user = useSelector((state) => state.user);
-  const [executingCreateListing, setExecutingCreateListing] = useState(false);
   const [showConfirmButton, setShowConfirmButton] = useState(false);
-  const [isCreating, setIsCreating]=  useState(false);
-  const [actualForm, setActualForm] = useState('list');
-
+  const [executingCreateBundle, setExecutingCreateBundle] = useState(false);
+  const formRef = useRef(null);
   const [createBundle, responseBundle] = useCreateBundle();
-
 
   const handleClearCart = () => {
     setShowConfirmButton(false);
     dispatch(clearBatchListingCart());
   };
-  const handleCascadePrices = (startingItem, startingPrice) => {
-    if (!startingPrice) return;
 
-    dispatch(cascadePrices({ startingItem, startingPrice }));
-  }
-  const handleApplyAll = (price) => {
-    if (!price) return;
-
-    dispatch(applyPriceToAll(price));
-  }
-
-  const validationForm = async () => {
-    const errors = await validateForm(values);
-    if (errors) {
-      const keysErrorsGroup = Object.keys(errors);
-      if (keysErrorsGroup.length > 0) {
-        setFieldTouched(`title`, true)
-        setFieldTouched(`description`, true)
-        return true;
+  const onSubmitBundle = async (values) => {
+    const validated = await formRef.current.validate();
+    const arrays = batchListingCart.nfts.reduce((object, nft) => {
+      const addresses = [nft.nft.address];
+      const ids = [nft.nft.id];
+      if (nft.nft.multiToken && nft.quantity > 1) {
+        for (let qty = 1; qty < nft.quantity; qty++) {
+          addresses.push(nft.nft.address);
+          ids.push(nft.nft.id);
+        }
       }
-      else {
-        return false;
-      }
-    }
-    return false
-  }
 
-  const onSubmitBundle = async (e) => {
-    const anyErrors = await validationForm()
-    if (MAX_NFTS_IN_BUNDLE < batchListingCart.nfts.length) {
-      toast.error(`Max ${MAX_NFTS_IN_BUNDLE} nfts`);
+      return {
+        tokens: [...object.tokens, ...addresses],
+        ids: [...object.ids, ...ids]
+      }
+    }, {
+      tokens: [],
+      ids: []
+    });
+
+    if (MAX_NFTS_IN_BUNDLE < arrays.tokens.length || MIN_NFTS_IN_BUNDLE > arrays.tokens.length) {
+      if (MAX_NFTS_IN_BUNDLE < arrays.tokens.length) {
+        toast.error(`Max ${MAX_NFTS_IN_BUNDLE} NFTs`);
+      }else{
+        toast.error(`Need at least ${MIN_NFTS_IN_BUNDLE} NFTs to bundle`);
+      }
     }
     else {
-      if (anyErrors) {
+      if (!validated) {
         toast.error(`Error`);
       }
       else {
         try {
-          setIsCreating(true);
-          const res = await createBundle({ values, nfts: batchListingCart.nfts })
-          setIsCreating(false)
+          setExecutingCreateBundle(true);
+          await createBundle(arrays.tokens, arrays.ids, values.title, values.description)
           toast.success('The bundle was created successfully');
           dispatch(setRefetchNfts(true))
           dispatch(clearBatchListingCart())
-        }
-        catch (error) {
+          formRef.current.resetForm();
+        } catch (error) {
+          console.log(error);
           toast.error(`Error`);
+        } finally {
+          setExecutingCreateBundle(false);
         }
-        setIsCreating(false)
       }
     }
   };
 
-  const initialValuesBundle = {
-    title: '',
-    description: '',
+  const canSubmit = () => {
+    return !executingCreateBundle &&
+      batchListingCart.nfts.length > 0 &&
+      !Object.values(batchListingCart.extras).some((o) => !o.approval) &&
+      !batchListingCart.nfts.some((o) => o.nft.isStaked || isBundle(o.nft.address));
   }
 
-  const bundleValidation = Yup.object().shape({
-    title: Yup.string().required('Required'),
-    description: Yup.string()
-
-  });
-
-  const formikProps = useFormik({
-    onSubmit: onSubmitBundle,
-    validationSchema: bundleValidation,
-    initialValues: initialValuesBundle,
-    enableReinitialize: true,
-  });
-  const {
-    values,
-    errors,
-    touched,
-    handleChange,
-    setFieldValue,
-    setFieldTouched,
-    handleBlur,
-    handleSubmit,
-    validateForm,
-  } = formikProps;
+  const handleSubmit = () => {
+    if (formRef.current) {
+      formRef.current.submitForm();
+    }
+  }
 
   return (
     <>
       <GridItem px={6} py={4}>
-        <Flex flexDirection="column">
-          <FormControlCK
-            name={'title'}
-            label={'Title'}
-            value={values?.title}
-            error={errors?.title}
-            touched={touched?.title}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            type={'text'}
-          />
-          <Text mb='8px'>Description</Text>
-          <Textarea
-            onChange={handleChange}
-            size='sm'
-            type='text'
-            resize='none'
-            name='description'
-            value={values.description}
-            onBlur={handleBlur}
-          />
-        </Flex>
+        <BundleDrawerForm ref={formRef} onSubmit={onSubmitBundle} />
       </GridItem>
       <GridItem px={6} py={4} overflowY="auto">
         <Flex mb={2}>
@@ -170,9 +110,7 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
             {batchListingCart.nfts.map((item, key) => (
               <BundleDrawerItem
                 item={item}
-                onCascadePriceSelected={handleCascadePrices}
-                onApplyAllSelected={handleApplyAll}
-                disabled={showConfirmButton || executingCreateListing}
+                disabled={showConfirmButton || executingCreateBundle}
               />
             ))}
           </>
@@ -185,15 +123,14 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
         )}
       </GridItem>
       <GridItem px={6} py={4}>
-
         <Button
           type="legacy"
           className="w-100"
           onClick={handleSubmit}
-          disabled={errors.length > 0}
-          isLoading={isCreating}
+          disabled={!canSubmit() || (formRef.current && formRef.current.hasErrors())}
+          isLoading={executingCreateBundle}
         >
-          {!isCreating? 
+          {!executingCreateBundle?
             'Create Bundle'  
             : 
             'Creating Bundle'

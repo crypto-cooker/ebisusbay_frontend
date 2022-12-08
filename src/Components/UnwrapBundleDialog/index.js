@@ -53,7 +53,7 @@ const UnwrapBundleDialog = ({ isOpen, onClose, nftBundle }) => {
       <ModalOverlay />
       <ModalContent>
         <ModalHeader className="text-center">
-          Unwrap "{nftBundle.title}"
+          Unwrap "{nftBundle.name}"
         </ModalHeader>
         <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
         <>
@@ -70,6 +70,7 @@ const UnwrapBundleDialog = ({ isOpen, onClose, nftBundle }) => {
               <Button type="legacy"
                 className="w-100"
                 onClick={unwrapNftEvent}
+                disabled={isLoading}
               >
                 {isLoading ? (
                   <>

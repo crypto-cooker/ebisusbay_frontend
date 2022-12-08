@@ -14,7 +14,7 @@ const batchListingSlice = createSlice({
     addToBatchListingCart: (state, action) => {
       const nftToAdd = action.payload;
       if (!state.nfts.some((o) => caseInsensitiveCompare(o.nft.address, nftToAdd.address) && o.nft.id === nftToAdd.id)) {
-        state.nfts.push({nft: nftToAdd, price: null});
+        state.nfts.push({nft: nftToAdd, price: null, quantity: null});
       }
 
       if (state.nfts.length === 1) {
@@ -61,6 +61,16 @@ const batchListingSlice = createSlice({
         state.nfts[foundIndex] = nft;
       }
     },
+    update1155Quantity: (state, action) => {
+      const itemToModify = action.payload.nft;
+      const quantity = action.payload.quantity;
+      const foundIndex = state.nfts.findIndex((o) => caseInsensitiveCompare(o.nft.address, itemToModify.address) && o.nft.id === itemToModify.id);
+      if (foundIndex >= 0 && itemToModify.multiToken) {
+        const nft = state.nfts[foundIndex]
+        nft.quantity = quantity;
+        state.nfts[foundIndex] = nft;
+      }
+    },
     cascadePrices: (state, action) => {
       const startingItem = action.payload.startingItem;
       let currentPrice = action.payload.startingPrice;
@@ -88,11 +98,6 @@ const batchListingSlice = createSlice({
       extra.approval = action.payload.status;
       state.extras[action.payload.address.toLowerCase()] = extra;
     },
-    setApprovalBundle: (state, action) => {
-      const extra = state.extras[action.payload.address.toLowerCase()] ?? {};
-      extra.approval = action.payload.status;
-      state.extrasBundle[action.payload.address.toLowerCase()] = extra;
-    },
     setFloorPrice: (state, action) => {
       const extra = state.extras[action.payload.address.toLowerCase()] ?? {};
       extra.floorPrice = action.payload.floorPrice;
@@ -100,9 +105,6 @@ const batchListingSlice = createSlice({
     },
     setExtras: (state, action) => {
       state.extras[action.payload.address.toLowerCase()] = action.payload;
-    },
-    setExtrasBundle: (state, action) => {
-      state.extrasBundle[action.payload.address.toLowerCase()] = action.payload;
     },
     setRefetchNfts: (state, action) => {
       state.refetchNfts = action.payload;
@@ -118,13 +120,12 @@ export const {
   closeBatchListingCart,
   minimizeBatchListingCart,
   updatePrice,
+  update1155Quantity,
   cascadePrices,
   applyPriceToAll,
   setApproval,
   setFloorPrice,
   setExtras,
-  setExtrasBundle,
-  setApprovalBundle,
   setRefetchNfts
 } = batchListingSlice.actions;
 

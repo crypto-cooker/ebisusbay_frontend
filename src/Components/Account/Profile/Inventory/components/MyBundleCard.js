@@ -194,28 +194,25 @@ const MyNftCard = ({
               )}
             </>
             <Slider size={nft.nfts?.length}>
-
-              {nft.nfts?.map((nft) =>
-
-
-              (<Box
-                _groupHover={{ transform: 'scale(1.05)', transition: '0.3s ease' }}
-                transition="0.3s ease"
-                transform="scale(1.0)"
-                onClick={() => navigateTo(nftUrl)}
-                cursor="pointer"
-              >
-                <AnyMedia image={nftCardUrl(nft.id, nft.image)}
-                  title={nft.id}
-                  newTab={true}
-                  className="card-img-top marketplace"
-                  height={440}
-                  width={440}
-                  video={batchListingCart.nfts.length > 0 ? undefined : (nft.video ?? nft.animation_url)}
-                  usePlaceholder={true}
-                />
-
-              </Box>))}
+              {nft.nfts?.map((currentNft) => (
+                <Box
+                  _groupHover={{ transform: 'scale(1.05)', transition: '0.3s ease' }}
+                  transition="0.3s ease"
+                  transform="scale(1.0)"
+                  onClick={() => navigateTo(nftUrl)}
+                  cursor="pointer"
+                >
+                  <AnyMedia image={nftCardUrl(currentNft.id, currentNft.image)}
+                    title={currentNft.id}
+                    newTab={false}
+                    className="card-img-top marketplace"
+                    height={440}
+                    width={440}
+                    video={batchListingCart.nfts.length > 0 ? undefined : (currentNft.video ?? currentNft.animation_url)}
+                    usePlaceholder={true}
+                  />
+                </Box>
+              ))}
             </Slider>
           </div>
           <div className="d-flex flex-column p-2 pb-1">
@@ -223,10 +220,10 @@ const MyNftCard = ({
               <span onClick={() => navigateTo(nftUrl)} style={{ cursor: 'pointer' }}>
                 {nft.count && nft.count > 0 ? (
                   <Heading as="h6" size="sm">
-                    {nft.title} (x{nft.count})
+                    {nft.name} (x{nft.count})
                   </Heading>
                 ) : (
-                  <Heading as="h6" size="sm">{nft.title}</Heading>
+                  <Heading as="h6" size="sm">{nft.name}</Heading>
                 )}
               </span>
             </div>

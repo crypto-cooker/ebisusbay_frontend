@@ -10,7 +10,7 @@ const Switch = ({ isChecked = false, setIsChecked, text = '', switchId = 'isVeri
   return (
     <>
       <FormControl display='flex' alignItems='center'>
-        <FormLabel htmlFor='email-alerts' mb='0'>
+        <FormLabel htmlFor={switchId} mb='0'>
           {text}
         </FormLabel>
         <ChakraSwitch
