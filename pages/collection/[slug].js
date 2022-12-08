@@ -61,15 +61,6 @@ const Collection = ({ ssrCollection, query, redirect, activeDrop }) => {
 export const getServerSideProps = async ({ params, query }) => {
   const slug = params?.slug;
 
-  if (isBundle(slug)) {
-    return {
-      redirect: {
-        destination: `/`,
-        permanent: false,
-      },
-    }
-  }
-
   // @todo fix with autolistings
   // const queryKey = isAddress(slug) ? 'address' : 'slug';
   // const res = await fetch(`${config.urls.api}collectioninfo?${queryKey}=${slug}`);

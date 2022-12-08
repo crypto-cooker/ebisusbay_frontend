@@ -673,7 +673,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
                       avatar={hostedImage(collectionMetadata?.avatar, true)}
                       address={address}
                       verified={collectionMetadata?.verified}
-                      to={isBundle ? undefined : `/collection/${address}`}
+                      to={`/collection/${address}`}
                     />
 
                     {typeof nft.rank !== 'undefined' && nft.rank !== null && (
