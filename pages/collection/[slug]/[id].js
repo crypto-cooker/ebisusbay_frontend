@@ -1,21 +1,10 @@
-import React, { memo, useEffect, useState } from 'react';
-import store from '../../../src/Store/store';
-import { getNftDetails } from '@src/GlobalState/nftSlice';
-import {
-  caseInsensitiveCompare,
-  findCollectionByAddress,
-  humanize,
-  isAddress,
-  isBundle,
-  relativePrecision
-} from '@src/utils';
+import React, {memo, useEffect, useState} from 'react';
+import {caseInsensitiveCompare, humanize, isAddress, isBundle, relativePrecision} from '@src/utils';
 import Nft1155 from '../../../src/Components/Collection/nft1155';
 import Nft721 from '../../../src/Components/Collection/nft721';
 import {appConfig} from "@src/Config";
 import PageHead from "../../../src/Components/Head/PageHead";
 import {getNft} from "@src/core/api/endpoints/nft";
-import { getCollections } from "@src/core/api/next/collectioninfo"
-import NftBundle from "@src/Components/Collection/nftBundle";
 
 const config = appConfig();
 

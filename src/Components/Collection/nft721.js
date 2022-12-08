@@ -943,7 +943,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
 
                       {currentTab === tabs.items && (
                         <Flex flexDir='column' gap='8px' maxH='340ox' overflowY='auto'>
-                          {nft.nfts.map((nft, i) => (
+                          {nft.nfts?.map((nft, i) => (
                             <Box p='16px' key={i}>
                               <Flex gap='15px'>
                                 <Box w='72px'>
