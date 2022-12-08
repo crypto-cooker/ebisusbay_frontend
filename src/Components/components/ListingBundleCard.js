@@ -218,35 +218,37 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
         >
           <Flex direction="column" height="100%">
             <Slider size={listing.nft.nfts?.length}>
-            {listing.nft.nfts?.map((currentNft) =>(<div className="card-img-container">
-              <Box
-                _groupHover={{transform:'scale(1.05)', transition:'0.3s ease'}}
-                transition="0.3s ease"
-                transform="scale(1.0)"
-              >
-                {watermark ? (
-                  <Watermarked watermark={watermark}>
-                    <AnyMedia
-                      image={nftCardUrl(currentNft.id, currentNft.image)}
-                      className={`card-img-top ${imgClass}`}
-                      title={currentNft.id}
-                      url={nftUrl}
-                      height={440}
-                      width={440}
-                    />
-                  </Watermarked>
-                ) : (
-                  <AnyMedia
-                    image={nftCardUrl(currentNft.id, currentNft.image)}
-                    className={`card-img-top ${imgClass}`}
-                    title={currentNft.id}
-                    url={nftUrl}
-                    height={440}
-                    width={440}
-                  />
-                )}
-              </Box>
-            </div>))}
+              {listing.nft.nfts?.map((currentNft) =>(
+                <div className="card-img-container">
+                  <Box
+                    _groupHover={{transform:'scale(1.05)', transition:'0.3s ease'}}
+                    transition="0.3s ease"
+                    transform="scale(1.0)"
+                  >
+                    {watermark ? (
+                      <Watermarked watermark={watermark}>
+                        <AnyMedia
+                          image={nftCardUrl(currentNft.id, currentNft.image)}
+                          className={`card-img-top ${imgClass}`}
+                          title={currentNft.id}
+                          url={nftUrl}
+                          height={440}
+                          width={440}
+                        />
+                      </Watermarked>
+                    ) : (
+                      <AnyMedia
+                        image={nftCardUrl(currentNft.id, currentNft.image)}
+                        className={`card-img-top ${imgClass}`}
+                        title={currentNft.id}
+                        url={nftUrl}
+                        height={440}
+                        width={440}
+                      />
+                    )}
+                  </Box>
+                </div>
+              ))}
             </Slider>
             {listing.nft.rank ? (
               <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{listing.nft.rank}</div>
@@ -255,16 +257,12 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
             )}
             <div className="d-flex flex-column justify-content-between p-2 pb-1">
               {listing.collection && (
-                <Link href={`/collection/${listing.collection.slug}`}>
-                  <a>
-                    <h6
-                      className="card-title mt-auto fw-normal"
-                      style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
-                    >
-                      {listing.collection.name}
-                    </h6>
-                  </a>
-                </Link>
+                <h6
+                  className="card-title mt-auto fw-normal"
+                  style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
+                >
+                  {listing.collection.name}
+                </h6>
               )}
               <Link href={nftUrl}>
                 <a>
