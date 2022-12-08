@@ -257,12 +257,16 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
             )}
             <div className="d-flex flex-column justify-content-between p-2 pb-1">
               {listing.collection && (
-                <h6
-                  className="card-title mt-auto fw-normal"
-                  style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
-                >
-                  {listing.collection.name}
-                </h6>
+                <Link href={`/collection/${listing.collection.slug}`}>
+                  <a>
+                    <h6
+                      className="card-title mt-auto fw-normal"
+                      style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
+                    >
+                      {listing.collection.name}
+                    </h6>
+                  </a>
+                </Link>
               )}
               <Link href={nftUrl}>
                 <a>

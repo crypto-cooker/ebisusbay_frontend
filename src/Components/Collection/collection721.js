@@ -11,7 +11,7 @@ import SalesCollection from '../components/SalesCollection';
 import CollectionNftsGroup from '../components/CollectionNftsGroup';
 import CollectionListingsGroup from '../components/CollectionListingsGroup';
 import {init, fetchListings, getStats, updateTab} from '@src/GlobalState/collectionSlice';
-import {isCnsCollection, isCronosVerseCollection, isCrosmocraftsCollection} from '@src/utils';
+import {isBundle, isCnsCollection, isCronosVerseCollection, isCrosmocraftsCollection} from '@src/utils';
 import SocialsBar from './SocialsBar';
 import { CollectionSortOption } from '../Models/collection-sort-option.model';
 import stakingPlatforms from '../../core/data/staking-platforms.json';
@@ -281,9 +281,11 @@ const Collection721 = ({ collection, query, activeDrop = null}) => {
             <li className={`tab ${openMenu === tabs.items ? 'active' : ''} my-1`}>
               <span onClick={handleBtnClick(tabs.items)}>Items</span>
             </li>
-            <li className={`tab ${openMenu === tabs.bundles ? 'active' : ''} my-1`}>
-              <span onClick={handleBtnClick(tabs.bundles)}>Bundles</span>
-            </li>
+            {!isBundle(collection.address) && (
+              <li className={`tab ${openMenu === tabs.bundles ? 'active' : ''} my-1`}>
+                <span onClick={handleBtnClick(tabs.bundles)}>Bundles</span>
+              </li>
+            )}
             <li className={`tab ${openMenu === tabs.activity ? 'active' : ''} my-1`}>
               <span onClick={handleBtnClick(tabs.activity)}>Activity</span>
             </li>
