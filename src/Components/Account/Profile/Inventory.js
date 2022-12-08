@@ -4,7 +4,7 @@ import { getNftsForAddress2 } from "@src/core/api";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Spinner } from "react-bootstrap";
 import MyNftCard from "@src/Components/components/MyNftCard";
-import { caseInsensitiveCompare, findCollectionByAddress, isNftBlacklisted } from "@src/utils";
+import {caseInsensitiveCompare, findCollectionByAddress, isBundle, isNftBlacklisted} from "@src/utils";
 import NftCard from "@src/Components/components/NftCard";
 import NftBundleCard from "@src/Components/components/NftBundleCard";
 import { appConfig } from "@src/Config";
@@ -105,7 +105,7 @@ export default function Inventory({ address }) {
           {data.pages.map((items, index) => (
             <React.Fragment key={index}>
               {items.map((nft, index) => {
-                if(nft.symbol && nft.symbol == 'Bundle'){
+                if(isBundle(nft.address)){
                   return (
                     <div
                       className={`d-item ${filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2'}  mb-4`}
@@ -114,10 +114,11 @@ export default function Inventory({ address }) {
                       {caseInsensitiveCompare(address, user.address) ? (
                         <MyBundleCard
                           nft={nft}
-                          canTransfer={true}
-                          canSell={true}
-                          canCancel={true}
-                          canUpdate={true}
+                          canTransfer={nft.canTransfer}
+                          canSell={nft.listable && !nft.listed && nft.canSell}
+                          isStaked={nft.isStaked}
+                          canCancel={nft.listed && nft.listingId}
+                          canUpdate={nft.listable && nft.listed}
                           onTransferButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageTransferDialog(nft))}
                           onSellButtonPressed={() => {
                             dispatch(MyNftPageActions.showMyNftPageListDialog(nft))

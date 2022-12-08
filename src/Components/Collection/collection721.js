@@ -30,6 +30,7 @@ import {MobileSort} from "@src/Components/Collection/CollectionTaskBar/MobileSor
 import {CnsRegistration} from "@src/Components/Collection/Custom/CnsRegistration";
 import {Flex, Heading} from "@chakra-ui/react";
 import MintingButton from "@src/Components/Collection/MintingButton";
+import CollectionBundlesGroup from "@src/Components/components/CollectionBundlesGroup";
 
 const NegativeMargin = styled.div`
   margin-left: -1.75rem !important;
@@ -42,6 +43,7 @@ const ThemedBackground = styled.div`
 
 const tabs = {
   items: 'items',
+  bundles: 'bundles',
   activity: 'activity',
   map: 'map',
   cns: 'cns'
@@ -279,6 +281,9 @@ const Collection721 = ({ collection, query, activeDrop = null}) => {
             <li className={`tab ${openMenu === tabs.items ? 'active' : ''} my-1`}>
               <span onClick={handleBtnClick(tabs.items)}>Items</span>
             </li>
+            <li className={`tab ${openMenu === tabs.bundles ? 'active' : ''} my-1`}>
+              <span onClick={handleBtnClick(tabs.bundles)}>Bundles</span>
+            </li>
             <li className={`tab ${openMenu === tabs.activity ? 'active' : ''} my-1`}>
               <span onClick={handleBtnClick(tabs.activity)}>Activity</span>
             </li>
@@ -339,6 +344,13 @@ const Collection721 = ({ collection, query, activeDrop = null}) => {
                     )}
                   </div>
                 </div>
+              </div>
+            )}
+            {openMenu === tabs.bundles && (
+              <div className="tab-2 onStep fadeIn container">
+                <CollectionBundlesGroup
+                  collection={collection}
+                />
               </div>
             )}
             {openMenu === tabs.activity && (

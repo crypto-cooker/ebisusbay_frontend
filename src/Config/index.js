@@ -39,6 +39,7 @@ export const configData = {
       offer: '0x016b347aeb70cc45e3bbaf324feb3c7c464e18b0',
       madAuction: '0x47E79264A9d1343C04F4A56922bE7e6177aE03a0',
       slothtyRugsurance: '0x73063E236EadC1e511FbE7313C6D8C5c651009E9',
+      bundle: '0x40874F18922267cc2Ca7933828594aB5078C1065',
       cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233'
     },
     tokens: {
@@ -98,6 +99,7 @@ export const configData = {
       offer: '0x016b347aeb70cc45e3bbaf324feb3c7c464e18b0',
       madAuction: '0x47E79264A9d1343C04F4A56922bE7e6177aE03a0',
       slothtyRugsurance: '0x73063E236EadC1e511FbE7313C6D8C5c651009E9',
+      bundle: '0x40874F18922267cc2Ca7933828594aB5078C1065',
       cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233'
     },
     tokens: {
@@ -157,7 +159,7 @@ export const configData = {
       offer: '0x8Dd84fb5d7f8A504BA2398243D768C604f8Daf5E',
       madAuction: '0x84356061d598A7bCE028dB6a37b14F84cf4A5905',
       slothtyRugsurance: '0xC54821941Bb036463bDB1eea781f9b29a7f98fAc',
-      bundle: '0x8522B1243c93f2fc8012bD21b86f48B4f482E3b6',
+      bundle: '0xEbFB981D5a7A7C2133752F7787263B58495bb923',
       cnsusd: '0x263818f9693548446A41ad7025923612b490CB0D'
     },
     tokens: {
@@ -253,5 +255,5 @@ export const featureFlags = {
   [Features.REPORT_COLLECTION]: false,             // Report button on collection page
   [Features.NEW_CHAKRA_THEME]: false,             // Update theme
   [Features.GLOBAL_SEARCH]: true,                // Global search bar
-  [Features.BUNDLES]: false,                      // Bundles
+  [Features.BUNDLES]: true,                      // Bundles
 }

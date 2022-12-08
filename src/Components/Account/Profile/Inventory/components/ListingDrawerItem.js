@@ -1,13 +1,18 @@
 import {useDispatch, useSelector} from "react-redux";
 import {
   Badge,
-  Box, Collapse,
+  Box,
+  Collapse,
   Flex,
-  FormControl, FormErrorMessage,
+  FormControl,
+  FormErrorMessage, Image,
   Input,
   Menu,
-  MenuButton, MenuItem, MenuList,
-  Skeleton, Spacer,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Skeleton,
+  Spacer,
   Stack,
   Text,
   useColorModeValue,
@@ -18,7 +23,7 @@ import {removeFromBatchListingCart, setApproval, setExtras, updatePrice} from "@
 import {Contract} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
 import {getCollectionMetadata} from "@src/core/api";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
@@ -27,13 +32,13 @@ import Link from "next/link";
 import {Button as ChakraButton} from "@chakra-ui/button";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEllipsisH, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faBoxOpen, faEllipsisH, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {appConfig} from "@src/Config";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 
-export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, disabled }) => {
+export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, disabled, isBundling = false }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
@@ -131,13 +136,16 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
           width={50}
           height={50}
           style={{ borderRadius: '20px' }}
-        >
-          <AnyMedia
-            image={ImageKitService.buildAvatarUrl(item.nft.image)}
-            title={item.nft.name}
-            usePlaceholder={false}
-            className="img-rounded-8"
+        > 
+        {isBundle(item.nft.address) ? (
+          <FontAwesomeIcon icon={faBoxOpen} size="2x"/>
+        ) : (
+          <Image
+            src={ImageKitService.buildAvatarUrl(item.nft.image)}
+            alt={item.nft.name}
+            rounded="md"
           />
+        )}
         </Box>
         <Box flex='1' ms={2} fontSize="14px">
           <VStack align="left" spacing={0}>
@@ -145,51 +153,61 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
               <Text fontWeight="bold" noOfLines={1} cursor="pointer">{item.nft.name}</Text>
             </Link>
             <Skeleton isLoaded={!initializing}>
-              {approvalStatus && canList ? (
-                <FormControl isInvalid={invalid}>
-                  <Stack direction="row">
-                    <Input
-                      placeholder="Enter Price"
-                      type="numeric"
-                      size="xs"
-                      value={price}
-                      onChange={handlePriceChange}
-                      disabled={disabled}
-                    />
-                    <ChakraButton
-                      size='xs'
-                      transition='all 0.2s'
-                      borderRadius='md'
-                      borderWidth='1px'
-                      onClick={() => setIsDetailsOpen(!isDetailsOpen)}
-                    >
-                      {isDetailsOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
-                    </ChakraButton>
-                    <Menu>
-                      <MenuButton
-                        px={2}
-                        transition='all 0.2s'
-                        borderRadius='md'
-                        borderWidth='1px'
-                        height={6}
-                      >
-                        <FontAwesomeIcon icon={faEllipsisH} />
-                      </MenuButton>
-                      <MenuList textAlign="right">
-                        <MenuItem onClick={() => onApplyAllSelected(price)}>Apply price to all</MenuItem>
-                        <MenuItem onClick={() => onCascadePriceSelected(item, price)}>Cascade price</MenuItem>
-                        <MenuItem onClick={handleRemoveItem}>Remove</MenuItem>
-                      </MenuList>
-                    </Menu>
-                  </Stack>
-                  <FormErrorMessage fontSize='xs' mt={1}>Enter a valid number.</FormErrorMessage>
-                </FormControl>
-              ) : !canList ? (
-                <Box>
-                  <Badge variant='outline' colorScheme='red'>
-                    Not Listable
-                  </Badge>
-                </Box>
+              {approvalStatus ? (
+                <>
+                  {isBundling && isBundle(item.nft.address) ? (
+                    <Box>
+                      <Badge variant='outline' colorScheme='red'>
+                        Can't Nest Bundles
+                      </Badge>
+                    </Box>
+                  ) : (!canList) ? (
+                    <Box>
+                      <Badge variant='outline' colorScheme='red'>
+                        Not Listable
+                      </Badge>
+                    </Box>
+                  ) : !isBundling && (
+                    <FormControl isInvalid={invalid}>
+                      <Stack direction="row">
+                        <Input
+                          placeholder="Enter Price"
+                          type="numeric"
+                          size="xs"
+                          value={price}
+                          onChange={handlePriceChange}
+                          disabled={disabled}
+                        />
+                        <ChakraButton
+                          size='xs'
+                          transition='all 0.2s'
+                          borderRadius='md'
+                          borderWidth='1px'
+                          onClick={() => setIsDetailsOpen(!isDetailsOpen)}
+                        >
+                          {isDetailsOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                        </ChakraButton>
+                        <Menu>
+                          <MenuButton
+                            px={2}
+                            transition='all 0.2s'
+                            borderRadius='md'
+                            borderWidth='1px'
+                            height={6}
+                          >
+                            <FontAwesomeIcon icon={faEllipsisH} />
+                          </MenuButton>
+                          <MenuList textAlign="right">
+                            <MenuItem onClick={() => onApplyAllSelected(price)}>Apply price to all</MenuItem>
+                            <MenuItem onClick={() => onCascadePriceSelected(item, price)}>Cascade price</MenuItem>
+                            <MenuItem onClick={handleRemoveItem}>Remove</MenuItem>
+                          </MenuList>
+                        </Menu>
+                      </Stack>
+                      <FormErrorMessage fontSize='xs' mt={1}>Enter a valid number.</FormErrorMessage>
+                    </FormControl>
+                  )}
+                </>
               ) : (
                 <ChakraButton
                   size='xs'
