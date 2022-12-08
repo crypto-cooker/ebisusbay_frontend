@@ -16208,6 +16208,34 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Ebisu's Bay NFT Bundles",
+      "slug": "nft-bundles",
+      "multiToken": false,
+      "address": "0x40874F18922267cc2Ca7933828594aB5078C1065",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Bundles made by the Ebisu's Bay bundle contract",
+        "verified": true,
+        "avatar": "/img/avatar.jpg",
+        "card": "/img/collections/ebisu/card.webp",
+        "banner": "/img/collections/ebisu/banner.png",
+        "maxSupply": 10000,
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "hidden",
+        "verified": true
+      }
     }
   ],
   "drops": [
