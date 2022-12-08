@@ -639,8 +639,8 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
                       <span className="fw-bold">This Lady Weird Ape can make {`${ladyWeirdApeChildren} ${ladyWeirdApeChildren === 1 ? 'baby' : 'babies'}`}</span>
                     </div>
                   )}
-                  {collection.listable && (
-
+                  
+                  {collection.listable && !nft.burnt && (
                     <PriceActionBar
                       offerType={offerType}
                       collectionName={collectionName}
