@@ -358,9 +358,10 @@
   {
     "slug": "baby-alien-division",
     "name": "Baby Alien Division",
-    "description": "",
+    "description": "BAD (Baby Alien Division) is a collection of mischievous aliens crossing the galaxy in adventure, war, turmoil, triumph, silliness, and growth. Follow along their journey and get involved - staking, charity work, giveaways, community, metaverse fun, and rich storytelling.",
     "images": {
-      "banner": "/img/collections/babyaliendivision/spaceships/banner.webp"
+      "banner": "/img/brands/baby-alien-division/banner.webp",
+      "preview": "/img/brands/baby-alien-division/preview.webp"
     },
     "collections": [
       "0xB340c91182b9fF831bB36232cB3296eD306c79B2",
@@ -374,9 +375,10 @@
     ],
     "socials": {
       "website": "https://badaliens.io/",
-      "twitter": "https://twitter.com/BAD_Cronos",
-      "discord": "https://discord.gg/qKBy2azf69",
-      "medium": "https://medium.com/@babyaliendivision"
+      "twitter": "https://twitter.com/BAD__nfts",
+      "discord": "https://discord.gg/badaliens",
+      "instagram": "https://www.instagram.com/babyaliendivision"
+
     },
     "featured": true,
     "categories": [],
