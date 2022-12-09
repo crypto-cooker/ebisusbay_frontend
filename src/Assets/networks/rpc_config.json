@@ -11783,7 +11783,7 @@
       }
     },
     {
-      "name": "CRO Homes Companions Collections",
+      "name": "CRO Homes Companion Collection",
       "slug": "cro-homes-companion-collection",
       "multiToken": false,
       "address": "0xBA51Cbe289c808B2Da3ef51DdF617076A49A0eA8",
@@ -16082,7 +16082,7 @@
       "name": "C³: Cronos Crow Crew",
       "slug": "c3-cronos-crow-crew",
       "multiToken": false,
-      "address": "",
+      "address": "0x5bB97B7D75Ce3151E413aa751F22FcD837703588",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -21811,7 +21811,7 @@
         "twitter": "https://twitter.com/CCrowcrew",
         "discord": "https://discord.gg/WvyKv2svbF"
       },
-      "address": "",
+      "address": "0x5bB97B7D75Ce3151E413aa751F22FcD837703588",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 100,
       "totalSupply": 3000,
@@ -21819,7 +21819,7 @@
       "memberCost": "500",
       "whitelistCost": "500",
       "foundersOnly": false,
-      "start": null,
+      "start": 1670619600000,
       "end": null,
       "referral": false,
       "is1155": false,
