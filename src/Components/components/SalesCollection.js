@@ -1,16 +1,19 @@
 import React, { memo, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { init, fetchListings, filterListings, sortListings, searchListings } from '../../GlobalState/marketplaceSlice';
+import { init, fetchListings, filterListings, sortListings, searchListings } from '@src/GlobalState/marketplaceSlice';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Spinner, Table } from 'react-bootstrap';
 import { SortOption } from '../Models/sort-option.model';
-import { debounce, shortAddress, timeSince } from '../../utils';
+import {debounce, isBundle, shortAddress, timeSince} from '@src/utils';
 import Link from 'next/link';
 import { ethers } from 'ethers';
 import TopFilterBar from './TopFilterBar';
 import { marketPlaceCollectionFilterOptions } from './constants/filter-options';
 import { sortOptions } from './constants/sort-options';
 import {MarketFilters} from "../Models/market-filters.model";
+import {faBoxOpen} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Box} from "@chakra-ui/react";
 
 const SalesCollection = ({
   showLoadMore = true,
@@ -186,12 +189,18 @@ const SalesCollection = ({
                   <td style={{ minWidth: '50px' }}>
                     <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
                       <a>
-                        <img
-                          className="lazy rounded"
-                          src={listing.nft.image}
-                          alt={listing.nft.name}
-                          style={{ maxHeight: '75px' }}
-                        />
+                        {isBundle(listing.nftAddress) ? (
+                          <Box maxH="75px">
+                            <FontAwesomeIcon icon={faBoxOpen} size="4x"/>
+                          </Box>
+                        ) : (
+                          <img
+                            className="lazy rounded"
+                            src={listing.nft.image}
+                            alt={listing.nft.name}
+                            style={{ maxHeight: '75px' }}
+                          />
+                        )}
                       </a>
                     </Link>
                   </td>

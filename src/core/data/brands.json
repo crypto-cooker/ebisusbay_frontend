@@ -363,11 +363,14 @@
       "banner": "/img/collections/babyaliendivision/spaceships/banner.webp"
     },
     "collections": [
+      "0xB340c91182b9fF831bB36232cB3296eD306c79B2",
+      "0x11984C500B477e83891f7cDb4246734387764E20",
       "0xbe5F02b6fD5C1e714f0bdd28B6a119827D8b6c61",
       "0x1A8C07dd1933433cDdBE3123b583695AE3C56b9b",
       "0x4E6795D725e26E340865140a870C25d1e413A118",
       "0xA217d6feEf38F9f2D139300E0C4adF42cf96F4C3",
-      "0xd7eEc30A764B3Eed788e93de9fc69b432Dd54d16"
+      "0xd7eEc30A764B3Eed788e93de9fc69b432Dd54d16",
+      "0xA3a4104B2A429b3A33Ac1304371E2eEf6E6aF44B"
     ],
     "socials": {
       "website": "https://badaliens.io/",
