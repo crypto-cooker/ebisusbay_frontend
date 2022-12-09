@@ -3080,6 +3080,31 @@
         "kyc": "hidden",
         "verified": true
       }
+    },
+    {
+      "name": "NFT Rings by Aperson Lyeque",
+      "slug": "nft-rings-aperson-lyeque",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A collection of 777 animated NFT rings. \n\nCollect all 7 ring types to receive a real life hand-made custom ring based on your chosen ring type.",
+        "verified": true,
+        "avatar": "/img/collections/nft-rings-aperson-lyeque/avatar.webp",
+        "card": "/img/collections/nft-rings-aperson-lyeque/card.webp",
+        "banner": "/img/collections/nft-rings-aperson-lyeque/banner.webp",
+        "maxSupply": 7777,
+        "website": "https://jlcustombentwoodrings.com/",
+        "twitter": "https://twitter.com/ApersonLyeque",
+        "discord": "https://discord.gg/Trooprz",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
@@ -7078,6 +7103,46 @@
         "banner": "/img/collections/c3-cronos-crow-crew/banner.webp",
         "avatar": "/img/collections/c3-cronos-crow-crew/avatar.webp",
         "preview": "/img/collections/c3-cronos-crow-crew/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 145,
+      "slug": "nft-rings-aperson-lyeque",
+      "title": "NFT Rings by Aperson Lyeque",
+      "subtitle": "A collection of 777 animated NFT rings. \n\nCollect all 7 ring types to receive a real life hand-made custom ring based on your chosen ring type.",
+      "description": "A collection of 777 animated NFT rings. \n\nCollect all 7 ring types to receive a real life hand-made custom ring based on your chosen ring type. \n\n7 colors:\n\nMidnight Blue\nJade Green\nRoyal Indigo\nRuby Red\nRose Gold\nIcy White\nObsidian Black\n\nYou will burn 6 of your rings in exchange for your one chosen ring.\n\nThis ring will have its metadata marked and go on to be hand-made by Aperson Lyeque.\n\nIn the end, there will be 111 genesis NFT rings, each with a custom IRL ring linked to it.",
+      "author": {
+        "name": "Aperson Lyeque",
+        "website": "https://jlcustombentwoodrings.com/",
+        "twitter": "https://twitter.com/ApersonLyeque",
+        "discord": "https://discord.gg/Trooprz"
+      },
+      "address": "",
+      "maxMintPerTx": 7,
+      "maxMintPerAddress": 21,
+      "totalSupply": 7777,
+      "cost": "375",
+      "memberCost": "333",
+      "whitelistCost": "333",
+      "foundersOnly": false,
+      "start": 1670601097000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "priceDescription": "333 $TRPZ back on every MINT",
+      "images": {
+        "drop": "/img/drops/nft-rings-aperson-lyeque/drop.webp",
+        "banner": "/img/collections/nft-rings-aperson-lyeque/banner.webp",
+        "avatar": "/img/collections/nft-rings-aperson-lyeque/avatar.webp",
+        "preview": "/img/collections/nft-rings-aperson-lyeque/card.webp"
       },
       "verification": {
         "verified": true,
