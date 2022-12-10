@@ -334,6 +334,29 @@
     "style": {}
   },
   {
+    "slug": "undead-community",
+    "name": "Undead Community",
+    "description": "The mission of The Undead Community is to create ever-lasting and essential solutions, tailored to Cryptocurrency and Non Fungible Tokens. Through providing a variety of products, tools, and services, to help users achieve their personal goals, The Undead Community is accelerating the world's transition to Blockchain Technology.",
+    "images": {
+      "banner": "/img/brands/undead-community/banner.webp",
+      "preview": "/img/brands/undead-community/preview.webp"
+    },
+    "collections": [
+      "0x40d6eFB6e54EC951301c1508620A6Acb5Fd432A8",
+      "0x5DA0c6A68e7C348664664F1546B9BaAA493E8C73",
+      "0xb4572Ee948Ee2E1838632479ACb12b78098edE35",
+      "0x542055b71f0a3060e97F2aa293bA4E08c4e0d103"
+    ],
+    "socials": {
+      "website": "https://undeadcommunity.com",
+      "twitter": "https://twitter.com/WeRtheUndead ",
+      "discord": "https://discord.gg/undeadcommunity"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "cro-homes",
     "name": "CRO Homes",
     "description": "Your place in the Metaverse",

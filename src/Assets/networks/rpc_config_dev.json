@@ -16272,7 +16272,7 @@
       "multiToken": false,
       "address": "0x446808090D43C4b99c5E70C5EAC145384F11128E",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Gen 2 collection of Mooncrew.",
         "verified": true,
@@ -16437,7 +16437,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Our goal is to create a simple investment project where funds from drops will be locked in few invest options and reinvested every month for bigger return. Half of income from all investments will be distributed for NFT holders. Easy way for passive income.  Mint! Hodl! Earn! We have already prepared 3 drops with small supply and we plan to realease much more drops. Our community will have a great influence on the development of the project.  Join us and be a part of Crypto Money Makers!",
+        "description": "Our goal is to create a simple investment project where funds from drops will be locked in few invest options and reinvested every month for bigger return. Half of income from all investments will be distributed for NFT holders. Easy way for passive income.  Mint! Hodl! Earn! We have already prepared 3 drops with small supply and we plan to release much more drops. Our community will have a great influence on the development of the project.  Join us and be a part of Crypto Money Makers!",
         "verified": false,
         "avatar": "/img/collections/cmm-membership-card/avatar.webp",
         "card": "/img/collections/cmm-membership-card/card.webp",
@@ -16447,6 +16447,58 @@
         "twitter": "https://twitter.com/CronosMoney",
         "discord": "https://discord.gg/ruPMH9MnZk",
         "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Colonel Tendies",
+      "slug": "colonel-tendies",
+      "multiToken": false,
+      "address": "0x3d5a4188fd85d1a5d4d21fa986e62e3567a5a288",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Colonel brings his bags of $TENDIES everywhere he goes. Filling the bellies of all crofam. Holding a Colonel NFT will give you OG status, future 1:1 NFT airdrop and whitelist on every future $TENDIE project. 50% of all Colonel Tendies mint proceeds will go to $tendie LP.",
+        "verified": false,
+        "avatar": "/img/collections/colonel-tendies/avatar.webp",
+        "card": "/img/collections/colonel-tendies/card.webp",
+        "banner": "/img/collections/colonel-tendies/banner.webp",
+        "maxSupply": 469,
+        "website": "https://www.tendiescro.xyz/",
+        "twitter": "https://twitter.com/tendiescro",
+        "discord": "https://discord.gg/5MbjpuFv4P",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Zombabies: Moon Missions",
+      "slug": "zombabies-moon-missions",
+      "multiToken": false,
+      "address": "0x3ebae0f8E208c0c7F34182A10f9dC191b87A6D56",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Small collections of NFTs to help our community earn some good passive income and to help us grow!",
+        "verified": false,
+        "avatar": "/img/collections/zombabies-moon-missions/avatar.webp",
+        "card": "/img/collections/zombabies-moon-missions/card.webp",
+        "banner": "/img/collections/zombabies-moon-missions/banner.webp",
+        "maxSupply": 125,
+        "website": "https://www.zombabies.io/",
+        "twitter": "https://twitter.com/ZombabiesNFT",
+        "discord": "https://discord.gg/tGQaAGz3Xp",
+        "categories": [
+          "collectibles"
+        ]
       },
       "verification": {
         "verified": false,
