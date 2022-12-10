@@ -16265,6 +16265,194 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Moon Crew Pandas",
+      "slug": "moon-crew-pandas",
+      "multiToken": false,
+      "address": "0x446808090D43C4b99c5E70C5EAC145384F11128E",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Gen 2 collection of Mooncrew.",
+        "verified": true,
+        "avatar": "/img/collections/moon-crew-pandas/avatar.webp",
+        "card": "/img/collections/moon-crew-pandas/card.webp",
+        "banner": "/img/collections/moon-crew-pandas/banner.webp",
+        "maxSupply": 3500,
+        "website": "https://mooncrewapes.com/",
+        "twitter": "https://twitter.com/moonapecrew",
+        "discord": "https://discord.gg/nRUBVDE7bM",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "BCK Thrones",
+      "slug": "bck-thrones",
+      "multiToken": false,
+      "address": "0xbdbee261730efb73f824e4abb3cd9d97a1b5ba2f",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "BCK Thrones - Part of the BCK Series. Mint your Throne today!!! This collection of 2000 NFTs contains 235 Prize Trait NFTs that will be redeemable via the Discord Group Ticket Function. Please Join Discord for more info.",
+        "verified": false,
+        "avatar": "/img/collections/bck-thrones/avatar.webp",
+        "maxSupply": 2000,
+        "twitter": "https://twitter.com/BChainKingdom",
+        "discord": "https://discord.gg/FREwht5Vzv",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Cronos Tycoon OG Survivor",
+      "slug": "cronos-tycoon-og-survivor",
+      "multiToken": false,
+      "address": "0x85B18b3B50598174E6173725E9ca6023F597c61e",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Receives royalties from all Cronos Tycoon Survivor NFTS",
+        "verified": false,
+        "avatar": "/img/collections/cronos-tycoon-og-survivor/avatar.webp",
+        "maxSupply": 2000,
+        "twitter": "https://twitter.com/CronosTycoon",
+        "discord": "https://discord.gg/D2d93we7Jy",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CroFrogs Survivor",
+      "slug": "crofrogs-survivor",
+      "multiToken": false,
+      "address": "0x96e2C5dA1a3144017825da6141eF0af95ea2c797",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Earn Royalties from defunct Crofrogs NFT",
+        "verified": false,
+        "avatar": "/img/collections/crofrogs-survivor/avatar.webp",
+        "maxSupply": 600,
+        "twitter": "https://twitter.com/CronosTycoon",
+        "discord": "https://discord.gg/D2d93we7Jy",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Santa Corgi",
+      "slug": "santa-corgi",
+      "multiToken": false,
+      "address": "0x431D10f08Afe93D96E2444e2D0e14A11615FD53F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Santa Corgi brought to you by Corgi Studio. Victims of Croman Society can use 4 NFTs to mint 1 Santa Corgi",
+        "verified": false,
+        "avatar": "/img/collections/santa-corgi/avatar.webp",
+        "maxSupply": 800,
+        "website": "https://corgistudio.io",
+        "twitter": "https://twitter.com/CronosCorgi",
+        "discord": "https://discord.gg/Corgistudio",
+        "telegram": "https://t.me/thecorgistudio",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Cheetahs Gang",
+      "slug": "cheetahs-gang",
+      "multiToken": false,
+      "address": "0xc2F826734ED1Fcd1AB0426430D4F6AA0a8567C89",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CHEETAHS GANG Is a collection of 500 storytelling NFTs exploring various known multiverses in an adventure to unlock secrets of their ancestry. Storytelling NFTs with a twist. Our first Augmented Reality Coloring Book releases next month. Guess what, we're using your characters. Welcome to the Cheetahs Gang Community Collaboration Program.",
+        "verified": false,
+        "avatar": "/img/collections/cheetahs-gang/avatar.webp",
+        "card": "/img/collections/cheetahs-gang/card.webp",
+        "banner": "/img/collections/cheetahs-gang/banner.webp",
+        "maxSupply": 500,
+        "twitter": "https://twitter.com/cheetahs_gang",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Radioactive Cheetahs",
+      "slug": "radioactive-cheetahs",
+      "multiToken": false,
+      "address": "0x799D1d85D84A56D1e826f8f5940273FD87BF92Be",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The alien mutagen from the universe has mutated our Cheetahs gang. Now they are real monster cubs",
+        "verified": false,
+        "avatar": "/img/collections/radioactive-cheetahs/avatar.webp",
+        "card": "/img/collections/radioactive-cheetahs/card.webp",
+        "banner": "/img/collections/radioactive-cheetahs/banner.webp",
+        "maxSupply": 500,
+        "twitter": "https://twitter.com/cheetahs_gang",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crypto Money Makers - Membership Card",
+      "slug": "cmm-membership-card",
+      "multiToken": false,
+      "address": "0xB038277515756fB56bA694d2AD702e8E0290C826",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Our goal is to create a simple investment project where funds from drops will be locked in few invest options and reinvested every month for bigger return. Half of income from all investments will be distributed for NFT holders. Easy way for passive income.  Mint! Hodl! Earn! We have already prepared 3 drops with small supply and we plan to realease much more drops. Our community will have a great influence on the development of the project.  Join us and be a part of Crypto Money Makers!",
+        "verified": false,
+        "avatar": "/img/collections/cmm-membership-card/avatar.webp",
+        "card": "/img/collections/cmm-membership-card/card.webp",
+        "banner": "/img/collections/cmm-membership-card/banner.webp",
+        "maxSupply": 444,
+        "website": "https://cryptomoneymakers.org/",
+        "twitter": "https://twitter.com/CronosMoney",
+        "discord": "https://discord.gg/ruPMH9MnZk",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
