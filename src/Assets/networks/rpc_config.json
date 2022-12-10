@@ -16358,6 +16358,30 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Santa Corgi",
+      "slug": "santa-corgi",
+      "multiToken": false,
+      "address": "0x431D10f08Afe93D96E2444e2D0e14A11615FD53F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Santa Corgi brought to you by Corgi Studio. Victims of Croman Society can use 4 NFTs to mint 1 Santa Corgi",
+        "verified": false,
+        "avatar": "/img/collections/santa-corgi/avatar.webp",
+        "maxSupply": 800,
+        "website": "https://corgistudio.io",
+        "twitter": "https://twitter.com/CronosCorgi",
+        "discord": "https://discord.gg/Corgistudio",
+        "telegram": "https://t.me/thecorgistudio",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
