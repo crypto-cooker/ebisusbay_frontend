@@ -16382,6 +16382,52 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Cheetahs Gang",
+      "slug": "cheetahs-gang",
+      "multiToken": false,
+      "address": "0xc2F826734ED1Fcd1AB0426430D4F6AA0a8567C89",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CHEETAHS GANG Is a collection of 500 storytelling NFTs exploring various known multiverses in an adventure to unlock secrets of their ancestry. Storytelling NFTs with a twist. Our first Augmented Reality Coloring Book releases next month. Guess what, we're using your characters. Welcome to the Cheetahs Gang Community Collaboration Program.",
+        "verified": false,
+        "avatar": "/img/collections/cheetahs-gang/avatar.webp",
+        "card": "/img/collections/cheetahs-gang/card.webp",
+        "banner": "/img/collections/cheetahs-gang/banner.webp",
+        "maxSupply": 500,
+        "twitter": "https://twitter.com/cheetahs_gang",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Radioactive Cheetahs",
+      "slug": "radioactive-cheetahs",
+      "multiToken": false,
+      "address": "0x799D1d85D84A56D1e826f8f5940273FD87BF92Be",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The alien mutagen from the universe has mutated our Cheetahs gang. Now they are real monster cubs",
+        "verified": false,
+        "avatar": "/img/collections/radioactive-cheetahs/avatar.webp",
+        "card": "/img/collections/radioactive-cheetahs/card.webp",
+        "banner": "/img/collections/radioactive-cheetahs/banner.webp",
+        "maxSupply": 500,
+        "twitter": "https://twitter.com/cheetahs_gang",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
