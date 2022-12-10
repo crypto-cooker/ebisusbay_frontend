@@ -16272,7 +16272,7 @@
       "multiToken": false,
       "address": "0x446808090D43C4b99c5E70C5EAC145384F11128E",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Gen 2 collection of Mooncrew.",
         "verified": true,
