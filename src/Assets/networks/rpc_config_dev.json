@@ -16314,6 +16314,50 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Cronos Tycoon OG Survivor",
+      "slug": "cronos-tycoon-og-survivor",
+      "multiToken": false,
+      "address": "0x85B18b3B50598174E6173725E9ca6023F597c61e",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Receives royalties from all Cronos Tycoon Survivor NFTS",
+        "verified": false,
+        "avatar": "/img/collections/cronos-tycoon-og-survivor/avatar.webp",
+        "maxSupply": 2000,
+        "twitter": "https://twitter.com/CronosTycoon",
+        "discord": "https://discord.gg/D2d93we7Jy",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CroFrogs Survivor",
+      "slug": "crofrogs-survivor",
+      "multiToken": false,
+      "address": "0x96e2C5dA1a3144017825da6141eF0af95ea2c797",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Earn Royalties from defunct Crofrogs NFT",
+        "verified": false,
+        "avatar": "/img/collections/crofrogs-survivor/avatar.webp",
+        "maxSupply": 600,
+        "twitter": "https://twitter.com/CronosTycoon",
+        "discord": "https://discord.gg/D2d93we7Jy",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
