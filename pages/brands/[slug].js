@@ -83,7 +83,7 @@ const Brand = ({ brand, collections, stats }) => {
               {brand.description}
             </Text>
             {isClippingDescription && !viewMore && (
-              <Button size="xs" colorScheme="blue" onClick={() => setViewMore(true)}>
+              <Button size="xs" colorScheme="blue" variant="link" onClick={() => setViewMore(true)}>
                 View More
               </Button>
             )}
