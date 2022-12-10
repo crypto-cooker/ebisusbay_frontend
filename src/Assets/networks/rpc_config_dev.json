@@ -16265,6 +16265,33 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Moon Crew Pandas",
+      "slug": "moon-crew-pandas",
+      "multiToken": false,
+      "address": "0x446808090D43C4b99c5E70C5EAC145384F11128E",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Gen 2 collection of Mooncrew.",
+        "verified": true,
+        "avatar": "/img/collections/moon-crew-pandas/avatar.webp",
+        "card": "/img/collections/moon-crew-pandas/card.webp",
+        "banner": "/img/collections/moon-crew-pandas/banner.webp",
+        "maxSupply": 3500,
+        "website": "https://mooncrewapes.com/",
+        "twitter": "https://twitter.com/moonapecrew",
+        "discord": "https://discord.gg/nRUBVDE7bM",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
