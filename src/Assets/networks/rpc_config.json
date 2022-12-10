@@ -16478,6 +16478,33 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Zombabies: Moon Missions",
+      "slug": "zombabies-moon-missions",
+      "multiToken": false,
+      "address": "0x3ebae0f8E208c0c7F34182A10f9dC191b87A6D56",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Small collections of NFTs to help our community earn some good passive income and to help us grow!",
+        "verified": false,
+        "avatar": "/img/collections/zombabies-moon-missions/avatar.webp",
+        "card": "/img/collections/zombabies-moon-missions/card.webp",
+        "banner": "/img/collections/zombabies-moon-missions/banner.webp",
+        "maxSupply": 125,
+        "website": "https://www.zombabies.io/",
+        "twitter": "https://twitter.com/ZombabiesNFT",
+        "discord": "https://discord.gg/tGQaAGz3Xp",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
