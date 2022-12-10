@@ -16292,6 +16292,28 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "BCK Thrones",
+      "slug": "bck-thrones",
+      "multiToken": false,
+      "address": "0xbdbee261730efb73f824e4abb3cd9d97a1b5ba2f",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "BCK Thrones - Part of the BCK Series. Mint your Throne today!!! This collection of 2000 NFTs contains 235 Prize Trait NFTs that will be redeemable via the Discord Group Ticket Function. Please Join Discord for more info.",
+        "verified": false,
+        "avatar": "/img/collections/bck-thrones/avatar.webp",
+        "maxSupply": 2000,
+        "twitter": "https://twitter.com/BChainKingdom",
+        "discord": "https://discord.gg/FREwht5Vzv",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
