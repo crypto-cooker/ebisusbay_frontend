@@ -1,19 +1,17 @@
-import React, { memo, useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { init, fetchListings, filterListings, sortListings, searchListings } from '@src/GlobalState/marketplaceSlice';
+import React, {memo, useCallback, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchListings, filterListings, init, searchListings, sortListings} from '@src/GlobalState/marketplaceSlice';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Spinner, Table } from 'react-bootstrap';
-import { SortOption } from '../Models/sort-option.model';
+import {Spinner, Table} from 'react-bootstrap';
+import {SortOption} from '../Models/sort-option.model';
 import {debounce, isBundle, shortAddress, timeSince} from '@src/utils';
 import Link from 'next/link';
-import { ethers } from 'ethers';
+import {ethers} from 'ethers';
 import TopFilterBar from './TopFilterBar';
-import { marketPlaceCollectionFilterOptions } from './constants/filter-options';
-import { sortOptions } from './constants/sort-options';
+import {marketPlaceCollectionFilterOptions} from './constants/filter-options';
+import {sortOptions} from './constants/sort-options';
 import {MarketFilters} from "../Models/market-filters.model";
-import {faBoxOpen} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {Box} from "@chakra-ui/react";
+import {ImageKitService} from "@src/helpers/image";
 
 const SalesCollection = ({
   showLoadMore = true,
@@ -190,9 +188,12 @@ const SalesCollection = ({
                     <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
                       <a>
                         {isBundle(listing.nftAddress) ? (
-                          <Box maxH="75px">
-                            <FontAwesomeIcon icon={faBoxOpen} size="4x"/>
-                          </Box>
+                          <img
+                            className="lazy rounded"
+                            src={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')}
+                            alt={listing.nft.name}
+                            style={{ maxHeight: '75px' }}
+                          />
                         ) : (
                           <img
                             className="lazy rounded"

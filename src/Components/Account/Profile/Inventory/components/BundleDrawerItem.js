@@ -23,7 +23,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import {ImageKitService} from "@src/helpers/image";
 import Link from "next/link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBoxOpen, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import {useDispatch, useSelector} from "react-redux";
 import {toast} from "react-toastify";
 import {
@@ -145,7 +145,11 @@ const BundleDrawerItem = ({ item, disabled }) => {
           style={{ borderRadius: '20px' }}
         >
           {isBundle(item.nft.address) ? (
-            <FontAwesomeIcon icon={faBoxOpen} size="2x"/>
+            <Image
+              src={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')}
+              alt={item.nft.name}
+              rounded="md"
+            />
           ) : (
             <Image
               src={ImageKitService.buildAvatarUrl(item.nft.image)}

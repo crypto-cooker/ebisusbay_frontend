@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {specialImageTransform} from "@src/hacks";
 import {Spinner} from "react-bootstrap";
@@ -10,15 +10,12 @@ import EmptyData from "@src/Components/Offer/EmptyData";
 import {ERC721} from "@src/Contracts/Abis";
 import {createSuccessfulTransactionToastContent, isBundle, isNftBlacklisted} from "@src/utils";
 import {appConfig} from "@src/Config";
-import Market from "@src/Contracts/Marketplace.json";
 import * as Sentry from '@sentry/react';
 import {getQuickWallet} from "@src/core/api/endpoints/wallets";
 import Select from "react-select";
 import {getTheme} from "@src/Theme/theme";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {
-  Box,
-  Center,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -31,8 +28,7 @@ import Image from "next/image";
 import {commify} from "ethers/lib/utils";
 import {getAllCollectionOffers} from "@src/core/subgraph";
 import {getCollectionMetadata} from "@src/core/api";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBoxOpen} from "@fortawesome/free-solid-svg-icons";
+import {ImageKitService} from "@src/helpers/image";
 
 const config = appConfig();
 const floorThreshold = 5;
@@ -416,11 +412,9 @@ const NftPicker = ({collectionAddress, nfts, onSelect, initialNft}) => {
   return (
     <>
       {isBundle(chosenNft.nftAddress) ? (
-        <Center pt="100%" position="relative">
-          <Box position="absolute" top="50%" left="50%" transform="translate(-50%, -50%)">
-            <FontAwesomeIcon icon={faBoxOpen} size="8x"/>
-          </Box>
-        </Center>
+        <ImageContainer className="mx-auto">
+          <img src={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')} alt={chosenNft.name} />
+        </ImageContainer>
       ) : (
         <ImageContainer className="mx-auto">
           <img src={specialImageTransform(collectionAddress, chosenNft.image)} alt={chosenNft.name} />

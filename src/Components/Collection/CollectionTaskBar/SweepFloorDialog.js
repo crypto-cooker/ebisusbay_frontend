@@ -13,7 +13,7 @@ import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {
-  createSuccessfulTransactionToastContent, isNftBlacklisted,
+  createSuccessfulTransactionToastContent, isBundle, isNftBlacklisted,
   isNumeric,
   mapAttributeString,
   round,
@@ -21,7 +21,7 @@ import {
   stripSpaces
 } from "@src/utils";
 import * as Sentry from '@sentry/react';
-import {hostedImage} from "@src/helpers/image";
+import {hostedImage, ImageKitService} from "@src/helpers/image";
 import Blockies from "react-blockies";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
 import DotIcon from "@src/Components/components/DotIcon";
@@ -692,12 +692,21 @@ const Results = ({listings, cost, isMobile}) => {
               <SwiperSlide key={listing.listingId}>
                 <div className="px-2">
                   <div className="text-center" style={{fontSize:'14px'}}>#{shortString(listing.nftId, 3, 3)}</div>
-                  <AnyMedia
-                    image={specialImageTransform(listing.nft.address ?? listing.nft.nftAddress, listing.nft.image)}
-                    title={listing.nft.name}
-                    usePlaceholder={false}
-                    className="img-fluid img-rounded swiper-lazy"
-                  />
+                  {isBundle(listing.nft.address ?? listing.nft.nftAddress) ? (
+                    <AnyMedia
+                      image={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')}
+                      title={listing.nft.name}
+                      usePlaceholder={false}
+                      className="img-fluid img-rounded swiper-lazy"
+                    />
+                  ) : (
+                    <AnyMedia
+                      image={specialImageTransform(listing.nft.address ?? listing.nft.nftAddress, listing.nft.image)}
+                      title={listing.nft.name}
+                      usePlaceholder={false}
+                      className="img-fluid img-rounded swiper-lazy"
+                    />
+                  )}
                   <div className="text-center" style={{fontSize:'14px'}}>{listing.price} CRO</div>
                 </div>
               </SwiperSlide>

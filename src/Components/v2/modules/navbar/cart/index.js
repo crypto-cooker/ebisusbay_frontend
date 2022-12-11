@@ -219,7 +219,12 @@ const Cart = function () {
                         style={{borderRadius: '20px'}}
                       >
                         {isBundle(nft.address) ? (
-                          <FontAwesomeIcon icon={faBoxOpen} size="3x"/>
+                          <AnyMedia
+                            image={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')}
+                            title={nft.name}
+                            usePlaceholder={false}
+                            className="img-rounded-8"
+                          />
                         ) : (
                           <AnyMedia
                             image={ImageKitService.buildFixedWidthUrl(nft.image, 100, 100)}

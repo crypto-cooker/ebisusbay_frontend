@@ -1,33 +1,16 @@
 import {useDispatch, useSelector} from "react-redux";
-import {
-  Badge,
-  Box, Collapse,
-  Flex,
-  FormControl, FormErrorMessage, Image,
-  Input,
-  Menu,
-  MenuButton, MenuItem, MenuList,
-  Skeleton, Spacer,
-  Stack,
-  Text,
-  useColorModeValue,
-  VStack
-} from "@chakra-ui/react";
+import {Badge, Box, Flex, Image, Skeleton, Text, useColorModeValue, VStack} from "@chakra-ui/react";
 import React, {useCallback, useEffect, useState} from "react";
-import {removeFromBatchListingCart, setApproval, setExtras, updatePrice} from "@src/GlobalState/batchListingSlice";
+import {removeFromBatchListingCart, setApproval, setExtras} from "@src/GlobalState/batchListingSlice";
 import {Contract} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
-import {getCollectionMetadata} from "@src/core/api";
-import {collectionRoyaltyPercent} from "@src/core/chain";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
 import {ImageKitService} from "@src/helpers/image";
 import Link from "next/link";
 import {Button as ChakraButton} from "@chakra-ui/button";
-import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBoxOpen, faEllipsisH, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import {appConfig} from "@src/Config";
 
 const config = appConfig();
@@ -108,7 +91,11 @@ export const TransferDrawerItem = ({ item }) => {
           style={{ borderRadius: '20px' }}
         >
           {isBundle(item.nft.address) ? (
-            <FontAwesomeIcon icon={faBoxOpen} size="2x"/>
+            <Image
+              src={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')}
+              alt={item.nft.name}
+              rounded="md"
+            />
           ) : (
             <Image
               src={ImageKitService.buildAvatarUrl(item.nft.image)}
