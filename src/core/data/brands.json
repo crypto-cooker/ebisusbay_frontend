@@ -179,32 +179,6 @@
     "style": {}
   },
   {
-    "slug": "trooprz",
-    "name": "Trooprz",
-    "description": "Trooprz have got your back",
-    "images": {
-      "banner": "/img/collections/trooprz/banner.jpeg"
-    },
-    "collections": [
-      "0x51112Bf32B9a1C64716DF2e6b82e63a04Bd384Fd",
-      "0xea4DF145322ec9dFCE037b062b08083141c6af8f",
-      "0xbabdFDD5f88035C9FbA58Be1b5c76DcFC6A847f3",
-      "0x96628048830a499b156aBdC04cC169C18c3A17f2",
-      "0xB82F6B5a4491D38292DFCd6706aa12DD5701D7e2",
-      "0xA35f40e45FFF953F477700C83D550D35F11B42aB",
-      "0x2FfF5FE8a3e13A10509E4297DF9d1fdaF1eE7DC4",
-      "0xEB54ea91C92Ce404Ba7AD7B0EF2e36fD75C889A7"
-    ],
-    "socials": {
-      "website": "https://trooprz.army/",
-      "twitter": "https://twitter.com/trooprzarmy",
-      "discord": "https://discord.gg/trooprz"
-    },
-    "featured": true,
-    "categories": [],
-    "style": {}
-  },
-  {
     "slug": "boomer-squad",
     "name": "Boomer Squad",
     "description": "Collection of 8008 Boomers using crypto in the only way they know how. Everyone has felt like our Boomers at some point in their crypto journey but just like everyone else they will figure it out eventually. Founded by a fully doxed team of 11, Boomer Squad was established to build an ecosystem of on chain games, events, collections, and ecosystem developments that reflects value back to our Gen 0 Boomers through our Verified Distribution Contract called the \"Mattress Fund\" and Boomer DAO. Check out our GitBook for a full breakdown of everything already established and in the works in our ecosystem",
@@ -237,31 +211,6 @@
     "style": {}
   },
   {
-    "slug": "argonauts",
-    "name": "Argonauts",
-    "description": "The Argonauts brand features various NFT collections under the NFT arm of Argo Finance. At it's core, the Argonauts collection is a collection of 8,888 unique utility-enabled characters that represents your unique identity on the Cronos chain. The Argonauts will be the centrepiece of Argo, providing users with massive utility across the suite of Argo products.",
-    "images": {
-      "banner": "/img/collections/argonauts/banner.webp"
-    },
-    "collections": [
-      "0xa996aD2b9f240F78b063E47F552037658c4563d1",
-      "0x8ac06d8CF5B371bf57723C050C1969f0f23Dbf98",
-      "0xc3cf2416a69351bf336ff671ad46d92efee4ea75",
-      "0x0A37674F61a9345f32E277b15E3C9603cDe710f6",
-      "0xb67A1DE71c8506e4b6326d2a01c421F831b9754d"
-    ],
-    "socials": {
-      "website": "https://www.argofinance.money/nft",
-      "twitter": "https://twitter.com/ArgoProtocol",
-      "discord": "https://discord.gg/argofinance",
-      "medium": "https://argofinance.medium.com",
-      "telegram": "https://t.me/Argo_Finance"
-    },
-    "featured": true,
-    "categories": [],
-    "style": {}
-  },
-  {
     "slug": "cronos-primate-business",
     "name": "Cronos Primate Business",
     "description": "3 generations of uniquely generated primates that make up the Primate World. The original Cronos Primate Business is a collection of 1000 primates that sold out in two minutes. The Primates along with Gorillas and Corrupted give staking, raffles, giveaways and more.\n\nCrotopia is the Metaverse being built by Cronos Primate Business. The OG pass is your key to the metaverse and includes free skin airdrops for life.",
@@ -281,6 +230,57 @@
       "twitter": "https://twitter.com/PrimateCronos",
       "discord": "https://discord.gg/X4shERMUwf",
       "medium": "https://medium.com/cronos-monkey-business"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "trooprz",
+    "name": "Trooprz",
+    "description": "Trooprz have got your back",
+    "images": {
+      "banner": "/img/collections/trooprz/banner.jpeg"
+    },
+    "collections": [
+      "0x51112Bf32B9a1C64716DF2e6b82e63a04Bd384Fd",
+      "0xea4DF145322ec9dFCE037b062b08083141c6af8f",
+      "0xbabdFDD5f88035C9FbA58Be1b5c76DcFC6A847f3",
+      "0x96628048830a499b156aBdC04cC169C18c3A17f2",
+      "0xB82F6B5a4491D38292DFCd6706aa12DD5701D7e2",
+      "0xA35f40e45FFF953F477700C83D550D35F11B42aB",
+      "0x2FfF5FE8a3e13A10509E4297DF9d1fdaF1eE7DC4",
+      "0xEB54ea91C92Ce404Ba7AD7B0EF2e36fD75C889A7"
+    ],
+    "socials": {
+      "website": "https://trooprz.army/",
+      "twitter": "https://twitter.com/trooprzarmy",
+      "discord": "https://discord.gg/trooprz"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "argonauts",
+    "name": "Argonauts",
+    "description": "The Argonauts brand features various NFT collections under the NFT arm of Argo Finance. At it's core, the Argonauts collection is a collection of 8,888 unique utility-enabled characters that represents your unique identity on the Cronos chain. The Argonauts will be the centrepiece of Argo, providing users with massive utility across the suite of Argo products.",
+    "images": {
+      "banner": "/img/collections/argonauts/banner.webp"
+    },
+    "collections": [
+      "0xa996aD2b9f240F78b063E47F552037658c4563d1",
+      "0x8ac06d8CF5B371bf57723C050C1969f0f23Dbf98",
+      "0xc3cf2416a69351bf336ff671ad46d92efee4ea75",
+      "0x0A37674F61a9345f32E277b15E3C9603cDe710f6",
+      "0xb67A1DE71c8506e4b6326d2a01c421F831b9754d"
+    ],
+    "socials": {
+      "website": "https://www.argofinance.money/nft",
+      "twitter": "https://twitter.com/ArgoProtocol",
+      "discord": "https://discord.gg/argofinance",
+      "medium": "https://argofinance.medium.com",
+      "telegram": "https://t.me/Argo_Finance"
     },
     "featured": true,
     "categories": [],
@@ -651,6 +651,33 @@
       "twitter": "https://twitter.com/badmeerkatnft",
       "discord": "https://discord.gg/wcJ4vvZb4H"
     },
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "barbara-redekop",
+    "name": "Barbara Redekop",
+    "description": "Hi, I’m Barbara Redekop! I’m creating art with the goal of making dark days a little brighter. After working in a variety of traditional media, I eventually began using digital tools and entered the NFT space in 2021.",
+    "images": {
+      "banner": "/img/brands/barbara-redekop/banner.webp",
+      "preview": "/img/brands/barbara-redekop/preview.webp"
+    },
+    "collections": [
+      "0x3Bf0a68a03fE82A5D21445f3a2306bB012dd50D9",
+      "0xf518f16F6611f0B7a51496cfCBA2Ed954Ec81112",
+      "0xd036b2223bcc2A96164B023022D6b78CD71A1a12",
+      "0x574677Ae4d09f8FcD4aa347E8905ccA7e18a4ca0",
+      "0x7a321568dc6dF06acEc39C09eFEf97fAd17eEF35",
+      "0x53068FcC2e233995088590e705AAb112e24e4993",
+      "0xe6f571551dcc680E789925117Aeb8C183E83295b"
+    ],
+    "socials": {
+      "website": "https://crypto.com/nft/profile/vredekop",
+      "twitter": "https://www.twitter.com/BarbaraRedekop",
+      "discord": "https://discord.gg/khRfPKDFwg",
+      "instagram": "https://www.instagram.com/im_barbara_redekop"
+    },
+    "featured": true,
     "categories": [],
     "style": {}
   }
