@@ -173,6 +173,11 @@ export const configData = {
         symbol: 'MAD',
         address: '0x4DEdeea250d2cbf54F0e156f0e9b55927094867E',
       },
+      trpz: {
+        name: 'TRPZ',
+        symbol: 'TRPZ',
+        address: '0x574deA750075145CcAD7f659A231721DFF9b5ef0',
+      },
       koi: {
         name: 'KOI',
         symbol: 'KOI',
