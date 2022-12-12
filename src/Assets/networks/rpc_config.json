@@ -3535,7 +3535,7 @@
       "multiToken": false,
       "address": "0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Lady Weird Apes is a collection of 2000 NFTs randomly generated from ~125 Traits.\nEach Lady is able to give birth up to 3 Baby Weird Apes by breeding with a Genesis.\nEach breedable Lady can be rented out earning $WAC and, once released LoW, each Lady in staking will reward its holder with 5 vials per day in addition to the opportunity to claim the corresponding Voxel Weird Ape preserving her traits!\nVisit our Discord to join our wonderful community!",
         "verified": true,
