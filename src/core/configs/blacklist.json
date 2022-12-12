@@ -1,5 +1,12 @@
 [
   {
+    "users": [
+      "0xbC01cc7E8Fa07F43C06E3Cec0773128043733e2D"
+    ],
+    "tokens": [],
+    "reason": "Scammed. Ticket #0884"
+  },
+  {
     "users": ["0x824fc9060d6daef0aa210653418b935f19b4f9a9"],
     "tokens": [
       {
