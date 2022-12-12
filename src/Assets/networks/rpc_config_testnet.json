@@ -3085,7 +3085,7 @@
       "name": "NFT Rings by Aperson Lyeque",
       "slug": "nft-rings-aperson-lyeque",
       "multiToken": false,
-      "address": "",
+      "address": "0xb948d0B3D18d4d9Db61226F840395e7A8E3a7F30",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -7123,7 +7123,7 @@
         "twitter": "https://twitter.com/ApersonLyeque",
         "discord": "https://discord.gg/Trooprz"
       },
-      "address": "",
+      "address": "0xb948d0B3D18d4d9Db61226F840395e7A8E3a7F30",
       "maxMintPerTx": 7,
       "maxMintPerAddress": 21,
       "totalSupply": 7777,
@@ -7131,7 +7131,7 @@
       "memberCost": "333",
       "whitelistCost": "333",
       "foundersOnly": false,
-      "start": 1670601097000,
+      "start": 1670888003000,
       "end": null,
       "referral": false,
       "is1155": false,
