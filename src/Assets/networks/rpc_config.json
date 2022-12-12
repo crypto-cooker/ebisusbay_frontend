@@ -16515,7 +16515,7 @@
       "listable": false,
       "metadata": {
         "description": "The MUTANT APE CRONOS CLUB is a collection of up to 20,000 Mutant Apes that can only be created by exposing an existing Bored Ape Cronos Club to a vial of MUTANT SERUM.",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/macc-serums/avatar.webp",
         "card": "/img/collections/macc-serums/card.webp",
         "maxSupply": 125,
@@ -16527,7 +16527,7 @@
         ]
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
@@ -22177,7 +22177,7 @@
         "preview": "/img/collections/macc-serums/card.webp"
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
         "kyc": false,
         "escrow": false
