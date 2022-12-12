@@ -16505,6 +16505,32 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "MACC Serums",
+      "slug": "macc-serums",
+      "multiToken": false,
+      "address": "0xF3dd7D783d7bDeC9d966cb49609d1F4167d16f9A",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The MUTANT APE CRONOS CLUB is a collection of up to 20,000 Mutant Apes that can only be created by exposing an existing Bored Ape Cronos Club to a vial of MUTANT SERUM.",
+        "verified": false,
+        "avatar": "/img/collections/macc-serums/avatar.webp",
+        "card": "/img/collections/macc-serums/card.webp",
+        "maxSupply": 125,
+        "website": "https://www.zombabies.io/",
+        "twitter": "https://twitter.com/ZombabiesNFT",
+        "discord": "https://discord.gg/tGQaAGz3Xp",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
@@ -22115,6 +22141,45 @@
         "verified": true,
         "doxx": false,
         "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 146,
+      "slug": "macc-serums",
+      "title": "MACC Serums",
+      "subtitle": "The MUTANT APE CRONOS CLUB is a collection of up to 20,000 Mutant Apes that can only be created by exposing an existing Bored Ape Cronos Club to a vial of MUTANT SERUM.",
+      "description": "",
+      "author": {
+        "name": "Bored Ape Cronos Club",
+        "twitter": "https://twitter.com/maccfinance",
+        "discord": "https://discord.gg/P6VWacJvyS"
+      },
+      "address": "0xF3dd7D783d7bDeC9d966cb49609d1F4167d16f9A",
+      "maxMintPerTx": 7,
+      "maxMintPerAddress": 21,
+      "totalSupply": 20000,
+      "cost": "250",
+      "memberCost": "250",
+      "whitelistCost": "250",
+      "foundersOnly": false,
+      "start": 1670822948000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": true,
+      "redirect": "https://www.crosea.io/mutantserum",
+      "images": {
+        "drop": "/img/drops/macc-serums/drop.webp",
+        "avatar": "/img/collections/macc-serums/avatar.webp",
+        "preview": "/img/collections/macc-serums/card.webp"
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false,
         "escrow": false
       }
     }
