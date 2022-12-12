@@ -15352,7 +15352,7 @@
       "multiToken": false,
       "address": "0x7aEBFd662494299CE53feb533BFE80a749e656BC",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "7777 Degen Apes looking for a degen holder on the cronos network. Join the degen club today!",
         "verified": false,
