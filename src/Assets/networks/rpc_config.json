@@ -12118,6 +12118,9 @@
       "slug": "cronos-apes",
       "multiToken": false,
       "address": "0x50a6aA29b9E99c9B8b81069a12EeFeDAC85919B7",
+      "mergedAddresses": [
+        "0x5Cb9a12d31CF751ACc58B12B47cc4E093A6AB580"
+      ],
       "onChain": false,
       "listable": true,
       "metadata": {
