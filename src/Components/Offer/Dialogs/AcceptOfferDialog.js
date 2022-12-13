@@ -92,7 +92,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
       }
 
       if (isCollectionOffer) {
-        const walletNfts = await getQuickWallet(user.address, {collection: collection.address});
+        const walletNfts = await getQuickWallet(user.address, {collection: collection.address, pageSize: 1000});
         setCollectionNfts(walletNfts.data.filter((nft) => !isNftBlacklisted(nft.address ?? nft.nftAddress, nft.id ?? nft.nftId)));
         await chooseCollectionNft(walletNfts.data[0])
       } else {
