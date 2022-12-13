@@ -58,16 +58,11 @@ export const configData = {
         symbol: 'TRPZ',
         address: '0x1Cc0B25BD5105CD8905f7e9cD174435D4C890E02',
       },
-      koi: {
-        name: 'KOI',
-        symbol: 'KOI',
+      bacc: {
+        name: 'BACC',
+        symbol: 'BACC',
         address: '',
-      },
-      dbf: {
-        name: 'DBF',
-        symbol: 'DBF',
-        address: '',
-      },
+      }
     },
     collections: rpcConfig.known_contracts,
     drops: rpcConfig.drops,
@@ -118,16 +113,11 @@ export const configData = {
         symbol: 'TRPZ',
         address: '0x1Cc0B25BD5105CD8905f7e9cD174435D4C890E02',
       },
-      koi: {
-        name: 'KOI',
-        symbol: 'KOI',
+      bacc: {
+        name: 'BACC',
+        symbol: 'BACC',
         address: '',
-      },
-      dbf: {
-        name: 'DBF',
-        symbol: 'DBF',
-        address: '',
-      },
+      }
     },
     collections: rpcConfigDev.known_contracts,
     drops: rpcConfigDev.drops,
@@ -178,16 +168,11 @@ export const configData = {
         symbol: 'TRPZ',
         address: '0x574deA750075145CcAD7f659A231721DFF9b5ef0',
       },
-      koi: {
-        name: 'KOI',
-        symbol: 'KOI',
+      bacc: {
+        name: 'BACC',
+        symbol: 'BACC',
         address: '',
-      },
-      dbf: {
-        name: 'DBF',
-        symbol: 'DBF',
-        address: '',
-      },
+      }
     },
     collections: rpcConfigTestnet.known_contracts,
     drops: rpcConfigTestnet.drops,
