@@ -35,7 +35,7 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
 
     try {
       setExecutingCancelOffer(true);
-      Sentry.captureEvent({message: 'handleCancelOffer', extra: {address: collection.address}});
+      Sentry.captureEvent({message: 'handleCancelOffer', extra: {address: nft.address ?? nft.nftAddress}});
       let tx;
       if (isCollectionOffer) {
         tx = await offerContract.cancelCollectionOffer(offer.nftAddress, offer.offerIndex);
@@ -81,7 +81,7 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
                       {collection.metadata.avatar ? (
                         <img src={hostedImage(collection.metadata.avatar)} alt={collection.name} />
                       ) : (
-                        <Blockies seed={collection.address.toLowerCase()} size={15} scale={10} />
+                        <Blockies seed={(nft.address ?? nft.nftAddress).toLowerCase()} size={15} scale={10} />
                       )}
                       {collection.metadata.verified && (
                         <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={8} stackClass="eb-avatar_badge" />
