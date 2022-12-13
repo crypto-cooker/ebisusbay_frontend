@@ -282,8 +282,8 @@ const Home = () => {
               <div className="d-flex flex-column align-middle">
                 <div className="d-flex justify-content-between flex-wrap">
                   <div className="flex-fill mx-auto mt-2" style={{maxWidth:300}}>
-                    {featuredAd.links.map((link) => (
-                      <a href={link.url} target={link.external ? '_blank' : '_self'} rel="noreferrer">
+                    {featuredAd.links.map((link, index) => (
+                      <a key={index} href={link.url} target={link.external ? '_blank' : '_self'} rel="noreferrer">
                         <Button type="legacy" className="w-100">
                           {link.label}
                         </Button>
