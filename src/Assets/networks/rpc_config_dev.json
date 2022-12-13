@@ -16537,6 +16537,33 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Cockheadz OG Founder Edition",
+      "slug": "cockheadz-og-founder-edition",
+      "multiToken": false,
+      "address": "0x86bD74dB7E8559F41D13E3f627951b38E8ED7062",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "After a successful mint out of the posters we’re back with the Cockheadz OG Founder Edition. Earning the highest rates of \uD83C\uDF3D$FEED of any of our collections. Can also be used to booster towards your \uD83E\uDD5A$EGGS earnings.",
+        "verified": false,
+        "avatar": "/img/collections/cockheadz-og-founder-edition/avatar.webp",
+        "card": "/img/collections/cockheadz-og-founder-edition/card.webp",
+        "banner": "/img/collections/cockheadz-og-founder-edition/banner.webp",
+        "maxSupply": 777,
+        "website": "https://cockheadznft.com/",
+        "twitter": "https://twitter.com/cockheadznft",
+        "discord": "https://discord.gg/ASxRBjbK8Y",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
