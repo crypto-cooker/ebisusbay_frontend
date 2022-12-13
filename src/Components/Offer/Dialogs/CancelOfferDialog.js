@@ -102,10 +102,12 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
                   )}
                 </div>
                 <div className="col-12 col-sm-6">
-                  <div>
-                    <div className="text-muted">Collection</div>
-                    <div className="fw-bold">{collection.name}</div>
-                  </div>
+                  {!!collection && (
+                    <div>
+                      <div className="text-muted">Collection</div>
+                      <div className="fw-bold">{collection.name}</div>
+                    </div>
+                  )}
                   {!isCollectionOffer && (
                     <div className="mt-2">
                       <div className="text-muted">NFT</div>
