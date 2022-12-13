@@ -15354,6 +15354,9 @@
       "slug": "degen-ape-cronos-club",
       "multiToken": false,
       "address": "0x7aEBFd662494299CE53feb533BFE80a749e656BC",
+      "mergedAddresses": [
+        "0x47C4184a9c5Ad620D5243c850A33833a3Cd010f5"
+      ],
       "onChain": false,
       "listable": true,
       "metadata": {
