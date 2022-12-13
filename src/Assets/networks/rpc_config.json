@@ -16564,6 +16564,34 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Ballies",
+      "slug": "ballies",
+      "multiToken": false,
+      "address": "0xF12B07570804c56B4ce8f63e7121BEC8C7CA1542",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Ballies Origins are a set of 9,999 completely unique basketball characters algorithmically generated from over 170 hand-drawn traits. They’re equipped with performance skills to become players in exciting basketball matches. Ballies are split into 2 rarity levels: Basic and Advanced. The latter are also stronger (higher ATK & DEF points).\n\nOwn a Ballie and live out your basketball dream! Enjoy exclusive access to the Meta-Court metaverse with many perks and opportunities. Dominate first-ever NFT 2.0 basketball games and tournaments, join exclusive talks with basketball stars, benefit from surprise raffles and competitions and be part of a dope community. Created by award-winning young digital artist Keivo.\n\nBecome the KING of the Meta-Court! Do you have what it takes?",
+        "verified": true,
+        "avatar": "/img/collections/ballies/avatar.webp",
+        "card": "/img/collections/ballies/card.webp",
+        "banner": "/img/collections/ballies/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://ballies.gg/",
+        "twitter": "https://twitter.com/Ballies_NFT",
+        "discord": "https://discord.gg/c6Rwb6uKKq",
+        "instagram": "https://instagram.com/ballies_nft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
