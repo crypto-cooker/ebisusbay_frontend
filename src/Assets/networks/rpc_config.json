@@ -16251,7 +16251,7 @@
       "name": "NFT Ringz by Aperson Lyeque",
       "slug": "nft-ringz-aperson-lyeque",
       "multiToken": false,
-      "address": "",
+      "address": "0x0CE3caE72F40d842e7019e944E78845a08508Cca",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -22177,7 +22177,7 @@
         "twitter": "https://twitter.com/ApersonLyeque",
         "discord": "https://discord.gg/Trooprz"
       },
-      "address": "",
+      "address": "0x0CE3caE72F40d842e7019e944E78845a08508Cca",
       "maxMintPerTx": 7,
       "maxMintPerAddress": 21,
       "totalSupply": 777,
