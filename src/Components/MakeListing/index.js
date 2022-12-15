@@ -30,6 +30,7 @@ import {
   ModalOverlay
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
+import useCreateGaslessListing from '../Account/Settings/hooks/useCreateGaslessListing';
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -40,6 +41,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
 
   const [saleType, setSaleType] = useState(1);
   const [salePrice, setSalePrice] = useState(null);
+  const [expirationDate, setExpirationDate] = useState(null);
   const [floorPrice, setFloorPrice] = useState(0);
   const [priceError, setPriceError] = useState(false);
   const [fee, setFee] = useState(0);
@@ -54,7 +56,11 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
 
   const windowSize = useWindowSize();
   const isAuctionOptionEnabled = useFeatureFlag(Features.AUCTION_OPTION_SALE);
+
+  const isGaslessListingEnabled = useFeatureFlag(Features.GASLESS_LISTING);
+
   const user = useSelector((state) => state.user);
+  const [createGaslessListing, response] = useCreateGaslessListing()
   const {contractService} = user;
 
   const changeSaleType = (type) => {
@@ -80,6 +86,10 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
       setSalePrice(newSalePrice)
     }
   }, [setSalePrice, floorPrice, salePrice]);
+
+  const expirationDateOnChange = useCallback((e) => {
+    setExpirationDate(e.target.value)
+  }, [setExpirationDate])
 
   const onQuickCost = useCallback((percentage) => {
     if (executingCreateListing || showConfirmButton) return;
@@ -197,10 +207,16 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
       const price = ethers.utils.parseEther(salePrice.toString());
 
       setExecutingCreateListing(true);
-      Sentry.captureEvent({message: 'handleCreateListing', extra: {nftAddress, nftId, price}});
-      let tx = await contractService.market.makeListing(nftAddress, nftId, price);
-      let receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      if(isGaslessListingEnabled){
+        const res = await createGaslessListing({collectionAddress: nftAddress, tokenId: nftId, price: salePrice.toString(), expirationDate});
+        toast.success("Listing Successful");
+
+      }else{
+        Sentry.captureEvent({message: 'handleCreateListing', extra: {nftAddress, nftId, price}});
+        let tx = await contractService.market.makeListing(nftAddress, nftId, price);
+        let receipt = await tx.wait();
+        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      }
       setExecutingCreateListing(false);
       onClose();
     } catch (error) {
@@ -267,11 +283,11 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                 <div className="col-12 col-sm-6">
                   <h3>Sale Type</h3>
                   <div className="d-flex">
-                    {/*<div className={`card flex-fill form_icon_button shadow first-button ${saleType === 0 ? 'active' : ''}`} onClick={() => changeSaleType('auction')}>*/}
+                    {/* <div className={`card flex-fill form_icon_button shadow first-button ${saleType === 0 ? 'active' : ''}`} onClick={() => changeSaleType('auction')}>*/}
                     {/*  {saleType === 0 && <DotIcon icon={faCheck} />}*/}
                     {/*  <FontAwesomeIcon className='icon' icon={faClock} />*/}
                     {/*  <p>Auction</p>*/}
-                    {/*</div>*/}
+                    {/*</div> */}
 
                     <div className={`card flex-fill form_icon_button shadow ${saleType === 1 ? 'active' : ''}`} onClick={() => changeSaleType('fixedPrice')}>
                       {saleType === 1 && <DotIcon icon={faCheck} />}
@@ -335,6 +351,25 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                       </Badge>
                     )}
                   </div>
+                  
+                  {isGaslessListingEnabled && (
+                    <Form.Group className="form-field mb-3">
+                      <Form.Label className="formLabel w-100">
+                        <div className="d-flex">
+                          <div className="flex-grow-1">Expiration Date</div>
+                        </div>
+                      </Form.Label>
+                      <Form.Control
+                        className="input"
+                        type="date"
+                        value={expirationDate}
+                        onChange={expirationDateOnChange}
+                        disabled={showConfirmButton || executingCreateListing}
+                      />
+                      <Form.Text className="field-description textError">
+                        {priceError}
+                      </Form.Text>
+                    </Form.Group>)}
 
                   <div>
                     <h3 className="feeTitle">Fees</h3>

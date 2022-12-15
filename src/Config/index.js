@@ -254,4 +254,5 @@ export const featureFlags = {
   [Features.NEW_CHAKRA_THEME]: false,             // Update theme
   [Features.GLOBAL_SEARCH]: true,                // Global search bar
   [Features.BUNDLES]: false,                      // Bundles
+  [Features.GASLESS_LISTING]: false                //Gasless listings
 }
