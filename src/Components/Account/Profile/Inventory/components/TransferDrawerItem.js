@@ -12,6 +12,8 @@ import {Button as ChakraButton} from "@chakra-ui/button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import {appConfig} from "@src/Config";
+import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {specialImageTransform} from "@src/hacks";
 
 const config = appConfig();
 
@@ -97,10 +99,11 @@ export const TransferDrawerItem = ({ item }) => {
               rounded="md"
             />
           ) : (
-            <Image
-              src={ImageKitService.buildAvatarUrl(item.nft.image)}
-              alt={item.nft.name}
-              rounded="md"
+            <AnyMedia
+              image={specialImageTransform(item.nft.address, ImageKitService.buildAvatarUrl(item.nft.image))}
+              title={item.nft.name}
+              usePlaceholder={true}
+              className="img-fluid img-rounded-5"
             />
           )}
         </Box>

@@ -36,6 +36,8 @@ import {Contract} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {appConfig} from "@src/Config";
 import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
+import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {specialImageTransform} from "@src/hacks";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -151,10 +153,11 @@ const BundleDrawerItem = ({ item, disabled }) => {
               rounded="md"
             />
           ) : (
-            <Image
-              src={ImageKitService.buildAvatarUrl(item.nft.image)}
-              alt={item.nft.name}
-              rounded="md"
+            <AnyMedia
+              image={specialImageTransform(item.nft.address, ImageKitService.buildAvatarUrl(item.nft.image))}
+              title={item.nft.name}
+              usePlaceholder={true}
+              className="img-fluid img-rounded-5"
             />
           )}
         </Box>
