@@ -16571,7 +16571,7 @@
       "multiToken": false,
       "address": "0xF12B07570804c56B4ce8f63e7121BEC8C7CA1542",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Ballies Origins are a set of 9,999 completely unique basketball characters algorithmically generated from over 170 hand-drawn traits. They’re equipped with performance skills to become players in exciting basketball matches. Ballies are split into 2 rarity levels: Basic and Advanced. The latter are also stronger (higher ATK & DEF points).\n\nOwn a Ballie and live out your basketball dream! Enjoy exclusive access to the Meta-Court metaverse with many perks and opportunities. Dominate first-ever NFT 2.0 basketball games and tournaments, join exclusive talks with basketball stars, benefit from surprise raffles and competitions and be part of a dope community. Created by award-winning young digital artist Keivo.\n\nBecome the KING of the Meta-Court! Do you have what it takes?",
         "verified": true,
@@ -16583,6 +16583,34 @@
         "twitter": "https://twitter.com/Ballies_NFT",
         "discord": "https://discord.gg/c6Rwb6uKKq",
         "instagram": "https://instagram.com/ballies_nft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crypto.com Land - The First Frontier",
+      "slug": "the-first-frontier",
+      "multiToken": false,
+      "address": "0x1BFE61949C261B48F55668fCe67252D07fbd298c",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Trading of \"First Frontier Deed\" NFTs on secondary marketplace will be enabled after end of public sale. Each “First Frontier Deed” will be revealed as one of five land NFTs on 22nd December 2022.\n\nCrypto.com expands its foray into Web3, launching our first ever land NFT collection: “Crypto.com Land - The First Frontier”. This land sale consists of 25,000 land NFTs, divided into five rarities. Each rarity sports a distinct design and unique backstory.\n\nThese collectibles also possess special powers and are ever-evolving. Your land NFT will also act as your ticket to Crypto.com’s future Web3 initiatives. The first is a special game featuring some very familiar faces.",
+        "verified": true,
+        "avatar": "/img/collections/the-first-frontier/avatar.webp",
+        "card": "/img/collections/the-first-frontier/card.webp",
+        "banner": "/img/collections/the-first-frontier/banner.webp",
+        "maxSupply": 25000,
+        "website": "https://crypto.com/nft/loaded-lions/",
+        "twitter": "https://twitter.com/loadedlions_CDC",
+        "discord": "https://discord.gg/cryptocom",
+        "instagram": "https://instagram.com/cryptocomnft",
         "categories": [
           "collectibles"
         ]
@@ -21215,8 +21243,8 @@
       "id": 122,
       "slug": "lion-social-club",
       "title": "Lion Social Club",
-      "subtitle": "Lion Social Club is minting our first collection, each NFT is unique and holds special utility. LSC aims to bring a community based DEX and DAO that puts the community first and gives each holder a voice with our utility based roadmap.",
-      "description": "Benefits of Lion Social Club \ud83e\udd81\nDAO governance voting in future tokens we launch to benefit the ecosystem.\n3% bonus in farming pool that earns $ROAR token. \nEntry in our giveaways\nRevenue sharing from secondary marketplace (4% from secondary marketplace + 4% to Lion Den DAO).\nFuture mints generate revenue for Gen 0 collection of Lion Social Club (Amount will be voted on).\nCustom 1 of 1 NFTs for top holders from our world renounced artist. \n\n\n20% Minted - 1000 CRO Giveaway to random holders.\n40% Minted - 5 LSC NFT Airdrop to random holder. \n60% Minted - 2500 CRO Giveaway to random holders.\n80% Minted - 2 Croskull Giveaway to random holders.\n100% Minted - 5000 CRO Giveaway to random holders.",
+      "subtitle": "Lion Social Club is minting our first collection, each NFT is unique and holds special utility.",
+      "description": "Lion Social Club is minting our first collection, each NFT is unique and holds special utility.",
       "author": {
         "name": "Lion Social Club",
         "website": "https://lionsocialclub.io/",
