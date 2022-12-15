@@ -21245,8 +21245,8 @@
         "preview": "/img/collections/lion-social-club/card.webp"
       },
       "verification": {
-        "doxx": false,
-        "kyc": false,
+        "doxx": true,
+        "kyc": true,
         "escrow": false,
         "verified": true
       }
