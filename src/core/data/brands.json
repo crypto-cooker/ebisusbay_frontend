@@ -505,6 +505,29 @@
     "style": {}
   },
   {
+    "slug": "crougar-kingdom",
+    "name": "CROugar Kingdom",
+    "description": "A fun and engaging Discord-focused community! Providing long-term value to our holders through a number of initiatives both on and off the Blockchain!",
+    "images": {
+      "banner": "/img/brands/crougar-kingdom/banner.webp",
+      "preview": "/img/brands/crougar-kingdom/preview.webp"
+    },
+    "collections": [
+      "0xdCcCEd571dcbC82Bbeadf95Af20ee4442E21208C",
+      "0x45958Cb5ede8dc9E1a797C1526D4523db1471F15",
+      "0xE97e0636abA2A02E7aB523fc6dE726C3525DBc39"
+    ],
+    "socials": {
+      "website": "https://crougarkingdom.com",
+      "twitter": "https://www.twitter.com/CROugarKingdom",
+      "discord": "https://discord.gg/crougarkingdom",
+      "medium": "https://medium.com/@crougar"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "cronos-apes",
     "name": "Cronos Apes",
     "description": "The Cronos Apes brand features various iconic NFT collection. Each NFT of these collections has been uniquely and randomly generated from a fully animated traits set. Each NFT gives access to an exclusive Community and set of utilities, such as the distribution of earnings. If you are searching for the most iconic Apes collection on the Cronos Chain, you are in the right place. Join the #CronosApesArmy now!",
