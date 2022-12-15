@@ -204,9 +204,7 @@ const MyNftCard = ({
               />
             </Box>
           </div>
-          {nft.rank && typeof nft.rank === 'number' && (
-            <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{nft.rank}</div>
-          )}
+          {nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{nft.rank}</div>}
           <div className="d-flex flex-column p-2 pb-1">
             <div className="card-title mt-auto">
               <span onClick={() => navigateTo(nftUrl)} style={{ cursor: 'pointer' }}>
