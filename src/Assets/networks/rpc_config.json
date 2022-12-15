@@ -16571,7 +16571,7 @@
       "multiToken": false,
       "address": "0xF12B07570804c56B4ce8f63e7121BEC8C7CA1542",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Ballies Origins are a set of 9,999 completely unique basketball characters algorithmically generated from over 170 hand-drawn traits. They’re equipped with performance skills to become players in exciting basketball matches. Ballies are split into 2 rarity levels: Basic and Advanced. The latter are also stronger (higher ATK & DEF points).\n\nOwn a Ballie and live out your basketball dream! Enjoy exclusive access to the Meta-Court metaverse with many perks and opportunities. Dominate first-ever NFT 2.0 basketball games and tournaments, join exclusive talks with basketball stars, benefit from surprise raffles and competitions and be part of a dope community. Created by award-winning young digital artist Keivo.\n\nBecome the KING of the Meta-Court! Do you have what it takes?",
         "verified": true,
@@ -16591,6 +16591,84 @@
         "verified": true,
         "doxx": false,
         "kyc": false
+      }
+    },
+    {
+      "name": "Crypto.com Land - The First Frontier",
+      "slug": "the-first-frontier",
+      "multiToken": false,
+      "address": "0x1BFE61949C261B48F55668fCe67252D07fbd298c",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Trading of \"First Frontier Deed\" NFTs on secondary marketplace will be enabled after end of public sale. Each “First Frontier Deed” will be revealed as one of five land NFTs on 22nd December 2022.\n\nCrypto.com expands its foray into Web3, launching our first ever land NFT collection: “Crypto.com Land - The First Frontier”. This land sale consists of 25,000 land NFTs, divided into five rarities. Each rarity sports a distinct design and unique backstory.\n\nThese collectibles also possess special powers and are ever-evolving. Your land NFT will also act as your ticket to Crypto.com’s future Web3 initiatives. The first is a special game featuring some very familiar faces.",
+        "verified": true,
+        "avatar": "/img/collections/the-first-frontier/avatar.webp",
+        "card": "/img/collections/the-first-frontier/card.webp",
+        "banner": "/img/collections/the-first-frontier/banner.webp",
+        "maxSupply": 25000,
+        "website": "https://crypto.com/nft/loaded-lions/",
+        "twitter": "https://twitter.com/loadedlions_CDC",
+        "discord": "https://discord.gg/cryptocom",
+        "instagram": "https://instagram.com/cryptocomnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Carkayous - Expedition 8.2",
+      "slug": "carkayous-expedition-8-2",
+      "multiToken": false,
+      "address": "0x4Ba5b1094455D1C8bDCcD534F5053DED02477b50",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Jesse has created a fictitious continent called Carkayous in 2009 for all of his tattoos and art to reside. The next adventure on the docket is to Durken Forest (Expedition 8.2 - The Blooming of the Psilofish) where we will explore a massive tattoo artist mega collaboration led by him. Each artist brought life to their own creature living in this forest.",
+        "verified": true,
+        "avatar": "/img/collections/carkayous-expedition-8-2/avatar.webp",
+        "banner": "/img/collections/carkayous-expedition-8-2/banner.webp",
+        "card": "/img/collections/carkayous-expedition-8-2/card.webp",
+        "maxSupply": 0,
+        "website": "https://carkayous.com/",
+        "twitter": "https://twitter.com/carkayous",
+        "discord": "https://discord.gg/carkayous",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Carkayous - Acorns",
+      "slug": "carkayous-acorns",
+      "multiToken": false,
+      "address": "0xDaFab3c3EdA8029C881986B30EFCBd1d32523a4e",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Acorns can be used as discounts (in the form of rebates) on all future NFTs by Carkayous. They have a value of $15 each.",
+        "verified": true,
+        "avatar": "/img/collections/carkayous-acorns/avatar.webp",
+        "banner": "/img/collections/carkayous-acorns/banner.webp",
+        "card": "/img/collections/carkayous-acorns/card.webp",
+        "maxSupply": 0,
+        "website": "https://carkayous.com/",
+        "twitter": "https://twitter.com/carkayous",
+        "discord": "https://discord.gg/carkayous",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "verified": true
       }
     }
   ],
