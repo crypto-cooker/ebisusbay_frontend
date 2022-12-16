@@ -3027,6 +3027,111 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "C³: Cronos Crow Crew",
+      "slug": "c3-cronos-crow-crew",
+      "multiToken": false,
+      "address": "0x0b54c93A363A3f064F97777C0491A2D798547378",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "C³ is a brand of 3000 PFP crow characters granting holders utility and revenue. Bringing powerful set of trading and analytical tools. It's the first project that allows holders to browse the Cronos NFT space efficiently and have fun in our Crowgame . Join C³DAO to get access to all those benefits.",
+        "verified": true,
+        "avatar": "/img/collections/c3-cronos-crow-crew/avatar.webp",
+        "card": "/img/collections/c3-cronos-crow-crew/card.webp",
+        "banner": "/img/collections/c3-cronos-crow-crew/banner.webp",
+        "maxSupply": 3000,
+        "website": "https://crowcrew.xyz/",
+        "twitter": "https://twitter.com/CCrowcrew",
+        "discord": "https://discord.gg/WvyKv2svbF",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Ebisu's Bay NFT Bundles",
+      "slug": "nft-bundles",
+      "multiToken": false,
+      "address": "0xEbFB981D5a7A7C2133752F7787263B58495bb923",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Ebisu's Bay bundle contract",
+        "verified": true,
+        "avatar": "/img/avatar.jpg",
+        "card": "/img/collections/ebisu/card.webp",
+        "banner": "/img/collections/ebisu/banner.png",
+        "maxSupply": 10000,
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "hidden",
+        "verified": true
+      }
+    },
+    {
+      "name": "NFT Rings by Aperson Lyeque",
+      "slug": "nft-rings-aperson-lyeque",
+      "multiToken": false,
+      "address": "0xb948d0B3D18d4d9Db61226F840395e7A8E3a7F30",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A collection of 777 animated NFT rings. \n\nCollect all 7 ring types to receive a real life hand-made custom ring based on your chosen ring type.",
+        "verified": true,
+        "avatar": "/img/collections/nft-rings-aperson-lyeque/avatar.webp",
+        "card": "/img/collections/nft-rings-aperson-lyeque/card.webp",
+        "banner": "/img/collections/nft-rings-aperson-lyeque/banner.webp",
+        "maxSupply": 7777,
+        "website": "https://jlcustombentwoodrings.com/",
+        "twitter": "https://twitter.com/ApersonLyeque",
+        "discord": "https://discord.gg/Trooprz",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Trippy Meanies",
+      "slug": "trippy-meanies",
+      "multiToken": false,
+      "address": "0x786e53f0E8979367aE015b612EB3a9fcA24307dA",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Trippy Meanies, are a special-edition limited collection of the Lost Toys Meanies.\n\nThese incredible designs have been created by top 2D artists Ugonzo, Genius and Woah Johnny. Each NFT is signed and also unlocks great utilities!",
+        "verified": true,
+        "avatar": "/img/collections/trippy-meanies/avatar.webp",
+        "card": "/img/collections/trippy-meanies/card.webp",
+        "banner": "/img/collections/trippy-meanies/banner.webp",
+        "maxSupply": 2200,
+        "website": "https://www.losttoys.io/",
+        "twitter": "https://www.twitter.com/losttoysnft",
+        "discord": "https://discord.gg/Tdd9TZRMxn",
+        "medium": "https://hello-143.gitbook.io/lost-toys-nft/",
+        "instagram": "https://www.instagram.com/losttoysnft/",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": false,
+        "verified": true
+      }
     }
   ],
   "drops": [
@@ -6986,6 +7091,85 @@
         "banner": "/img/collections/wetland-razzles/banner.webp",
         "avatar": "/img/collections/wetland-razzles/avatar.webp",
         "preview": "/img/collections/wetland-razzles/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 144,
+      "slug": "c3-cronos-crow-crew",
+      "title": "C³: Cronos Crow Crew",
+      "subtitle": "C³ is a brand of 3000 PFP crow characters granting holders utility and revenue. Bringing powerful set of trading and analytical tools. It's the first project that allows holders to browse the Cronos NFT space efficiently and have fun in our Crowgame . Join C³DAO to get access to all those benefits.",
+      "description": " C³ is a collection of 3000 fine art crow characters granting utility and revenue to its holders. By purchasing a C³ NFT, you gain access to the C³DAO, which includes several benefits :\n\nAnalytics platform  \n\nMint funds will be immediately used to complete the Insight analytics platform, that will improve your trading experience. Follow smart money inflows, social media engagements, and fined the gem.\n\nC³DAO \n\nBy entering the C³DAO, you gain voting power for governance and investments decision. A DAO wallet fund will be set up in order to fructify mint funds, and share revenue with holders. An investment proposal for seed round in fintech will be made to the C³DAO after its establishment.\n\nCrowGame\n\nThe CrowGame is a gamified staking, read more on our whitepaper : Crow game \n\nRevenue sharing \n\nWeb3 is about empowering people and giving back to the community. With our products and marketplace fees creating revenue, sharing will be organized by the C³DAO.\n\nSee you soon!",
+      "author": {
+        "name": "C³: Cronos Crow Crew",
+        "website": "https://crowcrew.xyz/",
+        "twitter": "https://twitter.com/CCrowcrew",
+        "discord": "https://discord.gg/WvyKv2svbF"
+      },
+      "address": "0x0b54c93A363A3f064F97777C0491A2D798547378",
+      "maxMintPerTx": 20,
+      "maxMintPerAddress": 100,
+      "totalSupply": 3000,
+      "cost": "650",
+      "memberCost": "500",
+      "whitelistCost": "500",
+      "foundersOnly": false,
+      "start": 1670445633000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/c3-cronos-crow-crew/drop.webp",
+        "banner": "/img/collections/c3-cronos-crow-crew/banner.webp",
+        "avatar": "/img/collections/c3-cronos-crow-crew/avatar.webp",
+        "preview": "/img/collections/c3-cronos-crow-crew/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 145,
+      "slug": "nft-rings-aperson-lyeque",
+      "title": "NFT Rings by Aperson Lyeque",
+      "subtitle": "A collection of 777 animated NFT rings. \n\nCollect all 7 ring types to receive a real life hand-made custom ring based on your chosen ring type.",
+      "description": "A collection of 777 animated NFT rings. \n\nCollect all 7 ring types to receive a real life hand-made custom ring based on your chosen ring type. \n\n7 colors:\n\nMidnight Blue\nJade Green\nRoyal Indigo\nRuby Red\nRose Gold\nIcy White\nObsidian Black\n\nYou will burn 6 of your rings in exchange for your one chosen ring.\n\nThis ring will have its metadata marked and go on to be hand-made by Aperson Lyeque.\n\nIn the end, there will be 111 genesis NFT rings, each with a custom IRL ring linked to it.",
+      "author": {
+        "name": "Aperson Lyeque",
+        "website": "https://jlcustombentwoodrings.com/",
+        "twitter": "https://twitter.com/ApersonLyeque",
+        "discord": "https://discord.gg/Trooprz"
+      },
+      "address": "0xb948d0B3D18d4d9Db61226F840395e7A8E3a7F30",
+      "maxMintPerTx": 7,
+      "maxMintPerAddress": 21,
+      "totalSupply": 7777,
+      "cost": "375",
+      "memberCost": "333",
+      "whitelistCost": "333",
+      "foundersOnly": false,
+      "start": 1670888003000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "priceDescription": "333 $TRPZ back on every MINT",
+      "images": {
+        "drop": "/img/drops/nft-rings-aperson-lyeque/drop.webp",
+        "banner": "/img/collections/nft-rings-aperson-lyeque/banner.webp",
+        "avatar": "/img/collections/nft-rings-aperson-lyeque/avatar.webp",
+        "preview": "/img/collections/nft-rings-aperson-lyeque/card.webp"
       },
       "verification": {
         "verified": true,

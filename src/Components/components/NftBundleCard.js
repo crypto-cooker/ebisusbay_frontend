@@ -65,7 +65,7 @@ const MakeBuy = styled.div`
 `;
 
 const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, canBuy = true }) => {
-  const nftUrl = appUrl(`/collection/${nft.id}`);
+  const nftUrl = appUrl(`/collection/${nft.address}/${nft.id}`);
   const history = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -202,7 +202,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, canBuy = t
           <Flex direction="column" height="100%">
             <div className="card-img-container">
             <Slider size={nft.nfts?.length}>
-              {nft.nfts?.map((nft)=> (
+              {nft.nfts?.map((currentNft)=> (
                 <Box
                 _groupHover={{ transform: 'scale(1.05)', transition: '0.3s ease' }}
                 transition="0.3s ease"
@@ -211,38 +211,38 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, canBuy = t
                 {watermark ? (
                   <Watermarked watermark={watermark}>
                     <AnyMedia
-                      image={nftCardUrl(nft.address, nft.image)}
+                      image={nftCardUrl(currentNft.address, currentNft.image)}
                       className={`card-img-top ${imgClass}`}
-                      title={nft.title}
-                      url={`/collection/${nft.id}`}
+                      title={currentNft.title}
+                      url={nftUrl}
                       width={440}
                       height={440}
-                      video={nft.video ?? nft.animation_url}
+                      video={currentNft.video ?? currentNft.animation_url}
                       usePlaceholder={true}
                     />
                   </Watermarked>
                 ) : (
                   <AnyMedia
-                    image={nftCardUrl(nft.address, nft.image)}
+                    image={nftCardUrl(currentNft.address, currentNft.image)}
                     className={`card-img-top ${imgClass}`}
-                    title={nft.title}
-                    url={`/collection/${nft.id}`}
+                    title={currentNft.title}
+                    url={nftUrl}
                     width={440}
                     height={440}
-                    video={nft.video ?? nft.animation_url}
+                    video={currentNft.video ?? currentNft.animation_url}
                     usePlaceholder={true}
                   />
                 )}
               </Box>
               ))}
-              
+
             </Slider>
               </div>
             {nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{nft.rank}</div>}
             <div className="d-flex flex-column justify-content-between p-2 pb-1">
-              <Link href={`/collection/${nft.id}`}>
+              <Link href={nftUrl}>
                 <a>
-                  <Heading as="h6" size="sm" className="card-title mt-auto">{nft.title}</Heading>
+                  <Heading as="h6" size="sm" className="card-title mt-auto">{nft.name}</Heading>
                 </a>
               </Link>
               {getIsNftListed() && (
@@ -293,7 +293,6 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, canBuy = t
           isOpen={openMakeOfferDialog}
           onClose={() => setOpenMakeOfferDialog(false)}
           nft={nft}
-          collection={collection}
         />
       )}
     </>

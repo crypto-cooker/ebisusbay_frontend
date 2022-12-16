@@ -1,87 +1,82 @@
 import {
+  Badge,
   Box,
+  Button,
   Button as ChakraButton,
   Collapse,
-  Flex, 
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  HStack,
+  Image,
+  Input,
   Skeleton,
   Spacer,
   Stack,
   Text,
   useColorModeValue,
+  useNumberInput,
   VStack,
-
 } from "@chakra-ui/react";
 
-import React, { useCallback, useEffect, useState } from "react";
-import { AnyMedia } from "@src/Components/components/AnyMedia";
-import { ImageKitService } from "@src/helpers/image";
+import React, {useCallback, useEffect, useState} from "react";
+import {ImageKitService} from "@src/helpers/image";
 import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisH, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faTrash} from "@fortawesome/free-solid-svg-icons";
+import {useDispatch, useSelector} from "react-redux";
+import {toast} from "react-toastify";
 import {
   removeFromBatchListingCart,
-  updatePrice,
-  setApprovalBundle,
-  setExtrasBundle
+  setApproval,
+  setExtras,
+  update1155Quantity
 } from "@src/GlobalState/batchListingSlice";
-import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
-import { Contract, ethers } from "ethers";
-import { ERC721 } from "@src/Contracts/Abis";
-import { appConfig } from "@src/Config";
-import { caseInsensitiveCompare, createSuccessfulTransactionToastContent } from "@src/utils";
-
-import { getCollectionMetadata } from "@src/core/api";
-import { collectionRoyaltyPercent } from "@src/core/chain";
+import {Contract} from "ethers";
+import {ERC721} from "@src/Contracts/Abis";
+import {appConfig} from "@src/Config";
+import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
+import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {specialImageTransform} from "@src/hacks";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 
-const BundleDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, disabled }) => {
+const BundleDrawerItem = ({ item, disabled }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-  const [price, setPrice] = useState('');
+  const [quantity, setQuantity] = useState('');
   const [invalid, setInvalid] = useState(false);
 
   // Approvals
-  const extras = useSelector((state) => state.batchListing.extrasBundle[item.nft.address.toLowerCase()] ?? {});
-  const approvalStatus = extras.approval;
+  const extras = useSelector((state) => state.batchListing.extras[item.nft.address.toLowerCase()] ?? {});
+  const { approval: approvalStatus, canList } = extras;
   const [executingApproval, setExecutingApproval] = useState(false);
+  const [initializing, setInitializing] = useState(false);
 
   const handleRemoveItem = () => {
     dispatch(removeFromBatchListingCart(item.nft));
   };
 
-  const handlePriceChange = useCallback((e) => {
-    const newSalePrice = e.target.value;
-    if (numberRegexValidation.test(newSalePrice) || newSalePrice === '') {
-      setInvalid(false);
-      dispatch(updatePrice({ nft: item.nft, price: newSalePrice }));
-    } else {
-      setInvalid(true);
-    }
-  }, [dispatch, item.nft, price]);
-
   useEffect(() => {
-    setPrice(item.price);
-  }, [item.price]);
+    setQuantity(item.quantity);
+  }, [item.quantity]);
 
   const checkApproval = async () => {
     const contract = new Contract(item.nft.address, ERC721, user.provider.getSigner());
-    return await contract.isApprovedForAll(user.address, config.contracts.bundle);
+    return await contract.isApprovedForAll(user.address, config.contracts.market);
   };
 
   const approveContract = useCallback(async () => {
     try {
       setExecutingApproval(true);
       const contract = new Contract(item.nft.address, ERC721, user.provider.getSigner());
-      const tx = await contract.setApprovalForAll(config.contracts.bundle, true);
+      const tx = await contract.setApprovalForAll(config.contracts.market, true);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      dispatch(setApprovalBundle({ address: item.nft.address, status: true }));
+      dispatch(setApproval({ address: item.nft.address, status: true }));
 
     } catch (error) {
       if (error.data) {
@@ -99,23 +94,44 @@ const BundleDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, di
 
   useEffect(() => {
     async function func() {
-      if (!extras[item.nft.address.toLowerCase()]) {
-        const extrasBundle = { address: item.nft.address };
+      try {
+        setInitializing(true);
+        if (!extras[item.nft.address.toLowerCase()]) {
+          const extras = { address: item.nft.address };
 
-        extrasBundle.approval = await checkApproval();
+          extras.approval = await checkApproval();
+          extras.canList = !item.nft.isStaked;
 
-        const metadata = await getCollectionMetadata(item.nft.address);
-        if (metadata.collections.length > 0) {
-          extrasBundle.floorPrice = metadata.collections[0].floorPrice;
+          dispatch(setExtras(extras));
         }
-
-        extrasBundle.royalty = await collectionRoyaltyPercent(item.nft.address, item.nft.id);
-
-        dispatch(setExtrasBundle(extrasBundle));
+      } finally {
+        setInitializing(false);
       }
     }
     func();
   }, []);
+
+  const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
+    useNumberInput({
+      step: 1,
+      defaultValue: 1,
+      min: 1,
+      max: 10,
+      precision: 0,
+      isDisabled: disabled,
+      onChange(valueAsString, valueAsNumber) {
+        const newQuantity = valueAsNumber;
+        if (numberRegexValidation.test(newQuantity) || newQuantity === '') {
+          setInvalid(false);
+          dispatch(update1155Quantity({ nft: item.nft, quantity: newQuantity }));
+        } else {
+          setInvalid(true);
+        }
+      }
+    })
+  const inc = getIncrementButtonProps()
+  const dec = getDecrementButtonProps()
+  const input = getInputProps()
 
   return (
     <Box
@@ -130,21 +146,59 @@ const BundleDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, di
           height={50}
           style={{ borderRadius: '20px' }}
         >
-          <AnyMedia
-            image={ImageKitService.buildAvatarUrl(item.nft.image)}
-            title={item.nft.name}
-            usePlaceholder={false}
-            className="img-rounded-8"
-          />
+          {isBundle(item.nft.address) ? (
+            <Image
+              src={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')}
+              alt={item.nft.name}
+              rounded="md"
+            />
+          ) : (
+            <AnyMedia
+              image={specialImageTransform(item.nft.address, ImageKitService.buildAvatarUrl(item.nft.image))}
+              title={item.nft.name}
+              usePlaceholder={true}
+              className="img-fluid img-rounded-5"
+            />
+          )}
         </Box>
         <Box flex='1' ms={2} fontSize="14px">
           <VStack align="left" spacing={0}>
             <Link href={`/collection/${item.nft.address}/${item.nft.id}`}>
               <Text fontWeight="bold" noOfLines={1} cursor="pointer">{item.nft.name}</Text>
             </Link>
-            <Skeleton isLoaded={typeof approvalStatus === 'boolean'}>
+            <Skeleton isLoaded={!initializing}>
               {approvalStatus ? (
-                <></>
+                <>
+                  {isBundle(item.nft.address) ? (
+                    <Box>
+                      <Badge variant='outline' colorScheme='red'>
+                        Can't Nest Bundles
+                      </Badge>
+                    </Box>
+                  ) : (!canList) ? (
+                    <Box>
+                      <Badge variant='outline' colorScheme='red'>
+                        Not Listable
+                      </Badge>
+                    </Box>
+                  ) : (item.nft.multiToken) && (
+                    <FormControl isInvalid={invalid}>
+                      <Stack direction="row">
+                        <HStack>
+                          <Text>Qty:</Text>
+                          <Button size="xs" {...dec}>-</Button>
+                          <Input
+                            placeholder="Enter Quantity"
+                            size="xs"
+                            {...input}
+                          />
+                          <Button size="xs" {...inc}>+</Button>
+                        </HStack>
+                      </Stack>
+                      <FormErrorMessage fontSize='xs' mt={1}>Enter a valid number.</FormErrorMessage>
+                    </FormControl>
+                  )}
+                </>
               ) : (
                 <ChakraButton
                   size='xs'

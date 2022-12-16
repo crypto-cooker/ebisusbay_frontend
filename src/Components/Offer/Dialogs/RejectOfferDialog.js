@@ -10,7 +10,7 @@ import {specialImageTransform} from "@src/hacks";
 import {useSelector} from "react-redux";
 import {toast} from "react-toastify";
 import * as Sentry from "@sentry/react";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
 import {
   Modal,
@@ -22,6 +22,7 @@ import {
   ModalOverlay
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
+import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
 
 export const RejectOfferDialog = ({onClose, isOpen, collection, isCollectionOffer, nft, offer}) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -85,6 +86,8 @@ export const RejectOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
                       )}
                       </div>
                     </div>
+                  ) : isBundle(nft.address ?? nft.nftAddress) ? (
+                    <ImagesContainer nft={nft} />
                   ) : (
                     <AnyMedia
                       image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}

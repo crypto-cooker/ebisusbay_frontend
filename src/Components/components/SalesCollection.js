@@ -1,16 +1,17 @@
-import React, { memo, useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { init, fetchListings, filterListings, sortListings, searchListings } from '../../GlobalState/marketplaceSlice';
+import React, {memo, useCallback, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchListings, filterListings, init, searchListings, sortListings} from '@src/GlobalState/marketplaceSlice';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Spinner, Table } from 'react-bootstrap';
-import { SortOption } from '../Models/sort-option.model';
-import { debounce, shortAddress, timeSince } from '../../utils';
+import {Spinner, Table} from 'react-bootstrap';
+import {SortOption} from '../Models/sort-option.model';
+import {debounce, isBundle, shortAddress, timeSince} from '@src/utils';
 import Link from 'next/link';
-import { ethers } from 'ethers';
+import {ethers} from 'ethers';
 import TopFilterBar from './TopFilterBar';
-import { marketPlaceCollectionFilterOptions } from './constants/filter-options';
-import { sortOptions } from './constants/sort-options';
+import {marketPlaceCollectionFilterOptions} from './constants/filter-options';
+import {sortOptions} from './constants/sort-options';
 import {MarketFilters} from "../Models/market-filters.model";
+import {ImageKitService} from "@src/helpers/image";
 
 const SalesCollection = ({
   showLoadMore = true,
@@ -186,12 +187,21 @@ const SalesCollection = ({
                   <td style={{ minWidth: '50px' }}>
                     <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
                       <a>
-                        <img
-                          className="lazy rounded"
-                          src={listing.nft.image}
-                          alt={listing.nft.name}
-                          style={{ maxHeight: '75px' }}
-                        />
+                        {isBundle(listing.nftAddress) ? (
+                          <img
+                            className="lazy rounded"
+                            src={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')}
+                            alt={listing.nft.name}
+                            style={{ maxHeight: '75px' }}
+                          />
+                        ) : (
+                          <img
+                            className="lazy rounded"
+                            src={listing.nft.image}
+                            alt={listing.nft.name}
+                            style={{ maxHeight: '75px' }}
+                          />
+                        )}
                       </a>
                     </Link>
                   </td>

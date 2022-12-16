@@ -92,7 +92,8 @@
     },
     "collections": [
       "0xEa1635a0E9344d933DF42c0Fd494d39bcE865Dc4",
-      "0xE3D53fb80c8Cda7Bb9B7207cb6B186172BD323cf"
+      "0xE3D53fb80c8Cda7Bb9B7207cb6B186172BD323cf",
+      "0x1BFE61949C261B48F55668fCe67252D07fbd298c"
     ],
     "socials": {
       "website": "https://crypto.com/nft/",
@@ -138,7 +139,8 @@
       "0x86aabe05e885108a8797314e817488c26f0601a1",
       "0xa072bB6F648a4271ba9CbaF1319Fc373eF907f29",
       "0x500cdf7a96a612BEb9e018035a3E89180a6732fE",
-      "0x70D3ee9b000f9210C1Ce1bD2A80cBAEBe209aeb7"
+      "0x70D3ee9b000f9210C1Ce1bD2A80cBAEBe209aeb7",
+      "0x8fb4483d92c045336974c4f8c96ad9b1fae8ac64"
     ],
     "socials": {
       "website": "https://dgpals.io/",
@@ -178,32 +180,6 @@
     "style": {}
   },
   {
-    "slug": "trooprz",
-    "name": "Trooprz",
-    "description": "Trooprz have got your back",
-    "images": {
-      "banner": "/img/collections/trooprz/banner.jpeg"
-    },
-    "collections": [
-      "0x51112Bf32B9a1C64716DF2e6b82e63a04Bd384Fd",
-      "0xea4DF145322ec9dFCE037b062b08083141c6af8f",
-      "0xbabdFDD5f88035C9FbA58Be1b5c76DcFC6A847f3",
-      "0x96628048830a499b156aBdC04cC169C18c3A17f2",
-      "0xB82F6B5a4491D38292DFCd6706aa12DD5701D7e2",
-      "0xA35f40e45FFF953F477700C83D550D35F11B42aB",
-      "0x2FfF5FE8a3e13A10509E4297DF9d1fdaF1eE7DC4",
-      "0xEB54ea91C92Ce404Ba7AD7B0EF2e36fD75C889A7"
-    ],
-    "socials": {
-      "website": "https://trooprz.army/",
-      "twitter": "https://twitter.com/trooprzarmy",
-      "discord": "https://discord.gg/trooprz"
-    },
-    "featured": true,
-    "categories": [],
-    "style": {}
-  },
-  {
     "slug": "boomer-squad",
     "name": "Boomer Squad",
     "description": "Collection of 8008 Boomers using crypto in the only way they know how. Everyone has felt like our Boomers at some point in their crypto journey but just like everyone else they will figure it out eventually. Founded by a fully doxed team of 11, Boomer Squad was established to build an ecosystem of on chain games, events, collections, and ecosystem developments that reflects value back to our Gen 0 Boomers through our Verified Distribution Contract called the \"Mattress Fund\" and Boomer DAO. Check out our GitBook for a full breakdown of everything already established and in the works in our ecosystem",
@@ -236,31 +212,6 @@
     "style": {}
   },
   {
-    "slug": "argonauts",
-    "name": "Argonauts",
-    "description": "The Argonauts brand features various NFT collections under the NFT arm of Argo Finance. At it's core, the Argonauts collection is a collection of 8,888 unique utility-enabled characters that represents your unique identity on the Cronos chain. The Argonauts will be the centrepiece of Argo, providing users with massive utility across the suite of Argo products.",
-    "images": {
-      "banner": "/img/collections/argonauts/banner.webp"
-    },
-    "collections": [
-      "0xa996aD2b9f240F78b063E47F552037658c4563d1",
-      "0x8ac06d8CF5B371bf57723C050C1969f0f23Dbf98",
-      "0xc3cf2416a69351bf336ff671ad46d92efee4ea75",
-      "0x0A37674F61a9345f32E277b15E3C9603cDe710f6",
-      "0xb67A1DE71c8506e4b6326d2a01c421F831b9754d"
-    ],
-    "socials": {
-      "website": "https://www.argofinance.money/nft",
-      "twitter": "https://twitter.com/ArgoProtocol",
-      "discord": "https://discord.gg/argofinance",
-      "medium": "https://argofinance.medium.com",
-      "telegram": "https://t.me/Argo_Finance"
-    },
-    "featured": true,
-    "categories": [],
-    "style": {}
-  },
-  {
     "slug": "cronos-primate-business",
     "name": "Cronos Primate Business",
     "description": "3 generations of uniquely generated primates that make up the Primate World. The original Cronos Primate Business is a collection of 1000 primates that sold out in two minutes. The Primates along with Gorillas and Corrupted give staking, raffles, giveaways and more.\n\nCrotopia is the Metaverse being built by Cronos Primate Business. The OG pass is your key to the metaverse and includes free skin airdrops for life.",
@@ -280,6 +231,58 @@
       "twitter": "https://twitter.com/PrimateCronos",
       "discord": "https://discord.gg/X4shERMUwf",
       "medium": "https://medium.com/cronos-monkey-business"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "trooprz",
+    "name": "Trooprz",
+    "description": "Trooprz have got your back",
+    "images": {
+      "banner": "/img/collections/trooprz/banner.jpeg"
+    },
+    "collections": [
+      "0x51112Bf32B9a1C64716DF2e6b82e63a04Bd384Fd",
+      "0xea4DF145322ec9dFCE037b062b08083141c6af8f",
+      "0xbabdFDD5f88035C9FbA58Be1b5c76DcFC6A847f3",
+      "0x96628048830a499b156aBdC04cC169C18c3A17f2",
+      "0xB82F6B5a4491D38292DFCd6706aa12DD5701D7e2",
+      "0xA35f40e45FFF953F477700C83D550D35F11B42aB",
+      "0x2FfF5FE8a3e13A10509E4297DF9d1fdaF1eE7DC4",
+      "0xEB54ea91C92Ce404Ba7AD7B0EF2e36fD75C889A7",
+      "0x0CE3caE72F40d842e7019e944E78845a08508Cca"
+    ],
+    "socials": {
+      "website": "https://trooprz.army/",
+      "twitter": "https://twitter.com/trooprzarmy",
+      "discord": "https://discord.gg/trooprz"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "argonauts",
+    "name": "Argonauts",
+    "description": "The Argonauts brand features various NFT collections under the NFT arm of Argo Finance. At it's core, the Argonauts collection is a collection of 8,888 unique utility-enabled characters that represents your unique identity on the Cronos chain. The Argonauts will be the centrepiece of Argo, providing users with massive utility across the suite of Argo products.",
+    "images": {
+      "banner": "/img/collections/argonauts/banner.webp"
+    },
+    "collections": [
+      "0xa996aD2b9f240F78b063E47F552037658c4563d1",
+      "0x8ac06d8CF5B371bf57723C050C1969f0f23Dbf98",
+      "0xc3cf2416a69351bf336ff671ad46d92efee4ea75",
+      "0x0A37674F61a9345f32E277b15E3C9603cDe710f6",
+      "0xb67A1DE71c8506e4b6326d2a01c421F831b9754d"
+    ],
+    "socials": {
+      "website": "https://www.argofinance.money/nft",
+      "twitter": "https://twitter.com/ArgoProtocol",
+      "discord": "https://discord.gg/argofinance",
+      "medium": "https://argofinance.medium.com",
+      "telegram": "https://t.me/Argo_Finance"
     },
     "featured": true,
     "categories": [],
@@ -334,24 +337,74 @@
     "style": {}
   },
   {
-    "slug": "baby-alien-division",
-    "name": "Baby Alien Division",
-    "description": "",
+    "slug": "undead-community",
+    "name": "Undead Community",
+    "description": "The mission of The Undead Community is to create ever-lasting and essential solutions, tailored to Cryptocurrency and Non Fungible Tokens. Through providing a variety of products, tools, and services, to help users achieve their personal goals, The Undead Community is accelerating the world's transition to Blockchain Technology.",
     "images": {
-      "banner": "/img/collections/babyaliendivision/spaceships/banner.webp"
+      "banner": "/img/brands/undead-community/banner.webp",
+      "preview": "/img/brands/undead-community/preview.webp"
     },
     "collections": [
+      "0x40d6eFB6e54EC951301c1508620A6Acb5Fd432A8",
+      "0x5DA0c6A68e7C348664664F1546B9BaAA493E8C73",
+      "0xb4572Ee948Ee2E1838632479ACb12b78098edE35",
+      "0x542055b71f0a3060e97F2aa293bA4E08c4e0d103"
+    ],
+    "socials": {
+      "website": "https://undeadcommunity.com",
+      "twitter": "https://twitter.com/WeRtheUndead ",
+      "discord": "https://discord.gg/undeadcommunity"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "cro-homes",
+    "name": "CRO Homes",
+    "description": "Your place in the Metaverse",
+    "images": {
+      "banner": "/img/collections/cro-homes/banner.webp"
+    },
+    "collections": [
+      "0x59b554B12B80cAc8629Bf541a2D6359639AF2A63",
+      "0x5F4e5C60955E71A5FD7cE31d366421262caA5FC7",
+      "0xBA51Cbe289c808B2Da3ef51DdF617076A49A0eA8"
+    ],
+    "socials": {
+      "website": "https://cro.homes",
+      "twitter": "https://twitter.com/CROHomesNFT",
+      "discord": "https://discord.gg/crohomes",
+      "medium": "https://medium.com/@CROHomes"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "baby-alien-division",
+    "name": "Baby Alien Division",
+    "description": "BAD (Baby Alien Division) is a collection of mischievous aliens crossing the galaxy in adventure, war, turmoil, triumph, silliness, and growth. Follow along their journey and get involved - staking, charity work, giveaways, community, metaverse fun, and rich storytelling.",
+    "images": {
+      "banner": "/img/brands/baby-alien-division/banner.webp",
+      "preview": "/img/brands/baby-alien-division/preview.webp"
+    },
+    "collections": [
+      "0xB340c91182b9fF831bB36232cB3296eD306c79B2",
+      "0x11984C500B477e83891f7cDb4246734387764E20",
       "0xbe5F02b6fD5C1e714f0bdd28B6a119827D8b6c61",
       "0x1A8C07dd1933433cDdBE3123b583695AE3C56b9b",
       "0x4E6795D725e26E340865140a870C25d1e413A118",
       "0xA217d6feEf38F9f2D139300E0C4adF42cf96F4C3",
-      "0xd7eEc30A764B3Eed788e93de9fc69b432Dd54d16"
+      "0xd7eEc30A764B3Eed788e93de9fc69b432Dd54d16",
+      "0xA3a4104B2A429b3A33Ac1304371E2eEf6E6aF44B"
     ],
     "socials": {
       "website": "https://badaliens.io/",
-      "twitter": "https://twitter.com/BAD_Cronos",
-      "discord": "https://discord.gg/qKBy2azf69",
-      "medium": "https://medium.com/@babyaliendivision"
+      "twitter": "https://twitter.com/BAD__nfts",
+      "discord": "https://discord.gg/badaliens",
+      "instagram": "https://www.instagram.com/babyaliendivision"
+
     },
     "featured": true,
     "categories": [],
@@ -368,6 +421,7 @@
       "0xd79a37824bD86e4E945e8385480de3c45B7e5B08",
       "0x776BeF0d43Acdc2b49c6885C6d15F9A5308252b2",
       "0xDa997f6c50306F886ce730B65bb1BFc977B89e8D",
+      "0x89679300771B8E54bD13D1c0a9031E3f3BaD71eF",
       "0x7d24acf59b211904c9713c9d901643e20fc81904",
       "0x56Db07fB1F560c2486527Da02c2fF1D276C2aec4",
       "0x69B0F59900E123Ad5D3AA37BB022fDe32A4d24B0",
@@ -424,7 +478,6 @@
       "twitter": "https://www.twitter.com/croodleape",
       "discord": "https://discord.gg/Tj97K4c4Y9"
     },
-    "featured": true,
     "categories": [],
     "style": {}
   },
@@ -446,6 +499,29 @@
       "discord": "https://discord.gg/Tdd9TZRMxn",
       "medium": "https://hello-143.gitbook.io/lost-toys-nft/",
       "instagram": "https://www.instagram.com/losttoysnft/"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "crougar-kingdom",
+    "name": "CROugar Kingdom",
+    "description": "A fun and engaging Discord-focused community! Providing long-term value to our holders through a number of initiatives both on and off the Blockchain!",
+    "images": {
+      "banner": "/img/brands/crougar-kingdom/banner.webp",
+      "preview": "/img/brands/crougar-kingdom/preview.webp"
+    },
+    "collections": [
+      "0xdCcCEd571dcbC82Bbeadf95Af20ee4442E21208C",
+      "0x45958Cb5ede8dc9E1a797C1526D4523db1471F15",
+      "0xE97e0636abA2A02E7aB523fc6dE726C3525DBc39"
+    ],
+    "socials": {
+      "website": "https://crougarkingdom.com",
+      "twitter": "https://www.twitter.com/CROugarKingdom",
+      "discord": "https://discord.gg/crougarkingdom",
+      "medium": "https://medium.com/@crougar"
     },
     "featured": true,
     "categories": [],
@@ -508,7 +584,9 @@
       "0xe0afa67d7E4F2329f81562DB9318837A28be83Ec",
       "0xD717708d012dCa8C3d108BD1E079f937C4A2C0cF",
       "0x7781b08298d7EDD97354989307A37cFd79BeB175",
-      "0x384A13ca5eA3BF799387DAf3dB0140AE66a7f3f0"
+      "0x384A13ca5eA3BF799387DAf3dB0140AE66a7f3f0",
+      "0x4Ba5b1094455D1C8bDCcD534F5053DED02477b50",
+      "0xDaFab3c3EdA8029C881986B30EFCBd1d32523a4e"
     ],
     "socials": {
       "website": "https://carkayous.com/",
@@ -531,7 +609,8 @@
       "0x28238122BECBE1D727F2D23631eD83d6cbe833Bc",
       "0x1C7F4fE849e52B013242CDCb0C88f6A3c2Ea28aF",
       "0x44aa4cB2efF7167A306449EDe9b550e57Ca33036",
-      "0x51eaf8c081Cca683A5542c438f9429CE46D238e4"
+      "0x51eaf8c081Cca683A5542c438f9429CE46D238e4",
+      "0x72c97F79867219381EFA83127534710D559a2220"
     ],
     "socials": {
       "website": "https://daogames.online/",
@@ -560,6 +639,73 @@
       "discord": "https://discord.gg/fnVzKYPbg/",
       "telegram": "https://t.me/BabyHopToken"
     },
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "crofam-ladies",
+    "name": "CrofamLadies",
+    "description": "The beautiful side of #crofam.",
+    "images": {
+      "banner": "/img/brands/crofam-ladies/banner.webp"
+    },
+    "collections": [
+      "0xF5aF7B3C142aB5545717C7fB6a0Da8fBF6E68612",
+      "0x7D8f0a2b275C0b22720A6Fc3b5a65AF84D9C55C5"
+    ],
+    "socials": {
+      "website": "https://crofamladies.netlify.app/",
+      "twitter": "https://www.twitter.com/CrofamLadies",
+      "discord": "https://discord.gg/4ZwwXghGEj"
+    },
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "badmeerkat",
+    "name": "BadMeerkat",
+    "description": "3 Fan Art collection of MadMeerkat \uD83C\uDD95 Traits \uD83C\uDD95 Personality \uD83D\uDFF0 Degen",
+    "images": {
+      "banner": "/img/brands/badmeerkat/banner.webp",
+      "preview": "/img/brands/badmeerkat/preview.webp"
+    },
+    "collections": [
+      "0x22B2f2223d26f27c27494efbF4E6646812193a43",
+      "0xdc9B6e10E0648E2258afe6705690C1E81cf933d7",
+      "0x302789418f6A5DfDe9faB3b8FE9Bc4EEe020E84F"
+    ],
+    "socials": {
+      "website": "https://linktr.ee/badmeerkat",
+      "twitter": "https://twitter.com/badmeerkatnft",
+      "discord": "https://discord.gg/wcJ4vvZb4H"
+    },
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "barbara-redekop",
+    "name": "Barbara Redekop",
+    "description": "Hi, I’m Barbara Redekop! I’m creating art with the goal of making dark days a little brighter. After working in a variety of traditional media, I eventually began using digital tools and entered the NFT space in 2021.",
+    "images": {
+      "banner": "/img/brands/barbara-redekop/banner.webp",
+      "preview": "/img/brands/barbara-redekop/preview.webp"
+    },
+    "collections": [
+      "0x3Bf0a68a03fE82A5D21445f3a2306bB012dd50D9",
+      "0xf518f16F6611f0B7a51496cfCBA2Ed954Ec81112",
+      "0xd036b2223bcc2A96164B023022D6b78CD71A1a12",
+      "0x574677Ae4d09f8FcD4aa347E8905ccA7e18a4ca0",
+      "0x7a321568dc6dF06acEc39C09eFEf97fAd17eEF35",
+      "0x53068FcC2e233995088590e705AAb112e24e4993",
+      "0xe6f571551dcc680E789925117Aeb8C183E83295b"
+    ],
+    "socials": {
+      "website": "https://crypto.com/nft/profile/vredekop",
+      "twitter": "https://www.twitter.com/BarbaraRedekop",
+      "discord": "https://discord.gg/khRfPKDFwg",
+      "instagram": "https://www.instagram.com/im_barbara_redekop"
+    },
+    "featured": true,
     "categories": [],
     "style": {}
   }

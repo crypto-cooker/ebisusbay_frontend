@@ -10,7 +10,7 @@ import {specialImageTransform} from "@src/hacks";
 import {useSelector} from "react-redux";
 import {toast} from "react-toastify";
 import * as Sentry from "@sentry/react";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
 import {
   Modal,
@@ -22,6 +22,7 @@ import {
   ModalOverlay
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
+import ImagesContainer from "../../Bundle/ImagesContainer";
 
 export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffer, nft, offer}) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -34,7 +35,7 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
 
     try {
       setExecutingCancelOffer(true);
-      Sentry.captureEvent({message: 'handleCancelOffer', extra: {address: collection.address}});
+      Sentry.captureEvent({message: 'handleCancelOffer', extra: {address: nft.address ?? nft.nftAddress}});
       let tx;
       if (isCollectionOffer) {
         tx = await offerContract.cancelCollectionOffer(offer.nftAddress, offer.offerIndex);
@@ -80,13 +81,15 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
                       {collection.metadata.avatar ? (
                         <img src={hostedImage(collection.metadata.avatar)} alt={collection.name} />
                       ) : (
-                        <Blockies seed={collection.address.toLowerCase()} size={15} scale={10} />
+                        <Blockies seed={(nft.address ?? nft.nftAddress).toLowerCase()} size={15} scale={10} />
                       )}
                       {collection.metadata.verified && (
                         <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={8} stackClass="eb-avatar_badge" />
                       )}
                       </div>
                     </div>
+                  ) : isBundle(nft.address ?? nft.nftAddress) ? (
+                    <ImagesContainer nft={nft} />
                   ) : (
                     <AnyMedia
                       image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
@@ -99,10 +102,12 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
                   )}
                 </div>
                 <div className="col-12 col-sm-6">
-                  <div>
-                    <div className="text-muted">Collection</div>
-                    <div className="fw-bold">{collection.name}</div>
-                  </div>
+                  {!!collection && (
+                    <div>
+                      <div className="text-muted">Collection</div>
+                      <div className="fw-bold">{collection.name}</div>
+                    </div>
+                  )}
                   {!isCollectionOffer && (
                     <div className="mt-2">
                       <div className="text-muted">NFT</div>

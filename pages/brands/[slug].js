@@ -83,7 +83,7 @@ const Brand = ({ brand, collections, stats }) => {
               {brand.description}
             </Text>
             {isClippingDescription && !viewMore && (
-              <Button size="xs" colorScheme="blue" onClick={() => setViewMore(true)}>
+              <Button size="xs" colorScheme="blue" variant="link" onClick={() => setViewMore(true)}>
                 View More
               </Button>
             )}
@@ -132,19 +132,19 @@ const Brand = ({ brand, collections, stats }) => {
                     <WrapItem>
                       <Stat size="sm">
                         <StatLabel fontSize="xs">Active</StatLabel>
-                        <StatNumber>{siPrefixedNumber(collection.stats.total.active)}</StatNumber>
+                        <StatNumber>{siPrefixedNumber(collection.stats.total.active, 4)}</StatNumber>
                       </Stat>
                     </WrapItem>
                     <WrapItem>
                       <Stat size="sm">
                         <StatLabel fontSize="xs">Sales</StatLabel>
-                        <StatNumber>{siPrefixedNumber(collection.stats.total.complete)}</StatNumber>
+                        <StatNumber>{siPrefixedNumber(collection.stats.total.complete, 4)}</StatNumber>
                       </Stat>
                     </WrapItem>
                     <WrapItem>
                       <Stat size="sm">
                         <StatLabel fontSize="xs">Volume</StatLabel>
-                        <StatNumber>{siPrefixedNumber(collection.stats.total.volume)}</StatNumber>
+                        <StatNumber>{siPrefixedNumber(collection.stats.total.volume, 4)}</StatNumber>
                       </Stat>
                     </WrapItem>
                   </Wrap>

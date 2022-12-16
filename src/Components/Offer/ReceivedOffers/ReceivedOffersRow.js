@@ -113,7 +113,8 @@ export default function TableRow({ data, type }) {
 
   const [offerType, setOfferType] = useState(OFFER_TYPE.none);
   const handleOffer = (type) => {
-    dispatch(getNftDetails(nftAddress, nftId));
+    // @todo replace with standalone NFT retrieval in dialog itself
+    if (nftId) dispatch(getNftDetails(nftAddress, nftId));
     setOfferType(type);
   };
 

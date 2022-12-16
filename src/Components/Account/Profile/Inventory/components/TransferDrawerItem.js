@@ -1,34 +1,19 @@
 import {useDispatch, useSelector} from "react-redux";
-import {
-  Badge,
-  Box, Collapse,
-  Flex,
-  FormControl, FormErrorMessage,
-  Input,
-  Menu,
-  MenuButton, MenuItem, MenuList,
-  Skeleton, Spacer,
-  Stack,
-  Text,
-  useColorModeValue,
-  VStack
-} from "@chakra-ui/react";
+import {Badge, Box, Flex, Image, Skeleton, Text, useColorModeValue, VStack} from "@chakra-ui/react";
 import React, {useCallback, useEffect, useState} from "react";
-import {removeFromBatchListingCart, setApproval, setExtras, updatePrice} from "@src/GlobalState/batchListingSlice";
+import {removeFromBatchListingCart, setApproval, setExtras} from "@src/GlobalState/batchListingSlice";
 import {Contract} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
-import {getCollectionMetadata} from "@src/core/api";
-import {collectionRoyaltyPercent} from "@src/core/chain";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
 import {ImageKitService} from "@src/helpers/image";
 import Link from "next/link";
 import {Button as ChakraButton} from "@chakra-ui/button";
-import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEllipsisH, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import {appConfig} from "@src/Config";
+import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {specialImageTransform} from "@src/hacks";
 
 const config = appConfig();
 
@@ -107,12 +92,20 @@ export const TransferDrawerItem = ({ item }) => {
           height={50}
           style={{ borderRadius: '20px' }}
         >
-          <AnyMedia
-            image={ImageKitService.buildAvatarUrl(item.nft.image)}
-            title={item.nft.name}
-            usePlaceholder={false}
-            className="img-rounded-8"
-          />
+          {isBundle(item.nft.address) ? (
+            <Image
+              src={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')}
+              alt={item.nft.name}
+              rounded="md"
+            />
+          ) : (
+            <AnyMedia
+              image={specialImageTransform(item.nft.address, ImageKitService.buildAvatarUrl(item.nft.image))}
+              title={item.nft.name}
+              usePlaceholder={true}
+              className="img-fluid img-rounded-5"
+            />
+          )}
         </Box>
         <Box flex='1' ms={2} fontSize="14px">
           <VStack align="left" spacing={0}>

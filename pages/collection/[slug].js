@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Collection1155 from '../../src/Components/Collection/collection1155';
 import Collection721 from '../../src/Components/Collection/collection721';
-import {caseInsensitiveCompare, isAddress, isCollection} from '@src/utils';
+import {caseInsensitiveCompare, isAddress, isBundle, isCollection} from '@src/utils';
 import {appConfig} from "@src/Config";
 import PageHead from "../../src/Components/Head/PageHead";
 import {hostedImage} from "@src/helpers/image";
@@ -103,6 +103,8 @@ export const getServerSideProps = async ({ params, query }) => {
   if (collection.slug === 'vip-founding-member') collection.id = 2;
   if (collection.slug === 'weird-apes-club') collection.mergedAddresses = ['0x7D5f8F9560103E1ad958A6Ca43d49F954055340a'];
   if (collection.slug === 'weird-apes-club-v1') collection.mergedWith = ['0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44'];
+  if (collection.slug === 'cronos-apes') collection.mergedAddresses = ['0x5Cb9a12d31CF751ACc58B12B47cc4E093A6AB580'];
+  if (collection.slug === 'degen-ape-cronos-club') collection.mergedAddresses = ['0x47C4184a9c5Ad620D5243c850A33833a3Cd010f5'];
 
   const activeDrop = appConfig('drops')
     .find((drop) => !!collection.address && caseInsensitiveCompare(collection.address, drop.address) && !drop.complete);

@@ -6,7 +6,7 @@ import Button from "@src/Components/components/Button";
 import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
 import {appConfig} from "@src/Config";
 import Offer from "@src/Contracts/Offer.json";
 import Market from "@src/Contracts/Marketplace.json";
@@ -29,6 +29,7 @@ import {
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
 import {getCollection, getCollections} from "@src/core/api/next/collectioninfo";
+import ImagesContainer from "../../Bundle/ImagesContainer";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -209,14 +210,18 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
             <ModalBody>
               <div className="nftSaleForm row gx-3">
                 <div className="col-12 col-sm-6 mb-2 mb-sm-0">
-                  <AnyMedia
-                    image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
-                    video={nft.video ?? nft.animation_url}
-                    videoProps={{ height: 'auto', autoPlay: true }}
-                    title={nft.name}
-                    usePlaceholder={false}
-                    className="img-fluid img-rounded"
-                  />
+                  {isBundle(nft.address ?? nft.nftAddress) ? (
+                    <ImagesContainer nft={nft} />
+                  ) : (
+                    <AnyMedia
+                      image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
+                      video={nft.video ?? nft.animation_url}
+                      videoProps={{ height: 'auto', autoPlay: true }}
+                      title={nft.name}
+                      usePlaceholder={false}
+                      className="img-fluid img-rounded"
+                    />
+                  )}
                 </div>
                 <div className="col-12 col-sm-6">
                   {existingOffer && (
@@ -288,14 +293,16 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
                   <div className="text-center my-3" style={{fontSize: '14px'}}>
                     Offer amount will be held in escrow until the offer is either accepted, rejected, or cancelled
                   </div>
-                  <div>
-                    <h3 className="feeTitle">Fees</h3>
-                    <hr />
-                    <div className="fee">
-                      <span>Royalty Fee: </span>
-                      <span>{royalty} %</span>
+                  {!isBundle(nft.address ?? nft.nftAddress) && (
+                    <div>
+                      <h3 className="feeTitle">Fees</h3>
+                      <hr />
+                      <div className="fee">
+                        <span>Royalty Fee: </span>
+                        <span>{royalty} %</span>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </ModalBody>

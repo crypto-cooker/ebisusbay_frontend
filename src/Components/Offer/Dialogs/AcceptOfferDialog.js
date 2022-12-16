@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {specialImageTransform} from "@src/hacks";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
@@ -10,9 +10,8 @@ import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {ERC721} from "@src/Contracts/Abis";
-import {createSuccessfulTransactionToastContent, isNftBlacklisted} from "@src/utils";
+import {createSuccessfulTransactionToastContent, isBundle, isNftBlacklisted} from "@src/utils";
 import {appConfig} from "@src/Config";
-import Market from "@src/Contracts/Marketplace.json";
 import * as Sentry from '@sentry/react';
 import {getQuickWallet} from "@src/core/api/endpoints/wallets";
 import Select from "react-select";
@@ -29,6 +28,8 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import {commify} from "ethers/lib/utils";
+import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
+import {ImageKitService} from "@src/helpers/image";
 
 const config = appConfig();
 const floorThreshold = 5;
@@ -91,7 +92,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
       }
 
       if (isCollectionOffer) {
-        const walletNfts = await getQuickWallet(user.address, {collection: collection.address});
+        const walletNfts = await getQuickWallet(user.address, {collection: collection.address, pageSize: 1000});
         setCollectionNfts(walletNfts.data.filter((nft) => !isNftBlacklisted(nft.address ?? nft.nftAddress, nft.id ?? nft.nftId)));
         await chooseCollectionNft(walletNfts.data[0])
       } else {
@@ -218,6 +219,8 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
                       initialNft={chosenCollectionNft}
                       onSelect={(n) => chooseCollectionNft(n)}
                     />
+                  ) : isBundle(nft.address ?? nft.nftAddress) ? (
+                    <ImagesContainer nft={nft} />
                   ) : (
                     <AnyMedia
                       image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
@@ -411,9 +414,15 @@ const NftPicker = ({collectionAddress, nfts, onSelect, initialNft}) => {
 
   return (
     <>
-      <ImageContainer className="mx-auto">
-        <img src={specialImageTransform(collectionAddress, chosenNft.image)} alt={chosenNft.name} />
-      </ImageContainer>
+      {isBundle(chosenNft.nftAddress) ? (
+        <ImageContainer className="mx-auto">
+          <img src={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')} alt={chosenNft.name} />
+        </ImageContainer>
+      ) : (
+        <ImageContainer className="mx-auto">
+          <img src={specialImageTransform(collectionAddress, chosenNft.image)} alt={chosenNft.name} />
+        </ImageContainer>
+      )}
       <h3 className="feeTitle mt-2">Choose NFT</h3>
       <Select
         menuPlacement="top"

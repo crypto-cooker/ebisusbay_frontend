@@ -14,9 +14,8 @@ import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {ERC721} from "@src/Contracts/Abis";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
 import {appConfig} from "@src/Config";
-import Market from "@src/Contracts/Marketplace.json";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import * as Sentry from '@sentry/react';
 import {collectionRoyaltyPercent} from "@src/core/chain";
@@ -30,6 +29,7 @@ import {
   ModalOverlay
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
+import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
 import useCreateGaslessListing from '../Account/Settings/hooks/useCreateGaslessListing';
 
 const config = appConfig();
@@ -271,14 +271,18 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
             <ModalBody>
               <div className="nftSaleForm row gx-3">
                 <div className="col-12 col-sm-6 mb-2 mb-sm-0">
-                  <AnyMedia
-                    image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
-                    video={nft.video ?? nft.animation_url}
-                    videoProps={{ height: 'auto', autoPlay: true }}
-                    title={nft.name}
-                    usePlaceholder={false}
-                    className="img-fluid img-rounded"
-                  />
+                  {isBundle(nft.address ?? nft.nftAddress) ? (
+                    <ImagesContainer nft={nft} />
+                  ) : (
+                    <AnyMedia
+                      image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
+                      video={nft.video ?? nft.animation_url}
+                      videoProps={{ height: 'auto', autoPlay: true }}
+                      title={nft.name}
+                      usePlaceholder={false}
+                      className="img-fluid img-rounded"
+                    />
+                  )}
                 </div>
                 <div className="col-12 col-sm-6">
                   <h3>Sale Type</h3>

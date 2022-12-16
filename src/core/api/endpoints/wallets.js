@@ -16,7 +16,6 @@ export async function getQuickWallet(walletAddress, queryParams = {}) {
     ...defaultParams,
     ...queryParams,
   });
-
   const url = new URL(api.endpoint, `${api.baseUrl}`);
   const uri = `${url}?${queryString}`;
 
