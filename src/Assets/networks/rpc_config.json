@@ -16697,6 +16697,34 @@
         "kyc": false,
         "verified": true
       }
+    },
+    {
+      "name": "Dr Dao X Mutant",
+      "slug": "dr-dao-x-mutant",
+      "multiToken": false,
+      "address": "0x72c97F79867219381EFA83127534710D559a2220",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Dr Dao X Mutants is a collection of 3333 NFTs on the Cronos blockchain, that give various benefits, such as, Mini Dao Club, Decision Power for Future Game Developments, Royalties Sharing from Secondary Markets Sales and Dao Doker Game, Deflationary Supply, Supply will be reduced through Dr Dao Fusion Tool dApp.",
+        "verified": true,
+        "avatar": "/img/collections/dr-dao-x-mutant/avatar.webp",
+        "card": "/img/collections/dr-dao-x-mutant/card.webp",
+        "banner": "/img/collections/dr-dao-x-mutant/banner.webp",
+        "maxSupply": 3333,
+        "website": "https://linktr.ee/daolabs/",
+        "twitter": "https://twitter.com/DrDaoClub",
+        "discord": "https://discord.gg/fyca4JYW7V",
+        "medium": "https://medium.com/@drdao.club/dr-dao-mutant-gen2-mintdrop-details-33c1de9dbc1c",
+        "categories": [
+          "utilities"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
