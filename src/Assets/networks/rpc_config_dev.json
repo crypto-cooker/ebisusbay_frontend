@@ -16670,6 +16670,33 @@
         "kyc": false,
         "verified": true
       }
+    },
+    {
+      "name": "Trippy Meanies",
+      "slug": "trippy-meanies",
+      "multiToken": false,
+      "address": "0xB4065baBDEdC69862758d012Bb44D8d784FEF08c",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Trippy Meanies, are a special-edition limited collection of the Lost Toys Meanies.\n\nThese incredible designs have been created by top 2D artists Ugonzo, Genius and Woah Johnny. Each NFT is signed and also unlocks great utilities!",
+        "verified": true,
+        "avatar": "/img/collections/trippy-meanies/avatar.webp",
+        "card": "/img/collections/trippy-meanies/card.webp",
+        "banner": "/img/collections/trippy-meanies/banner.webp",
+        "maxSupply": 2200,
+        "website": "https://www.losttoys.io/",
+        "twitter": "https://www.twitter.com/losttoysnft",
+        "discord": "https://discord.gg/Tdd9TZRMxn",
+        "medium": "https://hello-143.gitbook.io/lost-toys-nft/",
+        "instagram": "https://www.instagram.com/losttoysnft/",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": false,
+        "verified": true
+      }
     }
   ],
   "drops": [
