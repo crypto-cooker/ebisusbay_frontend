@@ -3132,6 +3132,34 @@
         "kyc": false,
         "verified": true
       }
+    },
+    {
+      "name": "Ryoshi Tales Christmas",
+      "slug": "ryoshi-tales-christmas",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Xmas is coming, and the Lotus Ocean Islands are covered in snow.  The characters of Ryoshi Tales have been preparing for the winter festivities!\n\nFrom getting ready to weather the harsh climate to enjoying the frosted landscapes, the characters of the Ryoshi Xmas Tales NFT collection come jam-packed with seasonally appropriate traits that make every NFT completely unique. \n\nWhat are you waiting for? \n\n**Get one now to sport your most Xmassy PFP to date.**",
+        "verified": true,
+        "avatar": "/img/collections/ryoshi-tales-christmas/avatar.webp",
+        "banner": "/img/collections/ryoshi-tales-christmas/banner.webp",
+        "card": "/img/collections/ryoshi-tales-christmas/card.webp",
+        "maxSupply": 2500,
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "hidden",
+        "verified": true
+      }
     }
   ],
   "drops": [
@@ -7176,6 +7204,47 @@
         "doxx": false,
         "kyc": true,
         "escrow": false
+      }
+    },
+    {
+      "id": 147,
+      "slug": "ryoshi-tales-christmas",
+      "title": "Ryoshi Tales Christmas",
+      "subtitle": "Xmas is coming, and the Lotus Ocean Islands are covered in snow.  The characters of Ryoshi Tales have been preparing for the winter festivities!\n\nFrom getting ready to weather the harsh climate to enjoying the frosted landscapes, the characters of the Ryoshi Xmas Tales NFT collection come jam-packed with seasonally appropriate traits that make every NFT completely unique. \n\nWhat are you waiting for? \n\n**Get one now to sport your most Xmassy PFP to date.**",
+      "description": "‘tis the season where the Lotus Ocean Islands from Ryoshi Tales are white with snow, fireplaces are lit and cozy wool mittens are worn.  With traits reflecting the Xmas holiday season, this is a unique opportunity to get your hands ahead of time on some NFTs that will be useable in the upcoming Ryoshi Tales! \n\nWhat more can you ask than getting to play as a snow-monster wearing kitsch Xmas-themed glasses as you go about developing the most glorious civilization that the Lotus Ocean Islands have ever seen? \n\nOr maybe, you’ll get to write your name in the history of the game as ***that guy*** who conquered his enemies while wearing a gingerbread costume. \n\nThese NFTs are uniquely composed of 7 different traits tailored to fit the winter holidays — background, miscellaneous accessories, mouth, head, eyes, body and clothing… each with numerous variations of different rarity!\n\nAre you ready for the holiday season?",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "",
+      "maxMintPerTx": 20,
+      "maxMintPerAddress": 20,
+      "totalSupply": 2500,
+      "cost": "160",
+      "memberCost": "80",
+      "foundersOnly": false,
+      "start": 1671228460000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/ryoshi-tales-christmas/drop.webp",
+        "banner": "/img/drops/ryoshi-tales-christmas/banner.webp",
+        "avatar": "/img/collections/ryoshi-tales-christmas/avatar.webp",
+        "preview": "/img/collections/ryoshi-tales-christmas/card.webp"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
       }
     }
   ]
