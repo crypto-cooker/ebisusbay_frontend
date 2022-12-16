@@ -16725,6 +16725,31 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Bad Hare Society",
+      "slug": "bad-hare-society",
+      "multiToken": false,
+      "address": "0x3893281354546de0cEe2aEFe03f7EB36268161b5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "\uD83C\uDFA8Fan Art collection of madharesociety, 500 unique #Badhare NFTs are coming!!|#cronos #crofam",
+        "verified": false,
+        "avatar": "/img/collections/bad-hare-society/avatar.webp",
+        "card": "/img/collections/bad-hare-society/card.webp",
+        "banner": "/img/collections/bad-hare-society/banner.webp",
+        "maxSupply": 500,
+        "website": "https://linktr.ee/badharesociety",
+        "twitter": "https://twitter.com/badharesociety",
+        "discord": "https://discord.gg/JAKuShMfCh",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
