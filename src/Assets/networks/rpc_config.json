@@ -16525,9 +16525,8 @@
         "avatar": "/img/collections/macc-serums/avatar.webp",
         "card": "/img/collections/macc-serums/card.webp",
         "maxSupply": 125,
-        "website": "https://www.zombabies.io/",
-        "twitter": "https://twitter.com/ZombabiesNFT",
-        "discord": "https://discord.gg/tGQaAGz3Xp",
+        "website": "https://www.bacc.finance/",
+        "twitter": "https://twitter.com/MACCFINANCE",
         "categories": [
           "collectibles"
         ]
@@ -16747,6 +16746,30 @@
       },
       "verification": {
         "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Mutant Ape Cronos Club",
+      "slug": "mutant-ape-cronos-club",
+      "multiToken": false,
+      "address": "0xcad19fE61C29861EBc53D5D16a603063aAacb7B8",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The MUTANT APE CRONOS CLUB is a collection of up to 20,000 Mutant Apes that can only be created by exposing an existing Bored Ape Cronos Club to a vial of MUTANT SERUM.",
+        "verified": true,
+        "avatar": "/img/collections/mutant-ape-cronos-club/avatar.webp",
+        "maxSupply": 20000,
+        "website": "https://www.bacc.finance/",
+        "twitter": "https://twitter.com/MACCFINANCE",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
