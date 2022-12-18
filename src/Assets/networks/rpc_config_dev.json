@@ -16775,6 +16775,33 @@
         "kyc": "hidden",
         "verified": true
       }
+    },
+    {
+      "name": "Teddy Bear Cro Club",
+      "slug": "teddy-bear-cro-club",
+      "multiToken": false,
+      "address": "0xE9b50C7E1b1Ebff3ba67cB683D1DD70482ed18C8",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "They are cute but also dangerous, these unique teddy bears guarantee exclusive benefits to their holders, including: 50% of total royalties back to holder, weekly Cro prize, Top holder reward, free gen 2 airdrop and much more",
+        "verified": false,
+        "avatar": "/img/collections/teddy-bear-cro-club/avatar.webp",
+        "banner": "/img/collections/teddy-bear-cro-club/banner.webp",
+        "card": "/img/collections/teddy-bear-cro-club/card.webp",
+        "maxSupply": 2000,
+        "website": "https://teddy-bear-club.netlify.app/",
+        "twitter": "https://twitter.com/teddy_cronos",
+        "discord": "https://discord.gg/SUj4zfYdKW",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
