@@ -2,29 +2,34 @@ import { SortOption } from '../../Models/sort-option.model';
 
 const sort = [
   {
+    id: 'listingId',
     key: 'listingId',
     direction: 'desc',
     label: 'Latest Listings',
   },
   {
+    id: 'price-desc',
     key: 'price',
     direction: 'desc',
     label: 'Price (High to Low)',
   },
   {
+    id: 'price-asc',
     key: 'price',
     direction: 'asc',
     label: 'Price (Low to High)',
   },
   {
+    id: 'rank-asc',
     key: 'rank',
     direction: 'asc',
-    label: 'Rank (High to Low)',
+    label: 'Rare to Common',
   },
   {
+    id: 'rank-desc',
     key: 'rank',
     direction: 'desc',
-    label: 'Rank (Low to High)',
+    label: 'Common to Rare',
   },
 ];
 

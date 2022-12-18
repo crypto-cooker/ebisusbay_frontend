@@ -1,5 +1,6 @@
 export class SortOption {
   label = 'None';
+  id = null;
   key = null;
   direction = null;
 
@@ -11,15 +12,17 @@ export class SortOption {
     return this.key;
   }
 
-  static fromJson({ key, direction, label }) {
+  static fromJson({ key, direction, label, id }) {
     const sortOption = new SortOption();
 
+    sortOption.id = id;
     sortOption.key = key;
     sortOption.direction = direction;
     sortOption.label = label;
 
     return sortOption;
   }
+
   static default() {
     return new SortOption();
   }
