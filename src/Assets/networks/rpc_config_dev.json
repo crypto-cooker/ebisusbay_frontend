@@ -15771,7 +15771,7 @@
       "listable": true,
       "metadata": {
         "description": "Trollfam is built from a community of Trollcoin holders. You are Trollcoin, we are Trollfam!",
-        "verified": false,
+        "verified": true,
         "avatar": "/img/collections/trollfam/avatar.webp",
         "card": "/img/collections/trollfam/card.webp",
         "banner": "/img/collections/trollfam/banner.webp",
@@ -15784,7 +15784,7 @@
       "verification": {
         "doxx": false,
         "kyc": false,
-        "verified": false
+        "verified": true
       }
     },
     {
@@ -16831,6 +16831,58 @@
         "verified": false,
         "doxx": false,
         "kyc": false
+      }
+    },
+    {
+      "name": "Trollfam Xmas",
+      "slug": "trollfam-xmas",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A collection of 5,555 Xmas Trollfam NFTs brought to you by Trollcoin. Jump into our discord and have some fun!",
+        "verified": true,
+        "avatar": "/img/collections/trollfam-xmas/avatar.webp",
+        "card": "/img/collections/trollfam-xmas/card.webp",
+        "banner": "/img/collections/trollfam-xmas/banner.webp",
+        "maxSupply": 5555,
+        "website": "https://trollcoin.clubcro.com/",
+        "twitter": "https://twitter.com/club_cro",
+        "discord": "https://discord.gg/u3USwUZ8nT",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Cro Snowmen",
+      "slug": "cro-snowmen",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Cro Snowmen are the first collection from Holiday NFT, which is an NFT project managed by TopBlok Digital Asset Management.  TopBlok is known for other Cronos Projects such as The CronosVerse and CROmmandos.",
+        "verified": true,
+        "avatar": "/img/collections/cro-snowmen/avatar.webp",
+        "banner": "/img/collections/cro-snowmen/banner.webp",
+        "card": "/img/collections/cro-snowmen/card.webp",
+        "maxSupply": 2000,
+        "website": "https://www.topblok.io/",
+        "twitter": "https://twitter.com/topblok",
+        "discord": "https://discord.gg/E9Mzzy9Hex",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
       }
     }
   ],
@@ -22558,6 +22610,82 @@
         "drop": "/img/drops/dr-dao-x-mutant/drop.webp",
         "avatar": "/img/collections/dr-dao-x-mutant/avatar.webp",
         "preview": "/img/drops/dr-dao-x-mutant/preview.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 149,
+      "slug": "trollfam-xmas",
+      "title": "Trollfam Xmas",
+      "subtitle": "A collection of 5,555 Xmas Trollfam NFTs brought to you by Trollcoin",
+      "description": "Jump into our discord and have some fun!",
+      "author": {
+        "name": "Trollfam",
+        "website": "https://trollcoin.clubcro.com/",
+        "twitter": "https://twitter.com/club_cro",
+        "discord": "https://discord.gg/u3USwUZ8nT"
+      },
+      "address": "",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 50,
+      "totalSupply": 5555,
+      "cost": "10",
+      "memberCost": "10",
+      "foundersOnly": false,
+      "start": 1671652800000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/trollfam-xmas/drop.webp",
+        "banner": "/img/collections/trollfam-xmas/banner.webp",
+        "avatar": "/img/collections/trollfam-xmas/avatar.webp",
+        "preview": "/img/collections/trollfam-xmas/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 150,
+      "slug": "cro-snowmen",
+      "title": "Cro Snowmen",
+      "subtitle": "Cro Snowmen are the first collection from Holiday NFT, which is an NFT project managed by TopBlok Digital Asset Management.  TopBlok is known for other Cronos Projects such as The CronosVerse and CROmmandos.\n\n*** This is a charity mint.  All proceeds raised from this mint will be donated to combat homelessness and hunger.",
+      "description": "Cro Snowmen is presented to you by TopBlok Digital and various Cronos Projects that we work with.   TopBlok is best known for our main project on Cronos, The CronosVerse, along with CROmmandos, Holiday NFT and various consulting work in gamefi and NFT marketing.\n\nThis is the first holiday themed NFT collection from our new project Holiday NFT, which aims to:\n\n- Help Create less Carbon Emissions and Waste than paper holiday cards\n- Provide Living Wages for content creators globally\n- Use Holiday Themed NFTs to help onboard new people to Crypto and Web3\n- All Funds Raised go to fight homelessness and hunger\n\nMint a digital Christmas Card today and embrace a new way of celebrating the holidays, with Holiday NFTs.",
+      "author": {
+        "name": "TopBlok",
+        "website": "https://www.topblok.io/",
+        "twitter": "https://twitter.com/topblok",
+        "discord": "https://discord.gg/E9Mzzy9Hex"
+      },
+      "address": "",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 100,
+      "totalSupply": 2000,
+      "cost": "65",
+      "memberCost": "50",
+      "foundersOnly": false,
+      "start": 1671654600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/cro-snowmen/drop.webp",
+        "banner": "/img/collections/cro-snowmen/banner.webp",
+        "avatar": "/img/collections/cro-snowmen/avatar.webp",
+        "preview": "/img/collections/cro-snowmen/card.webp"
       },
       "verification": {
         "verified": true,
