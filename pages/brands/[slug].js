@@ -141,6 +141,8 @@ export const getServerSideProps = async ({ params, query }) => {
       position: key
     }
   });
+
+  // Only using hidden collections for stats aggregation for now
   if (brand.hidden) {
     brandKeyedAddresses.push(...brand.hidden.map((address, key) => {
       return {
@@ -210,14 +212,19 @@ export const getServerSideProps = async ({ params, query }) => {
 
   // Weird Apes stats merge
   sortedCollections.map((c) => {
-    if (caseInsensitiveCompare(c.address, '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44')) {
-      const v1Collection = collections.data.collections.find((v1c) => caseInsensitiveCompare(v1c.address, '0x7D5f8F9560103E1ad958A6Ca43d49F954055340a'));
+    const weirdApes = '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44'
+    const weirdApesV1 = '0x7D5f8F9560103E1ad958A6Ca43d49F954055340a'
+    if (caseInsensitiveCompare(c.address, weirdApes)) {
+      const v1Collection = collections.data.collections.find((v1c) => caseInsensitiveCompare(v1c.address, weirdApesV1));
       c.stats.total.active = Number(c.stats.total.active) + Number(v1Collection.stats.total.active)
       c.stats.total.complete = Number(c.stats.total.complete) + Number(v1Collection.stats.total.complete)
       c.stats.total.volume = Number(c.stats.total.volume) + Number(v1Collection.stats.total.volume)
     }
     return c;
   });
+
+  // Remove hidden now that we're done with them
+  sortedCollections = sortedCollections.filter((c) => !c.hidden);
 
   return {
     props: {
