@@ -63,7 +63,7 @@ const tabs = {
   info: 'info',
 };
 
-const Nft1155 = ({ address, id }) => {
+const Nft1155 = ({ address, id, collection }) => {
   const dispatch = useDispatch();
   const history = useRouter();
   const { onCopy } = useClipboard(window.location);
@@ -77,9 +77,6 @@ const Nft1155 = ({ address, id }) => {
   );
 
   const powertraits = useSelector((state) => state.nft.nft?.powertraits);
-  const collection = useSelector((state) => {
-    return findCollectionByAddress(address, id);
-  });
   const collectionMetadata = useSelector((state) => {
     return collection?.metadata;
   });
