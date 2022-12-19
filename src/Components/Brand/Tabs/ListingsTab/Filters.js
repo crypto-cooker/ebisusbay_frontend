@@ -5,6 +5,7 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
+  Button,
   Checkbox,
   CheckboxGroup,
   Flex,
@@ -19,7 +20,6 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 
 const Filters = ({collections, onChange}) => {
-
   const [selectedCollections, setSelectedCollections] = useState([]);
 
   const viewGetDefaultCheckValue = (address) => {
@@ -69,7 +69,12 @@ const Filters = ({collections, onChange}) => {
                         {collection.name}
                       </Checkbox>
                       <Spacer />
-                      <Box cursor="pointer">
+                      <Box
+                        as={Button}
+                        cursor="pointer"
+                        size='sm'
+                        variant='ghost'
+                      >
                         <Link as={NextLink} href={`/collection/${collection.slug}`}>
                           <FontAwesomeIcon icon={faArrowRight}/>
                         </Link>
