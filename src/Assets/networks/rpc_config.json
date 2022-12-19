@@ -15777,8 +15777,9 @@
         "banner": "/img/collections/trollfam/banner.webp",
         "maxSupply": 5555,
         "website": "https://trollcoin.clubcro.com/",
-        "twitter": "https://twitter.com/club_cro",
-        "discord": "https://discord.gg/u3USwUZ8nT",
+        "twitter": "https://twitter.com/TrollCoinCro",
+        "discord": "https://discord.gg/trollcoin",
+        "telegram": "https://t.me/OfficialTrollcoin",
         "categories": []
       },
       "verification": {
@@ -16848,8 +16849,9 @@
         "banner": "/img/collections/trollfam-xmas/banner.webp",
         "maxSupply": 5555,
         "website": "https://trollcoin.clubcro.com/",
-        "twitter": "https://twitter.com/club_cro",
-        "discord": "https://discord.gg/u3USwUZ8nT",
+        "twitter": "https://twitter.com/TrollCoinCro",
+        "discord": "https://discord.gg/trollcoin",
+        "telegram": "https://t.me/OfficialTrollcoin",
         "categories": []
       },
       "verification": {
@@ -22627,8 +22629,9 @@
       "author": {
         "name": "Trollfam",
         "website": "https://trollcoin.clubcro.com/",
-        "twitter": "https://twitter.com/club_cro",
-        "discord": "https://discord.gg/u3USwUZ8nT"
+        "twitter": "https://twitter.com/TrollCoinCro",
+        "discord": "https://discord.gg/trollcoin",
+        "telegram": "https://t.me/OfficialTrollcoin"
       },
       "address": "",
       "maxMintPerTx": 40,
