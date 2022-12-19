@@ -237,6 +237,27 @@
     "style": {}
   },
   {
+    "slug": "cronosverse",
+    "name": "CronosVerse",
+    "description": "Buy your digital land plot, develop your property & enter The CronosVerse!",
+    "images": {
+      "banner": "/img/collections/cronosverse/banner.webp",
+      "preview": "/img/collections/cronosverse/card.webp"
+    },
+    "collections": [
+      "0x0aCDA31Cf1F301a7Eb8f988D47F708FbA058F8f5",
+      "0x130a6c2884325d302830179C691D328dDAd9b78C"
+    ],
+    "socials": {
+      "website": "https://thecronosverse.com/",
+      "twitter": "https://twitter.com/TheCronosVerse",
+      "discord": "https://discord.gg/E9Mzzy9Hex"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "trooprz",
     "name": "Trooprz",
     "description": "Trooprz have got your back",
