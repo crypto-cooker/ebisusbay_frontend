@@ -16,7 +16,6 @@ const MintingButton = ({onClick}) => {
       colorScheme="orange"
       onClick={onClick}
       animation={`${pulseColorClass} 1.5s infinite`}
-      align
     >
       <HStack spacing={2}>
         <SunIcon />

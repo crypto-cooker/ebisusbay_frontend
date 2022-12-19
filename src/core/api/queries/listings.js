@@ -53,9 +53,10 @@ export class ListingsQuery {
   }
 
   toApi() {
+    const collection = Array.isArray(this.collection) ? this.collection.join(',') : this.collection;
     const obj = {
       listingId: this.listingId,
-      collection: this.collection,
+      collection: collection,
       tokenId: this.tokenId,
       seller: this.seller,
       sortBy: this.sortBy,

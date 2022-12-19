@@ -16802,6 +16802,33 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "MACnifty",
+      "slug": "macnifty",
+      "multiToken": false,
+      "address": "0xf13f0520Fe03Ea1135666Cb48D3DA305B97F7102",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "MACnifty will be a first of it's kind designed to provide unmatched value to MACnifty NFT holders. The Collection will consist of just 5,000 MACnifty NFT's, making it more scarce and desirable than most other NFT collections in existence. Combined with a value proposition to guarantee long-term success and a sustainable floor raise. From a design perspective you're looking at a collection with fully unique hand drawn traits and attributes. Stunning yet intriguing NFT PFP artworks as unique as you are!",
+        "verified": false,
+        "avatar": "/img/collections/macnifty/avatar.webp",
+        "banner": "/img/collections/macnifty/banner.webp",
+        "card": "/img/collections/macnifty/card.webp",
+        "maxSupply": 5000,
+        "website": "https://macnifty.xyz/",
+        "twitter": "https://twitter.com/MACniftyCRO",
+        "discord": "https://discord.gg/MACnifty",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [

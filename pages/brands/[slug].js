@@ -5,7 +5,6 @@ import brands from '@src/core/data/brands.json';
 import {
   Box,
   Button,
-  Center,
   Flex,
   Heading,
   SimpleGrid,
@@ -13,21 +12,23 @@ import {
   StatLabel,
   StatNumber,
   Text,
-  useBreakpointValue,
-  Wrap,
-  WrapItem
+  useBreakpointValue
 } from "@chakra-ui/react";
-import CustomSlide from "@src/Components/components/CustomSlide";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
 import Footer from "@src/Components/components/Footer";
 import EndpointProxyService from "@src/services/endpoint-proxy.service";
 import {caseInsensitiveCompare, siPrefixedNumber} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {appConfig} from "@src/Config";
-import MintingButton from "@src/Components/Collection/MintingButton";
 import {useRouter} from "next/router";
+import CollectionsTab from "@src/Components/Brand/Tabs/CollectionsTab/CollectionsTab";
+import ListingsTab from "@src/Components/Brand/Tabs/ListingsTab/ListingsTab";
 
 const drops = appConfig('drops');
+const tabs = {
+  collections: 'collections',
+  listings: 'listings'
+};
 
 const Brand = ({ brand, collections, stats }) => {
   const router = useRouter();
@@ -38,13 +39,10 @@ const Brand = ({ brand, collections, stats }) => {
   )
   const bannerBgColor= useColorModeValue('black', 'transparent');
 
-  const handleMintingButtonClick = (drop) => {
-    if (drop.redirect) {
-      window.open(drop.redirect, '_blank');
-    } else {
-      router.push(`/drops/${drop.slug}`)
-    }
-  }
+  const [openMenu, setOpenMenu] = useState(tabs.collections);
+  const handleBtnClick = (key) => () => {
+    setOpenMenu(key);
+  };
 
   return (
     <>
@@ -102,59 +100,25 @@ const Brand = ({ brand, collections, stats }) => {
       </Box>
 
       <Box as="section" className="gl-legacy no-top" mt={6} mx={8} maxW="2560px">
-        <Box>
-          <Center>
-            <Heading>Collections</Heading>
-          </Center>
-          <div className="small-border"></div>
-        </Box>
-        <SimpleGrid columns={{base: 1, sm: 2, md: 3, lg: 4}} gap={{base: 4, '2xl': 8}}>
-          {collections.filter((c) => !c.hidden).map((collection, index) => (
-            <CustomSlide
-              key={index}
-              index={index + 1}
-              banner={collection.metadata.card}
-              title={collection.name}
-              contextComponent={collection.drop && !collection.drop.complete ?
-                <MintingButton onClick={() => handleMintingButtonClick(collection.drop)}/> :
-                undefined
-              }
-              subtitle={
-                <Box>
-                  <Text noOfLines={2} fontSize="xs" px={2}>{collection.metadata.description}</Text>
-                  <Wrap mt={2} justify="center" spacing={5}>
-                    <WrapItem>
-                      <Stat size="sm">
-                        <StatLabel fontSize="xs">Items</StatLabel>
-                        <StatNumber>{collection.totalSupply ? siPrefixedNumber(collection.totalSupply) : '-'}</StatNumber>
-                      </Stat>
-                    </WrapItem>
-                    <WrapItem>
-                      <Stat size="sm">
-                        <StatLabel fontSize="xs">Active</StatLabel>
-                        <StatNumber>{siPrefixedNumber(collection.stats.total.active, 4)}</StatNumber>
-                      </Stat>
-                    </WrapItem>
-                    <WrapItem>
-                      <Stat size="sm">
-                        <StatLabel fontSize="xs">Sales</StatLabel>
-                        <StatNumber>{siPrefixedNumber(collection.stats.total.complete, 4)}</StatNumber>
-                      </Stat>
-                    </WrapItem>
-                    <WrapItem>
-                      <Stat size="sm">
-                        <StatLabel fontSize="xs">Volume</StatLabel>
-                        <StatNumber>{siPrefixedNumber(collection.stats.total.volume, 4)}</StatNumber>
-                      </Stat>
-                    </WrapItem>
-                  </Wrap>
-                </Box>
-              }
-              url={`/collection/${collection.slug ?? collection.address}`}
-              verified={collection.metadata.verified}
-            />
-          ))}
-        </SimpleGrid>
+        <div className="de_tab">
+          <ul className="de_nav mb-2">
+            <li className={`tab ${openMenu === tabs.collections ? 'active' : ''} my-1`}>
+              <span onClick={handleBtnClick(tabs.collections)}>Collections</span>
+            </li>
+            <li className={`tab ${openMenu === tabs.listings ? 'active' : ''} my-1`}>
+              <span onClick={handleBtnClick(tabs.listings)}>Listings</span>
+            </li>
+          </ul>
+
+          <div className="de_tab_content">
+            {openMenu === tabs.collections && (
+              <CollectionsTab collections={collections} />
+            )}
+            {openMenu === tabs.listings && (
+              <ListingsTab brand={brand} collections={collections} />
+            )}
+          </div>
+        </div>
       </Box>
       <Footer />
     </>
@@ -177,6 +141,8 @@ export const getServerSideProps = async ({ params, query }) => {
       position: key
     }
   });
+
+  // Only using hidden collections for stats aggregation for now
   if (brand.hidden) {
     brandKeyedAddresses.push(...brand.hidden.map((address, key) => {
       return {
@@ -246,14 +212,19 @@ export const getServerSideProps = async ({ params, query }) => {
 
   // Weird Apes stats merge
   sortedCollections.map((c) => {
-    if (caseInsensitiveCompare(c.address, '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44')) {
-      const v1Collection = collections.data.collections.find((v1c) => caseInsensitiveCompare(v1c.address, '0x7D5f8F9560103E1ad958A6Ca43d49F954055340a'));
+    const weirdApes = '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44'
+    const weirdApesV1 = '0x7D5f8F9560103E1ad958A6Ca43d49F954055340a'
+    if (caseInsensitiveCompare(c.address, weirdApes)) {
+      const v1Collection = collections.data.collections.find((v1c) => caseInsensitiveCompare(v1c.address, weirdApesV1));
       c.stats.total.active = Number(c.stats.total.active) + Number(v1Collection.stats.total.active)
       c.stats.total.complete = Number(c.stats.total.complete) + Number(v1Collection.stats.total.complete)
       c.stats.total.volume = Number(c.stats.total.volume) + Number(v1Collection.stats.total.volume)
     }
     return c;
   });
+
+  // Remove hidden now that we're done with them
+  sortedCollections = sortedCollections.filter((c) => !c.hidden);
 
   return {
     props: {
