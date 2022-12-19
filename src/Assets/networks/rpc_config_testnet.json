@@ -3137,7 +3137,7 @@
       "name": "Ryoshi Tales Christmas",
       "slug": "ryoshi-tales-christmas",
       "multiToken": false,
-      "address": "",
+      "address": "0x7fb11087c21719C2e4f9Fc16408e8a97a46c92Ad",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -7221,7 +7221,7 @@
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
       },
-      "address": "",
+      "address": "0x7fb11087c21719C2e4f9Fc16408e8a97a46c92Ad",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 20,
       "totalSupply": 2500,
