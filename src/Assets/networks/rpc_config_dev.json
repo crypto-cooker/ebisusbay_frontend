@@ -22469,8 +22469,8 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
-      "featured": true,
+      "complete": true,
+      "featured": false,
       "redirect": "https://www.crosea.io/mutantserum",
       "images": {
         "drop": "/img/drops/macc-serums/drop.webp",
@@ -22523,6 +22523,47 @@
         "kyc": true,
         "escrow": false,
         "verified": true
+      }
+    },
+    {
+      "id": 148,
+      "slug": "dr-dao-x-mutant",
+      "title": "Dr Dao X Mutant",
+      "subtitle": "The Doctors have created some experiment's in there labs and have found a way to enhance there original form by gene splicing , but something went wrong, the DNA Structure has multiplied and the DrDao Mutants have been created to guard there secrets with there life. Mutants have Hit cronos and are merging with the top blue chips on Cronos, A very rare species that can be mutated even futher into a Super Mutant! Merge your NFTS to create a highly sought after 1 of 1. Gamify Experience on desktop and Mobile! Best price pool you will ever be a part of , you wont want to miss this mint! 30 000 $CRO in Price Pool. Dr Dao X Mutants is a collection of 3333 NFTs on the Cronos blockchain, that give various benefits, such as, Mini Dao Club, Decision Power for Future Game Developments, Royalties Sharing from Secondary Markets Sales and Dao Doker Game, Deflationary Supply, Supply will be reduced through Dr Dao Fusion Tool dApp.",
+      "description": "The Doctors have created some experiment's in there labs and have found a way to enhance there original form by gene splicing , but something went wrong, the DNA Structure has multiplied and the DrDao Mutants have been created to guard there secrets with there life. Mutants have Hit cronos and are merging with the top blue chips on Cronos, A very rare species that can be mutated even futher into a Super Mutant! Merge your NFTS to create a highly sought after 1 of 1. Gamify Experience on desktop and Mobile! Best price pool you will ever be a part of , you wont want to miss this mint! 30 000 $CRO in Price Pool. Dr Dao X Mutants is a collection of 3333 NFTs on the Cronos blockchain, that give various benefits, such as, Mini Dao Club, Decision Power for Future Game Developments, Royalties Sharing from Secondary Markets Sales and Dao Doker Game, Deflationary Supply, Supply will be reduced through Dr Dao Fusion Tool dApp.",
+      "author": {
+        "name": "DaoLab",
+        "website": "https://linktr.ee/daolabs/",
+        "twitter": "https://twitter.com/DrDaoClub",
+        "discord": "https://discord.gg/fyca4JYW7V",
+        "medium": "https://medium.com/@drdao.club/dr-dao-mutant-gen2-mintdrop-details-33c1de9dbc1c"
+      },
+      "address": "0x72c97F79867219381EFA83127534710D559a2220",
+      "maxMintPerTx": 7,
+      "maxMintPerAddress": 21,
+      "totalSupply": 3333,
+      "cost": "150",
+      "memberCost": "140",
+      "whitelistCost": "130",
+      "foundersOnly": false,
+      "start": 1671478058000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": true,
+      "redirect": "https://daogames.online/mint",
+      "images": {
+        "drop": "/img/drops/dr-dao-x-mutant/drop.webp",
+        "avatar": "/img/collections/dr-dao-x-mutant/avatar.webp",
+        "preview": "/img/drops/dr-dao-x-mutant/preview.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
       }
     }
   ]

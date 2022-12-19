@@ -1,5 +1,5 @@
 import {
-  Button,
+  Button as ChakraButton,
   ButtonGroup,
   Drawer,
   DrawerBody,
@@ -7,7 +7,7 @@ import {
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
-  DrawerOverlay,
+  DrawerOverlay, Flex,
   Grid,
   GridItem,
   Radio,
@@ -22,6 +22,7 @@ import React, {useState} from "react";
 import {SearchBar, SortDropdown} from "@src/Components/Brand/Tabs/ListingsTab/ListingsTab";
 import Filters from "@src/Components/Brand/Tabs/ListingsTab/Filters";
 import {sortOptions} from "@src/Components/components/constants/sort-options";
+import Button from "@src/Components/components/Button";
 
 const TaskBar = ({onFilterToggle, onSearch, onSort, collections, onFilter}) => {
   const useMobileViews = useBreakpointValue(
@@ -32,18 +33,15 @@ const TaskBar = ({onFilterToggle, onSearch, onSort, collections, onFilter}) => {
   const { isOpen: isMobileFilterOpen, onOpen: onOpenMobileFilter, onClose: onCloseMobileFilter } = useDisclosure();
   const { isOpen: isMobileSortOpen, onOpen: onOpenMobileSort, onClose: onCloseMobileSort } = useDisclosure();
 
-
-
-
   return useMobileViews ? (
     <>
       <ButtonGroup>
-        <Button onClick={onOpenMobileFilter}>
+        <ChakraButton onClick={onOpenMobileFilter}>
           <FontAwesomeIcon icon={faFilter} />
-        </Button>
-        <Button onClick={onOpenMobileSort}>
+        </ChakraButton>
+        <ChakraButton onClick={onOpenMobileSort}>
           <FontAwesomeIcon icon={faSort} />
-        </Button>
+        </ChakraButton>
         <SearchBar onSearch={onSearch} />
       </ButtonGroup>
       <MobileFilter
@@ -61,9 +59,9 @@ const TaskBar = ({onFilterToggle, onSearch, onSort, collections, onFilter}) => {
   ) : (
     <Grid templateColumns="auto 1fr 180px" gap={2}>
       <GridItem>
-        <Button onClick={onFilterToggle}>
+        <ChakraButton onClick={onFilterToggle}>
           <FontAwesomeIcon icon={faFilter} />
-        </Button>
+        </ChakraButton>
       </GridItem>
       <GridItem>
         <SearchBar onSearch={onSearch} />
@@ -102,10 +100,14 @@ const MobileFilter = ({collections, isOpen, onClose, onFilter}) => {
         </DrawerBody>
 
         <DrawerFooter>
-          <Button variant='outline' mr={3} onClick={onClose}>
-            Cancel
-          </Button>
-          <Button colorScheme='blue' onClick={handleSaveFilter}>Save</Button>
+          <Flex w="full">
+            <Button type="legacy-outlined" className="w-100" onClick={onClose}>
+              Cancel
+            </Button>
+            <Button type="legacy" className="w-100 ms-4" onClick={handleSaveFilter}>
+              Save
+            </Button>
+          </Flex>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
@@ -152,10 +154,14 @@ const MobileSort = ({isOpen, onClose, onSort}) => {
         </DrawerBody>
 
         <DrawerFooter>
-          <Button variant='outline' mr={3} onClick={onClose}>
-            Cancel
-          </Button>
-          <Button colorScheme='blue' onClick={handleSaveFilter}>Save</Button>
+          <Flex w="full">
+            <Button type="legacy-outlined" className="w-100" onClick={onClose}>
+              Cancel
+            </Button>
+            <Button type="legacy" className="w-100 ms-4" onClick={handleSaveFilter}>
+              Save
+            </Button>
+          </Flex>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
