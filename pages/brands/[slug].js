@@ -23,14 +23,16 @@ import {appConfig} from "@src/Config";
 import {useRouter} from "next/router";
 import CollectionsTab from "@src/Components/Brand/Tabs/CollectionsTab/CollectionsTab";
 import ListingsTab from "@src/Components/Brand/Tabs/ListingsTab/ListingsTab";
+import {pushQueryString} from "@src/helpers/query";
 
 const drops = appConfig('drops');
 const tabs = {
   collections: 'collections',
-  listings: 'listings'
+  listings: 'listings',
+  staking: 'staking'
 };
 
-const Brand = ({ brand, collections, stats }) => {
+const Brand = ({ brand, collections, stats, query }) => {
   const router = useRouter();
   const [viewMore, setViewMore] = useState(false);
   const isClippingDescription = useBreakpointValue(
@@ -39,9 +41,10 @@ const Brand = ({ brand, collections, stats }) => {
   )
   const bannerBgColor= useColorModeValue('black', 'transparent');
 
-  const [openMenu, setOpenMenu] = useState(tabs.collections);
+  const [currentTab, setCurrentTab] = useState(query.tab ?? tabs.collections);
   const handleBtnClick = (key) => () => {
-    setOpenMenu(key);
+    pushQueryString(router, {...query, tab: key});
+    setCurrentTab(key);
   };
 
   return (
@@ -102,19 +105,19 @@ const Brand = ({ brand, collections, stats }) => {
       <Box as="section" className="gl-legacy no-top" mt={6} mx={8} maxW="2560px">
         <div className="de_tab">
           <ul className="de_nav mb-2">
-            <li className={`tab ${openMenu === tabs.collections ? 'active' : ''} my-1`}>
+            <li className={`tab ${currentTab === tabs.collections ? 'active' : ''} my-1`}>
               <span onClick={handleBtnClick(tabs.collections)}>Collections</span>
             </li>
-            <li className={`tab ${openMenu === tabs.listings ? 'active' : ''} my-1`}>
+            <li className={`tab ${currentTab === tabs.listings ? 'active' : ''} my-1`}>
               <span onClick={handleBtnClick(tabs.listings)}>Listings</span>
             </li>
           </ul>
 
           <div className="de_tab_content">
-            {openMenu === tabs.collections && (
+            {currentTab === tabs.collections && (
               <CollectionsTab collections={collections} />
             )}
-            {openMenu === tabs.listings && (
+            {currentTab === tabs.listings && (
               <ListingsTab brand={brand} collections={collections} />
             )}
           </div>
