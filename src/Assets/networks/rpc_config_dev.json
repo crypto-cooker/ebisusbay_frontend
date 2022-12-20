@@ -16886,6 +16886,32 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "CroSkull Pets - Season 3",
+      "slug": "croskull-pets-s3",
+      "multiToken": false,
+      "address": "0x31B378ac025a341839CD81C4D29A8457324D3EbC",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Underworld is full of all kinds of creatures. During the CroSkulls adventures to the different regions of the Underworld, the CroSkulls often find regional eggs. Each season of CroSkulls explore new regions of the Underworld. Each season will have different seasonal pets. Once the eggs hatch, you will acquire a seasonal pet from that egg's region of the Underworld.",
+        "verified": true,
+        "avatar": "/img/collections/croskull-pets-s3/avatar.webp",
+        "card": "/img/collections/croskull-pets-s3/card.webp",
+        "banner": "/img/collections/croskull-pets-s3/banner.webp",
+        "maxSupply": 2200,
+        "website": "https://app.croskull.com/",
+        "twitter": "https://twitter.com/CroskullNFT",
+        "discord": "https://discord.gg/q3nWxw8QRY",
+        "medium": "https://medium.com/@croskullnft",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
