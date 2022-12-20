@@ -16758,7 +16758,7 @@
       "multiToken": false,
       "address": "0xe3Ef45955b507895779a6A8911bBc48E0E17B11C",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Xmas is coming, and the Lotus Ocean Islands are covered in snow.  The characters of Ryoshi Tales have been preparing for the winter festivities!\n\nFrom getting ready to weather the harsh climate to enjoying the frosted landscapes, the NFTs of the Ryoshi Xmas Tales NFT collection come jam-packed with seasonally appropriate traits that make each art piece completely unique. \n\nIn addition, these NFTs will feature in the upcoming Ryoshi Tales game as they will provide special in-game bonuses.\nSo what are you waiting for? \n\nGet one now to sport your most Xmassy PFP to date.",
         "verified": true,
@@ -22591,7 +22591,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/ryoshi-tales-christmas/drop.webp",
         "banner": "/img/drops/ryoshi-tales-christmas/banner.webp",
