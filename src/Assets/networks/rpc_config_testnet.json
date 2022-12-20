@@ -3165,7 +3165,7 @@
       "name": "Trollfam Xmas",
       "slug": "trollfam-xmas",
       "multiToken": false,
-      "address": "",
+      "address": "0xF79919891539FA4b456eABC080beBe7CC6A2205b",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -7313,7 +7313,7 @@
         "discord": "https://discord.gg/trollcoin",
         "telegram": "https://t.me/OfficialTrollcoin"
       },
-      "address": "",
+      "address": "0xF79919891539FA4b456eABC080beBe7CC6A2205b",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 50,
       "totalSupply": 5555,
