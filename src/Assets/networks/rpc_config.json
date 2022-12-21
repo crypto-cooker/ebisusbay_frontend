@@ -11258,6 +11258,7 @@
         "card": "/img/collections/thirteenth-evil/card.webp",
         "maxSupply": 500,
         "twitter": "https://twitter.com/ThirteenthEvil",
+        "discord": "https://discord.gg/DkZRW9n7vw",
         "rankings": {
           "source": "provided"
         },
@@ -16847,7 +16848,7 @@
       "name": "Trollfam Xmas",
       "slug": "trollfam-xmas",
       "multiToken": false,
-      "address": "0xa0044FDdFB07EaA7F9488C1B0804164Fefeb6a9D",
+      "address": "0x7D2068649c718a5699FF80877F6256EfA79F45d0",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -16873,7 +16874,7 @@
       "name": "Cro Snowmen",
       "slug": "cro-snowmen",
       "multiToken": false,
-      "address": "",
+      "address": "0x7Ac7D6d0d981C8A00637234f8026a4f78C5df14a",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -22668,7 +22669,7 @@
         "discord": "https://discord.gg/trollcoin",
         "telegram": "https://t.me/OfficialTrollcoin"
       },
-      "address": "0xa0044FDdFB07EaA7F9488C1B0804164Fefeb6a9D",
+      "address": "0x7D2068649c718a5699FF80877F6256EfA79F45d0",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 50,
       "totalSupply": 5555,
@@ -22706,7 +22707,7 @@
         "twitter": "https://twitter.com/topblok",
         "discord": "https://discord.gg/E9Mzzy9Hex"
       },
-      "address": "",
+      "address": "0x7Ac7D6d0d981C8A00637234f8026a4f78C5df14a",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 100,
       "totalSupply": 2000,
