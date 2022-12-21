@@ -16850,7 +16850,7 @@
       "multiToken": false,
       "address": "0x7D2068649c718a5699FF80877F6256EfA79F45d0",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A collection of 5,555 Xmas Trollfam NFTs brought to you by Trollcoin. Jump into our discord and have some fun!",
         "verified": true,
