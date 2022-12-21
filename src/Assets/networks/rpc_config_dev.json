@@ -16873,7 +16873,7 @@
       "name": "Cro Snowmen",
       "slug": "cro-snowmen",
       "multiToken": false,
-      "address": "",
+      "address": "0x7Ac7D6d0d981C8A00637234f8026a4f78C5df14a",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -22706,7 +22706,7 @@
         "twitter": "https://twitter.com/topblok",
         "discord": "https://discord.gg/E9Mzzy9Hex"
       },
-      "address": "",
+      "address": "0x7Ac7D6d0d981C8A00637234f8026a4f78C5df14a",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 100,
       "totalSupply": 2000,
