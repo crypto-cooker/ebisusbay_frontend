@@ -22681,7 +22681,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": true,
+        "kyc": false,
         "escrow": false
       }
     },
