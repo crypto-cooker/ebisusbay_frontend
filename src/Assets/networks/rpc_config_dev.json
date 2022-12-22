@@ -16972,6 +16972,34 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Robotmeerkat",
+      "slug": "robotmeerkat",
+      "multiToken": false,
+      "address": "0xB41398EE9A7a9c7570F1973690Ce98370C3a78E4",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The degen is becoming robotic",
+        "verified": false,
+        "avatar": "/img/collections/robotmeerkat/avatar.webp",
+        "banner": "/img/collections/robotmeerkat/banner.webp",
+        "card": "/img/collections/robotmeerkat/card.webp",
+        "maxSupply": 500,
+        "website": "https://linktr.ee/badmeerkat",
+        "twitter": "https://twitter.com/badmeerkatnft",
+        "discord": "https://discord.gg/wcJ4vvZb4H",
+        "categories": [
+          "art",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
