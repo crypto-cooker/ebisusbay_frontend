@@ -17025,6 +17025,34 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Ninja_fu_weapons",
+      "slug": "ninja-fu-weapons",
+      "multiToken": false,
+      "address": "0x34D02aB5f48d6DfE28E8C7Aa0132d0d109c3b94a",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "These weapons are magnificent, they are both elegant and devastating, seductive and mischievous. They were created not only to be pretty to look at and to own, but also to ensure victory and accompany the glorious fighter in its thousand and one adventures.",
+        "verified": true,
+        "avatar": "/img/collections/ninja-fu-weapons/avatar.webp",
+        "card": "/img/collections/ninja-fu-weapons/card.webp",
+        "banner": "/img/collections/ninja-fu-weapons/banner.webp",
+        "maxSupply": 600,
+        "website": "https://ninjafu.ca/",
+        "twitter": "https://twitter.com/ninja_fu_",
+        "discord": "https://discord.gg/N5YXhNDJyz",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
