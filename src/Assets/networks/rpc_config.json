@@ -16922,6 +16922,56 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Crofam Ladies FULL",
+      "slug": "crofam-ladies-full",
+      "multiToken": false,
+      "address": "0x212F04cc7E26E371C7baF966F726845269bC40AC",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Crofam Ladies FULL is a collection consisting of 1295 NFT. You collected your lady in full crown from Crofam Ladies collection.",
+        "verified": false,
+        "avatar": "/img/collections/crofam-ladies-full/avatar.webp",
+        "card": "/img/collections/crofam-ladies-full/card.webp",
+        "banner": "/img/collections/crofam-ladies-full/banner.webp",
+        "maxSupply": 1295,
+        "website": "https://crofamladies.netlify.app/",
+        "twitter": "https://www.twitter.com/CrofamLadies",
+        "discord": "https://discord.gg/4ZwwXghGEj",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crofam Ladies-VIP",
+      "slug": "crofam-ladies-vip",
+      "multiToken": false,
+      "address": "0x5286c663e03A2e4c155f6CFe595D61E07f136A34",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Crofam Ladies VIP is a collection consisting of 1660NFT. VIP collection from the Crofam Ladies Brand.",
+        "verified": false,
+        "avatar": "/img/collections/crofam-ladies-vip/avatar.webp",
+        "card": "/img/collections/crofam-ladies-vip/card.webp",
+        "banner": "/img/collections/crofam-ladies-vip/banner.webp",
+        "maxSupply": 1660,
+        "website": "https://crofamladies.netlify.app/",
+        "twitter": "https://www.twitter.com/CrofamLadies",
+        "discord": "https://discord.gg/4ZwwXghGEj",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
