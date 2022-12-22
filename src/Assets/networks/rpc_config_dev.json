@@ -17000,6 +17000,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "CroMo | PANDA (Gen1)",
+      "slug": "cromo-panda-gen1",
+      "multiToken": false,
+      "address": "0x5e4534D2fA8Cea62247Ec0459F9552b1Cd2f421E",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "'Together is better' is our motto and we believe that a strong community can achieve anything. With our NFT art we want to get active in some fields and as a team we thought that out of any income (+secondary) out of any collection we create, we will donate to different projects which preserve our planet.    Royality: 5% -> if it's trackable, 50% into community-pool   10% will be donated to save the rainforest   10% will be split and go to different facilities that will help animals   10% for facilities around the world which will keep our environment clean and healthy   10% will be given back to the community (5% Gold-Member, 3% Silver-Member, 2% Bronze-Member)   \u200BThe remaining 60% will be spend to pay taxes and our creators aswell as to get new equipment to improve quallity.",
+        "verified": false,
+        "avatar": "/img/collections/cromo-panda-gen1/avatar.webp",
+        "banner": "/img/collections/cromo-panda-gen1/banner.webp",
+        "card": "/img/collections/cromo-panda-gen1/card.webp",
+        "maxSupply": 2500,
+        "website": "https://www.cromo-art.com/",
+        "twitter": "https://twitter.com/CromoMint",
+        "discord": "https://discord.gg/PHvUhK5RQU",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
