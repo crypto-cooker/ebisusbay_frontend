@@ -114,14 +114,16 @@ const AuctionComponent = (props) => {
                     </div>
                     <div className="row" style={{ gap: '2rem 0' }}>
                       <ProfilePreview type="Seller" address={listing.seller} to={`/account/${listing.seller}`} />
-                      <ProfilePreview
-                        type="Collection"
-                        title={collection.name}
-                        avatar={hostedImage(collection.metadata.avatar, true)}
-                        address={listing.nftAddress}
-                        verified={collection.metadata.verified}
-                        to={`/collection/${collection.slug}`}
-                      />
+                      {collection && (
+                        <ProfilePreview
+                          type="Collection"
+                          title={collection.name}
+                          avatar={hostedImage(collection.metadata.avatar, true)}
+                          address={listing.nftAddress}
+                          verified={collection.metadata.verified}
+                          to={`/collection/${collection.slug}`}
+                        />
+                      )}
                     </div>
 
                     <div className="spacer-40"></div>
