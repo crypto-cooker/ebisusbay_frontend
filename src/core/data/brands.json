@@ -574,6 +574,29 @@
     "style": {}
   },
   {
+    "slug": "crofam-ladies",
+    "name": "CrofamLadies",
+    "description": "The beautiful side of #crofam.",
+    "images": {
+      "banner": "/img/brands/crofam-ladies/banner.webp",
+      "preview": "/img/collections/crofam-ladies-full/banner.webp"
+    },
+    "collections": [
+      "0xF5aF7B3C142aB5545717C7fB6a0Da8fBF6E68612",
+      "0x7D8f0a2b275C0b22720A6Fc3b5a65AF84D9C55C5",
+      "0x212F04cc7E26E371C7baF966F726845269bC40AC",
+      "0x5286c663e03A2e4c155f6CFe595D61E07f136A34"
+    ],
+    "socials": {
+      "website": "https://crofamladies.netlify.app/",
+      "twitter": "https://www.twitter.com/CrofamLadies",
+      "discord": "https://discord.gg/4ZwwXghGEj"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "zap-projects",
     "name": "Zap Projects",
     "description": "",
@@ -667,27 +690,6 @@
     "style": {}
   },
   {
-    "slug": "crofam-ladies",
-    "name": "CrofamLadies",
-    "description": "The beautiful side of #crofam.",
-    "images": {
-      "banner": "/img/brands/crofam-ladies/banner.webp"
-    },
-    "collections": [
-      "0xF5aF7B3C142aB5545717C7fB6a0Da8fBF6E68612",
-      "0x7D8f0a2b275C0b22720A6Fc3b5a65AF84D9C55C5",
-      "0x212F04cc7E26E371C7baF966F726845269bC40AC",
-      "0x5286c663e03A2e4c155f6CFe595D61E07f136A34"
-    ],
-    "socials": {
-      "website": "https://crofamladies.netlify.app/",
-      "twitter": "https://www.twitter.com/CrofamLadies",
-      "discord": "https://discord.gg/4ZwwXghGEj"
-    },
-    "categories": [],
-    "style": {}
-  },
-  {
     "slug": "badmeerkat",
     "name": "BadMeerkat",
     "description": "3 Fan Art collection of MadMeerkat \uD83C\uDD95 Traits \uD83C\uDD95 Personality \uD83D\uDFF0 Degen",
@@ -698,7 +700,8 @@
     "collections": [
       "0x22B2f2223d26f27c27494efbF4E6646812193a43",
       "0xdc9B6e10E0648E2258afe6705690C1E81cf933d7",
-      "0x302789418f6A5DfDe9faB3b8FE9Bc4EEe020E84F"
+      "0x302789418f6A5DfDe9faB3b8FE9Bc4EEe020E84F",
+      "0xB41398EE9A7a9c7570F1973690Ce98370C3a78E4"
     ],
     "socials": {
       "website": "https://linktr.ee/badmeerkat",
