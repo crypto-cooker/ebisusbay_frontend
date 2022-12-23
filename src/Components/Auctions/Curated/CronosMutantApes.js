@@ -8,6 +8,7 @@ import {ImageKitService} from "@src/helpers/image";
 import Reveal from "react-awesome-reveal";
 import styled from "styled-components";
 import {keyframes} from "@emotion/react";
+import CuratedAuctionCollection from "@src/Components/Auctions/Curated/CuratedAuctionCollection";
 
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 const HeroSection = styled.section`
@@ -116,26 +117,8 @@ const CronosMutantApesAuction = () => {
       </HeroSection>
       <section className="gl-legacy container pt-5">
         <div className="row">
-          <div className="col-12 pt-3">
-            <>
-              <div className="col-lg-12">
-                <div className="text-center">
-                  <Heading as="h2" size="xl" className="mb-2">Active Auctions</Heading>
-                </div>
-              </div>
-              <div className="col-lg-12 pt-3">
-                <div className="text-center">Auction coming soon!</div>
-              </div>
-
-              <div className="col-lg-12 mt-4">
-                <div className="text-center">
-                  <Heading as="h2" size="xl" className="mb-2">Completed Auctions</Heading>
-                </div>
-              </div>
-              <div className="col-lg-12 pt-3">
-                <div className="text-center">No completed auctions</div>
-              </div>
-            </>
+          <div className="col-lg-12 pt-3">
+            <CuratedAuctionCollection collectionId="0x33e0b91c773D500FB4De87957740f5D200Be7371" />
           </div>
         </div>
       </section>
