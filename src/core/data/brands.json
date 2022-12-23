@@ -738,5 +738,26 @@
     "featured": true,
     "categories": [],
     "style": {}
+  },
+  {
+    "slug": "cronos-rocks",
+    "name": "Cronos Rocks",
+    "description": "Cronos Rocks is a reflection of the team's vision, creativity and pure passion for everything Geological. Cronos Rocks consists of 3 collections Cronos Rocks, Cronos Fossils GEN1 and Cronos Fossils GEN2. Throughout the evolution of Cronos Rocks the team continues to build rock solid relationships within the Cronos Chain. Cronos Rocks has also delivered the unique utility that is CRONOS GOLD (Yes real gold alluvial nuggets from Australia!).",
+    "images": {
+      "banner": "/img/brands/cronos-rocks/banner.webp",
+      "preview": "/img/brands/cronos-rocks/preview.webp"
+    },
+    "collections": [
+      "0xf8e63021C3d757b63eb53a9124271251A964D572",
+      "0xbd6b9a1A0477d64E99F660b7b7C205f4604E4Ff3",
+      "0x30aB0D8C808Ec024365D45A105c559BDF06BCB14"
+    ],
+    "socials": {
+      "website": "https://www.cronosrocks.com/",
+      "twitter": "https://twitter.com/cronosrocksnft"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
   }
 ]
