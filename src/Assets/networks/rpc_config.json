@@ -17053,6 +17053,64 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Veno Unstaked CRO",
+      "slug": "veno-unstaked-cro",
+      "multiToken": false,
+      "address": "0xb15533a0bc7c530d692a9660785226dfd3633965",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Each Veno Unstaked CRO NFT enables the holder to claim the CRO amount stated on the NFT after the given unlock date on https://veno.finance",
+        "verified": true,
+        "avatar": "/img/collections/veno-unstaked-cro/avatar.webp",
+        "card": "/img/collections/veno-unstaked-cro/card.webp",
+        "banner": "/img/collections/veno-unstaked-cro/banner.webp",
+        "maxSupply": 0,
+        "website": "https://veno.finance/",
+        "twitter": "https://twitter.com/VenoFinance",
+        "discord": "https://discord.gg/xQK8f8wu26",
+        "telegram": "https://t.me/VenoFinance",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Whale Family Christmas Edition",
+      "slug": "whalefam-xmas",
+      "address": "0x350FaA33F175cf65E53904BbB1AE8905f0F0f14c",
+      "multiToken": true,
+      "tokens": [
+        {
+          "id": 1
+        }
+      ],
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Merry Christmas! By Barbara Redekop",
+        "verified": true,
+        "avatar": "/img/collections/whalefam/avatar.webp",
+        "banner": "/img/collections/whalefam/banner.webp",
+        "card": "/img/collections/whalefam/card.webp",
+        "maxSupply": 5555,
+        "website": "https://www.whalefam.com/",
+        "twitter": "https://twitter.com/WhaleFamNFT",
+        "discord": "https://discord.gg/khRfPKDFwg",
+        "gitbook": "https://drive.google.com/file/d/1va8ft-odC7VeQHOxume2viVvA8Kh7aYI/view",
+        "instagram": "https://www.instagram.com/im_barbara_redekop/",
+        "categories": []
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "verified": true
+      }
     }
   ],
   "drops": [
