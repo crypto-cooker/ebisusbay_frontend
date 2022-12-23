@@ -14360,6 +14360,37 @@
       }
     },
     {
+      "name": "World of Cats: Special Gift",
+      "slug": "world-of-cats-gift",
+      "multiToken": true,
+      "tokens": [
+        {
+          "id": 1
+        }
+    
+      ],
+      "address": "0x9CB52E237Ae674755bD88BeA358325214B978CCc",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "World of Cats special gift.",
+        "verified": true,
+        "avatar": "/img/collections/world-of-cats-seasonal/avatar.webp",
+        "card": "/img/collections/world-of-cats-seasonal/card.webp",
+        "banner": "/img/collections/world-of-cats-seasonal/banner.webp",
+        "maxSupply": 13,
+        "website": "https://worldofcats.xyz/",
+        "twitter": "https://twitter.com/worldofcatsnft",
+        "discord": "https://discord.gg/worldofcats",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": "ebisu",
+        "verified": true
+      }
+    },
+    {
       "name": "Halloween BabyJoey",
       "slug": "halloween-baby-joey",
       "multiToken": false,
