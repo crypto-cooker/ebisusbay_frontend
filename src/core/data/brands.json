@@ -759,5 +759,26 @@
     "featured": true,
     "categories": [],
     "style": {}
+  },
+  {
+    "slug": "moon-crew",
+    "name": "Moon Crew",
+    "description": "Moon Crew project is a community driven project that focus on group investing, passive income and holders events. Currently we have 2 Collection, 7000 Moon Crew Apes and 3500 Moon Crew Pandas. Holding atleast 1 will give you acess to our exclusive channesl, Raffle option, trading option, voting power, royalties and much more.",
+    "images": {
+      "banner": "/img/brands/moon-crew/banner.webp",
+      "preview": "/img/brands/moon-crew/preview.webp"
+    },
+    "collections": [
+      "0x3335A43C59b45Ed1F73dd1335A5b2583CD9B0aaA",
+      "0x446808090D43C4b99c5E70C5EAC145384F11128E"
+    ],
+    "socials": {
+      "website": "https://mooncrew.club/",
+      "twitter": "https://twitter.com/moonapecrew",
+      "discord": "https://discord.gg/scVSpjpmDf"
+    },
+    "featured": false,
+    "categories": [],
+    "style": {}
   }
 ]

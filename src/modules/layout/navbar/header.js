@@ -113,6 +113,7 @@ const Header = function () {
                 <NavLink name={'Brands'} to={'/brands'} />
                 <NavLink name={'Drops'} to={'/drops'} />
                 <NavLink name={'Stats'} to={'/stats'} />
+                <NavLink name={'Auction'} to={'/auctions/mutant-serum'} />
               </HStack>
 
               {shouldUseMobileSearch && isGlobalSearchEnabled && <MobileSearchDrawer />}
@@ -141,6 +142,7 @@ const Header = function () {
                 <NavLink name={'Brands'} to={'/brands'} onClick={onClose} />
                 <NavLink name={'Drops'} to={'/drops'} onClick={onClose} />
                 <NavLink name={'Stats'} to={'/stats'} onClick={onClose} />
+                <NavLink name={'Auction'} to={'/auctions/mutant-serum'} />
 
                 <Box onClick={toggleTheme} fontSize="14px" fontWeight="bold" color="#fff" cursor="pointer">
                   <FontAwesomeIcon icon={theme === 'dark' ? faMoon : faSun} color="#fff" className="me-2"/> Dark mode
