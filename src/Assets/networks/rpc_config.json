@@ -17142,6 +17142,35 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "Phenix World Cup Team",
+      "slug": "phenix-world-cup-team",
+      "multiToken": false,
+      "address": "0xe8c198edcd172aab17df2ea62525b77efde5485b",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Phenix World Cup Team NFT Collection is the official collectables from Phenix Finance that proudly represents the FIFA World Cup Qatar 2022 teams from around the world.\n\n✅ FIFA 2022 World Cup-themed PWCT NFT\n\n✅ 32 Unique Nations\n\n✅ Find Legendary Cronos Nation, win 6500 CRO!\n\n✅ Win 4000 CRO for each Argentina Mint!\n\n✅ Win 2500 CRO for each France Mint!\n\n✅ Earn 1 Mythic Mystery Box every 4 mints",
+        "verified": true,
+        "avatar": "/img/collections/phenix-world-cup-team/avatar.webp",
+        "banner": "/img/collections/flaming-phenix-club/banner.webp",
+        "card": "/img/collections/flaming-phenix-club/card.webp",
+        "maxSupply": 2214,
+        "website": "https://phenix.finance/",
+        "twitter": "https://twitter.com/phenixfinance",
+        "discord": "https://discord.gg/phenix",
+        "medium": "https://medium.com/@phenixfinance.marketing",
+        "telegram": "https://t.me/phenixfinance",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
