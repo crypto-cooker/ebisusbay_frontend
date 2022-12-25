@@ -15830,6 +15830,32 @@
       }
     },
     {
+      "name": "Troll Coal",
+      "slug": "troll-coal",
+      "multiToken": false,
+      "address": "0x3B7d540159bef1C5bB5866767a6709ee65E4B960",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Trollfam is built from a community of Trollcoin holders. You are Trollcoin, we are Trollfam!",
+        "verified": true,
+        "avatar": "/img/collections/tcoal/avatar.webp",
+        "card": "/img/collections/tcoal/card.webp",
+        "banner": "/img/collections/tcoal/banner.webp",
+        "maxSupply": 1500,
+        "website": "https://trollcoin.clubcro.com/",
+        "twitter": "https://twitter.com/TrollCoinCro",
+        "discord": "https://discord.gg/trollcoin",
+        "telegram": "https://t.me/OfficialTrollcoin",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
       "name": "Baby Demon Legion",
       "slug": "baby-demon-legion",
       "multiToken": false,
