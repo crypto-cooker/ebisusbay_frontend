@@ -1,7 +1,7 @@
 import {Contract, ethers} from "ethers";
 import {appConfig} from "@src/Config";
-import {useSelector} from "react-redux";
-import {Center, Radio, RadioGroup, SimpleGrid, Stack} from "@chakra-ui/react";
+import {useDispatch, useSelector} from "react-redux";
+import {Center, Radio, RadioGroup, SimpleGrid, Stack, Text, VStack} from "@chakra-ui/react";
 import React, {useEffect, useState} from "react";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {getQuickWallet} from "@src/core/api/endpoints/wallets";
@@ -10,6 +10,9 @@ import {Spinner} from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
 import StakingNftCard from "@src/Components/Brand/Tabs/StakingTab/StakingNftCard";
 import Link from "next/link";
+import Button from "@src/Components/components/Button";
+import MetaMaskOnboarding from "@metamask/onboarding";
+import {chainConnect, connectAccount} from "@src/GlobalState/User";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -26,9 +29,11 @@ const filterTypes = {
 };
 
 const WeirdApesStakingTab = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const queryClient = useQueryClient();
   const [filterType, setFilterType] = useState(filterTypes.all);
+  const [filteredData, setFilteredData] = useState([]);
 
   const {
     data,
@@ -58,7 +63,19 @@ const WeirdApesStakingTab = () => {
     await queryClient.invalidateQueries({ queryKey: ['WeirdApesStakingTab-User', user.address] })
   };
 
-  const [filteredData, setFilteredData] = useState([]);
+  const handleConnect = () => {
+    if (!user.address) {
+      if (user.needsOnboard) {
+        const onboarding = new MetaMaskOnboarding();
+        onboarding.startOnboarding();
+      } else if (!user.address) {
+        dispatch(connectAccount());
+      } else if (!user.correctChain) {
+        dispatch(chainConnect());
+      }
+    }
+  };
+
   useEffect(() => {
     setFilteredData(data?.filter((nft) => {
       if (filterType === filterTypes.staked) return nft.isStaked;
@@ -136,7 +153,15 @@ const WeirdApesStakingTab = () => {
           )}
         </>
       ) : (
-        <>Must sign in</>
+        <VStack>
+          <Text>Connect wallet to view Apes</Text>
+          <Button type="legacy"
+                  onClick={handleConnect}
+                  className="flex-fill"
+          >
+            Connect
+          </Button>
+        </VStack>
       )}
     </>
   )
