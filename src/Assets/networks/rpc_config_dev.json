@@ -16297,7 +16297,7 @@
       "multiToken": false,
       "address": "0x0CE3caE72F40d842e7019e944E78845a08508Cca",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A collection of 777 animated NFT rings. \n\nCollect all 7 ring types to receive a real life hand-made custom ring based on your chosen ring type.",
         "verified": true,
@@ -18727,7 +18727,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/bigbadwolves/drop.webp",
         "banner": "/img/collections/bigbadwolves/banner.webp",
@@ -22100,7 +22100,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/patron-nft/drop.webp",
         "banner": "/img/collections/patron-nft/banner.webp",
@@ -22769,7 +22769,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "priceDescription": "1111 $TRPZ back on every MINT",
       "images": {
         "drop": "/img/drops/nft-ringz-aperson-lyeque/drop.webp",
