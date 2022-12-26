@@ -17247,6 +17247,30 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Crown Punk Santa",
+      "slug": "crown-punk-santa",
+      "multiToken": false,
+      "address": "0x8f440D0706383cDE5D85B7843ea25ba0D8F6dB2c",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Handmade 1/1 Santa Crown Punk - Xmas Gift for Crown Punks holders 2022!",
+        "verified": false,
+        "avatar": "/img/collections/crown-punk-santa/avatar.webp",
+        "card": "/img/collections/crown-punk-santa/card.webp",
+        "banner": "/img/collections/crown-punk-santa/banner.webp",
+        "maxSupply": 75,
+        "twitter": "https://twitter.com/CPNFT_CrownPunk",
+        "discord": "https://discord.gg/RhbHMU9ZCQa",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
