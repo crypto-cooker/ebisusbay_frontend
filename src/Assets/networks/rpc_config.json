@@ -16773,7 +16773,7 @@
       "multiToken": false,
       "address": "0x72c97F79867219381EFA83127534710D559a2220",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Dr Dao X Mutants is a collection of 3333 NFTs on the Cronos blockchain, that give various benefits, such as, Mini Dao Club, Decision Power for Future Game Developments, Royalties Sharing from Secondary Markets Sales and Dao Doker Game, Deflationary Supply, Supply will be reduced through Dr Dao Fusion Tool dApp.",
         "verified": true,
@@ -22916,8 +22916,8 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
-      "featured": true,
+      "complete": true,
+      "featured": false,
       "redirect": "https://daogames.online/mint",
       "images": {
         "drop": "/img/drops/dr-dao-x-mutant/drop.webp",
