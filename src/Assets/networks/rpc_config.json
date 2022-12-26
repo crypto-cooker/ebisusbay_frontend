@@ -8229,7 +8229,7 @@
         "discord": "https://discord.gg/crogenft",
         "twitter": "https://twitter.com/CrogeCoin",
         "telegram": "https://t.me/crogecoin",
-        "medium": "https://medium.com/@cometcalls/croge-nfts-are-coming-june-30-2022-c167ca0b511b",
+        "medium": "https://crogecoin.medium.com/",
         "categories": [
           "gaming"
         ]
@@ -17194,6 +17194,134 @@
       },
       "verification": {
         "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Degen Cronos Apes",
+      "slug": "degen-cronos-apes",
+      "multiToken": false,
+      "address": "0x06C226C929AFB2c2EEb4caE586A63B90ce1584aD",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The DCA is made by degens for degens. Join the DCA community and get full control in the Degen DAO, and share 100% royalties with the Degen Distributor.",
+        "verified": false,
+        "avatar": "/img/collections/degen-cronos-apes/avatar.webp",
+        "banner": "/img/collections/degen-cronos-apes/banner.webp",
+        "card": "/img/collections/degen-cronos-apes/card.webp",
+        "maxSupply": 5555,
+        "website": "https://www.degencronosapes.com/",
+        "twitter": "https://twitter.com/DegenCronosApes",
+        "discord": "https://discord.gg/27fdbCmJbV",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Stoned Ape Cronos",
+      "slug": "stoned-ape-cronos",
+      "multiToken": false,
+      "address": "0x5ABa2ccB3cE3F438eD3918821e9016416c9D9d4a",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Ape not only eat \uD83C\uDF4C but also \uD83C\uDF44 ART by Fryst. PFPs collection with Staking (20% mint + 80% secondary) and Wl (-50% price) next gen. No Roadmap or other utility.",
+        "verified": false,
+        "avatar": "/img/collections/stoned-ape-cronosapes/avatar.webp",
+        "banner": "/img/collections/stoned-ape-cronos/banner.webp",
+        "card": "/img/collections/stoned-ape-cronos/card.webp",
+        "maxSupply": 600,
+        "website": "https://lift.bio/stonedapecronos/",
+        "twitter": "https://twitter.com/ape_cronos",
+        "discord": "https://discord.gg/27fdbCmJbV",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crown Punk Santa",
+      "slug": "crown-punk-santa",
+      "multiToken": false,
+      "address": "0x8f440D0706383cDE5D85B7843ea25ba0D8F6dB2c",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Handmade 1/1 Santa Crown Punk - Xmas Gift for Crown Punks holders 2022!",
+        "verified": false,
+        "avatar": "/img/collections/crown-punk-santa/avatar.webp",
+        "card": "/img/collections/crown-punk-santa/card.webp",
+        "banner": "/img/collections/crown-punk-santa/banner.webp",
+        "maxSupply": 75,
+        "twitter": "https://twitter.com/CPNFT_CrownPunk",
+        "discord": "https://discord.gg/RhbHMU9ZCQa",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crogemas",
+      "slug": "crogemas",
+      "multiToken": false,
+      "address": "0xba3847a1101124d30d92bdc8a5de0961179b9eab",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Croge has been the premier Meme coin on the Cronos Chain for over a year now. We have successfully onboarded thousands of users onto the Cronos Chain, we have revolutionized the meme coin sector on Cronos. We also had a massively successful NFT launch thanks to our community holders and believers but in the spirit of the holidays It's time we give back to our loyal Crocs. This is our Crogemas line, It is a free mint we designed specially for our community and this holiday season, Thank you once again to our loyal believers and enjoy the holidays!",
+        "verified": true,
+        "avatar": "/img/collections/crogemas/avatar.webp",
+        "card": "/img/collections/crogemas/card.webp",
+        "banner": "/img/collections/crogemas/banner.webp",
+        "maxSupply": 2646,
+        "website": "https://www.crogecoin.com/",
+        "discord": "https://discord.gg/crogenft",
+        "twitter": "https://twitter.com/CrogeCoin",
+        "telegram": "https://t.me/crogecoin",
+        "medium": "https://crogecoin.medium.com/",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Cronos Weed",
+      "slug": "cronos-weed",
+      "multiToken": false,
+      "address": "0xa45894D91395580D5D5D2178795d3F0b2F27CF32",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Cronos Weed is one of BOB Adventures NFTs collection, created by artificial intelligence created with super limited supply of 200.",
+        "verified": false,
+        "avatar": "/img/collections/cronos-weed/avatar.webp",
+        "card": "/img/collections/cronos-weed/card.webp",
+        "banner": "/img/collections/cronos-weed/banner.webp",
+        "maxSupply": 200,
+        "website": "https://bob-adventures.netlify.app/",
+        "twitter": "https://twitter.com/CroBobAdventure",
+        "discord": "https://discord.gg/kemzRExMju",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
         "doxx": false,
         "kyc": false
       }
