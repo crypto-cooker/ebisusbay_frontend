@@ -17197,6 +17197,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Degen Cronos Apes",
+      "slug": "degen-cronos-apes",
+      "multiToken": false,
+      "address": "0x06C226C929AFB2c2EEb4caE586A63B90ce1584aD",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The DCA is made by degens for degens. Join the DCA community and get full control in the Degen DAO, and share 100% royalties with the Degen Distributor.",
+        "verified": false,
+        "avatar": "/img/collections/degen-cronos-apes/avatar.webp",
+        "banner": "/img/collections/degen-cronos-apes/banner.webp",
+        "card": "/img/collections/degen-cronos-apes/card.webp",
+        "maxSupply": 5555,
+        "website": "https://www.degencronosapes.com/",
+        "twitter": "https://twitter.com/DegenCronosApes",
+        "discord": "https://discord.gg/27fdbCmJbV",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
