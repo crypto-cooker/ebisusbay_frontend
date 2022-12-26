@@ -17222,6 +17222,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Stoned Ape Cronos",
+      "slug": "stoned-ape-cronos",
+      "multiToken": false,
+      "address": "0x5ABa2ccB3cE3F438eD3918821e9016416c9D9d4a",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Ape not only eat \uD83C\uDF4C but also \uD83C\uDF44 ART by Fryst. PFPs collection with Staking (20% mint + 80% secondary) and Wl (-50% price) next gen. No Roadmap or other utility.",
+        "verified": false,
+        "avatar": "/img/collections/stoned-ape-cronosapes/avatar.webp",
+        "banner": "/img/collections/stoned-ape-cronos/banner.webp",
+        "card": "/img/collections/stoned-ape-cronos/card.webp",
+        "maxSupply": 600,
+        "website": "https://lift.bio/stonedapecronos/",
+        "twitter": "https://twitter.com/ape_cronos",
+        "discord": "https://discord.gg/27fdbCmJbV",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
