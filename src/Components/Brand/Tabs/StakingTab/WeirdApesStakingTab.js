@@ -3,7 +3,7 @@ import {appConfig} from "@src/Config";
 import {useDispatch, useSelector} from "react-redux";
 import {Center, Radio, RadioGroup, SimpleGrid, Stack, Text, VStack} from "@chakra-ui/react";
 import React, {useEffect, useState} from "react";
-import {useQuery, useQueryClient} from "@tanstack/react-query";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {getQuickWallet} from "@src/core/api/endpoints/wallets";
 import {ERC721} from "@src/Contracts/Abis";
 import {Spinner} from "react-bootstrap";
@@ -27,13 +27,15 @@ const filterTypes = {
   staked: 'staked',
   unstaked: 'unstaked'
 };
+const queryKey = 'WeirdApesStakingTab';
 
 const WeirdApesStakingTab = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const queryClient = useQueryClient();
   const [filterType, setFilterType] = useState(filterTypes.all);
   const [filteredData, setFilteredData] = useState([]);
+  const stakeMutation = useStakeMutation();
+  const unstakeMutation = useUnstakeMutation();
 
   const {
     data,
@@ -41,7 +43,7 @@ const WeirdApesStakingTab = () => {
     hasNextPage,
     status,
   } = useQuery(
-    ['WeirdApesStakingTab-User', user.address],
+    [queryKey, user.address],
     () => getApes(user.address),
     {
       refetchOnWindowFocus: false,
@@ -49,18 +51,12 @@ const WeirdApesStakingTab = () => {
     }
   );
 
-  const onStake = async (nftId) => {
-    const stakingContract = new Contract(stakingContractAddress, stakingAbi, user.provider.getSigner());
-    const tx = await stakingContract.stake(nftId);
-    await tx.wait();
-    await queryClient.invalidateQueries({ queryKey: ['WeirdApesStakingTab-User', user.address] })
+  const handleStake = async (nftId) => {
+    await stakeMutation.mutateAsync(nftId);
   };
 
-  const onUnstake = async (nftId) => {
-    const stakingContract = new Contract(stakingContractAddress, stakingAbi, user.provider.getSigner());
-    const tx = await stakingContract.unstake(nftId);
-    await tx.wait();
-    await queryClient.invalidateQueries({ queryKey: ['WeirdApesStakingTab-User', user.address] })
+  const handleUnstake = async (nftId) => {
+    await unstakeMutation.mutateAsync(nftId);
   };
 
   const handleConnect = () => {
@@ -121,14 +117,14 @@ const WeirdApesStakingTab = () => {
                 }
               >
                 {filteredData.length > 0 ? (
-                  <SimpleGrid columns={{base: 1, sm: 2, md: 3, lg: 4}} gap={4}>
+                  <SimpleGrid columns={{base: 1, sm: 2, md: 3, lg: 4, xl: 5, '2xl': 6}} gap={4}>
                     {filteredData.map((nft) => (
                       <StakingNftCard
                         key={nft.nftId}
                         nft={nft}
                         isStaked={nft.isStaked}
-                        onStake={onStake}
-                        onUnstake={onUnstake}
+                        onStake={handleStake}
+                        onUnstake={handleUnstake}
                       />
                     ))}
                   </SimpleGrid>
@@ -168,6 +164,48 @@ const WeirdApesStakingTab = () => {
 }
 
 export default WeirdApesStakingTab;
+
+const useStakeMutation = () => {
+  const queryClient = useQueryClient();
+  const user = useSelector((state) => state.user);
+
+  return useMutation({
+    mutationFn: async (nftId) => {
+      const stakingContract = new Contract(stakingContractAddress, stakingAbi, user.provider.getSigner());
+      const tx = await stakingContract.stake(nftId);
+      await tx.wait();
+      return nftId;
+    },
+    onSuccess: data => {
+      queryClient.setQueryData([queryKey, user.address], old => {
+        const index = old.findIndex((nft) => nft.nftId === data);
+        old[index].isStaked = true;
+        return old;
+      })
+    }
+  })
+}
+
+const useUnstakeMutation = () => {
+  const queryClient = useQueryClient();
+  const user = useSelector((state) => state.user);
+
+  return useMutation({
+    mutationFn: async (nftId) => {
+      const stakingContract = new Contract(stakingContractAddress, stakingAbi, user.provider.getSigner());
+      const tx = await stakingContract.unstake(nftId);
+      await tx.wait();
+      return nftId;
+    },
+    onSuccess: data => {
+      queryClient.setQueryData([queryKey, user.address], old => {
+        const index = old.findIndex((nft) => nft.nftId === data);
+        old[index].isStaked = false;
+        return old;
+      })
+    }
+  })
+}
 
 const getApes = async (address) => {
   const quickWallet = await getQuickWallet(address, {collection: gwacAddress, pageSize: 1000});
