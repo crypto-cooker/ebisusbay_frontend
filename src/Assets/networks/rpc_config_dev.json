@@ -17298,6 +17298,33 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Cronos Weed",
+      "slug": "cronos-weed",
+      "multiToken": false,
+      "address": "0xa45894D91395580D5D5D2178795d3F0b2F27CF32",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Cronos Weed is one of BOB Adventures NFTs collection, created by artificial intelligence created with super limited supply of 200.",
+        "verified": false,
+        "avatar": "/img/collections/cronos-weed/avatar.webp",
+        "card": "/img/collections/cronos-weed/card.webp",
+        "banner": "/img/collections/cronos-weed/banner.webp",
+        "maxSupply": 200,
+        "website": "https://bob-adventures.netlify.app/",
+        "twitter": "https://twitter.com/CroBobAdventure",
+        "discord": "https://discord.gg/kemzRExMju",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
