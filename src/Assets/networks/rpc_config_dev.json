@@ -8229,7 +8229,7 @@
         "discord": "https://discord.gg/crogenft",
         "twitter": "https://twitter.com/CrogeCoin",
         "telegram": "https://t.me/crogecoin",
-        "medium": "https://medium.com/@cometcalls/croge-nfts-are-coming-june-30-2022-c167ca0b511b",
+        "medium": "https://crogecoin.medium.com/",
         "categories": [
           "gaming"
         ]
@@ -17268,6 +17268,33 @@
       },
       "verification": {
         "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crogemas",
+      "slug": "crogemas",
+      "multiToken": false,
+      "address": "0xba3847a1101124d30d92bdc8a5de0961179b9eab",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Croge has been the premier Meme coin on the Cronos Chain for over a year now. We have successfully onboarded thousands of users onto the Cronos Chain, we have revolutionized the meme coin sector on Cronos. We also had a massively successful NFT launch thanks to our community holders and believers but in the spirit of the holidays It's time we give back to our loyal Crocs. This is our Crogemas line, It is a free mint we designed specially for our community and this holiday season, Thank you once again to our loyal believers and enjoy the holidays!",
+        "verified": true,
+        "avatar": "/img/collections/crogemas/avatar.webp",
+        "card": "/img/collections/crogemas/card.webp",
+        "banner": "/img/collections/crogemas/banner.webp",
+        "maxSupply": 2646,
+        "website": "https://www.crogecoin.com/",
+        "discord": "https://discord.gg/crogenft",
+        "twitter": "https://twitter.com/CrogeCoin",
+        "telegram": "https://t.me/crogecoin",
+        "medium": "https://crogecoin.medium.com/",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
