@@ -20877,7 +20877,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/cro-hamsters/drop.webp",
         "banner": "/img/collections/cro-hamsters/banner.webp",
