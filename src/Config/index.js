@@ -67,6 +67,11 @@ export const configData = {
     collections: rpcConfig.known_contracts,
     drops: rpcConfig.drops,
     auctions: rpcConfig.auctions,
+    vendors: {
+      transak: {
+        url: 'https://global.transak.com?apiKey=c5d03d27-59a6-49dd-9de3-5dad9471d105&cryptoCurrencyCode=CRO&isAutoFillUserData=true'
+      }
+    }
   },
   [environments.development]: {
     chain: {
@@ -122,6 +127,11 @@ export const configData = {
     collections: rpcConfigDev.known_contracts,
     drops: rpcConfigDev.drops,
     auctions: rpcConfigDev.auctions,
+    vendors: {
+      transak: {
+        url: 'https://global-stg.transak.com?apiKey=6bdef2f9-cfab-4d58-bb79-82794642a67e&cryptoCurrencyCode=CRO&isAutoFillUserData=true'
+      }
+    }
   },
   [environments.testnet]: {
     chain: {
@@ -177,12 +187,22 @@ export const configData = {
     collections: rpcConfigTestnet.known_contracts,
     drops: rpcConfigTestnet.drops,
     auctions: rpcConfigTestnet.auctions,
+    vendors: {
+      transak: {
+        url: 'https://global-stg.transak.com?apiKey=6bdef2f9-cfab-4d58-bb79-82794642a67e&cryptoCurrencyCode=CRO&isAutoFillUserData=true'
+      }
+    }
   },
   [environments.local]: {
     urls: {
       api: 'https://api.ebisusbay.com/',
       cms: 'http://localhost:4000/api/',
     },
+    vendors: {
+      transak: {
+        url: 'https://global-stg.transak.com?apiKey=6bdef2f9-cfab-4d58-bb79-82794642a67e&cryptoCurrencyCode=CRO&isAutoFillUserData=true'
+      }
+    }
   }
 };
 

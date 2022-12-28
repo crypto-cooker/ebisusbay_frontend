@@ -185,6 +185,10 @@ const Index = function () {
     toast.success(`Cookies cleared!`);
   };
 
+  const handleBuyCro = () => {
+    window.open(config.vendors.transak.url, '_blank');
+  }
+
   useEffect(() => {
     const themeInStorage = getThemeInStorage();
 
@@ -409,10 +413,10 @@ const Index = function () {
               <FontAwesomeIcon icon={faWallet} className="me-2"/>
               <span>Wallet Info</span>
             </Heading>
-            <div className="row mb-2">
-              <div className="col">
+            <div className="d-flex">
+              <div className="flex-fill">
                 <div className="text-muted">Balance</div>
-                <div className="">
+                <div>
                   {!user.connectingWallet ? (
                     <span className="d-wallet-value">
                       {user.balance ? (
@@ -435,8 +439,14 @@ const Index = function () {
                   )}
                 </div>
               </div>
+              <div className="my-auto">
+                <Button type="legacy"
+                        onClick={handleBuyCro}>
+                  Buy CRO
+                </Button>
+              </div>
             </div>
-            <div className="d-flex">
+            <div className="d-flex mt-2">
               <div className="flex-fill">
                 <div className="text-muted">Market Escrow</div>
                 <div>
