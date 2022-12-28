@@ -47,6 +47,9 @@ const theme = extendTheme({
       bgColor3: '#212428',
       bgColor4: '#000000',
     },
+    gray: {
+      700: '#212428'
+    }
   },
   breakpoints: {
     sm: '576px',

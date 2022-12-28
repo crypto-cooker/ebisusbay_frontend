@@ -17325,6 +17325,34 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "ODDling Ecosystem Pass",
+      "slug": "oddling-ecosystem-pass",
+      "multiToken": false,
+      "address": "0xBBF22d81C79f8618FFE232dE57f30ceC4cD641a7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "This NFT is an exclusive pass into the ODDling  Ecosystem .this pass allows for a claim of the 15% mint rewards back to the community during the mint phase and 50% of rewards back to the community off of secondary sales.  It will also act as the bases for creating the ODDling Ecosystem DAO. In addition to those utilities it will allow holders to be airdropped the next upcoming parts of this project and free mints and airdrops of collaborated projects . Moving forward each pass holder will get 1:1 airdrops of the ODDlings and act as raffle tickets to the lazy mint of the Snot nosed kids that i the founder drop weekly moving forward after this mint (community will vote on traits etc. for ones they would like to mint personally) come join the discord be sort of the DAO get a personalized and real hands experience of this project and ecosystem.",
+        "verified": false,
+        "avatar": "/img/collections/oddling-ecosystem-pass/avatar.webp",
+        "card": "/img/collections/oddling-ecosystem-pass/card.webp",
+        "banner": "/img/collections/oddling-ecosystem-pass/banner.webp",
+        "maxSupply": 1420,
+        "website": "https://oddling.netlify.app/",
+        "twitter": "https://twitter.com/oddlingnfts",
+        "discord": "https://discord.gg/qHtjuk7X",
+        "telegram": "https://t.me/+k0xWT-d1YDI1ZmY5",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
@@ -20877,7 +20905,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/cro-hamsters/drop.webp",
         "banner": "/img/collections/cro-hamsters/banner.webp",
