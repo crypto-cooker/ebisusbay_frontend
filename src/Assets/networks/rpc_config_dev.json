@@ -17239,7 +17239,6 @@
         "maxSupply": 600,
         "website": "https://lift.bio/stonedapecronos/",
         "twitter": "https://twitter.com/ape_cronos",
-        "discord": "https://discord.gg/27fdbCmJbV",
         "categories": []
       },
       "verification": {
@@ -17347,6 +17346,31 @@
         "categories": [
           "utility"
         ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "BANDITS",
+      "slug": "bandits",
+      "multiToken": false,
+      "address": "0xf71C55Fceb76E9d3fa1329719346918f9c4D17f0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Bandits is a collection of 777 uniquely generated NFT’s stored in the Cronos-Chain-Ecosystem. We will deliver airdrops, prize filled vaults, staking opportunities, NFT auctions, additional collections, customized art and much more! The NFT’s value will continue to evolve based on the desires of the community and we look forward to you joining the heist!",
+        "verified": false,
+        "avatar": "/img/collections/bandits/avatar.webp",
+        "card": "/img/collections/bandits/card.webp",
+        "banner": "/img/collections/bandits/banner.webp",
+        "maxSupply": 777,
+        "website": "https://nftlaunch.me/collection/bandits",
+        "twitter": "https://twitter.com/BANDITS750",
+        "discord": "https://discord.gg/tMubFQGW3A",
+        "categories": []
       },
       "verification": {
         "verified": false,
