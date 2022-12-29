@@ -1,5 +1,12 @@
 [
   {
+    "users": [
+      "0x35747AD66159fEf14C4331a902A27035D4a415f3"
+    ],
+    "tokens": [],
+    "reason": "Scammed. #0588"
+  },
+  {
     "users": ["0x824fc9060d6daef0aa210653418b935f19b4f9a9"],
     "tokens": [
       {
