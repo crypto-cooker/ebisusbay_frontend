@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Spinner } from 'react-bootstrap';
 
 import TableHeader from '../ReceivedOffers/ReceivedOffersHeader';
@@ -8,8 +8,10 @@ import {getAllCollectionOffers, getAllOffers} from "@src/core/subgraph";
 import {useQuery} from "@tanstack/react-query";
 import {caseInsensitiveCompare, findCollectionByAddress, findCollectionFloor, isNftBlacklisted} from "@src/utils";
 import {offerState} from "@src/core/api/enums";
+import {FormControl, FormLabel, Switch} from "@chakra-ui/react";
 
 export default function ReceivedOffers({ address, collectionAddresses, nfts, stats, type }) {
+  const [showAll, setShowAll] = useState(false);
 
   const fetchProjects = async ({ pageParam = 0 }) => {
     const {data: allOffers} = await getAllOffers(collectionAddresses, '0', pageParam);
@@ -27,7 +29,7 @@ export default function ReceivedOffers({ address, collectionAddresses, nfts, sta
 
         const floorPrice = findCollectionFloor(knownContract, stats);
         const offerPrice = parseInt(offer.price);
-        const isAboveOfferThreshold = floorPrice ? offerPrice >= floorPrice / 2 : true;
+        const isAboveOfferThreshold = floorPrice && !showAll ? offerPrice >= floorPrice / 2 : true;
         const canShowCompletedOffers = !knownContract.multiToken || parseInt(offer.state) === offerState.ACTIVE;
         const isBlacklisted = isNftBlacklisted(offer.nftAddress, offer.nftId);
 
@@ -47,7 +49,7 @@ export default function ReceivedOffers({ address, collectionAddresses, nfts, sta
 
           const floorPrice = findCollectionFloor(knownContract, stats);
           const offerPrice = parseInt(offer.price);
-          const isAboveOfferThreshold = floorPrice ? offerPrice >= floorPrice / 2 : true;
+          const isAboveOfferThreshold = floorPrice && !showAll ? offerPrice >= floorPrice / 2 : true;
           const canShowCompletedOffers = !knownContract.multiToken || parseInt(offer.state) === offerState.ACTIVE;
           const isBlacklisted = isNftBlacklisted(offer.nftAddress, offer.nftId);
 
@@ -69,7 +71,7 @@ export default function ReceivedOffers({ address, collectionAddresses, nfts, sta
 
         const floorPrice = findCollectionFloor(knownContract, stats);
         const offerPrice = parseInt(offer.price);
-        const isAboveOfferThreshold = floorPrice ? offerPrice >= floorPrice / 2 : true;
+        const isAboveOfferThreshold = floorPrice && !showAll ? offerPrice >= floorPrice / 2 : true;
         const canShowCompletedOffers = !knownContract.multiToken || parseInt(offer.state) === offerState.ACTIVE;
 
         return isAboveOfferThreshold && canShowCompletedOffers;
@@ -87,7 +89,7 @@ export default function ReceivedOffers({ address, collectionAddresses, nfts, sta
     isFetchingNextPage,
     status,
   } = useQuery(
-    ['ReceivedOffers', type],
+    ['ReceivedOffers', type, showAll],
     fetchProjects,
     {enabled: collectionAddresses.length > 0 && nfts.length > 0, refetchOnWindowFocus: false}
   )
@@ -98,6 +100,12 @@ export default function ReceivedOffers({ address, collectionAddresses, nfts, sta
 
   return (
     <div>
+      <FormControl display='flex' alignItems='center' mb={2}>
+        <FormLabel htmlFor='show-all-offers' mb='0'>
+          Show low offers
+        </FormLabel>
+        <Switch id='show-all-offers' isChecked={showAll} onChange={(e) => setShowAll(e.target.checked)} />
+      </FormControl>
       <TableHeader />
       {status === "loading" ? (
         <div className="col-lg-12 text-center">
