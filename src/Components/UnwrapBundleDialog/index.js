@@ -37,7 +37,7 @@ const UnwrapBundleDialog = ({ isOpen, onClose, nftBundle }) => {
     setIsLoading(true)
     try {
       await unwrapBundle(nftBundle.id)
-      toast.success('Your bundle was unwrap successfully');
+      toast.success('Your bundle was unwrapped successfully');
       onClose();
       dispatch(setRefetchNfts(true))
     } catch (err) {
