@@ -83,7 +83,7 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
                       ) : (
                         <Blockies seed={(nft.address ?? nft.nftAddress).toLowerCase()} size={15} scale={10} />
                       )}
-                      {collection.metadata.verified && (
+                      {collection.verification.verified && (
                         <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={8} stackClass="eb-avatar_badge" />
                       )}
                       </div>

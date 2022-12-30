@@ -42,7 +42,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/avatar.jpg",
         "card": "/img/collections/ebisu/card.webp",
         "website": "https://app.ebisusbay.com/",
@@ -68,7 +67,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "",
         "banner": "",
         "card": "",
@@ -92,7 +90,6 @@
       "listable": false,
       "metadata": {
         "description": "Our very own Halloween collection, from the team at Ebisu's Bay.",
-        "verified": true,
         "avatar": "/img/collections/ryoshi-tales-halloween/avatar.webp",
         "banner": "/img/collections/ryoshi-tales-halloween/banner.webp",
         "card": "/img/collections/ryoshi-tales-halloween/card.webp",
@@ -119,7 +116,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "",
         "banner": "",
         "card": "",
@@ -143,7 +139,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "",
         "banner": "",
         "card": "",
@@ -167,7 +162,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "",
         "banner": "",
         "card": "",
@@ -191,7 +185,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "",
         "banner": "",
         "card": "",
@@ -215,7 +208,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/deplone/avatar.jpg",
         "banner": "/img/collections/deplone/page_banner.jpg",
         "card": "/img/drops/deplone/drop.gif",
@@ -236,7 +228,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/lazyhorse/avatar.png",
         "card": "/img/collections/lazyhorse/card.png",
         "banner": "/img/collections/lazyhorse/banner.png",
@@ -257,7 +248,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/crougars/avatar.png",
         "card": "/img/collections/crougars/card.gif",
         "banner": "/img/collections/crougars/banner.webp",
@@ -278,7 +268,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/lazyhorse/avatar.png",
         "card": "/img/collections/lazyhorse/card.png",
         "banner": "/img/collections/lazyhorse/banner.png",
@@ -299,7 +288,6 @@
       "listable": true,
       "metadata": {
         "description": "They are magical! Their strength lies in feeling and finding those in need.",
-        "verified": true,
         "avatar": "/img/collections/barbara/spacecrystalunicorns/avatar.jpg",
         "card": "/img/collections/barbara/spacecrystalunicorns/card.jpg",
         "banner": "/img/collections/barbara/spacecrystalunicorns/banner.jpg",
@@ -320,7 +308,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/crognomes/avatar.png",
         "card": "/img/collections/crognomes/card.png",
         "banner": "/img/collections/crognomes/banner.png",
@@ -344,7 +331,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/anuah/avatar.png",
         "card": "/img/collections/anuah/card.webp",
         "banner": "/img/collections/anuah/banner.webp",
@@ -365,7 +351,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/cronogods/avatar.gif",
         "card": "/img/collections/cronogods/card.png",
         "banner": "/img/collections/cronogods/banner.webp",
@@ -389,7 +374,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/mariecyborg/avatar.png",
         "card": "/img/collections/mariecyborg/card.png",
         "banner": "/img/collections/mariecyborg/banner.webp",
@@ -416,7 +400,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/magbrew/avatar.jpg",
         "card": "/img/collections/magbrew/card.jpg",
         "banner": "/img/collections/magbrew/banner.webp",
@@ -442,7 +425,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/crazyscientists/avatar.png",
         "card": "/img/collections/crazyscientists/card.png",
         "banner": "/img/collections/crazyscientists/banner.png",
@@ -467,7 +449,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/bobanftea/avatar.png",
         "card": "/img/collections/bobanftea/card.png",
         "banner": "/img/collections/bobanftea/banner.png",
@@ -492,7 +473,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/recklessrobots/avatar.png",
         "card": "/img/collections/recklessrobots/card.png",
         "banner": "/img/collections/recklessrobots/banner.webp",
@@ -517,7 +497,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/hypeddogs/avatar.webp",
         "card": "/img/collections/hypeddogs/card.webp",
         "banner": "/img/collections/hypeddogs/banner.webp",
@@ -542,7 +521,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/creatures/avatar.jpg",
         "card": "/img/collections/creatures/card.png",
         "banner": "/img/collections/creatures/banner.png",
@@ -568,7 +546,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/alienft/avatar.png",
         "card": "/img/collections/alienft/card.png",
         "banner": "/img/collections/alienft/banner.png",
@@ -593,7 +570,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/meta_cyborgs/avatar.png",
         "card": "/img/collections/meta_cyborgs/banner.webp",
         "banner": "/img/collections/meta_cyborgs/banner.webp",
@@ -618,7 +594,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/crosmonauts/ship/avatar.webp",
         "card": "/img/collections/crosmonauts/ship/card.webp",
         "banner": "/img/collections/crosmonauts/ship/banner.webp",
@@ -643,7 +618,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/cronosmb/special/avatar.png",
         "card": "/img/collections/cronosmb/gorilla/card.jpeg",
         "banner": "/img/collections/cronosmb/gorilla/banner.webp",
@@ -668,7 +642,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/slothty/avatar.png",
         "card": "/img/collections/slothty/card.webp",
         "banner": "/img/collections/slothty/banner.webp",
@@ -693,7 +666,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "",
         "banner": "",
         "card": "",
@@ -717,7 +689,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/lolitafriends/avatar.png",
         "card": "/img/collections/lolitafriends/card.png",
         "banner": "/img/collections/lolitafriends/banner.png",
@@ -741,7 +712,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/goldpartner/avatar.gif",
         "card": "/img/collections/goldpartner/card.png",
         "banner": "/img/collections/goldpartner/banner.png",
@@ -764,7 +734,6 @@
       "address": "0x17e95a737533d93cf4B7180f8f48070914b84706",
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/fighters/avatar.png",
         "card": "/img/collections/fighters/card.png",
         "banner": "/img/collections/fighters/banner.png",
@@ -789,7 +758,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/bigbadwolves/avatar.webp",
         "card": "/img/collections/bigbadwolves/card.webp",
         "banner": "/img/collections/bigbadwolves/banner.webp",
@@ -814,7 +782,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/nobuddies/avatar.webp",
         "banner": "/img/collections/nobuddies/banner.webp",
         "card": "/img/collections/nobuddies/card.webp",
@@ -838,7 +805,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/marbleverse/avatar.webp",
         "banner": "/img/collections/marbleverse/banner.webp",
         "card": "/img/collections/marbleverse/card.webp",
@@ -864,7 +830,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/lazyhorse/avatar.png",
         "card": "/img/collections/lazyhorse/skybox/card.webp",
         "banner": "/img/collections/lazyhorse/skybox/banner.webp",
@@ -889,7 +854,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/cronosverse/avatar.webp",
         "card": "/img/collections/cronosverse/card.webp",
         "banner": "/img/collections/cronosverse/banner.webp",
@@ -913,7 +877,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/succubus/avatar.png",
         "card": "/img/collections/succubus/card.png",
         "banner": "/img/collections/succubus/banner.png",
@@ -937,7 +900,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/crobees/avatar.webp",
         "card": "/img/collections/crobees/card.webp",
         "banner": "/img/collections/crobees/banner.webp",
@@ -962,7 +924,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/ladyri/avatar.jpg",
         "card": "/img/collections/ladyri/card.jpg",
         "banner": "/img/collections/ladyri/banner.jpg",
@@ -986,7 +947,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/kardia/avatar.webp",
         "card": "/img/collections/kardia/card.webp",
         "banner": "/img/collections/kardia/banner.webp",
@@ -1012,7 +972,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": false,
         "avatar": "/img/collections/monkey-anarkey/avatar.webp",
         "card": "/img/collections/monkey-anarkey/card.webp",
         "banner": "/img/collections/monkey-anarkey/banner.webp",
@@ -1038,7 +997,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/lazyhorse/barncats/avatar.webp",
         "card": "/img/collections/lazyhorse/card.png",
         "banner": "/img/collections/lazyhorse/banner.png",
@@ -1063,7 +1021,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": false,
         "avatar": "/img/collections/panelsproject/primate/avatar.webp",
         "banner": "/img/collections/panelsproject/primate/banner.webp",
         "card": "/img/collections/panelsproject/primate/card.webp",
@@ -1088,7 +1045,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/croclubs/avatar.png",
         "card": "/img/collections/croclubs/card.png",
         "banner": "/img/collections/croclubs/banner.png",
@@ -1113,7 +1069,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/likehumans/avatar.webp",
         "banner": "/img/collections/likehumans/banner.webp",
         "card": "/img/collections/likehumans/card.webp",
@@ -1135,7 +1090,6 @@
       "listable": true,
       "metadata": {
         "description": "Employee of the Month is a collection that reflects on the topic of the hard, day to day corporate work. The employees are portrayed by the artist, as plain, green smileys, which is a symbol of how the society formed them to be more or less the same. It highlights (sometimes in a funny way) daily struggles, challenges and disappointments of the everyday office life.",
-        "verified": true,
         "avatar": "/img/collections/eotm/avatar.png",
         "banner": "/img/collections/eotm/banner.webp",
         "card": "/img/collections/eotm/card.webp",
@@ -1160,7 +1114,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/multiverse-selfies/avatar.webp",
         "card": "/img/collections/multiverse-selfies/card.webp",
         "banner": "/img/collections/multiverse-selfies/banner.webp",
@@ -1184,7 +1137,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/psycho-golden-lady/avatar.webp",
         "card": "/img/collections/psycho-golden-lady/card.webp",
         "banner": "/img/collections/psycho-golden-lady/banner.webp",
@@ -1208,7 +1160,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/cro-of-thrones/avatar.webp",
         "card": "/img/collections/cro-of-thrones/card.webp",
         "banner": "/img/collections/cro-of-thrones/banner.webp",
@@ -1232,7 +1183,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/smash-stunts/avatar.png",
         "card": "/img/collections/smash-stunts/card.webp",
         "banner": "/img/collections/smash-stunts/banner.webp",
@@ -1256,7 +1206,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/croppelganger/avatar.webp",
         "card": "/img/collections/croppelganger/card.webp",
         "banner": "/img/collections/croppelganger/banner.webp",
@@ -1279,7 +1228,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/genesis-crates/avatar.png",
         "card": "/img/collections/genesis-crates/card.webp",
         "banner": "/img/collections/genesis-crates/banner.webp",
@@ -1305,7 +1253,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/beta-mascots/avatar.webp",
         "card": "/img/collections/beta-mascots/card.webp",
         "banner": "/img/collections/beta-mascots/banner.webp",
@@ -1330,7 +1277,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/ghetto-doves/avatar.webp",
         "card": "/img/collections/ghetto-doves/card.webp",
         "banner": "/img/collections/ghetto-doves/banner.webp",
@@ -1360,7 +1306,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/ghetto-doves/avatar.webp",
         "card": "/img/collections/ghetto-doves/card.webp",
         "banner": "/img/collections/ghetto-doves/banner.webp",
@@ -1385,7 +1330,6 @@
       "listable": true,
       "metadata": {
         "description": "Cyberclone is a collection of 2000 uniquely generated NFTs stored on the Cronos blockchain. Each NFT Clone is inspired by the futuristic life of the year 2234, where the world is falling apart under the control of the Cyberclones, who are conquering earth!",
-        "verified": true,
         "avatar": "/img/collections/cyber-clone/avatar.webp",
         "card": "/img/collections/cyber-clone/card.webp",
         "banner": "/img/collections/cyber-clone/banner.webp",
@@ -1410,7 +1354,6 @@
       "listable": true,
       "metadata": {
         "description": "The Bankroll Bear Society is an NFT project consisting of 5,000 Bears. Found on the Cronos chain. We are offering direct REAL-LIFE utilities. Our Bears are a VIP gateway into the Bankroll Universe and ecosystem.",
-        "verified": true,
         "avatar": "/img/collections/bankroll-bear-society/avatar.webp",
         "card": "/img/collections/bankroll-bear-society/card.webp",
         "banner": "/img/collections/bankroll-bear-society/banner.webp",
@@ -1434,7 +1377,6 @@
       "listable": true,
       "metadata": {
         "description": "Looneycorns is the first of 5 unique toys/NFTs from the Lost Toy collection. Each toy character represents a childhood favourite that has been lost over time and needs a new home. \n\nEach of the 2,200 Looneycorns NFT have a different rarity level and to ensure that each one is totally unique, we have also gone the \u00e2\u20ac\u0153extra-mile\u00e2\u20ac\u009d and created over 120 traits which would easily make up a collection of 5,000 NFTs!",
-        "verified": true,
         "avatar": "/img/collections/looneycorns/avatar.webp",
         "card": "/img/collections/looneycorns/card.webp",
         "banner": "/img/collections/looneycorns/banner.webp",
@@ -1458,7 +1400,6 @@
       "listable": true,
       "metadata": {
         "description": "Welcome to Manor H, where Dr. Boo's ghosts were born. These ghosts come in 2111 appearances, divided into 3 categories: COMMON, RARE & EPIC. In addition to the staking and the numerous perks offered by these categories, each Boo NFT acquired will receive a Poison NFT, with a different color depending on the category (yellow, green or black). A Boo NFT + Poison NFT pair will allow access to the Manor in the metaverse, to retrieve multiple items daily to build a new NFT Boo FRK!",
-        "verified": true,
         "avatar": "/img/collections/dr-boos-ghosts/avatar.webp",
         "card": "/img/collections/dr-boos-ghosts/card.webp",
         "banner": "/img/collections/dr-boos-ghosts/banner.webp",
@@ -1483,7 +1424,6 @@
       "listable": true,
       "metadata": {
         "description": "The Northern Hippo Syndicate brings the artistic and creative stylings of Little Sloth from Open Sea to the Cronos chain. This crazy collection of 5000 unique PFP grants you access to so much more than amazing art. Hold a minimum of 3 to receive a plot of metaverse land.",
-        "verified": true,
         "avatar": "/img/collections/northern-hippo-syndicate/avatar.webp",
         "card": "/img/collections/northern-hippo-syndicate/card.webp",
         "banner": "/img/collections/northern-hippo-syndicate/banner.webp",
@@ -1507,7 +1447,6 @@
       "listable": true,
       "metadata": {
         "description": "The Flaming Phenix Club is a prestigious collection of 6,666 stunningly beautiful, fiery, and unique creatures apart of the Phenix Finance Ecosystem.",
-        "verified": true,
         "avatar": "/img/collections/flaming-phenix-club/avatar.webp",
         "banner": "/img/collections/flaming-phenix-club/banner.webp",
         "card": "/img/collections/flaming-phenix-club/card.webp",
@@ -1533,7 +1472,6 @@
       "listable": true,
       "metadata": {
         "description": "Icy Valkyries is a collection of 1000 NFTs who live in the darkest corner of Valhalla. Owning a Valkyrie allows you to fight in the monthly Icy Squid Game for huge jackpots, build a farm, start a family and establish your own clan.",
-        "verified": true,
         "avatar": "/img/collections/icy-valkyries/avatar.png",
         "card": "/img/collections/icy-valkyries/card.png",
         "banner": "/img/collections/icy-valkyries/banner.png",
@@ -1558,7 +1496,6 @@
       "listable": true,
       "metadata": {
         "description": "Carkayous is a fictitious continent created by Jesse Smith (Ink Master | TV Celeb | Tattoo Artist) where his art lives. The goal of Expedition #9 is to further explore Killick Falls Lagoon where the Feral Fish lives. This is a 2,222 PFP collection with FREE Tattoos (flight and hotel included) as the primary utility.",
-        "verified": true,
         "avatar": "/img/collections/carkayous/avatar.png",
         "card": "/img/collections/carkayous/card.png",
         "banner": "/img/collections/carkayous/banner.png",
@@ -1582,7 +1519,6 @@
       "listable": true,
       "metadata": {
         "description": "Holding a Lost Toy VIP NFT grants you access to the Lost Toys DAO to be able to vote on the future characters within the collection and the next features of our platform SnipeHub. Other utilities include exclusive raffles, WL to other projects and many more benefits yet to be announced.",
-        "verified": true,
         "avatar": "/img/collections/looneycorns/avatar.webp",
         "card": "/img/collections/lost-toys-vip/card.png",
         "banner": "/img/collections/lost-toys-vip/banner.png",
@@ -1606,7 +1542,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/collections/cyber-squad/avatar.png",
         "card": "/img/collections/cyber-squad/card.png",
         "banner": "/img/collections/cyber-squad/banner.png",
@@ -1630,7 +1565,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": false,
         "categories": []
       },
       "verification": {
@@ -1648,7 +1582,6 @@
       "listable": true,
       "metadata": {
         "description": "Create a community of aristocrats, driven by the community.\n\nFirst 100% utility project, our goal is to greatly improve the experience of cronos users.",
-        "verified": false,
         "avatar": "/img/collections/aristodog/avatar.png",
         "card": "/img/collections/aristodog/card.png",
         "banner": "/img/collections/aristodog/banner.png",
@@ -1673,7 +1606,6 @@
       "listable": true,
       "metadata": {
         "description": "Alien Apocalypse is a collection of 3,000 uniquely generated invaders. The first of its kind, bridging the Cronos and Cardano Blockchains. The collection contains over 180 out of this world traits that are sure to blow your mind. Owning an Alien Apocalypse NFT will grant you access to the Horde Ecosystem.",
-        "verified": true,
         "avatar": "/img/collections/alien-apocalypse/avatar.png",
         "card": "/img/collections/alien-apocalypse/card.png",
         "banner": "/img/collections/alien-apocalypse/banner.png",
@@ -1697,7 +1629,6 @@
       "listable": true,
       "metadata": {
         "description": "Hype Hogs, a collection of 3,333 different characters generated by the artist named \"ZAP7\". Each character has unique identity and rarity. Holders will be allowed to engage in a variety of community events such as random airdrops, customizing your hype hogs, the opportunity to win a random prize, or numerous giveaways. Half of the royalties will be used to sweep the floor or to help grow the community.",
-        "verified": true,
         "avatar": "/img/collections/hype-hogs/avatar.png",
         "card": "/img/collections/hype-hogs/card.png",
         "banner": "/img/collections/hype-hogs/banner.png",
@@ -1721,7 +1652,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/avatar.jpg",
         "card": "/img/collections/ebisu/card.webp",
         "website": "https://app.ebisusbay.com/",
@@ -1746,7 +1676,6 @@
       "listable": true,
       "metadata": {
         "description": "The Fury Mouse Gang is an NFT project with a first generation of 2500 unique mice gang PFP collectibles. At night the fury takes hold of them and they ravage everything in their path. These creatures rule their world. The ambition is huge: to become the number 1 project on Cronos. Our community is linked around a story and a brotherhood between the members of the Gang. We want our members to live an unique experience, never seen on Cronos.. So if you can\u00e2\u20ac\u2122t beat the gang, join us, before it is too late.",
-        "verified": true,
         "avatar": "/img/collections/fury-mouse-gang/avatar.png",
         "card": "/img/collections/fury-mouse-gang/card.png",
         "banner": "/img/collections/fury-mouse-gang/banner.png",
@@ -1770,7 +1699,6 @@
       "listable": true,
       "metadata": {
         "description": "Battle Ready Boyz is a project combining Design and GameFi offering its members to use their NFTs in Play-to-Earn or Risk-To-Earn.\n\nThe BRB collection features 7777 unique NFTs representing Aurora's gorilla soldiers and statues of their emperors.\n\nDon't forget to fight each other, life is too short!",
-        "verified": true,
         "avatar": "/img/collections/battle-ready-boyz/avatar.png",
         "card": "/img/collections/battle-ready-boyz/card.png",
         "banner": "/img/collections/battle-ready-boyz/banner.png",
@@ -1795,7 +1723,6 @@
       "listable": true,
       "metadata": {
         "description": "The Apes embark on a journey through the Kingdom of Utopia to set foot on the world! Apes Utopia is a collection of 2,222 NFTs with over 200 features built on the Cronos blockchain. Apes Utopia NFTs provide access to various benefits in our ecosystem. Apes Utopia owners can participate in special events such as NFT sweepstakes, surprise sweepstakes, giveaways and much more. Remember, all Apes Utopia is special - but some are particularly special.",
-        "verified": true,
         "avatar": "/img/collections/apes-utopia/avatar.gif",
         "card": "/img/collections/apes-utopia/card.png",
         "banner": "/img/collections/apes-utopia/banner.jpeg",
@@ -1820,7 +1747,6 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "verified": false,
         "categories": []
       },
       "verification": {
@@ -1838,7 +1764,6 @@
       "listable": true,
       "metadata": {
         "description": "Everybody's not friends is a handcrafted set of unique and rare 1/1 collectible characters and animations created by timebeam. This is a community driven passion project. The purpose of this project is to build a community which promotes friendship through a\u00c2 set of humorous 3D cartoon characters,\u00c2 animations and monthly live streamed brawls.",
-        "verified": true,
         "avatar": "/img/collections/everybodysnf/avatar.png",
         "card": "/img/collections/everybodysnf/card.png",
         "banner": "/img/collections/everybodysnf/banner.png",
@@ -1862,7 +1787,6 @@
       "listable": true,
       "metadata": {
         "description": "Noodles Club is a PFP collection of 8,888 NFTs stored on the Cronos Chain that comes with an ever-developing set of utilities. Only the real Noodles lovers will enjoy this spicy journey.",
-        "verified": true,
         "avatar": "/img/collections/noodles-club/avatar.webp",
         "card": "/img/collections/noodles-club/card.webp",
         "banner": "/img/collections/noodles-club/banner.webp",
@@ -1887,7 +1811,6 @@
       "listable": true,
       "metadata": {
         "description": "RYBORG: THE BUNKER is the first NFT trading/investment project on the Cronos Chain. Backed by TradingFXVPS, RYBORG aims to create an investment DAO that shares 80% profit sharing through diversification of portfolio through Stock, Forex, DeFi, NFT, Coins & Tokens. Only 1,000 unique RYBORG will be available on the 1st round.",
-        "verified": true,
         "avatar": "/img/collections/ryborgs/avatar.webp",
         "card": "/img/collections/ryborgs/card.webp",
         "banner": "/img/collections/ryborgs/banner.webp",
@@ -1912,7 +1835,6 @@
       "listable": true,
       "metadata": {
         "description": "The Crovilians are the citizens of The CronosVerse and have various traits representing the many societal roles required in both the metaverse and in the physical world. While each Crovilian\u00e2\u20ac\u2122s unique traits represent real life roles in our society, all Crovilians are created equal in terms of access to The CronosVerse. Holding a Crovilian NFT will grant access to The CronosVerse and allow the owner to create a custom avatar to be used in our metaverse.",
-        "verified": true,
         "avatar": "/img/collections/crovilians/avatar.webp",
         "card": "/img/collections/crovilians/card.webp",
         "banner": "/img/collections/crovilians/banner.webp",
@@ -1936,7 +1858,6 @@
       "listable": true,
       "metadata": {
         "description": "Cyberclone & Alphaclone is a collection of 2000 uniquely generated NFTs stored on the Cronos blockchain. Each NFT Clone is inspired by the futuristic life of the year 2234, where the world is falling apart under the control of the WorldClones, who are conquering earth!",
-        "verified": true,
         "avatar": "/img/collections/alpha-clone/avatar.webp",
         "card": "/img/collections/alpha-clone/card.webp",
         "banner": "/img/collections/alpha-clone/banner.webp",
@@ -1961,7 +1882,6 @@
       "listable": true,
       "metadata": {
         "description": "The Pocket Demons project is a collection of 666 uniquely generated demon characters. Each Demon is generated from a pool of over 70 traits. These Demons also carry unique stats and attacks that are utilized in our P2E Game!",
-        "verified": true,
         "avatar": "/img/collections/pocket-demons/avatar.webp",
         "card": "/img/collections/pocket-demons/card.webp",
         "banner": "/img/collections/pocket-demons/banner.webp",
@@ -1985,7 +1905,6 @@
       "listable": true,
       "metadata": {
         "description": "CroHamster is a collection of 1000 unique and 3D animated NFTs on Cronos. Each CroHamster is based on a wide variety of different traits. Owning a CroHamster will give you access to our CroHamster arena, where you can fight for awesome rewards.",
-        "verified": true,
         "avatar": "/img/collections/cro-hamsters/avatar.webp",
         "card": "/img/collections/cro-hamsters/card.webp",
         "banner": "/img/collections/cro-hamsters/banner.webp",
@@ -2010,7 +1929,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "categories": []
       },
       "verification": {
@@ -2028,7 +1946,6 @@
       "listable": true,
       "metadata": {
         "description": "GymKongZ is a 10,000 pfp project made up of more than 255 unique traits. We will focus on improving all pillars of life, not only the physical but also the mental and financial, and any other goal members are choosing to pursue. \nWe are really wanting to expand the horizon when it comes to a group of people coming together sharing similar goals and interests.",
-        "verified": false,
         "avatar": "/img/collections/gymkongz/avatar.webp",
         "card": "/img/collections/gymkongz/card.webp",
         "banner": "/img/collections/gymkongz/banner.webp",
@@ -2052,7 +1969,6 @@
       "listable": true,
       "metadata": {
         "description": "CroKami is a universe comprising our Manga series, NFT collection, and lore-connected game. We have set out to create a special ecosystem in which players can battle each other in game using their NFT\u00e2\u20ac\u2122s, or AI in a street-fighter style arena and earn $PACK -our real world cryptocurrency and in-game currency. Play and earn!",
-        "verified": true,
         "avatar": "/img/collections/crokami/avatar.webp",
         "card": "/img/collections/crokami/card.webp",
         "banner": "/img/collections/crokami/banner.webp",
@@ -2076,7 +1992,6 @@
       "listable": true,
       "metadata": {
         "description": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300k CRO will be distributed to DAO members.",
-        "verified": true,
         "avatar": "/img/collections/cronos-women/avatar.webp",
         "banner": "/img/collections/cronos-women/banner.webp",
         "card": "/img/collections/cronos-women/card.webp",
@@ -2101,7 +2016,6 @@
       "listable": true,
       "metadata": {
         "description": "BunnyFish from Carkayous attained by owning Feral Fishes that include Ledgelip or Riptide as the background. Owning enough BunnyFish that adds up to 75 points will get you an Expedition 8.2 BunnyFish.",
-        "verified": true,
         "avatar": "/img/collections/carkayous-bunnyfish/avatar.webp",
         "card": "/img/collections/carkayous-bunnyfish/card.webp",
         "banner": "/img/collections/carkayous-bunnyfish/banner.webp",
@@ -2125,7 +2039,6 @@
       "listable": true,
       "metadata": {
         "description": "God hates all crofam!!! This is strictly a pfp project with no utility. Why no utility\u2026 because god hates you. Now go away.",
-        "verified": true,
         "avatar": "/img/collections/god-hates-crofam/avatar.webp",
         "card": "/img/collections/god-hates-crofam/card.webp",
         "banner": "/img/collections/god-hates-crofam/banner.webp",
@@ -2148,7 +2061,6 @@
       "listable": true,
       "metadata": {
         "description": "CNS domains are unique decentralized domains for web3. CNS makes the blockchain ecosystem a bit simpler by allowing users to create a global username for their public addresses and decentralized dapps. Join our discord community to learn more about CNS.",
-        "verified": true,
         "avatar": "/img/collections/cronos-name-service/avatar.webp",
         "card": "/img/collections/cronos-name-service/card.webp",
         "banner": "/img/collections/cronos-name-service/banner.webp",
@@ -2174,7 +2086,6 @@
       "listable": true,
       "metadata": {
         "description": "Trillionaire Trashcans - A 10,000 uniquely created PFP project coming to you. As you may have heard the TTC NFT project has some of the best giveaways the Cronos chain has seen. We pride ourselves on how much we can give back to the community; that\u2019s why we will be giving away a LAMBO to one lucky minter. In order to be entered into the WenLambo giveaway, you must get lucky and mint 1 of 500 Trashcans that wear the Golden Key Earring!",
-        "verified": true,
         "avatar": "/img/collections/trillionaire-trashcans/avatar.webp",
         "banner": "/img/collections/trillionaire-trashcans/banner.webp",
         "card": "/img/collections/trillionaire-trashcans/card.webp",
@@ -2198,7 +2109,6 @@
       "listable": true,
       "metadata": {
         "description": "World of Cats is a handcrafted collection of 4444 Unique NFTs created by the artist Tam4tik with utility that is tied to the real world.\nEach with their own identity to be discovered by its founder. \nIn its purest form, WORLD OF CATS is the art of storytelling.\nCurated By:  HiddenFishDAO\u2122",
-        "verified": true,
         "avatar": "/img/collections/world-of-cats/avatar.webp",
         "card": "/img/collections/world-of-cats/card.webp",
         "banner": "/img/collections/world-of-cats/banner.webp",
@@ -2222,7 +2132,6 @@
       "listable": true,
       "metadata": {
         "description": "The Meanies are a collection of 2,500 uniquely generated NFTs and the 2nd character of the Lost Toys project. Each NFT is based on 7 trait categories with different rarities. A Lost Toy NFT is not simply an NFT it is a key to unlocking over 15 utilities!",
-        "verified": true,
         "avatar": "/img/collections/the-meanies/avatar.webp",
         "card": "/img/collections/the-meanies/card.webp",
         "banner": "/img/collections/the-meanies/banner.webp",
@@ -2248,7 +2157,6 @@
       "listable": true,
       "metadata": {
         "description": "5555 Lucky Finger Monkeys are about to hit Cronos. Lookout for the interactive platform!",
-        "verified": true,
         "avatar": "/img/collections/finger-monkeys/avatar.webp",
         "card": "/img/collections/finger-monkeys/card.webp",
         "banner": "/img/collections/finger-monkeys/banner.webp",
@@ -2271,7 +2179,6 @@
       "listable": true,
       "metadata": {
         "description": "A collection of 1,888 access cards, featuring 3D Spiteful Sea Creatures - the turtle, octopus, and the shark. The character and purpose of the models reflects the desire of their owners - further develop and bring change to the NFT market and the Web3 space as a whole. Setting new standards and trends requires a group of convinced individuals who come together to set in motion a wave that will eventually sweep an entire sea with it.",
-        "verified": true,
         "avatar": "/img/collections/ssc-access-cards/avatar.webp",
         "card": "/img/collections/ssc-access-cards/card.webp",
         "banner": "/img/collections/ssc-access-cards/banner.webp",
@@ -2296,7 +2203,6 @@
       "listable": true,
       "metadata": {
         "description": "V2 Fighters are HERE! Now grab a Fighter you love, make upgrades, earn tokens and battle them out in a head to head fight!",
-        "verified": true,
         "avatar": "/img/collections/cronos-fighters-v2/avatar.webp",
         "card": "/img/collections/cronos-fighters-v2/card.webp",
         "banner": "/img/collections/cronos-fighters-v2/banner.webp",
@@ -2321,7 +2227,6 @@
       "listable": true,
       "metadata": {
         "description": "8K Resolution Artworks that are unique and unlike anything else on the blockchain, created with the power of A.I. and advanced editing techniques across multiple platforms to produce the highest quality artwork on Cronos. No roadmaps, no staking, no games, just art, community, and utility.",
-        "verified": false,
         "avatar": "/img/collections/0xluckless-v2-0/avatar.webp",
         "card": "/img/collections/0xluckless-v2-0/card.webp",
         "banner": "/img/collections/0xluckless-v2-0/banner.webp",
@@ -2347,7 +2252,6 @@
       "listable": true,
       "metadata": {
         "description": "The \"Whale Family\" features a collection of 5,555 fun & vibrant Whale\nPFPs swimming on the Cronos blockchain with different levels of rarity \nfrom over 160 hand-drawn traits by Barbara Redekop.",
-        "verified": true,
         "avatar": "/img/collections/whalefam/avatar.webp",
         "banner": "/img/collections/whalefam/banner.webp",
         "card": "/img/collections/whalefam/card.webp",
@@ -2373,7 +2277,6 @@
       "listable": true,
       "metadata": {
         "description": "Devil Loves Cro Fam is a pfp project only with no roadmap or utility. Unless you call going to hell a utility!",
-        "verified": true,
         "avatar": "/img/collections/devil-loves-crofam/avatar.webp",
         "card": "/img/collections/devil-loves-crofam/card.webp",
         "banner": "/img/collections/devil-loves-crofam/banner.webp",
@@ -2396,7 +2299,6 @@
       "listable": true,
       "metadata": {
         "description": "Evolution Hogs is a collection of 3333 characters generated randomly. All are on the Cronos Chain with unique identity and rarity.",
-        "verified": true,
         "avatar": "/img/collections/evolution-hogs/avatar.webp",
         "card": "/img/collections/evolution-hogs/card.webp",
         "banner": "/img/collections/evolution-hogs/banner.webp",
@@ -2420,7 +2322,6 @@
       "listable": true,
       "metadata": {
         "description": "Lion Social Club is minting our first collection, each NFT is unique and holds special utility. LSC aims to bring a community based DEX and DAO that puts the community first and gives each holder a voice with our utility based roadmap.",
-        "verified": true,
         "avatar": "/img/collections/lion-social-club/avatar.webp",
         "card": "/img/collections/lion-social-club/card.webp",
         "banner": "/img/collections/lion-social-club/banner.webp",
@@ -2445,7 +2346,6 @@
       "listable": true,
       "metadata": {
         "description": "The Broken Hearts collection is a line of 101 tarot cards created by the musician Grey_hart, using MIDJOURNEY\u2019s AI software, all around the subject of a broken heart. Each 9x16 is a 1 of a kind image with varying themes and elements around heartbreak and the spiritual journey involved in getting through it. Some are astral guides, some spirit animals, some just metaphors and feelings made into imagery. If you\u2019ve experienced heartbreak of any kind in your life, there\u2019s sure to be an image that speaks to you in some form. ",
-        "verified": true,
         "avatar": "/img/collections/broken-hearts/avatar.webp",
         "card": "/img/collections/broken-hearts/card.webp",
         "banner": "/img/collections/broken-hearts/banner.webp",
@@ -2469,7 +2369,6 @@
       "listable": true,
       "metadata": {
         "description": "The Broken Hearts collection is a line of 101 tarot cards created by the musician Grey_hart, using MIDJOURNEY\u2019s AI software, all around the subject of a broken heart. Each 9x16 is a 1 of a kind image with varying themes and elements around heartbreak and the spiritual journey involved in getting through it. Some are astral guides, some spirit animals, some just metaphors and feelings made into imagery. If you\u2019ve experienced heartbreak of any kind in your life, there\u2019s sure to be an image that speaks to you in some form. ",
-        "verified": true,
         "avatar": "/img/collections/broken-hearts/avatar.webp",
         "card": "/img/collections/broken-hearts/card.webp",
         "banner": "/img/collections/broken-hearts/banner.webp",
@@ -2493,7 +2392,6 @@
       "listable": false,
       "metadata": {
         "description": "\u2606 1,000 Collectable Renegade Monks \u2606\n\nMint your Monk and fight with The New Resistance!",
-        "verified": true,
         "avatar": "/img/collections/renegade-monks/avatar.webp",
         "card": "/img/collections/renegade-monks/card.webp",
         "banner": "/img/collections/renegade-monks/banner.webp",
@@ -2517,7 +2415,6 @@
       "listable": true,
       "metadata": {
         "description": "Team Movember 2022 is an initiative of Team Mustachios to raise funds for the Movember Foundation Charity. 2022 NFTs and 50% of the mint will go directly to the cause. Movember fundraisers are a global community of fired up Mo Bros and Mo Sisters \u2013 aka rock stars making a difference in mental health and suicide prevention, prostate cancer and testicular cancer.",
-        "verified": true,
         "avatar": "/img/collections/team-movember/avatar.webp",
         "card": "/img/collections/team-movember/card.webp",
         "banner": "/img/collections/team-movember/banner.webp",
@@ -2541,7 +2438,6 @@
       "listable": false,
       "metadata": {
         "description": "The Resurrection potion can be deadly if I\u2019m the wrong hands!!! Dr. Boo has been working hard in the lab to bring you the first of its kind mutant potion!!! If you own and nft and want to mutate it\u2026 then drink the juice.  You will get a resurrected version of your favorite nft!!  Don\u2019t worry the host nft will not be harmed.",
-        "verified": true,
         "avatar": "/img/collections/dr-boo-resurrection/avatar.webp",
         "card": "/img/collections/dr-boo-resurrection/card.webp",
         "banner": "/img/collections/dr-boo-resurrection/banner.webp",
@@ -2565,7 +2461,6 @@
       "listable": false,
       "metadata": {
         "description": "A 2,000 NFT access card collection on the CRONOS chain that provides holders' with virtual real-estate in the ALSTONIAVERSE!",
-        "verified": true,
         "avatar": "/img/collections/alstoniaverse-access-card/avatar.webp",
         "card": "/img/collections/alstoniaverse-access-card/card.webp",
         "banner": "/img/collections/alstoniaverse-access-card/banner.webp",
@@ -2588,7 +2483,6 @@
       "listable": false,
       "metadata": {
         "description": "Rebel Punks is an artistically hand drawn collection, pioneering a new hybrid Gaming Ecosystem, the Metawarz Shooter. The Rebel Punks are more than just collectibles, they carry endless possibilities and utilities. The art is derived from one faction of the Metawarz. Thus, they are the cornerstone of Metawarz Shooter ecosystem. Your Rebel serve as a membership card, and grants you access to members-only benefits.",
-        "verified": true,
         "avatar": "/img/collections/rebel-punks/avatar.webp",
         "card": "/img/collections/rebel-punks/card.webp",
         "banner": "/img/collections/rebel-punks/banner.webp",
@@ -2615,7 +2509,6 @@
       "listable": true,
       "metadata": {
         "description": "Patron NFT is 4999 unique dogs of Jack Russell Terrier breed, created to help victims of the war in Ukraine",
-        "verified": true,
         "avatar": "/img/collections/patron-nft/avatar.webp",
         "card": "/img/collections/patron-nft/card.webp",
         "banner": "/img/collections/patron-nft/banner.webp",
@@ -2641,7 +2534,6 @@
       "listable": false,
       "metadata": {
         "description": "Cro Llamas is a NFT project created to share a cultural vision with a Llama themed art. We want to build a successful project that collecting Llama artwork is the main center of it.\n\nThe CRO Llamas used to live in their world called Llamaverse, a beautiful world where all llamas could live in harmony and wealth. One day, the twin gods, creators of the world, wanted to choose one of the llamas to become a new god and sit next to them, but to do so, the chosen one would need to go in an adventure.\n\n1200 Llamas were hand picked to participate on this quest!\nWhen they started their journey, they were sent to a world called Cronos Blockchain.",
-        "verified": true,
         "avatar": "/img/collections/cro-llamas/avatar.webp",
         "card": "/img/collections/cro-llamas/card.webp",
         "banner": "/img/collections/cro-llamas/banner.webp",
@@ -2665,7 +2557,6 @@
       "listable": false,
       "metadata": {
         "description": "Crazy Crossbreeds are wicked beasts who's genetics consist of Goat & Boar DNA. These NFT's will powers our Defi Game Cove and will be by far the craziest beasts in our eco-system. Holders receive benefits through our DAO, Tools, Games, Mint, and upcoming Comic Book release. Join The Herd Today!",
-        "verified": true,
         "avatar": "/img/collections/crazy-crossbreeds/avatar.webp",
         "card": "/img/collections/crazy-crossbreeds/card.webp",
         "banner": "/img/collections/crazy-crossbreeds/banner.webp",
@@ -2690,7 +2581,6 @@
       "listable": false,
       "metadata": {
         "description": "Selfie Guys is a collection with many utilities! Grab yours now and join our amazing community!",
-        "verified": true,
         "avatar": "/img/collections/selfie-guys/avatar.webp",
         "card": "/img/collections/selfie-guys/card.webp",
         "banner": "/img/collections/selfie-guys/banner.webp",
@@ -2715,7 +2605,6 @@
       "listable": false,
       "metadata": {
         "description": "Ryoshi Tales awaits all of our enthusiastic supporters. Get your hands on these exclusive Ryoshi Tales-themed VIP NFTs now! Coming with 8 different traits each with relevant attributes \u2013 body, background, tools, mouth, hair, miscellaneous, eyes, clothing \u2013 every NFT is completely unique. Don\u2019t miss out on the opportunity to participate in our project\u2019s evolution.",
-        "verified": true,
         "avatar": "/img/collections/ryoshi-tales-vip/avatar.webp",
         "card": "/img/collections/ryoshi-tales-vip/card.webp",
         "banner": "/img/collections/ryoshi-tales-vip/banner.webp",
@@ -2744,7 +2633,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/avatar.jpg",
         "card": "/img/collections/ebisu/card.webp",
         "website": "https://app.ebisusbay.com/",
@@ -2769,7 +2657,6 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "verified": true,
         "avatar": "/img/avatar.jpg",
         "card": "/img/collections/ebisu/card.webp",
         "website": "https://app.ebisusbay.com/",
@@ -2794,7 +2681,6 @@
       "listable": true,
       "metadata": {
         "description": "CroWorld Cup is a nft project celebrating the biggest soccer tournament in the world.  There are 32 countries battling for the title.  So are you.  Each mint will be a flag representing a country.  If your country wins.. you win.  First place country nft holders win $7500* split over each NFT.  2nd Place wins $2500* split over every nft holder.  THere are 30 flags per country so for every winning flag you can win $333.33 for first place and $83.33 per flag.  Own 2 flags get double winnings\n\nAll country flags that lose, will be dropped an NFT 1-2 weeks after the tournament ends.  These NFTs will be your ticket to future games.\n\n*These numbers are based on minting out.  Should we not mint out the first place team will get 50% of the pot and 2nd place will get 20% of the pot.",
-        "verified": false,
         "avatar": "/img/collections/cro-world-cup/avatar.webp",
         "banner": "/img/collections/cro-world-cup/banner.webp",
         "card": "/img/collections/cro-world-cup/card.webp",
@@ -2818,7 +2704,6 @@
       "listable": true,
       "metadata": {
         "description": "Piggy Bank Finance (PBF) is a collection of 6,666 unique NFTs with over 200 hand-drawn traits on the Cronos blockchain.",
-        "verified": true,
         "avatar": "/img/collections/piggy-bank-finance/avatar.webp",
         "card": "/img/collections/piggy-bank-finance/card.webp",
         "banner": "/img/collections/piggy-bank-finance/banner.webp",
@@ -2845,7 +2730,6 @@
       "listable": false,
       "metadata": {
         "description": "Welcome to the club\n5,555 planets ready to be explored...\nSomewhere far away in the universe, Meta Planet Club appears. A collection of 5,555 algorithmically generated psychedelic planets, offering its community a friendly ecosystem for life on the Web3.",
-        "verified": true,
         "avatar": "/img/collections/meta-planet-club/avatar.webp",
         "banner": "/img/collections/meta-planet-club/banner.webp",
         "card": "/img/collections/meta-planet-club/card.webp",
@@ -2871,7 +2755,6 @@
       "listable": false,
       "metadata": {
         "description": "Brought to you by CROugar Kingdom! Weekly Twitter and Discord giveaways for an entire year!  Maybe you will be a big winner! Get your Wetland Razzle Tix and tune in for the fun!",
-        "verified": true,
         "avatar": "/img/collections/wetland-razzles/avatar.webp",
         "banner": "/img/collections/wetland-razzles/banner.webp",
         "card": "/img/collections/wetland-razzles/card.webp",
@@ -2898,7 +2781,6 @@
       "listable": false,
       "metadata": {
         "description": "A Collection of 4420 PFPs to hit our Cronos blockchains, with planned donations to clinics, Holder Royalties pay outs, exclusive holder competitions, custom merch, app development and potential business investment opportunity for our O.G 4420 Buds holders, as well as plenty of live team chats! Our team is excited to bring you all along with us! let's better our medicinal cannabis industry 1 Bud at a time we look forward to providing greatness to our CroFam and the world.\nWe have planned an app development to help link patients, doctors and clinics to full cultivator information (what's used in the process, THC/CBD info, also trying to help recognizing the various cultivars and terpenes with DNA as well to optimize therapy outcomes.\n\nFuture plans for Buds is an import/export licensing to help regulate a more affordable medicinal option on our Aussie market, with the full potential to explore possible Cultivation licensing in the future! \n\nLets Break The Stigma!",
-        "verified": true,
         "avatar": "/img/collections/buds/avatar.webp",
         "banner": "/img/collections/buds/banner.webp",
         "card": "/img/collections/buds/card.webp",
@@ -2925,7 +2807,6 @@
       "listable": false,
       "metadata": {
         "description": "C\u00b3 is a brand of 3000 PFP crow characters granting holders utility and revenue. Bringing powerful set of trading and analytical tools. It's the first project that allows holders to browse the Cronos NFT space efficiently and have fun in our Crowgame . Join C\u00b3DAO to get access to all those benefits.",
-        "verified": true,
         "avatar": "/img/collections/c3-cronos-crow-crew/avatar.webp",
         "card": "/img/collections/c3-cronos-crow-crew/card.webp",
         "banner": "/img/collections/c3-cronos-crow-crew/banner.webp",
@@ -2949,7 +2830,6 @@
       "listable": true,
       "metadata": {
         "description": "Ebisu's Bay bundle contract",
-        "verified": true,
         "avatar": "/img/avatar.jpg",
         "card": "/img/collections/ebisu/card.webp",
         "banner": "/img/collections/ebisu/banner.png",
@@ -2976,7 +2856,6 @@
       "listable": false,
       "metadata": {
         "description": "A collection of 777 animated NFT rings. \n\nCollect all 7 ring types to receive a real life hand-made custom ring based on your chosen ring type.",
-        "verified": true,
         "avatar": "/img/collections/nft-rings-aperson-lyeque/avatar.webp",
         "card": "/img/collections/nft-rings-aperson-lyeque/card.webp",
         "banner": "/img/collections/nft-rings-aperson-lyeque/banner.webp",
@@ -3000,7 +2879,6 @@
       "listable": true,
       "metadata": {
         "description": "The Trippy Meanies, are a special-edition limited collection of the Lost Toys Meanies.\n\nThese incredible designs have been created by top 2D artists Ugonzo, Genius and Woah Johnny. Each NFT is signed and also unlocks great utilities!",
-        "verified": true,
         "avatar": "/img/collections/trippy-meanies/avatar.webp",
         "card": "/img/collections/trippy-meanies/card.webp",
         "banner": "/img/collections/trippy-meanies/banner.webp",
@@ -3026,7 +2904,6 @@
       "listable": false,
       "metadata": {
         "description": "Xmas is coming, and the Lotus Ocean Islands are covered in snow.  The characters of Ryoshi Tales have been preparing for the winter festivities!\n\nFrom getting ready to weather the harsh climate to enjoying the frosted landscapes, the characters of the Ryoshi Xmas Tales NFT collection come jam-packed with seasonally appropriate traits that make every NFT completely unique. \n\nWhat are you waiting for? \n\n**Get one now to sport your most Xmassy PFP to date.**",
-        "verified": true,
         "avatar": "/img/collections/ryoshi-tales-christmas/avatar.webp",
         "banner": "/img/collections/ryoshi-tales-christmas/banner.webp",
         "card": "/img/collections/ryoshi-tales-christmas/card.webp",
@@ -3053,7 +2930,6 @@
       "listable": false,
       "metadata": {
         "description": "A collection of 5,555 Xmas Trollfam NFTs brought to you by Trollcoin. Jump into our discord and have some fun!",
-        "verified": true,
         "avatar": "/img/collections/trollfam-xmas/avatar.webp",
         "card": "/img/collections/trollfam-xmas/card.webp",
         "banner": "/img/collections/trollfam-xmas/banner.webp",
@@ -3078,7 +2954,6 @@
       "listable": false,
       "metadata": {
         "description": "Cro Snowmen are the first collection from Holiday NFT, which is an NFT project managed by TopBlok Digital Asset Management.  TopBlok is known for other Cronos Projects such as The CronosVerse and CROmmandos.",
-        "verified": true,
         "avatar": "/img/collections/cro-snowmen/avatar.webp",
         "banner": "/img/collections/cro-snowmen/banner.webp",
         "card": "/img/collections/cro-snowmen/card.webp",
