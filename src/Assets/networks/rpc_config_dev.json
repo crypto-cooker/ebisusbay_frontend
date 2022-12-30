@@ -17405,6 +17405,32 @@
         "kyc": false,
         "verified": false
       }
+    },
+    {
+      "name": "Piggy Friday Party",
+      "slug": "piggy-friday-party",
+      "multiToken": false,
+      "address": "0xd9f6e47326dA6108DBD4A9D009c3B74b4c1DD180",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "10 000 PFPs on Cronos ready to Party every Friday! Welcome to Piggy Friday Party (PFP) \uD83D\uDC37 \uD83D\uDC37 The Piggy Friday Party Club motto is simple: Have Fun, Earn & OINK OINK!",
+        "verified": false,
+        "avatar": "/img/collections/piggy-friday-party/avatar.webp",
+        "card": "/img/collections/piggy-friday-party/card.webp",
+        "banner": "/img/collections/piggy-friday-party/banner.webp",
+        "maxSupply": 10000,
+        "website": "https://piggyfridayparty.com/",
+        "twitter": "https://twitter.com/PiggyFridayClub",
+        "discord": "https://discord.gg/WZgdw4v4DM",
+        "medium": "https://medium.com/@PFPclub",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
