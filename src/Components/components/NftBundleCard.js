@@ -292,7 +292,8 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, canBuy = t
         <MakeOfferDialog
           isOpen={openMakeOfferDialog}
           onClose={() => setOpenMakeOfferDialog(false)}
-          nft={nft}
+          initialNft={nft}
+          nftAddress={nft.address ?? nft.nftAddress}
         />
       )}
     </>

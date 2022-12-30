@@ -35,8 +35,6 @@ const Collection1155 = ({ collection, tokenId = null, query, activeDrop = null }
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const [metadata, setMetadata] = useState(null);
-
   const collectionStats = useSelector((state) => state.collection.stats);
   const initialLoadComplete = useSelector((state) => state.collection.initialLoadComplete);
 
@@ -47,10 +45,6 @@ const Collection1155 = ({ collection, tokenId = null, query, activeDrop = null }
       state.collection.listings.length > 0 &&
       (state.collection.query.page === 0 || state.collection.query.page < state.collection.totalPages)
     );
-  });
-
-  const collectionMetadata = useSelector((state) => {
-    return collection.metadata;
   });
   const isUsingListingsFallback = useSelector((state) => state.collection.isUsingListingsFallback);
 
@@ -94,10 +88,6 @@ const Collection1155 = ({ collection, tokenId = null, query, activeDrop = null }
     setOpenMenu(query.tab ?? tabs.items);
     // eslint-disable-next-line
   }, [dispatch, collection.address]);
-
-  useEffect(() => {
-    setMetadata(collection.metadata);
-  }, [collection]);
 
   useEffect(() => {
     async function asyncFunc() {
@@ -144,7 +134,7 @@ const Collection1155 = ({ collection, tokenId = null, query, activeDrop = null }
         id="profile_banner"
         className="jumbotron breadcumb no-bg"
         style={{
-          backgroundImage: `url(${ImageKitService.buildBannerUrl(metadata?.banner ?? '')})`,
+          backgroundImage: `url(${ImageKitService.buildBannerUrl(collection.metadata?.banner ?? '')})`,
           backgroundPosition: '50% 50%',
         }}
       >
@@ -157,12 +147,12 @@ const Collection1155 = ({ collection, tokenId = null, query, activeDrop = null }
             <div className="d_profile">
               <div className="profile_avatar">
                 <div className="d_profile_img">
-                  {metadata?.avatar ? (
-                    <img src={metadata.avatar} alt={collectionName()} />
+                  {collection.metadata?.avatar ? (
+                    <img src={collection.metadata.avatar} alt={collectionName()} />
                   ) : (
                     <Blockies seed={collection.address.toLowerCase()} size={15} scale={10} />
                   )}
-                  {metadata?.verified && (
+                  {collection.verification?.verified && (
                     <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={8} stackClass="eb-avatar_badge" />
                   )}
                 </div>
@@ -200,7 +190,7 @@ const Collection1155 = ({ collection, tokenId = null, query, activeDrop = null }
       <div className="px-4 mb-4">
         {collectionStats && (
           <div className="row">
-            {hasRank && collectionMetadata?.rarity === 'rarity_sniper' && (
+            {hasRank && collection.metadata?.rarity === 'rarity_sniper' && (
               <div className="row">
                 <div className="col-lg-8 col-sm-10 mx-auto text-center mb-3" style={{ fontSize: '0.8em' }}>
                   Rarity scores and ranks provided by{' '}
@@ -223,12 +213,12 @@ const Collection1155 = ({ collection, tokenId = null, query, activeDrop = null }
                 </div>
               </div>
             )}
-            {collectionMetadata?.staking && (
+            {collection.metadata?.staking && (
               <div className="row">
                 <div className="mx-auto text-center fw-bold" style={{ fontSize: '0.8em' }}>
                   NFTs from this collection can be staked at{' '}
-                  <a href={stakingPlatforms[collectionMetadata.staking].url} target="_blank" rel="noreferrer">
-                    <span className="color">{stakingPlatforms[collectionMetadata.staking].name}</span>
+                  <a href={stakingPlatforms[collection.metadata.staking].url} target="_blank" rel="noreferrer">
+                    <span className="color">{stakingPlatforms[collection.metadata.staking].name}</span>
                   </a>
                 </div>
               </div>

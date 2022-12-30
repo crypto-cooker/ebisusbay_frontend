@@ -644,7 +644,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
                     <PriceActionBar
                       offerType={offerType}
                       collectionName={collectionName}
-                      isVerified={collectionMetadata?.verified}
+                      isVerified={collection.verification?.verified}
                       onOfferSelected={() => handleMakeOffer()}
                       isOwner={caseInsensitiveCompare(user.address, nft.owner)}
                       collectionStats={collectionStats} />
@@ -672,7 +672,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
                       title={collectionName ?? 'View Collection'}
                       avatar={hostedImage(collectionMetadata?.avatar, true)}
                       address={address}
-                      verified={collectionMetadata?.verified}
+                      verified={collection.verification?.verified}
                       to={`/collection/${address}`}
                     />
 

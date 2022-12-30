@@ -259,7 +259,7 @@ const Collections = () => {
                                   ) : (
                                     <Blockies seed={collection.collection.toLowerCase()} size={10} scale={5} />
                                   )}
-                                  {collection.metadata?.verified && (
+                                  {collection.verification?.verified && (
                                     <VerifiedIcon>
                                       <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={7} />
                                     </VerifiedIcon>

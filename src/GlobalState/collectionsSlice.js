@@ -69,6 +69,7 @@ export const getAllCollections =
               response.collections[index].name = contract.name;
               response.collections[index].slug = contract.slug;
               response.collections[index].metadata = contract.metadata;
+              response.collections[index].verification = contract.verification;
               response.collections[index].listable = contract.listable;
               response.collections[index].skip = !!contract.mergedWith;
             }

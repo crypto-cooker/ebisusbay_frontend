@@ -369,7 +369,7 @@ const Nft1155 = ({ address, id, collection }) => {
                         onOfferSelected={() => handleMakeOffer()}
                         label="Floor Price"
                         collectionName={collectionName}
-                        isVerified={collectionMetadata?.verified}
+                        isVerified={collection.verification?.verified}
                         collectionStats={collectionStats}
                       />
                     </>
@@ -380,7 +380,7 @@ const Nft1155 = ({ address, id, collection }) => {
                       title={collectionName ?? 'View Collection'}
                       avatar={hostedImage(collectionMetadata?.avatar, true)}
                       address={address}
-                      verified={collectionMetadata?.verified}
+                      verified={collection.verification?.verified}
                       to={`/collection/${collectionSlug}`}
                     />
 
