@@ -16183,7 +16183,7 @@
       "multiToken": false,
       "address": "0xd9f6e47326dA6108DBD4A9D009c3B74b4c1DD180",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "10 000 PFPs on Cronos ready to Party every Friday! Welcome to Piggy Friday Party (PFP) \ud83d\udc37 \ud83d\udc37 The Piggy Friday Party Club motto is simple: Have Fun, Earn & OINK OINK!",
         "avatar": "/img/collections/piggy-friday-party/avatar.webp",
