@@ -30,7 +30,7 @@ const ImageContainer = ({ nft }) => {
           >
 
             <Center className="index-counter">
-              {`${currentIndex + 1} of ${nft.nfts.length}`}
+              {`${currentIndex + 1} of ${nft.nfts?.length}`}
             </Center>
 
             {nft.nfts.map((nft) => (
