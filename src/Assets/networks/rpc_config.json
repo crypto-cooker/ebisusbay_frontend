@@ -16200,6 +16200,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Deathcaps",
+      "slug": "deathcaps",
+      "multiToken": false,
+      "address": "0x8f97Bb2352fb1DD78C0A108a6ed279a3c2b6d9D1",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The plague creates The Deathcaps which come to invade the mushroom kingdom and forever maintain chaos.",
+        "avatar": "/img/collections/deathcaps/avatar.webp",
+        "card": "/img/collections/deathcaps/card.webp",
+        "banner": "/img/collections/deathcaps/banner.webp",
+        "website": "https://mushroomminions.co.uk/",
+        "twitter": "https://twitter.com/MinionsMushroom",
+        "discord": "https://discord.gg/QMJ2feJgkJ",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
