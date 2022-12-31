@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
 import Blockies from 'react-blockies';
-import { commify } from 'ethers/lib/utils';
+import {commify} from 'ethers/lib/utils';
 import Link from 'next/link';
 
 import Button from '../../../Components/components/Button';
 import {findCollectionByAddress, shortString, timeSince} from '@src/utils';
-import { getNftDetails } from '@src/GlobalState/nftSlice';
+import {getNftDetails} from '@src/GlobalState/nftSlice';
 import MakeOfferDialog from '../Dialogs/MakeOfferDialog';
 import {CancelOfferDialog} from "@src/Components/Offer/Dialogs/CancelOfferDialog";
 import MakeCollectionOfferDialog from "@src/Components/Offer/Dialogs/MakeCollectionOfferDialog";
@@ -201,22 +201,24 @@ export default function TableRow({ data }) {
         </div>
         <div className="table-row-item">{getOfferDate(timeCreated)} ago</div>
         <div className="table-row-item">
-          <Button
-            type="legacy"
-            onClick={() => handleOffer(OFFER_TYPE.update)}
-            disabled={getState(state) !== 'Active'}
-          >
-            Update
-          </Button>
+          {getState(state) === 'Active' && (
+            <Button
+              type="legacy"
+              onClick={() => handleOffer(OFFER_TYPE.update)}
+            >
+              Update
+            </Button>
+          )}
         </div>
         <div className="table-row-item">
-          <Button
-            type="legacy-outlined"
-            onClick={() => handleOffer(OFFER_TYPE.cancel)}
-            disabled={getState(state) !== 'Active'}
-          >
-            Cancel
-          </Button>
+          {getState(state) === 'Active' && (
+            <Button
+              type="legacy-outlined"
+              onClick={() => handleOffer(OFFER_TYPE.cancel)}
+            >
+              Cancel
+            </Button>
+          )}
         </div>
       </TableRowContainer>
       <TableRowContainerMobile>
@@ -256,22 +258,24 @@ export default function TableRow({ data }) {
         </ItemRow>
         <ItemRow>
           <div className="table-row-button">
-            <Button
-              type="legacy"
-              onClick={() => handleOffer(OFFER_TYPE.update)}
-              disabled={getState(state) !== 'Active'}
-            >
-              Update
-            </Button>
+            {getState(state) === 'Active' && (
+              <Button
+                type="legacy"
+                onClick={() => handleOffer(OFFER_TYPE.update)}
+              >
+                Update
+              </Button>
+            )}
           </div>
           <div className="table-row-button">
-            <Button
-              type="legacy-outlined"
-              onClick={() => handleOffer(OFFER_TYPE.cancel)}
-              disabled={getState(state) !== 'Active'}
-            >
-              Cancel
-            </Button>
+            {getState(state) === 'Active' && (
+              <Button
+                type="legacy-outlined"
+                onClick={() => handleOffer(OFFER_TYPE.cancel)}
+              >
+                Cancel
+              </Button>
+            )}
           </div>
         </ItemRow>
       </TableRowContainerMobile>

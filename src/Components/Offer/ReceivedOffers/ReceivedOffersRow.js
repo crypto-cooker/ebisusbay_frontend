@@ -202,20 +202,20 @@ export default function TableRow({ data, type }) {
         </div>
         <div className="table-row-item">{getOfferDate(timeCreated)} ago</div>
         <div className="table-row-item">
-          <Button
-            type="legacy"
-            onClick={() => handleOffer(OFFER_TYPE.accept)}
-            disabled={getState(state) !== 'Active'}
-          >
-            Accept
-          </Button>
+          {getState(state) === 'Active' && (
+            <Button
+              type="legacy"
+              onClick={() => handleOffer(OFFER_TYPE.accept)}
+            >
+              Accept
+            </Button>
+          )}
         </div>
         <div className="table-row-item">
-          {type !== 'received-public' && type !== 'received-collection' && (
+          {type !== 'received-public' && type !== 'received-collection' && getState(state) === 'Active' && (
             <Button
               type="legacy-outlined"
               onClick={() => handleOffer(OFFER_TYPE.reject)}
-              disabled={getState(state) !== 'Active'}
             >
               Reject
             </Button>
@@ -259,20 +259,20 @@ export default function TableRow({ data, type }) {
         </ItemRow>
         <ItemRow>
           <div className="table-row-button">
-            <Button
-              type="legacy"
-              onClick={() => handleOffer(OFFER_TYPE.accept)}
-              disabled={getState(state) !== 'Active'}
-            >
-              Accept
-            </Button>
+            {getState(state) === 'Active' && (
+              <Button
+                type="legacy"
+                onClick={() => handleOffer(OFFER_TYPE.accept)}
+              >
+                Accept
+              </Button>
+            )}
           </div>
           <div className="table-row-button">
-            {!collectionData.multiToken && (
+            {!collectionData.multiToken && getState(state) === 'Active' && (
               <Button
                 type="legacy-outlined"
                 onClick={() => handleOffer(OFFER_TYPE.reject)}
-                disabled={getState(state) !== 'Active'}
               >
                 Reject
               </Button>
