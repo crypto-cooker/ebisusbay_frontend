@@ -32,6 +32,8 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
   const user = useSelector((state) => state.user);
 
   const fetchNft = async () => {
+    if (isCollectionOffer) return null;
+
     const tmpNft = await getNft(offer.nftAddress, offer.nftId);
     return tmpNft.nft;
   }
@@ -40,9 +42,9 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
     ['CancelOffer', user.address, offer.nftAddress, offer.nftId],
     fetchNft,
     {
-      enabled: !!user.provider && !!offer.nftId && !!offer.nftAddress
+      enabled: !!user.provider && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId)
     }
-  )
+  );
 
   const handleCancelOffer = async (e) => {
     e.preventDefault();
