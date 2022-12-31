@@ -8349,15 +8349,16 @@
         "avatar": "/img/collections/sleazy-weasel/avatar.png",
         "card": "/img/collections/sleazy-weasel/card.png",
         "banner": "/img/collections/sleazy-weasel/banner.png",
-        "website": "https://www.sleazy-weasel.com/",
+        "website": "https://sleazy.undeadcommunity.wtf/",
         "twitter": "https://twitter.com/sleazy_weasel",
-        "discord": "https://discord.gg/sleazyweasel",
+        "discord": "https://discord.gg/7FN3P8evtE",
+        "telegram": "https://t.me/sleazywsal",
         "categories": [
           "utility"
         ]
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
@@ -11918,9 +11919,8 @@
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "CM13 is a spontaneous, unexpected, surprising and exciting collection. Created by two different artists. A combination of two different styles into one. CM13 is a collab mint of the thirteenthevil and CroMythic projects. Strong and powerfull cooperation is a very good foundation for further project development plans. Do not wonder and join the family. Utility is not known yet, but most likely it will benefit each of the sides in the future and projects as you know are developing and not going to run away. X-Mythic sold in 40min, FP 13Evil x4 from mint price, earning in bear market priceless.",
+        "description": "",
         "avatar": "/img/collections/cm13/avatar.webp",
-        "banner": "/img/collections/cm13/banner.webp",
         "card": "/img/collections/cm13/card.webp",
         "website": "https://cromythic.com/",
         "discord": "https://discord.gg/Fg6Megb4Vn",
@@ -16222,6 +16222,32 @@
       },
       "verification": {
         "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Sleazy Weasel Rare And Legendary ",
+      "slug": "sleazy-weasel-rare-and-legendary",
+      "multiToken": false,
+      "address": "0xEeCA8a560F0b7069E7a310F883A8aff435ffDd92",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Sleazy Weasel Legends are the premier destination for modern, coveted Weasels, in Cronos. Each weasel contains exclusive swag and drip traits that are sure to turn heads.  These limited Legends offer passive income opportunities and exclusive token drops for our dedicated fans. Own a piece of the action and join our elite community.",
+        "avatar": "/img/collections/sleazy-weasel-rare-and-legendary/avatar.webp",
+        "card": "/img/collections/sleazy-weasel-rare-and-legendary/card.webp",
+        "banner": "/img/collections/sleazy-weasel-rare-and-legendary/banner.webp",
+        "website": "https://sleazy.undeadcommunity.wtf/",
+        "twitter": "https://twitter.com/sleazy_weasel",
+        "discord": "https://discord.gg/7FN3P8evtE",
+        "telegram": "https://t.me/sleazywsal",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
