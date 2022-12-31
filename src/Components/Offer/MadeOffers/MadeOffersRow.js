@@ -105,10 +105,6 @@ export const OFFER_TYPE = {
 export default function TableRow({ data }) {
   const { state, timeCreated, seller, buyer, price, nftAddress, nftId } = data;
 
-  let nft = useSelector((state) => {
-    return { ...state.nft.nft, address: nftAddress };
-  });
-
   const dispatch = useDispatch();
 
   const [offerType, setOfferType] = useState(OFFER_TYPE.none);

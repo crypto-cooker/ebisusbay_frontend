@@ -74,8 +74,13 @@ export default function Inventory({ address }) {
         .reduce((arr, item) => {
           const coll = findCollectionByAddress(item.nftAddress, item.nftId);
           if (!coll) return arr;
-          coll.balance = item.balance;
-          arr.push(coll);
+          const existingIndex = arr.findIndex((c) => caseInsensitiveCompare(coll.address, c.address));
+          if (existingIndex >= 0) {
+            arr[existingIndex].balance += Number(item.balance);
+          } else {
+            coll.balance = Number(item.balance);
+            arr.push(coll);
+          }
           return arr;
         }, [])
         .sort((a, b) => a.name > b.name ? 1 : -1)
