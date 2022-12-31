@@ -8349,15 +8349,16 @@
         "avatar": "/img/collections/sleazy-weasel/avatar.png",
         "card": "/img/collections/sleazy-weasel/card.png",
         "banner": "/img/collections/sleazy-weasel/banner.png",
-        "website": "https://www.sleazy-weasel.com/",
+        "website": "https://sleazy.undeadcommunity.wtf/",
         "twitter": "https://twitter.com/sleazy_weasel",
-        "discord": "https://discord.gg/sleazyweasel",
+        "discord": "https://discord.gg/7FN3P8evtE",
+        "telegram": "https://t.me/sleazywsal",
         "categories": [
           "utility"
         ]
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
@@ -16222,6 +16223,32 @@
       },
       "verification": {
         "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Sleazy Weasel Rare And Legendary ",
+      "slug": "sleazy-weasel-rare-and-legendary",
+      "multiToken": false,
+      "address": "0xEeCA8a560F0b7069E7a310F883A8aff435ffDd92",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Sleazy Weasel Legends are the premier destination for modern, coveted Weasels, in Cronos. Each weasel contains exclusive swag and drip traits that are sure to turn heads.  These limited Legends offer passive income opportunities and exclusive token drops for our dedicated fans. Own a piece of the action and join our elite community.",
+        "avatar": "/img/collections/sleazy-weasel-rare-and-legendary/avatar.webp",
+        "card": "/img/collections/sleazy-weasel-rare-and-legendary/card.webp",
+        "banner": "/img/collections/sleazy-weasel-rare-and-legendary/banner.webp",
+        "website": "https://sleazy.undeadcommunity.wtf/",
+        "twitter": "https://twitter.com/sleazy_weasel",
+        "discord": "https://discord.gg/7FN3P8evtE",
+        "telegram": "https://t.me/sleazywsal",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
