@@ -167,7 +167,6 @@ export default function TableRow({ data }) {
           isOpen={!!offerType}
           onClose={() => handleOffer(OFFER_TYPE.none)}
           collection={collectionData}
-          nft={nft}
           isCollectionOffer={!nftId}
           offer={data}
         />

@@ -23,19 +23,33 @@ import {
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
 import ImagesContainer from "../../Bundle/ImagesContainer";
+import {getNft} from "@src/core/api/endpoints/nft";
+import {useQuery} from "@tanstack/react-query";
 
-export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffer, nft, offer}) => {
-  const [isLoading, setIsLoading] = useState(false);
+export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffer, offer}) => {
   const offerContract = useSelector((state) => state.user.contractService.offer);
   const [executingCancelOffer, setExecutingCancelOffer] = useState(false);
   const user = useSelector((state) => state.user);
+
+  const fetchNft = async () => {
+    const tmpNft = await getNft(offer.nftAddress, offer.nftId);
+    return tmpNft.nft;
+  }
+
+  const { isLoading, error, data: nft, status } = useQuery(
+    ['CancelOffer', user.address, offer.nftAddress, offer.nftId],
+    fetchNft,
+    {
+      enabled: !!user.provider && !!offer.nftId && !!offer.nftAddress
+    }
+  )
 
   const handleCancelOffer = async (e) => {
     e.preventDefault();
 
     try {
       setExecutingCancelOffer(true);
-      Sentry.captureEvent({message: 'handleCancelOffer', extra: {address: nft.address ?? nft.nftAddress}});
+      Sentry.captureEvent({message: 'handleCancelOffer', extra: {address: offer.nftAddress}});
       let tx;
       if (isCollectionOffer) {
         tx = await offerContract.cancelCollectionOffer(offer.nftAddress, offer.offerIndex);
@@ -67,7 +81,15 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
           {isCollectionOffer ? <>Cancel Collection Offer</> : <>Cancel Offer</>}
         </ModalHeader>
         <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
-        {!isLoading ? (
+        {status === "loading" ? (
+          <EmptyData>
+            <Spinner animation="border" role="status" size="sm" className="ms-1">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </EmptyData>
+        ) : status === "error" ? (
+          <p>Error: {error.message}</p>
+        ) : (
           <>
             <ModalBody>
               <div className="text-center mb-2" style={{fontSize: '14px'}}>
@@ -81,18 +103,18 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
                       {collection.metadata.avatar ? (
                         <img src={hostedImage(collection.metadata.avatar)} alt={collection.name} />
                       ) : (
-                        <Blockies seed={(nft.address ?? nft.nftAddress).toLowerCase()} size={15} scale={10} />
+                        <Blockies seed={(offer.nftAddress).toLowerCase()} size={15} scale={10} />
                       )}
                       {collection.verification.verified && (
                         <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={8} stackClass="eb-avatar_badge" />
                       )}
                       </div>
                     </div>
-                  ) : isBundle(nft.address ?? nft.nftAddress) ? (
+                  ) : isBundle(offer.nftAddress) ? (
                     <ImagesContainer nft={nft} />
                   ) : (
                     <AnyMedia
-                      image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
+                      image={specialImageTransform(offer.nftAddress, nft.image)}
                       video={nft.video ?? nft.animation_url}
                       videoProps={{ height: 'auto', autoPlay: true }}
                       title={nft.name}
@@ -140,12 +162,6 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
               </div>
             </ModalFooter>
           </>
-        ) : (
-          <EmptyData>
-            <Spinner animation="border" role="status" size="sm" className="ms-1">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          </EmptyData>
         )}
       </ModalContent>
     </Modal>
