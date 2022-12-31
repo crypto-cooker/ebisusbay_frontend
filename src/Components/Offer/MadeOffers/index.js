@@ -1,18 +1,22 @@
-import React from 'react';
-import { Spinner } from 'react-bootstrap';
+import React, {useState} from 'react';
+import {Spinner} from 'react-bootstrap';
 
 import TableHeader from './MadeOffersHeader';
 import TableRow from './MadeOffersRow';
 import {getMyCollectionOffers, getMyOffers} from "@src/core/subgraph";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
+import {Radio, RadioGroup, Stack, Text, Wrap, WrapItem} from "@chakra-ui/react";
+import {offerState} from "@src/core/api/enums";
 
 export default function MadeOffers({ address, type}) {
+  const [offerType, setOfferType] = useState(offerState.ACTIVE.toString());
+
   const fetchProjects = async ({ pageParam = 0 }) => {
     if (type === 'collection') {
-      return await getMyCollectionOffers(address, '0', pageParam);
+      return await getMyCollectionOffers(address, offerType, pageParam);
     } else {
-      return await getMyOffers(address, '0', pageParam);
+      return await getMyOffers(address, offerType, pageParam);
     }
   }
 
@@ -24,9 +28,13 @@ export default function MadeOffers({ address, type}) {
     isFetching,
     isFetchingNextPage,
     status,
-  } = useInfiniteQuery(['MadeOffers', type], fetchProjects, {
-    getNextPageParam: (lastPage, pages) => lastPage.nextCursor,
-  })
+  } = useInfiniteQuery(
+    ['MadeOffers', type, offerType],
+    fetchProjects,
+    {
+      getNextPageParam: (lastPage, pages) => lastPage.nextCursor,
+    }
+  )
 
   const loadMore = () => {
     fetchNextPage();
@@ -34,6 +42,20 @@ export default function MadeOffers({ address, type}) {
 
   return (
     <div>
+      <Wrap spacing={2}>
+        <WrapItem>
+          <Text fontWeight='bold'>Filter: </Text>
+        </WrapItem>
+        <WrapItem>
+          <RadioGroup onChange={setOfferType} value={offerType}>
+            <Stack direction='row'>
+              <Radio value={offerState.ACTIVE.toString()}>Active</Radio>
+              <Radio value={offerState.ACCEPTED.toString()}>Accepted</Radio>
+              <Radio value={offerState.REJECTED.toString()}>Rejected</Radio>
+            </Stack>
+          </RadioGroup>
+        </WrapItem>
+      </Wrap>
       <TableHeader />
       {status === "loading" ? (
         <div className="col-lg-12 text-center">

@@ -8,13 +8,14 @@ import {getAllCollectionOffers, getAllOffers} from "@src/core/subgraph";
 import {useQuery} from "@tanstack/react-query";
 import {caseInsensitiveCompare, findCollectionByAddress, findCollectionFloor, isNftBlacklisted} from "@src/utils";
 import {offerState} from "@src/core/api/enums";
-import {FormControl, FormLabel, Switch} from "@chakra-ui/react";
+import {Flex, FormControl, FormLabel, Radio, RadioGroup, Stack, Switch, Text, Wrap, WrapItem} from "@chakra-ui/react";
 
 export default function ReceivedOffers({ address, collectionAddresses, nfts, stats, type }) {
   const [showAll, setShowAll] = useState(false);
+  const [offerType, setOfferType] = useState(offerState.ACTIVE.toString());
 
   const fetchProjects = async ({ pageParam = 0 }) => {
-    const {data: allOffers} = await getAllOffers(collectionAddresses, '0', pageParam);
+    const {data: allOffers} = await getAllOffers(collectionAddresses, offerType, pageParam);
 
     if (type === 'received-direct') {
       return allOffers.filter((offer) => {
@@ -57,7 +58,7 @@ export default function ReceivedOffers({ address, collectionAddresses, nfts, sta
         })
         .sort((a, b) => parseInt(b.price) - parseInt(a.price));
     } else if (type === 'received-collection') {
-      const {data: allCollectionOffers} = await getAllCollectionOffers(collectionAddresses, '0', pageParam);
+      const {data: allCollectionOffers} = await getAllCollectionOffers(collectionAddresses, offerType, pageParam);
       return allCollectionOffers.filter((offer) => {
         const nft = nfts.filter((nft) => {
           const matchesAddress = caseInsensitiveCompare(nft.nftAddress, offer.nftAddress);
@@ -89,7 +90,7 @@ export default function ReceivedOffers({ address, collectionAddresses, nfts, sta
     isFetchingNextPage,
     status,
   } = useQuery(
-    ['ReceivedOffers', type, showAll],
+    ['ReceivedOffers', type, offerType, showAll],
     fetchProjects,
     {enabled: collectionAddresses.length > 0 && nfts.length > 0, refetchOnWindowFocus: false}
   )
@@ -100,12 +101,28 @@ export default function ReceivedOffers({ address, collectionAddresses, nfts, sta
 
   return (
     <div>
-      <FormControl display='flex' alignItems='center' mb={2}>
-        <FormLabel htmlFor='show-all-offers' mb='0'>
-          Show low offers
-        </FormLabel>
-        <Switch id='show-all-offers' isChecked={showAll} onChange={(e) => setShowAll(e.target.checked)} />
-      </FormControl>
+      <Flex justify='space-between' w='full'>
+        <Wrap spacing={2} w='full'>
+          <WrapItem>
+            <Text fontWeight='bold'>Filter: </Text>
+          </WrapItem>
+          <WrapItem>
+            <RadioGroup onChange={setOfferType} value={offerType}>
+              <Stack direction='row'>
+                <Radio value={offerState.ACTIVE.toString()}>Active</Radio>
+                <Radio value={offerState.ACCEPTED.toString()}>Accepted</Radio>
+                <Radio value={offerState.REJECTED.toString()}>Rejected</Radio>
+              </Stack>
+            </RadioGroup>
+          </WrapItem>
+        </Wrap>
+        <FormControl display='flex' alignItems='center' mb={2}>
+          <FormLabel htmlFor='show-all-offers' mb='0'>
+            Show low offers
+          </FormLabel>
+          <Switch id='show-all-offers' isChecked={showAll} onChange={(e) => setShowAll(e.target.checked)} />
+        </FormControl>
+      </Flex>
       <TableHeader />
       {status === "loading" ? (
         <div className="col-lg-12 text-center">
