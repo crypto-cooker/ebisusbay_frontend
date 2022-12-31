@@ -8,7 +8,17 @@ import {getAllCollectionOffers, getAllOffers} from "@src/core/subgraph";
 import {useQuery} from "@tanstack/react-query";
 import {caseInsensitiveCompare, findCollectionByAddress, findCollectionFloor, isNftBlacklisted} from "@src/utils";
 import {offerState} from "@src/core/api/enums";
-import {Flex, FormControl, FormLabel, Radio, RadioGroup, Stack, Switch, Text, Wrap, WrapItem} from "@chakra-ui/react";
+import {
+  FormControl,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  Stack,
+  Switch,
+  Text,
+  Wrap,
+  WrapItem
+} from "@chakra-ui/react";
 
 export default function ReceivedOffers({ address, collectionAddresses, nfts, stats, type }) {
   const [showAll, setShowAll] = useState(false);
@@ -101,8 +111,8 @@ export default function ReceivedOffers({ address, collectionAddresses, nfts, sta
 
   return (
     <div>
-      <Flex justify='space-between' w='full'>
-        <Wrap spacing={2} w='full'>
+      <Stack>
+        <Wrap spacing={2}>
           <WrapItem>
             <Text fontWeight='bold'>Filter: </Text>
           </WrapItem>
@@ -122,7 +132,7 @@ export default function ReceivedOffers({ address, collectionAddresses, nfts, sta
           </FormLabel>
           <Switch id='show-all-offers' isChecked={showAll} onChange={(e) => setShowAll(e.target.checked)} />
         </FormControl>
-      </Flex>
+      </Stack>
       <TableHeader />
       {status === "loading" ? (
         <div className="col-lg-12 text-center">
