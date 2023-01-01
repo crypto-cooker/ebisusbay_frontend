@@ -263,7 +263,7 @@ export const featureFlags = {
   [Features.INFINITE_QUERY_COLLECTION]: false,     // Paginated collections endpoint
   [Features.UNVERIFIED_WARNING]: false,            // Warning when buying from unverified collection
   [Features.REPORT_COLLECTION]: false,             // Report button on collection page
-  [Features.NEW_CHAKRA_THEME]: true,             // Update theme
+  [Features.NEW_CHAKRA_THEME]: false,             // Update theme
   [Features.GLOBAL_SEARCH]: true,                // Global search bar
   [Features.BUNDLES]: true,                      // Bundles
   [Features.GASLESS_LISTING]: false                //Gasless listings
