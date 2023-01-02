@@ -12,7 +12,7 @@ import {
   caseInsensitiveCompare,
   convertIpfsResource,
   findCollectionByAddress,
-  isAntMintPassCollection, isBundle, isCroniesCollection,
+  isAntMintPassCollection, isBundle, isCroniesCollection, isCroskullSbtCollection,
   isMetapixelsCollection,
   isNftBlacklisted,
   isSouthSideAntsCollection,
@@ -475,6 +475,10 @@ export async function getNftFromFile(collectionId, nftId) {
           canSell = false;
           isStaked = true;
         }
+      }
+      if (isCroskullSbtCollection(collectionId)) {
+        canTransfer = false;
+        canSell = false;
       }
       const properties = json.properties && Array.isArray(json.properties) ? json.properties : json.attributes;
       nft = {

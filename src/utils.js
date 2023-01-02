@@ -493,6 +493,10 @@ export const isSscCollection = (address) => {
   return isCollection(address, 'ssc-access-cards', '0x45Fe45e5623a129d652F15962d901C7B609e5194');
 };
 
+export const isCroskullSbtCollection = (address) => {
+  return isCollection(address, 'croskull-soulbound-token', '0x0977Ee79F7f6BedE288DD0264C77B4A1b32C48e8');
+};
+
 export const isEbVipCollection = (address, id) => {
   const collection = collections.find((c) => c.slug === 'vip-founding-member');
   return collection &&
