@@ -16251,6 +16251,33 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "CroSkull Soulbound Token",
+      "slug": "croskull-soulbound-token",
+      "multiToken": false,
+      "address": "0x0977Ee79F7f6BedE288DD0264C77B4A1b32C48e8",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The CroSkull Soul Bound Token is a non-transferable non-fungible token (NFT) that represents a person's ownership and participation in the CroSkull's Council decentralized autonomous organization. This token is tied to the owner's digital identity and cannot be transferred or sold to anyone else.  As the owner of a soul-bound token, you will have the opportunity to participate in the governance of the Council by voting on important decisions and proposals.  In addition to participating in Council governance, you will have access to exclusive perks and benefits offered by the organization. These may include discounts on future ticks or services, early access to new features or upgrades, and other special privileges (to be announced in the future).  Overall, a soul bound token is a powerful tool for anyone who wants to take an active role in a DAO's decision-making process and enjoy the exclusive benefits that come with it.",
+        "avatar": "/img/collections/croskull-soulbound-token/avatar.webp",
+        "banner": "/img/collections/croskull-soulbound-token/banner.webp",
+        "card": "/img/collections/croskull-soulbound-token/card.webp",
+        "website": "https://app.croskull.com/",
+        "twitter": "https://twitter.com/CroskullNFT",
+        "discord": "https://discord.gg/q3nWxw8QRY",
+        "medium": "https://medium.com/@croskullnft",
+        "staking": "croskull",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
