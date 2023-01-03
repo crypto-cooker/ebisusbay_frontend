@@ -16285,7 +16285,7 @@
       "multiToken": false,
       "address": "0xb33c03c551018E6c14F137003160067795667C8a",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "CrofamLadiesSKULL is a collection consisting of 10 000 NFT.  10 traits and over 200 elements.  CrofamLadiesVIP (SKULL rarity) drop for TOP 155 holders.  Special (1:1) drop \"Era of Inventors\" collection.  5% mint royalties for CrofamLadiesSKULL holders.  Part of the profits will be used to the CrofamVIP staking.  More utility coming soon",
         "avatar": "/img/collections/crofam-ladies-skull/avatar.webp",
