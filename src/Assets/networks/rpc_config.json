@@ -16301,6 +16301,28 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Troll",
+      "slug": "troll",
+      "multiToken": false,
+      "address": "0x6bb3dC616076aDB0Cb0CFCB3214794574b68a36e",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Stake, Bake and Troll on.",
+        "avatar": "/img/collections/troll/avatar.webp",
+        "card": "/img/collections/troll/card.webp",
+        "banner": "/img/collections/troll/banner.webp",
+        "twitter": "https://twitter.com/Sw33percrypto",
+        "discord": "https://discord.gg/trollcoin",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
     }
   ],
   "drops": [
