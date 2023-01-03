@@ -9,6 +9,7 @@ const batchListingSlice = createSlice({
     extras: {},
     extrasBundle: {},
     refetchNfts: false,
+    type: 'listing'
   },
   reducers: {
     addToBatchListingCart: (state, action) => {
@@ -109,6 +110,9 @@ const batchListingSlice = createSlice({
     setRefetchNfts: (state, action) => {
       state.refetchNfts = action.payload;
     },
+    setBatchType: (state, action) => {
+      state.type = action.payload;
+    },
   },
 });
 
@@ -126,7 +130,8 @@ export const {
   setApproval,
   setFloorPrice,
   setExtras,
-  setRefetchNfts
+  setRefetchNfts,
+  setBatchType
 } = batchListingSlice.actions;
 
 export default batchListingSlice.reducer;
