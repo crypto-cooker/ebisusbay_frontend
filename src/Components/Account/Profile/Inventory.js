@@ -7,7 +7,6 @@ import MyNftCard from "@src/Components/components/MyNftCard";
 import {caseInsensitiveCompare, findCollectionByAddress, isBundle, isNftBlacklisted} from "@src/utils";
 import NftCard from "@src/Components/components/NftCard";
 import NftBundleCard from "@src/Components/components/NftBundleCard";
-import { appConfig } from "@src/Config";
 import { MyNftPageActions } from "@src/GlobalState/User";
 import MyNftCancelDialog from "@src/Components/components/MyNftCancelDialog";
 import { getWalletOverview } from "@src/core/api/endpoints/walletoverview";
@@ -19,9 +18,23 @@ import Button from "@src/Components/components/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faFilter } from "@fortawesome/free-solid-svg-icons";
 import TransferNftDialog from "@src/Components/Account/Profile/Dialogs/TransferNftDialog";
-import { addToBatchListingCart, removeFromBatchListingCart, setRefetchNfts } from "@src/GlobalState/batchListingSlice";
+import {
+  addToBatchListingCart, closeBatchListingCart,
+  openBatchListingCart,
+  removeFromBatchListingCart, setBatchType,
+  setRefetchNfts
+} from "@src/GlobalState/batchListingSlice";
 import { MobileBatchListing } from "@src/Components/Account/Profile/Inventory/MobileBatchListing";
-import { useBreakpointValue } from "@chakra-ui/react";
+import {
+  Box,
+  Button as ChakraButton,
+  HStack,
+  Spacer,
+  Stack,
+  useBreakpointValue,
+  Wrap,
+  WrapItem
+} from "@chakra-ui/react";
 import MyBundleCard from './Inventory/components/MyBundleCard';
 
 export default function Inventory({ address }) {
@@ -94,6 +107,21 @@ export default function Inventory({ address }) {
     if (batchListingCart.refetchNfts) refetch()
     dispatch(setRefetchNfts(false))
   }, [batchListingCart.refetchNfts]);
+
+  const toggleOpenBatchListingCart = () => {
+    if (batchListingCart.isDrawerOpen) {
+      dispatch(closeBatchListingCart());
+    } else {
+      dispatch(openBatchListingCart());
+    }
+  };
+
+  const handleOpenBatchShortcut = (shortcut) => {
+    if (!batchListingCart.isDrawerOpen) {
+      dispatch(openBatchListingCart());
+    }
+    dispatch(setBatchType(shortcut));
+  };
 
   const historyContent = useMemo(() => {
     return status === "loading" ? (
@@ -209,16 +237,47 @@ export default function Inventory({ address }) {
           </div>
         )}
         <div className="flex-fill">
-          <div className="d-flex mb-2">
-            <div>
-              <Button
-                type="legacy-outlined"
-                onClick={toggleFilterVisibility}
-              >
-                <FontAwesomeIcon icon={filtersVisible ? faAngleLeft : faFilter} />
-              </Button>
-            </div>
-          </div>
+          <Stack direction="row" mb={2} align="center">
+            {useMobileMenu ? (
+              <ul className="activity-filter">
+                <li className="active" onClick={toggleFilterVisibility}>
+                  <FontAwesomeIcon icon={filtersVisible ? faAngleLeft : faFilter} />
+                </li>
+                <li id="bulk" className={batchListingCart.isDrawerOpen ? 'active' : ''} onClick={toggleOpenBatchListingCart}>
+                  Bulk Mode
+                </li>
+              </ul>
+            ) : (
+              <>
+                <Box>
+                  <Button
+                    type="legacy-outlined"
+                    onClick={toggleFilterVisibility}
+                  >
+                    <FontAwesomeIcon icon={filtersVisible ? faAngleLeft : faFilter} className="py-1" />
+                  </Button>
+                </Box>
+                <HStack align="center" spacing={2} border="1px solid white" rounded='md' ps={2} pe={1} py={1}>
+                  <Box>
+                    Bulk mode:
+                  </Box>
+                  <Wrap gap={2}>
+                    <WrapItem>
+                      <ChakraButton variant="ghost" size="sm" onClick={() => handleOpenBatchShortcut('listing')}>
+                        Sell
+                      </ChakraButton>
+                      <ChakraButton variant="ghost" size="sm" onClick={() => handleOpenBatchShortcut('bundle')}>
+                        Bundle
+                      </ChakraButton>
+                      <ChakraButton variant="ghost" size="sm" onClick={() => handleOpenBatchShortcut('transfer')}>
+                        Transfer
+                      </ChakraButton>
+                    </WrapItem>
+                  </Wrap>
+                </HStack>
+              </>
+            )}
+          </Stack>
           <InfiniteScroll
             dataLength={data?.pages ? data.pages.flat().length : 0}
             next={loadMore}
