@@ -7,6 +7,7 @@ import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSig
 import { useSelector } from "react-redux";
 import { appConfig } from "@src/Config";
 import { getServerSignature } from '@src/core/cms/endpoints/gaslessListing';
+import { buyListing } from '@src/core/cms/endpoints/gaslessListing';
 
 import gaslessListingContract from "@src/Contracts/GaslessListing.json";
 
@@ -88,7 +89,7 @@ const useBuyGaslessListings = () => {
 
         const newListing = await buyContract.completeListings(contractListings, sigData, signature, { value: total });
 
-        // const res = await buyListing(signatureInStorage, user.address.toLowerCase(), listings)
+        const res = await buyListing(signatureInStorage, user.address.toLowerCase(), gaslessListings)
         toast.success('Nft successfully purchased');
 
         setResponse({

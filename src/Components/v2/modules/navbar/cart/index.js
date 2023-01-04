@@ -97,7 +97,6 @@ const Cart = function () {
     const totalPrice = calculateTotalPrice();
     let price = ethers.utils.parseUnits(totalPrice.toString());
     const aux = await buyGaslessListings(cart.nfts, totalPrice)
-    toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
     handleClose();
     handleClearCart();
   };

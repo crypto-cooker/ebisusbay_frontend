@@ -60,9 +60,9 @@ export const cancelListing = async (signature, address, nonce, collectionAddress
   }
 }
 
-export const buyListing = async (signature, address, listing) => {
+export const buyListing = async (signature, address, listings) => {
   try {
-    const response = await api.patch('gasless-listing/buy', {collectionAddress: listing.nftAddress, tokenId: listing.nftId, nonce: listing.nonce}, {
+    const response = await api.patch('gasless-listing/buy', {listings}, {
       params: {
         signature,
         address
