@@ -27,6 +27,7 @@ import {listingState} from "@src/core/api/enums";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
 import Link from "next/link";
 import {LOCAL_STORAGE_ITEMS} from "@src/helpers/storage";
+import useBuyGaslessListings from '@src/hooks/useBuyGaslessListings';
 
 const Cart = function () {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ const Cart = function () {
   const [soldItems, setSoldItems] = useState([]);
   const [invalidItems, setInvalidItems] = useState([]);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
+  const [buyGaslessListings, response] = useBuyGaslessListings();
   const slideDirection = useBreakpointValue(
     {
       base: 'bottom',
@@ -94,10 +96,7 @@ const Cart = function () {
     const listingIds = cart.nfts.map((o) => o.listingId);
     const totalPrice = calculateTotalPrice();
     let price = ethers.utils.parseUnits(totalPrice.toString());
-    let tx = await user.contractService.market.makePurchases(listingIds, {
-      value: price,
-    });
-    let receipt = await tx.wait();
+    const aux = await buyGaslessListings(cart.nfts, totalPrice)
     toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
     handleClose();
     handleClearCart();

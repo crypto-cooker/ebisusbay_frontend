@@ -1,24 +1,25 @@
-import React, {useState, useCallback, useEffect} from 'react';
-import {specialImageTransform} from "@src/hacks";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
+import React, { useState, useCallback, useEffect } from 'react';
+import { specialImageTransform } from "@src/hacks";
+import { AnyMedia } from "@src/Components/components/AnyMedia";
 import DotIcon from "@src/Components/components/DotIcon";
-import {faCheck, faDollarSign} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { faCheck, faDollarSign, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useFeatureFlag from "@src/hooks/useFeatureFlag";
 import Constants from "@src/constants";
-import {Badge, Form, Spinner} from "react-bootstrap";
-import {useSelector} from "react-redux";
-import {Contract, ethers} from "ethers";
+import { Badge, Form, Spinner } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { Contract, ethers } from "ethers";
 import Button from "@src/Components/components/Button";
-import {getCollectionMetadata} from "@src/core/api";
-import {toast} from "react-toastify";
+import { getCollectionMetadata } from "@src/core/api";
+import { toast } from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {ERC721} from "@src/Contracts/Abis";
-import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
-import {appConfig} from "@src/Config";
-import {useWindowSize} from "@src/hooks/useWindowSize";
+import { ERC721 } from "@src/Contracts/Abis";
+import { createSuccessfulTransactionToastContent, isBundle } from "@src/utils";
+import { appConfig } from "@src/Config";
+import Market from "@src/Contracts/Marketplace.json";
+import { useWindowSize } from "@src/hooks/useWindowSize";
 import * as Sentry from '@sentry/react';
-import {collectionRoyaltyPercent} from "@src/core/chain";
+import { collectionRoyaltyPercent } from "@src/core/chain";
 import {
   Modal,
   ModalBody,
@@ -31,17 +32,55 @@ import {
 import {getTheme} from "@src/Theme/theme";
 import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
 import useCreateGaslessListing from '../Account/Settings/hooks/useCreateGaslessListing';
+import useUpdateGaslessListing from '../Account/Settings/hooks/useUpdateGaslessListing';
+
+import moment from 'moment';
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 const floorThreshold = 5;
 
+const expirationDatesValues = [
+  {
+    value: 3600000,
+    label: '1 Hour'
+  },
+  {
+    value: 10800000,
+    label: '3 Hours'
+  },
+  {
+    value: 21600000,
+    label: '6 Hours'
+  },
+  {
+    value: 86400000,
+    label: '1 Day'
+  },
+  {
+    value: 259200000,
+    label: '3 Days'
+  },
+  {
+    value: 604800000,
+    label: '7 Days'
+  },
+  {
+    value: 1296000000,
+    label: '15 Days'
+  },
+  {
+    value: 2592000000,
+    label: '30 Days'
+  },
+
+]
+
 export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
   const { Features } = Constants;
-
   const [saleType, setSaleType] = useState(1);
   const [salePrice, setSalePrice] = useState(null);
-  const [expirationDate, setExpirationDate] = useState(null);
+  const [expirationDate, setExpirationDate] = useState({ type: 'dropdown', value: new Date().getTime() + 2592000000 });
   const [floorPrice, setFloorPrice] = useState(0);
   const [priceError, setPriceError] = useState(false);
   const [fee, setFee] = useState(0);
@@ -60,8 +99,10 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
   const isGaslessListingEnabled = useFeatureFlag(Features.GASLESS_LISTING);
 
   const user = useSelector((state) => state.user);
-  const [createGaslessListing, response] = useCreateGaslessListing()
-  const {contractService} = user;
+  const [createGaslessListing, responseCreate] = useCreateGaslessListing();
+  const [updateGaslessListing, responseUpdate] = useUpdateGaslessListing();
+
+  const { contractService } = user;
 
   const changeSaleType = (type) => {
     switch (type) {
@@ -88,7 +129,14 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
   }, [setSalePrice, floorPrice, salePrice]);
 
   const expirationDateOnChange = useCallback((e) => {
-    setExpirationDate(e.target.value)
+
+    if (!e.target.value.includes('T')) {
+      setExpirationDate({ type: 'dropdown', value: new Date().getTime() + parseInt(e.target.value) });
+    }
+    else {
+      setExpirationDate({ type: 'select', value: new Date(e.target.value).getTime() });
+    }
+
   }, [setExpirationDate])
 
   const onQuickCost = useCallback((percentage) => {
@@ -205,14 +253,18 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
       const nftAddress = nft.address ?? nft.nftAddress;
       const nftId = nft.id ?? nft.nftId;
       const price = ethers.utils.parseEther(salePrice.toString());
-
       setExecutingCreateListing(true);
-      if(isGaslessListingEnabled){
-        const res = await createGaslessListing({collectionAddress: nftAddress, tokenId: nftId, price: salePrice.toString(), expirationDate});
+      if (isGaslessListingEnabled) {
+        if (nft.listed) {
+          const res = await updateGaslessListing({ collectionAddress: nftAddress, tokenId: nftId, price: salePrice.toString(), expirationDate: expirationDate.value, nonce: nft.listingNonce });
+        }
+        else {
+          const res = await createGaslessListing({ collectionAddress: nftAddress, tokenId: nftId, price: salePrice.toString(), expirationDate: expirationDate.value });
+        }
         toast.success("Listing Successful");
 
-      }else{
-        Sentry.captureEvent({message: 'handleCreateListing', extra: {nftAddress, nftId, price}});
+      } else {
+        Sentry.captureEvent({ message: 'handleCreateListing', extra: { nftAddress, nftId, price } });
         let tx = await contractService.market.makeListing(nftAddress, nftId, price);
         let receipt = await tx.wait();
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -355,7 +407,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                       </Badge>
                     )}
                   </div>
-                  
+
                   {isGaslessListingEnabled && (
                     <Form.Group className="form-field mb-3">
                       <Form.Label className="formLabel w-100">
@@ -363,13 +415,46 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                           <div className="flex-grow-1">Expiration Date</div>
                         </div>
                       </Form.Label>
-                      <Form.Control
-                        className="input"
-                        type="date"
-                        value={expirationDate}
-                        onChange={expirationDateOnChange}
-                        disabled={showConfirmButton || executingCreateListing}
-                      />
+                      <div style={{ display: 'flex', gap: '8px' }}>
+
+                        {expirationDate.type === 'dropdown' ?
+                          (<>
+                            <Form.Select defaultValue={2592000000}
+                              onChange={expirationDateOnChange}
+                            >
+                              {expirationDatesValues.map((time) => (
+                                <option value={time.value}>{time.label}</option>
+                              ))
+                              }
+
+                            </Form.Select>
+
+                          </>)
+                          :
+                          (<>
+                            <Form.Control
+                              className="input"
+                              type="text"
+                              value={moment(new Date(expirationDate.value)).format('DD/MM/YYYY HH:mm:ss a')}
+                              disabled
+
+                            />
+
+                            <Button type='outlined' style={{ maxWidth: '38px', height: '40px' }} className="simple-button" onClick={() => { setExpirationDate({ value: new Date().getTime() + 2592000000, type: 'dropdown' }) }}>
+                              <FontAwesomeIcon className='icon-fa' icon={faTimes} />
+                            </Button>
+                          </>
+                          )
+                        }
+                        <Form.Control
+                          style={{ maxWidth: '38px', visibility: expirationDate.type === 'dropdown' ? 'visible' : 'hidden', position: expirationDate.type === 'dropdown' ? 'relative' : 'absolute' }}
+                          className="input"
+                          type="datetime-local"
+                          onChange={expirationDateOnChange}
+
+                        />
+
+                      </div>
                       <Form.Text className="field-description textError">
                         {priceError}
                       </Form.Text>
@@ -412,16 +497,16 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                         )}
                         <div className="d-flex">
                           <Button type="legacy"
-                                  onClick={() => setShowConfirmButton(false)}
-                                  disabled={executingCreateListing}
-                                  className="me-2 flex-fill">
+                            onClick={() => setShowConfirmButton(false)}
+                            disabled={executingCreateListing}
+                            className="me-2 flex-fill">
                             Go Back
                           </Button>
                           <Button type="legacy-outlined"
-                                  onClick={handleCreateListing}
-                                  isLoading={executingCreateListing}
-                                  disabled={executingCreateListing}
-                                  className="flex-fill">
+                            onClick={handleCreateListing}
+                            isLoading={executingCreateListing}
+                            disabled={executingCreateListing}
+                            className="flex-fill">
                             I understand, continue
                           </Button>
                         </div>
@@ -435,10 +520,10 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                         )}
                         <div className="d-flex">
                           <Button type="legacy"
-                                  onClick={processCreateListingRequest}
-                                  isLoading={executingCreateListing}
-                                  disabled={executingCreateListing}
-                                  className="flex-fill">
+                            onClick={processCreateListingRequest}
+                            isLoading={executingCreateListing}
+                            disabled={executingCreateListing}
+                            className="flex-fill">
                             {listing ? 'Update Listing' : 'Confirm Listing'}
                           </Button>
                         </div>
@@ -452,10 +537,10 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                     </div>
                     <div className="d-flex justify-content-end">
                       <Button type="legacy"
-                              onClick={handleApproval}
-                              isLoading={executingApproval}
-                              disabled={executingApproval}
-                              className="flex-fill">
+                        onClick={handleApproval}
+                        isLoading={executingApproval}
+                        disabled={executingApproval}
+                        className="flex-fill">
                         Approve
                       </Button>
                     </div>

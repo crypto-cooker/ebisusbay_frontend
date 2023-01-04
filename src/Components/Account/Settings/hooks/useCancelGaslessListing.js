@@ -1,27 +1,21 @@
 import { useState } from 'react';
-import {Contract, ethers} from "ethers";
 
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import useCreateSigner from './useCreateSigner';
-import useCreateListingSigner from '../../../../hooks/useCreateListingSigner';
 import {useSelector} from "react-redux";
-import { createListing } from '@src/core/cms/endpoints/gaslessListing';
-import UUID from 'uuid-int';
+import { cancelListing } from '@src/core/cms/endpoints/gaslessListing';
 
-const generator = UUID(0);
-
-const useCreateGaslessListing = () => {
+const useCancelGaslessListing = () => {
   const [response, setResponse] = useState({
     loading: false,
     error: null,
   });
 
-  const [isLoadingListing, createListingSigner] = useCreateListingSigner();
   const [isLoading, getSigner] = useCreateSigner();
 
   const user = useSelector((state) => state.user);
 
-  const createGaslessListing = async (listing) => {
+  const cancelGaslessListing = async ({listingNonce, address, id}) => {
     setResponse({
       ...response,
       loading: true,
@@ -34,10 +28,8 @@ const useCreateGaslessListing = () => {
     }
     if (signatureInStorage) {
       try {
-        listing.nonce = generator.uuid();
-        const signature = await createListingSigner(listing);
-        listing.sellerSignature = signature;
-        const res = await createListing(signatureInStorage, user.address.toLowerCase(), listing)
+
+        const res = await cancelListing(signatureInStorage, user.address.toLowerCase(), listingNonce, address, id)
 
         setResponse({
           ...response,
@@ -66,7 +58,7 @@ const useCreateGaslessListing = () => {
     }
   };
 
-  return [createGaslessListing, response];
+  return [cancelGaslessListing, response];
 };
 
-export default useCreateGaslessListing;
+export default useCancelGaslessListing;

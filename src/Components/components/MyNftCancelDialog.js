@@ -1,6 +1,9 @@
 import React, { memo, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { MyNftCancelDialogActions } from '../../GlobalState/User';
+import useCancelGaslessListing from '@src/Components/Account/Settings/hooks/useCancelGaslessListing';
+import { MyNftPageActions } from "@src/GlobalState/User";
+import { toast } from 'react-toastify';
 
 const mapStateToProps = (state) => ({
   walletAddress: state.user.address,
@@ -8,22 +11,41 @@ const mapStateToProps = (state) => ({
   myNftPageCancelDialog: state.user.myNftPageCancelDialog,
 });
 
-const MyNftCancelDialog = ({ myNftPageCancelDialog }) => {
+const MyNftCancelDialog = ({ myNftPageCancelDialog, isGaslessListing }) => {
   const dispatch = useDispatch();
+
+  const [cancelGaslessListing, response] = useCancelGaslessListing();
+
+  const cancelGaslessListingFun = async () => {
+    try {
+      const res = await cancelGaslessListing(myNftPageCancelDialog)
+      dispatch(MyNftPageActions.hideNftPageCancelDialog());
+      toast.success('Canceled successfully')
+    }
+    catch(error){
+      console.log(error)
+      toast.error('Error')
+    }
+  }
 
   useEffect(() => {
     if (myNftPageCancelDialog) {
-      dispatch(
-        MyNftCancelDialogActions.cancelListing({
-          address: myNftPageCancelDialog.address,
-          id: myNftPageCancelDialog.id,
-          listingId: myNftPageCancelDialog.listingId,
-        })
-      );
+      if(!myNftPageCancelDialog.isGaslessListing){
+        dispatch(
+          MyNftCancelDialogActions.cancelListing({
+            address: myNftPageCancelDialog.contract.address,
+            id: myNftPageCancelDialog.id,
+            listingId: myNftPageCancelDialog.listingId,
+          })
+        );
+      }
+      else{
+        cancelGaslessListingFun()
+      }
     }
 
     // eslint-disable-next-line
-  }, [myNftPageCancelDialog]);
+  }, [myNftPageCancelDialog, isGaslessListing]);
 
   return <></>;
 };

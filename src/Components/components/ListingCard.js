@@ -22,12 +22,17 @@ import {
   faHand,
   faLink,
   faShoppingBag,
-  faSync
+  faSync,
+  faShoppingCart
 } from "@fortawesome/free-solid-svg-icons";
 import {addToCart, openCart, removeFromCart} from "@src/GlobalState/cartSlice";
 import {toast} from "react-toastify";
 import {refreshMetadata} from "@src/GlobalState/nftSlice";
 import {specialImageTransform} from "@src/hacks";
+import { appConfig } from "@src/Config";
+import useBuyGaslessListing from '@src/hooks/useBuyGaslessListing';
+
+const config = appConfig();
 
 const Watermarked = styled.div`
   position: relative;
@@ -65,6 +70,14 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
 
   const getOptions = () => {
     const options = [];
+
+    if(listing.nonce){
+      options.push({
+        icon: faShoppingCart,
+        label: 'Buy now',
+        handleClick: () => buyGaslessListing(listing),
+      });
+    }
 
     options.push({
       icon: faHand,
@@ -107,6 +120,8 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
     return options;
   };
 
+  const [buyGaslessListing, response] = useBuyGaslessListing();
+
   const handleMakeOffer = () => {
     if (user.address) {
       setOpenMakeOfferDialog(!openMakeOfferDialog);
@@ -130,7 +145,11 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
       price: listing.price,
       address: listing.nftAddress,
       id: listing.nftId,
-      rank: listing.nft.rank
+      rank: listing.nft.rank,
+      nonce: listing.nonce ?? null,
+      expirationDate: listing.expirationDate ?? null,
+      seller: listing.seller ?? null,
+      sellerSignature: listing.sellerSignature ?? null,
     }));
     toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
   };

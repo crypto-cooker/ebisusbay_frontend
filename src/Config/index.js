@@ -161,6 +161,7 @@ export const configData = {
       slothtyRugsurance: '0xC54821941Bb036463bDB1eea781f9b29a7f98fAc',
       bundle: '0xEbFB981D5a7A7C2133752F7787263B58495bb923',
       cnsusd: '0x263818f9693548446A41ad7025923612b490CB0D'
+      gaslessListing: '0xF147eC54C077A5Ec142cEA81394Ee24415e6d688'
     },
     tokens: {
       loot: {
@@ -265,6 +266,6 @@ export const featureFlags = {
   [Features.REPORT_COLLECTION]: false,             // Report button on collection page
   [Features.NEW_CHAKRA_THEME]: false,             // Update theme
   [Features.GLOBAL_SEARCH]: true,                // Global search bar
-  [Features.BUNDLES]: true,                      // Bundles
-  [Features.GASLESS_LISTING]: false                //Gasless listings
+  [Features.BUNDLES]: false,                      // Bundles
+  [Features.GASLESS_LISTING]: true                //Gasless listings
 }

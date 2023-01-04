@@ -194,7 +194,7 @@ export default function Inventory({ address }) {
                           onUpdateButtonPressed={() => {
                             dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
                           }}
-                          onCancelButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageCancelDialog(nft))}
+                          onCancelButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageCancelDialog(nft)) }
                           onAddToBatchListingButtonPressed={() => dispatch(addToBatchListingCart(nft))}
                           onRemoveFromBatchListingButtonPressed={() => dispatch(removeFromBatchListingCart(nft))}
                           newTab={true}

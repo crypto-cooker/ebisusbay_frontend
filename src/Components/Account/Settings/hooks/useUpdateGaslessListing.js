@@ -1,16 +1,12 @@
 import { useState } from 'react';
-import {Contract, ethers} from "ethers";
 
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import useCreateSigner from './useCreateSigner';
 import useCreateListingSigner from '../../../../hooks/useCreateListingSigner';
 import {useSelector} from "react-redux";
-import { createListing } from '@src/core/cms/endpoints/gaslessListing';
-import UUID from 'uuid-int';
+import { updateListing } from '@src/core/cms/endpoints/gaslessListing';
 
-const generator = UUID(0);
-
-const useCreateGaslessListing = () => {
+const useUpdateGaslessListing = () => {
   const [response, setResponse] = useState({
     loading: false,
     error: null,
@@ -21,7 +17,7 @@ const useCreateGaslessListing = () => {
 
   const user = useSelector((state) => state.user);
 
-  const createGaslessListing = async (listing) => {
+  const updateGaslessListing = async (listing) => {
     setResponse({
       ...response,
       loading: true,
@@ -34,10 +30,10 @@ const useCreateGaslessListing = () => {
     }
     if (signatureInStorage) {
       try {
-        listing.nonce = generator.uuid();
+
         const signature = await createListingSigner(listing);
         listing.sellerSignature = signature;
-        const res = await createListing(signatureInStorage, user.address.toLowerCase(), listing)
+        const res = await updateListing(signatureInStorage, user.address.toLowerCase(), listing)
 
         setResponse({
           ...response,
@@ -66,7 +62,7 @@ const useCreateGaslessListing = () => {
     }
   };
 
-  return [createGaslessListing, response];
+  return [updateGaslessListing, response];
 };
 
-export default useCreateGaslessListing;
+export default useUpdateGaslessListing;

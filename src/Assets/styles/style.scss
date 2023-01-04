@@ -5686,3 +5686,17 @@ iframe.metaverse {
   background: #ffee99;
   color: #555;
 }
+
+.icon-fa {
+  width: 23px;
+  height: 23px;
+  color: $textColor1;
+}
+
+.simple-button {
+  background: $cardColor2 !important;
+  border-radius: 2px !important;
+  border-color: $borderColor1 !important;
+  &::placeholder {color: $textColor2;} 
+  margin-bottom: 0px;
+}
