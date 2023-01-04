@@ -15,6 +15,10 @@ import { useRouter } from "next/router";
 import MakeListingDialog from "@src/Components/MakeListing";
 import Image from "next/image";
 import { shortAddress } from '@src/utils'
+import useFeatureFlag from "@src/hooks/useFeatureFlag";
+import Constants from "@src/constants";
+import useBuyGaslessListings from '@src/hooks/useBuyGaslessListings';
+import useCancelGaslessListing from '@src/Components/Account/Settings/hooks/useCancelGaslessListing';
 
 import {
   useDisclosure,
@@ -44,33 +48,46 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
   const [executingCancel, setExecutingCancel] = useState(false);
   const [canBuy, setCanBuy] = useState(false);
   const [isSellDialogOpen, setIsSellDialogOpen] = useState(false);
+  const isGaslessListingEnabled = useFeatureFlag(Features.GASLESS_LISTING);
+  const [buyGaslessListings, response] = useBuyGaslessListings();
+  const [cancelGaslessListing, responseCancelListing] = useCancelGaslessListing();
 
   const openPopup = useCallback((e) => {
     e.preventDefault();
     onOpen();
   }, [onOpen])
-
+  console.log()
   const executeBuy = (amount) => async () => {
     setExecutingBuy(true);
     onClose();
-    await runFunction(async (writeContract) => {
-      let price = ethers.utils.parseUnits(amount.toString());
-      return (
-        await writeContract.makePurchase(listing.listingId, {
-          value: price,
-        })
-      ).wait();
-    });
+    if(!isGaslessListingEnabled){
+      await runFunction(async (writeContract) => {
+        let price = ethers.utils.parseUnits(amount.toString());
+        return (
+          await writeContract.makePurchase(listing.listingId, {
+            value: price,
+          })
+        ).wait();
+      });
+    }else{
+      await buyGaslessListings([listing]);
+    }
     setExecutingBuy(false);
   };
 
   const executeCancel = () => async () => {
     setExecutingCancel(true);
-    await runFunction(async (writeContract) => {
-      return (
-        await writeContract.cancelListing(listing.listingId)
-      ).wait();
-    });
+    if(!isGaslessListingEnabled){
+      await runFunction(async (writeContract) => {
+        return (
+          await writeContract.cancelListing(listing.listingId)
+        ).wait();
+      });
+    }
+    else{
+      cancelGaslessListing(listing)
+    }
+
     setExecutingCancel(false);
   };
 
