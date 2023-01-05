@@ -10192,7 +10192,7 @@
       "multiToken": false,
       "address": "0x0C5cEA99fEd27c98B505837A8E72cfDF70bcF8F0",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Kaiju Talisman is a collection of 666 NFTs offering holders exclusive VIP benefits, with an optional upgrade path to obtain new perks.\nOnly those worthy enough shall obtain the fully upgraded \"Evolved Talisman\" and gain access to the mysterious Kaiju Lair.\n\nWho knows what lies inside...",
         "avatar": "/img/collections/kaiju-of-cronos/avatar.webp",
