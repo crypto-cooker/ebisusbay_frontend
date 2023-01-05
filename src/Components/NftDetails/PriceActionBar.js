@@ -31,9 +31,6 @@ import {
 
 import { Modal } from '../components/chakra-components'
 
-import Constants from '../../constants'
-import useFeatureFlag from '../../hooks/useFeatureFlag';
-
 const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isVerified, isOwner, collectionStats }) => {
   const dispatch = useDispatch();
   const router = useRouter();
