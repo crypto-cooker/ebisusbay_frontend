@@ -62,21 +62,9 @@ const useBuyGaslessListings = () => {
       try {
 
         const contractListings = formatListings(listings);
-        console.log('contractListings::', contractListings)
-        const legacyListingTest = {
-          seller: '0xdf2d986f951f640ed8cc304af14df798ae953b94',
-          coin: '0x5be9a14fe14f13954ef44b5efdbbab1ad1f17ac4',
-          price: ethers.utils.parseEther(`${1}`),
-          token: '0x5be9a14fe14f13954ef44b5efdbbab1ad1f17ac4',
-          id: '1965',
-          amount: 183,
-          sellby: 0,
-          nonce: 0
-        }
 
         const gaslessListings = contractListings.filter(({ nonce }) => !!nonce)
         const { data: serverSig } = await getServerSignature(signatureInStorage, user.address.toLowerCase(), gaslessListings);
-        console.log('serverSig: ', serverSig)
 
         const buyContract = new Contract(config.contracts.gaslessListing, gaslessListingContract.abi, user.provider.getSigner());
         let price = ethers.utils.parseUnits(`${cartPrice}`);
@@ -85,8 +73,7 @@ const useBuyGaslessListings = () => {
         const calculatedFee = (fees / 10000) * 100
         const total = price.add(price.mul(calculatedFee));
 
-        const { signature, ...sigData } = serverSig
-
+        const { signature, ...sigData } = serverSig;
         const newListing = await buyContract.completeListings(contractListings, sigData, signature, { value: total });
 
         const res = await buyListing(signatureInStorage, user.address.toLowerCase(), gaslessListings)

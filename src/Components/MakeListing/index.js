@@ -183,6 +183,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
       const nftAddress = nft.address ?? nft.nftAddress;
       const nftId = nft.id ?? nft.nftId;
       const marketContractAddress = config.contracts.market;
+      const gaslessListingContract = config.contracts.gaslessListing;
       const marketContract = user.contractService.market;
       setSalePrice(listing ? Math.round(listing.price) : null)
 
@@ -198,8 +199,8 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
       setRoyalty(royalties);
 
       const contract = new Contract(nftAddress, ERC721, user.provider.getSigner());
-      const transferEnabled = await contract.isApprovedForAll(user.address, marketContractAddress);
-
+      const transferEnabled =  await contract.isApprovedForAll(user.address, isGaslessListingEnabled? gaslessListingContract : marketContractAddress);
+      
       if (transferEnabled) {
         setIsTransferApproved(true);
       } else {
@@ -224,9 +225,10 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
     try {
       const nftAddress = nft.address ?? nft.nftAddress;
       const marketContractAddress = config.contracts.market;
+      const gaslessListingContract = config.contracts.gaslessListing;
       const contract = new Contract(nftAddress, ERC721, user.provider.getSigner());
       setExecutingApproval(true);
-      const tx = await contract.setApprovalForAll(marketContractAddress, true);
+      const tx = await contract.setApprovalForAll(isGaslessListingEnabled? gaslessListingContract : marketContractAddress, true);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       setIsTransferApproved(true);
