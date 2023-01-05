@@ -12160,7 +12160,7 @@
       "multiToken": false,
       "address": "0x63dF2BB08bcc9807c0ef5BD0C169FF3b4b289543",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Evolution Hogs is a collection of 3333 characters generated randomly. All are on the Cronos Chain with unique identity and rarity.",
         "avatar": "/img/collections/evolution-hogs/avatar.webp",
@@ -21006,7 +21006,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/evolution-hogs/drop.webp",
         "banner": "/img/collections/evolution-hogs/banner.webp",
