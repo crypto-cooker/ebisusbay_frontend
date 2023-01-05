@@ -457,9 +457,6 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                         />
 
                       </div>
-                      <Form.Text className="field-description textError">
-                        {priceError}
-                      </Form.Text>
                     </Form.Group>)}
 
                   <div>
