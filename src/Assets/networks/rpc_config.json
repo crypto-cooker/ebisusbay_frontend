@@ -16341,12 +16341,40 @@
         "discord": "https://discord.gg/raQcBPXEWu",
         "medium": "https://blog.singlefinance.io/",
         "telegram": "https://t.me/singlefinanceofficial",
-        "categories": []
+        "categories": [
+          "utility"
+        ]
       },
       "verification": {
         "doxx": false,
         "kyc": false,
         "verified": false
+      }
+    },
+    {
+      "name": "CroSkull Pets Eggs - Season 3",
+      "slug": "croskull-pets-eggs-s3",
+      "multiToken": false,
+      "address": "0x5DD5d3140Fe619Ef8F4655383283BB555E219A27",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A Mysterious Egg found by a CroSkull during his adventure! \"I.... never seen an egg like that, it may hatch in a some mysterious creature.\" Hatching Available on https://app.croskull.com/",
+        "avatar": "/img/collections/croskull-pets-eggs-s3/avatar.webp",
+        "card": "/img/collections/croskull-pets-eggs-s3/card.webp",
+        "banner": "/img/collections/croskull-pets-eggs-s3/banner.webp",
+        "website": "https://app.croskull.com/",
+        "twitter": "https://twitter.com/CroskullNFT",
+        "discord": "https://discord.gg/q3nWxw8QRY",
+        "medium": "https://medium.com/@croskullnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
