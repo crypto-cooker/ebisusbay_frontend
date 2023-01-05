@@ -16323,6 +16323,84 @@
         "kyc": false,
         "verified": false
       }
+    },
+    {
+      "name": "AutoTicket",
+      "slug": "autoticket",
+      "multiToken": false,
+      "address": "0x2AeD33B0A2278243392BD3996C9201C01947205F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "AutoTicket is a collection of 2000+ utility-enabled PFP. With AutoTicket, you can unlock exclusive Auto Strategy Vaults from AutoSingle. Head over to https://autosingle.singlefinance.io/ for more information about AutoTicket.",
+        "avatar": "/img/collections/autoticket/avatar.webp",
+        "card": "/img/collections/autoticket/card.webp",
+        "banner": "/img/collections/autoticket/banner.webp",
+        "website": "https://autosingle.singlefinance.io/",
+        "twitter": "https://twitter.com/single_finance",
+        "discord": "https://discord.gg/raQcBPXEWu",
+        "medium": "https://blog.singlefinance.io/",
+        "telegram": "https://t.me/singlefinanceofficial",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "CroSkull Pets Eggs - Season 3",
+      "slug": "croskull-pets-eggs-s3",
+      "multiToken": false,
+      "address": "0x5DD5d3140Fe619Ef8F4655383283BB555E219A27",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A Mysterious Egg found by a CroSkull during his adventure! \"I.... never seen an egg like that, it may hatch in a some mysterious creature.\" Hatching Available on https://app.croskull.com/",
+        "avatar": "/img/collections/croskull-pets-eggs-s3/avatar.webp",
+        "card": "/img/collections/croskull-pets-eggs-s3/card.webp",
+        "banner": "/img/collections/croskull-pets-eggs-s3/banner.webp",
+        "website": "https://app.croskull.com/",
+        "twitter": "https://twitter.com/CroskullNFT",
+        "discord": "https://discord.gg/q3nWxw8QRY",
+        "medium": "https://medium.com/@croskullnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "OG Spoon Warriors",
+      "slug": "og-spoon-warriors",
+      "multiToken": false,
+      "address": "0xBd366a51cDE8615C8DAcab70E9f9A045ffdc898b",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The 2nd collection from Cronos OG features a post apocalyptic landscape with warriors of another time battling for the sacred Spoon. The collection offers 10 sets with different variations of each set leaving the collector plenty of opportunities to chase their own fantasy storyline. The collection includes a share of the 60% royalty from secondary sales and special holder giveaways. Are you ready to tell your story?",
+        "avatar": "/img/collections/og-spoon-warriors/avatar.webp",
+        "banner": "/img/collections/og-spoon-warriors/banner.webp",
+        "card": "/img/collections/og-spoon-warriors/card.webp",
+        "website": "https://cronosogcollections.com/",
+        "twitter": "https://www.twitter.com/og_cronos",
+        "discord": "https://discord.gg/cGAyAP47QF",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
