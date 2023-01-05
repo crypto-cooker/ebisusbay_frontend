@@ -16323,6 +16323,31 @@
         "kyc": false,
         "verified": false
       }
+    },
+    {
+      "name": "AutoTicket",
+      "slug": "autoticket",
+      "multiToken": false,
+      "address": "0x2AeD33B0A2278243392BD3996C9201C01947205F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "AutoTicket is a collection of 2000+ utility-enabled PFP. With AutoTicket, you can unlock exclusive Auto Strategy Vaults from AutoSingle. Head over to https://autosingle.singlefinance.io/ for more information about AutoTicket.",
+        "avatar": "/img/collections/autoticket/avatar.webp",
+        "card": "/img/collections/autoticket/card.webp",
+        "banner": "/img/collections/autoticket/banner.webp",
+        "website": "https://autosingle.singlefinance.io/",
+        "twitter": "https://twitter.com/single_finance",
+        "discord": "https://discord.gg/raQcBPXEWu",
+        "medium": "https://blog.singlefinance.io/",
+        "telegram": "https://t.me/singlefinanceofficial",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
     }
   ],
   "drops": [
