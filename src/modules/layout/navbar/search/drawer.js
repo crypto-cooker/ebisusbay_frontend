@@ -157,6 +157,7 @@ const MobileSearchDrawer = () => {
                 <VStack>
                   {searchVisits.slice(0, 5).map((item) => (
                     <ResultCollection
+                      key={item.address}
                       collection={item}
                       onClick={handleCollectionClick}
                       useCloseButton={true}
@@ -184,6 +185,7 @@ const MobileSearchDrawer = () => {
                         <VStack>
                           {data.slice(0, 50).map((collection) => (
                             <ResultCollection
+                              key={collection.address}
                               collection={collection}
                               floorPrice={collection.stats.total.floorPrice}
                               onClick={handleCollectionClick}

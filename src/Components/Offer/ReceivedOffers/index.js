@@ -100,7 +100,7 @@ export default function ReceivedOffers({ address, collectionAddresses, nfts, sta
     isFetchingNextPage,
     status,
   } = useQuery(
-    ['ReceivedOffers', type, offerType, showAll],
+    ['ReceivedOffers', address, type, offerType, showAll],
     fetchProjects,
     {enabled: collectionAddresses.length > 0 && nfts.length > 0, refetchOnWindowFocus: false}
   )

@@ -183,6 +183,7 @@ const Search = () => {
                 <VStack>
                   {searchVisits.slice(0, 5).map((item) => (
                     <ResultCollection
+                      key={item.address}
                       collection={item}
                       onClick={handleCollectionClick}
                       useCloseButton={true}
@@ -209,6 +210,7 @@ const Search = () => {
                       <VStack>
                         {data.slice(0, maxResults).map((item) => (
                           <ResultCollection
+                            key={item.address}
                             collection={item}
                             floorPrice={item.stats.total.floorPrice}
                             onClick={handleCollectionClick}

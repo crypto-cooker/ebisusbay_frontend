@@ -92,12 +92,23 @@ export default function Offers({ address }) {
     async function getDeps() {
 
       const {data: collections} = await getWalletOverview(address);
-      const userNfts = await getQuickWallet(address, {pageSize: 1000});
+      const userNfts = [];
+      let paging = {
+        iterating: true,
+        size: 1000,
+        page: 1
+      }
+      while (paging.iterating) {
+        const walletNfts = await getQuickWallet(address, {pageSize: paging.size, page: paging.page});
+        userNfts.push(...walletNfts.data);
+        if (walletNfts.data.length < 1000 || paging.page > 10) paging.iterating = false;
+        paging.page++;
+      }
       const collectionStats = await getCollectionMetadata();
 
       const ret = {
         collectionAddresses: collections.map((c) => c.nftAddress),
-        nfts: userNfts.data,
+        nfts: userNfts,
         stats: collectionStats.collections
       }
       setReceivedOffersDeps(ret);
