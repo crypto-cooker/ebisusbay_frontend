@@ -11,6 +11,7 @@ import ProfilePreview from '../components/ProfilePreview';
 import Footer from '../components/Footer';
 import LayeredIcon from '../components/LayeredIcon';
 import { AnyMedia } from '../components/AnyMedia';
+import ProfileImage from '../components/ProfileImage'
 
 import {
   caseInsensitiveCompare,
@@ -652,12 +653,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
 
                   <div className="row" style={{ gap: '2rem 0' }}>
                     {nft.owner ? (
-                      <ProfilePreview
-                        type="Owner"
-                        address={nft.owner}
-                        to={`/account/${nft.owner}`}
-                        useCnsLookup={true}
-                      />
+                      <ProfileImage address={nft.owner} title='Owner' displayName />
                     ) : (currentListing && collection.listable) && (
                       <ProfilePreview
                         type="Owner"
