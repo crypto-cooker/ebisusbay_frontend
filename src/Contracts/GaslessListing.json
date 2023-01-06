@@ -37,6 +37,25 @@
       "inputs": [
         {
           "indexed": false,
+          "internalType": "address",
+          "name": "signer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "digest",
+          "type": "bytes32"
+        }
+      ],
+      "name": "Computed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
           "internalType": "uint8",
           "name": "version",
           "type": "uint8"
@@ -196,6 +215,42 @@
         {
           "components": [
             {
+              "internalType": "uint256",
+              "name": "expire",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "feeAmount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes[]",
+              "name": "sigs",
+              "type": "bytes[]"
+            }
+          ],
+          "internalType": "struct TradeshipCrates.Approval",
+          "name": "_approval",
+          "type": "tuple"
+        }
+      ],
+      "name": "_hashApproval",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
               "internalType": "address",
               "name": "seller",
               "type": "address"
@@ -257,42 +312,6 @@
         {
           "components": [
             {
-              "internalType": "bytes[]",
-              "name": "sigs",
-              "type": "bytes[]"
-            },
-            {
-              "internalType": "uint256",
-              "name": "expire",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "feeAmount",
-              "type": "uint256"
-            }
-          ],
-          "internalType": "struct TradeshipCrates.Sig",
-          "name": "_sig",
-          "type": "tuple"
-        }
-      ],
-      "name": "_hashSigs",
-      "outputs": [
-        {
-          "internalType": "bytes32",
-          "name": "",
-          "type": "bytes32"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "components": [
-            {
               "internalType": "address",
               "name": "seller",
               "type": "address"
@@ -340,11 +359,6 @@
         {
           "components": [
             {
-              "internalType": "bytes[]",
-              "name": "sigs",
-              "type": "bytes[]"
-            },
-            {
               "internalType": "uint256",
               "name": "expire",
               "type": "uint256"
@@ -353,87 +367,15 @@
               "internalType": "uint256",
               "name": "feeAmount",
               "type": "uint256"
-            }
-          ],
-          "internalType": "struct TradeshipCrates.Sig",
-          "name": "_sigData",
-          "type": "tuple"
-        }
-      ],
-      "name": "_processListings",
-      "outputs": [],
-      "stateMutability": "payable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "components": [
-            {
-              "internalType": "address",
-              "name": "seller",
-              "type": "address"
             },
-            {
-              "internalType": "address",
-              "name": "coin",
-              "type": "address"
-            },
-            {
-              "internalType": "uint256",
-              "name": "price",
-              "type": "uint256"
-            },
-            {
-              "internalType": "address",
-              "name": "token",
-              "type": "address"
-            },
-            {
-              "internalType": "uint256",
-              "name": "id",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "amount",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "sellby",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "nonce",
-              "type": "uint256"
-            }
-          ],
-          "internalType": "struct TradeshipCrates.Listing[]",
-          "name": "_listings",
-          "type": "tuple[]"
-        },
-        {
-          "components": [
             {
               "internalType": "bytes[]",
               "name": "sigs",
               "type": "bytes[]"
-            },
-            {
-              "internalType": "uint256",
-              "name": "expire",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "feeAmount",
-              "type": "uint256"
             }
           ],
-          "internalType": "struct TradeshipCrates.Sig",
-          "name": "_sigData",
+          "internalType": "struct TradeshipCrates.Approval",
+          "name": "_approval",
           "type": "tuple"
         },
         {
