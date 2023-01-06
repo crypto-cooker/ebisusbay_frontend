@@ -555,6 +555,27 @@
     "style": {}
   },
   {
+    "slug": "moon-crew",
+    "name": "Moon Crew",
+    "description": "Moon Crew project is a community driven project that focus on group investing, passive income and holders events. Currently we have 2 Collection, 7000 Moon Crew Apes and 3500 Moon Crew Pandas. Holding atleast 1 will give you acess to our exclusive channesl, Raffle option, trading option, voting power, royalties and much more.",
+    "images": {
+      "banner": "/img/brands/moon-crew/banner.webp",
+      "preview": "/img/brands/moon-crew/preview.webp"
+    },
+    "collections": [
+      "0x3335A43C59b45Ed1F73dd1335A5b2583CD9B0aaA",
+      "0x446808090D43C4b99c5E70C5EAC145384F11128E"
+    ],
+    "socials": {
+      "website": "https://mooncrew.club/",
+      "twitter": "https://twitter.com/moonapecrew",
+      "discord": "https://discord.gg/scVSpjpmDf"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "cronos-apes",
     "name": "Cronos Apes",
     "description": "The Cronos Apes brand features various iconic NFT collection. Each NFT of these collections has been uniquely and randomly generated from a fully animated traits set. Each NFT gives access to an exclusive Community and set of utilities, such as the distribution of earnings. If you are searching for the most iconic Apes collection on the Cronos Chain, you are in the right place. Join the #CronosApesArmy now!",
@@ -761,27 +782,6 @@
       "twitter": "https://twitter.com/cronosrocksnft"
     },
     "featured": true,
-    "categories": [],
-    "style": {}
-  },
-  {
-    "slug": "moon-crew",
-    "name": "Moon Crew",
-    "description": "Moon Crew project is a community driven project that focus on group investing, passive income and holders events. Currently we have 2 Collection, 7000 Moon Crew Apes and 3500 Moon Crew Pandas. Holding atleast 1 will give you acess to our exclusive channesl, Raffle option, trading option, voting power, royalties and much more.",
-    "images": {
-      "banner": "/img/brands/moon-crew/banner.webp",
-      "preview": "/img/brands/moon-crew/preview.webp"
-    },
-    "collections": [
-      "0x3335A43C59b45Ed1F73dd1335A5b2583CD9B0aaA",
-      "0x446808090D43C4b99c5E70C5EAC145384F11128E"
-    ],
-    "socials": {
-      "website": "https://mooncrew.club/",
-      "twitter": "https://twitter.com/moonapecrew",
-      "discord": "https://discord.gg/scVSpjpmDf"
-    },
-    "featured": false,
     "categories": [],
     "style": {}
   }
