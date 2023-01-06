@@ -95,7 +95,6 @@ const ManageAuctionList = () => {
           return new Auction(o)
         })
         .sort((a, b) => a.endAt < b.endAt ? 1 : -1);
-      console.log(otherAuctions);
       setUnwithdrawnAuctions(otherAuctions);
     }
     fetchData();
@@ -150,7 +149,7 @@ const ManageAuctionList = () => {
 
   const handleReturnBids = async (auction) => {
     if (user.address) {
-      let writeContract = user.contractServicec.auction;
+      let writeContract = user.contractService.auction;
       try {
         setExecutingStart(true);
         const tx = await writeContract.returnBidsToWallets(auction.getAuctionHash, auction.getAuctionIndex);
