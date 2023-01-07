@@ -16382,7 +16382,7 @@
       "multiToken": false,
       "address": "0xBd366a51cDE8615C8DAcab70E9f9A045ffdc898b",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The 2nd collection from Cronos OG features a post apocalyptic landscape with warriors of another time battling for the sacred Spoon. The collection offers 10 sets with different variations of each set leaving the collector plenty of opportunities to chase their own fantasy storyline. The collection includes a share of the 60% royalty from secondary sales and special holder giveaways. Are you ready to tell your story?",
         "avatar": "/img/collections/og-spoon-warriors/avatar.webp",
