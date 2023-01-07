@@ -16422,6 +16422,33 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Braindead Monkeys - Gen 2",
+      "slug": "braindead-monkeys-gen2",
+      "multiToken": false,
+      "address": "0x9a254a3e8656702a2850a34251784c70113561df",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/braindead-monkeys/avatar.webp",
+        "card": "/img/collections/braindead-monkeys/card.webp",
+        "banner": "/img/collections/braindead-monkeys/banner.webp",
+        "website": "https://www.braindeadmonkeys.com/",
+        "twitter": "https://twitter.com/BDMNFT_",
+        "discord": "https://discord.gg/wRzqzVPx8R",
+        "medium": "https://medium.com/@braindeadmonkeysnft",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
