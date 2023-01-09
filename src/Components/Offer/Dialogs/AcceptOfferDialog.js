@@ -30,11 +30,13 @@ import Image from "next/image";
 import {commify} from "ethers/lib/utils";
 import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
 import {ImageKitService} from "@src/helpers/image";
+import {useQuery} from "@tanstack/react-query";
+import {getNft} from "@src/core/api/endpoints/nft";
 
 const config = appConfig();
 const floorThreshold = 5;
 
-export default function AcceptOfferDialog({ onClose, isOpen, collection, isCollectionOffer, nft, offer}) {
+export default function AcceptOfferDialog({ onClose, isOpen, collection, isCollectionOffer, offer}) {
 
   const [salePrice, setSalePrice] = useState(null);
   const [floorPrice, setFloorPrice] = useState(0);
@@ -68,14 +70,29 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
     }
   };
 
+  const fetchNft = async () => {
+    if (isCollectionOffer) return null;
+
+    const tmpNft = await getNft(offer.nftAddress, offer.nftId);
+    return tmpNft.nft;
+  }
+
+  const { error, data: nft, status } = useQuery(
+    ['AcceptOffer', user.address, offer.nftAddress, offer.nftId],
+    fetchNft,
+    {
+      enabled: !!user.provider && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId)
+    }
+  );
+
   useEffect(() => {
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (nft && user.provider) {
+    if (nft) {
       asyncFunc();
     }
-  }, [nft, user.provider]);
+  }, [nft]);
 
   const getInitialProps = async () => {
     try {
@@ -198,17 +215,26 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
     setRoyalty(royalties);
   }
 
-  if (!nft) return <></>;
-
   return (
     <Modal onClose={onClose} isOpen={isOpen} size="2xl" isCentered>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader className="text-center">
-          {isCollectionOffer ? <>Accept Collection Offer for {collection.name}</> : <>Accept Offer for {nft.name}</>}
+          {isCollectionOffer ?
+            <>Accept Collection Offer for {collection.name}</>
+            : nft?.name ? <>Accept Offer for {nft.name}</> : <>Accept Offer</>
+          }
         </ModalHeader>
         <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
-        {!isLoading ? (
+        {status === "loading" || isLoading ? (
+          <EmptyData>
+            <Spinner animation="border" role="status" size="sm" className="ms-1">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </EmptyData>
+        ) : status === "error" ? (
+          <p>Error: {error.message}</p>
+        ) : (
           <>
             <ModalBody>
               <div className="nftSaleForm row gx-3">
@@ -329,12 +355,6 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
               </div>
             </ModalFooter>
           </>
-        ) : (
-          <EmptyData>
-            <Spinner animation="border" role="status" size="sm" className="ms-1">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          </EmptyData>
         )}
       </ModalContent>
     </Modal>
