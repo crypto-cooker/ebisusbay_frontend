@@ -16449,6 +16449,32 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Happy Holidays Card 2022",
+      "slug": "happy-holidays-card-2022",
+      "multiToken": false,
+      "address": "0x1a8f52fe051ae385b90F7F0064bB11F2Db855Bbe",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A Happy Holidays card featuring several NFT projects on Cronos gifted by the Crosmonauts team.",
+        "avatar": "/img/collections/happy-holidays-card-2022/avatar.webp",
+        "banner": "/img/collections/happy-holidays-card-2022/banner.webp",
+        "card": "/img/collections/happy-holidays-card-2022/card.webp",
+        "website": "https://www.crosmonauts.club/",
+        "twitter": "https://twitter.com/crosmonaut",
+        "discord": "https://discord.gg/yhyJjZ2uWk",
+        "medium": "https://medium.com/@crosmonaut",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
