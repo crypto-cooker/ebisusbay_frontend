@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import {Contract, ethers} from "ethers";
 
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import useCreateSigner from './useCreateSigner';
@@ -35,8 +34,11 @@ const useCreateGaslessListing = () => {
     if (signatureInStorage) {
       try {
         listing.nonce = generator.uuid();
+        listing.listingTime = Math.round(new Date().getTime() / 1000);
+        listing.expirationDate = Math.round(listing.expirationDate / 1000)
         const signature = await createListingSigner(listing);
         listing.sellerSignature = signature;
+
         const res = await createListing(signatureInStorage, user.address.toLowerCase(), listing)
 
         setResponse({

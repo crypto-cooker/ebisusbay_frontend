@@ -261,7 +261,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
           const res = await updateGaslessListing({ collectionAddress: nftAddress, tokenId: nftId, price: salePrice.toString(), expirationDate: expirationDate.value, nonce: nft.listingNonce });
         }
         else {
-          const res = await createGaslessListing({ collectionAddress: nftAddress, tokenId: nftId, price: salePrice.toString(), expirationDate: expirationDate.value });
+          const res = await createGaslessListing({ collectionAddress: nftAddress, tokenId: nftId, price: salePrice.toString(), expirationDate: expirationDate.value, is1155: nft.multiToken });
         }
         toast.success("Listing Successful");
 

@@ -1,9 +1,7 @@
 import { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
-import {appConfig} from "@src/Config";
-import { ERC721 } from "@src/Contracts/Abis";
-import { Contract, ethers } from "ethers";
-import { toast } from 'react-toastify';
+import { appConfig } from "@src/Config";
+import { ethers } from "ethers";
 
 const useSignature = () => {
   const user = useSelector((state) => state.user);
@@ -19,53 +17,32 @@ const useSignature = () => {
   };
 
   // The named list of all type definitions
-  const types = {
-    Listing: [
-      { name: 'seller', type: 'address' },
-      { name: 'coin', type: 'address' },
-      { name: 'price', type: 'uint256' },
+  const typeOrder = {
+    OfferItem: [
+      { name: 'itemType', type: 'uint8' },
       { name: 'token', type: 'address' },
-      { name: 'id', type: 'uint256' },
-      { name: 'amount', type: 'uint256' },
-      { name: 'sellby', type: 'uint256' },
-      { name: 'nonce', type: 'uint256' }
+      { name: 'identifierOrCriteria', type: 'uint256' },
+      { name: 'startAmount', type: 'uint256' },
+      { name: 'endAmount', type: 'uint256' }
+    ],
+    Order: [
+      { name: 'offerer', type: 'address' },
+      { name: 'offerings', type: 'OfferItem[]' },
+      { name: 'considerations', type: 'OfferItem[]' },
+      { name: 'orderType', type: 'uint8' },
+      { name: 'startAt', type: 'uint256' },
+      { name: 'endAt', type: 'uint256' },
+      { name: 'salt', type: 'uint256' }
     ]
-  };
-
-  const checkApproval = async (nftAddress) => {
-    const contract = new Contract(nftAddress, ERC721, user.provider.getSigner());
-    return await contract.isApprovedForAll(user.address, config.contracts.gaslessListing);
-  };
-
-  const approveContract = useCallback(async (nftAddress) => {
-    try {
-      const contract = new Contract(nftAddress, ERC721, user.provider.getSigner());
-      const tx = await contract.setApprovalForAll(config.contracts.gaslessListing, true);
-      let receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-
-    } catch (error) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        toast.error('Unknown Error');
-      }
-      console.log(error);
-    } finally {
-      setExecutingApproval(false);
-    }
-  }, [user]);
+  }
 
   const signMessage = useCallback(
     async (value) => {
       if (!user.provider) throw new Error();
-      console.log(value)
       try {
         const provider = user.provider;
         const signer = provider.getSigner();
-        return await signer._signTypedData(domain, types, value);
+        return await signer._signTypedData(domain, typeOrder, value);
       } catch (err) {
         console.log(err)
         throw new Error(err);
@@ -76,24 +53,36 @@ const useSignature = () => {
 
   const createSigner = useCallback(async (signatureValues) => {
     setIsLoading(true);
-    const weiPrice = ethers.utils.parseEther(signatureValues.price)
-    const value = {
-      seller: user.address,
-      coin: '0x0000000000000000000000000000000000000000',
-      price: weiPrice,
+    const considerationPrice= ethers.utils.parseEther(`${signatureValues.price}`);
+    const offerItem = {
+      itemType: listing.is1155 ? ItemType.ERC1155 : ItemType.ERC721, 
       token: signatureValues.collectionAddress,
-      id: signatureValues.tokenId ,
-      amount: 1,
-      sellby: signatureValues.expirationDate,
-      nonce: signatureValues.nonce,
+      identifierOrCriteria: signatureValues.tokenId,
+      startAmount: signatureValues.price,
+      endAmount: signatureValues.price
+    };
+
+    const considerationItem = {
+      itemType: 0, //Native
+      token: ethers.constants.AddressZero,
+      identifierOrCriteria: 0,
+      startAmount: considerationPrice,
+      endAmount: considerationPrice
+    };
+
+    const order = {
+      offerer: user.address,
+      offerings: [offerItem],
+      considerations: [considerationItem],
+      orderType: 0, //OrderType.SELL_NFT_NATIVE -> 0
+      startAt: signatureValues.listingTime,
+      endAt: signatureValues.expirationDate,
+      salt: signatureValues.nonce,
     };
 
     try {
-      const isApprove = await checkApproval(signatureValues.collectionAddress);
-      if(!isApprove){
-        await approveContract(signatureValues.collectionAddress)
-      }
-      const signature = await signMessage(value);
+
+      const signature = await signMessage(order);
       setIsLoading(false);
 
       return signature;

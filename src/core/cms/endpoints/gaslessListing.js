@@ -3,7 +3,7 @@ import axios from "axios";
 
 const config = appConfig();
 const api = axios.create({
-  baseURL: 'http://localhost:4000/api/',
+  baseURL: config.urls.cms,
 });
 
 export const createListing = async (signature, address, listing) => {
@@ -77,16 +77,18 @@ export const buyListing = async (signature, address, listings) => {
   }
 }
 
-export const getServerSignature = async (signature, address, listings) => {
+export const getServerSignature = async (signature, address, listings, fee) => {
   try {
     const response = await api.get('gasless-listing/validator', {
       params: {
-        signature,
+        fee,
         address,
-        listings: listings.map(({ token: collectionAddress, id: tokenId, nonce }) => ({
+        signature,
+        listings: listings.map(({ address: collectionAddress, id: tokenId, nonce, listingId: id }) => ({
           collectionAddress,
           tokenId,
-          nonce
+          nonce,
+          id
         }))
       }
     });

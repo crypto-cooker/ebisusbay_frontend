@@ -150,6 +150,8 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
       expirationDate: listing.expirationDate ?? null,
       seller: listing.seller ?? null,
       sellerSignature: listing.sellerSignature ?? null,
+      listingTime:  listing.listingTime ?? null,
+      is1155: listing.is1155
     }));
     toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
   };

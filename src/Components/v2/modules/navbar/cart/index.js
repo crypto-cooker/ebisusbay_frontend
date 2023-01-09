@@ -105,20 +105,20 @@ const Cart = function () {
     if (user.address) {
       try {
         setExecutingBuy(true);
-        const listingIds = cart.nfts.map((o) => o.listingId);
-        const listings = await getListingsByIds(listingIds);
-        const validListings = listings.data.listings
-          .filter((o) => o.state === listingState.ACTIVE)
-          .map((o) => o.listingId);
+        // const listingIds = cart.nfts.map((o) => o.listingId);
+        // const listings = await getListingsByIds(listingIds);
+        // const validListings = listings.data.listings
+        //   .filter((o) => o.state === listingState.ACTIVE)
+        //   .map((o) => o.listingId);
 
-        if (validListings.length < cart.nfts.length) {
-          const invalidItems = cart.nfts
-            .filter((o) => o.listingId !== o)
-            .map((o) => o.listingId);
-          setSoldItems(invalidItems);
-          return;
-        }
-        setSoldItems([]);
+        // if (validListings.length < cart.nfts.length) {
+        //   const invalidItems = cart.nfts
+        //     .filter((o) => o.listingId !== o)
+        //     .map((o) => o.listingId);
+        //   setSoldItems(invalidItems);
+        //   return;
+        // }
+        // setSoldItems([]);
 
         await executeBuy();
       } catch (error) {
@@ -128,7 +128,6 @@ const Cart = function () {
         } else if (error.message) {
           toast.error(error.message);
         } else {
-          console.log(error);
           toast.error('Unknown Error');
         }
       } finally {

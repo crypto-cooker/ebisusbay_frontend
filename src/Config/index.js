@@ -160,8 +160,8 @@ export const configData = {
       madAuction: '0x84356061d598A7bCE028dB6a37b14F84cf4A5905',
       slothtyRugsurance: '0xC54821941Bb036463bDB1eea781f9b29a7f98fAc',
       bundle: '0xEbFB981D5a7A7C2133752F7787263B58495bb923',
-      cnsusd: '0x263818f9693548446A41ad7025923612b490CB0D'
-      gaslessListing: '0xF147eC54C077A5Ec142cEA81394Ee24415e6d688'
+      cnsusd: '0x263818f9693548446A41ad7025923612b490CB0D',
+      gaslessListing: '0xBbe0D0715AbCadb8A0Db41C0Bb7f272570907C45'
     },
     tokens: {
       loot: {

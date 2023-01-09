@@ -8,9 +8,11 @@ import { useSelector } from "react-redux";
 import { appConfig } from "@src/Config";
 import { getServerSignature } from '@src/core/cms/endpoints/gaslessListing';
 import { buyListing } from '@src/core/cms/endpoints/gaslessListing';
+import Constants from '@src/constants';
 
 import gaslessListingContract from "@src/Contracts/GaslessListing.json";
 
+const { ItemType } = Constants;
 
 const useBuyGaslessListings = () => {
   const [response, setResponse] = useState({
@@ -23,26 +25,38 @@ const useBuyGaslessListings = () => {
 
   const user = useSelector((state) => state.user);
 
-  const formatListings = (listings) => {
-    return listings.map(listing => (listing.nonce) ? 
-      {
-        seller: listing.seller,
-        coin: '0x0000000000000000000000000000000000000000',
-        price: ethers.utils.parseEther(`${listing.price}`),
-        token: listing.address,
-        id: listing.id,
-        amount: 1,
-        sellby: listing.expirationDate,
-        nonce: listing.nonce
-      } : {
-        seller: listing.seller,
-        coin: listing.address,
-        price: ethers.utils.parseEther(`${listing.price}`),
-        token: listing.address,
-        id: listing.id,
-        amount: listing.listingId,
-        sellby: 0,
-        nonce: 0
+  const formatListings = (listings ) => {
+    return listings.map(listing => {
+      const weiPrice = ethers.utils.parseEther(`${listing.price}`);
+
+        const offerItem = {
+          itemType: !listing.nonce ? (ItemType.LEGACY_LISTING) : (listing.is1155 ? ItemType.ERC1155 : ItemType.ERC721), //ItemType.ERC721
+          token: listing.address ,
+          identifierOrCriteria: listing.nonce ? listing.id : listing.listingId,
+          startAmount: listing.price,
+          endAmount: listing.price
+         };
+      
+         const considerationItem = {
+          itemType : 0, //Native
+          token: ethers.constants.AddressZero,
+          identifierOrCriteria: 0,
+          startAmount: weiPrice,
+          endAmount: weiPrice
+         };
+
+         
+         const order = {
+           offerer : listing.seller,
+           offerings: [offerItem],
+           considerations: [considerationItem],
+           orderType: 0, //OrderType.SELL_NFT_NATIVE -> 0
+           startAt: listing.listingTime,
+           endAt: listing.expirationDate ?? 9995868693,
+           salt: listing.nonce ?? 12345
+          };
+          
+         return order
       }
     )
   }
@@ -60,22 +74,22 @@ const useBuyGaslessListings = () => {
     }
     if (signatureInStorage) {
       try {
-
         const contractListings = formatListings(listings);
 
         const gaslessListings = contractListings.filter(({ nonce }) => !!nonce)
-        const { data: serverSig } = await getServerSignature(signatureInStorage, user.address.toLowerCase(), gaslessListings);
-
         const buyContract = new Contract(config.contracts.gaslessListing, gaslessListingContract.abi, user.provider.getSigner());
-        let price = ethers.utils.parseUnits(`${cartPrice}`);
+        
         const marketContract = user.contractService.market;
-        const fees = await marketContract.fee(user.address);
-        const calculatedFee = (fees / 10000) * 100
-        const total = price.add(price.mul(calculatedFee));
+        const price = ethers.utils.parseEther(`${cartPrice}`);
+
+        const fee = price.mul(await marketContract.fee(user.address)).div(10_000);
+        const total = price.add(fee);
+
+        const { data: serverSig } = await getServerSignature(signatureInStorage, user.address.toLowerCase(), listings, fee);
 
         const { signature, ...sigData } = serverSig;
-        const newListing = await buyContract.completeListings(contractListings, sigData, signature, { value: total });
-
+        const tx = await buyContract.fillOrders(contractListings, sigData, signature, { value: total });
+        await tx.wait()
         const res = await buyListing(signatureInStorage, user.address.toLowerCase(), gaslessListings)
         toast.success('Nft successfully purchased');
 
