@@ -2,6 +2,10 @@ import { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { appConfig } from "@src/Config";
 import { ethers } from "ethers";
+import Constants from '@src/constants';
+
+
+const { ItemType } = Constants;
 
 const useSignature = () => {
   const user = useSelector((state) => state.user);
