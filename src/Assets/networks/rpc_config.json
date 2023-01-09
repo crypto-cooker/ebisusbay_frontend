@@ -16475,6 +16475,29 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Camel ToE",
+      "slug": "camel-toe",
+      "multiToken": false,
+      "address": "0x1b8cdb1dc5426eed5ead0f7a24d1c6d10b334677",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "This collection is made up of 1250 Camel NFTs. 10% mint redistributed back to holders. We will be setting all royalties to 10% across all secondary Cronos marketplaces. We will then redistribute 60% back to all NFT holders. 40% will go back into project. This is also your pass to 10% from our future mints!",
+        "avatar": "/img/collections/camel-toe/avatar.webp",
+        "banner": "/img/collections/camel-toe/banner.webp",
+        "card": "/img/collections/camel-toe/card.webp",
+        "website": "https://camel-toe.netlify.app/",
+        "twitter": "https://twitter.com/cameltoecan",
+        "discord": "https://discord.gg/c567CgNX2z",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
