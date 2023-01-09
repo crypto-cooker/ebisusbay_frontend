@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import Blockies from 'react-blockies';
-import { commify } from 'ethers/lib/utils';
+import {commify} from 'ethers/lib/utils';
 import Link from 'next/link';
 
 import Button from '../../../Components/components/Button';
 import {findCollectionByAddress, shortString, timeSince} from '@src/utils';
-import { getNftDetails } from '@src/GlobalState/nftSlice';
 import AcceptOfferDialog from "@src/Components/Offer/Dialogs/AcceptOfferDialog";
 import {RejectOfferDialog} from "@src/Components/Offer/Dialogs/RejectOfferDialog";
 import Image from "next/image";
-import {ethers} from "ethers";
 
 const TableRowContainer = styled.div`
   display: flex;
@@ -105,16 +102,8 @@ export const OFFER_TYPE = {
 export default function TableRow({ data, type }) {
   const { state, timeCreated, seller, buyer, price, nftAddress, nftId } = data;
 
-  let nft = useSelector((state) => {
-    return { ...state.nft.nft, address: nftAddress };
-  });
-
-  const dispatch = useDispatch();
-
   const [offerType, setOfferType] = useState(OFFER_TYPE.none);
   const handleOffer = (type) => {
-    // @todo replace with standalone NFT retrieval in dialog itself
-    if (nftId) dispatch(getNftDetails(nftAddress, nftId));
     setOfferType(type);
   };
 
@@ -153,7 +142,6 @@ export default function TableRow({ data, type }) {
           isOpen={!!offerType}
           onClose={() => handleOffer(OFFER_TYPE.none)}
           collection={collectionData}
-          nft={nft}
           isCollectionOffer={!data.nftId}
           offer={data}
         />
@@ -163,7 +151,6 @@ export default function TableRow({ data, type }) {
           isOpen={!!offerType}
           onClose={() => handleOffer(OFFER_TYPE.none)}
           collection={collectionData}
-          nft={nft}
           isCollectionOffer={!data.nftId}
           offer={data}
         />

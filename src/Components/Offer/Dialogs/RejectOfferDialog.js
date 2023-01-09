@@ -23,12 +23,28 @@ import {
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
 import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
+import {getNft} from "@src/core/api/endpoints/nft";
+import {useQuery} from "@tanstack/react-query";
 
-export const RejectOfferDialog = ({onClose, isOpen, collection, isCollectionOffer, nft, offer}) => {
-  const [isLoading, setIsLoading] = useState(false);
+export const RejectOfferDialog = ({onClose, isOpen, collection, isCollectionOffer, offer}) => {
   const offerContract = useSelector((state) => state.user.contractService.offer);
   const [executingRejectOffer, setExecutingRejectOffer] = useState(false);
   const user = useSelector((state) => state.user);
+
+  const fetchNft = async () => {
+    if (isCollectionOffer) return null;
+
+    const tmpNft = await getNft(offer.nftAddress, offer.nftId);
+    return tmpNft.nft;
+  }
+
+  const { error, data: nft, status } = useQuery(
+    ['RejectOffer', user.address, offer.nftAddress, offer.nftId],
+    fetchNft,
+    {
+      enabled: !!user.provider && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId)
+    }
+  );
 
   const handleRejectOffer = async (e) => {
     e.preventDefault();
@@ -68,7 +84,15 @@ export const RejectOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
           Reject Offer
         </ModalHeader>
         <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
-        {!isLoading ? (
+        {status === "loading" ? (
+          <EmptyData>
+            <Spinner animation="border" role="status" size="sm" className="ms-1">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </EmptyData>
+        ) : status === "error" ? (
+          <p>Error: {error.message}</p>
+        ) : (
           <>
             <ModalBody>
               <div className="nftSaleForm row gx-3">
@@ -136,12 +160,6 @@ export const RejectOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
               </div>
             </ModalFooter>
           </>
-        ) : (
-          <EmptyData>
-            <Spinner animation="border" role="status" size="sm" className="ms-1">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          </EmptyData>
         )}
       </ModalContent>
     </Modal>
