@@ -16532,7 +16532,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Earn traditional royalties and passive income thru a brick and mortar buisness located in Las Vegas Nevada ",
+        "description": "Earn traditional royalties and passive income thru a brick and mortar business located in Las Vegas Nevada ",
         "avatar": "/img/collections/pursase/avatar.webp",
         "twitter": "https://twitter.com/CronosTycoon",
         "discord": "https://discord.gg/D2d93we7Jy",
@@ -17952,7 +17952,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "images": {
         "drop": "/img/drops/lolitafriends/drop.png",
@@ -18526,7 +18526,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "images": {
         "drop": "/img/drops/succubus/drop.gif",
@@ -18933,7 +18933,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "images": {
         "drop": "/img/drops/cro-of-thrones/drop.webp",
@@ -18969,7 +18969,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "embed": "<div style=\"position: relative; padding-top: 100%;\"><iframe src=\"https://iframe.mediadelivery.net/embed/27293/2eb556f6-6f3a-487d-a41f-a6498879eecc?autoplay=true&loop=true&muted=true\" loading=\"lazy\" style=\"border: none; position: absolute; top: 0; height: 100%; width: 100%;\" allow=\"accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;\" allowfullscreen=\"true\"></iframe></div>",
       "images": {
@@ -19173,7 +19173,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "featured": false,
       "disclaimer": "**Assets and characters from other Ghetto-Doves\u2122 collections do not apply in the 7 character collection.",
@@ -19539,7 +19539,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "images": {
         "drop": "/img/drops/cyber-squad/drop.png",
@@ -19817,7 +19817,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "images": {
         "drop": "/img/drops/apes-utopia/drop.png",
@@ -19897,7 +19897,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "images": {
         "drop": "/img/drops/everybodysnf/drop.png",
@@ -19976,7 +19976,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "images": {
         "drop": "/img/drops/ryborgs/drop.webp",
@@ -20174,7 +20174,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "images": {
         "drop": "/img/drops/crokami/drop.webp",
@@ -20214,7 +20214,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "images": {
         "drop": "/img/drops/gymkongz/drop.webp",
@@ -20252,7 +20252,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": false,
       "redirect": "https://teammustachios.com/mint",
       "images": {
@@ -20460,7 +20460,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": false,
       "images": {
         "drop": "/img/drops/cronos-women/drop.webp",
@@ -20499,7 +20499,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "images": {
         "drop": "/img/drops/trillionaire-trashcans/drop.webp",
@@ -20655,7 +20655,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/finger-monkeys/drop.webp",
         "banner": "/img/collections/finger-monkeys/banner.webp",
@@ -20947,7 +20947,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": false,
       "images": {
         "drop": "/img/drops/cronos-fighters-v2/drop.webp",
@@ -20986,8 +20986,8 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
-      "complete": false,
+      "published": false,
+      "complete": true,
       "featured": false,
       "redirect": "https://furyquackgang.com/",
       "images": {
@@ -21943,7 +21943,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/cro-world-cup/drop.webp",
         "banner": "/img/collections/cro-world-cup/banner.webp",
@@ -22102,7 +22102,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/c3-cronos-crow-crew/drop.webp",
         "banner": "/img/collections/c3-cronos-crow-crew/banner.webp",
@@ -22340,7 +22340,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/cro-snowmen/drop.webp",
         "banner": "/img/collections/cro-snowmen/banner.webp",

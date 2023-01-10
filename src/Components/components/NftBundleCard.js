@@ -164,7 +164,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, canBuy = t
   };
 
   const handleRefresh = () => {
-    dispatch(refreshMetadata(nft.address, nft.id));
+    dispatch(refreshMetadata(nft.address, nft.id, nft.market?.id));
   };
 
   const handleCopy = () => {

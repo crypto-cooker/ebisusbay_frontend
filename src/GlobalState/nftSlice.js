@@ -65,9 +65,9 @@ export const getNftDetails = (collectionAddress, nftId) => async (dispatch, getS
   return response.nft;
 };
 
-export const refreshMetadata = (collectionAddress, nftId) => async (dispatch, getState) => {
+export const refreshMetadata = (collectionAddress, nftId, listingId) => async (dispatch, getState) => {
   dispatch(nftRefreshing());
-  await refreshToken(collectionAddress, nftId);
+  await refreshToken(collectionAddress, nftId, listingId);
   toast.success('Refresh queued! Check back in a few minutes.')
   dispatch(nftRefreshingComplete());
 }
