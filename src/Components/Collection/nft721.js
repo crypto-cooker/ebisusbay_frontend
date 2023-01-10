@@ -480,8 +480,8 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
   };
 
   const onRefreshMetadata = useCallback(() => {
-    dispatch(refreshMetadata(address, id));
-  }, [address, id]);
+    dispatch(refreshMetadata(address, id, currentListing?.listingId));
+  }, [address, id, currentListing]);
 
   useEffect(() => {
     async function func() {

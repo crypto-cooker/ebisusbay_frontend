@@ -166,7 +166,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
   };
 
   const handleRefresh = () => {
-    dispatch(refreshMetadata(listing.nftAddress, listing.nftId));
+    dispatch(refreshMetadata(listing.nftAddress, listing.nftId, listing.listingId));
   };
 
   const handleCopy = () => {

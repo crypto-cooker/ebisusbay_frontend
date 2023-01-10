@@ -229,8 +229,8 @@ const Nft1155 = ({ address, id, collection }) => {
   };
 
   const onRefreshMetadata = useCallback(() => {
-    dispatch(refreshMetadata(address, id));
-  }, [address, id]);
+    dispatch(refreshMetadata(address, id, currentListing?.listingId));
+  }, [address, id, currentListing]);
 
   useEffect(() => {
     async function func() {
