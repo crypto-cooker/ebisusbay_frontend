@@ -16523,6 +16523,26 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "Pursase",
+      "slug": "pursase",
+      "multiToken": false,
+      "address": "0x73E6499ee11b524BE275C0f7fF61A458615459d4",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Earn traditional royalties and passive income thru a brick and mortar buisness located in Las Vegas Nevada ",
+        "avatar": "/img/collections/pursase/avatar.webp",
+        "twitter": "https://twitter.com/CronosTycoon",
+        "discord": "https://discord.gg/D2d93we7Jy",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
