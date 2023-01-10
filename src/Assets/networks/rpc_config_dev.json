@@ -16498,6 +16498,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Kaiju Madzilla",
+      "slug": "kaiju-madzilla",
+      "multiToken": false,
+      "address": "0xe28B4045A6C1cb3ED30861CAF62A01A2C4DAaa69",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Kaiju Madzilla are here! A randomly generated collection of 6,666 NFTs, they will serve as the core component of the Kaiju of Cronos Ecosystem. By harvesting Kaiju $ENRG, they will lead you on a journey to obtain true Kaiju $POWR. The era of the Kaiju are upon us...",
+        "avatar": "/img/collections/kaiju-madzilla/avatar.webp",
+        "card": "/img/collections/kaiju-madzilla/card.webp",
+        "banner": "/img/collections/kaiju-madzilla/banner.webp",
+        "website": "https://kaijuofcronos.com/",
+        "twitter": "https://twitter.com/KAIJU_OF_CRONOS",
+        "discord": "https://discord.gg/kaijuofcronos",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
     }
   ],
   "drops": [
