@@ -194,7 +194,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
 
       const fees = await marketContract.fee(user.address);
 
-      if (!nft.listingNonce) setFee((fees / 10000) * 100)
+      if (nft.listed && !nft.listingNonce) setFee((fees / 10000) * 100)
 
       const royalties = await collectionRoyaltyPercent(nftAddress, nftId);
       setRoyalty(royalties);
