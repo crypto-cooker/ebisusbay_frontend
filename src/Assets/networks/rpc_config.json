@@ -11219,7 +11219,8 @@
         "discord": "https://discord.gg/worldofcats",
         "categories": [
           "collectibles"
-        ]
+        ],
+        "staking": "world-of-cats"
       },
       "verification": {
         "doxx": "private",

@@ -20,5 +20,10 @@
     "name": "MM Treehouse",
     "url": "https://mmtreehouse.io/",
     "address": "0x3bbfffb798b7bcba2726d3903468851163cf1aad"
+  },
+  "world-of-cats": {
+    "name": "World of Cats",
+    "url": "https://stake.worldofcats.xyz/",
+    "address": "0x70E4bFAB4d470b9c485634289e8eB27248dE12A3"
   }
 }
