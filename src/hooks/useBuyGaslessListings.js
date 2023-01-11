@@ -76,7 +76,7 @@ const useBuyGaslessListings = () => {
       try {
         const contractListings = formatListings(listings);
 
-        const gaslessListings = contractListings.filter(({ nonce }) => !!nonce)
+        const gaslessListings = listings.filter(({ nonce }) => !!nonce)
         const buyContract = new Contract(config.contracts.gaslessListing, gaslessListingContract.abi, user.provider.getSigner());
         
         const marketContract = user.contractService.market;
