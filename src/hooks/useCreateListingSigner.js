@@ -66,8 +66,8 @@ const useSignature = () => {
       itemType: signatureValues?.is1155 ? ItemType.ERC1155 : ItemType.ERC721, 
       token: signatureValues.collectionAddress,
       identifierOrCriteria: signatureValues.tokenId,
-      startAmount: signatureValues.price,
-      endAmount: signatureValues.price
+      startAmount: 1,
+      endAmount: 1
     };
 
     const considerationItem = {

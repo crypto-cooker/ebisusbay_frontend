@@ -33,8 +33,8 @@ const useBuyGaslessListings = () => {
           itemType: !listing.nonce ? (ItemType.LEGACY_LISTING) : (listing.is1155 ? ItemType.ERC1155 : ItemType.ERC721), //ItemType.ERC721
           token: listing.address ,
           identifierOrCriteria: listing.nonce ? listing.id : listing.listingId,
-          startAmount: listing.price,
-          endAmount: listing.price
+          startAmount: 1,
+          endAmount: 1
          };
       
          const considerationItem = {
