@@ -32,8 +32,9 @@ const useUpdateGaslessListing = () => {
       try {
         listing.listingTime = Math.round(new Date().getTime() / 1000);
         listing.expirationDate = Math.round(listing.expirationDate / 1000)
-        const signature = await createListingSigner(listing);
-        listing.sellerSignature = signature;
+        const { objectSignature, objectHash } = await createListingSigner(listing);
+        listing.sellerSignature = objectSignature;
+        listing.digest = objectHash
         const res = await updateListing(signatureInStorage, user.address.toLowerCase(), listing)
 
         setResponse({

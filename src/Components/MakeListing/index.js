@@ -258,7 +258,15 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
       setExecutingCreateListing(true);
       if (isGaslessListingEnabled) {
         if (nft.listed) {
-          const res = await updateGaslessListing({ collectionAddress: nftAddress, tokenId: nftId, price: salePrice.toString(), expirationDate: expirationDate.value, nonce: nft.listingNonce });
+          if(nft.listingNonce){
+            const res = await updateGaslessListing({ collectionAddress: nftAddress, tokenId: nftId, price: salePrice.toString(), expirationDate: expirationDate.value, nonce: nft.listingNonce });
+          }
+          else{
+            Sentry.captureEvent({ message: 'handleCreateListing', extra: { nftAddress, nftId, price } });
+            let tx = await contractService.market.makeListing(nftAddress, nftId, price);
+            let receipt = await tx.wait();
+            toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+          }
         }
         else {
           const res = await createGaslessListing({ collectionAddress: nftAddress, tokenId: nftId, price: salePrice.toString(), expirationDate: expirationDate.value, is1155: nft.multiToken });
@@ -484,6 +492,12 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
             </ModalBody>
             <ModalFooter className="border-0">
               <div className="w-100">
+
+                {nft.listed && !nft.listingNonce && (
+                  <div className="alert alert-warning my-auto mb-2 fw-bold text-center">
+                    Gasless listing is available
+                  </div>)
+                }
                 {isTransferApproved ? (
                   <>
                     {showConfirmButton ? (

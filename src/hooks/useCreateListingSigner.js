@@ -47,10 +47,10 @@ const useSignature = () => {
         const provider = user.provider;
         const signer = provider.getSigner();
 
-        const ejsObjectHash = ethers.utils._TypedDataEncoder.hash(domain, typeOrder, value);
-        console.log('ejsObjectHash: ', ejsObjectHash)
+        const objectHash = ethers.utils._TypedDataEncoder.hash(domain, typeOrder, value);
+        const objectSignature = await signer._signTypedData(domain, typeOrder, value);
 
-        return await signer._signTypedData(domain, typeOrder, value);
+        return { objectSignature, objectHash }
       } catch (err) {
         console.log(err)
         throw new Error(err);
