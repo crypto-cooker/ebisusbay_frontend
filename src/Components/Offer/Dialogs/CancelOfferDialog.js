@@ -42,7 +42,8 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
     ['CancelOffer', user.address, offer.nftAddress, offer.nftId],
     fetchNft,
     {
-      enabled: !!user.provider && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId)
+      enabled: !!user.provider && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId),
+      refetchOnWindowFocus: false
     }
   );
 
