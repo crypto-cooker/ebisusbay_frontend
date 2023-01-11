@@ -186,7 +186,10 @@ const Index = function () {
   };
 
   const handleBuyCro = () => {
-    window.open(config.vendors.transak.url, '_blank');
+    const url = new URL(config.vendors.transak.url)
+    url.searchParams.append('walletAddress', user.address);
+    
+    window.open(url, '_blank');
   }
 
   useEffect(() => {
