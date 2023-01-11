@@ -81,7 +81,8 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
     ['AcceptOffer', user.address, offer.nftAddress, offer.nftId],
     fetchNft,
     {
-      enabled: !!user.provider && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId)
+      enabled: !!user.provider && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId),
+      refetchOnWindowFocus: false
     }
   );
 
@@ -89,16 +90,13 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (nft) {
-      asyncFunc();
-    }
+    asyncFunc();
   }, [nft]);
 
   const getInitialProps = async () => {
     try {
       setIsLoading(true);
-      const nftAddress = nft.address ?? nft.nftAddress;
-      const nftId = nft.id ?? nft.nftId;
+      const nftAddress = offer.nftAddress;
       const marketContractAddress = config.contracts.market;
       const marketContract = contractService.market;
       setSalePrice(offer ? Math.round(offer.price) : null)
@@ -113,7 +111,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
         setCollectionNfts(walletNfts.data.filter((nft) => !isNftBlacklisted(nft.address ?? nft.nftAddress, nft.id ?? nft.nftId)));
         await chooseCollectionNft(walletNfts.data[0])
       } else {
-        const royalties = await collectionRoyaltyPercent(nftAddress, nftId);
+        const royalties = await collectionRoyaltyPercent(nftAddress, offer.nftId);
         setRoyalty(royalties);
       }
 
