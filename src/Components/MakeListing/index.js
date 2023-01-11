@@ -193,14 +193,15 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
       }
 
       const fees = await marketContract.fee(user.address);
-      setFee((fees / 10000) * 100);
+
+      if (!nft.listingNonce) setFee((fees / 10000) * 100)
 
       const royalties = await collectionRoyaltyPercent(nftAddress, nftId);
       setRoyalty(royalties);
 
       const contract = new Contract(nftAddress, ERC721, user.provider.getSigner());
-      const transferEnabled =  await contract.isApprovedForAll(user.address, isGaslessListingEnabled? gaslessListingContract : marketContractAddress);
-      
+      const transferEnabled = await contract.isApprovedForAll(user.address, marketContractAddress);
+
       if (transferEnabled) {
         setIsTransferApproved(true);
       } else {
@@ -228,7 +229,8 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
       const gaslessListingContract = config.contracts.gaslessListing;
       const contract = new Contract(nftAddress, ERC721, user.provider.getSigner());
       setExecutingApproval(true);
-      const tx = await contract.setApprovalForAll(isGaslessListingEnabled? gaslessListingContract : marketContractAddress, true);
+
+      const tx = await contract.setApprovalForAll(marketContractAddress, true);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       setIsTransferApproved(true);
@@ -258,10 +260,10 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
       setExecutingCreateListing(true);
       if (isGaslessListingEnabled) {
         if (nft.listed) {
-          if(nft.listingNonce){
+          if (nft.listingNonce) {
             const res = await updateGaslessListing({ collectionAddress: nftAddress, tokenId: nftId, price: salePrice.toString(), expirationDate: expirationDate.value, nonce: nft.listingNonce });
           }
-          else{
+          else {
             Sentry.captureEvent({ message: 'handleCreateListing', extra: { nftAddress, nftId, price } });
             let tx = await contractService.market.makeListing(nftAddress, nftId, price);
             let receipt = await tx.wait();

@@ -53,23 +53,43 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
     e.preventDefault();
     onOpen();
   }, [onOpen])
-  console.log()
-  const executeBuy = (amount) => async () => {
-    setExecutingBuy(true);
-    onClose();
-    if(!isGaslessListingEnabled){
-      await runFunction(async (writeContract) => {
-        let price = ethers.utils.parseUnits(amount.toString());
-        return (
-          await writeContract.makePurchase(listing.listingId, {
-            value: price,
-          })
-        ).wait();
-      });
-    }else{
-      await buyGaslessListings([listing]);
+
+  const listingAdapter = (listing) => {
+    return {
+      address: listing.nftAddress,
+      expirationDate: listing.expirationDate,
+      id: listing.nftId,
+      is1155: listing.is1155,
+      listingId: listing.listingId,
+      listingTime: listing.listingTime,
+      nonce: listing.nonce,
+      price: listing.price,
+      seller: listing.seller,
+      sellerSignature: listing.sellerSignature
     }
-    setExecutingBuy(false);
+  }
+
+  const executeBuy = (amount) => async () => {
+    try {
+      setExecutingBuy(true);
+      onClose();
+      if (!isGaslessListingEnabled) {
+        await runFunction(async (writeContract) => {
+          let price = ethers.utils.parseUnits(amount.toString());
+          return (
+            await writeContract.makePurchase(listing.listingId, {
+              value: price,
+            })
+          ).wait();
+        });
+      } else {
+        await buyGaslessListings([listingAdapter(listing)], parseInt(listing.price));
+      }
+      setExecutingBuy(false);
+    }
+    catch (error) {
+      setExecutingBuy(false);
+    }
   };
 
   const executeCancel = () => async () => {
