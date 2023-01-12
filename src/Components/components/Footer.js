@@ -5,7 +5,7 @@ import { faSquare, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import LayeredIcon from './LayeredIcon';
 import {hostedImage} from "../../helpers/image";
 import Link from "next/link";
-import {Heading} from "@chakra-ui/react";
+import {Heading, Image} from "@chakra-ui/react";
 
 const Footer = () => {
   const userTheme = useSelector((state) => {
@@ -18,8 +18,8 @@ const Footer = () => {
         <div className="row">
           <div className="col-md-3 col-sm-6 col-xs-1">
             <div className="widget">
-              <img
-                height="40px"
+              <Image
+                h="40px"
                 src={hostedImage(userTheme === 'light' ? '/img/logo-light.svg' : '/img/logo-dark.svg')}
                 alt="ebisus bay logo"
               />
