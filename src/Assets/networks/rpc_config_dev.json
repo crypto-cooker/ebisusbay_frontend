@@ -16348,7 +16348,7 @@
       "verification": {
         "doxx": false,
         "kyc": false,
-        "verified": false
+        "verified": true
       }
     },
     {
@@ -16565,6 +16565,31 @@
         "doxx": false,
         "kyc": true,
         "verified": true
+      }
+    },
+    {
+      "name": "SEWER APE Crotown",
+      "slug": "sewer-ape-crotown",
+      "multiToken": false,
+      "address": "0xa87CbF5cd4B0440822f22BACCFdFcCfd4f911fa9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "SEWER APE gOINg tO TaKE rEveNge oN thOsE GoBbiNz",
+        "avatar": "/img/collections/sewer-ape-crotown/avatar.webp",
+        "card": "/img/collections/sewer-ape-crotown/card.webp",
+        "banner": "/img/collections/sewer-ape-crotown/banner.webp",
+        "website": "https://goblincrotown.com/",
+        "twitter": "https://twitter.com/GoblinCroTown",
+        "discord": "https://discord.gg/QE2hr8xya4",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
