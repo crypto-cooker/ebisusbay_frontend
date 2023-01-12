@@ -16591,6 +16591,56 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Pumped Shinu",
+      "slug": "pumped-shinu",
+      "multiToken": false,
+      "address": "0xE821a4b88Ab0A4d263B962a2417dc63cb0Ba789e",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "1937 Pumped Shinu on Cronos that gets different Tokens in your wallet.",
+        "avatar": "/img/collections/pumped-shinu/avatar.webp",
+        "card": "/img/collections/pumped-shinu/card.webp",
+        "banner": "/img/collections/pumped-shinu/banner.webp",
+        "website": "https://linktr.ee/shikakuinu/",
+        "twitter": "https://twitter.com/ShikokuInuCro",
+        "discord": "https://discord.gg/UyUTGDUH",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Reindeer",
+      "slug": "reindeer",
+      "multiToken": false,
+      "address": "0xA121e0CCf267FFB8cd41c746D6977612be0a6e91",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "7000 PFP Reindeer on Cronos brought to you by Shinu. Only 1 Cro mint, join us on discord to discover more utilities on the Reindeer",
+        "avatar": "/img/collections/reindeer/avatar.webp",
+        "card": "/img/collections/reindeer/card.webp",
+        "banner": "/img/collections/reindeer/banner.webp",
+        "website": "https://linktr.ee/shikakuinu/",
+        "twitter": "https://twitter.com/ShikokuInuCro",
+        "discord": "https://discord.gg/UyUTGDUH",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
