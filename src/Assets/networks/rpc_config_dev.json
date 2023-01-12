@@ -43,7 +43,7 @@
       "listable": true,
       "metadata": {
         "description": "Holding this NFT grants reduced service fees, discounts on drops, early access to features and is stakeable in the service fee pool.",
-        "avatar": "/img/avatar.jpg",
+        "avatar": "/img/avatar.png",
         "card": "/img/collections/ebisu/card.webp",
         "banner": "/img/collections/ebisu/banner.png",
         "website": "https://app.ebisusbay.com/",
@@ -82,7 +82,7 @@
       "listable": true,
       "metadata": {
         "description": "Happy Valentine's Day from ebisusbay.com staff! We \u2764 you!",
-        "avatar": "/img/avatar.jpg",
+        "avatar": "/img/avatar.png",
         "card": "/img/collections/ebisu/card.webp",
         "banner": "/img/collections/ebisu/banner.png",
         "website": "https://app.ebisusbay.com/",
@@ -112,7 +112,7 @@
       "listable": true,
       "metadata": {
         "description": "Holding this NFT grants reduced service fees, discounts on drops and early access to features.",
-        "avatar": "/img/avatar.jpg",
+        "avatar": "/img/avatar.png",
         "card": "/img/collections/ebisu/card.webp",
         "banner": "/img/collections/ebisu/banner.png",
         "website": "https://app.ebisusbay.com/",
@@ -472,7 +472,7 @@
       "listable": true,
       "metadata": {
         "description": "Cronies are a NFT to commemorate the launch of the Cronos network. Randomly generated 100% on-chain SVG with the Cronos logo and the block number in which it was minted.\n\nWe are really excited to see the unique collections you will build. Such as, sequential block numbers, block numbers that have a special meaning to you like a birthday, and color schemes.",
-        "avatar": "/img/avatar.jpg",
+        "avatar": "/img/avatar.png",
         "card": "/img/collections/cronies/card.png",
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
@@ -13763,7 +13763,7 @@
       "listable": false,
       "metadata": {
         "description": "Art collectible version of the original Ebisu's Bay VIP Founding Member.",
-        "avatar": "/img/avatar.jpg",
+        "avatar": "/img/avatar.png",
         "card": "/img/collections/ebisu/card.webp",
         "banner": "/img/collections/ebisu/banner.png",
         "website": "https://app.ebisusbay.com/",
@@ -16575,7 +16575,7 @@
       "complete": true,
       "images": {
         "drop": "/img/drops/cronies/cronies-drop.webp",
-        "avatar": "/img/avatar.jpg",
+        "avatar": "/img/avatar.png",
         "preview": "/img/collections/cronies/card.png"
       },
       "verification": {
@@ -16613,7 +16613,7 @@
       "complete": true,
       "images": {
         "drop": "/img/drops/founding_member/founding_member_sm.png",
-        "avatar": "/img/avatar.jpg",
+        "avatar": "/img/avatar.png",
         "preview": "/img/collections/ebisu/card.webp"
       },
       "verification": {
