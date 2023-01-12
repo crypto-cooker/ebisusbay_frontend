@@ -20,7 +20,7 @@ const Footer = () => {
             <div className="widget">
               <img
                 height="40px"
-                src={hostedImage(userTheme === 'light' ? '/img/logo-light.svg' : '/img/logo-dark-prod.svg')}
+                src={hostedImage(userTheme === 'light' ? '/img/logo-light.svg' : '/img/logo-dark.svg')}
                 alt="ebisus bay logo"
               />
               <p className="mt-2">Ebisu's Bay is the first and largest NFT marketplace on Cronos. Create, buy, sell, trade and enjoy the #CroFam NFT community.</p>
