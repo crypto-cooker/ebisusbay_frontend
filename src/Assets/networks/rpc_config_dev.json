@@ -16544,6 +16544,28 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "DdmC",
+      "slug": "ddmc",
+      "multiToken": false,
+      "address": "0x5529B34ea252B57B239738D3CD81DE1B11c47D3F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "*DdmC*  Drip derivative mfer Cronos Is a derivative collection brought to you by Club DripCro.com on the $cronos chain.  The mfer collection is cc0 (creative commons 0)",
+        "avatar": "/img/collections/ddmc/avatar.webp",
+        "banner": "/img/collections/ddmc/banner.webp",
+        "card": "/img/collections/ddmc/card.webp",
+        "website": "https://dripderivatives.com/",
+        "discord": "https://discord.gg/x487dqKCQA",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
     }
   ],
   "drops": [
