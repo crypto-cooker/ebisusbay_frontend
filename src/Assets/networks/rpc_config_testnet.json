@@ -42,7 +42,7 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "avatar": "/img/avatar.jpg",
+        "avatar": "/img/avatar.png",
         "card": "/img/collections/ebisu/card.webp",
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
@@ -1652,7 +1652,7 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "avatar": "/img/avatar.jpg",
+        "avatar": "/img/avatar.png",
         "card": "/img/collections/ebisu/card.webp",
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
@@ -2633,7 +2633,7 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "avatar": "/img/avatar.jpg",
+        "avatar": "/img/avatar.png",
         "card": "/img/collections/ebisu/card.webp",
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
@@ -2657,7 +2657,7 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "avatar": "/img/avatar.jpg",
+        "avatar": "/img/avatar.png",
         "card": "/img/collections/ebisu/card.webp",
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
@@ -2830,7 +2830,7 @@
       "listable": true,
       "metadata": {
         "description": "Ebisu's Bay bundle contract",
-        "avatar": "/img/avatar.jpg",
+        "avatar": "/img/avatar.png",
         "card": "/img/collections/ebisu/card.webp",
         "banner": "/img/collections/ebisu/banner.png",
         "website": "https://app.ebisusbay.com/",
@@ -3695,7 +3695,7 @@
       "complete": false,
       "images": {
         "drop": "/img/drops/vip/drop.webp",
-        "avatar": "/img/avatar.jpg",
+        "avatar": "/img/avatar.png",
         "preview": "/img/collections/ebisu/card.webp"
       },
       "verification": {
@@ -5229,7 +5229,7 @@
       "complete": false,
       "images": {
         "drop": "/img/drops/vip/drop.webp",
-        "avatar": "/img/avatar.jpg",
+        "avatar": "/img/avatar.png",
         "preview": "/img/collections/ebisu/card.webp"
       },
       "verification": {
