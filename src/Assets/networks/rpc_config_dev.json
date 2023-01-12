@@ -16641,6 +16641,56 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "CroTrons",
+      "slug": "crotrons",
+      "multiToken": false,
+      "address": "0x59C785790aE16f51055b90B3A14779cAAF5aE17a",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "You have successfully built your CroTron, by combining the power of the 6 different colored CroTron's Panthers!",
+        "avatar": "/img/collections/crotrons/avatar.webp",
+        "card": "/img/collections/crotrons/card.webp",
+        "banner": "/img/collections/crotrons/banner.webp",
+        "website": "https://croarmy.app/",
+        "twitter": "https://twitter.com/CroTronPanthers",
+        "discord": "https://discord.gg/Dg2cWwhrsy",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CroTron's Panthers",
+      "slug": "crotrons-panthers",
+      "multiToken": false,
+      "address": "0x227E12DD6FE0D182a3365Ec5DA5AbA7AA84907bC",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Collect all 6 different colored panther, and build yourself a CroTron!  Get CRO on completion, and royalties from both of the CroTron's collection, and future iterations!",
+        "avatar": "/img/collections/crotrons-panthers/avatar.webp",
+        "card": "/img/collections/crotrons-panthers/card.webp",
+        "banner": "/img/collections/crotrons-panthers/banner.webp",
+        "website": "https://croarmy.app/",
+        "twitter": "https://twitter.com/CroTronPanthers",
+        "discord": "https://discord.gg/Dg2cWwhrsy",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
