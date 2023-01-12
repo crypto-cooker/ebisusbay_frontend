@@ -16348,7 +16348,7 @@
       "verification": {
         "doxx": false,
         "kyc": false,
-        "verified": false
+        "verified": true
       }
     },
     {
@@ -16419,9 +16419,9 @@
         "categories": []
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -16565,6 +16565,131 @@
         "doxx": false,
         "kyc": true,
         "verified": true
+      }
+    },
+    {
+      "name": "SEWER APE Crotown",
+      "slug": "sewer-ape-crotown",
+      "multiToken": false,
+      "address": "0xa87CbF5cd4B0440822f22BACCFdFcCfd4f911fa9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "SEWER APE gOINg tO TaKE rEveNge oN thOsE GoBbiNz",
+        "avatar": "/img/collections/sewer-ape-crotown/avatar.webp",
+        "card": "/img/collections/sewer-ape-crotown/card.webp",
+        "banner": "/img/collections/sewer-ape-crotown/banner.webp",
+        "website": "https://goblincrotown.com/",
+        "twitter": "https://twitter.com/GoblinCroTown",
+        "discord": "https://discord.gg/QE2hr8xya4",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Pumped Shinu",
+      "slug": "pumped-shinu",
+      "multiToken": false,
+      "address": "0xE821a4b88Ab0A4d263B962a2417dc63cb0Ba789e",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "1937 Pumped Shinu on Cronos that gets different Tokens in your wallet.",
+        "avatar": "/img/collections/pumped-shinu/avatar.webp",
+        "card": "/img/collections/pumped-shinu/card.webp",
+        "banner": "/img/collections/pumped-shinu/banner.webp",
+        "website": "https://linktr.ee/shikakuinu/",
+        "twitter": "https://twitter.com/ShikokuInuCro",
+        "discord": "https://discord.gg/UyUTGDUH",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Reindeer",
+      "slug": "reindeer",
+      "multiToken": false,
+      "address": "0xA121e0CCf267FFB8cd41c746D6977612be0a6e91",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "7000 PFP Reindeer on Cronos brought to you by Shinu. Only 1 Cro mint, join us on discord to discover more utilities on the Reindeer",
+        "avatar": "/img/collections/reindeer/avatar.webp",
+        "card": "/img/collections/reindeer/card.webp",
+        "banner": "/img/collections/reindeer/banner.webp",
+        "website": "https://linktr.ee/shikakuinu/",
+        "twitter": "https://twitter.com/ShikokuInuCro",
+        "discord": "https://discord.gg/UyUTGDUH",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CroTrons",
+      "slug": "crotrons",
+      "multiToken": false,
+      "address": "0x59C785790aE16f51055b90B3A14779cAAF5aE17a",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "You have successfully built your CroTron, by combining the power of the 6 different colored CroTron's Panthers!",
+        "avatar": "/img/collections/crotrons/avatar.webp",
+        "card": "/img/collections/crotrons/card.webp",
+        "banner": "/img/collections/crotrons/banner.webp",
+        "website": "https://croarmy.app/",
+        "twitter": "https://twitter.com/CroTronPanthers",
+        "discord": "https://discord.gg/Dg2cWwhrsy",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CroTron's Panthers",
+      "slug": "crotrons-panthers",
+      "multiToken": false,
+      "address": "0x227E12DD6FE0D182a3365Ec5DA5AbA7AA84907bC",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Collect all 6 different colored panther, and build yourself a CroTron!  Get CRO on completion, and royalties from both of the CroTron's collection, and future iterations!",
+        "avatar": "/img/collections/crotrons-panthers/avatar.webp",
+        "card": "/img/collections/crotrons-panthers/card.webp",
+        "banner": "/img/collections/crotrons-panthers/banner.webp",
+        "website": "https://croarmy.app/",
+        "twitter": "https://twitter.com/CroTronPanthers",
+        "discord": "https://discord.gg/Dg2cWwhrsy",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
