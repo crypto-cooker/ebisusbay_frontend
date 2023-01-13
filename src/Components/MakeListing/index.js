@@ -420,7 +420,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                     )}
                   </div>
 
-                  {(isGaslessListingEnabled && nft.listingNonce) && (
+                  {(isGaslessListingEnabled && ((nft.listed && nft.listingNonce) || (!nft.listed))) && (
                     <Form.Group className="form-field mb-3">
                       <Form.Label className="formLabel w-100">
                         <div className="d-flex">

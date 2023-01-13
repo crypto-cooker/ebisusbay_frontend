@@ -1,6 +1,6 @@
 import axios from "axios";
 import {ListingsQuery} from "@src/core/api/queries/listings";
-
+import {getValidListings} from "@src/core/api/endpoints/listings"
 const api = axios.create({
   baseURL: '/api',
 });
@@ -30,7 +30,7 @@ export const getListingsByIds = async (listingIds) => {
 export const getValidListingsByIds = async (listingIds) => {
   try{
     const ids = listingIds.join(',');
-    return await api.get(`listings/validate`, {params: {listingId: ids}});
+    return await getValidListings({listingId: ids});
   }
   catch(error){
     throw error;

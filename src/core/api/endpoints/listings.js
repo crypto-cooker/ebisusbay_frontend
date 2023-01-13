@@ -143,3 +143,7 @@ export const getListings = async (listingsQuery) => {
     throw error;
   }
 }
+
+export const getValidListings = async (listingsQuery) => {
+  return api.get('listings/validate', {params: listingsQuery})
+}
