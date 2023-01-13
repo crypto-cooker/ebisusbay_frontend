@@ -30,7 +30,6 @@ import {toast} from "react-toastify";
 import {refreshMetadata} from "@src/GlobalState/nftSlice";
 import {specialImageTransform} from "@src/hacks";
 import { appConfig } from "@src/Config";
-import useBuyGaslessListing from '@src/hooks/useBuyGaslessListing';
 
 const config = appConfig();
 
@@ -70,14 +69,6 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
 
   const getOptions = () => {
     const options = [];
-
-    if(listing.nonce){
-      options.push({
-        icon: faShoppingCart,
-        label: 'Buy now',
-        handleClick: () => buyGaslessListing(listing),
-      });
-    }
 
     options.push({
       icon: faHand,
@@ -120,7 +111,6 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
     return options;
   };
 
-  const [buyGaslessListing, response] = useBuyGaslessListing();
 
   const handleMakeOffer = () => {
     if (user.address) {
