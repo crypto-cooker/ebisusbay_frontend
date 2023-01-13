@@ -26,3 +26,13 @@ export const getListingsByIds = async (listingIds) => {
     throw error;
   }
 }
+
+export const getValidListingsByIds = async (listingIds) => {
+  try{
+    const ids = listingIds.join(',');
+    return await api.get(`listings/validate`, {params: {listingId: ids}});
+  }
+  catch(error){
+    throw error;
+  }
+}

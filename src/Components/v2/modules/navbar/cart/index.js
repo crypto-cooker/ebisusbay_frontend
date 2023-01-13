@@ -13,7 +13,7 @@ import {
   DrawerHeader,
   DrawerOverlay, Flex, Spacer, Text, useBreakpointValue, useColorModeValue, VStack, Wrap
 } from "@chakra-ui/react";
-import {getListingsByIds} from "@src/core/api/next/listings";
+import {getListingsByIds, getValidListingsByIds} from "@src/core/api/next/listings";
 import {acknowledgePrompt, clearCart, removeFromCart, syncCartStorage} from "@src/GlobalState/cartSlice";
 import {ImageKitService} from "@src/helpers/image";
 import {commify} from "ethers/lib/utils";
@@ -105,20 +105,20 @@ const Cart = function () {
     if (user.address) {
       try {
         setExecutingBuy(true);
-        // const listingIds = cart.nfts.map((o) => o.listingId);
-        // const listings = await getListingsByIds(listingIds);
-        // const validListings = listings.data.listings
-        //   .filter((o) => o.state === listingState.ACTIVE)
-        //   .map((o) => o.listingId);
+        const listingIds = cart.nfts.map((o) => o.listingId);
+        const listings = await getValidListingsByIds(listingIds);
+        const validListings = listings.data
+          .filter((o) => o.state === listingState.ACTIVE)
+          .map((o) => o.listingId);
 
-        // if (validListings.length < cart.nfts.length) {
-        //   const invalidItems = cart.nfts
-        //     .filter((o) => o.listingId !== o)
-        //     .map((o) => o.listingId);
-        //   setSoldItems(invalidItems);
-        //   return;
-        // }
-        // setSoldItems([]);
+        if (validListings.length < cart.nfts.length) {
+          const invalidItems = cart.nfts
+            .filter((o) => o.listingId !== o)
+            .map((o) => o.listingId);
+          setSoldItems(invalidItems);
+          return;
+        }
+        setSoldItems([]);
 
         await executeBuy();
       } catch (error) {

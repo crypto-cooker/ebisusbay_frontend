@@ -27,9 +27,9 @@ import {
   Tr,
   Td,
   TableContainer,
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
 
-import { Modal } from '../components/chakra-components'
+import { Modal } from '../components/chakra-components';
 
 const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isVerified, isOwner, collectionStats }) => {
   const dispatch = useDispatch();
