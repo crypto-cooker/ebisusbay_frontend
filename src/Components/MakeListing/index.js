@@ -327,7 +327,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
       <ModalOverlay />
       <ModalContent>
         <ModalHeader className="text-center">
-          {listing ? 'Update' : 'Sell'} {nft.name}
+          {listing || nft.listed ? 'Update' : 'Sell'} {nft.name}
         </ModalHeader>
         <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
         {!isLoading ? (
@@ -420,7 +420,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                     )}
                   </div>
 
-                  {isGaslessListingEnabled && (
+                  {(isGaslessListingEnabled && nft.listingNonce) && (
                     <Form.Group className="form-field mb-3">
                       <Form.Label className="formLabel w-100">
                         <div className="d-flex">
@@ -539,7 +539,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
                             isLoading={executingCreateListing}
                             disabled={executingCreateListing}
                             className="flex-fill">
-                            {listing ? 'Update Listing' : 'Confirm Listing'}
+                            {listing || nft.listed? 'Update Listing' : 'Confirm Listing'}
                           </Button>
                         </div>
                       </>
