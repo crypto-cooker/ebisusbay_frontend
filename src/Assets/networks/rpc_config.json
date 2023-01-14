@@ -8450,7 +8450,7 @@
       "multiToken": false,
       "address": "0xDa9d418C4B8Ac59A6eC92cDFDd514F75a0f44e18",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Purchasing a DegenBrains NFT will grant you exclusive access to a gamified Learn2Earn platform, private Discord channels with a growing community of degen-investors, and unique ways to earn passive income.",
         "avatar": "/img/collections/degen-brains/avatar.webp",
