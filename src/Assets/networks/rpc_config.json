@@ -16692,6 +16692,27 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Troll Family",
+      "slug": "troll-family",
+      "multiToken": false,
+      "address": "0x778D8C4E0322d6ea35f35b6C2d875f0976e9d21e",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Family of Trolls - \uD83D\uDC8E",
+        "avatar": "/img/collections/troll-family/avatar.webp",
+        "card": "/img/collections/troll-family/card.webp",
+        "banner": "/img/collections/troll-family/banner.webp",
+        "twitter": "https://twitter.com/Sw33percrypto",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
     }
   ],
   "drops": [
