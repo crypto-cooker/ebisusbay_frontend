@@ -16705,7 +16705,71 @@
         "avatar": "/img/collections/troll-family/avatar.webp",
         "card": "/img/collections/troll-family/card.webp",
         "banner": "/img/collections/troll-family/banner.webp",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Troll Town",
+      "slug": "troll-town",
+      "multiToken": false,
+      "address": "0xb6Ac66Cc7CA7F9af717d52690994b7f1bB1d5CeC",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Troll Town is a collection of 520 maniacal little trolls that have been trapped in web 3. They hate everything but have learned to adapt to staking pools with their Smurf counterparts. Only available on Corgi Studios.",
+        "avatar": "/img/collections/troll-town/avatar.webp",
+        "card": "/img/collections/troll-town/card.webp",
+        "banner": "/img/collections/troll-town/banner.webp",
         "twitter": "https://twitter.com/Sw33percrypto",
+        "discord": "https://discord.gg/uYuBdjm2QJ",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Troll Town - Smurfs",
+      "slug": "troll-town-smurfs",
+      "multiToken": false,
+      "address": "0x7548057dE1B3801BB156FD442D745d53A71e7e19",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Troll Town and Smurfs typical hate eachother but for the benefit of the community Trolls and Smurfs will  stake together.",
+        "avatar": "/img/collections/troll-town/avatar.webp",
+        "card": "/img/collections/troll-town/card.webp",
+        "banner": "/img/collections/troll-town/banner.webp",
+        "twitter": "https://twitter.com/Sw33percrypto",
+        "discord": "https://discord.gg/uYuBdjm2QJ",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Underground Pixels - Joker",
+      "slug": "underground-pixels-joker",
+      "multiToken": false,
+      "address": "0x6BfD6937a8a5773074be0083aDE4803D39f49EC8",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Joker is the first of several heroes. The laughing gas will be sprayed. All NFTs are handmade by our graphic designer and will contain lots of traits. The heroes will be revealed before the mint. supply: 500 NFTs. Royalties for Secondary Market Hodlers 40% (weekly pick-up on the project website) forever + 2% Boxes + 3%  Legendary NFTs +5% Rare NFTs",
+        "avatar": "/img/collections/underground-pixels-joker/avatar.webp",
+        "website": "https://underground-pixels.netlify.app/",
+        "twitter": "https://twitter.com/UndergroundPx",
+        "discord": "https://discord.gg/xyxZJjkqcj",
         "categories": []
       },
       "verification": {
