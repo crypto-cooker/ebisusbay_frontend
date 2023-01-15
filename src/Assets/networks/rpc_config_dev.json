@@ -15022,17 +15022,17 @@
       }
     },
     {
-      "name": "C\u00b3: Cronos Crow Crew",
-      "slug": "c3-cronos-crow-crew",
+      "name": "Murder Birdz",
+      "slug": "murder-birdz",
       "multiToken": false,
       "address": "0x5bB97B7D75Ce3151E413aa751F22FcD837703588",
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "C\u00b3 is a brand of 3000 PFP crow characters granting holders utility and revenue. Bringing powerful set of trading and analytical tools. It's the first project that allows holders to browse the Cronos NFT space efficiently and have fun in our Crowgame . Join C\u00b3DAO to get access to all those benefits.",
-        "avatar": "/img/collections/c3-cronos-crow-crew/avatar.webp",
-        "card": "/img/collections/c3-cronos-crow-crew/card.webp",
-        "banner": "/img/collections/c3-cronos-crow-crew/banner.webp",
+        "description": "Murder Birdz is a brand of 3000 PFP crow characters granting holders utility and revenue. Bringing powerful set of trading and analytical tools. It's the first project that allows holders to browse the Cronos NFT space efficiently and have fun in our Crowgame . Join Murder Birdz DAO to get access to all those benefits.",
+        "avatar": "/img/collections/murder-birdz/avatar.webp",
+        "card": "/img/collections/murder-birdz/card.webp",
+        "banner": "/img/collections/murder-birdz/banner.webp",
         "website": "https://crowcrew.xyz/",
         "twitter": "https://twitter.com/CCrowcrew",
         "discord": "https://discord.gg/WvyKv2svbF",
@@ -22313,12 +22313,12 @@
     },
     {
       "id": 144,
-      "slug": "c3-cronos-crow-crew",
-      "title": "C³: Cronos Crow Crew",
-      "subtitle": "C³ is a brand of 3000 PFP crow characters granting holders utility and revenue. Bringing powerful set of trading and analytical tools. It's the first project that allows holders to browse the Cronos NFT space efficiently and have fun in our Crowgame . Join C³DAO to get access to all those benefits.",
-      "description": " C³ is a collection of 3000 fine art crow characters granting utility and revenue to its holders. By purchasing a C³ NFT, you gain access to the C³DAO, which includes several benefits :\n\nAnalytics platform  \n\nMint funds will be immediately used to complete the Insight analytics platform, that will improve your trading experience. Follow smart money inflows, social media engagements, and fined the gem.\n\nC³DAO \n\nBy entering the C³DAO, you gain voting power for governance and investments decision. A DAO wallet fund will be set up in order to fructify mint funds, and share revenue with holders. An investment proposal for seed round in fintech will be made to the C³DAO after its establishment.\n\nCrowGame\n\nThe CrowGame is a gamified staking, read more on our whitepaper : Crow game \n\nRevenue sharing \n\nWeb3 is about empowering people and giving back to the community. With our products and marketplace fees creating revenue, sharing will be organized by the C³DAO.\n\nSee you soon!",
+      "slug": "murder-birdz",
+      "title": "Murder Birdz",
+      "subtitle": "Murder Birdz is a brand of 3000 PFP crow characters granting holders utility and revenue. Bringing powerful set of trading and analytical tools. It's the first project that allows holders to browse the Cronos NFT space efficiently and have fun in our Crowgame . Join Murder Birdz DAO to get access to all those benefits.",
+      "description": "Murder Birdz is a collection of 3000 fine art crow characters granting utility and revenue to its holders. By purchasing a Murder Birdz NFT, you gain access to the Murder Birdz DAO, which includes several benefits :\n\nAnalytics platform  \n\nMint funds will be immediately used to complete the Insight analytics platform, that will improve your trading experience. Follow smart money inflows, social media engagements, and fined the gem.\n\nMurder Birdz DAO \n\nBy entering the Murder Birdz DAO, you gain voting power for governance and investments decision. A DAO wallet fund will be set up in order to fructify mint funds, and share revenue with holders. An investment proposal for seed round in fintech will be made to the Murder Birdz DAO after its establishment.\n\nCrowGame\n\nThe CrowGame is a gamified staking, read more on our whitepaper : Crow game \n\nRevenue sharing \n\nWeb3 is about empowering people and giving back to the community. With our products and marketplace fees creating revenue, sharing will be organized by the Murder Birdz DAO.\n\nSee you soon!",
       "author": {
-        "name": "C³: Cronos Crow Crew",
+        "name": "Murder Birdz",
         "website": "https://crowcrew.xyz/",
         "twitter": "https://twitter.com/CCrowcrew",
         "discord": "https://discord.gg/WvyKv2svbF"
@@ -22338,10 +22338,10 @@
       "published": true,
       "complete": false,
       "images": {
-        "drop": "/img/drops/c3-cronos-crow-crew/drop.webp",
-        "banner": "/img/collections/c3-cronos-crow-crew/banner.webp",
-        "avatar": "/img/collections/c3-cronos-crow-crew/avatar.webp",
-        "preview": "/img/collections/c3-cronos-crow-crew/card.webp"
+        "drop": "/img/drops/murder-birdz/drop.webp",
+        "banner": "/img/collections/murder-birdz/banner.webp",
+        "avatar": "/img/collections/murder-birdz/avatar.webp",
+        "preview": "/img/collections/murder-birdz/card.webp"
       },
       "verification": {
         "verified": true,
