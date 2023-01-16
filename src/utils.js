@@ -7,6 +7,7 @@ import { appConfig } from './Config';
 import { hostedImage } from './helpers/image';
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import {commify} from "ethers/lib/utils";
+import brands from '../src/core/data/brands.json';
 
 const config = appConfig();
 const drops = config.drops;
@@ -401,6 +402,11 @@ export const isCollection = (address, matchesSlug, matchesAddress) => {
   );
 };
 
+export const isBrandCollection = (slug, matchesAddress) => {
+  const brand = brands.find((b) => b.slug === slug);
+  return brand && brand.collections.some((address) => caseInsensitiveCompare(address, matchesAddress));
+};
+
 export const isCroCrowCollection = (address) => {
   return isCollection(address, 'cro-crow', '0xe4ab77ed89528d90e6bcf0e1ac99c58da24e79d5');
 };
@@ -495,6 +501,10 @@ export const isSscCollection = (address) => {
 
 export const isCroskullSbtCollection = (address) => {
   return isCollection(address, 'croskull-soulbound-token', '0x0977Ee79F7f6BedE288DD0264C77B4A1b32C48e8');
+};
+
+export const isArgonautsBrandCollection = (address) => {
+  return isBrandCollection('argonauts', address);
 };
 
 export const isEbVipCollection = (address, id) => {

@@ -4409,7 +4409,7 @@
       "verification": {
         "doxx": false,
         "kyc": false,
-        "verified": true
+        "verified": false
       }
     },
     {
@@ -15034,7 +15034,7 @@
         "card": "/img/collections/murder-birdz/card.webp",
         "banner": "/img/collections/murder-birdz/banner.webp",
         "website": "https://crowcrew.xyz/",
-        "twitter": "https://twitter.com/CCrowcrew",
+        "twitter": "https://twitter.com/MurderBirdz",
         "discord": "https://discord.gg/WvyKv2svbF",
         "categories": []
       },
@@ -20131,7 +20131,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": false,
+      "published": true,
       "complete": false,
       "images": {
         "drop": "/img/drops/everybodysnf/drop.png",
@@ -22320,7 +22320,7 @@
       "author": {
         "name": "Murder Birdz",
         "website": "https://crowcrew.xyz/",
-        "twitter": "https://twitter.com/CCrowcrew",
+        "twitter": "https://twitter.com/MurderBirdz",
         "discord": "https://discord.gg/WvyKv2svbF"
       },
       "address": "0x5bB97B7D75Ce3151E413aa751F22FcD837703588",
