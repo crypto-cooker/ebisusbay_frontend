@@ -2389,7 +2389,7 @@
       "multiToken": false,
       "address": "0x313D04832B309CD5f3D75eD7407F34f655cf6455",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "\u2606 1,000 Collectable Renegade Monks \u2606\n\nMint your Monk and fight with The New Resistance!",
         "avatar": "/img/collections/renegade-monks/avatar.webp",
@@ -2458,7 +2458,7 @@
       "multiToken": false,
       "address": "0x51Cd050BB937AD8f6aF35e4413c97073e9f73D2d",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A 2,000 NFT access card collection on the CRONOS chain that provides holders' with virtual real-estate in the ALSTONIAVERSE!",
         "avatar": "/img/collections/alstoniaverse-access-card/avatar.webp",
@@ -2727,7 +2727,7 @@
       "multiToken": false,
       "address": "0xA9806E1F6Aa8FdF47470c06a2c1f563CFA501690",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Welcome to the club\n5,555 planets ready to be explored...\nSomewhere far away in the universe, Meta Planet Club appears. A collection of 5,555 algorithmically generated psychedelic planets, offering its community a friendly ecosystem for life on the Web3.",
         "avatar": "/img/collections/meta-planet-club/avatar.webp",
@@ -2752,7 +2752,7 @@
       "multiToken": false,
       "address": "0x7389d2eb61593940c87fca0ae9785ef196141093",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Brought to you by CROugar Kingdom! Weekly Twitter and Discord giveaways for an entire year!  Maybe you will be a big winner! Get your Wetland Razzle Tix and tune in for the fun!",
         "avatar": "/img/collections/wetland-razzles/avatar.webp",
@@ -2778,7 +2778,7 @@
       "multiToken": false,
       "address": "0x50c96032C5f10E21078C9269e1088D200a76CD4a",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A Collection of 4420 PFPs to hit our Cronos blockchains, with planned donations to clinics, Holder Royalties pay outs, exclusive holder competitions, custom merch, app development and potential business investment opportunity for our O.G 4420 Buds holders, as well as plenty of live team chats! Our team is excited to bring you all along with us! let's better our medicinal cannabis industry 1 Bud at a time we look forward to providing greatness to our CroFam and the world.\nWe have planned an app development to help link patients, doctors and clinics to full cultivator information (what's used in the process, THC/CBD info, also trying to help recognizing the various cultivars and terpenes with DNA as well to optimize therapy outcomes.\n\nFuture plans for Buds is an import/export licensing to help regulate a more affordable medicinal option on our Aussie market, with the full potential to explore possible Cultivation licensing in the future! \n\nLets Break The Stigma!",
         "avatar": "/img/collections/buds/avatar.webp",
@@ -2804,7 +2804,7 @@
       "multiToken": false,
       "address": "0x0b54c93A363A3f064F97777C0491A2D798547378",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "C\u00b3 is a brand of 3000 PFP crow characters granting holders utility and revenue. Bringing powerful set of trading and analytical tools. It's the first project that allows holders to browse the Cronos NFT space efficiently and have fun in our Crowgame . Join C\u00b3DAO to get access to all those benefits.",
         "avatar": "/img/collections/c3-cronos-crow-crew/avatar.webp",
@@ -2853,7 +2853,7 @@
       "multiToken": false,
       "address": "0xb948d0B3D18d4d9Db61226F840395e7A8E3a7F30",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A collection of 777 animated NFT rings. \n\nCollect all 7 ring types to receive a real life hand-made custom ring based on your chosen ring type.",
         "avatar": "/img/collections/nft-rings-aperson-lyeque/avatar.webp",
@@ -2901,7 +2901,7 @@
       "multiToken": false,
       "address": "0x7fb11087c21719C2e4f9Fc16408e8a97a46c92Ad",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Xmas is coming, and the Lotus Ocean Islands are covered in snow.  The characters of Ryoshi Tales have been preparing for the winter festivities!\n\nFrom getting ready to weather the harsh climate to enjoying the frosted landscapes, the characters of the Ryoshi Xmas Tales NFT collection come jam-packed with seasonally appropriate traits that make every NFT completely unique. \n\nWhat are you waiting for? \n\n**Get one now to sport your most Xmassy PFP to date.**",
         "avatar": "/img/collections/ryoshi-tales-christmas/avatar.webp",
@@ -2927,7 +2927,7 @@
       "multiToken": false,
       "address": "0xd9094AbE3cc719735E3aEc8D0356Ca2Faf729A10",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A collection of 5,555 Xmas Trollfam NFTs brought to you by Trollcoin. Jump into our discord and have some fun!",
         "avatar": "/img/collections/trollfam-xmas/avatar.webp",
@@ -2951,7 +2951,7 @@
       "multiToken": false,
       "address": "0x90E4bE01f94d6A8851Bf1a576B6495A77C5Ba0Ed",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Cro Snowmen are the first collection from Holiday NFT, which is an NFT project managed by TopBlok Digital Asset Management.  TopBlok is known for other Cronos Projects such as The CronosVerse and CROmmandos.",
         "avatar": "/img/collections/cro-snowmen/avatar.webp",
