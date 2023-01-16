@@ -5,6 +5,9 @@ import useCreateSigner from './useCreateSigner';
 import useCreateListingSigner from '../../../../hooks/useCreateListingSigner';
 import {useSelector} from "react-redux";
 import { updateListing } from '@src/core/cms/endpoints/gaslessListing';
+import UUID from "uuid-int";
+
+const generator = UUID(0);
 
 const useUpdateGaslessListing = () => {
   const [response, setResponse] = useState({
@@ -30,6 +33,7 @@ const useUpdateGaslessListing = () => {
     }
     if (signatureInStorage) {
       try {
+        listing.salt = generator.uuid();
         listing.listingTime = Math.round(new Date().getTime() / 1000);
         listing.expirationDate = Math.round(listing.expirationDate / 1000)
         const { objectSignature, objectHash } = await createListingSigner(listing);

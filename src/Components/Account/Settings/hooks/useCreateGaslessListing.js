@@ -33,7 +33,7 @@ const useCreateGaslessListing = () => {
     }
     if (signatureInStorage) {
       try {
-        listing.nonce = generator.uuid();
+        listing.salt = generator.uuid();
         listing.listingTime = Math.round(new Date().getTime() / 1000);
         listing.expirationDate = Math.round(listing.expirationDate / 1000)
         const { objectSignature, objectHash } = await createListingSigner(listing);

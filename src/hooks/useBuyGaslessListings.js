@@ -53,7 +53,7 @@ const useBuyGaslessListings = () => {
            orderType: 0, //OrderType.SELL_NFT_NATIVE -> 0
            startAt: listing.listingTime,
            endAt: listing.expirationDate ?? 9995868693,
-           salt: listing.nonce ?? 12345
+           salt: listing.salt ?? 12345
           };
           
          return order
@@ -76,7 +76,7 @@ const useBuyGaslessListings = () => {
       try {
         const contractListings = formatListings(listings);
 
-        const gaslessListings = listings.filter(({ nonce }) => !!nonce)
+        const gaslessListings = listings.filter(({ salt }) => !!salt)
         const buyContract = new Contract(config.contracts.gaslessListing, gaslessListingContract.abi, user.provider.getSigner());
         
         const marketContract = user.contractService.market;

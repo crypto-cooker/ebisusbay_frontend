@@ -85,7 +85,7 @@ const useSignature = () => {
       orderType: 0, //OrderType.SELL_NFT_NATIVE -> 0
       startAt: signatureValues.listingTime,
       endAt: signatureValues.expirationDate,
-      salt: signatureValues.nonce,
+      salt: signatureValues.salt,
     };
 
     try {

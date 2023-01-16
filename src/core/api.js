@@ -657,7 +657,7 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
         const listingId = !!listing ? listing.listingId : null;
         const price = !!listing ? listing.price : null;
         const isGasless = !!listing && isGaslessListing(listing.listingId);
-        const listingNonce = isGasless ? listing.nonce : null;
+        const listingSalt = isGasless ? listing.salt : null;
 
         if (isAntMintPassCollection(nft.nftAddress)) {
           const metadata = await getAntMintPassMetadata(nft.nftAddress, nft.nftId);
@@ -725,7 +725,7 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
           canTransfer: canTransfer,
           isStaked: isStaked,
           isGaslessListing: isGasless,
-          listingNonce
+          listingSalt
         };
       }})
   );

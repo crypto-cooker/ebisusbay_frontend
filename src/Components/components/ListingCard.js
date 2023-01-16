@@ -136,7 +136,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
       address: listing.nftAddress,
       id: listing.nftId,
       rank: listing.nft.rank,
-      nonce: listing.nonce ?? null,
+      salt: listing.salt ?? null,
       expirationDate: listing.expirationDate ?? null,
       seller: listing.seller ?? null,
       sellerSignature: listing.sellerSignature ?? null,
