@@ -13000,7 +13000,7 @@
       "multiToken": false,
       "address": "0x3C839Cb6d994edD48691C764207b8E783cDD58E0",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "A 2,000 NFT access card collection on the CRONOS chain that provides holders' with virtual real-estate in the ALSTONIAVERSE!",
         "avatar": "/img/collections/alstoniaverse-access-card/avatar.webp",
@@ -13011,7 +13011,7 @@
         "categories": []
       },
       "verification": {
-        "verified": true,
+        "verified": false,
         "doxx": false,
         "kyc": true
       }
