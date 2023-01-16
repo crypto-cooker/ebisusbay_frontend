@@ -40,15 +40,13 @@ export const updateListing = async (signature, address, listing) => {
   }
 }
 
-export const cancelListing = async (signature, address, nonce, collectionAddress, tokenId) => {
+export const cancelListing = async (signature, address, listingId) => {
   try {
     const response = await api.delete('gasless-listing', {
       params: {
         signature,
         address,
-        nonce,
-        collectionAddress,
-        tokenId
+        listingId
       }
     });
 

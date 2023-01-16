@@ -15,7 +15,7 @@ const useCancelGaslessListing = () => {
 
   const user = useSelector((state) => state.user);
 
-  const cancelGaslessListing = async ({listingNonce, address, id}) => {
+  const cancelGaslessListing = async (listingId) => {
     setResponse({
       ...response,
       loading: true,
@@ -28,8 +28,7 @@ const useCancelGaslessListing = () => {
     }
     if (signatureInStorage) {
       try {
-
-        const res = await cancelListing(signatureInStorage, user.address.toLowerCase(), listingNonce, address, id)
+        const res = await cancelListing(signatureInStorage, user.address.toLowerCase(), listingId)
 
         setResponse({
           ...response,

@@ -8241,6 +8241,11 @@
   "resolved" "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz"
   "version" "1.0.2"
 
+"uuid-int@^3.1.0":
+  "integrity" "sha512-L+TdqlKbIwO6XxkqpoRkE+MohbL1y6TpEbdDKuxs0MQ2rpO/Hv7Ktp76VneGAbGJRfmwQgvUlRXD6jO0mCzD9Q=="
+  "resolved" "https://registry.npmjs.org/uuid-int/-/uuid-int-3.1.0.tgz"
+  "version" "3.1.0"
+
 "uuid@^3.3.2":
   "integrity" "sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A=="
   "resolved" "https://registry.npmjs.org/uuid/-/uuid-3.4.0.tgz"

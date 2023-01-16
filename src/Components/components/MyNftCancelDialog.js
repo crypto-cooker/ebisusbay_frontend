@@ -4,6 +4,7 @@ import { MyNftCancelDialogActions } from '../../GlobalState/User';
 import useCancelGaslessListing from '@src/Components/Account/Settings/hooks/useCancelGaslessListing';
 import { MyNftPageActions } from "@src/GlobalState/User";
 import { toast } from 'react-toastify';
+import {isGaslessListing} from "@src/utils";
 
 const mapStateToProps = (state) => ({
   walletAddress: state.user.address,
@@ -18,7 +19,7 @@ const MyNftCancelDialog = ({ myNftPageCancelDialog, isGaslessListing }) => {
 
   const cancelGaslessListingFun = async () => {
     try {
-      const res = await cancelGaslessListing(myNftPageCancelDialog)
+      const res = await cancelGaslessListing(myNftPageCancelDialog.listingId)
       dispatch(MyNftPageActions.hideNftPageCancelDialog());
       toast.success('Canceled successfully')
     }
@@ -30,7 +31,7 @@ const MyNftCancelDialog = ({ myNftPageCancelDialog, isGaslessListing }) => {
 
   useEffect(() => {
     if (myNftPageCancelDialog) {
-      if(!myNftPageCancelDialog.isGaslessListing){
+      if(!isGaslessListing(myNftPageCancelDialog.listingId)){
         dispatch(
           MyNftCancelDialogActions.cancelListing({
             address: myNftPageCancelDialog.contract.address,

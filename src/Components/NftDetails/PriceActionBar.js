@@ -3,7 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { ethers } from 'ethers';
 import { toast } from 'react-toastify';
-import { createSuccessfulTransactionToastContent, isNftBlacklisted, isUserBlacklisted } from '@src/utils';
+import {
+  createSuccessfulTransactionToastContent,
+  isGaslessListing,
+  isNftBlacklisted,
+  isUserBlacklisted
+} from '@src/utils';
 import { Card, Spinner } from 'react-bootstrap';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import { chainConnect, connectAccount } from '@src/GlobalState/User';
@@ -94,7 +99,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
 
   const executeCancel = () => async () => {
     setExecutingCancel(true);
-    if(!isGaslessListingEnabled){
+    if(!isGaslessListing(listing.listingId)){
       await runFunction(async (writeContract) => {
         return (
           await writeContract.cancelListing(listing.listingId)
@@ -102,7 +107,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
       });
     }
     else{
-      cancelGaslessListing(listing)
+      cancelGaslessListing(listing.listingId)
     }
 
     setExecutingCancel(false);
