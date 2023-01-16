@@ -12,7 +12,7 @@ const mapStateToProps = (state) => ({
   myNftPageCancelDialog: state.user.myNftPageCancelDialog,
 });
 
-const MyNftCancelDialog = ({ myNftPageCancelDialog, isGaslessListing }) => {
+const MyNftCancelDialog = ({ myNftPageCancelDialog }) => {
   const dispatch = useDispatch();
 
   const [cancelGaslessListing, response] = useCancelGaslessListing();
