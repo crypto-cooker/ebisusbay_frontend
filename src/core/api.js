@@ -12,7 +12,7 @@ import {
   caseInsensitiveCompare,
   convertIpfsResource,
   findCollectionByAddress,
-  isAntMintPassCollection, isBundle, isCroniesCollection, isCroskullSbtCollection,
+  isAntMintPassCollection, isBundle, isCroniesCollection, isCroskullSbtCollection, isGaslessListing,
   isMetapixelsCollection,
   isNftBlacklisted,
   isSouthSideAntsCollection,
@@ -653,11 +653,11 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
           new Contract(knownContract.address, knownContract.multiToken ? ERC1155 : ERC721, signer)) : null;
         writeContracts[key] = writeContract;
 
-        const listed = !!getListing(knownContract.address, nft.nftId);
-        const listingId = listed ? getListing(knownContract.address, nft.nftId).listingId : null;
-        const price = listed ? getListing(knownContract.address, nft.nftId).price : null;
-        const isGaslessListing = listed ? !!getListing(knownContract.address, nft.nftId).nonce : false;
-        const listingNonce = isGaslessListing ? getListing(knownContract.address, nft.nftId).nonce : null;
+        const listing = getListing(knownContract.address, nft.nftId);
+        const listingId = !!listing ? listing.listingId : null;
+        const price = !!listing ? listing.price : null;
+        const isGasless = !!listing && isGaslessListing(listing.listingId);
+        const listingNonce = isGasless ? listing.nonce : null;
 
         if (isAntMintPassCollection(nft.nftAddress)) {
           const metadata = await getAntMintPassMetadata(nft.nftAddress, nft.nftId);
@@ -718,13 +718,13 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
           multiToken: knownContract.multiToken,
           rank: nft.rank,
           listable: knownContract.listable,
-          listed,
+          listed: !!listing,
           listingId,
           price,
           canSell: canSell,
           canTransfer: canTransfer,
           isStaked: isStaked,
-          isGaslessListing,
+          isGaslessListing: isGasless,
           listingNonce
         };
       }})

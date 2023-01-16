@@ -14,7 +14,7 @@ import { getCollectionMetadata } from "@src/core/api";
 import { toast } from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import { ERC721 } from "@src/Contracts/Abis";
-import { createSuccessfulTransactionToastContent, isBundle } from "@src/utils";
+import {createSuccessfulTransactionToastContent, isBundle, isGaslessListing} from "@src/utils";
 import { appConfig } from "@src/Config";
 import Market from "@src/Contracts/Marketplace.json";
 import { useWindowSize } from "@src/hooks/useWindowSize";
@@ -194,7 +194,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
 
       const fees = await marketContract.fee(user.address);
 
-      if (nft.listed && !nft.listingNonce) setFee((fees / 10000) * 100)
+      if (nft.listed && !isGaslessListing(nft.listingId)) setFee((fees / 10000) * 100)
 
       const royalties = await collectionRoyaltyPercent(nftAddress, nftId);
       setRoyalty(royalties);
@@ -260,7 +260,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
       setExecutingCreateListing(true);
       if (isGaslessListingEnabled) {
         if (nft.listed) {
-          if (nft.listingNonce) {
+          if (isGaslessListing(nft.listingId)) {
             const res = await updateGaslessListing({ collectionAddress: nftAddress, tokenId: nftId, price: salePrice.toString(), expirationDate: expirationDate.value, nonce: nft.listingNonce });
           }
           else {

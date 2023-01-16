@@ -769,5 +769,5 @@ export const pluralize = (val, word, plural = word + 's') => {
 };
 
 export const isGaslessListing = (listingId) => {
-  return listingId.toString().startsWith('0x')
+  return listingId && listingId.toString().startsWith('0x')
 }
