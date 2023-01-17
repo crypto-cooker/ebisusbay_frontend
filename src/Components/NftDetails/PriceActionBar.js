@@ -67,7 +67,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
       is1155: listing.is1155,
       listingId: listing.listingId,
       listingTime: listing.listingTime,
-      nonce: listing.nonce,
+      salt: listing.salt,
       price: listing.price,
       seller: listing.seller,
       sellerSignature: listing.sellerSignature
@@ -78,18 +78,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
     try {
       setExecutingBuy(true);
       onClose();
-      if (!isGaslessListingEnabled) {
-        await runFunction(async (writeContract) => {
-          let price = ethers.utils.parseUnits(amount.toString());
-          return (
-            await writeContract.makePurchase(listing.listingId, {
-              value: price,
-            })
-          ).wait();
-        });
-      } else {
-        await buyGaslessListings([listingAdapter(listing)], parseInt(listing.price));
-      }
+      await buyGaslessListings([listingAdapter(listing)], parseInt(listing.price));
       setExecutingBuy(false);
     }
     catch (error) {
@@ -107,7 +96,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
       });
     }
     else{
-      cancelGaslessListing(listing.listingId)
+      await cancelGaslessListing(listing.listingId)
     }
 
     setExecutingCancel(false);

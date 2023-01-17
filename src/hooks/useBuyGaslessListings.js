@@ -7,10 +7,10 @@ import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSig
 import { useSelector } from "react-redux";
 import { appConfig } from "@src/Config";
 import { getServerSignature } from '@src/core/cms/endpoints/gaslessListing';
-import { buyListing } from '@src/core/cms/endpoints/gaslessListing';
 import Constants from '@src/constants';
 
 import gaslessListingContract from "@src/Contracts/GaslessListing.json";
+import {isGaslessListing} from "@src/utils";
 
 const { ItemType } = Constants;
 
@@ -25,14 +25,15 @@ const useBuyGaslessListings = () => {
 
   const user = useSelector((state) => state.user);
 
-  const formatListings = (listings ) => {
+  const formatListings = (listings) => {
     return listings.map(listing => {
       const weiPrice = ethers.utils.parseEther(`${listing.price}`);
+        const isGasless = isGaslessListing(listing.listingId);
 
         const offerItem = {
-          itemType: !listing.nonce ? (ItemType.LEGACY_LISTING) : (listing.is1155 ? ItemType.ERC1155 : ItemType.ERC721), //ItemType.ERC721
+          itemType: !isGasless ? (ItemType.LEGACY_LISTING) : (listing.is1155 ? ItemType.ERC1155 : ItemType.ERC721), //ItemType.ERC721
           token: listing.address ,
-          identifierOrCriteria: listing.nonce ? listing.id : listing.listingId,
+          identifierOrCriteria: isGasless ? listing.id : listing.listingId,
           startAmount: 1,
           endAmount: 1
          };
@@ -85,12 +86,14 @@ const useBuyGaslessListings = () => {
         const fee = price.mul(await marketContract.fee(user.address)).div(10_000);
         const total = price.add(fee);
 
-        const { data: serverSig } = await getServerSignature(signatureInStorage, user.address.toLowerCase(), listings, fee);
-
+        console.log('getting sig...', signatureInStorage, user.address.toLowerCase(), listings, fee);
+        const { data: serverSig } = await getServerSignature(signatureInStorage, user.address.toLowerCase(), listings);
+        console.log('server sig:', serverSig);
         const { signature, ...sigData } = serverSig;
+        console.log('contract input: ', contractListings, sigData, signature, { value: total })
         const tx = await buyContract.fillOrders(contractListings, sigData, signature, { value: total });
         await tx.wait()
-        const res = await buyListing(signatureInStorage, user.address.toLowerCase(), gaslessListings)
+        // const res = await buyListing(signatureInStorage, user.address.toLowerCase(), gaslessListings)
         toast.success('Nft successfully purchased');
 
         setResponse({
