@@ -237,9 +237,20 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
       setExecutingCreateListing(true);
 
       if (nft.listed) {
-        const res = await updateGaslessListing({ collectionAddress: nftAddress, tokenId: nftId, price: salePrice.toString(), expirationDate: expirationDate.value });
+        const res = await updateGaslessListing(nft.listingId, {
+          collectionAddress: nftAddress,
+          tokenId: nftId,
+          price: salePrice.toString(),
+          expirationDate: expirationDate.value
+        });
       } else {
-        const res = await createGaslessListing({ collectionAddress: nftAddress, tokenId: nftId, price: salePrice.toString(), expirationDate: expirationDate.value, is1155: nft.multiToken });
+        const res = await createGaslessListing({
+          collectionAddress: nftAddress,
+          tokenId: nftId,
+          price: salePrice.toString(),
+          expirationDate: expirationDate.value,
+          is1155: nft.multiToken
+        });
       }
       toast.success("Listing Successful");
 
@@ -311,15 +322,6 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                   )}
                 </div>
                 <div className="col-12 col-sm-6">
-                  <h3>Sale Type</h3>
-                  <div className="d-flex">
-                    <div className={`card flex-fill form_icon_button shadow ${saleType === 1 ? 'active' : ''}`} onClick={() => changeSaleType('fixedPrice')}>
-                      {saleType === 1 && <DotIcon icon={faCheck} />}
-                      <FontAwesomeIcon className='icon' icon={faDollarSign} />
-                      <p>Fixed Price</p>
-                    </div>
-                  </div>
-
                   <Form.Group className="form-field">
                     <Form.Label className="formLabel w-100">
                       <div className="d-flex">
