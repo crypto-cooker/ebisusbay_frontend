@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>My first three.js app</title>
+		<style>
+			body { margin: 0; }
+		</style>
+	</head>
+	<body>
+		<script src="js/three.js"></script>
+		<script>
+			const scene = new THREE.Scene();
+			const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+			const renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+
+			const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+			const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+			const cube = new THREE.Mesh( geometry, material );
+			scene.add( cube );
+
+			camera.position.z = 5;
+
+            var text2 = document.createElement('div');
+            
+            
+            text2.style.position = 'absolute';
+            //text2.style.zIndex = 1;    // if you still don't see the label, try uncommenting this
+            text2.style.width = 100;
+            text2.style.height = 100;
+            text2.style.backgroundColor = "lightgray";
+            text2.innerHTML = "hi there!";
+            camera.updateMatrixWorld() 
+            // var vector = toXYCoords (200,200,200);
+            text2.style.top = 200 + 'px';
+            text2.style.left = 200+ 'px';
+            document.body.appendChild(text2);
+
+			function animate() {
+				requestAnimationFrame( animate );
+
+				cube.rotation.x += 0.01;
+				cube.rotation.y += 0.01;
+
+				renderer.render( scene, camera );
+			};
+            function toXYCoords (pos) {
+                var projector = new THREE.Projector();
+                var vector = projector.projectVector(pos.clone(), camera);
+                vector.x = (vector.x + 1)/2 * window.innerWidth;
+                vector.y = -(vector.y - 1)/2 * window.innerHeight;
+                return vector;
+            }
+			animate();
+		</script>
+        <!-- <script src="js/renderers/Projector.js"></script> -->
+	</body>
+</html>

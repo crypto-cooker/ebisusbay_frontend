@@ -1,0 +1,387 @@
+
+body {font-family: DM Sans,Helvetica,Arial,sans-serif;}
+    * {box-sizing: border-box;}
+    body {
+      background-color: rgb(33, 36, 40);
+   }
+    /* Button used to open the contact form - fixed at the bottom of the page */
+    /* .open-button {
+      background-color: #555;
+      color: white;
+      padding: 16px 20px;
+      border: none;
+      cursor: pointer;
+      opacity: 0.8;
+      position: fixed;
+      bottom: 23px;
+      right: 28px;
+      width: 280px;
+    } */
+    
+    /* The popup form - hidden by default */
+    .form-popup {
+      position: absolute;
+      top:50%;
+      left:50%;
+      /* width: 300px;;  adjust as per your needs */
+      /* height:400px;   adjust as per your needs */
+      margin-left:(-(width/2))px;   /* negative half of width above */
+      margin-top:(-(height/2))px;   /* negative half of height above */
+      display: none;
+      /* bottom: 0; */
+      /* right: 15px; */
+      border: 1px solid #c4c4c4;
+      -webkit-border-radius: 15px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+        border-bottom-left-radius: 15px;
+      z-index: 9;
+      box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
+    }
+    
+    /* Add styles to the form container */
+    .form-container {
+      max-width: 300px;
+      padding: 10px;
+      background-color: rgb(31, 31, 31);
+      -webkit-border-radius: 15px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+        border-bottom-left-radius: 15px;
+    }
+    
+    /* Full-width input fields */
+    /* .form-container input[type=text], .form-container input[type=password] {
+      width: 100%;
+      padding: 15px;
+      margin: 5px 0 22px 0;
+      border: none;
+      background: #f1f1f1;
+    } */
+    
+    /* When the inputs get focus, do something */
+    /* .form-container input[type=text]:focus, .form-container input[type=password]:focus {
+      background-color: #ddd;
+      outline: none;
+    } */
+    
+    /* Set a style for the submit/login button */
+    .form-container .btn {
+      background-color: rgb(53, 102, 158);
+      color: white;
+      padding: 16px 20px;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom:10px;
+      opacity: 0.8;
+      font-weight: 400;
+      font-family: DM Sans,Helvetica,Arial,sans-serif;
+      font-size: 14px;
+      font-feature-settings: 'kern';
+      border-radius: 5px;
+      border: 0px;
+    }
+    .form-container .smallBtnSelected {
+      background-color: rgb(53, 102, 158);
+      color: white;
+      padding: 16px 20px;
+      border: none;
+      cursor: pointer;
+      width: 40%;
+      margin-bottom:10px;
+      opacity: 0.8;
+      font-weight: 400;
+      font-family: DM Sans,Helvetica,Arial,sans-serif;
+      font-size: 14px;
+      font-feature-settings: 'kern';
+      border-radius: 5px;
+      border: 0px;
+    }
+    .form-container .smallBtnDisabled {
+      background-color: rgb(153, 153, 153);
+      color: white;
+      padding: 16px 20px;
+      border: none;
+      cursor: pointer;
+      width: 40%;
+      margin-bottom:10px;
+      opacity: 0.8;
+      font-weight: 400;
+      font-family: DM Sans,Helvetica,Arial,sans-serif;
+      font-size: 14px;
+      font-feature-settings: 'kern';
+      border-radius: 5px;
+      border: 0px;
+    }
+    .form-container .minibtn {
+      background-color: rgb(51, 51, 51);
+      text-align: center;
+      color: white;
+      padding: 16px 10px;
+      cursor: pointer;
+      width: 46%;
+      margin-top:10px;
+      margin-left:2px;
+      opacity: 0.8;
+      float: none;
+      display: inline-block;
+      margin-right: 5px;
+      word-wrap: break-word;
+      box-sizing: border-box;
+      font-weight: 400;
+      font-family: DM Sans,Helvetica,Arial,sans-serif;
+      font-size: 14px;
+      font-feature-settings: 'kern';
+      border-radius: 5px;
+      border: 0px;
+    }
+    .entryField {
+      width: 100%;
+      margin: 2px;
+      visibility: visible;
+      color: rgb(255, 255, 255);
+      flex: 1 1 auto;
+      display: inline-grid;
+      grid-area: 1 / 1 / 2 / 3;
+      grid-template-columns: 0px min-content;
+      box-sizing: border-box;
+      padding: 2px;
+      -webkit-box-align: center;
+      align-items: center;
+      border-color: rgb(204, 204, 204);
+      border-radius: 4px;
+      border-style: solid;
+      border-width: 1px;
+      cursor: default;
+      display: flex;
+      flex-wrap: wrap;
+      -webkit-box-pack: justify;
+      justify-content: space-between;
+      min-height: 38px;
+      position: relative;
+      transition: all 100ms ease 0s;
+      box-sizing: border-box;
+      background: rgba(33, 36, 40, 0.867);
+      color: rgb(255, 255, 255);
+      padding: 2px;
+      outline: 0px !important;
+    }
+
+    .form-container .factionButton {
+      background-color: #045aaa;
+      color: white;
+      padding: 8px 10px;
+      border: none;
+      cursor: pointer;
+      width: 31%;
+      margin-bottom:10px;
+      margin-right: 5px;
+      opacity: 0.8;
+      font-size: 15px;
+    }
+    
+    /* Add a red background color to the cancel button */
+    .form-container .cancel {
+      background-color: rgb(51, 51, 51);
+      font-size: 15px;
+    }
+    
+    /* Add some hover effects to buttons */
+    .form-container .btn:hover, .open-button:hover {
+      opacity: 1;
+    }
+    #overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: grey;
+      width: 100%;
+      height: 300px;
+      opacity: 0.6;
+    }
+    #overlay2 {
+      position: fixed;
+      display: none;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.65);
+      z-index: 2;
+      cursor: pointer;
+    }
+
+    .css-1fzih88 {
+      margin: 2px;
+      visibility: visible;
+      color: rgb(255, 255, 255);
+      flex: 1 1 auto;
+      display: inline-grid;
+      grid-area: 1 / 1 / 2 / 3;
+      grid-template-columns: 0px min-content;
+      box-sizing: border-box;
+      padding: 2px;
+      -webkit-box-align: center;
+      align-items: center;
+      border-color: rgb(204, 204, 204);
+      border-radius: 4px;
+      border-style: solid;
+      border-width: 1px;
+      cursor: default;
+      display: flex;
+      flex-wrap: wrap;
+      -webkit-box-pack: justify;
+      justify-content: space-between;
+      min-height: 38px;
+      position: relative;
+      transition: all 100ms ease 0s;
+      box-sizing: border-box;
+      background: rgba(33, 36, 40, 0.867);
+      color: rgb(255, 255, 255);
+      padding: 2px;
+      outline: 0px !important;
+  }
+  /* .scaled {
+    width: 100%;
+    transform: scale(0.7); Equal to scaleX(0.7) scaleY(0.7)
+  }  */
+ 
+  .aspectwrapper {
+    width: 100%;
+    position: relative;
+  }
+  .aspectspacer {
+    width: 100%; /* let the enlarged image height push .aspectwrapper's bottom edge */
+  }
+  .content {
+    position: absolute;
+    top: 0; bottom: 0; right: 0; left: 0;
+    outline: thin dashed green;
+  }
+  .mapBorder{
+    border-color: rgb(204, 204, 204);
+      border-radius: 4px;
+      border-style: solid;
+      border-width: 4px;
+      width: 1280px;
+      margin: 0 auto;
+  }
+  .maparea{
+    height: auto;
+    max-width: 100%;
+    /* margin: 2px;
+      visibility: visible;
+      color: rgb(255, 255, 255);
+      flex: 1 1 auto;
+      display: inline-grid;
+      grid-area: 1 / 1 / 2 / 3;
+      grid-template-columns: 0px min-content;
+      box-sizing: border-box;
+      padding: 2px;
+      -webkit-box-align: center;
+      align-items: center; */
+      /* border-color: rgb(204, 204, 204);
+      border-radius: 4px;
+      border-style: solid;
+      border-width: 4px; */
+      /* cursor: default;
+      display: flex;
+      flex-wrap: wrap;
+      -webkit-box-pack: justify;
+      /* justify-content: space-between; */
+      /*position: relative;
+      transition: all 100ms ease 0s;
+      box-sizing: border-box;
+      background: rgba(33, 36, 40, 0.867);
+      color: rgb(255, 255, 255);
+      padding: 2px;
+      outline: 0px !important;
+      justify-content: center; */
+  }
+
+  .basicText {
+    color: rgb(255, 255, 255);
+  font-weight: 400;
+  font-family: DM Sans,Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  font-feature-settings: 'kern';
+}
+.TitleText {
+  color: rgb(255, 255, 255);
+  padding: 2px;
+  font-size: large;
+  font-weight: 700;
+  font-family: DM Sans,Helvetica,Arial,sans-serif;
+  font-size: 28px;
+  font-feature-settings: 'kern';
+}
+.btn {
+  background-color: rgb(51, 51, 51);
+  text-align: center;
+  color: white;
+  padding: 16px 10px;
+  cursor: pointer;
+  width: 46%;
+  margin-bottom:10px;
+  margin-top:10px;
+  margin-left:2px;
+  opacity: 0.8;
+  float: none;
+  display: inline-block;
+  margin-right: 5px;
+  word-wrap: break-word;
+  box-sizing: border-box;
+  font-weight: 400;
+  font-family: DM Sans,Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  font-feature-settings: 'kern';
+  border-radius: 5px;
+  border: 0px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#myInput {
+  /* background-image: url('/css/searchicon.png'); */
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#factionUL {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#factionUL li a {
+  margin-top: -1px; /* Prevent double borders */
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  color: white;
+  display: block;
+  width: 100%;
+  font-size: 14px;
+  cursor: pointer;
+  border-color: #f6f6f6;
+    word-wrap: break-word;
+    border-width: 0;
+    border-style: solid;
+    box-sizing: border-box;
+}
+
+#factionUL li a:hover:not(.header) {
+  background-color: rgb(33, 36, 40);
+}

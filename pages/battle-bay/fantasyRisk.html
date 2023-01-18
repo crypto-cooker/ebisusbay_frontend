@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
+  <script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom/dist/panzoom.min.js"></script>
+  <link rel="stylesheet" href="fantasyRisk.css">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=yes"> -->
+</head>
+
+<body>
+<div>
+  <button type="button" class="btn" id="registerFaction" onclick="openRegistrationForm()">Register Faction</button>
+  <button type="button" class="btn" id="delgateTroops" onclick="openDelegateForm()">Delegate Troops</button>
+  <button type="button" class="btn" id="editFaction" onclick="editFaction()">Edit Faction</button>
+</div>
+
+<p id="demo" class = "basicText">Select a region to deploy troops to</p> 
+
+  <div class="scaled mapBorder container" >
+    <div id="panzoom" >
+      <img src="fantasyRisk.jpg" alt="Trulli" width="1280" height="600" usemap="#image-map" class="maparea">
+      <map name="image-map">
+      <area onmouseover="getRegionStats(title)" target="" alt="Southern Trident" title="Southern Trident" onclick="selectRegion(title), openForm()"
+            coords="255,534,295,532,337,554,396,534,410,481,351,411,331,377,264,391,225,377,208,430,157,439,191,515" shape="poly"> 
+        <area onmouseover="getRegionStats(title)" target="" alt="Dragonland" title="Dragonland" onclick="selectRegion(title), openForm()" 
+            coords="199,290,208,338,225,368,269,380,328,371,446,298,387,231,421,191,354,160,208,37,185,129,216,214,239,256,295,259,300,309,258,326,233,293" shape="poly"> 
+        <area onmouseover="getRegionStats(title)" target="" alt="Dwarf Mines" title="Dwarf Mines" onclick="selectRegion(title), openForm()" 
+            coords="438,529,455,478,491,470,502,349,589,352,699,318,724,340,721,447,699,475,721,520,778,540,741,568,640,546,640,489,550,481,516,526,469,543" shape="poly">
+        <area onmouseover="getRegionStats(title)" target="" alt="Human Kingdoms" title="Human Kingdoms" onclick="selectRegion(title), openForm()" 
+            coords="825,567,853,576,891,569,900,558,939,562,961,564,981,558,1018,564,1033,553,1038,517,1027,476,1004,499,954,521,918,517,914,497,902,474,889,458,898,427,900,400,893,379,877,359,850,361,821,357,807,366,776,363,753,352,737,339,712,361,728,370,724,384,735,397,719,418,728,449,708,460,685,474,710,491,721,521,753,542,778,536,782,512,805,503,823,485,853,497,873,506,873,519,850,533,846,548,837,556" shape="poly">
+      </map>
+    </div>
+  </div>
+
+<div class="scaleable-wrapper" id="scaleable-wrapper">
+  
+  <div class="very-specific-design" id="very-specific-design">
+  
+    <div class="inside">
+      
+      
+      
+    </div>
+    
+  </div>
+  
+</div>
+
+<p id="regionName" class = "TitleText"></p>
+<p id="desc" class="css-1fzih88">Mouse over a region to see the troops deployed to it.</p>
+
+
+<!-- old faction buttons -->
+<!-- <div class="d-flex justify-content-center">
+    <div class="spinner-border" 
+         role="status" id="loading">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div> -->
+
+<p id="deploymentNotes" class = "basicText"></p>
+<!-- <button onclick="reset_troops()">Reset</button> -->
+<p class = "basicText" id="troopsAppiled"></p>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  
+<div class="form-popup" id="myForm">
+
+    <form action="/action_page.php" class="form-container">
+      <h1 id="selectedRegion" class = "TitleText"></h1>
+      
+      <button type="button" id="deploy" class="smallBtnSelected" onclick="selectDeploy()">Deploy</button>
+      <button type="button" id="recall" class="smallBtnDisabled" onclick="selectRecall()">Recall</button>
+      <p id="troops" class = "basicText" >Troops available: </p>
+      <label class = "basicText" for="quantity">Please select a faction:</label>
+
+      <select class = "css-1fzih88" id = "factionList" onchange = "selectFaction()" >  
+        <option> ---Choose faction--- </option>  
+      </select>  
+
+      <p></p>
+      <label class = "basicText" for="quantity">Quantity:</label>
+      <input class = "css-1fzih88" type="number" id="quantity" name="quantity" min="0">
+      <p></p>
+
+      <button type="button" class="btn" onclick="Apply()">Apply</button>
+      <button type="button" class="btn cancel" onclick="closeForm()">Cancel</button>
+    </form>
+
+  </div>
+
+<div class="form-popup" id="factionRegistrationForm">
+
+    <form action="/action_page.php" class="form-container">
+
+      <label class = "basicText" for="quantity">Faction Name:</label>
+      <input type="text" class = "css-1fzih88" id="factionNameEntry" />
+      
+      <p></p>
+
+        <label class = "basicText" for="quantity">Addresses of Wallets or Contract:</label>
+        <input type="text" class = "entryField" id="addresses"/>
+        <button type="button" class="minibtn" onclick="addItem()">Add address</button>
+        <button type="button" class="minibtn" onclick="removeItem()">Remove</button>
+        <button type="button" class="minibtn" id="ShowAddresses" onclick="myFunction()">Hide Addresses</button>
+        <ul id="addresseslist"></ul>
+
+      <p></p>
+      <button type="button" class="btn" id="registerButton" onclick="registerFaction()">Register <br> Cost: 300 Cro</button>
+      <button type="button" class="btn cancel" onclick="closeRegistrationForm()">Cancel</button>
+    </form>
+
+  </div>
+
+<div class="form-popup" id="delegateForm">
+
+    <form action="/action_page.php" class="form-container">
+
+      <label class = "basicText" id="troopsAvailable">Troops available:</label>
+      <!-- <input type="text" class = "css-1fzih88" id="factionNameEntry" /> -->
+      
+      <p></p>
+
+        <label class = "basicText" >Select a faction to delegate troops to:</label>
+        <input type="text"  id="factionSelector" onkeyup="filterFactions()" placeholder="Search for faction.."class = "entryField"/>
+        
+        <ul id="factionUL">
+          <!-- <li><a onclick="selectFaction(this)">Adele</a></li> -->
+        </ul>
+
+        <p></p>
+        <label class = "basicText" for="quantity">Quantity:</label>
+        <input class = "css-1fzih88" type="number" id="troopsToDeligate" name="quantity" min="0">
+        <p></p>
+
+      <p></p>
+      <button type="button" class="btn" id="delegate" onclick="DelegateTroops()">Delegate</button>
+      <button type="button" class="btn cancel" onclick="closeDelegateForm()">Cancel</button>
+
+    </form>
+
+  </div>
+</body>
+
+<!-- close all the forms if clicked -->
+<div id="overlay2" onclick="closeForm(), closeDelegateForm(), closeRegistrationForm()"></div>
+
+<script type="text/javascript" src="jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="jquery.maphilight.js"></script>
+<script type="text/javascript" src="fantasyRisk.js"></script>
+<script type="text/javascript" src="selectRegion.js"></script>
+<script type="text/javascript" src="registerFaction.js"></script>
+<script type="text/javascript" src="delegateToFaction.js"></script>
+<script src="queryAPI.js"></script>
+
+</html>

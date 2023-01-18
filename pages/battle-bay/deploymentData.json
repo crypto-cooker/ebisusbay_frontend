@@ -1,0 +1,12 @@
+{
+    "regions": {
+        "Southern Trident": {
+            "deployments": {
+                "Mad Merkat": "7897",
+                "CroSkull": "754",
+                "Boomer Squad": "14500",
+                "Flaming Phenix Club": "45010"
+            }
+        }
+    }
+}
