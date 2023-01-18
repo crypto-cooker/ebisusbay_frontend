@@ -28,38 +28,37 @@ const useBuyGaslessListings = () => {
   const formatListings = (listings) => {
     return listings.map(listing => {
       const weiPrice = ethers.utils.parseEther(`${listing.price}`);
-        const isGasless = isGaslessListing(listing.listingId);
+      const isGasless = isGaslessListing(listing.listingId);
 
-        const offerItem = {
-          itemType: !isGasless ? (ItemType.LEGACY_LISTING) : (listing.is1155 ? ItemType.ERC1155 : ItemType.ERC721), //ItemType.ERC721
-          token: listing.address ,
-          identifierOrCriteria: isGasless ? listing.id : listing.listingId,
-          startAmount: 1,
-          endAmount: 1
-         };
-      
-         const considerationItem = {
-          itemType : 0, //Native
-          token: ethers.constants.AddressZero,
-          identifierOrCriteria: 0,
-          startAmount: weiPrice,
-          endAmount: weiPrice
-         };
+      const offerItem = {
+        itemType: !isGasless ? (ItemType.LEGACY_LISTING) : (listing.is1155 ? ItemType.ERC1155 : ItemType.ERC721), //ItemType.ERC721
+        token: listing.address ,
+        identifierOrCriteria: isGasless ? listing.id : listing.listingId,
+        startAmount: 1,
+        endAmount: 1
+      };
 
-         
-         const order = {
-           offerer : listing.seller,
-           offerings: [offerItem],
-           considerations: [considerationItem],
-           orderType: 0, //OrderType.SELL_NFT_NATIVE -> 0
-           startAt: listing.listingTime,
-           endAt: listing.expirationDate ?? 9995868693,
-           salt: listing.salt ?? 12345
-          };
-          
-         return order
-      }
-    )
+      const considerationItem = {
+        itemType : 0, //Native
+        token: ethers.constants.AddressZero,
+        identifierOrCriteria: 0,
+        startAmount: weiPrice,
+        endAmount: weiPrice
+      };
+
+
+      const order = {
+        offerer : listing.seller,
+        offerings: [offerItem],
+        considerations: [considerationItem],
+        orderType: 0, //OrderType.SELL_NFT_NATIVE -> 0
+        startAt: listing.listingTime,
+        endAt: listing.expirationDate ?? 9995868693,
+        salt: listing.salt ?? 12345
+       };
+
+       return order
+    })
   }
 
   const buyGaslessListings = async (listings, cartPrice) => {
