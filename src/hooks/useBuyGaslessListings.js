@@ -11,6 +11,7 @@ import Constants from '@src/constants';
 
 import gaslessListingContract from "@src/Contracts/GaslessListing.json";
 import {isGaslessListing} from "@src/utils";
+import contractService from "@src/core/contractService";
 
 const { ItemType } = Constants;
 
@@ -75,21 +76,15 @@ const useBuyGaslessListings = () => {
     if (signatureInStorage) {
       try {
         const contractListings = formatListings(listings);
-
-        const gaslessListings = listings.filter(({ salt }) => !!salt)
-        const buyContract = new Contract(config.contracts.gaslessListing, gaslessListingContract.abi, user.provider.getSigner());
-        
-        const marketContract = user.contractService.market;
+        const buyContract = user.contractService.ship;
         const price = ethers.utils.parseEther(`${cartPrice}`);
 
-        const fee = price.mul(await marketContract.fee(user.address)).div(10_000);
-        const total = price.add(fee);
-
-        console.log('getting sig...', signatureInStorage, user.address.toLowerCase(), listings, fee);
+        console.log('getting sig...', signatureInStorage, user.address.toLowerCase(), listings);
         const { data: serverSig } = await getServerSignature(signatureInStorage, user.address.toLowerCase(), listings);
         console.log('server sig:', serverSig);
         const { signature, ...sigData } = serverSig;
-        console.log('contract input: ', contractListings, sigData, signature, { value: total })
+        const total = price.add(sigData.feeAmount);
+        console.log('contract input: ', contractListings, sigData, signature, { value: total.toString() })
         const tx = await buyContract.fillOrders(contractListings, sigData, signature, { value: total });
         await tx.wait()
         // const res = await buyListing(signatureInStorage, user.address.toLowerCase(), gaslessListings)
