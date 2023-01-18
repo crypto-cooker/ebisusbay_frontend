@@ -12976,7 +12976,7 @@
       "multiToken": false,
       "address": "0x739b5380156Fa14C7956145048d52dF27EDedfCE",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "Our project is truly one of a kind in the Cronos ecosystem. We are centered around 100k deflationary NFTs that are constantly working on building upon our already large staking and compounding pools. Along with very affordable mint prices (max price 30cro) we also offer something SPECIAL: a burning mechanism on our NFTs.  We will begin airdropping royalty and staking rewards at 50% mint completion!! LFT",
         "avatar": "/img/collections/tatas-twisted-tonics/avatar.webp",
