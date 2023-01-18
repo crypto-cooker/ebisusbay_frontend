@@ -12025,7 +12025,7 @@
         "banner": "/img/collections/killakatz/banner.webp",
         "website": "http://killakatznft.com/",
         "twitter": "https://twitter.com/KillaKatzNFT",
-        "discord": "https://discord.gg/NRwkcnHf8b",
+        "discord": "https://discord.gg/C2nYz7Ajpp",
         "categories": [
           "collectibles"
         ]
@@ -12684,7 +12684,7 @@
         "banner": "/img/collections/killakatz-riot/banner.webp",
         "website": "http://killakatznft.com/",
         "twitter": "https://twitter.com/KillaKatzNFT",
-        "discord": "https://discord.gg/NRwkcnHf8b",
+        "discord": "https://discord.gg/C2nYz7Ajpp",
         "categories": []
       },
       "verification": {
@@ -16747,6 +16747,50 @@
         "avatar": "/img/collections/troll-town/avatar.webp",
         "card": "/img/collections/troll-town/card.webp",
         "banner": "/img/collections/troll-town/banner.webp",
+        "twitter": "https://twitter.com/Sw33percrypto",
+        "discord": "https://discord.gg/uYuBdjm2QJ",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Troll Town - Petz",
+      "slug": "troll-town-petz",
+      "multiToken": false,
+      "address": "0x350e9774a68784bC158e490D00e1B467Bd709615",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Petz are a collection of 800 fun fluffy fur balls, friends with Eggz they stake together",
+        "avatar": "/img/collections/troll-town-petz/avatar.webp",
+        "card": "/img/collections/troll-town-petz/card.webp",
+        "banner": "/img/collections/troll-town-petz/banner.webp",
+        "twitter": "https://twitter.com/Sw33percrypto",
+        "discord": "https://discord.gg/uYuBdjm2QJ",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Troll Town - Eggz",
+      "slug": "troll-town-eggz",
+      "multiToken": false,
+      "address": "0x73F30Bae5FdD645C5C3f3E4825FA2195A7d757BD",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Eggz are a collection of 740 anatomically correct Troll eggz that stake. Check out our Discord",
+        "avatar": "/img/collections/troll-town-eggz/avatar.webp",
+        "card": "/img/collections/troll-town-eggz/card.webp",
+        "banner": "/img/collections/troll-town-eggz/banner.webp",
         "twitter": "https://twitter.com/Sw33percrypto",
         "discord": "https://discord.gg/uYuBdjm2QJ",
         "categories": []
