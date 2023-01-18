@@ -16821,6 +16821,28 @@
         "kyc": false,
         "verified": false
       }
+    },
+    {
+      "name": "Eyeball Balldroid Gen 0",
+      "slug": "eyeball-balldroid-gen-0",
+      "multiToken": false,
+      "address": "0x6b02935008c23325b28f17f6281a8456f46fc121",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Eyeball Pool is by the makers of 8 Ball Pool. Balldroids are a collection of 4,001 unique utility PFPs that gives you early game access to Eyeball Pool. On launch you will receive an airdrop with an in-game starter pack of NFTs and tokens. In addition, holders of the PFP will also get \"priority boarding\" to in-game tournaments from a private Discord channel and the right to vote on community polls.",
+        "avatar": "/img/collections/eyeball-balldroid-gen-0/avatar.webp",
+        "banner": "/img/collections/eyeball-balldroid-gen-0/banner.webp",
+        "website": "https://eyeball.games/",
+        "twitter": "https://twitter.com/eyeball_games",
+        "discord": "https://discord.gg/j2N3N4thyP",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
     }
   ],
   "drops": [
