@@ -95,8 +95,7 @@ const Cart = function () {
   const executeBuy = async () => {
     const listingIds = cart.nfts.map((o) => o.listingId);
     const totalPrice = calculateTotalPrice();
-    let price = ethers.utils.parseUnits(totalPrice.toString());
-    const aux = await buyGaslessListings(cart.nfts, totalPrice)
+    const aux = await buyGaslessListings(listingIds, totalPrice);
     handleClose();
     handleClearCart();
   };

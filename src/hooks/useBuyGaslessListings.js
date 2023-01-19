@@ -6,6 +6,7 @@ import {getAuthSignerInStorage} from '@src/helpers/storage';
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner';
 import {useSelector} from "react-redux";
 import {getServerSignature} from '@src/core/cms/endpoints/gaslessListing';
+import {pluralize} from "@src/utils";
 
 const useBuyGaslessListings = () => {
   const [response, setResponse] = useState({
@@ -17,7 +18,7 @@ const useBuyGaslessListings = () => {
 
   const user = useSelector((state) => state.user);
 
-  const buyGaslessListings = async (listings, cartPrice) => {
+  const buyGaslessListings = async (listingIds, cartPrice) => {
     setResponse({
       ...response,
       loading: true,
@@ -32,14 +33,13 @@ const useBuyGaslessListings = () => {
       try {
         const buyContract = user.contractService.ship;
         const price = ethers.utils.parseEther(`${cartPrice}`);
-        const listingIds = listings.map(({ listingId }) => listingId);
 
         const { data: serverSig } = await getServerSignature(signatureInStorage, user.address.toLowerCase(), listingIds);
         const { signature, orderData, ...sigData } = serverSig;
         const total = price.add(sigData.feeAmount);
         const tx = await buyContract.fillOrders(orderData, sigData, signature, { value: total });
         await tx.wait()
-        toast.success('Nft successfully purchased');
+        toast.success(`${pluralize(listingIds.length, 'NFT')} successfully purchased`);
 
         setResponse({
           ...response,

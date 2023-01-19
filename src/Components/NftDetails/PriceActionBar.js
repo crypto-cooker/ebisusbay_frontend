@@ -78,7 +78,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
     try {
       setExecutingBuy(true);
       onClose();
-      await buyGaslessListings([listingAdapter(listing)], parseInt(listing.price));
+      await buyGaslessListings([listing.listingId], parseInt(listing.price));
       setExecutingBuy(false);
     }
     catch (error) {
