@@ -14326,7 +14326,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "7777 Degen Apes looking for a degen holder on the cronos network. Join the degen club today!",
+        "description": "7,777 Degenerate Apes on the Cronos network that pay 75% royalties to their holders each week.",
         "avatar": "/img/collections/degen-ape-cronos-club/avatar.webp",
         "banner": "/img/collections/degen-ape-cronos-club/banner.webp",
         "card": "/img/collections/degen-ape-cronos-club/card.webp",
@@ -16842,6 +16842,32 @@
         "doxx": false,
         "kyc": false,
         "verified": true
+      }
+    },
+    {
+      "name": "Ballies: The Gear",
+      "slug": "ballies-the-gear",
+      "multiToken": false,
+      "address": "0x861C150f818A882AAA3aFA91694Fc9a6C5CCcA1C",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "“The Gear” is the first Airdrop for holders of Ballies Origins. The Gear consists of 9,999 gear items; some come in batches some are completely unique. Gear items are wearables that will have an important role in Ballies play-and-earn game since each gear item directly boosts Ballies performance - enhances either attack points, defence points or both. Each gear item is powered by one crystal that determines the type of boost. Gear Collection is broken up into 4 categories - neck items, arm items, body items and hand items. The latter gives the strongest boost. It’s time to power up your Ballie!",
+        "avatar": "/img/collections/ballies-the-gear/avatar.webp",
+        "card": "/img/collections/ballies-the-gear/card.webp",
+        "banner": "/img/collections/ballies-the-gear/banner.webp",
+        "website": "https://ballies.gg/",
+        "twitter": "https://twitter.com/Ballies_NFT",
+        "discord": "https://discord.gg/c6Rwb6uKKq",
+        "instagram": "https://instagram.com/ballies_nft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
