@@ -2602,7 +2602,7 @@
       "multiToken": false,
       "address": "0xCF7aedEbC5223c4C620625A560300582B77D8719",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Ryoshi Tales awaits all of our enthusiastic supporters. Get your hands on these exclusive Ryoshi Tales-themed VIP NFTs now! Coming with 8 different traits each with relevant attributes \u2013 body, background, tools, mouth, hair, miscellaneous, eyes, clothing \u2013 every NFT is completely unique. Don\u2019t miss out on the opportunity to participate in our project\u2019s evolution.",
         "avatar": "/img/collections/ryoshi-tales-vip/avatar.webp",
