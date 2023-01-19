@@ -136,37 +136,7 @@ function getTroopsInRegion(region)
     return total;
 }
 
-$('.maparea').maphilight({ 
-    fill: true,
-    fillColor: 'FFFFFF',
-    fillOpacity: 0.2,
 
-    stroke: true,
-    strokeColor: 'ff0000',
-    strokeOpacity: 1,
-    strokeWidth: 3,
-
-    // fade in the shapes on mouseover
-    fade: true,
-    // always show the hilighted areas
-    alwaysOn: false,
-    // never show the hilighted areas
-    neverOn: false,
-
-    groupBy: false,
-    wrapClass: true,
-    // apply a shadow to the shape
-    shadow: false,
-    shadowX: 0,
-    shadowY: 0,
-    shadowRadius: 6,
-    shadowColor: '000000',
-    shadowOpacity: 0.8,
-    // Can be 'outside', 'inside', or 'both'.
-    shadowPosition: 'outside',
-    // Can be 'stroke' or 'fill'
-    shadowFrom: false,
-});
 
 
 

@@ -4,19 +4,6 @@ body {font-family: DM Sans,Helvetica,Arial,sans-serif;}
     body {
       background-color: rgb(33, 36, 40);
    }
-    /* Button used to open the contact form - fixed at the bottom of the page */
-    /* .open-button {
-      background-color: #555;
-      color: white;
-      padding: 16px 20px;
-      border: none;
-      cursor: pointer;
-      opacity: 0.8;
-      position: fixed;
-      bottom: 23px;
-      right: 28px;
-      width: 280px;
-    } */
     
     /* The popup form - hidden by default */
     .form-popup {
@@ -265,15 +252,21 @@ body {font-family: DM Sans,Helvetica,Arial,sans-serif;}
   }
   .mapBorder{
     border-color: rgb(204, 204, 204);
-      border-radius: 4px;
-      border-style: solid;
-      border-width: 4px;
-      width: 1280px;
+      /* border-radius: 4px; */
+      /* border-style: solid; */
+      /* border-width: 4px; */
+      /* width: 1280px; */
+      /* max-width: 100%; */
       margin: 0 auto;
+      background-color: #045aaa;
   }
   .maparea{
-    height: auto;
-    max-width: 100%;
+    /* height: auto;
+      margin: 0 auto; */
+      /* width: 100%; */
+      /* width: auto; */
+    /* max-height: 100%; */
+      /* width: 1280px; */
     /* margin: 2px;
       visibility: visible;
       color: rgb(255, 255, 255);

@@ -16,11 +16,15 @@
 
 <p id="demo" class = "basicText">Select a region to deploy troops to</p> 
 
-  <div class="scaled mapBorder container" >
+  <div class="mapBorder container" >
     <div id="panzoom" >
-      <img src="fantasyRisk.jpg" alt="Trulli" width="1280" height="600" usemap="#image-map" class="maparea">
-      <map name="image-map">
-      <area onmouseover="getRegionStats(title)" target="" alt="Southern Trident" title="Southern Trident" onclick="selectRegion(title), openForm()"
+      <img src="fantasyRisk2.png" alt="Trulli" usemap="#image-map" width="100%" class="maparea" id="islandMap" >
+      <map name="image-map" width="100%">
+      <area onmouseover="getRegionStats(title)" 
+            target="" 
+            alt="Southern Trident" 
+            title="Southern Trident" 
+            onclick="selectRegion(title), openForm()"
             coords="255,534,295,532,337,554,396,534,410,481,351,411,331,377,264,391,225,377,208,430,157,439,191,515" shape="poly"> 
         <area onmouseover="getRegionStats(title)" target="" alt="Dragonland" title="Dragonland" onclick="selectRegion(title), openForm()" 
             coords="199,290,208,338,225,368,269,380,328,371,446,298,387,231,421,191,354,160,208,37,185,129,216,214,239,256,295,259,300,309,258,326,233,293" shape="poly"> 
@@ -32,31 +36,20 @@
     </div>
   </div>
 
-<div class="scaleable-wrapper" id="scaleable-wrapper">
+<!-- <div class="scaleable-wrapper" id="scaleable-wrapper">
   
   <div class="very-specific-design" id="very-specific-design">
   
     <div class="inside">
       
-      
-      
     </div>
     
   </div>
   
-</div>
+</div> -->
 
 <p id="regionName" class = "TitleText"></p>
 <p id="desc" class="css-1fzih88">Mouse over a region to see the troops deployed to it.</p>
-
-
-<!-- old faction buttons -->
-<!-- <div class="d-flex justify-content-center">
-    <div class="spinner-border" 
-         role="status" id="loading">
-        <span class="sr-only">Loading...</span>
-    </div>
-</div> -->
 
 <p id="deploymentNotes" class = "basicText"></p>
 <!-- <button onclick="reset_troops()">Reset</button> -->
@@ -151,6 +144,8 @@
 <script type="text/javascript" src="selectRegion.js"></script>
 <script type="text/javascript" src="registerFaction.js"></script>
 <script type="text/javascript" src="delegateToFaction.js"></script>
+<script type="text/javascript" src="jquery.imagemapster.js"></script>
 <script src="queryAPI.js"></script>
+<!-- <script src="imageMapResizer.js"></script> -->
 
 </html>
