@@ -27,7 +27,7 @@ import {
   pluralize
 } from "@src/utils";
 import * as Sentry from "@sentry/react";
-import {appConfig} from "@src/Config";
+import {appConfig, isTestnet} from "@src/Config";
 import {ListingDrawerItem} from "@src/Components/Account/Profile/Inventory/components/ListingDrawerItem";
 import ListingBundleDrawerForm from "@src/Components/Account/Profile/Inventory/components/ListingBundleDrawerForm";
 import Bundle from "@src/Contracts/Bundle.json";
@@ -48,6 +48,7 @@ export const ListingDrawer = () => {
   const [showConfirmButton, setShowConfirmButton] = useState(false);
   const [isBundling, setIsBundling] = useState(false);
   const formRef = useRef(null);
+  const [debugLegacy, setDebugLegacy] = useState(false);
 
   const [createGaslessListing, responseCreate] = useCreateGaslessListing();
   const [updateGaslessListing, responseUpdate] = useUpdateGaslessListing();
@@ -83,9 +84,13 @@ export const ListingDrawer = () => {
         return;
       }
 
-      const splitItems = splitExistingLegacyFromGasless(filteredCartNfts);
-      await executeUpdateLegacyListings(splitItems.legacy);
-      await executeGaslessListings(splitItems.gasless);
+      if (isTestnet() && debugLegacy) {
+        await executeUpdateLegacyListings(filteredCartNfts);
+      } else {
+        const splitItems = splitExistingLegacyFromGasless(filteredCartNfts);
+        await executeUpdateLegacyListings(splitItems.legacy);
+        await executeGaslessListings(splitItems.gasless);
+      }
 
       resetDrawer();
     } finally {
@@ -109,7 +114,7 @@ export const ListingDrawer = () => {
       const expiration = item.expiration;
 
       if (item.nft.listed) {
-        const res = await updateGaslessListing({ collectionAddress: address, tokenId: id, price: price, expirationDate: expiration });
+        const res = await updateGaslessListing(item.nft.listingId, { collectionAddress: address, tokenId: id, price: price, expirationDate: expiration });
       } else {
         const res = await createGaslessListing({ collectionAddress: address, tokenId: id, price: price, expirationDate: expiration, is1155: item.nft.multiToken });
       }
@@ -243,6 +248,14 @@ export const ListingDrawer = () => {
   return (
     <>
       <GridItem px={6} py={4} overflowY="auto">
+        {isTestnet() && (
+          <FormControl display='flex' alignItems='center' mb={2}>
+            <FormLabel htmlFor='debug-legacy-toggle' mb='0'>
+              Debug: enable legacy
+            </FormLabel>
+            <Switch id='debug-legacy-toggle' isChecked={debugLegacy} onChange={() => setDebugLegacy(!debugLegacy)}/>
+          </FormControl>
+        )}
         <FormControl display='flex' alignItems='center' mb={2}>
           <FormLabel htmlFor='list-bundle-toggle' mb='0'>
             List as bundle
@@ -265,7 +278,7 @@ export const ListingDrawer = () => {
           <>
             {batchListingCart.nfts.map((item, key) => (
               <ListingDrawerItem
-                key={key}
+                key={item.nft.name}
                 item={item}
                 onCascadePriceSelected={handleCascadePrices}
                 onApplyAllSelected={handleApplyAll}

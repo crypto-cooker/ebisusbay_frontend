@@ -253,6 +253,10 @@ export const isLocalEnv = () => {
   return currentEnv() === environments.local;
 }
 
+export const isTestnet = () => {
+  return currentEnv() === environments.testnet;
+}
+
 export const featureFlags = {
   [Features.AUCTION_OPTION_SALE]: false,          // Auction listing option
   [Features.CMS_NOTIFICATIONS]: true,             // Notifications
