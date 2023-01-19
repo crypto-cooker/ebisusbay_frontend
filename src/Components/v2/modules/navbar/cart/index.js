@@ -106,8 +106,8 @@ const Cart = function () {
       try {
         setExecutingBuy(true);
         const listingIds = cart.nfts.map((o) => o.listingId);
-        const listings = await getValidListingsByIds(listingIds);
-        const validListings = listings.data
+        const listings = await getListingsByIds(listingIds);
+        const validListings = listings.data.listings
           .filter((o) => o.state === listingState.ACTIVE)
           .map((o) => o.listingId);
 

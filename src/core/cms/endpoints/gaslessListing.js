@@ -75,13 +75,13 @@ export const buyListing = async (signature, address, listings) => {
   }
 }
 
-export const getServerSignature = async (signature, address, listings) => {
+export const getServerSignature = async (signature, address, listingIds) => {
   try {
     const response = await api.get('gasless-listing/validator', {
       params: {
         address,
         signature,
-        listingIds: listings.map(({ listingId }) => listingId)
+        listingIds
       }
     });
 
