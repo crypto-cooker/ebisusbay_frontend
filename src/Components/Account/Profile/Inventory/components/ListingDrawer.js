@@ -87,9 +87,7 @@ export const ListingDrawer = () => {
       if (isTestnet() && debugLegacy) {
         await executeUpdateLegacyListings(filteredCartNfts);
       } else {
-        const splitItems = splitExistingLegacyFromGasless(filteredCartNfts);
-        await executeUpdateLegacyListings(splitItems.legacy);
-        await executeGaslessListings(splitItems.gasless);
+        await executeGaslessListings(filteredCartNfts);
       }
 
       resetDrawer();
@@ -107,6 +105,8 @@ export const ListingDrawer = () => {
 
     Sentry.captureEvent({ message: 'handleBatchListing', extra: { nftAddresses, nftIds, nftPrices } });
 
+    const updateableListings = [];
+    const creatableListings = [];
     for (const item of nfts) {
       const address = item.nft.address ?? item.nft.nftAddress;
       const id = item.nft.id ?? item.nft.nftId;
@@ -114,11 +114,19 @@ export const ListingDrawer = () => {
       const expiration = item.expiration;
 
       if (item.nft.listed) {
-        const res = await updateGaslessListing({ collectionAddress: address, tokenId: id, price: price, expirationDate: expiration });
+        updateableListings.push({ collectionAddress: address, tokenId: id, price: price, expirationDate: expiration, listingId: item.nft.listingId });
       } else {
-        const res = await createGaslessListing({ collectionAddress: address, tokenId: id, price: price, expirationDate: expiration, is1155: item.nft.multiToken });
+        creatableListings.push({ collectionAddress: address, tokenId: id, price: price, expirationDate: expiration });
       }
     }
+
+    if (updateableListings.length > 0) {
+      await updateGaslessListing(updateableListings);
+    }
+    if (creatableListings.length > 0) {
+      await createGaslessListing(creatableListings);
+    }
+
     toast.success(createSuccessfulTransactionToastContent(''));
   }
 

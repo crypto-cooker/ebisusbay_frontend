@@ -17,7 +17,9 @@ const useCreateGaslessListing = () => {
 
   const user = useSelector((state) => state.user);
 
-  const createGaslessListing = async (listing) => {
+  const createGaslessListing = async (listings) => {
+    if (!Array.isArray(listings)) listings = [listings];
+
     setResponse({
       ...response,
       loading: true,
@@ -25,15 +27,16 @@ const useCreateGaslessListing = () => {
     });
 
     try {
-      listing.salt = generator.uuid();
-      listing.listingTime = Math.round(new Date().getTime() / 1000);
-      listing.expirationDate = Math.round(listing.expirationDate / 1000)
-      const { objectSignature, objectHash } = await createListingSigner(listing);
-      listing.sellerSignature = objectSignature;
-      listing.seller = user.address.toLowerCase();
-      listing.digest = objectHash
-
-      const res = await createListing(listing)
+      for (const listing of listings) {
+        listing.salt = generator.uuid();
+        listing.listingTime = Math.round(new Date().getTime() / 1000);
+        listing.expirationDate = Math.round(listing.expirationDate / 1000)
+        const { objectSignature, objectHash } = await createListingSigner(listing);
+        listing.sellerSignature = objectSignature;
+        listing.seller = user.address.toLowerCase();
+        listing.digest = objectHash
+        const res = await createListing(listing)
+      }
 
       setResponse({
         ...response,
