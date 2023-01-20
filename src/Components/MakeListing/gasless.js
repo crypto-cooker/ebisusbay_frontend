@@ -237,7 +237,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
       setExecutingCreateListing(true);
 
       if (nft.listed) {
-        const res = await updateGaslessListing(nft.listingId, {
+        const res = await updateGaslessListing({
           collectionAddress: nftAddress,
           tokenId: nftId,
           price: salePrice.toString(),

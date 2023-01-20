@@ -114,7 +114,7 @@ export const ListingDrawer = () => {
       const expiration = item.expiration;
 
       if (item.nft.listed) {
-        const res = await updateGaslessListing(item.nft.listingId, { collectionAddress: address, tokenId: id, price: price, expirationDate: expiration });
+        const res = await updateGaslessListing({ collectionAddress: address, tokenId: id, price: price, expirationDate: expiration });
       } else {
         const res = await createGaslessListing({ collectionAddress: address, tokenId: id, price: price, expirationDate: expiration, is1155: item.nft.multiToken });
       }

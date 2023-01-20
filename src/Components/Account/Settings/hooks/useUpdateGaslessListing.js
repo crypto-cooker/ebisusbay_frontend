@@ -20,7 +20,7 @@ const useUpdateGaslessListing = () => {
 
   const user = useSelector((state) => state.user);
 
-  const updateGaslessListing = async (listingId, listing) => {
+  const updateGaslessListing = async (listing) => {
     setResponse({
       ...response,
       loading: true,
@@ -40,7 +40,6 @@ const useUpdateGaslessListing = () => {
         listing.sellerSignature = objectSignature;
         listing.seller = user.address.toLowerCase();
         listing.digest = objectHash;
-        listing.prevDigest = listingId;
         const res = await updateListing(signatureInStorage, user.address.toLowerCase(), listing)
 
         setResponse({

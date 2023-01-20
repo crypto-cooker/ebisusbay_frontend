@@ -14,8 +14,6 @@ const useBuyGaslessListings = () => {
     error: null,
   });
 
-  const [isLoading, getSigner] = useCreateSigner();
-
   const user = useSelector((state) => state.user);
 
   const buyGaslessListings = async (listingIds, cartPrice) => {
