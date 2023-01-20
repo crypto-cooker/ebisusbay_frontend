@@ -59,47 +59,50 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
     onOpen();
   }, [onOpen])
 
-  const listingAdapter = (listing) => {
-    return {
-      address: listing.nftAddress,
-      expirationDate: listing.expirationDate,
-      id: listing.nftId,
-      is1155: listing.is1155,
-      listingId: listing.listingId,
-      listingTime: listing.listingTime,
-      salt: listing.salt,
-      price: listing.price,
-      seller: listing.seller,
-      sellerSignature: listing.sellerSignature
-    }
-  }
-
   const executeBuy = (amount) => async () => {
     try {
       setExecutingBuy(true);
       onClose();
       await buyGaslessListings([listing.listingId], parseInt(listing.price));
-      setExecutingBuy(false);
-    }
-    catch (error) {
+    } catch (error) {
+      if (error.data) {
+        toast.error(error.data.message);
+      } else if (error.message) {
+        toast.error(error.message);
+      } else {
+        console.log(error);
+        toast.error('Unknown Error');
+      }
+    } finally {
       setExecutingBuy(false);
     }
   };
 
   const executeCancel = () => async () => {
-    setExecutingCancel(true);
-    if(!isGaslessListing(listing.listingId)){
-      await runFunction(async (writeContract) => {
-        return (
-          await writeContract.cancelListing(listing.listingId)
-        ).wait();
-      });
+    try {
+      setExecutingCancel(true);
+      if(!isGaslessListing(listing.listingId)){
+        await runFunction(async (writeContract) => {
+          return (
+            await writeContract.cancelListing(listing.listingId)
+          ).wait();
+        });
+      }
+      else{
+        await cancelGaslessListing(listing.listingId)
+      }
+    } catch (error) {
+      if (error.data) {
+        toast.error(error.data.message);
+      } else if (error.message) {
+        toast.error(error.message);
+      } else {
+        console.log(error);
+        toast.error('Unknown Error');
+      }
+    } finally {
+      setExecutingCancel(false);
     }
-    else{
-      await cancelGaslessListing(listing.listingId)
-    }
-
-    setExecutingCancel(false);
   };
 
   const runFunction = async (fn) => {
