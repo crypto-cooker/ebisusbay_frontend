@@ -1,7 +1,5 @@
 import { useState } from 'react';
 
-import { getAuthSignerInStorage } from '@src/helpers/storage';
-import useCreateSigner from './useCreateSigner';
 import useCreateListingSigner from '../../../../hooks/useCreateListingSigner';
 import {useSelector} from "react-redux";
 import { createListing } from '@src/core/cms/endpoints/gaslessListing';
@@ -16,7 +14,6 @@ const useCreateGaslessListing = () => {
   });
 
   const [isLoadingListing, createListingSigner] = useCreateListingSigner();
-  const [isLoading, getSigner] = useCreateSigner();
 
   const user = useSelector((state) => state.user);
 
@@ -26,47 +23,32 @@ const useCreateGaslessListing = () => {
       loading: true,
       error: null,
     });
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        listing.salt = generator.uuid();
-        listing.listingTime = Math.round(new Date().getTime() / 1000);
-        listing.expirationDate = Math.round(listing.expirationDate / 1000)
-        const { objectSignature, objectHash } = await createListingSigner(listing);
-        listing.sellerSignature = objectSignature;
-        listing.seller = user.address.toLowerCase();
-        listing.digest = objectHash
 
-        const res = await createListing(signatureInStorage, user.address.toLowerCase(), listing)
+    try {
+      listing.salt = generator.uuid();
+      listing.listingTime = Math.round(new Date().getTime() / 1000);
+      listing.expirationDate = Math.round(listing.expirationDate / 1000)
+      const { objectSignature, objectHash } = await createListingSigner(listing);
+      listing.sellerSignature = objectSignature;
+      listing.seller = user.address.toLowerCase();
+      listing.digest = objectHash
 
-        setResponse({
-          ...response,
-          loading: false,
-          error: null,
-        });
+      const res = await createListing(listing)
 
-        return true;
-      } catch (error) {
-        console.log(error)
-        setResponse({
-          ...response,
-          loading: false,
-          error: error,
-        });
-        throw error;
-      }
-    } else {
       setResponse({
-        isLoading: false,
-        response: [],
-        error: { message: 'Something went wrong' },
+        ...response,
+        loading: false,
+        error: null,
       });
 
-      throw new Error();
+      return true;
+    } catch (error) {
+      setResponse({
+        ...response,
+        loading: false,
+        error: error,
+      });
+      throw error;
     }
   };
 
