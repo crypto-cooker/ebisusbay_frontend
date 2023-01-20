@@ -2,11 +2,11 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import * as Sentry from '@sentry/react';
 
-import { ErrorPage } from '../src/Components/ErrorPage';
+import { ErrorPage } from '@src/Components/ErrorPage';
 import store from '../src/Store/store';
 import App from '../src/App';
-import { SentryLoggingService } from '../src/services/sentry-logging.service';
-import { Site24x7LoggingService } from '../src/services/site24x7-logging.service';
+import { SentryLoggingService } from '@src/services/sentry-logging.service';
+import { Site24x7LoggingService } from '@src/services/site24x7-logging.service';
 import {
   QueryClient,
   QueryClientProvider,
