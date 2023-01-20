@@ -6,14 +6,9 @@ const api = axios.create({
   baseURL: config.urls.cms,
 });
 
-export const createListing = async (signature, address, listing) => {
+export const createListing = async (listing) => {
   try {
-    const response = await api.post('gasless-listing', listing, {
-      params: {
-        signature,
-        address
-      }
-    });
+    const response = await api.post('gasless-listing', listing);
 
     return response.data;
   } catch (e) {
@@ -23,14 +18,9 @@ export const createListing = async (signature, address, listing) => {
   }
 }
 
-export const updateListing = async (signature, address, listing) => {
+export const updateListing = async (listing) => {
   try {
-    const response = await api.patch('gasless-listing', listing, {
-      params: {
-        signature,
-        address
-      }
-    });
+    const response = await api.patch('gasless-listing', listing);
 
     return response.data;
   } catch (e) {
@@ -56,23 +46,6 @@ export const cancelListing = async (listingIds) => {
   }
 }
 
-export const buyListing = async (signature, address, listings) => {
-  try {
-    const response = await api.patch('gasless-listing/buy', {listings}, {
-      params: {
-        signature,
-        address
-      }
-    });
-
-    return response.data;
-  } catch (e) {
-    console.log('error', e);
-    throw e;
-
-  }
-}
-
 export const getServerSignature = async (address, listingIds) => {
   try {
     const response = await api.get('gasless-listing/validator', {
@@ -86,7 +59,6 @@ export const getServerSignature = async (address, listingIds) => {
   } catch (e) {
     console.log('error', e);
     throw e;
-
   }
 }
 
