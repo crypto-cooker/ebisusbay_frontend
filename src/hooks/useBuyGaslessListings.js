@@ -24,48 +24,34 @@ const useBuyGaslessListings = () => {
       loading: true,
       error: null,
     });
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const buyContract = user.contractService.ship;
-        const price = ethers.utils.parseEther(`${cartPrice}`);
 
-        const { data: serverSig } = await getServerSignature(signatureInStorage, user.address.toLowerCase(), listingIds);
-        const { signature, orderData, ...sigData } = serverSig;
-        const total = price.add(sigData.feeAmount);
-        const tx = await buyContract.fillOrders(orderData, sigData, signature, { value: total });
-        await tx.wait()
-        toast.success(`${pluralize(listingIds.length, 'NFT')} successfully purchased`);
+    try {
+      const buyContract = user.contractService.ship;
+      const price = ethers.utils.parseEther(`${cartPrice}`);
 
-        setResponse({
-          ...response,
-          loading: false,
-          error: null,
-        });
+      const { data: serverSig } = await getServerSignature(user.address.toLowerCase(), listingIds);
+      const { signature, orderData, ...sigData } = serverSig;
+      const total = price.add(sigData.feeAmount);
+      const tx = await buyContract.fillOrders(orderData, sigData, signature, { value: total });
+      await tx.wait()
+      toast.success(`${pluralize(listingIds.length, 'NFT')} successfully purchased`);
 
-        return true;
-      } catch (error) {
-        console.log(error)
-        toast.error('Error');
-        setResponse({
-          ...response,
-          loading: false,
-          error: error,
-        });
-        throw error;
-      }
-    } else {
       setResponse({
-        isLoading: false,
-        response: [],
-        error: { message: 'Something went wrong' },
+        ...response,
+        loading: false,
+        error: null,
       });
 
-      throw new Error();
+      return true;
+    } catch (error) {
+      console.log(error)
+      toast.error('Error');
+      setResponse({
+        ...response,
+        loading: false,
+        error: error,
+      });
+      throw error;
     }
   };
 
