@@ -1,9 +1,8 @@
 import { useState } from 'react';
-
-import { getAuthSignerInStorage } from '@src/helpers/storage';
-import useCreateSigner from './useCreateSigner';
 import {useSelector} from "react-redux";
 import { cancelListing } from '@src/core/cms/endpoints/gaslessListing';
+import {toast} from "react-toastify";
+import {pluralize} from "@src/utils";
 
 const useCancelGaslessListing = () => {
   const [response, setResponse] = useState({
@@ -11,49 +10,40 @@ const useCancelGaslessListing = () => {
     error: null,
   });
 
-  const [isLoading, getSigner] = useCreateSigner();
-
   const user = useSelector((state) => state.user);
 
-  const cancelGaslessListing = async (listingId) => {
+  const cancelGaslessListing = async (listingIds) => {
+    if (!Array.isArray(listingIds)) listingIds = [listingIds];
+
     setResponse({
       ...response,
       loading: true,
       error: null,
     });
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const res = await cancelListing(signatureInStorage, user.address.toLowerCase(), listingId)
 
-        setResponse({
-          ...response,
-          loading: false,
-          error: null,
-        });
+    try {
+      const { data: orders } = await cancelListing(listingIds);
 
-        return true;
-      } catch (error) {
-        console.log(error)
-        setResponse({
-          ...response,
-          loading: false,
-          error: error,
-        });
-        throw error;
-      }
-    } else {
+      const ship = user.contractService.ship;
+      const tx = await ship.cancelOrders(orders);
+      await tx.wait()
+      toast.success(`${pluralize(listingIds.length, 'NFT')} successfully cancelled`);
+
       setResponse({
-        isLoading: false,
-        response: [],
-        error: { message: 'Something went wrong' },
+        ...response,
+        loading: false,
+        error: null,
       });
 
-      throw new Error();
+      return true;
+    } catch (error) {
+      console.log(error)
+      setResponse({
+        ...response,
+        loading: false,
+        error: error,
+      });
+      throw error;
     }
   };
 
