@@ -12184,7 +12184,7 @@
       "multiToken": false,
       "address": "0xb4D807aD7BEf1cB6Ac99688F675AaDF38196CC47",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Lion Social Club is minting our first collection, each NFT is unique and holds special utility",
         "avatar": "/img/collections/lion-social-club/avatar.webp",
@@ -16507,7 +16507,7 @@
       "multiToken": false,
       "address": "0xe28B4045A6C1cb3ED30861CAF62A01A2C4DAaa69",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Kaiju Madzilla are here! A randomly generated collection of 6,666 NFTs, they will serve as the core component of the Kaiju of Cronos Ecosystem. By harvesting Kaiju $ENRG, they will lead you on a journey to obtain true Kaiju $POWR. The era of the Kaiju are upon us...",
         "avatar": "/img/collections/kaiju-madzilla/avatar.webp",
@@ -21514,7 +21514,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/lion-social-club/drop.webp",
         "banner": "/img/collections/lion-social-club/banner.webp",
