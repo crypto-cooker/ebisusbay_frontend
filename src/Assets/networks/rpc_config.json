@@ -2192,6 +2192,7 @@
         "twitter": "https://twitter.com/thelaboratoryio",
         "discord": "https://discord.gg/thelaboratory",
         "medium": "https://medium.com/@TheLaboratoryIO",
+        "telegram": "https://t.me/thelaboratoryio",
         "categories": [
           "collectibles",
           "utility"
@@ -16869,6 +16870,92 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "ICY",
+      "slug": "icy",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A collection of 1000 IcyCRO glasses. \n\nMint yourself a ICY NFT and you will be part of the biggest community validator project in Cronos and in the whole Cosmos.\n\nIcyCRO has grown quickly to be one the most popular validators and best relayers in three chains: Crypto.org, ATOM and JUNO.",
+        "avatar": "/img/collections/icy/avatar.webp",
+        "card": "/img/collections/icy/card.webp",
+        "banner": "/img/collections/icy/banner.webp",
+        "website": "https://www.icycro.org/",
+        "twitter": "https://twitter.com/IcyCro",
+        "medium": "https://medium.com/@IcyCRO",
+        "telegram": "https://t.co/BDFTTGErlZ",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Compound X & Y",
+      "slug": "compound-xy",
+      "multiToken": true,
+      "address": "0xEf0A34A742066b9d1DcB89575dDe7e4f0B7CE0D6",
+      "onChain": false,
+      "listable": true,
+      "tokens": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        }
+      ],
+      "metadata": {
+        "description": "Compound X & Y were formulated by the Head of Laboratory as a special concoction. These substances can be used to bring to life a new Laboratory grown species. The Cronos planet is not suitable to host the Crazy Scientists and the new species, prepare yourself to travel the Block Chain Solar System.",
+        "avatar": "/img/collections/compound-xy/avatar.webp",
+        "card": "/img/collections/compound-xy/card.webp",
+        "banner": "/img/collections/compound-xy/banner.webp",
+        "website": "https://www.thelaboratory.io/",
+        "twitter": "https://twitter.com/thelaboratoryio",
+        "discord": "https://discord.gg/thelaboratory",
+        "medium": "https://medium.com/@TheLaboratoryIO",
+        "telegram": "https://t.me/thelaboratoryio",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": "phenix",
+        "verified": true
+      }
+    },
+    {
+      "name": "Jack Yolo Odyssey",
+      "slug": "jack-yolo-odyssey",
+      "multiToken": false,
+      "address": "0x2A6F97546d50ABCD188401AC08f4007BE69d9807",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The \"Jack Yolo Odyssey\" is a collection of 91 unique, AI-generated pictures created by Jack Yolo. These NFTs have a long-term value proposition, providing holders with returns from future mints, a share of royalties, and priority access to future collections within the \"Yolo galaxy\".",
+        "avatar": "/img/collections/jack-yolo-odyssey/avatar.webp",
+        "card": "/img/collections/jack-yolo-odyssey/card.webp",
+        "banner": "/img/collections/jack-yolo-odyssey/banner.webp",
+        "website": "https://jackyolo.xyz/JYO/",
+        "twitter": "https://twitter.com/jackyoloodissey",
+        "discord": "https://discord.gg/TAjH5MW4A6",
+        "telegram": "https://t.me/jackyoloodissey",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
     }
   ],
   "drops": [
@@ -22678,6 +22765,47 @@
         "doxx": false,
         "kyc": true,
         "escrow": false
+      }
+    },
+    {
+      "id": 151,
+      "slug": "icy",
+      "title": "ICY",
+      "subtitle": "A collection of 1000 IcyCRO glasses. \n\nMint yourself a ICY NFT and you will be part of the biggest community validator project in Cronos and in the whole Cosmos.\n\nIcyCRO has grown quickly to be one the most popular validators and best relayers in three chains: Crypto.org, ATOM and JUNO.",
+      "description": "A collection of 1000 IcyCRO glasses. \n\nMint yourself a ICY NFT and you will be part of the biggest community validator project in Cronos and in the whole Cosmos.\n\nIcyCRO has grown quickly to be one the most popular validators and best relayers in three chains: Crypto.org, ATOM and JUNO. \n\nAll the profit that the IcyCRO project makes is shared with the community through jackpot raffles, CRO-ICY farms and NFT staking. \n\nBenefits:\n- Free entry to the monthly IcyCRO Jackpot raffle.\n- ICY airdrop. 5k ICY for every legendary NFT. \n- NFT staking rewards on Crodex. \n\nPlans are also to use the ICY NFTs as CRO-ICY farm boosters in the future. \n\nRevenue sharing:\n- 40% is donated to the best Cronos projects. \n- 40% is used to boost the CRO-ICY farm APR and liquidity. \n- 20% goes for the NFT staking rewards",
+      "author": {
+        "name": "IcyCRO",
+        "website": "https://www.icycro.org/",
+        "twitter": "https://twitter.com/IcyCro",
+        "medium": "https://medium.com/@IcyCRO",
+        "telegram": "https://t.co/BDFTTGErlZ"
+      },
+      "address": "",
+      "maxMintPerTx": 5,
+      "maxMintPerAddress": 10,
+      "totalSupply": 1000,
+      "cost": "550",
+      "memberCost": "500",
+      "whitelistCost": "480",
+      "foundersOnly": false,
+      "start": 1674849600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "priceDescription": "Whitelist-only presale for the first 12 hours (limit 5 per address). Public sale after presale ends.",
+      "images": {
+        "drop": "/img/drops/icy/drop.webp",
+        "banner": "/img/collections/icy/banner.webp",
+        "avatar": "/img/collections/icy/avatar.webp",
+        "preview": "/img/collections/icy/card.webp"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
       }
     }
   ]
