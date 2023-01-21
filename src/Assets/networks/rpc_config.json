@@ -2192,6 +2192,7 @@
         "twitter": "https://twitter.com/thelaboratoryio",
         "discord": "https://discord.gg/thelaboratory",
         "medium": "https://medium.com/@TheLaboratoryIO",
+        "telegram": "https://t.me/thelaboratoryio",
         "categories": [
           "collectibles",
           "utility"
@@ -16894,6 +16895,42 @@
         "verified": true,
         "doxx": false,
         "kyc": false
+      }
+    },
+    {
+      "name": "Compound X & Y",
+      "slug": "compound-xy",
+      "multiToken": true,
+      "address": "0xEf0A34A742066b9d1DcB89575dDe7e4f0B7CE0D6",
+      "onChain": false,
+      "listable": true,
+      "tokens": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        }
+      ],
+      "metadata": {
+        "description": "Compound X & Y were formulated by the Head of Laboratory as a special concoction. These substances can be used to bring to life a new Laboratory grown species. The Cronos planet is not suitable to host the Crazy Scientists and the new species, prepare yourself to travel the Block Chain Solar System.",
+        "avatar": "/img/collections/compound-xy/avatar.webp",
+        "card": "/img/collections/compound-xy/card.webp",
+        "banner": "/img/collections/compound-xy/banner.webp",
+        "website": "https://www.thelaboratory.io/",
+        "twitter": "https://twitter.com/thelaboratoryio",
+        "discord": "https://discord.gg/thelaboratory",
+        "medium": "https://medium.com/@TheLaboratoryIO",
+        "telegram": "https://t.me/thelaboratoryio",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": "phenix",
+        "verified": true
       }
     }
   ],
