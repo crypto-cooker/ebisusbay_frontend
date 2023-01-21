@@ -36,10 +36,12 @@ const useUpdateGaslessListing = () => {
         .map((listing) => listing.listingId),
     };
 
-    if (cancelIds.legacy.length > 0) {
-      const port = user.contractService.market;
-      await port.cancelListings(cancelIds.legacy)
-    }
+    // Deciding to instead hide legacy listings at this time
+    // if (cancelIds.legacy.length > 0) {
+    //   const port = user.contractService.market;
+    //   await port.cancelListings(cancelIds.legacy)
+    // }
+
     if (cancelIds.gasless.length > 0) {
       const { data: orders } = await cancelListing(cancelIds.gasless);
       const ship = user.contractService.ship;
