@@ -232,6 +232,11 @@
             },
             {
               "internalType": "address",
+              "name": "feeToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
               "name": "filler",
               "type": "address"
             },
@@ -593,6 +598,11 @@
               "internalType": "uint256",
               "name": "feeAmount",
               "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "feeToken",
+              "type": "address"
             },
             {
               "internalType": "address",

@@ -18,6 +18,8 @@ export const getListingsByCollection = async (address, listingsQuery) => {
 }
 
 export const getListingsByIds = async (listingIds) => {
+  if (!Array.isArray(listingIds)) listingIds = [listingIds];
+
   try{
     const ids = listingIds.join(',');
     return await api.get(`listings`, {params: {listingId: ids}});
