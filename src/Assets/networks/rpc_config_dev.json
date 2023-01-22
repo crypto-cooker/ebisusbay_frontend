@@ -2006,8 +2006,8 @@
         "card": "/img/collections/mariecyborg/card.png",
         "banner": "/img/collections/mariecyborg/banner.webp",
         "website": "https://www.mariescyborgs.io/",
-        "twitter": "https://twitter.com/mariescyborgs",
-        "discord": "https://discord.gg/mariescyborgs",
+        "twitter": "https://twitter.com/cyborgbh",
+        "discord": "https://discord.gg/TkjJ3ePv",
         "telegram": "https://t.me/mariescyborgs",
         "categories": [
           "collectibles"
@@ -4323,8 +4323,8 @@
         "card": "/img/collections/cyborgbrotherhood/card.webp",
         "banner": "/img/collections/cyborgbrotherhood/banner.webp",
         "website": "https://www.cyborgbh.io/",
-        "twitter": "https://twitter.com/mariescyborgs",
-        "discord": "https://discord.gg/x9bvzuSBeV",
+        "twitter": "https://twitter.com/cyborgbh",
+        "discord": "https://discord.gg/TkjJ3ePv",
         "medium": "https://medium.com/@mariescyborgs/cyborg-brotherhood-28173eccf03a",
         "categories": [
           "collectibles"
@@ -16955,6 +16955,53 @@
         "doxx": false,
         "kyc": false,
         "verified": false
+      }
+    },
+    {
+      "name": "Trollfem",
+      "slug": "trollfem",
+      "multiToken": false,
+      "address": "0x02315CC59Ec1d9875C2339Aa868a624D6FF2E091",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Trollfem is a collection of 5,555 female NFTs brought to you by the creators of the #1 meme coin on Cronos Trollcoin. Join our discord and join in with the fun. If you hold 1 Trollfam, and 1 Trollfem you will receive an airdrop in the future per pair that you hold.",
+        "avatar": "/img/collections/trollfem/avatar.webp",
+        "card": "/img/collections/trollfem/card.webp",
+        "banner": "/img/collections/trollfem/banner.webp",
+        "website": "https://trollcoin.clubcro.com/",
+        "twitter": "https://twitter.com/TrollCoinCro",
+        "discord": "https://discord.gg/trollcoin",
+        "telegram": "https://t.me/OfficialTrollcoin",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Radiated Pill",
+      "slug": "radiated-pill",
+      "multiToken": false,
+      "address": "0xfB9c657A58b46010B292321f871cC690084CB34f",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Radiate your KKC",
+        "avatar": "/img/collections/radiated-pill/avatar.webp",
+        "banner": "/img/collections/radiated-pill/banner.webp",
+        "card": "/img/collections/radiated-pill/card.webp",
+        "website": "https://kingkong-cronos.netlify.app/",
+        "twitter": "https://www.twitter.com/KingKongCronos2",
+        "discord": "https://discord.gg/qJq6d3Bu",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
       }
     }
   ],
