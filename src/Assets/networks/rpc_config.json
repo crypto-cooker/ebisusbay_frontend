@@ -33,16 +33,22 @@
   },
   "known_contracts": [
     {
-      "name": "Ebisu's Bay - Legacy VIP Founding Member",
-      "slug": "vip-founding-member",
+      "name": "Ebisu's Bay - Founding Member",
+      "slug": "founding-member",
       "onChain": false,
       "address": "0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5",
       "multiToken": true,
-      "split": true,
-      "id": 2,
       "listable": true,
+      "tokens": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        }
+      ],
       "metadata": {
-        "description": "Holding this NFT grants reduced service fees, discounts on drops, early access to features and is stakeable in the service fee pool.",
+        "description": "Holding this NFT grants reduced service fees, discounts on drops and early access to features.",
         "avatar": "/img/avatar.png",
         "card": "/img/collections/ebisu/card.webp",
         "banner": "/img/collections/ebisu/banner.png",
@@ -102,43 +108,11 @@
       }
     },
     {
-      "name": "Ebisu's Bay - Founding Member",
-      "slug": "founding-member",
-      "onChain": false,
-      "address": "0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5",
-      "multiToken": true,
-      "split": true,
-      "id": 1,
-      "listable": true,
-      "metadata": {
-        "description": "Holding this NFT grants reduced service fees, discounts on drops and early access to features.",
-        "avatar": "/img/avatar.png",
-        "card": "/img/collections/ebisu/card.webp",
-        "banner": "/img/collections/ebisu/banner.png",
-        "website": "https://app.ebisusbay.com/",
-        "twitter": "https://twitter.com/EbisusBay",
-        "discord": "https://discord.gg/ebisusbay",
-        "medium": "https://blog.ebisusbay.com/",
-        "instagram": "https://www.instagram.com/ebisusbayofficial",
-        "telegram": "https://t.me/ebisusbay",
-        "categories": [
-          "utility"
-        ]
-      },
-      "verification": {
-        "doxx": "public",
-        "kyc": "hidden",
-        "verified": true
-      }
-    },
-    {
       "name": "Holiday Hares",
       "slug": "holiday-hares",
       "onChain": false,
       "address": "0x008d4Ab1D8fbC7823422a7cCFe3f1D73c09760Ab",
       "multiToken": true,
-      "split": false,
-      "id": 1,
       "listable": true,
       "metadata": {
         "description": "Happy Easter from the ebisusbay.com staff!",

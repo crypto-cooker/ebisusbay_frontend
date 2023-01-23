@@ -134,9 +134,9 @@ const formatCollections = (collections) => {
 
   return collections.map((collection) => (
     {
-      averageSalePrice: collection?.stats?.total?.avg_sale_price,
+      averageSalePrice: collection?.stats?.total?.avgSalePrice,
       collection: collection?.address,
-      floorPrice: collection?.stats?.total?.floor_price,
+      floorPrice: collection?.stats?.total?.floorPrice,
       listable: collection?.listable,
       metadata: collection?.metadata,
       name: collection?.name,

@@ -83,34 +83,34 @@ export default function CollectionInfoBar({ collectionStats, type = 'legacy' }) 
       <div className="d-item col-lg-8 col-sm-10 mb-4 mx-auto">
         <div className="nft_attr">
           <div className="collection_info_bar">
-            <Box minW={['100%', '100%', '72px']}>
+            <Box minW={['50%', '50%', '72px']}>
               <h5>Items</h5>
               <h4>{totalSupply ? commify(totalSupply) : '-'}</h4>
             </Box>
-            <Box minW={['100%', '100%', '72px']}>
+            <Box minW={['50%', '50%', '72px']}>
               <h5>Volume</h5>
               <h4>{totalVolume ? <>{siPrefixedNumber(Number(totalVolume).toFixed(0))} CRO</> : <>-</>}</h4>
             </Box>
-            <Box minW={['100%', '100%', '72px']}>
+            <Box minW={['50%', '50%', '72px']}>
               <h5>Sales</h5>
               <h4>{numberOfSales ? <>{siPrefixedNumber(numberOfSales)}</> : <>-</>}</h4>
             </Box>
-            <Box minW={['100%', '100%', '72px']}>
+            <Box minW={['50%', '50%', '72px']}>
               <h5>Avg. Sale</h5>
               <h4>{averageSalePrice ? <>{siPrefixedNumber(Number(averageSalePrice).toFixed(0))} CRO</> : <>-</>}</h4>
             </Box>
-            <Box minW={['100%', '100%', '72px']}>
+            <Box minW={['50%', '50%', '72px']}>
               <h5>Active Listings</h5>
               <h4>{numberActive ? <>{siPrefixedNumber(numberActive)}</> : <>-</>}</h4>
             </Box>
-            <Box minW={['100%', '100%', '72px']}>
+            <Box minW={['50%', '50%', '72px']}>
               <h5>Floor</h5>
               <h4>{numberActive > 0 && floorPrice ? <>{siPrefixedNumber(Number(floorPrice).toFixed(0))} CRO</> : <>-</>}</h4>
             </Box>
-            <Box className="" minW={['100%', '100%', '72px']}>
-              <h5>Owners</h5>
-              <h4>{owners > 0 ? <>{owners}</> : <>-</>}</h4>
-            </Box>
+            {/*<Box className="" minW={['50%', '50%', '72px']}>*/}
+            {/*  <h5>Owners</h5>*/}
+            {/*  <h4>{owners > 0 ? <>{owners}</> : <>-</>}</h4>*/}
+            {/*</Box>*/}
           </div>
         </div>
       </div>
