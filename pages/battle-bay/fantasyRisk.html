@@ -13,6 +13,53 @@
   <button type="button" class="btn" id="delgateTroops" onclick="openDelegateForm()">Delegate Troops</button>
   <button type="button" class="btn" id="editFaction" onclick="editFaction()">Edit Faction</button>
 </div>
+<div class="form-popup form-container" id="myForm">
+
+  <form action="/action_page.php" class="form-container">
+    <h1 id="selectedRegion" class = "TitleText"> Region Name</h1>
+
+    <!-- Table Showing Deployed Troops -->
+    <p id="regionDesc" class = "basicText"> </p>
+    <div class="mt-4 table-responsive">
+      <table class="table">
+      <thread class="border-bottom">
+          <tr>
+              <th scope="col" class="tex-center">Rank</th>
+              <th scope="col" class="tex-center">Faction</th>
+              <th scope="col" class="tex-center">Troops</th>
+          </tr>
+      </thread>
+      <tbody id="troopsTable">
+          <!-- <tr>
+              <th scope="row" class="text-center">1</td>
+              <td class="text-center">test</td>
+              <td class="text-center">100</td>
+          </tr> -->
+      </tbody>
+  </table>
+  </div>
+  <h1></h1>
+  <p > </p>
+    
+    <button type="button" id="deploy" class="smallBtnSelected" onclick="selectDeploy()">Deploy</button>
+    <button type="button" id="recall" class="smallBtnDisabled" onclick="selectRecall()">Recall</button>
+    <p id="troops" class = "basicText" ></p>
+    <label class = "basicText" for="quantity">Please select a faction:</label>
+
+    <select class = "css-1fzih88" id = "factionList" onchange = "selectFaction()" >  
+      <option> ---Choose faction--- </option>  
+    </select>  
+
+    <p></p>
+    <label class = "basicText" for="quantity">Quantity:</label>
+    <input class = "css-1fzih88" type="number" id="quantity" name="quantity" min="0">
+    <p></p>
+
+    <button type="button" class="btn" onclick="Apply()">Apply</button>
+    <button type="button" class="btn cancel" onclick="closeForm()">Cancel</button>
+  </form>
+
+</div>
 
 <p id="demo" class = "basicText">Select a region to deploy troops to</p> 
 
@@ -75,30 +122,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
   
-<div class="form-popup" id="myForm">
 
-    <form action="/action_page.php" class="form-container">
-      <h1 id="selectedRegion" class = "TitleText"></h1>
-      
-      <button type="button" id="deploy" class="smallBtnSelected" onclick="selectDeploy()">Deploy</button>
-      <button type="button" id="recall" class="smallBtnDisabled" onclick="selectRecall()">Recall</button>
-      <p id="troops" class = "basicText" >Troops available: </p>
-      <label class = "basicText" for="quantity">Please select a faction:</label>
-
-      <select class = "css-1fzih88" id = "factionList" onchange = "selectFaction()" >  
-        <option> ---Choose faction--- </option>  
-      </select>  
-
-      <p></p>
-      <label class = "basicText" for="quantity">Quantity:</label>
-      <input class = "css-1fzih88" type="number" id="quantity" name="quantity" min="0">
-      <p></p>
-
-      <button type="button" class="btn" onclick="Apply()">Apply</button>
-      <button type="button" class="btn cancel" onclick="closeForm()">Cancel</button>
-    </form>
-
-  </div>
 
 <div class="form-popup" id="factionRegistrationForm">
 

@@ -1,7 +1,7 @@
 deployMode = new Boolean(true);
 
 function openForm() {
-    document.getElementById("myForm").style.display = "block";
+    document.getElementById("myForm").style.display = "inline-block";
     document.getElementById("troops").innerHTML = "Troops available: " + troopsAvailable;
     document.getElementById("quantity").max = troopsAvailable;
     document.getElementById("overlay2").style.display = "block";

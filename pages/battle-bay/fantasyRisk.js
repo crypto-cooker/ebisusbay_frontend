@@ -53,6 +53,7 @@ function selectRegion(x)
 {
     selectedRegion = x;
     document.getElementById("selectedRegion").innerHTML = selectedRegion;
+    displayTop3InRegion(selectedRegion);
 }
 function getRegionStats(region, pin)
 {
@@ -140,6 +141,49 @@ function getTroopsInRegion(region)
     }
 
     return total;
+}
+function displayTop3InRegion(region)
+{
+    deployedTroops.deployments.sort(function(b, a){return a.amount - b.amount});
+    var troopsTable = document.getElementById("troopsTable");
+    while (troopsTable.firstChild) {
+        troopsTable.removeChild(troopsTable.lastChild);
+        }
+    var rank = 1;
+
+    for(var i=0; i<deployedTroops.deployments.length; i++)  
+    {  
+        if(region == deployedTroops.deployments[i].region)
+        {  
+            var tr = document.createElement("tr");
+
+            var tdRank = document.createElement("td");
+            tdRank.classList.add("text-center");
+            tdRank.scope = "row";
+            tdRank.innerHTML = rank;
+            tr.appendChild(tdRank);
+
+            var tdFaction = document.createElement("td");
+            tdFaction.classList.add("text-center");
+            tdFaction.scope = "row";
+            tdFaction.innerHTML = deployedTroops.deployments[i].faction;
+            tr.appendChild(tdFaction);
+
+            var tdTroops = document.createElement("td");
+            tdTroops.classList.add("text-center");
+            tdTroops.scope = "row";
+            tdTroops.innerHTML = deployedTroops.deployments[i].amount;
+            tr.appendChild(tdTroops);
+
+            troopsTable.appendChild(tr);
+
+            if(rank==3)
+            {
+                return;
+            }
+            rank++;
+        }
+    }
 }
 function getWinningFactionInRegion(region)
 {
