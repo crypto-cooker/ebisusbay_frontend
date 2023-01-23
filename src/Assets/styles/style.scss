@@ -5686,3 +5686,10 @@ iframe.metaverse {
   background: #ffee99;
   color: #555;
 }
+
+.collection_info_bar {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}

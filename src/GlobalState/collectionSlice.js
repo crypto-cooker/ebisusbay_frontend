@@ -302,7 +302,8 @@ export const getStats =
               numberOfSales: sCollection.stats.total.complete,
               averageSalePrice: sCollection.stats.total.avgSalePrice ?? sCollection.stats.total.avg_sale_price,
               numberActive: sCollection.stats.total.active,
-              floorPrice: sCollection.stats.total.floorPrice ?? sCollection.stats.total.floor_price
+              floorPrice: sCollection.stats.total.floorPrice ?? sCollection.stats.total.floor_price,
+              owners: sCollection.holders
             }
           ]
         };
