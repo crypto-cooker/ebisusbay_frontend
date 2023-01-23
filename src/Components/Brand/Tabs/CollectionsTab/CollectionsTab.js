@@ -1,7 +1,7 @@
 import {Box, SimpleGrid, Stat, StatLabel, StatNumber, Text, Wrap, WrapItem} from "@chakra-ui/react";
 import CustomSlide from "@src/Components/components/CustomSlide";
 import MintingButton from "@src/Components/Collection/MintingButton";
-import {siPrefixedNumber} from "@src/utils";
+import {round, siPrefixedNumber} from "@src/utils";
 import React from "react";
 
 const CollectionsTab = ({collections}) => {
@@ -50,7 +50,7 @@ const CollectionsTab = ({collections}) => {
                 <WrapItem>
                   <Stat size="sm">
                     <StatLabel fontSize="xs">Volume</StatLabel>
-                    <StatNumber>{siPrefixedNumber(collection.stats.total.volume)}</StatNumber>
+                    <StatNumber>{siPrefixedNumber(round(collection.stats.total.volume))}</StatNumber>
                   </Stat>
                 </WrapItem>
               </Wrap>

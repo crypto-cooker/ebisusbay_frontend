@@ -175,20 +175,6 @@ export const getServerSideProps = async ({ params, query }) => {
       const drop = drops.find((d) => d.slug === c.slug);
       c.drop = drop ?? null;
       c.hidden = brand.hidden?.includes(c.address) ?? false;
-
-      if (c.slug === 'founding-member') {
-        const vip = c.tokens[2];
-        vip.stats = {
-          total: c.stats.tokens[2]
-        }
-        vip.totalSupply = 1000;
-        splitCollections.push(vip);
-
-        c.stats = {
-          total: c.stats.tokens[1],
-        };
-        c.totalSupply = 10000;
-      }
       return c;
     })
     .sort((a, b) => a.position > b.position ? 1 : -1);
