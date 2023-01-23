@@ -89,7 +89,7 @@ section.gl-legacy {
     padding-bottom: 90px;
 }
 .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
-    max-width: 500px;
+    max-width: 1000px;
     width: 100%;
     padding-right: var(--bs-gutter-x,.75rem);
     padding-left: var(--bs-gutter-x,.75rem);

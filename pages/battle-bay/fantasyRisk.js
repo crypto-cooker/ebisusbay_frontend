@@ -40,7 +40,7 @@ class DeployedTroops {
 
 let deployedTroops = new DeployedTroops()
 RandomizeStats();
-displayWinningFactions();
+// displayWinningFactions();
 
 function reset_troops(){
     deployedTroops = new DeployedTroops()
@@ -168,6 +168,5 @@ function displayWinningFactions()
         targetdiv.textContent = getWinningFactionInRegion(pins[i].title);
         var icon = pins[i].getElementsByClassName("factionIcon")[0]
         icon.src = "images/"+getWinningFactionInRegion(pins[i].title)+".png";
-
     }
 }
