@@ -1,5 +1,6 @@
 const factions_url = "https://api.coindesk.com/v1/bpi/currentprice.json";
 const regions = ["Dwarf Mines", "Southern Trident", "Dragonland", "Human Kingdoms"];
+// const factions = ["Mad Merkat", "CroSkull", "Boomer Squad", "Flaming Phenix Club", "connected wallet"];
 
 getAllFactions(factions_url);
 
@@ -34,7 +35,6 @@ parent.addEventListener('gesturestart', function(e) {
 parent.addEventListener('gesturechange', function(e) {console.log("gesture change");}, false);
 
 
-
 function hideloader() {
     document.getElementById('loading').style.display = 'none';
 }
@@ -57,7 +57,7 @@ function delegate(x)
 }
 function AddFaction(faction)
 {
-    const factions = ["Mad Merkat", "CroSkull", "Boomer Squad", "Flaming Phenix Club", "connected wallet"];
+    // const factions = ["Mad Merkat", "CroSkull", "Boomer Squad", "Flaming Phenix Club", "connected wallet"];
     factions.push(faction.factionName);
     console.log(factions);
 }
@@ -98,7 +98,7 @@ async function getAllFactions(url)
 
 
     //placeholder function
-    const factions = ["Mad Merkat", "CroSkull", "Boomer Squad", "Flaming Phenix Club", "connected wallet"];
+    // const factions = ["Mad Merkat", "CroSkull", "Boomer Squad", "Flaming Phenix Club", "connected wallet"];
 
     factions.forEach(faction => {
         var option = document.createElement("option");
@@ -106,8 +106,6 @@ async function getAllFactions(url)
         factionList.add(option);
     });
 }
-console.log('yo');
-
 
 // $('.maparea').maphilight({ 
 //     fill: true,

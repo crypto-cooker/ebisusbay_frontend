@@ -378,3 +378,76 @@ body {font-family: DM Sans,Helvetica,Arial,sans-serif;}
 #factionUL li a:hover:not(.header) {
   background-color: rgb(33, 36, 40);
 }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.map {
+  margin: 10px;
+  border: 5px solid red;
+  position: relative;
+  display: inline-block;
+}
+
+.map img {
+  max-width: 100%;
+  display: block;
+}
+
+.box {
+  width: 8%;
+  height: 8%;
+  background-image: url(http://www.clker.com/cliparts/W/0/g/a/W/E/map-pin-red.svg);
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  overflow: visible;
+}
+.factionIcon {
+  position: relative;
+  top: -30px;
+  left: -5px;
+  z-index: 99;
+}
+
+#pin-Dragonland {
+  top: 20%;
+  left: 20%;
+}
+#pin-Human-Kingdoms {
+  top: 52%;
+  left: 57%;
+}
+#pin-Dwarf-Mines{
+  top: 50%;
+  left: 45%;
+}
+#pin-Southern-Trident{
+  top: 60%;
+  left: 20%;
+}
+
+
+.box:hover>.pin-text {
+  display: block;
+}
+
+
+.pin-text {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 75%;
+  white-space: nowrap;
+  display: none;
+}
+
+.pin-text h3 {
+  color: rgb(255, 255, 255);
+  text-shadow: 3px 3px 3px #000;
+}

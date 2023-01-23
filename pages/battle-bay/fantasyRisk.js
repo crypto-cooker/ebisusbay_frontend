@@ -1,4 +1,6 @@
 var selectedRegion = "None";
+const factions = ["Mad Merkat", "CroSkull", "Boomer Squad", "Flaming Phenix Club", "connected wallet"];
+const regionFlags = ["pin-Southern-Trident", "pin-Dragonland", "pin-Human-Kingdoms", "pin-Dwarf-Mines"];
 
 class Deployment {
     constructor(region, faction, amount) {
@@ -38,7 +40,7 @@ class DeployedTroops {
 
 let deployedTroops = new DeployedTroops()
 RandomizeStats();
-
+displayWinningFactions();
 
 function reset_troops(){
     deployedTroops = new DeployedTroops()
@@ -52,10 +54,14 @@ function selectRegion(x)
     selectedRegion = x;
     document.getElementById("selectedRegion").innerHTML = selectedRegion;
 }
-function getRegionStats(region)
+function getRegionStats(region, pin)
 {
     document.getElementById("regionName").innerHTML = region;
     document.getElementById("desc").innerHTML = "<br>" +getTroopsInRegion(region);
+    // console.log("Current holder: "+getWinningFactionInRegion(region))
+    // var targetdiv = document.getElementById(pin).getElementsByClassName("pin-text")[0].getElementsByClassName("head")[0];
+    // console.log(targetdiv)
+    // targetdiv.textContent = getWinningFactionInRegion(region);
 }
 function CheckFaction()
 {
@@ -135,13 +141,33 @@ function getTroopsInRegion(region)
 
     return total;
 }
+function getWinningFactionInRegion(region)
+{
+    deployedTroops.deployments.sort(function(b, a){return a.amount - b.amount});
+    for(var i=0; i<deployedTroops.deployments.length; i++)  
+    {  
+        if(region == deployedTroops.deployments[i].region)
+        {  
+            return deployedTroops.deployments[i].faction;
+        }
+    }
+}
+function displayWinningFactions()
+{
+    var pins = [];
+    regionFlags.forEach(myFunction); 
 
+    function myFunction(item, index) { 
+        // console.log(item); 
+        pins.push(document.getElementById(item));
+    }
+    
+    for(var i=0; i<pins.length; i++)
+    {
+        var targetdiv = pins[i].getElementsByClassName("pin-text")[0].getElementsByClassName("head")[0];
+        targetdiv.textContent = getWinningFactionInRegion(pins[i].title);
+        var icon = pins[i].getElementsByClassName("factionIcon")[0]
+        icon.src = "images/"+getWinningFactionInRegion(pins[i].title)+".png";
 
-
-
-
-// var $wrapper = $("#scaleable-wrapper");
-
-// $wrapper.resizable({
-  
-// });
+    }
+}

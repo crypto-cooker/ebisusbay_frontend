@@ -1,8 +1,9 @@
 class Faction {
-    constructor(factionName, addresses, owner) {
+    constructor(factionName, addresses, owner, icon) {
       this.factionName = factionName;
       this.addresses = addresses;
       this.owner = owner;
+      this.icon = icon;
     }
     getDetails() {
         return this.owner+" is the owner of the " + this.factionName +" faction containing the addresses: "+ this.addresses+"<br>";
