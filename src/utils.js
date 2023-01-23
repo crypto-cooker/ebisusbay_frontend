@@ -508,10 +508,16 @@ export const isArgonautsBrandCollection = (address) => {
 };
 
 export const isEbVipCollection = (address, id) => {
-  const collection = collections.find((c) => c.slug === 'vip-founding-member');
+  const collection = collections.find((c) => c.slug === 'founding-member');
   return collection &&
     caseInsensitiveCompare(collection.address, address) &&
-    collection.id.toString() === id.toString();
+    id?.toString() === '2';
+};
+
+export const isFoundingMemberCollection = (address, id) => {
+  const collection = collections.find((c) => c.slug === 'founding-member');
+  return collection &&
+    caseInsensitiveCompare(collection.address, address);
 };
 
 export const isBundle = (addressOrSlug) => {

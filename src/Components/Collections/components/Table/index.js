@@ -155,7 +155,6 @@ const Table = ({ timeFrame, searchTerms, onlyVerified }) => {
               return (
                 <tr key={index}>
                   {tableMobileView && <td>{(index + 1) + (indexPages * PAGE_SIZE)}</td>}
-                 { console.log(index, indexPages, items.length, (index + 1) + (indexPages * items.length))}
                   <th scope="row" className="row gap-4 border-bottom-0" style={{ paddingLeft: 0 }}>
                     <div className="col-12" style={{ paddingLeft: '75px' }}>
                       <div className="coll_list_pp" style={{ cursor: 'pointer' }}>
@@ -190,7 +189,7 @@ const Table = ({ timeFrame, searchTerms, onlyVerified }) => {
                       <div className="col-12 row gap-1">
                         <div className="col-12 mobile-view-list-item">
                           <span>#</span>
-                          <span className="text-end">{index + 1}</span>
+                          <span className="text-end">{(index + 1) + (indexPages * PAGE_SIZE)}</span>
                         </div>
                         <div className="col-12 mobile-view-list-item" onClick={() => sortCollections('totalvolume')}>
                           <span>

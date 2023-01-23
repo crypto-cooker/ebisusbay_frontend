@@ -72,7 +72,7 @@ const Search = () => {
             // }
             return knownContracts.find((c) => caseInsensitiveCompare(c.address, collection.address)) && validTokenCount;
           })
-          .sort((a, b) => b.verification.verified - a.verification.verified)
+          .sort((a, b) => b.verification?.verified - a.verification?.verified)
       }
     }
   );

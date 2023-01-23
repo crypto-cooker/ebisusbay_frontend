@@ -6466,10 +6466,10 @@
   "resolved" "https://registry.npmjs.org/native-fetch/-/native-fetch-3.0.0.tgz"
   "version" "3.0.0"
 
-"native-forms-react@^1.9.54":
-  "integrity" "sha512-M0Y4mRkrrgL/O/aHQGGIrvQDDr4eMuwaqAr0U1lseBTekDU/JpO03dCnxBGO+M3JIZKY1unlLZLJirtxl0D9QQ=="
-  "resolved" "https://registry.npmjs.org/native-forms-react/-/native-forms-react-1.9.54.tgz"
-  "version" "1.9.54"
+"native-forms-react@^1.9.62":
+  "integrity" "sha512-wfBOYcExB0vCOpIiV62V+EV2XJHkGRutk+j6LS3CJA10J7p7ln04y8MMBxOOwvtrV3n+zFBvG57tQNJoJssdeA=="
+  "resolved" "https://registry.npmjs.org/native-forms-react/-/native-forms-react-1.9.62.tgz"
+  "version" "1.9.62"
 
 "natural-compare@^1.4.0":
   "integrity" "sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc="
