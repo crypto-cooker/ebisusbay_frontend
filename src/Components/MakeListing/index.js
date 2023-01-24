@@ -138,9 +138,14 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
       const marketContract = user.contractService.market;
       setSalePrice(listing ? Math.round(listing.price) : null)
 
-      const floorPrice = await getCollectionMetadata(nftAddress);
-      if (floorPrice.collections.length > 0) {
-        setFloorPrice(floorPrice.collections[0].floorPrice ?? 0);
+      const collectionInfo = await getCollectionMetadata(nftAddress);
+      if (collectionInfo.collections.length > 0) {
+        const stats = collectionInfo.collections[0].stats;
+        let floor = stats.total.floorPrice;
+        if (stats.tokens) {
+          floor = stats.tokens[nftId]?.floor_price ?? 0;
+        }
+        setFloorPrice(floor);
       }
 
       const fees = await marketContract.fee(user.address);
