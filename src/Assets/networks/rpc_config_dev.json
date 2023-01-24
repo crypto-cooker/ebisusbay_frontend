@@ -12861,7 +12861,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": "private"
+        "kyc": true
       }
     },
     {
@@ -16998,6 +16998,29 @@
       "verification": {
         "verified": true,
         "doxx": true,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Skronos - Anatomy Edition",
+      "slug": "skronos-anatomy-edition",
+      "multiToken": false,
+      "address": "0x1171cAa403304B1aE9aaf218236C5e953bF01031",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Get ready to unlock the secrets of the Skronos Empire \uD83C\uDFF0 The Anatomy Edition is a combination of 188 Hands, 188 Legs, 188 Torsos, 188 Hearts & 48 coffins ⚰️ that will allow you to ultimately generate a complete Skronos by combining them with the Skronos OG Skull collection \uD83D\uDC80 Are you ready to enjoy the thrill of supply and demand? \uD83D\uDE08",
+        "avatar": "/img/collections/skronos-anatomy-edition/avatar.webp",
+        "card": "/img/collections/skronos-anatomy-edition/card.webp",
+        "banner": "/img/collections/skronos-anatomy-edition/banner.webp",
+        "website": "https://skronos-syndicate.com/",
+        "twitter": "https://twitter.com/skronosNFT",
+        "discord": "https://discord.gg/VH78mEQ2cE",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
         "kyc": true
       }
     }
