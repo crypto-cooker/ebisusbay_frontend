@@ -12861,7 +12861,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": "private"
+        "kyc": true
       }
     },
     {
@@ -16999,6 +16999,77 @@
         "verified": true,
         "doxx": true,
         "kyc": true
+      }
+    },
+    {
+      "name": "Skronos - Anatomy Edition",
+      "slug": "skronos-anatomy-edition",
+      "multiToken": false,
+      "address": "0x1171cAa403304B1aE9aaf218236C5e953bF01031",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Get ready to unlock the secrets of the Skronos Empire \uD83C\uDFF0 The Anatomy Edition is a combination of 188 Hands, 188 Legs, 188 Torsos, 188 Hearts & 48 coffins ⚰️ that will allow you to ultimately generate a complete Skronos by combining them with the Skronos OG Skull collection \uD83D\uDC80 Are you ready to enjoy the thrill of supply and demand? \uD83D\uDE08",
+        "avatar": "/img/collections/skronos-anatomy-edition/avatar.webp",
+        "card": "/img/collections/skronos-anatomy-edition/card.webp",
+        "banner": "/img/collections/skronos-anatomy-edition/banner.webp",
+        "website": "https://skronos-syndicate.com/",
+        "twitter": "https://twitter.com/skronosNFT",
+        "discord": "https://discord.gg/VH78mEQ2cE",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Heroes of Cronoxity",
+      "slug": "heroes-of-cronoxity",
+      "multiToken": false,
+      "address": "0x35f23199d7063bf897C692a6f1151BE88f4a58DD",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "This collection is made of 3,000 Heroes coming from the heart of Cronoxity to protect their owner from any troubles. Each Hero gives you access to a unique way of making you earn from more than 7 different coins/tokens through their power infusion, and competitive tournament events through our gaming interface. Join our discord for more in depth info.",
+        "avatar": "/img/collections/heroes-of-cronoxity/avatar.webp",
+        "card": "/img/collections/heroes-of-cronoxity/card.webp",
+        "banner": "/img/collections/heroes-of-cronoxity/banner.webp",
+        "website": "https://heroes-cronoxity.netlify.app/",
+        "twitter": "https://twitter.com/CronoxityHeroes",
+        "discord": "https://discord.gg/gVFn9stFQJ",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "AIKO CARDS",
+      "slug": "aiko-cards",
+      "multiToken": false,
+      "address": "0x767bE428D8BF8fA99BC0b84D96d6f135845a11fF",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The AIKO CARDS is a Collection of 1000 unique Animated Cards 3D, unique Digital Collectibles that live on the Cronos Blockchain. 8 Different Colors, 8 Different Rarities. Your AIKO CARDS acts as a Membership to AIKOSociety and guarantees Access to the Benefits reserved for holders of these cards. Any Holder of this Card will have the Access to receive Rewards, participate in Travels, Exclusive Events and parties and much more... You will receive benefits based on the Rarity of your AIKO Cards and based on the number of Cards in your Possession.",
+        "avatar": "/img/collections/aiko-cards/avatar.webp",
+        "banner": "/img/collections/aiko-cards/banner.webp",
+        "card": "/img/collections/aiko-cards/card.webp",
+        "website": "https://www.aikosociety.com/",
+        "twitter": "https://twitter.com/AikoSociety",
+        "discord": "https://discord.gg/uPGhuAFPFw",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
