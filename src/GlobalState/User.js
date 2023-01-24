@@ -769,28 +769,6 @@ const addRanksToNfts = async (dispatch, getState) => {
   }
 };
 
-export const fetchSales = (walletAddress) => async (dispatch, getState) => {
-  const state = getState();
-  dispatch(mySoldNftsFetching());
-
-  const listings = await getNftSalesForAddress(walletAddress, state.user.mySoldNftsCurPage + 1);
-  dispatch(mySalesFetched(listings));
-};
-
-export const fetchUnfilteredListings = (walletAddress) => async (dispatch, getState) => {
-  const state = getState();
-  const walletProvider = state.user.provider;
-
-  dispatch(myUnfilteredListingsFetching());
-
-  const listings = await getUnfilteredListingsForAddress(
-    walletAddress,
-    walletProvider,
-    state.user.myUnfilteredListingsCurPage + 1
-  );
-  dispatch(myUnfilteredListingsFetched(listings));
-};
-
 export const checkForOutstandingOffers = () => async (dispatch, getState) => {
   const state = getState();
   const collectionsStats = state.collections.collections;

@@ -1,81 +1,52 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
-import { ethers } from 'ethers';
-import { toast } from 'react-toastify';
+import {ethers} from 'ethers';
+import {toast} from 'react-toastify';
 import {
   createSuccessfulTransactionToastContent,
   isGaslessListing,
   isNftBlacklisted,
-  isUserBlacklisted
+  isUserBlacklisted,
+  shortAddress
 } from '@src/utils';
-import { Card, Spinner } from 'react-bootstrap';
+import {Card, Spinner} from 'react-bootstrap';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import { chainConnect, connectAccount } from '@src/GlobalState/User';
-import { listingUpdated } from '@src/GlobalState/listingSlice';
-import { listingState } from '@src/core/api/enums';
-import { OFFER_TYPE } from "../Offer/MadeOffers/MadeOffersRow";
+import {chainConnect, connectAccount} from '@src/GlobalState/User';
+import {listingUpdated} from '@src/GlobalState/listingSlice';
+import {listingState} from '@src/core/api/enums';
+import {OFFER_TYPE} from "../Offer/MadeOffers/MadeOffersRow";
 import Button from "../components/Button";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 import MakeListingDialog from "@src/Components/MakeListing";
 import Image from "next/image";
-import { shortAddress } from '@src/utils'
 import useFeatureFlag from "@src/hooks/useFeatureFlag";
 import Constants from "@src/constants";
-import useBuyGaslessListings from '@src/hooks/useBuyGaslessListings';
 import useCancelGaslessListing from '@src/Components/Account/Settings/hooks/useCancelGaslessListing';
 
-import {
-  useDisclosure,
-  Table,
-  Tbody,
-  Tr,
-  Td,
-  TableContainer,
-} from '@chakra-ui/react';
-
-import { Modal } from '../components/chakra-components';
+import {Table, TableContainer, Tbody, Td, Tr, useDisclosure,} from '@chakra-ui/react';
+import PurchaseDialog from "@src/Components/NftDetails/PurchaseDialog";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
 
 const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isVerified, isOwner, collectionStats }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [runAuthedFunction] = useAuthedFunction();
 
   const { Features } = Constants;
   const isWarningMessageEnabled = useFeatureFlag(Features.UNVERIFIED_WARNING);
 
   const user = useSelector((state) => state.user);
   const { currentListing: listing, nft } = useSelector((state) => state.nft);
-  const [executingBuy, setExecutingBuy] = useState(false);
   const [executingCancel, setExecutingCancel] = useState(false);
   const [canBuy, setCanBuy] = useState(false);
   const [isSellDialogOpen, setIsSellDialogOpen] = useState(false);
-  const isGaslessListingEnabled = useFeatureFlag(Features.GASLESS_LISTING);
-  const [buyGaslessListings, response] = useBuyGaslessListings();
+  const [isPurchaseDialogOpen, setIsPurchaseDialogOpen] = useState(false);
   const [cancelGaslessListing, responseCancelListing] = useCancelGaslessListing();
 
-  const openPopup = useCallback((e) => {
-    e.preventDefault();
-    onOpen();
-  }, [onOpen])
-
-  const executeBuy = (amount) => async () => {
-    try {
-      setExecutingBuy(true);
-      onClose();
-      await buyGaslessListings([listing.listingId], parseInt(listing.price));
-    } catch (error) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        console.log(error);
-        toast.error('Unknown Error');
-      }
-    } finally {
-      setExecutingBuy(false);
-    }
+  const executeBuy = async () => {
+    await runAuthedFunction(() => setIsPurchaseDialogOpen(true));
   };
 
   const executeCancel = () => async () => {
@@ -211,7 +182,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
           <Button type="legacy-outlined" className="me-2" onClick={onClose}>
             Cancel
           </Button>
-          <Button type="legacy" onClick={executeBuy(listing?.price)}>
+          <Button type="legacy" onClick={() => executeBuy(listing?.price)}>
             Continue
           </Button>
         </div>
@@ -281,17 +252,8 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
                 {canBuy && (
                   <div className="flex-fill mx-1">
                     {listing.state === listingState.ACTIVE && (
-                      <Button type="legacy" className="w-100" onClick={isVerified || !isWarningMessageEnabled ? executeBuy(listing.price) : openPopup} disabled={executingBuy}>
-                        {executingBuy ? (
-                          <>
-                            Buy Now...
-                            <Spinner animation="border" role="status" size="sm" className="ms-1">
-                              <span className="visually-hidden">Loading...</span>
-                            </Spinner>
-                          </>
-                        ) : (
-                          <>Buy Now</>
-                        )}
+                      <Button type="legacy" className="w-100" onClick={executeBuy}>
+                        Buy Now
                       </Button>
                     )}
                   </div>
@@ -306,15 +268,24 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
           </div>
         </Card.Body>
       </Card>
-      <MakeListingDialog
-        isOpen={isSellDialogOpen}
-        nft={nft}
-        onClose={() => setIsSellDialogOpen(!isSellDialogOpen)}
-        listing={listing}
-      />
-      <div className='nftSaleForm'>
-        <Modal isCentered title={'This is an unverified collection'} body={ModalBody()} dialogActions={ModalFooter()} isOpen={isOpen} onClose={onClose} />
-      </div>
+      {isSellDialogOpen && (
+        <MakeListingDialog
+          isOpen={isSellDialogOpen}
+          nft={nft}
+          onClose={() => setIsSellDialogOpen(false)}
+          listing={listing}
+        />
+      )}
+      {isPurchaseDialogOpen && listing && (
+        <PurchaseDialog
+          isOpen={isPurchaseDialogOpen}
+          onClose={() => setIsPurchaseDialogOpen(false)}
+          listingId={listing.listingId}
+        />
+      )}
+      {/*<div className='nftSaleForm'>*/}
+      {/*  <Modal isCentered title={'This is an unverified collection'} body={ModalBody()} dialogActions={ModalFooter()} isOpen={isOpen} onClose={onClose} />*/}
+      {/*</div>*/}
     </div>
   );
 };

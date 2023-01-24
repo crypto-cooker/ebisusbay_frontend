@@ -21,6 +21,7 @@ const useBuyGaslessListings = () => {
       ...response,
       loading: true,
       error: null,
+      tx: null
     });
 
     try {
@@ -31,13 +32,14 @@ const useBuyGaslessListings = () => {
       const { signature, orderData, ...sigData } = serverSig;
       const total = price.add(sigData.feeAmount);
       const tx = await buyContract.fillOrders(orderData, sigData, signature, { value: total });
-      await tx.wait()
+      const receipt = await tx.wait()
       toast.success(`${pluralize(listingIds.length, 'NFT')} successfully purchased`);
 
       setResponse({
         ...response,
         loading: false,
         error: null,
+        tx: receipt
       });
 
       return true;

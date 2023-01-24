@@ -9,7 +9,7 @@ export default function MakeListingDialog({ isOpen, nft, onClose, listing }) {
   const { Features } = Constants;
   const isGaslessListingEnabled = useFeatureFlag(Features.GASLESS_LISTING);
 
-  return !isGaslessListingEnabled || (nft.listed && !isGaslessListing(nft.listingId)) ?
+  return !isGaslessListingEnabled || (nft && nft.listed && !isGaslessListing(nft.listingId)) ?
     <UpdateLegacyListingDialog isOpen={isOpen} nft={nft} onClose={onClose} listing={listing} /> :
     <MakeGaslessListingDialog isOpen={isOpen} nft={nft} onClose={onClose} listing={listing} />
 }
