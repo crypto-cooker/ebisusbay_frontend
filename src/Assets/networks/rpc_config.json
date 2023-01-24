@@ -16977,6 +16977,29 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Wedripz Cro",
+      "slug": "wedripz-cro",
+      "multiToken": false,
+      "address": "0x86Eecf80c106d1Fd23ed2eC2db28B957c8Cd6c3a",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "WeDripz Cro is a collection of 5555 Dripz with 4 evolved bloodlines from the OG Eth collection \uD83D\uDC8E  Artwork by TikTok trending artist: MrSaintVon \uD83C\uDFA8  Official collaboration with \"Trust me Vodka\" for events and IRL items ✅",
+        "avatar": "/img/collections/wedripz-cro/avatar.webp",
+        "banner": "/img/collections/wedripz-cro/banner.webp",
+        "card": "/img/collections/wedripz-cro/card.webp",
+        "website": "https://wedripz.netlify.app/",
+        "twitter": "https://www.twitter.com/wedripz",
+        "discord": "https://discord.gg/dhrRCgMF",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
@@ -22827,6 +22850,46 @@
         "kyc": true,
         "escrow": false,
         "verified": true
+      }
+    },
+    {
+      "id": 152,
+      "slug": "wedripz-cro",
+      "title": "Wedripz Cro",
+      "subtitle": "WeDripz Cro is a collection of 5555 Dripz with 4 evolved bloodlines from the OG Eth collection \uD83D\uDC8E  Artwork by TikTok trending artist: MrSaintVon \uD83C\uDFA8  Official collaboration with \"Trust me Vodka\" for events and IRL items ✅",
+      "description": "",
+      "author": {
+        "name": "Wedripz Cro",
+        "website": "https://wedripz.netlify.app/",
+        "twitter": "https://www.twitter.com/wedripz",
+        "discord": "https://discord.gg/dhrRCgMF"
+      },
+      "address": "0x86Eecf80c106d1Fd23ed2eC2db28B957c8Cd6c3a",
+      "maxMintPerTx": 7,
+      "maxMintPerAddress": 21,
+      "totalSupply": 5555,
+      "cost": "150",
+      "memberCost": "125",
+      "foundersOnly": false,
+      "start": 1674543844000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": true,
+      "redirect": "https://wedripz.netlify.app/",
+      "images": {
+        "drop": "/img/drops/wedripz-cro/drop.webp",
+        "banner": "/img/collections/wedripz-cro/banner.webp",
+        "avatar": "/img/collections/wedripz-cro/avatar.webp",
+        "preview": "/img/collections/wedripz-cro/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
       }
     }
   ]
