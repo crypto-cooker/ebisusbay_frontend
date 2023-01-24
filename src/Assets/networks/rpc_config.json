@@ -17046,6 +17046,31 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "AIKO CARDS",
+      "slug": "aiko-cards",
+      "multiToken": false,
+      "address": "0x767bE428D8BF8fA99BC0b84D96d6f135845a11fF",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The AIKO CARDS is a Collection of 1000 unique Animated Cards 3D, unique Digital Collectibles that live on the Cronos Blockchain. 8 Different Colors, 8 Different Rarities. Your AIKO CARDS acts as a Membership to AIKOSociety and guarantees Access to the Benefits reserved for holders of these cards. Any Holder of this Card will have the Access to receive Rewards, participate in Travels, Exclusive Events and parties and much more... You will receive benefits based on the Rarity of your AIKO Cards and based on the number of Cards in your Possession.",
+        "avatar": "/img/collections/aiko-cards/avatar.webp",
+        "banner": "/img/collections/aiko-cards/banner.webp",
+        "card": "/img/collections/aiko-cards/card.webp",
+        "website": "https://www.aikosociety.com/",
+        "twitter": "https://twitter.com/AikoSociety",
+        "discord": "https://discord.gg/uPGhuAFPFw",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
