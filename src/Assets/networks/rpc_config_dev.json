@@ -17023,6 +17023,29 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Heroes of Cronoxity",
+      "slug": "heroes-of-cronoxity",
+      "multiToken": false,
+      "address": "0x35f23199d7063bf897C692a6f1151BE88f4a58DD",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "This collection is made of 3,000 Heroes coming from the heart of Cronoxity to protect their owner from any troubles. Each Hero gives you access to a unique way of making you earn from more than 7 different coins/tokens through their power infusion, and competitive tournament events through our gaming interface. Join our discord for more in depth info.",
+        "avatar": "/img/collections/heroes-of-cronoxity/avatar.webp",
+        "card": "/img/collections/heroes-of-cronoxity/card.webp",
+        "banner": "/img/collections/heroes-of-cronoxity/banner.webp",
+        "website": "https://heroes-cronoxity.netlify.app/",
+        "twitter": "https://twitter.com/CronoxityHeroes",
+        "discord": "https://discord.gg/gVFn9stFQJ",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
