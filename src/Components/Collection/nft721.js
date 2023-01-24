@@ -1,67 +1,77 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Contract, ethers } from 'ethers';
-import { faHeart as faHeartOutline } from '@fortawesome/free-regular-svg-icons';
-import { faCrow, faExternalLinkAlt, faHeart as faHeartSolid, faShare, faSync, faEllipsisH, faShareAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {memo, useCallback, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {Contract, ethers} from 'ethers';
+import {faHeart as faHeartOutline} from '@fortawesome/free-regular-svg-icons';
+import {
+  faCopy,
+  faCrow,
+  faExternalLinkAlt,
+  faHeart as faHeartSolid,
+  faShareAlt,
+  faSync
+} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import { Badge, Spinner } from 'react-bootstrap';
+import {Badge, Spinner} from 'react-bootstrap';
 
 import ProfilePreview from '../components/ProfilePreview';
 import Footer from '../components/Footer';
 import LayeredIcon from '../components/LayeredIcon';
-import { AnyMedia } from '../components/AnyMedia';
+import {AnyMedia} from '../components/AnyMedia';
 import ProfileImage from '../components/ProfileImage'
 
 import {
+  appUrl,
   caseInsensitiveCompare,
   humanize,
+  isAnyWeirdApesCollection,
+  isArgonautsBrandCollection,
   isBabyWeirdApesCollection,
   isCroCrowCollection,
   isCrognomidesCollection,
-  isEvoSkullCollection,
   isCroSkullPetsCollection,
-  mapAttributeString,
-  millisecondTimestamp,
-  shortAddress,
-  timeSince,
-  relativePrecision,
-  rankingsLogoForCollection,
-  rankingsTitleForCollection,
-  rankingsLinkForCollection,
+  isEmptyObj,
+  isEvoSkullCollection,
+  isLadyWeirdApesCollection,
   isLazyHorseCollection,
   isLazyHorsePonyCollection,
-  isLadyWeirdApesCollection,
   isNftBlacklisted,
-  isAnyWeirdApesCollection, isWeirdApesCollection, isEmptyObj, appUrl,
+  isWeirdApesCollection,
+  mapAttributeString,
+  millisecondTimestamp,
+  rankingsLinkForCollection,
+  rankingsLogoForCollection,
+  rankingsTitleForCollection,
+  relativePrecision,
+  shortAddress,
+  timeSince,
 } from '@src/utils';
-import { getNftDetails, refreshMetadata, tickFavorite } from '@src/GlobalState/nftSlice';
-import { connectAccount, chainConnect, retrieveProfile } from '@src/GlobalState/User';
-import { specialImageTransform } from '@src/hacks';
+import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
+import {chainConnect, connectAccount, retrieveProfile} from '@src/GlobalState/User';
+import {specialImageTransform} from '@src/hacks';
 import ListingItem from '../NftDetails/NFTTabListings/ListingItem';
 import PriceActionBar from '../NftDetails/PriceActionBar';
-import { ERC721 } from '@src/Contracts/Abis';
-import { getFilteredOffers } from '@src/core/subgraph';
+import {ERC721} from '@src/Contracts/Abis';
+import {getFilteredOffers} from '@src/core/subgraph';
 import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
 import NFTTabOffers from '../Offer/NFTTabOffers';
-import { OFFER_TYPE } from '../Offer/MadeOffers/MadeOffersRow';
-import { offerState } from '@src/core/api/enums';
-import { commify } from 'ethers/lib/utils';
-import { appConfig } from '@src/Config';
-import { hostedImage } from '@src/helpers/image';
+import {OFFER_TYPE} from '../Offer/MadeOffers/MadeOffersRow';
+import {offerState} from '@src/core/api/enums';
+import {commify} from 'ethers/lib/utils';
+import {appConfig} from '@src/Config';
+import {hostedImage} from '@src/helpers/image';
 import Link from 'next/link';
 import axios from "axios";
-import Button, { LegacyOutlinedButton } from "@src/Components/components/common/Button";
-import { collectionRoyaltyPercent } from "@src/core/chain";
+import Button, {LegacyOutlinedButton} from "@src/Components/components/common/Button";
+import {collectionRoyaltyPercent} from "@src/core/chain";
 import {Box, ButtonGroup, Flex, Heading, MenuButton as MenuButtonCK, Stack, Text, useClipboard} from "@chakra-ui/react";
 import useToggleFavorite from "@src/Components/NftDetails/hooks/useToggleFavorite";
-import { toast } from "react-toastify";
-import { Menu } from '../components/chakra-components';
-import { faCopy } from '@fortawesome/free-solid-svg-icons';
-import { faFacebook, faSquareTwitter, faTelegram } from '@fortawesome/free-brands-svg-icons';
-import { getStats } from '@src/GlobalState/collectionSlice';
-import { useQuery } from "@tanstack/react-query";
-import { getCollections } from "@src/core/api/next/collectioninfo";
+import {toast} from "react-toastify";
+import {Menu} from '../components/chakra-components';
+import {faFacebook, faSquareTwitter, faTelegram} from '@fortawesome/free-brands-svg-icons';
+import {getStats} from '@src/GlobalState/collectionSlice';
+import {useQuery} from "@tanstack/react-query";
+import {getCollections} from "@src/core/api/next/collectioninfo";
 import {ImageContainer} from "@src/Components/Bundle";
 import {getTheme} from "@src/Theme/theme";
 
@@ -684,7 +694,18 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
                     )}
                   </div>
 
-                  <div className="spacer-40"></div>
+
+                  {isArgonautsBrandCollection(nft.address) ? (
+                    <Box my={6}>
+                      <Button styleType="default-outlined" borderColor={getTheme(user.theme).colors.textColor4}>
+                        <a href={`https://hub.argofinance.money/${nft.owner}`} target="_blank" className="fw-bold" style={{ fontSize: '0.8em' }}>
+                          <span className="color">View Argonaut's Hub</span>
+                        </a>
+                      </Button>
+                    </Box>
+                  ) : (
+                    <div className="spacer-40"></div>
+                  )}
 
                   <div className="de_tab">
                     <ul className="de_nav nft_tabs_options">

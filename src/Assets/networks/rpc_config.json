@@ -33,16 +33,22 @@
   },
   "known_contracts": [
     {
-      "name": "Ebisu's Bay - Legacy VIP Founding Member",
-      "slug": "vip-founding-member",
+      "name": "Ebisu's Bay - Founding Member",
+      "slug": "founding-member",
       "onChain": false,
       "address": "0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5",
       "multiToken": true,
-      "split": true,
-      "id": 2,
       "listable": true,
+      "tokens": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        }
+      ],
       "metadata": {
-        "description": "Holding this NFT grants reduced service fees, discounts on drops, early access to features and is stakeable in the service fee pool.",
+        "description": "Holding this NFT grants reduced service fees, discounts on drops and early access to features.",
         "avatar": "/img/avatar.png",
         "card": "/img/collections/ebisu/card.webp",
         "banner": "/img/collections/ebisu/banner.png",
@@ -102,43 +108,11 @@
       }
     },
     {
-      "name": "Ebisu's Bay - Founding Member",
-      "slug": "founding-member",
-      "onChain": false,
-      "address": "0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5",
-      "multiToken": true,
-      "split": true,
-      "id": 1,
-      "listable": true,
-      "metadata": {
-        "description": "Holding this NFT grants reduced service fees, discounts on drops and early access to features.",
-        "avatar": "/img/avatar.png",
-        "card": "/img/collections/ebisu/card.webp",
-        "banner": "/img/collections/ebisu/banner.png",
-        "website": "https://app.ebisusbay.com/",
-        "twitter": "https://twitter.com/EbisusBay",
-        "discord": "https://discord.gg/ebisusbay",
-        "medium": "https://blog.ebisusbay.com/",
-        "instagram": "https://www.instagram.com/ebisusbayofficial",
-        "telegram": "https://t.me/ebisusbay",
-        "categories": [
-          "utility"
-        ]
-      },
-      "verification": {
-        "doxx": "public",
-        "kyc": "hidden",
-        "verified": true
-      }
-    },
-    {
       "name": "Holiday Hares",
       "slug": "holiday-hares",
       "onChain": false,
       "address": "0x008d4Ab1D8fbC7823422a7cCFe3f1D73c09760Ab",
       "multiToken": true,
-      "split": false,
-      "id": 1,
       "listable": true,
       "metadata": {
         "description": "Happy Easter from the ebisusbay.com staff!",
@@ -2006,8 +1980,8 @@
         "card": "/img/collections/mariecyborg/card.png",
         "banner": "/img/collections/mariecyborg/banner.webp",
         "website": "https://www.mariescyborgs.io/",
-        "twitter": "https://twitter.com/mariescyborgs",
-        "discord": "https://discord.gg/mariescyborgs",
+        "twitter": "https://twitter.com/cyborgbh",
+        "discord": "https://discord.gg/TkjJ3ePv",
         "telegram": "https://t.me/mariescyborgs",
         "categories": [
           "collectibles"
@@ -2192,6 +2166,7 @@
         "twitter": "https://twitter.com/thelaboratoryio",
         "discord": "https://discord.gg/thelaboratory",
         "medium": "https://medium.com/@TheLaboratoryIO",
+        "telegram": "https://t.me/thelaboratoryio",
         "categories": [
           "collectibles",
           "utility"
@@ -3715,7 +3690,7 @@
         "avatar": "/img/collections/slavikfruitfarm/avatar.webp",
         "banner": "/img/collections/slavikfruitfarm/banner.webp",
         "card": "/img/collections/slavikfruitfarm/card.webp",
-        "website": "https://slavikfruitfarm.io/",
+        "website": "https://SlavikFruit.Farm/",
         "twitter": "https://twitter.com/SlavikFruitFarm",
         "discord": "https://discord.gg/damg",
         "categories": [
@@ -4322,8 +4297,8 @@
         "card": "/img/collections/cyborgbrotherhood/card.webp",
         "banner": "/img/collections/cyborgbrotherhood/banner.webp",
         "website": "https://www.cyborgbh.io/",
-        "twitter": "https://twitter.com/mariescyborgs",
-        "discord": "https://discord.gg/x9bvzuSBeV",
+        "twitter": "https://twitter.com/cyborgbh",
+        "discord": "https://discord.gg/TkjJ3ePv",
         "medium": "https://medium.com/@mariescyborgs/cyborg-brotherhood-28173eccf03a",
         "categories": [
           "collectibles"
@@ -4409,7 +4384,7 @@
       "verification": {
         "doxx": false,
         "kyc": false,
-        "verified": true
+        "verified": false
       }
     },
     {
@@ -7476,12 +7451,12 @@
       "name": "Possessed Pirates",
       "slug": "possessed-pirates",
       "multiToken": false,
-      "address": "0x7158CA28039626c92B7cdBEA1a6595c3ca025f71",
+      "address": "0x99Cb75E8950C496b1c74124aA4822116F12E82ff",
       "onChain": false,
       "listable": true,
       "metadata": {
         "description": "In the seas of Cronos, heading to Ebisu's Bay. But something is wrong...there's something turning the crew into monsters...possessing them!",
-        "avatar": "/img/collections/possessed-pirates/avatar.png",
+        "avatar": "/img/collections/possessed-pirates/avatar.webp",
         "card": "/img/collections/possessed-pirates/card.png",
         "banner": "/img/collections/possessed-pirates/banner.png",
         "website": "https://www.possessedpirates.com/",
@@ -8450,7 +8425,7 @@
       "multiToken": false,
       "address": "0xDa9d418C4B8Ac59A6eC92cDFDd514F75a0f44e18",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Purchasing a DegenBrains NFT will grant you exclusive access to a gamified Learn2Earn platform, private Discord channels with a growing community of degen-investors, and unique ways to earn passive income.",
         "avatar": "/img/collections/degen-brains/avatar.webp",
@@ -12025,7 +12000,7 @@
         "banner": "/img/collections/killakatz/banner.webp",
         "website": "http://killakatznft.com/",
         "twitter": "https://twitter.com/KillaKatzNFT",
-        "discord": "https://discord.gg/NRwkcnHf8b",
+        "discord": "https://discord.gg/C2nYz7Ajpp",
         "categories": [
           "collectibles"
         ]
@@ -12184,7 +12159,7 @@
       "multiToken": false,
       "address": "0xb4D807aD7BEf1cB6Ac99688F675AaDF38196CC47",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Lion Social Club is minting our first collection, each NFT is unique and holds special utility",
         "avatar": "/img/collections/lion-social-club/avatar.webp",
@@ -12192,7 +12167,7 @@
         "banner": "/img/collections/lion-social-club/banner.webp",
         "website": "https://lionsocialclub.io/",
         "twitter": "https://twitter.com/LionSocialClub",
-        "discord": "https://discord.gg/WdgfBzYTKX",
+        "discord": "https://discord.gg/p5hM7BGjxT",
         "categories": []
       },
       "verification": {
@@ -12684,7 +12659,7 @@
         "banner": "/img/collections/killakatz-riot/banner.webp",
         "website": "http://killakatznft.com/",
         "twitter": "https://twitter.com/KillaKatzNFT",
-        "discord": "https://discord.gg/NRwkcnHf8b",
+        "discord": "https://discord.gg/C2nYz7Ajpp",
         "categories": []
       },
       "verification": {
@@ -12886,7 +12861,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": "private"
+        "kyc": true
       }
     },
     {
@@ -12976,7 +12951,7 @@
       "multiToken": false,
       "address": "0x739b5380156Fa14C7956145048d52dF27EDedfCE",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "Our project is truly one of a kind in the Cronos ecosystem. We are centered around 100k deflationary NFTs that are constantly working on building upon our already large staking and compounding pools. Along with very affordable mint prices (max price 30cro) we also offer something SPECIAL: a burning mechanism on our NFTs.  We will begin airdropping royalty and staking rewards at 50% mint completion!! LFT",
         "avatar": "/img/collections/tatas-twisted-tonics/avatar.webp",
@@ -13000,7 +12975,7 @@
       "multiToken": false,
       "address": "0x3C839Cb6d994edD48691C764207b8E783cDD58E0",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "A 2,000 NFT access card collection on the CRONOS chain that provides holders' with virtual real-estate in the ALSTONIAVERSE!",
         "avatar": "/img/collections/alstoniaverse-access-card/avatar.webp",
@@ -13011,7 +12986,7 @@
         "categories": []
       },
       "verification": {
-        "verified": true,
+        "verified": false,
         "doxx": false,
         "kyc": true
       }
@@ -14326,7 +14301,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "7777 Degen Apes looking for a degen holder on the cronos network. Join the degen club today!",
+        "description": "7,777 Degenerate Apes on the Cronos network that pay 75% royalties to their holders each week.",
         "avatar": "/img/collections/degen-ape-cronos-club/avatar.webp",
         "banner": "/img/collections/degen-ape-cronos-club/banner.webp",
         "card": "/img/collections/degen-ape-cronos-club/card.webp",
@@ -15022,19 +14997,19 @@
       }
     },
     {
-      "name": "C\u00b3: Cronos Crow Crew",
-      "slug": "c3-cronos-crow-crew",
+      "name": "Murder Birdz",
+      "slug": "murder-birdz",
       "multiToken": false,
       "address": "0x5bB97B7D75Ce3151E413aa751F22FcD837703588",
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "C\u00b3 is a brand of 3000 PFP crow characters granting holders utility and revenue. Bringing powerful set of trading and analytical tools. It's the first project that allows holders to browse the Cronos NFT space efficiently and have fun in our Crowgame . Join C\u00b3DAO to get access to all those benefits.",
-        "avatar": "/img/collections/c3-cronos-crow-crew/avatar.webp",
-        "card": "/img/collections/c3-cronos-crow-crew/card.webp",
-        "banner": "/img/collections/c3-cronos-crow-crew/banner.webp",
+        "description": "Murder Birdz is a brand of 3000 PFP crow characters granting holders utility and revenue. Bringing powerful set of trading and analytical tools. It's the first project that allows holders to browse the Cronos NFT space efficiently and have fun in our Crowgame . Join Murder Birdz DAO to get access to all those benefits.",
+        "avatar": "/img/collections/murder-birdz/avatar.webp",
+        "card": "/img/collections/murder-birdz/card.webp",
+        "banner": "/img/collections/murder-birdz/banner.webp",
         "website": "https://crowcrew.xyz/",
-        "twitter": "https://twitter.com/CCrowcrew",
+        "twitter": "https://twitter.com/MurderBirdz",
         "discord": "https://discord.gg/WvyKv2svbF",
         "categories": []
       },
@@ -16507,7 +16482,7 @@
       "multiToken": false,
       "address": "0xe28B4045A6C1cb3ED30861CAF62A01A2C4DAaa69",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Kaiju Madzilla are here! A randomly generated collection of 6,666 NFTs, they will serve as the core component of the Kaiju of Cronos Ecosystem. By harvesting Kaiju $ENRG, they will lead you on a journey to obtain true Kaiju $POWR. The era of the Kaiju are upon us...",
         "avatar": "/img/collections/kaiju-madzilla/avatar.webp",
@@ -16676,7 +16651,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Collect all 6 different colored panther, and build yourself a CroTron!  Get CRO on completion, and royalties from both of the CroTron's collection, and future iterations!",
+        "description": "Collect all 6 different colored panther, and build yourself a CroTron! Get CRO on completion, and royalties from both of the CroTron's collection, and future iterations!\nBlue Panthers (Token ID 1–400), Red Panthers (Token ID 401–800), Yellow Panthers (Token ID 801–1200), Green Panthers (Token ID 1201–1600), White Panthers (Token ID 1601–1800), Black Panthers (Token ID 1801–1899)",
         "avatar": "/img/collections/crotrons-panthers/avatar.webp",
         "card": "/img/collections/crotrons-panthers/card.webp",
         "banner": "/img/collections/crotrons-panthers/banner.webp",
@@ -16689,6 +16664,410 @@
       },
       "verification": {
         "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Troll Family",
+      "slug": "troll-family",
+      "multiToken": false,
+      "address": "0x778D8C4E0322d6ea35f35b6C2d875f0976e9d21e",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Family of Trolls - \uD83D\uDC8E",
+        "avatar": "/img/collections/troll-family/avatar.webp",
+        "card": "/img/collections/troll-family/card.webp",
+        "banner": "/img/collections/troll-family/banner.webp",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Troll Town",
+      "slug": "troll-town",
+      "multiToken": false,
+      "address": "0xb6Ac66Cc7CA7F9af717d52690994b7f1bB1d5CeC",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Troll Town is a collection of 520 maniacal little trolls that have been trapped in web 3. They hate everything but have learned to adapt to staking pools with their Smurf counterparts. Only available on Corgi Studios.",
+        "avatar": "/img/collections/troll-town/avatar.webp",
+        "card": "/img/collections/troll-town/card.webp",
+        "banner": "/img/collections/troll-town/banner.webp",
+        "twitter": "https://twitter.com/Sw33percrypto",
+        "discord": "https://discord.gg/uYuBdjm2QJ",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Troll Town - Smurfs",
+      "slug": "troll-town-smurfs",
+      "multiToken": false,
+      "address": "0x7548057dE1B3801BB156FD442D745d53A71e7e19",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Troll Town and Smurfs typical hate eachother but for the benefit of the community Trolls and Smurfs will  stake together.",
+        "avatar": "/img/collections/troll-town/avatar.webp",
+        "card": "/img/collections/troll-town/card.webp",
+        "banner": "/img/collections/troll-town/banner.webp",
+        "twitter": "https://twitter.com/Sw33percrypto",
+        "discord": "https://discord.gg/uYuBdjm2QJ",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Troll Town - Petz",
+      "slug": "troll-town-petz",
+      "multiToken": false,
+      "address": "0x350e9774a68784bC158e490D00e1B467Bd709615",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Petz are a collection of 800 fun fluffy fur balls, friends with Eggz they stake together",
+        "avatar": "/img/collections/troll-town-petz/avatar.webp",
+        "card": "/img/collections/troll-town-petz/card.webp",
+        "banner": "/img/collections/troll-town-petz/banner.webp",
+        "twitter": "https://twitter.com/Sw33percrypto",
+        "discord": "https://discord.gg/uYuBdjm2QJ",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Troll Town - Eggz",
+      "slug": "troll-town-eggz",
+      "multiToken": false,
+      "address": "0x73F30Bae5FdD645C5C3f3E4825FA2195A7d757BD",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Eggz are a collection of 740 anatomically correct Troll eggz that stake. Check out our Discord",
+        "avatar": "/img/collections/troll-town-eggz/avatar.webp",
+        "card": "/img/collections/troll-town-eggz/card.webp",
+        "banner": "/img/collections/troll-town-eggz/banner.webp",
+        "twitter": "https://twitter.com/Sw33percrypto",
+        "discord": "https://discord.gg/uYuBdjm2QJ",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Underground Pixels - Joker",
+      "slug": "underground-pixels-joker",
+      "multiToken": false,
+      "address": "0x6BfD6937a8a5773074be0083aDE4803D39f49EC8",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Joker is the first of several heroes. The laughing gas will be sprayed. All NFTs are handmade by our graphic designer and will contain lots of traits. The heroes will be revealed before the mint. supply: 500 NFTs. Royalties for Secondary Market Hodlers 40% (weekly pick-up on the project website) forever + 2% Boxes + 3%  Legendary NFTs +5% Rare NFTs",
+        "avatar": "/img/collections/underground-pixels-joker/avatar.webp",
+        "website": "https://underground-pixels.netlify.app/",
+        "twitter": "https://twitter.com/UndergroundPx",
+        "discord": "https://discord.gg/xyxZJjkqcj",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Eyeball Balldroid Gen 0",
+      "slug": "eyeball-balldroid-gen-0",
+      "multiToken": false,
+      "address": "0x6b02935008c23325b28f17f6281a8456f46fc121",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Eyeball Pool is by the makers of 8 Ball Pool. Balldroids are a collection of 4,001 unique utility PFPs that gives you early game access to Eyeball Pool. On launch you will receive an airdrop with an in-game starter pack of NFTs and tokens. In addition, holders of the PFP will also get \"priority boarding\" to in-game tournaments from a private Discord channel and the right to vote on community polls.",
+        "avatar": "/img/collections/eyeball-balldroid-gen-0/avatar.webp",
+        "banner": "/img/collections/eyeball-balldroid-gen-0/banner.webp",
+        "website": "https://eyeball.games/",
+        "twitter": "https://twitter.com/eyeball_games",
+        "discord": "https://discord.gg/j2N3N4thyP",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Ballies: The Gear",
+      "slug": "ballies-the-gear",
+      "multiToken": false,
+      "address": "0x861C150f818A882AAA3aFA91694Fc9a6C5CCcA1C",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "“The Gear” is the first Airdrop for holders of Ballies Origins. The Gear consists of 9,999 gear items; some come in batches some are completely unique. Gear items are wearables that will have an important role in Ballies play-and-earn game since each gear item directly boosts Ballies performance - enhances either attack points, defence points or both. Each gear item is powered by one crystal that determines the type of boost. Gear Collection is broken up into 4 categories - neck items, arm items, body items and hand items. The latter gives the strongest boost. It’s time to power up your Ballie!",
+        "avatar": "/img/collections/ballies-the-gear/avatar.webp",
+        "card": "/img/collections/ballies-the-gear/card.webp",
+        "banner": "/img/collections/ballies-the-gear/banner.webp",
+        "website": "https://ballies.gg/",
+        "twitter": "https://twitter.com/Ballies_NFT",
+        "discord": "https://discord.gg/c6Rwb6uKKq",
+        "instagram": "https://instagram.com/ballies_nft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "ICY",
+      "slug": "icy",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A collection of 1000 IcyCRO glasses. \n\nMint yourself a ICY NFT and you will be part of the biggest community validator project in Cronos and in the whole Cosmos.\n\nIcyCRO has grown quickly to be one the most popular validators and best relayers in three chains: Crypto.org, ATOM and JUNO.",
+        "avatar": "/img/collections/icy/avatar.webp",
+        "card": "/img/collections/icy/card.webp",
+        "banner": "/img/collections/icy/banner.webp",
+        "website": "https://www.icycro.org/",
+        "twitter": "https://twitter.com/IcyCro",
+        "medium": "https://medium.com/@IcyCRO",
+        "telegram": "https://t.co/BDFTTGErlZ",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Compound X & Y",
+      "slug": "compound-xy",
+      "multiToken": true,
+      "address": "0xEf0A34A742066b9d1DcB89575dDe7e4f0B7CE0D6",
+      "onChain": false,
+      "listable": true,
+      "tokens": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        }
+      ],
+      "metadata": {
+        "description": "Compound X & Y were formulated by the Head of Laboratory as a special concoction. These substances can be used to bring to life a new Laboratory grown species. The Cronos planet is not suitable to host the Crazy Scientists and the new species, prepare yourself to travel the Block Chain Solar System.",
+        "avatar": "/img/collections/compound-xy/avatar.webp",
+        "card": "/img/collections/compound-xy/card.webp",
+        "banner": "/img/collections/compound-xy/banner.webp",
+        "website": "https://www.thelaboratory.io/",
+        "twitter": "https://twitter.com/thelaboratoryio",
+        "discord": "https://discord.gg/thelaboratory",
+        "medium": "https://medium.com/@TheLaboratoryIO",
+        "telegram": "https://t.me/thelaboratoryio",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": "phenix",
+        "verified": true
+      }
+    },
+    {
+      "name": "Jack Yolo Odyssey",
+      "slug": "jack-yolo-odyssey",
+      "multiToken": false,
+      "address": "0x2A6F97546d50ABCD188401AC08f4007BE69d9807",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The \"Jack Yolo Odyssey\" is a collection of 91 unique, AI-generated pictures created by Jack Yolo. These NFTs have a long-term value proposition, providing holders with returns from future mints, a share of royalties, and priority access to future collections within the \"Yolo galaxy\".",
+        "avatar": "/img/collections/jack-yolo-odyssey/avatar.webp",
+        "card": "/img/collections/jack-yolo-odyssey/card.webp",
+        "banner": "/img/collections/jack-yolo-odyssey/banner.webp",
+        "website": "https://jackyolo.xyz/JYO/",
+        "twitter": "https://twitter.com/jackyoloodissey",
+        "discord": "https://discord.gg/TAjH5MW4A6",
+        "telegram": "https://t.me/jackyoloodissey",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Trollfem",
+      "slug": "trollfem",
+      "multiToken": false,
+      "address": "0x02315CC59Ec1d9875C2339Aa868a624D6FF2E091",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Trollfem is a collection of 5,555 female NFTs brought to you by the creators of the #1 meme coin on Cronos Trollcoin. Join our discord and join in with the fun. If you hold 1 Trollfam, and 1 Trollfem you will receive an airdrop in the future per pair that you hold.",
+        "avatar": "/img/collections/trollfem/avatar.webp",
+        "card": "/img/collections/trollfem/card.webp",
+        "banner": "/img/collections/trollfem/banner.webp",
+        "website": "https://trollcoin.clubcro.com/",
+        "twitter": "https://twitter.com/TrollCoinCro",
+        "discord": "https://discord.gg/trollcoin",
+        "telegram": "https://t.me/OfficialTrollcoin",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Radiated Pill",
+      "slug": "radiated-pill",
+      "multiToken": false,
+      "address": "0xfB9c657A58b46010B292321f871cC690084CB34f",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Radiate your KKC",
+        "avatar": "/img/collections/radiated-pill/avatar.webp",
+        "banner": "/img/collections/radiated-pill/banner.webp",
+        "card": "/img/collections/radiated-pill/card.webp",
+        "website": "https://kingkong-cronos.netlify.app/",
+        "twitter": "https://www.twitter.com/KingKongCronos2",
+        "discord": "https://discord.gg/qJq6d3Bu",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Wedripz Cro",
+      "slug": "wedripz-cro",
+      "multiToken": false,
+      "address": "0x86Eecf80c106d1Fd23ed2eC2db28B957c8Cd6c3a",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "WeDripz Cro is a collection of 5555 Dripz with 4 evolved bloodlines from the OG Eth collection \uD83D\uDC8E  Artwork by TikTok trending artist: MrSaintVon \uD83C\uDFA8  Official collaboration with \"Trust me Vodka\" for events and IRL items ✅",
+        "avatar": "/img/collections/wedripz-cro/avatar.webp",
+        "banner": "/img/collections/wedripz-cro/banner.webp",
+        "card": "/img/collections/wedripz-cro/card.webp",
+        "website": "https://wedripz.netlify.app/",
+        "twitter": "https://www.twitter.com/wedripz",
+        "discord": "https://discord.gg/dhrRCgMF",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": true,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Skronos - Anatomy Edition",
+      "slug": "skronos-anatomy-edition",
+      "multiToken": false,
+      "address": "0x1171cAa403304B1aE9aaf218236C5e953bF01031",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Get ready to unlock the secrets of the Skronos Empire \uD83C\uDFF0 The Anatomy Edition is a combination of 188 Hands, 188 Legs, 188 Torsos, 188 Hearts & 48 coffins ⚰️ that will allow you to ultimately generate a complete Skronos by combining them with the Skronos OG Skull collection \uD83D\uDC80 Are you ready to enjoy the thrill of supply and demand? \uD83D\uDE08",
+        "avatar": "/img/collections/skronos-anatomy-edition/avatar.webp",
+        "card": "/img/collections/skronos-anatomy-edition/card.webp",
+        "banner": "/img/collections/skronos-anatomy-edition/banner.webp",
+        "website": "https://skronos-syndicate.com/",
+        "twitter": "https://twitter.com/skronosNFT",
+        "discord": "https://discord.gg/VH78mEQ2cE",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Heroes of Cronoxity",
+      "slug": "heroes-of-cronoxity",
+      "multiToken": false,
+      "address": "0x35f23199d7063bf897C692a6f1151BE88f4a58DD",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "This collection is made of 3,000 Heroes coming from the heart of Cronoxity to protect their owner from any troubles. Each Hero gives you access to a unique way of making you earn from more than 7 different coins/tokens through their power infusion, and competitive tournament events through our gaming interface. Join our discord for more in depth info.",
+        "avatar": "/img/collections/heroes-of-cronoxity/avatar.webp",
+        "card": "/img/collections/heroes-of-cronoxity/card.webp",
+        "banner": "/img/collections/heroes-of-cronoxity/banner.webp",
+        "website": "https://heroes-cronoxity.netlify.app/",
+        "twitter": "https://twitter.com/CronoxityHeroes",
+        "discord": "https://discord.gg/gVFn9stFQJ",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "AIKO CARDS",
+      "slug": "aiko-cards",
+      "multiToken": false,
+      "address": "0x767bE428D8BF8fA99BC0b84D96d6f135845a11fF",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The AIKO CARDS is a Collection of 1000 unique Animated Cards 3D, unique Digital Collectibles that live on the Cronos Blockchain. 8 Different Colors, 8 Different Rarities. Your AIKO CARDS acts as a Membership to AIKOSociety and guarantees Access to the Benefits reserved for holders of these cards. Any Holder of this Card will have the Access to receive Rewards, participate in Travels, Exclusive Events and parties and much more... You will receive benefits based on the Rarity of your AIKO Cards and based on the number of Cards in your Possession.",
+        "avatar": "/img/collections/aiko-cards/avatar.webp",
+        "banner": "/img/collections/aiko-cards/banner.webp",
+        "card": "/img/collections/aiko-cards/card.webp",
+        "website": "https://www.aikosociety.com/",
+        "twitter": "https://twitter.com/AikoSociety",
+        "discord": "https://discord.gg/uPGhuAFPFw",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
@@ -18675,7 +19054,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": false,
+      "published": true,
       "complete": false,
       "images": {
         "drop": "/img/drops/succubus/drop.gif",
@@ -19688,7 +20067,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": false,
+      "published": true,
       "complete": false,
       "images": {
         "drop": "/img/drops/cyber-squad/drop.png",
@@ -20046,7 +20425,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": false,
+      "published": true,
       "complete": false,
       "images": {
         "drop": "/img/drops/everybodysnf/drop.png",
@@ -21337,7 +21716,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/lion-social-club/drop.webp",
         "banner": "/img/collections/lion-social-club/banner.webp",
@@ -21580,7 +21959,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/rebel-punks/drop.webp",
         "banner": "/img/collections/rebel-punks/banner.webp",
@@ -22228,14 +22607,14 @@
     },
     {
       "id": 144,
-      "slug": "c3-cronos-crow-crew",
-      "title": "C³: Cronos Crow Crew",
-      "subtitle": "C³ is a brand of 3000 PFP crow characters granting holders utility and revenue. Bringing powerful set of trading and analytical tools. It's the first project that allows holders to browse the Cronos NFT space efficiently and have fun in our Crowgame . Join C³DAO to get access to all those benefits.",
-      "description": " C³ is a collection of 3000 fine art crow characters granting utility and revenue to its holders. By purchasing a C³ NFT, you gain access to the C³DAO, which includes several benefits :\n\nAnalytics platform  \n\nMint funds will be immediately used to complete the Insight analytics platform, that will improve your trading experience. Follow smart money inflows, social media engagements, and fined the gem.\n\nC³DAO \n\nBy entering the C³DAO, you gain voting power for governance and investments decision. A DAO wallet fund will be set up in order to fructify mint funds, and share revenue with holders. An investment proposal for seed round in fintech will be made to the C³DAO after its establishment.\n\nCrowGame\n\nThe CrowGame is a gamified staking, read more on our whitepaper : Crow game \n\nRevenue sharing \n\nWeb3 is about empowering people and giving back to the community. With our products and marketplace fees creating revenue, sharing will be organized by the C³DAO.\n\nSee you soon!",
+      "slug": "murder-birdz",
+      "title": "Murder Birdz",
+      "subtitle": "Murder Birdz is a brand of 3000 PFP crow characters granting holders utility and revenue. Bringing powerful set of trading and analytical tools. It's the first project that allows holders to browse the Cronos NFT space efficiently and have fun in our Crowgame . Join Murder Birdz DAO to get access to all those benefits.",
+      "description": "Murder Birdz is a collection of 3000 fine art crow characters granting utility and revenue to its holders. By purchasing a Murder Birdz NFT, you gain access to the Murder Birdz DAO, which includes several benefits :\n\nAnalytics platform  \n\nMint funds will be immediately used to complete the Insight analytics platform, that will improve your trading experience. Follow smart money inflows, social media engagements, and fined the gem.\n\nMurder Birdz DAO \n\nBy entering the Murder Birdz DAO, you gain voting power for governance and investments decision. A DAO wallet fund will be set up in order to fructify mint funds, and share revenue with holders. An investment proposal for seed round in fintech will be made to the Murder Birdz DAO after its establishment.\n\nCrowGame\n\nThe CrowGame is a gamified staking, read more on our whitepaper : Crow game \n\nRevenue sharing \n\nWeb3 is about empowering people and giving back to the community. With our products and marketplace fees creating revenue, sharing will be organized by the Murder Birdz DAO.\n\nSee you soon!",
       "author": {
-        "name": "C³: Cronos Crow Crew",
+        "name": "Murder Birdz",
         "website": "https://crowcrew.xyz/",
-        "twitter": "https://twitter.com/CCrowcrew",
+        "twitter": "https://twitter.com/MurderBirdz",
         "discord": "https://discord.gg/WvyKv2svbF"
       },
       "address": "0x5bB97B7D75Ce3151E413aa751F22FcD837703588",
@@ -22253,10 +22632,10 @@
       "published": true,
       "complete": false,
       "images": {
-        "drop": "/img/drops/c3-cronos-crow-crew/drop.webp",
-        "banner": "/img/collections/c3-cronos-crow-crew/banner.webp",
-        "avatar": "/img/collections/c3-cronos-crow-crew/avatar.webp",
-        "preview": "/img/collections/c3-cronos-crow-crew/card.webp"
+        "drop": "/img/drops/murder-birdz/drop.webp",
+        "banner": "/img/collections/murder-birdz/banner.webp",
+        "avatar": "/img/collections/murder-birdz/avatar.webp",
+        "preview": "/img/collections/murder-birdz/card.webp"
       },
       "verification": {
         "verified": true,
@@ -22499,6 +22878,87 @@
       "verification": {
         "verified": true,
         "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 151,
+      "slug": "icy",
+      "title": "ICY",
+      "subtitle": "A collection of 1000 IcyCRO glasses. \n\nMint yourself a ICY NFT and you will be part of the biggest community validator project in Cronos and in the whole Cosmos.\n\nIcyCRO has grown quickly to be one the most popular validators and best relayers in three chains: Crypto.org, ATOM and JUNO.",
+      "description": "A collection of 1000 IcyCRO glasses. \n\nMint yourself a ICY NFT and you will be part of the biggest community validator project in Cronos and in the whole Cosmos.\n\nIcyCRO has grown quickly to be one the most popular validators and best relayers in three chains: Crypto.org, ATOM and JUNO. \n\nAll the profit that the IcyCRO project makes is shared with the community through jackpot raffles, CRO-ICY farms and NFT staking. \n\nBenefits:\n- Free entry to the monthly IcyCRO Jackpot raffle.\n- ICY airdrop. 5k ICY for every legendary NFT. \n- NFT staking rewards on Crodex. \n\nPlans are also to use the ICY NFTs as CRO-ICY farm boosters in the future. \n\nRevenue sharing:\n- 40% is donated to the best Cronos projects. \n- 40% is used to boost the CRO-ICY farm APR and liquidity. \n- 20% goes for the NFT staking rewards",
+      "author": {
+        "name": "IcyCRO",
+        "website": "https://www.icycro.org/",
+        "twitter": "https://twitter.com/IcyCro",
+        "medium": "https://medium.com/@IcyCRO",
+        "telegram": "https://t.co/BDFTTGErlZ"
+      },
+      "address": "",
+      "maxMintPerTx": 5,
+      "maxMintPerAddress": 10,
+      "totalSupply": 1000,
+      "cost": "550",
+      "memberCost": "500",
+      "whitelistCost": "480",
+      "foundersOnly": false,
+      "start": 1674849600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "priceDescription": "Whitelist-only presale for the first 12 hours (limit 5 per address). Public sale after presale ends.",
+      "images": {
+        "drop": "/img/drops/icy/drop.webp",
+        "banner": "/img/collections/icy/banner.webp",
+        "avatar": "/img/collections/icy/avatar.webp",
+        "preview": "/img/collections/icy/card.webp"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
+      }
+    },
+    {
+      "id": 152,
+      "slug": "wedripz-cro",
+      "title": "Wedripz Cro",
+      "subtitle": "WeDripz Cro is a collection of 5555 Dripz with 4 evolved bloodlines from the OG Eth collection \uD83D\uDC8E  Artwork by TikTok trending artist: MrSaintVon \uD83C\uDFA8  Official collaboration with \"Trust me Vodka\" for events and IRL items ✅",
+      "description": "",
+      "author": {
+        "name": "Wedripz Cro",
+        "website": "https://wedripz.netlify.app/",
+        "twitter": "https://www.twitter.com/wedripz",
+        "discord": "https://discord.gg/dhrRCgMF"
+      },
+      "address": "0x86Eecf80c106d1Fd23ed2eC2db28B957c8Cd6c3a",
+      "maxMintPerTx": 7,
+      "maxMintPerAddress": 21,
+      "totalSupply": 5555,
+      "cost": "150",
+      "memberCost": "125",
+      "foundersOnly": false,
+      "start": 1674543844000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": true,
+      "redirect": "https://wedripz.netlify.app/",
+      "images": {
+        "drop": "/img/drops/wedripz-cro/drop.webp",
+        "banner": "/img/collections/wedripz-cro/banner.webp",
+        "avatar": "/img/collections/wedripz-cro/avatar.webp",
+        "preview": "/img/collections/wedripz-cro/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": true,
         "kyc": true,
         "escrow": false
       }

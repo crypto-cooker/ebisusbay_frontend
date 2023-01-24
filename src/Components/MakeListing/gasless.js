@@ -169,9 +169,14 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
       const marketContractAddress = config.contracts.market;
       setSalePrice(listing ? Math.round(listing.price) : null)
 
-      const floorPrice = await getCollectionMetadata(nftAddress);
-      if (floorPrice.collections.length > 0) {
-        setFloorPrice(floorPrice.collections[0].floorPrice ?? 0);
+      const collectionInfo = await getCollectionMetadata(nftAddress);
+      if (collectionInfo.collections.length > 0) {
+        const stats = collectionInfo.collections[0].stats;
+        let floor = stats.total.floorPrice;
+        if (stats.tokens) {
+          floor = stats.tokens[nftId]?.floor_price ?? 0;
+        }
+        setFloorPrice(floor);
       }
 
       const royalties = await collectionRoyaltyPercent(nftAddress, nftId);

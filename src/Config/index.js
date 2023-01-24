@@ -261,11 +261,11 @@ export const featureFlags = {
   [Features.AUCTION_OPTION_SALE]: false,          // Auction listing option
   [Features.CMS_NOTIFICATIONS]: true,             // Notifications
   [Features.CMS_FULL_PROFILES]: true,             // User Profiles
-  [Features.GET_COLLECTION_NEW_ENDPOINT]: false,   // Paginated collections endpoint
+  [Features.GET_COLLECTION_NEW_ENDPOINT]: true,   // Paginated collections endpoint
   [Features.CMS_COLLECTIONS]: false,               // Collection editing
   [Features.VERIFIED_SWITCH_COLLECTION]: false,    // Filter verified collections
   [Features.VERIFIED_SWITCH_MARKETPLACE]: false,   // Filter verified in marketplace
-  [Features.INFINITE_QUERY_COLLECTION]: false,     // Paginated collections endpoint
+  [Features.INFINITE_QUERY_COLLECTION]: true,     // Paginated collections endpoint
   [Features.UNVERIFIED_WARNING]: false,            // Warning when buying from unverified collection
   [Features.REPORT_COLLECTION]: false,             // Report button on collection page
   [Features.NEW_CHAKRA_THEME]: false,             // Update theme

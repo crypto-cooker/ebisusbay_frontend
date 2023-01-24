@@ -4,7 +4,7 @@ import {
   getCollectionPowertraits,
   getCollectionTraits,
 } from '../core/api';
-import {caseInsensitiveCompare} from '../utils';
+import {caseInsensitiveCompare, isFoundingMemberCollection} from '../utils';
 import {appConfig} from "../Config";
 import {listingType} from "../core/api/enums";
 import {ListingsQuery} from "../core/api/queries/listings";
@@ -199,6 +199,10 @@ export const fetchListings =
         pageSizeOverride
       );
 
+      if (isFoundingMemberCollection(knownContract.address)) {
+        response.nfts = response.nfts.filter((n) => n.id !== '3');
+      }
+
       if (response.status === 200) {
         if (!cancelled) {
 
@@ -270,26 +274,40 @@ export const getStats =
       const mergedAddresses = extraAddresses ? [collection.address, ...extraAddresses] : collection.address;
       var response;
       if (id != null) {
-        // const newStats = await getCollections({address: mergedAddresses});
-        // response = {
-        //   collections: [
-        //     {
-        //       collection: mergedAddresses,
-        //       totalSupply: newStats.data.collections[0].tokens[id].metadata.maxSupply,
-        //       totalVolume: newStats.data.collections[0].stats.tokens[id].volume,
-        //       numberOfSales: newStats.data.collections[0].stats.tokens[id].complete,
-        //       averageSalePrice: newStats.data.collections[0].stats.tokens[id].avg_sale_price,
-        //       numberActive: newStats.data.collections[0].stats.tokens[id].active,
-        //       floorPrice: newStats.data.collections[0].stats.tokens[id].floor_price
-        //     }
-        //   ]
-        // };
-        response = await getCollectionMetadata(mergedAddresses, null, {
+        const newStats = await getCollectionMetadata(mergedAddresses, null, {
           type: 'tokenId',
           value: id,
         });
+        response = {
+          collections: newStats.data.collections.map((sCollection) => (
+            {
+              collection: collection.address,
+              totalSupply: sCollection.totalSupply,
+              totalVolume: sCollection.stats.total.volume,
+              numberOfSales: sCollection.stats.total.complete,
+              averageSalePrice: sCollection.stats.total.avgSalePrice ?? sCollection.stats.total.avg_sale_price,
+              numberActive: sCollection.stats.total.active,
+              floorPrice: sCollection.stats.total.floorPrice ?? sCollection.stats.total.floor_price,
+              owners: sCollection.holders
+            }
+          ))
+        };
       } else if (Array.isArray(mergedAddresses)) {
-        response = await getCollectionMetadata(mergedAddresses);
+        const newStats = await getCollections({address: mergedAddresses.join(',')});
+        response = {
+          collections: newStats.data.collections.map((sCollection) => (
+            {
+              collection: collection.address,
+              totalSupply: sCollection.totalSupply,
+              totalVolume: sCollection.stats.total.volume,
+              numberOfSales: sCollection.stats.total.complete,
+              averageSalePrice: sCollection.stats.total.avgSalePrice ?? sCollection.stats.total.avg_sale_price,
+              numberActive: sCollection.stats.total.active,
+              floorPrice: sCollection.stats.total.floorPrice ?? sCollection.stats.total.floor_price,
+              owners: sCollection.holders
+            }
+          ))
+        }
       } else {
         const newStats = await getCollections({address: mergedAddresses});
         const sCollection = newStats.data.collections[0];
@@ -302,7 +320,8 @@ export const getStats =
               numberOfSales: sCollection.stats.total.complete,
               averageSalePrice: sCollection.stats.total.avgSalePrice ?? sCollection.stats.total.avg_sale_price,
               numberActive: sCollection.stats.total.active,
-              floorPrice: sCollection.stats.total.floorPrice ?? sCollection.stats.total.floor_price
+              floorPrice: sCollection.stats.total.floorPrice ?? sCollection.stats.total.floor_price,
+              owners: sCollection.holders
             }
           ]
         };

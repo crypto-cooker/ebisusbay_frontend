@@ -63,15 +63,13 @@ const Search = () => {
       enabled: !!debouncedSearch && debouncedSearch.length >= minChars,
       refetchOnWindowFocus: false,
       select: (d) => {
-        // console.log(d);
         return d.data.collections
           .filter((collection) =>{
-            let validTokenCount = true;
-            // if (collection.tokens) {
-            //   validTokenCount = collection.tokens.filter((t) => Object.keys(t).length > 1).length > 0;
-            // }
-            return knownContracts.find((c) => caseInsensitiveCompare(c.address, collection.address)) && validTokenCount;
+            const knownContract = knownContracts.find((c) => caseInsensitiveCompare(c.address, collection.address));
+            if (!knownContract) return false;
+            return !knownContract.mergedWith;
           })
+          .sort((a, b) => b.verification?.verified - a.verification?.verified)
       }
     }
   );

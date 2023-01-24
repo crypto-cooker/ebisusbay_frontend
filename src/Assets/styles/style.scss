@@ -5700,3 +5700,10 @@ iframe.metaverse {
   &::placeholder {color: $textColor2;} 
   margin-bottom: 0px;
 }
+
+.collection_info_bar {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}

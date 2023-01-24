@@ -60,6 +60,16 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/collection/vip-founding-member',
+        destination: '/collection/founding-member',
+        permanent: true,
+      },
+      {
+        source: '/collection/vip-founding-member/:id',
+        destination: '/collection/founding-member/:id',
+        permanent: true,
+      },
+      {
         source: '/collection/mad-treehouse',
         destination: '/collection/mm-treehouse',
         permanent: true,
