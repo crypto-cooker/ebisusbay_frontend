@@ -122,7 +122,7 @@ export async function getCollectionMetadata(contractAddress, sort, filter) {
     query = { ...query, ...sortProps };
   }
   if (contractAddress != null) {
-    query['collection'] = Array.isArray(contractAddress)
+    query['address'] = Array.isArray(contractAddress)
       ? contractAddress.map((c) => ethers.utils.getAddress(c.toLowerCase()))
       : ethers.utils.getAddress(contractAddress.toLowerCase());
   }
@@ -131,7 +131,7 @@ export async function getCollectionMetadata(contractAddress, sort, filter) {
 
   const uri = `${api.baseUrl}${api.collections}?${queryString}`;
   if(newEndpointEnabled){
-    const data = await getCollections();
+    const data = await getCollections(query);
     return data.data;
   }
   else{
