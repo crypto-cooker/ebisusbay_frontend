@@ -16997,8 +16997,8 @@
       },
       "verification": {
         "verified": true,
-        "doxx": false,
-        "kyc": false
+        "doxx": true,
+        "kyc": true
       }
     }
   ],
@@ -22887,8 +22887,8 @@
       },
       "verification": {
         "verified": true,
-        "doxx": false,
-        "kyc": false,
+        "doxx": true,
+        "kyc": true,
         "escrow": false
       }
     }
