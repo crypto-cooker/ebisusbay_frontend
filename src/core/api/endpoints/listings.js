@@ -36,7 +36,7 @@ export async function sortAndFetchListings(
     state: state ?? 0,
     page: page,
     pageSize: pagesize,
-    sortBy: 'listingId',
+    sortBy: 'listing_time',
     direction: 'desc'
   };
   if (filter && (filter instanceof ListingsQuery)) {
