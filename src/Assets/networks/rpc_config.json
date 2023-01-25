@@ -17071,6 +17071,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "CroDragons Eggs",
+      "slug": "crodragons-eggs",
+      "multiToken": false,
+      "address": "0xd1cD66B242961E7b22a643F2cB43a2E1787cEDc0",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "In the depths of the forbidden cave, dragon eggs have been found! Take your egg, incubate it in the cave and wait for your unique dragon! Conquer the island and become the king on the forgotten island of Cronos!",
+        "avatar": "/img/collections/crodragons-eggs/avatar.webp",
+        "banner": "/img/collections/crodragons-eggs/banner.webp",
+        "card": "/img/collections/crodragons-eggs/card.webp",
+        "website": "https://www.crodragons.net/",
+        "twitter": "https://twitter.com/CroDragons",
+        "discord": "https://discord.gg/crodragons",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
@@ -22960,6 +22985,45 @@
         "verified": true,
         "doxx": true,
         "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 153,
+      "slug": "crodragons-eggs",
+      "title": "CroDragons Eggs",
+      "subtitle": "In the depths of the forbidden cave, dragon eggs have been found! Take your egg, incubate it in the cave and wait for your unique dragon! Conquer the island and become the king on the forgotten island of Cronos!",
+      "description": "",
+      "author": {
+        "name": "CroDragons",
+        "website": "https://www.crodragons.net/",
+        "twitter": "https://twitter.com/CroDragons",
+        "discord": "https://discord.gg/crodragons"
+      },
+      "address": "0x86Eecf80c106d1Fd23ed2eC2db28B957c8Cd6c3a",
+      "maxMintPerTx": 7,
+      "maxMintPerAddress": 21,
+      "totalSupply": 6000,
+      "cost": "400",
+      "foundersOnly": false,
+      "start": 1674543844000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": false,
+      "redirect": "https://www.crodragonsapp.net/",
+      "images": {
+        "drop": "/img/drops/crodragons-eggs/drop.webp",
+        "banner": "/img/collections/crodragons-eggs/banner.webp",
+        "avatar": "/img/collections/crodragons-eggs/avatar.webp",
+        "preview": "/img/collections/crodragons-eggs/card.webp"
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false,
         "escrow": false
       }
     }
