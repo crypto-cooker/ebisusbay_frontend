@@ -105,7 +105,7 @@ export default function PurchaseSuccessDialog({ onClose, isOpen, listing, tx}) {
               )}
             </Box>
             {tx && (
-              <Link href={`${config.urls.explorer}${tx.transactionHash}`} isExternal>
+              <Link href={`${config.urls.explorer}tx/${tx.transactionHash}`} isExternal>
                 <HStack>
                   <Image src={`/img/logos/cronos_${userTheme === 'dark' ? 'white' : 'blue'}.svg`} width={30} height={30}/>
                   <Text>View on Cronoscan</Text>

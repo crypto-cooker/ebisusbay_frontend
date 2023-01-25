@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { appConfig } from "@src/Config";
-import { ethers } from "ethers";
+import {BigNumber, ethers} from "ethers";
 import Constants from '@src/constants';
 
 
@@ -65,7 +65,7 @@ const useSignature = () => {
     const offerItem = {
       itemType: signatureValues?.is1155 ? ItemType.ERC1155 : ItemType.ERC721, 
       token: signatureValues.collectionAddress,
-      identifierOrCriteria: signatureValues.tokenId,
+      identifierOrCriteria: BigNumber.from(signatureValues.tokenId),
       startAmount: 1,
       endAmount: 1
     };
