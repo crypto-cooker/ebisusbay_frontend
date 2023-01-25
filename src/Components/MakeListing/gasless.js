@@ -246,7 +246,8 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
           tokenId: nftId,
           price: salePrice.toString(),
           amount: quantity,
-          expirationDate: expirationDate.value
+          expirationDate: expirationDate.value,
+          listingId: nft.listingId
         });
       } else {
         const res = await createGaslessListing({
