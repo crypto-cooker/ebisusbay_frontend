@@ -3,7 +3,6 @@ import {specialImageTransform} from "@src/hacks";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import Constants from "@src/constants";
 import {Badge, Form, Spinner} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {Contract} from "ethers";
@@ -18,9 +17,7 @@ import {useWindowSize} from "@src/hooks/useWindowSize";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {
   Box,
-  Button as ChakraButton, Flex,
-  HStack,
-  Input,
+  Flex,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -32,10 +29,9 @@ import {
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
 import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
-import useCreateGaslessListing from '../Account/Settings/hooks/useCreateGaslessListing';
-import useUpdateGaslessListing from '../Account/Settings/hooks/useUpdateGaslessListing';
 
 import moment from 'moment';
+import useUpsertGaslessListings from "@src/Components/Account/Settings/hooks/useUpsertGaslessListings";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -78,13 +74,10 @@ const expirationDatesValues = [
 ]
 
 export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing }) {
-  const { Features } = Constants;
-  const [saleType, setSaleType] = useState(1);
   const [salePrice, setSalePrice] = useState(null);
   const [expirationDate, setExpirationDate] = useState({ type: 'dropdown', value: new Date().getTime() + 2592000000 });
   const [floorPrice, setFloorPrice] = useState(0);
   const [priceError, setPriceError] = useState(false);
-  const [fee, setFee] = useState(0);
   const [royalty, setRoyalty] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
@@ -98,21 +91,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   const windowSize = useWindowSize();
 
   const user = useSelector((state) => state.user);
-  const [createGaslessListing, responseCreate] = useCreateGaslessListing();
-  const [updateGaslessListing, responseUpdate] = useUpdateGaslessListing();
-
-  const changeSaleType = (type) => {
-    switch (type) {
-      case 'auction':
-        setSaleType(0);
-        break;
-      case 'fixedPrice':
-        setSaleType(1);
-        break;
-      default:
-        setSaleType(1);
-    }
-  }
+  const [upsertGaslessListing, responseUpsert] = useUpsertGaslessListings();
 
   const isBelowFloorPrice = (price) => {
     return (floorPrice !== 0 && ((floorPrice - Number(price)) / floorPrice) * 100 > floorThreshold);
@@ -240,25 +219,13 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
       const nftId = nft.id ?? nft.nftId;
       setExecutingCreateListing(true);
 
-      if (nft.listed) {
-        const res = await updateGaslessListing({
-          collectionAddress: nftAddress,
-          tokenId: nftId,
-          price: salePrice.toString(),
-          amount: quantity,
-          expirationDate: expirationDate.value,
-          listingId: nft.listingId
-        });
-      } else {
-        const res = await createGaslessListing({
-          collectionAddress: nftAddress,
-          tokenId: nftId,
-          price: salePrice.toString(),
-          amount: quantity,
-          expirationDate: expirationDate.value,
-          is1155: nft.multiToken
-        });
-      }
+      const res = await upsertGaslessListing({
+        collectionAddress: nftAddress,
+        tokenId: nftId,
+        price: salePrice.toString(),
+        amount: quantity,
+        expirationDate: expirationDate.value
+      });
       toast.success("Listing Successful");
 
       setExecutingCreateListing(false);

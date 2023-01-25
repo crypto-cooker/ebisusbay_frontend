@@ -31,8 +31,7 @@ import {appConfig, isTestnet} from "@src/Config";
 import {ListingDrawerItem} from "@src/Components/Account/Profile/Inventory/components/ListingDrawerItem";
 import ListingBundleDrawerForm from "@src/Components/Account/Profile/Inventory/components/ListingBundleDrawerForm";
 import Bundle from "@src/Contracts/Bundle.json";
-import useCreateGaslessListing from "@src/Components/Account/Settings/hooks/useCreateGaslessListing";
-import useUpdateGaslessListing from "@src/Components/Account/Settings/hooks/useUpdateGaslessListing";
+import useUpsertGaslessListings from "@src/Components/Account/Settings/hooks/useUpsertGaslessListings";
 
 const config = appConfig();
 const MAX_NFTS_IN_CART = 40;
@@ -50,8 +49,7 @@ export const ListingDrawer = () => {
   const formRef = useRef(null);
   const [debugLegacy, setDebugLegacy] = useState(false);
 
-  const [createGaslessListing, responseCreate] = useCreateGaslessListing();
-  const [updateGaslessListing, responseUpdate] = useUpdateGaslessListing();
+  const [upsertGaslessListings, responseUpdate] = useUpsertGaslessListings();
 
   const handleClearCart = () => {
     setShowConfirmButton(false);
@@ -105,28 +103,12 @@ export const ListingDrawer = () => {
 
     Sentry.captureEvent({ message: 'handleBatchListing', extra: { nftAddresses, nftIds, nftPrices } });
 
-    const updateableListings = [];
-    const creatableListings = [];
-    for (const item of nfts) {
-      const address = item.nft.address ?? item.nft.nftAddress;
-      const id = item.nft.id ?? item.nft.nftId;
-      const price = item.price.toString();
-      const expiration = item.expiration;
-
-      if (item.nft.listed) {
-        updateableListings.push({ collectionAddress: address, tokenId: id, price: price, expirationDate: expiration, listingId: item.nft.listingId });
-      } else {
-        creatableListings.push({ collectionAddress: address, tokenId: id, price: price, expirationDate: expiration });
-      }
-    }
-
-    if (updateableListings.length > 0) {
-      await updateGaslessListing(updateableListings);
-    }
-    if (creatableListings.length > 0) {
-      await createGaslessListing(creatableListings);
-    }
-
+    await upsertGaslessListings(nfts.map((item) => ({
+      collectionAddress: item.nft.address ?? item.nft.nftAddress,
+      tokenId: item.nft.id ?? item.nft.nftId,
+      price: item.price.toString(),
+      expirationDate: item.expiration
+    })))
     toast.success(createSuccessfulTransactionToastContent(''));
   }
 
@@ -148,20 +130,6 @@ export const ListingDrawer = () => {
     let receipt = await tx.wait();
 
     toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-  }
-
-  const splitExistingLegacyFromGasless = (nfts) => {
-    const legacy = [];
-    const gasless = [];
-    for (const nft of nfts) {
-      if (nft.listed && !isGaslessListing(nft.listingId)) {
-        legacy.push(nft);
-      } else {
-        gasless.push(nft);
-      }
-    }
-
-    return {legacy, gasless};
   }
 
   const prepareListing = async () => {
