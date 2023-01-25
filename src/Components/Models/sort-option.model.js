@@ -29,7 +29,7 @@ export class SortOption {
 
   toApi() {
     return {
-      sortBy: this.key || 'listing_time',
+      sortBy: this.key || 'listingTime',
       direction: this.direction || 'desc',
     };
   }

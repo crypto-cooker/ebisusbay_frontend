@@ -180,7 +180,6 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
 
   return (
     <Box
-      key={`${item.nft.address}-${item.nft.id}`}
       _hover={{ background: hoverBackground }}
       p={2}
       rounded="lg"
