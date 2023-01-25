@@ -106,10 +106,16 @@
           "type": "bytes32"
         },
         {
-          "indexed": true,
+          "indexed": false,
           "internalType": "address",
           "name": "filler",
           "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "royaltyAmount",
+          "type": "uint256"
         }
       ],
       "name": "OrderFilled",
