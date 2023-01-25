@@ -15649,8 +15649,8 @@
         "banner": "/img/collections/teddy-bear-cro-club/banner.webp",
         "card": "/img/collections/teddy-bear-cro-club/card.webp",
         "website": "https://teddy-bear-club.netlify.app/",
-        "twitter": "https://twitter.com/teddy_cronos",
-        "discord": "https://discord.gg/SUj4zfYdKW",
+        "twitter": "https://twitter.com/Cro_TeddyClub",
+        "discord": "https://discord.gg/HGVYzk64",
         "categories": [
           "collectibles"
         ]
@@ -17052,7 +17052,7 @@
       "name": "AIKO CARDS",
       "slug": "aiko-cards",
       "multiToken": false,
-      "address": "0x767bE428D8BF8fA99BC0b84D96d6f135845a11fF",
+      "address": "",
       "onChain": false,
       "listable": true,
       "metadata": {
