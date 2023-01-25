@@ -34,7 +34,7 @@ const Collections = () => {
 
   const [timeFrame, setTimeFrame] = useState(null);
 
-  const [onlyVerified, setOnlyVerified] = useState(true);
+  const [onlyVerified, setOnlyVerified] = useState(false);
 
   const { Features } = Constants;
 
