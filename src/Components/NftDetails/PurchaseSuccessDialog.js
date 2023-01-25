@@ -89,10 +89,9 @@ export default function PurchaseSuccessDialog({ onClose, isOpen, listing, tx}) {
         <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
         <ModalBody>
           <VStack>
-            <Text textAlign="center">Congratulations! You have successfully purchased {listing.nft.name}</Text>
             <Box w="30%">
               {isBundle(listing.nftAddress) ? (
-                <ImagesContainer nft={listing} />
+                <ImagesContainer nft={listing.nft} />
               ) : (
                 <AnyMedia
                   image={specialImageTransform(listing.nft.nftAddress, listing.nft.image)}
@@ -104,6 +103,7 @@ export default function PurchaseSuccessDialog({ onClose, isOpen, listing, tx}) {
                 />
               )}
             </Box>
+            <Text textAlign="center">Congratulations! You have successfully purchased {listing.nft.name}</Text>
             {tx && (
               <Link href={`${config.urls.explorer}tx/${tx.transactionHash}`} isExternal>
                 <HStack>

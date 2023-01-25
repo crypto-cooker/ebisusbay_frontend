@@ -11,7 +11,7 @@ import {isBundle, isGaslessListing, round} from "@src/utils";
 import {getTheme} from "@src/Theme/theme";
 import {
   Box,
-  Button as ChakraButton,
+  Button as ChakraButton, Center,
   Flex,
   Modal,
   ModalBody,
@@ -22,7 +22,7 @@ import {
   ModalOverlay,
   SimpleGrid,
   Spacer,
-  Text
+  Text, VStack
 } from "@chakra-ui/react";
 import Image from "next/image";
 import {commify} from "ethers/lib/utils";
@@ -132,14 +132,17 @@ export default function PurchaseDialog({ onClose, isOpen, listingId}) {
             </Spinner>
           </EmptyData>
         ) : status === "error" ? (
-          <p>Error: {error.message}</p>
+          <VStack spacing={0} mb={2}>
+            <Text>Unable to load listing information</Text>
+            <Text fontSize="xs">Error: {error.message}</Text>
+          </VStack>
         ) : (
           <>
             <ModalBody>
               <div className="nftSaleForm row gx-3">
                 <div className="col-4 mb-2 mb-sm-0">
                   {isBundle(listing.nftAddress) ? (
-                    <ImagesContainer nft={listing} />
+                    <ImagesContainer nft={listing.nft} />
                   ) : (
                     <AnyMedia
                       image={specialImageTransform(listing.nft.nftAddress, listing.nft.image)}
@@ -156,14 +159,12 @@ export default function PurchaseDialog({ onClose, isOpen, listingId}) {
                     <div className="mb-3 text-center">
                       <Flex justify="space-between" fontSize="lg">
                         <Text>Listing Price</Text>
-                        <Text>
-                          <Flex justify="space-between" align="center">
-                            <Image src="/img/logos/cdc_icon.svg" width={24} height={24} />
-                            <Text as="span" ms={1}>
-                              {commify(listing.price)}
-                            </Text>
-                          </Flex>
-                        </Text>
+                        <Flex justify="space-between" align="center">
+                          <Image src="/img/logos/cdc_icon.svg" width={24} height={24} />
+                          <Text as="span" ms={1}>
+                            {commify(listing.price)}
+                          </Text>
+                        </Flex>
                       </Flex>
                       {isGaslessListing(listingId) && (
                         <Flex justify="space-between" fontSize="sm" mt={1}>
