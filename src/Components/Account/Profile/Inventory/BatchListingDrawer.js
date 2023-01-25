@@ -2,8 +2,6 @@ import {CloseButton, Flex, Grid, GridItem, Select, Spacer} from "@chakra-ui/reac
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import BundleDrawer from "./components/BundleDrawer";
-import useFeatureFlag from "@src/hooks/useFeatureFlag";
-import Constants from "@src/constants";
 import {ListingDrawer} from "@src/Components/Account/Profile/Inventory/components/ListingDrawer";
 import {TransferDrawer} from "@src/Components/Account/Profile/Inventory/components/TransferDrawer";
 import {setBatchType} from "@src/GlobalState/batchListingSlice";
@@ -18,8 +16,6 @@ const actions = {
 
 export const BatchListingDrawer = ({ onClose, ...gridProps }) => {
   const dispatch = useDispatch();
-  const { Features } = Constants;
-  const useBundles = useFeatureFlag(Features.BUNDLES);
   const batchListingCart = useSelector((state) => state.batchListing);
 
   const gridTemplateRows = () => {
@@ -45,9 +41,7 @@ export const BatchListingDrawer = ({ onClose, ...gridProps }) => {
           {/*TODO update*/}
           <Select me={2} value={batchListingCart.type} onChange={handleTypeChange}>
             <option value={actions.listing}>List for sale</option>
-            {useBundles && (
-              <option value={actions.bundle}>Create a Bundle</option>
-            )}
+            <option value={actions.bundle}>Create a Bundle</option>
             <option value={actions.transfer}>Transfer</option>
           </Select>
           <Spacer />

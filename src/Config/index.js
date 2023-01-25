@@ -254,8 +254,6 @@ export const isLocalEnv = () => {
 
 export const featureFlags = {
   [Features.AUCTION_OPTION_SALE]: false,          // Auction listing option
-  [Features.CMS_NOTIFICATIONS]: true,             // Notifications
-  [Features.CMS_FULL_PROFILES]: true,             // User Profiles
   [Features.GET_COLLECTION_NEW_ENDPOINT]: true,   // Paginated collections endpoint
   [Features.CMS_COLLECTIONS]: false,               // Collection editing
   [Features.VERIFIED_SWITCH_COLLECTION]: false,    // Filter verified collections
@@ -264,7 +262,5 @@ export const featureFlags = {
   [Features.UNVERIFIED_WARNING]: false,            // Warning when buying from unverified collection
   [Features.REPORT_COLLECTION]: false,             // Report button on collection page
   [Features.NEW_CHAKRA_THEME]: false,             // Update theme
-  [Features.GLOBAL_SEARCH]: true,                // Global search bar
-  [Features.BUNDLES]: true,                      // Bundles
   [Features.GASLESS_LISTING]: false                //Gasless listings
 }
