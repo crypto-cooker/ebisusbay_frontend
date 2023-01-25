@@ -8,8 +8,6 @@ import {faBars, faMoon, faSun} from '@fortawesome/free-solid-svg-icons';
 import AccountMenu from './accountMenu';
 import NotificationMenu from '../../../Components/components/NotificationMenu';
 import { setTheme } from '@src/GlobalState/User';
-import useFeatureFlag from "@src/hooks/useFeatureFlag";
-import Constants from "@src/constants";
 import {
   Box,
   Flex,
@@ -56,11 +54,7 @@ const Header = function () {
   useOutsideClick({
     ref: ref,
     handler: onClose,
-  })
-
-  const { Features } = Constants;
-  const isNotificationsEnabled = useFeatureFlag(Features.CMS_NOTIFICATIONS);
-  const isGlobalSearchEnabled = useFeatureFlag(Features.GLOBAL_SEARCH);
+  });
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
@@ -95,7 +89,7 @@ const Header = function () {
                 </HStack>
               </a>
             </Link>
-            {!shouldUseMobileSearch && isGlobalSearchEnabled && (
+            {!shouldUseMobileSearch && (
               <Box w="100%" me={2} ms={4}>
                 <Search />
               </Box>
@@ -116,9 +110,9 @@ const Header = function () {
                 {/*<NavLink name={'Auction'} to={'/auctions/mutant-serum'} />*/}
               </HStack>
 
-              {shouldUseMobileSearch && isGlobalSearchEnabled && <MobileSearchDrawer />}
+              {shouldUseMobileSearch && <MobileSearchDrawer />}
               <Cart />
-              {isNotificationsEnabled && profile && <NotificationMenu />}
+              {profile && <NotificationMenu />}
               <span className="my-auto">
                 <AccountMenu />
               </span>

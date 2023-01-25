@@ -199,7 +199,7 @@ const RyoshiDrop = ({drop}) => {
           await tx.wait();
         }
 
-        const vipCollection = collections.find((c) => c.slug === 'vip-founding-member');
+        const vipCollection = collections.find((c) => c.slug === 'founding-member');
         const vipContract = await new ethers.Contract(vipCollection.address, ERC1155, user.provider.getSigner());
         const isApprovedVip = await vipContract.isApprovedForAll(user.address, drop.address);
         if (!isApprovedVip) {

@@ -14,7 +14,9 @@ import { filter } from 'lodash';
 import styled from "styled-components";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
 import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
+import {appConfig} from "@src/Config";
 
+const config = appConfig();
 const mobileListBreakpoint = 1000;
 const PAGE_SIZE = 50;
 const tableMobileView = typeof window !== 'undefined' && window.innerWidth > mobileListBreakpoint;
@@ -66,7 +68,9 @@ const Table = ({ timeFrame, searchTerms, onlyVerified }) => {
   const collectionNumberActiveValue = ({ numberActive }) => numberActive;
 
   const fetcher = async ({ pageParam = 1 }) => {
-    return await getCollections(pageParam);
+    const result = await getCollections(pageParam);
+    const knownContracts = config.collections.map((c) => c.address.toLowerCase());
+    return result.filter((collection) => knownContracts.includes(collection.collection.toLowerCase()));
   };
 
   const {
@@ -124,9 +128,7 @@ const Table = ({ timeFrame, searchTerms, onlyVerified }) => {
 
   useEffect(() => {
     changeFilters({ ...filter, verified: onlyVerified ? 1 : null })
-  }, [onlyVerified])
-
-  onlyVerified
+  }, [onlyVerified]);
 
   const historyContent = useMemo(() => {
     return status === "loading" ? (
