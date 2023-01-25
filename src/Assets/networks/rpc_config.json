@@ -10455,6 +10455,7 @@
         "avatar": "/img/collections/thirteenth-evil/avatar.webp",
         "banner": "/img/collections/thirteenth-evil/banner.webp",
         "card": "/img/collections/thirteenth-evil/card.webp",
+        "website": "https://13th-evil.netlify.app",
         "twitter": "https://twitter.com/ThirteenthEvil",
         "discord": "https://discord.gg/DkZRW9n7vw",
         "rankings": {
@@ -17093,6 +17094,33 @@
       },
       "verification": {
         "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "AnnabelleCoinNFT",
+      "slug": "annabellecoinnft",
+      "multiToken": false,
+      "address": "0x43c4B9D8EA3E33dc67a0432d6eD018f5C7B2746B",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "AnnabelleCoinNFT is a hand-drawn collection of 1313 NFTs by the ThirteenthEvil team. The collection depicts the coin Annabelle (ANNA) WCRO/ANNA contract: 0x43c4B9D8EA3E33dc67a0432d6eD018f5C7B2746B  Anyone can buy it on MMF. By holding this coin you get automatic airdrops in the form of (USDC) from every buy and sell transaction. You don't have to do anything extra just hold it on your wallet! ",
+        "avatar": "/img/collections/annabellecoinnft/avatar.webp",
+        "banner": "/img/collections/annabellecoinnft/banner.webp",
+        "card": "/img/collections/annabellecoinnft/card.webp",
+        "website": "https://13th-evil.netlify.app",
+        "twitter": "https://twitter.com/ThirteenthEvil",
+        "discord": "https://discord.gg/sBJcsPrcRq",
+        "telegram": "https://t.me/AnnabelleCoin",
+        "rankings": {
+          "source": "provided"
+        },
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
         "doxx": false,
         "kyc": false
       }
