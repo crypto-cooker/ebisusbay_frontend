@@ -573,7 +573,8 @@ export const findCollectionByAddress = (address, tokenId) => {
 
 export const findCollectionFloor = (knownContract, collectionsStats) => {
   const collectionStats = collectionsStats.find((o) => {
-    if (knownContract.multiToken && o.collection.indexOf('-') !== -1) {
+    const address = o.collection ?? o.address;
+    if (knownContract.multiToken && address.indexOf('-') !== -1) {
       let parts = o.collection.split('-');
       return caseInsensitiveCompare(knownContract.address, parts[0]) && knownContract.id === parseInt(parts[1]);
     } else {
