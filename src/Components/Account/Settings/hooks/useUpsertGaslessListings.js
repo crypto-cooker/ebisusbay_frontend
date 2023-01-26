@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import useCreateListingSigner from '../../../../hooks/useCreateListingSigner';
 import {useSelector} from "react-redux";
-import {cancelListing, createListing} from '@src/core/cms/endpoints/gaslessListing';
+import {cancelListing, upsertListing} from '@src/core/cms/endpoints/gaslessListing';
 import UUID from "uuid-int";
 import {caseInsensitiveCompare, isGaslessListing} from "@src/utils";
 import {getAllListingsByUser} from "@src/core/api/next/listings";
@@ -70,7 +70,7 @@ const useUpsertGaslessListings = () => {
         pendingListing.sellerSignature = objectSignature;
         pendingListing.seller = user.address.toLowerCase();
         pendingListing.digest = objectHash;
-        const res = await createListing(pendingListing)
+        const res = await upsertListing(pendingListing)
       }
 
       setResponse({

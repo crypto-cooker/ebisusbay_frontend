@@ -6,21 +6,9 @@ const api = axios.create({
   baseURL: config.urls.cms,
 });
 
-export const createListing = async (listing) => {
+export const upsertListing = async (listing) => {
   try {
     const response = await api.post('gasless-listing', listing);
-
-    return response.data;
-  } catch (e) {
-    console.log('error', e);
-    throw e;
-
-  }
-}
-
-export const updateListing = async (listing) => {
-  try {
-    const response = await api.patch('gasless-listing', listing);
 
     return response.data;
   } catch (e) {
