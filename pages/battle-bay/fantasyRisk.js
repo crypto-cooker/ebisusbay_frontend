@@ -215,3 +215,20 @@ function displayWinningFactions()
         icon.src = "images/"+getWinningFactionInRegion(pins[i].title)+".png";
     }
 }
+function openPanel(evt, panelName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = "smallBtnDisabled";
+    }
+    document.getElementById(panelName).style.display = "block";
+    evt.currentTarget.className = "smallBtnSelected";
+}
+function RefreshInfo()
+{
+    displayTop3InRegion(selectedRegion);
+}

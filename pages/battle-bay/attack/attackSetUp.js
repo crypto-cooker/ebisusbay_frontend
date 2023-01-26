@@ -1,32 +1,19 @@
+const battleText = document.getElementById('battleText');
 var attackerTroops;
 var defenderTroops;
-
-var defenderFaction;
 var attackerFaction;
+var defenderFaction;
 
-const input = document.getElementById('defenderFactionInput');
-const battleText = document.getElementById('battleText');
-// input.addEventListener('change', selectDefenderFaction);
+// const input = document.getElementById('defenderFactionInput');
+// // input.addEventListener('change', selectDefenderFaction);
+// const attackerFactionInput = document.getElementById('attackerFactionInput');
+// // attackerFactionInput.addEventListener('change', showMaxAttackers);
 
-const attackerFactionInput = document.getElementById('attackerFactionInput');
-// attackerFactionInput.addEventListener('change', showMaxAttackers);
-
-// function showMaxAttackers(e)
-// {
-//     attackerFaction = attackerFactionInput.value;
-//     console.log(attackerFaction);
-//     var maxText = document.getElementById('troopsToAttackWith');
-//     var maxTextInput = document.getElementById('troopsToAttackWithInput');
-//     var troops = getAttackerTroops();
-
-//     maxText.textContent = "Troops to wager (max " +troops+")";
-//     maxTextInput.max = troops;
-// }
 function updateValue() {
-    console.log(defenderFaction);
-    console.log(attackerFaction);
-    console.log(attackerTroops);
-    console.log(defenderTroops);
+    // console.log(defenderFaction);
+    // console.log(attackerFaction);
+    // console.log(attackerTroops);
+    // console.log(defenderTroops);
 
     if(defenderFaction != null && attackerFaction != null && attackerTroops != null && defenderTroops != null)
     {
@@ -52,6 +39,7 @@ function setUpDropDown(inputId, ulId, factions, selectedFunction)
     });
     ul.style.display = "none";
 }
+
 function selectDefenderFaction(x, inputId, ulId)
 {
     defenderFaction = x;
@@ -74,40 +62,14 @@ function selectAttackerFaction(x, inputId, ulId)
 
     maxText.textContent = "Troops to wager (max " +attackerTroops+")";
     maxTextInput.max = attackerTroops;
+    maxTextInput.value = attackerTroops;
     updateValue();
-}
-
-
-var dice = {
-    sides: 6,
-    roll: function () {
-      var randomNumber = Math.floor(Math.random() * this.sides) + 1;
-      return randomNumber;
-    }
-  }
-
-function Attack(attacker, defender)
-{
-    while(attacker > 0 && defender > 0)
-    {
-        var attackerRoll = dice.roll();
-        var defenderRoll = dice.roll();
-        if(attackerRoll > defenderRoll)
-        {
-            defender--;
-        }
-        else
-        {
-            attacker--;
-        }
-    }
-    return attacker, defender;
 }
 
 function getAttackerTroops()
 {
-    console.log("attackerFaction: " + attackerFaction);
-    console.log("selectedRegion: " + selectedRegion);
+    // console.log("attackerFaction: " + attackerFaction);
+    // console.log("selectedRegion: " + selectedRegion);
 
     for(var i=0; i<deployedTroops.deployments.length; i++)  
     {  
@@ -130,41 +92,7 @@ function getDefenderTroops()
         }
     }
 }
-function removeAttackerTroops(troops)
-{
-    var initialTroops = getAttackerTroops();
-    initialTroops -= (initialTroops - troops);
-    setAttackerTroops(initialTroops);
-}
-function removeDefenderTroops(troops)
-{
-    var initialTroops = getDefenderTroops();
-    initialTroops -= (initialTroops - troops);
-    setDefenderTroops(initialTroops);
-}
-function setAttackerTroops(troops)
-{
-    //set the attacker troops
-}
-function setDefenderTroops(troops)
-{
-    //set the defender troops
-}
 
-function Battle()
-{
-    // var attacker = getAttackerTroops();
-    // var defender = getDefenderTroops();
-
-    // attacker, defender = Attack(attacker, defender)
-
-    // removeAttackerTroops(attacker);
-    // removeDefenderTroops(defender);
-
-    // showConclusion();
-    document.getElementById("attackSetUp").style.display = "none";
-    document.getElementById("attackConclusion").style.display = "block";
-}
 
 function getAttackerFactions()
 {
@@ -194,6 +122,7 @@ function getDefenderFactions()
     }
     return factionsInRegion;
 }
+
 function filterFactions(inputId, ulId) {
     document.getElementById(ulId).style.display = "block";
 
@@ -215,32 +144,4 @@ function filterFactions(inputId, ulId) {
     }
     // console.log("filterFactions");
 }
-// function selectDefenderFaction(x, inputId, ulId)
-// {
-//     defenderFaction = x.innerHTML;
-//     defenderTroops = getDefenderTroops();
 
-//     document.getElementById(inputId).value = defenderFaction;
-//     document.getElementById(ulId).style.display = "none";
-
-//     // updateValue();
-// }
-
-function openPanel(evt, panelName) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = "smallBtnDisabled";
-    }
-    document.getElementById(panelName).style.display = "block";
-    evt.currentTarget.className = "smallBtnSelected";
-  }
-  function attackAgain()
-  {
-    document.getElementById("attackSetUp").style.display = "block";
-    document.getElementById("attackConclusion").style.display = "none";
-  }

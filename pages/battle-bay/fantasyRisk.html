@@ -20,13 +20,14 @@
   <form action="/action_page.php" class="form-container">
   <h1 id="selectedRegion" class = "TitleText"> Region Name</h1>
   <button type="button" class="x" onclick="closeForm()">Cancel</button>
-  
 
   <div class="form-container">
-    <button type="button" name="tablinks" class="smallBtnSelected" onclick="openPanel(event, 'Info')">Info</button>
+    <button type="button" name="tablinks" class="smallBtnSelected" onclick="openPanel(event, 'Info'), RefreshInfo()">Info</button>
     <button type="button" name="tablinks" class="smallBtnDisabled" onclick="openPanel(event, 'Deploy')">Deploy</button>
     <button type="button" name="tablinks" class="smallBtnDisabled" onclick="openPanel(event, 'Attack')">Attack</button>
   </div>
+
+  <!-- Deploy Tab -->
   <div id="Deploy" class="tabcontent">
     <div >
       <button type="button" id="deploy" class="smallBtnSelected" onclick="selectDeploy()">Deploy</button>
@@ -48,16 +49,19 @@
     </div>
   </div>
 
-
-
+  <!-- Attack Tab -->
   <div id="Attack" class="tabcontent">
     <div id="attackSetUp" style="display: block;">
       <div class="container">
-        <div class="row" style="height: 100%;">
+        <p>If you are a faction owner, you will be able to attack other troops in the region with troops you have deployed</p>
+        <div class="row">
+        </div>
+      </div>
             <div class="column border-right">
                 <p>Attackers</p>
-                <label class = "basicText" style ="float: left;" for="quantity">Select Troops you have deployed:</label>
-                <input type="text"  id="attackerFactionInput" onkeyup="filterFactions('attackerFactionInput','attackerFactionUl')" placeholder="Search for faction.."class = "entryField"/>
+                <label class = "basicText" style ="float: left;" for="quantity">Attacker Faction:</label>
+                <input type="text"  id="attackerFactionInput" onkeyup="filterFactions('attackerFactionInput','attackerFactionUl')" 
+                  onclick="filterFactions('attackerFactionInput','attackerFactionUl')" placeholder="Search for faction.."class = "entryField"/>
                 <ul id="attackerFactionUl"> </ul>
 
                 <label class = "basicText" for="wager" id="troopsToAttackWith">Troops to wager (max 0):</label>
@@ -67,10 +71,10 @@
             <div class="column border-left">
                 <p>Defenders</p>
                 <label class = "basicText" for="quantity">Select A Faction to attack:</label>
-                <input type="text"  id="defenderFactionInput" onkeyup="filterFactions('defenderFactionInput','defenderFactionUL')" placeholder="Search for faction.."class = "entryField"/>
+                <input type="text"  id="defenderFactionInput" onkeyup="filterFactions('defenderFactionInput','defenderFactionUL')" 
+                  onclick="filterFactions('defenderFactionInput','defenderFactionUL')" placeholder="Search for faction.."class = "entryField"/>
                 <ul id="defenderFactionUL"></ul>
             </div>
-        </div>
 
         <div class="bottomform">
           <label class = "basicText" id="battleText" for="Battle"><br></label>
@@ -80,39 +84,42 @@
             The lower roll (ties going to defender) loses a troop. This continues until one 
               side has run out of troops">How are Attacks Calculated? (Hover for info)</div>
         </div>
-      </div>
   </div>
-
     <div id="attackConclusion" style="display: none;">
       <div class="container">
-                  <p>Victory!</p>
-
-                  <div class="row">
-              <div class="column border-right">
-                  <p>Attackers</p>
-                  <label class = "basicText" for="quantity">Mad Merkat: -7 of 10</label>
-                  <p></p>
-              </div>
-              <div class="column border-left">
-                  <p>Defenders</p>
-                  <label class = "basicText" for="quantity">CroSkull: -5 of 5</label>
-                </select> 
-              </div>
+        <p id="attackOutcome">Victory!</p>
+        <div class="row">
+          <div class="column border-right">
+            <p>Attackers</p>
+            <label class = "basicText" id="attackerOutcome">Mad Merkat: -7 of 10</label>
+            <p></p>
           </div>
-          <div class="bottomform">
-            <button type="button" class="minibtn" onclick="addItem()">See detailed results</button>
-            <button type="button" class="btn cancel" onclick="attackAgain()">Attack Again</button>
+          <div class="column border-left">
+            <p>Defenders</p>
+            <label class = "basicText" id="defenderOutcome">CroSkull: -5 of 5</label>
+            </select> 
           </div>
+        </div>
+        <div class="bottomform">
+          <button type="button" class="btn cancel" onclick="attackAgain()">Attack Again</button>
+          <button type="button" class="minibtn" id="resultsButton" onclick="showDetailedResults()">See detailed results</button>
+        </div>
       </div>
+
+      <div class="form-popup" id="detailedResultsForm" style="display: none; overflow-y: scroll; 
+        min-height:300px; height:300px;">
+        <form class="form-container">
+          <label class = "basicText" id="">Results:</label>
+          <p id="outcomeLog"></p>
+        </form>
+      </div>
+
     </div>
   </div>
 
-
-
-
+  <!-- Info Tab -->
   <div id="Info" class="tabcontent" style="display: block;">
       <!-- Table Showing Deployed Troops -->
-  <!-- <p id="regionDesc" class = "basicText"> </p> -->
   <p id="region Bonus" class = "basicText"> The faction with the highest troop count on (Date & Time Here) will recieve a reward of (Reward Here)</p>
   <div class="mt-4 table-responsive">
     <table class="table">
@@ -128,7 +135,8 @@
 </table>
   </div>
   </div>
-  </div>
+  
+</div>
   </form>
 </div>
 
@@ -175,28 +183,13 @@
     </div>
   </div>
 
-<!-- <div class="scaleable-wrapper" id="scaleable-wrapper">
-  
-  <div class="very-specific-design" id="very-specific-design">
-  
-    <div class="inside">
-      
-    </div>
-    
-  </div>
-  
-</div> -->
-
 <p id="regionName" class = "TitleText"></p>
 <p id="desc" class="css-1fzih88">Mouse over a region to see the troops deployed to it.</p>
-
 <p id="deploymentNotes" class = "basicText"></p>
-<!-- <button onclick="reset_troops()">Reset</button> -->
+<!-- <button onclick="reset_troops()">Reset</button>-->
 <p class = "basicText" id="troopsAppiled"></p>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
   
-
 
 <div class="form-popup" id="factionRegistrationForm">
 
@@ -262,7 +255,8 @@
 <script type="text/javascript" src="delegateToFaction.js"></script>
 <!-- <script type="text/javascript" src="jquery.imagemapster.js"></script> -->
 <script src="queryAPI.js"></script>
-<script src="attack.js"></script>
+<script src="attack/attackSetUp.js"></script>
+<script src="attack/attack.js"></script>
 <!-- <script src="imageMapResizer.js"></script> -->
 
 </html>
