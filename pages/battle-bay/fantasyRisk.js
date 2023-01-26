@@ -3,7 +3,7 @@ const factions = ["Mad Merkat", "CroSkull", "Boomer Squad", "Flaming Phenix Club
 const regionFlags = ["pin-Southern-Trident", "pin-Dragonland", "pin-Human-Kingdoms", "pin-Dwarf-Mines"];
 
 class Deployment {
-    constructor(region, faction, amount) {
+    constructor(region, faction, amount, deploymentOwner) {
       this.code = region + faction;
       this.region = region;
       this.faction = faction;
@@ -40,7 +40,7 @@ class DeployedTroops {
 
 let deployedTroops = new DeployedTroops()
 RandomizeStats();
-// displayWinningFactions();
+displayWinningFactions();
 
 function reset_troops(){
     deployedTroops = new DeployedTroops()
@@ -54,6 +54,8 @@ function selectRegion(x)
     selectedRegion = x;
     document.getElementById("selectedRegion").innerHTML = selectedRegion;
     displayTop3InRegion(selectedRegion);
+    setUpDropDown('defenderFactionInput','defenderFactionUL', getDefenderFactions(), selectDefenderFaction);
+    setUpDropDown('attackerFactionInput','attackerFactionUl', getAttackerFactions(), selectAttackerFaction);
 }
 function getRegionStats(region, pin)
 {
@@ -66,15 +68,14 @@ function getRegionStats(region, pin)
 }
 function CheckFaction()
 {
-    var mylist = document.getElementById("factionList");  
+    var inputField = document.getElementById("deployFactionInput");  
 
-    if(selectedFaction == "None" || mylist.selectedIndex==0){
+    if(selectedFaction == "None" || inputField.innerHTML == "None"){
         console.log("No faction selected");
-        // document.getElementById("selectedFaction").innerHTML = "Please select a faction";
         return true;
     }
     else{
-        // document.getElementById("selectedFaction").innerHTML = "Selected Faction: " + selectedFaction;
+        return false;
     }
 }
 function CheckRegion()

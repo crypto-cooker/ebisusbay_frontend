@@ -3,61 +3,135 @@
 <head>
   <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
   <script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom/dist/panzoom.min.js"></script>
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"> -->
   <link rel="stylesheet" href="fantasyRisk.css">
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=yes"> -->
 </head>
 
 <body>
-<div>
-  <button type="button" class="btn" id="registerFaction" onclick="openRegistrationForm()">Register Faction</button>
-  <button type="button" class="btn" id="delgateTroops" onclick="openDelegateForm()">Delegate Troops</button>
-  <button type="button" class="btn" id="editFaction" onclick="editFaction()">Edit Faction</button>
-</div>
-<div class="form-popup form-container" id="myForm">
-
-  <form action="/action_page.php" class="form-container">
-    <h1 id="selectedRegion" class = "TitleText"> Region Name</h1>
-
-    <!-- Table Showing Deployed Troops -->
-    <p id="regionDesc" class = "basicText"> </p>
-    <div class="mt-4 table-responsive">
-      <table class="table">
-      <thread class="border-bottom">
-          <tr>
-              <th scope="col" class="tex-center">Rank</th>
-              <th scope="col" class="tex-center">Faction</th>
-              <th scope="col" class="tex-center">Troops</th>
-          </tr>
-      </thread>
-      <tbody id="troopsTable">
-          <!-- <tr>
-              <th scope="row" class="text-center">1</td>
-              <td class="text-center">test</td>
-              <td class="text-center">100</td>
-          </tr> -->
-      </tbody>
-  </table>
+  <div>
+    <button type="button" class="btn" id="registerFaction" onclick="openRegistrationForm()">Register Faction</button>
+    <button type="button" class="btn" id="delgateTroops" onclick="openDelegateForm()">Delegate Troops</button>
+    <button type="button" class="btn" id="editFaction" onclick="editFaction()">Edit Faction</button>
   </div>
-  <h1></h1>
-  <p > </p>
-    
-    <button type="button" id="deploy" class="smallBtnSelected" onclick="selectDeploy()">Deploy</button>
-    <button type="button" id="recall" class="smallBtnDisabled" onclick="selectRecall()">Recall</button>
-    <p id="troops" class = "basicText" ></p>
-    <label class = "basicText" for="quantity">Please select a faction:</label>
 
-    <select class = "css-1fzih88" id = "factionList" onchange = "selectFaction()" >  
-      <option> ---Choose faction--- </option>  
-    </select>  
 
-    <p></p>
-    <label class = "basicText" for="quantity">Quantity:</label>
-    <input class = "css-1fzih88" type="number" id="quantity" name="quantity" min="0">
-    <p></p>
+<div class="form-popup form-container" id="myForm">
+  <form action="/action_page.php" class="form-container">
+  <h1 id="selectedRegion" class = "TitleText"> Region Name</h1>
+  <button type="button" class="x" onclick="closeForm()">Cancel</button>
+  
 
-    <button type="button" class="btn" onclick="Apply()">Apply</button>
-    <button type="button" class="btn cancel" onclick="closeForm()">Cancel</button>
+  <div class="form-container">
+    <button type="button" name="tablinks" class="smallBtnSelected" onclick="openPanel(event, 'Info')">Info</button>
+    <button type="button" name="tablinks" class="smallBtnDisabled" onclick="openPanel(event, 'Deploy')">Deploy</button>
+    <button type="button" name="tablinks" class="smallBtnDisabled" onclick="openPanel(event, 'Attack')">Attack</button>
+  </div>
+  <div id="Deploy" class="tabcontent">
+    <div >
+      <button type="button" id="deploy" class="smallBtnSelected" onclick="selectDeploy()">Deploy</button>
+      <button type="button" id="recall" class="smallBtnDisabled" onclick="selectRecall()">Recall</button>
+      <p id="troops" class = "basicText" ></p>
+
+      <label class = "basicText" style ="float: left;" for="quantity">Please select a faction:</label>
+      <input type="text"  id="deployFactionInput" onkeyup="filterFactions('deployFactionInput','deployFactionUl')"
+        onchange = "selectFaction(this)" placeholder="Search for faction.."class = "entryField"/>
+      <ul id="deployFactionUl"> </ul>
+
+      <p></p>
+      <label class = "basicText" for="quantity">Quantity:</label>
+      <input class = "css-1fzih88" type="number" id="quantity" name="quantity" min="0">
+      <p></p>
+
+      <button type="button" class="btn" onclick="Apply()">Apply</button>
+      <button type="button" class="btn cancel" onclick="closeForm()">Cancel</button>
+    </div>
+  </div>
+
+
+
+  <div id="Attack" class="tabcontent">
+    <div id="attackSetUp" style="display: block;">
+      <div class="container">
+        <div class="row" style="height: 100%;">
+            <div class="column border-right">
+                <p>Attackers</p>
+                <label class = "basicText" style ="float: left;" for="quantity">Select Troops you have deployed:</label>
+                <input type="text"  id="attackerFactionInput" onkeyup="filterFactions('attackerFactionInput','attackerFactionUl')" placeholder="Search for faction.."class = "entryField"/>
+                <ul id="attackerFactionUl"> </ul>
+
+                <label class = "basicText" for="wager" id="troopsToAttackWith">Troops to wager (max 0):</label>
+                <input class = "css-1fzih88" type="number" id="troopsToAttackWithInput" name="wager" min="0">
+                <p></p>
+            </div>
+            <div class="column border-left">
+                <p>Defenders</p>
+                <label class = "basicText" for="quantity">Select A Faction to attack:</label>
+                <input type="text"  id="defenderFactionInput" onkeyup="filterFactions('defenderFactionInput','defenderFactionUL')" placeholder="Search for faction.."class = "entryField"/>
+                <ul id="defenderFactionUL"></ul>
+            </div>
+        </div>
+
+        <div class="bottomform">
+          <label class = "basicText" id="battleText" for="Battle"><br></label>
+          <label class = "basicText right" for="attackCost">Cost: 100 Token</label>
+          <button type="button" class="btn" onclick="Battle()">Confirm Attack</button>
+          <div title="When attacking, a D6 roll is made for both the attacker and the defender. 
+            The lower roll (ties going to defender) loses a troop. This continues until one 
+              side has run out of troops">How are Attacks Calculated? (Hover for info)</div>
+        </div>
+      </div>
+  </div>
+
+    <div id="attackConclusion" style="display: none;">
+      <div class="container">
+                  <p>Victory!</p>
+
+                  <div class="row">
+              <div class="column border-right">
+                  <p>Attackers</p>
+                  <label class = "basicText" for="quantity">Mad Merkat: -7 of 10</label>
+                  <p></p>
+              </div>
+              <div class="column border-left">
+                  <p>Defenders</p>
+                  <label class = "basicText" for="quantity">CroSkull: -5 of 5</label>
+                </select> 
+              </div>
+          </div>
+          <div class="bottomform">
+            <button type="button" class="minibtn" onclick="addItem()">See detailed results</button>
+            <button type="button" class="btn cancel" onclick="attackAgain()">Attack Again</button>
+          </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div id="Info" class="tabcontent" style="display: block;">
+      <!-- Table Showing Deployed Troops -->
+  <!-- <p id="regionDesc" class = "basicText"> </p> -->
+  <p id="region Bonus" class = "basicText"> The faction with the highest troop count on (Date & Time Here) will recieve a reward of (Reward Here)</p>
+  <div class="mt-4 table-responsive">
+    <table class="table">
+    <thread class="border-bottom">
+        <tr>
+            <th scope="col" class="tex-center">Rank</th>
+            <th scope="col" class="tex-center">Faction</th>
+            <th scope="col" class="tex-center">Troops</th>
+        </tr>
+    </thread>
+    <tbody id="troopsTable">
+    </tbody>
+</table>
+  </div>
+  </div>
+  </div>
   </form>
+</div>
+
 
 </div>
 
@@ -65,7 +139,7 @@
 
   <div class="mapBorder container" >
     <div id="panzoom" >
-      <img src="fantasyRisk2.png" alt="Trulli" usemap="#image-map" width="100%" class="maparea" id="islandMap" >
+      <img src="images/fantasyRisk2.png" alt="Trulli" usemap="#image-map" width="100%" class="maparea" id="islandMap" >
       <map name="image-map" width="100%">
       <area onmouseover="getRegionStats(title, 'pin-Southern-Trident')" target="" alt="Southern Trident" title="Southern Trident" onclick="selectRegion(title), openForm()"
             coords="255,534,295,532,337,554,396,534,410,481,351,411,331,377,264,391,225,377,208,430,157,439,191,515" shape="poly"> 
@@ -181,13 +255,14 @@
 <div id="overlay2" onclick="closeForm(), closeDelegateForm(), closeRegistrationForm()"></div>
 
 <script type="text/javascript" src="jquery-1.6.2.min.js"></script>
-<script type="text/javascript" src="jquery.maphilight.js"></script>
+<!-- <script type="text/javascript" src="jquery.maphilight.js"></script> -->
 <script type="text/javascript" src="fantasyRisk.js"></script>
 <script type="text/javascript" src="selectRegion.js"></script>
 <script type="text/javascript" src="registerFaction.js"></script>
 <script type="text/javascript" src="delegateToFaction.js"></script>
-<script type="text/javascript" src="jquery.imagemapster.js"></script>
+<!-- <script type="text/javascript" src="jquery.imagemapster.js"></script> -->
 <script src="queryAPI.js"></script>
+<script src="attack.js"></script>
 <!-- <script src="imageMapResizer.js"></script> -->
 
 </html>
