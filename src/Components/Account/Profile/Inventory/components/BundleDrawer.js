@@ -68,7 +68,9 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
           toast.success('The bundle was created successfully');
           dispatch(setRefetchNfts(true))
           dispatch(clearBatchListingCart())
-          formRef.current.resetForm();
+          if (typeof formRef.current.resetForm === 'function') {
+            formRef.current.resetForm();
+          }
         } catch (error) {
           console.log(error);
           toast.error(`Error`);
