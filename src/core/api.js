@@ -593,7 +593,7 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
   }
 
   if (!zeroMatched && results.length > 0) {
-    return [0];
+    return [];
   }
 
   const signer = walletProvider?.getSigner();
