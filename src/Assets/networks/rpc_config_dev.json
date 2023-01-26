@@ -12965,8 +12965,8 @@
         "categories": []
       },
       "verification": {
-        "doxx": true,
-        "kyc": "ebisu",
+        "doxx": false,
+        "kyc": false,
         "verified": false
       }
     },
