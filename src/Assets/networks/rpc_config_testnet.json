@@ -2969,6 +2969,32 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "ICY",
+      "slug": "icy",
+      "multiToken": false,
+      "address": "0xFAdF08b861BEFB90F024fd12F814Dcf07E7545E9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collection of 1000 IcyCRO glasses. \n\nMint yourself a ICY NFT and you will be part of the biggest community validator project in Cronos and in the whole Cosmos.\n\nIcyCRO has grown quickly to be one the most popular validators and best relayers in three chains: Crypto.org, ATOM and JUNO.",
+        "avatar": "/img/collections/icy/avatar.webp",
+        "card": "/img/collections/icy/card.webp",
+        "banner": "/img/collections/icy/banner.webp",
+        "website": "https://www.icycro.org/",
+        "twitter": "https://twitter.com/IcyCro",
+        "medium": "https://medium.com/@IcyCRO",
+        "telegram": "https://t.co/BDFTTGErlZ",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
@@ -7131,6 +7157,47 @@
         "doxx": false,
         "kyc": true,
         "escrow": false
+      }
+    },
+    {
+      "id": 151,
+      "slug": "icy",
+      "title": "ICY",
+      "subtitle": "A collection of 1000 IcyCRO glasses. \n\nMint yourself a ICY NFT and you will be part of the biggest community validator project in Cronos and in the whole Cosmos.\n\nIcyCRO has grown quickly to be one the most popular validators and best relayers in three chains: Crypto.org, ATOM and JUNO.",
+      "description": "A collection of 1000 IcyCRO glasses. \n\nMint yourself a ICY NFT and you will be part of the biggest community validator project in Cronos and in the whole Cosmos.\n\nIcyCRO has grown quickly to be one the most popular validators and best relayers in three chains: Crypto.org, ATOM and JUNO. \n\nAll the profit that the IcyCRO project makes is shared with the community through jackpot raffles, CRO-ICY farms and NFT staking. \n\nBenefits:\n- Free entry to the monthly IcyCRO Jackpot raffle.\n- ICY airdrop. 5k ICY for every legendary NFT. \n- NFT staking rewards on Crodex. \n\nPlans are also to use the ICY NFTs as CRO-ICY farm boosters in the future. \n\nRevenue sharing:\n- 40% is donated to the best Cronos projects. \n- 40% is used to boost the CRO-ICY farm APR and liquidity. \n- 20% goes for the NFT staking rewards",
+      "author": {
+        "name": "IcyCRO",
+        "website": "https://www.icycro.org/",
+        "twitter": "https://twitter.com/IcyCro",
+        "medium": "https://medium.com/@IcyCRO",
+        "telegram": "https://t.co/BDFTTGErlZ"
+      },
+      "address": "0xFAdF08b861BEFB90F024fd12F814Dcf07E7545E9",
+      "maxMintPerTx": 5,
+      "maxMintPerAddress": 10,
+      "totalSupply": 1000,
+      "cost": "550",
+      "memberCost": "500",
+      "whitelistCost": "480",
+      "foundersOnly": false,
+      "start": 1674756865000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "priceDescription": "Whitelist-only presale for the first 12 hours (limit 5 per address). Public sale after presale ends.",
+      "images": {
+        "drop": "/img/drops/icy/drop.webp",
+        "banner": "/img/collections/icy/banner.webp",
+        "avatar": "/img/collections/icy/avatar.webp",
+        "preview": "/img/collections/icy/card.webp"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
       }
     }
   ]
