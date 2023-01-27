@@ -48,35 +48,43 @@ const numberRegexValidation = /^[1-9]+[0-9]*$/;
 const expirationDatesValues = [
   {
     value: 3600000,
-    label: '1 Hour'
+    label: '1 hour'
   },
   {
     value: 10800000,
-    label: '3 Hours'
+    label: '3 hours'
   },
   {
     value: 21600000,
-    label: '6 Hours'
+    label: '6 hours'
   },
   {
     value: 86400000,
-    label: '1 Day'
+    label: '1 day'
   },
   {
     value: 259200000,
-    label: '3 Days'
+    label: '3 days'
   },
   {
     value: 604800000,
-    label: '7 Days'
+    label: '1 week'
   },
   {
     value: 1296000000,
-    label: '15 Days'
+    label: '2 weeks'
   },
   {
     value: 2592000000,
-    label: '30 Days'
+    label: '1 month'
+  },
+  {
+    value: 7776000000,
+    label: '3 month'
+  },
+  {
+    value: 15552000000,
+    label: '6 months'
   },
 ]
 
