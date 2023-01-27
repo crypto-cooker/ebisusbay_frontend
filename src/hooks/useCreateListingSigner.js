@@ -64,7 +64,7 @@ const useSignature = () => {
     const considerationPrice= ethers.utils.parseEther(`${signatureValues.price}`);
     const offerItem = {
       itemType: signatureValues?.is1155 ? ItemType.ERC1155 : ItemType.ERC721, 
-      token: signatureValues.collectionAddress,
+      token: signatureValues.collectionAddress.toLowerCase(),
       identifierOrCriteria: BigNumber.from(signatureValues.tokenId),
       startAmount: 1,
       endAmount: 1
@@ -79,7 +79,7 @@ const useSignature = () => {
     };
 
     const order = {
-      offerer: user.address,
+      offerer: user.address.toLowerCase(),
       offerings: [offerItem],
       considerations: [considerationItem],
       orderType: 0, //OrderType.SELL_NFT_NATIVE -> 0
