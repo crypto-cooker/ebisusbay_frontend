@@ -16850,7 +16850,7 @@
       "name": "ICY",
       "slug": "icy",
       "multiToken": false,
-      "address": "",
+      "address": "0x0Ea3bE4Ca12b7B43e974264a210f4de0e273A027",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -22972,7 +22972,7 @@
         "medium": "https://medium.com/@IcyCRO",
         "telegram": "https://t.co/BDFTTGErlZ"
       },
-      "address": "",
+      "address": "0x0Ea3bE4Ca12b7B43e974264a210f4de0e273A027",
       "maxMintPerTx": 5,
       "maxMintPerAddress": 10,
       "totalSupply": 1000,
@@ -22981,6 +22981,10 @@
       "whitelistCost": "480",
       "foundersOnly": false,
       "start": 1674849600000,
+      "salePeriods": {
+        "presale": 1674849600000,
+        "public": 1674892800000
+      },
       "end": null,
       "referral": false,
       "is1155": false,
