@@ -57,7 +57,7 @@ function selectRegion(x)
     setUpDropDown('defenderFactionInput','defenderFactionUL', getDefenderFactions(), selectDefenderFaction);
     setUpDropDown('attackerFactionInput','attackerFactionUl', getAttackerFactions(), selectAttackerFaction);
 }
-function getRegionStats(region, pin)
+function getRegionStats(region)
 {
     document.getElementById("regionName").innerHTML = region;
     document.getElementById("desc").innerHTML = "<br>" +getTroopsInRegion(region);

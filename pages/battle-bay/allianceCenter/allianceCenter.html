@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
+        <script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom/dist/panzoom.min.js"></script>
+        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"> -->
+        <link rel="stylesheet" href="../fantasyRisk.css">
+          <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=yes"> -->
+      </head>
+
+    <body>
+        <div>
+            <button class="btn" onclick="window.location.href='../fancyMenu.html'">back</button>
+            <button type="button" class="btn" id="registerFaction" onclick="openRegistrationForm()">Register Faction</button>
+            <button type="button" class="btn" id="delgateTroops" onclick="openDelegateForm()">Delegate Troops</button>
+            <button type="button" class="btn" id="editFaction" onclick="editFaction()">Edit Faction</button>
+          </div>
+<div class="form-popup" id="factionRegistrationForm">
+
+    <form action="/action_page.php" class="form-container">
+
+      <label class = "basicText" for="quantity">Faction Name:</label>
+      <input type="text" class = "css-1fzih88" id="factionNameEntry" />
+      
+      <p></p>
+
+        <label class = "basicText" for="quantity">Addresses of Wallets or Contract:</label>
+        <input type="text" class = "entryField" id="addresses"/>
+        <button type="button" class="minibtn" onclick="addItem()">Add address</button>
+        <button type="button" class="minibtn" onclick="removeItem()">Remove</button>
+        <button type="button" class="minibtn" id="ShowAddresses" onclick="myFunction()">Hide Addresses</button>
+        <ul id="addresseslist"></ul>
+
+      <p></p>
+      <button type="button" class="btn" id="registerButton" onclick="registerFaction()">Register <br> Cost: 300 Cro</button>
+      <button type="button" class="btn cancel" onclick="closeRegistrationForm()">Cancel</button>
+    </form>
+
+  </div>
+
+  <div class="form-popup" id="delegateForm">
+
+    <form action="/action_page.php" class="form-container">
+
+      <label class = "basicText" id="troopsAvailable">Troops available:</label>
+      <!-- <input type="text" class = "css-1fzih88" id="factionNameEntry" /> -->
+      
+      <p></p>
+
+        <label class = "basicText" >Select a faction to delegate troops to:</label>
+        <input type="text"  id="factionSelector" onkeyup="filterFactions()" placeholder="Search for faction.."class = "entryField"/>
+        
+        <ul id="factionUL">
+          <!-- <li><a onclick="selectFaction(this)">Adele</a></li> -->
+        </ul>
+
+        <p></p>
+        <label class = "basicText" for="quantity">Quantity:</label>
+        <input class = "css-1fzih88" type="number" id="troopsToDeligate" name="quantity" min="0">
+        <p></p>
+
+      <p></p>
+      <button type="button" class="btn" id="delegate" onclick="DelegateTroops()">Delegate</button>
+      <button type="button" class="btn cancel" onclick="closeDelegateForm()">Cancel</button>
+
+    </form>
+
+  </div>
+  <div id="overlay2" onclick="closeForm(), closeDelegateForm(), closeRegistrationForm()"></div>
+  </body>
+
+  <script type="text/javascript" src="../jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="../registerFaction.js"></script>
+<script type="text/javascript" src="../delegateToFaction.js"></script>
+<script>
+    function closeForm() {
+    document.getElementById("factionRegistrationForm").style.display = "none";
+    document.getElementById("delegateForm").style.display = "none";
+    off();
+}
+
+function off() {
+    document.getElementById("overlay2").style.display = "none";
+}
+
+</script>
+</html>

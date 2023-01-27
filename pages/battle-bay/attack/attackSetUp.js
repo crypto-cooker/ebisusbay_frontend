@@ -93,7 +93,7 @@ function getDefenderTroops()
     }
 }
 
-
+//currently, this returns all factions in this region for testing purposes, in the future it will only return those that the wallet owns
 function getAttackerFactions()
 {
     var factionsInRegion = [];
