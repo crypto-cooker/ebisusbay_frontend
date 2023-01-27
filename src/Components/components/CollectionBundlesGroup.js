@@ -17,6 +17,9 @@ const CollectionBundlesGroup = ({collection}) => {
     const query = ListingsQuery.default();
     query.page = pageParam;
 
+    // @todo remove pageSize and fix paging when entire first page is filtered out
+    query.pageSize = 1000;
+
     const listings = await getListingsByCollection(config.contracts.bundle, query);
     listings.data.listings = listings.data.listings.filter((listing) => {
       return listing.nft.nfts.some((nft) => caseInsensitiveCompare(nft.address, collection.address));
