@@ -17148,6 +17148,32 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Ghost OG",
+      "slug": "ghost-og",
+      "multiToken": false,
+      "address": "0xe0160145ec09f98fb3Dbc03b2b5da08D16871e3f",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Ghost is a Community Driven Project aimed at Gamification. Ghost OG consists of 7070 Interactive NFTs, In fact, it is possible to customize your Ghost on our site; change weapons, background and add items.",
+        "avatar": "/img/collections/ghost-og/avatar.webp",
+        "card": "/img/collections/ghost-og/card.webp",
+        "banner": "/img/collections/ghost-og/banner.webp",
+        "website": "https://ghostog.netlify.app/",
+        "twitter": "https://twitter.com/GhostEliteNFTs",
+        "discord": "https://discord.gg/BtbKbxVmEK",
+        "medium": "https://medium.com/@daolab-ecosystem/ghost-elite-nfts-project-details-39f36e3d7228",
+        "categories": [
+          "utilities"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
@@ -23121,6 +23147,46 @@
         "doxx": false,
         "kyc": true,
         "escrow": true
+      }
+    },
+    {
+      "id": 148,
+      "slug": "ghost-og",
+      "title": "Ghost OG",
+      "subtitle": "Ghost is a community driven NFT project aiming to launch a P2E game, the OG NFT Collection consists of 7070 NFTs that will be implemented in the Ghostly world.",
+      "description": "",
+      "author": {
+        "name": "DaoLab",
+        "website": "https://ghostog.netlify.app/",
+        "twitter": "https://twitter.com/GhostEliteNFTs",
+        "discord": "https://discord.gg/BtbKbxVmEK",
+        "medium": "https://medium.com/@daolab-ecosystem/ghost-elite-nfts-project-details-39f36e3d7228"
+      },
+      "address": "0xe0160145ec09f98fb3Dbc03b2b5da08D16871e3f",
+      "maxMintPerTx": 7,
+      "maxMintPerAddress": 21,
+      "totalSupply": 7070,
+      "cost": "110",
+      "foundersOnly": false,
+      "start": 1674852719000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": false,
+      "redirect": "https://ghostog.netlify.app/mint",
+      "images": {
+        "drop": "/img/drops/ghost-og/drop.webp",
+        "banner": "/img/collections/ghost-og/banner.webp",
+        "avatar": "/img/collections/ghost-og/avatar.webp",
+        "preview": "/img/collections/ghost-og/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
       }
     }
   ]
