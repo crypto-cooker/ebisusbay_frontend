@@ -23120,7 +23120,7 @@
         "verified": true,
         "doxx": false,
         "kyc": true,
-        "escrow": false
+        "escrow": true
       }
     }
   ]
