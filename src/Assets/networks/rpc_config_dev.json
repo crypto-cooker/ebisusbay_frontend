@@ -2500,14 +2500,14 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Made with fighting spirit",
-        "avatar": "/img/collections/bushicro/avatar.jpg",
-        "card": "/img/collections/bushicro/card.jpg",
-        "banner": "/img/collections/bushicro/banner.jpg",
+        "description": "Holding a Bushicro NFT is not just a simple possession, it is a badge of honor that signifies your dedication to the principles of the Bushido code. As a holder, you will unlock a special role in our Discord server, with increasing privileges based on the number of NFTs you own. These benefits translate into real-life utilities and perks that will enhance your standing as a true follower of the Bushido way.",
+        "avatar": "/img/collections/bushicro/avatar.webp",
+        "card": "/img/collections/bushicro/card.webp",
+        "banner": "/img/collections/bushicro/banner.webp",
         "twitter": "https://twitter.com/bushicro",
-        "website": "https://bushicro.io/",
+        "website": "https://www.bushicro.com/",
         "discord": "https://discord.gg/27XPAwZHJg",
-        "medium": "https://medium.com/@bushicro",
+        "medium": "https://medium.com/@bushicroNFT",
         "categories": [
           "collectibles",
           "gaming"
@@ -4157,20 +4157,20 @@
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "Made with fighting spirit",
-        "avatar": "/img/collections/bushicro/femalewarriors/avatar.png",
-        "card": "/img/collections/bushicro/femalewarriors/card.jpg",
-        "banner": "/img/collections/bushicro/femalewarriors/banner.png",
+        "description": "Holding a Bushicro NFT is not just a simple possession, it is a badge of honor that signifies your dedication to the principles of the Bushido code. As a holder, you will unlock a special role in our Discord server, with increasing privileges based on the number of NFTs you own. These benefits translate into real-life utilities and perks that will enhance your standing as a true follower of the Bushido way.",
+        "avatar": "/img/collections/bushicro/femalewarriors/avatar.webp",
+        "card": "/img/collections/bushicro/femalewarriors/card.webp",
+        "banner": "/img/collections/bushicro/femalewarriors/banner.webp",
         "twitter": "https://twitter.com/bushicro",
-        "website": "https://bushicro.io/",
+        "website": "https://www.bushicro.com/",
         "discord": "https://discord.gg/27XPAwZHJg",
-        "medium": "https://medium.com/@bushicro",
+        "medium": "https://medium.com/@bushicroNFT",
         "categories": [
           "collectibles"
         ]
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
@@ -23120,7 +23120,7 @@
         "verified": true,
         "doxx": false,
         "kyc": true,
-        "escrow": false
+        "escrow": true
       }
     }
   ]
