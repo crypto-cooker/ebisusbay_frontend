@@ -40,7 +40,8 @@ export const configData = {
       madAuction: '0x47E79264A9d1343C04F4A56922bE7e6177aE03a0',
       slothtyRugsurance: '0x73063E236EadC1e511FbE7313C6D8C5c651009E9',
       bundle: '0x40874F18922267cc2Ca7933828594aB5078C1065',
-      cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233'
+      cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233',
+      gaslessListing: '0x523d6f30c4aaca133daad97ee2a0c48235bff137'
     },
     tokens: {
       loot: {
@@ -100,7 +101,8 @@ export const configData = {
       madAuction: '0x47E79264A9d1343C04F4A56922bE7e6177aE03a0',
       slothtyRugsurance: '0x73063E236EadC1e511FbE7313C6D8C5c651009E9',
       bundle: '0x40874F18922267cc2Ca7933828594aB5078C1065',
-      cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233'
+      cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233',
+      gaslessListing: '0x523d6f30c4aaca133daad97ee2a0c48235bff137'
     },
     tokens: {
       loot: {
@@ -160,7 +162,8 @@ export const configData = {
       madAuction: '0x84356061d598A7bCE028dB6a37b14F84cf4A5905',
       slothtyRugsurance: '0xC54821941Bb036463bDB1eea781f9b29a7f98fAc',
       bundle: '0xEbFB981D5a7A7C2133752F7787263B58495bb923',
-      cnsusd: '0x263818f9693548446A41ad7025923612b490CB0D'
+      cnsusd: '0x263818f9693548446A41ad7025923612b490CB0D',
+      gaslessListing: '0xBbe0D0715AbCadb8A0Db41C0Bb7f272570907C45'
     },
     tokens: {
       loot: {
@@ -252,6 +255,10 @@ export const isLocalEnv = () => {
   return currentEnv() === environments.local;
 }
 
+export const isTestnet = () => {
+  return currentEnv() === environments.testnet;
+}
+
 export const featureFlags = {
   [Features.AUCTION_OPTION_SALE]: false,          // Auction listing option
   [Features.GET_COLLECTION_NEW_ENDPOINT]: true,   // Paginated collections endpoint
@@ -262,5 +269,5 @@ export const featureFlags = {
   [Features.UNVERIFIED_WARNING]: false,            // Warning when buying from unverified collection
   [Features.REPORT_COLLECTION]: false,             // Report button on collection page
   [Features.NEW_CHAKRA_THEME]: false,             // Update theme
-  [Features.GASLESS_LISTING]: false                //Gasless listings
+  [Features.GASLESS_LISTING]: true                //Gasless listings
 }

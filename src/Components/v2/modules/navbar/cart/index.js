@@ -13,7 +13,7 @@ import {
   DrawerHeader,
   DrawerOverlay, Flex, Spacer, Text, useBreakpointValue, useColorModeValue, VStack, Wrap
 } from "@chakra-ui/react";
-import {getListingsByIds} from "@src/core/api/next/listings";
+import {getListingsByIds, getValidListingsByIds} from "@src/core/api/next/listings";
 import {acknowledgePrompt, clearCart, removeFromCart, syncCartStorage} from "@src/GlobalState/cartSlice";
 import {ImageKitService} from "@src/helpers/image";
 import {commify} from "ethers/lib/utils";
@@ -27,6 +27,7 @@ import {listingState} from "@src/core/api/enums";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
 import Link from "next/link";
 import {LOCAL_STORAGE_ITEMS} from "@src/helpers/storage";
+import useBuyGaslessListings from '@src/hooks/useBuyGaslessListings';
 
 const Cart = function () {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ const Cart = function () {
   const [soldItems, setSoldItems] = useState([]);
   const [invalidItems, setInvalidItems] = useState([]);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
+  const [buyGaslessListings, response] = useBuyGaslessListings();
   const slideDirection = useBreakpointValue(
     {
       base: 'bottom',
@@ -93,12 +95,7 @@ const Cart = function () {
   const executeBuy = async () => {
     const listingIds = cart.nfts.map((o) => o.listingId);
     const totalPrice = calculateTotalPrice();
-    let price = ethers.utils.parseUnits(totalPrice.toString());
-    let tx = await user.contractService.market.makePurchases(listingIds, {
-      value: price,
-    });
-    let receipt = await tx.wait();
-    toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+    const aux = await buyGaslessListings(listingIds, totalPrice);
     handleClose();
     handleClearCart();
   };
@@ -130,7 +127,6 @@ const Cart = function () {
         } else if (error.message) {
           toast.error(error.message);
         } else {
-          console.log(error);
           toast.error('Unknown Error');
         }
       } finally {

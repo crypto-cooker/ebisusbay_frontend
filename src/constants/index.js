@@ -20,4 +20,11 @@ export default {
       /^data:image\/(?:gif|png|jpeg|bmp|webp|svg\+xml)(?:;charset=utf-8)?;base64,(?:[A-Za-z0-9]|[+/])+={0,2}/,
     BASE64_VIDEO_MP4: /^data:video\/(?:mp4|webp|svg\+xml)(?:;charset=utf-8)?;base64,(?:[A-Za-z0-9]|[+/])+={0,2}/,
   },
+  ItemType: {
+    NATIVE: 0,
+    ERC721: 1,
+    ERC1155: 2,
+    ERC20: 3,
+    LEGACY_LISTING: 6
+  }
 }

@@ -155,12 +155,14 @@ const MyListingsCollection = ({ walletAddress = null }) => {
 
       <MyNftCancelDialog/>
       <InvalidListingsPopup navigateTo={false}/>
-      <MakeListingDialog
-        isOpen={!!user.myNftPageListDialog?.nft}
-        nft={user.myNftPageListDialog?.nft}
-        onClose={() => dispatch(MyNftPageActions.hideMyNftPageListDialog())}
-        listing={user.myNftPageListDialog?.listing}
-      />
+      {user.myNftPageListDialog?.nft && (
+        <MakeListingDialog
+          isOpen={!!user.myNftPageListDialog?.nft}
+          nft={user.myNftPageListDialog?.nft}
+          onClose={() => dispatch(MyNftPageActions.hideMyNftPageListDialog())}
+          listing={user.myNftPageListDialog?.listing}
+        />
+      )}
     </>
   );
 };

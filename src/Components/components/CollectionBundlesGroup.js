@@ -49,7 +49,6 @@ const CollectionBundlesGroup = ({collection}) => {
   const loadMore = () => {
     fetchNextPage();
   };
-console.log('data', data);
 
   return (
     <InfiniteScroll

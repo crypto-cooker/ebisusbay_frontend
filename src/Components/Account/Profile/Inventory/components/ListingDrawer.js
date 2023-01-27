@@ -19,13 +19,19 @@ import {useDispatch, useSelector} from "react-redux";
 import {applyPriceToAll, cascadePrices, clearBatchListingCart} from "@src/GlobalState/batchListingSlice";
 import {Contract, ethers} from "ethers";
 import {toast} from "react-toastify";
-import {caseInsensitiveCompare, createSuccessfulTransactionToastContent, isBundle, pluralize} from "@src/utils";
+import {
+  caseInsensitiveCompare,
+  createSuccessfulTransactionToastContent,
+  isBundle,
+  isGaslessListing,
+  pluralize
+} from "@src/utils";
 import * as Sentry from "@sentry/react";
-import {appConfig} from "@src/Config";
+import {appConfig, isTestnet} from "@src/Config";
 import {ListingDrawerItem} from "@src/Components/Account/Profile/Inventory/components/ListingDrawerItem";
 import ListingBundleDrawerForm from "@src/Components/Account/Profile/Inventory/components/ListingBundleDrawerForm";
 import Bundle from "@src/Contracts/Bundle.json";
-import {ERC721} from "@src/Contracts/Abis";
+import useUpsertGaslessListings from "@src/Components/Account/Settings/hooks/useUpsertGaslessListings";
 
 const config = appConfig();
 const MAX_NFTS_IN_CART = 40;
@@ -41,6 +47,9 @@ export const ListingDrawer = () => {
   const [showConfirmButton, setShowConfirmButton] = useState(false);
   const [isBundling, setIsBundling] = useState(false);
   const formRef = useRef(null);
+  const [debugLegacy, setDebugLegacy] = useState(false);
+
+  const [upsertGaslessListings, responseUpdate] = useUpsertGaslessListings();
 
   const handleClearCart = () => {
     setShowConfirmButton(false);
@@ -66,23 +75,62 @@ export const ListingDrawer = () => {
       const filteredCartNfts = batchListingCart.nfts.filter((o) => {
         return batchListingCart.extras[o.nft.address.toLowerCase()]?.approval;
       });
-      const nftAddresses = filteredCartNfts.map((o) => o.nft.address);
-      const nftIds = filteredCartNfts.map((o) => o.nft.id);
-      const nftPrices = filteredCartNfts.map((o) => ethers.utils.parseEther(o.price.toString()));
 
+      const nftPrices = filteredCartNfts.map((o) => ethers.utils.parseEther(o.price.toString()));
       if (nftPrices.some((o) => !o.gt(0))) {
         toast.error('0 priced item detected!');
         return;
       }
 
-      Sentry.captureEvent({ message: 'handleBatchListing', extra: { nftAddresses, nftIds, nftPrices } });
-      let tx = await user.contractService.market.makeListings(nftAddresses, nftIds, nftPrices);
-      let receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      if (isTestnet() && debugLegacy) {
+        await executeUpdateLegacyListings(filteredCartNfts);
+      } else {
+        await executeGaslessListings(filteredCartNfts);
+      }
+
       resetDrawer();
     } finally {
       setExecutingCreateListing(false);
     }
+  }
+
+  const executeGaslessListings = async (nfts) => {
+    if (nfts.length < 1) return;
+
+    const nftAddresses = nfts.map((o) => o.nft.address);
+    const nftIds = nfts.map((o) => o.nft.id);
+    const nftPrices = nfts.map((o) => ethers.utils.parseEther(o.price.toString()));
+
+    Sentry.captureEvent({ message: 'handleBatchListing', extra: { nftAddresses, nftIds, nftPrices } });
+
+    await upsertGaslessListings(nfts.map((item) => ({
+      collectionAddress: item.nft.address ?? item.nft.nftAddress,
+      tokenId: item.nft.id ?? item.nft.nftId,
+      price: item.price.toString(),
+      expirationDate: item.expiration,
+      is1155: item.nft.multiToken
+    })))
+    toast.success("Listings Successful");
+  }
+
+  const executeUpdateLegacyListings = async (existingLegacyListingNfts) => {
+    if (existingLegacyListingNfts.length < 1) return;
+
+    const nftAddresses = existingLegacyListingNfts.map((o) => o.nft.address);
+    const nftIds = existingLegacyListingNfts.map((o) => o.nft.id);
+    const nftPrices = existingLegacyListingNfts.map((o) => ethers.utils.parseEther(o.price.toString()));
+
+    if (nftPrices.some((o) => !o.gt(0))) {
+      toast.error('0 priced item detected!');
+      return;
+    }
+
+    Sentry.captureEvent({ message: 'handleBatchListing', extra: { nftAddresses, nftIds, nftPrices } });
+
+    let tx = await user.contractService.market.makeListings(nftAddresses, nftIds, nftPrices);
+    let receipt = await tx.wait();
+
+    toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
   }
 
   const prepareListing = async () => {
@@ -116,12 +164,12 @@ export const ListingDrawer = () => {
       }
 
     } catch (error) {
+      console.log(error);
       if (error.data) {
         toast.error(error.data.message);
       } else if (error.message) {
         toast.error(error.message);
       } else {
-        console.log(error);
         toast.error('Unknown Error');
       }
     }
@@ -131,7 +179,8 @@ export const ListingDrawer = () => {
     return !executingCreateListing &&
       batchListingCart.nfts.length > 0 &&
       !Object.values(batchListingCart.extras).some((o) => !o.approval) &&
-      (isBundling || !batchListingCart.nfts.some((o) => !o.price || !parseInt(o.price) > 0)) &&
+      (isBundling || !batchListingCart.nfts.some((o) => !o.price || !(parseInt(o.price) > 0))) &&
+      (isBundling || !batchListingCart.nfts.some((o) => !o.expiration || !(parseInt(o.expiration) > 0))) &&
       !batchListingCart.nfts.some((o) => !o.nft.listable || o.nft.isStaked || (isBundling && isBundle(o.nft.address)));
   }
 
@@ -176,6 +225,14 @@ export const ListingDrawer = () => {
   return (
     <>
       <GridItem px={6} py={4} overflowY="auto">
+        {isTestnet() && (
+          <FormControl display='flex' alignItems='center' mb={2}>
+            <FormLabel htmlFor='debug-legacy-toggle' mb='0'>
+              Debug: enable legacy
+            </FormLabel>
+            <Switch id='debug-legacy-toggle' isChecked={debugLegacy} onChange={() => setDebugLegacy(!debugLegacy)}/>
+          </FormControl>
+        )}
         <FormControl display='flex' alignItems='center' mb={2}>
           <FormLabel htmlFor='list-bundle-toggle' mb='0'>
             List as bundle
@@ -198,7 +255,7 @@ export const ListingDrawer = () => {
           <>
             {batchListingCart.nfts.map((item, key) => (
               <ListingDrawerItem
-                key={key}
+                key={item.nft.name}
                 item={item}
                 onCascadePriceSelected={handleCascadePrices}
                 onApplyAllSelected={handleApplyAll}
