@@ -1,6 +1,7 @@
 import axios from "axios";
 import {ListingsQuery} from "@src/core/api/queries/listings";
-
+import {getValidListings} from "@src/core/api/endpoints/listings"
+import {listingState} from "@src/core/api/enums";
 const api = axios.create({
   baseURL: '/api',
 });
@@ -18,9 +19,36 @@ export const getListingsByCollection = async (address, listingsQuery) => {
 }
 
 export const getListingsByIds = async (listingIds) => {
+  if (!Array.isArray(listingIds)) listingIds = [listingIds];
+
   try{
     const ids = listingIds.join(',');
     return await api.get(`listings`, {params: {listingId: ids}});
+  }
+  catch(error){
+    throw error;
+  }
+}
+
+export const getValidListingsByIds = async (listingIds) => {
+  try{
+    const ids = listingIds.join(',');
+    return await getValidListings({listingId: ids});
+  }
+  catch(error){
+    throw error;
+  }
+}
+
+export const getAllListingsByUser = async (address) => {
+  try{
+    const listings = await api.get(`listings`, {params: {
+      seller: address,
+      pageSize: 1000,
+      state: listingState.ACTIVE
+    }});
+
+    return listings;
   }
   catch(error){
     throw error;

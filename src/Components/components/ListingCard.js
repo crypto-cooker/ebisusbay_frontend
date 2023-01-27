@@ -22,12 +22,16 @@ import {
   faHand,
   faLink,
   faShoppingBag,
-  faSync
+  faSync,
+  faShoppingCart
 } from "@fortawesome/free-solid-svg-icons";
 import {addToCart, openCart, removeFromCart} from "@src/GlobalState/cartSlice";
 import {toast} from "react-toastify";
 import {refreshMetadata} from "@src/GlobalState/nftSlice";
 import {specialImageTransform} from "@src/hacks";
+import { appConfig } from "@src/Config";
+
+const config = appConfig();
 
 const Watermarked = styled.div`
   position: relative;
@@ -107,6 +111,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
     return options;
   };
 
+
   const handleMakeOffer = () => {
     if (user.address) {
       setOpenMakeOfferDialog(!openMakeOfferDialog);
@@ -130,7 +135,11 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
       price: listing.price,
       address: listing.nftAddress,
       id: listing.nftId,
-      rank: listing.nft.rank
+      rank: listing.nft.rank,
+      expirationDate: listing.expirationDate ?? null,
+      seller: listing.seller ?? null,
+      listingTime:  listing.listingTime ?? null,
+      is1155: listing.is1155
     }));
     toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
   };

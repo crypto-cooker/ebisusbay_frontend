@@ -11,7 +11,7 @@ import {
   Menu,
   MenuButton,
   MenuItem,
-  MenuList,
+  MenuList, Select,
   Skeleton,
   Spacer,
   Stack,
@@ -20,7 +20,13 @@ import {
   VStack
 } from "@chakra-ui/react";
 import React, {useCallback, useEffect, useState} from "react";
-import {removeFromBatchListingCart, setApproval, setExtras, updatePrice} from "@src/GlobalState/batchListingSlice";
+import {
+  removeFromBatchListingCart,
+  setApproval,
+  setExtras,
+  updateExpiration,
+  updatePrice
+} from "@src/GlobalState/batchListingSlice";
 import {Contract} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
@@ -39,6 +45,40 @@ import {specialImageTransform} from "@src/hacks";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
+const expirationDatesValues = [
+  {
+    value: 3600000,
+    label: '1 Hour'
+  },
+  {
+    value: 10800000,
+    label: '3 Hours'
+  },
+  {
+    value: 21600000,
+    label: '6 Hours'
+  },
+  {
+    value: 86400000,
+    label: '1 Day'
+  },
+  {
+    value: 259200000,
+    label: '3 Days'
+  },
+  {
+    value: 604800000,
+    label: '7 Days'
+  },
+  {
+    value: 1296000000,
+    label: '15 Days'
+  },
+  {
+    value: 2592000000,
+    label: '30 Days'
+  },
+]
 
 export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, disabled, isBundling = false }) => {
   const dispatch = useDispatch();
@@ -46,6 +86,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [price, setPrice] = useState('');
+  const [expirationDate, setExpirationDate] = useState(new Date().getTime() + 2592000000 );
   const [invalid, setInvalid] = useState(false);
 
   // Approvals
@@ -67,6 +108,17 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
       setInvalid(true);
     }
   }, [dispatch, item.nft, price]);
+
+  const handleExpirationDateChange = useCallback((e) => {
+    const expiration = new Date().getTime() + parseInt(e.target.value);
+    if (expiration < Date.now()) {
+      setInvalid(true);
+    }
+
+    setInvalid(false);
+    setExpirationDate(expiration);
+    dispatch(updateExpiration({ nft: item.nft, expiration }));
+  }, [dispatch, item.nft, expirationDate]);
 
   useEffect(() => {
     setPrice(item.price);
@@ -128,7 +180,6 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
 
   return (
     <Box
-      key={`${item.nft.address}-${item.nft.id}`}
       _hover={{ background: hoverBackground }}
       p={2}
       rounded="lg"
@@ -175,44 +226,63 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
                       </Badge>
                     </Box>
                   ) : !isBundling && (
-                    <FormControl isInvalid={invalid}>
-                      <Stack direction="row">
-                        <Input
-                          placeholder="Enter Price"
-                          type="numeric"
-                          size="xs"
-                          value={price}
-                          onChange={handlePriceChange}
-                          disabled={disabled}
-                        />
-                        <ChakraButton
-                          size='xs'
-                          transition='all 0.2s'
-                          borderRadius='md'
-                          borderWidth='1px'
-                          onClick={() => setIsDetailsOpen(!isDetailsOpen)}
-                        >
-                          {isDetailsOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
-                        </ChakraButton>
-                        <Menu>
-                          <MenuButton
-                            px={2}
+                    <>
+                      <FormControl isInvalid={invalid}>
+                        <Stack direction="row">
+                          <Input
+                            placeholder="Enter Price"
+                            type="numeric"
+                            size="xs"
+                            value={price}
+                            onChange={handlePriceChange}
+                            disabled={disabled}
+                          />
+                          <ChakraButton
+                            size='xs'
                             transition='all 0.2s'
                             borderRadius='md'
                             borderWidth='1px'
-                            height={6}
+                            onClick={() => setIsDetailsOpen(!isDetailsOpen)}
                           >
-                            <FontAwesomeIcon icon={faEllipsisH} />
-                          </MenuButton>
-                          <MenuList textAlign="right">
-                            <MenuItem onClick={() => onApplyAllSelected(price)}>Apply price to all</MenuItem>
-                            <MenuItem onClick={() => onCascadePriceSelected(item, price)}>Cascade price</MenuItem>
-                            <MenuItem onClick={handleRemoveItem}>Remove</MenuItem>
-                          </MenuList>
-                        </Menu>
-                      </Stack>
-                      <FormErrorMessage fontSize='xs' mt={1}>Enter a valid number.</FormErrorMessage>
-                    </FormControl>
+                            {isDetailsOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                          </ChakraButton>
+                          <Menu>
+                            <MenuButton
+                              px={2}
+                              transition='all 0.2s'
+                              borderRadius='md'
+                              borderWidth='1px'
+                              height={6}
+                            >
+                              <FontAwesomeIcon icon={faEllipsisH} />
+                            </MenuButton>
+                            <MenuList textAlign="right">
+                              <MenuItem onClick={() => onApplyAllSelected(price)}>Apply price to all</MenuItem>
+                              <MenuItem onClick={() => onCascadePriceSelected(item, price)}>Cascade price</MenuItem>
+                              <MenuItem onClick={handleRemoveItem}>Remove</MenuItem>
+                            </MenuList>
+                          </Menu>
+                        </Stack>
+                        <FormErrorMessage fontSize='xs' mt={1}>Enter a valid number.</FormErrorMessage>
+                      </FormControl>
+
+                      <FormControl isInvalid={invalid} mt={1}>
+                        <Stack direction="row">
+                          <Select
+                            placeholder='Select expiration'
+                            size="xs"
+                            bg="transparent !important"
+                            onChange={handleExpirationDateChange}
+                            disabled={disabled}
+                          >
+                            {expirationDatesValues.map((time) => (
+                              <option value={time.value}>{time.label}</option>
+                            ))}
+                          </Select>
+                        </Stack>
+                        <FormErrorMessage fontSize='xs' mt={1}>Enter a valid number.</FormErrorMessage>
+                      </FormControl>
+                    </>
                   )}
                 </>
               ) : (

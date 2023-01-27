@@ -5,6 +5,7 @@ import Auction from "@src/Contracts/DegenAuction.json";
 import Offer from "@src/Contracts/Offer.json";
 import StakeABI from "@src/Contracts/Stake.json";
 import Membership from "@src/Contracts/EbisusBayMembership.json";
+import gaslessListingContract from "@src/Contracts/GaslessListing.json";
 
 const config = appConfig();
 
@@ -48,6 +49,13 @@ class UserContractService {
       this._membership = new Contract(config.contracts.membership, Membership.abi, this.signer)
     }
     return this._membership;
+  }
+
+  get ship() {
+    if (!this._ship) {
+      this._ship = new Contract(config.contracts.gaslessListing, gaslessListingContract.abi, this.signer)
+    }
+    return this._ship;
   }
 }
 //
