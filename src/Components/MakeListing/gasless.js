@@ -91,7 +91,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   const windowSize = useWindowSize();
 
   const user = useSelector((state) => state.user);
-  const [upsertGaslessListing, responseUpsert] = useUpsertGaslessListings();
+  const [upsertGaslessListings, responseUpsert] = useUpsertGaslessListings();
 
   const isBelowFloorPrice = (price) => {
     return (floorPrice !== 0 && ((floorPrice - Number(price)) / floorPrice) * 100 > floorThreshold);
@@ -219,7 +219,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
       const nftId = nft.id ?? nft.nftId;
       setExecutingCreateListing(true);
 
-      const res = await upsertGaslessListing({
+      const res = await upsertGaslessListings({
         collectionAddress: nftAddress,
         tokenId: nftId,
         price: salePrice.toString(),
