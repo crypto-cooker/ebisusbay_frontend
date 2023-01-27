@@ -107,9 +107,10 @@ export const ListingDrawer = () => {
       collectionAddress: item.nft.address ?? item.nft.nftAddress,
       tokenId: item.nft.id ?? item.nft.nftId,
       price: item.price.toString(),
-      expirationDate: item.expiration
+      expirationDate: item.expiration,
+      is1155: item.nft.multiToken
     })))
-    toast.success(createSuccessfulTransactionToastContent(''));
+    toast.success("Listings Successful");
   }
 
   const executeUpdateLegacyListings = async (existingLegacyListingNfts) => {

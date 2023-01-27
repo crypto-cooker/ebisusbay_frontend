@@ -30,7 +30,6 @@ const useUpsertGaslessListings = () => {
 
     // Get any existing listings
     const listingsResponse = await getAllListingsByUser(user.address);
-    console.log('listings', pendingListings, listingsResponse.data.listings)
     const existingListings = listingsResponse.data.listings.filter((eListing) => {
       return pendingListings.some((pListing) => {
         return caseInsensitiveCompare(eListing.nftAddress, pListing.collectionAddress) &&
@@ -70,7 +69,7 @@ const useUpsertGaslessListings = () => {
         pendingListing.sellerSignature = objectSignature;
         pendingListing.seller = user.address.toLowerCase();
         pendingListing.digest = objectHash;
-        const res = await upsertListing(pendingListing)
+        const res = await upsertListing(pendingListing);
       }
 
       setResponse({

@@ -26,8 +26,7 @@ const useCancelGaslessListing = () => {
 
       const ship = user.contractService.ship;
       const tx = await ship.cancelOrders(orders);
-      await tx.wait()
-      toast.success(`${pluralize(listingIds.length, 'NFT')} successfully cancelled`);
+      await tx.wait();
 
       setResponse({
         ...response,
