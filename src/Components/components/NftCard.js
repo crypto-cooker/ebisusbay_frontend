@@ -12,7 +12,7 @@ import {
   createSuccessfulAddCartContent,
   isNftBlacklisted,
   round,
-  siPrefixedNumber
+  siPrefixedNumber, timeSince
 } from '@src/utils';
 import { AnyMedia } from './AnyMedia';
 import {convertGateway, nftCardUrl} from '@src/helpers/image';
@@ -167,6 +167,22 @@ const NftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false, can
     toast.success('Link copied!');
   };
 
+  const getListing = () => {
+    if (nft.market?.price) {
+      return {
+        price: nft.market.price,
+        expirationDate: nft.market.expirationDate
+      };
+    }
+    if (nft.listed) {
+      return {
+        price: nft.price,
+        expirationDate: nft.expirationDate
+      };
+    }
+
+    return null;
+  }
   const getIsNftListed = () => {
     if (nft.market?.price) {
       return true;
@@ -235,16 +251,21 @@ const NftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false, can
                   <Heading as="h6" size="sm" className="card-title mt-auto">{nft.name}</Heading>
                 </a>
               </Link>
-              {getIsNftListed() && (
-                <MakeBuy>
-                  {is1155 && <div>Floor:</div>}
-                  <div className="d-flex">
-                    <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
-                    <span className="ms-1">
-                    {nft.market?.price > 6 ? siPrefixedNumber(nft.market?.price) : ethers.utils.commify(round(nft.market?.price))}
-                  </span>
-                  </div>
-                </MakeBuy>
+              {getListing() && (
+                <>
+                  <MakeBuy>
+                    {is1155 && <div>Floor:</div>}
+                    <div className="d-flex">
+                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+                      <span className="ms-1">
+                      {getListing().price > 6 ? siPrefixedNumber(getListing().price) : ethers.utils.commify(round(getListing().price))}
+                    </span>
+                    </div>
+                  </MakeBuy>
+                  {getListing().expirationDate && (
+                    <Text className="text-muted mt-1" fontSize="sm">Ends in {timeSince(getListing().expirationDate)}</Text>
+                  )}
+                </>
               )}
             </div>
             <Spacer />

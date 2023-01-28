@@ -14,7 +14,7 @@ import {
   isNftBlacklisted,
   openWithCronosExplorer,
   round,
-  siPrefixedNumber
+  siPrefixedNumber, timeSince
 } from '@src/utils';
 import { AnyMedia } from './AnyMedia';
 import { convertGateway, nftCardUrl } from '@src/helpers/image';
@@ -246,14 +246,19 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, canBuy = t
                 </a>
               </Link>
               {getIsNftListed() && (
-                <MakeBuy>
-                  <div className="d-flex">
-                    <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
-                    <span className="ms-1">
+                <>
+                  <MakeBuy>
+                    <div className="d-flex">
+                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+                      <span className="ms-1">
                       {nft.market?.price > 6 ? siPrefixedNumber(nft.market?.price) : ethers.utils.commify(round(nft.market?.price))}
                     </span>
-                  </div>
-                </MakeBuy>
+                    </div>
+                  </MakeBuy>
+                  {nft.market?.expirationDate && (
+                    <Text className="text-muted mt-1" fontSize="sm">Ends in {timeSince(nft.market.expirationDate)}</Text>
+                  )}
+                </>
               )}
             </div>
             <Spacer />

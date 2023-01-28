@@ -9,7 +9,7 @@ import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
 import {darkTheme, getTheme, lightTheme} from '@src/Theme/theme';
 import { AnyMedia } from './AnyMedia';
 import { connectAccount, chainConnect } from '@src/GlobalState/User';
-import {appUrl, createSuccessfulAddCartContent, round} from '@src/utils';
+import {appUrl, createSuccessfulAddCartContent, round, timeSince} from '@src/utils';
 import {convertGateway, nftCardUrl} from "@src/helpers/image";
 import {Box, Flex, Heading, Spacer, Text, useClipboard} from "@chakra-ui/react";
 import Image from "next/image";
@@ -256,7 +256,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
               )}
               <Link href={`/collection/${listing.collection.slug}/${listing.nftId}`}>
                 <a>
-                  <Heading as="h6" size="sm" className="card-title mt-auto">{listing.nft.name}</Heading>
+                  <Heading as="h6" size="sm" className="card-title mt-auto mb-1">{listing.nft.name}</Heading>
                 </a>
               </Link>
               <MakeBuy>
@@ -267,6 +267,9 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                   </span>
                 </div>
               </MakeBuy>
+              {listing.expirationDate && (
+                <Text className="text-muted mt-1" fontSize="sm">Ends in {timeSince(listing.expirationDate)}</Text>
+              )}
             </div>
             <Spacer />
             <Box

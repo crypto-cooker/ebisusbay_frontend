@@ -27,7 +27,7 @@ import {
   useClipboard
 } from "@chakra-ui/react";
 import Image from "next/image";
-import {appUrl, caseInsensitiveCompare, round} from "@src/utils";
+import {appUrl, caseInsensitiveCompare, round, timeSince} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {darkTheme, lightTheme} from "@src/Theme/theme";
 import {useSelector} from "react-redux";
@@ -229,6 +229,9 @@ const MyNftCard = ({
                 <>&nbsp;</>
               )}
             </span>
+            {nft.expirationDate && (
+              <Text className="text-muted mt-1" fontSize="sm">Ends in {timeSince(nft.expirationDate)}</Text>
+            )}
 
             {isStaked && (
               <Badge variant='outline' colorScheme='orange'>
