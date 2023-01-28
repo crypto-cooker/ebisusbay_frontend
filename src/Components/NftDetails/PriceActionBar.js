@@ -8,7 +8,7 @@ import {
   isGaslessListing,
   isNftBlacklisted,
   isUserBlacklisted,
-  shortAddress
+  shortAddress, timeSince
 } from '@src/utils';
 import {Card, Spinner} from 'react-bootstrap';
 import MetaMaskOnboarding from '@metamask/onboarding';
@@ -24,7 +24,7 @@ import useFeatureFlag from "@src/hooks/useFeatureFlag";
 import Constants from "@src/constants";
 import useCancelGaslessListing from '@src/Components/Account/Settings/hooks/useCancelGaslessListing';
 
-import {Table, TableContainer, Tbody, Td, Tr, useDisclosure,} from '@chakra-ui/react';
+import {Flex, Heading, Table, TableContainer, Tbody, Td, Text, Tr, useDisclosure,} from '@chakra-ui/react';
 import PurchaseDialog from "@src/Components/NftDetails/PurchaseDialog";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
 
@@ -196,11 +196,16 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
       <Card className="mb-4 border-1 shadow pab-card">
         <Card.Body>
           <div id={`lid-${listing?.listingId}`}>
-            <div className="d-flex flex-row justify-content-between">
-              <div className={`my-auto fw-bold`}>
+            <Flex direction="column" justify="space-between">
+              <div className={`my-auto`}>
                 <>
-                  <h5>{label ?? 'Listing Price'}:</h5>
-                  <span className="d-flex fs-3 ms-1">
+                  <Flex justify="space-between">
+                    <Heading size="sm">{label ?? 'Listing Price'}:</Heading>
+                    {listing?.expirationDate && (
+                      <Text fontSize="sm" className="text-muted">Ends in {timeSince(listing.expirationDate)}</Text>
+                    )}
+                  </Flex>
+                  <span className="d-flex fs-3 ms-1 fw-bold">
                     {listing ? (
                       <>
                         <Image src="/img/logos/cdc_icon.svg" width={25} height={25} className="my-auto" />
@@ -212,7 +217,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
                   </span>
                 </>
               </div>
-            </div>
+            </Flex>
           </div>
 
           <div className="d-flex">

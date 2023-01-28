@@ -10,7 +10,7 @@ import { chainConnect, connectAccount } from '@src/GlobalState/User';
 import { AnyMedia } from './AnyMedia';
 import {convertGateway, nftCardUrl} from "@src/helpers/image";
 import {appConfig} from "@src/Config";
-import {appUrl, caseInsensitiveCompare, createSuccessfulAddCartContent} from "@src/utils";
+import {appUrl, caseInsensitiveCompare, createSuccessfulAddCartContent, timeSince} from "@src/utils";
 import {Box, Flex, Heading, Spacer, Text, useClipboard} from "@chakra-ui/react";
 import Image from "next/image";
 import {
@@ -227,7 +227,7 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark })
             <div className="d-flex flex-column justify-content-between p-2 pb-1">
               <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
                 <a>
-                  <Heading as="h6" size="sm" className="card-title mt-auto">{listing.nft.name}</Heading>
+                  <Heading as="h6" size="sm" className="card-title mt-auto mb-1">{listing.nft.name}</Heading>
                 </a>
               </Link>
               <MakeBuy>
@@ -238,6 +238,9 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark })
                   </span>
                 </div>
               </MakeBuy>
+              {listing.expirationDate && (
+                <Text className="text-muted mt-1" fontSize="sm">Ends in {timeSince(listing.expirationDate)}</Text>
+              )}
             </div>
             <Spacer />
             <Box

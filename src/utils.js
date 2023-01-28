@@ -254,31 +254,33 @@ export function shortString(str, leftChars = 3, rightChars = 3) {
   return `${str.substring(0, leftChars)}...${str.substring(str.length - rightChars, str.length)}`;
 }
 
-export function timeSince(date) {
-  var seconds = Math.floor((new Date() - date) / 1000);
+export function timeSince(timestamp) {
+  timestamp = millisecondTimestamp(timestamp);
+  const seconds = Math.floor(Math.abs((new Date() - timestamp) / 1000));
+  let interval = Math.floor(seconds / 31536000);
 
-  var interval = seconds / 31536000;
+  if (interval > 1) {
+    return `${interval} ${pluralize(interval, 'year')}`;
+  }
+  interval = Math.floor(seconds / 2592000);
+  if (interval >= 1) {
+    return `${interval} ${pluralize(interval, 'month')}`;
+  }
+  interval = Math.floor(seconds / 86400);
+  if (interval >= 1) {
+    return `${interval} ${pluralize(interval, 'day')}`;
+  }
+  interval = Math.floor(seconds / 3600);
+  if (interval >= 1) {
+    return `${interval} ${pluralize(interval, 'hour')}`;
+  }
+  interval = Math.floor(seconds / 60);
+  if (interval > 1) {
+    return `${interval} ${pluralize(interval, 'minute')}`;
+  }
 
-  if (interval > 1) {
-    return Math.floor(interval) + ' years';
-  }
-  interval = seconds / 2592000;
-  if (interval > 1) {
-    return Math.floor(interval) + ' months';
-  }
-  interval = seconds / 86400;
-  if (interval > 1) {
-    return Math.floor(interval) + ' days';
-  }
-  interval = seconds / 3600;
-  if (interval > 1) {
-    return Math.floor(interval) + ' hours';
-  }
-  interval = seconds / 60;
-  if (interval > 1) {
-    return Math.floor(interval) + ' minutes';
-  }
-  return Math.floor(seconds) + ' seconds';
+  interval = Math.floor(seconds);
+  return `${interval} ${pluralize(interval, 'second')}`;
 }
 
 export function secondsToDhms(seconds) {
