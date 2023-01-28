@@ -8903,7 +8903,7 @@
         "card": "/img/collections/pocket-demons/card.webp",
         "banner": "/img/collections/pocket-demons/banner.webp",
         "website": "https://www.pocketdemons.net/",
-        "twitter": "https://twitter.com/Pocket_Demons",
+        "twitter": "https://twitter.com/PDemon_Official",
         "discord": "https://discord.gg/sXrJZR983J",
         "categories": [
           "gaming"
@@ -23174,7 +23174,7 @@
       "is1155": false,
       "published": true,
       "complete": false,
-      "featured": false,
+      "featured": true,
       "redirect": "https://ghostog.netlify.app/mint",
       "images": {
         "drop": "/img/drops/ghost-og/drop.webp",
