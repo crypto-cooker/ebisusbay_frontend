@@ -223,7 +223,7 @@ const SalesCollection = ({
                     </Link>
                   </td>
                   <td className="px-2" style={{ minWidth: '115px' }}>
-                    {timeSince(listing.saleTime + '000')} ago
+                    {timeSince(listing.saleTime)} ago
                   </td>
                 </tr>
               ))}

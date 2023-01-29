@@ -87,7 +87,7 @@ export default function ListingsRow({ listing, nft }) {
       buttonText="Add to Cart"
       primaryTitle="Listed by"
       user={listing.seller}
-      time={timeSince(listing.listingTime + '000')}
+      time={timeSince(listing.listingTime)}
       price={ethers.utils.commify(listing.price)}
       primaryText={shortAddress(listing.seller)}
       onClick={handleAddToCart}
