@@ -1,9 +1,50 @@
 const regions = ["Dwarf Mines", "Southern Trident", "Dragonland", "Human Kingdoms"];
-function GetRegions()
-{
+const factions = ["Mad Merkat", "CroSkull", "Boomer Squad", "Flaming Phenix Club"];
+class Deployment {
+    constructor(region, faction, amount, deploymentOwner) {
+      this.code = region + faction;
+      this.region = region;
+      this.faction = faction;
+      this.amount = amount;
+    }
+    addTroops(amount) {
+        this.amount += amount;
+      }
+    getDetails() {
+        return "You have deployed " + this.amount +" troops on behalf of "+ this.faction +" to " + this.region + "<br>";
+      }};
+class DeployedTroops {
+    constructor(){
+      this.deployments = []
+    }
+    newDeployment(region, faction, amount){
+      let d = new Deployment(region, faction, amount)
+      this.deployments.push(d)
+      return d
+    }
+    get allPlayers(){
+      return this.deployments
+    }
+    get numberOfPlayers(){
+        return this.deployments.length
+    }
+    get totalTroops(){
+        let total = 0
+        this.deployments.forEach(d => total += d.amount)
+        console.log(total)
+        return total
+    }
+  }
+
+let deployedTroops = new DeployedTroops()
+
+function setUpLeaderboard() {
+    RandomizeStats();
+    DisplayRegions();
+}
+function GetRegions(){
     return regions;
 }
-
 function DisplayRegions() {
     var regions = GetRegions();
     var ul, li;
@@ -20,8 +61,6 @@ function DisplayRegions() {
     });
     selectRegion(li[0].getElementsByTagName("a")[0]);
 }
-DisplayRegions();
-
 function selectRegion(region) {
     console.log(region.innerHTML);
     ul = document.getElementById("regionsUL");
@@ -35,8 +74,7 @@ function selectRegion(region) {
     region.parentElement.classList.add("active");
     displayWinners(region);
 }
-function displayWinners(region)
-{
+function displayWinners(region){
     deployedTroops.deployments.sort(function(b, a){return a.amount - b.amount});
     var troopsTable = document.getElementById("troopsTable");
     while (troopsTable.firstChild) {
@@ -71,6 +109,35 @@ function displayWinners(region)
             troopsTable.appendChild(tr);
 
             rank++;
+        }
+    }
+}
+function RandomizeStats()
+{
+    function checkIfDeploymentExists(region, faction)
+    {
+        for(var i=0; i<deployedTroops.deployments.length; i++)  
+        {  
+            var code = deployedTroops.deployments[i].code;  
+            if(code == region + faction){  
+                return true;  
+            }
+        }
+        return false;
+    }
+
+    for (let index = 0; index < 100; index++) 
+    {
+        var faction = factions[Math.floor(Math.random()*factions.length)];
+        var region = regions[Math.floor(Math.random()*regions.length)];
+
+        //if deployment exists, add troops to it
+        if(checkIfDeploymentExists(region, faction) == true)
+        {
+        }
+        else    //create new deployment
+        {
+            deployedTroops.newDeployment(region, faction, Math.floor(Math.random()*10));
         }
     }
 }

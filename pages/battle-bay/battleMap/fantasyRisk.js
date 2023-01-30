@@ -159,7 +159,7 @@ function RandomizeStats()
         }
         else    //create new deployment
         {
-            deployedTroops.newDeployment(region, faction, Math.floor(Math.random()*1000));
+            deployedTroops.newDeployment(region, faction, Math.floor(Math.random()*10));
         }
     }
 }
