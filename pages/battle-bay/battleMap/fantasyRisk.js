@@ -69,8 +69,13 @@ class DeployedTroops {
   }
 
 let deployedTroops = new DeployedTroops()
-RandomizeStats();
-displayWinningFactions();
+
+function setUpBattleMap(){
+    console.log("Setting up battle map");
+    RandomizeStats();
+    displayWinningFactions();
+}
+
 
 function reset_troops(){
     deployedTroops = new DeployedTroops()
