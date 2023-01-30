@@ -16852,7 +16852,7 @@
       "multiToken": false,
       "address": "0x0Ea3bE4Ca12b7B43e974264a210f4de0e273A027",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A collection of 1000 IcyCRO glasses. \n\nMint yourself a ICY NFT and you will be part of the biggest community validator project in Cronos and in the whole Cosmos.\n\nIcyCRO has grown quickly to be one the most popular validators and best relayers in three chains: Crypto.org, ATOM and JUNO.",
         "avatar": "/img/collections/icy/avatar.webp",
@@ -23041,7 +23041,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "priceDescription": "Whitelist-only presale for the first 12 hours (limit 5 per address). Public sale after presale ends.",
       "images": {
         "drop": "/img/drops/icy/drop.webp",
