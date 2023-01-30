@@ -17174,6 +17174,32 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Alien Crosmobabies",
+      "slug": "alien-crosmobabies",
+      "multiToken": false,
+      "address": "0xc77E5f75868EdC46FD665FC46d3d3F3bF042Af5f",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "567 3D Alien Crosmobabies have found their way to Cronos, a limited AI NFT collection by Crosmonauts.",
+        "avatar": "/img/collections/alien-crosmobabies/avatar.webp",
+        "card": "/img/collections/alien-crosmobabies/card.webp",
+        "banner": "/img/collections/alien-crosmobabies/banner.webp",
+        "website": "https://www.crosmonauts.club/",
+        "twitter": "https://twitter.com/crosmonaut",
+        "discord": "https://discord.gg/yhyJjZ2uWk",
+        "medium": "https://medium.com/@crosmonaut",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
