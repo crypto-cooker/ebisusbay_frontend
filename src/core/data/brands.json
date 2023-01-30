@@ -532,6 +532,32 @@
     "style": {}
   },
   {
+    "slug": "crosmonauts",
+    "name": "Crosmonauts",
+    "description": "A community oriented NFT Project that launched alongside the launch of Cronos",
+    "images": {
+      "banner": "/img/collections/crosmonauts/banner.webp",
+      "preview": "/img/collections/crosmonauts/card.png"
+    },
+    "collections": [
+      "0xDFab622fC4E5CE1420F83cf38E52312f33849a0A",
+      "0xf98F7fF91E8EF5F78c0DE703BD9b9de3Ad9eDE58",
+      "0xC6373d6F369A9FfE7D93B21F2A5b0E16291d996D",
+      "0xf49C94E09E506aCcbe553b673FEe4F44efb06D55",
+      "0x1a8f52fe051ae385b90F7F0064bB11F2Db855Bbe",
+      "0xc77E5f75868EdC46FD665FC46d3d3F3bF042Af5f"
+    ],
+    "socials": {
+      "website": "https://www.crosmonauts.club/",
+      "twitter": "https://twitter.com/crosmonaut",
+      "discord": "https://discord.gg/yhyJjZ2uWk",
+      "medium": "https://medium.com/@crosmonaut"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "crougar-kingdom",
     "name": "CROugar Kingdom",
     "description": "A fun and engaging Discord-focused community! Providing long-term value to our holders through a number of initiatives both on and off the Blockchain!",
