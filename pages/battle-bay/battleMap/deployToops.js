@@ -1,4 +1,3 @@
-setUpDropDown('deployFactionInput','deployFactionUl', factions, selectDeploymentFaction);
 // setUpFactionDropDown("deployFactionInput", "deployFactionUl", factions, selectFaction())
 
 function selectDeploy() {
@@ -12,6 +11,7 @@ function selectDeploy() {
 
     document.getElementById("troops").innerHTML = "Troops available to Deploy: " + troopsAvailable;
     deployMode = true;
+    setUpDropDown('deployFactionInput','deployFactionUl', factions, selectDeploymentFaction);
 }
 
 function selectRecall() {

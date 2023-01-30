@@ -9,8 +9,8 @@ class Faction {
         return this.owner+" is the owner of the " + this.factionName +" faction containing the addresses: "+ this.addresses+"<br>";
       }};
 
-
-document.getElementById("editFaction").style.display = "none";
+//needs to be included in a function where we check for factions
+// document.getElementById("editFaction").style.display = "none";
 var myFaction;
 
 function editFaction() {
