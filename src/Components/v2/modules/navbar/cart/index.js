@@ -27,7 +27,7 @@ import {ImageKitService} from "@src/helpers/image";
 import {commify} from "ethers/lib/utils";
 import {Contract, ethers} from "ethers";
 import {toast} from "react-toastify";
-import {isBundle, isGaslessListing, round} from "@src/utils";
+import {isBundle, round} from "@src/utils";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import Button from "@src/Components/components/common/Button";
@@ -191,13 +191,13 @@ const Cart = function () {
   useEffect(() => {
     let fees = 0;
     const totalPrice = cart.nfts.reduce((total, nft) => {
-      const price = parseInt(nft.price);
-      let amt = price;
-      if (isGaslessListing(nft.listingId)) {
-        const fee = price * (user.fee / 100);
-        fees += fee;
-        amt += fee;
-      }
+      const numericPrice = parseInt(nft.price);
+      let amt = numericPrice;
+
+      const fee = numericPrice * (user.fee / 100);
+      fees += fee;
+      amt += fee;
+
       return total + amt;
     }, 0);
     setTotalPrice(totalPrice);
