@@ -1,6 +1,36 @@
 var selectedRegion = "None";
 const factions = ["Mad Merkat", "CroSkull", "Boomer Squad", "Flaming Phenix Club", "connected wallet"];
 const regionFlags = ["pin-Southern-Trident", "pin-Dragonland", "pin-Human-Kingdoms", "pin-Dwarf-Mines"];
+deployMode = new Boolean(true);
+var selectedFaction = "";
+var troopsAvailable = 20;
+
+//form that pops up when you click on a region
+function openForm() {
+    document.getElementById("myForm").style.display = "inline-block";
+    document.getElementById("troops").innerHTML = "Troops available: " + troopsAvailable;
+    document.getElementById("quantity").max = troopsAvailable;
+    document.getElementById("overlay2").style.display = "block";
+    selectDeploy();
+}
+
+function closeForm() {
+    document.getElementById("myForm").style.display = "none";
+    off();
+}
+
+function off() {
+    document.getElementById("overlay2").style.display = "none";
+}
+
+function Apply() {
+    if(deployMode){
+        deployTroops();
+    }
+    else{
+        recallTroops();
+    }
+}
 
 class Deployment {
     constructor(region, faction, amount, deploymentOwner) {
@@ -233,11 +263,10 @@ function RefreshInfo()
     displayTop3InRegion(selectedRegion);
 }
 
-const factions_url = "https://api.coindesk.com/v1/bpi/currentprice.json";
+//from testing async
+// const factions_url = "https://api.coindesk.com/v1/bpi/currentprice.json";
 
-setUpFactionDropDown("deployFactionInput", "deployFactionUl", factions)
-var selectedFaction = "";
-var troopsAvailable = 20;
+
 
 function howManyTroopsCanUserPlace()
 {

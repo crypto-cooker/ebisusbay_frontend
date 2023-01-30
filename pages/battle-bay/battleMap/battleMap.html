@@ -34,7 +34,7 @@
 
       <label class = "basicText" style ="float: left;" for="quantity">Please select a faction:</label>
       <input type="text"  id="deployFactionInput" onkeyup="filterFactions('deployFactionInput','deployFactionUl')"
-        onchange = "selectFaction(this)" placeholder="Search for faction.."class = "entryField"/>
+        onclick="filterFactions('deployFactionInput','deployFactionUl')" placeholder="Search for faction.."class = "entryField"/>
       <ul id="deployFactionUl"> </ul>
 
       <p></p>
@@ -196,7 +196,7 @@
 <script type="text/javascript" src="../jquery-1.6.2.min.js"></script>
 <!-- <script type="text/javascript" src="jquery.maphilight.js"></script> -->
 <script type="text/javascript" src="fantasyRisk.js"></script>
-<script type="text/javascript" src="selectRegion.js"></script>
+<script type="text/javascript" src="deployToops.js"></script>
 <!-- <script type="text/javascript" src="../factions/registerFaction.js"></script>
 <script type="text/javascript" src="../factions/delegateToFaction.js"></script> -->
 <!-- <script type="text/javascript" src="jquery.imagemapster.js"></script> -->
