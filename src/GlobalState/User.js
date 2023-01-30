@@ -48,6 +48,7 @@ const userSlice = createSlice({
     // stakeCount: 0,
     needsOnboard: false,
     isStaking: false,
+    fee: 3,
 
     // Signatures
     authSignature: null,
@@ -110,6 +111,7 @@ const userSlice = createSlice({
       state.marketBalance = action.payload.marketBalance;
       state.stakingRewards = action.payload.stakingRewards;
       state.gettingContractData = false;
+      state.fee = action.payload.fee;
     },
 
     setAuthSigner(state, action) {
@@ -315,6 +317,7 @@ const userSlice = createSlice({
       state.profile = {};
       state.authSignature = null;
       state.contractService = null;
+      state.fee = 3;
     },
     onThemeChanged(state, action) {
       state.theme = action.payload;
@@ -547,6 +550,7 @@ export const connectAccount =
       // let stakeCount = 0;
       let stakingRewards = 0;
       let isMember = false;
+      let fee;
 
       dispatch(retrieveProfile());
 
@@ -565,6 +569,9 @@ export const connectAccount =
 
         try {
           balance = ethers.utils.formatEther(await provider.getBalance(address));
+
+          fee = await contractService.market.fee(address);
+          fee = (fee / 10000) * 100;
         } catch (error) {
           console.log('Error checking CRO balance', error);
         }
@@ -581,7 +588,8 @@ export const connectAccount =
           // rewards: rewards,
           isMember,
           marketBalance: sales,
-          stakingRewards: stakingRewards
+          stakingRewards: stakingRewards,
+          fee
         })
       );
     } catch (error) {
