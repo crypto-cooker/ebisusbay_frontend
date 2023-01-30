@@ -212,7 +212,7 @@ function displayWinningFactions()
         var targetdiv = pins[i].getElementsByClassName("pin-text")[0].getElementsByClassName("head")[0];
         targetdiv.textContent = getWinningFactionInRegion(pins[i].title);
         var icon = pins[i].getElementsByClassName("factionIcon")[0]
-        icon.src = "images/"+getWinningFactionInRegion(pins[i].title)+".png";
+        icon.src = "../images/"+getWinningFactionInRegion(pins[i].title)+".png";
     }
 }
 function openPanel(evt, panelName) {
@@ -231,4 +231,45 @@ function openPanel(evt, panelName) {
 function RefreshInfo()
 {
     displayTop3InRegion(selectedRegion);
+}
+
+const factions_url = "https://api.coindesk.com/v1/bpi/currentprice.json";
+
+setUpFactionDropDown("deployFactionInput", "deployFactionUl", factions)
+var selectedFaction = "";
+var troopsAvailable = 20;
+
+function howManyTroopsCanUserPlace()
+{
+    return troopsAvailable;
+}
+//delegate troops to a faction
+function delegate(x)
+{
+    troopsAvailable -= x;
+}
+//register a faction
+function AddFaction(faction)
+{
+    factions.push(faction.factionName);
+    console.log(factions);
+}
+
+function setUpFactionDropDown(inputId, ulId, factions, selectionFunction)
+{
+    var input, filter, ul, i;
+    input = document.getElementById(inputId);
+    filter = input.value.toUpperCase();
+    ul = document.getElementById(ulId);
+
+    factions.forEach(faction => {
+        var el = document.createElement("li");
+        var a = document.createElement("a");
+        el.appendChild(a);
+        a.innerHTML = faction;
+        a.onclick = function() {selectionFunction(a.innerHTML)};
+        ul.appendChild(el);
+    });
+    ul.style.display = "none";
+    console.log(factions);
 }

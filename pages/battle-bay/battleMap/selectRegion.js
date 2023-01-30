@@ -74,7 +74,7 @@ function deployTroops() {
 }
 
 function selectFaction() {  
-    var mylist = document.getElementById("factionList");  
+    var mylist = document.getElementById("deployFactionInput");  
     selectedFaction = mylist.options[mylist.selectedIndex].text;
     displayTroopsToRecall();
 }

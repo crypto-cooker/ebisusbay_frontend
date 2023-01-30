@@ -4,13 +4,13 @@
   <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
   <script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom/dist/panzoom.min.js"></script>
   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"> -->
-  <link rel="stylesheet" href="fantasyRisk.css">
+  <link rel="stylesheet" href="../fantasyRisk.css">
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=yes"> -->
 </head>
 
 <body>
   <div>
-    <button class="btn" onclick="window.location.href='fancyMenu.html'">back</button>
+    <button class="btn" onclick="window.location.href='../villageMap.html'">back</button>
   </div>
 
 
@@ -145,7 +145,7 @@
 
   <div class="mapBorder container" >
     <div id="panzoom" >
-      <img src="images/fantasyRisk2.png" alt="Trulli" usemap="#image-map" width="100%" class="maparea" id="islandMap" >
+      <img src="../images/fantasyRisk2.png" alt="Trulli" usemap="#image-map" width="100%" class="maparea" id="islandMap" >
       <map name="image-map" width="100%">
       <area onmouseover="getRegionStats(title, 'pin-Southern-Trident')" target="" alt="Southern Trident" title="Southern Trident" onclick="selectRegion(title), openForm()"
             coords="255,534,295,532,337,554,396,534,410,481,351,411,331,377,264,391,225,377,208,430,157,439,191,515" shape="poly"> 
@@ -193,17 +193,16 @@
 <!-- close all the forms if clicked -->
 <div id="overlay2" onclick="closeForm(), closeDelegateForm(), closeRegistrationForm()"></div>
 
-<script type="text/javascript" src="jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="../jquery-1.6.2.min.js"></script>
 <!-- <script type="text/javascript" src="jquery.maphilight.js"></script> -->
 <script type="text/javascript" src="fantasyRisk.js"></script>
 <script type="text/javascript" src="selectRegion.js"></script>
-<script type="text/javascript" src="registerFaction.js"></script>
-<script type="text/javascript" src="delegateToFaction.js"></script>
+<!-- <script type="text/javascript" src="../factions/registerFaction.js"></script>
+<script type="text/javascript" src="../factions/delegateToFaction.js"></script> -->
 <!-- <script type="text/javascript" src="jquery.imagemapster.js"></script> -->
-<script src="queryAPI.js"></script>
-<script src="attack/attackSetUp.js"></script>
-<script src="attack/attack.js"></script>
-<script type="text/javascript" src="mapControls.js"></script>
+<script src="../attack/attackSetUp.js"></script>
+<script src="../attack/attack.js"></script>
+<script type="text/javascript" src="../mapStuff/mapControls.js"></script>
 
 <!-- resize Map -->
 <script>

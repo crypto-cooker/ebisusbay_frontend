@@ -26,6 +26,7 @@ function setUpDropDown(inputId, ulId, factions, selectedFunction)
     input = document.getElementById(inputId);
     filter = input.value.toUpperCase();
     ul = document.getElementById(ulId);
+    $(ul).empty();//clears the list
 
     factions.forEach(faction => {
         var el = document.createElement("li");
