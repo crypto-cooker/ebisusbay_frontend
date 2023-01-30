@@ -1,19 +1,11 @@
-const battleText = document.getElementById('battleText');
+// const battleText = document.getElementById('battleText');
 var attackerTroops;
 var defenderTroops;
 var attackerFaction;
 var defenderFaction;
 
-// const input = document.getElementById('defenderFactionInput');
-// // input.addEventListener('change', selectDefenderFaction);
-// const attackerFactionInput = document.getElementById('attackerFactionInput');
-// // attackerFactionInput.addEventListener('change', showMaxAttackers);
-
 function updateValue() {
-    // console.log(defenderFaction);
-    // console.log(attackerFaction);
-    // console.log(attackerTroops);
-    // console.log(defenderTroops);
+    battleText = document.getElementById('battleText');
 
     if(defenderFaction != null && attackerFaction != null && attackerTroops != null && defenderTroops != null)
     {
@@ -40,7 +32,6 @@ function setUpDropDown(inputId, ulId, factions, selectedFunction)
     });
     ul.style.display = "none";
 }
-
 function selectDefenderFaction(x, inputId, ulId)
 {
     defenderFaction = x;
@@ -66,7 +57,6 @@ function selectAttackerFaction(x, inputId, ulId)
     maxTextInput.value = attackerTroops;
     updateValue();
 }
-
 function getAttackerTroops()
 {
     // console.log("attackerFaction: " + attackerFaction);
@@ -93,7 +83,6 @@ function getDefenderTroops()
         }
     }
 }
-
 //currently, this returns all factions in this region for testing purposes, in the future it will only return those that the wallet owns
 function getAttackerFactions()
 {
@@ -123,7 +112,6 @@ function getDefenderFactions()
     }
     return factionsInRegion;
 }
-
 function filterFactions(inputId, ulId) {
     document.getElementById(ulId).style.display = "block";
 
@@ -145,4 +133,3 @@ function filterFactions(inputId, ulId) {
     }
     // console.log("filterFactions");
 }
-
