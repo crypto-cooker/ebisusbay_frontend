@@ -508,7 +508,7 @@ const Listing = () => {
                                     </a>
                                   </Link>
                                   <div className="p_list_info">
-                                    <span>{timeSince(item.saleTime + '000')} ago</span>
+                                    <span>{timeSince(item.saleTime)} ago</span>
                                     Bought by{' '}
                                     <b>
                                       <Link href={`/account/${item.purchaser}`}>

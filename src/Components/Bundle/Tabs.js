@@ -73,7 +73,7 @@ const Tabs = ({ nft }) => {
                         route="/account"
                         primaryTitle="Bought by"
                         user={listing.purchaser}
-                        time={timeSince(listing.saleTime + '000')}
+                        time={timeSince(listing.saleTime)}
                         price={ethers.utils.commify(listing.price)}
                         primaryText={shortAddress(listing.purchaser)}
                       />

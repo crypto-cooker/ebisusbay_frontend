@@ -1,25 +1,33 @@
 import React, {forwardRef, memo, useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faBox, faBoxOpen, faLayerGroup, faShoppingBag, faTrash} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faShoppingBag, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {
   Badge,
-  Box, Center,
+  Box,
+  Center,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
-  DrawerOverlay, Flex, Spacer, Text, useBreakpointValue, useColorModeValue, VStack, Wrap
+  DrawerOverlay,
+  Flex,
+  Spacer,
+  Text,
+  useBreakpointValue,
+  useColorModeValue,
+  VStack,
+  Wrap
 } from "@chakra-ui/react";
-import {getListingsByIds, getValidListingsByIds} from "@src/core/api/next/listings";
+import {getListingsByIds} from "@src/core/api/next/listings";
 import {acknowledgePrompt, clearCart, removeFromCart, syncCartStorage} from "@src/GlobalState/cartSlice";
 import {ImageKitService} from "@src/helpers/image";
 import {commify} from "ethers/lib/utils";
-import {ethers} from "ethers";
+import {Contract, ethers} from "ethers";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
+import {isBundle, isGaslessListing, round} from "@src/utils";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import Button from "@src/Components/components/common/Button";
@@ -28,6 +36,12 @@ import {AnyMedia} from "@src/Components/components/AnyMedia";
 import Link from "next/link";
 import {LOCAL_STORAGE_ITEMS} from "@src/helpers/storage";
 import useBuyGaslessListings from '@src/hooks/useBuyGaslessListings';
+import Market from "@src/Contracts/Marketplace.json";
+import {appConfig} from "@src/Config";
+
+const config = appConfig();
+const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+const readMarket = new Contract(config.contracts.market, Market.abi, readProvider);
 
 const Cart = function () {
   const dispatch = useDispatch();
@@ -172,6 +186,24 @@ const Cart = function () {
     }
   }, []);
 
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [serviceFees, setServiceFees] = useState(0);
+  useEffect(() => {
+    let fees = 0;
+    const totalPrice = cart.nfts.reduce((total, nft) => {
+      const price = parseInt(nft.price);
+      let amt = price;
+      if (isGaslessListing(nft.listingId)) {
+        const fee = price * (user.fee / 100);
+        fees += fee;
+        amt += fee;
+      }
+      return total + amt;
+    }, 0);
+    setTotalPrice(totalPrice);
+    setServiceFees(fees);
+  }, [cart.nfts, user.fee]);
+
   return (
     <div>
       <div className="de-menu-notification" onClick={openMenu}>
@@ -289,13 +321,33 @@ const Cart = function () {
 
           <DrawerFooter>
             <Flex direction="column" w="100%">
-              <Box my={4}>
+              <Box mt={4} fontSize="sm">
+                <Flex>
+                  <Box flex='1'>
+                    <Text>Subtotal</Text>
+                  </Box>
+                  <Box>
+                    <Text>{commify(calculateTotalPrice())} CRO</Text>
+                  </Box>
+                </Flex>
+              </Box>
+              <Box fontSize="sm">
+                <Flex>
+                  <Box flex='1'>
+                    <Text>Service Fees</Text>
+                  </Box>
+                  <Box>
+                    <Text>{commify(serviceFees)} CRO</Text>
+                  </Box>
+                </Flex>
+              </Box>
+              <Box mb={4}>
                 <Flex>
                   <Box flex='1'>
                     <Text fontWeight="bold">Total Price</Text>
                   </Box>
                   <Box>
-                    <Text fontWeight="bold">{commify(calculateTotalPrice())} CRO</Text>
+                    <Text fontWeight="bold">{commify(round(totalPrice, 2))} CRO</Text>
                   </Box>
                 </Flex>
               </Box>
