@@ -7,7 +7,7 @@ import {Contract, ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {isBundle, isGaslessListing, round} from "@src/utils";
+import {isBundle, round} from "@src/utils";
 import {getTheme} from "@src/Theme/theme";
 import {
   Box,
@@ -60,15 +60,11 @@ export default function PurchaseDialog({ onClose, isOpen, listingId}) {
   }
 
   const getYouReceiveViewValue = () => {
-    if (isGaslessListing(listingId)) {
-      const youReceive = parseInt(listing.price) + (listing.price * (fee / 100));
-      try {
-        return ethers.utils.commify(youReceive.toFixed(2));
-      } catch (e) {
-        return youReceive
-      }
-    } else {
-      return parseInt(listing.price);
+    const youReceive = parseInt(listing.price) + (listing.price * (fee / 100));
+    try {
+      return ethers.utils.commify(youReceive.toFixed(2));
+    } catch (e) {
+      return youReceive
     }
   };
 
@@ -166,14 +162,12 @@ export default function PurchaseDialog({ onClose, isOpen, listingId}) {
                           </Text>
                         </Flex>
                       </Flex>
-                      {isGaslessListing(listingId) && (
-                        <Flex justify="space-between" fontSize="sm" mt={1}>
-                          <Text className="text-muted">Service Fee</Text>
-                          <Text>
-                            {fee} %
-                          </Text>
-                        </Flex>
-                      )}
+                      <Flex justify="space-between" fontSize="sm" mt={1}>
+                        <Text className="text-muted">Service Fee</Text>
+                        <Text>
+                          {fee} %
+                        </Text>
+                      </Flex>
                     </div>
                     <Text fontSize={18} fontWeight="bold">Pay with</Text>
                     <SimpleGrid columns={{base: 1, sm: 2}}>
