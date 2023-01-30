@@ -23112,7 +23112,7 @@
       "maxMintPerTx": 7,
       "maxMintPerAddress": 21,
       "totalSupply": 6000,
-      "cost": "400",
+      "cost": "499",
       "foundersOnly": false,
       "start": 1674903600000,
       "end": null,
