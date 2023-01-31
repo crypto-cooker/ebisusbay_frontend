@@ -4435,9 +4435,9 @@
         ]
       },
       "verification": {
-        "doxx": "private",
+        "doxx": false,
         "kyc": false,
-        "verified": true
+        "verified": false
       }
     },
     {
