@@ -46,7 +46,7 @@ const MyListingsCollection = ({ walletAddress = null }) => {
     isFetchingNextPage,
     status,
     refetch,
-  } = useInfiniteQuery(['MySoldNftCollection', walletAddress], fetcher, {
+  } = useInfiniteQuery(['MyListingsCollection', walletAddress], fetcher, {
     getNextPageParam: (lastPage, pages) => {
       return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
     },

@@ -95,13 +95,13 @@ const batchListingSlice = createSlice({
 
         const price = currentPrice > 1 ? currentPrice : 1;
         currentPrice--;
-        return {nft: o.nft, price}
+        return {...o, price}
       });
     },
     applyPriceToAll: (state, action) => {
-      const price = action.payload;
+      const {price, expiration} = action.payload;
       state.nfts = state.nfts.map((o) => {
-        return {nft: o.nft, price}
+        return {...o, price, expiration}
       });
     },
     setApproval: (state, action) => {
