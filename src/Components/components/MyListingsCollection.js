@@ -16,6 +16,7 @@ import { useRouter } from 'next/router';
 import {getUnfilteredListingsForAddress} from "@src/core/api";
 import MakeListingDialog from "@src/Components/MakeListing";
 import {useInfiniteQuery} from "@tanstack/react-query";
+import {invalidState} from "@src/core/api/enums";
 
 
 const MyListingsCollection = ({ walletAddress = null }) => {
@@ -29,11 +30,11 @@ const MyListingsCollection = ({ walletAddress = null }) => {
 
   const fetcher = async ({ pageParam = 1 }) => {
     const listings = await getUnfilteredListingsForAddress(walletAddress, user.provider, pageParam);
-    if (listings.some((value) => !value.valid)) {
+    if (listings.some((value) => !value.valid && value.invalid !== invalidState.LEGACY)) {
       setHasInvalidListings(true);
     }
     return listings
-      .filter((x) => x.listed)
+      .filter((x) => x.listed && x.invalid !== invalidState.LEGACY)
       .filter((x) => (showInvalidOnly ? !x.valid : true));
   };
 
