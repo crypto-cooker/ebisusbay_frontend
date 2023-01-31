@@ -279,7 +279,7 @@ export async function getUnfilteredListingsForAddress(walletAddress, walletProvi
 
     const filteredListings = listings
       .map((item) => {
-        const { listingId, price, nft, purchaser, valid, state, is1155, nftAddress } = item;
+        const { listingId, price, nft, purchaser, valid, state, is1155, nftAddress, invalid } = item;
         const { name, image, rank } = nft || {};
 
         const listingTime = moment(new Date(item.listingTime * 1000)).format('DD/MM/YYYY, HH:mm');
@@ -326,6 +326,7 @@ export async function getUnfilteredListingsForAddress(walletAddress, walletProvi
           purchaser,
           rank,
           valid,
+          invalid,
           useIframe: isMetaPixels,
           nft,
           iframeSource: isMetaPixels ? `https://www.metaversepixels.app/grid?id=${id}&zoom=3` : null,
