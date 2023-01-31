@@ -1,5 +1,5 @@
 import React from "react";
-import {Helmet} from "react-helmet";
+// import {Helmet} from "react-helmet";
 
 const DefaultArea = ({onChange}) => {
   return (
@@ -25,12 +25,12 @@ const DefaultArea = ({onChange}) => {
         <img src="" width="64" height="64" className="factionIcon"/>
         <div className="map-Text"><h3 className="head">Alliance Hall</h3></div>
       </div>
-      <Helmet>
+      {/* <Helmet>
       <script>
         consle.log('hello -TJ')
       </script>
       <script>try{Typekit.load({ async: true })}catch(e){}</script>
-      </Helmet>
+      </Helmet> */}
     </div>
     
   )
