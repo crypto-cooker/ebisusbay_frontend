@@ -16333,7 +16333,7 @@
       "multiToken": false,
       "address": "0x5DD5d3140Fe619Ef8F4655383283BB555E219A27",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A Mysterious Egg found by a CroSkull during his adventure! \"I.... never seen an egg like that, it may hatch in a some mysterious creature.\" Hatching Available on https://app.croskull.com/",
         "avatar": "/img/collections/croskull-pets-eggs-s3/avatar.webp",
