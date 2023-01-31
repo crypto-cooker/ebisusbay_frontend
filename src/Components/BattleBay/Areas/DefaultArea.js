@@ -28,7 +28,7 @@ const DefaultArea = ({onChange}) => {
       <script>
         consle.log('hello -TJ')
       </script>
-      <script>try{Typekit.load({ async: true })}catch(e){}</script>
+      {/* <script>try{Typekit.load({ async: true })}catch(e){}</script> */}
     </div>
     
   )
