@@ -4435,9 +4435,9 @@
         ]
       },
       "verification": {
-        "doxx": "private",
+        "doxx": false,
         "kyc": false,
-        "verified": true
+        "verified": false
       }
     },
     {
@@ -16993,7 +16993,7 @@
         "card": "/img/collections/wedripz-cro/card.webp",
         "website": "https://wedripz.netlify.app/",
         "twitter": "https://www.twitter.com/wedripz",
-        "discord": "https://discord.gg/dhrRCgMF",
+        "discord": "https://discord.gg/8EaxSbCqu6",
         "categories": []
       },
       "verification": {
@@ -17224,6 +17224,106 @@
       },
       "verification": {
         "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "INNER CIRCLE FINANCE BRONZE (ICFB)",
+      "slug": "inner-circle-finance-bronze",
+      "multiToken": false,
+      "address": "0x2a1730D76D442297a4CB849fCe3FD140E413761F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/inner-circle-finance/avatar.webp",
+        "card": "/img/collections/inner-circle-finance/card.webp",
+        "banner": "/img/collections/inner-circle-finance/banner.webp",
+        "website": "https://innercircle.finance/",
+        "twitter": "https://twitter.com/CircleFounders",
+        "discord": "https://discord.gg/theinnercircle",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "INNER CIRCLE FINANCE SILVER (ICFS)",
+      "slug": "inner-circle-finance-silver",
+      "multiToken": false,
+      "address": "0xadb51Db1f1d328908f2036e6F86a833CF41350B0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/inner-circle-finance/avatar.webp",
+        "card": "/img/collections/inner-circle-finance/card.webp",
+        "banner": "/img/collections/inner-circle-finance/banner.webp",
+        "website": "https://innercircle.finance/",
+        "twitter": "https://twitter.com/CircleFounders",
+        "discord": "https://discord.gg/theinnercircle",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "INNER CIRCLE FINANCE GOLD (ICFS)",
+      "slug": "inner-circle-finance-gold",
+      "multiToken": false,
+      "address": "0x5C384Fc995Ca7Cd5F3Bc8734825923a33588ab3b",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/inner-circle-finance/avatar.webp",
+        "card": "/img/collections/inner-circle-finance/card.webp",
+        "banner": "/img/collections/inner-circle-finance/banner.webp",
+        "website": "https://innercircle.finance/",
+        "twitter": "https://twitter.com/CircleFounders",
+        "discord": "https://discord.gg/theinnercircle",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "INNER CIRCLE FINANCE PLATINUM (ICFS)",
+      "slug": "inner-circle-finance-platinum",
+      "multiToken": false,
+      "address": "0x5D785235E9d9Eb0CEb89428ef77350DBe73d7838",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/inner-circle-finance/avatar.webp",
+        "card": "/img/collections/inner-circle-finance/card.webp",
+        "banner": "/img/collections/inner-circle-finance/banner.webp",
+        "website": "https://innercircle.finance/",
+        "twitter": "https://twitter.com/CircleFounders",
+        "discord": "https://discord.gg/theinnercircle",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
         "doxx": false,
         "kyc": false
       }
@@ -23093,7 +23193,7 @@
         "name": "Wedripz Cro",
         "website": "https://wedripz.netlify.app/",
         "twitter": "https://www.twitter.com/wedripz",
-        "discord": "https://discord.gg/dhrRCgMF"
+        "discord": "https://discord.gg/8EaxSbCqu6"
       },
       "address": "0x86Eecf80c106d1Fd23ed2eC2db28B957c8Cd6c3a",
       "maxMintPerTx": 7,
