@@ -17200,6 +17200,33 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Atlantis Planets",
+      "slug": "atlantis-planets",
+      "multiToken": false,
+      "address": "0x3A19A693a29b43BAE23F32B498d1A24D09F19878",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome to the captivating realm of Atlantis, the game-verse and home of the legendary Argonauts. Planets are coveted lands that hold the key to your success in the game. Acquire planets, embark on exciting expeditions, and earn rewards that will supercharge your growth in Atlantis.",
+        "avatar": "/img/collections/atlantis-planets/avatar.webp",
+        "card": "/img/collections/atlantis-planets/card.webp",
+        "banner": "/img/collections/atlantis-planets/banner.webp",
+        "website": "https://atlantis.argofinance.money/",
+        "twitter": "https://twitter.com/ArgoProtocol",
+        "discord": "https://discord.gg/argofinance",
+        "medium": "https://argofinance.medium.com",
+        "telegram": "https://t.me/Argo_Finance",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
