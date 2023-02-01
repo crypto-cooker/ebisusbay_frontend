@@ -66,6 +66,8 @@ const userSlice = createSlice({
     withdrawingMarketBalance: false,
     stakingRewards: null,
     harvestingStakingRewards: false,
+    usesEscrow: false,
+    updatingEscrowStatus: false,
 
     // My NFTs
     fetchingNfts: false,
@@ -112,6 +114,7 @@ const userSlice = createSlice({
       state.stakingRewards = action.payload.stakingRewards;
       state.gettingContractData = false;
       state.fee = action.payload.fee;
+      state.usesEscrow = action.payload.usesEscrow;
     },
 
     setAuthSigner(state, action) {
@@ -265,6 +268,13 @@ const userSlice = createSlice({
         state.stakingRewards = 0;
       }
     },
+    updatingEscrowStatus(state) {
+      state.updatingEscrowStatus = true;
+    },
+    updatedEscrowStatus(state, action) {
+      state.updatingEscrowStatus = false;
+      if (action.payload !== undefined) state.usesEscrow = action.payload;
+    },
     transferedNFT(state, action) {
       const indexesToRemove = state.nfts
         .map((nft, index) => {
@@ -377,6 +387,8 @@ export const {
   withdrewMarketBalance,
   harvestingStakingRewards,
   harvestedStakingRewards,
+  updatingEscrowStatus,
+  updatedEscrowStatus,
   listingUpdate,
   transferedNFT,
   setIsMember,
@@ -541,31 +553,22 @@ export const connectAccount =
         window.location.reload();
       });
 
-      // let code;
       let balance;
-      // let rewards;
-      // let ownedFounder = 0;
-      // let ownedVip = 0;
       let sales;
-      // let stakeCount = 0;
       let stakingRewards = 0;
       let isMember = false;
       let fee;
+      let usesEscrow = false;
 
       dispatch(retrieveProfile());
 
       if (signer && correctChain) {
         const contractService = new UserContractService(signer);
         dispatch(onContractServiceInitialized(contractService));
-        // const rawCode = await contractService.membership.codes(address);
-        // code = ethers.utils.parseBytes32String(rawCode);
-        // rewards = ethers.utils.formatEther(await contractService.membership.payments(address));
-        // ownedFounder = await contractService.membership.balanceOf(address, 1);
-        // ownedVip = await contractService.membership.balanceOf(address, 2);
-        // stakeCount = await contractService.staking.amountStaked(address);
         sales = ethers.utils.formatEther(await contractService.market.payments(address));
         stakingRewards = ethers.utils.formatEther(await contractService.staking.getReward(address));
         isMember = await contractService.market.isMember(address);
+        usesEscrow = await contractService.market.useEscrow(address);
 
         try {
           balance = ethers.utils.formatEther(await provider.getBalance(address));
@@ -583,13 +586,12 @@ export const connectAccount =
           web3modal: web3Modal,
           needsOnboard: false,
           correctChain: correctChain,
-          // code: code,
           balance: balance,
-          // rewards: rewards,
           isMember,
           marketBalance: sales,
           stakingRewards: stakingRewards,
-          fee
+          fee,
+          usesEscrow
         })
       );
     } catch (error) {
@@ -908,6 +910,28 @@ export class AccountMenuActions {
         console.log(error);
         toast.error('Unknown Error');
       }
+    }
+  };
+
+  static toggleEscrowOptIn = (optIn) => async (dispatch, getState) => {
+    const { user } = getState();
+    try {
+      dispatch(updatingEscrowStatus());
+      const tx = await user.contractService.market.setUseEscrow(user.address, optIn);
+      const receipt = await tx.wait();
+      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      dispatch(updatedEscrowStatus(optIn));
+    } catch (error) {
+      dispatch(updatedEscrowStatus());
+      if (error.data) {
+        toast.error(error.data.message);
+      } else if (error.message) {
+        toast.error(error.message);
+      } else {
+        console.log(error);
+        toast.error('Unknown Error');
+      }
+    } finally {
     }
   };
 }
