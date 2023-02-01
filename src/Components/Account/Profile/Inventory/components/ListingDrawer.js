@@ -59,9 +59,9 @@ export const ListingDrawer = () => {
     if (!startingPrice) return;
     dispatch(cascadePrices({ startingItem, startingPrice }));
   }
-  const handleApplyAll = (price) => {
-    if (!price) return;
-    dispatch(applyPriceToAll(price));
+  const handleApplyAll = (price, expiration) => {
+    if (!price && !expiration) return;
+    dispatch(applyPriceToAll({price, expiration}));
   }
   const resetDrawer = () => {
     handleClearCart();
@@ -107,7 +107,7 @@ export const ListingDrawer = () => {
       collectionAddress: item.nft.address ?? item.nft.nftAddress,
       tokenId: item.nft.id ?? item.nft.nftId,
       price: item.price.toString(),
-      expirationDate: item.expiration,
+      expirationDate: new Date().getTime() + parseInt(item.expiration),
       is1155: item.nft.multiToken
     })))
     toast.success("Listings Successful");
