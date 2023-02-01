@@ -179,7 +179,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
 
           const metadata = await getCollectionMetadata(item.nft.address);
           if (metadata.collections.length > 0) {
-            extras.floorPrice = metadata.collections[0].floorPrice;
+            extras.floorPrice = metadata.collections[0].stats.total.floorPrice;
           }
 
           extras.royalty = await collectionRoyaltyPercent(item.nft.address, item.nft.id);
