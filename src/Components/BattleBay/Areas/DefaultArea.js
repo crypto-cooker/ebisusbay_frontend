@@ -2,16 +2,15 @@ import React, { useState, useEffect } from 'react';
 // import {Helmet} from "react-helmet";
 import { setUpLeaderboard } from './leaderboardFunctions.js'
 
-useEffect(() => {
-  // Update the document title using the browser API
-  document.title = `You clicked ${count} times`;
-});
-
-function Example() {
-  const [count, setCount] = useState(0);
-}
-
 const DefaultArea = ({onChange}) => {
+
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    document.title = `You clicked ${count} times`;
+  });
+
   return (
     <div>
     <div>
