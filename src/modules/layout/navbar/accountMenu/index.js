@@ -476,7 +476,7 @@ const Index = function () {
                       </>
                     ) : (
                       <Text>
-                        Not enabled (receiving direct)
+                        Direct to wallet
                       </Text>
                     )}
                   </div>
@@ -513,11 +513,16 @@ const Index = function () {
                           onClick={() => toggleEscrowOptIn(true)}
                           isLoading={user.updatingEscrowStatus}
                           disabled={user.updatingEscrowStatus}>
-                    Opt-In
+                    Opt-In to Escrow
                   </Button>
                 )}
               </div>
             </div>
+            <Text fontSize={'xs'}>
+              {user.usesEscrow ? <>Opt-out of market escrow to receive payments directly</>
+                : <>If you prefer claiming from escrow, opt-in above</>
+              }
+            </Text>
             <div className="d-flex mt-2">
               <div className="flex-fill">
                 <div className="text-muted">Staking Rewards</div>

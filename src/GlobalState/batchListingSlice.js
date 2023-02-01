@@ -15,7 +15,7 @@ const batchListingSlice = createSlice({
     addToBatchListingCart: (state, action) => {
       const nftToAdd = action.payload;
       if (!state.nfts.some((o) => caseInsensitiveCompare(o.nft.address, nftToAdd.address) && o.nft.id === nftToAdd.id)) {
-        state.nfts.push({nft: nftToAdd, price: null, quantity: null, expiration: null});
+        state.nfts.push({nft: nftToAdd, price: null, quantity: null, expiration: 2592000000});
       }
 
       if (state.nfts.length === 1) {

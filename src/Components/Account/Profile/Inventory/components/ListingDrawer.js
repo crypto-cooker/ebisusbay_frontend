@@ -32,6 +32,7 @@ import {ListingDrawerItem} from "@src/Components/Account/Profile/Inventory/compo
 import ListingBundleDrawerForm from "@src/Components/Account/Profile/Inventory/components/ListingBundleDrawerForm";
 import Bundle from "@src/Contracts/Bundle.json";
 import useUpsertGaslessListings from "@src/Components/Account/Settings/hooks/useUpsertGaslessListings";
+import useCancelGaslessListing from "@src/Components/Account/Settings/hooks/useCancelGaslessListing";
 
 const config = appConfig();
 const MAX_NFTS_IN_CART = 40;
@@ -47,9 +48,10 @@ export const ListingDrawer = () => {
   const [showConfirmButton, setShowConfirmButton] = useState(false);
   const [isBundling, setIsBundling] = useState(false);
   const formRef = useRef(null);
-  const [debugLegacy, setDebugLegacy] = useState(false);
+  const [expressMode, setExpressMode] = useState(false);
 
   const [upsertGaslessListings, responseUpdate] = useUpsertGaslessListings();
+  const [cancelGaslessListing, response] = useCancelGaslessListing();
 
   const handleClearCart = () => {
     setShowConfirmButton(false);
@@ -82,8 +84,8 @@ export const ListingDrawer = () => {
         return;
       }
 
-      if (isTestnet() && debugLegacy) {
-        await executeUpdateLegacyListings(filteredCartNfts);
+      if (expressMode) {
+        await executeExpressListings(filteredCartNfts);
       } else {
         await executeGaslessListings(filteredCartNfts);
       }
@@ -101,7 +103,7 @@ export const ListingDrawer = () => {
     const nftIds = nfts.map((o) => o.nft.id);
     const nftPrices = nfts.map((o) => ethers.utils.parseEther(o.price.toString()));
 
-    Sentry.captureEvent({ message: 'handleBatchListing', extra: { nftAddresses, nftIds, nftPrices } });
+    Sentry.captureEvent({ message: 'handleBatchListings', extra: { nftAddresses, nftIds, nftPrices } });
 
     await upsertGaslessListings(nfts.map((item) => ({
       collectionAddress: item.nft.address ?? item.nft.nftAddress,
@@ -113,19 +115,25 @@ export const ListingDrawer = () => {
     toast.success("Listings Successful");
   }
 
-  const executeUpdateLegacyListings = async (existingLegacyListingNfts) => {
-    if (existingLegacyListingNfts.length < 1) return;
+  const executeExpressListings = async (items) => {
+    if (items.length < 1) return;
 
-    const nftAddresses = existingLegacyListingNfts.map((o) => o.nft.address);
-    const nftIds = existingLegacyListingNfts.map((o) => o.nft.id);
-    const nftPrices = existingLegacyListingNfts.map((o) => ethers.utils.parseEther(o.price.toString()));
+    // Cancel gasless listings
+    const gaslessListingIds = items
+      .filter((item) => item.nft.listingId && isGaslessListing(item.nft.listingId))
+      .map((item) => item.nft.listingId);
+    if (gaslessListingIds.length > 0) await cancelGaslessListing(gaslessListingIds);
+
+    const nftAddresses = items.map((o) => o.nft.address);
+    const nftIds = items.map((o) => o.nft.id);
+    const nftPrices = items.map((o) => ethers.utils.parseEther(o.price.toString()));
 
     if (nftPrices.some((o) => !o.gt(0))) {
       toast.error('0 priced item detected!');
       return;
     }
 
-    Sentry.captureEvent({ message: 'handleBatchListing', extra: { nftAddresses, nftIds, nftPrices } });
+    Sentry.captureEvent({ message: 'handleBatchExpressListings', extra: { nftAddresses, nftIds, nftPrices } });
 
     let tx = await user.contractService.market.makeListings(nftAddresses, nftIds, nftPrices);
     let receipt = await tx.wait();
@@ -225,19 +233,17 @@ export const ListingDrawer = () => {
   return (
     <>
       <GridItem px={6} py={4} overflowY="auto">
-        {isTestnet() && (
-          <FormControl display='flex' alignItems='center' mb={2}>
-            <FormLabel htmlFor='debug-legacy-toggle' mb='0'>
-              Debug: enable legacy
-            </FormLabel>
-            <Switch id='debug-legacy-toggle' isChecked={debugLegacy} onChange={() => setDebugLegacy(!debugLegacy)}/>
-          </FormControl>
-        )}
         <FormControl display='flex' alignItems='center' mb={2}>
           <FormLabel htmlFor='list-bundle-toggle' mb='0'>
             List as bundle
           </FormLabel>
           <Switch id='list-bundle-toggle' isChecked={isBundling} onChange={onBundleToggled}/>
+        </FormControl>
+        <FormControl display='flex' alignItems='center' mb={2}>
+          <FormLabel htmlFor='debug-legacy-toggle' mb='0'>
+            Express Mode
+          </FormLabel>
+          <Switch id='debug-legacy-toggle' isChecked={expressMode} onChange={() => setExpressMode(!expressMode)}/>
         </FormControl>
         {isBundling && (
           <Box mb={4}>
