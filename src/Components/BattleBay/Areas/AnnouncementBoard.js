@@ -1,3 +1,4 @@
+import { setUpLeaderboard } from './leaderboardFunctions.js'
 
 const AnnouncementBoard = () => {
   return (
@@ -27,6 +28,15 @@ const AnnouncementBoard = () => {
             </tbody>
         </table>
         </div>
+        
+        {/* <div className='App'>
+      <h1>Geeksforgeeks : How to include an external 
+      JavaScript library to ReactJS?</h1>
+      <ScriptTag isHydrating={true} type="text/javascript" 
+      src= "../old/battle-bay/announcementBoard/announcementBoard.html" />
+    </div>
+  ); */}
+
     </section>
   )
 };

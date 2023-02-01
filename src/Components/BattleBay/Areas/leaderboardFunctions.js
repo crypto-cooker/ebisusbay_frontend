@@ -38,10 +38,11 @@ class DeployedTroops {
 
 let deployedTroops = new DeployedTroops()
 
-function setUpLeaderboard() {
+export function setUpLeaderboard() {
     RandomizeStats();
     DisplayRegions();
 }
+
 function GetRegions(){
     return regions;
 }
@@ -141,3 +142,5 @@ function RandomizeStats()
         }
     }
 }
+// let myVar = 1234;
+// export default;
