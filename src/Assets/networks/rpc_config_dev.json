@@ -17279,7 +17279,7 @@
       }
     },
     {
-      "name": "INNER CIRCLE FINANCE GOLD (ICFS)",
+      "name": "INNER CIRCLE FINANCE GOLD (ICFG)",
       "slug": "inner-circle-finance-gold",
       "multiToken": false,
       "address": "0x5C384Fc995Ca7Cd5F3Bc8734825923a33588ab3b",
@@ -17304,7 +17304,7 @@
       }
     },
     {
-      "name": "INNER CIRCLE FINANCE PLATINUM (ICFS)",
+      "name": "INNER CIRCLE FINANCE PLATINUM (ICFP)",
       "slug": "inner-circle-finance-platinum",
       "multiToken": false,
       "address": "0x5D785235E9d9Eb0CEb89428ef77350DBe73d7838",

@@ -86,7 +86,9 @@ const expirationDatesValues = [
     value: 15552000000,
     label: '6 months'
   },
-]
+];
+
+const defaultExpiry = 2592000000;
 
 export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, disabled, isBundling = false }) => {
   const dispatch = useDispatch();
@@ -94,7 +96,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [price, setPrice] = useState('');
-  const [expirationDate, setExpirationDate] = useState(new Date().getTime() + 2592000000 );
+  const [expirationDate, setExpirationDate] = useState(defaultExpiry.toString());
   const [invalid, setInvalid] = useState(false);
 
   // Approvals
@@ -118,19 +120,25 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
   }, [dispatch, item.nft, price]);
 
   const handleExpirationDateChange = useCallback((e) => {
-    const expiration = new Date().getTime() + parseInt(e.target.value);
-    if (expiration < Date.now()) {
+    const expirationLength = parseInt(e.target.value);
+    if (isNaN(expirationLength) || Number(expirationLength) < 1) {
       setInvalid('expiration');
     }
 
     setInvalid(false);
-    setExpirationDate(expiration);
-    dispatch(updateExpiration({ nft: item.nft, expiration }));
+    setExpirationDate(e.target.value);
+    dispatch(updateExpiration({ nft: item.nft, expiration: expirationLength }));
   }, [dispatch, item.nft, expirationDate]);
 
   useEffect(() => {
     setPrice(item.price);
   }, [item.price]);
+
+  useEffect(() => {
+    if (item.expiration) {
+      setExpirationDate(item.expiration?.toString());
+    }
+  }, [item.expiration]);
 
   const checkApproval = async () => {
     const contract = new Contract(item.nft.address, ERC721, user.provider.getSigner());
@@ -171,7 +179,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
 
           const metadata = await getCollectionMetadata(item.nft.address);
           if (metadata.collections.length > 0) {
-            extras.floorPrice = metadata.collections[0].floorPrice;
+            extras.floorPrice = metadata.collections[0].stats.total.floorPrice;
           }
 
           extras.royalty = await collectionRoyaltyPercent(item.nft.address, item.nft.id);
@@ -265,7 +273,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
                               <FontAwesomeIcon icon={faEllipsisH} />
                             </MenuButton>
                             <MenuList textAlign="right">
-                              <MenuItem onClick={() => onApplyAllSelected(price)}>Apply price to all</MenuItem>
+                              <MenuItem onClick={() => onApplyAllSelected(price, expirationDate)}>Apply values to all</MenuItem>
                               <MenuItem onClick={() => onCascadePriceSelected(item, price)}>Cascade price</MenuItem>
                               <MenuItem onClick={handleRemoveItem}>Remove</MenuItem>
                             </MenuList>
@@ -276,19 +284,22 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
 
                       <FormControl isInvalid={invalid === 'expiration'} mt={1}>
                         <Stack direction="row">
+                          <Text>Expires</Text>
                           <Select
                             placeholder='Select expiration'
                             size="xs"
                             bg="transparent !important"
                             onChange={handleExpirationDateChange}
                             disabled={disabled}
+                            defaultValue={defaultExpiry.toString()}
+                            value={expirationDate}
                           >
                             {expirationDatesValues.map((time) => (
-                              <option value={time.value}>{time.label}</option>
+                              <option value={time.value.toString()}>{time.label}</option>
                             ))}
                           </Select>
                         </Stack>
-                        <FormErrorMessage fontSize='xs' mt={1}>Enter a valid number.</FormErrorMessage>
+                        <FormErrorMessage fontSize='xs' mt={1}>Select a valid expiration.</FormErrorMessage>
                       </FormControl>
                     </>
                   )}
