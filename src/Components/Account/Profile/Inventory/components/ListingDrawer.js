@@ -3,17 +3,18 @@ import {
   AlertDescription,
   AlertIcon,
   Box,
+  Button as ChakraButton,
   Center,
   Flex,
   FormControl,
   FormLabel,
-  GridItem,
+  GridItem, IconButton, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverTrigger,
   Spacer,
   Switch,
   Text
 } from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
-import {Spinner} from "react-bootstrap";
+import {PopoverHeader, Spinner} from "react-bootstrap";
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {applyPriceToAll, cascadePrices, clearBatchListingCart} from "@src/GlobalState/batchListingSlice";
@@ -33,6 +34,7 @@ import ListingBundleDrawerForm from "@src/Components/Account/Profile/Inventory/c
 import Bundle from "@src/Contracts/Bundle.json";
 import useUpsertGaslessListings from "@src/Components/Account/Settings/hooks/useUpsertGaslessListings";
 import useCancelGaslessListing from "@src/Components/Account/Settings/hooks/useCancelGaslessListing";
+import {QuestionIcon, QuestionOutlineIcon} from "@chakra-ui/icons";
 
 const config = appConfig();
 const MAX_NFTS_IN_CART = 40;
@@ -244,6 +246,15 @@ export const ListingDrawer = () => {
             Express Mode
           </FormLabel>
           <Switch id='debug-legacy-toggle' isChecked={expressMode} onChange={() => setExpressMode(!expressMode)}/>
+          <Popover>
+            <PopoverTrigger>
+              <IconButton icon={<QuestionOutlineIcon />} variant='unstyled'/>
+            </PopoverTrigger>
+            <PopoverContent>
+              <PopoverArrow />
+              <PopoverBody>Express mode reduces the amount of signings required for listing. However this may increase gas fees</PopoverBody>
+            </PopoverContent>
+          </Popover>
         </FormControl>
         {isBundling && (
           <Box mb={4}>
