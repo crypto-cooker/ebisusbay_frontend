@@ -587,6 +587,9 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
 
   const results = quickWallet.data;
 
+  // Determine before filters if there is a next page to avoid page cutoffs
+  const hasNextPage = results.length > 0;
+
   let zeroMatched = false;
   for (const nft of results) {
     const matchedContract = findCollectionByAddress(nft.nftAddress, nft.nftId);
@@ -594,7 +597,10 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
   }
 
   if (!zeroMatched && results.length > 0) {
-    return [];
+    return {
+      hasNextPage,
+      nfts: []
+    };
   }
 
   const signer = walletProvider?.getSigner();
@@ -611,7 +617,7 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
     });
   };
   const writeContracts = [];
-  return await Promise.all(
+  const mappedResults = await Promise.all(
     results
       .filter((nft) => {
         if(isBundle(nft.nftAddress) && nft.metadata?.nfts) return true
@@ -730,6 +736,11 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
         };
       }})
   );
+
+  return {
+    hasNextPage,
+    nfts: mappedResults
+  }
 }
 
 export async function getLeaders(timeframe) {

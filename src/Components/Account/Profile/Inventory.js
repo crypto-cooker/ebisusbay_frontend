@@ -71,7 +71,7 @@ export default function Inventory({ address }) {
     refetch,
   } = useInfiniteQuery(['Inventory', address, collectionFilter], fetcher, {
     getNextPageParam: (lastPage, pages) => {
-      return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
+      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
     },
     refetchOnWindowFocus: false
   })
@@ -137,7 +137,7 @@ export default function Inventory({ address }) {
         <div className="card-group row g-3">
           {data.pages.map((items, index) => (
             <React.Fragment key={index}>
-              {items.map((nft, index) => {
+              {items.nfts.map((nft, index) => {
                 if(isBundle(nft.address)){
                   return (
                     <div

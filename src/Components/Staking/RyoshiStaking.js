@@ -128,7 +128,7 @@ const UnstakedRyoshiNftList = ({onSelect}) => {
     fetcher,
     {
       getNextPageParam: (lastPage, pages) => {
-        return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
+        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
       },
       refetchOnWindowFocus: false
     })
@@ -171,7 +171,7 @@ const UnstakedRyoshiNftList = ({onSelect}) => {
                   <>
                     {data.pages.map((items, index) => (
                       <React.Fragment key={index}>
-                        {items.map((nft, index) => {
+                        {items.nfts.map((nft, index) => {
                           return (
                             <div
                               className={`d-item col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2 mb-4`}
