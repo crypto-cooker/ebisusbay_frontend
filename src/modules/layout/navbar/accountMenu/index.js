@@ -1,51 +1,52 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import Blockies from 'react-blockies';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {useDispatch, useSelector} from 'react-redux';
+import {useRouter} from 'next/router';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
+  faArrowRightArrowLeft,
   faBolt,
-  faUser,
-  faEdit,
   faCoins,
   faCopy,
-  faHeart,
   faDollarSign,
-  faWallet,
-  faSearch,
+  faEdit,
   faHand,
-  faArrowRightArrowLeft, faMoon, faSun
+  faHeart,
+  faMoon,
+  faSearch,
+  faSun,
+  faUser,
+  faWallet
 } from '@fortawesome/free-solid-svg-icons';
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import {Modal, NavLink, Spinner, ModalTitle, Offcanvas} from 'react-bootstrap';
+import {Modal, ModalTitle, Offcanvas, Spinner} from 'react-bootstrap';
 import styled from 'styled-components';
 import {Contract, ethers} from 'ethers';
-import { ERC20 } from '@src/Contracts/Abis';
-import { useInterval } from '@src/utils';
+import {ERC20} from '@src/Contracts/Abis';
+import {round, shortAddress, useInterval} from '@src/utils';
 import styles from './accountmenu.module.scss';
 
 import {
+  AccountMenuActions,
+  balanceUpdated,
+  chainConnect,
+  checkForOutstandingOffers,
   connectAccount,
   onLogout,
-  setTheme,
   setShowWrongChainModal,
-  chainConnect,
-  AccountMenuActions,
-  checkForOutstandingOffers,
-  balanceUpdated,
+  setTheme,
 } from '@src/GlobalState/User';
 
-import { getThemeInStorage, setThemeInStorage } from '@src/helpers/storage';
-import { getAllCollections } from '@src/GlobalState/collectionsSlice';
-import { fetchMyNFTs } from '@src/GlobalState/offerSlice';
-import { round, shortAddress } from '@src/utils';
-import { appConfig } from '@src/Config';
+import {getThemeInStorage, setThemeInStorage} from '@src/helpers/storage';
+import {getAllCollections} from '@src/GlobalState/collectionsSlice';
+import {fetchMyNFTs} from '@src/GlobalState/offerSlice';
+import {appConfig} from '@src/Config';
 import {ImageKitService} from "@src/helpers/image";
 import classnames from "classnames";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import Button from "@src/Components/components/Button";
-import {Box, Flex, Heading, Link, Spacer, Text, Tooltip, useClipboard, useColorMode, VStack} from "@chakra-ui/react";
+import {Box, Flex, Heading, Link, Spacer, Text, useClipboard, useColorMode, VStack, Wrap} from "@chakra-ui/react";
 import Image from "next/image";
 import {useQuery} from "@tanstack/react-query";
 
@@ -178,6 +179,10 @@ const Index = function () {
 
   const harvestStakingRewards = async () => {
     dispatch(AccountMenuActions.harvestStakingRewards());
+  };
+
+  const toggleEscrowOptIn = async (optIn) => {
+    dispatch(AccountMenuActions.toggleEscrowOptIn(optIn));
   };
 
   const clearCookies = async () => {
@@ -452,38 +457,63 @@ const Index = function () {
             <div className="d-flex mt-2">
               <div className="flex-fill">
                 <div className="text-muted">Market Escrow</div>
-                <div>
-                  {!user.connectingWallet ? (
-                    <>
-                      {user.marketBalance ? (
-                        <>
-                          <div className="d-flex">
-                            <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
-                            <span className="ms-1">
+                {!user.connectingWallet ? (
+                  <div>
+                    {user.usesEscrow ? (
+                      <>
+                        {user.marketBalance ? (
+                          <>
+                            <div className="d-flex">
+                              <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+                              <span className="ms-1">
                               {ethers.utils.commify(round(user.marketBalance, 2))}
                             </span>
-                          </div>
-                        </>
-                      ) : (
-                        <span className="d-wallet-value">0.0 CRO</span>
-                      )}
-                    </>
-                  ) : (
-                    <span>
-                      <Spinner animation="border" role="status" size={'sm'}>
-                        <span className="visually-hidden">Loading...</span>
-                      </Spinner>
-                    </span>
-                  )}
-                </div>
+                            </div>
+                          </>
+                        ) : (
+                          <span className="d-wallet-value">0.0 CRO</span>
+                        )}
+                      </>
+                    ) : (
+                      <Text>
+                        Not enabled (receiving direct)
+                      </Text>
+                    )}
+                  </div>
+                ) : (
+                  <span>
+                    <Spinner animation="border" role="status" size={'sm'}>
+                      <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                  </span>
+                )}
               </div>
               <div className="my-auto">
-                {user.marketBalance !== '0.0' && (
+                {!user.connectingWallet && user.usesEscrow ? (
+                  <>
+                    <Wrap>
+                      {Number(user.marketBalance) > 0 && (
+                        <Button type="legacy"
+                                onClick={withdrawBalance}
+                                isLoading={user.withdrawingMarketBalance}
+                                disabled={user.withdrawingMarketBalance}>
+                          Claim
+                        </Button>
+                      )}
+                      <Button type="legacy"
+                              onClick={() => toggleEscrowOptIn(false)}
+                              isLoading={user.updatingEscrowStatus}
+                              disabled={user.updatingEscrowStatus}>
+                        Opt-Out
+                      </Button>
+                    </Wrap>
+                  </>
+                ) : !user.connectingWallet && (
                   <Button type="legacy"
-                          onClick={withdrawBalance}
-                          isLoading={user.withdrawingMarketBalance}
-                          disabled={user.withdrawingMarketBalance}>
-                    Withdraw
+                          onClick={() => toggleEscrowOptIn(true)}
+                          isLoading={user.updatingEscrowStatus}
+                          disabled={user.updatingEscrowStatus}>
+                    Opt-In
                   </Button>
                 )}
               </div>
