@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 // import {Helmet} from "react-helmet";
+import { setUpLeaderboard } from './leaderboardFunctions.js'
+
+useEffect(() => {
+  // Update the document title using the browser API
+  document.title = `You clicked ${count} times`;
+});
+
+function Example() {
+  const [count, setCount] = useState(0);
+}
 
 const DefaultArea = ({onChange}) => {
   return (
     <div>
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>
+        Click me
+      </button>
+    </div>
       <p id="demo" className="basicText">Select a building</p>
       <div className="mapBorder container">
         <div id="panzoom">
@@ -29,6 +45,7 @@ const DefaultArea = ({onChange}) => {
         consle.log('hello -TJ')
       </script>
       {/* <script>try{Typekit.load({ async: true })}catch(e){}</script> */}
+      setUpLeaderboard();
     </div>
     
   )

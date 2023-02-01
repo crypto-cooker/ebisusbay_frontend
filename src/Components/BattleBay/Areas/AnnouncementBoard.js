@@ -6,7 +6,7 @@ const AnnouncementBoard = () => {
     <section class="gl-legacy container" onload="setUpLeaderboard()">
         <div class="row">
             <div class="col-12 col-lg-7 text-center text-lg-start">
-                <h2 class="chakra-heading mb-0 css-1dklj6k">Leaderboard</h2>
+                <h2 class="chakra-heading mb-0 css-1dklj6k">AnnouncementBoard</h2>
             </div>
             <div >
                 <ul id="regionsUL" class="activity-filter">
