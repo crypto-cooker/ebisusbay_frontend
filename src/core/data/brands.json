@@ -533,6 +533,29 @@
     "style": {}
   },
   {
+    "slug": "the-laboratory",
+    "name": "The Laboratory",
+    "description": "The Laboratory aims to be a complete ecosystem on Cronos with NFT utility at the centre of it all. The Crazy Scientists NFT are our genesis collection. Holders of the Crazy Scientists will be able to access our ecosystem and be connected with one of Cronos' top communities for NFTs, DeFi and crypto market information. Your Crazy Scientist can be rewarded in the following ecosystems:\n1/ Crazy Critters Arena\n2/ Lab DEX\n3/ CERN (gamified staking)\n4/ Growth Chambers\n5/ Future projects\nWithin the Laboratory, we have a distinct focus on community. The Laboratory is allocating resources to building its community. A place where members can trust and rely on others in finding opportunities both in crypto and NFTs.",
+    "images": {
+      "banner": "/img/brands/the-laboratory/banner.webp",
+      "preview": "/img/brands/the-laboratory/preview.webp"
+    },
+    "collections": [
+      "0xf0B2A653938f0E6A4620A140568D61D97F71978C",
+      "0xEf0A34A742066b9d1DcB89575dDe7e4f0B7CE0D6"
+    ],
+    "socials": {
+      "website": "https://www.thelaboratory.io/",
+      "twitter": "https://twitter.com/TheLaboratoryIO",
+      "discord": "https://discord.gg/TheLaboratory",
+      "telegram": "https://t.me/thelaboratoryio",
+      "gitbook": "https://dapps.thelaboratory.io/exchange"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "crosmonauts",
     "name": "Crosmonauts",
     "description": "A community oriented NFT Project that launched alongside the launch of Cronos",
