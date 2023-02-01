@@ -39,6 +39,7 @@ class DeployedTroops {
 let deployedTroops = new DeployedTroops()
 
 export function setUpLeaderboard() {
+    console.log("yooooooooooooooooo")
     RandomizeStats();
     DisplayRegions();
 }

@@ -1,8 +1,9 @@
 import { setUpLeaderboard } from './leaderboardFunctions.js'
 
 const AnnouncementBoard = () => {
+    
   return (
-    <section class="gl-legacy container">
+    <section class="gl-legacy container" onload="setUpLeaderboard()">
         <div class="row">
             <div class="col-12 col-lg-7 text-center text-lg-start">
                 <h2 class="chakra-heading mb-0 css-1dklj6k">Leaderboard</h2>
@@ -28,6 +29,7 @@ const AnnouncementBoard = () => {
             </tbody>
         </table>
         </div>
+        <setUpLeaderboard/>
         
         {/* <div className='App'>
       <h1>Geeksforgeeks : How to include an external 
