@@ -2,8 +2,8 @@ import { SortOption } from '../../Models/sort-option.model';
 
 const sort = [
   {
-    id: 'listingId',
-    key: 'listingId',
+    id: 'listingTime',
+    key: 'listingTime',
     direction: 'desc',
     label: 'Latest Listings',
   },

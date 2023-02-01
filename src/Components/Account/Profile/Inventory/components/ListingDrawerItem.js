@@ -113,14 +113,14 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
       setInvalid(false);
       dispatch(updatePrice({ nft: item.nft, price: newSalePrice }));
     } else {
-      setInvalid(true);
+      setInvalid('price');
     }
   }, [dispatch, item.nft, price]);
 
   const handleExpirationDateChange = useCallback((e) => {
     const expiration = new Date().getTime() + parseInt(e.target.value);
     if (expiration < Date.now()) {
-      setInvalid(true);
+      setInvalid('expiration');
     }
 
     setInvalid(false);
@@ -235,7 +235,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
                     </Box>
                   ) : !isBundling && (
                     <>
-                      <FormControl isInvalid={invalid}>
+                      <FormControl isInvalid={invalid === 'price'}>
                         <Stack direction="row">
                           <Input
                             placeholder="Enter Price"
@@ -274,7 +274,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
                         <FormErrorMessage fontSize='xs' mt={1}>Enter a valid number.</FormErrorMessage>
                       </FormControl>
 
-                      <FormControl isInvalid={invalid} mt={1}>
+                      <FormControl isInvalid={invalid === 'expiration'} mt={1}>
                         <Stack direction="row">
                           <Select
                             placeholder='Select expiration'
