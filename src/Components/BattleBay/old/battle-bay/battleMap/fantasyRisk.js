@@ -247,7 +247,7 @@ function displayWinningFactions()
         var targetdiv = pins[i].getElementsByClassName("pin-text")[0].getElementsByClassName("head")[0];
         targetdiv.textContent = getWinningFactionInRegion(pins[i].title);
         var icon = pins[i].getElementsByClassName("factionIcon")[0]
-        icon.src = "../images/"+getWinningFactionInRegion(pins[i].title)+".png";
+        icon.src = "../../../../../../public/img/battle-bay/"+getWinningFactionInRegion(pins[i].title)+".png";
     }
 }
 function openPanel(evt, panelName) {

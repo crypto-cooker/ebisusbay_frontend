@@ -304,7 +304,7 @@ body {font-family: DM Sans,Helvetica,Arial,sans-serif;}
       margin: 0 auto;
       /* background-color: #045aaa; */
       background-repeat: repeat;
-      background-image: url("public/img/battle-bay/ocean-3.png");
+      background-image: url("../../../../../public/img/battle-bay/ocean-3.png");
   }
   .maparea{
     /* height: auto;
