@@ -1,5 +1,12 @@
+import { setUpLeaderboard } from './leaderboardFunctions.js'
 
 const Leaderboard = () => {
+
+    useEffect(() => {
+        console.log("this is from useEffect on barracks")
+        setUpLeaderboard();
+      });
+
   return (
     <section class="gl-legacy container">
         <div class="row">
