@@ -20,12 +20,12 @@ const DefaultArea = ({onChange}) => {
        {/* onLoad={() => setUpLeaderboard()}> */}
     <div>
       {/* <p>You clicked {count} times</p> */}
-      <button onLoad={() => setUpLeaderboard()} onClick={() => setUpLeaderboard()}>
+      {/* <button onLoad={() => setUpLeaderboard()} onClick={() => setUpLeaderboard()}> */}
       {/* <button onClick={() => setCount(count + 1)}> */}
-        Version 2
-      </button>
+      {/* Version 2 */}
+      {/* </button> */}
     </div>
-      <p id="demo" className="basicText">Select a building</p>
+      <p id="demo" className="basicText">Version 3</p>
       <div className="mapBorder container">
         <div id="panzoom">
           <img src="/img/battle-bay/fancyMenu2.png" useMap="#image-map" width="100%" className="maparea" id="fancyMenu"/>
