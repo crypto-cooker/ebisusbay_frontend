@@ -1,5 +1,5 @@
 
-const Barracks = () => {
+const Barracks = ({onChange}) => {
   return (
     <section className="gl-legacy container">
       <button class="btn" onClick={() => onChange()}>Back to Village Map</button>
