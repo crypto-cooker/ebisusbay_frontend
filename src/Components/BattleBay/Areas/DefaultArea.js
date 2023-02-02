@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 // import {Helmet} from "react-helmet";
 import { setUpLeaderboard } from './leaderboardFunctions.js'
+import { resizeMap } from './mapFunctions.js'
 
 const DefaultArea = ({onChange}) => {
 
-  const [count] = useState(0);
+  // const [count] = useState(0);
 
   useEffect(() => {
     // Update the document title using the browser API
     document.title = `Page has loaded`;
     console.log("this is from useEffect")
     setUpLeaderboard();
+    resizeMap();
   });
 
   return (
@@ -19,7 +21,7 @@ const DefaultArea = ({onChange}) => {
       <p>You clicked {count} times</p>
       <button onLoad={() => setUpLeaderboard()} onClick={() => setUpLeaderboard()}>
       {/* <button onClick={() => setCount(count + 1)}> */}
-        Click to set up
+        Version 2
       </button>
     </div>
       <p id="demo" className="basicText">Select a building</p>
@@ -43,6 +45,7 @@ const DefaultArea = ({onChange}) => {
         <img src="" width="64" height="64" className="factionIcon"/>
         <div className="map-Text"><h3 className="head">Alliance Hall</h3></div>
       </div>
+
     </section>
   )
 };
