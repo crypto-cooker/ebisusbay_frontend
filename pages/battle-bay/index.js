@@ -11,9 +11,14 @@ import DefaultArea from "@src/Components/BattleBay/Areas/DefaultArea";
 
 const BattleBay = () => {
   const [currentPage, setCurrentPage] = useState();
+  const [preivousPage, setPreviousPage] = useState();
 
   const navigate = (page) => {
+    setPreviousPage(currentPage)
     setCurrentPage(page)
+  };
+  const returnToPreviousPage = () => {
+    setCurrentPage(preivousPage)
   };
 
   return (
@@ -24,7 +29,7 @@ const BattleBay = () => {
         url={`/battle-bay`}
       />
       {currentPage === 'barracks' ? (
-        <Barracks onChange={navigate} />
+        <Barracks onBack={returnToPreviousPage} />
       ) : currentPage === 'battleMap' ? (
         <BattleMap />
       ) : currentPage === 'leaderboard' ? (
