@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-// import {Helmet} from "react-helmet";
-import { setUpLeaderboard } from './leaderboardFunctions.js'
+import React, {useEffect } from 'react';
 import { resizeMap } from './mapFunctions.js'
 
 const DefaultArea = ({onChange}) => {

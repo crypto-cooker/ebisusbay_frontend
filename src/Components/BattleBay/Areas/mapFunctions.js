@@ -89,3 +89,11 @@ export function resizeMap()
     element : '#fancyMenu'
   })
 }
+export function resizeBattleMap()
+{
+    const resizeImg = new ImageResize({
+    width: 1280,
+    height: 720,
+    element : '#islandMap'
+  })
+}

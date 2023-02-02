@@ -1,4 +1,5 @@
 import { setUpLeaderboard } from './leaderboardFunctions.js'
+import React, {useEffect } from 'react';
 
 const Leaderboard = () => {
 
