@@ -97,3 +97,32 @@ export function resizeBattleMap()
     element : '#islandMap'
   })
 }
+
+export function setUpMapZooming(){
+    element = document.getElementById('panzoom')
+    panzoom = Panzoom(element, {
+        contain: 'outside',
+        startScale: 0.5,
+        origin: '50% 50%', 
+        pinchAndPan: true,
+        maxScale: 3
+    });
+  
+    parent = element.parentElement
+    parent.addEventListener('wheel', panzoom.zoomWithWheel);
+    parent.addEventListener('gesturestart', function(e) {
+        console.log("gesture start");
+        if(e.scale <1)
+        {
+            panzoom.zoom(0.9, { animate: false })
+            console.log("zoom out");
+        }
+        else
+        {
+            panzoom.zoom(1.1, { animate: false })
+            console.log("zoom in");
+        }
+    }, false);
+    parent.addEventListener('gesturechange', function(e) {console.log("gesture change");}, false);
+  
+}

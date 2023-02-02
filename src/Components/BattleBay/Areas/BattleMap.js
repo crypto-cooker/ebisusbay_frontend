@@ -1,22 +1,26 @@
 import React, {useEffect } from 'react';
-import { resizeBattleMap } from './mapFunctions.js'
+import { resizeBattleMap, setUpMapZooming } from './mapFunctions.js'
+import { setUpBattleMap } from './battleMapFunctions.js'
 
 const BattleMap = () => {
 
   useEffect(() => {
     resizeBattleMap();
+    setUpBattleMap();
+    // setUpMapZooming();
   });
 
   return (
     <section>
-    <body onload = "setUpBattleMap(), setUpMapZooming()">
+    <body>
     
-    <div>
+    {/* old way of returning to village map */}
+    {/* <div>
       <button class="btn" onclick="window.location.href='../villageMap.html'">back</button>
-    </div>
+    </div> */}
 
-    <div class="form-popup form-container" id="myForm">
-      <form action="/action_page.php" class="form-container">
+  <div class="form-popup form-container" id="myForm">
+    <form action="/action_page.php" class="form-container">
       <h1 id="selectedRegion" class = "TitleText"> Region Name</h1>
       <button type="button" class="x" onclick="closeForm()">Cancel</button>
 
@@ -135,7 +139,6 @@ const BattleMap = () => {
   </div>
   
   </form>
-
 </div>
 
 
@@ -143,7 +146,7 @@ const BattleMap = () => {
 
   <div class="mapBorder container" >
     <div id="panzoom" >
-      <img src="../../../../../../public/img/battle-bay/fantasyRisk2.png" alt="Trulli" usemap="#image-map" width="100%" class="maparea" id="islandMap" />
+      <img src="/img/battle-bay/fantasyRisk2.png" alt="Trulli" usemap="#image-map" width="100%" class="maparea" id="islandMap" />
       <map name="image-map" width="100%">
       <area onmouseover="getRegionStats(title, 'pin-Southern-Trident')" target="" alt="Southern Trident" title="Southern Trident" onclick="selectRegion(title), openForm()"
             coords="255,534,295,532,337,554,396,534,410,481,351,411,331,377,264,391,225,377,208,430,157,439,191,515" shape="poly"/> 
