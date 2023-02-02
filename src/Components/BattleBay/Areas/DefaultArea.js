@@ -15,9 +15,9 @@ const DefaultArea = ({onChange}) => {
     <div>
     <div>
       <p>You clicked {count} times</p>
-      <button onLoad={() => setUpLeaderboard()}>
+      <button onLoad={() => setUpLeaderboard()} onClick={() => setUpLeaderboard()}>
       {/* <button onClick={() => setCount(count + 1)}> */}
-        Click me
+        Click to set up
       </button>
     </div>
       <p id="demo" className="basicText">Select a building</p>
@@ -41,11 +41,6 @@ const DefaultArea = ({onChange}) => {
         <img src="" width="64" height="64" className="factionIcon"/>
         <div className="map-Text"><h3 className="head">Alliance Hall</h3></div>
       </div>
-      <script>
-        consle.log('hello -TJ')
-      </script>
-      {/* <script>try{Typekit.load({ async: true })}catch(e){}</script> */}
-      setUpLeaderboard();
     </div>
     
   )
