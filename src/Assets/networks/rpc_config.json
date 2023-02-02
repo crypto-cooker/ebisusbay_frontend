@@ -12998,7 +12998,7 @@
       "multiToken": false,
       "address": "0xc7E77C602D549747AB33C2F0137Cbcb42eeF2bB8",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Rebel Punks is an artistically hand drawn collection, pioneering a new hybrid Gaming Ecosystem, the Metawarz Shooter. The Rebel Punks are more than just collectibles, they carry endless possibilities and utilities. The art is derived from one faction of the Metawarz. Thus, they are the cornerstone of Metawarz Shooter ecosystem. Your Rebel serve as a membership card, and grants you access to members-only benefits.",
         "avatar": "/img/collections/rebel-punks/avatar.webp",
