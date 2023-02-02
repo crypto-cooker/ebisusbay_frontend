@@ -82,7 +82,8 @@ class ImageResize {
 
 export function resizeMap()
 {
-    document.getElementById('fancyMenu') = new ImageResize({
+    const imageToResize = document.getElementById('fancyMenu');
+    imageToResize = new ImageResize({
     width: 1920,
     height: 1080,
     element : '#fancyMenu'

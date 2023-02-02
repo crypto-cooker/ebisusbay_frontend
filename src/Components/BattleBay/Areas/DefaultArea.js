@@ -11,14 +11,15 @@ const DefaultArea = ({onChange}) => {
     // Update the document title using the browser API
     document.title = `Page has loaded`;
     console.log("this is from useEffect")
-    setUpLeaderboard();
+    // setUpLeaderboard();
     resizeMap();
   });
 
   return (
-    <section onLoad={() => setUpLeaderboard()}>
+    <section>
+       {/* onLoad={() => setUpLeaderboard()}> */}
     <div>
-      <p>You clicked {count} times</p>
+      {/* <p>You clicked {count} times</p> */}
       <button onLoad={() => setUpLeaderboard()} onClick={() => setUpLeaderboard()}>
       {/* <button onClick={() => setCount(count + 1)}> */}
         Version 2
