@@ -4,15 +4,17 @@ import { setUpLeaderboard } from './leaderboardFunctions.js'
 
 const DefaultArea = ({onChange}) => {
 
-  const [count, setCount] = useState(0);
+  const [count] = useState(0);
 
   useEffect(() => {
     // Update the document title using the browser API
-    document.title = `You clicked ${count} times`;
+    document.title = `Page has loaded`;
+    console.log("this is from useEffect")
+    setUpLeaderboard();
   });
 
   return (
-    <div>
+    <section onLoad={() => setUpLeaderboard()}>
     <div>
       <p>You clicked {count} times</p>
       <button onLoad={() => setUpLeaderboard()} onClick={() => setUpLeaderboard()}>
@@ -41,8 +43,7 @@ const DefaultArea = ({onChange}) => {
         <img src="" width="64" height="64" className="factionIcon"/>
         <div className="map-Text"><h3 className="head">Alliance Hall</h3></div>
       </div>
-    </div>
-    
+    </section>
   )
 };
 
