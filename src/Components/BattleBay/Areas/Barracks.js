@@ -2,7 +2,7 @@
 const Barracks = ({onChange}) => {
   return (
     <section className="gl-legacy container">
-      <button class="btn" onClick={() => onChange()}>Back to Village Map</button>
+      <button class="btn" onClick={() => onChange('leaderboard')}>Back to Village Map</button>
 
       <p className="title text-center">Barracks</p>
       <p className="text-center">Stake Ryoshis for battle bonus</p>

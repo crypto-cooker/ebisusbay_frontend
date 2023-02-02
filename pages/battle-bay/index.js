@@ -24,7 +24,7 @@ const BattleBay = () => {
         url={`/battle-bay`}
       />
       {currentPage === 'barracks' ? (
-        <Barracks />
+        <Barracks onChange={navigate} />
       ) : currentPage === 'battleMap' ? (
         <BattleMap />
       ) : currentPage === 'leaderboard' ? (
