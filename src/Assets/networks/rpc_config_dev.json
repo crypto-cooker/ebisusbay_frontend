@@ -23207,8 +23207,8 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
-      "featured": true,
+      "complete": true,
+      "featured": false,
       "redirect": "https://wedripz.netlify.app/",
       "images": {
         "drop": "/img/drops/wedripz-cro/drop.webp",
@@ -23246,7 +23246,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": false,
       "redirect": "https://www.crodragonsapp.net/",
       "images": {
@@ -23326,8 +23326,8 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
-      "featured": true,
+      "complete": true,
+      "featured": false,
       "redirect": "https://ghostog.netlify.app/mint",
       "images": {
         "drop": "/img/drops/ghost-og/drop.webp",
