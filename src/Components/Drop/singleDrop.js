@@ -425,7 +425,7 @@ const SingleDrop = ({drop}) => {
                       <span onClick={handleBtnClick(tabs.description)}>Description</span>
                     </li>
                     <li className={`tab ${openMenu === tabs.roadmap ? 'active' : ''} my-1`}>
-                      <span onClick={handleBtnClick(tabs.roadmap)}>Roadmap</span>
+                      <span onClick={handleBtnClick(tabs.roadmap)}>Milestones</span>
                     </li>
                   </ul>
                   <div className="de_tab_content">
@@ -434,7 +434,7 @@ const SingleDrop = ({drop}) => {
                     )}
                     {openMenu === tabs.roadmap && (
                       <div className="mt-3 mb-4">
-                        <VStack spacing={4}>
+                        <VStack spacing={4} align='start'>
                           {drop.escrow.milestones.map((milestone, index) => (
                             <Box key={index}>
                               <Text fontWeight="bold" fontSize="lg">Phase {index + 1}</Text>
