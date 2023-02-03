@@ -4,6 +4,8 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles from './BattleBay.module.scss';
 
 const DefaultArea = ({onChange}) => {
+  const mapRef = useRef();
+  const borderRef = useRef();
 
   // const [count] = useState(0);
   const [tempWidth, setTempWidth] = useState(1);
@@ -71,7 +73,15 @@ const DefaultArea = ({onChange}) => {
     document.title = `Page has loaded`;
     console.log("this is from useEffect")
     // setUpLeaderboard();
-    resizeMap();
+    // resizeMap();
+    borderRef.current.height = (borderRef.current.clientWidth * 2703) / 4532;
+    let canvas_width = (borderRef.current.clientWidth * 3.65) / 6;
+    let canvas_height = (canvas_width * 620) / 1189;
+    mapRef.current.width = canvas_width;
+    mapRef.current.height = canvas_height;
+
+    setTempWidth(mapRef.current.width);
+    setTempHeight(mapRef.current.height);
   });
   const changeCanvasState = (ReactZoomPanPinchRef, event) => {
     setZoomState({
@@ -84,7 +94,7 @@ const DefaultArea = ({onChange}) => {
   return (
     <section>
        {/* onLoad={() => setUpLeaderboard()}> */}
-    <div>
+    <div >
       {/* <p>You clicked {count} times</p> */}
       {/* <button onLoad={() => setUpLeaderboard()} onClick={() => setUpLeaderboard()}> */}
       {/* <button onClick={() => setCount(count + 1)}> */}
@@ -92,7 +102,7 @@ const DefaultArea = ({onChange}) => {
       {/* </button> */}
     </div>
       <p id="demo" className="basicText">Version 4</p>
-      <div className="mapBorder container">
+      <div className="mapBorder container" ref={borderRef}>
       <TransformWrapper
         onZoom={changeCanvasState}
         onPinching={changeCanvasState}
@@ -117,7 +127,7 @@ const DefaultArea = ({onChange}) => {
             {/* <area onClick={() => onChange('battleMap')} href="academy.html" alt="academy" title="academy" coords="1331,122,1570,215" shape="rect"/> */}
             <area onClick={() => onChange('allianceCenter')} alt="allianceCenter" title="allianceCenter" coords="611,175,957,261" shape="rect"/>
           </map>
-          <canvas className={`${styles.canvasFront}`} onClick={handleClick}></canvas>
+          <canvas className={`${styles.canvasFront}`} ref={mapRef} onClick={handleClick}></canvas>
         {/* </div> */}
         </TransformComponent>
       </TransformWrapper>
