@@ -12,7 +12,8 @@ import styled from 'styled-components';
 import Footer from '../components/Footer';
 import {fetchMemberInfo, fetchVipInfo} from '@src/GlobalState/Memberships';
 import {
-  isCarkayousCollection,
+  isBundle,
+  isCarkayousCollection, isCnsCollection, isCronosVerseCollection,
   isCyberCloneDrop,
   isFounderDrop,
   isFounderVipDrop,
@@ -26,12 +27,14 @@ import SocialsBar from '../Collection/SocialsBar';
 import {appConfig} from "@src/Config";
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
-import {Heading} from "@chakra-ui/react";
+import {Box, Heading, Text, VStack} from "@chakra-ui/react";
 import {MintBox} from "@src/Components/Drop/MintBox";
 
 import {useQuery} from "@tanstack/react-query";
 import { getCollections } from "@src/core/api/next/collectioninfo";
 import {Spinner} from "react-bootstrap";
+import {pushQueryString} from "@src/helpers/query";
+import {updateTab} from "@src/GlobalState/collectionSlice";
 
 const config = appConfig();
 
@@ -68,6 +71,11 @@ const HeroSection = styled.section`
   }
 `;
 
+const tabs = {
+  description: 'description',
+  roadmap: 'roadmap'
+};
+
 const SingleDrop = ({drop}) => {
   const router = useRouter();
   const { slug } = router.query;
@@ -91,21 +99,11 @@ const SingleDrop = ({drop}) => {
   const [totalSupply, setTotalSupply] = useState(0);
   const [canMintQuantity, setCanMintQuantity] = useState(0);
 
-  // useEffect(() => {
-  //   logEvent(getAnalytics(), 'screen_view', {
-  //     firebase_screen: 'drop',
-  //     drop_id: slug,
-  //   });
-  //   // eslint-disable-next-line
-  // }, []);
 
-  // useEffect(() => {
-  //   dispatch(fetchMemberInfo());
-  //   if (process.env.NODE_ENV === 'development') {
-  //     dispatch(fetchVipInfo());
-  //   }
-  //   // eslint-disable-next-line
-  // }, []);
+  const [openMenu, setOpenMenu] = useState(tabs.description);
+  const handleBtnClick = (key) => (element) => {
+    setOpenMenu(key);
+  };
 
   const user = useSelector((state) => {
     return state.user;
@@ -420,7 +418,37 @@ const SingleDrop = ({drop}) => {
                 specialWhitelist={specialWhitelist}
               />
 
-              <div className="mt-3 mb-4">{newlineText(drop.description)}</div>
+              {drop.escrow ? (
+                <div className="de_tab mt-2">
+                  <ul className="de_nav mb-2 text-center">
+                    <li className={`tab ${openMenu === tabs.description ? 'active' : ''} my-1`}>
+                      <span onClick={handleBtnClick(tabs.description)}>Description</span>
+                    </li>
+                    <li className={`tab ${openMenu === tabs.roadmap ? 'active' : ''} my-1`}>
+                      <span onClick={handleBtnClick(tabs.roadmap)}>Roadmap</span>
+                    </li>
+                  </ul>
+                  <div className="de_tab_content">
+                    {openMenu === tabs.description && (
+                      <div className="mt-3 mb-4">{newlineText(drop.description)}</div>
+                    )}
+                    {openMenu === tabs.roadmap && (
+                      <div className="mt-3 mb-4">
+                        <VStack spacing={4}>
+                          {drop.escrow.milestones.map((milestone, index) => (
+                            <Box key={index}>
+                              <Text fontWeight="bold" fontSize="lg">Phase {index + 1}</Text>
+                              <Text>{milestone}</Text>
+                            </Box>
+                          ))}
+                        </VStack>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="mt-3 mb-4">{newlineText(drop.description)}</div>
+              )}
             </div>
           </div>
         </div>

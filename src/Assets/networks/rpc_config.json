@@ -23300,6 +23300,13 @@
         "doxx": false,
         "kyc": true,
         "escrow": true
+      },
+      "escrow": {
+        "milestones": [
+          "33.3% to be released upon the completion of mint of collection",
+          "33.3% to be released upon the release of NFT staking for Blumies holders",
+          "33.3% to be released upon the release of customer merchandise associated with your project and the release of a short Blumies animated film"
+        ]
       }
     },
     {
