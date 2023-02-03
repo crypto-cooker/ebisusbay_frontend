@@ -7,6 +7,8 @@ const DefaultArea = ({onChange}) => {
   // const [count] = useState(0);
   const [tempWidth, setTempWidth] = useState(1);
   const [tempHeight, setTempHeight] = useState(1);
+  const [subDistanceX, setSubDistanceX] = useState(0);
+  const [subDistanceY, setSubDistanceY] = useState(0);
   // const [modalFlag, setModalFlag] = useState('none');
   // const [canvasDown, setCanvasDown] = useState(false);
   const [zoomState, setZoomState] = useState({
@@ -14,8 +16,54 @@ const DefaultArea = ({onChange}) => {
     offsetY: 0,
     scale: 1,
   });
-  const globalX = mPos.x + zoomState.offsetX - (subDistanceX > 0 ? 240 - subDistanceX : 0);
-  const globalY = mPos.y + zoomState.offsetY - (subDistanceY > 0 ? 175 - subDistanceY : 0);
+  const getMousePos = (e) => {
+    var rect = e.target.getBoundingClientRect();
+    return {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    };
+  };
+  const handleClick = (e) => {
+    console.log('you clicked', e);
+    const mPos = getMousePos(e);
+    console.log('mouse pos', mPos);
+    let scale = zoomState.scale;
+    // const tileWidth = ref2.current.width / 54;
+    // const tileHeight = ref2.current.height / 28;
+    // const xPos = Math.floor(mPos.x / (tileWidth * scale));
+    // const yPos = Math.floor(mPos.y / (tileHeight * scale));
+    // const type = getTileType(xPos, yPos);
+    // devLog(type, xPos, yPos, tileInfo);
+    // let ctx = ref2.current.getContext('2d');
+    // ctx.clearRect(tileWidth * tileInfo.xPos - 1, tileHeight * tileInfo.yPos - 1, tileWidth + 1, tileHeight + 2);
+
+    // const prevTokenId = getTokenId(tileInfo.xPos, tileInfo.yPos);
+    // if (listingForToken(prevTokenId)) {
+    //   ctx.fillStyle = 'rgba(50, 50, 50, 0.5)';
+    //   ctx.fillRect(tileWidth * tileInfo.xPos - 1, tileHeight * tileInfo.yPos - 1, tileWidth + 1, tileHeight + 2);
+    // }
+
+    // if (type === 0 || type === 4) {
+    //   setModalFlag('none');
+
+    //   return;
+    // }
+
+    // const tokenId = getTokenId(xPos, yPos);
+    // const listing = listingForToken(tokenId);
+    // const nft = nftForToken(tokenId);
+    // devLog('selected data', nft, listing);
+    // let price = 0;
+    // if (listing) {
+    //   price = listing.market.price;
+    // }
+
+    // const globalX = mPos.x + zoomState.offsetX - (subDistanceX > 0 ? 240 - subDistanceX : 0);
+    // const globalY = mPos.y + zoomState.offsetY - (subDistanceY > 0 ? 175 - subDistanceY : 0);
+
+    // setSubDistanceX(0);
+    // setSubDistanceY(0);
+  };
   
   useEffect(() => {
     // Update the document title using the browser API
@@ -68,6 +116,7 @@ const DefaultArea = ({onChange}) => {
             {/* <area onClick={() => onChange('battleMap')} href="academy.html" alt="academy" title="academy" coords="1331,122,1570,215" shape="rect"/> */}
             <area onClick={() => onChange('allianceCenter')} alt="allianceCenter" title="allianceCenter" coords="611,175,957,261" shape="rect"/>
           </map>
+          <canvas className={`${styles.canvasFront}`} ref={ref2} onClick={handleClick}></canvas>
         {/* </div> */}
         </TransformComponent>
       </TransformWrapper>
