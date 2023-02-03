@@ -31,15 +31,15 @@ const BattleBay = () => {
       {currentPage === 'barracks' ? (
         <Barracks onBack={returnToPreviousPage} />
       ) : currentPage === 'battleMap' ? (
-        <BattleMap />
+        <BattleMap onBack={returnToPreviousPage}/>
       ) : currentPage === 'leaderboard' ? (
-        <Leaderboard />
+        <Leaderboard onBack={returnToPreviousPage}/>
       ): currentPage === 'bank' ? (
-        <Bank />
+        <Bank onBack={returnToPreviousPage} />
       ): currentPage === 'allianceCenter' ? (
-        <AllianceCenter />
+        <AllianceCenter onBack={returnToPreviousPage} />
       ): currentPage === 'announcementBoard' ? (
-        <AnnouncementBoard />
+        <AnnouncementBoard onBack={returnToPreviousPage} />
       ): (
         <DefaultArea onChange={navigate} />
       )}

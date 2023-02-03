@@ -1,7 +1,8 @@
 
-const AllianceCenter = () => {
+const AllianceCenter = ({onBack}) => {
   return (
     <section className="gl-legacy container">
+      <button class="btn" onClick={onBack}>Back to Village Map</button>
     <div>
             <button class="btn" onclick="window.location.href='../fancyMenu.html'">back</button>
             <button type="button" class="btn" id="registerFaction" onclick="openRegistrationForm()">Register Faction</button>

@@ -2,7 +2,7 @@ import React, {useEffect } from 'react';
 import { resizeBattleMap, setUpMapZooming } from './mapFunctions.js'
 import { setUpBattleMap } from './battleMapFunctions.js'
 
-const BattleMap = () => {
+const BattleMap = ({onBack}) => {
 
   useEffect(() => {
     resizeBattleMap();
@@ -19,6 +19,7 @@ const BattleMap = () => {
       <button class="btn" onclick="window.location.href='../villageMap.html'">back</button>
     </div> */}
 
+      <button class="btn" onClick={onBack}>Back to Village Map</button>
   <div class="form-popup form-container" id="myForm">
     <form action="/action_page.php" class="form-container">
       <h1 id="selectedRegion" class = "TitleText"> Region Name</h1>

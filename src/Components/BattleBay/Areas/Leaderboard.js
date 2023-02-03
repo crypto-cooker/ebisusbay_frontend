@@ -1,7 +1,7 @@
 import { setUpLeaderboard } from './leaderboardFunctions.js'
 import React, {useEffect } from 'react';
 
-const Leaderboard = () => {
+const Leaderboard = ({onBack}) => {
 
     useEffect(() => {
         console.log("this is from useEffect on barracks")
@@ -10,6 +10,7 @@ const Leaderboard = () => {
 
   return (
     <section class="gl-legacy container">
+      <button class="btn" onClick={onBack}>Back to Village Map</button>
         <div class="row">
             <div class="col-12 col-lg-7 text-center text-lg-start">
                 <h2 class="chakra-heading mb-0 css-1dklj6k">Leaderboard</h2>

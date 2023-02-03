@@ -1,9 +1,10 @@
 import { setUpLeaderboard } from './leaderboardFunctions.js'
 
-const AnnouncementBoard = () => {
+const AnnouncementBoard = ({onBack}) => {
     
   return (
     <section class="gl-legacy container" onload="setUpLeaderboard()">
+      <button class="btn" onClick={onBack}>Back to Village Map</button>
         <div class="row">
             <div class="col-12 col-lg-7 text-center text-lg-start">
                 <h2 class="chakra-heading mb-0 css-1dklj6k">AnnouncementBoard</h2>
