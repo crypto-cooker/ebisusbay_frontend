@@ -17129,7 +17129,7 @@
       "name": "Blumies",
       "slug": "blumies",
       "multiToken": false,
-      "address": "",
+      "address": "0xB278947b945eB7dea7F1822A1801d7e9aEdD8e63",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -23275,7 +23275,7 @@
         "discord": "https://discord.gg/d4HhNDTHSV",
         "medium": "https://blumies.gitbook.io/blumies-nft/"
       },
-      "address": "",
+      "address": "0xB278947b945eB7dea7F1822A1801d7e9aEdD8e63",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 330,
       "totalSupply": 7777,
