@@ -117,7 +117,7 @@ const DefaultArea = ({onChange}) => {
             {/* <area onClick={() => onChange('battleMap')} href="academy.html" alt="academy" title="academy" coords="1331,122,1570,215" shape="rect"/> */}
             <area onClick={() => onChange('allianceCenter')} alt="allianceCenter" title="allianceCenter" coords="611,175,957,261" shape="rect"/>
           </map>
-          <canvas className={`${styles.canvasFront}`} ref={ref2} onClick={handleClick}></canvas>
+          <canvas className={`${styles.canvasFront}`} onClick={handleClick}></canvas>
         {/* </div> */}
         </TransformComponent>
       </TransformWrapper>
