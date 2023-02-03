@@ -1,7 +1,7 @@
 var selectedRegion = "None";
 const factions = ["Mad Merkat", "CroSkull", "Boomer Squad", "Flaming Phenix Club", "connected wallet"];
 const regionFlags = ["pin-Southern-Trident", "pin-Dragonland", "pin-Human-Kingdoms", "pin-Dwarf-Mines"];
-deployMode = new Boolean(true);
+const deployMode = new Boolean(true);
 var selectedFaction = "";
 var troopsAvailable = 20;
 
