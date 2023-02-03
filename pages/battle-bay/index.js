@@ -8,7 +8,7 @@ import Bank from "@src/Components/BattleBay/Areas/Bank";
 import AllianceCenter from "@src/Components/BattleBay/Areas/AllianceCenter";
 import AnnouncementBoard from "@src/Components/BattleBay/Areas/AnnouncementBoard";
 import DefaultArea from "@src/Components/BattleBay/Areas/DefaultArea";
-import SimpleBattleMap from "@src/Components/BattleBay/Areas/simpleBattleMap";
+import SimpleBattleMap from "@src/Components/BattleBay/Areas/SimpleBattleMap";
 
 const BattleBay = () => {
   const [currentPage, setCurrentPage] = useState();
