@@ -1,4 +1,4 @@
-import React, {useEffect, Component } from 'react';
+import React, {useEffect, useState } from 'react';
 import { resizeMap } from './mapFunctions.js'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
