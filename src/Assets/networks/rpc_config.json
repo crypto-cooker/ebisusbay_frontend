@@ -17350,6 +17350,35 @@
         "kyc": false,
         "verified": false
       }
+    },
+    {
+      "name": "Barbara Custom NFT",
+      "slug": "barbara-custom-nft",
+      "multiToken": true,
+      "address": "0x27c9e774344C5772c41956891843F3Cd6FeAb81C",
+      "onChain": false,
+      "listable": true,
+      "tokens": [
+        {
+          "id": 1
+        }
+      ],
+      "metadata": {
+        "description": "Custom NFTs multi-edition",
+        "avatar": "/img/collections/barbara-custom-nft/avatar.webp",
+        "banner": "/img/collections/barbara-custom-nft/banner.webp",
+        "card": "/img/collections/barbara-custom-nft/card.webp",
+        "website": "https://crypto.com/nft/profile/vredekop/",
+        "twitter": "https://twitter.com/BarbaraRedekop",
+        "discord": "https://discord.gg/khRfPKDFwg",
+        "instagram": "https://www.instagram.com/im_barbara_redekop/",
+        "categories": []
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "verified": true
+      }
     }
   ],
   "drops": [
