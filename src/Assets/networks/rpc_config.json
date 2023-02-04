@@ -17327,6 +17327,29 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Underground Pixels - OG",
+      "slug": "underground-pixels-og",
+      "multiToken": false,
+      "address": "0x7b2ea928CE0af3Aa4d14aF8F0Ec11bAa1a8E36CB",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "NFT with extra utilities for OG Mobs",
+        "avatar": "/img/collections/underground-pixels-og/avatar.webp",
+        "card": "/img/collections/underground-pixels-og/card.webp",
+        "banner": "/img/collections/underground-pixels-og/banner.webp",
+        "website": "https://underground-pixels.netlify.app/",
+        "twitter": "https://twitter.com/UndergroundPx",
+        "discord": "https://discord.gg/xyxZJjkqcj",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
     }
   ],
   "drops": [
