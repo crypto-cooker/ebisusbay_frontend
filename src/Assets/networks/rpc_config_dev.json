@@ -23207,7 +23207,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": true,
+      "complete": false,
       "featured": false,
       "redirect": "https://wedripz.netlify.app/",
       "images": {
