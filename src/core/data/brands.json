@@ -877,5 +877,27 @@
     "featured": false,
     "categories": [],
     "style": {}
+  },
+  {
+    "slug": "kaiju-of-cronos",
+    "name": "Kaiju of Cronos",
+    "description": "Kaiju of Cronos, a double KYC'd project, utilizes IRL business to maintain a consistent cash flow within the ecosystem, while systemically providing longevity to the NFT project. \nOur IRL business brand is crucial to creating rewards, IRL products and services to all, no matter the market conditions.",
+    "images": {
+      "banner": "/img/brands/kaiju-of-cronos/banner.webp",
+      "preview": "/img/brands/kaiju-of-cronos/preview.webp"
+    },
+    "collections": [
+      "0x0C5cEA99fEd27c98B505837A8E72cfDF70bcF8F0",
+      "0xe28B4045A6C1cb3ED30861CAF62A01A2C4DAaa69"
+    ],
+    "socials": {
+      "website": "https://kaijuofcronos.com/",
+      "twitter": "https://twitter.com/kaiju_of_cronos",
+      "discord": "https://discord.gg/kaijuofcronos",
+      "gitbook": "https://docs.kaijuofcronos.com/"
+    },
+    "featured": false,
+    "categories": [],
+    "style": {}
   }
 ]

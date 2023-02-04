@@ -75,7 +75,7 @@ const ItemValue = styled.div`
   }
 `;
 
-export default function CollectionInfoBar({ collectionStats, type = 'legacy' }) {
+export default function CollectionInfoBar({ collectionStats, type = 'legacy', hideFloor = false}) {
   const { numberActive, averageSalePrice, numberOfSales, floorPrice, totalVolume, totalSupply, owners } = collectionStats;
 
   if (type === 'legacy') {
@@ -105,7 +105,7 @@ export default function CollectionInfoBar({ collectionStats, type = 'legacy' }) 
             </Box>
             <Box minW={['50%', '50%', '72px']}>
               <h5>Floor</h5>
-              <h4>{numberActive > 0 && floorPrice ? <>{siPrefixedNumber(Number(floorPrice).toFixed(0))} CRO</> : <>-</>}</h4>
+              <h4>{!hideFloor && numberActive > 0 && floorPrice ? <>{siPrefixedNumber(Number(floorPrice).toFixed(0))} CRO</> : <>-</>}</h4>
             </Box>
             {/*<Box className="" minW={['50%', '50%', '72px']}>*/}
             {/*  <h5>Owners</h5>*/}
@@ -143,7 +143,7 @@ export default function CollectionInfoBar({ collectionStats, type = 'legacy' }) 
           <ItemTitle>Royalty</ItemTitle>
         </InfoItem>
         <InfoItem>
-          <ItemValue>{numberActive ? <>{siPrefixedNumber(numberActive)}</> : <>-</>}</ItemValue>
+          <ItemValue>{!hideFloor && numberActive ? <>{siPrefixedNumber(numberActive)}</> : <>-</>}</ItemValue>
           <ItemTitle>Active Listings</ItemTitle>
         </InfoItem>
       </CollectionInfoBarContainer>

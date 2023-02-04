@@ -17327,6 +17327,84 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Underground Pixels - OG",
+      "slug": "underground-pixels-og",
+      "multiToken": false,
+      "address": "0x7b2ea928CE0af3Aa4d14aF8F0Ec11bAa1a8E36CB",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "NFT with extra utilities for OG Mobs",
+        "avatar": "/img/collections/underground-pixels-og/avatar.webp",
+        "card": "/img/collections/underground-pixels-og/card.webp",
+        "banner": "/img/collections/underground-pixels-og/banner.webp",
+        "website": "https://underground-pixels.netlify.app/",
+        "twitter": "https://twitter.com/UndergroundPx",
+        "discord": "https://discord.gg/xyxZJjkqcj",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Barbara Custom NFT",
+      "slug": "barbara-custom-nft",
+      "multiToken": true,
+      "address": "0x27c9e774344C5772c41956891843F3Cd6FeAb81C",
+      "onChain": false,
+      "listable": true,
+      "tokens": [
+        {
+          "id": 1
+        }
+      ],
+      "metadata": {
+        "description": "Custom NFTs multi-edition",
+        "avatar": "/img/collections/barbara-custom-nft/avatar.webp",
+        "banner": "/img/collections/barbara-custom-nft/banner.webp",
+        "card": "/img/collections/barbara-custom-nft/card.webp",
+        "website": "https://crypto.com/nft/profile/vredekop/",
+        "twitter": "https://twitter.com/BarbaraRedekop",
+        "discord": "https://discord.gg/khRfPKDFwg",
+        "instagram": "https://www.instagram.com/im_barbara_redekop/",
+        "categories": []
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "verified": true
+      }
+    },
+    {
+      "name": "Ultimate Mutants",
+      "slug": "ultimate-mutants",
+      "multiToken": false,
+      "address": "0x21037397bDA5CF87c17b5Ec7A07f6935B6c6EA65",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Ultimate Mutants is a 555 NFTs  Collection, Based on Cronos Blockchain, this Asset is an access for the DaoLabs Multichain portal.",
+        "avatar": "/img/collections/dr-dao-x-mutant/avatar.webp",
+        "card": "/img/collections/dr-dao-x-mutant/card.webp",
+        "banner": "/img/collections/dr-dao-x-mutant/banner.webp",
+        "website": "https://linktr.ee/daolabs/",
+        "twitter": "https://twitter.com/DrDaoClub",
+        "discord": "https://discord.gg/fyca4JYW7V",
+        "medium": "https://medium.com/@daolab-ecosystem",
+        "categories": [
+          "utilities"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
@@ -23207,7 +23285,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": true,
+      "complete": false,
       "featured": false,
       "redirect": "https://wedripz.netlify.app/",
       "images": {
