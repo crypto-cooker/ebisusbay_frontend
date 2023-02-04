@@ -241,7 +241,7 @@ const Collection721 = ({ collection, query, activeDrop = null}) => {
                 </div>
               </div>
             )}
-            <CollectionInfoBar collectionStats={collectionStats} />
+            <CollectionInfoBar collectionStats={collectionStats} hideFloor={!collection.listable} />
             {collection.address.toLowerCase() === '0x7D5f8F9560103E1ad958A6Ca43d49F954055340a'.toLowerCase() && (
               <div className="row m-3">
                 <div className="mx-auto text-center fw-bold" style={{ fontSize: '1.2em' }}>
