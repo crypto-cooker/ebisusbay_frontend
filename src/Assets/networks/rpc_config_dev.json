@@ -17379,6 +17379,32 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "Ultimate Mutants",
+      "slug": "ultimate-mutants",
+      "multiToken": false,
+      "address": "0x21037397bDA5CF87c17b5Ec7A07f6935B6c6EA65",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Ultimate Mutants is a 555 NFTs  Collection, Based on Cronos Blockchain, this Asset is an access for the DaoLabs Multichain portal.",
+        "avatar": "/img/collections/dr-dao-x-mutant/avatar.webp",
+        "card": "/img/collections/dr-dao-x-mutant/card.webp",
+        "banner": "/img/collections/dr-dao-x-mutant/banner.webp",
+        "website": "https://linktr.ee/daolabs/",
+        "twitter": "https://twitter.com/DrDaoClub",
+        "discord": "https://discord.gg/fyca4JYW7V",
+        "medium": "https://medium.com/@daolab-ecosystem",
+        "categories": [
+          "utilities"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
