@@ -90,7 +90,7 @@ const expirationDatesValues = [
 
 const defaultExpiry = 2592000000;
 
-export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, disabled, isBundling = false }) => {
+export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, onAddCollection, disabled, isBundling = false }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
@@ -275,6 +275,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
                             <MenuList textAlign="right">
                               <MenuItem onClick={() => onApplyAllSelected(price, expirationDate)}>Apply values to all</MenuItem>
                               <MenuItem onClick={() => onCascadePriceSelected(item, price)}>Cascade price</MenuItem>
+                              <MenuItem onClick={() => onAddCollection(item.nft.address)}>Add entire collection</MenuItem>
                               <MenuItem onClick={handleRemoveItem}>Remove</MenuItem>
                             </MenuList>
                           </Menu>

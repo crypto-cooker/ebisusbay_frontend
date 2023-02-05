@@ -1,21 +1,9 @@
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  Box,
-  Center,
-  Flex,
-  GridItem,
-  Spacer,
-  Text,
-  Textarea
-} from "@chakra-ui/react";
+import {Alert, AlertDescription, AlertIcon, Box, Center, Flex, GridItem, Spacer, Text} from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
 import {Spinner} from "react-bootstrap";
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {clearBatchListingCart, setRefetchNfts} from "@src/GlobalState/batchListingSlice";
-import {ethers} from "ethers";
+import {addToBatchListingCart, clearBatchListingCart, setRefetchNfts} from "@src/GlobalState/batchListingSlice";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, pluralize, shortAddress} from "@src/utils";
 import * as Sentry from "@sentry/react";
@@ -23,8 +11,8 @@ import {TransferDrawerItem} from "@src/Components/Account/Profile/Inventory/comp
 import {FormControl as FormControlCK} from "@src/Components/components/chakra-components";
 import * as Yup from "yup";
 import {useFormik} from "formik";
-import * as Filter from "bad-words";
 import {getCnsAddress, isCnsName} from "@src/helpers/cns";
+import {getNftsForAddress2} from "@src/core/api";
 
 const MAX_NFTS_IN_CART = 100;
 
@@ -41,6 +29,14 @@ export const TransferDrawer = () => {
     setShowConfirmButton(false);
     dispatch(clearBatchListingCart());
   };
+
+  const handleAddCollection = async (address) => {
+    if (!address) return;
+    const nfts = await getNftsForAddress2(user.address, user.provider, 1, [address]);
+    for (const nft of nfts.nfts) {
+      dispatch(addToBatchListingCart(nft));
+    }
+  }
 
   const resetDrawer = () => {
     handleClearCart();
@@ -189,8 +185,12 @@ export const TransferDrawer = () => {
         </Flex>
         {batchListingCart.nfts.length > 0 ? (
           <>
-            {batchListingCart.nfts.map((item, key) => (
-              <TransferDrawerItem item={item} />
+            {batchListingCart.nfts.map((item) => (
+              <TransferDrawerItem
+                key={`${item.nft.address}-${item.nft.id}`}
+                item={item}
+                onAddCollection={handleAddCollection}
+              />
             ))}
           </>
         ) : (
