@@ -10,9 +10,9 @@
   align-items: center;
   min-width: 1200px;
 }
-.content img{
-  pointer-events: auto !important;
-}
+// .content img{
+//   pointer-events: auto !important;
+// }
 .canvas {
   margin-top: 16%;
   margin-bottom: 12%;
@@ -30,7 +30,7 @@
 // }
 
 .canvasFront {
-  z-index: 1;
+  z-index: -1;
   position: absolute;
 }
 
