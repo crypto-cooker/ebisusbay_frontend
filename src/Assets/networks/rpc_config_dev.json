@@ -17514,6 +17514,32 @@
         "kyc": false,
         "verified": false
       }
+    },
+    {
+      "name": "CroHamsterNFT Items MK1",
+      "slug": "crohamsternft-items-mk1",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "CroHamsterNFT Items MK1 is a collection of 1000 animated 3D NFT Items that builds on our CroHamsterNFT collection for use in our CroHamster arena. These Item NFTs have different combat values and rarities! Owning such an Item will increase your CroHamsterNFT's combat abilities in one of our arena matchups, where you can compete for great NFT and Cro rewards and work your way up to our Hall of Fame for even more rewards and glory! In addition, 100% of the funds resulting from this Item collection will be used to burn the CroHamsterNFT floor price in multiple unannounced waves and expand our CroHamsterNFT Universe!",
+        "avatar": "/img/collections/crohamsternft-items-mk1/avatar.webp",
+        "card": "/img/collections/crohamsternft-items-mk1/card.webp",
+        "banner": "/img/collections/crohamsternft-items-mk1/banner.webp",
+        "website": "https://linktr.ee/crohamsternft/",
+        "twitter": "https://twitter.com/cro_hamster",
+        "discord": "https://discord.gg/sj4cHPrdVk",
+        "medium": "https://medium.com/@CroHamsterNFT",
+        "categories": [
+          "gaming"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
     }
   ],
   "drops": [
@@ -23497,7 +23523,7 @@
       }
     },
     {
-      "id": 148,
+      "id": 155,
       "slug": "ghost-og",
       "title": "Ghost OG",
       "subtitle": "Ghost is a community driven NFT project aiming to launch a P2E game, the OG NFT Collection consists of 7070 NFTs that will be implemented in the Ghostly world.",
@@ -23534,6 +23560,46 @@
         "doxx": false,
         "kyc": true,
         "escrow": false
+      }
+    },
+    {
+      "id": 156,
+      "slug": "crohamsternft-items-mk1",
+      "title": "CroHamsterNFT Items MK1",
+      "subtitle": "CroHamsterNFT Items MK1 is a collection of 1000 animated 3D NFT Items that builds on our CroHamsterNFT collection for use in our CroHamster arena. These Item NFTs have different combat values and rarities! Owning such an Item will increase your CroHamsterNFT's combat abilities in one of our arena matchups, where you can compete for great NFT and Cro rewards and work your way up to our Hall of Fame for even more rewards and glory! In addition, 100% of the funds resulting from this Item collection will be used to burn the CroHamsterNFT floor price in multiple unannounced waves and expand our CroHamsterNFT Universe!",
+      "description": "CroHamsterNFT Items MK1 is a collection of 1000 animated 3D NFT Items that builds on our CroHamsterNFT collection for use in our CroHamster arena. These Item NFTs have different combat values and rarities ! Owning such an Item will increase your CroHamsterNFT's combat abilities in one of our arena matchups, where you can compete for great NFT and Cro rewards and work your way up to our Hall of Fame for even more rewards and glory! In addition, 100% of the funds resulting from this Item collection will be used to burn the CroHamsterNFT floor price in multiple unannounced waves and expand our CroHamsterNFT Universe!\n\nMore details about our new collection:\n10x Legendary Items\n90x Epic Items\n900x Common Items\n10% Royalties will also be used for floor burn system.\n\nBurn wallet feature : 100% of resulting funds will be used to burn the CroHamsterNFT floor price in multiple unannounced waves.\nEach CroHamster can take one NFT Item with him into an arena fight (Special rules for Legendary CroHamsterNFTs).",
+      "author": {
+        "name": "CroHamsterNFT",
+        "website": "https://linktr.ee/crohamsternft/",
+        "twitter": "https://twitter.com/cro_hamster",
+        "discord": "https://discord.gg/sj4cHPrdVk",
+        "medium": "https://medium.com/@CroHamsterNFT"
+      },
+      "address": "",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 1000,
+      "cost": "50",
+      "memberCost": "40",
+      "whitelistCost": "30",
+      "foundersOnly": false,
+      "start": 1675886400000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/crohamsternft-items-mk1/drop.webp",
+        "banner": "/img/collections/crohamsternft-items-mk1/banner.webp",
+        "avatar": "/img/collections/crohamsternft-items-mk1/avatar.webp",
+        "preview": "/img/collections/crohamsternft-items-mk1/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
       }
     }
   ]
