@@ -5,7 +5,7 @@ import styles from './BattleBay.module.scss';
 
 const DefaultArea = ({onChange}) => {
   const mapRef = useRef();
-  // const borderRef = useRef();
+  const borderRef = useRef();
 
   // const [count] = useState(0);
   const [tempWidth, setTempWidth] = useState(1);
@@ -74,16 +74,16 @@ const DefaultArea = ({onChange}) => {
     console.log("this is from useEffect")
     // setUpLeaderboard();
     // resizeMap();
-    // borderRef.current.height = (borderRef.current.clientWidth * 2703) / 4532;
-    // let canvas_width = (borderRef.current.clientWidth * 3.65) / 6;
-    // let canvas_height = (canvas_width * 620) / 1189;
-    // mapRef.current.width = canvas_width;
-    // mapRef.current.height = canvas_height;
+    borderRef.current.height = (borderRef.current.clientWidth * 2703) / 4532;
+    let canvas_width = (borderRef.current.clientWidth * 3.65) / 6;
+    let canvas_height = (canvas_width * 620) / 1189;
+    mapRef.current.width = canvas_width;
+    mapRef.current.height = canvas_height;
 
-    // setTempWidth(mapRef.current.width);
-    // setTempHeight(mapRef.current.height);
-    setTempWidth(1920);
-    setTempHeight(1080);
+    setTempWidth(mapRef.current.width);
+    setTempHeight(mapRef.current.height);
+    // setTempWidth(1920);
+    // setTempHeight(1080);
   });
   const changeCanvasState = (ReactZoomPanPinchRef, event) => {
     setZoomState({
@@ -104,8 +104,8 @@ const DefaultArea = ({onChange}) => {
       {/* </button> */}
     </div>
       <p id="demo" className="basicText">Version 6</p>
-      <div className="mapBorder container">
-         {/* ref={borderRef}> */}
+      <div className="mapBorder container"
+         ref={borderRef}>
       <TransformWrapper
         onZoom={changeCanvasState}
         onPinching={changeCanvasState}
@@ -116,10 +116,11 @@ const DefaultArea = ({onChange}) => {
         <TransformComponent>
 
         {/* <div id="panzoom"> */}
-          <canvas className={`${styles.canvasFront}`} ref={mapRef} onClick={handleClick}></canvas>
+          {/* <canvas className={`${styles.canvasFront}`} ref={mapRef} onClick={handleClick}></canvas> */}
           <img src="/img/battle-bay/fancyMenu2.png" 
             style={{ width: `${tempWidth}px`, height: `${tempHeight}px` }}
-            useMap="#image-map" width="100%" className="maparea" id="fancyMenu"/>
+            useMap="#image-map" width="100%" className={`${styles.canvasFront}`} ref={mapRef} onClick={handleClick} id="fancyMenu"/>
+            {/* useMap="#image-map" width="100%" className="maparea" id="fancyMenu"/> */}
           <map name="image-map" width="100%">
             <area onClick={() => onChange('bank')} alt="bank" title="bank" coords="396,763,237,839" shape="rect"/>
             <area onClick={() => onChange('barracks')} alt="barracks" title="barracks" coords="705,770,940,871" shape="rect"/>
