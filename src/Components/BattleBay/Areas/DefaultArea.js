@@ -103,8 +103,9 @@ const DefaultArea = ({onChange}) => {
       {/* Version 2 */}
       {/* </button> */}
     </div>
-      <p id="demo" className="basicText">Version 6</p>
-      <div className="mapBorder container"
+      <p id="demo" className="basicText">Version 7</p>
+      <div className={`${styles.bitpixel_back}`}
+      // className="mapBorder container"
          ref={borderRef}>
       <TransformWrapper
         onZoom={changeCanvasState}
