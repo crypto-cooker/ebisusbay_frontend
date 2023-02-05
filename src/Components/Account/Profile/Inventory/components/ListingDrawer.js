@@ -3,21 +3,31 @@ import {
   AlertDescription,
   AlertIcon,
   Box,
-  Button as ChakraButton,
   Center,
   Flex,
   FormControl,
   FormLabel,
-  GridItem, IconButton, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverTrigger,
+  GridItem,
+  IconButton,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
   Spacer,
   Switch,
   Text
 } from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
-import {PopoverHeader, Spinner} from "react-bootstrap";
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import {Spinner} from "react-bootstrap";
+import React, {useCallback, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {applyPriceToAll, cascadePrices, clearBatchListingCart} from "@src/GlobalState/batchListingSlice";
+import {
+  addToBatchListingCart,
+  applyPriceToAll,
+  cascadePrices,
+  clearBatchListingCart
+} from "@src/GlobalState/batchListingSlice";
 import {Contract, ethers} from "ethers";
 import {toast} from "react-toastify";
 import {
@@ -28,13 +38,14 @@ import {
   pluralize
 } from "@src/utils";
 import * as Sentry from "@sentry/react";
-import {appConfig, isTestnet} from "@src/Config";
+import {appConfig} from "@src/Config";
 import {ListingDrawerItem} from "@src/Components/Account/Profile/Inventory/components/ListingDrawerItem";
 import ListingBundleDrawerForm from "@src/Components/Account/Profile/Inventory/components/ListingBundleDrawerForm";
 import Bundle from "@src/Contracts/Bundle.json";
 import useUpsertGaslessListings from "@src/Components/Account/Settings/hooks/useUpsertGaslessListings";
 import useCancelGaslessListing from "@src/Components/Account/Settings/hooks/useCancelGaslessListing";
-import {QuestionIcon, QuestionOutlineIcon} from "@chakra-ui/icons";
+import {QuestionOutlineIcon} from "@chakra-ui/icons";
+import {getNftsForAddress2} from "@src/core/api";
 
 const config = appConfig();
 const MAX_NFTS_IN_CART = 40;
@@ -66,6 +77,13 @@ export const ListingDrawer = () => {
   const handleApplyAll = (price, expiration) => {
     if (!price && !expiration) return;
     dispatch(applyPriceToAll({price, expiration}));
+  }
+  const handleAddCollection = async (address) => {
+    if (!address) return;
+    const nfts = await getNftsForAddress2(user.address, user.provider, 1, [address]);
+    for (const nft of nfts.nfts) {
+      dispatch(addToBatchListingCart(nft));
+    }
   }
   const resetDrawer = () => {
     handleClearCart();
@@ -272,10 +290,11 @@ export const ListingDrawer = () => {
           <>
             {batchListingCart.nfts.map((item, key) => (
               <ListingDrawerItem
-                key={item.nft.name}
+                key={`${item.nft.address}-${item.nft.id}`}
                 item={item}
                 onCascadePriceSelected={handleCascadePrices}
                 onApplyAllSelected={handleApplyAll}
+                onAddCollection={handleAddCollection}
                 disabled={showConfirmButton || executingCreateListing}
                 isBundling={isBundling}
               />

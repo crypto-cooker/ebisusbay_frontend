@@ -4,13 +4,14 @@ import React, {useRef, useState} from "react";
 
 import {useDispatch, useSelector} from "react-redux";
 import {toast} from "react-toastify";
-import {clearBatchListingCart, setRefetchNfts,} from "@src/GlobalState/batchListingSlice";
+import {addToBatchListingCart, clearBatchListingCart, setRefetchNfts,} from "@src/GlobalState/batchListingSlice";
 
 
 import useCreateBundle from '@src/Components/Account/Settings/hooks/useCreateBundle';
 import BundleDrawerItem from "./BundleDrawerItem";
 import {isBundle} from "@src/utils";
 import BundleDrawerForm from "@src/Components/Account/Profile/Inventory/components/BundleDrawerForm";
+import {getNftsForAddress2} from "@src/core/api";
 
 const MAX_NFTS_IN_BUNDLE = 40;
 const MIN_NFTS_IN_BUNDLE = 2;
@@ -28,6 +29,14 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
     setShowConfirmButton(false);
     dispatch(clearBatchListingCart());
   };
+
+  const handleAddCollection = async (address) => {
+    if (!address) return;
+    const nfts = await getNftsForAddress2(user.address, user.provider, 1, [address]);
+    for (const nft of nfts.nfts) {
+      dispatch(addToBatchListingCart(nft));
+    }
+  }
 
   const onSubmitBundle = async (values) => {
     const validated = await formRef.current.validate();
@@ -109,11 +118,12 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
         </Flex>
         {batchListingCart.nfts.length > 0 ? (
           <>
-            {batchListingCart.nfts.map((item, key) => (
+            {batchListingCart.nfts.map((item) => (
               <BundleDrawerItem
-                key={key}
+                key={`${item.nft.address}-${item.nft.id}`}
                 item={item}
                 disabled={showConfirmButton || executingCreateBundle}
+                onAddCollection={handleAddCollection}
               />
             ))}
           </>

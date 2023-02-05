@@ -1,5 +1,17 @@
 import {useDispatch, useSelector} from "react-redux";
-import {Badge, Box, Flex, Image, Skeleton, Text, useColorModeValue, VStack} from "@chakra-ui/react";
+import {
+  Badge,
+  Box,
+  Flex, IconButton,
+  Image,
+  Menu,
+  MenuButton, MenuItem,
+  MenuList,
+  Skeleton, Stack,
+  Text,
+  useColorModeValue,
+  VStack
+} from "@chakra-ui/react";
 import React, {useCallback, useEffect, useState} from "react";
 import {removeFromBatchListingCart, setApproval, setExtras} from "@src/GlobalState/batchListingSlice";
 import {Contract} from "ethers";
@@ -10,14 +22,14 @@ import {ImageKitService} from "@src/helpers/image";
 import Link from "next/link";
 import {Button as ChakraButton} from "@chakra-ui/button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faEllipsisH, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {appConfig} from "@src/Config";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
 import {specialImageTransform} from "@src/hacks";
 
 const config = appConfig();
 
-export const TransferDrawerItem = ({ item }) => {
+export const TransferDrawerItem = ({ item, onAddCollection }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
@@ -135,9 +147,26 @@ export const TransferDrawerItem = ({ item }) => {
             </Skeleton>
           </VStack>
         </Box>
-        <Box ms={2} cursor="pointer" onClick={handleRemoveItem}>
-          <FontAwesomeIcon icon={faTrash} />
-        </Box>
+        <Stack direction='row' ms={2} align="start">
+          <Menu>
+            <MenuButton
+              px={2}
+              transition='all 0.2s'
+              borderRadius='md'
+              borderWidth='1px'
+              height={6}
+            >
+              <FontAwesomeIcon icon={faEllipsisH} />
+            </MenuButton>
+            <MenuList textAlign="right" fontSize="14px">
+              <MenuItem onClick={() => onAddCollection(item.nft.address)}>Add entire collection</MenuItem>
+              <MenuItem onClick={handleRemoveItem}>Remove</MenuItem>
+            </MenuList>
+          </Menu>
+          <Box ms={2} cursor="pointer" onClick={handleRemoveItem}>
+            <FontAwesomeIcon icon={faTrash} />
+          </Box>
+        </Stack>
       </Flex>
     </Box>
   )

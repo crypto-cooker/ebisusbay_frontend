@@ -9,7 +9,7 @@ import {
   FormErrorMessage,
   HStack,
   Image,
-  Input,
+  Input, Menu, MenuButton, MenuItem, MenuList,
   Skeleton,
   Spacer,
   Stack,
@@ -23,7 +23,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import {ImageKitService} from "@src/helpers/image";
 import Link from "next/link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faEllipsisH, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {useDispatch, useSelector} from "react-redux";
 import {toast} from "react-toastify";
 import {
@@ -42,7 +42,7 @@ import {specialImageTransform} from "@src/hacks";
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 
-const BundleDrawerItem = ({ item, disabled }) => {
+const BundleDrawerItem = ({ item, disabled, onAddCollection }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
@@ -238,9 +238,26 @@ const BundleDrawerItem = ({ item, disabled }) => {
             </Collapse>
           </VStack>
         </Box>
-        <Box ms={2} cursor="pointer" onClick={handleRemoveItem}>
-          <FontAwesomeIcon icon={faTrash} />
-        </Box>
+        <Stack direction='row' ms={2} align="start">
+          <Menu>
+            <MenuButton
+              px={2}
+              transition='all 0.2s'
+              borderRadius='md'
+              borderWidth='1px'
+              height={6}
+            >
+              <FontAwesomeIcon icon={faEllipsisH} />
+            </MenuButton>
+            <MenuList textAlign="right" fontSize="14px">
+              <MenuItem onClick={() => onAddCollection(item.nft.address)}>Add entire collection</MenuItem>
+              <MenuItem onClick={handleRemoveItem}>Remove</MenuItem>
+            </MenuList>
+          </Menu>
+          <Box ms={2} cursor="pointer" onClick={handleRemoveItem}>
+            <FontAwesomeIcon icon={faTrash} />
+          </Box>
+        </Stack>
       </Flex>
     </Box>
   )
