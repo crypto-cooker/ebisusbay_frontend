@@ -102,7 +102,8 @@ const DefaultArea = ({onChange}) => {
       {/* </button> */}
     </div>
       <p id="demo" className="basicText">Version 5</p>
-      <div className="mapBorder container" ref={borderRef}>
+      <div className="mapBorder container">
+         {/* ref={borderRef}> */}
       <TransformWrapper
         onZoom={changeCanvasState}
         onPinching={changeCanvasState}
