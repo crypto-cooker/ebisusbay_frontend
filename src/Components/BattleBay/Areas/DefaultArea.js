@@ -105,10 +105,11 @@ const DefaultArea = ({onChange}) => {
       {/* Version 2 */}
       {/* </button> */}
     </div>
-      <p id="demo" className="basicText">Version 7</p>
-      <div className={`${styles.bitpixel_back}`}
-      // className="mapBorder container"
-         ref={borderRef}>
+      <p id="demo" className="basicText">Version 8</p>
+      <div 
+      // className={`${styles.bitpixel_back}`}
+      className="mapBorder container">
+        {/* //  ref={borderRef}> */}
       <TransformWrapper
         onZoom={changeCanvasState}
         onPinching={changeCanvasState}
@@ -122,10 +123,10 @@ const DefaultArea = ({onChange}) => {
           {/* <canvas className={`${styles.canvasFront}`} ref={mapRef} onClick={handleClick}></canvas> */}
           <img src="/img/battle-bay/fancyMenu2.png" 
             style={{ width: `${tempWidth}px`, height: `${tempHeight}px` }}
-            useMap="#image-map" width="100%" className={`${styles.canvasFront}`} ref={mapRef} onClick={handleClick} id="fancyMenu"/>
+            useMap="#image-map" width="100%" id="fancyMenu"/>
             {/* useMap="#image-map" width="100%" className="maparea" id="fancyMenu"/> */}
           <map style={{ width: `${tempWidth}px`, height: `${tempHeight}px` }}
-            name="image-map" width="100%">
+            name="image-map" width="100%" className={`${styles.canvasFront}`} ref={mapRef} onClick={handleClick}>
             <area onClick={() => onChange('bank')} alt="bank" title="bank" coords="396,763,237,839" shape="rect"/>
             <area onClick={() => onChange('barracks')} alt="barracks" title="barracks" coords="705,770,940,871" shape="rect"/>
             <area onClick={() => onChange('battleMap')} alt="tradeport" title="tradeport" coords="1365,807,1638,912" shape="rect" />
