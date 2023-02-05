@@ -82,6 +82,8 @@ const DefaultArea = ({onChange}) => {
 
     // setTempWidth(mapRef.current.width);
     // setTempHeight(mapRef.current.height);
+    setTempWidth(1920);
+    setTempHeight(1080);
   });
   const changeCanvasState = (ReactZoomPanPinchRef, event) => {
     setZoomState({
@@ -101,7 +103,7 @@ const DefaultArea = ({onChange}) => {
       {/* Version 2 */}
       {/* </button> */}
     </div>
-      <p id="demo" className="basicText">Version 5</p>
+      <p id="demo" className="basicText">Version 6</p>
       <div className="mapBorder container">
          {/* ref={borderRef}> */}
       <TransformWrapper
@@ -114,6 +116,7 @@ const DefaultArea = ({onChange}) => {
         <TransformComponent>
 
         {/* <div id="panzoom"> */}
+          <canvas className={`${styles.canvasFront}`} ref={mapRef} onClick={handleClick}></canvas>
           <img src="/img/battle-bay/fancyMenu2.png" 
             style={{ width: `${tempWidth}px`, height: `${tempHeight}px` }}
             useMap="#image-map" width="100%" className="maparea" id="fancyMenu"/>
@@ -128,7 +131,6 @@ const DefaultArea = ({onChange}) => {
             {/* <area onClick={() => onChange('battleMap')} href="academy.html" alt="academy" title="academy" coords="1331,122,1570,215" shape="rect"/> */}
             <area onClick={() => onChange('allianceCenter')} alt="allianceCenter" title="allianceCenter" coords="611,175,957,261" shape="rect"/>
           </map>
-          <canvas className={`${styles.canvasFront}`} ref={mapRef} onClick={handleClick}></canvas>
         {/* </div> */}
         </TransformComponent>
       </TransformWrapper>
