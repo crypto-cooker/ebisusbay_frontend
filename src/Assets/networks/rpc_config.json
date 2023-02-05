@@ -17405,6 +17405,115 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Explorer NFTs",
+      "slug": "explorer-nfts",
+      "multiToken": false,
+      "address": "0x55AC069FB893f03eD0050b4b054AFAaEd0040BF5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/explorer-nfts/avatar.webp",
+        "website": "https://explorer-nfts.netlify.app/",
+        "twitter": "https://twitter.com/CronosSecretNFT",
+        "discord": "https://discord.gg/hfUkstVQ65",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Botz",
+      "slug": "botz",
+      "multiToken": false,
+      "address": "0x097f67eD5D0B049f099144229EF9E838a76A8253",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Botz are a collection of 400 security droids that keep troll town safe from invaders. Join our discord and find out more.",
+        "avatar": "/img/collections/botz/avatar.webp",
+        "card": "/img/collections/botz/card.webp",
+        "banner": "/img/collections/botz/banner.webp",
+        "twitter": "https://twitter.com/Sw33percrypto",
+        "discord": "https://discord.gg/uYuBdjm2QJ",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Monsterz",
+      "slug": "monsterz",
+      "multiToken": false,
+      "address": "0x606612C714090b6fBaA86d9aC9Bd72E51C6eA001",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Monsterz are a collection of 520 Troll Town troublemakers. Join our discord to discover more.",
+        "avatar": "/img/collections/monsterz/avatar.webp",
+        "card": "/img/collections/monsterz/card.webp",
+        "banner": "/img/collections/monsterz/banner.webp",
+        "twitter": "https://twitter.com/Sw33percrypto",
+        "discord": "https://discord.gg/uYuBdjm2QJ",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Frogz",
+      "slug": "frogz",
+      "multiToken": false,
+      "address": "0x15aBb694634F72a07f7Ff7fd8E66a557Bc0326f3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Frogz are a collection of 520 friendly Troll Town amphibians. Join our discord to discover more.",
+        "avatar": "/img/collections/frogz/avatar.webp",
+        "card": "/img/collections/frogz/card.webp",
+        "banner": "/img/collections/frogz/banner.webp",
+        "twitter": "https://twitter.com/Sw33percrypto",
+        "discord": "https://discord.gg/uYuBdjm2QJ",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Piratez",
+      "slug": "piratez",
+      "multiToken": false,
+      "address": "0xaFFE9B61F9AA71d292186257B1C4518925c403Ed",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Piratez are a collection of 620 marauders from Troll Town. Find your Piratez Booty in our discord.",
+        "avatar": "/img/collections/piratez/avatar.webp",
+        "card": "/img/collections/piratez/card.webp",
+        "banner": "/img/collections/piratez/banner.webp",
+        "twitter": "https://twitter.com/Sw33percrypto",
+        "discord": "https://discord.gg/uYuBdjm2QJ",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
     }
   ],
   "drops": [

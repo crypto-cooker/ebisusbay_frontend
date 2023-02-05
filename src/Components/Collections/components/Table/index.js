@@ -211,7 +211,7 @@ const Table = ({ timeFrame, searchTerms, onlyVerified }) => {
                         >
                           <span>Floor Price</span>
                           <span className="text-end">
-                            {collection.numberActive > 0 ? `${collectionFloorPriceValue(collection)} CRO` : 'N/A'}
+                            {collection.listable && collection.numberActive > 0 ? `${collectionFloorPriceValue(collection)} CRO` : 'N/A'}
                           </span>
                         </div>
                         <div className="col-12 mobile-view-list-item" onClick={() => sortCollections('totalaveragesaleprice')}>
@@ -236,7 +236,7 @@ const Table = ({ timeFrame, searchTerms, onlyVerified }) => {
                   {tableMobileView && <td>{siPrefixedNumber(collectionVolume(collection))} CRO</td>}
                   {tableMobileView && <td>{siPrefixedNumber(collectionSales(collection))}</td>}
                   {tableMobileView && (
-                    <td>{collection.numberActive > 0 ? `${collectionFloorPriceValue(collection)} CRO` : '-'}</td>
+                    <td>{collection.listable && collection.numberActive > 0 ? `${collectionFloorPriceValue(collection)} CRO` : '-'}</td>
                   )}
                   {tableMobileView && <td>{collectionAveragePrices(collection)} CRO</td>}
                   {tableMobileView && <td>{siPrefixedNumber(collectionNumberActiveValue(collection))}</td>}
