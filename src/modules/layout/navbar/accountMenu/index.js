@@ -39,8 +39,6 @@ import {
 } from '@src/GlobalState/User';
 
 import {getThemeInStorage, setThemeInStorage} from '@src/helpers/storage';
-import {getAllCollections} from '@src/GlobalState/collectionsSlice';
-import {fetchMyNFTs} from '@src/GlobalState/offerSlice';
 import {appConfig} from '@src/Config';
 import {ImageKitService} from "@src/helpers/image";
 import classnames from "classnames";
@@ -73,7 +71,7 @@ const Index = function () {
   const walletAddress = useSelector((state) => {
     return state.user.address;
   });
-  const { onCopy } = useClipboard(walletAddress);
+  const { setValue:setClipboardValue, onCopy } = useClipboard();
 
   const correctChain = useSelector((state) => {
     return state.user.correctChain;
@@ -146,8 +144,7 @@ const Index = function () {
 
   useEffect(() => {
     if (walletAddress) {
-      dispatch(getAllCollections());
-      dispatch(fetchMyNFTs(walletAddress));
+      setClipboardValue(walletAddress);
     }
     // eslint-disable-next-line
   }, [walletAddress]);
