@@ -105,7 +105,7 @@ const DefaultArea = ({onChange}) => {
       {/* Version 2 */}
       {/* </button> */}
     </div>
-      <p id="demo" className="basicText">Version 9</p>
+      <p id="demo" className="basicText">Version 1</p>
       <div 
       // className={`${styles.bitpixel_back}`}
       className="mapBorder container">
@@ -126,7 +126,7 @@ const DefaultArea = ({onChange}) => {
             {/* useMap="#image-map" width="100%" className="maparea" id="fancyMenu"/> */}
           {/* <map style={{ width: `${tempWidth}px`, height: `${tempHeight}px` }} */}
             {/* name="image-map" width="100%" className={`${styles.canvasFront}`} ref={mapRef} onClick={handleClick}> */}
-            <map name="image-map" width="100%">
+            <map name="image-map" width="100%" height="100%" class="mapImageArea">
             <area onClick={() => onChange('bank')} alt="bank" title="bank" coords="396,763,237,839" shape="rect"/>
             <area onClick={() => onChange('barracks')} alt="barracks" title="barracks" coords="705,770,940,871" shape="rect"/>
             <area onClick={() => onChange('battleMap')} alt="tradeport" title="tradeport" coords="1365,807,1638,912" shape="rect" />
