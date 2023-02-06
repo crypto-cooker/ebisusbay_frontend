@@ -1,16 +1,1 @@
-<svg width="121" height="139" viewBox="0 0 121 139" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M60.093 0L-1.52588e-05 34.7123V104.114L60.093 138.803L120.14 104.114V34.7123L60.093 0ZM102.349 93.8304L60.093 118.236L17.814 93.8304V44.9725L60.093 20.5668L102.349 44.9725V93.8304Z" fill="#002D74"/>
-<path style="mix-blend-mode:multiply" d="M60.0932 138.803L120.14 104.114V34.7123L60.0932 0V20.5901L102.349 44.9958V93.8536L60.0932 118.236V138.803Z" fill="url(#paint0_linear_304_31)"/>
-<path style="mix-blend-mode:multiply" d="M60.0465 0L0 34.6891V104.091L60.0465 138.803V118.213L17.7907 93.8071V44.9492L60.0465 20.5668V0Z" fill="url(#paint1_linear_304_31)"/>
-<path d="M88.1163 85.6176L60.0698 101.811L32 85.6176V53.2086L60.0698 36.9924L88.1163 53.2086L76.4419 59.9556L60.0698 50.4865L43.6977 59.9556V78.8473L60.0698 88.3165L76.4419 78.8473L88.1163 85.6176Z" fill="#002D74"/>
-<defs>
-<linearGradient id="paint0_linear_304_31" x1="90.1164" y1="138.803" x2="90.1164" y2="69.4014" gradientUnits="userSpaceOnUse">
-<stop stop-color="#002D74"/>
-<stop offset="1" stop-color="#002D74" stop-opacity="0"/>
-</linearGradient>
-<linearGradient id="paint1_linear_304_31" x1="30.0233" y1="0" x2="30.0233" y2="69.4014" gradientUnits="userSpaceOnUse">
-<stop stop-color="#002D74"/>
-<stop offset="1" stop-color="#002D74" stop-opacity="0"/>
-</linearGradient>
-</defs>
-</svg>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 121 139"><defs><style>.cls-1{fill:#002d74;}.cls-2{fill:url(#linear-gradient);}.cls-3{fill:url(#linear-gradient-2);}</style><linearGradient id="linear-gradient" x1="120.4096" y1="107.7972" x2="75.3557" y2="81.7854" gradientTransform="matrix(1, 0, 0, -1, 0, 142.5567)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#002d74"/><stop offset="0.5328" stop-color="#002c72"/><stop offset="0.7247" stop-color="#00286b"/><stop offset="0.8615" stop-color="#002160"/><stop offset="0.9713" stop-color="#00174f"/><stop offset="1" stop-color="#001449"/></linearGradient><linearGradient id="linear-gradient-2" x1="0.251" y1="38.4506" x2="45.3048" y2="64.4624" xlink:href="#linear-gradient"/></defs><title>Cronos files Dr.Relli</title><path class="cls-1" d="M60.3534.0312.26,34.7435v69.4017l60.093,34.689,60.047-34.689V34.7435Zm42.256,93.83-42.256,24.4056L18.0744,93.8616V45.0037L60.3534,20.598l42.256,24.4057Z"/><path class="cls-2" d="M60.3536,138.8342,120.4,104.1452V34.7435L60.3536.0312v20.59L102.6094,45.027V93.8848L60.3536,118.2672Z"/><path class="cls-3" d="M60.3069.0312.26,34.72v69.4019l60.0465,34.712v-20.59L18.0511,93.8383V44.98L60.3069,20.598Z"/><path class="cls-1" d="M88.3767,85.6488,60.33,101.8422,32.26,85.6488V53.24L60.33,37.0236,88.3767,53.24l-11.6744,6.747L60.33,50.5177,43.9581,59.9868V78.8785L60.33,88.3477l16.3721-9.4692Z"/></svg>

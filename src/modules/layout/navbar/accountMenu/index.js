@@ -47,6 +47,7 @@ import Button from "@src/Components/components/Button";
 import {Box, Flex, Heading, Link, Spacer, Text, useClipboard, useColorMode, VStack, Wrap} from "@chakra-ui/react";
 import Image from "next/image";
 import {useQuery} from "@tanstack/react-query";
+import CronosIcon from "@src/components-v2/shared/icons/cronos";
 
 const StyledModal = styled(Modal)`
   .modal-content {
@@ -447,7 +448,8 @@ const Index = function () {
               <div className="my-auto">
                 <Button type="legacy"
                         onClick={handleBuyCro}>
-                  Buy CRO
+                  <CronosIcon boxSize={4}/>
+                  <Text ms={1}>Buy CRO</Text>
                 </Button>
               </div>
             </div>
