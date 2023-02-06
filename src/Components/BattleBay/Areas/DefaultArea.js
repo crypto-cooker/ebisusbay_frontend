@@ -105,7 +105,7 @@ const DefaultArea = ({onChange}) => {
       {/* Version 2 */}
       {/* </button> */}
     </div>
-      <p id="demo" className="basicText">Version 1</p>
+      <p id="demo" className="basicText">Version 2</p>
       <div 
       // className={`${styles.bitpixel_back}`}
       className="mapBorder container">
