@@ -114,6 +114,11 @@
       "address": "0x008d4Ab1D8fbC7823422a7cCFe3f1D73c09760Ab",
       "multiToken": true,
       "listable": true,
+      "tokens": [
+        {
+          "id": 1
+        }
+      ],
       "metadata": {
         "description": "Happy Easter from the ebisusbay.com staff!",
         "avatar": "/img/collections/ebisu/holidayhares/avatar.webp",
@@ -10444,7 +10449,7 @@
       }
     },
     {
-      "name": "ThirteenthEvil",
+      "name": "ThirteenthEvil Annabelle",
       "slug": "thirteenth-evil",
       "multiToken": false,
       "address": "0xfc787d585DCA5DB15f4804351a62973Fa55aab81",
