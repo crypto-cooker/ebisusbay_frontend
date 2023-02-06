@@ -123,7 +123,7 @@ const DefaultArea = ({onChange}) => {
           {/* <canvas className={`${styles.canvasFront}`} ref={mapRef} onClick={handleClick}></canvas> */}
           <img src="/img/battle-bay/fancyMenu2.png" 
             style={{ width: `${tempWidth}px`, height: `${tempHeight}px` }}
-            useMap="#image-map" width="100%" id="fancyMenu"/>
+            useMap="#image-map" width="100%" id="fancyMenu">
             {/* useMap="#image-map" width="100%" className="maparea" id="fancyMenu"/> */}
           <map style={{ width: `${tempWidth}px`, height: `${tempHeight}px` }}
             name="image-map" width="100%" className={`${styles.canvasFront}`} ref={mapRef} onClick={handleClick}>
@@ -137,6 +137,7 @@ const DefaultArea = ({onChange}) => {
             {/* <area onClick={() => onChange('battleMap')} href="academy.html" alt="academy" title="academy" coords="1331,122,1570,215" shape="rect"/> */}
             <area onClick={() => onChange('allianceCenter')} alt="allianceCenter" title="allianceCenter" coords="611,175,957,261" shape="rect"/>
           </map>
+        </img>
         {/* </div> */}
         </TransformComponent>
       </TransformWrapper>
