@@ -48,8 +48,15 @@
   position: absolute;
 }
 .mapImageArea{
-  z-index: 99;
+  pointer-events: auto !important;
 }
+.maparea{
+  pointer-events: auto !important;
+}
+.mapDiv{
+  z-index: -1;
+}
+.content img { pointer-events: all !important; }
 
 .tip_modal {
   position: absolute;

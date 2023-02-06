@@ -121,12 +121,14 @@ const DefaultArea = ({onChange}) => {
 
         {/* <div id="panzoom"> */}
           {/* <canvas className={`${styles.canvasFront}`} ref={mapRef} onClick={handleClick}></canvas> */}
-        <img src="/img/battle-bay/fancyMenu2.png" usemap="#image-map" width="100%" class="maparea" id="fancyMenu" />
+        <div class="mapDiv">
+        <img src="/img/battle-bay/fancyMenu2.png" usemap="#image-map" width="100%" className={`${styles.mapImageArea}`} id="fancyMenu"/>
+        <div onClick={() => onChange('bank')}> bandk 
           {/* <img src="/img/battle-bay/fancyMenu2.png"             style={{ width: `${tempWidth}px`, height: `${tempHeight}px` }}            useMap="#image-map" width="100%" id="fancyMenu"/> */}
             {/* useMap="#image-map" width="100%" className="maparea" id="fancyMenu"/> */}
           {/* <map style={{ width: `${tempWidth}px`, height: `${tempHeight}px` }} */}
             {/* name="image-map" width="100%" className={`${styles.canvasFront}`} ref={mapRef} onClick={handleClick}> */}
-            <map name="image-map" width="100%" height="100%" class="mapImageArea">
+            <map name="image-map" width="100%" height="100%" className={`${styles.mapImageArea}`} >
             <area onClick={() => onChange('bank')} alt="bank" title="bank" coords="396,763,237,839" shape="rect"/>
             <area onClick={() => onChange('barracks')} alt="barracks" title="barracks" coords="705,770,940,871" shape="rect"/>
             <area onClick={() => onChange('battleMap')} alt="tradeport" title="tradeport" coords="1365,807,1638,912" shape="rect" />
@@ -137,7 +139,8 @@ const DefaultArea = ({onChange}) => {
             {/* <area onClick={() => onChange('battleMap')} href="academy.html" alt="academy" title="academy" coords="1331,122,1570,215" shape="rect"/> */}
             <area onClick={() => onChange('allianceCenter')} alt="allianceCenter" title="allianceCenter" coords="611,175,957,261" shape="rect"/>
           </map>
-        {/* </div> */}
+          </div>
+        </div>
         </TransformComponent>
       </TransformWrapper>
       </div>
