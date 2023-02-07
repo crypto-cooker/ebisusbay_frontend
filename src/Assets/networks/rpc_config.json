@@ -17136,7 +17136,7 @@
       "multiToken": false,
       "address": "0xB278947b945eB7dea7F1822A1801d7e9aEdD8e63",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Blumies collection brought to you by ''Purple Fantasy'' team. \n\nUnique styles lead to unique ideas. Join the journey and discover what you haven't seen and heard before! Work with the team, learn, receive, observe and enjoy while the story evolves.",
         "avatar": "/img/collections/blumies/avatar.webp",
