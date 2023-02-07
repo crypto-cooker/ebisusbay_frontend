@@ -5372,11 +5372,11 @@
         "avatar": "/img/collections/cro-army-soldier/avatar.webp",
         "card": "/img/collections/cro-army-soldier/card.webp",
         "banner": "/img/collections/cro-army-soldier/banner.webp",
-        "website": "https://croarmy.io/",
+        "website": "https://croarmy.app/",
         "twitter": "https://twitter.com/croarmy_eth",
         "discord": "https://discord.gg/croarmy",
         "telegram": "https://t.me/CroArmy_ETH",
-        "medium": "https://croarmy.gitbook.io/croarmy/",
+        "medium": "https://medium.com/@CroArmy",
         "categories": [
           "utility"
         ]
@@ -5819,11 +5819,11 @@
         "avatar": "/img/collections/cro-army-burns/avatar.webp",
         "card": "/img/collections/cro-army-burns/card.webp",
         "banner": "/img/collections/cro-army-soldier/banner.webp",
-        "website": "https://croarmy.io/",
+        "website": "https://croarmy.app/",
         "twitter": "https://twitter.com/croarmy_eth",
         "discord": "https://discord.gg/croarmy",
         "telegram": "https://t.me/CroArmy_ETH",
-        "medium": "https://croarmy.gitbook.io/croarmy/",
+        "medium": "https://medium.com/@CroArmy",
         "categories": [
           "utility"
         ]
@@ -6386,22 +6386,22 @@
       }
     },
     {
-      "name": "CroArmy Jackals",
-      "slug": "cro-army-jackals",
+      "name": "Jackals Reloaded",
+      "slug": "jackals-reloaded",
       "multiToken": false,
-      "address": "",
+      "address": "0xB9c37Cba144204B50B95CA56Dd9167F0F9315630",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
-        "description": "CroArmy Jackals is a collection of 4,200 NFT's that pair with our $ARMY Token. The NFT's act as a membership to the CroArmy to participate in staking, community voting, and other exclusive rewards.",
+        "description": "A collection of 4200 Jackals are launching on the Cronos Chain. We're bringing them back, Re-Loaded , and stacked with Utility. Utilities are backed, and guaranteed \uD83D\uDC40 5% of CroArmy's distinguished bi-weeky bCRO airdrops are allocated to this Collection. 10k $ARMY will be backing EACH Jackals as well, as if the airdrops weren't enough \uD83D\uDE0F If you want to claim your 10k $ARMY, just burn your jackal to receive your $ARMY. 1 Point to Top 30!",
         "avatar": "/img/collections/cro-army-jackals/avatar.webp",
         "card": "/img/collections/cro-army-soldier/card.webp",
         "banner": "/img/collections/cro-army-soldier/banner.webp",
-        "website": "https://croarmy.io/",
+        "website": "https://croarmy.app/",
         "twitter": "https://twitter.com/croarmy_eth",
         "discord": "https://discord.gg/croarmy",
         "telegram": "https://t.me/CroArmy_ETH",
-        "medium": "https://croarmy.gitbook.io/croarmy/",
+        "medium": "https://medium.com/@CroArmy",
         "categories": [
           "collectibles"
         ]
@@ -6450,11 +6450,11 @@
         "avatar": "/img/collections/cro-army-diamond-hand/avatar.png",
         "card": "/img/collections/cro-army-diamond-hand/card.webp",
         "banner": "/img/collections/cro-army-diamond-hand/banner.webp",
-        "website": "https://croarmy.io/",
+        "website": "https://croarmy.app/",
         "twitter": "https://twitter.com/croarmy_eth",
         "discord": "https://discord.gg/croarmy",
         "telegram": "https://t.me/CroArmy_ETH",
-        "medium": "https://croarmy.gitbook.io/croarmy/",
+        "medium": "https://medium.com/@CroArmy",
         "categories": [
           "utility"
         ]
@@ -7328,11 +7328,11 @@
         "avatar": "/img/collections/cro-army-coalition/avatar.png",
         "card": "/img/collections/cro-army-coalition/card.png",
         "banner": "/img/collections/cro-army-coalition/banner.png",
-        "website": "https://croarmy.io/",
+        "website": "https://croarmy.app/",
         "twitter": "https://twitter.com/croarmy_eth",
         "discord": "https://discord.gg/croarmy",
         "telegram": "https://t.me/CroArmy_ETH",
-        "medium": "https://croarmy.gitbook.io/croarmy/",
+        "medium": "https://medium.com/@CroArmy",
         "categories": [
           "utility"
         ]
@@ -8520,11 +8520,11 @@
         "avatar": "/img/collections/btc-cro-army-miners/avatar.webp",
         "card": "/img/collections/btc-cro-army-miners/card.webp",
         "banner": "/img/collections/btc-cro-army-miners/banner.webp",
-        "website": "https://croarmy.io/",
+        "website": "https://croarmy.app/",
         "twitter": "https://twitter.com/croarmy_eth",
         "discord": "https://discord.gg/croarmy",
         "telegram": "https://t.me/CroArmy_ETH",
-        "medium": "https://croarmy.gitbook.io/croarmy/",
+        "medium": "https://medium.com/@CroArmy",
         "categories": [
           "utility"
         ]
@@ -10565,11 +10565,11 @@
         "avatar": "/img/collections/cro-army-jarheads/avatar.webp",
         "card": "/img/collections/cro-army-jarheads/card.webp",
         "banner": "/img/collections/cro-army-jarheads/banner.webp",
-        "website": "https://croarmy.io/",
+        "website": "https://croarmy.app/",
         "twitter": "https://twitter.com/croarmy_eth",
         "discord": "https://discord.gg/croarmy",
         "telegram": "https://t.me/CroArmy_ETH",
-        "medium": "https://croarmy.gitbook.io/croarmy/",
+        "medium": "https://medium.com/@CroArmy",
         "categories": [
           "utility"
         ]
@@ -17136,7 +17136,7 @@
       "multiToken": false,
       "address": "0xB278947b945eB7dea7F1822A1801d7e9aEdD8e63",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Blumies collection brought to you by ''Purple Fantasy'' team. \n\nUnique styles lead to unique ideas. Join the journey and discover what you haven't seen and heard before! Work with the team, learn, receive, observe and enjoy while the story evolves.",
         "avatar": "/img/collections/blumies/avatar.webp",
@@ -23506,7 +23506,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/blumies/drop.webp",
         "banner": "/img/collections/blumies/banner.webp",
