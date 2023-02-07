@@ -25,7 +25,7 @@ import Constants from "@src/constants";
 import useCancelGaslessListing from '@src/Components/Account/Settings/hooks/useCancelGaslessListing';
 
 import {Flex, Heading, Table, TableContainer, Tbody, Td, Text, Tr, useDisclosure,} from '@chakra-ui/react';
-import PurchaseDialog from "@src/Components/NftDetails/PurchaseDialog";
+import PurchaseDialog from "@src/components-v2/shared/dialogs/purchase";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
 
 const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isVerified, isOwner, collectionStats }) => {
