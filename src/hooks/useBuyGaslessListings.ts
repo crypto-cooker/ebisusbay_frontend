@@ -8,6 +8,7 @@ import {useSelector} from "react-redux";
 import {getServerSignature} from '@src/core/cms/endpoints/gaslessListing';
 import {pluralize} from "@src/utils";
 import {useAppSelector} from "@src/Store/hooks";
+import ContractService from "@src/core/contractService";
 
 type ResponseProps = {
   loading: boolean;
@@ -22,7 +23,7 @@ const useBuyGaslessListings = () => {
     tx: undefined
   });
 
-  const user = useAppSelector((state) => state.user);
+  const {contractService, address} = useAppSelector((state) => state.user);
 
   const buyGaslessListings = async (listingIds: string[], cartPrice: number | string) => {
     setResponse({
@@ -33,10 +34,10 @@ const useBuyGaslessListings = () => {
     });
 
     try {
-      const buyContract = user.contractService.ship;
+      const buyContract = (contractService! as ContractService).ship;
       const price = ethers.utils.parseEther(`${cartPrice}`);
 
-      const { data: serverSig } = await getServerSignature(user.address.toLowerCase(), listingIds);
+      const { data: serverSig } = await getServerSignature((address! as string), listingIds);
       const { signature, orderData, ...sigData } = serverSig;
       const total = price.add(sigData.feeAmount);
       const tx = await buyContract.fillOrders(orderData, sigData, signature, { value: total });
