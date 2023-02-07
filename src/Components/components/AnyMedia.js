@@ -9,15 +9,15 @@ export const AnyMedia = ({
   image,
   video,
   title,
-  url,
-  newTab,
+  url = null,
+  newTab = false,
   usePlaceholder = false,
   videoProps,
   className,
   layout = 'responsive',
   width = 1,
   height = 1,
-  sizes,
+  sizes = null,
 }) => {
   const [dynamicType, setDynamicType] = useState(null);
   const [transformedImage, setTransformedImage] = useState(image);
