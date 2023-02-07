@@ -1,16 +1,1 @@
-<svg width="121" height="139" viewBox="0 0 121 139" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M60.093 0L-1.52588e-05 34.7123V104.114L60.093 138.803L120.14 104.114V34.7123L60.093 0ZM102.349 93.8304L60.093 118.236L17.814 93.8304V44.9725L60.093 20.5668L102.349 44.9725V93.8304Z" fill="white"/>
-<path style="mix-blend-mode:multiply" d="M60.0932 138.803L120.14 104.114V34.7123L60.0932 0V20.5901L102.349 44.9958V93.8536L60.0932 118.236V138.803Z" fill="white"/>
-<path style="mix-blend-mode:multiply" d="M60.0465 0L0 34.6891V104.091L60.0465 138.803V118.213L17.7907 93.8071V44.9492L60.0465 20.5668V0Z" fill="white"/>
-<path d="M88.1163 85.6176L60.0698 101.811L32 85.6176V53.2086L60.0698 36.9924L88.1163 53.2086L76.4419 59.9556L60.0698 50.4865L43.6977 59.9556V78.8473L60.0698 88.3165L76.4419 78.8473L88.1163 85.6176Z" fill="white"/>
-<defs>
-    <linearGradient id="paint0_linear_304_31" x1="90.1164" y1="138.803" x2="90.1164" y2="69.4014" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#002D74"/>
-        <stop offset="1" stop-color="#002D74" stop-opacity="0"/>
-    </linearGradient>
-    <linearGradient id="paint1_linear_304_31" x1="30.0233" y1="0" x2="30.0233" y2="69.4014" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#002D74"/>
-        <stop offset="1" stop-color="#002D74" stop-opacity="0"/>
-    </linearGradient>
-</defs>
-</svg>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121 139"><defs><style>.cls-1{fill:#fff;}</style></defs><title>Cronos files Dr.Relli</title><path class="cls-1" d="M60.093,0,0,34.7123V104.114l60.093,34.689,60.047-34.689V34.7123Zm42.256,93.83L60.093,118.236,17.814,93.83V44.9725L60.093,20.5668l42.256,24.4057Z"/><path class="cls-1" d="M60.0932,138.803,120.14,104.114V34.7123L60.0932,0V20.59L102.349,44.9958V93.8536L60.0932,118.236Z"/><path class="cls-1" d="M60.0465,0,0,34.6891V104.091l60.0465,34.712v-20.59L17.7907,93.8071V44.9492L60.0465,20.5668Z"/><path class="cls-1" d="M88.1163,85.6176,60.07,101.811,32,85.6176V53.2086L60.07,36.9924,88.1163,53.2086l-11.6744,6.747L60.07,50.4865,43.6977,59.9556V78.8473L60.07,88.3165l16.3721-9.4692Z"/></svg>
