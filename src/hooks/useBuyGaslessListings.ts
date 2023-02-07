@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {ethers} from "ethers";
+import {ContractReceipt, ethers} from "ethers";
 import {toast} from 'react-toastify';
 
 import {getAuthSignerInStorage} from '@src/helpers/storage';
@@ -13,7 +13,7 @@ import ContractService from "@src/core/contractService";
 type ResponseProps = {
   loading: boolean;
   error?: any;
-  tx?: string;
+  tx?: ContractReceipt;
 };
 
 const useBuyGaslessListings = () => {

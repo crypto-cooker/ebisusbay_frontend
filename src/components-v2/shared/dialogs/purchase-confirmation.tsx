@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {specialImageTransform} from "@src/hacks";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
 import {Spinner} from "react-bootstrap";
-import {Contract, ethers} from "ethers";
+import {Contract, ContractReceipt, ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
@@ -33,20 +33,20 @@ import DotIcon from "@src/Components/components/DotIcon";
 import {faCheck} from "@fortawesome/free-solid-svg-icons";
 import {appConfig} from "@src/Config";
 import Market from "@src/Contracts/Marketplace.json";
-import PurchaseSuccessDialog from "@src/Components/NftDetails/PurchaseSuccessDialog";
 import {useAppSelector} from "@src/Store/hooks";
+import PurchaseSuccessDialog from './purchase-success';
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 const readMarket = new Contract(config.contracts.market, Market.abi, readProvider);
 
-type PurchaseDialogProps = {
+type PurchaseConfirmationDialogProps = {
   onClose: () => void;
   isOpen: boolean;
   listingId: string;
 };
 
-export default function PurchaseDialog({ onClose, isOpen, listingId}: PurchaseDialogProps) {
+export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}: PurchaseConfirmationDialogProps) {
   const [fee, setFee] = useState(0);
   const [executingPurchase, setExecutingPurchase] = useState(false);
   const [buyGaslessListings, response] = useBuyGaslessListings();
@@ -54,7 +54,7 @@ export default function PurchaseDialog({ onClose, isOpen, listingId}: PurchaseDi
   const user = useAppSelector((state) => state.user);
 
   const [isComplete, setIsComplete] = useState(false);
-  const [tx, setTx] = useState<string>();
+  const [tx, setTx] = useState<ContractReceipt>();
 
   const handleBuyCro = () => {
     const url = new URL(config.vendors.transak.url);
@@ -175,7 +175,7 @@ export default function PurchaseDialog({ onClose, isOpen, listingId}: PurchaseDi
                       {isGaslessListing(listingId) && (
                         <Flex justify="space-between" fontSize="sm" mt={1}>
                           <Text className="text-muted">Service Fee</Text>
-                          <Text>
+                          <Text className="text-muted">
                             {fee} %
                           </Text>
                         </Flex>
