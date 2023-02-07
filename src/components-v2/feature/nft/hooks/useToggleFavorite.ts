@@ -4,9 +4,16 @@ import { getAuthSignerInStorage } from '@src/helpers/storage';
 import { setOwner } from "@src/core/api/next/collectioninfo";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 import {addFavorite, removeFavorite} from "@src/core/cms/next/favorites";
+import {ContractReceipt} from "ethers";
+
+type ResponseProps = {
+  isLoading: boolean;
+  error?: any;
+  response?: any;
+};
 
 export const useToggleFavorite = () => {
-  const [response, setResponse] = useState({
+  const [response, setResponse] = useState<ResponseProps>({
     isLoading: false,
     response: null,
     error: null
@@ -14,7 +21,7 @@ export const useToggleFavorite = () => {
 
   const [isLoading, getSigner] = useCreateSigner();
 
-  const toggleFavorite = useCallback(async (address, collectionAddress, tokenId, shouldAdd = true) => {
+  const toggleFavorite = useCallback(async (address: string, collectionAddress: string, tokenId: string, shouldAdd: boolean = true) => {
     setResponse({
       ...response,
       isLoading: true,
@@ -36,7 +43,7 @@ export const useToggleFavorite = () => {
           isLoading: false,
           response: payload,
         });
-      } catch (e) {
+      } catch (e: any) {
         setResponse({
           isLoading: false,
           response: null,
@@ -51,9 +58,9 @@ export const useToggleFavorite = () => {
       });
     }
 
-  }, [toggleFavorite, response, getSigner]);
+  }, [response, getSigner]);
 
-  return [response, toggleFavorite];
+  return [response, toggleFavorite] as const;
 };
 
 export default useToggleFavorite;

@@ -45,13 +45,13 @@ import { collectionRoyaltyPercent } from "@src/core/chain";
 import Button, { LegacyOutlinedButton } from "@src/Components/components/common/Button";
 import {Box, ButtonGroup, Flex, Heading, Link, MenuButton as MenuButtonCK, Text, useClipboard} from "@chakra-ui/react";
 import { toast } from "react-toastify";
-import useToggleFavorite from "@src/Components/NftDetails/hooks/useToggleFavorite";
 import { faHeart as faHeartOutline } from "@fortawesome/free-regular-svg-icons";
 import { Menu } from '../components/chakra-components';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faSquareTwitter, faTelegram } from '@fortawesome/free-brands-svg-icons';
 import { getStats } from '@src/GlobalState/collectionSlice';
 import NextLink from 'next/link';
+import useToggleFavorite from "@src/components-v2/feature/nft/hooks/useToggleFavorite";
 
 const config = appConfig();
 const tabs = {

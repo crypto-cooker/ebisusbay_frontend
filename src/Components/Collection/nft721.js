@@ -65,7 +65,6 @@ import axios from "axios";
 import Button, {LegacyOutlinedButton} from "@src/Components/components/common/Button";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {Box, ButtonGroup, Flex, Heading, MenuButton as MenuButtonCK, Stack, Text, useClipboard} from "@chakra-ui/react";
-import useToggleFavorite from "@src/Components/NftDetails/hooks/useToggleFavorite";
 import {toast} from "react-toastify";
 import {Menu} from '../components/chakra-components';
 import {faFacebook, faSquareTwitter, faTelegram} from '@fortawesome/free-brands-svg-icons';
@@ -74,6 +73,7 @@ import {useQuery} from "@tanstack/react-query";
 import {getCollections} from "@src/core/api/next/collectioninfo";
 import {ImageContainer} from "@src/Components/Bundle";
 import {getTheme} from "@src/Theme/theme";
+import useToggleFavorite from "@src/components-v2/feature/nft/hooks/useToggleFavorite";
 
 const config = appConfig();
 const tabs = {
