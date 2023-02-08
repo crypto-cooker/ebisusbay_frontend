@@ -53,11 +53,46 @@
 .maparea{
   pointer-events: auto !important;
 }
+.pinImg{
+  pointer-events: none !important;
+}
 .mapDiv{
   z-index: -1;
 }
 .content img { pointer-events: all !important; }
 
+.image{
+  pointer-events: none;
+  position: relative;
+  object-fit: cover;
+}
+// .container {
+//   position: relative;
+//   background: #2F5596;
+// }
+
+// .container::before {
+//   position: absolute;
+//   display: block;
+//   transform: translateX(-50%);
+//   left: 50%;
+//   width: 50%;
+//   height: 100%;
+//   background: rgba(0, 0, 0, 0.5);
+//   content: '';
+// }
+.mapBorder{
+  border-color: rgb(204, 204, 204);
+    /* border-radius: 4px; */
+    /* border-style: solid; */
+    /* border-width: 4px; */
+    /* width: 1280px; */
+    /* max-width: 100%; */
+    margin: 0 auto;
+    /* background-color: #045aaa; */
+    background-repeat: repeat;
+    background-image: url("/img/battle-bay/ocean-3.png");
+}
 .tip_modal {
   position: absolute;
   background-color: white;
@@ -105,3 +140,42 @@
     color: black;
   }
 }
+// pins on battleMap
+.factionIcon {
+  position: relative;
+  top: -30px;
+  left: -5px;
+  z-index: 99;
+}
+// #pin-Dragonland {
+//   top: 20%;
+//   left: 20%;
+// }
+// #pin-Human-Kingdoms {
+//   top: 52%;
+//   left: 57%;
+// }
+// #pin-Dwarf-Mines{
+//   top: 50%;
+//   left: 45%;
+// }
+// #pin-Southern-Trident{
+//   top: 60%;
+//   left: 20%;
+// }
+.box:hover>.pinText {
+  display: block;
+}
+.pinText {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 75%;
+  white-space: nowrap;
+  display: none;
+}
+.pinText h3 {
+  color: rgb(255, 255, 255);
+  text-shadow: 3px 3px 3px #000;
+}
+

@@ -8,7 +8,7 @@ import Bank from "@src/Components/BattleBay/Areas/Bank";
 import AllianceCenter from "@src/Components/BattleBay/Areas/AllianceCenter";
 import AnnouncementBoard from "@src/Components/BattleBay/Areas/AnnouncementBoard";
 import DefaultArea from "@src/Components/BattleBay/Areas/DefaultArea";
-import SimpleBattleMap from "@src/Components/BattleBay/Areas/SimpleBattleMap";
+// import "src/Components/BattleBay/Areas/BattleBay.module.scss";
 
 const BattleBay = () => {
   const [currentPage, setCurrentPage] = useState();
@@ -45,10 +45,12 @@ const BattleBay = () => {
         <AnnouncementBoard onBack={returnToPreviousPage} />
       ): (
         <DefaultArea onChange={navigate} />
+        // <BattleMap onChange={navigate} />
       )}
       <Footer />
     </>
   )
 }
+
 
 export default BattleBay;
