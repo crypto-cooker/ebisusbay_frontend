@@ -17545,6 +17545,29 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "MINI-SAUR",
+      "slug": "mini-saur",
+      "multiToken": false,
+      "address": "0x547a101975925795ac935489117a5c174357367a",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "My idea is to create a small artistic NFT project with the aim of guaranteeing a long-term passive income for buyers. Earnings are given by mint reflection, royalties and receive part of the funds of upcoming projects. But not only that, I would also like to have a united community that supports each other with respect, free to ask for help for anything and to be able to talk about other projects as well",
+        "avatar": "/img/collections/mini-saur/avatar.webp",
+        "card": "/img/collections/mini-saur/card.webp",
+        "banner": "/img/collections/mini-saur/banner.webp",
+        "website": "https://mini-saur.netlify.app/",
+        "twitter": "https://twitter.com/saur_mini",
+        "discord": "https://discord.gg/Y5KkxANNm9",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
     }
   ],
   "drops": [
