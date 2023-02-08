@@ -2,12 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {specialImageTransform} from "@src/hacks";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
 import {Spinner} from "react-bootstrap";
-import {useSelector} from "react-redux";
-import {Contract, ethers} from "ethers";
+import {Contract, ContractReceipt, ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {isBundle, round} from "@src/utils";
+import {isBundle, isGaslessListing, round} from "@src/utils";
 import {getTheme} from "@src/Theme/theme";
 import {
   Box,
@@ -34,21 +33,28 @@ import DotIcon from "@src/Components/components/DotIcon";
 import {faCheck} from "@fortawesome/free-solid-svg-icons";
 import {appConfig} from "@src/Config";
 import Market from "@src/Contracts/Marketplace.json";
-import PurchaseSuccessDialog from "@src/Components/NftDetails/PurchaseSuccessDialog";
+import {useAppSelector} from "@src/Store/hooks";
+import PurchaseSuccessDialog from './purchase-success';
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 const readMarket = new Contract(config.contracts.market, Market.abi, readProvider);
 
-export default function PurchaseDialog({ onClose, isOpen, listingId}) {
+type PurchaseConfirmationDialogProps = {
+  onClose: () => void;
+  isOpen: boolean;
+  listingId: string;
+};
+
+export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}: PurchaseConfirmationDialogProps) {
   const [fee, setFee] = useState(0);
   const [executingPurchase, setExecutingPurchase] = useState(false);
   const [buyGaslessListings, response] = useBuyGaslessListings();
 
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
 
   const [isComplete, setIsComplete] = useState(false);
-  const [tx, setTx] = useState();
+  const [tx, setTx] = useState<ContractReceipt>();
 
   const handleBuyCro = () => {
     const url = new URL(config.vendors.transak.url);
@@ -60,11 +66,15 @@ export default function PurchaseDialog({ onClose, isOpen, listingId}) {
   }
 
   const getYouReceiveViewValue = () => {
-    const youReceive = parseInt(listing.price) + (listing.price * (fee / 100));
-    try {
-      return ethers.utils.commify(youReceive.toFixed(2));
-    } catch (e) {
-      return youReceive
+    if (isGaslessListing(listingId)) {
+      const youReceive = parseInt(listing.price) + (listing.price * (fee / 100));
+      try {
+        return ethers.utils.commify(youReceive.toFixed(2));
+      } catch (e) {
+        return youReceive
+      }
+    } else {
+      return parseInt(listing.price);
     }
   };
 
@@ -92,7 +102,7 @@ export default function PurchaseDialog({ onClose, isOpen, listingId}) {
       setExecutingPurchase(true);
       await buyGaslessListings([listing.listingId], parseInt(listing.price));
       setIsComplete(true);
-    } catch (error) {
+    } catch (error: any) {
       if (error.data) {
         toast.error(error.data.message);
       } else if (error.message) {
@@ -106,7 +116,7 @@ export default function PurchaseDialog({ onClose, isOpen, listingId}) {
   };
 
   useEffect(() => {
-    if (response) {
+    if (response?.tx) {
       setTx(response.tx);
     }
   }, [response]);
@@ -120,7 +130,7 @@ export default function PurchaseDialog({ onClose, isOpen, listingId}) {
         <ModalHeader className="text-center">
           Buy {listing?.nft?.name}
         </ModalHeader>
-        <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
+        <ModalCloseButton color={getTheme(user.theme)!.colors.textColor4} />
         {status === "loading" ? (
           <EmptyData>
             <Spinner animation="border" role="status" size="sm" className="ms-1">
@@ -130,7 +140,7 @@ export default function PurchaseDialog({ onClose, isOpen, listingId}) {
         ) : status === "error" ? (
           <VStack spacing={0} mb={2}>
             <Text>Unable to load listing information</Text>
-            <Text fontSize="xs">Error: {error.message}</Text>
+            <Text fontSize="xs">Error: {error?.toString()}</Text>
           </VStack>
         ) : (
           <>
@@ -162,12 +172,14 @@ export default function PurchaseDialog({ onClose, isOpen, listingId}) {
                           </Text>
                         </Flex>
                       </Flex>
-                      <Flex justify="space-between" fontSize="sm" mt={1}>
-                        <Text className="text-muted">Service Fee</Text>
-                        <Text>
-                          {fee} %
-                        </Text>
-                      </Flex>
+                      {isGaslessListing(listingId) && (
+                        <Flex justify="space-between" fontSize="sm" mt={1}>
+                          <Text className="text-muted">Service Fee</Text>
+                          <Text className="text-muted">
+                            {fee} %
+                          </Text>
+                        </Flex>
+                      )}
                     </div>
                     <Text fontSize={18} fontWeight="bold">Pay with</Text>
                     <SimpleGrid columns={{base: 1, sm: 2}}>
@@ -195,12 +207,12 @@ export default function PurchaseDialog({ onClose, isOpen, listingId}) {
                         </Flex>
                       </Box>
                     </Flex>
-                    <Box align="end" fontSize="sm">
+                    <Box textAlign="end" fontSize="sm">
                       Low on CRO?&nbsp;
                       <ChakraButton
                         size="sm"
                         variant="link"
-                        color={getTheme(user.theme).colors.textColor4}
+                        color={getTheme(user.theme)!.colors.textColor4}
                         onClick={handleBuyCro}
                       >
                         Buy CRO

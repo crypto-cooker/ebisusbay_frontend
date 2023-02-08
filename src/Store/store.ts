@@ -43,6 +43,7 @@ const rootReducer = combineReducers({
 const reduxDevToolsComposeEnhancers =
   (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
+// @ts-ignore
 const sentryEnhancedMiddlewares = applyMiddleware(thunk, createSentryMiddleware(Sentry, {}));
 
 const enableDevTools = process.env.NODE_ENV !== 'production' || process.env.REACT_APP_DEVTOOLS === 'true';
@@ -52,5 +53,11 @@ const reduxDevToolsEnhancedMiddlewares = enableDevTools
   : sentryEnhancedMiddlewares;
 
 const store = createStore(rootReducer, reduxDevToolsEnhancedMiddlewares);
+
+
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch
 
 export default store;

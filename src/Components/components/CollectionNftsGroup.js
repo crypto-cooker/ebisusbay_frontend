@@ -2,9 +2,9 @@ import React, { memo, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Spinner } from 'react-bootstrap';
 
-import NftCard from './NftCard';
 import {isBundle, isNftBlacklisted} from "../../utils";
 import NftBundleCard from "@src/Components/components/NftBundleCard";
+import {NftCard} from "@src/components-v2/shared/nft-card";
 
 const CollectionNftsGroup = ({
   showLoadMore = true,

@@ -25,7 +25,7 @@ import Constants from "@src/constants";
 import useCancelGaslessListing from '@src/Components/Account/Settings/hooks/useCancelGaslessListing';
 
 import {Flex, Heading, Table, TableContainer, Tbody, Td, Text, Tr, useDisclosure,} from '@chakra-ui/react';
-import PurchaseDialog from "@src/Components/NftDetails/PurchaseDialog";
+import PurchaseConfirmationDialog from "@src/components-v2/shared/dialogs/purchase-confirmation";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
 
 const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isVerified, isOwner, collectionStats }) => {
@@ -282,7 +282,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
         />
       )}
       {isPurchaseDialogOpen && listing && (
-        <PurchaseDialog
+        <PurchaseConfirmationDialog
           isOpen={isPurchaseDialogOpen}
           onClose={() => setIsPurchaseDialogOpen(false)}
           listingId={listing.listingId}

@@ -5,7 +5,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { Spinner } from "react-bootstrap";
 import MyNftCard from "@src/Components/components/MyNftCard";
 import {caseInsensitiveCompare, findCollectionByAddress, isBundle, isNftBlacklisted} from "@src/utils";
-import NftCard from "@src/Components/components/NftCard";
 import NftBundleCard from "@src/Components/components/NftBundleCard";
 import { MyNftPageActions } from "@src/GlobalState/User";
 import MyNftCancelDialog from "@src/Components/components/MyNftCancelDialog";
@@ -36,6 +35,7 @@ import {
   WrapItem
 } from "@chakra-ui/react";
 import MyBundleCard from './Inventory/components/MyBundleCard';
+import {NftCard} from "@src/components-v2/shared/nft-card";
 
 export default function Inventory({ address }) {
   const dispatch = useDispatch();
