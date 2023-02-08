@@ -112,6 +112,7 @@
   },
   "devDependencies": {
     "@types/redux-sentry-middleware": "^0.2.2",
+    "@types/styled-components": "^5.1.26",
     "babel-plugin-styled-components": "^2.0.7",
     "eslint": "^8.15.0",
     "husky": "^7.0.4",

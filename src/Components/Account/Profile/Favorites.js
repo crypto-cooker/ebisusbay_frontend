@@ -2,9 +2,9 @@ import {getUserFavorites} from "@src/core/cms/next/favorites";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {Spinner} from "react-bootstrap";
-import NftCard from "@src/Components/components/NftCard";
 import {useQuery} from "@tanstack/react-query";
 import {isNftBlacklisted} from "@src/utils";
+import {NftCard} from "@src/components-v2/shared/nft-card";
 
 export default function Favorites({ address }) {
 
