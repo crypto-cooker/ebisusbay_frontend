@@ -20,7 +20,7 @@ import { createSuccessfulTransactionToastContent, isFounderDrop, newlineText } f
 import { dropState as statuses } from '../../core/api/enums';
 import { EbisuDropAbi } from '../../Contracts/Abis';
 
-import styles from '../Collection/collectionCronosverse/CollectionCronosverse.module.scss';
+import styles from '../Collection/Custom/Cronosverse/CollectionCronosverse.module.scss';
 import {appConfig} from "../../Config";
 
 const tiles = [
@@ -311,7 +311,7 @@ const CronosverseDrop = () => {
       <>
         <HeroSection
           className={`jumbotron h-vh tint`}
-          style={{ backgroundImage: `url(${drop.imgBanner ? drop.imgBanner : '/img/background/Ebisus-bg-1_L.webp'})` }}
+          style={{ backgroundImage: `url(${drop.images.banner ? drop.images.banner : '/img/background/Ebisus-bg-1_L.webp'})` }}
         >
           <div className="container">
             <div className="row align-items-center">
@@ -388,13 +388,13 @@ const CronosverseDrop = () => {
           </div>
         </HeroSection>
 
-        <section className="container no-bottom" id="drop_detail">
+        <section className="gl-legacy container no-bottom" id="drop_detail">
           <div className="row">
             <div className="col-md-12">
               <div className="d_profile de-flex">
                 <div className="de-flex-col">
                   <div className="profile_avatar">
-                    {drop.imgAvatar && <img src={drop.imgAvatar} alt={drop.author.name} />}
+                    {drop.images.avatar && <img src={drop.images.avatar} alt={drop.author.name} />}
                     <div className="profile_name">
                       <h4>
                         {drop.author.name}
@@ -413,7 +413,7 @@ const CronosverseDrop = () => {
             </div>
           </div>
         </section>
-        <section className="container no-top">
+        <section className="gl-legacy container no-top">
           <div className="row">
             <div className="item_info">
               <h2>{drop.title}</h2>

@@ -1,3 +1,6 @@
+import {extendTheme} from "@chakra-ui/react";
+import { mode } from '@chakra-ui/theme-tools';
+
 export const lightTheme = {
   textColor1: '#FFFFFF',
   textColor2: '#595d69',
@@ -7,7 +10,7 @@ export const lightTheme = {
   textColor6: '#750b1c',
   borderColor1: '#EB7D07',
   borderColor2: '#707070',
-  borderColor3: '#0078CB',
+  borderColor3: '#218cff',
   borderColor4: '#727272',
   borderColor5: '#8D8D8D',
   borderColor6: '#AA4A44',
@@ -15,6 +18,7 @@ export const lightTheme = {
   bgColor2: '#ffffffdd',
   bgColor3: '#eeeeee',
   bgColor4: '#0078cb',
+  bgColor5: '#eeeeee',
 };
 
 export const darkTheme = {
@@ -26,7 +30,7 @@ export const darkTheme = {
   textColor6: '#c93152',
   borderColor1: '#EB7D07',
   borderColor2: '#707070',
-  borderColor3: '#0078CB',
+  borderColor3: '#218cff',
   borderColor4: '#727272',
   borderColor5: '#8D8D8D',
   borderColor6: '#AA4A44',
@@ -34,6 +38,7 @@ export const darkTheme = {
   bgColor2: '#212428dd',
   bgColor3: '#212428',
   bgColor4: '#000000',
+  bgColor5: '#333333',
 };
 
 export const theme = {
@@ -56,8 +61,46 @@ export const theme = {
 
 export const getTheme = (mode) => {
   if (mode === 'light') {
-    return theme;
+    return { ...theme, colors: lightTheme };
   } else if (mode === 'dark') {
     return { ...theme, colors: darkTheme };
   }
 };
+
+const grayColor = {
+  // 100: '#ff0000',
+  // 200: '#00ff00',
+  // 300: '#0000ff',
+  // 400: '#ffff00',
+  // 500: '#ff00ff',
+  // 600: '#00ffff',
+  700: '#212428',
+  // 800: '#000000',
+  // 900: '#888888',
+}
+
+const customTheme = extendTheme({
+  config: {
+    initialColorMode: 'dark',
+    useSystemColorMode: false,
+  },
+  fonts: {
+    heading: 'DM Sans, Helvetica, Arial, sans-serif',
+    body: `DM Sans, Helvetica, Arial, sans-serif`,
+  },
+  colors: {
+    gray: grayColor
+  },
+  components: {
+    Switch: {
+      baseStyle: {
+        track: {
+          _checked: {
+            background: mode(lightTheme.textColor4, darkTheme.textColor4)
+          },
+        },
+      },
+    }
+  }
+})
+export default customTheme

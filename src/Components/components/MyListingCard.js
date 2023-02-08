@@ -6,6 +6,9 @@ import { toast } from 'react-toastify';
 import { ethers } from 'ethers';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import {appConfig} from "../../Config";
+import Image from "next/image";
+import {appUrl} from "@src/utils";
+import {useClipboard} from "@chakra-ui/react";
 
 
 const MyListingCard = ({
@@ -15,14 +18,12 @@ const MyListingCard = ({
   onCancelButtonPressed,
   onUpdateButtonPressed,
 }) => {
-
-  const nftUrl = () => {
-    return `/collection/${nft.address}/${nft.id}`;
-  };
+  const nftUrl = appUrl(`/collection/${nft.address}/${nft.id}`);
+  const { onCopy } = useClipboard(nftUrl);
 
   const onCopyLinkButtonPressed = (url) => () => {
-    navigator.clipboard.writeText(url);
-    toast.success('Copied!');
+    onCopy();
+    toast.success('Link copied!');
   };
 
   return (
@@ -38,8 +39,13 @@ const MyListingCard = ({
               <p className="card-text">
                 Listing ID: {nft.listingId}
                 <br />
-                Price: {ethers.utils.commify(nft.price)} CRO
-                <br />
+                <div className="d-flex">
+                  <span className="me-1">Price:</span>
+                  <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+                  <span className="ms-1">
+                    {ethers.utils.commify(nft.price)}
+                  </span>
+                </div>
                 {nft.rank && (
                   <>
                     Rank: {nft.rank} <br />
@@ -87,7 +93,7 @@ const MyListingCard = ({
           )}
           <button
             className="btn-main mx-1 mt-2"
-            onClick={onCopyLinkButtonPressed(new URL(nftUrl(), appConfig('urls.app')))}
+            onClick={onCopyLinkButtonPressed(new URL(nftUrl, appConfig('urls.app')))}
             style={{ cursor: 'pointer', color: 'black' }}
           >
             <FontAwesomeIcon icon={faLink} />

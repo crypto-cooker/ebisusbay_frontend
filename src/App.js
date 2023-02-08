@@ -6,13 +6,15 @@ import { toast, ToastContainer } from 'react-toastify';
 import { initializeApp } from 'firebase/app';
 import { initializeAnalytics } from 'firebase/analytics';
 
-import ScrollToTopBtn from './Components/menu/ScrollToTop';
-import Header from './Components/menu/header';
+import ScrollToTopBtn from '@src/modules/layout/navbar/ScrollToTop';
+import Header from '@src/modules/layout/navbar/header';
 import firebaseConfig from './Firebase/firebase_config';
 import { initProvider } from './GlobalState/User';
 import { appInitializer } from './GlobalState/InitSlice';
 import { getTheme } from './Theme/theme';
 import {DefaultHead} from "./Components/Head/DefaultHead";
+import {useColorMode} from "@chakra-ui/react";
+import {syncCartStorage} from "@src/GlobalState/cartSlice";
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -42,6 +44,7 @@ const GlobalStyles = createGlobalStyle`
 
 function App({ Component, pageProps }) {
   const dispatch = useDispatch();
+  const { colorMode } = useColorMode()
 
   const userTheme = useSelector((state) => {
     return state.user.theme;
@@ -70,15 +73,25 @@ function App({ Component, pageProps }) {
     }
   }, []);
 
+  useEffect(() => {
+    dispatch(syncCartStorage());
+  }, []);
+
   return (
     <ThemeProvider theme={getTheme(userTheme)}>
       <DefaultHead />
       <div className="wraper">
         <GlobalStyles isDark={userTheme === 'dark'} />
         <Header />
-        <Component {...pageProps} />
+        <div style={{paddingTop:'74px'}}>
+          <Component {...pageProps} />
+        </div>
         <ScrollToTopBtn />
-        <ToastContainer position={toast.POSITION.BOTTOM_LEFT} hideProgressBar={true} />
+        <ToastContainer
+          position={toast.POSITION.BOTTOM_LEFT}
+          hideProgressBar={true}
+          theme={colorMode}
+        />
       </div>
     </ThemeProvider>
   );

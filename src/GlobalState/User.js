@@ -1,10 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Contract, ethers, BigNumber } from 'ethers';
-import Membership from '../Contracts/EbisusBayMembership.json';
-import StakeABI from '../Contracts/Stake.json';
-import Market from '../Contracts/Marketplace.json';
-import Auction from '../Contracts/DegenAuction.json';
-import Offer from '../Contracts/Offer.json';
+import { ethers, BigNumber } from 'ethers';
 import Web3Modal from 'web3modal';
 
 import detectEthereumProvider from '@metamask/detect-provider';
@@ -14,7 +9,6 @@ import * as DefiWalletConnectProvider from '@deficonnect/web3-provider';
 import {
   getNftRankings,
   getNftSalesForAddress,
-  getNftsForAddress,
   getNftsForAddress2,
   getUnfilteredListingsForAddress,
 } from '../core/api';
@@ -26,16 +20,15 @@ import {
   isUserBlacklisted,
   sliceIntoChunks,
 } from '../utils';
-import { nanoid } from 'nanoid';
 import { appAuthInitFinished } from './InitSlice';
 import { captureException } from '@sentry/react';
 import { setThemeInStorage } from '../helpers/storage';
 import { getAllOffers } from '../core/subgraph';
 import { offerState } from '../core/api/enums';
-import { txExtras } from '../core/constants';
 import { appConfig } from '../Config';
 import { MarketFilterCollection } from '../Components/Models/market-filters.model';
 import {getProfile} from "@src/core/cms/endpoints/profile";
+import UserContractService from "@src/core/contractService";
 
 const config = appConfig();
 
@@ -48,34 +41,33 @@ const userSlice = createSlice({
     web3modal: null,
     connectingWallet: false,
     gettingContractData: true,
-    code: '',
+    // code: '',
     isMember: false,
-    founderCount: 0,
-    vipCount: 0,
-    stakeCount: 0,
+    // founderCount: 0,
+    // vipCount: 0,
+    // stakeCount: 0,
     needsOnboard: false,
     isStaking: false,
+    fee: 3,
 
     // Signatures
     authSignature: null,
 
     // Contracts
-    membershipContract: null,
-    marketContract: null,
-    stakeContract: null,
-    auctionContract: null,
-    offerContract: null,
+    contractService: null,
 
     correctChain: false,
     showWrongChainModal: false,
 
     // Primary Balances
     balance: null,
-    rewards: null,
+    // rewards: null,
     marketBalance: null,
     withdrawingMarketBalance: false,
     stakingRewards: null,
     harvestingStakingRewards: false,
+    usesEscrow: false,
+    updatingEscrowStatus: false,
 
     // My NFTs
     fetchingNfts: false,
@@ -112,21 +104,17 @@ const userSlice = createSlice({
   },
   reducers: {
     accountChanged(state, action) {
-      state.membershipContract = action.payload.membershipContract;
-      state.stakeContract = action.payload.stakeContract;
-
       state.balance = action.payload.balance;
-      state.code = action.payload.code;
-      state.rewards = action.payload.rewards;
+      // state.code = action.payload.code;
+      // state.rewards = action.payload.rewards;
       state.isMember = action.payload.isMember;
-      state.vipCount = action.payload.vipCount;
-      state.stakeCount = action.payload.stakeCount;
-      state.marketContract = action.payload.marketContract;
+      // state.vipCount = action.payload.vipCount;
+      // state.stakeCount = action.payload.stakeCount;
       state.marketBalance = action.payload.marketBalance;
       state.stakingRewards = action.payload.stakingRewards;
-      state.auctionContract = action.payload.auctionContract;
-      state.offerContract = action.payload.offerContract;
       state.gettingContractData = false;
+      state.fee = action.payload.fee;
+      state.usesEscrow = action.payload.usesEscrow;
     },
 
     setAuthSigner(state, action) {
@@ -140,7 +128,6 @@ const userSlice = createSlice({
     onProvider(state, action) {
       state.provider = action.payload.provider;
       state.needsOnboard = action.payload.needsOnboard;
-      state.membershipContract = action.payload.membershipContract;
       state.correctChain = action.payload.correctChain;
     },
 
@@ -150,6 +137,10 @@ const userSlice = createSlice({
       state.web3modal = action.payload.web3modal;
       state.correctChain = action.payload.correctChain;
       state.needsOnboard = action.payload.needsOnboard;
+    },
+
+    onContractServiceInitialized(state, action) {
+      state.contractService = action.payload;
     },
 
     fetchingNfts(state, action) {
@@ -253,12 +244,12 @@ const userSlice = createSlice({
     connectingWallet(state, action) {
       state.connectingWallet = action.payload.connecting;
     },
-    registeredCode(state, action) {
-      state.code = action.payload;
-    },
-    withdrewRewards(state) {
-      state.rewards = 0;
-    },
+    // registeredCode(state, action) {
+    //   state.code = action.payload;
+    // },
+    // withdrewRewards(state) {
+    //   state.rewards = 0;
+    // },
     withdrawingMarketBalance(state) {
       state.withdrawingMarketBalance = true;
     },
@@ -276,6 +267,13 @@ const userSlice = createSlice({
       if (action.payload.success) {
         state.stakingRewards = 0;
       }
+    },
+    updatingEscrowStatus(state) {
+      state.updatingEscrowStatus = true;
+    },
+    updatedEscrowStatus(state, action) {
+      state.updatingEscrowStatus = false;
+      if (action.payload !== undefined) state.usesEscrow = action.payload;
     },
     transferedNFT(state, action) {
       const indexesToRemove = state.nfts
@@ -312,12 +310,12 @@ const userSlice = createSlice({
       state.address = '';
       state.provider = null;
       state.balance = null;
-      state.rewards = null;
+      // state.rewards = null;
       state.marketBalance = null;
       state.stakingRewards = null;
       state.isMember = false;
-      state.vipCount = 0;
-      state.stakeCount = 0;
+      // state.vipCount = 0;
+      // state.stakeCount = 0;
       state.fetchingNfts = false;
       state.nftsFullyFetched = false;
       state.nftsInitialized = false;
@@ -328,6 +326,8 @@ const userSlice = createSlice({
       state.myUnfilteredListings = [];
       state.profile = {};
       state.authSignature = null;
+      state.contractService = null;
+      state.fee = 3;
     },
     onThemeChanged(state, action) {
       state.theme = action.payload;
@@ -343,12 +343,12 @@ const userSlice = createSlice({
         state.stakingRewards = action.payload.stakingRewards;
       }
     },
-    setVIPCount(state, action) {
-      state.vipCount = action.payload;
-    },
-    setStakeCount(state, action) {
-      state.stakeCount = action.payload;
-    },
+    // setVIPCount(state, action) {
+    //   state.vipCount = action.payload;
+    // },
+    // setStakeCount(state, action) {
+    //   state.stakeCount = action.payload;
+    // },
     onOutstandingOffersFound(state, action) {
       state.hasOutstandingOffers = action.payload;
     },
@@ -367,6 +367,7 @@ export const {
   onNftLoading,
   onNftsAdded,
   onNftsReplace,
+  onContractServiceInitialized,
   nftsFetched,
   nftsFullyFetched,
   onNftLoaded,
@@ -380,12 +381,14 @@ export const {
   clearMySales,
   connectingWallet,
   onCorrectChain,
-  registeredCode,
-  withdrewRewards,
+  // registeredCode,
+  // withdrewRewards,
   withdrawingMarketBalance,
   withdrewMarketBalance,
   harvestingStakingRewards,
   harvestedStakingRewards,
+  updatingEscrowStatus,
+  updatedEscrowStatus,
   listingUpdate,
   transferedNFT,
   setIsMember,
@@ -395,8 +398,8 @@ export const {
   elonContract,
   onThemeChanged,
   balanceUpdated,
-  setVIPCount,
-  setStakeCount,
+  // setVIPCount,
+  // setStakeCount,
   onOutstandingOffersFound,
   setProfile,
 } = userSlice.actions;
@@ -550,40 +553,28 @@ export const connectAccount =
         window.location.reload();
       });
 
-      let mc;
-      let cc;
-      let sc;
-      let code;
       let balance;
-      let rewards;
-      let ownedFounder = 0;
-      let ownedVip = 0;
-      let market;
-      let auction;
-      let offer;
       let sales;
-      let stakeCount = 0;
       let stakingRewards = 0;
+      let isMember = false;
+      let fee;
+      let usesEscrow = false;
 
       dispatch(retrieveProfile());
 
       if (signer && correctChain) {
-        mc = new Contract(config.contracts.membership, Membership.abi, signer);
-        sc = new Contract(config.contracts.stake, StakeABI.abi, signer);
-        const rawCode = await mc.codes(address);
-        code = ethers.utils.parseBytes32String(rawCode);
-        rewards = ethers.utils.formatEther(await mc.payments(address));
-        ownedFounder = await mc.balanceOf(address, 1);
-        ownedVip = await mc.balanceOf(address, 2);
-        stakeCount = await sc.amountStaked(address);
-        market = new Contract(config.contracts.market, Market.abi, signer);
-        auction = new Contract(config.contracts.madAuction, Auction.abi, signer);
-        offer = new Contract(config.contracts.offer, Offer.abi, signer);
-        sales = ethers.utils.formatEther(await market.payments(address));
-        stakingRewards = ethers.utils.formatEther(await sc.getReward(address));
+        const contractService = new UserContractService(signer);
+        dispatch(onContractServiceInitialized(contractService));
+        sales = ethers.utils.formatEther(await contractService.market.payments(address));
+        stakingRewards = ethers.utils.formatEther(await contractService.staking.getReward(address));
+        isMember = await contractService.market.isMember(address);
+        usesEscrow = await contractService.market.useEscrow(address);
 
         try {
           balance = ethers.utils.formatEther(await provider.getBalance(address));
+
+          fee = await contractService.market.fee(address);
+          fee = (fee / 10000) * 100;
         } catch (error) {
           console.log('Error checking CRO balance', error);
         }
@@ -595,19 +586,12 @@ export const connectAccount =
           web3modal: web3Modal,
           needsOnboard: false,
           correctChain: correctChain,
-          membershipContract: mc,
-          stakeContract: sc,
-          code: code,
           balance: balance,
-          rewards: rewards,
-          isMember: ownedVip > 0 || ownedFounder > 0 || stakeCount > 0,
-          vipCount: ownedVip ? ownedVip.toNumber() : ownedVip,
-          stakeCount: stakeCount ? stakeCount.toNumber() : stakeCount,
-          marketContract: market,
-          auctionContract: auction,
-          offerContract: offer,
+          isMember,
           marketBalance: sales,
           stakingRewards: stakingRewards,
+          fee,
+          usesEscrow
         })
       );
     } catch (error) {
@@ -724,126 +708,6 @@ export const chainConnect = (type) => async (dispatch) => {
   }
 };
 
-export const fetchNfts =
-  (page, persist = false, collectionAddress = null) =>
-  async (dispatch, getState) => {
-    const state = getState();
-
-    const walletAddress = state.user.address;
-    const walletProvider = state.user.provider;
-    
-    const values = collectionAddress?.split('-') ?? '';
-    if (values.length > 1) {
-      collectionAddress = values[0];
-    }
-
-    dispatch(fetchingNfts({ persist }));
-    const response = await getNftsForAddress2(walletAddress, walletProvider, page, collectionAddress);
-    if (response.length > 0) {
-      if (response[0] === 0) {
-        dispatch(onNftsAdded([0]));
-        dispatch(nftsFetched());
-      } else {
-        dispatch(onNftsAdded(response));
-        dispatch(nftsFetched());
-      }
-    } else {
-      dispatch(nftsFullyFetched());
-    }
-  };
-
-export const fetchChainNfts = (abortSignal) => async (dispatch, getState) => {
-  const state = getState();
-
-  const walletAddress = state.user.address;
-  const walletProvider = state.user.provider;
-
-  dispatch(fetchingNfts());
-  try {
-    const response = await getNftsForAddress(
-      walletAddress,
-      walletProvider,
-      (nfts) => {
-        dispatch(onNftsAdded(nfts));
-      },
-      abortSignal
-    );
-    if (abortSignal.aborted) return;
-    dispatch(setIsMember(response.isMember));
-    await addRanksToNfts(dispatch, getState);
-    dispatch(nftsFetched());
-  } catch (err) {
-    if (err.name === 'AbortError') {
-      console.log('aborting previous request');
-    }
-  }
-};
-
-const addRanksToNfts = async (dispatch, getState) => {
-  let cSortedNfts = [];
-  let currentStateNfts = getState().user.nfts.slice();
-  for (let i in currentStateNfts) {
-    if (!cSortedNfts[currentStateNfts[i].address]) {
-      cSortedNfts[currentStateNfts[i].address] = [];
-    }
-    cSortedNfts[currentStateNfts[i].address].push({
-      key: i,
-      nft: currentStateNfts[i],
-    });
-  }
-
-  for (let collectionId in cSortedNfts) {
-    const collectionNfts = cSortedNfts[collectionId];
-    const chunks = sliceIntoChunks(collectionNfts, 10);
-    for (let i in chunks) {
-      let cStateNfts = getState().user.nfts.slice();
-      try {
-        const rankedNfts = await getNftRankings(
-          chunks[i][0].nft.address,
-          chunks[i].map((a) => a.nft.id)
-        );
-        for (let j in rankedNfts) {
-          const nft = rankedNfts[j];
-          const key = chunks[i].find((a) => ethers.BigNumber.from(a.nft.id).eq(nft.id))?.key;
-          if (!key) {
-            continue;
-          }
-          if (nft.rank) {
-            cStateNfts[key] = Object.assign({ rank: nft.rank }, cStateNfts[key]);
-          } else {
-            cStateNfts[key] = Object.assign({ rank: 'N/A' }, cStateNfts[key]);
-          }
-        }
-        dispatch(onNftsReplace(cStateNfts));
-      } catch (error) {
-        console.log('error while retrieving chunk for rankings', error);
-      }
-    }
-  }
-};
-
-export const fetchSales = (walletAddress) => async (dispatch, getState) => {
-  const state = getState();
-  dispatch(mySoldNftsFetching());
-
-  const listings = await getNftSalesForAddress(walletAddress, state.user.mySoldNftsCurPage + 1);
-  dispatch(mySalesFetched(listings));
-};
-
-export const fetchUnfilteredListings = (walletAddress) => async (dispatch, getState) => {
-  const state = getState();
-  const walletProvider = state.user.provider;
-
-  dispatch(myUnfilteredListingsFetching());
-
-  const listings = await getUnfilteredListingsForAddress(
-    walletAddress,
-    walletProvider,
-    state.user.myUnfilteredListingsCurPage + 1
-  );
-  dispatch(myUnfilteredListingsFetched(listings));
-};
-
 export const checkForOutstandingOffers = () => async (dispatch, getState) => {
   const state = getState();
   const collectionsStats = state.collections.collections;
@@ -913,31 +777,31 @@ export const retrieveProfile = () => async (dispatch, getState) => {
 };
 
 export class AccountMenuActions {
-  static withdrawRewards = () => async (dispatch, getState) => {
-    const { user } = getState();
-    try {
-      const tx = await user.membershipContract.withdrawPayments(user.address);
-      const receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      dispatch(withdrewRewards());
-      dispatch(updateBalance());
-    } catch (error) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        console.log(error);
-        toast.error('Unknown Error');
-      }
-    }
-  };
+  // static withdrawRewards = () => async (dispatch, getState) => {
+  //   const { user } = getState();
+  //   try {
+  //     const tx = await user.contractService.membership.withdrawPayments(user.address);
+  //     const receipt = await tx.wait();
+  //     toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+  //     dispatch(withdrewRewards());
+  //     dispatch(updateBalance());
+  //   } catch (error) {
+  //     if (error.data) {
+  //       toast.error(error.data.message);
+  //     } else if (error.message) {
+  //       toast.error(error.message);
+  //     } else {
+  //       console.log(error);
+  //       toast.error('Unknown Error');
+  //     }
+  //   }
+  // };
 
   static withdrawMarketBalance = () => async (dispatch, getState) => {
     const { user } = getState();
     try {
       dispatch(withdrawingMarketBalance());
-      const tx = await user.marketContract.withdrawPayments(user.address);
+      const tx = await user.contractService.market.withdrawPayments(user.address);
       const receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       dispatch(withdrewMarketBalance({ success: true }));
@@ -960,7 +824,7 @@ export class AccountMenuActions {
     const { user } = getState();
     try {
       dispatch(harvestingStakingRewards());
-      const tx = await user.stakeContract.harvest(user.address);
+      const tx = await user.contractService.staking.harvest(user.address);
       const receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       dispatch(harvestedStakingRewards({ success: true }));
@@ -978,16 +842,16 @@ export class AccountMenuActions {
     }
   };
 
-  static registerCode = () => async (dispatch, getState) => {
+  static toggleEscrowOptIn = (optIn) => async (dispatch, getState) => {
     const { user } = getState();
     try {
-      const id = nanoid(10);
-      const encoded = ethers.utils.formatBytes32String(id);
-      const tx = await user.membershipContract.register(encoded);
+      dispatch(updatingEscrowStatus());
+      const tx = await user.contractService.market.setUseEscrow(user.address, optIn);
       const receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      dispatch(registeredCode(id));
+      dispatch(updatedEscrowStatus(optIn));
     } catch (error) {
+      dispatch(updatedEscrowStatus());
       if (error.data) {
         toast.error(error.data.message);
       } else if (error.message) {
@@ -996,6 +860,7 @@ export class AccountMenuActions {
         console.log(error);
         toast.error('Unknown Error');
       }
+    } finally {
     }
   };
 }
@@ -1019,10 +884,6 @@ export class MyNftPageActions {
     dispatch(userSlice.actions.setMyNftPageListDialog({ nft, listing }));
   };
 
-  static setMyNftPageListDialogError = (error) => async (dispatch) => {
-    dispatch(userSlice.actions.setMyNftPageListDialogError(error));
-  };
-
   static hideMyNftPageListDialog = () => async (dispatch) => {
     dispatch(userSlice.actions.setMyNftPageListDialog(null));
   };
@@ -1034,71 +895,6 @@ export class MyNftPageActions {
   static hideNftPageCancelDialog = () => async (dispatch) => {
     dispatch(userSlice.actions.setMyNftPageCancelDialog(null));
   };
-
-  static setMyNftPageListedOnly =
-    (status = false) =>
-    async (dispatch) => {
-      dispatch(userSlice.actions.setMyNftPageListedOnly(status));
-    };
-
-  static setMyNftPageActiveFilterOption = (filterOption) => async (dispatch) => {
-    dispatch(userSlice.actions.setMyNftPageActiveFilterOption(filterOption));
-  };
-
-  static transferDialogConfirm = (selectedNft, walletAddress, transferAddress) => async (dispatch) => {
-    try {
-      dispatch(MyNftPageActions.hideMyNftPageTransferDialog());
-
-      const tx = selectedNft.multiToken
-        ? await selectedNft.contract.safeTransferFrom(walletAddress, transferAddress, selectedNft.id, 1, [])
-        : await selectedNft.contract.safeTransferFrom(walletAddress, transferAddress, selectedNft.id);
-
-      await tx.wait();
-
-      toast.success(`Transfer successful!`);
-
-      dispatch(transferedNFT(selectedNft));
-    } catch (error) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        console.log(error);
-        toast.error('Unknown Error');
-      }
-    }
-  };
-
-  static listingDialogConfirm =
-    ({ contractAddress, nftId, salePrice, marketContract }) =>
-    async (dispatch) => {
-      try {
-        dispatch(MyNftPageActions.setMyNftPageListDialogError(false));
-
-        const price = ethers.utils.parseEther(salePrice);
-
-        let tx = await marketContract.makeListing(contractAddress, nftId, price, txExtras);
-
-        let receipt = await tx.wait();
-
-        dispatch(updateListed(contractAddress, nftId, true, salePrice));
-
-        dispatch(MyNftPageActions.hideMyNftPageListDialog());
-
-        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      } catch (error) {
-        if (error.data) {
-          toast.error(error.data.message);
-        } else if (error.message) {
-          toast.error(error.message);
-        } else {
-          console.log(error);
-          toast.error('Unknown Error');
-        }
-        dispatch(MyNftPageActions.setMyNftPageListDialogError(true));
-      }
-    };
 }
 
 export class MyListingsCollectionPageActions {
@@ -1122,7 +918,7 @@ export class MyNftCancelDialogActions {
     ({ listingId, address, id }) =>
     async (dispatch, getState) => {
       const state = getState();
-      const marketContract = state.user.marketContract;
+      const marketContract = state.user.contractService.market;
       try {
         let tx = await marketContract.cancelListing(listingId);
 

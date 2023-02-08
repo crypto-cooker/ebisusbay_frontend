@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { utils } from 'ethers';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {utils} from 'ethers';
 import Card from '../src/Components/Leaderboard/Card';
 import Table from '../src/Components/Leaderboard/Table';
-import { getAllLeaderBoard } from '../src/GlobalState/leaderBoardSlice';
-import { shortAddress } from '../src/utils';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import {getAllLeaderBoard} from '@src/GlobalState/leaderBoardSlice';
+import {shortAddress} from '@src/utils';
 import styles from '../src/Components/Leaderboard/styles.module.scss';
 import PageHead from "../src/Components/Head/PageHead";
 import Footer from "../src/Components/components/Footer";
 import {Badge} from "react-bootstrap";
-import { Modal, ModalTitle } from 'react-bootstrap';
-import styled from "styled-components";
 import {Navigation, Pagination} from "swiper";
 import {Swiper, SwiperSlide} from "swiper/react";
+import {Button, Heading, Link, Menu, MenuButton, MenuItem, MenuList} from "@chakra-ui/react";
+import {ChevronDownIcon} from "@chakra-ui/icons";
+import {useRouter} from "next/router";
+import {hostedImage} from "@src/helpers/image";
 
 const headers = {
   totalVolume: ['User', 'Sales Volume', 'Buy Volume', 'Total Volume'],
@@ -23,19 +23,10 @@ const headers = {
   biggestSingleSale: ['User', 'Total Volume'],
 };
 
-const StyledModal = styled(Modal)`
-  .modal-content {
-    background: ${({ theme }) => theme.colors.bgColor1};
-  }
-`;
-
-const StyledModalTitle = styled(ModalTitle)`
-  color: ${({ theme }) => theme.colors.textColor3};
-`;
-
-export default function Stats() {
+export default function Stats({pageHead, initialTimeframe}) {
+  const router = useRouter();
   const dispatch = useDispatch();
-  const [timeframe, setTimeframe] = useState('30d');
+  const [timeframe, setTimeframe] = useState(initialTimeframe);
   const [type, setType] = useState('totalVolume');
   const [showDialog, setShowDialog] = useState(false);
 
@@ -44,42 +35,44 @@ export default function Stats() {
   });
 
   const updateTimeframe = (val) => {
+    let query = {
+      time: val
+    }
+
+    router.push({
+        pathname: '/stats',
+        query: query
+      },
+      undefined, { shallow: true }
+    );
+
     setTimeframe(val);
   };
 
   useEffect(() => {
-    dispatch(getAllLeaderBoard(timeframe));
+    let filter = timeframe;
+    if (timeframe === 'bc-all') {
+      filter = 'custom'
+    } else if (timeframe === 'bc-1d') {
+      filter = 'custom2'
+    } else if (timeframe === 'all') {
+      filter = null
+    }
+    dispatch(getAllLeaderBoard(filter));
   }, [timeframe]);
-
-  const PrevArrow = (props) => {
-    const { className, style, onClick } = props;
-    return (
-      <div className={className} style={style} onClick={onClick}>
-        <FontAwesomeIcon icon={faChevronLeft} />
-      </div>
-    );
-  };
-
-  const NextArrow = (props) => {
-    const { className, style, onClick } = props;
-    return (
-      <div className={className} style={style} onClick={onClick}>
-        <FontAwesomeIcon icon={faChevronRight} />
-      </div>
-    );
-  };
 
   return (
     <div>
       <PageHead
-        title="Stats"
-        description="View the top performing NFTs and users on Ebisu's Bay Marketplace"
-        url="/stats"
+        title={pageHead.title}
+        description={pageHead.description}
+        url={pageHead.url}
+        image={pageHead.image}
       />
-      <section className="container">
+      <section className="gl-legacy container">
         <div className="row">
           <div className="col-12 col-lg-7 text-center text-lg-start">
-            <h2 className="mb-0">Cronos Marketplace NFT Sales</h2>
+            <Heading className="mb-0">Cronos Marketplace NFT Sales</Heading>
           </div>
           <div className="col-12 col-lg-5 text-center text-lg-end mt-4 mt-lg-0">
             <ul className="activity-filter">
@@ -92,129 +85,152 @@ export default function Stats() {
               <li id="sale" className={timeframe === '30d' ? 'active' : ''} onClick={() => updateTimeframe('30d')}>
                 30d
               </li>
-              <li id="sale" className={timeframe === null ? 'active' : ''} onClick={() => updateTimeframe(null)}>
+              <li id="sale" className={timeframe === 'all' ? 'active' : ''} onClick={() => updateTimeframe('all')}>
                 All Time
               </li>
               {/*<li id="sale" className={timeframe === 'custom' ? 'active' : ''} onClick={() => updateTimeframe('custom')}>*/}
               {/*  Competition*/}
               {/*</li>*/}
+              {/*<Menu>*/}
+              {/*  <MenuButton*/}
+              {/*    as={Button}*/}
+              {/*    rightIcon={<ChevronDownIcon />}*/}
+              {/*    variant="outline"*/}
+              {/*    backgroundColor="#FF2D98"*/}
+              {/*    color="white"*/}
+              {/*    _hover={{ bg: '#FF2D98' }}*/}
+              {/*    _expanded={{ bg: '#FF2D98' }}*/}
+              {/*    _focus={{ bg: '#FF2D98' }}*/}
+              {/*  >*/}
+              {/*    Bored Candy*/}
+              {/*  </MenuButton>*/}
+              {/*  <MenuList*/}
+              {/*    zIndex="2"*/}
+              {/*  >*/}
+              {/*    <MenuItem onClick={() => updateTimeframe('bc-1d')}>Daily</MenuItem>*/}
+              {/*    <MenuItem onClick={() => updateTimeframe('bc-all')}>Overall</MenuItem>*/}
+              {/*  </MenuList>*/}
+              {/*</Menu>*/}
             </ul>
           </div>
         </div>
-        {timeframe === 'custom' && (
+        {timeframe.startsWith('bc-') && (
           <div>
             <p>
-              Prizes up for grabs for the top 5 ranked wallets in each category! Competition runs from July 1st - 31st. &nbsp;
-              <Badge bg="primary" onClick={() => setShowDialog(true)} className="cursor-pointer">More Info</Badge>
+              Daily prizes up for grabs for the top Bored Candy buyers and sellers! Competition runs from Nov 1st - 15th. &nbsp;
+              <Link href="https://blog.ebisusbay.com/bored-candy-city-and-ebisus-bay-collaboration-5caa9f40cb64" isExternal>
+                <Badge bg="primary" className="cursor-pointer">More Info</Badge>
+              </Link>
             </p>
           </div>
         )}
-        <div className="d-flex gap-3 mt-lg-4 align-items-center justify-content-between">
-          <div className={`nft ${styles.dots}`}>
+          <div className="d-flex gap-3 mt-lg-4 align-items-center justify-content-between">
+            <div className={`nft ${styles.dots}`}>
 
-            <Swiper
-              spaceBetween={10}
-              slidesPerView={1}
-              navigation={true}
-              loop={true}
-              modules={[Navigation, Pagination]}
-              className="mySwiper"
-              breakpoints={{
-                576: {
-                  slidesPerView: 2,
-                },
-                768: {
-                  slidesPerView: 3,
-                },
-                1200: {
-                  slidesPerView: 4,
-                },
-              }}
-            >
-              <SwiperSlide>
-                <Card
-                  title="Most Total Volume"
-                  onClick={() => setType('totalVolume')}
-                  totalVolume={utils.commify(leaderBoard?.totalVolume[0]?.totalVolume || 0)}
-                  name={shortAddress(leaderBoard?.totalVolume[0]?.address) || 0}
-                  active={type === 'totalVolume'}
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <Card
-                  title="Most Buy Volume"
-                  onClick={() => setType('buyVolume')}
-                  totalVolume={utils.commify(leaderBoard?.buyVolume[0]?.totalVolume || 0)}
-                  name={shortAddress(leaderBoard?.buyVolume[0]?.address) || 0}
-                  active={type === 'buyVolume'}
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <Card
-                  title="Most Sell Volume"
-                  onClick={() => setType('sellVolume')}
-                  totalVolume={utils.commify(leaderBoard?.sellVolume[0]?.totalVolume || 0)}
-                  name={shortAddress(leaderBoard?.sellVolume[0]?.address) || 0}
-                  active={type === 'sellVolume'}
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <Card
-                  title="Biggest Single Sale"
-                  onClick={() => setType('biggestSingleSale')}
-                  totalVolume={utils.commify(leaderBoard?.biggestSingleSale[0]?.totalVolume || 0)}
-                  name={shortAddress(leaderBoard?.biggestSingleSale[0]?.address) || 0}
-                  active={type === 'biggestSingleSale'}
-                />
-              </SwiperSlide>
-            </Swiper>
+              <Swiper
+                spaceBetween={10}
+                slidesPerView="auto"
+                navigation={true}
+                loop={true}
+                modules={[Navigation, Pagination]}
+                className="mySwiper"
+                breakpoints={{
+                  576: {
+                    slidesPerView: 2,
+                  },
+                  768: {
+                    slidesPerView: 3,
+                  },
+                  1200: {
+                    slidesPerView: 4,
+                  },
+                }}
+              >
+                <SwiperSlide>
+                  <Card
+                    title="Most Total Volume"
+                    onClick={() => setType('totalVolume')}
+                    totalVolume={utils.commify(leaderBoard?.totalVolume[0]?.totalVolume || 0)}
+                    name={shortAddress(leaderBoard?.totalVolume[0]?.address) || 0}
+                    active={type === 'totalVolume'}
+                  />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <Card
+                    title="Most Buy Volume"
+                    onClick={() => setType('buyVolume')}
+                    totalVolume={utils.commify(leaderBoard?.buyVolume[0]?.totalVolume || 0)}
+                    name={shortAddress(leaderBoard?.buyVolume[0]?.address) || 0}
+                    active={type === 'buyVolume'}
+                  />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <Card
+                    title="Most Sell Volume"
+                    onClick={() => setType('sellVolume')}
+                    totalVolume={utils.commify(leaderBoard?.sellVolume[0]?.totalVolume || 0)}
+                    name={shortAddress(leaderBoard?.sellVolume[0]?.address) || 0}
+                    active={type === 'sellVolume'}
+                  />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <Card
+                    title="Biggest Single Sale"
+                    onClick={() => setType('biggestSingleSale')}
+                    totalVolume={utils.commify(leaderBoard?.biggestSingleSale[0]?.totalVolume || 0)}
+                    name={shortAddress(leaderBoard?.biggestSingleSale[0]?.address) || 0}
+                    active={type === 'biggestSingleSale'}
+                  />
+                </SwiperSlide>
+              </Swiper>
+            </div>
           </div>
-        </div>
-        <div className="mt-4 table-responsive">
-          <Table headers={headers[type]} items={leaderBoard[type]} />
-        </div>
+          <div className="mt-4 table-responsive">
+            <Table headers={headers[type]} items={leaderBoard[type]} />
+          </div>
       </section>
-      {timeframe === 'custom' &&
-        <p className="text-center small"><a href="https://cdn.ebisusbay.com/Contest_Terms_and_Conditions.html">Contest Terms and
-          Conditions</a></p>
-      }
+      {/*<p className="text-center small"><a href="https://cdn.ebisusbay.com/Contest_Terms_and_Conditions.html">Contest Terms and*/}
+      {/*  Conditions</a></p>*/}
 
-      <StyledModal show={showDialog} onHide={() => setShowDialog(false)}>
-        <Modal.Header>
-          <StyledModalTitle>Competition Details</StyledModalTitle>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Based on leaderboard results from July 1st - 31st, Ebisu's Bay will be awarding prizes in the following structure: </p>
-
-          <span className="fw-bold">Total Volume</span>
-          <ul>
-            <li>1st - 8,000 CRO</li>
-            <li>2nd - 5,000 CRO</li>
-            <li>3rd - 3,000 CRO</li>
-            <li>4th - 2,000 CRO</li>
-            <li>5th - 2,000 CRO</li>
-          </ul>
-
-          <span className="fw-bold">Total Buy, Sell and Biggest Single Sale</span>
-          <ul>
-            <li>1st - 4,000 CRO</li>
-            <li>2nd - 2,500 CRO</li>
-            <li>3rd - 1,500 CRO</li>
-            <li>4th - 1,000 CRO</li>
-            <li>5th - 1,000 CRO</li>
-          </ul>
-
-          <p>So get trading, climbing and finding your way into the prize money!</p>
-        </Modal.Body>
-
-        <Modal.Footer>
-          <button className="p-4 pt-2 pb-2 btn_menu inline white lead" onClick={() => setShowDialog(false)}>
-            Close
-          </button>
-        </Modal.Footer>
-      </StyledModal>
+      {/*<Modal isOpen={showDialog} onClose={() => setShowDialog(false)}>*/}
+      {/*  <ModalOverlay />*/}
+      {/*  <ModalContent>*/}
+      {/*    <ModalHeader>Competition Details</ModalHeader>*/}
+      {/*    <ModalCloseButton />*/}
+      {/*    <ModalBody>*/}
+      {/*      <Text>Ebisu’s Bay is going to be offering an exclusive 2 week long contest in collaboration with the Bored Candy City NFTs!</Text>*/}
+      {/*    </ModalBody>*/}
+      {/*  </ModalContent>*/}
+      {/*</Modal>*/}
 
       <Footer />
     </div>
   );
 }
+
+export const getServerSideProps = async ({ query }) => {
+  const { time } = query;
+
+  let initialTimeframe = time ?? '30d'
+  const pageHead = {
+    title: 'Stats',
+    description: 'View the top performing NFTs and users on Ebisu\'s Bay Marketplace',
+    url: '/stats'
+  };
+
+  if (time) {
+    pageHead.url = `/stats?time=${time}`;
+    if (time.startsWith('bc-')) {
+      pageHead.title = 'Bored Candy Volume Competition';
+      pageHead.description = 'Daily prizes up for grabs for the top Bored Candy buyers and sellers! Competition runs from Nov 1st - 15th.';
+      pageHead.image = hostedImage('/img/collections/bored-candy/card.webp')
+    }
+  }
+
+  return {
+    props: {
+      pageHead,
+      initialTimeframe
+    },
+  };
+};

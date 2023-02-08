@@ -28,9 +28,9 @@ const AuctionCard = ({ listing, imgClass = 'marketplace' }) => {
       <a>
         <div className="card eb-nft__card h-100" style={{border:borderColor, boxShadow:boxShadowColor}}>
           <AnyMedia
-            image={nftCardUrl(listing.nftAaddress, listing.nft.image)}
+            image={nftCardUrl(listing.nftAaddress, listing.nft.metadata.image)}
             className={`card-img-top ${imgClass}`}
-            title={listing.nft.name}
+            title={listing.nft.metadata.name}
             width={440}
             height={440}
           />
@@ -42,7 +42,7 @@ const AuctionCard = ({ listing, imgClass = 'marketplace' }) => {
             {listing.state === auctionState.SOLD && <div className="fw-bold"><FontAwesomeIcon icon={faGavel} /> Sold</div>}
           </div>
           <div className="card-body d-flex flex-column">
-            <h6 className="card-title mt-auto">{listing.nft.name}{isLegendary && <span title="Legendary!">&#128142;</span>}</h6>
+            <h6 className="card-title mt-auto fw-bold">{listing.nft.metadata.name}{isLegendary && <span title="Legendary!">&#128142;</span>}</h6>
             <p className="card-text">{ethers.utils.commify(listing.getHighestBid)} MAD</p>
           </div>
         </div>

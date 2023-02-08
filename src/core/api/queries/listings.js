@@ -6,7 +6,11 @@ export class ListingsQuery {
   collection = null;
   tokenId = null;
   seller = null;
+  sortBy = null;
+  direction = null;
   state = null;
+  page = null;
+  pageSize = null
   traits = {};
   powertraits = {};
   search = null;
@@ -49,12 +53,17 @@ export class ListingsQuery {
   }
 
   toApi() {
+    const collection = Array.isArray(this.collection) ? this.collection.join(',') : this.collection;
     const obj = {
       listingId: this.listingId,
-      collection: this.collection,
+      collection: collection,
       tokenId: this.tokenId,
       seller: this.seller,
+      sortBy: this.sortBy,
+      direction: this.direction,
       state: this.state,
+      page: this.page,
+      pageSize: this.pageSize,
       traits: this.traits,
       powertraits: this.powertraits,
       search: this.search,

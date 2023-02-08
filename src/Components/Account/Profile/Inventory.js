@@ -1,39 +1,55 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {getNftsForAddress2} from "@src/core/api";
+import React, { useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { getNftsForAddress2 } from "@src/core/api";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {Collapse, Spinner} from "react-bootstrap";
+import { Spinner } from "react-bootstrap";
 import MyNftCard from "@src/Components/components/MyNftCard";
-import {caseInsensitiveCompare, findCollectionByAddress} from "@src/utils";
-import NftCard from "@src/Components/components/NftCard";
-import {appConfig} from "@src/Config";
-import {MyNftPageActions} from "@src/GlobalState/User";
+import {caseInsensitiveCompare, findCollectionByAddress, isBundle, isNftBlacklisted} from "@src/utils";
+import NftBundleCard from "@src/Components/components/NftBundleCard";
+import { MyNftPageActions } from "@src/GlobalState/User";
 import MyNftCancelDialog from "@src/Components/components/MyNftCancelDialog";
-import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
-import {useInfiniteQuery} from "@tanstack/react-query";
+import { getWalletOverview } from "@src/core/api/endpoints/walletoverview";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import MakeListingDialog from "@src/Components/MakeListing";
-import {CollectionFilter} from "@src/Components/Account/Profile/Inventory/CollectionFilter";
-import {MobileFilters} from "@src/Components/Account/Profile/Inventory/MobileFilters";
+import { CollectionFilter } from "@src/Components/Account/Profile/Inventory/CollectionFilter";
+import { MobileFilters } from "@src/Components/Account/Profile/Inventory/MobileFilters";
 import Button from "@src/Components/components/Button";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faAngleLeft, faFilter} from "@fortawesome/free-solid-svg-icons";
-import useBreakpoint from "use-breakpoint";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleLeft, faFilter } from "@fortawesome/free-solid-svg-icons";
 import TransferNftDialog from "@src/Components/Account/Profile/Dialogs/TransferNftDialog";
+import {
+  addToBatchListingCart, closeBatchListingCart,
+  openBatchListingCart,
+  removeFromBatchListingCart, setBatchType,
+  setRefetchNfts
+} from "@src/GlobalState/batchListingSlice";
+import { MobileBatchListing } from "@src/Components/Account/Profile/Inventory/MobileBatchListing";
+import {
+  Box,
+  Button as ChakraButton,
+  HStack,
+  Spacer,
+  Stack,
+  useBreakpointValue,
+  Wrap,
+  WrapItem
+} from "@chakra-ui/react";
+import MyBundleCard from './Inventory/components/MyBundleCard';
+import {NftCard} from "@src/components-v2/shared/nft-card";
 
-const knownContracts = appConfig('collections');
-
-const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
 export default function Inventory({ address }) {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user);
+  const batchListingCart = useSelector((state) => state.batchListing);
 
   const [collections, setCollections] = useState([]);
   const [collectionFilter, setCollectionFilter] = useState([]);
-  const [filtersVisible, setFiltersVisible] = useState(true);
-  const [useMobileMenu, setUseMobileMenu] = useState(false);
-  const [hasManuallyToggledFilters, setHasManuallyToggledFilters] = useState(false);
-  const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
+  const [filtersVisible, setFiltersVisible] = useState(false);
+  const useMobileMenu = useBreakpointValue(
+    { base: true, lg: false },
+    { fallback: 'lg' },
+  );
 
   const onFilterChange = (filterOption) => {
     setCollectionFilter(filterOption ?? []);
@@ -55,7 +71,7 @@ export default function Inventory({ address }) {
     refetch,
   } = useInfiniteQuery(['Inventory', address, collectionFilter], fetcher, {
     getNextPageParam: (lastPage, pages) => {
-      return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
+      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
     },
     refetchOnWindowFocus: false
   })
@@ -71,8 +87,13 @@ export default function Inventory({ address }) {
         .reduce((arr, item) => {
           const coll = findCollectionByAddress(item.nftAddress, item.nftId);
           if (!coll) return arr;
-          coll.balance = item.balance;
-          arr.push(coll);
+          const existingIndex = arr.findIndex((c) => caseInsensitiveCompare(coll.address, c.address));
+          if (existingIndex >= 0) {
+            arr[existingIndex].balance += Number(item.balance);
+          } else {
+            coll.balance = Number(item.balance);
+            arr.push(coll);
+          }
           return arr;
         }, [])
         .sort((a, b) => a.name > b.name ? 1 : -1)
@@ -81,6 +102,26 @@ export default function Inventory({ address }) {
 
     func();
   }, [address]);
+
+  useEffect(() => {
+    if (batchListingCart.refetchNfts) refetch()
+    dispatch(setRefetchNfts(false))
+  }, [batchListingCart.refetchNfts]);
+
+  const toggleOpenBatchListingCart = () => {
+    if (batchListingCart.isDrawerOpen) {
+      dispatch(closeBatchListingCart());
+    } else {
+      dispatch(openBatchListingCart());
+    }
+  };
+
+  const handleOpenBatchShortcut = (shortcut) => {
+    if (!batchListingCart.isDrawerOpen) {
+      dispatch(openBatchListingCart());
+    }
+    dispatch(setBatchType(shortcut));
+  };
 
   const historyContent = useMemo(() => {
     return status === "loading" ? (
@@ -94,44 +135,82 @@ export default function Inventory({ address }) {
     ) : (
       <>
         <div className="card-group row g-3">
-
           {data.pages.map((items, index) => (
             <React.Fragment key={index}>
-              {items.map((nft, index) => {
-                const collection = knownContracts.find((c) => caseInsensitiveCompare(c.address, nft.address));
-                return (
-                  <div
-                    className={`d-item ${filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2'}  mb-4`}
-                    key={`${nft.address}-${nft.id}-${nft.listed}-${index}`}
-                  >
-                    {caseInsensitiveCompare(address, user.address) ? (
-                      <MyNftCard
-                        nft={nft}
-                        canTransfer={nft.canTransfer}
-                        canSell={nft.listable && !nft.listed && nft.canSell}
-                        isStaked={nft.isStaked}
-                        canCancel={nft.listed && nft.listingId}
-                        canUpdate={nft.listable && nft.listed}
-                        onTransferButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageTransferDialog(nft))}
-                        onSellButtonPressed={() => {
-                          dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
-                        }}
-                        onUpdateButtonPressed={() => {
-                          dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
-                        }}
-                        onCancelButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageCancelDialog(nft))}
-                        newTab={true}
-                      />
-                    ) : collection && (
-                      <NftCard
-                        listing={nft}
-                        imgClass="collection"
-                        collection={collection}
-                      />
-                    )}
-                  </div>
-                )
+              {items.nfts.map((nft, index) => {
+                if(isBundle(nft.address)){
+                  return (
+                    <div
+                      className={`d-item ${filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2'}  mb-4`}
+                      key={`${nft.address}-${nft.id}-${index}`}
+                    >
+                      {caseInsensitiveCompare(address, user.address) ? (
+                        <MyBundleCard
+                          nft={nft}
+                          canTransfer={nft.canTransfer}
+                          canSell={nft.listable && !nft.listed && nft.canSell}
+                          isStaked={nft.isStaked}
+                          canCancel={nft.listed && nft.listingId}
+                          canUpdate={nft.listable && nft.listed}
+                          onTransferButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageTransferDialog(nft))}
+                          onSellButtonPressed={() => {
+                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
+                          }}
+                          onUpdateButtonPressed={() => {
+                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
+                          }}
+                          onCancelButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageCancelDialog(nft))}
+                          onAddToBatchListingButtonPressed={() => dispatch(addToBatchListingCart(nft))}
+                          onRemoveFromBatchListingButtonPressed={() => dispatch(removeFromBatchListingCart(nft))}
+                          newTab={true}
+                        />
+                      ) : (
+                        <NftBundleCard 
+                          listing={nft}
+                          imgClass="collection"
+                        />
+                      )}
+                    </div>
+                  )
+                }
+                else{
+                  return (
+                    <div
+                      className={`d-item ${filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2'}  mb-4`}
+                      key={`${nft.address}-${nft.id}-${nft.listed}-${index}`}
+                    >
+                      {caseInsensitiveCompare(address, user.address) ? (
+                        <MyNftCard
+                          nft={nft}
+                          canTransfer={nft.canTransfer}
+                          canSell={nft.listable && !nft.listed && nft.canSell}
+                          isStaked={nft.isStaked}
+                          canCancel={nft.listed && nft.listingId}
+                          canUpdate={nft.listable && nft.listed}
+                          onTransferButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageTransferDialog(nft))}
+                          onSellButtonPressed={() => {
+                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
+                          }}
+                          onUpdateButtonPressed={() => {
+                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
+                          }}
+                          onCancelButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageCancelDialog(nft)) }
+                          onAddToBatchListingButtonPressed={() => dispatch(addToBatchListingCart(nft))}
+                          onRemoveFromBatchListingButtonPressed={() => dispatch(removeFromBatchListingCart(nft))}
+                          newTab={true}
+                        />
+                      ) : (
+                        <NftCard
+                          nft={nft}
+                          imgClass="collection"
+                          canBuy={!isNftBlacklisted(nft.address, nft.id)}
+                        />
+                      )}
+                    </div>
+                  )
+                }
               })}
+              
             </React.Fragment>
           ))}
         </div>
@@ -139,16 +218,7 @@ export default function Inventory({ address }) {
     );
   }, [data, error, status, address, user.address, filtersVisible]);
 
-  useEffect(() => {
-    const isMobileSize = minWidth < BREAKPOINTS.m;
-    setUseMobileMenu(isMobileSize);
-    if (!hasManuallyToggledFilters) {
-      setFiltersVisible(!isMobileSize);
-    }
-  }, [breakpoint]);
-
   const toggleFilterVisibility = () => {
-    setHasManuallyToggledFilters(true);
     setFiltersVisible(!filtersVisible)
   };
 
@@ -157,7 +227,7 @@ export default function Inventory({ address }) {
       <div className="d-flex">
         {filtersVisible && !useMobileMenu && (
           <div className="m-0 p-0">
-            <div className="me-4 px-2" style={{width: 320}}>
+            <div className="me-4 px-2" style={{ width: 320 }}>
               <CollectionFilter
                 collections={collections}
                 currentFilter={collectionFilter}
@@ -167,16 +237,47 @@ export default function Inventory({ address }) {
           </div>
         )}
         <div className="flex-fill">
-          <div className="d-flex mb-2">
-            <div>
-              <Button
-                type="legacy-outlined"
-                onClick={toggleFilterVisibility}
-              >
-                <FontAwesomeIcon icon={filtersVisible ? faAngleLeft : faFilter} />
-              </Button>
-            </div>
-          </div>
+          <Stack direction="row" mb={2} align="center">
+            {useMobileMenu ? (
+              <ul className="activity-filter">
+                <li className="active" onClick={toggleFilterVisibility}>
+                  <FontAwesomeIcon icon={filtersVisible ? faAngleLeft : faFilter} />
+                </li>
+                <li id="bulk" className={batchListingCart.isDrawerOpen ? 'active' : ''} onClick={toggleOpenBatchListingCart}>
+                  Bulk Mode
+                </li>
+              </ul>
+            ) : (
+              <>
+                <Box>
+                  <Button
+                    type="legacy-outlined"
+                    onClick={toggleFilterVisibility}
+                  >
+                    <FontAwesomeIcon icon={filtersVisible ? faAngleLeft : faFilter} className="py-1" />
+                  </Button>
+                </Box>
+                <HStack align="center" spacing={2} border="1px solid white" rounded='md' ps={2} pe={1} py={1}>
+                  <Box>
+                    Bulk mode:
+                  </Box>
+                  <Wrap gap={2}>
+                    <WrapItem>
+                      <ChakraButton variant="ghost" size="sm" onClick={() => handleOpenBatchShortcut('listing')}>
+                        Sell
+                      </ChakraButton>
+                      <ChakraButton variant="ghost" size="sm" onClick={() => handleOpenBatchShortcut('bundle')}>
+                        Bundle
+                      </ChakraButton>
+                      <ChakraButton variant="ghost" size="sm" onClick={() => handleOpenBatchShortcut('transfer')}>
+                        Transfer
+                      </ChakraButton>
+                    </WrapItem>
+                  </Wrap>
+                </HStack>
+              </>
+            )}
+          </Stack>
           <InfiniteScroll
             dataLength={data?.pages ? data.pages.flat().length : 0}
             next={loadMore}
@@ -220,14 +321,7 @@ export default function Inventory({ address }) {
         />
       )}
       {useMobileMenu && (
-        <div className="d-flex fixed-bottom mx-2 my-2">
-          <div className="mx-auto">
-            <Button type="legacy" style={{height: '100%'}} onClick={() => setFiltersVisible(true)}>
-              <FontAwesomeIcon icon={faFilter} />
-              <span className="ms-2">Filters ({collectionFilter.length})</span>
-            </Button>
-          </div>
-        </div>
+        <MobileBatchListing />
       )}
     </>
   )

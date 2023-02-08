@@ -4,7 +4,10 @@ import { faCheck, faCircle } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 
 import LayeredIcon from './LayeredIcon';
-import {hostedImage} from "../../helpers/image";
+import {hostedImage} from "@src/helpers/image";
+import {Box, Heading, Text} from "@chakra-ui/react";
+import {useRouter} from "next/router";
+import {useColorModeValue} from "@chakra-ui/color-mode";
 
 const VerifiedIcon = styled.span`
   font-size: 10px;
@@ -18,43 +21,65 @@ const VerifiedIcon = styled.span`
   right: 2px;
 `;
 
-const CustomSlide = ({ index, avatar, banner, title, subtitle, collectionId, url, verified, externalPage = false }) => {
+const CustomSlide = ({ index, avatar, banner, title, subtitle, collectionId, url, verified, externalPage = false, contextComponent }) => {
+  const router = useRouter();
+  const hoverBgColor = useColorModeValue('#FFFFFF', '#404040');
+
   const navigateTo = (url) => {
     if (url && typeof window !== 'undefined') {
-      window.open(url, externalPage ? '_blank' : '_self');
+      if (externalPage) {
+        window.open(url, '_blank');
+      } else {
+        router.push(url)
+      }
     }
   };
 
   return (
-    <div className="itm" key={index}>
-      <div className="nft_coll cursor-pointer" onClick={() => navigateTo(url)}>
-        <div className="nft_wrap">
-          <span>
-            <img src={hostedImage(banner)} className="lazy img-fluid" alt={title} />
+    <Box key={index} h="100%">
+      <Box className="nft_coll cursor-pointer h-100" _hover={{
+        backgroundColor: hoverBgColor
+      }} shadow="lg">
+        <div className="nft_wrap position-relative">
+          <span onClick={() => navigateTo(url)}>
+            <img src={hostedImage(banner)} className="lazy img-fluid w-100" alt={title} />
           </span>
+          {contextComponent && (
+            <div className="position-absolute top-0 end-0 m-2">
+              {contextComponent}
+            </div>
+          )}
         </div>
-        <div className="nft_coll_pp">
+        <div className="nft_coll_pp" onClick={() => navigateTo(url)}>
+          {avatar || collectionId ? (
+            <span>
+              {avatar ? (
+                <img className="lazy" src={hostedImage(avatar, true)} alt={title} />
+              ) : (
+                <Blockies seed={collectionId} size={10} scale={6} />
+              )}
+              {verified && (
+                <VerifiedIcon>
+                  <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={7} />
+                </VerifiedIcon>
+              )}
+            </span>
+          ) : (
+            <Box h="30px"></Box>
+          )}
+        </div>
+        <div className="nft_coll_info" onClick={() => navigateTo(url)}>
           <span>
-            {avatar ? (
-              <img className="lazy" src={hostedImage(avatar, true)} alt={title} />
-            ) : (
-              <Blockies seed={collectionId} size={10} scale={6} />
-            )}
-            {verified && (
-              <VerifiedIcon>
-                <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={7} />
-              </VerifiedIcon>
-            )}
+            <Heading as="h4" size="md">{title}</Heading>
           </span>
+          {typeof subtitle === 'string' ? (
+            <Text noOfLines={3} fontSize="14px" px={2}>{subtitle}</Text>
+          ) : (
+            <>{subtitle}</>
+          )}
         </div>
-        <div className="nft_coll_info">
-          <span>
-            <h4>{title}</h4>
-          </span>
-          <span>{subtitle}</span>
-        </div>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

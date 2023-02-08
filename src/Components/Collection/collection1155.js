@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { faCheck, faCircle } from '@fortawesome/free-solid-svg-icons';
+import {faBullhorn, faCheck, faCircle} from '@fortawesome/free-solid-svg-icons';
 import Blockies from 'react-blockies';
 
 import Footer from '../components/Footer';
 import CollectionListingsGroup from '../components/CollectionListingsGroup';
 import LayeredIcon from '../components/LayeredIcon';
 import {init, fetchListings, getStats, updateTab} from '@src/GlobalState/collectionSlice';
-import { isCrosmocraftsPartsCollection } from '@src/utils';
+import {isCrosmocraftsPartsCollection, isEbVipCollection} from '@src/utils';
 import SocialsBar from './SocialsBar';
 import { CollectionSortOption } from '../Models/collection-sort-option.model';
 import CollectionInfoBar from '../components/CollectionInfoBar';
@@ -20,6 +20,10 @@ import {Spinner} from "react-bootstrap";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import {pushQueryString} from "@src/helpers/query";
 import {useRouter} from "next/router";
+import {Box, Flex, Heading, Link, Text} from "@chakra-ui/react";
+import MintingButton from "@src/Components/Collection/MintingButton";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import NextLink from "next/link";
 
 
 const tabs = {
@@ -27,11 +31,9 @@ const tabs = {
   activity: 'activity'
 };
 
-const Collection1155 = ({ collection, tokenId = null, query }) => {
+const Collection1155 = ({ collection, tokenId = null, query, activeDrop = null }) => {
   const dispatch = useDispatch();
   const router = useRouter();
-
-  const [metadata, setMetadata] = useState(null);
 
   const collectionStats = useSelector((state) => state.collection.stats);
   const initialLoadComplete = useSelector((state) => state.collection.initialLoadComplete);
@@ -43,10 +45,6 @@ const Collection1155 = ({ collection, tokenId = null, query }) => {
       state.collection.listings.length > 0 &&
       (state.collection.query.page === 0 || state.collection.query.page < state.collection.totalPages)
     );
-  });
-
-  const collectionMetadata = useSelector((state) => {
-    return collection.metadata;
   });
   const isUsingListingsFallback = useSelector((state) => state.collection.isUsingListingsFallback);
 
@@ -92,10 +90,6 @@ const Collection1155 = ({ collection, tokenId = null, query }) => {
   }, [dispatch, collection.address]);
 
   useEffect(() => {
-    setMetadata(collection.metadata);
-  }, [collection]);
-
-  useEffect(() => {
     async function asyncFunc() {
       if (tokenId != null) {
         dispatch(getStats(collection, tokenId));
@@ -107,40 +101,52 @@ const Collection1155 = ({ collection, tokenId = null, query }) => {
     // eslint-disable-next-line
   }, [dispatch, collection]);
 
+  const handleMintingButtonClick = () => {
+    if (activeDrop.redirect) {
+      window.open(activeDrop.redirect, '_blank');
+    } else {
+      router.push(`/drops/${activeDrop.slug}`)
+    }
+  }
+
   return (
     <div>
       <section
         id="profile_banner"
         className="jumbotron breadcumb no-bg"
         style={{
-          backgroundImage: `url(${ImageKitService.buildBannerUrl(metadata?.banner ?? '')})`,
+          backgroundImage: `url(${ImageKitService.buildBannerUrl(collection.metadata?.banner ?? '')})`,
           backgroundPosition: '50% 50%',
         }}
       >
         <div className="mainbreadcumb"></div>
       </section>
 
-      <section className="container d_coll no-top no-bottom">
+      <section className="gl-legacy container d_coll no-top no-bottom">
         <div className="row">
           <div className="col-md-12">
             <div className="d_profile">
               <div className="profile_avatar">
                 <div className="d_profile_img">
-                  {metadata?.avatar ? (
-                    <img src={metadata.avatar} alt={collectionName()} />
+                  {collection.metadata?.avatar ? (
+                    <img src={collection.metadata.avatar} alt={collectionName()} />
                   ) : (
                     <Blockies seed={collection.address.toLowerCase()} size={15} scale={10} />
                   )}
-                  {metadata?.verified && (
+                  {collection.verification?.verified && (
                     <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={8} stackClass="eb-avatar_badge" />
                   )}
                 </div>
 
                 <div className="profile_name">
-                  <h4>
-                    {collection.name}
-                    <div className="clearfix" />
-                  </h4>
+                  <Flex justify="center" align="center" mb={4}>
+                    <Heading as="h4" size="md" my="auto">
+                      {collection.name}
+                    </Heading>
+                    {activeDrop && (
+                      <MintingButton onClick={handleMintingButtonClick} />
+                    )}
+                  </Flex>
                   <CollectionVerificationRow
                     doxx={collection.verification?.doxx}
                     kyc={collection.verification?.kyc}
@@ -165,7 +171,7 @@ const Collection1155 = ({ collection, tokenId = null, query }) => {
       <div className="px-4 mb-4">
         {collectionStats && (
           <div className="row">
-            {hasRank && collectionMetadata?.rarity === 'rarity_sniper' && (
+            {hasRank && collection.metadata?.rarity === 'rarity_sniper' && (
               <div className="row">
                 <div className="col-lg-8 col-sm-10 mx-auto text-center mb-3" style={{ fontSize: '0.8em' }}>
                   Rarity scores and ranks provided by{' '}
@@ -188,12 +194,12 @@ const Collection1155 = ({ collection, tokenId = null, query }) => {
                 </div>
               </div>
             )}
-            {collectionMetadata?.staking && (
+            {collection.metadata?.staking && (
               <div className="row">
                 <div className="mx-auto text-center fw-bold" style={{ fontSize: '0.8em' }}>
                   NFTs from this collection can be staked at{' '}
-                  <a href={stakingPlatforms[collectionMetadata.staking].url} target="_blank" rel="noreferrer">
-                    <span className="color">{stakingPlatforms[collectionMetadata.staking].name}</span>
+                  <a href={stakingPlatforms[collection.metadata.staking].url} target="_blank" rel="noreferrer">
+                    <span className="color">{stakingPlatforms[collection.metadata.staking].name}</span>
                   </a>
                 </div>
               </div>

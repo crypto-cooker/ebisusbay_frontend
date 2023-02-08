@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { ethers } from 'ethers';
 import moment from 'moment';
+import {Heading} from "@chakra-ui/react";
 
 const Outer = styled.div`
   display: flex;
@@ -40,7 +41,7 @@ const SoldNftCard = ({ nft, index, className = 'col-sm-12 col-md-12 col-lg-6 d-i
         </div>
         <div className="nft__item_info">
           <span>
-            <h4>{nft.nft?.name}</h4>
+            <Heading as="h4" size="md">{nft.nft?.name}</Heading>
           </span>
           <div className="nft__item_price">
             <span className="m-0">Sold for {ethers.utils.commify(nft.price)} CRO</span>

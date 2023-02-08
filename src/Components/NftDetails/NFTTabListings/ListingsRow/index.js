@@ -8,12 +8,18 @@ import MetaMaskOnboarding from '@metamask/onboarding';
 import { useDispatch, useSelector } from 'react-redux';
 import { Spinner } from 'react-bootstrap';
 
-import { createSuccessfulTransactionToastContent, shortAddress, timeSince } from '../../../../utils';
+import {
+  createSuccessfulAddCartContent,
+  createSuccessfulTransactionToastContent,
+  shortAddress,
+  timeSince
+} from '../../../../utils';
 import { chainConnect, connectAccount } from '../../../../GlobalState/User';
 import { getNftDetails } from '../../../../GlobalState/nftSlice';
 import ListingItem from '../ListingItem';
+import {addToCart, openCart} from "@src/GlobalState/cartSlice";
 
-export default function ListingsRow({ listing }) {
+export default function ListingsRow({ listing, nft }) {
   const dispatch = useDispatch();
   const history = useRouter();
 
@@ -37,7 +43,7 @@ export default function ListingsRow({ listing }) {
   const runFunction = async (fn) => {
     if (user.address) {
       try {
-        const receipt = await fn(user.marketContract);
+        const receipt = await fn(user.contractService.market);
         dispatch(getNftDetails(listing.nftAddress, listing.nftId));
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       } catch (error) {
@@ -62,16 +68,29 @@ export default function ListingsRow({ listing }) {
     }
   };
 
+  const handleAddToCart = () => {
+    dispatch(addToCart({
+      listingId: listing.listingId,
+      name: nft.name,
+      image: nft.image,
+      price: listing.price,
+      address: listing.nftAddress,
+      id: listing.nftId,
+      rank: nft.rank
+    }));
+    toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
+  };
+
   return (
     <ListingItem
       route="/account"
-      buttonText="Buy Now"
+      buttonText="Add to Cart"
       primaryTitle="Listed by"
       user={listing.seller}
-      time={timeSince(listing.listingTime + '000')}
+      time={timeSince(listing.listingTime)}
       price={ethers.utils.commify(listing.price)}
       primaryText={shortAddress(listing.seller)}
-      onClick={executeBuy(listing.price)}
+      onClick={handleAddToCart}
       isProcessing={executingBuy}
     />
   );

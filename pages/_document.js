@@ -1,6 +1,8 @@
 import { Html, Head, Main, NextScript } from 'next/document';
 import {appConfig} from "../src/Config";
 import Script from "next/script";
+import {ColorModeScript} from "@chakra-ui/react";
+import customTheme from "@src/Theme/theme";
 const cdn = appConfig('urls.cdn');
 
 export default function Document() {
@@ -25,17 +27,29 @@ export default function Document() {
 
         <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
+        {/* Site 24x7 */}
         <Script type="module"
                 src="https://js-wc.site24x7static.com/site24x7/client/statusiq_status_widget/statusiq-status-widget.esm.js?11_2022"
                 strategy="beforeInteractive"/>
         <Script noModule
                 src="https://js-wc.site24x7static.com/site24x7/client/statusiq_status_widget/statusiq-status-widget.js?11_2022"
                 strategy="beforeInteractive"/>
+
+        {/* Alchemy */}
+        <Script strategy="beforeInteractive">
+          const BADGE_ID = 'xhfjcoQoaZOdb4VhRFk5q5z9BuBctt7n';
+        </Script>
+        <Script
+          src="https://static.alchemyapi.io/scripts/analytics/badge-analytics.js"
+          alt="Alchemy Supercharged"
+          strategy="beforeInteractive"
+        />
       </Head>
       <body>
         <div id="initialLoader">
           <div className="loader"></div>
         </div>
+        <ColorModeScript initialColorMode={customTheme.config.initialColorMode} />
         <Main />
         <NextScript />
         <statusiq-status-widget src="https://status.ebisusbay.com" widget-type="sticky" widget-position="bottom-left"></statusiq-status-widget>

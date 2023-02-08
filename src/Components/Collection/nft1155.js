@@ -1,8 +1,14 @@
-import React, {memo, useCallback, useEffect, useState} from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import {Contract, ethers} from 'ethers';
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import {ethers} from 'ethers';
+import {
+  faExternalLinkAlt,
+  faHeart as faHeartSolid,
+  faSync,
+  faShareAlt,
+  faBullhorn
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Spinner } from 'react-bootstrap';
 import MetaMaskOnboarding from '@metamask/onboarding';
@@ -10,18 +16,19 @@ import MetaMaskOnboarding from '@metamask/onboarding';
 import ProfilePreview from '../components/ProfilePreview';
 import Footer from '../components/Footer';
 import {
+  caseInsensitiveCompare,
   findCollectionByAddress,
   humanize,
-  isCrosmocraftsPartsDrop,
+  isCrosmocraftsPartsDrop, isEbVipCollection, isEmptyObj,
   mapAttributeString,
   millisecondTimestamp, rankingsLinkForCollection, rankingsLogoForCollection, rankingsTitleForCollection,
   relativePrecision,
   shortAddress,
   timeSince,
 } from '@src/utils';
-import { getNftDetails } from '@src/GlobalState/nftSlice';
+import { getNftDetails, refreshMetadata, tickFavorite } from '@src/GlobalState/nftSlice';
 import { specialImageTransform } from '@src/hacks';
-import { chainConnect, connectAccount } from '@src/GlobalState/User';
+import { chainConnect, connectAccount, retrieveProfile } from '@src/GlobalState/User';
 
 import ListingItem from '../NftDetails/NFTTabListings/ListingItem';
 import { listingState, offerState } from '@src/core/api/enums';
@@ -33,9 +40,18 @@ import { OFFER_TYPE } from '../Offer/MadeOffers/MadeOffersRow';
 import NFTTabOffers from '../Offer/NFTTabOffers';
 import { AnyMedia } from '../components/AnyMedia';
 import { hostedImage } from '@src/helpers/image';
-import {appConfig} from "@src/Config";
-import Market from "@src/Contracts/Marketplace.json";
-import {collectionRoyaltyPercent} from "@src/core/chain";
+import { appConfig } from "@src/Config";
+import { collectionRoyaltyPercent } from "@src/core/chain";
+import Button, { LegacyOutlinedButton } from "@src/Components/components/common/Button";
+import {Box, ButtonGroup, Flex, Heading, Link, MenuButton as MenuButtonCK, Text, useClipboard} from "@chakra-ui/react";
+import { toast } from "react-toastify";
+import { faHeart as faHeartOutline } from "@fortawesome/free-regular-svg-icons";
+import { Menu } from '../components/chakra-components';
+import { faCopy } from '@fortawesome/free-solid-svg-icons';
+import { faFacebook, faSquareTwitter, faTelegram } from '@fortawesome/free-brands-svg-icons';
+import { getStats } from '@src/GlobalState/collectionSlice';
+import NextLink from 'next/link';
+import useToggleFavorite from "@src/components-v2/feature/nft/hooks/useToggleFavorite";
 
 const config = appConfig();
 const tabs = {
@@ -47,11 +63,12 @@ const tabs = {
   info: 'info',
 };
 
-const Nft1155 = ({ address, id }) => {
+const Nft1155 = ({ address, id, collection }) => {
   const dispatch = useDispatch();
   const history = useRouter();
+  const { onCopy } = useClipboard(window.location);
 
-  const nft = useSelector((state) => state.nft.nft);
+  const { nft, refreshing, favorites } = useSelector((state) => state.nft);
   const soldListings = useSelector((state) =>
     state.nft.history.filter((i) => i.state === listingState.SOLD).sort((a, b) => (a.saleTime < b.saleTime ? 1 : -1))
   );
@@ -60,9 +77,6 @@ const Nft1155 = ({ address, id }) => {
   );
 
   const powertraits = useSelector((state) => state.nft.nft?.powertraits);
-  const collection = useSelector((state) => {
-    return findCollectionByAddress(address, id);
-  });
   const collectionMetadata = useSelector((state) => {
     return collection?.metadata;
   });
@@ -74,6 +88,7 @@ const Nft1155 = ({ address, id }) => {
   });
   const isLoading = useSelector((state) => state.nft.loading);
   const user = useSelector((state) => state.user);
+  const [{ isLoading: isFavoriting, response, error }, toggleFavorite] = useToggleFavorite();
 
   useEffect(() => {
     dispatch(getNftDetails(address, id));
@@ -88,6 +103,82 @@ const Nft1155 = ({ address, id }) => {
     getRoyalty();
   }, []);
 
+  const copyLink = useCallback(() => {
+    onCopy();
+    toast.info(`Link copied!`);
+  }, [navigator, window.location])
+
+  const options = [
+    {
+      url: 'https://www.facebook.com/sharer/sharer.php?u=',
+      label: 'Share on facebook',
+      icon: faFacebook,
+      type: 'url'
+    },
+    {
+      url: 'https://twitter.com/intent/tweet?text=',
+      label: 'Share on twitter',
+      icon: faSquareTwitter,
+      type: 'url'
+    },
+    {
+      url: 'https://telegram.me/share/?url=',
+      label: 'Share on telegram',
+      icon: faTelegram,
+      type: 'url'
+    },
+    {
+      label: 'Copy Link',
+      icon: faCopy,
+      type: 'event',
+      handleClick: copyLink
+    }
+
+  ];
+
+  const MenuItems = (
+    options.map(option => (
+      option.type === 'url' ?
+        (
+          <div >
+            <a href={`${option.url}${window.location}`} target='_blank' >
+              <div key={option.label} className='social_media_item'>
+                <div className='icon_container'>
+                  <FontAwesomeIcon icon={option.icon} style={{ height: 28 }} />
+                </div>
+                <div className='label_container'>
+                  <span>{option.label}</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+        )
+        :
+        (
+          <div className='social_media_item' onClick={option.handleClick} key={option.label}>
+            <div className='icon_container'>
+              <FontAwesomeIcon icon={option.icon} style={{ height: 28 }} />
+            </div>
+            <div className='label_container'>
+              <span>
+                {option.label}
+              </span>
+            </div>
+          </div>
+        )
+
+    )))
+
+  const MenuButton = () => {
+
+    return (
+      <MenuButtonCK as={LegacyOutlinedButton}>
+        <FontAwesomeIcon icon={faShareAlt} style={{ cursor: 'pointer' }} />
+      </MenuButtonCK>
+    )
+  }
+
   const fullImage = () => {
     if (nft.original_image.startsWith('ipfs://')) {
       const link = nft.original_image.split('://')[1];
@@ -101,6 +192,17 @@ const Nft1155 = ({ address, id }) => {
 
     return nft.original_image;
   };
+
+
+  const collectionStats = useSelector((state) => state.collection.stats);
+
+  useEffect(() => {
+    async function asyncFunc() {
+      dispatch(getStats(collection));
+    }
+    asyncFunc();
+    // eslint-disable-next-line
+  }, [dispatch, collection]);
 
   const [currentTab, setCurrentTab] = useState(tabs.properties);
   const handleTabChange = useCallback((tab) => {
@@ -126,6 +228,10 @@ const Nft1155 = ({ address, id }) => {
     }
   };
 
+  const onRefreshMetadata = useCallback(() => {
+    dispatch(refreshMetadata(address, id));
+  }, [address, id]);
+
   useEffect(() => {
     async function func() {
       const filteredOffers = await getFilteredOffers(nft.address, nft.id.toString(), user.address);
@@ -144,10 +250,50 @@ const Nft1155 = ({ address, id }) => {
     // eslint-disable-next-line
   }, [nft, user.address]);
 
+  const onFavoriteClicked = async () => {
+    if (isEmptyObj(user.profile)) {
+      toast.info(`Connect wallet and create a profile to start adding favorites`);
+      return;
+    }
+    if (user.profile.error) {
+      toast.info(`Error loading profile. Please try reconnecting wallet`);
+      return;
+    }
+    const isCurrentFav = isFavorite();
+    await toggleFavorite(user.address, address, id, !isCurrentFav);
+    toast.success(`Item ${isCurrentFav ? 'removed from' : 'added to'} favorites`);
+    dispatch(tickFavorite(isCurrentFav ? -1 : 1));
+    dispatch(retrieveProfile());
+  };
+
+  const isFavorite = () => {
+    if (!user.profile?.favorites) return false;
+    return user.profile.favorites.find((f) => caseInsensitiveCompare(address, f.tokenAddress) && id === f.tokenId);
+  }
+
   return (
     <div>
+      {isEbVipCollection(address, id) && (
+        <Box className="promo">
+          <Flex justify="center" px={3}>
+            <FontAwesomeIcon icon={faBullhorn} className="my-auto"/>
+            <Text ms={2}>
+              Ebisu's Bay VIP Founding Member will be migrating to the new Ryoshi Tales VIP collection on Friday Nov 11th.{' '}
+              <Box align="center">
+                <Link href="https://blog.ebisusbay.com/ebisus-bay-vip-split-506b05c619c7" isExternal fontWeight="bold">
+                  Learn more
+                </Link>
+                <span className="mx-2">|</span>
+                <NextLink href="/drops/ryoshi-tales-vip" >
+                  <Link fontWeight="bold">View drop</Link>
+                </NextLink>
+              </Box>
+            </Text>
+          </Flex>
+        </Box>
+      )}
       {isLoading ? (
-        <section className="container">
+        <section className="gl-legacy container">
           <div className="row mt-4">
             <div className="col-lg-12 text-center">
               <Spinner animation="border" role="status">
@@ -157,7 +303,8 @@ const Nft1155 = ({ address, id }) => {
           </div>
         </section>
       ) : (
-        <section className="container">
+        <section className="gl-legacy container">
+
           <div className="row">
             <div className="col-md-6 text-center">
               {nft ? (
@@ -178,31 +325,52 @@ const Nft1155 = ({ address, id }) => {
               ) : (
                 <></>
               )}
-              {nft && nft.original_image && (
-                <div className="nft__item_action mt-2" style={{ cursor: 'pointer' }}>
-                  <span
-                    onClick={() =>
+              <div className="mt-2" style={{ cursor: 'pointer' }}>
+                <ButtonGroup size='sm' isAttached variant='outline'>
+                  <Button styleType="default-outlined" title="Refresh Metadata" onClick={onRefreshMetadata} disabled={refreshing}>
+                    <FontAwesomeIcon icon={faSync} spin={refreshing} />
+                  </Button>
+                  <Button
+                    styleType="default-outlined"
+                    title={isFavorite() ? 'This item is in your favorites list' : 'Click to add to your favorites list'}
+                    onClick={onFavoriteClicked}
+                  >
+                    <div>
+                      <span className="me-1">{favorites}</span>
+                      {isFavorite() ? (
+                        <FontAwesomeIcon icon={faHeartSolid} style={{ color: '#dc143c' }} />
+                      ) : (
+                        <FontAwesomeIcon icon={faHeartOutline} />
+                      )}
+                    </div>
+                  </Button>
+                  {nft && nft.original_image && (
+                    <Button styleType="default-outlined" title="View Full Image" onClick={() =>
                       typeof window !== 'undefined' &&
                       window.open(specialImageTransform(address, fullImage()), '_blank')
-                    }
-                  >
-                    <span className="p-2">View Full Image</span>
-                    <FontAwesomeIcon icon={faExternalLinkAlt} />
-                  </span>
-                </div>
-              )}
+                    }>
+                      <FontAwesomeIcon icon={faExternalLinkAlt} />
+                    </Button>
+                  )}
+                  <Menu MenuItems={MenuItems} MenuButton={MenuButton()} />
+
+                </ButtonGroup>
+              </div>
             </div>
             <div className="col-md-6">
               {nft && (
                 <div className="item_info">
-                  <h2>{nft.name}</h2>
-                  <p className="text-break">{nft.description}</p>
+                  <Heading>{nft.name}</Heading>
+                  <p className="text-break mb-4">{nft.description}</p>
                   {collection.listable && (
                     <>
                       <PriceActionBar
                         offerType={offerType}
                         onOfferSelected={() => handleMakeOffer()}
                         label="Floor Price"
+                        collectionName={collectionName}
+                        isVerified={collection.verification?.verified}
+                        collectionStats={collectionStats}
                       />
                     </>
                   )}
@@ -212,7 +380,7 @@ const Nft1155 = ({ address, id }) => {
                       title={collectionName ?? 'View Collection'}
                       avatar={hostedImage(collectionMetadata?.avatar, true)}
                       address={address}
-                      verified={collectionMetadata?.verified}
+                      verified={collection.verification?.verified}
                       to={`/collection/${collectionSlug}`}
                     />
 
@@ -260,7 +428,7 @@ const Nft1155 = ({ address, id }) => {
                       {currentTab === tabs.properties && (
                         <div className="tab-1 onStep fadeIn">
                           {(nft.attributes && Array.isArray(nft.attributes) && nft.attributes.length > 0) ||
-                          (nft.properties && Array.isArray(nft.properties) && nft.properties.length > 0) ? (
+                            (nft.properties && Array.isArray(nft.properties) && nft.properties.length > 0) ? (
                             <div className="d-block mb-3">
                               <div className="row gx-3 gy-2">
                                 {nft.attributes &&
@@ -374,7 +542,7 @@ const Nft1155 = ({ address, id }) => {
                                   route="/account"
                                   primaryTitle="Bought by"
                                   user={listing.purchaser}
-                                  time={timeSince(listing.saleTime + '000')}
+                                  time={timeSince(listing.saleTime)}
                                   price={ethers.utils.commify(listing.price)}
                                   primaryText={shortAddress(listing.purchaser)}
                                 />
@@ -414,7 +582,7 @@ const Nft1155 = ({ address, id }) => {
                       )}
                       {currentTab === tabs.listings && (
                         <div className="tab-3 onStep fadeIn">
-                          <NFTTabListings listings={activeListings} />
+                          <NFTTabListings listings={activeListings} nft={nft} />
                         </div>
                       )}
 
@@ -427,7 +595,7 @@ const Nft1155 = ({ address, id }) => {
                                 <div>
                                   <a href={`${config.urls.explorer}address/${address}`} target="_blank">
                                     {shortAddress(address)}
-                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted"/>
+                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted" />
                                   </a>
                                 </div>
                               </div>
@@ -436,7 +604,7 @@ const Nft1155 = ({ address, id }) => {
                                 <div>
                                   <a href={`${config.urls.explorer}token/${address}?a=${id}`} target="_blank">
                                     {id.length > 10 ? shortAddress(id) : id}
-                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted"/>
+                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted" />
                                   </a>
                                 </div>
                               </div>
@@ -467,7 +635,7 @@ const Nft1155 = ({ address, id }) => {
           isOpen={openMakeOfferDialog}
           onClose={() => setOpenMakeOfferDialog(false)}
           nftId={id}
-          collection={collection}
+          nftAddress={address}
         />
       )}
       <Footer />

@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import Blockies from 'react-blockies';
-import { commify } from 'ethers/lib/utils';
+import {commify} from 'ethers/lib/utils';
 import Link from 'next/link';
 
 import Button from '../../../Components/components/Button';
 import {findCollectionByAddress, shortString, timeSince} from '@src/utils';
-import { getNftDetails } from '@src/GlobalState/nftSlice';
 import AcceptOfferDialog from "@src/Components/Offer/Dialogs/AcceptOfferDialog";
 import {RejectOfferDialog} from "@src/Components/Offer/Dialogs/RejectOfferDialog";
+import Image from "next/image";
 
 const TableRowContainer = styled.div`
   display: flex;
@@ -103,15 +102,8 @@ export const OFFER_TYPE = {
 export default function TableRow({ data, type }) {
   const { state, timeCreated, seller, buyer, price, nftAddress, nftId } = data;
 
-  let nft = useSelector((state) => {
-    return { ...state.nft.nft, address: nftAddress };
-  });
-
-  const dispatch = useDispatch();
-
   const [offerType, setOfferType] = useState(OFFER_TYPE.none);
   const handleOffer = (type) => {
-    dispatch(getNftDetails(nftAddress, nftId));
     setOfferType(type);
   };
 
@@ -150,7 +142,6 @@ export default function TableRow({ data, type }) {
           isOpen={!!offerType}
           onClose={() => handleOffer(OFFER_TYPE.none)}
           collection={collectionData}
-          nft={nft}
           isCollectionOffer={!data.nftId}
           offer={data}
         />
@@ -160,7 +151,6 @@ export default function TableRow({ data, type }) {
           isOpen={!!offerType}
           onClose={() => handleOffer(OFFER_TYPE.none)}
           collection={collectionData}
-          nft={nft}
           isCollectionOffer={!data.nftId}
           offer={data}
         />
@@ -189,23 +179,30 @@ export default function TableRow({ data, type }) {
           </div>
           <a href={`/collection/${collectionData?.slug}/${nftId}`}>{shortString(nftId)}</a>
         </div>
-        <div className="table-row-item">{commify(price)} CRO</div>
+        <div className="table-row-item">
+          <div className="d-flex">
+            <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+            <span className="ms-1">
+              {commify(price)}
+            </span>
+          </div>
+        </div>
         <div className="table-row-item">{getOfferDate(timeCreated)} ago</div>
         <div className="table-row-item">
-          <Button
-            type="legacy"
-            onClick={() => handleOffer(OFFER_TYPE.accept)}
-            disabled={getState(state) !== 'Active'}
-          >
-            Accept
-          </Button>
+          {getState(state) === 'Active' && (
+            <Button
+              type="legacy"
+              onClick={() => handleOffer(OFFER_TYPE.accept)}
+            >
+              Accept
+            </Button>
+          )}
         </div>
         <div className="table-row-item">
-          {type !== 'received-public' && type !== 'received-collection' && (
+          {type !== 'received-public' && type !== 'received-collection' && getState(state) === 'Active' && (
             <Button
               type="legacy-outlined"
               onClick={() => handleOffer(OFFER_TYPE.reject)}
-              disabled={getState(state) !== 'Active'}
             >
               Reject
             </Button>
@@ -249,20 +246,20 @@ export default function TableRow({ data, type }) {
         </ItemRow>
         <ItemRow>
           <div className="table-row-button">
-            <Button
-              type="legacy"
-              onClick={() => handleOffer(OFFER_TYPE.accept)}
-              disabled={getState(state) !== 'Active'}
-            >
-              Accept
-            </Button>
+            {getState(state) === 'Active' && (
+              <Button
+                type="legacy"
+                onClick={() => handleOffer(OFFER_TYPE.accept)}
+              >
+                Accept
+              </Button>
+            )}
           </div>
           <div className="table-row-button">
-            {!collectionData.multiToken && (
+            {!collectionData.multiToken && getState(state) === 'Active' && (
               <Button
                 type="legacy-outlined"
                 onClick={() => handleOffer(OFFER_TYPE.reject)}
-                disabled={getState(state) !== 'Active'}
               >
                 Reject
               </Button>

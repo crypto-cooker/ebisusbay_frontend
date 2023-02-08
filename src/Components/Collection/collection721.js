@@ -11,11 +11,11 @@ import SalesCollection from '../components/SalesCollection';
 import CollectionNftsGroup from '../components/CollectionNftsGroup';
 import CollectionListingsGroup from '../components/CollectionListingsGroup';
 import {init, fetchListings, getStats, updateTab} from '@src/GlobalState/collectionSlice';
-import { isCronosVerseCollection, isCrosmocraftsCollection } from '@src/utils';
+import {isBundle, isCnsCollection, isCronosVerseCollection, isCrosmocraftsCollection} from '@src/utils';
 import SocialsBar from './SocialsBar';
 import { CollectionSortOption } from '../Models/collection-sort-option.model';
 import stakingPlatforms from '../../core/data/staking-platforms.json';
-import CollectionCronosverse from '../Collection/collectionCronosverse';
+import CollectionCronosverse from './Custom/Cronosverse';
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {useRouter} from "next/router";
 import {CollectionFilters} from "../Models/collection-filters.model";
@@ -27,6 +27,10 @@ import useBreakpoint from "use-breakpoint";
 import {MobileFilters} from "@src/Components/Collection/CollectionTaskBar/MobileFilters";
 import {FilterResultsBar} from "@src/Components/Collection/FilterResultsBar";
 import {MobileSort} from "@src/Components/Collection/CollectionTaskBar/MobileSort";
+import {CnsRegistration} from "@src/Components/Collection/Custom/CnsRegistration";
+import {Flex, Heading} from "@chakra-ui/react";
+import MintingButton from "@src/Components/Collection/MintingButton";
+import CollectionBundlesGroup from "@src/Components/components/CollectionBundlesGroup";
 
 const NegativeMargin = styled.div`
   margin-left: -1.75rem !important;
@@ -39,19 +43,20 @@ const ThemedBackground = styled.div`
 
 const tabs = {
   items: 'items',
+  bundles: 'bundles',
   activity: 'activity',
-  map: 'map'
+  map: 'map',
+  cns: 'cns'
 };
 
 const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
-const Collection721 = ({ collection,  query }) => {
+const Collection721 = ({ collection, query, activeDrop = null}) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const collectionStats = useSelector((state) => state.collection.stats);
   const collectionLoading = useSelector((state) => state.collection.loading);
   const initialLoadComplete = useSelector((state) => state.collection.initialLoadComplete);
-  // const currentFilter = useSelector((state) => state.collection.query.filter);
 
   const [isFirstLoaded, setIsFirstLoaded] = useState(0);
 
@@ -88,9 +93,7 @@ const Collection721 = ({ collection,  query }) => {
     sortOption.label = 'By Price';
 
     const filterOption = preservedQuery ? CollectionFilters.fromQuery(preservedQuery) : CollectionFilters.default();
-    filterOption.address = collection.mergedAddresses
-      ? [collection.address, ...collection.mergedAddresses]
-      : collection.address;
+    filterOption.address = collection.address;
 
     dispatch(init(filterOption, sortOption));
     dispatch(fetchListings());
@@ -161,6 +164,14 @@ const Collection721 = ({ collection,  query }) => {
     setFiltersVisible(!filtersVisible)
   };
 
+  const handleMintingButtonClick = () => {
+    if (activeDrop.redirect) {
+      window.open(activeDrop.redirect, '_blank');
+    } else {
+      router.push(`/drops/${activeDrop.slug}`)
+    }
+  }
+
   return (
     <div>
       <section
@@ -174,7 +185,7 @@ const Collection721 = ({ collection,  query }) => {
         <div className="mainbreadcumb"></div>
       </section>
 
-      <section className="container d_coll no-top no-bottom">
+      <section className="gl-legacy container d_coll no-top no-bottom">
         <div className="row">
           <div className="col-md-12">
             <div className="d_profile">
@@ -185,16 +196,20 @@ const Collection721 = ({ collection,  query }) => {
                   ) : (
                     <Blockies seed={collection.address.toLowerCase()} size={15} scale={10} />
                   )}
-                  {collection.metadata.verified && (
+                  {collection.verification.verified && (
                     <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={8} stackClass="eb-avatar_badge" />
                   )}
                 </div>
 
                 <div className="profile_name">
-                  <h4>
-                    {collection.name}
-                    <div className="clearfix" />
-                  </h4>
+                  <Flex justify="center" align="center" mb={4}>
+                    <Heading as="h4" size="md" my="auto">
+                      {collection.name}
+                    </Heading>
+                    {activeDrop && (
+                      <MintingButton onClick={handleMintingButtonClick} />
+                    )}
+                  </Flex>
                   <CollectionVerificationRow
                     doxx={collection.verification?.doxx}
                     kyc={collection.verification?.kyc}
@@ -226,7 +241,7 @@ const Collection721 = ({ collection,  query }) => {
                 </div>
               </div>
             )}
-            <CollectionInfoBar collectionStats={collectionStats} />
+            <CollectionInfoBar collectionStats={collectionStats} hideFloor={!collection.listable} />
             {collection.address.toLowerCase() === '0x7D5f8F9560103E1ad958A6Ca43d49F954055340a'.toLowerCase() && (
               <div className="row m-3">
                 <div className="mx-auto text-center fw-bold" style={{ fontSize: '1.2em' }}>
@@ -234,7 +249,7 @@ const Collection721 = ({ collection,  query }) => {
                   <a href="/collection/weird-apes-club-v2">
                     <span className="color">here </span>
                   </a>
-                  for the newer, migrated contract until these pages are unified
+                  for the newer, migrated contract
                 </div>
               </div>
             )}
@@ -263,15 +278,25 @@ const Collection721 = ({ collection,  query }) => {
 
         <div className="de_tab">
           <ul className="de_nav mb-2">
-            <li id="Mainbtn0" className={`tab ${openMenu === tabs.items ? 'active' : ''}`}>
+            <li className={`tab ${openMenu === tabs.items ? 'active' : ''} my-1`}>
               <span onClick={handleBtnClick(tabs.items)}>Items</span>
             </li>
-            <li id="Mainbtn1" className={`tab ${openMenu === tabs.activity ? 'active' : ''}`}>
+            {!isBundle(collection.address) && (
+              <li className={`tab ${openMenu === tabs.bundles ? 'active' : ''} my-1`}>
+                <span onClick={handleBtnClick(tabs.bundles)}>Bundles</span>
+              </li>
+            )}
+            <li className={`tab ${openMenu === tabs.activity ? 'active' : ''} my-1`}>
               <span onClick={handleBtnClick(tabs.activity)}>Activity</span>
             </li>
             {isCronosVerseCollection(collection.address) && (
-              <li id="Mainbtn9" className={`tab ${openMenu === tabs.map ? 'active' : ''}`}>
+              <li className={`tab ${openMenu === tabs.map ? 'active' : ''} my-1`}>
                 <span onClick={handleBtnClick(tabs.map)}>Map</span>
+              </li>
+            )}
+            {isCnsCollection(collection.address) && (
+              <li className={`tab ${openMenu === tabs.cns ? 'active' : ''} my-1`}>
+                <span onClick={handleBtnClick(tabs.cns)}>Register Domain</span>
               </li>
             )}
           </ul>
@@ -279,7 +304,7 @@ const Collection721 = ({ collection,  query }) => {
           <div className="de_tab_content">
             {openMenu === tabs.items && (
               <div className="tab-1 onStep fadeIn">
-                <ThemedBackground className="row sticky-top pt-2">
+                <ThemedBackground className="row position-sticky pt-2" style={{top: 74, zIndex: 5}}>
                   <CollectionTaskBar
                     collection={collection}
                     onFilterToggle={toggleFilterVisibility}
@@ -323,6 +348,13 @@ const Collection721 = ({ collection,  query }) => {
                 </div>
               </div>
             )}
+            {openMenu === tabs.bundles && (
+              <div className="tab-2 onStep fadeIn container">
+                <CollectionBundlesGroup
+                  collection={collection}
+                />
+              </div>
+            )}
             {openMenu === tabs.activity && (
               <div className="tab-2 onStep fadeIn container">
                 <SalesCollection cacheName="collection" collectionId={collection.address} />
@@ -332,6 +364,9 @@ const Collection721 = ({ collection,  query }) => {
               <NegativeMargin className="tab-2 onStep fadeIn overflow-auto mt-2">
                 <CollectionCronosverse collection={collection} slug={collection.slug} cacheName={collection.slug} />
               </NegativeMargin>
+            )}
+            {openMenu === tabs.cns && (
+              <CnsRegistration />
             )}
           </div>
         </div>
@@ -348,6 +383,7 @@ const Collection721 = ({ collection,  query }) => {
       <MobileSort
         show={useMobileMenu && mobileSortVisible}
         onHide={() => setMobileSortVisible(false)}
+        hasRank={hasRank}
       />
 
       {/*{useMobileMenu && openMenu === tabs.items && (*/}

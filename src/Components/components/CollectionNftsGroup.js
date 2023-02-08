@@ -2,13 +2,13 @@ import React, { memo, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Spinner } from 'react-bootstrap';
 
-import NftCard from './NftCard';
-import {isNftBlacklisted} from "../../utils";
+import {isBundle, isNftBlacklisted} from "../../utils";
+import NftBundleCard from "@src/Components/components/NftBundleCard";
+import {NftCard} from "@src/components-v2/shared/nft-card";
 
 const CollectionNftsGroup = ({
   showLoadMore = true,
   listings = [],
-  royalty,
   canLoadMore = false,
   loadMore,
   collection,
@@ -41,12 +41,19 @@ const CollectionNftsGroup = ({
           {listings &&
             listings.map((listing, index) => (
               <div key={index} className="d-item col-xxl-2 col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                <NftCard
-                  listing={listing}
-                  imgClass="collection"
-                  collection={collection}
-                  canBuy={!isNftBlacklisted(listing.address, listing.id) && collection.listable}
-                />
+                {isBundle(listing.address) ? (
+                  <NftBundleCard
+                    listing={listing}
+                    imgClass="collection"
+                  />
+                ) : (
+                  <NftCard
+                    nft={listing}
+                    imgClass="collection"
+                    canBuy={!isNftBlacklisted(listing.address, listing.id) && collection.listable}
+                    is1155={collection.multiToken}
+                  />
+                )}
               </div>
             ))}
         </div>
@@ -60,11 +67,10 @@ const CollectionNftsGroup = ({
             listings.map((listing, index) => (
               <div key={index} className="d-item col-xxl-2 col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12 mb-4 px-2">
                 <NftCard
-                  royalty={royalty}
-                  listing={listing}
+                  nft={listing}
                   imgClass="collection"
-                  collection={collection}
                   canBuy={!isNftBlacklisted(listing.address, listing.id) && collection.listable}
+                  is1155={collection.multiToken}
                 />
               </div>
             ))}

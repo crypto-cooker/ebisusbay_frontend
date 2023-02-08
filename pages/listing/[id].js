@@ -186,7 +186,7 @@ const Listing = () => {
           price = ethers.utils.parseEther(price);
         }
 
-        const tx = await user.marketContract.makePurchase(listing.listingId, {
+        const tx = await user.contractService.market.makePurchase(listing.listingId, {
           value: price,
         });
         const receipt = await tx.wait();
@@ -234,7 +234,7 @@ const Listing = () => {
         image={listing?.nft?.image}
       />
       {isLoading ? (
-        <section className="container">
+        <section className="gl-legacy container">
           <div className="row mt-4">
             <div className="col-lg-12 text-center">
               <Spinner animation="border" role="status">
@@ -244,7 +244,7 @@ const Listing = () => {
           </div>
         </section>
       ) : (
-        <section className="container">
+        <section className="gl-legacy container">
           <div className="row mt-md-5 pt-md-4">
             <div className="col-md-6 text-center">
               {listing ? (
@@ -333,7 +333,7 @@ const Listing = () => {
                       title={collection.name}
                       avatar={hostedImage(collection.metadata.avatar, true)}
                       address={listing.nftAddress}
-                      verified={collection.metadata.verified}
+                      verified={collection.verification.verified}
                       to={`/collection/${collection.slug}`}
                     />
                     {typeof listing.nft.rank !== 'undefined' && listing.nft.rank !== null && (
@@ -508,7 +508,7 @@ const Listing = () => {
                                     </a>
                                   </Link>
                                   <div className="p_list_info">
-                                    <span>{timeSince(item.saleTime + '000')} ago</span>
+                                    <span>{timeSince(item.saleTime)} ago</span>
                                     Bought by{' '}
                                     <b>
                                       <Link href={`/account/${item.purchaser}`}>

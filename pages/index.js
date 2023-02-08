@@ -1,26 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {useRouter} from 'next/router';
 import Link from 'next/link';
-import { keyframes } from '@emotion/react';
+import {keyframes} from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
-import styled, { createGlobalStyle } from 'styled-components';
-import {faBook, faCoffee, faFire} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import styled, {createGlobalStyle} from 'styled-components';
+import {faFire} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import Footer from '../src/Components/components/Footer';
 import ListingCollection from '../src/Components/components/ListingCollection';
 import HotCollections from '../src/Components/components/HotCollections';
 import CurrentDrops from '../src/Components/components/CurrentDrops';
-import { getMarketData } from '@src/GlobalState/marketplaceSlice';
-import { siPrefixedNumber } from '@src/utils';
+import {getMarketData} from '@src/GlobalState/marketplaceSlice';
+import {millisecondTimestamp, newlineText, siPrefixedNumber} from '@src/utils';
 import {getTheme, theme} from '@src/Theme/theme';
-import { limitSizeOptions } from '@src/Components/components/constants/filter-options';
+import {limitSizeOptions} from '@src/Components/components/constants/filter-options';
 import Button from '../src/Components/components/Button';
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {appConfig} from "@src/Config";
 import Head from "next/head";
-import {faDiscord, faTwitter} from "@fortawesome/free-brands-svg-icons";
+import {Center, Heading, Wrap, WrapItem} from "@chakra-ui/react";
+import ads from "@src/core/data/ads.json";
 
 const fadeInUp = keyframes`
   0% {
@@ -90,8 +91,7 @@ const GlobalStyles = createGlobalStyle`
 const Jumbotron = {
   Host: styled.div`
     background-image: url(${({ isDark }) =>
-      isDark ? ImageKitService.buildBannerUrl('/img/background/banner-dark.webp') : ImageKitService.buildBannerUrl('/img/background/Ebisus-bg-1_L.webp')});
-    background-size: cover;
+    isDark ? ImageKitService.buildBannerUrl('/img/background/banner-dark.webp') : ImageKitService.buildBannerUrl('/img/background/Ebisus-bg-1_L.webp')});    background-size: cover;
     background-repeat: no-repeat;
     height: max(100vh, 800px);
     display: flex;
@@ -113,6 +113,12 @@ const Jumbotron = {
     border-radius: 10px;
   `,
 };
+const featuredAd = ads
+  .sort((a, b) => a.weight < b.weight ? 1 : -1)
+  .find((ad) => {
+    const now = Date.now();
+    return now > millisecondTimestamp(ad.start) && (!ad.end || now < millisecondTimestamp(ad.end));
+  });
 
 const Home = () => {
   const history = useRouter();
@@ -157,13 +163,13 @@ const Home = () => {
   const JumbotronData = () => {
     return (
       <Jumbotron.Data>
-        <h6>
+        <Heading as="h6" size="sm">
           <span className="text-uppercase color">Ebisu's Bay Marketplace</span>
-        </h6>
+        </Heading>
         <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
-          <h1>
+          <Heading as="h1" size="2xl">
             Discover <span className="color">rare</span> digital art and collect NFTs
-          </h1>
+          </Heading>
         </Reveal>
         <Reveal className="onStep" keyframes={fadeInUp} delay={600} duration={900} triggerOnce>
           <p className="lead">
@@ -198,27 +204,27 @@ const Home = () => {
               <div className="row">
                 <div className="col-4 col-sm-4 col-md-4 col-12  mb30 ">
                   <div className="de_count text-center text-md-start">
-                    <h3>
+                    <Heading as="h3" size="xl">
                       <span>{siPrefixedNumber(Number(marketData.totalVolume).toFixed(0))}</span>
-                    </h3>
+                    </Heading>
                     <h5 className="id-color">Volume</h5>
                   </div>
                 </div>
 
                 <div className="col-4 col-sm-4 col-md-4 col-12 mb30 ">
                   <div className="de_count text-center text-md-start">
-                    <h3>
+                    <Heading as="h3" size="xl">
                       <span>{siPrefixedNumber(Number(marketData.totalSales).toFixed(0))}</span>
-                    </h3>
+                    </Heading>
                     <h5 className="id-color">NFTs Sold</h5>
                   </div>
                 </div>
 
                 <div className="col-4 col-sm-4 col-md-4 col-12 mb30 ">
                   <div className="de_count text-center text-md-start">
-                    <h3>
+                    <Heading as="h3" size="xl">
                       <span>{siPrefixedNumber(marketData.totalActive)}</span>
-                    </h3>
+                    </Heading>
                     <h5 className="id-color">Active Listings</h5>
                   </div>
                 </div>
@@ -250,58 +256,52 @@ const Home = () => {
       </Jumbotron.Host>
       {mobile && JumbotronData()}
 
-      <section className="container no-bottom no-top">
-        <div className="row">
-          <div className="col-lg-12">
-            <div className="text-center pt-5">
-              <h2>CROtopia</h2>
-              <div className="small-border"></div>
+      {featuredAd && (
+        <section className="gl-legacy container no-bottom no-top">
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="text-center pt-5">
+                <Heading>{featuredAd.name}</Heading>
+                <div className="small-border"></div>
+              </div>
             </div>
-          </div>
-          <div className="col-lg-6 col-md-6 d-flex align-items-center">
-            <div className="mt-3" style={{color:getTheme(userTheme).colors.textColor3}}>
-              <p>
-                CROtopia OG Pass gives users immediate access to a fully functioning and ever expanding Metaverse. Holders gain access to all partner buildings and are able to compete in our Play 2 Earn section. Crotopia OG pass holders will also benefit from exclusive airdrops, skins, accessories and more.
-              </p>
+            <div className="col-lg-6 col-md-6 d-flex align-items-center">
+              <div className="mt-3 fs-5" style={{color:getTheme(userTheme).colors.textColor3}}>
+                {newlineText(featuredAd.description)}
+              </div>
             </div>
-          </div>
-          <div className="col-lg-6 col-md-6 pt-3">
-            <div className="mx-auto text-center">
-              <img
-                src={hostedImage('/img/promos/crotopia.webp')}
-                alt="CROtopia"
-                className="img-fluid"
-                width="100%"
-                style={{maxWidth: '300px'}}
-              />
-            </div>
-            <div className="d-flex flex-column align-middle">
-              <div className="d-flex justify-content-between flex-wrap">
-                <div className="flex-fill mx-1 mt-2">
-                  <a href="https://www.crotopia.land/" target="_blank" rel="noreferrer">
-                    <Button type="legacy-outlined" className="w-100">
-                      Metaverse
-                    </Button>
-                  </a>
-                </div>
-                <div className="flex-fill mx-auto mt-2" style={{maxWidth:300}}>
-                  <a href="https://www.crotopia.xyz" target="_blank" rel="noreferrer">
-                    <Button type="legacy" className="w-100">
-                       Mint Now
-                    </Button>
-                  </a>
+            <div className="col-lg-6 col-md-6 pt-3">
+              <div className="mx-auto text-center">
+                <img
+                  src={featuredAd.image.startsWith('/') ? hostedImage(featuredAd.image) : featuredAd.image}
+                  alt={featuredAd.name}
+                  className="img-fluid"
+                  width="100%"
+                />
+              </div>
+              <div className="d-flex flex-column align-middle">
+                <div className="d-flex justify-content-between flex-wrap">
+                  <div className="flex-fill mx-auto mt-2" style={{maxWidth:300}}>
+                    {featuredAd.links.map((link, index) => (
+                      <a key={index} href={link.url} target={link.external ? '_blank' : '_self'} rel="noreferrer">
+                        <Button type="legacy" className="w-100">
+                          {link.label}
+                        </Button>
+                      </a>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      <section className="container no-bottom">
+      <section className="gl-legacy container no-bottom">
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2>Current Drops</h2>
+              <Heading>Current Drops</Heading>
               <div className="small-border"></div>
             </div>
           </div>
@@ -311,11 +311,11 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="container no-bottom">
+      <section className="gl-legacy container no-bottom">
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2>Hot Collections</h2>
+              <Heading>Hot Collections</Heading>
               <div className="small-border"></div>
             </div>
           </div>
@@ -325,72 +325,98 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="container">
-        <div className="row">
-          <div className="col-lg-12">
-            <div className="text-center">
-              <h2>New Listings</h2>
-              <div className="small-border"></div>
-            </div>
-          </div>
-          <div className="col-lg-12">
-            <ListingCollection limitSize={limitSizeOptions.md} showLoadMore={false} />
-          </div>
-          <div className="col-lg-12">
-            <div className="spacer-single"></div>
-            <span onClick={() => navigateTo(`/marketplace`)} className="btn-main lead m-auto">
-              View Marketplace
-            </span>
-          </div>
-        </div>
-      </section>
+      {/*<section className="gl-legacy container">*/}
+      {/*  <div className="row">*/}
+      {/*    <div className="col-lg-12">*/}
+      {/*      <div className="text-center">*/}
+      {/*        <Heading>New Listings</Heading>*/}
+      {/*        <div className="small-border"></div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*    <div className="col-lg-12">*/}
+      {/*      <ListingCollection limitSize={limitSizeOptions.md} showLoadMore={false} />*/}
+      {/*    </div>*/}
+      {/*    <div className="col-lg-12">*/}
+      {/*      <div className="spacer-single"></div>*/}
+      {/*      <span onClick={() => navigateTo(`/marketplace`)} className="btn-main lead m-auto">*/}
+      {/*        View Marketplace*/}
+      {/*      </span>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</section>*/}
 
-      <section className="container">
+      <section className="gl-legacy container">
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2>Frens</h2>
+              <Heading>Frens</Heading>
               <div className="small-border"></div>
             </div>
           </div>
         </div>
         <div className="row align-items-center text-center">
-          <div className="col">
-            <a href="https://nebkas.ro" target="_blank" rel="noreferrer">
-              <img
-                src={hostedImage(userTheme === 'light' ? '/img/logos/nebkas-logo.png' : '/img/logos/nebkas-logo.png')}
-                alt="nebkas.co"
-                width="128px"
-              />
-            </a>
-          </div>
-          <div className="col">
-            <a href="https://weare.fi/en/" target="_blank" rel="noreferrer">
-              <img
-                src={hostedImage(userTheme === 'light' ? '/img/logos/wearefi-logo.png' : '/img/logos/wearefi-white.png')}
-                alt="WeAre Solutions"
-                width={userTheme === 'light' ? '64px' : '160px'}
-              />
-            </a>
-          </div>
-          <div className="col">
-            <a href="https://phenix.finance/" target="_blank" rel="noreferrer">
-              <img
-                src={hostedImage(userTheme === 'light' ? '/img/logos/phenix.svg' : '/img/logos/phenix-white.svg')}
-                alt="Phenix Finance"
-                width="100px"
-              />
-            </a>
-          </div>
-          <div className="col">
-            <a href="https://crodex.app/" target="_blank" rel="noreferrer">
-              <img
-                src={hostedImage(userTheme === 'light' ? '/img/logos/crodex.png' : '/img/logos/crodex-white.png')}
-                alt="CRODEX"
-                width="150px"
-              />
-            </a>
-          </div>
+          <Wrap align='center' justify='center' spacing={12}>
+            <WrapItem>
+              <Center>
+                <a href="https://nebkas.ro" target="_blank" rel="noreferrer">
+                  <img
+                    src={hostedImage(userTheme === 'light' ? '/img/logos/nebkas-logo.png' : '/img/logos/nebkas-logo.png')}
+                    alt="nebkas.co"
+                    width="128px"
+                  />
+                </a>
+              </Center>
+            </WrapItem>
+            <WrapItem>
+              <Center>
+                <a href="https://weare.fi/en/" target="_blank" rel="noreferrer">
+                  <img
+                    src={hostedImage(userTheme === 'light' ? '/img/logos/wearefi-logo.png' : '/img/logos/wearefi-white.png')}
+                    alt="WeAre Solutions"
+                    width={userTheme === 'light' ? '64px' : '160px'}
+                  />
+                </a>
+              </Center>
+            </WrapItem>
+            <WrapItem>
+              <Center>
+                <a href="https://crodex.app/" target="_blank" rel="noreferrer">
+                  <img
+                    src={hostedImage(userTheme === 'light' ? '/img/logos/crodex.png' : '/img/logos/crodex-white.png')}
+                    alt="CRODEX"
+                    width="150px"
+                  />
+                </a>
+              </Center>
+            </WrapItem>
+            <WrapItem>
+              <Center>
+                <a href="https://defiolio.com/" target="_blank" rel="noreferrer">
+                  <img
+                    src={hostedImage(userTheme === 'light' ? '/img/logos/defiolio.webp' : '/img/logos/defiolio-white.webp')}
+                    alt="Defiolio"
+                    width="150px"
+                  />
+                </a>
+              </Center>
+            </WrapItem>
+            <WrapItem>
+              <Center>
+                <a href="#">
+                  <img
+                    onClick={() => window['logBadgeClick']()}
+                    id="badge-button"
+                    style={{"width":"240px", "height":"53px"}}
+                    src={hostedImage(userTheme === 'light' ?
+                      '/img/logos/alchemy-light.svg' :
+                      '/img/logos/alchemy-dark.svg'
+                    )}
+                    alt="Alchemy Supercharged"
+                  />
+                </a>
+              </Center>
+            </WrapItem>
+          </Wrap>
         </div>
       </section>
       <Footer />

@@ -1,15 +1,12 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import { Dialog, DialogContent, DialogTitle } from '@mui/material';
-import styled from 'styled-components';
 import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
-import {Badge, Col, Form, Spinner} from "react-bootstrap";
+import {Badge, Form, Spinner} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {Contract, ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {txExtras} from "@src/core/constants";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
 import {appConfig} from "@src/Config";
 import Offer from "@src/Contracts/Offer.json";
@@ -20,47 +17,16 @@ import {hostedImage} from "@src/helpers/image";
 import Blockies from "react-blockies";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
 import {getMyCollectionOffers} from "@src/core/subgraph";
-
-const DialogContainer = styled(Dialog)`
-  .MuiPaper-root {
-    border-radius: 8px;
-    overflow: hidden;
-    background-color: ${({ theme }) => theme.colors.bgColor1};
-  }
-
-  .MuiDialogContent-root {
-    width: 700px;
-    padding: 15px 42px 28px !important;
-    border-radius: 8px;
-    max-width: 734px;
-    background-color: ${({ theme }) => theme.colors.bgColor1};
-    color: ${({ theme }) => theme.colors.textColor3};
-
-    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
-      width: 100%;
-    }
-  }
-`;
-
-const DialogTitleContainer = styled(DialogTitle)`
-  font-size: 26px !important;
-  color: ${({ theme }) => theme.colors.textColor3};
-  padding: 0px !important;
-  margin-bottom: 18px !important;
-  font-weight: bold !important;
-  text-align: center;<
-`;
-
-const CloseIconContainer = styled.div`
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  cursor: pointer;
-
-  img {
-    width: 28px;
-  }
-`;
+import {
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay
+} from "@chakra-ui/react";
+import {getTheme} from "@src/Theme/theme";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -78,7 +44,7 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
 
   const windowSize = useWindowSize();
   const user = useSelector((state) => state.user);
-  const {offerContract, marketContract} = user;
+  const {contractService} = user;
 
   const isAboveFloorPrice = (price) => {
     return (parseInt(floorPrice) > 0 && ((Number(price) - floorPrice) / floorPrice) * 100 > floorThreshold);
@@ -111,20 +77,11 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
     }
   }, [collection, user.provider]);
 
-  const wrappedOfferContract = () => {
-    return offerContract ?? new Contract(config.contracts.offer, Offer.abi, user.provider.getSigner());
-  };
-
-  const wrappedMarketContract = () => {
-    return marketContract ?? new Contract(config.contracts.market, Market.abi, user.provider.getSigner());
-  };
-
   const getInitialProps = async () => {
     try {
       setIsLoading(true);
       setPriceError(null);
       const collectionAddress = collection.address;
-      const marketContract = wrappedMarketContract();
 
       const floorPrice = await getCollectionMetadata(collectionAddress);
       if (floorPrice.collections.length > 0) {
@@ -157,23 +114,17 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
 
       setExecutingCreateListing(true);
       Sentry.captureEvent({message: 'handleCreateOffer', extra: {address: collectionAddress, price}});
-      const contract = wrappedOfferContract();
+      const contract = contractService.offer;;
 
       let tx;
       if (existingOffer) {
         const newPrice = parseInt(offerPrice) - parseInt(existingOffer.price)
         tx = await contract.uppdateCollectionOffer(existingOffer.nftAddress, existingOffer.offerIndex, {
-          ...{
-            value: ethers.utils.parseEther(newPrice.toString()),
-          },
-          ...txExtras,
+          value: ethers.utils.parseEther(newPrice.toString())
         });
       } else {
         tx = await contract.makeCollectionOffer(collectionAddress, {
-          ...{
-            value: ethers.utils.parseEther(offerPrice.toString()),
-          },
-          ...txExtras,
+          value: ethers.utils.parseEther(offerPrice.toString())
         });
       }
 
@@ -225,102 +176,107 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
   if (!collection) return <></>;
 
   return (
-    <DialogContainer onClose={onClose} open={isOpen} maxWidth="md">
-      <DialogContent>
+    <Modal onClose={onClose} isOpen={isOpen} size="2xl" isCentered>
+      <ModalOverlay />
+      <ModalContent>
         {!isLoading ? (
           <>
-            <DialogTitleContainer className="fs-5 fs-md-3">
+            <ModalHeader className="text-center">
               {existingOffer ? <>Update Offer on {collection.name}</> : <>Offer on {collection.name}</>}
-            </DialogTitleContainer>
-            <div className="text-center mb-2" style={{fontSize: '14px'}}>
-              This is an offer on the entire {collection.name} collection. Any owners of this collection will be able to view and accept it.
-            </div>
-            <div className="nftSaleForm row gx-3">
-              <div className="col-12 col-sm-6 mb-sm-3">
-                <div className="profile_avatar d-flex justify-content-center">
-                  <div className="d_profile_img">
-                    {collection.metadata.avatar ? (
-                      <img src={hostedImage(collection.metadata.avatar)} alt={collection.name} />
-                    ) : (
-                      <Blockies seed={collection.address.toLowerCase()} size={15} scale={10} />
-                    )}
-                    {collection.metadata.verified && (
-                      <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={8} stackClass="eb-avatar_badge" />
-                    )}
+            </ModalHeader>
+            <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
+            <ModalBody>
+              <div className="text-center mb-2" style={{fontSize: '14px'}}>
+                This is an offer on the entire {collection.name} collection. Any owners of this collection will be able to view and accept it.
+              </div>
+              <div className="nftSaleForm row gx-3">
+                <div className="col-12 col-sm-6 mb-sm-3">
+                  <div className="profile_avatar d-flex justify-content-center">
+                    <div className="dialog_avatar position-relative">
+                      {collection.metadata.avatar ? (
+                        <img src={hostedImage(collection.metadata.avatar)} alt={collection.name} />
+                      ) : (
+                        <Blockies seed={collection.address.toLowerCase()} size={15} scale={10} />
+                      )}
+                      {collection.verification.verified && (
+                        <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={8} stackClass="eb-avatar_badge" />
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="col-12 col-sm-6 my-auto">
-                <div className="mt-4 mt-sm-0 mb-3 mb-sm-0">
-                  {existingOffer && (
-                    <div className="d-flex justify-content-between">
-                      <Form.Label className="formLabel">
-                        Previous Offer:
-                      </Form.Label>
-                      <div>
-                        {existingOffer.price} CRO
-                      </div>
-                    </div>
-                  )}
-                  <Form.Group className="form-field">
-                    <Form.Label className="formLabel w-100">
-                      <div className="d-flex">
-                        <div className="flex-grow-1">Offer Amount</div>
-                        <div className="my-auto">
-                          <Badge
-                            pill
-                            bg={user.theme === 'dark' ? 'light' : 'secondary'}
-                            text={user.theme === 'dark' ? 'dark' : 'light'}
-                            className="ms-2"
-                          >
-                            Floor: {floorPrice} CRO
-                          </Badge>
+                <div className="col-12 col-sm-6 my-auto">
+                  <div className="mt-4 mt-sm-0 mb-3 mb-sm-0">
+                    {existingOffer && (
+                      <div className="d-flex justify-content-between">
+                        <Form.Label className="formLabel">
+                          Previous Offer:
+                        </Form.Label>
+                        <div>
+                          {existingOffer.price} CRO
                         </div>
                       </div>
-                    </Form.Label>
-                    <Form.Control
-                      className="input"
-                      type="number"
-                      placeholder="Enter Amount"
-                      value={offerPrice}
-                      onChange={costOnChange}
-                      disabled={showConfirmButton || executingCreateListing}
-                    />
-                    <Form.Text className="field-description textError">
-                      {priceError}
-                    </Form.Text>
-                  </Form.Group>
-
-                  <div className="d-flex flex-wrap justify-content-between">
-                    {windowSize.width > 377 && (
-                      <Badge bg="danger" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(-0.25)}>
-                        -25%
-                      </Badge>
                     )}
-                    <Badge bg="danger" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(-0.1)}>
-                      -10%
-                    </Badge>
-                    <Badge
-                      bg={user.theme === 'dark' ? 'light' : 'secondary'}
-                      text={user.theme === 'dark' ? 'dark' : 'light'}
-                      className="cursor-pointer my-1" onClick={() => onQuickCost(0)}
-                    >
-                      Floor
-                    </Badge>
-                    <Badge bg="success" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(0.1)}>
-                      +10%
-                    </Badge>
+                    <Form.Group className="form-field">
+                      <Form.Label className="formLabel w-100">
+                        <div className="d-flex">
+                          <div className="flex-grow-1">Offer Amount</div>
+                          <div className="my-auto">
+                            <Badge
+                              pill
+                              bg={user.theme === 'dark' ? 'light' : 'secondary'}
+                              text={user.theme === 'dark' ? 'dark' : 'light'}
+                              className="ms-2"
+                            >
+                              Floor: {floorPrice} CRO
+                            </Badge>
+                          </div>
+                        </div>
+                      </Form.Label>
+                      <Form.Control
+                        className="input"
+                        type="number"
+                        placeholder="Enter Amount"
+                        value={offerPrice}
+                        onChange={costOnChange}
+                        disabled={showConfirmButton || executingCreateListing}
+                      />
+                      <Form.Text className="field-description textError">
+                        {priceError}
+                      </Form.Text>
+                    </Form.Group>
 
-                    {windowSize.width > 377 && (
-                      <Badge bg="success" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(0.25)}>
-                        +25%
+                    <div className="d-flex flex-wrap justify-content-between">
+                      {windowSize.width > 377 && (
+                        <Badge bg="danger" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(-0.25)}>
+                          -25%
+                        </Badge>
+                      )}
+                      <Badge bg="danger" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(-0.1)}>
+                        -10%
                       </Badge>
-                    )}
+                      <Badge
+                        bg={user.theme === 'dark' ? 'light' : 'secondary'}
+                        text={user.theme === 'dark' ? 'dark' : 'light'}
+                        className="cursor-pointer my-1" onClick={() => onQuickCost(0)}
+                      >
+                        Floor
+                      </Badge>
+                      <Badge bg="success" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(0.1)}>
+                        +10%
+                      </Badge>
+
+                      {windowSize.width > 377 && (
+                        <Badge bg="success" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(0.25)}>
+                          +25%
+                        </Badge>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
-
-              <div className="mt-3 mx-auto">
+            </ModalBody>
+            <ModalFooter className="border-0">
+              <div className="w-100">
                 {showConfirmButton ? (
                   <>
                     <div className="alert alert-danger my-auto mb-2 fw-bold text-center">
@@ -332,6 +288,7 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
                     <div className="d-flex">
                       <Button type="legacy"
                               onClick={() => setShowConfirmButton(false)}
+                              disabled={executingCreateListing}
                               className="me-2 flex-fill">
                         Go Back
                       </Button>
@@ -363,7 +320,7 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
                   </>
                 )}
               </div>
-            </div>
+            </ModalFooter>
           </>
         ) : (
           <EmptyData>
@@ -372,10 +329,7 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
             </Spinner>
           </EmptyData>
         )}
-        <CloseIconContainer onClick={onClose}>
-          <img src="/img/icons/close-icon-blue.svg" alt="close" width="40" height="40" />
-        </CloseIconContainer>
-      </DialogContent>
-    </DialogContainer>
+      </ModalContent>
+    </Modal>
   );
 }

@@ -11,10 +11,28 @@ import { CdnImage } from '@src/Components/components/CdnImage';
 import { hostedImage } from '@src/helpers/image';
 import useGetCollections from '../../hooks/useGetCollections';
 import { filter } from 'lodash';
+import styled from "styled-components";
+import LayeredIcon from "@src/Components/components/LayeredIcon";
+import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
+import {appConfig} from "@src/Config";
 
+const config = appConfig();
 const mobileListBreakpoint = 1000;
 const PAGE_SIZE = 50;
 const tableMobileView = typeof window !== 'undefined' && window.innerWidth > mobileListBreakpoint;
+
+const VerifiedIcon = styled.span`
+  font-size: 8px;
+  color: #ffffff;
+  background: $color;
+  border-radius: 100%;
+  -moz-border-radius: 100%;
+  -webkit-border-radius: 100%;
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  z-index:1000;
+`;
 
 const Table = ({ timeFrame, searchTerms, onlyVerified }) => {
 
@@ -50,7 +68,9 @@ const Table = ({ timeFrame, searchTerms, onlyVerified }) => {
   const collectionNumberActiveValue = ({ numberActive }) => numberActive;
 
   const fetcher = async ({ pageParam = 1 }) => {
-    return await getCollections(pageParam);
+    const result = await getCollections(pageParam);
+    const knownContracts = config.collections.map((c) => c.address.toLowerCase());
+    return result.filter((collection) => knownContracts.includes(collection.collection.toLowerCase()));
   };
 
   const {
@@ -108,9 +128,7 @@ const Table = ({ timeFrame, searchTerms, onlyVerified }) => {
 
   useEffect(() => {
     changeFilters({ ...filter, verified: onlyVerified ? 1 : null })
-  }, [onlyVerified])
-
-  onlyVerified
+  }, [onlyVerified]);
 
   const historyContent = useMemo(() => {
     return status === "loading" ? (
@@ -139,7 +157,6 @@ const Table = ({ timeFrame, searchTerms, onlyVerified }) => {
               return (
                 <tr key={index}>
                   {tableMobileView && <td>{(index + 1) + (indexPages * PAGE_SIZE)}</td>}
-                 { console.log(index, indexPages, items.length, (index + 1) + (indexPages * items.length))}
                   <th scope="row" className="row gap-4 border-bottom-0" style={{ paddingLeft: 0 }}>
                     <div className="col-12" style={{ paddingLeft: '75px' }}>
                       <div className="coll_list_pp" style={{ cursor: 'pointer' }}>
@@ -155,6 +172,11 @@ const Table = ({ timeFrame, searchTerms, onlyVerified }) => {
                             ) : (
                               <Blockies seed={collection.collection.toLowerCase()} size={10} scale={5} />
                             )}
+                            {collection.verification?.verified && (
+                              <VerifiedIcon>
+                                <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={7} />
+                              </VerifiedIcon>
+                            )}
                           </a>
                         </Link>
                       </div>
@@ -169,7 +191,7 @@ const Table = ({ timeFrame, searchTerms, onlyVerified }) => {
                       <div className="col-12 row gap-1">
                         <div className="col-12 mobile-view-list-item">
                           <span>#</span>
-                          <span className="text-end">{index + 1}</span>
+                          <span className="text-end">{(index + 1) + (indexPages * PAGE_SIZE)}</span>
                         </div>
                         <div className="col-12 mobile-view-list-item" onClick={() => sortCollections('totalvolume')}>
                           <span>
@@ -189,7 +211,7 @@ const Table = ({ timeFrame, searchTerms, onlyVerified }) => {
                         >
                           <span>Floor Price</span>
                           <span className="text-end">
-                            {collection.numberActive > 0 ? `${collectionFloorPriceValue(collection)} CRO` : 'N/A'}
+                            {collection.listable && collection.numberActive > 0 ? `${collectionFloorPriceValue(collection)} CRO` : 'N/A'}
                           </span>
                         </div>
                         <div className="col-12 mobile-view-list-item" onClick={() => sortCollections('totalaveragesaleprice')}>
@@ -214,7 +236,7 @@ const Table = ({ timeFrame, searchTerms, onlyVerified }) => {
                   {tableMobileView && <td>{siPrefixedNumber(collectionVolume(collection))} CRO</td>}
                   {tableMobileView && <td>{siPrefixedNumber(collectionSales(collection))}</td>}
                   {tableMobileView && (
-                    <td>{collection.numberActive > 0 ? `${collectionFloorPriceValue(collection)} CRO` : '-'}</td>
+                    <td>{collection.listable && collection.numberActive > 0 ? `${collectionFloorPriceValue(collection)} CRO` : '-'}</td>
                   )}
                   {tableMobileView && <td>{collectionAveragePrices(collection)} CRO</td>}
                   {tableMobileView && <td>{siPrefixedNumber(collectionNumberActiveValue(collection))}</td>}

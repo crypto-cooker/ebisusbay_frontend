@@ -6,9 +6,12 @@ import { toast } from 'react-toastify';
 import { UploadPfp } from '../../../../Form';
 import { editProfileFormFields } from '../Form/constants';
 import { shortAddress } from '../../../../../utils';
+import {useClipboard} from "@chakra-ui/react";
 
 export default function Pfp({ values, errors, touched, handleChange, setFieldValue, setFieldTouched, handleBlur }) {
   const user = useSelector((state) => state.user);
+  const { onCopy } = useClipboard(user?.address);
+
   const getUserName = (address) => {
     if (values?.userInfo?.username) {
       return values?.userInfo?.username;
@@ -18,9 +21,9 @@ export default function Pfp({ values, errors, touched, handleChange, setFieldVal
     }
   };
 
-  const handleCopy = (code) => () => {
-    navigator.clipboard.writeText(code);
-    toast.success(values?.userInfo?.username ? 'Username copied!' : 'Address copied!');
+  const handleCopy = () => {
+    onCopy();
+    toast.success('Address copied!');
   };
 
   return (
@@ -46,7 +49,7 @@ export default function Pfp({ values, errors, touched, handleChange, setFieldVal
         })}
         <div className="mt-3">
           <span className="me-2">{getUserName(user?.address)}</span>
-          <FontAwesomeIcon icon={faCopy} className="cursor-pointer" onClick={handleCopy(getUserName(user?.address))} />
+          <FontAwesomeIcon icon={faCopy} className="cursor-pointer" onClick={handleCopy} />
         </div>
       </div>
     </div>

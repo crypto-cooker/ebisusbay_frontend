@@ -27,7 +27,7 @@ export class ImageKitService {
   static thumbify(url) {
     if(url.pathname.includes('.')){
       //try to use imagekit thumbnail (check for period it doesn't work if no exension)
-      url.pathname = url.pathname = '/ik-thumbnail.jpg'
+      url.pathname += '/ik-thumbnail.jpg'
       return url.toString();
     }
   }
@@ -47,10 +47,24 @@ export class ImageKitService {
     return kit.buildUrl();
   }
 
+  static buildBannerPreviewUrl(imageUrl) {
+    const kit = ImageKitService.from(imageUrl).setNamed('wide_preview');
+    return kit.buildUrl();
+  }
+
   static buildBannerUrl(imageUrl) {
     const kit = ImageKitService.from(imageUrl)
       .setWidth(1920)
       .setHeight(1080)
+      .setCrop('at_max');
+
+    return kit.buildUrl();
+  }
+
+  static buildFixedWidthUrl(imageUrl, width, height) {
+    const kit = ImageKitService.from(imageUrl)
+      .setWidth(width)
+      .setHeight(height)
       .setCrop('at_max');
 
     return kit.buildUrl();
@@ -102,7 +116,7 @@ export class ImageKitService {
   }
 
   buildUrl() {
-    if (isLocalEnv()) return this.imageUrl;
+    if (isLocalEnv() && this.imageUrl?.startsWith('/')) return this.imageUrl;
     if(!this.imageUrl || this.imageUrl.startsWith('data')) return this.imageUrl;
 
     const cdn = appConfig('urls.cdn');
@@ -151,4 +165,17 @@ export const hostedImage = (imgPath, useThumbnail) => {
 export const nftCardUrl = (nftAddress, nftImage) => {
   if (!nftImage || nftImage.startsWith('data')) return nftImage;
   return ImageKitService.buildNftCardUrl(specialImageTransform(nftAddress, nftImage));
+}
+
+export const convertGateway = (imageUrl) => {
+  if (imageUrl.startsWith('ipfs://')) {
+    const link = imageUrl.split('://')[1];
+    return `https://ipfs.io/ipfs/${link}`;
+  }
+
+  if (imageUrl.startsWith('https://gateway.ebisusbay.com')) {
+    return imageUrl.replace('gateway.ebisusbay.com', 'ipfs.io');
+  }
+
+  return imageUrl;
 }

@@ -14,9 +14,11 @@ import BuyerActionBar from '../Auctions/BuyerActionBar';
 import ProfilePreview from '../components/ProfilePreview';
 import { appConfig } from '../../Config';
 import { hostedImage } from '../../helpers/image';
+import {Heading} from "@chakra-ui/react";
+import {useQuery} from "@tanstack/react-query";
+import { getCollections } from "@src/core/api/next/collectioninfo";
 
 const config = appConfig();
-const knownContracts = config.collections;
 
 const AuctionComponent = (props) => {
   const router = useRouter();
@@ -28,26 +30,34 @@ const AuctionComponent = (props) => {
   const powertraits = useSelector((state) => state.auction.powertraits);
   const isLoading = useSelector((state) => state.auction.loading);
 
-  const collection = useSelector((state) => {
-    return knownContracts.find((c) => c.address.toLowerCase() === listing?.nftAddress.toLowerCase());
-  });
+  const { isLoading : isLoadingCollection, error, data, status } = useQuery(['Collections', listing?.nftAddress.toLowerCase()], () =>
+    getCollections({address: listing?.nftAddress.toLowerCase()}), true
+  )
+
+  const [collection, setCollection] = useState(null);
+
+  useEffect(()=> {
+    if(!isLoadingCollection && data) {
+      setCollection(data.data?.collections[0])
+    }
+  }, [isLoadingCollection, data])
 
   useEffect(() => {
     dispatch(getAuctionDetails(id));
   }, [dispatch, id]);
 
   const fullImage = () => {
-    if (listing.nft.original_image.startsWith('ipfs://')) {
-      const link = listing.nft.original_image.split('://')[1];
+    if (listing.nft.metadata.original_image.startsWith('ipfs://')) {
+      const link = listing.nft.metadata.original_image.split('://')[1];
       return `https://ipfs.io/ipfs/${link}`;
     }
 
-    if (listing.nft.original_image.startsWith('https://gateway.ebisusbay.com')) {
-      const link = listing.nft.original_image.replace('gateway.ebisusbay.com', 'ipfs.io');
+    if (listing.nft.metadata.original_image.startsWith('https://gateway.ebisusbay.com')) {
+      const link = listing.nft.metadata.original_image.replace('gateway.ebisusbay.com', 'ipfs.io');
       return link;
     }
 
-    return listing.nft.original_image;
+    return listing.nft.metadata.original_image;
   };
 
   const [openMenu, setOpenMenu] = React.useState(0);
@@ -64,8 +74,10 @@ const AuctionComponent = (props) => {
   return (
     <>
       <div>
-        {isLoading ? (
-          <section className="container">
+        {isLoading && isLoadingCollection? (
+          <section className="gl-legacy container">
+        
+
             <div className="row mt-4">
               <div className="col-lg-12 text-center">
                 <Spinner animation="border" role="status">
@@ -75,13 +87,13 @@ const AuctionComponent = (props) => {
             </div>
           </section>
         ) : (
-          <section className="container">
-            <div className="row mt-md-5 pt-md-4">
+          <section className="gl-legacy container">
+            <div className="row mt-4">
               <div className="col-md-6 text-center">
                 {listing && (
                   <>
-                    <img src={listing.nft.image} className="img-fluid img-rounded mb-sm-30" alt={listing.nft.name} />
-                    {listing.nft.original_image && (
+                    <img src={listing.nft.metadata.image} className="img-fluid img-rounded mb-sm-30" alt={listing.nft.metadata.name} />
+                    {listing.nft.metadata.original_image && (
                       <div className="nft__item_action mt-2" style={{ cursor: 'pointer' }}>
                         <span onClick={() => window.open(fullImage(), '_blank')}>
                           <span className="p-2">View Full Image</span>
@@ -95,21 +107,23 @@ const AuctionComponent = (props) => {
               <div className="col-md-6">
                 {listing && (
                   <div className="item_info">
-                    <h2>{listing.nft.name}</h2>
-                    <p>{listing.nft.description}</p>
+                    <Heading as="h2" size="xl">{listing.nft.metadata.name}</Heading>
+                    <p className="my-2">{listing.nft.metadata.description}</p>
                     <div className="row">
                       <BuyerActionBar />
                     </div>
                     <div className="row" style={{ gap: '2rem 0' }}>
                       <ProfilePreview type="Seller" address={listing.seller} to={`/account/${listing.seller}`} />
-                      <ProfilePreview
-                        type="Collection"
-                        title={collection.name}
-                        avatar={hostedImage(collection.metadata.avatar, true)}
-                        address={listing.nftAddress}
-                        verified={collection.metadata.verified}
-                        to={`/collection/${collection.slug}`}
-                      />
+                      {collection && (
+                        <ProfilePreview
+                          type="Collection"
+                          title={collection.name}
+                          avatar={hostedImage(collection.metadata.avatar, true)}
+                          address={listing.nftAddress}
+                          verified={collection.verification.verified}
+                          to={`/collection/${collection.slug}`}
+                        />
+                      )}
                     </div>
 
                     <div className="spacer-40"></div>
@@ -135,11 +149,11 @@ const AuctionComponent = (props) => {
                       <div className="de_tab_content">
                         {openMenu === 0 && (
                           <div className="tab-1 onStep fadeIn">
-                            {listing.nft.attributes && listing.nft.attributes.length > 0 ? (
+                            {listing.nft.metadata.attributes && listing.nft.metadata.attributes.length > 0 ? (
                               <div key="charity-attributes">
                                 <div className="d-block mb-3">
                                   <div className="row mt-5 gx-3 gy-2">
-                                    {listing.nft.attributes.map((data, i) => {
+                                    {listing.nft.metadata.attributes.map((data, i) => {
                                       return (
                                         <div key={i} className="col-lg-4 col-md-6 col-sm-6">
                                           <div className="nft_attr">
@@ -227,7 +241,7 @@ const AuctionComponent = (props) => {
                         )}
                         {openMenu === 3 && (
                           <div className="tab-4 onStep fadeIn">
-                            <h4>How it works:</h4>
+                            <Heading as="h4" size="sm">How it works:</Heading>
                             <ol>
                               <li>
                                 Connect your wallet and place a bid. Minimum bid will change depending on the current

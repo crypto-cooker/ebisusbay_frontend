@@ -63,15 +63,13 @@ export const getAllCollections =
             }
 
             if (contract) {
-
               if (contract.mergedAddresses) {
-
                 mergeStats(contract, response, index);
-
               }
               response.collections[index].name = contract.name;
               response.collections[index].slug = contract.slug;
               response.collections[index].metadata = contract.metadata;
+              response.collections[index].verification = contract.verification;
               response.collections[index].listable = contract.listable;
               response.collections[index].skip = !!contract.mergedWith;
             }
@@ -136,9 +134,9 @@ const formatCollections = (collections) => {
 
   return collections.map((collection) => (
     {
-      averageSalePrice: collection?.stats?.total?.avg_sale_price,
+      averageSalePrice: collection?.stats?.total?.avgSalePrice,
       collection: collection?.address,
-      floorPrice: collection?.stats?.total?.floor_price,
+      floorPrice: collection?.stats?.total?.floorPrice,
       listable: collection?.listable,
       metadata: collection?.metadata,
       name: collection?.name,

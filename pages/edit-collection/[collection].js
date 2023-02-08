@@ -1,10 +1,13 @@
 import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
-import { UpdateOwner } from '@src/Components/EditCollection';
+import { UpdateOwner, EditCollection as EditCollectionTab} from '@src/Components/EditCollection';
+import Royalties from "@src/Components/EditCollection/Royalties/Royalties";
+import Footer from "@src/Components/components/Footer";
 
 const tabs = {
   editCollection: 'editCollection',
   setOwner: 'setOwner',
+  royalties: 'royalties'
 };
 
 const EditCollection = ({ tab }) => {
@@ -30,7 +33,7 @@ const EditCollection = ({ tab }) => {
           </div>
         </div>
       </section>
-      <section className="container pt-4">
+      <section className="gl-legacy container pt-4">
         <div className="row mt-2 mt-sm-4">
           <div className="de_tab">
             <div className='' style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -44,20 +47,27 @@ const EditCollection = ({ tab }) => {
                       <span onClick={() => handleTabChange(tabs.setOwner)}>Ownership</span>
                     </li>
                   )}
+                  <li className={`tab mb-2 ${currentTab === tabs.royalties ? 'active' : ''}`}>
+                    <span onClick={() => handleTabChange(tabs.royalties)}>Royalties</span>
+                  </li>
                 </ul>
               </div>
             </div>
             <div className="de_tab_content">
-              {currentTab === tabs.inventory && (
-                <></>
+              {currentTab === tabs.editCollection && (
+                <EditCollectionTab address={collection} />
               )}
               {currentTab === tabs.setOwner && (
                 <UpdateOwner address={collection} />
+              )}
+              {currentTab === tabs.royalties && (
+                <Royalties address={collection} />
               )}
             </div>
           </div>
         </div>
       </section>
+      <Footer />
     </>
   )
 }

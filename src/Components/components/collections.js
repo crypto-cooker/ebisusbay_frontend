@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import Link from 'next/link';
 import { ethers } from 'ethers';
 import Blockies from 'react-blockies';
@@ -9,10 +9,12 @@ import { Form, Spinner } from 'react-bootstrap';
 import Footer from '@src/Components/components/Footer';
 import { getAllCollections } from '@src/GlobalState/collectionsSlice';
 import { debounce, siPrefixedNumber } from '@src/utils';
-import Image from "next/image";
 import {CdnImage} from "@src/Components/components/CdnImage";
 import {hostedImage} from "@src/helpers/image";
 import PageHead from "@src/Components/Head/PageHead";
+import {Heading} from "@chakra-ui/react";
+import LayeredIcon from "@src/Components/components/LayeredIcon";
+import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
 
 const GlobalStyles = createGlobalStyle`
   .mobile-view-list-item {
@@ -28,6 +30,19 @@ const GlobalStyles = createGlobalStyle`
     background-color: rgba(0,0,0,0.6);
     background-blend-mode: multiply;
   }
+`;
+
+const VerifiedIcon = styled.span`
+  font-size: 8px;
+  color: #ffffff;
+  background: $color;
+  border-radius: 100%;
+  -moz-border-radius: 100%;
+  -webkit-border-radius: 100%;
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  z-index:1000;
 `;
 
 const Collections = () => {
@@ -148,14 +163,14 @@ const Collections = () => {
           <div className="container">
             <div className="row m-10-hor">
               <div className="col-12">
-                <h1 className="text-center">Collections</h1>
+                <Heading as="h1" size="2xl" className="text-center">Collections</Heading>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="container no-top">
+      <section className="gl-legacy container no-top">
         <div className="row mt-4">
           <div className="col-lg-4 col-md-6">
             <Form.Control type="text" placeholder="Search for Collection" onChange={handleSearch} />
@@ -227,7 +242,7 @@ const Collections = () => {
                 {filteredCollections &&
                   filteredCollections.map((collection, index) => {
                     return (
-                      <tr key={index}>
+                      <tr key={collection.address}>
                         {tableMobileView && <td>{index + 1}</td>}
                         <th scope="row" className="row gap-4 border-bottom-0" style={{ paddingLeft: 0 }}>
                           <div className="col-12" style={{ paddingLeft: '75px' }}>
@@ -243,6 +258,11 @@ const Collections = () => {
                                     />
                                   ) : (
                                     <Blockies seed={collection.collection.toLowerCase()} size={10} scale={5} />
+                                  )}
+                                  {collection.verification?.verified && (
+                                    <VerifiedIcon>
+                                      <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={7} />
+                                    </VerifiedIcon>
                                   )}
                                 </a>
                               </Link>
@@ -264,13 +284,13 @@ const Collections = () => {
                                 <span>
                                   Volume {timeframe !== null && <span className="badge bg-secondary">{timeframe}</span>}
                                 </span>
-                                <span className="text-end">{siPrefixedNumber(collectionVolume(collection))} CRO</span>
+                                <span className="text-end">{siPrefixedNumber(collectionVolume(collection), 3)} CRO</span>
                               </div>
                               <div className="col-12 mobile-view-list-item" onClick={() => sortCollections('sales')}>
                                 <span>
                                   Sales {timeframe !== null && <span className="badge bg-secondary">{timeframe}</span>}
                                 </span>
-                                <span className="text-end">{siPrefixedNumber(collectionSales(collection))}</span>
+                                <span className="text-end">{siPrefixedNumber(collectionSales(collection), 3)}</span>
                               </div>
                               <div
                                 className="col-12 mobile-view-list-item"
@@ -300,8 +320,8 @@ const Collections = () => {
                             </div>
                           )}
                         </th>
-                        {tableMobileView && <td>{siPrefixedNumber(collectionVolume(collection))} CRO</td>}
-                        {tableMobileView && <td>{siPrefixedNumber(collectionSales(collection))}</td>}
+                        {tableMobileView && <td>{siPrefixedNumber(collectionVolume(collection), 3)} CRO</td>}
+                        {tableMobileView && <td>{siPrefixedNumber(collectionSales(collection), 3)}</td>}
                         {tableMobileView && (
                           <td>{collection.numberActive > 0 ? `${collectionFloorPriceValue(collection)} CRO` : '-'}</td>
                         )}

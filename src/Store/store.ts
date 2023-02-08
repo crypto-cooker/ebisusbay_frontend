@@ -1,0 +1,63 @@
+import { applyMiddleware, compose, createStore, combineReducers } from 'redux';
+
+import thunk from 'redux-thunk';
+import * as Sentry from '@sentry/react';
+import createSentryMiddleware from 'redux-sentry-middleware';
+
+import { memberships } from '../GlobalState/Memberships';
+import marketplaceReducer from '../GlobalState/marketplaceSlice';
+import auctionsReducer from '../GlobalState/auctionsSlice';
+import listingReducer from '../GlobalState/listingSlice';
+import auctionReducer from '../GlobalState/auctionSlice';
+import metaverseReducer from '../GlobalState/metaverseSlice';
+import nftReducer from '../GlobalState/nftSlice';
+import collectionsReducer from '../GlobalState/collectionsSlice';
+import collectionReducer from '../GlobalState/collectionSlice';
+import { appInitializeStateReducer } from '../GlobalState/InitSlice';
+import offerReducer from '../GlobalState/offerSlice';
+import leaderBoardReducer from '../GlobalState/leaderBoardSlice';
+import cartReducer from '../GlobalState/cartSlice';
+import batchListingReducer from '../GlobalState/batchListingSlice';
+import ryoshiStakingReducer from '../GlobalState/ryoshiStakingCartSlice';
+import { user } from '../GlobalState/User';
+
+const rootReducer = combineReducers({
+  memberships: memberships,
+  marketplace: marketplaceReducer,
+  auctions: auctionsReducer,
+  listing: listingReducer,
+  auction: auctionReducer,
+  nft: nftReducer,
+  user: user,
+  appInitialize: appInitializeStateReducer,
+  collections: collectionsReducer,
+  collection: collectionReducer,
+  offer: offerReducer,
+  metaverse: metaverseReducer,
+  leaderBoard: leaderBoardReducer,
+  cart: cartReducer,
+  batchListing: batchListingReducer,
+  ryoshiStakingCart: ryoshiStakingReducer,
+});
+
+const reduxDevToolsComposeEnhancers =
+  (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+
+// @ts-ignore
+const sentryEnhancedMiddlewares = applyMiddleware(thunk, createSentryMiddleware(Sentry, {}));
+
+const enableDevTools = process.env.NODE_ENV !== 'production' || process.env.REACT_APP_DEVTOOLS === 'true';
+
+const reduxDevToolsEnhancedMiddlewares = enableDevTools
+  ? reduxDevToolsComposeEnhancers(sentryEnhancedMiddlewares)
+  : sentryEnhancedMiddlewares;
+
+const store = createStore(rootReducer, reduxDevToolsEnhancedMiddlewares);
+
+
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch
+
+export default store;

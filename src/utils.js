@@ -1,5 +1,4 @@
 import moment from 'moment';
-import { ethers, utils } from 'ethers';
 import blacklist from './core/configs/blacklist.json';
 import attributes from './core/configs/attributes.json';
 import { useEffect, useRef } from 'react';
@@ -7,9 +6,12 @@ import IPFSGatewayTools from '@pinata/ipfs-gateway-tools/dist/node';
 import { appConfig } from './Config';
 import { hostedImage } from './helpers/image';
 import {getProfile} from "@src/core/cms/endpoints/profile";
+import {commify} from "ethers/lib/utils";
+import brands from '../src/core/data/brands.json';
 
-const drops = appConfig('drops');
-const collections = appConfig('collections');
+const config = appConfig();
+const drops = config.drops;
+const collections = config.collections;
 
 const gateway = 'https://mygateway.mypinata.cloud';
 
@@ -217,22 +219,28 @@ export function mapAttributeString(str, address, category, makeHuman = false) {
  * Converts a number to use SI prefixed notation
  *
  * @param num
+ * @param exclude
  * @returns {string|number}
  */
-export function siPrefixedNumber(num) {
+export function siPrefixedNumber(num, exclude = 5) {
+  if (!num) return 0;
+
+  const wholeNumbers = Math.round(Number(num)).toString().length;
+  const shouldPrefix = wholeNumbers > exclude;
+
   // Twelve Zeroes for Trillions
-  return Math.abs(Number(num)) >= 1.0e12
-    ? (Math.abs(Number(num)) / 1.0e12).toFixed(2) + 'T'
+  return Math.abs(Number(num)) >= 1.0e12 && shouldPrefix
+    ? Number((Math.abs(Number(num)) / 1.0e12).toFixed(2)) + 'T'
     : // Nine Zeroes for Billions
-    Math.abs(Number(num)) >= 1.0e9
-      ? (Math.abs(Number(num)) / 1.0e9).toFixed(2) + 'B'
+    Math.abs(Number(num)) >= 1.0e9 && shouldPrefix
+      ? Number((Math.abs(Number(num)) / 1.0e9).toFixed(2)) + 'B'
       : // Six Zeroes for Millions
-    Math.abs(Number(num)) >= 1.0e6
-      ? (Math.abs(Number(num)) / 1.0e6).toFixed(2) + 'M'
+    Math.abs(Number(num)) >= 1.0e6 && shouldPrefix
+      ? Number((Math.abs(Number(num)) / 1.0e6).toFixed(2)) + 'M'
       : // Three Zeroes for Thousands
-    Math.abs(Number(num)) >= 1.0e3
-      ? (Math.abs(Number(num)) / 1.0e3).toFixed(2) + 'K'
-      : Math.abs(Number(num));
+    Math.abs(Number(num)) >= 1.0e3 && shouldPrefix
+      ? Number((Math.abs(Number(num)) / 1.0e3).toFixed(2)) + 'K'
+      : commify(Number(Math.abs(Number(num))));
 }
 
 export function shortAddress(address) {
@@ -246,31 +254,33 @@ export function shortString(str, leftChars = 3, rightChars = 3) {
   return `${str.substring(0, leftChars)}...${str.substring(str.length - rightChars, str.length)}`;
 }
 
-export function timeSince(date) {
-  var seconds = Math.floor((new Date() - date) / 1000);
+export function timeSince(timestamp) {
+  timestamp = millisecondTimestamp(timestamp);
+  const seconds = Math.floor(Math.abs((new Date() - timestamp) / 1000));
+  let interval = Math.floor(seconds / 31536000);
 
-  var interval = seconds / 31536000;
+  if (interval > 1) {
+    return `${interval} ${pluralize(interval, 'year')}`;
+  }
+  interval = Math.floor(seconds / 2592000);
+  if (interval >= 1) {
+    return `${interval} ${pluralize(interval, 'month')}`;
+  }
+  interval = Math.floor(seconds / 86400);
+  if (interval >= 1) {
+    return `${interval} ${pluralize(interval, 'day')}`;
+  }
+  interval = Math.floor(seconds / 3600);
+  if (interval >= 1) {
+    return `${interval} ${pluralize(interval, 'hour')}`;
+  }
+  interval = Math.floor(seconds / 60);
+  if (interval > 1) {
+    return `${interval} ${pluralize(interval, 'minute')}`;
+  }
 
-  if (interval > 1) {
-    return Math.floor(interval) + ' years';
-  }
-  interval = seconds / 2592000;
-  if (interval > 1) {
-    return Math.floor(interval) + ' months';
-  }
-  interval = seconds / 86400;
-  if (interval > 1) {
-    return Math.floor(interval) + ' days';
-  }
-  interval = seconds / 3600;
-  if (interval > 1) {
-    return Math.floor(interval) + ' hours';
-  }
-  interval = seconds / 60;
-  if (interval > 1) {
-    return Math.floor(interval) + ' minutes';
-  }
-  return Math.floor(seconds) + ' seconds';
+  interval = Math.floor(seconds);
+  return `${interval} ${pluralize(interval, 'second')}`;
 }
 
 export function secondsToDhms(seconds) {
@@ -313,6 +323,21 @@ export function createSuccessfulTransactionToastContent(transactionHash) {
   );
 }
 
+export function createSuccessfulAddCartContent(onClickView) {
+  return (
+    <span>
+      Added to cart
+      <span
+        className="link-primary"
+        style={{ paddingLeft: '1rem' }}
+        onClick={onClickView}
+      >
+        View cart
+      </span>
+    </span>
+  );
+}
+
 /**
  *
  * Case insensitive comparison
@@ -326,28 +351,11 @@ export function caseInsensitiveCompare(str1, str2) {
 }
 
 export function newlineText(text) {
-  return text.split('\n').map((str, i) => <p key={i}>{str}</p>);
+  return text.split('\n').map((str, i) => <p key={i} className="mb-3">{str}</p>);
 }
-
-export const isCroniesDrop = (address) => {
-  return isDrop(address, 'cronies');
-};
 
 export const isFounderDrop = (address) => {
   return isDrop(address, 'founding-member');
-};
-
-export const isFounderCollection = (address) => {
-  const collection = collections.find((c) => caseInsensitiveCompare(c.address, address));
-  return collection && ['vip-founding-member', 'founding-member'].includes(collection.slug);
-};
-
-export const isCrognomesDrop = (address) => {
-  return isDrop(address, 'crognomes-member');
-};
-
-export const isCrognomidesDrop = (address) => {
-  return isDrop(address, 'crognomides');
 };
 
 export const isMagBrewVikingsDrop = (address) => {
@@ -374,99 +382,149 @@ export const isCyberCloneDrop = (address) => {
   return isDrop(address, 'cyber-clone');
 };
 
+export const isBossFrogzDrop = (address) => {
+  return isDrop(address, 'trooprz-boss-frogz');
+};
+
+export const isRyoshiVipDrop = (address) => {
+  return isDrop(address, 'ryoshi-tales-vip');
+};
+
 export const isDrop = (address, slug) => {
   const drop = drops.find((d) => d.slug === slug);
   return drop && caseInsensitiveCompare(drop.address, address);
 };
 
-export const isCollection = (address, slug) => {
-  if (Array.isArray(slug)) {
-    return collections.some((c) => slug.includes(c.slug) && caseInsensitiveCompare(c.address, address));
-  }
+export const isCollection = (address, matchesSlug, matchesAddress) => {
+  const slugs = Array.isArray(matchesSlug) ? matchesSlug : [matchesSlug];
+  const addresses = Array.isArray(matchesAddress) ? matchesAddress : [matchesAddress];
+  return (
+    slugs.some((s) => caseInsensitiveCompare(s, address)) ||
+    addresses.some((a) => caseInsensitiveCompare(a, address))
+  );
+};
 
-  const collection = collections.find((c) => c.slug === slug);
-  return collection && caseInsensitiveCompare(collection.address, address);
+export const isBrandCollection = (slug, matchesAddress) => {
+  const brand = brands.find((b) => b.slug === slug);
+  return brand && brand.collections.some((address) => caseInsensitiveCompare(address, matchesAddress));
 };
 
 export const isCroCrowCollection = (address) => {
-  return isCollection(address, 'cro-crow');
+  return isCollection(address, 'cro-crow', '0xe4ab77ed89528d90e6bcf0e1ac99c58da24e79d5');
 };
 
 export const isCrognomidesCollection = (address) => {
-  return isCollection(address, 'crognomides');
+  return isCollection(address, 'crognomides', '0x9AE196176b528680B75C7aea2FBd72456FDFAE17');
 };
 
 export const isMetapixelsCollection = (address) => {
-  return isCollection(address, 'metapixels');
+  return isCollection(address, 'metapixels', '0x19e1f891002240fbea77ccc2adb6e73b93b3b97a');
 };
 
 export const isSouthSideAntsCollection = (address) => {
-  return isCollection(address, 'south-side-ants');
+  return isCollection(address, 'south-side-ants', '0x5219cA4b335bA51aB717E474F31D803381D09d24');
 };
 
 export const isAntMintPassCollection = (address) => {
-  return isCollection(address, 'ant-mint-pass');
+  return isCollection(address, 'ant-mint-pass', '0x844DaCD5A52DB9368E6C606f739599598031da84');
 };
 
 export const isCrosmocraftsPartsCollection = (address) => {
-  return isCollection(address, 'crosmocrafts-parts');
+  return isCollection(address, 'crosmocrafts-parts', '0xf49C94E09E506aCcbe553b673FEe4F44efb06D55');
 };
 
 export const isCrosmocraftsCollection = (address) => {
-  return isCollection(address, 'crosmocrafts');
+  return isCollection(address, 'crosmocrafts', '0xC6373d6F369A9FfE7D93B21F2A5b0E16291d996D');
 };
 
 export const isWeirdApesCollection = (address) => {
-  return isCollection(address, 'weird-apes-club');
+  return isCollection(address, 'weird-apes-club', '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44');
 };
 
 export const isBabyWeirdApesCollection = (address) => {
-  return isCollection(address, 'baby-weird-apes');
+  return isCollection(address, 'baby-weird-apes', '0x89F7114C73d5cef7d7EDCbDb14DaA092EB2194c9');
 };
 
 export const isLadyWeirdApesCollection = (address) => {
-  return isCollection(address, 'lady-weird-apes');
+  return isCollection(address, 'lady-weird-apes', '0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1');
 };
 
 export const isAnyWeirdApesCollection = (address) => {
-  return isCollection(address, [
-    'weird-apes-club',
-    'baby-weird-apes',
-    'lady-weird-apes'
-  ]);
+  return isCollection(
+    address,
+    [
+      'weird-apes-club',
+      'baby-weird-apes',
+      'lady-weird-apes'
+    ],
+    [
+      '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44',
+      '0x89F7114C73d5cef7d7EDCbDb14DaA092EB2194c9',
+      '0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1'
+    ]
+  );
 };
 
 export const isCronosVerseCollection = (address) => {
-  return isCollection(address, 'cronosverse');
+  return isCollection(address, 'cronosverse', '0x0aCDA31Cf1F301a7Eb8f988D47F708FbA058F8f5');
 };
 
 export const isEvoSkullCollection = (address) => {
-  return isCollection(address, 'evo-skull');
+  return isCollection(address, 'evo-skull', '0xbf4E430cD0ce8b93d4760958fe4ae66cDaCDB6c6');
 };
 
 export const isCroSkullPetsCollection = (address) => {
-  return isCollection(address, 'croskull-pets');
+  return isCollection(address, 'croskull-pets', '0xB77959DC7a12F7549ACC084Af01259Fc48813c89');
 };
 
 export const isCroniesCollection = (address) => {
-  return isCollection(address, 'cronies');
-};
-
-export const isIcyValkyriesCollection = (address) => {
-  return isCollection(address, 'icy-valkyries');
+  return isCollection(address, 'cronies', '0xD961956B319A10CBdF89409C0aE7059788A4DaBb');
 };
 
 export const isCarkayousCollection = (address) => {
-  return isCollection(address, 'carkayous');
+  return isCollection(address, 'carkayous-feral-fish', '0x72af9c869a4759e6d50e9656c0741b395532c3dd');
 };
 
 export const isLazyHorseCollection = (address) => {
-  return isCollection(address, 'lazy-horse');
+  return isCollection(address, 'lazy-horse', '0xD504ed871d33dbD4f56f523A37dceC86Ee918cb6');
 };
 
 export const isLazyHorsePonyCollection = (address) => {
-  return isCollection(address, 'lazy-horse-pony');
+  return isCollection(address, 'lazy-horse-pony', '0x7d0259070B5f513CA543afb6a906d42af5884B1B');
 };
+
+export const isCnsCollection = (address) => {
+  return isCollection(address, 'cronos-name-service', '0x15F7A67075C8b0883c355814Aa4e6C1e19994Af3');
+};
+
+export const isSscCollection = (address) => {
+  return isCollection(address, 'ssc-access-cards', '0x45Fe45e5623a129d652F15962d901C7B609e5194');
+};
+
+export const isCroskullSbtCollection = (address) => {
+  return isCollection(address, 'croskull-soulbound-token', '0x0977Ee79F7f6BedE288DD0264C77B4A1b32C48e8');
+};
+
+export const isArgonautsBrandCollection = (address) => {
+  return isBrandCollection('argonauts', address);
+};
+
+export const isEbVipCollection = (address, id) => {
+  const collection = collections.find((c) => c.slug === 'founding-member');
+  return collection &&
+    caseInsensitiveCompare(collection.address, address) &&
+    id?.toString() === '2';
+};
+
+export const isFoundingMemberCollection = (address, id) => {
+  const collection = collections.find((c) => c.slug === 'founding-member');
+  return collection &&
+    caseInsensitiveCompare(collection.address, address);
+};
+
+export const isBundle = (addressOrSlug) => {
+  return caseInsensitiveCompare(addressOrSlug, config.contracts.bundle) || addressOrSlug === 'nft-bundles';
+}
 
 export const percentage = (partialValue, totalValue) => {
   if (!totalValue || totalValue === 0) return 0;
@@ -517,7 +575,8 @@ export const findCollectionByAddress = (address, tokenId) => {
 
 export const findCollectionFloor = (knownContract, collectionsStats) => {
   const collectionStats = collectionsStats.find((o) => {
-    if (knownContract.multiToken && o.collection.indexOf('-') !== -1) {
+    const address = o.collection ?? o.address;
+    if (knownContract.multiToken && address.indexOf('-') !== -1) {
       let parts = o.collection.split('-');
       return caseInsensitiveCompare(knownContract.address, parts[0]) && knownContract.id === parseInt(parts[1]);
     } else {
@@ -693,30 +752,6 @@ export const rankingsLinkForCollection = (collection, id) => {
   return link;
 };
 
-/**
- * SWR fetcher for contracts, wallet functions
- * 
- * @param library
- * @param abi
- * @returns {(function(...[*]): (*))|*}
- */
-export const fetcher =
-  (library, abi) =>
-  (...args) => {
-    const [arg1, arg2, ...params] = args;
-    // it's a contract
-    if (utils.isAddress(arg1)) {
-      const address = arg1;
-      const method = arg2;
-      const contract = new ethers.Contract(address, abi, library.getSigner());
-      return contract[method](...params);
-    }
-    // it's a eth call
-    const method = arg1;
-    return library[method](arg2, ...params);
-  };
-
-
 export const buildTwitterUrl = (username) => {
   if (!username || username.startsWith('http')) return username;
 
@@ -739,4 +774,19 @@ export const isNumeric = (str) => {
 
 export const stripSpaces = (str) => {
   return str.replace(/\W/g, '');
+}
+
+export const appUrl = (path) => {
+  return new URL(path, appConfig('urls.app'));
+}
+
+export const pluralize = (val, word, plural = word + 's') => {
+  const _pluralize = (num, word, plural = word + 's') =>
+    [1, -1].includes(Number(num)) ? word : plural;
+  if (typeof val === 'object') return (num, word) => _pluralize(num, word, val[word]);
+  return _pluralize(val, word, plural);
+};
+
+export const isGaslessListing = (listingId) => {
+  return listingId && listingId.toString().startsWith('0x')
 }

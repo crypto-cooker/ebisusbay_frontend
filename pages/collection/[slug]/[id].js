@@ -1,31 +1,19 @@
-import React, { memo, useEffect, useState } from 'react';
-import store from '../../../src/Store/store';
-import { getNftDetails } from '@src/GlobalState/nftSlice';
-import {findCollectionByAddress, humanize, isAddress, relativePrecision} from '@src/utils';
+import React, {memo, useEffect, useState} from 'react';
+import {caseInsensitiveCompare, humanize, isAddress, isBundle, relativePrecision} from '@src/utils';
 import Nft1155 from '../../../src/Components/Collection/nft1155';
 import Nft721 from '../../../src/Components/Collection/nft721';
 import {appConfig} from "@src/Config";
 import PageHead from "../../../src/Components/Head/PageHead";
-const knownContracts = appConfig('collections')
+import {getNft} from "@src/core/api/endpoints/nft";
 
-const Nft = ({ slug, id, nft }) => {
+const config = appConfig();
+
+const Nft = ({ slug, id, nft, collection }) => {
   const [type, setType] = useState('721');
-  const [collection, setCollection] = useState(null);
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
-    let col = knownContracts.find((c) => c.slug === slug);
-    if (col) {
-      setCollection(col);
-      setType(col.multiToken ? '1155' : '721');
-      if (col.multiToken) setType(col.multiToken ? '1155' : '721');
-    } else {
-      col = findCollectionByAddress(slug, id);
-      if (col) {
-        setCollection(col);
-        router.push(`/collection/${col.slug}/${id}`);
-      }
-    }
+    setType(collection.multiToken ? '1155' : '721');
     setInitialized(true);
   }, [slug, id]);
 
@@ -82,10 +70,12 @@ const Nft = ({ slug, id, nft }) => {
       />
       {initialized && collection && (
         <>
-          {type === '1155' ? (
-            <Nft1155 address={collection.address} id={id} />
+          {isBundle(collection.address) ? (
+            <Nft721 address={collection.address} id={id} nft={nft} isBundle={true} />
+          ) : type === '1155' ? (
+            <Nft1155 address={collection.address} id={id} nft={nft} collection={collection} />
           ) : (
-            <Nft721 address={collection.address} id={id} />
+            <Nft721 address={collection.address} id={id} nft={nft} />
           )}
         </>
       )}
@@ -97,15 +87,26 @@ export const getServerSideProps = async ({ params }) => {
   const slug = params?.slug;
   const tokenId = params?.id;
   let collection;
+
+  // @todo fix in autolistings
   if (isAddress(slug)) {
-    collection = knownContracts.find((c) => c?.address.toLowerCase() === slug.toLowerCase());
+    collection = appConfig('collections').find((c) => caseInsensitiveCompare(c.address, slug));
+
+    // const res = await fetch(`${config.urls.api}collectioninfo?address=${slug}`);
+    // const json = await res.json();
+    // collection = json.collections[0]
   } else {
-    collection = knownContracts.find((c) => c?.slug.toLowerCase() === slug.toLowerCase());
+    collection = appConfig('collections').find((c) => caseInsensitiveCompare(c.slug, slug));
+
+    // const res = await fetch(`${config.urls.api}collectioninfo?slug=${slug}`);
+    // const json = await res.json();
+    // collection = json.collections[0]
   }
 
   let nft;
   if (collection?.address) {
-    nft = await store.dispatch(getNftDetails(collection.address, tokenId));
+    const resp = await getNft(collection.address, tokenId);
+    nft = { ...resp.nft, address: collection.address, id: tokenId };
   }
 
   if (!collection || !nft) {

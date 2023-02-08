@@ -13,8 +13,9 @@ import ShipItemABI from '../src/Contracts/ShipItem.json';
 import {appConfig} from '@src/Config';
 import {hostedImage} from '@src/helpers/image';
 import PageHead from '../src/Components/Head/PageHead';
+import {Heading} from "@chakra-ui/react";
 
-const knownContracts = appConfig('collections');
+import { getCollections } from "@src/core/api/next/collectioninfo";
 
 const Drop = () => {
   const [ships, setShips] = useState([]);
@@ -33,7 +34,9 @@ const Drop = () => {
     await refreshDropDetails();
     try {
       if (user.provider) {
-        const spaceShipDrop = knownContracts.find((drop) => drop.slug === 'crosmocrafts');
+        const res = await getCollections({slug: 'crosmocrafts'});
+        const spaceShipDrop = res.data.collections[0];
+
         if (!spaceShipDrop.address) {
           setIsLoading(false);
           return;
@@ -61,7 +64,8 @@ const Drop = () => {
   }, [user.address, user.provider]);
 
   const refreshPartsBalance = async () => {
-    const shipItemDrop = knownContracts.find((drop) => drop.slug === 'crosmocrafts-parts');
+    const res = await getCollections({slug: 'crosmocrafts-parts'});
+    const shipItemDrop = res.data?.collections[0];
     let shipItem = await new ethers.Contract(shipItemDrop.address, ShipItemABI.abi, user.provider.getSigner());
     let ids = [];
     for (let i = 0; i < 9; i++) {
@@ -72,7 +76,8 @@ const Drop = () => {
   };
 
   const refreshDropDetails = async () => {
-    const spaceShipDrop = knownContracts.find((drop) => drop.slug === 'crosmocrafts');
+    const res = await getCollections({slug: 'crosmocrafts'});
+    const spaceShipDrop = res.data?.collections[0];
     const readProvider = new ethers.providers.JsonRpcProvider(appConfig('rpc.read'));
     let spaceShip = await new ethers.Contract(spaceShipDrop.address, ShipABI.abi, readProvider);
     const info = await spaceShip.getInfo();
@@ -127,14 +132,14 @@ const Drop = () => {
           <div className="container">
             <div className="row m-10-hor">
               <div className="col-12 text-center">
-                <h1>Build a Crosmocraft</h1>
+                <Heading as="h1" size="2xl" >Build a Crosmocraft</Heading>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="container d_coll no-top no-bottom">
+      <section className="gl-legacy container d_coll no-top no-bottom">
         <div className="row">
           <div className="col-md-12">
             <div className="d_profile">
@@ -165,7 +170,7 @@ const Drop = () => {
         </div>
       </section>
 
-      <section className="container no-top">
+      <section className="gl-legacy container no-top">
         {isLoading ? (
           <div className="row mt-4" style={{ marginTop: '220px' }}>
             <div className="col-lg-12 text-center">

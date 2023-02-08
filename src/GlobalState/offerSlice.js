@@ -9,8 +9,7 @@ import { isMetapixelsCollection } from '../utils';
 import { offerState } from '../core/api/enums';
 import {appConfig} from "../Config";
 import {getQuickWallet} from "../core/api/endpoints/wallets";
-
-const knownContracts = appConfig('collections');
+import { getCollections } from "@src/core/api/next/collectioninfo";
 
 const offerSlice = createSlice({
   name: 'offer',
@@ -218,7 +217,8 @@ export const updateOfferFailed = (error) => async (dispatch) => {
 
 export const updateContractInstance = (walletProvider, nftAddress) => async (dispatch) => {
   const signer = walletProvider.getSigner();
-  let nftInfo = knownContracts.find((c) => c.address.toLowerCase() === nftAddress.toLowerCase());
+  const res = await getCollections({address: nftAddress.toLowerCase()});
+  let nftInfo = res.data.collections[0]
 
   let contractInstance;
   // ERC 1155

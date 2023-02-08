@@ -18,7 +18,7 @@ export const CollectionVerificationRow = ({doxx, kyc, escrow, creativeCommons, c
   const doxxStatus = () => {
     if (!doxx) return;
     if (doxx === 'public') return 'Team has been publicly doxxed';
-    if (doxx === 'private' || doxx === true) return 'Team has been privately doxxed';
+    if (doxx === 'private') return 'Team has been privately doxxed';
 
     return 'Team has an unknown doxx status';
   }
@@ -32,7 +32,7 @@ export const CollectionVerificationRow = ({doxx, kyc, escrow, creativeCommons, c
 
   return (
     <div className={`d-flex ${center ? 'justify-content-center' : ''}`}>
-      {doxx && (
+      {(doxx === true || doxx === 'public') && (
         <OverlayTrigger
           placement="top"
           delay={{ show: 100, hide: 100 }}

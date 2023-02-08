@@ -5,6 +5,7 @@ import { faSquare, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import LayeredIcon from './LayeredIcon';
 import {hostedImage} from "../../helpers/image";
 import Link from "next/link";
+import {Heading, Image} from "@chakra-ui/react";
 
 const Footer = () => {
   const userTheme = useSelector((state) => {
@@ -12,14 +13,14 @@ const Footer = () => {
   });
 
   return (
-    <footer className="footer-light">
+    <footer className="footer-light mt-4">
       <div className="container">
         <div className="row">
           <div className="col-md-3 col-sm-6 col-xs-1">
             <div className="widget">
-              <img
-                height="40px"
-                src={hostedImage(userTheme === 'light' ? '/img/logo-light.svg' : '/img/logo-dark-prod.svg')}
+              <Image
+                h="40px"
+                src={hostedImage(userTheme === 'light' ? '/img/logo-light.svg' : '/img/logo-dark.svg')}
                 alt="ebisus bay logo"
               />
               <p className="mt-2">Ebisu's Bay is the first and largest NFT marketplace on Cronos. Create, buy, sell, trade and enjoy the #CroFam NFT community.</p>
@@ -27,7 +28,7 @@ const Footer = () => {
           </div>
           <div className="col-md-3 col-sm-6 col-xs-1">
             <div className="widget">
-              <h5>Marketplace</h5>
+              <Heading as="h5" size="md">Marketplace</Heading>
               <ul>
                 <li><Link href="/marketplace">Explore</Link></li>
                 <li><Link href="/collections">Collections</Link></li>
@@ -40,10 +41,10 @@ const Footer = () => {
           </div>
           <div className="col-md-3 col-sm-6 col-xs-1">
             <div className="widget">
-              <h5>Resources</h5>
+              <Heading as="h5" size="md">Resources</Heading>
               <ul>
                 <li><a href="https://status.ebisusbay.com/" target="_blank" rel="noreferrer">Platform Status</a></li>
-                <li><a href="https://faq.ebisusbay.com/" target="_blank" rel="noreferrer">FAQ</a></li>
+                <li><a href="https://docs.ebisusbay.com/" target="_blank" rel="noreferrer">FAQ</a></li>
                 <li><a href="https://blog.ebisusbay.com/" target="_blank" rel="noreferrer">Blog</a></li>
                 <li><a href="https://almurraydesign.com/cryptocrows.html#!/Ebisus-Bay/c/130146020" target="_blank" rel="noreferrer">Merchandise</a></li>
                 <li><a href="https://cdn.ebisusbay.com/terms-of-service.html" target="_blank" rel="noreferrer">Terms of Service</a></li>
@@ -53,7 +54,7 @@ const Footer = () => {
           </div>
           <div className="col-md-3 col-sm-6 col-xs-1">
             <div className="widget">
-              <h5>Community</h5>
+              <Heading as="h5" size="md">Community</Heading>
               <ul>
                 <li><a href="/collection/founding-member">Become a Founding Member</a></li>
                 <li><a href="https://discord.gg/ebisusbay" target="_blank" rel="noreferrer">Discord</a></li>

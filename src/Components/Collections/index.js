@@ -55,7 +55,7 @@ const Collections = () => {
       <GlobalStyles />
       <Header title={'Collections'} />
 
-      <section className="container no-top">
+      <section className="gl-legacy container no-top">
         <div className="row mt-4">
           <div className="col-lg-4 col-md-6">
             <Form.Control type="text" placeholder="Search for Collection" onChange={handleSearch} />
@@ -63,7 +63,7 @@ const Collections = () => {
           <div className="col-md-6 col-lg-8 text-end">
             <ul className="activity-filter">
               {isSwitchEnabled ? <li style={{ border: 'none' }}>
-                <Switch isChecked={onlyVerified} setIsChecked={setOnlyVerified} checkedText={'Verified'} uncheckedText={'All'} />
+                <Switch isChecked={onlyVerified} setIsChecked={setOnlyVerified} text={'Only Verified'} />
               </li> : null}
               <li id="sale" className={timeFrame === '1d' ? 'active' : ''} onClick={() => setTimeFrame('1d')}>
                 1d

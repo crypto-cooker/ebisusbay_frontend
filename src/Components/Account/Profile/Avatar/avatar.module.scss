@@ -1,3 +1,5 @@
+@import '../../../../Assets/styles/vars';
+
 .avatar {
   .pfp {
     position: relative;
@@ -5,6 +7,8 @@
     height: 200px;
     overflow: hidden;
     border-radius: 100%;
+    border-color: $borderColor3;
+    border-width: 3px;
     margin-left: auto;
     margin-right: auto;
 

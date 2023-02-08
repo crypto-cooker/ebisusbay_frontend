@@ -5,13 +5,33 @@ import Link from 'next/link';
 import { ethers } from 'ethers';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
-import Button from './Button';
 import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
-import { getTheme } from '@src/Theme/theme';
+import {darkTheme, getTheme, lightTheme} from '@src/Theme/theme';
 import { AnyMedia } from './AnyMedia';
 import { connectAccount, chainConnect } from '@src/GlobalState/User';
-import { round } from '@src/utils';
-import {nftCardUrl} from "@src/helpers/image";
+import {appUrl, createSuccessfulAddCartContent, round, timeSince} from '@src/utils';
+import {convertGateway, nftCardUrl} from "@src/helpers/image";
+import {Box, Flex, Heading, Spacer, Text, useClipboard} from "@chakra-ui/react";
+import Image from "next/image";
+import {useColorModeValue} from "@chakra-ui/color-mode";
+import {MenuPopup} from "@src/Components/components/chakra-components";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+  faEllipsisH,
+  faExternalLink,
+  faHand,
+  faLink,
+  faShoppingBag,
+  faSync,
+  faShoppingCart
+} from "@fortawesome/free-solid-svg-icons";
+import {addToCart, openCart, removeFromCart} from "@src/GlobalState/cartSlice";
+import {toast} from "react-toastify";
+import {refreshMetadata} from "@src/GlobalState/nftSlice";
+import {specialImageTransform} from "@src/hacks";
+import { appConfig } from "@src/Config";
+
+const config = appConfig();
 
 const Watermarked = styled.div`
   position: relative;
@@ -37,22 +57,60 @@ const MakeBuy = styled.div`
   align-items: center;
 `;
 
-const MakeOffer = styled.div`
-  margin-top: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 2;
-
-  .w-45 {
-    width: 45%;
-  }
-`;
-
-const ListingCard = ({ listing, imgClass = 'marketplace', watermark, address, collection }) => {
+const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
+  const nftUrl = appUrl(`/collection/${listing.nftAddress}/${listing.nftId}`);
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const cart = useSelector((state) => state.cart);
+  const [isHovered, setIsHovered] = useState(false);
+  const isInCart = cart.nfts.map((o) => o.listingId).includes(listing.listingId);
+  const { onCopy } = useClipboard(nftUrl);
+
+  const getOptions = () => {
+    const options = [];
+
+    options.push({
+      icon: faHand,
+      label: 'Make Offer',
+      handleClick: handleMakeOffer,
+    });
+
+    if (isInCart) {
+      options.push({
+        icon: faShoppingBag,
+        label: 'Remove from Cart',
+        handleClick: handleRemoveFromCart,
+      });
+    } else {
+      options.push({
+        icon: faShoppingBag,
+        label: 'Add to Cart',
+        handleClick: handleAddToCart,
+      });
+    }
+
+    options.push({
+      icon: faSync,
+      label: 'Refresh Metadata',
+      handleClick: handleRefresh,
+    });
+
+    options.push({
+      icon: faExternalLink,
+      label: 'Open Original',
+      handleClick: handleOpenOriginal,
+    });
+
+    options.push({
+      icon: faLink,
+      label: 'Copy link',
+      handleClick: handleCopy,
+    });
+
+    return options;
+  };
+
 
   const handleMakeOffer = () => {
     if (user.address) {
@@ -67,6 +125,43 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark, address, co
         dispatch(chainConnect());
       }
     }
+  };
+
+  const handleAddToCart = () => {
+    dispatch(addToCart({
+      listingId: listing.listingId,
+      name: listing.nft.name,
+      image: listing.nft.image,
+      price: listing.price,
+      address: listing.nftAddress,
+      id: listing.nftId,
+      rank: listing.nft.rank,
+      expirationDate: listing.expirationDate ?? null,
+      seller: listing.seller ?? null,
+      listingTime:  listing.listingTime ?? null,
+      is1155: listing.is1155
+    }));
+    toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
+  };
+
+  const handleRemoveFromCart = () => {
+    dispatch(removeFromCart(listing.listingId));
+    toast.success('Removed from cart');
+  };
+
+  const handleOpenOriginal = () => {
+    if (listing.nft.original_image) {
+      window.open(specialImageTransform(listing.nftAddress, convertGateway(listing.nft.original_image)), '_blank')
+    }
+  };
+
+  const handleRefresh = () => {
+    dispatch(refreshMetadata(listing.nftAddress, listing.nftId, listing.listingId));
+  };
+
+  const handleCopy = () => {
+    onCopy();
+    toast.success('Link copied!');
   };
 
   const getCorrectPrice = (price) => {
@@ -93,75 +188,121 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark, address, co
 
   return (
     <>
-      <div className="card eb-nft__card h-100 shadow">
-        {watermark ? (
-          <Watermarked watermark={watermark}>
-            <AnyMedia
-              image={nftCardUrl(listing.nftAddress, listing.nft.image)}
-              className={`card-img-top ${imgClass}`}
-              title={listing.nft.name}
-              url={`/collection/${listing.nftAddress}/${listing.nftId}`}
-              height={440}
-              width={440}
-            />
-          </Watermarked>
-        ) : (
-          <AnyMedia
-            image={nftCardUrl(listing.nftAddress, listing.nft.image)}
-            className={`card-img-top ${imgClass}`}
-            title={listing.nft.name}
-            url={`/collection/${listing.nftAddress}/${listing.nftId}`}
-            height={440}
-            width={440}
-          />
-        )}
-        {listing.nft.rank ? (
-          <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{listing.nft.rank}</div>
-        ) : (
-          <div>&nbsp;</div>
-        )}
-        <div className="card-body d-flex flex-column justify-content-between">
-          {collection && (
-            <Link href={`/collection/${collection.slug}`}>
-              <a>
-                <h6
-                  className="card-title mt-auto fw-normal"
-                  style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
-                >
-                  {collection.name}
-                </h6>
-              </a>
-            </Link>
-          )}
-          <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
-            <a>
-              <h6 className="card-title mt-auto">{listing.nft.name}</h6>
-            </a>
-          </Link>
-          <MakeBuy>
-            <div>{getCorrectPrice(listing.price)} CRO</div>
-          </MakeBuy>
-          <MakeOffer>
-            <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
-              <a>
-                <Button type="legacy">Buy</Button>
-              </a>
-            </Link>
-            <div>
-              <Button type="legacy-outlined" onClick={() => handleMakeOffer('Make')}>
-                Offer
-              </Button>
+      <Box
+        className="card eb-nft__card h-100 shadow"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        data-group
+        _hover={{
+          borderColor:useColorModeValue('#595d69', '#ddd'),
+        }}
+      >
+        <Box
+          _groupHover={{
+            background:useColorModeValue('#FFFFFF', '#404040'),
+            transition:'0.3s ease'
+          }}
+          borderRadius={'15px'}
+          transition="0.3s ease"
+          height="100%"
+        >
+          <Flex direction="column" height="100%">
+            <div className="card-img-container">
+              <Box
+                _groupHover={{transform:'scale(1.05)', transition:'0.3s ease'}}
+                transition="0.3s ease"
+                transform="scale(1.0)"
+              >
+                {watermark ? (
+                  <Watermarked watermark={watermark}>
+                    <AnyMedia
+                      image={nftCardUrl(listing.nftAddress, listing.nft.image)}
+                      className={`card-img-top ${imgClass}`}
+                      title={listing.nft.name}
+                      url={`/collection/${listing.nftAddress}/${listing.nftId}`}
+                      height={440}
+                      width={440}
+                    />
+                  </Watermarked>
+                ) : (
+                  <AnyMedia
+                    image={nftCardUrl(listing.nftAddress, listing.nft.image)}
+                    className={`card-img-top ${imgClass}`}
+                    title={listing.nft.name}
+                    url={`/collection/${listing.nftAddress}/${listing.nftId}`}
+                    height={440}
+                    width={440}
+                  />
+                )}
+              </Box>
             </div>
-          </MakeOffer>
-        </div>
-      </div>
-
+            {listing.nft.rank ? (
+              <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{listing.nft.rank}</div>
+            ) : (
+              <div>&nbsp;</div>
+            )}
+            <div className="d-flex flex-column justify-content-between p-2 pb-1">
+              {listing.collection && (
+                <Link href={`/collection/${listing.collection.slug}`}>
+                  <a>
+                    <h6
+                      className="card-title mt-auto fw-normal"
+                      style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
+                    >
+                      {listing.collection.name}
+                    </h6>
+                  </a>
+                </Link>
+              )}
+              <Link href={`/collection/${listing.collection.slug}/${listing.nftId}`}>
+                <a>
+                  <Heading as="h6" size="sm" className="card-title mt-auto mb-1">{listing.nft.name}</Heading>
+                </a>
+              </Link>
+              <MakeBuy>
+                <div className="d-flex">
+                  <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+                  <span className="ms-1">
+                    {getCorrectPrice(listing.price)}
+                  </span>
+                </div>
+              </MakeBuy>
+              {listing.expirationDate && (
+                <Text className="text-muted mt-1" fontSize="sm">Ends in {timeSince(listing.expirationDate)}</Text>
+              )}
+            </div>
+            <Spacer />
+            <Box
+              borderBottomRadius={15}
+              _groupHover={{background: useColorModeValue(lightTheme.textColor4, darkTheme.textColor4), color:lightTheme.textColor1}}
+              px={4}
+              py={1}
+            >
+              <div className="d-flex justify-content-between">
+                <Box
+                  _groupHover={{visibility:'visible', color:lightTheme.textColor1}}
+                  visibility="hidden"
+                >
+                  {isInCart ? (
+                    <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={handleRemoveFromCart}>Remove From Cart</Text>
+                  ) : (
+                    <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={handleAddToCart}>Add to Cart</Text>
+                  )}
+                </Box>
+                <MenuPopup options={getOptions()}>
+                  <FontAwesomeIcon icon={faEllipsisH} style={{ cursor: 'pointer' }} className="my-auto" />
+                </MenuPopup>
+              </div>
+            </Box>
+          </Flex>
+        </Box>
+      </Box>
       {openMakeOfferDialog && (
         <MakeOfferDialog
           isOpen={openMakeOfferDialog}
           onClose={() => setOpenMakeOfferDialog(false)}
           nftId={listing.nftId}
-          collection={collection}
+          nftAddress={listing.nftAddress}
         />
       )}
     </>

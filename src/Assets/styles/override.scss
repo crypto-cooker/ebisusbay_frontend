@@ -15,23 +15,6 @@ textarea {
   min-height: 100vh;
 }
 
-//  to fix the footer to the bottom of page when there is not enough content.
-body > div#root > div.wraper {
-  //  first child is header
-  //  second element is component's top level div placed by router.
-  & > div:nth-child(2) {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-
-    //  first child element is header picture and title
-    //  Content: second child element is class with .container class
-    & > section:nth-child(2) {
-      flex: 1;
-    }
-  }
-}
-
 //  Hide partners in other places than homepage.
 footer {
   &[data-is-in-home-page='false'] {
@@ -321,13 +304,22 @@ canvas {
 
 /* Custom Listing Cards */
 .eb-nft__card {
-  border: solid 1px #ddd;
+  border: solid 1px $borderColor2;
   border-radius: 15px;
   -moz-border-radius: 15px;
   -webkit-border-radius: 15px;
   background: $bgColor1;
   transition: 0.7s;
-  overflow: hidden;
+
+  .card-img-container {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    -moz-border-radius-topleft: 15px;
+    -moz-border-radius-topright: 15px;
+    -webkit-border-top-left-radius: 15px;
+    -webkit-border-top-right-radius: 15px;
+    overflow: hidden;
+  }
 
   img {
     width: 100%;
@@ -412,6 +404,12 @@ canvas {
   position: absolute;
   padding: 10px;
 }
+.profile_avatar .dialog_avatar .eb-avatar_badge {
+  margin: -38px 0 0 107px;
+  display: block;
+  position: absolute;
+  padding: 10px;
+}
 .d_coll .profile_avatar .eb-avatar_badge {
   margin-right: -30px;
 }
@@ -476,30 +474,6 @@ canvas {
   .de-menu-profile {
     position: relative;
     cursor: pointer;
-  }
-}
-
-.navbar {
-  position: relative;
-  @media only screen and (max-width: 1199px) {
-    &.navbar {
-      position: relative;
-      .mainside-warning {
-        position: absolute;
-        right: 90px;
-        top: 12px;
-      }
-    }
-  }
-  @media only screen and (max-width: 641px) {
-    &.navbar {
-      .mainside-warning {
-        a {
-          font-size: 13px;
-          padding: 4px 10px;
-        }
-      }
-    }
   }
 }
 
@@ -819,53 +793,42 @@ canvas {
     right: 0;
     left: auto;
   }
-}
 
-.swiper-button-prev, .swiper-button-next {
-  top: 45%;
-  width: 40px;
-  height: 40px;
-  background: #fff;
-  border: 1px solid gray;
-  border-radius: 50%;
-  color: #000;
-  font-weight: 700;
-  outline: 0;
-  transition: background-color .2s ease, color .2s ease;
+  .swiper-button-prev, .swiper-button-next {
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    border: 1px solid gray;
+    border-radius: 50%;
+    color: #000;
+    font-weight: 700;
+    outline: 0;
+    transition: background-color .2s ease, color .2s ease;
 
-  &::after {
-    font-size: 16px;
+    &::after {
+      font-size: 16px;
+    }
   }
-}
 
-.swiper-button-prev {
-  &:after {
-    position: relative;
-    left: -1px;
+  .swiper-button-prev {
+    &:after {
+      position: relative;
+      left: -1px;
+    }
   }
-}
 
-.swiper-button-next {
-  &:after {
-    position: relative;
-    left: 1px;
+  .swiper-button-next {
+    &:after {
+      position: relative;
+      left: 1px;
+    }
   }
-}
 
-.swiper-button-prev, .swiper-container-rtl .swiper-button-next {
-  left: 10px;
-  right: auto;
-}
-
-.swiper-button-next, .swiper-container-rtl .swiper-button-prev {
-  right: 10px;
-  left: auto;
-}
-
-.swiper-button-prev.swiper-button-disabled, .swiper-button-next.swiper-button-disabled {
-  opacity: 0;
-  cursor: auto;
-  pointer-events: none;
+  .swiper-button-prev.swiper-button-disabled, .swiper-button-next.swiper-button-disabled {
+    opacity: 0;
+    cursor: auto;
+    pointer-events: none;
+  }
 }
 
 html[data-theme='dark'] {
@@ -885,4 +848,10 @@ html[data-theme='dark'] {
   hr {
     border: 1px solid $dividerSoft;
   }
+}
+
+select {
+  background-color: $bgColor1 !important;
+  border: 1px solid $borderColor2 !important;
+  color: $textColor1 !important;
 }

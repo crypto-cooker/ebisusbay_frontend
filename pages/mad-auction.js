@@ -8,7 +8,7 @@ import {hostedImage} from "../src/helpers/image";
 const MetaverseAuctions = () => {
   return (
     <div>
-      <section className="container no-bottom">
+      <section className="gl-legacy container no-bottom">
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center pt-5">
@@ -28,7 +28,7 @@ const MetaverseAuctions = () => {
           </div>
         </div>
       </section>
-      <section className="container pt-5">
+      <section className="gl-legacy container pt-5">
         <div className="row">
           <div className="col-lg-12 pt-3">
             <AuctionCollection />

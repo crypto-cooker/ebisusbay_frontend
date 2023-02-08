@@ -1,5 +1,4 @@
-import React, {useState, useCallback, useEffect} from 'react';
-import { Dialog, DialogContent, DialogTitle } from '@mui/material';
+import React, {useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {specialImageTransform} from "@src/hacks";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
@@ -11,65 +10,33 @@ import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {ERC721} from "@src/Contracts/Abis";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {createSuccessfulTransactionToastContent, isBundle, isNftBlacklisted} from "@src/utils";
 import {appConfig} from "@src/Config";
-import Market from "@src/Contracts/Marketplace.json";
 import * as Sentry from '@sentry/react';
-import {hostedImage} from "@src/helpers/image";
-import Blockies from "react-blockies";
-import LayeredIcon from "@src/Components/components/LayeredIcon";
-import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
-import {txExtras} from "@src/core/constants";
 import {getQuickWallet} from "@src/core/api/endpoints/wallets";
 import Select from "react-select";
 import {getTheme} from "@src/Theme/theme";
 import {collectionRoyaltyPercent} from "@src/core/chain";
-
-const DialogContainer = styled(Dialog)`
-  .MuiPaper-root {
-    border-radius: 8px;
-    overflow: hidden;
-    background-color: ${({ theme }) => theme.colors.bgColor1};
-  }
-
-  .MuiDialogContent-root {
-    width: 700px;
-    padding: 15px 42px 28px !important;
-    border-radius: 8px;
-    max-width: 734px;
-    background-color: ${({ theme }) => theme.colors.bgColor1};
-    color: ${({ theme }) => theme.colors.textColor3};
-
-    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
-      width: 100%;
-    }
-  }
-`;
-
-const DialogTitleContainer = styled(DialogTitle)`
-  font-size: 26px !important;
-  color: ${({ theme }) => theme.colors.textColor3};
-  padding: 0px !important;
-  margin-bottom: 18px !important;
-  font-weight: bold !important;
-  text-align: center;
-`;
-
-const CloseIconContainer = styled.div`
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  cursor: pointer;
-
-  img {
-    width: 28px;
-  }
-`;
+import {
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay
+} from "@chakra-ui/react";
+import Image from "next/image";
+import {commify} from "ethers/lib/utils";
+import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
+import {ImageKitService} from "@src/helpers/image";
+import {useQuery} from "@tanstack/react-query";
+import {getNft} from "@src/core/api/endpoints/nft";
 
 const config = appConfig();
 const floorThreshold = 5;
 
-export default function AcceptOfferDialog({ onClose, isOpen, collection, isCollectionOffer, nft, offer}) {
+export default function AcceptOfferDialog({ onClose, isOpen, collection, isCollectionOffer, offer}) {
 
   const [salePrice, setSalePrice] = useState(null);
   const [floorPrice, setFloorPrice] = useState(0);
@@ -88,18 +55,10 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
   const [chosenCollectionNft, setChosenCollectionNft] = useState(null);
 
   const user = useSelector((state) => state.user);
-  const {marketContract, offerContract} = user;
+  const {contractService} = user;
 
   const isBelowFloorPrice = (price) => {
     return (floorPrice !== 0 && ((floorPrice - Number(price)) / floorPrice) * 100 > floorThreshold);
-  };
-
-  const getSaleValue = () => {
-    try {
-      return ethers.utils.commify(salePrice.toFixed(2));
-    } catch (e) {
-      return salePrice
-    }
   };
 
   const getYouReceiveViewValue = () => {
@@ -111,26 +70,35 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
     }
   };
 
+  const fetchNft = async () => {
+    if (isCollectionOffer) return null;
+
+    const tmpNft = await getNft(offer.nftAddress, offer.nftId);
+    return tmpNft.nft;
+  }
+
+  const { error, data: nft, status } = useQuery(
+    ['AcceptOffer', user.address, offer.nftAddress, offer.nftId],
+    fetchNft,
+    {
+      enabled: !!user.provider && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId),
+      refetchOnWindowFocus: false
+    }
+  );
+
   useEffect(() => {
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (nft && user.provider) {
-      asyncFunc();
-    }
-  }, [nft, user.provider]);
-
-  const wrappedMarketContract = () => {
-    return marketContract ?? new Contract(config.contracts.market, Market.abi, user.provider.getSigner());
-  };
+    asyncFunc();
+  }, [nft]);
 
   const getInitialProps = async () => {
     try {
       setIsLoading(true);
-      const nftAddress = nft.address ?? nft.nftAddress;
-      const nftId = nft.id ?? nft.nftId;
+      const nftAddress = offer.nftAddress;
       const marketContractAddress = config.contracts.market;
-      const marketContract = wrappedMarketContract();
+      const marketContract = contractService.market;
       setSalePrice(offer ? Math.round(offer.price) : null)
 
       const floorPrice = await getCollectionMetadata(nftAddress);
@@ -139,11 +107,11 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
       }
 
       if (isCollectionOffer) {
-        const walletNfts = await getQuickWallet(user.address, {collection: collection.address});
-        setCollectionNfts(walletNfts.data);
+        const walletNfts = await getQuickWallet(user.address, {collection: collection.address, pageSize: 1000});
+        setCollectionNfts(walletNfts.data.filter((nft) => !isNftBlacklisted(nft.address ?? nft.nftAddress, nft.id ?? nft.nftId)));
         await chooseCollectionNft(walletNfts.data[0])
       } else {
-        const royalties = await collectionRoyaltyPercent(nftAddress, nftId);
+        const royalties = await collectionRoyaltyPercent(nftAddress, offer.nftId);
         setRoyalty(royalties);
       }
 
@@ -176,7 +144,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
     e.preventDefault();
     try {
       const nftAddress = nft.address ?? nft.nftAddress;
-      const marketContractAddress = marketContract.address;
+      const marketContractAddress = config.contracts.market;
       const contract = new Contract(nftAddress, ERC721, user.provider.getSigner());
       setExecutingApproval(true);
       const tx = await contract.setApprovalForAll(marketContractAddress, true);
@@ -202,17 +170,18 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
     e.preventDefault();
 
     try {
-      const nftAddress = nft.address ?? nft.nftAddress;
-      const nftId = nft.id ?? nft.nftId;
+      const nftAddress = offer.nftAddress;
       const price = ethers.utils.parseEther(salePrice.toString());
 
       setExecutingAcceptOffer(true);
-      Sentry.captureEvent({message: 'handleAcceptOffer', extra: {nftAddress, nftId, price}});
       let tx;
       if (isCollectionOffer) {
-        tx = await offerContract.acceptCollectionOffer(offer.nftAddress, offer.offerIndex, chosenCollectionNft.nftId, txExtras);
+        Sentry.captureEvent({message: 'handleAcceptOffer', extra: {nftAddress, price}});
+        tx = await contractService.offer.acceptCollectionOffer(offer.nftAddress, offer.offerIndex, chosenCollectionNft.nftId);
       } else {
-        tx = await offerContract.acceptOffer(offer.hash, offer.offerIndex, txExtras);
+        const nftId = nft.id ?? nft.nftId;
+        Sentry.captureEvent({message: 'handleAcceptOffer', extra: {nftAddress, nftId, price}});
+        tx = await contractService.offer.acceptOffer(offer.hash, offer.offerIndex);
       }
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -245,60 +214,83 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
     setRoyalty(royalties);
   }
 
-  if (!nft) return <></>;
-
   return (
-    <DialogContainer onClose={onClose} open={isOpen} maxWidth="md">
-      <DialogContent>
-        <DialogTitleContainer className="fs-5 fs-md-3">
-          {isCollectionOffer ? <>Accept Collection Offer for {collection.name}</> : <>Accept Offer for {nft.name}</>}
-        </DialogTitleContainer>
-        {!isLoading ? (
+    <Modal onClose={onClose} isOpen={isOpen} size="2xl" isCentered>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader className="text-center">
+          {isCollectionOffer ?
+            <>Accept Collection Offer for {collection.name}</>
+            : nft?.name ? <>Accept Offer for {nft.name}</> : <>Accept Offer</>
+          }
+        </ModalHeader>
+        <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
+        {status === "loading" || isLoading ? (
+          <EmptyData>
+            <Spinner animation="border" role="status" size="sm" className="ms-1">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </EmptyData>
+        ) : status === "error" ? (
+          <p>Error: {error.message}</p>
+        ) : (
           <>
-            <div className="nftSaleForm row gx-3">
-              <div className="col-12 col-sm-6 mb-2 mb-sm-0">
-                {isCollectionOffer ? (
-                  <NftPicker nfts={collectionNfts} onSelect={(n) => chooseCollectionNft(n)} />
-                ) : (
-                  <AnyMedia
-                    image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
-                    video={nft.video ?? nft.animation_url}
-                    videoProps={{ height: 'auto', autoPlay: true }}
-                    title={nft.name}
-                    usePlaceholder={false}
-                    className="img-fluid img-rounded"
-                  />
-                )}
-              </div>
-              <div className="col-12 col-sm-6 mt-2 mt-sm-0">
-                <div className="mb-4 text-center">
-                  <div className="fs-6">Offer Price</div>
-                  <div className="fs-2 fw-bold">{offer.price} CRO</div>
+            <ModalBody>
+              <div className="nftSaleForm row gx-3">
+                <div className="col-12 col-sm-6 mb-2 mb-sm-0">
+                  {isCollectionOffer ? (
+                    <NftPicker
+                      nfts={collectionNfts}
+                      initialNft={chosenCollectionNft}
+                      onSelect={(n) => chooseCollectionNft(n)}
+                    />
+                  ) : isBundle(nft.address ?? nft.nftAddress) ? (
+                    <ImagesContainer nft={nft} />
+                  ) : (
+                    <AnyMedia
+                      image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
+                      video={nft.video ?? nft.animation_url}
+                      videoProps={{ height: 'auto', autoPlay: true }}
+                      title={nft.name}
+                      usePlaceholder={false}
+                      className="img-fluid img-rounded"
+                    />
+                  )}
                 </div>
+                <div className="col-12 col-sm-6 mt-2 mt-sm-0">
+                  <div className="mb-4 text-center">
+                    <div className="fs-6">Offer Price</div>
+                    <div className="fs-2 fw-bold">
+                      <div className="d-flex justify-content-center">
+                        <Image src="/img/logos/cdc_icon.svg" width={32} height={32} />
+                        <span className="ms-1">
+                          {commify(offer.price)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
 
-                <div>
-                  <h3 className="feeTitle">Fees</h3>
-                  <hr />
-                  <div className="fee">
-                    <span>Service Fee: </span>
-                    <span>{fee} %</span>
-                  </div>
-                  <div className="fee">
-                    <span>Royalty Fee: </span>
-                    <span>{royalty} %</span>
-                  </div>
-                  <div className="fee">
-                    <span className='label'>Buyer pays: </span>
-                    <span>{getSaleValue()} CRO</span>
-                  </div>
-                  <div className="fee">
-                    <span className='label'>You receive: </span>
-                    <span>{getYouReceiveViewValue()} CRO</span>
+                  <div>
+                    <h3 className="feeTitle">Fees</h3>
+                    <hr />
+                    <div className="fee">
+                      <span>Service Fee: </span>
+                      <span>{fee} %</span>
+                    </div>
+                    <div className="fee">
+                      <span>Royalty Fee: </span>
+                      <span>{royalty} %</span>
+                    </div>
+                    <div className="fee">
+                      <span className='label'>You receive: </span>
+                      <span>{getYouReceiveViewValue()} CRO</span>
+                    </div>
                   </div>
                 </div>
               </div>
-
-              <div className="mt-3 mx-auto">
+            </ModalBody>
+            <ModalFooter className="border-0">
+              <div className="w-100">
                 {isTransferApproved ? (
                   <>
                     {showConfirmButton ? (
@@ -335,7 +327,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
                           <Button type="legacy"
                                   onClick={processAcceptOfferRequest}
                                   isLoading={executingAcceptOffer}
-                                  disabled={executingAcceptOffer}
+                                  disabled={(isCollectionOffer && !chosenCollectionNft) || executingAcceptOffer}
                                   className="flex-fill">
                             Accept Offer
                           </Button>
@@ -360,20 +352,11 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
                   </>
                 )}
               </div>
-            </div>
+            </ModalFooter>
           </>
-        ) : (
-          <EmptyData>
-            <Spinner animation="border" role="status" size="sm" className="ms-1">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          </EmptyData>
         )}
-        <CloseIconContainer onClick={onClose}>
-          <img src="/img/icons/close-icon-blue.svg" alt="close" width="40" height="40" />
-        </CloseIconContainer>
-      </DialogContent>
-    </DialogContainer>
+      </ModalContent>
+    </Modal>
   );
 }
 
@@ -396,9 +379,9 @@ const ImageContainer = styled.div`
     margin-bottom: 10px;
   }
 `;
-const NftPicker = ({collectionAddress, nfts, onSelect}) => {
+const NftPicker = ({collectionAddress, nfts, onSelect, initialNft}) => {
   const userTheme = useSelector((state) => state.user.theme);
-  const [chosenNft, setChosenNft] = useState(nfts[0]);
+  const [chosenNft, setChosenNft] = useState(initialNft);
 
   const handleNftChange = useCallback((chosenNft) => {
     setChosenNft(chosenNft);
@@ -450,9 +433,15 @@ const NftPicker = ({collectionAddress, nfts, onSelect}) => {
 
   return (
     <>
-      <ImageContainer className="mx-auto">
-        <img src={specialImageTransform(collectionAddress, chosenNft.image)} alt={chosenNft.name} />
-      </ImageContainer>
+      {isBundle(chosenNft.nftAddress) ? (
+        <ImageContainer className="mx-auto">
+          <img src={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')} alt={chosenNft.name} />
+        </ImageContainer>
+      ) : (
+        <ImageContainer className="mx-auto">
+          <img src={specialImageTransform(collectionAddress, chosenNft.image)} alt={chosenNft.name} />
+        </ImageContainer>
+      )}
       <h3 className="feeTitle mt-2">Choose NFT</h3>
       <Select
         menuPlacement="top"

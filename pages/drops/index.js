@@ -11,6 +11,7 @@ import { getTheme } from '../../src/Theme/theme';
 import {hostedImage} from "../../src/helpers/image";
 import Head from "next/head";
 import PageHead from "../../src/Components/Head/PageHead";
+import {Heading} from "@chakra-ui/react";
 
 const Drops = () => {
   const userTheme = useSelector((state) => {
@@ -26,19 +27,15 @@ const Drops = () => {
       <section className="no-top mt-2 pb-2 bg-transparent">
         <div className="d-flex justify-content-center px-5">
           <p className="my-auto me-5">
-            Enjoy amazing discounts on drops and 50% off service fees while holding an Ebisu's Bay Founding Member NFT.
-            <span className="fw-bold d-block d-md-inline-block text-end ms-3">
-              <Link href="/collection/founding-member">
-                <a>Learn More</a>
-              </Link>
+          Now is your chance to mint a Founding Member VIP from the team that brought you Ebisu's Bay.
+            <span className="fw-bold d-block d-md-inline-block text-end ms-3">            
+                <a href='https://blog.seashrine.io/vip-founding-member-nft-presale-announcement-4b791d086d63' target="_blank" rel="noopener noreferrer" >Learn More</a>
             </span>
           </p>
-          <div style={{ width: '70px' }} className="my-auto">
-            <Link href="/collection/founding-member">
-              <a>
-                <img src={hostedImage('/img/founding_member_sm.png')} className="img-responsive" alt="Founding Member Membership" />
+          <div style={{ width: '70px' }} className="my-auto"> 
+              <a href='https://seashrine.io/#mint' target="_blank" rel="noopener noreferrer" >
+                <img src={hostedImage('/img/drops/seashrine-vip/drop.webp')} className="img-responsive" alt="Founding Member Membership" />
               </a>
-            </Link>
           </div>
         </div>
       </section>
@@ -50,11 +47,11 @@ const Drops = () => {
         </div>
       </section>
 
-      <section className="container">
+      <section className="gl-legacy container">
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2>Active Drops</h2>
+              <Heading>Active Drops</Heading>
               <div className="small-border"></div>
             </div>
           </div>
@@ -64,13 +61,13 @@ const Drops = () => {
         </div>
       </section>
 
-      <section className="container no-top">
+      <section className="gl-legacy container no-top">
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2>
+              <Heading>
                 Upcoming Drops
-              </h2>
+              </Heading>
               <div className="small-border"></div>
             </div>
           </div>
@@ -80,11 +77,11 @@ const Drops = () => {
         </div>
       </section>
 
-      <section className="container no-top">
+      <section className="gl-legacy container no-top">
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2>Completed Drops</h2>
+              <Heading>Completed Drops</Heading>
               <div className="small-border"></div>
             </div>
           </div>

@@ -1,33 +1,12 @@
-import {appConfig} from "../../../Config";
-import {MarketFilterCollection} from "../../Models/market-filters.model";
-
-const knownContracts = appConfig('collections');
+import {appConfig} from "@src/Config";
+import {MarketFilterCollection} from "@src/Components/Models/market-filters.model";
 
 export const limitSizeOptions = {
   md: 12,
   lg: 50
 }
 
-export const collectionFilterOptions = knownContracts
-  .sort((a, b) => (a.name > b.name ? 1 : -1))
-  .map((x) => new MarketFilterCollection(x.name,x.multiToken && x.split ? `${x.address}-${x.id}` : x.address));
-
-export const marketPlaceCollectionFilterOptions = knownContracts
+export const marketPlaceCollectionFilterOptions = appConfig('collections')
   .filter((c) => c.listable)
   .sort((a, b) => (a.name > b.name ? 1 : -1))
   .map((x) => new MarketFilterCollection(x.name, x.multiToken && x.split ? `${x.address}-${x.id}` : x.address));
-
-export const listingFilterOptions = [
-  {
-    key: 'all',
-    label: 'All',
-  },
-  {
-    key: 'listed',
-    label: 'Listed',
-  },
-  {
-    key: 'unlisted',
-    label: 'Unlisted',
-  },
-];

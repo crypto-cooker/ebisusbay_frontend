@@ -91,13 +91,13 @@ const MultiDrop = () => {
     // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    dispatch(fetchMemberInfo());
-    if (process.env.NODE_ENV === 'development') {
-      dispatch(fetchVipInfo());
-    }
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchMemberInfo());
+  //   if (process.env.NODE_ENV === 'development') {
+  //     dispatch(fetchVipInfo());
+  //   }
+  //   // eslint-disable-next-line
+  // }, []);
 
   const user = useSelector((state) => {
     return state.user;
@@ -328,7 +328,7 @@ const MultiDrop = () => {
       <>
         <HeroSection
           className={`jumbotron h-vh tint`}
-          style={{ backgroundImage: `url(${drop.imgBanner ? drop.imgBanner : '/img/background/Ebisus-bg-1_L.webp'})` }}
+          style={{ backgroundImage: `url(${drop.images.banner ? drop.images.banner : '/img/background/Ebisus-bg-1_L.webp'})` }}
         >
           <div className="container">
             <div className="row align-items-center">
@@ -399,13 +399,13 @@ const MultiDrop = () => {
           </div>
         </HeroSection>
 
-        <section className="container no-bottom" id="drop_detail">
+        <section className="gl-legacy container no-bottom" id="drop_detail">
           <div className="row">
             <div className="col-md-12">
               <div className="d_profile de-flex">
                 <div className="de-flex-col">
                   <div className="profile_avatar">
-                    {drop.imgAvatar && <img src={drop.imgAvatar} alt={drop.author.name} />}
+                    {drop.images.avatar && <img src={drop.images.avatar} alt={drop.author.name} />}
                     <div className="profile_name">
                       <h4>
                         {drop.author.name}
@@ -425,7 +425,7 @@ const MultiDrop = () => {
           </div>
         </section>
 
-        <section className="container no-top no-bottom mb-4" id="drop_detail">
+        <section className="gl-legacy container no-top no-bottom mb-4" id="drop_detail">
           <div className="row">
             <div className="text-center">
               <h2>{drop.title}</h2>
@@ -476,7 +476,7 @@ const MultiDrop = () => {
           </div>
         </section>
 
-        <section className="container no-top" id="drop_detail">
+        <section className="gl-legacy container no-top" id="drop_detail">
           <div className="card-group">
             <div className="d-item col-sm-4 mb-4 px-2">
               <MultiDropCard

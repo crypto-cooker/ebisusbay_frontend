@@ -1,16 +1,11 @@
-import { useRouter } from 'next/router';
 import Profile from '@src/Components/Account/Profile';
-import Footer from '@src/Components/components/Footer';
-import {caseInsensitiveCompare, isAddress} from "@src/utils";
+import {caseInsensitiveCompare} from "@src/utils";
 import {getProfile} from "@src/core/cms/endpoints/profile";
 
 export default function Account({ address, profile, query }) {
-  const router = useRouter();
-
   return (
     <>
       <Profile address={address} profile={profile} tab={query?.tab} />
-      <Footer />
     </>
   );
 }
@@ -30,7 +25,7 @@ export const getServerSideProps = async ({ params, query }) => {
     !caseInsensitiveCompare(addressOrUsername, user.data.username)) {
     return {
       redirect: {
-        destination: `/account/${user.data.username}`,
+        destination: `/account/${user.data.username}${query?.tab? `?tab=${query?.tab}` : ''}`,
         permanent: false,
       },
     }

@@ -1,59 +1,81 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Contract, ethers } from 'ethers';
-import {faCrow, faExternalLinkAlt, faHeart, faShare, faSync} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {memo, useCallback, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {Contract, ethers} from 'ethers';
+import {faHeart as faHeartOutline} from '@fortawesome/free-regular-svg-icons';
+import {
+  faCopy,
+  faCrow,
+  faExternalLinkAlt,
+  faHeart as faHeartSolid,
+  faShareAlt,
+  faSync
+} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import {Badge, Spinner} from 'react-bootstrap';
 
 import ProfilePreview from '../components/ProfilePreview';
 import Footer from '../components/Footer';
 import LayeredIcon from '../components/LayeredIcon';
-import { AnyMedia } from '../components/AnyMedia';
+import {AnyMedia} from '../components/AnyMedia';
+import ProfileImage from '../components/ProfileImage'
+
 import {
+  appUrl,
   caseInsensitiveCompare,
   humanize,
+  isAnyWeirdApesCollection,
+  isArgonautsBrandCollection,
   isBabyWeirdApesCollection,
   isCroCrowCollection,
   isCrognomidesCollection,
-  isEvoSkullCollection,
   isCroSkullPetsCollection,
-  mapAttributeString,
-  millisecondTimestamp,
-  shortAddress,
-  timeSince,
-  relativePrecision,
-  rankingsLogoForCollection,
-  rankingsTitleForCollection,
-  rankingsLinkForCollection,
+  isEmptyObj,
+  isEvoSkullCollection,
+  isLadyWeirdApesCollection,
   isLazyHorseCollection,
   isLazyHorsePonyCollection,
-  isLadyWeirdApesCollection,
   isNftBlacklisted,
-  isAnyWeirdApesCollection, isWeirdApesCollection,
+  isWeirdApesCollection,
+  mapAttributeString,
+  millisecondTimestamp,
+  rankingsLinkForCollection,
+  rankingsLogoForCollection,
+  rankingsTitleForCollection,
+  relativePrecision,
+  shortAddress,
+  timeSince,
 } from '@src/utils';
-import {getNftDetails, refreshMetadata} from '@src/GlobalState/nftSlice';
-import { connectAccount, chainConnect } from '@src/GlobalState/User';
-import { specialImageTransform } from '@src/hacks';
+import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
+import {chainConnect, connectAccount, retrieveProfile} from '@src/GlobalState/User';
+import {specialImageTransform} from '@src/hacks';
 import ListingItem from '../NftDetails/NFTTabListings/ListingItem';
 import PriceActionBar from '../NftDetails/PriceActionBar';
-import { ERC721 } from '@src/Contracts/Abis';
-import { getFilteredOffers } from '@src/core/subgraph';
+import {ERC721} from '@src/Contracts/Abis';
+import {getFilteredOffers} from '@src/core/subgraph';
 import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
 import NFTTabOffers from '../Offer/NFTTabOffers';
-import { OFFER_TYPE } from '../Offer/MadeOffers/MadeOffersRow';
-import { offerState } from '@src/core/api/enums';
-import { commify } from 'ethers/lib/utils';
-import { appConfig } from '@src/Config';
-import { hostedImage } from '@src/helpers/image';
+import {OFFER_TYPE} from '../Offer/MadeOffers/MadeOffersRow';
+import {offerState} from '@src/core/api/enums';
+import {commify} from 'ethers/lib/utils';
+import {appConfig} from '@src/Config';
+import {hostedImage} from '@src/helpers/image';
 import Link from 'next/link';
 import axios from "axios";
-import Button from "@src/Components/components/common/Button";
-import Market from "@src/Contracts/Marketplace.json";
+import Button, {LegacyOutlinedButton} from "@src/Components/components/common/Button";
 import {collectionRoyaltyPercent} from "@src/core/chain";
+import {Box, ButtonGroup, Flex, Heading, MenuButton as MenuButtonCK, Stack, Text, useClipboard} from "@chakra-ui/react";
+import {toast} from "react-toastify";
+import {Menu} from '../components/chakra-components';
+import {faFacebook, faSquareTwitter, faTelegram} from '@fortawesome/free-brands-svg-icons';
+import {getStats} from '@src/GlobalState/collectionSlice';
+import {useQuery} from "@tanstack/react-query";
+import {getCollections} from "@src/core/api/next/collectioninfo";
+import {ImageContainer} from "@src/Components/Bundle";
+import {getTheme} from "@src/Theme/theme";
+import useToggleFavorite from "@src/components-v2/feature/nft/hooks/useToggleFavorite";
 
 const config = appConfig();
-const knownContracts = config.collections;
 const tabs = {
   properties: 'properties',
   powertraits: 'powertraits',
@@ -61,13 +83,14 @@ const tabs = {
   offers: 'offers',
   info: 'info',
   breeding: 'breeding',
+  items: 'items',
 };
 
-const Nft721 = ({ address, id }) => {
+const Nft721 = ({ address, id, nft, isBundle = false }) => {
   const dispatch = useDispatch();
-
   const user = useSelector((state) => state.user);
-  const {nft, refreshing} = useSelector((state) => state.nft);
+  const { refreshing, favorites, loading:isLoading } = useSelector((state) => state.nft);
+  const { onCopy } = useClipboard(appUrl(`/collection/${address}/${id}`));
 
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [offerType, setOfferType] = useState(OFFER_TYPE.none);
@@ -79,16 +102,117 @@ const Nft721 = ({ address, id }) => {
   );
 
   const powertraits = useSelector((state) => state.nft.nft?.powertraits);
-  const collection = useSelector((state) => {
-    return knownContracts.find((c) => caseInsensitiveCompare(c.address, address));
-  });
+
+
+  const collectionStats = useSelector((state) => state.collection.stats);
+
+  useEffect(() => {
+    if (collection) {
+      async function asyncFunc() {
+        dispatch(getStats(collection, null, collection.mergedAddresses));
+      }
+      asyncFunc();
+    }
+    // eslint-disable-next-line
+  }, [dispatch, collection]);
+
+  const { isLoading: isLoadingCollection, error, data, status } = useQuery(['Collections', address], () =>
+    getCollections({ address }), true
+  )
+
+  const [collection, setCollection] = useState(null);
+
+  useEffect(() => {
+    if (!isLoadingCollection && data) {
+      setCollection(data.data.collections[0])
+    }
+  }, [isLoadingCollection, data])
+
   const collectionMetadata = useSelector((state) => {
     return collection?.metadata;
   });
   const collectionName = useSelector((state) => {
     return collection?.name;
   });
-  const isLoading = useSelector((state) => state.nft.loading);
+
+  const [{ isLoading: isFavoriting, response, error: errorTF }, toggleFavorite] = useToggleFavorite();
+
+  const copyLink = useCallback(() => {
+    onCopy();
+    toast.info(`Link copied!`);
+  }, [navigator, window.location])
+
+  const options = [
+    {
+      url: 'https://www.facebook.com/sharer/sharer.php?u=',
+      label: 'Share on Facebook',
+      icon: faFacebook,
+      type: 'url'
+    },
+    {
+      url: 'https://twitter.com/intent/tweet?text=',
+      label: 'Share on Twitter',
+      icon: faSquareTwitter,
+      type: 'url'
+    },
+    {
+      url: 'https://telegram.me/share/?url=',
+      label: 'Share on Telegram',
+      icon: faTelegram,
+      type: 'url'
+    },
+    {
+      label: 'Copy Link',
+      icon: faCopy,
+      type: 'event',
+      handleClick: copyLink
+    }
+
+  ];
+
+  const MenuItems = (
+    options.map(option => (
+      option.type === 'url' ?
+        (
+          <div >
+            <a href={`${option.url}${window.location}`} target='_blank' >
+              <div key={option.label} className='social_media_item'>
+                <div className='icon_container'>
+                  <FontAwesomeIcon icon={option.icon} style={{ height: 28 }} />
+                </div>
+                <div className='label_container'>
+                  <span>{option.label}</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+        )
+        :
+        (
+          <div className='social_media_item' onClick={option.handleClick} key={option.label}>
+            <div className='icon_container'>
+              <FontAwesomeIcon icon={option.icon} style={{ height: 28 }} />
+            </div>
+            <div className='label_container'>
+              <span>
+                {option.label}
+              </span>
+            </div>
+          </div>
+        )
+
+    )))
+
+
+  const MenuButton = () => {
+
+    return (
+      <MenuButtonCK as={LegacyOutlinedButton}>
+        <FontAwesomeIcon icon={faShareAlt} style={{ cursor: 'pointer' }} />
+      </MenuButtonCK>
+    )
+  }
 
   // Custom breeding considerations
   const [croCrowBreed, setCroCrowBreed] = useState(null);
@@ -224,7 +348,7 @@ const Nft721 = ({ address, id }) => {
           console.log(error);
         }
       } else {
-        setCustomProfile({name: null, description: null});
+        setCustomProfile({ name: null, description: null });
       }
     }
     getApeInfo();
@@ -291,7 +415,7 @@ const Nft721 = ({ address, id }) => {
           const uri = await contract.tokenURI(id);
           await axios.get(uri)
             .then((response) => {
-              setCustomProfile({name: response.data.name.length > 0 ? response.data.name : null, description: null});
+              setCustomProfile({ name: response.data.name.length > 0 ? response.data.name : null, description: null });
               setLazyHorseTraits([
                 response.data.attributes.find((trait) => trait.trait_type === 'Race Count'),
                 response.data.attributes.find((trait) => trait.trait_type === 'Breeded'),
@@ -301,7 +425,7 @@ const Nft721 = ({ address, id }) => {
           console.log(error);
         }
       } else {
-        setCustomProfile({name: null, description: null});
+        setCustomProfile({ name: null, description: null });
       }
     }
     getLazyHorseName();
@@ -344,10 +468,11 @@ const Nft721 = ({ address, id }) => {
     return nft.original_image;
   };
 
-  const [currentTab, setCurrentTab] = React.useState(tabs.properties);
+  const [currentTab, setCurrentTab] = useState(tabs.properties);
+  useEffect(() => { setCurrentTab(isBundle ? tabs.items : tabs.properties)}, [isBundle] )
   const handleTabChange = useCallback((tab) => {
     setCurrentTab(tab);
-  }, []);
+  }, [isBundle, currentTab]);
 
   const handleMakeOffer = () => {
     if (user.address) {
@@ -365,8 +490,8 @@ const Nft721 = ({ address, id }) => {
   };
 
   const onRefreshMetadata = useCallback(() => {
-    dispatch(refreshMetadata(address, id));
-  }, [address, id]);
+    dispatch(refreshMetadata(address, id, currentListing?.listingId));
+  }, [address, id, currentListing]);
 
   useEffect(() => {
     async function func() {
@@ -386,10 +511,31 @@ const Nft721 = ({ address, id }) => {
     // eslint-disable-next-line
   }, [nft, user.address]);
 
+  const onFavoriteClicked = async () => {
+    if (isEmptyObj(user.profile)) {
+      toast.info(`Connect wallet and create a profile to start adding favorites`);
+      return;
+    }
+    if (user.profile.error) {
+      toast.info(`Error loading profile. Please try reconnecting wallet`);
+      return;
+    }
+    const isCurrentFav = isFavorite();
+    await toggleFavorite(user.address, address, id, !isCurrentFav);
+    toast.success(`Item ${isCurrentFav ? 'removed from' : 'added to'} favorites`);
+    dispatch(tickFavorite(isCurrentFav ? -1 : 1));
+    dispatch(retrieveProfile());
+  };
+
+  const isFavorite = () => {
+    if (!user.profile?.favorites) return false;
+    return user.profile.favorites.find((f) => caseInsensitiveCompare(address, f.tokenAddress) && id === f.tokenId);
+  }
+
   return (
     <div>
-      {isLoading ? (
-        <section className="container">
+      {isLoading || isLoadingCollection || !collection ? (
+        <section className="gl-legacy container">
           <div className="row mt-4">
             <div className="col-lg-12 text-center">
               <Spinner animation="border" role="status">
@@ -399,11 +545,13 @@ const Nft721 = ({ address, id }) => {
           </div>
         </section>
       ) : (
-        <section className="container">
+        <section className="gl-legacy container">
           <div className="row">
             <div className="col-md-6 text-center">
               {nft ? (
-                nft.useIframe ? (
+                isBundle ? (
+                  <ImageContainer nft={nft} />
+                ) : nft.useIframe ? (
                   <iframe width="100%" height="636" src={nft.iframeSource} title="nft" />
                 ) : (
                   <>
@@ -420,53 +568,52 @@ const Nft721 = ({ address, id }) => {
               ) : (
                 <></>
               )}
-              {nft && nft.original_image && (
-                <div className="nft__item_action mt-2" style={{ cursor: 'pointer' }}>
-                  {/*<ButtonGroup>*/}
-                  {/*  <Button styleType="default-outlined">*/}
-                  {/*    Increase Bid*/}
-                  {/*  </Button>*/}
-                  {/*  <Button styleType="default-outlined" title="Share" onClick={() => onShare()}>*/}
-                  {/*    <FontAwesomeIcon icon={faShare} />*/}
-                  {/*  </Button>*/}
-                  {/*  <Button styleType="default-outlined" title="Refresh Metadata" onClick={() => onRefreshMetadata()}>*/}
-                  {/*    <FontAwesomeIcon icon={faSync} />*/}
-                  {/*  </Button>*/}
-                  {/*  <Button styleType="default-outlined" title="View Full Image" onClick={() =>*/}
-                  {/*    typeof window !== 'undefined' &&*/}
-                  {/*    window.open(specialImageTransform(address, fullImage()), '_blank')*/}
-                  {/*  }>*/}
-                  {/*    <FontAwesomeIcon icon={faExternalLinkAlt} />*/}
-                  {/*  </Button>*/}
-                  {/*</ButtonGroup>*/}
-                  <div className="d-flex justify-content-center">
-                    <Button styleType="default-outlined" title="Refresh Metadata" onClick={onRefreshMetadata} disabled={refreshing}>
-                      <FontAwesomeIcon icon={faSync} spin={refreshing} />
-                    </Button>
-                    <Button styleType="default-outlined" className="ms-2" title="View Full Image" onClick={() =>
+              <div className="mt-2" style={{ cursor: 'pointer' }}>
+                <ButtonGroup size='sm' isAttached variant='outline'>
+                  <Button styleType="default-outlined" title="Refresh Metadata" onClick={onRefreshMetadata} disabled={refreshing}>
+                    <FontAwesomeIcon icon={faSync} spin={refreshing} />
+                  </Button>
+                  <Button
+                    styleType="default-outlined"
+                    title={isFavorite() ? 'This item is in your favorites list' : 'Click to add to your favorites list'}
+                    onClick={onFavoriteClicked}
+                  >
+                    <div>
+                      <span className="me-1">{favorites}</span>
+                      {isFavorite() ? (
+                        <FontAwesomeIcon icon={faHeartSolid} style={{ color: '#dc143c' }} />
+                      ) : (
+                        <FontAwesomeIcon icon={faHeartOutline} />
+                      )}
+                    </div>
+                  </Button>
+                  {nft && nft.original_image && (
+                    <Button styleType="default-outlined" title="View Full Image" onClick={() =>
                       typeof window !== 'undefined' &&
                       window.open(specialImageTransform(address, fullImage()), '_blank')
                     }>
                       <FontAwesomeIcon icon={faExternalLinkAlt} />
                     </Button>
-                  </div>
-                </div>
-              )}
+                  )}
+                  <Menu MenuItems={MenuItems} MenuButton={MenuButton()} />
+
+                </ButtonGroup>
+              </div>
             </div>
             <div className="col-md-6">
               {nft && (
                 <div className="item_info">
                   {isNftBlacklisted(address, id) ? (
                     <div className="mb-4">
-                      <h2 className="mb-0">{customProfile.name ?? nft.name}</h2>
+                      <Heading className="mb-0">{customProfile.name ?? nft.name}</Heading>
                       <div className="d-flex">
                         <Badge bg="danger">Blacklisted</Badge>
                       </div>
                     </div>
                   ) : (
-                    <h2>{customProfile.name ?? nft.name}</h2>
+                    <Heading>{customProfile.name ?? nft.name}</Heading>
                   )}
-                  <p className="text-break">{customProfile.description ?? nft.description}</p>
+                  <p className="text-break mb-4">{customProfile.description ?? nft.description}</p>
                   {isCroCrowCollection(address) && croCrowBreed && (
                     <div className="d-flex flex-row align-items-center mb-4">
                       <LayeredIcon
@@ -482,7 +629,7 @@ const Nft721 = ({ address, id }) => {
                   {isCrognomidesCollection(address) && crognomideBreed && (
                     <div className="d-flex flex-row align-items-center mb-4">
                       <LayeredIcon
-                        icon={faHeart}
+                        icon={faHeartSolid}
                         bgColor={'#ffffff00'}
                         color={'#dc143c'}
                         inverse={false}
@@ -494,7 +641,7 @@ const Nft721 = ({ address, id }) => {
                   {isLadyWeirdApesCollection(address) && ladyWeirdApeChildren !== null && (
                     <div className="d-flex flex-row align-items-center mb-4">
                       <LayeredIcon
-                        icon={faHeart}
+                        icon={faHeartSolid}
                         bgColor={'#ffffff00'}
                         color={'#dc143c'}
                         inverse={false}
@@ -503,23 +650,20 @@ const Nft721 = ({ address, id }) => {
                       <span className="fw-bold">This Lady Weird Ape can make {`${ladyWeirdApeChildren} ${ladyWeirdApeChildren === 1 ? 'baby' : 'babies'}`}</span>
                     </div>
                   )}
-
-                  {collection.listable && (
+                  
+                  {collection.listable && !nft.burnt && (
                     <PriceActionBar
                       offerType={offerType}
+                      collectionName={collectionName}
+                      isVerified={collection.verification?.verified}
                       onOfferSelected={() => handleMakeOffer()}
                       isOwner={caseInsensitiveCompare(user.address, nft.owner)}
-                    />
+                      collectionStats={collectionStats} />
                   )}
 
                   <div className="row" style={{ gap: '2rem 0' }}>
                     {nft.owner ? (
-                      <ProfilePreview
-                        type="Owner"
-                        address={nft.owner}
-                        to={`/account/${nft.owner}`}
-                        useCnsLookup={true}
-                      />
+                      <ProfileImage address={nft.owner} title='Owner' displayName />
                     ) : (currentListing && collection.listable) && (
                       <ProfilePreview
                         type="Owner"
@@ -534,7 +678,7 @@ const Nft721 = ({ address, id }) => {
                       title={collectionName ?? 'View Collection'}
                       avatar={hostedImage(collectionMetadata?.avatar, true)}
                       address={address}
-                      verified={collectionMetadata?.verified}
+                      verified={collection.verification?.verified}
                       to={`/collection/${address}`}
                     />
 
@@ -550,13 +694,30 @@ const Nft721 = ({ address, id }) => {
                     )}
                   </div>
 
-                  <div className="spacer-40"></div>
+
+                  {isArgonautsBrandCollection(nft.address) ? (
+                    <Box my={6}>
+                      <Button styleType="default-outlined" borderColor={getTheme(user.theme).colors.textColor4}>
+                        <a href={`https://hub.argofinance.money/${nft.owner}`} target="_blank" className="fw-bold" style={{ fontSize: '0.8em' }}>
+                          <span className="color">View Argonaut's Hub</span>
+                        </a>
+                      </Button>
+                    </Box>
+                  ) : (
+                    <div className="spacer-40"></div>
+                  )}
 
                   <div className="de_tab">
                     <ul className="de_nav nft_tabs_options">
-                      <li className={`tab ${currentTab === tabs.properties ? 'active' : ''}`}>
-                        <span onClick={() => handleTabChange(tabs.properties)}>Properties</span>
-                      </li>
+                      {isBundle ? (
+                        <li className={`tab ${currentTab === tabs.items ? 'active' : ''}`}>
+                          <span onClick={() => handleTabChange(tabs.items)}>Items</span>
+                        </li>
+                      ) : (
+                        <li className={`tab ${currentTab === tabs.properties ? 'active' : ''}`}>
+                          <span onClick={() => handleTabChange(tabs.properties)}>Properties</span>
+                        </li>
+                      )}
                       {((powertraits && powertraits.length > 0) || (evoSkullTraits && evoSkullTraits.length > 0)) && (
                         <li className={`tab ${currentTab === tabs.powertraits ? 'active' : ''}`}>
                           <span onClick={() => handleTabChange(tabs.powertraits)}>In-Game Attributes</span>
@@ -568,9 +729,11 @@ const Nft721 = ({ address, id }) => {
                       <li className={`tab ${currentTab === tabs.offers ? 'active' : ''}`}>
                         <span onClick={() => handleTabChange(tabs.offers)}>Offers</span>
                       </li>
-                      <li className={`tab ${currentTab === tabs.info ? 'active' : ''}`}>
-                        <span onClick={() => handleTabChange(tabs.info)}>Info</span>
-                      </li>
+                      {!isBundle && (
+                        <li className={`tab ${currentTab === tabs.info ? 'active' : ''}`}>
+                          <span onClick={() => handleTabChange(tabs.info)}>Info</span>
+                        </li>
+                      )}
                       {babyWeirdApeBreed && (
                         <li className={`tab ${currentTab === tabs.breeding ? 'active' : ''}`}>
                           <span onClick={() => handleTabChange(tabs.breeding)}>Breed Info</span>
@@ -582,7 +745,7 @@ const Nft721 = ({ address, id }) => {
                       {currentTab === tabs.properties && (
                         <div className="tab-1 onStep fadeIn">
                           {(nft.attributes && Array.isArray(nft.attributes) && nft.attributes.length > 0) ||
-                          (nft.properties && Array.isArray(nft.properties) && nft.properties.length > 0) ? (
+                            (nft.properties && Array.isArray(nft.properties) && nft.properties.length > 0) ? (
                             <div className="d-block mb-3">
                               <div className="row gx-3 gy-2">
                                 {nft.attributes &&
@@ -698,7 +861,7 @@ const Nft721 = ({ address, id }) => {
                                   route="/account"
                                   primaryTitle="Bought by"
                                   user={listing.purchaser}
-                                  time={timeSince(listing.saleTime + '000')}
+                                  time={timeSince(listing.saleTime)}
                                   price={ethers.utils.commify(listing.price)}
                                   primaryText={shortAddress(listing.purchaser)}
                                 />
@@ -723,7 +886,7 @@ const Nft721 = ({ address, id }) => {
                                 <div>
                                   <a href={`${config.urls.explorer}address/${address}`} target="_blank">
                                     {shortAddress(address)}
-                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted"/>
+                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted" />
                                   </a>
                                 </div>
                               </div>
@@ -732,7 +895,7 @@ const Nft721 = ({ address, id }) => {
                                 <div>
                                   <a href={`${config.urls.explorer}token/${address}?a=${id}`} target="_blank">
                                     {id.length > 10 ? shortAddress(id) : id}
-                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted"/>
+                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted" />
                                   </a>
                                 </div>
                               </div>
@@ -794,6 +957,49 @@ const Nft721 = ({ address, id }) => {
                           </div>
                         </div>
                       )}
+
+                      {currentTab === tabs.items && (
+                        <Flex flexDir='column' gap='8px' maxH='340ox' overflowY='auto'>
+                          {nft.nfts?.map((nft, i) => (
+                            <Box p='16px' key={i}>
+                              <Flex gap='15px'>
+                                <Box w='72px'>
+                                  <AnyMedia
+                                    image={specialImageTransform('0xe94ac1647bF99FE299B2aDcF53FcF57153C23Fe1', nft.image)}
+                                    video={nft.video ?? nft.animation_url}
+                                    videoProps={{ height: 'auto', autoPlay: true }}
+                                    title={'title'}
+                                    usePlaceholder={false}
+                                    className="img-fluid img-rounded mb-sm-30"
+                                  />
+                                </Box>
+                                <Stack>
+                                  {nft.collectionName && (
+                                    <Link href={`/collection/${nft.collectionSlug ?? nft.address}`}>
+                                      <a>
+                                        <h6
+                                          className="card-title mt-auto fw-normal mb-0"
+                                          style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
+                                        >
+                                          {nft.collectionName}
+                                        </h6>
+                                      </a>
+                                    </Link>
+                                  )}
+                                  <Link href={`/collection/${nft.address}/${nft.id}`}>
+                                    <a>
+                                      <Text fontWeight='bold'>{nft.name}</Text>
+                                    </a>
+                                  </Link>
+                                </Stack>
+
+                              </Flex>
+                            </Box>
+                          ))
+                          }
+                        </Flex>
+                      )}
+
                     </div>
                   </div>
                 </div>
@@ -806,8 +1012,8 @@ const Nft721 = ({ address, id }) => {
         <MakeOfferDialog
           isOpen={openMakeOfferDialog}
           onClose={() => setOpenMakeOfferDialog(false)}
-          nft={nft}
-          collection={collection}
+          initialNft={nft}
+          nftAddress={address}
         />
       )}
       <Footer />
