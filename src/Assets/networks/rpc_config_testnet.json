@@ -3047,8 +3047,8 @@
       }
     },
     {
-      "name": "Turkey Relief",
-      "slug": "turkey-relief",
+      "name": "Turkey Earthquake Support",
+      "slug": "turkey-earthquake-support",
       "multiToken": true,
       "tokens": [
         {
@@ -3059,14 +3059,13 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "placeholder",
-        "avatar": "/img/collections/cronos-women/avatar.webp",
-        "banner": "/img/collections/cronos-women/banner.webp",
-        "card": "/img/collections/cronos-women/card.webp",
-        "website": "https://cronos-women.com/",
-        "twitter": "https://twitter.com/Cronos_Women",
+        "description": "Turkey has recently been struck by a devastating earthquake with a magnitude of 7.8. The impact has been widespread and many communities have been severely affected. In this difficult time, we are reaching out to ask for your support. Any donation, no matter how small, will help us provide much-needed aid to those affected by the earthquake. Your generosity will help provide shelter, food, and medical supplies to those in need. Your contribution will make a real difference in the lives of those affected by this disaster. Thank you for your kindness and support.",
+        "avatar": "/img/collections/turkey-earthquake-support/avatar.webp",
+        "banner": "/img/collections/turkey-earthquake-support/banner.webp",
+        "card": "/img/collections/turkey-earthquake-support/card.webp",
+        "website": "https://ahbap.org/disasters-turkey/",
+        "twitter": "https://twitter.com/ahbap",
         "discord": "https://discord.gg/CronosWomen",
-        "medium": "https://medium.com/@veliikb",
         "categories": []
       },
       "verification": {
@@ -7360,37 +7359,36 @@
       }
     },
     {
-      "id": 106,
-      "slug": "turkey-relief",
-      "title": "Turkey Relief",
-      "subtitle": "placeholder",
-      "description": "placeholder",
+      "id": 157,
+      "slug": "turkey-earthquake-support",
+      "title": "Turkey Earthquake Support",
+      "subtitle": "Turkey has recently been struck by a devastating earthquake with a magnitude of 7.8. The impact has been widespread and many communities have been severely affected. In this difficult time, we are reaching out to ask for your support. Any donation, no matter how small, will help us provide much-needed aid to those affected by the earthquake. Your generosity will help provide shelter, food, and medical supplies to those in need. Your contribution will make a real difference in the lives of those affected by this disaster. Thank you for your kindness and support.",
+      "description": "Turkey has recently been struck by a devastating earthquake with a magnitude of 7.8. The impact has been widespread and many communities have been severely affected. In this difficult time, we are reaching out to ask for your support. Any donation, no matter how small, will help us provide much-needed aid to those affected by the earthquake. Your generosity will help provide shelter, food, and medical supplies to those in need. Your contribution will make a real difference in the lives of those affected by this disaster. Thank you for your kindness and support.",
       "author": {
         "name": "Cronos Women",
-        "website": "https://cronos-women.com/",
-        "twitter": "https://twitter.com/Cronos_Women",
-        "discord": "https://discord.gg/CronosWomen",
-        "medium": "https://medium.com/@veliikb"
+        "website": "https://ahbap.org/disasters-turkey/",
+        "twitter": "https://twitter.com/ahbap",
+        "discord": "https://discord.gg/CronosWomen"
       },
       "address": "0xBE1B0475F1CDaF4481E944AE6a28eABF149128B1",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 100,
       "totalSupply": 6000,
-      "cost": "3",
-      "memberCost": "2",
-      "whitelistCost": "1",
+      "cost": "100",
+      "memberCost": "100",
+      "whitelistCost": "100",
       "foundersOnly": false,
-      "start": 1675881019000,
+      "start": 1675888270000,
       "end": null,
       "referral": false,
       "is1155": false,
       "published": true,
       "complete": false,
       "images": {
-        "drop": "/img/drops/cronos-women/drop.webp",
-        "banner": "/img/collections/cronos-women/banner.webp",
-        "avatar": "/img/collections/cronos-women/avatar.webp",
-        "preview": "/img/collections/cronos-women/card.webp"
+        "drop": "/img/drops/turkey-earthquake-support/drop.webp",
+        "banner": "/img/collections/turkey-earthquake-support/banner.webp",
+        "avatar": "/img/collections/turkey-earthquake-support/avatar.webp",
+        "preview": "/img/collections/turkey-earthquake-support/card.webp"
       },
       "verification": {
         "doxx": true,
