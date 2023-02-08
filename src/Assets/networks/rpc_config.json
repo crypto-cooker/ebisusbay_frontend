@@ -17524,7 +17524,7 @@
       "name": "CroHamsterNFT Items MK1",
       "slug": "crohamsternft-items-mk1",
       "multiToken": false,
-      "address": "",
+      "address": "0xfaDb4ef67596492534d7315C405B4B06D1e19Bf1",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -21025,7 +21025,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": false,
+      "published": true,
       "complete": false,
       "images": {
         "drop": "/img/drops/ryborgs/drop.webp",
@@ -23627,7 +23627,7 @@
         "discord": "https://discord.gg/sj4cHPrdVk",
         "medium": "https://medium.com/@CroHamsterNFT"
       },
-      "address": "",
+      "address": "0xfaDb4ef67596492534d7315C405B4B06D1e19Bf1",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 1000,
