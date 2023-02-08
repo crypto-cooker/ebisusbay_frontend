@@ -11012,7 +11012,7 @@
         "avatar": "/img/collections/bob-adventures/avatar.webp",
         "card": "/img/collections/bob-adventures/card.webp",
         "banner": "/img/collections/bob-adventures/banner.webp",
-        "website": "https://cbonft.com/",
+        "website": "https://bob-adventures.netlify.app/",
         "twitter": "https://twitter.com/CroBobAdventure",
         "discord": "https://discord.gg/bATYfZZ4xn",
         "categories": [
@@ -17610,6 +17610,31 @@
         "doxx": false,
         "kyc": true,
         "verified": true
+      }
+    },
+    {
+      "name": "BOB Spaceships",
+      "slug": "bob-spaceships",
+      "multiToken": false,
+      "address": "0xC5Fe01a64e63EDefC40d620A5716B90c52D444f9",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "BOB Spaceships is AI generated collection on Cronos that focuses on community and passive income. All of our Spaceship NFTs is all unique 1 of 1 created by AI.",
+        "avatar": "/img/collections/bob-spaceships/avatar.webp",
+        "card": "/img/collections/bob-spaceships/card.webp",
+        "banner": "/img/collections/bob-spaceships/banner.webp",
+        "website": "https://bob-adventures.netlify.app/",
+        "twitter": "https://twitter.com/CroBobAdventure",
+        "discord": "https://discord.gg/bATYfZZ4xn",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
