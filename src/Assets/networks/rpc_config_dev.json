@@ -17568,6 +17568,30 @@
         "kyc": false,
         "verified": false
       }
+    },
+    {
+      "name": "Cupid Corgi",
+      "slug": "cupid-corgi",
+      "multiToken": false,
+      "address": "0x290E94507Add3e328F19f337bc5f46977D051a77",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "a Gift for #crofam for Valentine 2023",
+        "avatar": "/img/collections/cupid-corgi/avatar.webp",
+        "card": "/img/collections/cupid-corgi/card.webp",
+        "banner": "/img/collections/cupid-corgi/banner.webp",
+        "website": "https://corgistudio.io/",
+        "twitter": "https://twitter.com/CronosCorgi",
+        "discord": "https://discord.gg/Corgistudio",
+        "telegram": "https://t.me/thecorgistudio",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
     }
   ],
   "drops": [
