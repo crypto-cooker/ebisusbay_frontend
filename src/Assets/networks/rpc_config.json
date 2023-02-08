@@ -1365,10 +1365,9 @@
           "source": "rarity_sniper",
           "slug": "cronos-primate-business"
         },
-        "website": "https://www.cronospb.com/",
-        "twitter": "https://twitter.com/PrimateCronos",
-        "discord": "https://discord.gg/X4shERMUwf",
-        "medium": "https://medium.com/cronos-monkey-business",
+        "website": "https://www.primate.business/",
+        "twitter": "https://twitter.com/PrimateBusiness",
+        "discord": "https://discord.gg/WuA3jKQBfa",
         "categories": [
           "collectibles"
         ]
@@ -2220,10 +2219,9 @@
         "avatar": "/img/collections/cronosmb/avatar.png",
         "card": "/img/collections/cronosmb/special/card.webp",
         "banner": "/img/collections/cronosmb/special/banner.webp",
-        "website": "https://www.cronospb.com/",
-        "twitter": "https://twitter.com/PrimateCronos",
-        "discord": "https://discord.gg/X4shERMUwf",
-        "medium": "https://medium.com/cronos-monkey-business",
+        "website": "https://www.primate.business/",
+        "twitter": "https://twitter.com/PrimateBusiness",
+        "discord": "https://discord.gg/WuA3jKQBfa",
         "categories": [
           "collectibles"
         ]
@@ -2894,10 +2892,9 @@
         "avatar": "/img/collections/cronosmb/avatar.png",
         "card": "/img/collections/cronosmb/gorilla/card.webp",
         "banner": "/img/collections/cronosmb/gorilla/banner.webp",
-        "website": "https://www.cronospb.com/",
-        "twitter": "https://twitter.com/PrimateCronos",
-        "discord": "https://discord.gg/X4shERMUwf",
-        "medium": "https://medium.com/cronos-monkey-business",
+        "website": "https://www.primate.business/",
+        "twitter": "https://twitter.com/PrimateBusiness",
+        "discord": "https://discord.gg/WuA3jKQBfa",
         "categories": [
           "utility"
         ]
@@ -7251,10 +7248,9 @@
         "avatar": "/img/collections/cronosmb/avatar.png",
         "card": "/img/collections/cronosmb/bananas/card.webp",
         "banner": "/img/collections/cronosmb/bananas/banner.webp",
-        "website": "https://www.cronospb.com/",
-        "twitter": "https://twitter.com/PrimateCronos",
-        "discord": "https://discord.gg/X4shERMUwf",
-        "medium": "https://medium.com/cronos-monkey-business",
+        "website": "https://www.primate.business/",
+        "twitter": "https://twitter.com/PrimateBusiness",
+        "discord": "https://discord.gg/WuA3jKQBfa",
         "categories": [
           "utility"
         ]
@@ -9739,10 +9735,9 @@
         "avatar": "/img/collections/cpb-corrupt/avatar.webp",
         "card": "/img/collections/cpb-corrupt/card.webp",
         "banner": "/img/collections/cpb-corrupt/banner.webp",
-        "website": "https://www.cronospb.com/",
-        "twitter": "https://twitter.com/PrimateCronos",
-        "discord": "https://discord.gg/X4shERMUwf",
-        "medium": "https://medium.com/cronos-monkey-business",
+        "website": "https://www.primate.business/",
+        "twitter": "https://twitter.com/PrimateBusiness",
+        "discord": "https://discord.gg/WuA3jKQBfa",
         "categories": [
           "collectibles"
         ]
@@ -17591,6 +17586,30 @@
         "doxx": false,
         "kyc": false,
         "verified": false
+      }
+    },
+    {
+      "name": "Zombie Gorilla Business",
+      "slug": "zombie-gorilla-business",
+      "multiToken": false,
+      "address": "0x89D3671ed4561C1775b3B2a5713B08224f610D4D",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "700 ZGBs are the result of burning 2100 CGBS. Zombies are more powerful then regular gorillas",
+        "avatar": "/img/collections/zombie-gorilla-business/avatar.webp",
+        "banner": "/img/collections/zombie-gorilla-business/banner.webp",
+        "website": "https://www.primate.business/",
+        "twitter": "https://twitter.com/PrimateBusiness",
+        "discord": "https://discord.gg/WuA3jKQBfa",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
       }
     }
   ],
