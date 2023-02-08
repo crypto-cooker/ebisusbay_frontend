@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect} from 'react';
 import {specialImageTransform} from "@src/hacks";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
-import {useSelector} from "react-redux";
 import {toast} from "react-toastify";
 import {appUrl, isBundle} from "@src/utils";
 import {getTheme} from "@src/Theme/theme";
@@ -31,14 +30,24 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFacebook, faTelegram, faTwitter} from "@fortawesome/free-brands-svg-icons";
 import {CheckCircleIcon} from "@chakra-ui/icons";
 import {appConfig} from "@src/Config";
+import {ContractReceipt} from "ethers";
+import {useAppSelector} from "@src/Store/hooks";
+import CronosIcon from "@src/components-v2/shared/icons/cronos";
 
 const config = appConfig();
 
-export default function PurchaseSuccessDialog({ onClose, isOpen, listing, tx}) {
-  const { onCopy, setValue } = useClipboard();
+type PurchaseSuccessDialogProps = {
+  onClose: () => void;
+  isOpen: boolean;
+  listing: any;
+  tx?: ContractReceipt
+};
 
-  const user = useSelector((state) => state.user);
-  const userTheme = useSelector((state) => state.user.theme);
+export default function PurchaseSuccessDialog({ onClose, isOpen, listing, tx}: PurchaseSuccessDialogProps) {
+  const { onCopy, setValue } = useClipboard(appUrl(`/collection/${listing.nftAddress}/${listing.nftId}`).toString());
+
+  const user = useAppSelector((state) => state.user);
+  const userTheme = useAppSelector((state) => state.user.theme);
 
   const handleCopy = useCallback(() => {
     onCopy();
@@ -70,7 +79,7 @@ export default function PurchaseSuccessDialog({ onClose, isOpen, listing, tx}) {
 
   useEffect(() => {
     if (listing) {
-      setValue(appUrl(`/collection/${listing.nftAddress}/${listing.nftId}`));
+      setValue(appUrl(`/collection/${listing.nftAddress}/${listing.nftId}`).toString());
     }
   }, [listing]);
 
@@ -86,7 +95,7 @@ export default function PurchaseSuccessDialog({ onClose, isOpen, listing, tx}) {
             </HStack>
           </Center>
         </ModalHeader>
-        <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
+        <ModalCloseButton color={getTheme(user.theme)!.colors.textColor4} />
         <ModalBody>
           <VStack>
             <Box w="30%">
@@ -107,7 +116,7 @@ export default function PurchaseSuccessDialog({ onClose, isOpen, listing, tx}) {
             {tx && (
               <Link href={`${config.urls.explorer}tx/${tx.transactionHash}`} isExternal>
                 <HStack>
-                  <Image src={`/img/logos/cronos_${userTheme === 'dark' ? 'white' : 'blue'}.svg`} width={30} height={30}/>
+                  <CronosIcon boxSize={6}/>
                   <Text>View on Cronoscan</Text>
                 </HStack>
               </Link>
@@ -118,7 +127,7 @@ export default function PurchaseSuccessDialog({ onClose, isOpen, listing, tx}) {
           <VStack w="full">
             <Text>Share</Text>
             <Flex justify="center">
-              <ButtonGroup align="center">
+              <ButtonGroup>
                 {shareOptions.map((shareOption) => (
                   <IconButton
                     icon={<FontAwesomeIcon icon={shareOption.icon} />}

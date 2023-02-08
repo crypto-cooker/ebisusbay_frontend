@@ -672,6 +672,33 @@
     "style": {}
   },
   {
+    "slug": "croarmy-collection",
+    "name": "CroArmy Collection",
+    "description": "CroArmy is a collection of NFTs that each serve a purpose. We attempt to diversify our holdings so we’re not too heavy in one singular project. Earnings from those projects, are swapped to bcro and airdropped to Coalitions, Soldiers, Burns, and Jackals. On top of our main treasury, we also have side hustles with BTC miners, and Jarheads.",
+    "images": {
+      "banner": "/img/brands/croarmy-collection/banner.webp",
+      "preview": "/img/brands/croarmy-collection/preview.webp"
+    },
+    "collections": [
+      "0x85aC0eAc55A62840121c5Bc75368987a52267086",
+      "0xE4a36Aa88d8380DB252558104dbe0D71505aF7a5",
+      "0x68500E24a226B75eE603F4040a647DB1fAa8f0fE",
+      "0xb7F47b23A642a40fafF4d8df6e84B049A843ba4F",
+      "0xD06eF4dA6d75f6E4047999d7D9b2f899688f31a0",
+      "0x963ebb384b39C720EEaD0B7094Eb0d55eCd40AB9",
+      "0x22475d952F5dA84007A7535725EC7c79CfA013FE"
+    ],
+    "socials": {
+      "website": "https://croarmy.app/",
+      "twitter": "https://twitter.com/croarmy_eth",
+      "discord": "https://discord.gg/croarmy",
+      "medium": "https://medium.com/@CroArmy"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "zap-projects",
     "name": "Zap Projects",
     "description": "",

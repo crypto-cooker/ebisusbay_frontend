@@ -1,31 +1,38 @@
-import React, { memo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useCallback, useState} from 'react';
+import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
 import Link from 'next/link';
-import { ethers } from 'ethers';
+import {ethers} from 'ethers';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
-import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
-import { connectAccount, chainConnect } from '@src/GlobalState/User';
+import MakeOfferDialog from '@src/Components/Offer/Dialogs/MakeOfferDialog';
+import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import {
   appUrl,
+  caseInsensitiveCompare,
   createSuccessfulAddCartContent,
   isNftBlacklisted,
   round,
-  siPrefixedNumber, timeSince
+  siPrefixedNumber,
+  timeSince
 } from '@src/utils';
-import { AnyMedia } from './AnyMedia';
+import {AnyMedia} from '@src/Components/components/AnyMedia';
 import {convertGateway, nftCardUrl} from '@src/helpers/image';
-import {
-  Box, Flex,
-  Heading, Spacer,
-  Text, useClipboard
-} from "@chakra-ui/react";
+import {Box, Flex, Heading, Spacer, Text, useClipboard} from "@chakra-ui/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-  faBolt,
-  faEllipsisH, faExternalLink, faHand,
-  faLink, faShoppingBag, faSync,
+  faEllipsisH,
+  faExchangeAlt,
+  faExternalLink,
+  faHand,
+  faLink,
+  faMinus,
+  faPen,
+  faShoppingBag,
+  faSync,
+  faTag,
+  faTags,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import Image from "next/image";
@@ -35,8 +42,9 @@ import {addToCart, openCart, removeFromCart} from "@src/GlobalState/cartSlice";
 import {toast} from "react-toastify";
 import {refreshMetadata} from "@src/GlobalState/nftSlice";
 import {specialImageTransform} from "@src/hacks";
+import {useAppSelector} from "@src/Store/hooks";
 
-const Watermarked = styled.div`
+const Watermarked = styled.div<{ watermark: string }>`
   position: relative;
   &:after {
     content: '';
@@ -60,61 +68,42 @@ const MakeBuy = styled.div`
   align-items: center;
 `;
 
-const NftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false, canBuy = true }) => {
+type BaseNftCardProps = {
+  nft: any;
+  imgClass: string;
+  watermark: any;
+  is1155: boolean;
+  canBuy: boolean;
+}
+const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false, canBuy = true }: BaseNftCardProps) => {
   const nftUrl = appUrl(`/collection/${nft.address}/${nft.id}`);
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const cart = useSelector((state) => state.cart);
+  const user = useAppSelector((state) => state.user);
+  const cart = useAppSelector((state) => state.cart);
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const isInCart = nft.market?.id && cart.nfts.map((o) => o.listingId).includes(nft.market.id);
-  const { onCopy } = useClipboard(nftUrl);
+  const { onCopy } = useClipboard(nftUrl.toString());
 
-  const getOptions = () => {
-    const options = [];
-
-    options.push({
-      icon: faHand,
-      label: 'Make Offer',
-      handleClick: handleMakeOffer,
-    });
-
-    if (nft.market && canBuy) {
-      if (isInCart) {
-        options.push({
-          icon: faShoppingBag,
-          label: 'Remove from Cart',
-          handleClick: handleRemoveFromCart,
-        });
-      } else {
-        options.push({
-          icon: faShoppingBag,
-          label: 'Add to Cart',
-          handleClick: handleAddToCart,
-        });
-      }
+  const getListing = (): any => {
+    if (nft.market?.price) {
+      return {
+        id: nft.market.id,
+        price: nft.market.price,
+        expirationDate: nft.market.expirationDate
+      };
+    }
+    if (nft.listed) {
+      return {
+        id: nft.listingId,
+        price: nft.price,
+        expirationDate: nft.expirationDate
+      };
     }
 
-    options.push({
-      icon: faSync,
-      label: 'Refresh Metadata',
-      handleClick: handleRefresh,
-    });
+    return null;
+  }
 
-    options.push({
-      icon: faExternalLink,
-      label: 'Open Original',
-      handleClick: handleOpenOriginal,
-    });
-
-    options.push({
-      icon: faLink,
-      label: 'Copy link',
-      handleClick: handleCopy,
-    });
-
-    return options;
-  };
+  const isInCart = getListing()?.id && cart.nfts.map((o: any) => o.listingId).includes(getListing().id);
 
   const handleMakeOffer = () => {
     const isBlacklisted = isNftBlacklisted(nft.address, nft.id);
@@ -135,11 +124,12 @@ const NftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false, can
   };
 
   const handleAddToCart = () => {
+    const listing = getListing();
     dispatch(addToCart({
-      listingId: nft.market.id,
+      listingId: listing.id,
       name: nft.name,
       image: nft.image,
-      price: nft.market.price,
+      price: listing.price,
       address: nft.address,
       id: nft.id,
       rank: nft.rank
@@ -147,10 +137,11 @@ const NftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false, can
     toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
   };
 
-  const handleRemoveFromCart = () => {
-    dispatch(removeFromCart(nft.market.id));
+  const handleRemoveFromCart = useCallback(() => {
+    const listing = getListing();
+    dispatch(removeFromCart(listing.id));
     toast.success('Removed from cart');
-  };
+  }, [nft]);
 
   const handleOpenOriginal = () => {
     if (nft.original_image) {
@@ -167,29 +158,22 @@ const NftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false, can
     toast.success('Link copied!');
   };
 
-  const getListing = () => {
-    if (nft.market?.price) {
-      return {
-        price: nft.market.price,
-        expirationDate: nft.market.expirationDate
-      };
-    }
-    if (nft.listed) {
-      return {
-        price: nft.price,
-        expirationDate: nft.expirationDate
-      };
-    }
-
-    return null;
-  }
-  const getIsNftListed = () => {
-    if (nft.market?.price) {
-      return true;
-    }
-    return false;
-  };
-
+  const menuOptions = caseInsensitiveCompare(user.address, nft.address ?? nft.nftAddress) ?
+    ownerMenuOptions({
+      onRefresh: handleRefresh,
+      onOpenLink: handleOpenOriginal,
+      onCopy: handleCopy
+    }) : publicMenuOptions({
+      onRefresh: handleRefresh,
+      onOpenLink: handleOpenOriginal,
+      onCopy: handleCopy,
+      onAddToCart: handleAddToCart,
+      onRemoveFromCart: handleRemoveFromCart,
+      onMakeOffer: handleMakeOffer,
+      isInCart: isInCart,
+      canBuy: nft.market && canBuy
+    });
+console.log(nft)
   return (
     <>
       <Box
@@ -280,7 +264,7 @@ const NftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false, can
                     _groupHover={{visibility:'visible', color:lightTheme.textColor1}}
                     visibility="hidden"
                   >
-                    {nft.market?.price && canBuy ? (
+                    {getListing()?.price && canBuy ? (
                       <>
                         {isInCart ? (
                           <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={handleRemoveFromCart}>Remove From Cart</Text>
@@ -292,7 +276,7 @@ const NftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false, can
                       <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={handleMakeOffer}>Make Offer</Text>
                     )}
                   </Box>
-                <MenuPopup options={getOptions()}>
+                <MenuPopup options={menuOptions}>
                   <FontAwesomeIcon icon={faEllipsisH} style={{ cursor: 'pointer' }} className="my-auto" />
                 </MenuPopup>
               </div>
@@ -306,10 +290,162 @@ const NftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false, can
           onClose={() => setOpenMakeOfferDialog(false)}
           initialNft={nft}
           nftAddress={nft.address ?? nft.nftAddress}
+          nftId={nft.id ?? nft.nftId}
         />
       )}
     </>
   );
 };
 
-export default memo(NftCard);
+type NftCardProps = {
+  nft: any;
+  imgClass: string;
+  watermark: boolean;
+  is1155: boolean;
+  canBuy:  boolean;
+
+  isInventory: boolean;
+  includeCollectionName: boolean;
+}
+export const NftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false, canBuy = true }: NftCardProps) => {
+  return (
+    <BaseNftCard
+      nft={nft}
+      imgClass={imgClass}
+      watermark={watermark}
+      is1155={is1155}
+      canBuy={canBuy}
+    />
+  )
+}
+
+type OwnerMenuProps = {
+  onRefresh: () => void;
+  onOpenLink: () => void;
+  onCopy: () => void;
+  onCreateLising?: () => void;
+  onUpdateListing?: () => void;
+  onTransfer?: () => void;
+  onCancelListing?: () => void;
+  onAddToBatch?: () => void;
+  onRemoveFromBatch?: () => void;
+}
+const ownerMenuOptions = (props: OwnerMenuProps) => {
+  const options = [];
+
+  options.push({
+    icon: faTag,
+    label: 'Sell',
+    handleClick: props.onCreateLising,
+  });
+
+  if (props.onAddToBatch) {
+    options.push({
+      icon: faTags,
+      label: 'Add to batch',
+      handleClick: props.onAddToBatch,
+    });
+  }
+
+  if (props.onRemoveFromBatch) {
+    options.push({
+      icon: faMinus,
+      label: 'Remove from batch',
+      handleClick: props.onRemoveFromBatch,
+    });
+  }
+
+  options.push({
+    icon: faSync,
+    label: 'Refresh Metadata',
+    handleClick: props.onRefresh,
+  });
+
+  options.push({
+    icon: faExternalLink,
+    label: 'Open Original',
+    handleClick: props.onOpenLink,
+  });
+
+  options.push({
+    icon: faLink,
+    label: 'Copy link',
+    handleClick: props.onCopy,
+  });
+
+  options.push({
+    icon: faPen,
+    label: 'Update',
+    handleClick: props.onUpdateListing,
+  });
+
+  options.push({
+    icon: faTimes,
+    label: 'Cancel',
+    handleClick: props.onCancelListing,
+  });
+
+  options.push({
+    icon: faExchangeAlt,
+    label: 'Transfer',
+    handleClick: props.onTransfer,
+  });
+
+  return options;
+};
+
+type PublicMenuProps = {
+  onRefresh: () => void;
+  onOpenLink: () => void;
+  onCopy: () => void;
+  onAddToCart: () => void;
+  onRemoveFromCart: () => void;
+  onMakeOffer: () => void;
+  isInCart: boolean;
+  canBuy: boolean;
+}
+const publicMenuOptions = (props: PublicMenuProps) => {
+  const options = [];
+
+  options.push({
+    icon: faHand,
+    label: 'Make Offer',
+    handleClick: props.onMakeOffer,
+  });
+
+  if (props.canBuy) {
+    if (props.isInCart) {
+      options.push({
+        icon: faMinus,
+        label: 'Remove from Cart',
+        handleClick: props.onRemoveFromCart,
+      });
+    } else {
+      options.push({
+        icon: faShoppingBag,
+        label: 'Add to Cart',
+        handleClick: props.onAddToCart,
+      });
+    }
+  }
+
+  options.push({
+    icon: faSync,
+    label: 'Refresh Metadata',
+    handleClick: props.onRefresh,
+  });
+
+  options.push({
+    icon: faExternalLink,
+    label: 'Open Original',
+    handleClick: props.onOpenLink,
+  });
+
+  options.push({
+    icon: faLink,
+    label: 'Copy link',
+    handleClick: props.onCopy,
+  });
+
+  return options;
+}

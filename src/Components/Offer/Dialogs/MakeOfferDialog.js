@@ -203,7 +203,7 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
               {nft ? (
                 <>{existingOffer ? <>Update Offer on {nft.name}</> : <>Offer on {nft.name}</>}</>
               ) : (
-                <>{existingOffer ? <>Update Offer</> : <>Make Offer}</>}</>
+                <>{existingOffer ? <>Update Offer</> : <>Make Offer</>}</>
               )}
             </ModalHeader>
             <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
