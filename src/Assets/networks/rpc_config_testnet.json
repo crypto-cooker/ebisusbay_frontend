@@ -3045,6 +3045,35 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "Turkey Relief",
+      "slug": "turkey-relief",
+      "multiToken": true,
+      "tokens": [
+        {
+          "id": 0
+        }
+      ],
+      "address": "0xBE1B0475F1CDaF4481E944AE6a28eABF149128B1",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "placeholder",
+        "avatar": "/img/collections/cronos-women/avatar.webp",
+        "banner": "/img/collections/cronos-women/banner.webp",
+        "card": "/img/collections/cronos-women/card.webp",
+        "website": "https://cronos-women.com/",
+        "twitter": "https://twitter.com/Cronos_Women",
+        "discord": "https://discord.gg/CronosWomen",
+        "medium": "https://medium.com/@veliikb",
+        "categories": []
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "phenix",
+        "verified": true
+      }
     }
   ],
   "drops": [
@@ -7325,6 +7354,46 @@
       },
       "verification": {
         "doxx": false,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
+      }
+    },
+    {
+      "id": 106,
+      "slug": "turkey-relief",
+      "title": "Turkey Relief",
+      "subtitle": "placeholder",
+      "description": "placeholder",
+      "author": {
+        "name": "Cronos Women",
+        "website": "https://cronos-women.com/",
+        "twitter": "https://twitter.com/Cronos_Women",
+        "discord": "https://discord.gg/CronosWomen",
+        "medium": "https://medium.com/@veliikb"
+      },
+      "address": "0xBE1B0475F1CDaF4481E944AE6a28eABF149128B1",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 100,
+      "totalSupply": 6000,
+      "cost": "3",
+      "memberCost": "2",
+      "whitelistCost": "1",
+      "foundersOnly": false,
+      "start": 1675881019000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/cronos-women/drop.webp",
+        "banner": "/img/collections/cronos-women/banner.webp",
+        "avatar": "/img/collections/cronos-women/avatar.webp",
+        "preview": "/img/collections/cronos-women/card.webp"
+      },
+      "verification": {
+        "doxx": true,
         "kyc": true,
         "escrow": false,
         "verified": true
