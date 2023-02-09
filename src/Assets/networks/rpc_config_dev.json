@@ -17521,7 +17521,7 @@
       "multiToken": false,
       "address": "0xfaDb4ef67596492534d7315C405B4B06D1e19Bf1",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "CroHamsterNFT Items MK1 is a collection of 1000 animated 3D NFT Items that builds on our CroHamsterNFT collection for use in our CroHamster arena. These Item NFTs have different combat values and rarities! Owning such an Item will increase your CroHamsterNFT's combat abilities in one of our arena matchups, where you can compete for great NFT and Cro rewards and work your way up to our Hall of Fame for even more rewards and glory! In addition, 100% of the funds resulting from this Item collection will be used to burn the CroHamsterNFT floor price in multiple unannounced waves and expand our CroHamsterNFT Universe!",
         "avatar": "/img/collections/crohamsternft-items-mk1/avatar.webp",
@@ -23712,7 +23712,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/crohamsternft-items-mk1/drop.webp",
         "banner": "/img/collections/crohamsternft-items-mk1/banner.webp",
