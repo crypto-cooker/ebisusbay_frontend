@@ -43,7 +43,7 @@ const DeployTap = ({ factions = [] }) => {
       <FormControl mb={'24px'}>
         <FormLabel>Please select a faction:</FormLabel>
         <Select me={2} value={dataForm.faction} name="faction" onChange={onChangeInputs}>
-          {factions.map((faction) => (<option value={faction}>{faction}</option>))}
+          {factions.map((faction, index) => (<option value={faction} key={index}>{faction}</option>))}
         </Select>
       </FormControl>
 

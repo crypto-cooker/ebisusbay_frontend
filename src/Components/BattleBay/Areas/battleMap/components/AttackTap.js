@@ -27,8 +27,8 @@ const AttackTap = ({ factions = [] }) => {
           <p>Attackers</p>
           <FormControl mb={'24px'}>
             <FormLabel>Attacker Faction:</FormLabel>
-            <Select name='attackersFaction' me={2} value={dataForm.attackersFaction}>
-              {factions.map((faction) => (<option value={faction}>{faction}</option>))}
+            <Select name='attackersFaction' me={2} value={dataForm.attackersFaction} onChange={onChangeInputs}>
+              {factions.map((faction, index) => (<option value={faction} key={index}>{faction}</option>))}
             </Select>
           </FormControl>
 
@@ -42,8 +42,8 @@ const AttackTap = ({ factions = [] }) => {
           <p>Defenders</p>
           <FormControl mb={'24px'}>
             <FormLabel>Select A Faction to attack:</FormLabel>
-            <Select name='defenderFaction' me={2} value={dataForm.defenderFaction}>
-              {factions.map((faction) => (<option value={faction}>{faction}</option>))}
+            <Select name='defenderFaction' me={2} value={dataForm.defenderFaction} onChange={onChangeInputs}>
+              {factions.map((faction, index) => (<option value={faction} key={index}>{faction}</option>))}
             </Select>
           </FormControl>
         </Box>
