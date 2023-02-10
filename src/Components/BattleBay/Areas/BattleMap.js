@@ -3,6 +3,7 @@ import { resizeBattleMap, setUpMapZooming } from './mapFunctions.js'
 // import { setUpBattleMap, selectRegion, getRegionStats, holdRefs } from './battleMapFunctions.js'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles from './BattleBay.module.scss';
+import {Animated} from 'react-native';
 
 
 const BattleMap = ({onBack}) => {
@@ -75,14 +76,7 @@ let deployedTroops = new DeployedTroops()
     });
   };
 
-  const pinText = {
-    position: "absolute",
-    top: "50%",
-    transform: "translateY(-50%)",
-    left: "75%",
-    display: "none"
-  };
-
+//#region Map Functions
   function setUpBattleMap(){
     console.log("Setting up battle map");
     RandomizeStats();
@@ -219,6 +213,7 @@ function getWinningFactionInRegion(region)
       // setUpDropDown(defenderFactionInput,'defenderFactionUL', getDefenderFactions(), selectDefenderFaction);
       // setUpDropDown('attackerFactionInput','attackerFactionUl', getAttackerFactions(), selectAttackerFaction);
   }
+//#endregion
   
   return (
 

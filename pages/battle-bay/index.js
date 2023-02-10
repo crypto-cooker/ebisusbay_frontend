@@ -3,12 +3,12 @@ import PageHead from "@src/Components/Head/PageHead";
 import React, {useState} from "react";
 import Barracks from "@src/Components/BattleBay/Areas/Barracks";
 import BattleMap from "@src/Components/BattleBay/Areas/BattleMap";
-import Leaderboard from "@src/Components/BattleBay/Areas/Leaderboard";
 import Bank from "@src/Components/BattleBay/Areas/Bank";
 import AllianceCenter from "@src/Components/BattleBay/Areas/AllianceCenter";
 import AnnouncementBoard from "@src/Components/BattleBay/Areas/AnnouncementBoard";
 import DefaultArea from "@src/Components/BattleBay/Areas/DefaultArea";
 // import "src/Components/BattleBay/Areas/BattleBay.module.scss";
+// import Leaderboard from "@src/Components/BattleBay/Areas/Leaderboard";
 
 const BattleBay = () => {
   const [currentPage, setCurrentPage] = useState();
@@ -33,18 +33,16 @@ const BattleBay = () => {
         <Barracks onBack={returnToPreviousPage} />
       ) : currentPage === 'battleMap' ? (
         <BattleMap onBack={returnToPreviousPage}/>
-      ) : currentPage === 'leaderboard' ? (
-        <Leaderboard onBack={returnToPreviousPage}/>
+      // ) : currentPage === 'leaderboard' ? (
+      //   <Leaderboard onBack={returnToPreviousPage}/>
       ): currentPage === 'bank' ? (
         <Bank onBack={returnToPreviousPage} />
       ): currentPage === 'allianceCenter' ? (
         <AllianceCenter onBack={returnToPreviousPage} />
       ): currentPage === 'announcementBoard' ? (
-        <SimpleBattleMap onBack={returnToPreviousPage} />
-      ): currentPage === 'simpleBattleMap' ? (
         <AnnouncementBoard onBack={returnToPreviousPage} />
       ): (
-        <DefaultArea onChange={navigate} />
+        <BattleMap onChange={navigate} />
         // <BattleMap onChange={navigate} />
       )}
       <Footer />
