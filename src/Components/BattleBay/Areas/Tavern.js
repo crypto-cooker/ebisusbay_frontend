@@ -2,16 +2,15 @@ import {
   Heading,
 } from '@chakra-ui/react';
 
-const Barracks = ({onBack}) => {
+const Tavern = ({onBack}) => {
   return (
     <section className="gl-legacy container">
       <button class="btn" onClick={onBack}>Back to Village Map</button>
-
-      <Heading className="title text-center">Barracks</Heading>
-      <p className="text-center">Stake Ryoshis for battle bonus</p>
+      <Heading className="title text-center">Tavern</Heading>
+      <p className="text-center">The Tavern includes Ryoshi Quests</p>
     </section>
   )
 };
 
 
-export default Barracks;
+export default Tavern;

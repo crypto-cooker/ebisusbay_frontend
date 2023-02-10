@@ -1,8 +1,14 @@
+import {
+  Heading,
+} from '@chakra-ui/react';
 
 const AllianceCenter = ({onBack}) => {
   return (
     <section className="gl-legacy container">
       <button class="btn" onClick={onBack}>Back to Village Map</button>
+      <Heading className="title text-center">Alliance Center</Heading>
+      <p className="text-center">The Alliance Center allows for faction management.</p>
+      
     <div>
             <button class="btn" onclick="window.location.href='../fancyMenu.html'">back</button>
             <button type="button" class="btn" id="registerFaction" onclick="openRegistrationForm()">Register Faction</button>

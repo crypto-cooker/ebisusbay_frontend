@@ -7,6 +7,7 @@ import Bank from "@src/Components/BattleBay/Areas/Bank";
 import AllianceCenter from "@src/Components/BattleBay/Areas/AllianceCenter";
 import AnnouncementBoard from "@src/Components/BattleBay/Areas/AnnouncementBoard";
 import DefaultArea from "@src/Components/BattleBay/Areas/DefaultArea";
+import Academy from "@src/Components/BattleBay/Areas/Academy";
 // import "src/Components/BattleBay/Areas/BattleBay.module.scss";
 // import Leaderboard from "@src/Components/BattleBay/Areas/Leaderboard";
 
@@ -39,10 +40,12 @@ const BattleBay = () => {
         <Bank onBack={returnToPreviousPage} />
       ): currentPage === 'allianceCenter' ? (
         <AllianceCenter onBack={returnToPreviousPage} />
+      ): currentPage === 'academy' ? (
+        <Academy onBack={returnToPreviousPage} />
       ): currentPage === 'announcementBoard' ? (
         <AnnouncementBoard onBack={returnToPreviousPage} />
       ): (
-        <BattleMap onChange={navigate} />
+        <DefaultArea onChange={navigate} />
         // <BattleMap onChange={navigate} />
       )}
       <Footer />

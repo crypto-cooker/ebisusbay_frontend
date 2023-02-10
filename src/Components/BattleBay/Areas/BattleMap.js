@@ -1,13 +1,12 @@
 import React, {useEffect, useRef, useState } from 'react';
 import { resizeBattleMap, setUpMapZooming } from './mapFunctions.js'
-// import { setUpBattleMap, selectRegion, getRegionStats, holdRefs } from './battleMapFunctions.js'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles from './BattleBay.module.scss';
-// import Boat from "./battleMap/components/Boat";
-// import './BattleBay.module.scss';
-
+import { FactionForm } from './battleMap/components/index.js';
 
 const BattleMap = ({onBack}) => {
+
+//#region variables
   const titleRef = useRef();
   const troopsTableRef = useRef();
   const defenderFactionInputRef = useRef();
@@ -54,16 +53,10 @@ class DeployedTroops {
         return total
     }
   }
-
 let deployedTroops = new DeployedTroops()
+//#endregion
 
-  useEffect(() => {
-    console.log("this is from battleMap useEffect")
-    // holdRefs(defenderFactionInputRef);
-    resizeBattleMap();
-    setUpBattleMap();
-    // setUpMapZooming();
-  });
+//#region Map Zooming
   const [zoomState, setZoomState] = useState({
     offsetX: 0,
     offsetY: 0,
@@ -76,8 +69,16 @@ let deployedTroops = new DeployedTroops()
       scale: ReactZoomPanPinchRef.state.scale,
     });
   };
+//#endregion
 
 //#region Map Functions
+useEffect(() => {
+  console.log("this is from battleMap useEffect")
+  // holdRefs(defenderFactionInputRef);
+  resizeBattleMap();
+  setUpBattleMap();
+  // setUpMapZooming();
+});
   function setUpBattleMap(){
     console.log("Setting up battle map");
     RandomizeStats();
@@ -207,148 +208,25 @@ function getWinningFactionInRegion(region)
   {
       console.log("Selected region: "+x);
       //need to redo as refs
-      // openForm();
       selectedRegion = x;
       // document.getElementById("selectedRegion").innerHTML = selectedRegion;
       // displayTop3InRegion(selectedRegion, troopsTableRef);
       // setUpDropDown(defenderFactionInput,'defenderFactionUL', getDefenderFactions(), selectDefenderFaction);
       // setUpDropDown('attackerFactionInput','attackerFactionUl', getAttackerFactions(), selectAttackerFaction);
   }
-//#endregion
   
+//#endregion
+
+function openForm(){
+  console.log("open form");
+  <FactionForm/>
+}
   return (
-
-//     <body>
-    
-//     {/* old way of returning to village map */}
-//     {/* <div>
-//       <button class="btn" onClick="window.location.href='../villageMap.html'">back</button>
-//     </div> */}
-
-//       <button class="btn" onClick={onBack}>Back to Village Map</button>
-//   <div class="form-popup form-container" id="myForm">
-//     <form action="/action_page.php" class="form-container">
-//       <h1 id="selectedRegion" class = "TitleText"> Region Name</h1>
-//       <button type="button" class="x" onClick="closeForm()">Cancel</button>
-
-//       <div class="form-container">
-//         <button type="button" name="tablinks" class="smallBtnSelected" onClick="openPanel(event, 'Info'), RefreshInfo()">Info</button>
-//         <button type="button" name="tablinks" class="smallBtnDisabled" onClick="openPanel(event, 'Deploy')">Deploy</button>
-//         <button type="button" name="tablinks" class="smallBtnDisabled" onClick="openPanel(event, 'Attack')">Attack</button>
-//       </div>
-
-//   {/* <!-- Deploy Tab --> */}
-//   <div id="Deploy" class="tabcontent">
-//     <div >
-//       <button type="button" id="deploy" class="smallBtnSelected" onClick="selectDeploy()">Deploy</button>
-//       <button type="button" id="recall" class="smallBtnDisabled" onClick="selectRecall()">Recall</button>
-//       <p id="troops" class = "basicText" ></p>
-
-//       <label class = "basicText" style ="float: left;" for="quantity">Please select a faction:</label>
-//       <input type="text"  id="deployFactionInput" onkeyup="filterFactions('deployFactionInput','deployFactionUl')"
-//         onClick="filterFactions('deployFactionInput','deployFactionUl')" placeholder="Search for faction.."class = "entryField"/>
-//       <ul id="deployFactionUl"> </ul>
-
-//       <p></p>
-//       <label class = "basicText" for="quantity">Quantity:</label>
-//       <input class = "css-1fzih88" type="number" id="quantity" name="quantity" min="0"/>
-//       <p></p>
-
-//       <button type="button" class="btn" onClick="Apply()">Apply</button>
-//       <button type="button" class="btn cancel" onClick="closeForm()">Cancel</button>
-//     </div>
-//   </div>
-
 
 
 <section>
-  {/* Attack Tab */}
-  {/* <div id="Attack" class="tabcontent">
-      <div id="attackSetUp" 
-      // style="display: block;"
-      >
-        <div className="container">
-          <p>If you are a faction owner, you will be able to attack other troops in the region with troops you have deployed</p>
-          <div className="row">
-          </div>
-        </div>
-              <div className="column border-right">
-                  <p>Attackers</p>
-                  <label className = "basicText" 
-                  // style ="float: left;" 
-                  for="quantity">Attacker Faction:</label>
-                  <input type="text"  id="attackerFactionInput" onkeyup="filterFactions('attackerFactionInput','attackerFactionUl')" 
-                    onclick="filterFactions('attackerFactionInput','attackerFactionUl')" placeholder="Search for faction.."className = "entryField"/>
-                  <ul id="attackerFactionUl"> </ul>
 
-                  <label className = "basicText" for="wager" id="troopsToAttackWith">Troops to wager (max 0):</label>
-                  <input className = "css-1fzih88" type="number" id="troopsToAttackWithInput" name="wager" min="0"/>
-                  <p></p>
-              </div>
-              <div className="column border-left">
-                  <p>Defenders</p>
-                  <label className = "basicText" for="quantity">Select A Faction to attack:</label>
-                  <input type="text" ref={defenderFactionInputRef} id="defenderFactionInput" onkeyup="filterFactions('defenderFactionInput','defenderFactionUL')" 
-                    onclick="filterFactions('defenderFactionInput','defenderFactionUL')" placeholder="Search for faction.."className = "entryField"/>
-                  <ul id="defenderFactionUL"></ul>
-              </div>
-
-          <div className="bottomform">
-            <label className = "basicText" id="battleText" for="Battle"><br/></label>
-            <label className = "basicText right" for="attackCost">Cost: 100 Token</label>
-            <button type="button" className="btn" onclick="Battle()">Confirm Attack</button>
-            <div title="When attacking, a D6 roll is made for both the attacker and the defender. 
-              The lower roll (ties going to defender) loses a troop. This continues until one 
-                side has run out of troops">How are Attacks Calculated? (Hover for info)</div>
-          </div>
-    </div>
-    <div id="attackConclusion"
-    //  style="display: none;"
-    >
-        <div className="container">
-          <p id="attackOutcome">Victory!</p>
-          <div className="row">
-            <div className="column border-right">
-              <p>Attackers</p>
-              <label className = "basicText" id="attackerOutcome">Mad Merkat: -7 of 10</label>
-              <p></p>
-            </div>
-            <div className="column border-left">
-              <p>Defenders</p>
-              <label className = "basicText" id="defenderOutcome">CroSkull: -5 of 5</label>
-            </div>
-          </div>
-          <div className="bottomform">
-            <button type="button" className="btn cancel" onclick="attackAgain()">Attack Again</button>
-            <button type="button" className="minibtn" id="resultsButton" onclick="showDetailedResults()">See detailed results</button>
-          </div>
-        </div>
-
-        <div className="form-popup" id="detailedResultsForm" 
-        // style="display: none; overflow-y: scroll; min-height:300px; height:300px;"
-        >
-          <form className="form-container">
-            <label className = "basicText" id="">Results:</label>
-            <p id="outcomeLog"></p>
-          </form>
-        </div>
-
-    </div>
-    </div> */}
-
-{/* <tbody ref={troopsTableRef}>
-    </tbody> */}
-        {/* <table className="table">
-    <thread className="border-bottom">
-        <tr>
-            <th scope="col" className="tex-center">Rank</th>
-            <th scope="col" className="tex-center">Faction</th>
-            <th scope="col" className="tex-center">Troops</th>
-        </tr>
-    </thread>
-    <tbody id="troopsTable">
-    </tbody>
-</table> */}
+<FactionForm/>
 
 <button className="btn" onClick={onBack}>Back to Village Map</button>
 <p className="title text-center">Select a region to deploy troops to</p>
@@ -366,7 +244,7 @@ function getWinningFactionInRegion(region)
       <img src="/img/battle-bay/fantasyRisk2.png" alt="Trulli" useMap="#image-map" width="100%" style={{backgroundRepeat: 'repeat', backgroundImage:'url("/img/battle-bay/ocean-3.png")'}} className={`${styles.mapImageArea}`} id="islandMap" />
       <map name="image-map" width="100%" height="100%" className={`${styles.mapImageArea}`}>
         <area onMouseOver={getRegionStats("Southern Trident" , 'pin-Southern-Trident')} alt="Southern Trident" 
-          onClick={() => selectRegion("Southern Trident", troopsTableRef)}
+          onClick={() => {selectRegion("Southern Trident", troopsTableRef); openForm();}}
           coords="255,534,295,532,337,554,396,534,410,481,351,411,331,377,264,391,225,377,208,430,157,439,191,515" shape="poly"/> 
         <area onMouseOver={getRegionStats("Dragonland", 'pin-Dragonland')} alt="Dragonland" 
           onClick={() => selectRegion("DragonLand", troopsTableRef)}
@@ -409,36 +287,12 @@ function getWinningFactionInRegion(region)
       </TransformComponent>
     </TransformWrapper>
 
-      
-
   </div>
     <p ref={titleRef} className = "TitleText"></p>
     <p id="desc" className="css-1fzih88">Mouse over a region to see the troops deployed to it.</p>
     <p id="deploymentNotes" className = "basicText"></p>
 </section>
 
-// {/* <!-- <button onClick="reset_troops()">Reset</button>--> */}
-// <p class = "basicText" id="troopsAppiled"></p>
-// <meta name="viewport" content="width=device-width, initial-scale=1"/> 
-  
-// </body>
-
-// {/* <!-- close all the forms if clicked --> */}
-// <div id="overlay2" onClick="closeForm(), closeDelegateForm(), closeRegistrationForm()"></div>
-
-// {/* <!-- <script type="text/javascript" src="../jquery-1.6.2.min.js"></script> --> */}
-// {/* <!-- <script type="text/javascript" src="jquery.maphilight.js"></script> --> */}
-// <script type="text/javascript" src="fantasyRisk.js"></script>
-// <script type="text/javascript" src="deployToops.js"></script>
-// {/* <!-- <script type="text/javascript" src="../factions/registerFaction.js"></script> */}
-// {/* <script type="text/javascript" src="../factions/delegateToFaction.js"></script> --> */}
-// {/* <!-- <script type="text/javascript" src="jquery.imagemapster.js"></script> --> */}
-// <script src="../attack/attackSetUp.js"></script>
-// <script src="../attack/attack.js"></script>
-// <script type="text/javascript" src="../mapStuff/mapControls.js"></script>
-
-// {/* <!-- resize Map --> */}
-// </section>
   )
 };
 
