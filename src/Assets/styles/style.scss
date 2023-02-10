@@ -5686,3 +5686,46 @@ iframe.metaverse {
   background: #ffee99;
   color: #555;
 }
+
+.taps-buttons-group{
+  padding: 8px;
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  gap: 8px;
+
+  .smallBtn {
+    background-color: rgb(153, 153, 153);
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 30%;
+    margin-bottom:10px;
+    opacity: 0.8;
+    font-weight: 400;
+    font-family: DM Sans,Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    font-feature-settings: 'kern';
+    border-radius: 5px;
+    border: 0px;
+    
+    &.selected {
+      background-color: rgb(53, 102, 158);
+      color: white;
+      padding: 16px 20px;
+      border: none;
+      cursor: pointer;
+      width: 30%;
+      margin-bottom:10px;
+      opacity: 0.8;
+      font-weight: 400;
+      font-family: DM Sans,Helvetica,Arial,sans-serif;
+      font-size: 14px;
+      font-feature-settings: 'kern';
+      border-radius: 5px;
+      border: 0px;
+    }
+  }
+  
+}

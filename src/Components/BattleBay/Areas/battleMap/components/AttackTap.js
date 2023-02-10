@@ -5,11 +5,11 @@ const AttackTap = ({ factions = [] }) => {
 
   return (
     <Flex flexDirection='column' textAlign='center' border={'1px solid white'} borderRadius={'10px'} justifyContent='space-around' padding='16px'>
-      <div style={{ margin: '8px 24px 34px' }}>
+      <Box m='8px 24px 34px'>
         <p>
           If you are a faction owner, you will be able to attack other troops in the region with troops you have deployed
         </p>
-      </div>
+      </Box>
       <Flex gap='16px'>
         <Box>
           <p>Attackers</p>
