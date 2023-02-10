@@ -3,7 +3,8 @@ import { resizeBattleMap, setUpMapZooming } from './mapFunctions.js'
 // import { setUpBattleMap, selectRegion, getRegionStats, holdRefs } from './battleMapFunctions.js'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles from './BattleBay.module.scss';
-import {Animated} from 'react-native';
+// import Boat from "./battleMap/components/Boat";
+// import './BattleBay.module.scss';
 
 
 const BattleMap = ({onBack}) => {
