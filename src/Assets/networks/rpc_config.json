@@ -6388,7 +6388,7 @@
       "multiToken": false,
       "address": "0xb7F47b23A642a40fafF4d8df6e84B049A843ba4F",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A collection of 4200 Jackals are launching on the Cronos Chain. We're bringing them back, Re-Loaded , and stacked with Utility. Utilities are backed, and guaranteed \uD83D\uDC40 5% of CroArmy's distinguished bi-weeky bCRO airdrops are allocated to this Collection. 10k $ARMY will be backing EACH Jackals as well, as if the airdrops weren't enough \uD83D\uDE0F If you want to claim your 10k $ARMY, just burn your jackal to receive your $ARMY. 1 Point to Top 30!",
         "avatar": "/img/collections/jackals-reloaded/avatar.webp",
