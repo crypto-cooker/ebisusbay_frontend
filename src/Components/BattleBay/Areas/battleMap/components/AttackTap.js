@@ -1,7 +1,19 @@
+import { useState } from 'react';
 import { Box, Flex, FormControl, FormLabel, Input, Select } from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
 
 const AttackTap = ({ factions = [] }) => {
+
+  const [dataForm, setDataForm] = useState({
+    attackersFaction: factions[0] ?? null,
+    quantity: 0,
+    defenderFaction: factions[0] ?? null,
+  })
+
+  const onChangeInputs = (e) => {
+    console.log(e.target.name, e.target.value)
+    setDataForm({...dataForm, [e.target.name]: e.target.value})
+  }
 
   return (
     <Flex flexDirection='column' textAlign='center' border={'1px solid white'} borderRadius={'10px'} justifyContent='space-around' padding='16px'>
@@ -15,14 +27,14 @@ const AttackTap = ({ factions = [] }) => {
           <p>Attackers</p>
           <FormControl mb={'24px'}>
             <FormLabel>Attacker Faction:</FormLabel>
-            <Select me={2} value={factions[0] ?? null}>
+            <Select name='attackersFaction' me={2} value={dataForm.attackersFaction}>
               {factions.map((faction) => (<option value={faction}>{faction}</option>))}
             </Select>
           </FormControl>
 
           <FormControl>
             <FormLabel>Quantity:</FormLabel>
-            <Input type='number' />
+            <Input name="quantity" type='number' value={dataForm.quantity} onChange={onChangeInputs} />
           </FormControl>
         </Box>
 
@@ -30,7 +42,7 @@ const AttackTap = ({ factions = [] }) => {
           <p>Defenders</p>
           <FormControl mb={'24px'}>
             <FormLabel>Select A Faction to attack:</FormLabel>
-            <Select me={2} value={factions[0] ?? null}>
+            <Select name='defenderFaction' me={2} value={dataForm.defenderFaction}>
               {factions.map((faction) => (<option value={faction}>{faction}</option>))}
             </Select>
           </FormControl>

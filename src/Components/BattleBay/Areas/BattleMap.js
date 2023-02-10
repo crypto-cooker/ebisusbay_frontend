@@ -3,6 +3,7 @@ import { resizeBattleMap, setUpMapZooming } from './mapFunctions.js'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles from './BattleBay.module.scss';
 import { FactionForm } from './battleMap/components/index.js';
+import { useDisclosure } from '@chakra-ui/react'
 
 const BattleMap = ({onBack}) => {
 
@@ -11,13 +12,15 @@ const BattleMap = ({onBack}) => {
   const troopsTableRef = useRef();
   const defenderFactionInputRef = useRef();
   const node = titleRef.current;
-  var selectedRegion = "None";
+  const [selectedRegion, setSelectedRegion] = useState("None");
   const factions = ["Mad Merkat", "CroSkull", "Boomer Squad", "Flaming Phenix Club", "connected wallet"];
   const regionFlags = ["pin-Southern-Trident", "pin-Dragonland", "pin-Human-Kingdoms", "pin-Dwarf-Mines"];
   const deployMode = new Boolean(true);
   var selectedFaction = "";
   var troopsAvailable = 20;
   var defenderFactionInput;
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
   class Deployment {
     constructor(region, faction, amount, deploymentOwner) {
       this.code = region + faction;
@@ -208,7 +211,7 @@ function getWinningFactionInRegion(region)
   {
       console.log("Selected region: "+x);
       //need to redo as refs
-      selectedRegion = x;
+      setSelectedRegion(x);
       // document.getElementById("selectedRegion").innerHTML = selectedRegion;
       // displayTop3InRegion(selectedRegion, troopsTableRef);
       // setUpDropDown(defenderFactionInput,'defenderFactionUL', getDefenderFactions(), selectDefenderFaction);
@@ -217,16 +220,12 @@ function getWinningFactionInRegion(region)
   
 //#endregion
 
-function openForm(){
-  console.log("open form");
-  <FactionForm/>
-}
   return (
 
 
 <section>
 
-<FactionForm/>
+<FactionForm isOpen={isOpen} onClose={onClose} title={selectedRegion}/>
 
 <button className="btn" onClick={onBack}>Back to Village Map</button>
 <p className="title text-center">Select a region to deploy troops to</p>
@@ -244,7 +243,7 @@ function openForm(){
       <img src="/img/battle-bay/fantasyRisk2.png" alt="Trulli" useMap="#image-map" width="100%" style={{backgroundRepeat: 'repeat', backgroundImage:'url("/img/battle-bay/ocean-3.png")'}} className={`${styles.mapImageArea}`} id="islandMap" />
       <map name="image-map" width="100%" height="100%" className={`${styles.mapImageArea}`}>
         <area onMouseOver={getRegionStats("Southern Trident" , 'pin-Southern-Trident')} alt="Southern Trident" 
-          onClick={() => {selectRegion("Southern Trident", troopsTableRef); openForm();}}
+          onClick={() => {selectRegion("Southern Trident", troopsTableRef); onOpen();}}
           coords="255,534,295,532,337,554,396,534,410,481,351,411,331,377,264,391,225,377,208,430,157,439,191,515" shape="poly"/> 
         <area onMouseOver={getRegionStats("Dragonland", 'pin-Dragonland')} alt="Dragonland" 
           onClick={() => selectRegion("DragonLand", troopsTableRef)}
@@ -261,7 +260,7 @@ function openForm(){
       </map>
 
       <div id="pin-Southern-Trident" onMouseOver={getRegionStats("Southern Trident", 'pin-Southern-Trident')}
-        title="Southern Trident" onClick={selectRegion("Southern Trident", troopsTableRef)} 
+        title="Southern Trident" onClick={()=> selectRegion("Southern Trident", troopsTableRef)} 
         className="image" style={{marginTop: '-20%', marginLeft: '20%', zIndex:"9", pointerEvents:"none"}}>
         <img src=""  width="32" height="32" className="factionIcon"/>
         <div className= "pinText"><h3 className="head">pin-Southern-Trident</h3></div>
@@ -273,13 +272,13 @@ function openForm(){
       </div>
       <div id="pin-Dwarf-Mines" onMouseOver={getRegionStats("Dwarf Mines" , 'pin-Dwarf-Mines')} 
         className="image" title="Dwarf Mines" style={{marginTop: '-30%', marginLeft: '15%', zIndex:"9", pointerEvents:"none"}}
-        onClick={selectRegion("Dwarf-Mines", troopsTableRef)}>
+        onClick={()=> selectRegion("Dwarf-Mines", troopsTableRef)}>
         <img src=""  width="32" height="32" className="factionIcon"/>
         <div className="pinText"><h3 className="head">pin-Dwarf-Mines</h3></div>
       </div>
       <div id="pin-Human-Kingdoms" onMouseOver={getRegionStats("Human Kingdoms", 'pin-Human-Kingdoms')} 
         className="image" title="Human Kingdoms" style={{marginTop: '-25%', marginLeft: '10%', zIndex:"9", pointerEvents:"none"}}
-        onClick={selectRegion("Human Kingdoms", troopsTableRef)}>
+        onClick={()=> selectRegion("Human Kingdoms", troopsTableRef)}>
         <img src=""  width="32" height="32" className="factionIcon"/>
         <div className="pinText"><h3 className="head">pin-Human-Kingdoms</h3></div>
       </div>
@@ -292,7 +291,7 @@ function openForm(){
     <p id="desc" className="css-1fzih88">Mouse over a region to see the troops deployed to it.</p>
     <p id="deploymentNotes" className = "basicText"></p>
 </section>
-
+  
   )
 };
 

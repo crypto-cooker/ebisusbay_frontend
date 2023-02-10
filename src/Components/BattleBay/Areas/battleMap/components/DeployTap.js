@@ -16,6 +16,15 @@ const actions = {
 const DeployTap = ({ factions = [] }) => {
 
   const [currentTab, setCurrentTab] = useState(tabs.deploy);
+  const [dataForm, setDataForm] = useState({
+    faction: factions[0] ?? null,
+    quantity: 0,
+  })
+
+  const onChangeInputs = (e) => {
+    console.log(e.target.name, e.target.value)
+    setDataForm({...dataForm, [e.target.name]: e.target.value})
+  }
 
   return (
     <Flex flexDirection='column' textAlign='center' border={'1px solid white'} borderRadius={'10px'} justifyContent='space-around' padding='16px'>
@@ -33,14 +42,14 @@ const DeployTap = ({ factions = [] }) => {
       </Box>
       <FormControl mb={'24px'}>
         <FormLabel>Please select a faction:</FormLabel>
-        <Select me={2} value={factions[0] ?? null}>
+        <Select me={2} value={dataForm.faction} name="faction" onChange={onChangeInputs}>
           {factions.map((faction) => (<option value={faction}>{faction}</option>))}
         </Select>
       </FormControl>
 
       <FormControl>
         <FormLabel>Quantity:</FormLabel>
-        <Input type='number' />
+        <Input type='number' name="quantity" value={dataForm.quantity} onChange={onChangeInputs}/>
       </FormControl>
 
       <Flex mt='16px'>
