@@ -17664,6 +17664,34 @@
         "kyc": "phenix",
         "verified": true
       }
+    },
+    {
+      "name": "Reckless Robots Legends",
+      "slug": "reckless-robots-legends",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Reckless Robots Legends is a collection of 3000 hand-drawn NFTs deployed on the Cronos Chain. The collection consists of three (3) main Classes starring the Commander, The Void and The Beast. These three will be put to a test as they battle it out to become true Legends of Cronos",
+        "avatar": "/img/collections/reckless-robots-legends/avatar.webp",
+        "banner": "/img/collections/reckless-robots-legends/banner.webp",
+        "card": "/img/collections/reckless-robots-legends/card.webp",
+        "website": "https://www.recklessrobotsnft.com/",
+        "twitter": "https://twitter.com/recklessrobots",
+        "discord": "https://discord.gg/Nk4PHjdhcs",
+        "medium": "https://medium.com/@recklessrobots",
+        "telegram": "https://t.me/recklessrobotsnft",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
@@ -23763,6 +23791,54 @@
         "kyc": true,
         "escrow": false,
         "verified": true
+      }
+    },
+    {
+      "id": 158,
+      "slug": "reckless-robots-legends",
+      "title": "Reckless Robots Legends",
+      "subtitle": "Reckless Robots Legends is a collection of 3000 hand-drawn NFTs deployed on the Cronos Chain. The collection consists of three (3) main Classes starring the Commander, The Void and The Beast. These three will be put to a test as they battle it out to become true Legends of Cronos",
+      "description": "Reckless Robots NFT launched the GEN1 collection in February 2022. The collection was sold out in less than 6 hours.  We are now proud to introduce the Gen2 collection Reckless Robots Legends. \n\nLegends is a collection of 3000 unique NFTs consisting of 3 main classes; The Commander, the Void and the Beast. Each of the main classes come with more than 70 traits in up to 7 main categories. \n\nHolders will be able to battle out their NFTs to gain the Legend form. In the process the losing robot will be destroyed (Burned). Burns decrease the total supply thus making collection NFTs more rare. At the same time Legends will get perks such as better rewards  and ability to manipulate the traits given in the transformation.\n\nReckless Robots Legends collection NFTs can be operated through the Reckless Command Center DApp. The DApp will contain possibilities for voting, holder and project statistics and the transfer of NFTs.",
+      "author": {
+        "name": "Reckless Robots NFT",
+        "website": "https://www.recklessrobotsnft.com/",
+        "twitter": "https://twitter.com/recklessrobots",
+        "discord": "https://discord.gg/Nk4PHjdhcs",
+        "medium": "https://medium.com/@recklessrobots",
+        "telegram": "https://t.me/recklessrobotsnft"
+      },
+      "address": "",
+      "maxMintPerTx": 20,
+      "maxMintPerAddress": 200,
+      "totalSupply": 3000,
+      "cost": "300",
+      "memberCost": "200",
+      "whitelistCost": "200",
+      "foundersOnly": false,
+      "start": 1676664000000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/reckless-robots-legends/drop.webp",
+        "banner": "/img/collections/reckless-robots-legends/banner.webp",
+        "avatar": "/img/collections/reckless-robots-legends/avatar.webp",
+        "preview": "/img/collections/reckless-robots-legends/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
+      },
+      "escrow": {
+        "milestones": [
+          "15% of funds raised for the project to be paid at the time of mint",
+          "33% of the remaining funds to be held in escrow until voting is implemented by the project",
+          "67% of remaining funds to be released when a battle system is implemented by the project"
+        ]
       }
     }
   ]
