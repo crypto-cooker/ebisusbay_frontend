@@ -17692,6 +17692,29 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Carkayous - Serkin Tree",
+      "slug": "carkayous-serkin-tree",
+      "multiToken": false,
+      "address": "0x00A605feDeF87d8C53D46d17eda9E3fe37d9927B",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "These serkin trees drop acorns (which can be used to rebate Carkayous NFTs) after every drop.",
+        "avatar": "/img/collections/carkayous-serkin-tree/avatar.webp",
+        "banner": "/img/collections/carkayous-serkin-tree/banner.webp",
+        "card": "/img/collections/carkayous-serkin-tree/card.webp",
+        "website": "https://carkayous.com/",
+        "twitter": "https://twitter.com/carkayous",
+        "discord": "https://discord.gg/carkayous",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "verified": true
+      }
     }
   ],
   "drops": [
