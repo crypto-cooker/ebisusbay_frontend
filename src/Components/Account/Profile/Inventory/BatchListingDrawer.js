@@ -36,7 +36,7 @@ export const BatchListingDrawer = ({ onClose, ...gridProps }) => {
 
   return (
     <Grid templateRows={gridTemplateRows} {...gridProps}>
-      <GridItem px={6} py={4}>
+      <GridItem p={4}>
         <Flex align="center">
           {/*TODO update*/}
           <Select me={2} value={batchListingCart.type} onChange={handleTypeChange}>

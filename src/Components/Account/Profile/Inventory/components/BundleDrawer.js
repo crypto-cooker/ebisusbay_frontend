@@ -105,10 +105,10 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
 
   return (
     <>
-      <GridItem px={6} py={4}>
+      <GridItem p={4}>
         <BundleDrawerForm ref={formRef} onSubmit={onSubmitBundle} />
       </GridItem>
-      <GridItem px={6} py={4} overflowY="auto">
+      <GridItem p={4} overflowY="auto">
         <Flex mb={2}>
           <Text fontWeight="bold" color={batchListingCart.nfts.length > 40 && 'red'}>
             {batchListingCart.nfts.length} / {MAX_NFTS_IN_BUNDLE} Items
@@ -135,7 +135,7 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
           </Box>
         )}
       </GridItem>
-      <GridItem px={6} py={4}>
+      <GridItem p={4}>
         <Button
           type="legacy"
           className="w-100"

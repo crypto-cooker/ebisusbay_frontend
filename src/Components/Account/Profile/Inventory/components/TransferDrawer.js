@@ -159,7 +159,7 @@ export const TransferDrawer = () => {
 
   return (
     <>
-      <GridItem px={6} py={4}>
+      <GridItem p={4}>
         <Flex flexDirection="column">
           <FormControlCK
             name={'recipient'}
@@ -175,7 +175,7 @@ export const TransferDrawer = () => {
           />
         </Flex>
       </GridItem>
-      <GridItem px={6} py={4} overflowY="auto">
+      <GridItem p={4} overflowY="auto">
         <Flex mb={2}>
           <Text fontWeight="bold" color={batchListingCart.nfts.length > MAX_NFTS_IN_CART && 'red'}>
             {batchListingCart.nfts.length} / {MAX_NFTS_IN_CART} Items
@@ -201,7 +201,7 @@ export const TransferDrawer = () => {
           </Box>
         )}
       </GridItem>
-      <GridItem px={6} py={4}>
+      <GridItem p={4}>
         {/*TODO update*/}
         { showConfirmButton ? (
           <>
