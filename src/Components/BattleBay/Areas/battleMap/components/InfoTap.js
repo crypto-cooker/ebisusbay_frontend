@@ -15,9 +15,9 @@ import {
 //   faction: String,
 //   troops: number
 // }
-// const factions: faction[]
-const InfoTap = ({ factions = [] }) => {
 
+
+const InfoTap = ({ factions = []  }) => {
 
   return (
     <Flex flexDirection='column' textAlign='center' border={'1px solid white'} borderRadius={'10px'} justifyContent='space-around'>

@@ -13,17 +13,36 @@ const actions = {
   transfer: 'transfer'
 };
 
-const DeployTap = ({ factions = [] }) => {
+const DeployTap = ({ factions = [], regionName, troopsAvailable =[]}) => {
 
+  const [selectedFaction, setSelectedFaction] = useState("(No Faction Selected)");
+  const [selectedQuantity, setSelectedQuantity] = useState(0);
+  
   const [currentTab, setCurrentTab] = useState(tabs.deploy);
   const [dataForm, setDataForm] = useState({
     faction: factions[0] ?? null,
     quantity: 0,
   })
 
-  const onChangeInputs = (e) => {
+  const onChangeInputsFaction = (e) => {
     console.log(e.target.name, e.target.value)
     setDataForm({...dataForm, [e.target.name]: e.target.value})
+    setSelectedFaction(e.target.value)
+  }
+  const onChangeInputsQuantity = (e) => {
+    console.log(e.target.name, e.target.value)
+    setDataForm({...dataForm, [e.target.name]: e.target.value})
+    setSelectedQuantity(e.target.value)
+  }
+  const deployOrRecallTroops = () => {
+    if(currentTab === tabs.deploy)
+    {
+      console.log("You deployed", dataForm.quantity, "troops to", regionName, "on behalf of", dataForm.faction)
+    }
+    else if(currentTab === tabs.recall)
+    {
+      console.log("You recalled", dataForm.quantity, "troops from", regionName, "on behalf of", dataForm.faction)
+    }
   }
 
   return (
@@ -34,27 +53,28 @@ const DeployTap = ({ factions = [] }) => {
       </div>
       <Box m='8px 24px'>
         {currentTab === tabs.deploy && (<p>
-          Troops available to Deploy: 20
+          Troops available to Deploy: {troopsAvailable.length}
         </p>)}
         {currentTab === tabs.recall && (<p>
-          Troops deployed to Dragonland on behalf of connected wallet: 0
+          Troops deployed to {regionName} on behalf of {selectedFaction}
         </p>)}
       </Box>
       <FormControl mb={'24px'}>
         <FormLabel>Please select a faction:</FormLabel>
-        <Select me={2} value={dataForm.faction} name="faction" onChange={onChangeInputs}>
+        <Select me={2} value={dataForm.faction} name="faction" onChange={onChangeInputsFaction}>
           {factions.map((faction, index) => (<option value={faction} key={index}>{faction}</option>))}
         </Select>
       </FormControl>
 
       <FormControl>
         <FormLabel>Quantity:</FormLabel>
-        <Input type='number' name="quantity" value={dataForm.quantity} onChange={onChangeInputs}/>
+        <Input type='number' name="quantity" value={dataForm.quantity} onChange={onChangeInputsQuantity}/>
       </FormControl>
 
       <Flex mt='16px'>
         <Button type="legacy"
           // onClick={processCreateListingRequest}
+          onClick={deployOrRecallTroops}
           // isLoading={executingCreateListing}
           // disabled={executingCreateListing}
           className="flex-fill">

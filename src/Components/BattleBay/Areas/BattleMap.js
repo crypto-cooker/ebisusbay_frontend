@@ -7,18 +7,29 @@ import { useDisclosure } from '@chakra-ui/react'
 
 const BattleMap = ({onBack}) => {
 
-//#region variables
-  const titleRef = useRef();
+  //#region variables
+  // const titleRef = useRef();
+  // const node = titleRef.current;
   const troopsTableRef = useRef();
   const defenderFactionInputRef = useRef();
-  const node = titleRef.current;
   const [selectedRegion, setSelectedRegion] = useState("None");
+  
   const factions = ["Mad Merkat", "CroSkull", "Boomer Squad", "Flaming Phenix Club", "connected wallet"];
   const regionFlags = ["pin-Southern-Trident", "pin-Dragonland", "pin-Human-Kingdoms", "pin-Dwarf-Mines"];
-  const deployMode = new Boolean(true);
-  var selectedFaction = "";
-  var troopsAvailable = 20;
-  var defenderFactionInput;
+
+  const factionsForRegion = [
+    { rank: 1, faction: "Mad Merkat", troops: 52 },
+    { rank: 2, faction: "CroSkull", troops: 17 },
+    { rank: 3, faction: "Boomer Squad", troops: 5 },
+  ]
+
+  const factionsPlayerOwns = [
+    'Mad Merkat',
+  ]
+
+  const troopsAvailableToFaction = [
+    { faction: "Mad Merkat", troops: 7 },
+  ]
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   class Deployment {
@@ -83,12 +94,14 @@ useEffect(() => {
   // setUpMapZooming();
 });
   function setUpBattleMap(){
-    console.log("Setting up battle map");
+    // console.log("Setting up battle map");
     RandomizeStats();
     displayWinningFactions();
   }
   function RandomizeStats()
   {
+    //this is for adding dummy data to the map
+    console.log("Randomizing stats");
       function checkIfDeploymentExists(region, faction)
       {
           for(var i=0; i<deployedTroops.deployments.length; i++)  
@@ -225,7 +238,8 @@ function getWinningFactionInRegion(region)
 
 <section>
 
-<FactionForm isOpen={isOpen} onClose={onClose} title={selectedRegion}/>
+<FactionForm isOpen={isOpen} onClose={onClose} title={selectedRegion} factions={factionsForRegion} 
+  factionsPlayerOwns={factionsPlayerOwns} troopsAvailableToFaction={troopsAvailableToFaction}/>
 
 <button className="btn" onClick={onBack}>Back to Village Map</button>
 <p className="title text-center">Select a region to deploy troops to</p>
@@ -240,19 +254,21 @@ function getWinningFactionInRegion(region)
         >
       <TransformComponent>
 
-      <img src="/img/battle-bay/fantasyRisk2.png" alt="Trulli" useMap="#image-map" width="100%" style={{backgroundRepeat: 'repeat', backgroundImage:'url("/img/battle-bay/ocean-3.png")'}} className={`${styles.mapImageArea}`} id="islandMap" />
+      <img src="/img/battle-bay/fantasyRisk2.png" alt="Trulli" useMap="#image-map" width="100%" 
+        style={{backgroundRepeat: 'repeat', backgroundImage:'url("/img/battle-bay/ocean-3.png")'}} 
+        className={`${styles.mapImageArea}`} id="islandMap" />
       <map name="image-map" width="100%" height="100%" className={`${styles.mapImageArea}`}>
         <area onMouseOver={getRegionStats("Southern Trident" , 'pin-Southern-Trident')} alt="Southern Trident" 
           onClick={() => {selectRegion("Southern Trident", troopsTableRef); onOpen();}}
           coords="255,534,295,532,337,554,396,534,410,481,351,411,331,377,264,391,225,377,208,430,157,439,191,515" shape="poly"/> 
         <area onMouseOver={getRegionStats("Dragonland", 'pin-Dragonland')} alt="Dragonland" 
-          onClick={() => selectRegion("DragonLand", troopsTableRef)}
+          onClick={() => {selectRegion("Dragonland", troopsTableRef); onOpen();}}
           coords="199,290,208,338,225,368,269,380,328,371,446,298,387,231,421,191,354,160,208,37,185,129,216,214,239,256,295,259,300,309,258,326,233,293" shape="poly"/> 
         <area onMouseOver={getRegionStats("Dwarf Mines", 'pin-Dwarf-Mines')} target="" alt="Dwarf Mines" 
-          onClick={() => selectRegion("Dwarf Mines", troopsTableRef)}
+          onClick={() => {selectRegion("Dwarf Mines", troopsTableRef); onOpen();}}
           coords="438,529,455,478,491,470,502,349,589,352,699,318,724,340,721,447,699,475,721,520,778,540,741,568,640,546,640,489,550,481,516,526,469,543" shape="poly"/>
         <area onMouseOver={getRegionStats("Human Kingdoms", 'pin-Human-Kingdoms')} target="" alt="Human Kingdoms" 
-          onClick={() => selectRegion("Human Kingdoms", troopsTableRef)}
+          onClick={() => {selectRegion("Human Kingdoms", troopsTableRef); onOpen();}}
           coords="825,567,853,576,891,569,900,558,939,562,961,564,981,558,1018,564,1033,553,1038,517,1027,476,1004,499,954,521,918,517,914,497,902,474,
           889,458,898,427,900,400,893,379,877,359,850,361,821,357,807,366,776,363,753,352,737,339,712,361,728,370,724,384,735,397,719,418,728,449,708,
           460,685,474,710,491,721,521,753,542,778,536,782,512,805,503,823,485,853,497,873,506,873,519,850,533,846,548,837,556" shape="poly"/>
@@ -287,7 +303,7 @@ function getWinningFactionInRegion(region)
     </TransformWrapper>
 
   </div>
-    <p ref={titleRef} className = "TitleText"></p>
+    <p  className = "TitleText"></p>
     <p id="desc" className="css-1fzih88">Mouse over a region to see the troops deployed to it.</p>
     <p id="deploymentNotes" className = "basicText"></p>
 </section>
