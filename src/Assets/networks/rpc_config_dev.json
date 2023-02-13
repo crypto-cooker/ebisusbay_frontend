@@ -9330,7 +9330,7 @@
       "multiToken": false,
       "address": "0x133D5b18977cdDd191528789B5DB954622Aab754",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "GymKongZ is a 10,000 pfp project made up of more than 255 unique traits. We will focus on improving all pillars of life, not only the physical but also the mental and financial, and any other goal members are choosing to pursue. \nWe are really wanting to expand the horizon when it comes to a group of people coming together sharing similar goals and interests.",
         "avatar": "/img/collections/gymkongz/avatar.webp",
@@ -12996,7 +12996,7 @@
       "name": "Rebel Punks",
       "slug": "rebel-punks",
       "multiToken": false,
-      "address": "0xc7E77C602D549747AB33C2F0137Cbcb42eeF2bB8",
+      "address": "0x20C4512a2D6FB66E5Ee3A704167c0c67B9B846dD",
       "onChain": false,
       "listable": true,
       "metadata": {
