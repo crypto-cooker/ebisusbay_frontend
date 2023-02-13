@@ -11,7 +11,7 @@ import {
   Button as ChakraButton,
   Center,
   Flex,
-  FormControl,
+  FormControl, FormErrorMessage,
   FormLabel,
   GridItem,
   HStack,
@@ -37,7 +37,7 @@ import {
   applyFloorPctToAll,
   applyFloorPriceToAll,
   applyPriceToAll,
-  cascadePrices,
+  cascadePrices, cascadePricesPercent,
   clearBatchListingCart,
   sortAll
 } from "@src/GlobalState/batchListingSlice";
@@ -114,6 +114,19 @@ export const ListingDrawer = () => {
       dispatch(applyFloorPctToAll({pct: value}));
     } else if (option === customPriceOptions.pctBelowFloor) {
       dispatch(applyFloorPctToAll({pct: value * -1}));
+    }
+  }
+  const handleCascadePriceToAll = (option, value, step) => {
+    if (!value) return;
+
+    if (option === customCascadeOptions.priceDown) {
+      dispatch(cascadePrices({ startingPrice: value, step: step * -1 }));
+    } else if (option === customCascadeOptions.priceUp) {
+      dispatch(cascadePrices({ startingPrice: value, step }));
+    } else if (option === customCascadeOptions.pctDown) {
+      dispatch(cascadePricesPercent({ startingPrice: value, step: step * -1 }));
+    } else if (option === customCascadeOptions.pctUp) {
+      dispatch(cascadePricesPercent({ startingPrice: value, step }));
     }
   }
   const handleApplyExpirationDateToAll = (value) => {
@@ -335,7 +348,7 @@ export const ListingDrawer = () => {
             <AccordionPanel px={0}>
               <VStack align='start'>
                 <Box w="full">
-                  <Text fontSize="sm" fontWeight="bold">Apply price to all:</Text>
+                  <Text fontSize="sm" fontWeight="bold">Apply price:</Text>
                   <HStack mt={1}>
                     <CustomPriceRow
                       onChange={handleApplyCustomPriceToAll}
@@ -344,7 +357,15 @@ export const ListingDrawer = () => {
                   </HStack>
                 </Box>
                 <Box w="full">
-                  <Text fontSize="sm" fontWeight="bold">Apply expiration to all:</Text>
+                  <Text fontSize="sm" fontWeight="bold">Cascade price:</Text>
+                  <HStack mt={1}>
+                    <CustomCascadeRow
+                      onChange={handleCascadePriceToAll}
+                    />
+                  </HStack>
+                </Box>
+                <Box w="full">
+                  <Text fontSize="sm" fontWeight="bold">Apply expiration:</Text>
                   <HStack mt={1}>
                     <Select
                       placeholder='Select expiration'
@@ -353,7 +374,7 @@ export const ListingDrawer = () => {
                       onChange={(e) => setExpirationDateAllOption(e.target.value)}
                     >
                       {expirationDatesValues.map((time) => (
-                        <option value={time.value.toString()}>{time.label}</option>
+                        <option key={time.value.toString()} value={time.value.toString()}>{time.label}</option>
                       ))}
                     </Select>
                     <IconButton
@@ -365,7 +386,7 @@ export const ListingDrawer = () => {
                   </HStack>
                 </Box>
                 <Box w="full">
-                  <Text fontSize="sm" fontWeight="bold">Sort All:</Text>
+                  <Text fontSize="sm" fontWeight="bold">Sort:</Text>
                   <HStack mt={1}>
                     <Select size="sm" placeholder="Choose option" onChange={(e) => setSortAllOption(e.target.value)}>
                       <option value={sortOptions.rankRareToCommon}>Rank: Rare to Common</option>
@@ -541,6 +562,7 @@ const CustomPriceRow = ({onChange, onFloor}) => {
   const [inputType, setInputType] = useState('price');
   const [option, setOption] = useState(customPriceOptions.price);
   const [value, setValue] = useState('');
+  const [error, setError] = useState();
 
   const onOptionChange = (e) => {
     const newType = e.target.value;
@@ -566,32 +588,139 @@ const CustomPriceRow = ({onChange, onFloor}) => {
   };
 
   const handleApply = () => {
+    setError(null);
+    if (!option || !value) {
+      setError('All fields are required');
+      return;
+    }
+
     onChange(option, value);
   };
 
   return (
-    <HStack w='full'>
-      <ChakraButton size='sm' px={4} onClick={onFloor}>
-        Floor
-      </ChakraButton>
-      <Select size="sm" w="full" onChange={onOptionChange}>
-        <option value={customPriceOptions.price}>Custom</option>
-        <option value={customPriceOptions.pctAboveFloor}>% above floor</option>
-        <option value={customPriceOptions.pctBelowFloor}>% below floor</option>
-      </Select>
-      <Input
-        placeholder={inputType === 'percent' ? '%' : 'Price'}
-        type="numeric"
-        size="sm"
-        onChange={handleInputChange}
-        value={value}
-      />
-      <IconButton
-        icon={<FontAwesomeIcon icon={faArrowRight}/>}
-        size='sm'
-        mt={1}
-        onClick={handleApply}
-      />
-    </HStack>
+    <FormControl isInvalid={error}>
+      <HStack w='full'>
+        <ChakraButton size='sm' px={4} onClick={onFloor}>
+          Floor
+        </ChakraButton>
+        <Select size="sm" w="full" onChange={onOptionChange}>
+          <option value={customPriceOptions.price}>Custom</option>
+          <option value={customPriceOptions.pctAboveFloor}>% above floor</option>
+          <option value={customPriceOptions.pctBelowFloor}>% below floor</option>
+        </Select>
+        <Input
+          placeholder={inputType === 'percent' ? '%' : 'Price'}
+          type="numeric"
+          size="sm"
+          onChange={handleInputChange}
+          value={value}
+        />
+        <IconButton
+          icon={<FontAwesomeIcon icon={faArrowRight}/>}
+          size='sm'
+          mt={1}
+          onClick={handleApply}
+        />
+      </HStack>
+      <FormErrorMessage>{error}</FormErrorMessage>
+    </FormControl>
+  )
+}
+
+const customCascadeOptions = {
+  priceDown: 'priceDown',
+  priceUp: 'priceUp',
+  pctUp: 'pctUp',
+  pctDown: 'pctDown'
+}
+const CustomCascadeRow = ({onChange}) => {
+  const [inputType, setInputType] = useState('price');
+  const [option, setOption] = useState(customCascadeOptions.priceDown);
+  const [startingPrice, setStartingPrice] = useState('');
+  const [step, setStep] = useState('');
+  const [error, setError] = useState();
+
+  const onOptionChange = (e) => {
+    const newType = e.target.value;
+    if ([customCascadeOptions.pctUp, customCascadeOptions.pctDown].includes(newType)) {
+      if (inputType !== 'percent') setStep('');
+      setInputType('percent');
+    } else {
+      if (inputType !== 'price') setStep('');
+      setInputType('price')
+    }
+    setOption(newType);
+  };
+
+  const handleInputChange = (e) => {
+    const newValue = e.target.value;
+    if (newValue.length > 5) return;
+    if (!numberRegexValidation.test(newValue) && newValue !== '') return;
+
+    setStartingPrice(e.target.value);
+  };
+
+  const handleStepChange = (e) => {
+    const newValue = e.target.value;
+    const isPct = [customCascadeOptions.pctUp, customCascadeOptions.pctDown].includes(option);
+    if (newValue.length > 5) return;
+    if (isPct && Number(newValue) > 100) return;
+    if (!isPct && option === customCascadeOptions.priceDown && Number(newValue) > Number(startingPrice)) return;
+    if (!numberRegexValidation.test(newValue) && newValue !== '') return;
+
+    setStep(e.target.value);
+  };
+
+  const handleApply = () => {
+    setError(null);
+    const isPct = [customCascadeOptions.pctUp, customCascadeOptions.pctDown].includes(option);
+
+    if (!inputType || !startingPrice || !step) {
+      setError('All fields are required');
+      return;
+    }
+
+    if (isPct && Number(step) > 100 ||
+      !isPct && option === customCascadeOptions.priceDown && Number(step) > Number(startingPrice)) {
+      setError('Invalid step value');
+      return;
+    }
+
+    onChange(option, startingPrice, step);
+  };
+
+  return (
+    <FormControl isInvalid={error}>
+      <HStack w='full'>
+        <Select size="sm" minW="110px" onChange={onOptionChange}>
+          <option value={customCascadeOptions.priceUp}>Price &uarr;</option>
+          <option value={customCascadeOptions.priceDown}>Price &darr;</option>
+          <option value={customCascadeOptions.pctUp}>Percent &uarr;</option>
+          <option value={customCascadeOptions.pctDown}>Percent &darr;</option>
+        </Select>
+        <Input
+          placeholder='Start price'
+          type="numeric"
+          size="sm"
+          minW="100px"
+          onChange={handleInputChange}
+          value={startingPrice}
+        />
+        <Input
+          placeholder={inputType === 'percent' ? '%' : 'Step'}
+          type="numeric"
+          size="sm"
+          onChange={handleStepChange}
+          value={step}
+        />
+        <IconButton
+          icon={<FontAwesomeIcon icon={faArrowRight}/>}
+          size='sm'
+          mt={1}
+          onClick={handleApply}
+        />
+      </HStack>
+      <FormErrorMessage>{error}</FormErrorMessage>
+    </FormControl>
   )
 }

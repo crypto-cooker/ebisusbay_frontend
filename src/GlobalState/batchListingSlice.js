@@ -83,8 +83,9 @@ const batchListingSlice = createSlice({
       }
     },
     cascadePrices: (state, action) => {
-      const startingItem = action.payload.startingItem;
-      let currentPrice = action.payload.startingPrice;
+      const startingItem = action.payload.startingItem ?? state.nfts[0];
+      let currentPrice = Number(action.payload.startingPrice);
+      const step = Number(action.payload.step ?? 1);
       let startingIndex = null;
       state.nfts = state.nfts.map((o, index) => {
         const isStartingItem = caseInsensitiveCompare(o.nft.address, startingItem.nft.address) && o.nft.id === startingItem.nft.id;
@@ -94,7 +95,25 @@ const batchListingSlice = createSlice({
         if (!state.extras[o.nft.address.toLowerCase()]?.approval) return o;
 
         const price = currentPrice > 1 ? currentPrice : 1;
-        currentPrice--;
+        currentPrice += step;
+        console.log('cascade', price, currentPrice, step)
+        return {...o, price}
+      });
+    },
+    cascadePricesPercent: (state, action) => {
+      const startingItem = action.payload.startingItem ?? state.nfts[0];
+      let currentPrice = Number(action.payload.startingPrice);
+      const step = Number(action.payload.step ?? 1);
+      let startingIndex = null;
+      state.nfts = state.nfts.map((o, index) => {
+        const isStartingItem = caseInsensitiveCompare(o.nft.address, startingItem.nft.address) && o.nft.id === startingItem.nft.id;
+
+        if (isStartingItem) startingIndex = index;
+        else if (startingIndex === null) return o;
+        if (!state.extras[o.nft.address.toLowerCase()]?.approval) return o;
+
+        const price = currentPrice > 1 ? currentPrice : 1;
+        currentPrice += round(currentPrice * (step * 0.01));
         return {...o, price}
       });
     },
@@ -183,6 +202,7 @@ export const {
   updateExpiration,
   update1155Quantity,
   cascadePrices,
+  cascadePricesPercent,
   applyPriceToAll,
   applyExpirationToAll,
   applyFloorPriceToAll,

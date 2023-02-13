@@ -296,7 +296,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
                             value={expirationDate}
                           >
                             {expirationDatesValues.map((time) => (
-                              <option value={time.value.toString()}>{time.label}</option>
+                              <option key={time.value.toString()} value={time.value.toString()}>{time.label}</option>
                             ))}
                           </Select>
                         </Stack>
