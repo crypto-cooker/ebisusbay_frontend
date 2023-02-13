@@ -9330,7 +9330,7 @@
       "multiToken": false,
       "address": "0x133D5b18977cdDd191528789B5DB954622Aab754",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "GymKongZ is a 10,000 pfp project made up of more than 255 unique traits. We will focus on improving all pillars of life, not only the physical but also the mental and financial, and any other goal members are choosing to pursue. \nWe are really wanting to expand the horizon when it comes to a group of people coming together sharing similar goals and interests.",
         "avatar": "/img/collections/gymkongz/avatar.webp",
