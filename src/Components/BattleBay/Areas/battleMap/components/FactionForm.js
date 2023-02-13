@@ -43,7 +43,7 @@ const FactionForm = ({ isOpen, onClose, title }) => {
             </ModalHeader>
             <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
             <ModalBody>
-              <div className="row mt-2 mt-sm-4">
+              <div className="row mt-2 mt-sm-2">
                 <div className="">
                   <div className="taps-buttons-group">
                     <button type="button" className={`smallBtn ${currentTab === tabs.info ? 'selected' : ''}`} onClick={() => setCurrentTab(tabs.info)}>Info</button>

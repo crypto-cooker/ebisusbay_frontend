@@ -36,7 +36,7 @@ const InfoTap = ({ factions = [] }) => {
             </Tr>
           </Thead>
           <Tbody>
-            {factions.map((faction) => (<Tr>
+            {factions.map((faction, index) => (<Tr key={index}>
               <Td textAlign='center'>{faction.rank}</Td>
               <Td textAlign='center'>{faction.faction}</Td>
               <Td textAlign='center'>{faction.troops}</Td>
