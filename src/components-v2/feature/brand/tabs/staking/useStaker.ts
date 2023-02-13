@@ -51,7 +51,6 @@ export const useStaker = (slug: string) => {
         onSuccess: data => {
             queryClient.setQueryData([queryKey, user.address, data.nftAddress, data.statusFilter], (old: any) => {
                 const index = old.findIndex((nft: any) => nft.nftId === data.nftId);
-                console.log('mutate unstake', data, index, old[index])
                 old[index].isStaked = false;
                 return old;
             })

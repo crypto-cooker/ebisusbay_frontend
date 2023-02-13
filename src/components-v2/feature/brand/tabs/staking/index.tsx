@@ -14,6 +14,7 @@ import Button from "@src/Components/components/Button";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
+import Taskbar from "@src/components-v2/feature/brand/tabs/staking/taskbar";
 
 const MotionGrid = motion(Grid);
 
@@ -89,9 +90,7 @@ const StakingTab = ({ brand, collections }: StakingTabProps) => {
     }, [staker, user.provider, filterType]);
 
     useEffect(() => {
-        if (useMobileViews) {
-            setIsFilterOpen(false);
-        }
+        setIsFilterOpen(!useMobileViews);
     }, [useMobileViews]);
 
     useEffect(() => {
@@ -106,6 +105,12 @@ const StakingTab = ({ brand, collections }: StakingTabProps) => {
         <>
             {user.address ? (
                 <Flex direction='column'>
+                    <Taskbar
+                        staker={staker}
+                        collections={collections}
+                        onCollectionFilter={handleCollectionFilter}
+                        onStatusFilter={handleStatusFilter}
+                    />
                     <MotionGrid
                         animate={isFilterOpen && !useMobileViews ? 'expand' : 'collapse'}
                         variants={variants}
