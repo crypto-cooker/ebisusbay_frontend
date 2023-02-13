@@ -1,7 +1,5 @@
 import {appConfig} from "@src/Config";
-import {
-  isMetapixelsCollection
-} from "@src/utils";
+import {isMetapixelsCollection} from "@src/utils";
 import {Contract, ethers} from "ethers";
 import {MetaPixelsAbi} from "@src/Contracts/Abis";
 import * as Sentry from "@sentry/react";
@@ -32,6 +30,20 @@ export async function getNft(collectionId, nftId) {
     Sentry.captureException(error);
     const nft = await getNftFromFile(collectionId, nftId);
     return nft ? {nft} : {status: 404};
+  }
+}
+
+export async function getNfts(collectionId, nftIds) {
+  try {
+    const queryString = {
+      collection: collectionId.toLowerCase(),
+      tokenId: nftIds.join(','),
+    };
+
+    return (await api.get(endpoint, {params: queryString}))?.data;
+  } catch (error) {
+    Sentry.captureException(error);
+    return {status: 404};
   }
 }
 
