@@ -23,8 +23,9 @@ import {appConfig} from "@src/Config";
 import {useRouter} from "next/router";
 import CollectionsTab from "@src/Components/Brand/Tabs/CollectionsTab/CollectionsTab";
 import ListingsTab from "@src/Components/Brand/Tabs/ListingsTab/ListingsTab";
-import WeirdApesStakingTab from "@src/Components/Brand/Tabs/StakingTab/WeirdApesStakingTab";
 import {pushQueryString} from "@src/helpers/query";
+import StakingTab from "@src/components-v2/feature/brand/tabs/staking";
+import {stakers} from "@src/components-v2/feature/brand/tabs/staking/config";
 
 const drops = appConfig('drops');
 const tabs = {
@@ -112,7 +113,7 @@ const Brand = ({ brand, collections, stats, query }) => {
             <li className={`tab ${currentTab === tabs.listings ? 'active' : ''} my-1`}>
               <span onClick={handleBtnClick(tabs.listings)}>Listings</span>
             </li>
-            {brand.slug === 'weird-apes-club' && (
+            {Object.keys(stakers).includes(brand.slug) && (
               <li className={`tab ${currentTab === tabs.staking ? 'active' : ''} my-1`}>
                 <span onClick={handleBtnClick(tabs.staking)}>Staking</span>
               </li>
@@ -127,7 +128,7 @@ const Brand = ({ brand, collections, stats, query }) => {
               <ListingsTab brand={brand} collections={collections} />
             )}
             {currentTab === tabs.staking && (
-              <WeirdApesStakingTab />
+              <StakingTab brand={brand} collections={collections} />
             )}
           </div>
         </div>
