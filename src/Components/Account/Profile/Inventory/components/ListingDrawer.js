@@ -692,7 +692,7 @@ const CustomCascadeRow = ({onChange}) => {
   return (
     <FormControl isInvalid={error}>
       <HStack w='full'>
-        <Select size="sm" minW="110px" onChange={onOptionChange}>
+        <Select size="sm" minW="110px" onChange={onOptionChange} value={option}>
           <option value={customCascadeOptions.priceUp}>Price &uarr;</option>
           <option value={customCascadeOptions.priceDown}>Price &darr;</option>
           <option value={customCascadeOptions.pctUp}>Percent &uarr;</option>
