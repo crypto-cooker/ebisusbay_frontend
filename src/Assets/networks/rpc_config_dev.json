@@ -17771,7 +17771,7 @@
       "multiToken": false,
       "address": "0xca00aba7689e3c0f9f74e1f8d82e61c04c787734",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "The Cr00ts rolled into Cronos and are taking over !  Born from the hands of 8 talented artists \uD83C\uDFA8 Giving 50% of secondary markets ROI to holders, beneficial partnerships, growing investment pool, and more to come !  Join the fam, join the fun \uD83D\uDC8E",
         "avatar": "/img/collections/cr00ts/avatar.webp",
@@ -17809,6 +17809,31 @@
       },
       "verification": {
         "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Fallen Angels - Demons",
+      "slug": "fallen-angels-demons",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Fallen Angels is a collection of 1998 uniquely generated NFTs on the Cronos Chain.Each Fallen Angel NFT is generated with over 70+ Attributes with different rarities and 10 Legendaries.",
+        "avatar": "/img/collections/fallen-angels-demons/avatar.webp",
+        "card": "/img/collections/fallen-angels-demons/card.webp",
+        "banner": "/img/collections/fallen-angels-demons/banner.webp",
+        "website": "https://www.pocketdemons.net/",
+        "twitter": "https://twitter.com/PDemon_Official",
+        "discord": "https://discord.gg/sXrJZR983J",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
@@ -23946,6 +23971,52 @@
         "banner": "/img/collections/reckless-robots-legends/banner.webp",
         "avatar": "/img/collections/reckless-robots-legends/avatar.webp",
         "preview": "/img/collections/reckless-robots-legends/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": true
+      },
+      "escrow": {
+        "milestones": [
+          "15% of funds raised for the project to be paid at the time of mint",
+          "33% of the remaining funds to be held in escrow until voting is implemented by the project",
+          "67% of remaining funds to be released when a battle system is implemented by the project"
+        ]
+      }
+    },
+    {
+      "id": 159,
+      "slug": "fallen-angels-demons",
+      "title": "Fallen Angels - Demons",
+      "subtitle": "Fallen Angels is a collection of 1998 uniquely generated NFTs on the Cronos Chain.Each Fallen Angel NFT is generated with over 70+ Attributes with different rarities and 10 Legendaries.",
+      "description": "The FallenAngels collection is the Second generation of the PocketDemons Ecosystem on Cronos. The collection consists of 1998 uniquely generated NFT's with 10 Lengendaries and over 70 attributes that will come in handy in our Risk-To-Earn game HellTrumps. The FallenAngel collection will also come with a future breeding utility to bring something New and Powerful to the PocketDemons Ecosystem. Mint a Legendary and enjoy a nice CRO reward as well as a variety of Special utilities within the PocketDemons ecosystem on Cronos.",
+      "author": {
+        "name": "Pocket Demons",
+        "website": "https://www.pocketdemons.net/",
+        "twitter": "https://twitter.com/PDemon_Official",
+        "discord": "https://discord.gg/sXrJZR983J"
+      },
+      "address": "",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 100,
+      "totalSupply": 1998,
+      "cost": "250",
+      "memberCost": "200",
+      "whitelistCost": "200",
+      "foundersOnly": false,
+      "start": 1677009600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/fallen-angels-demons/drop.webp",
+        "banner": "/img/collections/fallen-angels-demons/banner.webp",
+        "avatar": "/img/collections/fallen-angels-demons/avatar.webp",
+        "preview": "/img/collections/fallen-angels-demons/card.webp"
       },
       "verification": {
         "verified": true,
