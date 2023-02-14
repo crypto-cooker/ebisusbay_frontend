@@ -17718,6 +17718,29 @@
         "kyc": false,
         "verified": true
       }
+    },
+    {
+      "name": "Rebel Kangas",
+      "slug": "rebel-kangas",
+      "multiToken": false,
+      "address": "0xB494b51a76E9b95708c9Fa9D1477FE5e3eFAf281",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Hi! Meet the Rebel Kangas, the bad guys on the chain! Calling out scams, pumps, and dumps and taking no nonsense. We're a force for good but labeled the bad guys.",
+        "avatar": "/img/collections/rebel-kangas/avatar.webp",
+        "banner": "/img/collections/rebel-kangas/banner.webp",
+        "card": "/img/collections/rebel-kangas/card.webp",
+        "website": "https://Roo.Finance/",
+        "twitter": "https://twitter.com/RooFinance",
+        "discord": "https://discord.gg/4u5muHcdaJ",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
     }
   ],
   "drops": [
