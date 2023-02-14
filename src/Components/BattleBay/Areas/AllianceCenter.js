@@ -1,44 +1,36 @@
 import {
   Heading,
+  useDisclosure,
 } from '@chakra-ui/react';
+import ClanForm from './ClanForm';
+import DelegateForm from './DelegateForm';
 
 const AllianceCenter = ({onBack}) => {
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const factions = ["Mad Merkat", "CroSkull", "Boomer Squad", "Flaming Phenix Club", "connected wallet"];
+  
   return (
     <section className="gl-legacy container">
       <button class="btn" onClick={onBack}>Back to Village Map</button>
       <Heading className="title text-center">Alliance Center</Heading>
       <p className="text-center">The Alliance Center allows for faction management.</p>
+
+      <DelegateForm isOpen={isOpen} onClose={onClose} factions={factions}/>
+      {/* <ClanForm isOpen={isOpen} onClose={onClose}/> */}
+
       
     <div>
-            <button class="btn" onclick="window.location.href='../fancyMenu.html'">back</button>
-            <button type="button" class="btn" id="registerFaction" onclick="openRegistrationForm()">Register Faction</button>
-            <button type="button" class="btn" id="delgateTroops" onclick="openDelegateForm()">Delegate Troops</button>
-            <button type="button" class="btn" id="editFaction" onclick="editFaction()">Edit Faction</button>
-          </div>
-<div class="form-popup" id="factionRegistrationForm">
+      <button type="button" className="btn" id="registerFaction" 
+        onClick={() => {}}>Register Clan</button>
+      <button type="button" class="btn" id="delgateTroops" 
+        onClick={() => {onOpen();}}>Delegate Troops</button>
+      <button type="button" class="btn" id="editFaction" 
+        onClick={() => {}}>Edit Clan</button>
+    </div>
 
-    <form action="/action_page.php" class="form-container">
 
-      <label class = "basicText" for="quantity">Faction Name:</label>
-      <input type="text" class = "css-1fzih88" id="factionNameEntry" />
-      
-      <p></p>
-
-        <label class = "basicText" for="quantity">Addresses of Wallets or Contract:</label>
-        <input type="text" class = "entryField" id="addresses"/>
-        <button type="button" class="minibtn" onclick="addItem()">Add address</button>
-        <button type="button" class="minibtn" onclick="removeItem()">Remove</button>
-        <button type="button" class="minibtn" id="ShowAddresses" onclick="myFunction()">Hide Addresses</button>
-        <ul id="addresseslist"></ul>
-
-      <p></p>
-      <button type="button" class="btn" id="registerButton" onclick="registerFaction()">Register <br/> Cost: 300 Cro</button>
-      <button type="button" class="btn cancel" onclick="closeRegistrationForm()">Cancel</button>
-    </form>
-
-  </div>
-
-  <div class="form-popup" id="delegateForm">
+  {/* <div class="form-popup" id="delegateForm">
 
     <form action="/action_page.php" class="form-container">
 
@@ -63,8 +55,7 @@ const AllianceCenter = ({onBack}) => {
 
     </form>
 
-  </div>
-  <div id="overlay2" onclick="closeForm(), closeDelegateForm(), closeRegistrationForm()"></div>
+  </div> */}
     </section>
   )
 };

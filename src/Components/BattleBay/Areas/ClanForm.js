@@ -13,11 +13,6 @@ import { Spinner } from 'react-bootstrap';
 
 import { getTheme } from "@src/Theme/theme";
 
-import {
-  DeployTap,
-  InfoTap,
-  AttackTap
-} from "./"
 
 const tabs = {
   info: 'info',
@@ -52,15 +47,28 @@ const ClanForm = ({ isOpen, onClose, title, factions, factionsPlayerOwns, troops
                   </div>
 
                   <div className="de_tab_content">
-                    {currentTab === tabs.info && (
-                      <InfoTap factions={factions}/>
-                    )}
-                    {currentTab === tabs.deploy && (
-                      <DeployTap faction={factionsPlayerOwns} troopsAvailableToFaction={troopsAvailableToFaction}/>
-                    )}
-                    {currentTab === tabs.attack && (
-                      <AttackTap />
-                    )}
+                  <div class="form-popup" id="factionRegistrationForm">
+
+                    <form action="/action_page.php" class="form-container">
+
+                    <label class = "basicText" for="quantity">Faction Name:</label>
+                    <input type="text" class = "css-1fzih88" id="factionNameEntry" />
+                    
+                    <p></p>
+
+                        <label class = "basicText" for="quantity">Addresses of Wallets or Contract:</label>
+                        <input type="text" class = "entryField" id="addresses"/>
+                        <button type="button" class="minibtn" onclick="addItem()">Add address</button>
+                        <button type="button" class="minibtn" onclick="removeItem()">Remove</button>
+                        <button type="button" class="minibtn" id="ShowAddresses" onclick="myFunction()">Hide Addresses</button>
+                        <ul id="addresseslist"></ul>
+
+                    <p></p>
+                    <button type="button" class="btn" id="registerButton" onclick="registerFaction()">Register <br/> Cost: 300 Cro</button>
+                    <button type="button" class="btn cancel" onclick="closeRegistrationForm()">Cancel</button>
+                    </form>
+
+                    </div>
                   </div>
                 </div>
               </div>

@@ -15,14 +15,14 @@ const actions = {
 
 const DeployTap = ({ factions = [], regionName, troopsAvailable =[]}) => {
 
-  const [selectedFaction, setSelectedFaction] = useState("(No Faction Selected)");
-  const [selectedQuantity, setSelectedQuantity] = useState(0);
-  
   const [currentTab, setCurrentTab] = useState(tabs.deploy);
   const [dataForm, setDataForm] = useState({
     faction: factions[0] ?? null,
     quantity: 0,
   })
+
+  const [selectedQuantity, setSelectedQuantity] = useState(0);
+  const [selectedFaction, setSelectedFaction] = useState(dataForm.faction);
 
   const onChangeInputsFaction = (e) => {
     console.log(e.target.name, e.target.value)
