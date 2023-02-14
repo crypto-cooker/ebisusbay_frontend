@@ -17741,6 +17741,29 @@
         "kyc": false,
         "verified": false
       }
+    },
+    {
+      "name": "Kingdom Ape",
+      "slug": "kingdom-ape",
+      "multiToken": false,
+      "address": "0x19C56cDA2c358202778b68F4fBCc301969af6387",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Kingdom ape is a pfps derivative nft project designed by Azariel. Each NFT is unique and different from the others in both rarity and appearance, 69 traits that create thousands of different possible combinations. Among them is also hidden a completely golden 1/1.  In addition holder receive 80% of royalties shared with the community, free mint next collection and the ability to edit the look of your nft with the details you prefer.",
+        "avatar": "/img/collections/kingdom-ape/avatar.webp",
+        "banner": "/img/collections/kingdom-ape/banner.webp",
+        "card": "/img/collections/kingdom-ape/card.webp",
+        "website": "https://Roo.Finance/",
+        "twitter": "https://twitter.com/cro_kingdom",
+        "discord": "https://discord.gg/FqfxCcdxc7",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
     }
   ],
   "drops": [
