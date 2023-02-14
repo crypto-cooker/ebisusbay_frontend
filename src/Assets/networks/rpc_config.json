@@ -17789,6 +17789,29 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Pepe de Fiera",
+      "slug": "pepe-de-fiera",
+      "multiToken": false,
+      "address": "0x38fA7eA9f021dc1E9bca4414b2d6f1e4Cc626102",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Fiera.cro's VIP token. Gain exclusive access to content and benefits.",
+        "avatar": "/img/collections/pepe-de-fiera/avatar.webp",
+        "card": "/img/collections/pepe-de-fiera/card.webp",
+        "banner": "/img/collections/pepe-de-fiera/banner.webp",
+        "discord": "https://discord.gg/AbXqKmpRyq",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
