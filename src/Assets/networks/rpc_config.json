@@ -18036,6 +18036,30 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "BANDITS VALENTINES DAY COLLECTION",
+      "slug": "bandits-valentines-day-collection",
+      "multiToken": false,
+      "address": "0xD06DB5C70022acCDcA6a096FF64d21Ac1C9eB004",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A seasonal collection brought to you by BANDITS ",
+        "avatar": "/img/collections/bandits-valentines-day-collection/avatar.webp",
+        "banner": "/img/collections/bandits-valentines-day-collection/banner.webp",
+        "card": "/img/collections/bandits-valentines-day-collection/card.webp",
+        "twitter": "https://twitter.com/bandits750",
+        "discord": "https://discord.gg/2s7YMT6zK9",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
