@@ -8,27 +8,16 @@ import { useDisclosure } from '@chakra-ui/react'
 const BattleMap = ({onBack}) => {
 
   //#region variables
-  // const titleRef = useRef();
-  // const node = titleRef.current;
+
   const troopsTableRef = useRef();
-  const defenderFactionInputRef = useRef();
   const [selectedRegion, setSelectedRegion] = useState("None");
-  
-  const factions = ["Mad Merkat", "CroSkull", "Boomer Squad", "Flaming Phenix Club", "connected wallet"];
   const regionFlags = ["pin-Southern-Trident", "pin-Dragonland", "pin-Human-Kingdoms", "pin-Dwarf-Mines"];
-
-  const factionsForRegion = [
-    { rank: 1, faction: "Mad Merkat", troops: 52 },
-    { rank: 2, faction: "CroSkull", troops: 17 },
-    { rank: 3, faction: "Boomer Squad", troops: 5 },
-  ]
-
-  const factionsPlayerOwns = [
-    'Mad Merkat',
-  ]
-
-  const troopsAvailableToFaction = [
-    { faction: "Mad Merkat", troops: 7 },
+ 
+  const factions = [
+    { rank: 1, faction: "Mad Merkat", troops: 52, owned:true },
+    { rank: 2, faction: "CroSkull", troops: 17, owned:false },
+    { rank: 3, faction: "Boomer Squad", troops: 5, owned:false },
+    { rank: 4, faction: "Flaming Phenix Club", troops: 3, owned:false },
   ]
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -238,8 +227,7 @@ function getWinningFactionInRegion(region)
 
 <section>
 
-<FactionForm isOpen={isOpen} onClose={onClose} title={selectedRegion} factions={factionsForRegion} 
-  factionsPlayerOwns={factionsPlayerOwns} troopsAvailableToFaction={troopsAvailableToFaction}/>
+<FactionForm isOpen={isOpen} onClose={onClose} title={selectedRegion} factions={factions}/>
 
 <button className="btn" onClick={onBack}>Back to Village Map</button>
 <p className="title text-center">Select a region to deploy troops to</p>

@@ -1,4 +1,17 @@
-import { Box, Flex, FormControl, FormLabel, Input, Select } from "@chakra-ui/react";
+import { 
+  Box, 
+  Flex, 
+  FormControl, 
+  FormLabel, 
+  Input, 
+  Select,
+  NumberInput, 
+  NumberInputField,
+  NumberInputStepper, 
+  NumberIncrementStepper, 
+  NumberDecrementStepper, 
+ } from "@chakra-ui/react";
+
 import { useState } from "react";
 import Button from "@src/Components/components/Button";
 
@@ -13,11 +26,15 @@ const actions = {
   transfer: 'transfer'
 };
 
-const DeployTap = ({ factions = [], regionName, troopsAvailable =[]}) => {
+const DeployTap = ({ factions = [], regionName}) => {
 
+  const playerFactions = factions.filter(faction => faction.owned)
+  const arrayColumn = (arr, n) => arr.map(x => x[n]);
+  const playerFactionNames = arrayColumn(playerFactions, 'faction')
+  const troopsAvailable = 0;
   const [currentTab, setCurrentTab] = useState(tabs.deploy);
   const [dataForm, setDataForm] = useState({
-    faction: factions[0] ?? null,
+    faction: playerFactions[0] ?? null,
     quantity: 0,
   })
 
@@ -28,20 +45,23 @@ const DeployTap = ({ factions = [], regionName, troopsAvailable =[]}) => {
     console.log(e.target.name, e.target.value)
     setDataForm({...dataForm, [e.target.name]: e.target.value})
     setSelectedFaction(e.target.value)
+    troopsAvailable = factions.filter(faction => faction.faction === e.target.value)[0].troops
   }
-  const onChangeInputsQuantity = (e) => {
-    console.log(e.target.name, e.target.value)
-    setDataForm({...dataForm, [e.target.name]: e.target.value})
-    setSelectedQuantity(e.target.value)
-  }
+  // const onChangeInputsQuantity = (e) => {
+  //   console.log(e.target.name, e.target.value)
+  //   setDataForm({...dataForm, [e.target.name]: e.target.value})
+  //   setSelectedQuantity(e.target.value)
+  // }
+  const handleChange = (value) => setSelectedQuantity(value)
+
   const deployOrRecallTroops = () => {
     if(currentTab === tabs.deploy)
     {
-      console.log("You deployed", dataForm.quantity, "troops to", regionName, "on behalf of", dataForm.faction)
+      console.log("You deployed", selectedQuantity, "troops to", regionName, "on behalf of", dataForm.faction)
     }
     else if(currentTab === tabs.recall)
     {
-      console.log("You recalled", dataForm.quantity, "troops from", regionName, "on behalf of", dataForm.faction)
+      console.log("You recalled", selectedQuantity, "troops from", regionName, "on behalf of", dataForm.faction)
     }
   }
 
@@ -55,21 +75,34 @@ const DeployTap = ({ factions = [], regionName, troopsAvailable =[]}) => {
         {currentTab === tabs.deploy && (<p>
           Troops available to Deploy: {troopsAvailable.length}
         </p>)}
-        {currentTab === tabs.recall && (<p>
-          Troops deployed to {regionName} on behalf of {selectedFaction}
+        {currentTab === tabs.recall && (<p>Troops deployed to {regionName} 
+          {/* Troops deployed to {regionName} on behalf of {selectedFaction} */}
         </p>)}
       </Box>
       <FormControl mb={'24px'}>
         <FormLabel>Please select a faction:</FormLabel>
         <Select me={2} value={dataForm.faction} name="faction" onChange={onChangeInputsFaction}>
-          {factions.map((faction, index) => (<option value={faction} key={index}>{faction}</option>))}
+          {playerFactionNames.map((faction, index) => (<option value={faction} key={index}>{faction}</option>))}
         </Select>
       </FormControl>
 
-      <FormControl>
+      {/* <FormControl>
         <FormLabel>Quantity:</FormLabel>
         <Input type='number' name="quantity" value={dataForm.quantity} onChange={onChangeInputsQuantity}/>
-      </FormControl>
+      </FormControl> */}
+
+      <FormControl>
+            <FormLabel>Quantity:</FormLabel>
+            <NumberInput defaultValue={1} min={1} max={100} name="quantity" 
+              onChange={handleChange}
+              value={selectedQuantity} type ='number'>
+             <NumberInputField />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+          </FormControl>
 
       <Flex mt='16px'>
         <Button type="legacy"

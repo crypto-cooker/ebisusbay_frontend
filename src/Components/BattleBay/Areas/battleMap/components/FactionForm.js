@@ -25,7 +25,7 @@ const tabs = {
   attack: 'attack',
 };
 
-const FactionForm = ({ isOpen, onClose, title, factions, factionsPlayerOwns, troopsAvailableToFaction}) => {
+const FactionForm = ({ isOpen, onClose, title, factions}) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const user = useSelector((state) => state.user);
@@ -56,10 +56,10 @@ const FactionForm = ({ isOpen, onClose, title, factions, factionsPlayerOwns, tro
                       <InfoTap factions={factions}/>
                     )}
                     {currentTab === tabs.deploy && (
-                      <DeployTap factions={factionsPlayerOwns} regionName={title} troopsAvailableToFaction={troopsAvailableToFaction}/>
+                      <DeployTap factions={factions} regionName={title}/>
                     )}
                     {currentTab === tabs.attack && (
-                      <AttackTap />
+                      <AttackTap factions={factions}/>
                     )}
                   </div>
                 </div>
