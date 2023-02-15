@@ -255,6 +255,8 @@ export function shortString(str, leftChars = 3, rightChars = 3) {
 }
 
 export function timeSince(timestamp) {
+  if (!timestamp) return timestamp;
+
   timestamp = millisecondTimestamp(timestamp);
   const seconds = Math.floor(Math.abs((new Date() - timestamp) / 1000));
   let interval = Math.floor(seconds / 31536000);
