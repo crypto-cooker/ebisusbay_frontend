@@ -17837,6 +17837,127 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Fallen Angels - Demons",
+      "slug": "fallen-angels-demons",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Fallen Angels is a collection of 1998 uniquely generated NFTs on the Cronos Chain.Each Fallen Angel NFT is generated with over 70+ Attributes with different rarities and 10 Legendaries.",
+        "avatar": "/img/collections/fallen-angels-demons/avatar.webp",
+        "card": "/img/collections/fallen-angels-demons/card.webp",
+        "banner": "/img/collections/fallen-angels-demons/banner.webp",
+        "website": "https://www.pocketdemons.net/",
+        "twitter": "https://twitter.com/PDemon_Official",
+        "discord": "https://discord.gg/sXrJZR983J",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "croFI$H Gen1 - The Clownfish",
+      "slug": "crofish-gen1-the-clownfish",
+      "multiToken": false,
+      "address": "0x9131b97062e52B0C6cB7088F99a9987ea8B22f6F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Actually we got a part of ocean life. Which one is the cutest? Yes, we call him Nemo, you know why. What started as emoji’s has be reborn as a NFT collection. We call it croFI$H Nemo will be our gen1 drop on Corgistudios. It’s a collection of 3333  It’s a mint of 35 CRO After mint out. We make staking available at corgistudios for $MAC token. We are planning to bring out our next gen2 within reasonable time. We keep it a surprise for now which ocean creature will  live alongside with 3333 other nemos.",
+        "avatar": "/img/collections/crofish-gen1-the-clownfish/avatar.webp",
+        "card": "/img/collections/crofish-gen1-the-clownfish/card.webp",
+        "banner": "/img/collections/crofish-gen1-the-clownfish/banner.webp",
+        "twitter": "https://twitter.com/crofishteam",
+        "discord": "https://discord.gg/wsQjjZ3Zkm",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "croFI$H Gen2 - The Crab",
+      "slug": "crofish-gen2-the-crab",
+      "multiToken": false,
+      "address": "0xcb7415a13195aDf530666329ED179570892637D9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "croFI$H https://linktr.ee/crofish   A brand named croFI$H found by Viaron, a well known NFT artist on Cronos Chain and crypto.com, created the Ocean Life collection. She is the founder of Trappazoids. Her second project is called croFI$H, where she partnered up with a highly respected community manager and founder of MACnifty. The croFI$H collection is unique because it is a collectible NFT project. Investors can collect their croFI$H NFTs and bring them to life by letting them free in their own Ocean they have purchased. The release of Ocean plots is scheduled for mid-March 2023. We might have our first foray into selling virtual ocean plots. We started our Gen1 with “The Clownfish” on January the 27th in the year 2023. Gen2 \"The Crab\" was subsequently released on February 2nd. Gen3 \"The Turtles\" is planned to be released on February 9th. Every week we drop the next generation to provide a collecting aspect, which will create a fun factor.  We want to make the investors aware of how special all these species are the fish, reptiles, memels, and invertebrates and that there has to be awareness of how special the ocean is. Every mintable collection will be explained on https://trappazoids.com. It will be the stand alone ocean life encyclopedia. We like to contribute to charities that keep our oceans clean to provide a healthy habitat for ocean life. By providing investors with information about the diversity of ocean species, we hope to create a heightened awareness of the importance of protecting our oceans and the life within them. To do our part, croFI$H will donate a portion of its profits to ocean conservation charities.",
+        "avatar": "/img/collections/crofish-gen2-the-crab/avatar.webp",
+        "card": "/img/collections/crofish-gen2-the-crab/card.webp",
+        "banner": "/img/collections/crofish-gen2-the-crab/banner.webp",
+        "twitter": "https://twitter.com/crofishteam",
+        "discord": "https://discord.gg/wsQjjZ3Zkm",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "croFI$H Gen3 - The Sea Turtle",
+      "slug": "crofish-gen3-the-sea-turtle",
+      "multiToken": false,
+      "address": "0x1Ee55A9D7E9a9964EF7415f8b6127C9EF83d2419",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "croFI$H https://linktr.ee/crofish   A brand named croFI$H found by Viaron, a well known NFT artist on Cronos Chain and crypto.com, created the Ocean Life collection. She is the founder of Trappazoids. Her second project is called croFI$H, where she partnered up with a highly respected community manager and founder of MACnifty. The croFI$H collection is unique because it is a collectible NFT project. Investors can collect their croFI$H NFTs and bring them to life by letting them free in their own Ocean they have purchased. The release of Ocean plots is scheduled for mid-March 2023. We might have our first foray into selling virtual ocean plots. We started our Gen1 with “The Clownfish” on January the 27th in the year 2023. Gen2 \"The Crab\" was subsequently released on February 2nd. Gen3 \"The Turtles\" is planned to be released on February 9th. Every week we drop the next generation to provide a collecting aspect, which will create a fun factor.  We want to make the investors aware of how special all these species are the fish, reptiles, memels, and invertebrates and that there has to be awareness of how special the ocean is. Every mintable collection will be explained on https://trappazoids.com. It will be the stand alone ocean life encyclopedia. We like to contribute to charities that keep our oceans clean to provide a healthy habitat for ocean life. By providing investors with information about the diversity of ocean species, we hope to create a heightened awareness of the importance of protecting our oceans and the life within them. To do our part, croFI$H will donate a portion of its profits to ocean conservation charities.",
+        "avatar": "/img/collections/crofish-gen3-the-sea-turtle/avatar.webp",
+        "card": "/img/collections/crofish-gen3-the-sea-turtle/card.webp",
+        "banner": "/img/collections/crofish-gen3-the-sea-turtle/banner.webp",
+        "twitter": "https://twitter.com/crofishteam",
+        "discord": "https://discord.gg/wsQjjZ3Zkm",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "croFI$H Gen4 - The Seahorse",
+      "slug": "crofish-gen4-the-seahorse",
+      "multiToken": false,
+      "address": "0x4b396a722d0116b90475C567d2361d807766CF66",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/crofish-gen4-the-seahorse/avatar.webp",
+        "card": "/img/collections/crofish-gen4-the-seahorse/card.webp",
+        "banner": "/img/collections/crofish-gen4-the-seahorse/banner.webp",
+        "twitter": "https://twitter.com/crofishteam",
+        "discord": "https://discord.gg/wsQjjZ3Zkm",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
@@ -24021,11 +24142,8 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false,
+        "kyc": true,
         "escrow": false
-      },
-      "escrow": {
-        "milestones": []
       }
     }
   ]
