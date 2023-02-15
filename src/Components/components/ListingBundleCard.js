@@ -219,7 +219,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
           <Flex direction="column" height="100%">
             <Slider size={listing.nft.nfts?.length}>
               {listing.nft.nfts?.map((currentNft) =>(
-                <div className="card-img-container">
+                <div key={listing.listingId} className="card-img-container">
                   <Box
                     _groupHover={{transform:'scale(1.05)', transition:'0.3s ease'}}
                     transition="0.3s ease"

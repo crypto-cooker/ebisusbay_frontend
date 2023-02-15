@@ -39,7 +39,8 @@ export class WorldOfCatsStaker implements Staker {
     async getStaked(userAddress: string, collectionAddress: string) {
         const readContract = new Contract(this.address, this.abi, readProvider);
         const stakedIds = await readContract.getUserstakedNftIds(userAddress);
-
+        if (stakedIds.length < 1) return [];
+        
         const nfts = await getNfts(collectionAddress, stakedIds.map((id: BigNumber) => id.toNumber()));
 
         return nfts.data.map((item: any) => ({...item.nft, isStaked: true}));
