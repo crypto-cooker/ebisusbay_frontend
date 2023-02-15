@@ -17958,6 +17958,84 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "MonoMorphs",
+      "slug": "monomorphs",
+      "multiToken": false,
+      "address": "0x68Ec244796Ca8Ae4De88a049C8D2D3b761393cC2",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Mysterious Morphs with a lack of color.",
+        "avatar": "/img/collections/monomorphs/avatar.webp",
+        "banner": "/img/collections/monomorphs/banner.webp",
+        "card": "/img/collections/monomorphs/card.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/vQaBeUv5tX",
+        "medium": "https://medium.com/@CroMorphs",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Morphed Brew",
+      "slug": "morphed-brew",
+      "multiToken": false,
+      "address": "0xD863B9b954a20b93693216e1d03E2cCF91669120",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Special brew enchanced by the inabitants of MetaMorphis.",
+        "avatar": "/img/collections/morphed-brew/avatar.webp",
+        "banner": "/img/collections/morphed-brew/banner.webp",
+        "card": "/img/collections/morphed-brew/card.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/vQaBeUv5tX",
+        "medium": "https://medium.com/@CroMorphs",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Magic Morphing Potions",
+      "slug": "magic-morphing-potions",
+      "multiToken": false,
+      "address": "0x92CE054D908e1d6400D6E04Bc249842afB1239B5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Can be used in MetaMorphis",
+        "avatar": "/img/collections/magic-morphing-potions/avatar.webp",
+        "banner": "/img/collections/magic-morphing-potions/banner.webp",
+        "card": "/img/collections/magic-morphing-potions/card.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/vQaBeUv5tX",
+        "medium": "https://medium.com/@CroMorphs",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
