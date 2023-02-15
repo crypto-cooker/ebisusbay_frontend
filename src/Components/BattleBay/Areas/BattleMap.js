@@ -5,7 +5,7 @@ import styles from './BattleBay.module.scss';
 import { FactionForm } from './battleMap/components/index.js';
 import { useDisclosure } from '@chakra-ui/react'
 
-const BattleMap = ({onBack}) => {
+const BattleMap = ({onBack, factions=[]}) => {
 
   //#region variables
 
@@ -13,13 +13,6 @@ const BattleMap = ({onBack}) => {
   const [selectedRegion, setSelectedRegion] = useState("None");
   const regionFlags = ["pin-Southern-Trident", "pin-Dragonland", "pin-Human-Kingdoms", "pin-Dwarf-Mines"];
  
-  const factions = [
-    { rank: 1, faction: "Mad Merkat", troops: 52, owned:true },
-    { rank: 2, faction: "CroSkull", troops: 17, owned:false },
-    { rank: 3, faction: "Boomer Squad", troops: 5, owned:false },
-    { rank: 4, faction: "Flaming Phenix Club", troops: 3, owned:false },
-  ]
-
   const { isOpen, onOpen, onClose } = useDisclosure();
   class Deployment {
     constructor(region, faction, amount, deploymentOwner) {

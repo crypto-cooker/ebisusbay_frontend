@@ -19,7 +19,7 @@ import { Spinner } from 'react-bootstrap';
 import { getTheme } from "@src/Theme/theme";
 import Button from "@src/Components/components/Button";
 
-const DelegateForm = ({ isOpen, onClose, factions }) => {
+const DelegateForm = ({ isOpen, onClose, factions=[] }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const user = useSelector((state) => state.user);

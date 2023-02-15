@@ -23,6 +23,14 @@ const BattleBay = () => {
     setCurrentPage(preivousPage)
   };
 
+  //placeholder data until we get data from the backend
+  const factions = [
+    { clanType: "collection", rank: 1, faction: "Mad Merkat", troops: 52, owned:true, addresses: ["0x000001", "0x000001"]},
+    { clanType: "user", rank: 2, faction: "CroSkull", troops: 17, owned:false, addresses: ["0x000001", "0x000001"] },
+    { clanType: "collection", rank: 3, faction: "Boomer Squad", troops: 5, owned:false, addresses: ["0x000001", "0x000001"] },
+    { clanType: "collection", rank: 4, faction: "Flaming Phenix Club", troops: 3, owned:false, addresses: ["0x000001", "0x000001"] },
+  ]
+
   return (
     <>
       <PageHead
@@ -33,13 +41,13 @@ const BattleBay = () => {
       {currentPage === 'barracks' ? (
         <Barracks onBack={returnToPreviousPage} />
       ) : currentPage === 'battleMap' ? (
-        <BattleMap onBack={returnToPreviousPage}/>
+        <BattleMap onBack={returnToPreviousPage} factions={factions}/>
       // ) : currentPage === 'leaderboard' ? (
       //   <Leaderboard onBack={returnToPreviousPage}/>
       ): currentPage === 'bank' ? (
         <Bank onBack={returnToPreviousPage} />
       ): currentPage === 'allianceCenter' ? (
-        <AllianceCenter onBack={returnToPreviousPage} />
+        <AllianceCenter onBack={returnToPreviousPage} factions={factions}/>
       ): currentPage === 'academy' ? (
         <Academy onBack={returnToPreviousPage} />
       ): currentPage === 'announcementBoard' ? (

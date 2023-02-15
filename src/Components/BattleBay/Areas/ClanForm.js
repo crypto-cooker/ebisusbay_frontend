@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
   Modal,
@@ -7,25 +7,109 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay
+  ModalOverlay,
+  Input,
+  Button,
+  FormControl,
+  FormLabel,
+  Tabs,
+  TabList,
+  TabPanels,
+  TabPanel,
+  Tab,
+  Flex,
+  Spacer,
+  Box,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  Stack,
+
 } from "@chakra-ui/react"
 import { Spinner } from 'react-bootstrap';
-
 import { getTheme } from "@src/Theme/theme";
+import { add } from "lodash";
+import { faRightLeft } from "@fortawesome/free-solid-svg-icons";
 
+const ClanForm = ({ isOpen, onClose, factions=[]}) => {
 
-const tabs = {
-  info: 'info',
-  deploy: 'deploy',
-  attack: 'attack',
-};
+  //addresses
+  const addressInput = useRef(null);
+  const [addresses, setAddresses] = useState([])
+  const handleAddChange = (event) => setValue(event.target.value)
+  const [addressToAdd, setValue] = useState('')
 
-const ClanForm = ({ isOpen, onClose, title, factions, factionsPlayerOwns, troopsAvailableToFaction}) => {
+  //clan name
+  const clanNameInput = useRef(null);
+  const [clanName, setClanName] = useState('')
+  const handleClanChange = (event) => setClanName(event.target.value)
+  const [clanType, setClanType] = useState('collectionClan')
 
+  //alerts
+  const [showAlert, setShowAlert] = useState(false)
+  const [alertMessage, setAlertMessage] = useState("")
+
+  //other
   const [isLoading, setIsLoading] = useState(false);
   const user = useSelector((state) => state.user);
 
-  const [currentTab, setCurrentTab] = useState(tabs.info);
+  const CreateClan = () => {
+    if(clanNameInput.current === undefined) {
+      setAlertMessage("You must enter a clan name")
+      setShowAlert(true)
+      return;
+    }
+    console.log(addresses)
+    if(addresses.current.length > getMaxAddresses()) {
+      setAlertMessage("You are over the maximum number of addresses for this clan type")
+      setShowAlert(true)
+      return;
+    }
+    
+    //add payment code here
+    console.log("You created a clan with the name "+clanNameInput);
+    clanType === 'collectionClan' ? console.log("You created a collection clan") : console.log("You created a user clan")
+    onClose();
+  }
+  function AddAddress() {
+    setShowAlert(false)
+
+    if(addressToAdd === '') {
+      setAlertMessage("You must enter an address")
+      setShowAlert(true)
+      return;
+    }
+
+    if(addresses.includes(addressToAdd)) {
+      setAlertMessage("You already have this address in your clan")
+      setShowAlert(true)
+      return;
+    }
+    setAddresses(addresses => [...addresses, addressToAdd])
+    addressInput.current.value = ''
+    setValue('')
+  }
+  function RemoveAddress() {
+    setShowAlert(false)
+    if(addresses.includes(addressToAdd)) {
+      setAddresses(addresses.filter(address => address !== addressToAdd)) 
+    } else {
+      setAlertMessage("The address you are trying to remove does not exist")
+      setShowAlert(true)
+      return
+    }
+    addressInput.current.value = ''
+    setValue('')
+  }
+  function collectionClan() {
+    setClanType('collectionClan')
+  }
+  function userClan() {
+    setClanType('userClan')
+  }
+  function getMaxAddresses() {
+    return clanType === 'collectionClan' ? 3 : 15
+  }
 
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
@@ -33,49 +117,69 @@ const ClanForm = ({ isOpen, onClose, title, factions, factionsPlayerOwns, troops
       <ModalContent>
         {!isLoading ? (
           <>
-            <ModalHeader className="text-center">
-              {title}
-            </ModalHeader>
+          <ModalHeader className="text-center">Register a Clan</ModalHeader>
             <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
             <ModalBody>
-              <div className="row mt-2 mt-sm-2">
-                <div className="">
-                  <div className="taps-buttons-group">
-                    <button type="button" className={`smallBtn ${currentTab === tabs.info ? 'selected' : ''}`} onClick={() => setCurrentTab(tabs.info)}>Info</button>
-                    <button type="button" className={`smallBtn ${currentTab === tabs.deploy ? 'selected' : ''}`} onClick={() => setCurrentTab(tabs.deploy)}>Deploy</button>
-                    <button type="button" className={`smallBtn ${currentTab === tabs.attack ? 'selected' : ''}`} onClick={() => setCurrentTab(tabs.attack)}>Attack</button>
-                  </div>
+   
+              <FormControl isRequired>
+                <FormLabel>Clan name:</FormLabel>
+                <Input
+                  ref={clanNameInput}
+                  value={clanName}
+                  onChange={handleClanChange}
+                  placeholder=''
+                  size='sm'/>
+              </FormControl>
 
-                  <div className="de_tab_content">
-                  <div class="form-popup" id="factionRegistrationForm">
-
-                    <form action="/action_page.php" class="form-container">
-
-                    <label class = "basicText" for="quantity">Faction Name:</label>
-                    <input type="text" class = "css-1fzih88" id="factionNameEntry" />
+              <Tabs variant='unstyled' style={{ marginTop: '24px'}}>
+                <TabList>
+                  <Tab onClick={collectionClan} _selected={{ color: 'white', bg: 'blue.500' }}>Collection Clan</Tab>
+                  <Tab onClick={userClan} _selected={{ color: 'white', bg: 'blue.500' }}>User Clan</Tab>
+                </TabList>
+                <TabPanels>
+                  <TabPanel>
+                    <p>Maximum of 3 collection addresses</p>
+                  </TabPanel>
+                  <TabPanel>
+                    <p>Maximum of 15 wallet addresses</p>
+                  </TabPanel>
+                </TabPanels>
+              </Tabs>
                     
-                    <p></p>
+              <FormLabel style={{ display: 'flex', marginTop: '24px' }}>Addresses of Wallets or Contracts:</FormLabel>
+                <Input
+                  ref={addressInput}
+                  value={addressToAdd}
+                  onChange={handleAddChange}
+                  placeholder=''
+                  size='sm'
+                />
+                {showAlert && (
+                <Alert status='error'>
+                  <AlertIcon />
+                  <AlertTitle>{alertMessage}</AlertTitle>
+                </Alert>
+                )}
 
-                        <label class = "basicText" for="quantity">Addresses of Wallets or Contract:</label>
-                        <input type="text" class = "entryField" id="addresses"/>
-                        <button type="button" class="minibtn" onclick="addItem()">Add address</button>
-                        <button type="button" class="minibtn" onclick="removeItem()">Remove</button>
-                        <button type="button" class="minibtn" id="ShowAddresses" onclick="myFunction()">Hide Addresses</button>
-                        <ul id="addresseslist"></ul>
+              <Stack direction='row' spacing={4} style={{ display: 'flex', marginTop: '16px' }}>
+                <Button colorScheme='blue'variant='outline' onClick={AddAddress} className="flex-fill"> Add address </Button>
+                <Button colorScheme='red' variant='outline'onClick={RemoveAddress} className="flex-fill"> Remove address </Button>
+              </Stack>
 
-                    <p></p>
-                    <button type="button" class="btn" id="registerButton" onclick="registerFaction()">Register <br/> Cost: 300 Cro</button>
-                    <button type="button" class="btn cancel" onclick="closeRegistrationForm()">Cancel</button>
-                    </form>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
+              
+              <ul id="addresseslist"></ul>
+              <Flex >
+              <Spacer />
+                <Box p='3'>
+              <Button style={{ display: 'flex', marginTop: '16px' }} 
+                onClick={CreateClan} variant='outline'size='lg'> 
+                Register  <br/> Cost: 1000 Fortune </Button>
+                </Box>
+              </Flex>
             </ModalBody>
-            <ModalFooter className="border-0">
+            <ModalFooter className="border-0"/>
 
-            </ModalFooter>
+            
           </>
         ) : (
           <Spinner animation="border" role="status" size="sm" className="ms-1">
@@ -84,6 +188,7 @@ const ClanForm = ({ isOpen, onClose, title, factions, factionsPlayerOwns, troops
         )}
       </ModalContent>
     </Modal>
+    
   )
 }
 
