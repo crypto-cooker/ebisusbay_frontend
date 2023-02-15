@@ -17771,7 +17771,7 @@
       "multiToken": false,
       "address": "0xca00aba7689e3c0f9f74e1f8d82e61c04c787734",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Cr00ts rolled into Cronos and are taking over !  Born from the hands of 8 talented artists \uD83C\uDFA8 Giving 50% of secondary markets ROI to holders, beneficial partnerships, growing investment pool, and more to come !  Join the fam, join the fun \uD83D\uDC8E",
         "avatar": "/img/collections/cr00ts/avatar.webp",
@@ -17834,6 +17834,256 @@
       },
       "verification": {
         "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Fallen Angels - Demons",
+      "slug": "fallen-angels-demons",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Fallen Angels is a collection of 1998 uniquely generated NFTs on the Cronos Chain.Each Fallen Angel NFT is generated with over 70+ Attributes with different rarities and 10 Legendaries.",
+        "avatar": "/img/collections/fallen-angels-demons/avatar.webp",
+        "card": "/img/collections/fallen-angels-demons/card.webp",
+        "banner": "/img/collections/fallen-angels-demons/banner.webp",
+        "website": "https://www.pocketdemons.net/",
+        "twitter": "https://twitter.com/PDemon_Official",
+        "discord": "https://discord.gg/sXrJZR983J",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "croFI$H Gen1 - The Clownfish",
+      "slug": "crofish-gen1-the-clownfish",
+      "multiToken": false,
+      "address": "0x9131b97062e52B0C6cB7088F99a9987ea8B22f6F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Actually we got a part of ocean life. Which one is the cutest? Yes, we call him Nemo, you know why. What started as emoji’s has be reborn as a NFT collection. We call it croFI$H Nemo will be our gen1 drop on Corgistudios. It’s a collection of 3333  It’s a mint of 35 CRO After mint out. We make staking available at corgistudios for $MAC token. We are planning to bring out our next gen2 within reasonable time. We keep it a surprise for now which ocean creature will  live alongside with 3333 other nemos.",
+        "avatar": "/img/collections/crofish-gen1-the-clownfish/avatar.webp",
+        "card": "/img/collections/crofish-gen1-the-clownfish/card.webp",
+        "banner": "/img/collections/crofish-gen1-the-clownfish/banner.webp",
+        "twitter": "https://twitter.com/crofishteam",
+        "discord": "https://discord.gg/wsQjjZ3Zkm",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "croFI$H Gen2 - The Crab",
+      "slug": "crofish-gen2-the-crab",
+      "multiToken": false,
+      "address": "0xcb7415a13195aDf530666329ED179570892637D9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "croFI$H https://linktr.ee/crofish   A brand named croFI$H found by Viaron, a well known NFT artist on Cronos Chain and crypto.com, created the Ocean Life collection. She is the founder of Trappazoids. Her second project is called croFI$H, where she partnered up with a highly respected community manager and founder of MACnifty. The croFI$H collection is unique because it is a collectible NFT project. Investors can collect their croFI$H NFTs and bring them to life by letting them free in their own Ocean they have purchased. The release of Ocean plots is scheduled for mid-March 2023. We might have our first foray into selling virtual ocean plots. We started our Gen1 with “The Clownfish” on January the 27th in the year 2023. Gen2 \"The Crab\" was subsequently released on February 2nd. Gen3 \"The Turtles\" is planned to be released on February 9th. Every week we drop the next generation to provide a collecting aspect, which will create a fun factor.  We want to make the investors aware of how special all these species are the fish, reptiles, memels, and invertebrates and that there has to be awareness of how special the ocean is. Every mintable collection will be explained on https://trappazoids.com. It will be the stand alone ocean life encyclopedia. We like to contribute to charities that keep our oceans clean to provide a healthy habitat for ocean life. By providing investors with information about the diversity of ocean species, we hope to create a heightened awareness of the importance of protecting our oceans and the life within them. To do our part, croFI$H will donate a portion of its profits to ocean conservation charities.",
+        "avatar": "/img/collections/crofish-gen2-the-crab/avatar.webp",
+        "card": "/img/collections/crofish-gen2-the-crab/card.webp",
+        "banner": "/img/collections/crofish-gen2-the-crab/banner.webp",
+        "twitter": "https://twitter.com/crofishteam",
+        "discord": "https://discord.gg/wsQjjZ3Zkm",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "croFI$H Gen3 - The Sea Turtle",
+      "slug": "crofish-gen3-the-sea-turtle",
+      "multiToken": false,
+      "address": "0x1Ee55A9D7E9a9964EF7415f8b6127C9EF83d2419",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "croFI$H https://linktr.ee/crofish   A brand named croFI$H found by Viaron, a well known NFT artist on Cronos Chain and crypto.com, created the Ocean Life collection. She is the founder of Trappazoids. Her second project is called croFI$H, where she partnered up with a highly respected community manager and founder of MACnifty. The croFI$H collection is unique because it is a collectible NFT project. Investors can collect their croFI$H NFTs and bring them to life by letting them free in their own Ocean they have purchased. The release of Ocean plots is scheduled for mid-March 2023. We might have our first foray into selling virtual ocean plots. We started our Gen1 with “The Clownfish” on January the 27th in the year 2023. Gen2 \"The Crab\" was subsequently released on February 2nd. Gen3 \"The Turtles\" is planned to be released on February 9th. Every week we drop the next generation to provide a collecting aspect, which will create a fun factor.  We want to make the investors aware of how special all these species are the fish, reptiles, memels, and invertebrates and that there has to be awareness of how special the ocean is. Every mintable collection will be explained on https://trappazoids.com. It will be the stand alone ocean life encyclopedia. We like to contribute to charities that keep our oceans clean to provide a healthy habitat for ocean life. By providing investors with information about the diversity of ocean species, we hope to create a heightened awareness of the importance of protecting our oceans and the life within them. To do our part, croFI$H will donate a portion of its profits to ocean conservation charities.",
+        "avatar": "/img/collections/crofish-gen3-the-sea-turtle/avatar.webp",
+        "card": "/img/collections/crofish-gen3-the-sea-turtle/card.webp",
+        "banner": "/img/collections/crofish-gen3-the-sea-turtle/banner.webp",
+        "twitter": "https://twitter.com/crofishteam",
+        "discord": "https://discord.gg/wsQjjZ3Zkm",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "croFI$H Gen4 - The Seahorse",
+      "slug": "crofish-gen4-the-seahorse",
+      "multiToken": false,
+      "address": "0x4b396a722d0116b90475C567d2361d807766CF66",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/crofish-gen4-the-seahorse/avatar.webp",
+        "card": "/img/collections/crofish-gen4-the-seahorse/card.webp",
+        "banner": "/img/collections/crofish-gen4-the-seahorse/banner.webp",
+        "twitter": "https://twitter.com/crofishteam",
+        "discord": "https://discord.gg/wsQjjZ3Zkm",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "MonoMorphs",
+      "slug": "monomorphs",
+      "multiToken": false,
+      "address": "0x68Ec244796Ca8Ae4De88a049C8D2D3b761393cC2",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Mysterious Morphs with a lack of color.",
+        "avatar": "/img/collections/monomorphs/avatar.webp",
+        "banner": "/img/collections/monomorphs/banner.webp",
+        "card": "/img/collections/monomorphs/card.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/vQaBeUv5tX",
+        "medium": "https://medium.com/@CroMorphs",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Morphed Brew",
+      "slug": "morphed-brew",
+      "multiToken": false,
+      "address": "0xD863B9b954a20b93693216e1d03E2cCF91669120",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Special brew enhanced by the inhabitants of MetaMorphs.",
+        "avatar": "/img/collections/morphed-brew/avatar.webp",
+        "banner": "/img/collections/morphed-brew/banner.webp",
+        "card": "/img/collections/morphed-brew/card.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/vQaBeUv5tX",
+        "medium": "https://medium.com/@CroMorphs",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Magic Morphing Potions",
+      "slug": "magic-morphing-potions",
+      "multiToken": false,
+      "address": "0x92CE054D908e1d6400D6E04Bc249842afB1239B5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Can be used in MetaMorphis",
+        "avatar": "/img/collections/magic-morphing-potions/avatar.webp",
+        "banner": "/img/collections/magic-morphing-potions/banner.webp",
+        "card": "/img/collections/magic-morphing-potions/card.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/vQaBeUv5tX",
+        "medium": "https://medium.com/@CroMorphs",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "BANDITS VALENTINES DAY COLLECTION",
+      "slug": "bandits-valentines-day-collection",
+      "multiToken": false,
+      "address": "0xD06DB5C70022acCDcA6a096FF64d21Ac1C9eB004",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A seasonal collection brought to you by BANDITS",
+        "avatar": "/img/collections/bandits-valentines-day-collection/avatar.webp",
+        "banner": "/img/collections/bandits-valentines-day-collection/banner.webp",
+        "card": "/img/collections/bandits-valentines-day-collection/card.webp",
+        "twitter": "https://twitter.com/bandits750",
+        "discord": "https://discord.gg/2s7YMT6zK9",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Inventorapes",
+      "slug": "inventorapes",
+      "multiToken": false,
+      "address": "0x5E1aeeE81D92B9Af08DFe8743ebb4e310e495e8D",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "5% Mint Royalty for holders 10% Market Royalty Fee : 5% for Top Traders (Sweep Contest), 5% for project promotion  A lot of Swap contests to get Inventorbots components collections. Get free mint for each: Background, Eyes, Mouth, Body, Head, Ears  Get a 1:1 free mint of the Jewelry \uD83D\uDC8E Inventorbots components only for Inventorapes  For every 20 mints Inventorapes you will receive 1 x free mint next AI CrofamLadies collection  Top 15 holders will get Mythic (gif) Inventorapes  Top 100 holders receive an extra guaranteed drop of each 6 component  Take a mint at each stage and get or win Mythic Inventorapes -> check  Get the required Inventorbots components and build a Inventorbots that will be the most powerful NFT of the CrofamLadies / CrofamSpace ecosystem  Owner of Mythic Inventorapes has guaranteed 10 x free mint of Background, Eyes, Mouth, Body, Head, Ears components  More utility coming soon...",
+        "avatar": "/img/collections/inventorapes/avatar.webp",
+        "banner": "/img/collections/inventorapes/banner.webp",
+        "card": "/img/collections/inventorapes/card.webp",
+        "website": "https://crofamladies.netlify.app/",
+        "twitter": "https://twitter.com/CrofamLadies",
+        "discord": "https://discord.gg/uaE6Sd26Qa",
+        "medium": "https://crofamladies.gitbook.io/crofam-ladies-wp/age-of-inventors/inventorapes",
+        "telegram": "https://twitter.com/InventorsAge",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
         "doxx": false,
         "kyc": false
       }
@@ -23716,7 +23966,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "featured": false,
       "redirect": "https://wedripz.netlify.app/",
@@ -23755,7 +24005,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "featured": false,
       "redirect": "https://www.crodragonsapp.net/",
@@ -24021,15 +24271,49 @@
       "verification": {
         "verified": true,
         "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 159,
+      "slug": "inventorapes",
+      "title": "CroFam Ladies Inventorapes",
+      "subtitle": "5% Mint Royalty for holders 10% Market Royalty Fee : 5% for Top Traders (Sweep Contest), 5% for project promotion  A lot of Swap contests to get Inventorbots components collections. Get free mint for each: Background, Eyes, Mouth, Body, Head, Ears  Get a 1:1 free mint of the Jewelry \uD83D\uDC8E Inventorbots components only for Inventorapes  For every 20 mints Inventorapes you will receive 1 x free mint next AI CrofamLadies collection  Top 15 holders will get Mythic (gif) Inventorapes  Top 100 holders receive an extra guaranteed drop of each 6 component  Take a mint at each stage and get or win Mythic Inventorapes -> check  Get the required Inventorbots components and build a Inventorbots that will be the most powerful NFT of the CrofamLadies / CrofamSpace ecosystem  Owner of Mythic Inventorapes has guaranteed 10 x free mint of Background, Eyes, Mouth, Body, Head, Ears components  More utility coming soon...",
+      "description": "5% Mint Royalty for holders 10% Market Royalty Fee : 5% for Top Traders (Sweep Contest), 5% for project promotion  A lot of Swap contests to get Inventorbots components collections. Get free mint for each: Background, Eyes, Mouth, Body, Head, Ears  Get a 1:1 free mint of the Jewelry \uD83D\uDC8E Inventorbots components only for Inventorapes  For every 20 mints Inventorapes you will receive 1 x free mint next AI CrofamLadies collection  Top 15 holders will get Mythic (gif) Inventorapes  Top 100 holders receive an extra guaranteed drop of each 6 component  Take a mint at each stage and get or win Mythic Inventorapes -> check  Get the required Inventorbots components and build a Inventorbots that will be the most powerful NFT of the CrofamLadies / CrofamSpace ecosystem  Owner of Mythic Inventorapes has guaranteed 10 x free mint of Background, Eyes, Mouth, Body, Head, Ears components  More utility coming soon...",
+      "author": {
+        "name": "CroFam Ladies",
+        "website": "https://crofamladies.netlify.app/",
+        "twitter": "https://twitter.com/CrofamLadies",
+        "discord": "https://discord.gg/uaE6Sd26Qa",
+        "medium": "https://crofamladies.gitbook.io/crofam-ladies-wp/age-of-inventors/inventorapes",
+        "telegram": "https://twitter.com/InventorsAge"
+      },
+      "address": "0x5E1aeeE81D92B9Af08DFe8743ebb4e310e495e8D",
+      "maxMintPerTx": 7,
+      "maxMintPerAddress": 21,
+      "totalSupply": 8888,
+      "cost": "68",
+      "foundersOnly": false,
+      "start": 1676492952000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": false,
+      "redirect": "https://crofamladies.netlify.app/",
+      "images": {
+        "drop": "/img/drops/inventorapes/drop.webp",
+        "banner": "/img/collections/inventorapes/banner.webp",
+        "avatar": "/img/collections/inventorapes/avatar.webp",
+        "preview": "/img/collections/inventorapes/card.webp"
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
         "kyc": false,
         "escrow": false
-      },
-      "escrow": {
-        "milestones": [
-          "15% of funds raised for the project to be paid at the time of mint",
-          "33% of the remaining funds to be held in escrow until voting is implemented by the project",
-          "67% of remaining funds to be released when a battle system is implemented by the project"
-        ]
       }
     }
   ]

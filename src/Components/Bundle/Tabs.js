@@ -117,7 +117,7 @@ const Tabs = ({ nft }) => {
                     <Flex gap='15px'>
                       <Box w='72px'>
                         <AnyMedia
-                          image={specialImageTransform('0xe94ac1647bF99FE299B2aDcF53FcF57153C23Fe1', nft.image)}
+                          image={specialImageTransform(nft.address, nft.image)}
                           video={nft.video ?? nft.animation_url}
                           videoProps={{ height: 'auto', autoPlay: true }}
                           title={'title'}
