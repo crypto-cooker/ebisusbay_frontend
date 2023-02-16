@@ -26,6 +26,7 @@ export class CroCrowStaker implements StakerWithRewards {
     ];
 
     booster = new CroCrowBoosterStaker();
+    rewardsSymbol = 'CRO';
 
     async stake(payload: StakePayload, signer: ethers.Signer): Promise<ContractTransaction> {
         const contract = new Contract(this.address, this.abi, signer);
@@ -68,7 +69,8 @@ export class CroCrowStaker implements StakerWithRewards {
 
     async getRewards(userAddress: string) {
         const readContract = new Contract(this.address, this.abi, readProvider);
-        return await readContract.availableRewards(userAddress);
+        const rewards = await readContract.availableRewards(userAddress);
+        return ethers.utils.formatEther(rewards);
     }
 
     async claimRewards(userAddress: string, signer: ethers.Signer) {

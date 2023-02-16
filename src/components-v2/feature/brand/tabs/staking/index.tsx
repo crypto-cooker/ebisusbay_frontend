@@ -5,7 +5,7 @@ import {
     Grid,
     GridItem,
     HStack,
-    SimpleGrid,
+    SimpleGrid, Stack,
     Text,
     useBreakpointValue,
     VStack
@@ -13,7 +13,7 @@ import {
 import InfiniteScroll from "react-infinite-scroll-component";
 import {Spinner} from "react-bootstrap";
 import React, {useCallback, useEffect, useState} from "react";
-import {caseInsensitiveCompare} from "@src/utils";
+import {caseInsensitiveCompare, round} from "@src/utils";
 import {motion} from "framer-motion";
 import {useQuery} from "@tanstack/react-query";
 import {useAppSelector} from "@src/Store/hooks";
@@ -384,32 +384,34 @@ const RewardsComponent = ({staker}: {staker: StakerWithRewards}) => {
     }, [setExecutingClaim, user, staker]);
 
     return (
-        <HStack>
-            <Box fontWeight='bold'>Rewards:</Box>
-            {status === "loading" ? (
-                <div className="col-lg-12 text-center">
-                    <Spinner animation="border" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </Spinner>
-                </div>
-            ) : status === "error" ? (
-                <Box>N/A</Box>
-            ) : (
-                <>
-                    <Box>{Number(data)}</Box>
-                    {Number(data) > 0 && (
-                        <Button
-                            type="legacy"
-                            onClick={handleClaimRewards}
-                            executing={executingClaim}
-                            disabled={executingClaim}
-                        >
-                            Claim
-                        </Button>
-                    )}
-                </>
-            )}
-        </HStack>
+        <Box ps={{base:4, lg:0}} my={2} w='full'>
+            <Stack px={4} py={2} align='center' w='full' direction={{base: 'column', sm: 'row'}} className='card eb-nft__card'>
+                <Box fontWeight='bold'>Rewards:</Box>
+                {status === "loading" ? (
+                    <div className="col-lg-12 text-center">
+                        <Spinner animation="border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </Spinner>
+                    </div>
+                ) : status === "error" ? (
+                    <Box>N/A</Box>
+                ) : (
+                    <HStack>
+                        <Box>{ethers.utils.commify(round(data, 2))} {staker.rewardsSymbol}</Box>
+                        {Number(data) > 0 && (
+                            <Button
+                                type="legacy"
+                                onClick={handleClaimRewards}
+                                isLoading={executingClaim}
+                                disabled={executingClaim}
+                            >
+                                Claim
+                            </Button>
+                        )}
+                    </HStack>
+                )}
+            </Stack>
+        </Box>
     )
 }
 export default StakingTab;
