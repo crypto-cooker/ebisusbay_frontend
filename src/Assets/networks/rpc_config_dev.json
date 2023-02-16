@@ -18087,6 +18087,52 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "These Cronos Kids",
+      "slug": "these-cronos-kids",
+      "multiToken": false,
+      "address": "0xF02B3aB820af29Ebf612634e5c1f47150237BAe4",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "1,111 New Cronos Kids In Town",
+        "avatar": "/img/collections/these-cronos-kids/avatar.webp",
+        "banner": "/img/collections/these-cronos-kids/banner.webp",
+        "card": "/img/collections/these-cronos-kids/card.webp",
+        "website": "https://thesecronoskids.com/",
+        "twitter": "https://twitter.com/TheseCronosKids",
+        "discord": "https://discord.gg/jBVFXQssUw",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Bored Turtle Yacht Club",
+      "slug": "bored-turtle-yacht-club",
+      "multiToken": false,
+      "address": "0x330aCB27d6Fc53Ad374757f796b27fBe4C1d8aC0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Bored Turtle Yacht Club is the very first derivative profile picture (PFP)  Using the traits from the Bored Ape Yacht Club project  launched in the NFT space, consisting of 10,000 uniqueBored Turtles with BAYC traits, algorithmically-generated PFPs. Launch on jan, 2023 the year of the turtle. Slowly but surely we will be known WORLD WIDE.",
+        "avatar": "/img/collections/bored-turtle-yacht-club/avatar.webp",
+        "banner": "/img/collections/bored-turtle-yacht-club/banner.webp",
+        "card": "/img/collections/bored-turtle-yacht-club/card.webp",
+        "website": "https://memesbaynft.com/",
+        "twitter": "https://twitter.com/BoredTurtleYC",
+        "discord": "https://discord.gg/t59gQmXMfg",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
