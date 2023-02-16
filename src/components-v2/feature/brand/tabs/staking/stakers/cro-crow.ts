@@ -1,32 +1,40 @@
 import {BigNumber, Contract, ContractTransaction, ethers} from "ethers";
-import {StakePayload, Staker, UnstakePayload} from "@src/components-v2/feature/brand/tabs/staking/types";
+import {
+    StakePayload,
+    StakerWithRewards,
+    UnstakePayload
+} from "@src/components-v2/feature/brand/tabs/staking/types";
 import {getQuickWallet} from "@src/core/api/endpoints/wallets";
 import {appConfig} from "@src/Config";
 import {getNfts} from "@src/core/api/endpoints/nft";
+import CroCrowBoosterStaker from "@src/components-v2/feature/brand/tabs/staking/stakers/cro-crow-booster";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
-export class WorldOfCatsStaker implements Staker {
+export class CroCrowStaker implements StakerWithRewards {
     abi = [
-        'function stakeNfts(uint256[] tokenIds)',
-        'function unstakeNfts(uint256[] tokenIds)',
-        'function getNftsIdsbyAddress(address _add) public view returns (uint256[] memory)',
-        'function getUserstakedNftIds(address _user) public view returns (uint256[] memory)'
+        'function stake(uint256[] calldata ids) public',
+        'function unstake(uint256[] calldata ids) public',
+        'function crowsOfOwner(address _owner) public view returns (uint256[] memory)',
+        'function availableRewards(address _owner) public view returns (uint256)',
+        'function claimRewards()'
     ];
-    address = '0x70E4bFAB4d470b9c485634289e8eB27248dE12A3';
+    address = '0x777777777795f2A6A74CC442ff6048aE4710FA2C';
     collections = [
-        '0x4Ce0B9608006533dA056170f1efe8eEa771e0d19'
+        '0xe4ab77ed89528d90e6bcf0e1ac99c58da24e79d5'
     ];
 
-    async stake(payload: StakePayload, signer: any): Promise<ContractTransaction> {
+    booster = new CroCrowBoosterStaker();
+
+    async stake(payload: StakePayload, signer: ethers.Signer): Promise<ContractTransaction> {
         const contract = new Contract(this.address, this.abi, signer);
-        return await contract.stakeNfts([payload.nftId]);
+        return await contract.stake([payload.nftId]);
     }
 
-    async unstake(payload: UnstakePayload, signer: any): Promise<ContractTransaction> {
+    async unstake(payload: UnstakePayload, signer: ethers.Signer): Promise<ContractTransaction> {
         const contract = new Contract(this.address, this.abi, signer);
-        return await contract.unstakeNfts([payload.nftId]);
+        return await contract.unstake([payload.nftId]);
     }
 
     async getAll(userAddress: string, collectionAddress: string) {
@@ -38,11 +46,10 @@ export class WorldOfCatsStaker implements Staker {
 
     async getStaked(userAddress: string, collectionAddress: string) {
         const readContract = new Contract(this.address, this.abi, readProvider);
-        const stakedIds = await readContract.getUserstakedNftIds(userAddress);
+        const stakedIds = await readContract.crowsOfOwner(userAddress);
         if (stakedIds.length < 1) return [];
         
         const nfts = await getNfts(collectionAddress, stakedIds.map((id: BigNumber) => id.toNumber()));
-
         if (nfts.data) {
             return nfts.data.map((item: any) => ({...item.nft, isStaked: true}));
         } else {
@@ -58,6 +65,16 @@ export class WorldOfCatsStaker implements Staker {
 
         return quickWallet.data.map((item: any) => ({...item, isStaked: false}));
     }
+
+    async getRewards(userAddress: string) {
+        const readContract = new Contract(this.address, this.abi, readProvider);
+        return await readContract.availableRewards(userAddress);
+    }
+
+    async claimRewards(userAddress: string, signer: ethers.Signer) {
+        const contract = new Contract(this.address, this.abi, signer);
+        await contract.claimRewards();
+    }
 }
 
-export default WorldOfCatsStaker;
+export default CroCrowStaker;

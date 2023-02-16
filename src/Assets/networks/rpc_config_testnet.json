@@ -3078,7 +3078,7 @@
       "name": "Reckless Robots Legends",
       "slug": "reckless-robots-legends",
       "multiToken": false,
-      "address": "",
+      "address": "0x14dc317829f1bd1d76abedbc586a94c83fb0e3f1",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -7439,7 +7439,7 @@
         "medium": "https://medium.com/@recklessrobots",
         "telegram": "https://t.me/recklessrobotsnft"
       },
-      "address": "",
+      "address": "0x14dc317829f1bd1d76abedbc586a94c83fb0e3f1",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 200,
       "totalSupply": 3000,
@@ -7447,7 +7447,7 @@
       "memberCost": "200",
       "whitelistCost": "200",
       "foundersOnly": false,
-      "start": 1676079857000,
+      "start": 1676563545000,
       "end": null,
       "referral": false,
       "is1155": false,

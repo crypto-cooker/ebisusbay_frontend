@@ -88,6 +88,7 @@ const MobileFilter = ({staker, collections, isOpen, onClose, onCollectionFilter,
         <DrawerBody>
           <Filters
               collections={collections.filter((c: any) => staker?.collections.some((sc: string) => caseInsensitiveCompare(sc, c.address)))}
+              boosterCollections={!!staker?.booster ? collections.filter((c: any) => staker.booster!.collections.some((sc: string) => caseInsensitiveCompare(sc, c.address))) : []}
               initialCollection={staker.collections[0]}
               initialStatus={StakingStatusFilters.ALL}
               onChangeCollection={onCollectionFilter}
