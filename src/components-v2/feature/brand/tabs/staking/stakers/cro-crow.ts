@@ -3,6 +3,7 @@ import {StakePayload, Staker, UnstakePayload} from "@src/components-v2/feature/b
 import {getQuickWallet} from "@src/core/api/endpoints/wallets";
 import {appConfig} from "@src/Config";
 import {getNfts} from "@src/core/api/endpoints/nft";
+import CroCrowBoosterStaker from "@src/components-v2/feature/brand/tabs/staking/stakers/cro-crow-booster";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -17,6 +18,8 @@ export class CroCrowStaker implements Staker {
     collections = [
         '0xe4ab77ed89528d90e6bcf0e1ac99c58da24e79d5'
     ];
+
+    booster = new CroCrowBoosterStaker();
 
     async stake(payload: StakePayload, signer: any): Promise<ContractTransaction> {
         const contract = new Contract(this.address, this.abi, signer);

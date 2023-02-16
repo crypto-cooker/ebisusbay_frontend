@@ -1,4 +1,4 @@
-import {Center, Flex, Grid, GridItem, SimpleGrid, Text, useBreakpointValue, VStack} from "@chakra-ui/react";
+import {Box, Center, Flex, Grid, GridItem, SimpleGrid, Text, useBreakpointValue, VStack} from "@chakra-ui/react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {Spinner} from "react-bootstrap";
 import React, {useCallback, useEffect, useState} from "react";
@@ -6,7 +6,7 @@ import {caseInsensitiveCompare} from "@src/utils";
 import {motion} from "framer-motion";
 import {useQuery} from "@tanstack/react-query";
 import {useAppSelector} from "@src/Store/hooks";
-import {StakingStatusFilters} from "@src/components-v2/feature/brand/tabs/staking/types";
+import {BoosterSlot, StakingStatusFilters} from "@src/components-v2/feature/brand/tabs/staking/types";
 import StakingNftCard from "@src/components-v2/feature/brand/tabs/staking/staking-nft-card";
 import {useStaker} from "@src/components-v2/feature/brand/tabs/staking/useStaker";
 import Filters from "@src/components-v2/feature/brand/tabs/staking/filters";
@@ -15,6 +15,7 @@ import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
 import Taskbar from "@src/components-v2/feature/brand/tabs/staking/taskbar";
+import BoostSlotCard from "@src/components-v2/feature/brand/tabs/staking/boost-slot-card";
 
 const MotionGrid = motion(Grid);
 
@@ -28,7 +29,7 @@ type StakingTabProps = {
 
 const StakingTab = ({ brand, collections }: StakingTabProps) => {
     const dispatch = useDispatch();
-    const { staker, stakeMutation, unstakeMutation } = useStaker(brand.slug);
+    const { staker, stakeMutation, unstakeMutation, isBoosterCollection } = useStaker(brand.slug);
     const user = useAppSelector((state) => state.user);
     const useMobileViews = useBreakpointValue(
         {base: true, lg: false},
@@ -43,12 +44,17 @@ const StakingTab = ({ brand, collections }: StakingTabProps) => {
     const [filterType, setFilterType] = useState(StakingStatusFilters.ALL);
 
     const fetcher = async (address: string) => {
-        if (filterType === StakingStatusFilters.STAKED) {
-            return staker?.getStaked(user.address!, address);
-        } else if (filterType === StakingStatusFilters.UNSTAKED) {
-            return staker?.getUnstaked(user.address!, address);
+        let target = staker;
+        if (staker && isBoosterCollection(address)) {
+            target = staker.booster;
         }
-        return staker?.getAll(user.address!, address);
+
+        if (filterType === StakingStatusFilters.STAKED) {
+            return target?.getStaked(user.address!, address);
+        } else if (filterType === StakingStatusFilters.UNSTAKED) {
+            return target?.getUnstaked(user.address!, address);
+        }
+        return target?.getAll(user.address!, address);
     }
 
     const { data, error, status } = useQuery(
@@ -80,14 +86,6 @@ const StakingTab = ({ brand, collections }: StakingTabProps) => {
     const handleStatusFilter = useCallback((status: StakingStatusFilters) => {
         setFilterType(status);
     }, [filterType]);
-
-    const handleStake = useCallback(async (nftAddress: string, nftId: string) => {
-        await stakeMutation.mutateAsync({ nftAddress, nftId, statusFilter: filterType });
-    }, [staker, user.provider, filterType]);
-
-    const handleUnstake = useCallback(async (nftAddress: string, nftId: string) => {
-        await unstakeMutation.mutateAsync({ nftAddress, nftId, statusFilter: filterType });
-    }, [staker, user.provider, filterType]);
 
     useEffect(() => {
         setIsFilterOpen(!useMobileViews);
@@ -121,6 +119,7 @@ const StakingTab = ({ brand, collections }: StakingTabProps) => {
                         <GridItem overflow='hidden'>
                             <Filters
                                 collections={collections.filter((c: any) => staker?.collections.some((sc: string) => caseInsensitiveCompare(sc, c.address)))}
+                                boosterCollections={!!staker?.booster ? collections.filter((c: any) => staker.booster!.collections.some((sc: string) => caseInsensitiveCompare(sc, c.address))) : []}
                                 initialCollection={staker.collections[0]}
                                 initialStatus={StakingStatusFilters.ALL}
                                 onChangeCollection={handleCollectionFilter}
@@ -153,26 +152,20 @@ const StakingTab = ({ brand, collections }: StakingTabProps) => {
                                     <p>Error: {(error as Error).message}</p>
                                 ) : (
                                     <>
-                                        {data.length > 0 ? (
-                                            <SimpleGrid columns={{base: 1, sm: 2, md: 3, lg: 4, xl: 5, '2xl': 6}} gap={4}>
-                                                {data
-                                                    .filter((nft: any) => (filterType === StakingStatusFilters.ALL) ||
-                                                        (filterType === StakingStatusFilters.STAKED && nft.isStaked) ||
-                                                        (filterType === StakingStatusFilters.UNSTAKED && !nft.isStaked))
-                                                    .map((nft: any) => (
-                                                        <StakingNftCard
-                                                            key={`${nft.nftAddress}${nft.nftId}`}
-                                                            nft={nft}
-                                                            isStaked={nft.isStaked}
-                                                            onStake={(nftId) => handleStake(selectedAddress!, nftId)}
-                                                            onUnstake={(nftId) => handleUnstake(selectedAddress!, nftId)}
-                                                        />
-                                                    ))}
-                                            </SimpleGrid>
+                                        {isBoosterCollection(selectedAddress!) ? (
+                                            <BoostView
+                                                slug={brand.slug}
+                                                collectionAddress={selectedAddress!}
+                                                filterType={filterType}
+                                                nfts={data}
+                                            />
                                         ) : (
-                                            <Center>
-                                                No items found.
-                                            </Center>
+                                            <StakeView
+                                                slug={brand.slug}
+                                                collectionAddress={selectedAddress!}
+                                                filterType={filterType}
+                                                nfts={data}
+                                            />
                                         )}
                                     </>
                                 )}
@@ -192,6 +185,138 @@ const StakingTab = ({ brand, collections }: StakingTabProps) => {
                 </VStack>
             )}
         </>
+    )
+}
+
+type StakeViewProps = {
+    slug: string;
+    collectionAddress: string;
+    filterType: StakingStatusFilters;
+    nfts: any;
+}
+const StakeView = ({slug, collectionAddress, filterType, nfts}: StakeViewProps) => {
+    const user = useAppSelector((state) => state.user);
+    const { staker, stakeMutation, unstakeMutation } = useStaker(slug);
+
+    const handleStake = useCallback(async (nftAddress: string, nftId: string) => {
+        await stakeMutation.mutateAsync({ nftAddress, nftId, statusFilter: filterType });
+    }, [staker, user.provider, filterType]);
+
+    const handleUnstake = useCallback(async (nftAddress: string, nftId: string) => {
+        await unstakeMutation.mutateAsync({ nftAddress, nftId, statusFilter: filterType });
+    }, [staker, user.provider, filterType]);
+
+    return (
+        <>
+            {nfts.length > 0 ? (
+                <SimpleGrid columns={{base: 1, sm: 2, md: 3, lg: 4, xl: 5, '2xl': 6}} gap={4}>
+                    {nfts
+                        .filter((nft: any) => (filterType === StakingStatusFilters.ALL) ||
+                            (filterType === StakingStatusFilters.STAKED && nft.isStaked) ||
+                            (filterType === StakingStatusFilters.UNSTAKED && !nft.isStaked))
+                        .map((nft: any) => (
+                            <StakingNftCard
+                                key={`${nft.nftAddress}${nft.nftId}`}
+                                nft={nft}
+                                isStaked={nft.isStaked}
+                                onStake={(nftId) => handleStake(collectionAddress, nftId)}
+                                onUnstake={(nftId) => handleUnstake(collectionAddress, nftId)}
+                            />
+                        ))}
+                </SimpleGrid>
+            ) : (
+                <Center>
+                    No items found.
+                </Center>
+            )}
+        </>
+    )
+}
+
+type BoostViewProps = {
+    slug: string;
+    collectionAddress: string;
+    filterType: StakingStatusFilters;
+    nfts: any;
+}
+const BoostView = ({slug, collectionAddress, filterType, nfts}: BoostViewProps) => {
+    const user = useAppSelector((state) => state.user);
+    const { staker, boostMutation, unboostMutation } = useStaker(slug);
+    const [selectedSlot, setSelectedSlot] = useState<BoosterSlot>();
+    const [slots, setSlots] = useState<BoosterSlot[]>([]);
+
+    const handleStake = useCallback(async (nftAddress: string, nftId: string, slot?: BoosterSlot) => {
+        let emptySlot = slot;
+        if (emptySlot === undefined) {
+            emptySlot = slots.find((slot: any) => !slot.nft);
+            if (emptySlot) setSelectedSlot(emptySlot);
+        }
+        if (!emptySlot) throw 'Invalid slot';
+
+        await boostMutation.mutateAsync({ nftAddress, nftId, slot: emptySlot.slot, statusFilter: filterType });
+        await getSlots();
+    }, [staker, user.provider, filterType, slots]);
+
+    const handleUnstake = useCallback(async (nftAddress: string, nftId: string, slot: number) => {
+        await unboostMutation.mutateAsync({ nftAddress, nftId, slot, statusFilter: filterType });
+        await getSlots();
+    }, [staker, user.provider, filterType]);
+
+    const getSlots = async () => {
+        if (!staker?.booster || !user.address) return [];
+
+        const data = await staker.booster.getSlots(user.address);
+        setSlots(data);
+    }
+
+    useEffect(() => {
+        async function func() {
+            await getSlots();
+        }
+        func();
+    }, [staker?.booster, user.address]);
+
+    return (
+        <Box>
+            <Box mb={2}>
+                <Text fontSize='lg' fontWeight='bold'>Boosters</Text>
+                <SimpleGrid columns={{base: 1, sm: 2, md: 3, lg: 4, xl: 5, '2xl': 5}} gap={4}>
+                    {slots.map((slot: any) => (
+                        <>
+                            <BoostSlotCard
+                                key={`${slot.slot}`}
+                                slot={slot}
+                                onUnstake={(slot) => handleUnstake(slot.nft.nftAddress, slot.nft.nftId, slot.slot)}
+                                onSelect={(slot) => setSelectedSlot(slot)}
+                                isSelected={selectedSlot?.slot === slot.slot}
+                            />
+                        </>
+                    ))}
+                </SimpleGrid>
+            </Box>
+            <Text fontSize='lg' fontWeight='bold'>NFTs</Text>
+            {nfts.length > 0 ? (
+                <SimpleGrid columns={{base: 1, sm: 2, md: 3, lg: 4, xl: 5, '2xl': 6}} gap={4}>
+                    {nfts
+                        .filter((nft: any) => (filterType === StakingStatusFilters.ALL) ||
+                            (filterType === StakingStatusFilters.STAKED && nft.isStaked) ||
+                            (filterType === StakingStatusFilters.UNSTAKED && !nft.isStaked))
+                        .map((nft: any) => (
+                            <StakingNftCard
+                                key={`${nft.nftAddress}${nft.nftId}`}
+                                nft={nft}
+                                isStaked={nft.isStaked}
+                                onStake={(nftId) => handleStake(collectionAddress, nftId, selectedSlot)}
+                                onUnstake={(nftId) => handleUnstake(collectionAddress, nftId, selectedSlot?.slot ?? 0)}
+                            />
+                        ))}
+                </SimpleGrid>
+            ) : (
+                <Center>
+                    No items found.
+                </Center>
+            )}
+        </Box>
     )
 }
 
