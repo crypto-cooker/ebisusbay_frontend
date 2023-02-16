@@ -16,6 +16,9 @@ import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
 import Taskbar from "@src/components-v2/feature/brand/tabs/staking/taskbar";
 import BoostSlotCard from "@src/components-v2/feature/brand/tabs/staking/boost-slot-card";
+import {Contract, ethers} from "ethers";
+import {ERC721} from "@src/Contracts/Abis";
+import {JsonRpcProvider} from "@ethersproject/providers";
 
 const MotionGrid = motion(Grid);
 
@@ -29,7 +32,7 @@ type StakingTabProps = {
 
 const StakingTab = ({ brand, collections }: StakingTabProps) => {
     const dispatch = useDispatch();
-    const { staker, stakeMutation, unstakeMutation, isBoosterCollection } = useStaker(brand.slug);
+    const { staker, isBoosterCollection } = useStaker(brand.slug);
     const user = useAppSelector((state) => state.user);
     const useMobileViews = useBreakpointValue(
         {base: true, lg: false},
@@ -246,12 +249,21 @@ const BoostView = ({slug, collectionAddress, filterType, nfts}: BoostViewProps) 
     const [slots, setSlots] = useState<BoosterSlot[]>([]);
 
     const handleStake = useCallback(async (nftAddress: string, nftId: string, slot?: BoosterSlot) => {
+        if (!user.provider) throw 'Not connected';
+
         let emptySlot = slot;
         if (emptySlot === undefined) {
             emptySlot = slots.find((slot: any) => !slot.nft);
             if (emptySlot) setSelectedSlot(emptySlot);
         }
         if (!emptySlot) throw 'Invalid slot';
+
+        const nftContract = new Contract(nftAddress, ERC721, (user.provider! as JsonRpcProvider).getSigner() as ethers.Signer);
+        const transferEnabled = await nftContract.isApprovedForAll(user.address, staker?.booster?.address);
+        if (!transferEnabled) {
+            const tx = await nftContract.setApprovalForAll(staker?.booster?.address, true);
+            await tx.wait();
+        }
 
         await boostMutation.mutateAsync({ nftAddress, nftId, slot: emptySlot.slot, statusFilter: filterType });
         await getSlots();
@@ -274,13 +286,14 @@ const BoostView = ({slug, collectionAddress, filterType, nfts}: BoostViewProps) 
             await getSlots();
         }
         func();
+
     }, [staker?.booster, user.address]);
 
     return (
         <Box>
             <Box mb={2}>
                 <Text fontSize='lg' fontWeight='bold'>Boosters</Text>
-                <SimpleGrid columns={{base: 1, sm: 2, md: 3, lg: 4, xl: 5, '2xl': 5}} gap={4}>
+                <SimpleGrid columns={{base: 2, sm: 2, md: 3, lg: 4, xl: 5, '2xl': 5}} gap={4}>
                     {slots.map((slot: any) => (
                         <>
                             <BoostSlotCard

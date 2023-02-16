@@ -30,7 +30,12 @@ const BoostSlotCard = ({slot, onUnstake, onSelect, isSelected}: BoostSlotCardPro
       className="card eb-nft__card h-100 shadow"
       borderColor={isSelected ? useColorModeValue('#595d69', '#ddd') : 'auto'}
     >
-      <Box borderRadius={'15px'} transition="0.3s ease" height="100%">
+      <Box
+          borderRadius={'15px'}
+          transition="0.3s ease"
+          height="100%"
+          background={isSelected ? useColorModeValue('#FFFFFF', '#404040') : 'auto'}
+      >
         {slot.nft ? (
           <Flex direction="column" height="100%">
             <div className="card-img-container position-relative">

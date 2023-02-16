@@ -9,6 +9,7 @@ import {appConfig} from "@src/Config";
 import {getNfts} from "@src/core/api/endpoints/nft";
 import abi from "@src/Assets/abis/cro-crow-forest.json";
 import {caseInsensitiveCompare} from "@src/utils";
+import {ERC721} from "@src/Contracts/Abis";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -83,7 +84,11 @@ export class CroCrowBoosterStaker implements BoosterStaker {
         for (const [nftAddress, nftIds] of Object.entries(colMappedIds)) {
             if (nftAddress === ethers.constants.AddressZero) continue;
             const nfts = await getNfts(nftAddress, (nftIds as BigNumber[]).map((id: BigNumber) => id.toNumber()));
-            fullNfts.push(...nfts.data.map((item: any) => item.nft));
+            if (nfts.data) {
+                fullNfts.push(...nfts.data.map((item: any) => item.nft));
+            } else {
+                fullNfts.push(nfts.nft);
+            }
         }
 
         return stakedObjs.map((obj: any, index: number) => {
