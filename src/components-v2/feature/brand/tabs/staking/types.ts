@@ -16,6 +16,7 @@ export interface Staker {
 }
 
 export interface StakerWithRewards extends Staker {
+    rewardsSymbol: string;
     getRewards(userAddress: string): any;
     claimRewards(userAddress: string, signer: ethers.Signer): any;
 }
