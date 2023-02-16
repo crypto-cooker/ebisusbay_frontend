@@ -14,10 +14,7 @@ export const DefaultHead = () => {
         name="description"
         content="The first NFT marketplace on Cronos. Create, buy, sell, trade and enjoy the #CroFam NFT community."
       />
-      <meta
-        name="keywords"
-        content="Cronos, NFT, marketplace, first, community, nft marketplace, curated, launch, nft launch, crofam, collection, drop"
-      />
+      <meta name="keywords" content="NFT, NFTMarket, Cronos, CronosNFT, NFT Art, CroFam"/>
 
       {/* Open Graph / Facebook */}
       <meta property="og:site_name" content="Ebisu's Bay Marketplace" />
