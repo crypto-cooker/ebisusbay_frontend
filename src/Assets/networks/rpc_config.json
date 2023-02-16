@@ -18087,6 +18087,29 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "These Cronos Kids",
+      "slug": "these-cronos-kids",
+      "multiToken": false,
+      "address": "0xF02B3aB820af29Ebf612634e5c1f47150237BAe4",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "1,111 New Cronos Kids In Town",
+        "avatar": "/img/collections/these-cronos-kids/avatar.webp",
+        "banner": "/img/collections/these-cronos-kids/banner.webp",
+        "card": "/img/collections/these-cronos-kids/card.webp",
+        "website": "https://thesecronoskids.com/",
+        "twitter": "https://twitter.com/TheseCronosKids",
+        "discord": "https://discord.gg/jBVFXQssUw",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
