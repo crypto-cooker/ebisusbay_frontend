@@ -2,6 +2,12 @@ import React, {useEffect, useRef, useState } from 'react';
 import { resizeMap } from './mapFunctions.js'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles from './BattleBay.module.scss';
+import {
+  Button,
+  Flex,
+  Box,
+  Spacer,
+} from "@chakra-ui/react"
 
 const DefaultArea = ({onChange}) => {
 
@@ -17,7 +23,7 @@ const DefaultArea = ({onChange}) => {
   });
   useEffect(() => {
     // Update the document title using the browser API
-    document.title = `Page has loaded`;
+    // document.title = `Page has loaded`;
     // setUpLeaderboard();
     resizeMap();
   });
@@ -31,11 +37,17 @@ const DefaultArea = ({onChange}) => {
 
   return (
     <section>
-       {/* onLoad={() => setUpLeaderboard()}> */}
-    <div >
-    </div>
-      <p id="demo" className="basicText">Version 2</p>
-      <div className="mapBorder container">
+       
+      <div>
+      <Flex>
+        <Spacer/>
+        <Box p='3'>
+          <Button style={{ display: 'flex', marginTop: '16px' }} 
+            onClick={() => onChange('userPage')} variant='outline'size='lg'> 
+            User Profile</Button>
+        </Box>
+      </Flex>
+        {/* className="mapBorder container" */}
       <TransformWrapper
         onZoom={changeCanvasState}
         onPinching={changeCanvasState}
@@ -70,6 +82,9 @@ const DefaultArea = ({onChange}) => {
         <div className="map-Text"><h3 className="head">Alliance Hall</h3></div>
       </div>
 
+      
+
+      
     </section>
   )
 };

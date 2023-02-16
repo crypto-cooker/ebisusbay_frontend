@@ -8,8 +8,7 @@ import AllianceCenter from "@src/Components/BattleBay/Areas/AllianceCenter";
 import AnnouncementBoard from "@src/Components/BattleBay/Areas/AnnouncementBoard";
 import DefaultArea from "@src/Components/BattleBay/Areas/DefaultArea";
 import Academy from "@src/Components/BattleBay/Areas/Academy";
-// import "src/Components/BattleBay/Areas/BattleBay.module.scss";
-// import Leaderboard from "@src/Components/BattleBay/Areas/Leaderboard";
+import UserPage from "@src/Components/BattleBay/Areas/UserPage";
 
 const BattleBay = () => {
   const [currentPage, setCurrentPage] = useState();
@@ -25,7 +24,7 @@ const BattleBay = () => {
 
   //placeholder data until we get data from the backend
   const factions = [
-    { clanType: "collection", rank: 1, faction: "Mad Merkat", troops: 52, owned:true, addresses: ["0x000001", "0x000001"]},
+    { clanType: "collection", rank: 1, faction: "Mad Merkat", troops: 52, owned:true, addresses: ["0x000002", "0x000001"]},
     { clanType: "user", rank: 2, faction: "CroSkull", troops: 17, owned:false, addresses: ["0x000001", "0x000001"] },
     { clanType: "collection", rank: 3, faction: "Boomer Squad", troops: 5, owned:false, addresses: ["0x000001", "0x000001"] },
     { clanType: "collection", rank: 4, faction: "Flaming Phenix Club", troops: 3, owned:false, addresses: ["0x000001", "0x000001"] },
@@ -52,6 +51,8 @@ const BattleBay = () => {
         <Academy onBack={returnToPreviousPage} />
       ): currentPage === 'announcementBoard' ? (
         <AnnouncementBoard onBack={returnToPreviousPage} />
+      ): currentPage === 'userPage' ? (
+        <UserPage onBack={returnToPreviousPage} factions={factions}/>
       ): (
         <DefaultArea onChange={navigate} />
         // <BattleMap onChange={navigate} />

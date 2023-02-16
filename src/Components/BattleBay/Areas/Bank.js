@@ -7,7 +7,7 @@ const Bank = ({onBack}) => {
     <section className="gl-legacy container">
       <button class="btn" onClick={onBack}>Back to Village Map</button>
       <Heading className="title text-center">Bank</Heading>
-      <p className="text-center">The Bank provides Fortune Staking</p>
+      <p className="text-center">The Bank provides Fortune Staking <br/> Stake your Fortune to obtain Mitama</p>
     </section>
   )
 };
