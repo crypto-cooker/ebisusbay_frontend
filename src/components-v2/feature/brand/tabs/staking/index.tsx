@@ -61,7 +61,7 @@ const StakingTab = ({ brand, collections }: StakingTabProps) => {
     }
 
     const { data, error, status } = useQuery(
-        [queryKey, user.address, selectedAddress, filterType],
+        [queryKey, user.address, selectedAddress?.toLowerCase(), filterType],
         () => fetcher(selectedAddress!),
         {
             refetchOnWindowFocus: false,
@@ -295,15 +295,13 @@ const BoostView = ({slug, collectionAddress, filterType, nfts}: BoostViewProps) 
                 <Text fontSize='lg' fontWeight='bold'>Boosters</Text>
                 <SimpleGrid columns={{base: 2, sm: 2, md: 3, lg: 4, xl: 5, '2xl': 5}} gap={4}>
                     {slots.map((slot: any) => (
-                        <>
-                            <BoostSlotCard
-                                key={`${slot.slot}`}
-                                slot={slot}
-                                onUnstake={(slot) => handleUnstake(slot.nft.nftAddress, slot.nft.nftId, slot.slot)}
-                                onSelect={(slot) => setSelectedSlot(slot)}
-                                isSelected={selectedSlot?.slot === slot.slot}
-                            />
-                        </>
+                        <BoostSlotCard
+                            key={`${slot.slot}`}
+                            slot={slot}
+                            onUnstake={(slot) => handleUnstake(slot.nft.nftAddress, slot.nft.nftId, slot.slot)}
+                            onSelect={(slot) => setSelectedSlot(slot)}
+                            isSelected={selectedSlot?.slot === slot.slot}
+                        />
                     ))}
                 </SimpleGrid>
             </Box>

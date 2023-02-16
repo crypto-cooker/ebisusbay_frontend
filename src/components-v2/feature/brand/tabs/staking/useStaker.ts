@@ -70,7 +70,7 @@ export const useStaker = (slug: string) => {
             return { nftAddress, nftId, statusFilter };
         },
         onSuccess: data => {
-            queryClient.setQueryData([queryKey, user.address, data.nftAddress, data.statusFilter], (old: any) => {
+            queryClient.setQueryData([queryKey, user.address, data.nftAddress.toLowerCase(), data.statusFilter], (old: any) => {
                 const index = old.findIndex((nft: any) => nft.nftId === data.nftId);
                 old[index].isStaked = true;
                 return old;
@@ -90,7 +90,7 @@ export const useStaker = (slug: string) => {
             return { nftAddress, nftId, statusFilter };
         },
         onSuccess: data => {
-            queryClient.setQueryData([queryKey, user.address, data.nftAddress, data.statusFilter], (old: any) => {
+            queryClient.setQueryData([queryKey, user.address, data.nftAddress.toLowerCase(), data.statusFilter], (old: any) => {
                 const index = old.findIndex((nft: any) => nft.nftId === data.nftId);
                 old[index].isStaked = false;
                 return old;
