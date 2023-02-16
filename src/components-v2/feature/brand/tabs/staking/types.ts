@@ -15,6 +15,11 @@ export interface Staker {
     getUnstaked(userAddress: string, collectionAddress: string): any;
 }
 
+export interface StakerWithRewards extends Staker {
+    getRewards(userAddress: string): any;
+    claimRewards(userAddress: string, signer: ethers.Signer): any;
+}
+
 export interface BoosterStaker extends Staker {
     slots: number;
 

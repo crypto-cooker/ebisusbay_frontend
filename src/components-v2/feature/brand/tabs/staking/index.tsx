@@ -1,4 +1,15 @@
-import {Box, Center, Flex, Grid, GridItem, SimpleGrid, Text, useBreakpointValue, VStack} from "@chakra-ui/react";
+import {
+    Box,
+    Center,
+    Flex,
+    Grid,
+    GridItem,
+    HStack,
+    SimpleGrid,
+    Text,
+    useBreakpointValue,
+    VStack
+} from "@chakra-ui/react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {Spinner} from "react-bootstrap";
 import React, {useCallback, useEffect, useState} from "react";
@@ -6,7 +17,11 @@ import {caseInsensitiveCompare} from "@src/utils";
 import {motion} from "framer-motion";
 import {useQuery} from "@tanstack/react-query";
 import {useAppSelector} from "@src/Store/hooks";
-import {BoosterSlot, StakingStatusFilters} from "@src/components-v2/feature/brand/tabs/staking/types";
+import {
+    BoosterSlot,
+    StakerWithRewards,
+    StakingStatusFilters
+} from "@src/components-v2/feature/brand/tabs/staking/types";
 import StakingNftCard from "@src/components-v2/feature/brand/tabs/staking/staking-nft-card";
 import {useStaker} from "@src/components-v2/feature/brand/tabs/staking/useStaker";
 import Filters from "@src/components-v2/feature/brand/tabs/staking/filters";
@@ -90,6 +105,10 @@ const StakingTab = ({ brand, collections }: StakingTabProps) => {
         setFilterType(status);
     }, [filterType]);
 
+    function supportsRewards() {
+        return staker && 'getRewards' in staker;
+    }
+
     useEffect(() => {
         setIsFilterOpen(!useMobileViews);
     }, [useMobileViews]);
@@ -112,6 +131,9 @@ const StakingTab = ({ brand, collections }: StakingTabProps) => {
                         onCollectionFilter={handleCollectionFilter}
                         onStatusFilter={handleStatusFilter}
                     />
+                    {supportsRewards() && (
+                        <RewardsComponent staker={staker as StakerWithRewards} />
+                    )}
                     <MotionGrid
                         animate={isFilterOpen && !useMobileViews ? 'expand' : 'collapse'}
                         variants={variants}
@@ -331,4 +353,63 @@ const BoostView = ({slug, collectionAddress, filterType, nfts}: BoostViewProps) 
     )
 }
 
+const RewardsComponent = ({staker}: {staker: StakerWithRewards}) => {
+    const user = useAppSelector((state) => state.user);
+    const [executingClaim, setExecutingClaim] = useState(false);
+
+    const fetcher = async () => {
+        if (!user.address) return;
+        const rewards = await staker.getRewards(user.address);
+        return rewards;
+    }
+
+    const { data, error, status, refetch } = useQuery(
+        ['StakingRewards', user.address, staker.address.toLowerCase()],
+        fetcher,
+        {
+            refetchOnWindowFocus: false,
+            enabled: !!user.address && !!staker
+        }
+    );
+
+    const handleClaimRewards = useCallback(async () => {
+        try {
+            setExecutingClaim(true);
+            if (!user.address || !user.provider) throw 'Not connected';
+            await staker.claimRewards(user.address, (user.provider! as JsonRpcProvider).getSigner() as ethers.Signer);
+            await refetch();
+        } finally {
+            setExecutingClaim(false)
+        }
+    }, [setExecutingClaim, user, staker]);
+
+    return (
+        <HStack>
+            <Box fontWeight='bold'>Rewards:</Box>
+            {status === "loading" ? (
+                <div className="col-lg-12 text-center">
+                    <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                </div>
+            ) : status === "error" ? (
+                <Box>N/A</Box>
+            ) : (
+                <>
+                    <Box>{Number(data)}</Box>
+                    {Number(data) > 0 && (
+                        <Button
+                            type="legacy"
+                            onClick={handleClaimRewards}
+                            executing={executingClaim}
+                            disabled={executingClaim}
+                        >
+                            Claim
+                        </Button>
+                    )}
+                </>
+            )}
+        </HStack>
+    )
+}
 export default StakingTab;

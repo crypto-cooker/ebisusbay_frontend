@@ -56,7 +56,7 @@ const Filters = ({collections, boosterCollections, initialCollection, initialSta
                       <Radio key={collection.address} value={collection.address}>{collection.name}</Radio>
                   ))}
                 </Flex>
-                {boosterCollections && (
+                {boosterCollections && boosterCollections.length > 1 && (
                     <>
                       <Heading as='h2' size='sm'>Boosters</Heading>
                       <Flex direction='column'>
