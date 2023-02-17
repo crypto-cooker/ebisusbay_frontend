@@ -224,6 +224,13 @@ const StakeView = ({slug, collectionAddress, filterType, nfts}: StakeViewProps) 
     const { staker, stakeMutation, unstakeMutation } = useStaker(slug);
 
     const handleStake = useCallback(async (nftAddress: string, nftId: string) => {
+        const nftContract = new Contract(nftAddress, ERC721, (user.provider! as JsonRpcProvider).getSigner() as ethers.Signer);
+        const transferEnabled = await nftContract.isApprovedForAll(user.address, staker?.address);
+        if (!transferEnabled) {
+            const tx = await nftContract.setApprovalForAll(staker?.address, true);
+            await tx.wait();
+        }
+
         await stakeMutation.mutateAsync({ nftAddress, nftId, statusFilter: filterType });
     }, [staker, user.provider, filterType]);
 
@@ -376,7 +383,8 @@ const RewardsComponent = ({staker}: {staker: StakerWithRewards}) => {
         try {
             setExecutingClaim(true);
             if (!user.address || !user.provider) throw 'Not connected';
-            await staker.claimRewards(user.address, (user.provider! as JsonRpcProvider).getSigner() as ethers.Signer);
+            const tx = await staker.claimRewards(user.address, (user.provider! as JsonRpcProvider).getSigner() as ethers.Signer);
+            await tx.wait();
             await refetch();
         } finally {
             setExecutingClaim(false)
@@ -386,7 +394,7 @@ const RewardsComponent = ({staker}: {staker: StakerWithRewards}) => {
     return (
         <Box ps={{base:4, lg:0}} my={2} w='full'>
             <Stack px={4} py={2} align='center' w='full' direction={{base: 'column', sm: 'row'}} className='card eb-nft__card'>
-                <Box fontWeight='bold'>Rewards:</Box>
+                <Box fontWeight='bold'>Pending Rewards:</Box>
                 {status === "loading" ? (
                     <div className="col-lg-12 text-center">
                         <Spinner animation="border" role="status">

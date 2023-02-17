@@ -1,5 +1,10 @@
 import {BigNumber, Contract, ContractTransaction, ethers} from "ethers";
-import {StakePayload, Staker, UnstakePayload} from "@src/components-v2/feature/brand/tabs/staking/types";
+import {
+    BoosterStaker,
+    StakePayload,
+    StakerWithRewards,
+    UnstakePayload
+} from "@src/components-v2/feature/brand/tabs/staking/types";
 import {getQuickWallet} from "@src/core/api/endpoints/wallets";
 import {appConfig} from "@src/Config";
 import {getNfts} from "@src/core/api/endpoints/nft";
@@ -7,12 +12,16 @@ import {getNfts} from "@src/core/api/endpoints/nft";
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
-export class WorldOfCatsStaker implements Staker {
+export class WorldOfCatsStaker implements StakerWithRewards {
+    booster?: BoosterStaker | undefined;
+    rewardsSymbol = 'FELINE';
     abi = [
         'function stakeNfts(uint256[] tokenIds)',
         'function unstakeNfts(uint256[] tokenIds)',
         'function getNftsIdsbyAddress(address _add) public view returns (uint256[] memory)',
-        'function getUserstakedNftIds(address _user) public view returns (uint256[] memory)'
+        'function getUserstakedNftIds(address _user) public view returns (uint256[] memory)',
+        'function viewRewards(address account) public view returns (uint256)',
+        'function claimRewards()'
     ];
     address = '0x70E4bFAB4d470b9c485634289e8eB27248dE12A3';
     collections = [
@@ -57,6 +66,16 @@ export class WorldOfCatsStaker implements Staker {
         if (!quickWallet.data) return [];
 
         return quickWallet.data.map((item: any) => ({...item, isStaked: false}));
+    }
+
+    async getRewards(userAddress: string) {
+        const readContract = new Contract(this.address, this.abi, readProvider);
+        const rewards = await readContract.viewRewards(userAddress);
+        return ethers.utils.formatEther(rewards);
+    }
+    async claimRewards(userAddress: string, signer: ethers.Signer): Promise<ContractTransaction> {
+        const contract = new Contract(this.address, this.abi, signer);
+        return await contract.claimRewards();
     }
 }
 

@@ -73,9 +73,9 @@ export class CroCrowStaker implements StakerWithRewards {
         return ethers.utils.formatEther(rewards);
     }
 
-    async claimRewards(userAddress: string, signer: ethers.Signer) {
+    async claimRewards(userAddress: string, signer: ethers.Signer): Promise<ContractTransaction> {
         const contract = new Contract(this.address, this.abi, signer);
-        await contract.claimRewards();
+        return await contract.claimRewards();
     }
 }
 
