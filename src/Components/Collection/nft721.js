@@ -15,7 +15,6 @@ import MetaMaskOnboarding from '@metamask/onboarding';
 import {Badge, Spinner} from 'react-bootstrap';
 
 import ProfilePreview from '../components/ProfilePreview';
-import Footer from '../components/Footer';
 import LayeredIcon from '../components/LayeredIcon';
 import {AnyMedia} from '../components/AnyMedia';
 import ProfileImage from '../components/ProfileImage'
@@ -1016,7 +1015,6 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
           nftAddress={address}
         />
       )}
-      <Footer />
     </div>
   );
 };

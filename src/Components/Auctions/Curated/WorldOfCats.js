@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Footer from '../../components/Footer';
 import CuratedAuctionCollection from "./CuratedAuctionCollection";
 import PageHead from "../../Head/PageHead";
 import {Heading} from "@chakra-ui/react";
@@ -45,7 +44,6 @@ const WorldOfCatsAuction = () => {
           </div>
         </div>
       </section>
-      <Footer />
     </>
   );
 };

@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import ListingCollection from '../src/Components/components/ListingCollection';
-import Footer from '../src/Components/components/Footer';
 import TopFilterBar from '../src/Components/components/TopFilterBar';
 import { sortOptions } from '../src/Components/components/constants/sort-options';
 import { marketPlaceCollectionFilterOptions } from '../src/Components/components/constants/filter-options';
@@ -168,8 +167,6 @@ const Marketplace = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

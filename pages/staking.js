@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 
-import Footer from '../src/Components/components/Footer';
 import LegacyStaking from '@src/Components/Staking/LegacyStaking';
 import withAuth from '../src/Components/withAuth';
 import {Box, Container, Grid, GridItem, Heading, Text, useBreakpointValue, useColorModeValue} from "@chakra-ui/react";
@@ -96,7 +95,6 @@ const MyStaking = () => {
               </div>
             </div>
           </section>
-          <Footer />
         </GridItem>
         <GridItem borderLeft={useMobileCartView ? 'none' : '0.5px solid'} borderLeftColor={batchListingBorderColor}>
           <BatchStakingDrawer

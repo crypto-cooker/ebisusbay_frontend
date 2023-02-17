@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 
 import DropsCarousel from '../../src/Components/components/DropsCarousel';
 import CurrentDrops from '../../src/Components/components/CurrentDrops';
-import Footer from '../../src/Components/components/Footer';
 import UpcomingDrops from '../../src/Components/Drops/UpcomingDrops';
 import PastDrops from '../../src/Components/Drops/PastDrops';
 import { getTheme } from '../../src/Theme/theme';
@@ -90,8 +89,6 @@ const Drops = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

@@ -6,7 +6,6 @@ import { keyframes } from '@emotion/react';
 import dynamic from 'next/dynamic';
 import { faLightbulb, faTags } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Footer from '../src/Components/components/Footer';
 import {useRouter} from "next/router";
 import PageHead from "../src/Components/Head/PageHead";
 import {Heading} from "@chakra-ui/react";
@@ -197,7 +196,6 @@ const Application = ({type}) => {
           </div>
         </div>
       </section>
-      <Footer />
     </div>
   );
 };

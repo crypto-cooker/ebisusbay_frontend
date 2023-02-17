@@ -1,6 +1,5 @@
 import brands from "@src/core/data/brands.json";
 import {Box, SimpleGrid, Text, useMediaQuery, VStack, Wrap, WrapItem} from "@chakra-ui/react";
-import Footer from "@src/Components/components/Footer";
 import {useRouter} from "next/router";
 import PageHead from "@src/Components/Head/PageHead";
 import {hostedImage, ImageKitService} from "@src/helpers/image";
@@ -81,7 +80,6 @@ const Brands = ({ssrBrands}) => {
           ))}
         </SimpleGrid>
       </Box>
-      <Footer />
     </>
   )
 }

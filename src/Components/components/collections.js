@@ -6,7 +6,6 @@ import { ethers } from 'ethers';
 import Blockies from 'react-blockies';
 import { Form, Spinner } from 'react-bootstrap';
 
-import Footer from '@src/Components/components/Footer';
 import { getAllCollections } from '@src/GlobalState/collectionsSlice';
 import { debounce, siPrefixedNumber } from '@src/utils';
 import {CdnImage} from "@src/Components/components/CdnImage";
@@ -335,8 +334,6 @@ const Collections = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

@@ -11,7 +11,6 @@ import {createSuccessfulTransactionToastContent} from "@src/utils";
 import {ERC721} from "@src/Contracts/Abis";
 import {appConfig} from "@src/Config";
 import PageHead from "@src/Components/Head/PageHead";
-import Footer from "@src/Components/components/Footer";
 import {
   Heading,
   Modal,
@@ -443,7 +442,6 @@ const Rugsurance = () => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <Footer />
     </div>
   );
 };

@@ -1,16 +1,14 @@
 import React, {memo} from 'react';
-import {useSelector} from 'react-redux';
 import {faDiscord, faInstagram, faLinkedin, faMedium, faTelegram, faTwitter} from '@fortawesome/free-brands-svg-icons';
 import {faSquare} from '@fortawesome/free-solid-svg-icons';
-import LayeredIcon from './LayeredIcon';
 import {hostedImage} from "@src/helpers/image";
 import Link from "next/link";
 import {Box, Center, Flex, Heading, Image, ListItem, SimpleGrid, UnorderedList} from "@chakra-ui/react";
+import {useAppSelector} from "@src/Store/hooks";
+import LayeredIcon from "@src/Components/components/LayeredIcon";
 
 const Footer = () => {
-  const userTheme = useSelector((state) => {
-    return state.user.theme;
-  });
+  const userTheme = useAppSelector((state) => state.user.theme);
 
   return (
     <Box as='footer' maxW='2560px' className="footer-light mt-4">

@@ -141,7 +141,7 @@ export class ImageKitService {
  * @param useThumbnail
  * @returns {string}
  */
-export const hostedImage = (imgPath, useThumbnail) => {
+export const hostedImage = (imgPath, useThumbnail = false) => {
   if (isLocalEnv()) return imgPath;
   if (!imgPath) return imgPath;
 

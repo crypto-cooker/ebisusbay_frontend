@@ -7,7 +7,6 @@ import {getAllLeaderBoard} from '@src/GlobalState/leaderBoardSlice';
 import {shortAddress} from '@src/utils';
 import styles from '../src/Components/Leaderboard/styles.module.scss';
 import PageHead from "../src/Components/Head/PageHead";
-import Footer from "../src/Components/components/Footer";
 import {Badge} from "react-bootstrap";
 import {Navigation, Pagination} from "swiper";
 import {Swiper, SwiperSlide} from "swiper/react";
@@ -202,8 +201,6 @@ export default function Stats({pageHead, initialTimeframe}) {
       {/*    </ModalBody>*/}
       {/*  </ModalContent>*/}
       {/*</Modal>*/}
-
-      <Footer />
     </div>
   );
 }

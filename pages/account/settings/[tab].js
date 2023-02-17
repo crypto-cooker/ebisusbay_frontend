@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import TopTabs from '../../../src/Components/Account/Settings/TopTabs';
 import EditProfile from '../../../src/Components/Account/Settings/Profile';
-import Footer from "@src/Components/components/Footer";
 import Notification from "@src/Components/Account/Settings/Notification";
 import {Heading} from "@chakra-ui/react";
 
@@ -36,7 +35,6 @@ export default function Account() {
           </>
         )}
       </section>
-      <Footer />
     </div>
   );
 }

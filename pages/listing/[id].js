@@ -15,7 +15,6 @@ import ReactPlayer from 'react-player';
 
 import ProfilePreview from '../../src/Components/components/ProfilePreview';
 import LayeredIcon from '../../src/Components/components/LayeredIcon';
-import Footer from '../../src/Components/components/Footer';
 import { getListingDetails, listingUpdated } from '@src/GlobalState/listingSlice';
 import { connectAccount, chainConnect } from '@src/GlobalState/User';
 import {
@@ -596,7 +595,6 @@ const Listing = () => {
         </section>
       )}
 
-      <Footer />
       {openCheckout && user && (
         <div className="checkout">
           <div className="maincheckout">

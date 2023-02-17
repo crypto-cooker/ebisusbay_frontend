@@ -4,7 +4,6 @@ import { createGlobalStyle, default as styled } from 'styled-components';
 import { keyframes } from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
 
-import Footer from '../src/Components/components/Footer';
 import { theme } from '../src/Theme/theme';
 import {hostedImage} from "../src/helpers/image";
 
@@ -156,7 +155,6 @@ const Custom500 = () => {
         {!mobile && <div className="container">{JumbotronData()}</div>}
       </Jumbotron.Host>
       {mobile && JumbotronData()}
-      <Footer />
     </div>
   );
 };

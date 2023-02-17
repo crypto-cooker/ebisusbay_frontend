@@ -1,4 +1,3 @@
-import Footer from '../../src/Components/components/Footer';
 import { Heading, Text, Box, Image, Center, Link } from "@chakra-ui/react";
 import PageHead from '@src/Components/Head/PageHead';
 import {hostedImage, ImageKitService} from "@src/helpers/image";
@@ -256,7 +255,6 @@ const RyoshiTales = () => {
           </section>
 
         </section>
-        <Footer />
       </div>
     </>
   )

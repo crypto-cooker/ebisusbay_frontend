@@ -1,5 +1,4 @@
 import React from 'react';
-import Footer from '../../components/Footer';
 import PageHead from "../../Head/PageHead";
 import {Box, Container, Heading} from "@chakra-ui/react";
 import Image from "next/image";
@@ -122,7 +121,6 @@ const CronosMutantApesAuction = () => {
           </div>
         </div>
       </section>
-      <Footer />
     </>
   );
 };
