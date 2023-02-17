@@ -18133,6 +18133,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Hidden Avatars",
+      "slug": "hidden-avatars",
+      "multiToken": false,
+      "address": "0x28Fc9DaCa33E0a3Ada666064F54B400E63596c6C",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "4444 Free-to-Mint PFPs brought to you by the Hidden Fish DAO, the #1 DAO on Cronos.",
+        "avatar": "/img/collections/hidden-avatars/avatar.webp",
+        "card": "/img/collections/hidden-avatars/card.webp",
+        "banner": "/img/collections/hidden-avatars/banner.webp",
+        "website": "https://hidethefish.com/",
+        "twitter": "https://twitter.com/HiddenFishDAO",
+        "medium": "https://blog.hidethefish.com",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": "ebisu",
+        "verified": true
+      }
     }
   ],
   "drops": [
