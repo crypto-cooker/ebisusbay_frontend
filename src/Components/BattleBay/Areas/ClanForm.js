@@ -31,8 +31,8 @@ import { getTheme } from "@src/Theme/theme";
 import { add } from "lodash";
 import { faRightLeft } from "@fortawesome/free-solid-svg-icons";
 
-const ClanForm = ({ isOpen, onClose, factions=[]}) => {
-
+const ClanForm = ({ isOpen, onClose, clans=[], clanToModify}) => {
+  // console.log("clanToModify: "+clanToModify.faction)
   //addresses
   const addressInput = useRef(null);
   const [addresses, setAddresses] = useState([])
@@ -41,9 +41,14 @@ const ClanForm = ({ isOpen, onClose, factions=[]}) => {
 
   //clan name
   const clanNameInput = useRef(null);
-  const [clanName, setClanName] = useState('')
-  const handleClanChange = (event) => setClanName(event.target.value)
-  const [clanType, setClanType] = useState('collectionClan')
+  const arrayColumn = (arr, n) => arr.map(x => x[n]);
+  const clanToModifyIndex = clans.findIndex(clan => clan === clanToModify)
+  const clanNames = arrayColumn(clans, 'faction').filter(clan => clan !== clans[clanToModifyIndex].faction)
+  const [clanName, setClanName] = useState(clans[clanToModifyIndex].faction)
+
+  
+  const handleClanNameChange = (event) => setClanName(event.target.value)
+  const [clanType, setClanType] = useState(clans[clanToModifyIndex].clanType)
 
   //alerts
   const [showAlert, setShowAlert] = useState(false)
@@ -53,9 +58,15 @@ const ClanForm = ({ isOpen, onClose, factions=[]}) => {
   const [isLoading, setIsLoading] = useState(false);
   const user = useSelector((state) => state.user);
 
-  const CreateClan = () => {
+  const SaveChanges = () => {
+
     if(clanNameInput.current === undefined) {
       setAlertMessage("You must enter a clan name")
+      setShowAlert(true)
+      return;
+    }
+    if(clanNames.includes(clanName)) {
+      setAlertMessage("Your Clan Name is already taken")
       setShowAlert(true)
       return;
     }
@@ -102,13 +113,13 @@ const ClanForm = ({ isOpen, onClose, factions=[]}) => {
     setValue('')
   }
   function collectionClan() {
-    setClanType('collectionClan')
+    setClanType('collection')
   }
   function userClan() {
     setClanType('userClan')
   }
   function getMaxAddresses() {
-    return clanType === 'collectionClan' ? 3 : 15
+    return clanType === 'collection' ? 3 : 15
   }
 
   return (
@@ -117,16 +128,15 @@ const ClanForm = ({ isOpen, onClose, factions=[]}) => {
       <ModalContent>
         {!isLoading ? (
           <>
-          <ModalHeader className="text-center">Register a Clan</ModalHeader>
+          <ModalHeader className="text-center">Edit Clan</ModalHeader>
             <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
             <ModalBody>
-   
               <FormControl isRequired>
                 <FormLabel>Clan name:</FormLabel>
                 <Input
                   ref={clanNameInput}
                   value={clanName}
-                  onChange={handleClanChange}
+                  onChange={handleClanNameChange}
                   placeholder=''
                   size='sm'/>
               </FormControl>
@@ -154,12 +164,6 @@ const ClanForm = ({ isOpen, onClose, factions=[]}) => {
                   placeholder=''
                   size='sm'
                 />
-                {showAlert && (
-                <Alert status='error'>
-                  <AlertIcon />
-                  <AlertTitle>{alertMessage}</AlertTitle>
-                </Alert>
-                )}
 
               <Stack direction='row' spacing={4} style={{ display: 'flex', marginTop: '16px' }}>
                 <Button colorScheme='blue'variant='outline' onClick={AddAddress} className="flex-fill"> Add address </Button>
@@ -168,12 +172,21 @@ const ClanForm = ({ isOpen, onClose, factions=[]}) => {
 
               
               <ul id="addresseslist"></ul>
-              <Flex >
-              <Spacer />
+              <Flex justify={"center"} align={"center"} style={{ marginTop: '16px' }}>
+                <Box p='3'>
+                {showAlert && (
+                <Alert status='error'>
+                  <AlertIcon />
+                  <AlertTitle>{alertMessage}</AlertTitle>
+                </Alert>
+                )}
+                </Box>
+              </Flex>
+              <Flex justifyContent={"center"} align={"center"}>
+                
                 <Box p='3'>
               <Button style={{ display: 'flex', marginTop: '16px' }} 
-                onClick={CreateClan} variant='outline'size='lg'> 
-                Register  <br/> Cost: 1000 Fortune </Button>
+                onClick={SaveChanges} variant='outline'size='lg'>SaveChanges</Button>
                 </Box>
               </Flex>
             </ModalBody>

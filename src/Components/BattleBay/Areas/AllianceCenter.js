@@ -1,3 +1,4 @@
+import { useState} from "react";
 import {
   Heading,
   useDisclosure,
@@ -16,29 +17,25 @@ import {
 
 } from '@chakra-ui/react';
 import ClanForm from './ClanForm';
-import DelegateForm from './DelegateForm';
-const AllianceCenter = ({onBack, factions=[]}) => {
+import SetTheClanName from './ClanForm';
+import ClanRegistrationForm from './ClanRegistrationForm';
+import { logEvent } from "firebase/analytics";
 
-  const playerFactions = factions.filter(faction => faction.owned)
+const AllianceCenter = ({onBack, factions: clans=[]}) => {
   const { isOpen: isOpenClan, onOpen: onOpenClan, onClose: onCloseClan } = useDisclosure();
-  const { isOpen, onOpen: onOpenDelegate, onClose } = useDisclosure();
+  const { isOpen: isOpenRegister, onOpen: onOpenRegister, onClose: onCloseRegister } = useDisclosure();
 
-
-    
-  const arrayColumn = (arr, n) => arr.map(x => x[n]);
-  const factionNames = arrayColumn(factions, 'faction')
-  const EditClan = (faction) => {
-    console.log("Edit Clan", faction)
-    setSelectedFaction(faction)
-    onOpenClan();
-  }
+  const playerClans = clans.filter(clan => clan.owned);
+  // console.log(playerClans)
+  const [selectedClan, setSelectedClan] = useState(playerClans[0]);
+  const GetRegistrationColor = (registered) => {if(registered) {return 'green'} else {return 'red'}}
   
   return (
     <section className="gl-legacy container">
-      <ClanForm isOpen={isOpenClan} onClose={onCloseClan} factions={factionNames}/>
-      <DelegateForm isOpen={isOpen} onClose={onClose} factions={factionNames}/>
+      <ClanForm isOpen={isOpenClan} onClose={onCloseClan} clans={clans} clanToModify={selectedClan}/>
+      <ClanRegistrationForm isOpen={isOpenRegister} onClose={onCloseRegister} clans={clans}/>
       
-      <button class="btn" onClick={onBack}>Back to Village Map</button>
+      <button onClick={onBack}>Back to Village Map</button>
       <Box >
         <Center>
          <Image src="/img/battle-bay/allianceCenter.png" alt="Alliance Center" />
@@ -56,6 +53,7 @@ const AllianceCenter = ({onBack, factions=[]}) => {
           <Thead>
             <Tr>
               <Th textAlign='center'>Clan Name</Th>
+              <Th textAlign='center'>Registered this Season</Th>
               <Th textAlign='center'>Clan Type</Th>
               <Th textAlign='center'>Troops</Th>
               <Th textAlign='center'>Addresses</Th>
@@ -63,16 +61,21 @@ const AllianceCenter = ({onBack, factions=[]}) => {
             </Tr>
           </Thead>
           <Tbody>
-            {playerFactions.map((faction, index) => (
+            {playerClans.map((clan, index) => (
             // <div style={{ margin: '8px 24px' }}>
             <Tr key={index}>
-              <Td textAlign='center'>{faction.faction}</Td>
-              <Td textAlign='center'>{faction.clanType}</Td>
-              <Td textAlign='center'>{faction.troops}</Td>
-              <Td textAlign='center'>{faction.addresses}</Td>
+              <Td textAlign='center'>{clan.faction}</Td>
               <Td textAlign='center'>
-                <Button colorScheme='blue' onClick={() => {EditClan(faction)}}>Edit
-                  </Button></Td>
+                <Button colorScheme={GetRegistrationColor(clan.registered)} 
+                // onClick={}
+                ></Button>
+              </Td>
+              <Td textAlign='center'>{clan.clanType}</Td>
+              <Td textAlign='center'>{clan.troops}</Td>
+              <Td textAlign='center'>{clan.addresses}</Td>
+              <Td textAlign='center'>
+                <Button colorScheme='blue' onClick={() => {setSelectedClan(playerClans[index]), onOpenClan()}}>Edit</Button>
+              </Td>
             </Tr>
             ))}
           </Tbody>
@@ -81,9 +84,9 @@ const AllianceCenter = ({onBack, factions=[]}) => {
 
       <Flex mt='30pt' mb='30pt'>
       <Button type="legacy"
-          onClick={() => {onOpenClan();}}
+          onClick={() => {onOpenRegister()}}
           className="flex-fill">
-          + Create Clan
+          + Register New Clan
         </Button>
       </Flex>
       </div>
@@ -95,7 +98,6 @@ const AllianceCenter = ({onBack, factions=[]}) => {
       </Box>
       </Flex>
       
-      <Button style={{ display: 'flex', marginTop: '16px' }} colorScheme='gray' onClick={() => {onOpenDelegate();}}>Delegate Troops </Button>
     </section>
   )
 };
