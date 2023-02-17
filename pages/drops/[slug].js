@@ -6,7 +6,7 @@ import SingleDrop from '../../src/Components/Drop/singleDrop';
 import CronosverseDrop from '../../src/Components/Drop/CronosverseDrop';
 import {caseInsensitiveCompare, isRyoshiVipDrop} from "@src/utils";
 import {appConfig} from "@src/Config";
-import PageHead from "../../src/Components/Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 import {hostedImage} from "@src/helpers/image";
 import RyoshiDrop from "@src/Components/Drop/ryoshiDrop";
 

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import PageHead from "../../src/Components/Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import brands from '@src/core/data/brands.json';
 import {
@@ -15,7 +15,6 @@ import {
   useBreakpointValue
 } from "@chakra-ui/react";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
-import Footer from "@src/Components/components/Footer";
 import EndpointProxyService from "@src/services/endpoint-proxy.service";
 import {caseInsensitiveCompare, siPrefixedNumber} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
@@ -133,7 +132,6 @@ const Brand = ({ brand, collections, stats, query }) => {
           </div>
         </div>
       </Box>
-      <Footer />
     </>
   );
 };

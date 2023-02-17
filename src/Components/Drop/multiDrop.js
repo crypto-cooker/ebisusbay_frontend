@@ -13,7 +13,6 @@ import ReactPlayer from 'react-player';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
 
-import Footer from '../components/Footer';
 import { connectAccount } from '../../GlobalState/User';
 import { fetchMemberInfo, fetchVipInfo } from '../../GlobalState/Memberships';
 import { createSuccessfulTransactionToastContent, isCmbDrop, newlineText, percentage } from '../../utils';
@@ -526,7 +525,6 @@ const MultiDrop = () => {
           </div>
         </section>
       </>
-      <Footer />
     </div>
   );
 };

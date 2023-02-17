@@ -1,5 +1,8 @@
 import {Contract, ContractTransaction, ethers} from "ethers";
-import {StakePayload, Staker} from "@src/components-v2/feature/brand/tabs/staking/types";
+import {BoosterStaker,
+    StakePayload,
+    StakerWithRewards
+} from "@src/components-v2/feature/brand/tabs/staking/types";
 import {getQuickWallet} from "@src/core/api/endpoints/wallets";
 import {ERC721} from "@src/Contracts/Abis";
 import {appConfig} from "@src/Config";
@@ -7,7 +10,10 @@ import {appConfig} from "@src/Config";
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
-export class WeirdApesStaker implements Staker {
+export class WeirdApesStaker implements StakerWithRewards {
+    rewardsSymbol = 'WAC';
+    booster?: BoosterStaker | undefined;
+
     abi = [
         'function stake(uint256 _tokenId)',
         'function unstake(uint256 _tokenId)'
@@ -15,6 +21,12 @@ export class WeirdApesStaker implements Staker {
     address = '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44';
     collections = [
         "0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44"
+    ];
+
+    rewardsAddress = '0xcf639e01bCDAe12c5405fe575B60499107A6B4FC';
+    rewardsAbi = [
+        'function getTotalClaimable(address _user) public view returns (uint256)',
+        'function getReward()',
     ];
 
     async stake(payload: StakePayload, signer: any): Promise<ContractTransaction> {
@@ -48,6 +60,16 @@ export class WeirdApesStaker implements Staker {
         const nfts = await this.getAll(userAddress, collectionAddress);
 
         return nfts.filter((nft: any) => !nft.isStaked);
+    }
+
+    async getRewards(userAddress: string) {
+        const readContract = new Contract(this.rewardsAddress, this.rewardsAbi, readProvider);
+        const rewards = await readContract.getTotalClaimable(userAddress);
+        return ethers.utils.formatEther(rewards);
+    }
+    async claimRewards(userAddress: string, signer: ethers.Signer): Promise<ContractTransaction> {
+        const contract = new Contract(this.rewardsAddress, this.rewardsAbi, signer);
+        return await contract.getReward();
     }
 }
 

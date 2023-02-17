@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 
-import Footer from '../src/Components/components/Footer';
 import LegacyStaking from '@src/Components/Staking/LegacyStaking';
 import withAuth from '../src/Components/withAuth';
 import {Box, Container, Grid, GridItem, Heading, Text, useBreakpointValue, useColorModeValue} from "@chakra-ui/react";
@@ -10,7 +9,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {closeCart} from "@src/GlobalState/ryoshiStakingCartSlice";
 import {BatchStakingDrawer} from "@src/Components/Staking/BatchStakingDrawer";
 import RewardsCard from "@src/Components/Staking/RewardsCard";
-import PageHead from "@src/Components/Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 import {MobileBatchStaking} from "@src/Components/Staking/MobileBatchStaking";
 
 const MotionGrid = motion(Grid)
@@ -96,7 +95,6 @@ const MyStaking = () => {
               </div>
             </div>
           </section>
-          <Footer />
         </GridItem>
         <GridItem borderLeft={useMobileCartView ? 'none' : '0.5px solid'} borderLeftColor={batchListingBorderColor}>
           <BatchStakingDrawer

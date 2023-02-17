@@ -18,7 +18,7 @@ export interface Staker {
 export interface StakerWithRewards extends Staker {
     rewardsSymbol: string;
     getRewards(userAddress: string): any;
-    claimRewards(userAddress: string, signer: ethers.Signer): any;
+    claimRewards(userAddress: string, signer: ethers.Signer): Promise<ContractTransaction>;
 }
 
 export interface BoosterStaker extends Staker {

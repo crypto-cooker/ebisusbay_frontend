@@ -1,12 +1,11 @@
 import React from 'react';
 
-import Footer from '../../components/Footer';
 import AuctionCollection from '../../components/AuctionCollection';
 import MetaverseModal from '../../components/MetaverseModal';
 import CuratedAuctionCollection from "./CuratedAuctionCollection";
 import Head from "next/head";
 import {hostedImage} from "../../../helpers/image";
-import PageHead from "../../Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 
 const Blood4NftAuction = () => {
   const name = 'Blood 4 NFT Auction';
@@ -51,7 +50,6 @@ const Blood4NftAuction = () => {
           </div>
         </div>
       </section>
-      <Footer />
     </>
   );
 };

@@ -1,10 +1,17 @@
 import React from "react";
 import Head from "next/head";
-import {appConfig} from "../../Config";
+import {appConfig} from "@src/Config";
 
 const config = appConfig();
 
-const PageHead = ({ title, description, image, url }) => {
+type PageHeadProps = {
+    title: string,
+    description?: string,
+    image?: string,
+    url?: string
+}
+
+const PageHead = ({ title, description, image, url }: PageHeadProps) => {
   return (
     <Head>
       <title>{`${title} | Ebisu's Bay Marketplace`}</title>

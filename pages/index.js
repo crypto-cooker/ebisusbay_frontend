@@ -8,7 +8,6 @@ import styled, {createGlobalStyle} from 'styled-components';
 import {faFire} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import Footer from '../src/Components/components/Footer';
 import ListingCollection from '../src/Components/components/ListingCollection';
 import HotCollections from '../src/Components/components/HotCollections';
 import CurrentDrops from '../src/Components/components/CurrentDrops';
@@ -419,7 +418,6 @@ const Home = () => {
           </Wrap>
         </div>
       </section>
-      <Footer />
     </div>
   );
 };

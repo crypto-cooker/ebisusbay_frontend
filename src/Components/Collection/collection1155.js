@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import {faBullhorn, faCheck, faCircle} from '@fortawesome/free-solid-svg-icons';
 import Blockies from 'react-blockies';
 
-import Footer from '../components/Footer';
 import CollectionListingsGroup from '../components/CollectionListingsGroup';
 import LayeredIcon from '../components/LayeredIcon';
 import {init, fetchListings, getStats, updateTab} from '@src/GlobalState/collectionSlice';
@@ -254,8 +253,6 @@ const Collection1155 = ({ collection, tokenId = null, query, activeDrop = null }
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };

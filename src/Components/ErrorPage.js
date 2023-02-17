@@ -4,7 +4,6 @@ import { createGlobalStyle, default as styled } from 'styled-components';
 import { keyframes } from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
 
-import Footer from '../Components/components/Footer';
 import { getMarketData } from '../GlobalState/marketplaceSlice';
 import { theme } from '../Theme/theme';
 import {hostedImage} from "../helpers/image";
@@ -157,7 +156,6 @@ export const ErrorPage = () => {
         {!mobile && <div className="container">{JumbotronData()}</div>}
       </Jumbotron.Host>
       {mobile && JumbotronData()}
-      <Footer />
     </div>
   );
 };
