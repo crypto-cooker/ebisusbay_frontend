@@ -5,7 +5,7 @@ import MetaverseModal from '../../components/MetaverseModal';
 import CuratedAuctionCollection from "./CuratedAuctionCollection";
 import Head from "next/head";
 import {hostedImage} from "../../../helpers/image";
-import PageHead from "../../Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 
 const Blood4NftAuction = () => {
   const name = 'Blood 4 NFT Auction';

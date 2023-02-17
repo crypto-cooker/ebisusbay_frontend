@@ -42,3 +42,5 @@ export const DefaultHead = () => {
     </Head>
   )
 }
+
+export default DefaultHead;

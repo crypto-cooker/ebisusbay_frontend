@@ -9,7 +9,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {closeCart} from "@src/GlobalState/ryoshiStakingCartSlice";
 import {BatchStakingDrawer} from "@src/Components/Staking/BatchStakingDrawer";
 import RewardsCard from "@src/Components/Staking/RewardsCard";
-import PageHead from "@src/Components/Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 import {MobileBatchStaking} from "@src/Components/Staking/MobileBatchStaking";
 
 const MotionGrid = motion(Grid)

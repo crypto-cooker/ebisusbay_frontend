@@ -1,7 +1,7 @@
 import React from 'react';
 
 import CuratedAuctionCollection from "./CuratedAuctionCollection";
-import PageHead from "../../Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Heading} from "@chakra-ui/react";
 import Image from "next/image";
 

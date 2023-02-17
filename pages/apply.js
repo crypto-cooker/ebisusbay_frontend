@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic';
 import { faLightbulb, faTags } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {useRouter} from "next/router";
-import PageHead from "../src/Components/Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Heading} from "@chakra-ui/react";
 const NativeForms = dynamic(() => import('native-forms-react'), { ssr: false });
 

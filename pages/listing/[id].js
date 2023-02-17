@@ -35,7 +35,7 @@ import {specialImageTransform} from '@src/hacks';
 import NFTTabOffers from '../../src/Components/Offer/NFTTabOffers';
 import {appConfig} from "@src/Config";
 import {hostedImage} from "@src/helpers/image";
-import PageHead from "../../src/Components/Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 
 const config = appConfig();
 const tabs = {

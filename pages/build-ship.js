@@ -11,7 +11,7 @@ import ShipABI from '../src/Contracts/Ship.json';
 import ShipItemABI from '../src/Contracts/ShipItem.json';
 import {appConfig} from '@src/Config';
 import {hostedImage} from '@src/helpers/image';
-import PageHead from '../src/Components/Head/PageHead';
+import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Heading} from "@chakra-ui/react";
 
 import { getCollections } from "@src/core/api/next/collectioninfo";

@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap';
 
 import Switch from '@src/Components/components/common/Switch';
 import { debounce } from '@src/utils';
-import PageHead from "@src/Components/Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 import Header from './components/Header';
 import Table from './components/Table';
 import useFeatureFlag from '@src/hooks/useFeatureFlag';

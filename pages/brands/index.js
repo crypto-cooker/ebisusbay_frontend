@@ -1,7 +1,7 @@
 import brands from "@src/core/data/brands.json";
 import {Box, SimpleGrid, Text, useMediaQuery, VStack, Wrap, WrapItem} from "@chakra-ui/react";
 import {useRouter} from "next/router";
-import PageHead from "@src/Components/Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import React from "react";
 import Header from "@src/Components/Collections/components/Header";

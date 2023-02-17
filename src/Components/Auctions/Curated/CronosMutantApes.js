@@ -1,5 +1,5 @@
 import React from 'react';
-import PageHead from "../../Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Box, Container, Heading} from "@chakra-ui/react";
 import Image from "next/image";
 import dynamic from "next/dynamic";

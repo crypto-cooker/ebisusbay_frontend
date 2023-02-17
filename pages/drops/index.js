@@ -9,7 +9,7 @@ import PastDrops from '../../src/Components/Drops/PastDrops';
 import { getTheme } from '../../src/Theme/theme';
 import {hostedImage} from "../../src/helpers/image";
 import Head from "next/head";
-import PageHead from "../../src/Components/Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Heading} from "@chakra-ui/react";
 
 const Drops = () => {

@@ -6,7 +6,7 @@ import Table from '../src/Components/Leaderboard/Table';
 import {getAllLeaderBoard} from '@src/GlobalState/leaderBoardSlice';
 import {shortAddress} from '@src/utils';
 import styles from '../src/Components/Leaderboard/styles.module.scss';
-import PageHead from "../src/Components/Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Badge} from "react-bootstrap";
 import {Navigation, Pagination} from "swiper";
 import {Swiper, SwiperSlide} from "swiper/react";
