@@ -17672,7 +17672,7 @@
       "name": "Reckless Robots Legends",
       "slug": "reckless-robots-legends",
       "multiToken": false,
-      "address": "",
+      "address": "0xf96ec7C11D311920833753FAB9b174B6FD53517E",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -24273,7 +24273,7 @@
         "medium": "https://medium.com/@recklessrobots",
         "telegram": "https://t.me/recklessrobotsnft"
       },
-      "address": "",
+      "address": "0xf96ec7C11D311920833753FAB9b174B6FD53517E",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 200,
       "totalSupply": 3000,
