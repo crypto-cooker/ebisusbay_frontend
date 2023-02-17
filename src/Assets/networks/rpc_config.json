@@ -18140,7 +18140,7 @@
       "multiToken": false,
       "address": "0x28Fc9DaCa33E0a3Ada666064F54B400E63596c6C",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "4444 Free-to-Mint PFPs brought to you by the Hidden Fish DAO, the #1 DAO on Cronos.",
         "avatar": "/img/collections/hidden-avatars/avatar.webp",
