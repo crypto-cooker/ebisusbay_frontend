@@ -1,0 +1,37 @@
+import {ListingsQuery} from "@src/core/services/api-service/mapi/queries/listings";
+import {listingState} from "@src/core/api/enums";
+import {limitSizeOptions} from "@src/Components/components/constants/filter-options";
+import MapiRepository from "@src/core/services/api-service/mapi/repositories/index";
+
+class CollectionsRepository extends MapiRepository {
+
+  async getCollections(query?: ListingsQuery) {
+    let defaultQuery = {
+      state: listingState.ACTIVE,
+      page: 1,
+      pageSize: limitSizeOptions.lg,
+      sortBy: 'listingId',
+      direction: 'desc'
+    };
+
+    return await this.api.get(`listings`, {
+      params: {...defaultQuery, ...query?.toQuery()}
+    });
+  }
+
+  async getCollection(query?: ListingsQuery) {
+    let defaultQuery = {
+      state: listingState.ACTIVE,
+      page: 1,
+      pageSize: limitSizeOptions.lg,
+      sortBy: 'listingId',
+      direction: 'desc'
+    };
+
+    return await this.api.get(`listings`, {
+      params: {...defaultQuery, ...query?.toQuery()}
+    });
+  }
+}
+
+export default CollectionsRepository;
