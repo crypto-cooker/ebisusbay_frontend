@@ -255,6 +255,8 @@ export function shortString(str, leftChars = 3, rightChars = 3) {
 }
 
 export function timeSince(timestamp) {
+  if (!timestamp) return timestamp;
+
   timestamp = millisecondTimestamp(timestamp);
   const seconds = Math.floor(Math.abs((new Date() - timestamp) / 1000));
   let interval = Math.floor(seconds / 31536000);
@@ -348,6 +350,10 @@ export function createSuccessfulAddCartContent(onClickView) {
  */
 export function caseInsensitiveCompare(str1, str2) {
   return str1?.toLowerCase() === str2?.toLowerCase();
+}
+
+export function ciIncludes(array, str) {
+  return array.map((item) => item.toLowerCase()).includes(str.toLowerCase());
 }
 
 export function newlineText(text) {

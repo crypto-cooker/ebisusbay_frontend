@@ -74,14 +74,9 @@ const useSignature = () => {
     let signature: string | null = null;
     let address: string | null = null;
 
-    if (!signer) return { signature, address };
-
-    const mSigner = signer as SignerProps;
-    const dateFormat = typeof mSigner.date;
-
-    if (signer && (dateFormat === 'string' || dateFormat === 'object')) {
-      signature = mSigner.signature;
-      address = mSigner.address;
+    if (signer) {
+      signature = (signer as SignerProps).signature;
+      address = (signer as SignerProps).address;
     } else {
       [signature, address] = await createSigner();
     }

@@ -6,12 +6,11 @@ import { ethers } from 'ethers';
 import Blockies from 'react-blockies';
 import { Form, Spinner } from 'react-bootstrap';
 
-import Footer from '@src/Components/components/Footer';
 import { getAllCollections } from '@src/GlobalState/collectionsSlice';
 import { debounce, siPrefixedNumber } from '@src/utils';
 import {CdnImage} from "@src/Components/components/CdnImage";
 import {hostedImage} from "@src/helpers/image";
-import PageHead from "@src/Components/Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Heading} from "@chakra-ui/react";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
 import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
@@ -335,8 +334,6 @@ const Collections = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

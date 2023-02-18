@@ -1,32 +1,45 @@
 import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
   Alert,
   AlertDescription,
   AlertIcon,
   Box,
+  Button as ChakraButton,
   Center,
   Flex,
-  FormControl,
+  FormControl, FormErrorMessage,
   FormLabel,
   GridItem,
+  HStack,
   IconButton,
+  Input,
   Popover,
   PopoverArrow,
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
+  Select,
   Spacer,
   Switch,
-  Text
+  Text,
+  VStack
 } from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
 import {Spinner} from "react-bootstrap";
 import React, {useCallback, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
-  addToBatchListingCart,
+  addToBatchListingCart, applyExpirationToAll,
+  applyFloorPctToAll,
+  applyFloorPriceToAll,
   applyPriceToAll,
-  cascadePrices,
-  clearBatchListingCart
+  cascadePrices, cascadePricesPercent,
+  clearBatchListingCart,
+  sortAll
 } from "@src/GlobalState/batchListingSlice";
 import {Contract, ethers} from "ethers";
 import {toast} from "react-toastify";
@@ -46,6 +59,8 @@ import useUpsertGaslessListings from "@src/Components/Account/Settings/hooks/use
 import useCancelGaslessListing from "@src/Components/Account/Settings/hooks/useCancelGaslessListing";
 import {QuestionOutlineIcon} from "@chakra-ui/icons";
 import {getNftsForAddress2} from "@src/core/api";
+import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const config = appConfig();
 const MAX_NFTS_IN_CART = 40;
@@ -62,6 +77,8 @@ export const ListingDrawer = () => {
   const [isBundling, setIsBundling] = useState(false);
   const formRef = useRef(null);
   const [expressMode, setExpressMode] = useState(false);
+  const [sortAllOption, setSortAllOption] = useState();
+  const [expirationDateAllOption, setExpirationDateAllOption] = useState();
 
   const [upsertGaslessListings, responseUpdate] = useUpsertGaslessListings();
   const [cancelGaslessListing, response] = useCancelGaslessListing();
@@ -85,6 +102,52 @@ export const ListingDrawer = () => {
       dispatch(addToBatchListingCart(nft));
     }
   }
+  const handleFloorAll = () => {
+    dispatch(applyFloorPriceToAll());
+  }
+  const handleApplyCustomPriceToAll = (option, value) => {
+    if (!value) return;
+
+    if (option === customPriceOptions.price) {
+      dispatch(applyPriceToAll({price: value}));
+    } else if (option === customPriceOptions.pctAboveFloor) {
+      dispatch(applyFloorPctToAll({pct: value}));
+    } else if (option === customPriceOptions.pctBelowFloor) {
+      dispatch(applyFloorPctToAll({pct: value * -1}));
+    }
+  }
+  const handleCascadePriceToAll = (option, value, step) => {
+    if (!value) return;
+
+    if (option === customCascadeOptions.priceDown) {
+      dispatch(cascadePrices({ startingPrice: value, step: step * -1 }));
+    } else if (option === customCascadeOptions.priceUp) {
+      dispatch(cascadePrices({ startingPrice: value, step }));
+    } else if (option === customCascadeOptions.pctDown) {
+      dispatch(cascadePricesPercent({ startingPrice: value, step: step * -1 }));
+    } else if (option === customCascadeOptions.pctUp) {
+      dispatch(cascadePricesPercent({ startingPrice: value, step }));
+    }
+  }
+  const handleApplyExpirationDateToAll = (value) => {
+    if (!value) return;
+    
+    dispatch(applyExpirationToAll(value));
+  }
+  const handleSortAll = (value) => {
+    if (!value) return;
+
+    if (value === sortOptions.rankCommonToRare) {
+      dispatch(sortAll({field: 'rank', direction: 'desc'}));
+    } else if (value === sortOptions.rankRareToCommon) {
+      dispatch(sortAll({field: 'rank', direction: 'asc'}));
+    } else if (value === sortOptions.floorLowToHigh) {
+      dispatch(sortAll({field: 'floor', direction: 'asc'}));
+    } else if (value === sortOptions.floorHighToLow) {
+      dispatch(sortAll({field: 'floor', direction: 'desc'}));
+    }
+  }
+
   const resetDrawer = () => {
     handleClearCart();
     setIsBundling(false);
@@ -252,14 +315,14 @@ export const ListingDrawer = () => {
 
   return (
     <>
-      <GridItem px={6} py={4} overflowY="auto">
+      <GridItem p={4} overflowY="auto">
         <FormControl display='flex' alignItems='center' mb={2}>
           <FormLabel htmlFor='list-bundle-toggle' mb='0'>
             List as bundle
           </FormLabel>
           <Switch id='list-bundle-toggle' isChecked={isBundling} onChange={onBundleToggled}/>
         </FormControl>
-        <FormControl display='flex' alignItems='center' mb={2}>
+        <FormControl display='flex' alignItems='center'>
           <FormLabel htmlFor='debug-legacy-toggle' mb='0'>
             Express Mode
           </FormLabel>
@@ -274,6 +337,75 @@ export const ListingDrawer = () => {
             </PopoverContent>
           </Popover>
         </FormControl>
+        <Accordion mb={2} allowToggle>
+          <AccordionItem>
+            <AccordionButton ps={0}>
+              <Box as="span" flex='1' textAlign='left' fontWeight='bold'>
+                Advanced
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel px={0}>
+              <VStack align='start'>
+                <Box w="full">
+                  <Text fontSize="sm" fontWeight="bold">Apply price:</Text>
+                  <HStack mt={1}>
+                    <CustomPriceRow
+                      onChange={handleApplyCustomPriceToAll}
+                      onFloor={handleFloorAll}
+                    />
+                  </HStack>
+                </Box>
+                <Box w="full">
+                  <Text fontSize="sm" fontWeight="bold">Cascade price:</Text>
+                  <HStack mt={1}>
+                    <CustomCascadeRow
+                      onChange={handleCascadePriceToAll}
+                    />
+                  </HStack>
+                </Box>
+                <Box w="full">
+                  <Text fontSize="sm" fontWeight="bold">Apply expiration:</Text>
+                  <HStack mt={1}>
+                    <Select
+                      placeholder='Select expiration'
+                      size="sm"
+                      bg="transparent !important"
+                      onChange={(e) => setExpirationDateAllOption(e.target.value)}
+                    >
+                      {expirationDatesValues.map((time) => (
+                        <option key={time.value.toString()} value={time.value.toString()}>{time.label}</option>
+                      ))}
+                    </Select>
+                    <IconButton
+                      icon={<FontAwesomeIcon icon={faArrowRight}/>}
+                      size='sm'
+                      mt={1}
+                      onClick={() => handleApplyExpirationDateToAll(expirationDateAllOption)}
+                    />
+                  </HStack>
+                </Box>
+                <Box w="full">
+                  <Text fontSize="sm" fontWeight="bold">Sort:</Text>
+                  <HStack mt={1}>
+                    <Select size="sm" placeholder="Choose option" onChange={(e) => setSortAllOption(e.target.value)}>
+                      <option value={sortOptions.rankRareToCommon}>Rank: Rare to Common</option>
+                      <option value={sortOptions.rankCommonToRare}>Rank: Common to Rare</option>
+                      <option value={sortOptions.floorHighToLow}>Floor: High to Low</option>
+                      <option value={sortOptions.floorLowToHigh}>Floor: Low to High</option>
+                    </Select>
+                    <IconButton
+                      icon={<FontAwesomeIcon icon={faArrowRight}/>}
+                      size='sm'
+                      mt={1}
+                      onClick={() => handleSortAll(sortAllOption)}
+                    />
+                  </HStack>
+                </Box>
+              </VStack>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
         {isBundling && (
           <Box mb={4}>
             <ListingBundleDrawerForm ref={formRef} onSubmit={onSubmitListingBundle} />
@@ -308,7 +440,7 @@ export const ListingDrawer = () => {
           </Box>
         )}
       </GridItem>
-      <GridItem px={6} py={4}>
+      <GridItem p={4}>
         {/*TODO update*/}
         { showConfirmButton ? (
           <>
@@ -368,5 +500,227 @@ export const ListingDrawer = () => {
         }
       </GridItem>
     </>
+  )
+}
+
+const expirationDatesValues = [
+  {
+    value: 3600000,
+    label: '1 hour'
+  },
+  {
+    value: 10800000,
+    label: '3 hours'
+  },
+  {
+    value: 21600000,
+    label: '6 hours'
+  },
+  {
+    value: 86400000,
+    label: '1 day'
+  },
+  {
+    value: 259200000,
+    label: '3 days'
+  },
+  {
+    value: 604800000,
+    label: '1 week'
+  },
+  {
+    value: 1296000000,
+    label: '2 weeks'
+  },
+  {
+    value: 2592000000,
+    label: '1 month'
+  },
+  {
+    value: 7776000000,
+    label: '3 month'
+  },
+  {
+    value: 15552000000,
+    label: '6 months'
+  },
+];
+
+const sortOptions = {
+  rankRareToCommon: 'rankRareToCommon',
+  rankCommonToRare: 'rankCommonToRare',
+  floorHighToLow: 'floorHighToLow',
+  floorLowToHigh: 'floorLowToHigh'
+}
+
+const customPriceOptions = {
+  price: 'price',
+  pctAboveFloor: 'pctAboveFloor',
+  pctBelowFloor: 'pctBelowFloor'
+}
+const CustomPriceRow = ({onChange, onFloor}) => {
+  const [inputType, setInputType] = useState('price');
+  const [option, setOption] = useState(customPriceOptions.price);
+  const [value, setValue] = useState('');
+  const [error, setError] = useState();
+
+  const onOptionChange = (e) => {
+    const newType = e.target.value;
+    if ([customPriceOptions.pctAboveFloor, customPriceOptions.pctBelowFloor].includes(newType)) {
+      if (inputType !== 'percent') setValue('');
+      setInputType('percent');
+    } else {
+      if (inputType !== 'price') setValue('');
+      setInputType('price')
+    }
+    setOption(newType);
+  };
+
+  const handleInputChange = (e) => {
+    const newValue = e.target.value;
+    if (newValue.length > 7) return;
+    if (!numberRegexValidation.test(newValue) && newValue !== '') return;
+
+    const numericValue = Number(newValue);
+    if (inputType === 'percent' && (numericValue < 1 || numericValue > 100)) return;
+
+    setValue(e.target.value);
+  };
+
+  const handleApply = () => {
+    setError(null);
+    if (!option || !value) {
+      setError('All fields are required');
+      return;
+    }
+
+    onChange(option, value);
+  };
+
+  return (
+    <FormControl isInvalid={error}>
+      <HStack w='full'>
+        <ChakraButton size='sm' px={4} onClick={onFloor}>
+          Floor
+        </ChakraButton>
+        <Select size="sm" w="full" onChange={onOptionChange}>
+          <option value={customPriceOptions.price}>Custom</option>
+          <option value={customPriceOptions.pctAboveFloor}>% above floor</option>
+          <option value={customPriceOptions.pctBelowFloor}>% below floor</option>
+        </Select>
+        <Input
+          placeholder={inputType === 'percent' ? '%' : 'Price'}
+          type="numeric"
+          size="sm"
+          onChange={handleInputChange}
+          value={value}
+        />
+        <IconButton
+          icon={<FontAwesomeIcon icon={faArrowRight}/>}
+          size='sm'
+          mt={1}
+          onClick={handleApply}
+        />
+      </HStack>
+      <FormErrorMessage>{error}</FormErrorMessage>
+    </FormControl>
+  )
+}
+
+const customCascadeOptions = {
+  priceDown: 'priceDown',
+  priceUp: 'priceUp',
+  pctUp: 'pctUp',
+  pctDown: 'pctDown'
+}
+const CustomCascadeRow = ({onChange}) => {
+  const [inputType, setInputType] = useState('price');
+  const [option, setOption] = useState(customCascadeOptions.priceDown);
+  const [startingPrice, setStartingPrice] = useState('');
+  const [step, setStep] = useState('');
+  const [error, setError] = useState();
+
+  const onOptionChange = (e) => {
+    const newType = e.target.value;
+    if ([customCascadeOptions.pctUp, customCascadeOptions.pctDown].includes(newType)) {
+      if (inputType !== 'percent') setStep('');
+      setInputType('percent');
+    } else {
+      if (inputType !== 'price') setStep('');
+      setInputType('price')
+    }
+    setOption(newType);
+  };
+
+  const handleInputChange = (e) => {
+    const newValue = e.target.value;
+    if (newValue.length > 5) return;
+    if (!numberRegexValidation.test(newValue) && newValue !== '') return;
+
+    setStartingPrice(e.target.value);
+  };
+
+  const handleStepChange = (e) => {
+    const newValue = e.target.value;
+    const isPct = [customCascadeOptions.pctUp, customCascadeOptions.pctDown].includes(option);
+    if (newValue.length > 5) return;
+    if (isPct && Number(newValue) > 100) return;
+    if (!isPct && option === customCascadeOptions.priceDown && Number(newValue) > Number(startingPrice)) return;
+    if (!numberRegexValidation.test(newValue) && newValue !== '') return;
+
+    setStep(e.target.value);
+  };
+
+  const handleApply = () => {
+    setError(null);
+    const isPct = [customCascadeOptions.pctUp, customCascadeOptions.pctDown].includes(option);
+
+    if (!inputType || !startingPrice || !step) {
+      setError('All fields are required');
+      return;
+    }
+
+    if (isPct && Number(step) > 100 ||
+      !isPct && option === customCascadeOptions.priceDown && Number(step) > Number(startingPrice)) {
+      setError('Invalid step value');
+      return;
+    }
+
+    onChange(option, startingPrice, step);
+  };
+
+  return (
+    <FormControl isInvalid={error}>
+      <HStack w='full'>
+        <Select size="sm" minW="110px" onChange={onOptionChange} value={option}>
+          <option value={customCascadeOptions.priceUp}>Price &uarr;</option>
+          <option value={customCascadeOptions.priceDown}>Price &darr;</option>
+          <option value={customCascadeOptions.pctUp}>Percent &uarr;</option>
+          <option value={customCascadeOptions.pctDown}>Percent &darr;</option>
+        </Select>
+        <Input
+          placeholder='Start price'
+          type="numeric"
+          size="sm"
+          minW="100px"
+          onChange={handleInputChange}
+          value={startingPrice}
+        />
+        <Input
+          placeholder={inputType === 'percent' ? '%' : 'Step'}
+          type="numeric"
+          size="sm"
+          onChange={handleStepChange}
+          value={step}
+        />
+        <IconButton
+          icon={<FontAwesomeIcon icon={faArrowRight}/>}
+          size='sm'
+          mt={1}
+          onClick={handleApply}
+        />
+      </HStack>
+      <FormErrorMessage>{error}</FormErrorMessage>
+    </FormControl>
   )
 }

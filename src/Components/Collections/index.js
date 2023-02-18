@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { Form } from 'react-bootstrap';
 
-import Footer from '@src/Components/components/Footer';
 import Switch from '@src/Components/components/common/Switch';
 import { debounce } from '@src/utils';
-import PageHead from "@src/Components/Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 import Header from './components/Header';
 import Table from './components/Table';
 import useFeatureFlag from '@src/hooks/useFeatureFlag';
@@ -82,8 +81,6 @@ const Collections = () => {
         </div>
         <Table timeFrame={timeFrame} searchTerms={searchTerms} onlyVerified={onlyVerified} />
       </section>
-
-      <Footer />
     </div>
   );
 };

@@ -6,13 +6,12 @@ import { Form, ProgressBar, Spinner } from 'react-bootstrap';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
 
-import Footer from '../src/Components/components/Footer';
 import { createSuccessfulTransactionToastContent, humanize, percentage } from '@src/utils';
 import ShipABI from '../src/Contracts/Ship.json';
 import ShipItemABI from '../src/Contracts/ShipItem.json';
 import {appConfig} from '@src/Config';
 import {hostedImage} from '@src/helpers/image';
-import PageHead from '../src/Components/Head/PageHead';
+import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Heading} from "@chakra-ui/react";
 
 import { getCollections } from "@src/core/api/next/collectioninfo";
@@ -220,7 +219,6 @@ const Drop = () => {
           </>
         )}
       </section>
-      <Footer />
     </>
   );
 };

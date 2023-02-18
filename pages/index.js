@@ -8,7 +8,6 @@ import styled, {createGlobalStyle} from 'styled-components';
 import {faFire} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import Footer from '../src/Components/components/Footer';
 import ListingCollection from '../src/Components/components/ListingCollection';
 import HotCollections from '../src/Components/components/HotCollections';
 import CurrentDrops from '../src/Components/components/CurrentDrops';
@@ -325,25 +324,25 @@ const Home = () => {
         </div>
       </section>
 
-      {/*<section className="gl-legacy container">*/}
-      {/*  <div className="row">*/}
-      {/*    <div className="col-lg-12">*/}
-      {/*      <div className="text-center">*/}
-      {/*        <Heading>New Listings</Heading>*/}
-      {/*        <div className="small-border"></div>*/}
-      {/*      </div>*/}
-      {/*    </div>*/}
-      {/*    <div className="col-lg-12">*/}
-      {/*      <ListingCollection limitSize={limitSizeOptions.md} showLoadMore={false} />*/}
-      {/*    </div>*/}
-      {/*    <div className="col-lg-12">*/}
-      {/*      <div className="spacer-single"></div>*/}
-      {/*      <span onClick={() => navigateTo(`/marketplace`)} className="btn-main lead m-auto">*/}
-      {/*        View Marketplace*/}
-      {/*      </span>*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</section>*/}
+      <section className="gl-legacy container">
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="text-center">
+              <Heading>New Listings</Heading>
+              <div className="small-border"></div>
+            </div>
+          </div>
+          <div className="col-lg-12">
+            <ListingCollection limitSize={limitSizeOptions.md} showLoadMore={false} />
+          </div>
+          <div className="col-lg-12">
+            <div className="spacer-single"></div>
+            <span onClick={() => navigateTo(`/marketplace`)} className="btn-main lead m-auto">
+              View Marketplace
+            </span>
+          </div>
+        </div>
+      </section>
 
       <section className="gl-legacy container">
         <div className="row">
@@ -419,7 +418,6 @@ const Home = () => {
           </Wrap>
         </div>
       </section>
-      <Footer />
     </div>
   );
 };

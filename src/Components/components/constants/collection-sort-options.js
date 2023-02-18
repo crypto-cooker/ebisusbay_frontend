@@ -2,7 +2,7 @@ import { CollectionSortOption } from '../../Models/collection-sort-option.model'
 
 const sort = [
   {
-    key: 'listingId',
+    key: 'listingTime',
     direction: 'desc',
     label: 'Latest Listings',
   },

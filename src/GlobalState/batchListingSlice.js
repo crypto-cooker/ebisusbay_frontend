@@ -1,5 +1,5 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {caseInsensitiveCompare} from "@src/utils";
+import {createSlice, current} from '@reduxjs/toolkit';
+import {caseInsensitiveCompare, round} from "@src/utils";
 
 const batchListingSlice = createSlice({
   name: 'batchListing',
@@ -83,8 +83,9 @@ const batchListingSlice = createSlice({
       }
     },
     cascadePrices: (state, action) => {
-      const startingItem = action.payload.startingItem;
-      let currentPrice = action.payload.startingPrice;
+      const startingItem = action.payload.startingItem ?? state.nfts[0];
+      let currentPrice = Number(action.payload.startingPrice);
+      const step = Number(action.payload.step ?? 1);
       let startingIndex = null;
       state.nfts = state.nfts.map((o, index) => {
         const isStartingItem = caseInsensitiveCompare(o.nft.address, startingItem.nft.address) && o.nft.id === startingItem.nft.id;
@@ -94,14 +95,58 @@ const batchListingSlice = createSlice({
         if (!state.extras[o.nft.address.toLowerCase()]?.approval) return o;
 
         const price = currentPrice > 1 ? currentPrice : 1;
-        currentPrice--;
+        currentPrice += step;
+        console.log('cascade', price, currentPrice, step)
+        return {...o, price}
+      });
+    },
+    cascadePricesPercent: (state, action) => {
+      const startingItem = action.payload.startingItem ?? state.nfts[0];
+      let currentPrice = Number(action.payload.startingPrice);
+      const step = Number(action.payload.step ?? 1);
+      let startingIndex = null;
+      state.nfts = state.nfts.map((o, index) => {
+        const isStartingItem = caseInsensitiveCompare(o.nft.address, startingItem.nft.address) && o.nft.id === startingItem.nft.id;
+
+        if (isStartingItem) startingIndex = index;
+        else if (startingIndex === null) return o;
+        if (!state.extras[o.nft.address.toLowerCase()]?.approval) return o;
+
+        const price = currentPrice > 1 ? currentPrice : 1;
+        currentPrice += round(currentPrice * (step * 0.01));
         return {...o, price}
       });
     },
     applyPriceToAll: (state, action) => {
-      const {price, expiration} = action.payload;
+      const { price, expiration } = action.payload;
       state.nfts = state.nfts.map((o) => {
-        return {...o, price, expiration}
+        const obj = {...o, price};
+        if (expiration) obj.expiration = expiration;
+        return obj;
+      });
+    },
+    applyExpirationToAll: (state, action) => {
+      const expiration = action.payload;
+      state.nfts = state.nfts.map((o) => {
+        return {...o, expiration};
+      });
+    },
+    applyFloorPriceToAll: (state, action) => {
+      state.nfts = state.nfts.map((o) => {
+        const extra = state.extras[o.nft.address.toLowerCase()] ?? {};
+        if (extra?.floorPrice) return {...o, price: extra.floorPrice}
+        return o;
+      });
+    },
+    applyFloorPctToAll: (state, action) => {
+      const { pct } = action.payload;
+      state.nfts = state.nfts.map((o) => {
+        const extra = state.extras[o.nft.address.toLowerCase()] ?? {};
+        if (extra?.floorPrice) {
+          const price = round(extra.floorPrice * (1 + (pct / 100)))
+          return {...o, price}
+        }
+        return o;
       });
     },
     setApproval: (state, action) => {
@@ -123,6 +168,26 @@ const batchListingSlice = createSlice({
     setBatchType: (state, action) => {
       state.type = action.payload;
     },
+    sortAll: (state, action) => {
+      const { field, direction } = action.payload;
+      state.nfts = state.nfts.sort((a, b) => {
+        const dir1 = direction === 'asc' ? 1 : -1;
+        const dir2 = direction === 'asc' ? -1 : 1;
+
+        if (field === 'rank') {
+          if (!a.nft.rank) return 1;
+          if (!b.nft.rank) return -1;
+          return a.nft.rank > b.nft.rank ? dir1 : dir2;
+        }
+        if (field === 'floor') {
+          const aExtra = state.extras[a.nft.address.toLowerCase()] ?? {};
+          const bExtra = state.extras[b.nft.address.toLowerCase()] ?? {};
+          const aFloorPrice = aExtra?.floorPrice ? Number(aExtra.floorPrice) : 0;
+          const bFloorPrice = bExtra?.floorPrice ? Number(bExtra.floorPrice) : 0;
+          return aFloorPrice > bFloorPrice ? dir1 : dir2;
+        }
+      });
+    },
   },
 });
 
@@ -137,12 +202,17 @@ export const {
   updateExpiration,
   update1155Quantity,
   cascadePrices,
+  cascadePricesPercent,
   applyPriceToAll,
+  applyExpirationToAll,
+  applyFloorPriceToAll,
+  applyFloorPctToAll,
   setApproval,
   setFloorPrice,
   setExtras,
   setRefetchNfts,
-  setBatchType
+  setBatchType,
+  sortAll
 } = batchListingSlice.actions;
 
 export default batchListingSlice.reducer;

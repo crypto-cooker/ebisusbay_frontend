@@ -11,7 +11,7 @@ const LayeredIcon = ({
   inverse = true,
   stackClass = 'k',
   shrink = 7,
-  title,
+  title = null,
 }) => {
   return (
     <span className={`fa-layers fa-fw fa-2x eb-icon_stack ${stackClass}`} title={title}>

@@ -14,7 +14,7 @@ import Offers from "@src/Components/Account/Profile/Offers";
 import Sales from "@src/Components/Account/Profile/Sales";
 import Favorites from "@src/Components/Account/Profile/Favorites";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
-import PageHead from "@src/Components/Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 import {pushQueryString} from "@src/helpers/query";
 import {ethers} from "ethers";
 import {Badge} from "react-bootstrap";

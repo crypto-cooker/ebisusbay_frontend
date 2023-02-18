@@ -5442,7 +5442,7 @@
       "multiToken": false,
       "address": "0xe7EEE45A6D27B066443Fbe4b7b409d6514B812d7",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "EyezInTheDeep NFT is the first PFP Collection from CronosEyez, 2000 Unique NFTs living in the Cronos Blockchain. Owners share a part of the CronosArt.org Art Vault among another perks.",
         "avatar": "/img/collections/cronoseyez/eyezinthedeep/avatar.webp",
@@ -5885,7 +5885,7 @@
       "name": "CyberClone",
       "slug": "cyber-clone",
       "multiToken": false,
-      "address": "0xa9C5A884b012A0B1528012d7EaEF38512DA12b2B",
+      "address": "0x8d05d11335ECA16114ac5FF62730Bb67475381a9",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -6388,7 +6388,7 @@
       "multiToken": false,
       "address": "0xb7F47b23A642a40fafF4d8df6e84B049A843ba4F",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A collection of 4200 Jackals are launching on the Cronos Chain. We're bringing them back, Re-Loaded , and stacked with Utility. Utilities are backed, and guaranteed \uD83D\uDC40 5% of CroArmy's distinguished bi-weeky bCRO airdrops are allocated to this Collection. 10k $ARMY will be backing EACH Jackals as well, as if the airdrops weren't enough \uD83D\uDE0F If you want to claim your 10k $ARMY, just burn your jackal to receive your $ARMY. 1 Point to Top 30!",
         "avatar": "/img/collections/jackals-reloaded/avatar.webp",
@@ -9330,7 +9330,7 @@
       "multiToken": false,
       "address": "0x133D5b18977cdDd191528789B5DB954622Aab754",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "GymKongZ is a 10,000 pfp project made up of more than 255 unique traits. We will focus on improving all pillars of life, not only the physical but also the mental and financial, and any other goal members are choosing to pursue. \nWe are really wanting to expand the horizon when it comes to a group of people coming together sharing similar goals and interests.",
         "avatar": "/img/collections/gymkongz/avatar.webp",
@@ -12996,7 +12996,7 @@
       "name": "Rebel Punks",
       "slug": "rebel-punks",
       "multiToken": false,
-      "address": "0xc7E77C602D549747AB33C2F0137Cbcb42eeF2bB8",
+      "address": "0x20C4512a2D6FB66E5Ee3A704167c0c67B9B846dD",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -13314,6 +13314,9 @@
         },
         {
           "id": 18
+        },
+        {
+          "id": 19
         }
       ],
       "address": "0x7dE8BeC3ACf03997CDf3052c769571bbbBb7eE14",
@@ -14302,13 +14305,13 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "7,777 Degenerate Apes on the Cronos network that pay 75% royalties to their holders each week.",
+        "description": "DACC shares 75% of its royalties with holders. Holders of 5+ DACC qualify for the weekly royalty payment.",
         "avatar": "/img/collections/degen-ape-cronos-club/avatar.webp",
         "banner": "/img/collections/degen-ape-cronos-club/banner.webp",
         "card": "/img/collections/degen-ape-cronos-club/card.webp",
-        "website": "https://degenapecronos.club/",
+        "website": "https://daccdisco.club/",
         "twitter": "https://twitter.com/degenapecroclub",
-        "discord": "https://discord.gg/mfunkW2fZk",
+        "discord": "https://discord.gg/yzsHeAr49c",
         "categories": [
           "collectibles"
         ],
@@ -17139,7 +17142,7 @@
         "card": "/img/collections/blumies/card.webp",
         "website": "https://www.blumiesofficial.com/",
         "twitter": "https://twitter.com/BlumiesNFT",
-        "discord": "https://discord.gg/d4HhNDTHSV",
+        "discord": "https://discord.gg/gQEmwg43Dg",
         "medium": "https://blumies.gitbook.io/blumies-nft/",
         "categories": []
       },
@@ -17521,7 +17524,7 @@
       "multiToken": false,
       "address": "0xfaDb4ef67596492534d7315C405B4B06D1e19Bf1",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "CroHamsterNFT Items MK1 is a collection of 1000 animated 3D NFT Items that builds on our CroHamsterNFT collection for use in our CroHamster arena. These Item NFTs have different combat values and rarities! Owning such an Item will increase your CroHamsterNFT's combat abilities in one of our arena matchups, where you can compete for great NFT and Cro rewards and work your way up to our Hall of Fame for even more rewards and glory! In addition, 100% of the funds resulting from this Item collection will be used to burn the CroHamsterNFT floor price in multiple unannounced waves and expand our CroHamsterNFT Universe!",
         "avatar": "/img/collections/crohamsternft-items-mk1/avatar.webp",
@@ -17662,6 +17665,497 @@
       "verification": {
         "doxx": true,
         "kyc": "phenix",
+        "verified": true
+      }
+    },
+    {
+      "name": "Reckless Robots Legends",
+      "slug": "reckless-robots-legends",
+      "multiToken": false,
+      "address": "0xf96ec7C11D311920833753FAB9b174B6FD53517E",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Reckless Robots Legends is a collection of 3000 hand-drawn NFTs deployed on the Cronos Chain. The collection consists of three (3) main Classes starring the Commander, The Void and The Beast. These three will be put to a test as they battle it out to become true Legends of Cronos",
+        "avatar": "/img/collections/reckless-robots-legends/avatar.webp",
+        "banner": "/img/collections/reckless-robots-legends/banner.webp",
+        "card": "/img/collections/reckless-robots-legends/card.webp",
+        "website": "https://www.recklessrobotsnft.com/",
+        "twitter": "https://twitter.com/recklessrobots",
+        "discord": "https://discord.gg/Nk4PHjdhcs",
+        "medium": "https://medium.com/@recklessrobots",
+        "telegram": "https://t.me/recklessrobotsnft",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Carkayous - Serkin Tree",
+      "slug": "carkayous-serkin-tree",
+      "multiToken": false,
+      "address": "0x00A605feDeF87d8C53D46d17eda9E3fe37d9927B",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "These serkin trees drop acorns (which can be used to rebate Carkayous NFTs) after every drop.",
+        "avatar": "/img/collections/carkayous-serkin-tree/avatar.webp",
+        "banner": "/img/collections/carkayous-serkin-tree/banner.webp",
+        "card": "/img/collections/carkayous-serkin-tree/card.webp",
+        "website": "https://carkayous.com/",
+        "twitter": "https://twitter.com/carkayous",
+        "discord": "https://discord.gg/carkayous",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Rebel Kangas",
+      "slug": "rebel-kangas",
+      "multiToken": false,
+      "address": "0xB494b51a76E9b95708c9Fa9D1477FE5e3eFAf281",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Hi! Meet the Rebel Kangas, the bad guys on the chain! Calling out scams, pumps, and dumps and taking no nonsense. We're a force for good but labeled the bad guys.",
+        "avatar": "/img/collections/rebel-kangas/avatar.webp",
+        "banner": "/img/collections/rebel-kangas/banner.webp",
+        "card": "/img/collections/rebel-kangas/card.webp",
+        "website": "https://Roo.Finance/",
+        "twitter": "https://twitter.com/RooFinance",
+        "discord": "https://discord.gg/4u5muHcdaJ",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Kingdom Ape",
+      "slug": "kingdom-ape",
+      "multiToken": false,
+      "address": "0x19C56cDA2c358202778b68F4fBCc301969af6387",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Kingdom ape is a pfps derivative nft project designed by Azariel. Each NFT is unique and different from the others in both rarity and appearance, 69 traits that create thousands of different possible combinations. Among them is also hidden a completely golden 1/1.  In addition holder receive 80% of royalties shared with the community, free mint next collection and the ability to edit the look of your nft with the details you prefer.",
+        "avatar": "/img/collections/kingdom-ape/avatar.webp",
+        "banner": "/img/collections/kingdom-ape/banner.webp",
+        "card": "/img/collections/kingdom-ape/card.webp",
+        "website": "https://Roo.Finance/",
+        "twitter": "https://twitter.com/cro_kingdom",
+        "discord": "https://discord.gg/FqfxCcdxc7",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Cr00ts",
+      "slug": "cr00ts",
+      "multiToken": false,
+      "address": "0xca00aba7689e3c0f9f74e1f8d82e61c04c787734",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Cr00ts rolled into Cronos and are taking over !  Born from the hands of 8 talented artists \uD83C\uDFA8 Giving 50% of secondary markets ROI to holders, beneficial partnerships, growing investment pool, and more to come !  Join the fam, join the fun \uD83D\uDC8E",
+        "avatar": "/img/collections/cr00ts/avatar.webp",
+        "card": "/img/collections/cr00ts/card.webp",
+        "banner": "/img/collections/cr00ts/banner.webp",
+        "website": "https://cr00tsnft.ca/",
+        "twitter": "https://twitter.com/cr00tsnft",
+        "discord": "https://discord.gg/Xb5xv84mS2",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Pepe de Fiera",
+      "slug": "pepe-de-fiera",
+      "multiToken": false,
+      "address": "0x38fA7eA9f021dc1E9bca4414b2d6f1e4Cc626102",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Fiera.cro's VIP token. Gain exclusive access to content and benefits.",
+        "avatar": "/img/collections/pepe-de-fiera/avatar.webp",
+        "card": "/img/collections/pepe-de-fiera/card.webp",
+        "banner": "/img/collections/pepe-de-fiera/banner.webp",
+        "discord": "https://discord.gg/AbXqKmpRyq",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Fallen Angels - Demons",
+      "slug": "fallen-angels-demons",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Fallen Angels is a collection of 1998 uniquely generated NFTs on the Cronos Chain.Each Fallen Angel NFT is generated with over 70+ Attributes with different rarities and 10 Legendaries.",
+        "avatar": "/img/collections/fallen-angels-demons/avatar.webp",
+        "card": "/img/collections/fallen-angels-demons/card.webp",
+        "banner": "/img/collections/fallen-angels-demons/banner.webp",
+        "website": "https://www.pocketdemons.net/",
+        "twitter": "https://twitter.com/PDemon_Official",
+        "discord": "https://discord.gg/sXrJZR983J",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Fallen Angels - Demons",
+      "slug": "fallen-angels-demons",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Fallen Angels is a collection of 1998 uniquely generated NFTs on the Cronos Chain.Each Fallen Angel NFT is generated with over 70+ Attributes with different rarities and 10 Legendaries.",
+        "avatar": "/img/collections/fallen-angels-demons/avatar.webp",
+        "card": "/img/collections/fallen-angels-demons/card.webp",
+        "banner": "/img/collections/fallen-angels-demons/banner.webp",
+        "website": "https://www.pocketdemons.net/",
+        "twitter": "https://twitter.com/PDemon_Official",
+        "discord": "https://discord.gg/sXrJZR983J",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "croFI$H Gen1 - The Clownfish",
+      "slug": "crofish-gen1-the-clownfish",
+      "multiToken": false,
+      "address": "0x9131b97062e52B0C6cB7088F99a9987ea8B22f6F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Actually we got a part of ocean life. Which one is the cutest? Yes, we call him Nemo, you know why. What started as emoji’s has be reborn as a NFT collection. We call it croFI$H Nemo will be our gen1 drop on Corgistudios. It’s a collection of 3333  It’s a mint of 35 CRO After mint out. We make staking available at corgistudios for $MAC token. We are planning to bring out our next gen2 within reasonable time. We keep it a surprise for now which ocean creature will  live alongside with 3333 other nemos.",
+        "avatar": "/img/collections/crofish-gen1-the-clownfish/avatar.webp",
+        "card": "/img/collections/crofish-gen1-the-clownfish/card.webp",
+        "banner": "/img/collections/crofish-gen1-the-clownfish/banner.webp",
+        "twitter": "https://twitter.com/crofishteam",
+        "discord": "https://discord.gg/wsQjjZ3Zkm",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "croFI$H Gen2 - The Crab",
+      "slug": "crofish-gen2-the-crab",
+      "multiToken": false,
+      "address": "0xcb7415a13195aDf530666329ED179570892637D9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "croFI$H https://linktr.ee/crofish   A brand named croFI$H found by Viaron, a well known NFT artist on Cronos Chain and crypto.com, created the Ocean Life collection. She is the founder of Trappazoids. Her second project is called croFI$H, where she partnered up with a highly respected community manager and founder of MACnifty. The croFI$H collection is unique because it is a collectible NFT project. Investors can collect their croFI$H NFTs and bring them to life by letting them free in their own Ocean they have purchased. The release of Ocean plots is scheduled for mid-March 2023. We might have our first foray into selling virtual ocean plots. We started our Gen1 with “The Clownfish” on January the 27th in the year 2023. Gen2 \"The Crab\" was subsequently released on February 2nd. Gen3 \"The Turtles\" is planned to be released on February 9th. Every week we drop the next generation to provide a collecting aspect, which will create a fun factor.  We want to make the investors aware of how special all these species are the fish, reptiles, memels, and invertebrates and that there has to be awareness of how special the ocean is. Every mintable collection will be explained on https://trappazoids.com. It will be the stand alone ocean life encyclopedia. We like to contribute to charities that keep our oceans clean to provide a healthy habitat for ocean life. By providing investors with information about the diversity of ocean species, we hope to create a heightened awareness of the importance of protecting our oceans and the life within them. To do our part, croFI$H will donate a portion of its profits to ocean conservation charities.",
+        "avatar": "/img/collections/crofish-gen2-the-crab/avatar.webp",
+        "card": "/img/collections/crofish-gen2-the-crab/card.webp",
+        "banner": "/img/collections/crofish-gen2-the-crab/banner.webp",
+        "twitter": "https://twitter.com/crofishteam",
+        "discord": "https://discord.gg/wsQjjZ3Zkm",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "croFI$H Gen3 - The Sea Turtle",
+      "slug": "crofish-gen3-the-sea-turtle",
+      "multiToken": false,
+      "address": "0x1Ee55A9D7E9a9964EF7415f8b6127C9EF83d2419",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "croFI$H https://linktr.ee/crofish   A brand named croFI$H found by Viaron, a well known NFT artist on Cronos Chain and crypto.com, created the Ocean Life collection. She is the founder of Trappazoids. Her second project is called croFI$H, where she partnered up with a highly respected community manager and founder of MACnifty. The croFI$H collection is unique because it is a collectible NFT project. Investors can collect their croFI$H NFTs and bring them to life by letting them free in their own Ocean they have purchased. The release of Ocean plots is scheduled for mid-March 2023. We might have our first foray into selling virtual ocean plots. We started our Gen1 with “The Clownfish” on January the 27th in the year 2023. Gen2 \"The Crab\" was subsequently released on February 2nd. Gen3 \"The Turtles\" is planned to be released on February 9th. Every week we drop the next generation to provide a collecting aspect, which will create a fun factor.  We want to make the investors aware of how special all these species are the fish, reptiles, memels, and invertebrates and that there has to be awareness of how special the ocean is. Every mintable collection will be explained on https://trappazoids.com. It will be the stand alone ocean life encyclopedia. We like to contribute to charities that keep our oceans clean to provide a healthy habitat for ocean life. By providing investors with information about the diversity of ocean species, we hope to create a heightened awareness of the importance of protecting our oceans and the life within them. To do our part, croFI$H will donate a portion of its profits to ocean conservation charities.",
+        "avatar": "/img/collections/crofish-gen3-the-sea-turtle/avatar.webp",
+        "card": "/img/collections/crofish-gen3-the-sea-turtle/card.webp",
+        "banner": "/img/collections/crofish-gen3-the-sea-turtle/banner.webp",
+        "twitter": "https://twitter.com/crofishteam",
+        "discord": "https://discord.gg/wsQjjZ3Zkm",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "croFI$H Gen4 - The Seahorse",
+      "slug": "crofish-gen4-the-seahorse",
+      "multiToken": false,
+      "address": "0x4b396a722d0116b90475C567d2361d807766CF66",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/crofish-gen4-the-seahorse/avatar.webp",
+        "card": "/img/collections/crofish-gen4-the-seahorse/card.webp",
+        "banner": "/img/collections/crofish-gen4-the-seahorse/banner.webp",
+        "twitter": "https://twitter.com/crofishteam",
+        "discord": "https://discord.gg/wsQjjZ3Zkm",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "MonoMorphs",
+      "slug": "monomorphs",
+      "multiToken": false,
+      "address": "0x68Ec244796Ca8Ae4De88a049C8D2D3b761393cC2",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Mysterious Morphs with a lack of color.",
+        "avatar": "/img/collections/monomorphs/avatar.webp",
+        "banner": "/img/collections/monomorphs/banner.webp",
+        "card": "/img/collections/monomorphs/card.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/vQaBeUv5tX",
+        "medium": "https://medium.com/@CroMorphs",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Morphed Brew",
+      "slug": "morphed-brew",
+      "multiToken": false,
+      "address": "0xD863B9b954a20b93693216e1d03E2cCF91669120",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Special brew enhanced by the inhabitants of MetaMorphs.",
+        "avatar": "/img/collections/morphed-brew/avatar.webp",
+        "banner": "/img/collections/morphed-brew/banner.webp",
+        "card": "/img/collections/morphed-brew/card.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/vQaBeUv5tX",
+        "medium": "https://medium.com/@CroMorphs",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Magic Morphing Potions",
+      "slug": "magic-morphing-potions",
+      "multiToken": false,
+      "address": "0x92CE054D908e1d6400D6E04Bc249842afB1239B5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Can be used in MetaMorphis",
+        "avatar": "/img/collections/magic-morphing-potions/avatar.webp",
+        "banner": "/img/collections/magic-morphing-potions/banner.webp",
+        "card": "/img/collections/magic-morphing-potions/card.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/vQaBeUv5tX",
+        "medium": "https://medium.com/@CroMorphs",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "BANDITS VALENTINES DAY COLLECTION",
+      "slug": "bandits-valentines-day-collection",
+      "multiToken": false,
+      "address": "0xD06DB5C70022acCDcA6a096FF64d21Ac1C9eB004",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A seasonal collection brought to you by BANDITS",
+        "avatar": "/img/collections/bandits-valentines-day-collection/avatar.webp",
+        "banner": "/img/collections/bandits-valentines-day-collection/banner.webp",
+        "card": "/img/collections/bandits-valentines-day-collection/card.webp",
+        "twitter": "https://twitter.com/bandits750",
+        "discord": "https://discord.gg/2s7YMT6zK9",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Inventorapes",
+      "slug": "inventorapes",
+      "multiToken": false,
+      "address": "0x5E1aeeE81D92B9Af08DFe8743ebb4e310e495e8D",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "5% Mint Royalty for holders 10% Market Royalty Fee : 5% for Top Traders (Sweep Contest), 5% for project promotion  A lot of Swap contests to get Inventorbots components collections. Get free mint for each: Background, Eyes, Mouth, Body, Head, Ears  Get a 1:1 free mint of the Jewelry \uD83D\uDC8E Inventorbots components only for Inventorapes  For every 20 mints Inventorapes you will receive 1 x free mint next AI CrofamLadies collection  Top 15 holders will get Mythic (gif) Inventorapes  Top 100 holders receive an extra guaranteed drop of each 6 component  Take a mint at each stage and get or win Mythic Inventorapes -> check  Get the required Inventorbots components and build a Inventorbots that will be the most powerful NFT of the CrofamLadies / CrofamSpace ecosystem  Owner of Mythic Inventorapes has guaranteed 10 x free mint of Background, Eyes, Mouth, Body, Head, Ears components  More utility coming soon...",
+        "avatar": "/img/collections/inventorapes/avatar.webp",
+        "banner": "/img/collections/inventorapes/banner.webp",
+        "card": "/img/collections/inventorapes/card.webp",
+        "website": "https://crofamladies.netlify.app/",
+        "twitter": "https://twitter.com/CrofamLadies",
+        "discord": "https://discord.gg/uaE6Sd26Qa",
+        "medium": "https://crofamladies.gitbook.io/crofam-ladies-wp/age-of-inventors/inventorapes",
+        "telegram": "https://twitter.com/InventorsAge",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "These Cronos Kids",
+      "slug": "these-cronos-kids",
+      "multiToken": false,
+      "address": "0xF02B3aB820af29Ebf612634e5c1f47150237BAe4",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "1,111 New Cronos Kids In Town",
+        "avatar": "/img/collections/these-cronos-kids/avatar.webp",
+        "banner": "/img/collections/these-cronos-kids/banner.webp",
+        "card": "/img/collections/these-cronos-kids/card.webp",
+        "website": "https://thesecronoskids.com/",
+        "twitter": "https://twitter.com/TheseCronosKids",
+        "discord": "https://discord.gg/jBVFXQssUw",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Bored Turtle Yacht Club",
+      "slug": "bored-turtle-yacht-club",
+      "multiToken": false,
+      "address": "0x330aCB27d6Fc53Ad374757f796b27fBe4C1d8aC0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Bored Turtle Yacht Club is the very first derivative profile picture (PFP)  Using the traits from the Bored Ape Yacht Club project  launched in the NFT space, consisting of 10,000 uniqueBored Turtles with BAYC traits, algorithmically-generated PFPs. Launch on jan, 2023 the year of the turtle. Slowly but surely we will be known WORLD WIDE.",
+        "avatar": "/img/collections/bored-turtle-yacht-club/avatar.webp",
+        "banner": "/img/collections/bored-turtle-yacht-club/banner.webp",
+        "card": "/img/collections/bored-turtle-yacht-club/card.webp",
+        "website": "https://memesbaynft.com/",
+        "twitter": "https://twitter.com/BoredTurtleYC",
+        "discord": "https://discord.gg/t59gQmXMfg",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Hidden Avatars",
+      "slug": "hidden-avatars",
+      "multiToken": false,
+      "address": "0x28Fc9DaCa33E0a3Ada666064F54B400E63596c6C",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "4444 Free-to-Mint PFPs brought to you by the Hidden Fish DAO, the #1 DAO on Cronos.",
+        "avatar": "/img/collections/hidden-avatars/avatar.webp",
+        "card": "/img/collections/hidden-avatars/card.webp",
+        "banner": "/img/collections/hidden-avatars/banner.webp",
+        "website": "https://hidethefish.com/",
+        "twitter": "https://twitter.com/HiddenFishDAO",
+        "medium": "https://blog.hidethefish.com",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": "ebisu",
         "verified": true
       }
     }
@@ -23543,7 +24037,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "featured": false,
       "redirect": "https://wedripz.netlify.app/",
@@ -23582,7 +24076,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "featured": false,
       "redirect": "https://www.crodragonsapp.net/",
@@ -23609,7 +24103,7 @@
         "name": "Purple Fantasy",
         "website": "https://www.blumiesofficial.com/",
         "twitter": "https://twitter.com/BlumiesNFT",
-        "discord": "https://discord.gg/d4HhNDTHSV",
+        "discord": "https://discord.gg/gQEmwg43Dg",
         "medium": "https://blumies.gitbook.io/blumies-nft/"
       },
       "address": "0xB278947b945eB7dea7F1822A1801d7e9aEdD8e63",
@@ -23712,7 +24206,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/crohamsternft-items-mk1/drop.webp",
         "banner": "/img/collections/crohamsternft-items-mk1/banner.webp",
@@ -23751,7 +24245,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/turkey-earthquake-support/drop.webp",
         "banner": "/img/collections/turkey-earthquake-support/banner.webp",
@@ -23763,6 +24257,134 @@
         "kyc": true,
         "escrow": false,
         "verified": true
+      }
+    },
+    {
+      "id": 158,
+      "slug": "reckless-robots-legends",
+      "title": "Reckless Robots Legends",
+      "subtitle": "Reckless Robots Legends is a collection of 3000 hand-drawn NFTs deployed on the Cronos Chain. The collection consists of three (3) main Classes starring the Commander, The Void and The Beast. These three will be put to a test as they battle it out to become true Legends of Cronos",
+      "description": "Reckless Robots NFT launched the GEN1 collection in February 2022. The collection was sold out in less than 6 hours.  We are now proud to introduce the Gen2 collection Reckless Robots Legends. \n\nLegends is a collection of 3000 unique NFTs consisting of 3 main classes; The Commander, the Void and the Beast. Each of the main classes come with more than 70 traits in up to 7 main categories. \n\nHolders will be able to battle out their NFTs to gain the Legend form. In the process the losing robot will be destroyed (Burned). Burns decrease the total supply thus making collection NFTs more rare. At the same time Legends will get perks such as better rewards  and ability to manipulate the traits given in the transformation.\n\nReckless Robots Legends collection NFTs can be operated through the Reckless Command Center DApp. The DApp will contain possibilities for voting, holder and project statistics and the transfer of NFTs.",
+      "author": {
+        "name": "Reckless Robots NFT",
+        "website": "https://www.recklessrobotsnft.com/",
+        "twitter": "https://twitter.com/recklessrobots",
+        "discord": "https://discord.gg/Nk4PHjdhcs",
+        "medium": "https://medium.com/@recklessrobots",
+        "telegram": "https://t.me/recklessrobotsnft"
+      },
+      "address": "0xf96ec7C11D311920833753FAB9b174B6FD53517E",
+      "maxMintPerTx": 20,
+      "maxMintPerAddress": 200,
+      "totalSupply": 3000,
+      "cost": "300",
+      "memberCost": "200",
+      "whitelistCost": "200",
+      "foundersOnly": false,
+      "start": 1676664000000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/reckless-robots-legends/drop.webp",
+        "banner": "/img/collections/reckless-robots-legends/banner.webp",
+        "avatar": "/img/collections/reckless-robots-legends/avatar.webp",
+        "preview": "/img/collections/reckless-robots-legends/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": true
+      },
+      "escrow": {
+        "milestones": [
+          "15% of funds raised for the project to be paid at the time of mint",
+          "33% of the remaining funds to be held in escrow until voting is implemented by the project",
+          "67% of remaining funds to be released when a battle system is implemented by the project"
+        ]
+      }
+    },
+    {
+      "id": 159,
+      "slug": "fallen-angels-demons",
+      "title": "Fallen Angels - Demons",
+      "subtitle": "Fallen Angels is a collection of 1998 uniquely generated NFTs on the Cronos Chain.Each Fallen Angel NFT is generated with over 70+ Attributes with different rarities and 10 Legendaries.",
+      "description": "The FallenAngels collection is the Second generation of the PocketDemons Ecosystem on Cronos. The collection consists of 1998 uniquely generated NFT's with 10 Lengendaries and over 70 attributes that will come in handy in our Risk-To-Earn game HellTrumps. The FallenAngel collection will also come with a future breeding utility to bring something New and Powerful to the PocketDemons Ecosystem. Mint a Legendary and enjoy a nice CRO reward as well as a variety of Special utilities within the PocketDemons ecosystem on Cronos.",
+      "author": {
+        "name": "Pocket Demons",
+        "website": "https://www.pocketdemons.net/",
+        "twitter": "https://twitter.com/PDemon_Official",
+        "discord": "https://discord.gg/sXrJZR983J"
+      },
+      "address": "",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 100,
+      "totalSupply": 1998,
+      "cost": "250",
+      "memberCost": "200",
+      "whitelistCost": "200",
+      "foundersOnly": false,
+      "start": 1677009600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/fallen-angels-demons/drop.webp",
+        "banner": "/img/collections/fallen-angels-demons/banner.webp",
+        "avatar": "/img/collections/fallen-angels-demons/avatar.webp",
+        "preview": "/img/collections/fallen-angels-demons/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 159,
+      "slug": "inventorapes",
+      "title": "CroFam Ladies Inventorapes",
+      "subtitle": "5% Mint Royalty for holders 10% Market Royalty Fee : 5% for Top Traders (Sweep Contest), 5% for project promotion  A lot of Swap contests to get Inventorbots components collections. Get free mint for each: Background, Eyes, Mouth, Body, Head, Ears  Get a 1:1 free mint of the Jewelry \uD83D\uDC8E Inventorbots components only for Inventorapes  For every 20 mints Inventorapes you will receive 1 x free mint next AI CrofamLadies collection  Top 15 holders will get Mythic (gif) Inventorapes  Top 100 holders receive an extra guaranteed drop of each 6 component  Take a mint at each stage and get or win Mythic Inventorapes -> check  Get the required Inventorbots components and build a Inventorbots that will be the most powerful NFT of the CrofamLadies / CrofamSpace ecosystem  Owner of Mythic Inventorapes has guaranteed 10 x free mint of Background, Eyes, Mouth, Body, Head, Ears components  More utility coming soon...",
+      "description": "5% Mint Royalty for holders 10% Market Royalty Fee : 5% for Top Traders (Sweep Contest), 5% for project promotion  A lot of Swap contests to get Inventorbots components collections. Get free mint for each: Background, Eyes, Mouth, Body, Head, Ears  Get a 1:1 free mint of the Jewelry \uD83D\uDC8E Inventorbots components only for Inventorapes  For every 20 mints Inventorapes you will receive 1 x free mint next AI CrofamLadies collection  Top 15 holders will get Mythic (gif) Inventorapes  Top 100 holders receive an extra guaranteed drop of each 6 component  Take a mint at each stage and get or win Mythic Inventorapes -> check  Get the required Inventorbots components and build a Inventorbots that will be the most powerful NFT of the CrofamLadies / CrofamSpace ecosystem  Owner of Mythic Inventorapes has guaranteed 10 x free mint of Background, Eyes, Mouth, Body, Head, Ears components  More utility coming soon...",
+      "author": {
+        "name": "CroFam Ladies",
+        "website": "https://crofamladies.netlify.app/",
+        "twitter": "https://twitter.com/CrofamLadies",
+        "discord": "https://discord.gg/uaE6Sd26Qa",
+        "medium": "https://crofamladies.gitbook.io/crofam-ladies-wp/age-of-inventors/inventorapes",
+        "telegram": "https://twitter.com/InventorsAge"
+      },
+      "address": "0x5E1aeeE81D92B9Af08DFe8743ebb4e310e495e8D",
+      "maxMintPerTx": 7,
+      "maxMintPerAddress": 21,
+      "totalSupply": 8888,
+      "cost": "68",
+      "foundersOnly": false,
+      "start": 1676492952000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": false,
+      "redirect": "https://crofamladies.netlify.app/",
+      "images": {
+        "drop": "/img/drops/inventorapes/drop.webp",
+        "banner": "/img/collections/inventorapes/banner.webp",
+        "avatar": "/img/collections/inventorapes/avatar.webp",
+        "preview": "/img/collections/inventorapes/card.webp"
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
       }
     }
   ]

@@ -5,7 +5,6 @@ import {faCheck, faCircle} from '@fortawesome/free-solid-svg-icons';
 import {Collapse, Spinner} from 'react-bootstrap';
 import styled from 'styled-components';
 import LayeredIcon from '../components/LayeredIcon';
-import Footer from '../components/Footer';
 import CollectionInfoBar from '../components/CollectionInfoBar';
 import SalesCollection from '../components/SalesCollection';
 import CollectionNftsGroup from '../components/CollectionNftsGroup';
@@ -396,8 +395,6 @@ const Collection721 = ({ collection, query, activeDrop = null}) => {
       {/*    </div>*/}
       {/*  </div>*/}
       {/*)}*/}
-
-      <Footer />
     </div>
   );
 };

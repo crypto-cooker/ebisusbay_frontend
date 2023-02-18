@@ -173,7 +173,7 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
       isInCart: isInCart,
       canBuy: nft.market && canBuy
     });
-console.log(nft)
+
   return (
     <>
       <Box

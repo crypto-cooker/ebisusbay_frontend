@@ -4,7 +4,7 @@ import Collection1155 from '../../src/Components/Collection/collection1155';
 import Collection721 from '../../src/Components/Collection/collection721';
 import {caseInsensitiveCompare, isAddress, isBundle, isCollection} from '@src/utils';
 import {appConfig} from "@src/Config";
-import PageHead from "../../src/Components/Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 import {hostedImage} from "@src/helpers/image";
 
 const collectionTypes = {

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Footer from '../../components/Footer';
 import AuctionCollection from '../../components/AuctionCollection';
 import MetaverseModal from '../../components/MetaverseModal';
 import CuratedAuctionCollection from "./CuratedAuctionCollection";
@@ -36,7 +35,6 @@ const MadAuction = () => {
           </div>
         </div>
       </section>
-      <Footer />
     </div>
   );
 };

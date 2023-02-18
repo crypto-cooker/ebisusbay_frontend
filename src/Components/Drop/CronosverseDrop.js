@@ -14,7 +14,6 @@ import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
-import Footer from '../components/Footer';
 import { connectAccount } from '../../GlobalState/User';
 import { createSuccessfulTransactionToastContent, isFounderDrop, newlineText } from '../../utils';
 import { dropState as statuses } from '../../core/api/enums';
@@ -489,7 +488,6 @@ const CronosverseDrop = () => {
           )}
         </section>
       </>
-      <Footer />
     </div>
   );
 };

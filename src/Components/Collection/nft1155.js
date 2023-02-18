@@ -14,7 +14,6 @@ import { Spinner } from 'react-bootstrap';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
 import ProfilePreview from '../components/ProfilePreview';
-import Footer from '../components/Footer';
 import {
   caseInsensitiveCompare,
   findCollectionByAddress,
@@ -638,7 +637,6 @@ const Nft1155 = ({ address, id, collection }) => {
           nftAddress={address}
         />
       )}
-      <Footer />
     </div>
   );
 };

@@ -15,7 +15,6 @@ import MetaMaskOnboarding from '@metamask/onboarding';
 import {Badge, Spinner} from 'react-bootstrap';
 
 import ProfilePreview from '../components/ProfilePreview';
-import Footer from '../components/Footer';
 import LayeredIcon from '../components/LayeredIcon';
 import {AnyMedia} from '../components/AnyMedia';
 import ProfileImage from '../components/ProfileImage'
@@ -965,7 +964,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
                               <Flex gap='15px'>
                                 <Box w='72px'>
                                   <AnyMedia
-                                    image={specialImageTransform('0xe94ac1647bF99FE299B2aDcF53FcF57153C23Fe1', nft.image)}
+                                    image={specialImageTransform(nft.address, nft.image)}
                                     video={nft.video ?? nft.animation_url}
                                     videoProps={{ height: 'auto', autoPlay: true }}
                                     title={'title'}
@@ -1016,7 +1015,6 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
           nftAddress={address}
         />
       )}
-      <Footer />
     </div>
   );
 };

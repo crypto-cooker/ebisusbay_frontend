@@ -103,12 +103,12 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
                   {isCollectionOffer ? (
                     <div className="profile_avatar d-flex justify-content-center mb-2">
                       <div className="dialog_avatar position-relative">
-                      {collection.metadata.avatar ? (
+                      {collection?.metadata?.avatar ? (
                         <img src={hostedImage(collection.metadata.avatar)} alt={collection.name} />
                       ) : (
                         <Blockies seed={(offer.nftAddress).toLowerCase()} size={15} scale={10} />
                       )}
-                      {collection.verification.verified && (
+                      {collection?.verification?.verified && (
                         <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={8} stackClass="eb-avatar_badge" />
                       )}
                       </div>

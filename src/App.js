@@ -12,9 +12,10 @@ import firebaseConfig from './Firebase/firebase_config';
 import { initProvider } from './GlobalState/User';
 import { appInitializer } from './GlobalState/InitSlice';
 import { getTheme } from './Theme/theme';
-import {DefaultHead} from "./Components/Head/DefaultHead";
+import DefaultHead from "@src/components-v2/shared/layout/default-head";
 import {useColorMode} from "@chakra-ui/react";
 import {syncCartStorage} from "@src/GlobalState/cartSlice";
+import Footer from "@src/components-v2/shared/layout/footer";
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -86,6 +87,7 @@ function App({ Component, pageProps }) {
         <div style={{paddingTop:'74px'}}>
           <Component {...pageProps} />
         </div>
+        <Footer />
         <ScrollToTopBtn />
         <ToastContainer
           position={toast.POSITION.BOTTOM_LEFT}

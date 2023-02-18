@@ -12,7 +12,6 @@ import ReactPlayer from 'react-player';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
 
-import Footer from '../components/Footer';
 import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import { fetchMemberInfo, fetchVipInfo } from '@src/GlobalState/Memberships';
 import {
@@ -563,7 +562,6 @@ const RyoshiDrop = ({drop}) => {
           </div>
         </section>
       </>
-      <Footer />
     </div>
   );
 };
