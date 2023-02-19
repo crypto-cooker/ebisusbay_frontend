@@ -4,6 +4,13 @@ export enum ListingState {
     CANCELLED
 }
 
+export enum OfferState {
+    ACTIVE,
+    ACCEPTED,
+    REJECTED,
+    CANCELLED
+}
+
 export enum InvalidState {
     FALSE,
     UNKNOWN,

@@ -1,15 +1,17 @@
 import {ListingsQuery} from "@src/core/services/api-service/mapi/queries/listings";
 import {PagedList} from "@src/core/services/api-service/paginated-list";
-import Listing from "@src/services/api-service/models/listing";
 import Cms from "@src/core/services/api-service/cms";
 import Mapi from "@src/core/services/api-service/mapi";
 import axios, {AxiosInstance} from "axios";
 import SearchQuery from "@src/core/services/api-service/mapi/queries/search";
+import OffersQuery from "@src/core/services/api-service/mapi/queries/offers";
+import Listing from "@src/core/models/listing";
 
 interface Api {
   getListings(query?: ListingsQuery): Promise<PagedList<Listing>>;
   getProfile(addressOrUsername: string): Promise<any>;
   search(query?: SearchQuery): Promise<PagedList<any>>;
+  getOffers(query?: OffersQuery): Promise<PagedList<any>>
 }
 
 export class ApiService implements Api {
@@ -31,6 +33,14 @@ export class ApiService implements Api {
 
   async search(query?: SearchQuery): Promise<PagedList<any>> {
     return await this.mapi.search(query);
+  }
+
+  async getOffers(query?: OffersQuery): Promise<PagedList<any>> {
+    return await this.mapi.getOffers(query);
+  }
+
+  async getOffersByUser(address: string, query?: OffersQuery): Promise<PagedList<any>> {
+    return await this.mapi.getOffersByUser(address, query);
   }
 }
 
@@ -55,6 +65,12 @@ export class NextApiService implements Api {
 
   async search(query?: SearchQuery): Promise<PagedList<any>> {
     return await this.next.get(`search`, {
+      params: query
+    });
+  }
+
+  async getOffers(query?: OffersQuery): Promise<PagedList<any>> {
+    return await this.next.get(`offers`, {
       params: query
     });
   }
