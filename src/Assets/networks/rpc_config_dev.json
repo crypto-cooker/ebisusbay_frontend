@@ -17142,7 +17142,7 @@
         "card": "/img/collections/blumies/card.webp",
         "website": "https://www.blumiesofficial.com/",
         "twitter": "https://twitter.com/BlumiesNFT",
-        "discord": "https://discord.gg/d4HhNDTHSV",
+        "discord": "https://discord.gg/gQEmwg43Dg",
         "medium": "https://blumies.gitbook.io/blumies-nft/",
         "categories": []
       },
@@ -18157,6 +18157,54 @@
         "doxx": "private",
         "kyc": "ebisu",
         "verified": true
+      }
+    },
+    {
+      "name": "The Rich Girls",
+      "slug": "the-rich-girls",
+      "multiToken": false,
+      "address": "0x4C541775335ca46ED6aC965688851A15841B83F1",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Rich Kids is a three part set of 10,000 boys, 10,000 girls, and 10,000 jets. All building on each other to create a unique ecosystem exploring the debauchery of the upper class at their worst. The Girls compliment the Boys to pilot the jets.",
+        "avatar": "/img/collections/the-rich-girls/avatar.webp",
+        "card": "/img/collections/the-rich-girls/card.webp",
+        "banner": "/img/collections/the-rich-girls/banner.webp",
+        "website": "https://www.trknft.com/",
+        "twitter": "https://twitter.com/TRK_CRO",
+        "discord": "https://discord.gg/C2nYz7Ajpp",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "MCA Epics and Legends",
+      "slug": "mca-epics-and-legends",
+      "multiToken": false,
+      "address": "0x5f65A36f55964bb8C2C7983bB2Ede2E0698B15F7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/mca-epics-and-legends/avatar.webp",
+        "card": "/img/collections/mca-epics-and-legends/card.webp",
+        "banner": "/img/collections/mca-epics-and-legends/banner.webp",
+        "website": "https://mooncrew.club/",
+        "twitter": "https://twitter.com/mooncrew_cro",
+        "discord": "https://discord.gg/phuC5GpwDV",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
@@ -24103,7 +24151,7 @@
         "name": "Purple Fantasy",
         "website": "https://www.blumiesofficial.com/",
         "twitter": "https://twitter.com/BlumiesNFT",
-        "discord": "https://discord.gg/d4HhNDTHSV",
+        "discord": "https://discord.gg/gQEmwg43Dg",
         "medium": "https://blumies.gitbook.io/blumies-nft/"
       },
       "address": "0xB278947b945eB7dea7F1822A1801d7e9aEdD8e63",
