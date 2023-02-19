@@ -18181,6 +18181,31 @@
         "kyc": false,
         "verified": false
       }
+    },
+    {
+      "name": "MCA Epics and Legends",
+      "slug": "mca-epics-and-legends",
+      "multiToken": false,
+      "address": "0x5f65A36f55964bb8C2C7983bB2Ede2E0698B15F7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/mca-epics-and-legends/avatar.webp",
+        "card": "/img/collections/mca-epics-and-legends/card.webp",
+        "banner": "/img/collections/mca-epics-and-legends/banner.webp",
+        "website": "https://mooncrew.club/",
+        "twitter": "https://twitter.com/mooncrew_cro",
+        "discord": "https://discord.gg/phuC5GpwDV",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
