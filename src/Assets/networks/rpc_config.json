@@ -18190,7 +18190,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "",
+        "description": "MCA Epics and Legends is a special collection of Epics and Legendary MCA. 100% secondary royalties back to holders, 50% royalties of 1000 MCA will also go to Epics and Legends Holders. Holding legendary MCA will grant you to have more power voting on Community votes.",
         "avatar": "/img/collections/mca-epics-and-legends/avatar.webp",
         "card": "/img/collections/mca-epics-and-legends/card.webp",
         "banner": "/img/collections/mca-epics-and-legends/banner.webp",
@@ -18203,6 +18203,29 @@
       },
       "verification": {
         "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Dead Beat Dads",
+      "slug": "dead-beat-dads",
+      "multiToken": false,
+      "address": "0xe971838ced4949e5c51dd7baa6d2d0188ed772f0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collection of 3000 hand drawn pixelated NFTs drawn by a IRL Dad that spends all his time trading crypto/NFTs instead of caring for his family. With 6 trait categories and 10-14 traits within every category, each DBD will be unique. There are also 5 legendary DBDs within the collection!",
+        "avatar": "/img/collections/dead-beat-dads/avatar.webp",
+        "card": "/img/collections/dead-beat-dads/card.webp",
+        "banner": "/img/collections/dead-beat-dads/banner.webp",
+        "website": "https://deadbeatdadscronos.com/",
+        "twitter": "https://twitter.com/zolape01",
+        "discord": "https://discord.gg/KnRmEA4u8v",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
         "doxx": false,
         "kyc": false
       }
