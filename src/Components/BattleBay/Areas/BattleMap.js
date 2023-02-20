@@ -8,10 +8,12 @@ import { useDisclosure } from '@chakra-ui/react'
 const BattleMap = ({onBack, factions=[]}) => {
 
   //#region variables
+  const gif = "/img/battle-bay/fire.gif";
 
   const troopsTableRef = useRef();
   const [selectedRegion, setSelectedRegion] = useState("None");
   const regionFlags = ["pin-Southern-Trident", "pin-Dragonland", "pin-Human-Kingdoms", "pin-Dwarf-Mines"];
+  const flagSize = "32px";
  
   const { isOpen, onOpen, onClose } = useDisclosure();
   class Deployment {
@@ -53,25 +55,25 @@ let deployedTroops = new DeployedTroops()
 //#endregion
 
 //#region Map Zooming
-  const [zoomState, setZoomState] = useState({
-    offsetX: 0,
-    offsetY: 0,
-    scale: 1,
-  });
-  const changeCanvasState = (ReactZoomPanPinchRef, event) => {
-    setZoomState({
-      offsetX: ReactZoomPanPinchRef.state.positionX,
-      offsetY: ReactZoomPanPinchRef.state.positionY,
-      scale: ReactZoomPanPinchRef.state.scale,
-    });
-  };
+  // const [zoomState, setZoomState] = useState({
+  //   offsetX: 0,
+  //   offsetY: 0,
+  //   scale: 1,
+  // });
+  // const changeCanvasState = (ReactZoomPanPinchRef, event) => {
+  //   setZoomState({
+  //     offsetX: ReactZoomPanPinchRef.state.positionX,
+  //     offsetY: ReactZoomPanPinchRef.state.positionY,
+  //     scale: ReactZoomPanPinchRef.state.scale,
+  //   });
+  // };
 //#endregion
 
 //#region Map Functions
 useEffect(() => {
   console.log("this is from battleMap useEffect")
   // holdRefs(defenderFactionInputRef);
-  resizeBattleMap();
+  // resizeBattleMap();
   setUpBattleMap();
   // setUpMapZooming();
 });
@@ -218,26 +220,22 @@ function getWinningFactionInRegion(region)
   return (
 
 
-<section>
+  <section>
 
-<FactionForm isOpen={isOpen} onClose={onClose} title={selectedRegion} factions={factions}/>
+  <FactionForm isOpen={isOpen} onClose={onClose} title={selectedRegion} factions={factions}/>
 
-<button className="btn" onClick={onBack}>Back to Village Map</button>
-<p className="title text-center">Select a region to deploy troops to</p>
-<p className="text-center"></p>
-  <div className="container" >
-    <TransformWrapper
-        // onZoom={changeCanvasState}
-        // onPinching={changeCanvasState}
-        // onPinchingStop={changeCanvasState}
-        // onPanningStop={changeCanvasState}
-        // onPanning={() => setModalFlag('none')}
-        >
+  <button className="btn" onClick={onBack}>Back to Village Map</button>
+
+  <p className="title text-center">Select a region to deploy troops to</p>
+
+  <div className="container">
+    <TransformWrapper>
       <TransformComponent>
 
       <img src="/img/battle-bay/fantasyRisk2.png" alt="Trulli" useMap="#image-map" width="100%" 
         style={{backgroundRepeat: 'repeat', backgroundImage:'url("/img/battle-bay/ocean-3.png")'}} 
         className={`${styles.mapImageArea}`} id="islandMap" />
+
       <map name="image-map" width="100%" height="100%" className={`${styles.mapImageArea}`}>
         <area onMouseOver={getRegionStats("Southern Trident" , 'pin-Southern-Trident')} alt="Southern Trident" 
           onClick={() => {selectRegion("Southern Trident", troopsTableRef); onOpen();}}
@@ -253,42 +251,44 @@ function getWinningFactionInRegion(region)
           coords="825,567,853,576,891,569,900,558,939,562,961,564,981,558,1018,564,1033,553,1038,517,1027,476,1004,499,954,521,918,517,914,497,902,474,
           889,458,898,427,900,400,893,379,877,359,850,361,821,357,807,366,776,363,753,352,737,339,712,361,728,370,724,384,735,397,719,418,728,449,708,
           460,685,474,710,491,721,521,753,542,778,536,782,512,805,503,823,485,853,497,873,506,873,519,850,533,846,548,837,556" shape="poly"/>
-      
       </map>
 
-      <div id="pin-Southern-Trident" onMouseOver={getRegionStats("Southern Trident", 'pin-Southern-Trident')}
-        title="Southern Trident" onClick={()=> selectRegion("Southern Trident", troopsTableRef)} 
-        className="image" style={{marginTop: '-20%', marginLeft: '20%', zIndex:"9", pointerEvents:"none"}}>
-        <img src=""  width="32" height="32" className="factionIcon"/>
+      <div id="pin-Southern-Trident" title="Southern Trident"
+        style={{position:"absolute", marginTop: '32%', marginLeft: '20%', zIndex:"9", pointerEvents:"none"}}>
+        <img src=""  width={flagSize} height={flagSize} className="factionIcon"/>
         <div className= "pinText"><h3 className="head">pin-Southern-Trident</h3></div>
       </div>
-      <div id="pin-Dragonland" className="image" 
-        title="Dragonland" style={{marginTop: '-45%', marginLeft: '-10%', zIndex:"9", pointerEvents:"none"}} >
-        <img src=""  width="32" height="32" className="factionIcon"/>
+      <div id="pin-Dragonland" title="Dragonland" 
+        style={{position:"absolute", marginTop: '17%', marginLeft: '24%', zIndex:"9", pointerEvents:"none"}}>
+        <img src=""  width={flagSize} height={flagSize} className="factionIcon"/>
         <div  className="pinText"><h3 className="head">pin-dragon</h3></div>
       </div>
-      <div id="pin-Dwarf-Mines" onMouseOver={getRegionStats("Dwarf Mines" , 'pin-Dwarf-Mines')} 
-        className="image" title="Dwarf Mines" style={{marginTop: '-30%', marginLeft: '15%', zIndex:"9", pointerEvents:"none"}}
-        onClick={()=> selectRegion("Dwarf-Mines", troopsTableRef)}>
-        <img src=""  width="32" height="32" className="factionIcon"/>
+      <div id="pin-Dwarf-Mines" title="Dwarf Mines" 
+        style={{position:"absolute", marginTop: '32%', marginLeft: '47%', zIndex:"9", pointerEvents:"none"}}>
+        <img src=""  width={flagSize} height={flagSize} className="factionIcon"/>
         <div className="pinText"><h3 className="head">pin-Dwarf-Mines</h3></div>
       </div>
-      <div id="pin-Human-Kingdoms" onMouseOver={getRegionStats("Human Kingdoms", 'pin-Human-Kingdoms')} 
-        className="image" title="Human Kingdoms" style={{marginTop: '-25%', marginLeft: '10%', zIndex:"9", pointerEvents:"none"}}
-        onClick={()=> selectRegion("Human Kingdoms", troopsTableRef)}>
-        <img src=""  width="32" height="32" className="factionIcon"/>
+      <div id="pin-Human-Kingdoms" title="Human Kingdoms" 
+        style={{position:"absolute", marginTop: '30%', marginLeft: '63%', zIndex:"9", pointerEvents:"none"}}>
+        <img src=""  width={flagSize} height={flagSize} className="factionIcon"/>
         <div className="pinText"><h3 className="head">pin-Human-Kingdoms</h3></div>
       </div>
 
-      </TransformComponent>
-    </TransformWrapper>
+      <div 
+        style={{position:"absolute", marginTop: '25%', marginLeft: '50%', zIndex:"9", pointerEvents:"none"}}>
+        <img src={gif}  width="50" height="50"/>
+      </div>
 
-  </div>
-    <p  className = "TitleText"></p>
+        </TransformComponent>
+      </TransformWrapper>
+
+    </div>
+
+    {/* <p  className = "TitleText"></p>
     <p id="desc" className="css-1fzih88">Mouse over a region to see the troops deployed to it.</p>
-    <p id="deploymentNotes" className = "basicText"></p>
-</section>
-  
+    <p id="deploymentNotes" className = "basicText"></p> */}
+
+  </section>
   )
 };
 
