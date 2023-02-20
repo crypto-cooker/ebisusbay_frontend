@@ -13,6 +13,7 @@ import {useSelector} from "react-redux";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
 import {getQuickWallet} from "@src/core/api/endpoints/wallets";
 import {getCollectionMetadata} from "@src/core/api";
+import {OfferType} from "@src/core/services/api-service/types";
 
 const StyledNav = styled.div`
   .nav-link {
@@ -167,10 +168,10 @@ export default function Offers({ address }) {
           </div>
           <Tab.Content >
             <Tab.Pane eventKey={tabs.madeDirect.key}>
-              <MadeOffers address={address} type="direct" />
+              <MadeOffers address={address} type={OfferType.DIRECT} />
             </Tab.Pane>
             <Tab.Pane eventKey={tabs.madeCollection.key}>
-              <MadeOffers address={address} type="collection" />
+              <MadeOffers address={address} type={OfferType.COLLECTION} />
             </Tab.Pane>
             <Tab.Pane eventKey={tabs.receivedDirect.key}>
               {receivedOffersDeps && (
