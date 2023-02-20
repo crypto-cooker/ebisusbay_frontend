@@ -3,9 +3,10 @@ import {PagedList} from "@src/core/services/api-service/paginated-list";
 import Cms from "@src/core/services/api-service/cms";
 import Mapi from "@src/core/services/api-service/mapi";
 import SearchQuery from "@src/core/services/api-service/mapi/queries/search";
-import OffersQuery from "@src/core/services/api-service/mapi/queries/offers";
+import OffersQuery, {OffersQueryParams} from "@src/core/services/api-service/mapi/queries/offers";
 import Listing from "@src/core/models/listing";
 import {Api} from "@src/core/services/api-service/types";
+import {Offer} from "@src/core/models/offer";
 
 
 
@@ -34,12 +35,15 @@ export class ApiService implements Api {
     return await this.mapi.search(query);
   }
 
-  async getOffers(query?: OffersQuery): Promise<PagedList<any>> {
+  async getOffers(query?: OffersQueryParams): Promise<PagedList<Offer>> {
     return await this.mapi.getOffers(query);
   }
 
-  async getOffersByUser(address: string, query?: OffersQuery): Promise<PagedList<any>> {
-    return await this.mapi.getOffersByUser(address, query);
+  async getMadeOffersByUser(address: string, query?: OffersQueryParams): Promise<PagedList<Offer>> {
+    if (!query) query = {};
+    query.purchaser = address;
+
+    return await this.getOffers(query);
   }
 }
 

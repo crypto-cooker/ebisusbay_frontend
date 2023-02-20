@@ -6,8 +6,9 @@ import SearchQuery from "@src/core/services/api-service/mapi/queries/search";
 import axios from "axios";
 import {appConfig} from "@src/Config";
 import Listing from "@src/core/models/listing";
-import OffersQuery from "@src/core/services/api-service/mapi/queries/offers";
+import OffersQuery, {OffersQueryParams} from "@src/core/services/api-service/mapi/queries/offers";
 import OffersRepository from "@src/core/services/api-service/mapi/repositories/offers";
+import {Offer} from "@src/core/models/offer";
 const config = appConfig();
 
 class Mapi {
@@ -25,7 +26,7 @@ class Mapi {
     return new PagedList<Listing>(
       response.data.listings,
       response.data.page,
-      response.data.page >= response.data.totalPages
+      response.data.page < response.data.totalPages
     )
   }
 
@@ -34,18 +35,18 @@ class Mapi {
     return await api.get(`search`, {params: {query}});
   }
 
-  async getOffers(query?: OffersQuery): Promise<PagedList<any>> {
-    const response = await this.offers.getOffers(query);
+  async getOffers(query?: OffersQueryParams): Promise<PagedList<Offer>> {
+    const response = await this.offers.getOffers(new OffersQuery(query));
 
-    return new PagedList<any>(
+    return new PagedList<Offer>(
       response.data.offers,
       response.data.page,
-      response.data.page >= response.data.totalPages
+      response.data.page < response.data.totalPages
     )
   }
 
-  async getOffersByUser(address: string, query?: OffersQuery): Promise<PagedList<any>> {
-    if (!query) query = new OffersQuery();
+  async getMadeOffersByUser(address: string, query?: OffersQueryParams): Promise<PagedList<Offer>> {
+    if (!query) query = {};
     query.purchaser = address;
 
     return await this.getOffers(query);

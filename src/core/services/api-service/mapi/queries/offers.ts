@@ -1,22 +1,23 @@
-import {InvalidState, OfferState} from "@src/core/services/api-service/types";
-import {isEmptyObj} from "@src/utils";
+import {InvalidState, OfferState, OfferType} from "@src/core/services/api-service/types";
+import Query from "@src/core/services/api-service/mapi/queries/index";
 
-class OffersQuery {
+export interface OffersQueryParams {
   offerId?: string;
   verified?: boolean;
   collection?: string;
+  type?: OfferType;
   tokenId?: string;
   seller?: string;
   purchaser?: string;
   sortBy?: 'listingId' | 'listingTime' | 'saleTime' | 'price' | 'rank';
   direction?: 'asc' | 'desc';
-  state?: OfferState = OfferState.ACTIVE;
+  state?: OfferState;
   page?: number;
   pageSize?: number;
-  traits? = {};
+  traits?: object;
   search?: string;
   invalid?: InvalidState;
-  powertraits? = {};
+  powertraits?: object;
   minPrice?: number;
   maxPrice?: number;
   minListingTime?: number;
@@ -25,14 +26,19 @@ class OffersQuery {
   maxSaleTime?: number;
   minRank?: number;
   maxRank?: number;
+}
 
-  toQuery() {
-    const obj = {...this};
+class OffersQuery extends Query<OffersQueryParams> {
 
-    return Object.fromEntries(Object.entries(obj).filter(([k, v]) => {
-      return v !== undefined && !isEmptyObj(v)
-    }));
+  defaultParams(): OffersQueryParams {
+    return {
+      state: OfferState.ACTIVE,
+      traits: {},
+      powertraits: {},
+      page: 1
+    };
   }
+
 }
 
 export default OffersQuery;

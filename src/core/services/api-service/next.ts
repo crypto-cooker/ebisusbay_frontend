@@ -3,8 +3,9 @@ import {ListingsQuery} from "@src/core/services/api-service/mapi/queries/listing
 import {PagedList} from "@src/core/services/api-service/paginated-list";
 import Listing from "@src/core/models/listing";
 import SearchQuery from "@src/core/services/api-service/mapi/queries/search";
-import OffersQuery from "@src/core/services/api-service/mapi/queries/offers";
-import {Api} from "@src/core/services/api-service/types";
+import OffersQuery, {OffersQueryParams} from "@src/core/services/api-service/mapi/queries/offers";
+import {Api, OfferType} from "@src/core/services/api-service/types";
+import {Offer} from "@src/core/models/offer";
 
 class NextApiService implements Api {
   private next: AxiosInstance;
@@ -37,7 +38,7 @@ class NextApiService implements Api {
     return response.data;
   }
 
-  async getOffers(query?: OffersQuery): Promise<PagedList<any>> {
+  async getOffers(query?: OffersQueryParams): Promise<PagedList<Offer>> {
     const response = await this.next.get(`offers`, {
       params: query
     });
@@ -76,6 +77,14 @@ class NextApiService implements Api {
     query.pageSize = 1000;
 
     return await this.getListings(query);
+  }
+
+  async getMadeOffersByUser(address: string, type: OfferType, query?: OffersQueryParams): Promise<PagedList<Offer>> {
+    if (!query) query = {};
+    query.purchaser = address;
+    query.type = type
+
+    return await this.getOffers(query);
   }
 }
 
