@@ -21,7 +21,7 @@ import {
   VStack,
   Wrap
 } from "@chakra-ui/react";
-import {getListingsByIds} from "@src/core/api/next/listings";
+import NextApiService from "@src/core/services/api-service/next";
 import {acknowledgePrompt, clearCart, removeFromCart, syncCartStorage} from "@src/GlobalState/cartSlice";
 import {ImageKitService} from "@src/helpers/image";
 import {commify} from "ethers/lib/utils";
@@ -119,8 +119,8 @@ const Cart = function () {
       try {
         setExecutingBuy(true);
         const listingIds = cart.nfts.map((o) => o.listingId);
-        const listings = await getListingsByIds(listingIds);
-        const validListings = listings.data.listings
+        const listings = await NextApiService.getListingsByIds(listingIds);
+        const validListings = listings.data
           .filter((o) => o.state === listingState.ACTIVE)
           .map((o) => o.listingId);
 

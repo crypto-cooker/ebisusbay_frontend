@@ -14,9 +14,9 @@ class Mapi {
   private listings;
   private offers;
 
-  constructor() {
-    this.listings = new ListingsRepository();
-    this.offers = new OffersRepository();
+  constructor(apiKey?: string) {
+    this.listings = new ListingsRepository(apiKey);
+    this.offers = new OffersRepository(apiKey);
   }
 
   async getListings(query?: ListingsQuery): Promise<PagedList<Listing>> {

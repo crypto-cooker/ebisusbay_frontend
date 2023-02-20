@@ -2,9 +2,9 @@ import {InvalidState, ListingState} from "@src/core/services/api-service/types";
 import {isEmptyObj} from "@src/utils";
 
 export class ListingsQuery {
-    listingId?: string;
-    collection?: string;
-    tokenId?: string;
+    listingId?: string | string[];
+    collection?: string | string[];
+    tokenId?: string | string[];
     seller?: string;
     sortBy?: string;
     direction?: string;
@@ -52,10 +52,12 @@ export class ListingsQuery {
 
     toQuery() {
         const collection = Array.isArray(this.collection) ? this.collection.join(',') : this.collection;
+        const tokenId = Array.isArray(this.tokenId) ? this.tokenId.join(',') : this.tokenId;
+        const listingId = Array.isArray(this.listingId) ? this.listingId.join(',') : this.listingId;
         const obj = {
-            listingId: this.listingId,
+            listingId: listingId,
             collection: collection,
-            tokenId: this.tokenId,
+            tokenId: tokenId,
             seller: this.seller,
             sortBy: this.sortBy,
             direction: this.direction,
@@ -78,7 +80,7 @@ export class ListingsQuery {
         };
 
         return Object.fromEntries(Object.entries(obj).filter(([k, v]) => {
-            return !!v && !isEmptyObj(v)
+            return v !== undefined && !isEmptyObj(v)
         }));
     }
 }

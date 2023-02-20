@@ -2,28 +2,27 @@ import {ListingsQuery} from "@src/core/services/api-service/mapi/queries/listing
 import {PagedList} from "@src/core/services/api-service/paginated-list";
 import Cms from "@src/core/services/api-service/cms";
 import Mapi from "@src/core/services/api-service/mapi";
-import axios, {AxiosInstance} from "axios";
 import SearchQuery from "@src/core/services/api-service/mapi/queries/search";
 import OffersQuery from "@src/core/services/api-service/mapi/queries/offers";
 import Listing from "@src/core/models/listing";
+import {Api} from "@src/core/services/api-service/types";
 
-interface Api {
-  getListings(query?: ListingsQuery): Promise<PagedList<Listing>>;
-  getProfile(addressOrUsername: string): Promise<any>;
-  search(query?: SearchQuery): Promise<PagedList<any>>;
-  getOffers(query?: OffersQuery): Promise<PagedList<any>>
-}
+
 
 export class ApiService implements Api {
   private mapi: Mapi;
   private cms: Cms;
 
-  constructor() {
-    this.mapi = new Mapi();
-    this.cms = new Cms();
+  constructor(apiKey?: string) {
+    this.mapi = new Mapi(apiKey);
+    this.cms = new Cms(apiKey);
   }
 
-  async getListings(query?: ListingsQuery): Promise<PagedList<Listing>> {
+  static withKey(apiKey: string) {
+    return new ApiService(apiKey);
+  }
+
+  async getListings(query?: ListingsQuery): Promise<PagedList<any>> {
     return await this.mapi.getListings(query);
   }
 
@@ -44,34 +43,3 @@ export class ApiService implements Api {
   }
 }
 
-export class NextApiService implements Api {
-  private next: AxiosInstance;
-
-  constructor() {
-    this.next = axios.create({baseURL: '/api'});
-  }
-
-  async getListings(query?: ListingsQuery): Promise<PagedList<Listing>> {
-    return await this.next.get(`listings`, {
-      params: query
-    });
-  }
-
-  async getProfile(addressOrUsername: string): Promise<any> {
-    return await this.next.get(`users/${addressOrUsername}/profile`, {
-      params: {addressOrUsername}
-    });
-  }
-
-  async search(query?: SearchQuery): Promise<PagedList<any>> {
-    return await this.next.get(`search`, {
-      params: query
-    });
-  }
-
-  async getOffers(query?: OffersQuery): Promise<PagedList<any>> {
-    return await this.next.get(`offers`, {
-      params: query
-    });
-  }
-}

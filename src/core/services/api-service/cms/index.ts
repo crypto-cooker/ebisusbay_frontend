@@ -3,8 +3,8 @@ import ProfilesRepository from "@src/core/services/api-service/cms/repositories/
 class Cms {
   private profiles;
 
-  constructor() {
-    this.profiles = new ProfilesRepository();
+  constructor(apiKey?: string) {
+    this.profiles = new ProfilesRepository(apiKey);
   }
 
   async getProfile(addressOrUsername: string): Promise<any> {
