@@ -3101,6 +3101,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Fallen Angels - Demons",
+      "slug": "fallen-angels-demons",
+      "multiToken": false,
+      "address": "0x66adfe35f6a4371b4cC91481E633B03c83Ff423E",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Fallen Angels is a collection of 1998 uniquely generated NFTs on the Cronos Chain.Each Fallen Angel NFT is generated with over 70+ Attributes with different rarities and 10 Legendaries.",
+        "avatar": "/img/collections/fallen-angels-demons/avatar.webp",
+        "card": "/img/collections/fallen-angels-demons/card.webp",
+        "banner": "/img/collections/fallen-angels-demons/banner.webp",
+        "website": "https://www.pocketdemons.net/",
+        "twitter": "https://twitter.com/PDemon_Official",
+        "discord": "https://discord.gg/sXrJZR983J",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
@@ -7471,6 +7496,45 @@
           "33% of the remaining funds to be held in escrow until voting is implemented by the project",
           "67% of remaining funds to be released when a battle system is implemented by the project"
         ]
+      }
+    },
+    {
+      "id": 159,
+      "slug": "fallen-angels-demons",
+      "title": "Fallen Angels - Demons",
+      "subtitle": "Fallen Angels is a collection of 1998 uniquely generated NFTs on the Cronos Chain.Each Fallen Angel NFT is generated with over 70+ Attributes with different rarities and 10 Legendaries.",
+      "description": "The FallenAngels collection is the Second generation of the PocketDemons Ecosystem on Cronos. The collection consists of 1998 uniquely generated NFT's with 10 Lengendaries and over 70 attributes that will come in handy in our Risk-To-Earn game HellTrumps. The FallenAngel collection will also come with a future breeding utility to bring something New and Powerful to the PocketDemons Ecosystem. Mint a Legendary and enjoy a nice CRO reward as well as a variety of Special utilities within the PocketDemons ecosystem on Cronos.",
+      "author": {
+        "name": "Pocket Demons",
+        "website": "https://www.pocketdemons.net/",
+        "twitter": "https://twitter.com/PDemon_Official",
+        "discord": "https://discord.gg/sXrJZR983J"
+      },
+      "address": "0x66adfe35f6a4371b4cC91481E633B03c83Ff423E",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 100,
+      "totalSupply": 1998,
+      "cost": "250",
+      "memberCost": "200",
+      "whitelistCost": "200",
+      "foundersOnly": false,
+      "start": 1676919696000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/fallen-angels-demons/drop.webp",
+        "banner": "/img/collections/fallen-angels-demons/banner.webp",
+        "avatar": "/img/collections/fallen-angels-demons/avatar.webp",
+        "preview": "/img/collections/fallen-angels-demons/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
       }
     }
   ]

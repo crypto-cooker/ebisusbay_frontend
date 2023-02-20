@@ -5,7 +5,7 @@ import {useSelector} from "react-redux";
 import {cancelListing, upsertListing} from '@src/core/cms/endpoints/gaslessListing';
 import UUID from "uuid-int";
 import {caseInsensitiveCompare, isGaslessListing} from "@src/utils";
-import {getAllListingsByUser} from "@src/core/api/next/listings";
+import NextApiService from "@src/core/services/api-service/next";
 
 const generator = UUID(0);
 
@@ -29,8 +29,8 @@ const useUpsertGaslessListings = () => {
     });
 
     // Get any existing listings
-    const listingsResponse = await getAllListingsByUser(user.address);
-    const existingListings = listingsResponse.data.listings.filter((eListing) => {
+    const listingsResponse = await NextApiService.getAllListingsByUser(user.address);
+    const existingListings = listingsResponse.data.filter((eListing) => {
       return pendingListings.some((pListing) => {
         return caseInsensitiveCompare(eListing.nftAddress, pListing.collectionAddress) &&
           eListing.nftId.toString() === pListing.tokenId.toString();

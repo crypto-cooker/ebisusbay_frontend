@@ -1,23 +1,29 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {Spinner} from 'react-bootstrap';
-
-import TableHeader from './MadeOffersHeader';
-import TableRow from './MadeOffersRow';
-import {getMyCollectionOffers, getMyOffers} from "@src/core/subgraph";
+import {OFFER_TYPE} from './MadeOffersRow';
 import {useInfiniteQuery} from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {Radio, RadioGroup, Stack, Text, Wrap, WrapItem} from "@chakra-ui/react";
-import {offerState} from "@src/core/api/enums";
+import NextApiService from "@src/core/services/api-service/next";
+import {OfferState} from "@src/core/services/api-service/types";
+import ResponsiveOffersTable from "@src/components-v2/shared/responsive-table/responsive-offers-table";
+import MakeOfferDialog from "@src/Components/Offer/Dialogs/MakeOfferDialog";
+import MakeCollectionOfferDialog from "@src/Components/Offer/Dialogs/MakeCollectionOfferDialog";
+import {CancelOfferDialog} from "@src/Components/Offer/Dialogs/CancelOfferDialog";
 
 export default function MadeOffers({ address, type}) {
-  const [offerType, setOfferType] = useState(offerState.ACTIVE.toString());
+  const [offerType, setOfferType] = useState(OfferState.ACTIVE.toString());
+
+  const [offerAction, setOfferAction] = useState(OFFER_TYPE.none);
+  const [selectedOffer, setSelectedOffer] = useState(null);
 
   const fetchProjects = async ({ pageParam = 0 }) => {
-    if (type === 'collection') {
-      return await getMyCollectionOffers(address, offerType, pageParam);
-    } else {
-      return await getMyOffers(address, offerType, pageParam);
-    }
+    return await NextApiService.getMadeOffersByUser(address, type, {
+      state: offerType,
+      page: pageParam + 1,
+      sortBy: 'price',
+      direction: 'desc'
+    });
   }
 
   const {
@@ -29,16 +35,21 @@ export default function MadeOffers({ address, type}) {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery(
-    ['MadeOffers', type, offerType],
+    ['MadeOffers', address, type, offerType],
     fetchProjects,
     {
-      getNextPageParam: (lastPage, pages) => lastPage.nextCursor,
+      getNextPageParam: (lastPage, pages) => lastPage.hasNextPage,
     }
   )
 
   const loadMore = () => {
     fetchNextPage();
   };
+
+  const onCloseDialog = useCallback(() => {
+    setOfferAction(OFFER_TYPE.none);
+    setSelectedOffer(null);
+  }, [setOfferAction, setSelectedOffer]);
 
   return (
     <div>
@@ -49,14 +60,13 @@ export default function MadeOffers({ address, type}) {
         <WrapItem>
           <RadioGroup onChange={setOfferType} value={offerType}>
             <Stack direction='row'>
-              <Radio value={offerState.ACTIVE.toString()}>Active</Radio>
-              <Radio value={offerState.ACCEPTED.toString()}>Accepted</Radio>
-              <Radio value={offerState.REJECTED.toString()}>Rejected</Radio>
+              <Radio value={OfferState.ACTIVE.toString()}>Active</Radio>
+              <Radio value={OfferState.ACCEPTED.toString()}>Accepted</Radio>
+              <Radio value={OfferState.REJECTED.toString()}>Rejected</Radio>
             </Stack>
           </RadioGroup>
         </WrapItem>
       </Wrap>
-      <TableHeader />
       {status === "loading" ? (
         <div className="col-lg-12 text-center">
           <Spinner animation="border" role="status">
@@ -82,15 +92,44 @@ export default function MadeOffers({ address, type}) {
               </div>
             }
           >
-            {data.pages.map((page, index) => (
-              <div key={index}>
-                {page.data.map((offer, index) => (
-                  <TableRow key={index} data={offer} />
-                ))}
-              </div>
-            ))}
+            <ResponsiveOffersTable
+              data={data}
+              onUpdate={(offer) => {
+                setSelectedOffer(offer);
+                setOfferAction(OFFER_TYPE.update);
+              }}
+              onCancel={(offer) => {
+                setSelectedOffer(offer);
+                setOfferAction(OFFER_TYPE.cancel);
+              }}
+            />
           </InfiniteScroll>
         </>
+      )}
+
+      {!!offerAction && offerAction === OFFER_TYPE.update && !!selectedOffer?.nftId && (
+        <MakeOfferDialog
+          isOpen={!!offerAction}
+          onClose={onCloseDialog}
+          nftId={selectedOffer.nftId}
+          nftAddress={selectedOffer.nftAddress}
+        />
+      )}
+      {!!offerAction && offerAction === OFFER_TYPE.update && !selectedOffer?.nftId && (
+        <MakeCollectionOfferDialog
+          isOpen={!!offerAction}
+          onClose={onCloseDialog}
+          collection={selectedOffer.collection}
+        />
+      )}
+      {!!offerAction && offerAction === OFFER_TYPE.cancel && selectedOffer && (
+        <CancelOfferDialog
+          isOpen={!!offerAction}
+          onClose={onCloseDialog}
+          collection={selectedOffer.collection}
+          isCollectionOffer={!selectedOffer?.nftId}
+          offer={selectedOffer}
+        />
       )}
     </div>
   );

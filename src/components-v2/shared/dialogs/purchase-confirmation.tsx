@@ -27,7 +27,7 @@ import Image from "next/image";
 import {commify} from "ethers/lib/utils";
 import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
 import {useQuery} from "@tanstack/react-query";
-import {getListingsByIds} from "@src/core/api/next/listings";
+import NextApiService from "@src/core/services/api-service/next";
 import useBuyGaslessListings from "@src/hooks/useBuyGaslessListings";
 import DotIcon from "@src/Components/components/DotIcon";
 import {faCheck} from "@fortawesome/free-solid-svg-icons";
@@ -66,6 +66,8 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   }
 
   const getYouReceiveViewValue = () => {
+    if (!listing) return;
+
     if (isGaslessListing(listingId)) {
       const youReceive = parseInt(listing.price) + (listing.price * (fee / 100));
       try {
@@ -79,8 +81,8 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   };
 
   const getInitialProps = async () => {
-    const listingsResponse = await getListingsByIds(listingId);
-    const listing = listingsResponse.data.listings[0];
+    const listingsResponse = await NextApiService.getListingsByIds(listingId);
+    const listing = listingsResponse.data[0];
 
     const fees = await readMarket.fee(user.address);
     setFee((fees / 10000) * 100);

@@ -13,7 +13,7 @@ export const AnyMedia = ({
   newTab = false,
   usePlaceholder = false,
   videoProps = {},
-  className,
+  className = '',
   layout = 'responsive',
   width = 1,
   height = 1,
