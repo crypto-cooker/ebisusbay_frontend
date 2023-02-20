@@ -17844,7 +17844,7 @@
       "multiToken": false,
       "address": "",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "Fallen Angels is a collection of 1998 uniquely generated NFTs on the Cronos Chain.Each Fallen Angel NFT is generated with over 70+ Attributes with different rarities and 10 Legendaries.",
         "avatar": "/img/collections/fallen-angels-demons/avatar.webp",
