@@ -37,7 +37,7 @@ const DefaultArea = ({onChange}) => {
 
   return (
     <section>
-       
+      
       <div>
       <Flex>
         <Spacer/>
@@ -47,19 +47,17 @@ const DefaultArea = ({onChange}) => {
             User Profile</Button>
         </Box>
       </Flex>
-        {/* className="mapBorder container" */}
+
       <TransformWrapper
         onZoom={changeCanvasState}
         onPinching={changeCanvasState}
         onPinchingStop={changeCanvasState}
         onPanningStop={changeCanvasState}
-        // onPanning={() => setModalFlag('none')}
         >
         <TransformComponent>
 
         <div className="mapDiv">
         <img src="/img/battle-bay/fancyMenu2.png" useMap="#image-map" width="100%" className={`${styles.mapImageArea}`} id="fancyMenu"/>
-        {/* <div onClick={() => onChange('bank')}> bandk  */}
             <map name="image-map" width="100%" height="100%" className={`${styles.mapImageArea}`} >
             <area onClick={() => onChange('bank')} alt="bank" title="bank" coords="396,763,237,839" shape="rect"/>
             <area onClick={() => onChange('barracks')} alt="barracks" title="barracks" coords="705,770,940,871" shape="rect"/>
@@ -71,19 +69,12 @@ const DefaultArea = ({onChange}) => {
             <area onClick={() => onChange('academy')} alt="academy" title="academy" coords="1331,122,1570,215" shape="rect"/>
             <area onClick={() => onChange('allianceCenter')} alt="allianceCenter" title="allianceCenter" coords="611,175,957,261" shape="rect"/>
           </map>
-          {/* </div> */}
         </div>
 
         </TransformComponent>
       </TransformWrapper>
-      </div>
-      <div id="pin-Alliance-Center" className="box" style={{display: 'none'}}>
-        <img src="" width="64" height="64" className="factionIcon"/>
-        <div className="map-Text"><h3 className="head">Alliance Hall</h3></div>
-      </div>
 
-      
-
+      </div>
       
     </section>
   )

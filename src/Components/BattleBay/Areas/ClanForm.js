@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback  } from "react";
 import { useSelector } from "react-redux";
 import {
   Modal,
@@ -28,8 +28,9 @@ import {
 } from "@chakra-ui/react"
 import { Spinner } from 'react-bootstrap';
 import { getTheme } from "@src/Theme/theme";
-import { add } from "lodash";
-import { faRightLeft } from "@fortawesome/free-solid-svg-icons";
+import { Formik, Form, Field, ErrorMessage, useFormik } from 'formik';
+import * as Yup from 'yup';
+import useGetSettings from '../../../../src/Components/Account/Settings/hooks/useGetSettings';
 
 const ClanForm = ({ isOpen, onClose, clans=[], clanToModify}) => {
   // console.log("clanToModify: "+clanToModify.faction)
@@ -70,12 +71,11 @@ const ClanForm = ({ isOpen, onClose, clans=[], clanToModify}) => {
       setShowAlert(true)
       return;
     }
-    console.log(addresses)
-    if(addresses.current.length > getMaxAddresses()) {
-      setAlertMessage("You are over the maximum number of addresses for this clan type")
-      setShowAlert(true)
-      return;
-    }
+    // if(addresses.current.length > getMaxAddresses()) {
+    //   setAlertMessage("You are over the maximum number of addresses for this clan type")
+    //   setShowAlert(true)
+    //   return;
+    // }
     
     //add payment code here
     console.log("You created a clan with the name "+clanNameInput);
@@ -122,6 +122,17 @@ const ClanForm = ({ isOpen, onClose, clans=[], clanToModify}) => {
     return clanType === 'collection' ? 3 : 15
   }
 
+  const formik = useFormik({
+    initialValues: {
+      clanName: clans[clanToModifyIndex].faction,
+      addresses: clans[clanToModifyIndex].addresses,
+    },
+    onSubmit: (values) => {
+      // alert(JSON.stringify(values, null, 2))
+      clans[clanToModifyIndex].faction = values.clanName
+    },
+  })
+
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
       <ModalOverlay />
@@ -131,16 +142,18 @@ const ClanForm = ({ isOpen, onClose, clans=[], clanToModify}) => {
           <ModalHeader className="text-center">Edit Clan</ModalHeader>
             <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
             <ModalBody>
+            <form onSubmit={formik.handleSubmit}>
               <FormControl isRequired>
                 <FormLabel>Clan name:</FormLabel>
                 <Input
-                  ref={clanNameInput}
-                  value={clanName}
-                  onChange={handleClanNameChange}
+                  id='clanName'
+                  name='clanName'
+                  // ref={clanNameInput}
+                  value={formik.values.clanName}
+                  onChange={formik.handleChange}
                   placeholder=''
                   size='sm'/>
               </FormControl>
-
               <Tabs variant='unstyled' style={{ marginTop: '24px'}}>
                 <TabList>
                   <Tab onClick={collectionClan} _selected={{ color: 'white', bg: 'blue.500' }}>Collection Clan</Tab>
@@ -157,13 +170,14 @@ const ClanForm = ({ isOpen, onClose, clans=[], clanToModify}) => {
               </Tabs>
                     
               <FormLabel style={{ display: 'flex', marginTop: '24px' }}>Addresses of Wallets or Contracts:</FormLabel>
-                <Input
-                  ref={addressInput}
+              
+              <Input
+                ref={addressInput}
                   value={addressToAdd}
                   onChange={handleAddChange}
                   placeholder=''
                   size='sm'
-                />
+              />
 
               <Stack direction='row' spacing={4} style={{ display: 'flex', marginTop: '16px' }}>
                 <Button colorScheme='blue'variant='outline' onClick={AddAddress} className="flex-fill"> Add address </Button>
@@ -185,14 +199,14 @@ const ClanForm = ({ isOpen, onClose, clans=[], clanToModify}) => {
               <Flex justifyContent={"center"} align={"center"}>
                 
                 <Box p='3'>
-              <Button style={{ display: 'flex', marginTop: '16px' }} 
-                onClick={SaveChanges} variant='outline'size='lg'>SaveChanges</Button>
+                <Button type="submit" style={{ display: 'flex', marginTop: '16px' }} 
+                      onClick={SaveChanges} variant='outline'size='lg'
+                      >SaveChanges</Button>
                 </Box>
               </Flex>
+              </form>
             </ModalBody>
-            <ModalFooter className="border-0"/>
-
-            
+            <ModalFooter className="border-0"/>            
           </>
         ) : (
           <Spinner animation="border" role="status" size="sm" className="ms-1">

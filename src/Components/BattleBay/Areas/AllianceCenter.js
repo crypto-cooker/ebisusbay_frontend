@@ -26,7 +26,6 @@ const AllianceCenter = ({onBack, factions: clans=[]}) => {
   const { isOpen: isOpenRegister, onOpen: onOpenRegister, onClose: onCloseRegister } = useDisclosure();
 
   const playerClans = clans.filter(clan => clan.owned);
-  // console.log(playerClans)
   const [selectedClan, setSelectedClan] = useState(playerClans[0]);
   const GetRegistrationColor = (registered) => {if(registered) {return 'green'} else {return 'red'}}
   
@@ -47,7 +46,6 @@ const AllianceCenter = ({onBack, factions: clans=[]}) => {
       <p style={{textAlign:'left'}}>Your Clans</p>
       <Flex flexDirection='column' textAlign='center' border={'1px solid white'} borderRadius={'10px'} justifyContent='space-around'>
       <div style={{ margin: '8px 24px' }}>
-      
       <TableContainer>
         <Table variant='simple'>
           <Thead>

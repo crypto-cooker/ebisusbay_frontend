@@ -20,7 +20,10 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  VStack,
+  StackDivider,
   Spacer,
+
 } from '@chakra-ui/react';
 import DelegateForm from './DelegateForm';
 
@@ -66,21 +69,25 @@ const UserPage = ({onBack, factions=[]}) => {
       <Heading marginTop={6} marginBottom={6} textAlign={'center'}>User: '{'Connected Wallet Address Here'}'</Heading>
       <Tabs marginTop={18}>
         <TabList>
+          {/* <Tab>Troops</Tab> */}
           <Tab>Troops</Tab>
-          <Tab>Delegations</Tab>
           <Tab>Clans</Tab>
         </TabList>
 
         <TabPanels>
+
           <TabPanel>
-            <Heading  size='md' textAlign={'center'}>Your Troops:</Heading>
-            <p style={{textAlign:'left'}}>Total Troops: {troopsTotal}</p>
-            <p style={{textAlign:'left'}}>Troops Delegated: {troopsDelegated}</p>
-            <p style={{textAlign:'left'}}>Troops Available: {troopsNotDelegated}</p>
-          </TabPanel>
-          <TabPanel>
-            <Flex alignContent={'center'} justifyContent={'center'} marginBottom={5}> 
-            <Table variant='simple' size='sm' maxWidth={400}>
+          <VStack
+          spacing={0}
+          align='stretch'
+          >
+            
+          <Heading  size='md' textAlign={'center'}>Your Troops: {troopsTotal}</Heading>
+              <p style={{textAlign:'center'}}>Available: {troopsNotDelegated}</p>
+              <p style={{textAlign:'center'}}>Delegated: {troopsDelegated}</p>
+            <Spacer />
+            <Flex alignContent={'center'} justifyContent={'center'} textAlign='center'  >
+              <Table variant='simple' size='sm' maxWidth={400} marginTop={"5"} marginBottom={"18"} border={'1px solid white'} borderRadius={'10'}>
                 <Thead>
                   <Tr>
                     <Th textAlign='center'>Clan Name</Th>
@@ -97,12 +104,14 @@ const UserPage = ({onBack, factions=[]}) => {
                 </Tbody>
               </Table>
             </Flex>
+
               <Flex alignContent={'center'} justifyContent={'center'} marginBottom={5}>
               <Button style={{ display: 'flex'}} margin={2} colorScheme='gray' variant='outline'
                 onClick={() => {setDelegateMode('delegate'), onOpenDelegate();}}>Delegate Troops </Button>
               <Button style={{ display: 'flex'}} margin={2} colorScheme='red' variant='outline'
                 onClick={() => {setDelegateMode('recall'), onOpenDelegate();}}>Recall Troops </Button>
             </Flex>
+          </VStack>
           </TabPanel>
           <TabPanel>
             <Heading  size='md' textAlign={'center'}>Your Clans:</Heading>
