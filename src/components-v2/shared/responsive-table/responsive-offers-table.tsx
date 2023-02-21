@@ -35,20 +35,22 @@ interface ResponsiveOffersTableProps {
   data: InfiniteData<AxiosResponse<IPaginatedList<Offer>>>;
   onUpdate: (offer: Offer) => void;
   onCancel: (offer: Offer) => void;
+  onSort: (field: string) => void;
+  breakpointValue?: string
 }
 
-const ResponsiveOffersTable = ({data, onUpdate, onCancel}: ResponsiveOffersTableProps) => {
-  const shouldUseAccordion = useBreakpointValue({base: true, md: false}, {fallback: 'md'})
+const ResponsiveOffersTable = ({data, onUpdate, onCancel, onSort, breakpointValue}: ResponsiveOffersTableProps) => {
+  const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'md']: false}, {fallback: 'md'})
 
   return shouldUseAccordion ? (
-    <DataAccordion data={data} onUpdate={onUpdate} onCancel={onCancel} />
+    <DataAccordion data={data} onUpdate={onUpdate} onCancel={onCancel} onSort={onSort} />
   ) : (
-    <DataTable data={data} onUpdate={onUpdate} onCancel={onCancel} />
+    <DataTable data={data} onUpdate={onUpdate} onCancel={onCancel} onSort={onSort} />
   )
 }
 
 
-const DataTable = ({data, onUpdate, onCancel}: ResponsiveOffersTableProps) => {
+const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveOffersTableProps) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
 
   const getOfferDate = (timestamp: number) => {
@@ -61,8 +63,10 @@ const DataTable = ({data, onUpdate, onCancel}: ResponsiveOffersTableProps) => {
         <Thead>
           <Tr>
             <Th colSpan={2}>Item</Th>
-            <Th>Price</Th>
-            <Th>Offer Time</Th>
+            <Th onClick={() => onSort('rank')} cursor='pointer'>Rank</Th>
+            <Th onClick={() => onSort('price')} cursor='pointer'>Price</Th>
+            <Th onClick={() => onSort('listingTime')} cursor='pointer'>Offer Time</Th>
+            <Th></Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -74,14 +78,15 @@ const DataTable = ({data, onUpdate, onCancel}: ResponsiveOffersTableProps) => {
                     <Box
                       width={50}
                       height={50}
-                      style={{ borderRadius: '20px' }}
                       position='relative'
+                      rounded='full'
+                      overflow='hidden'
                     >
                       <AnyMedia
                         image={offer.nft.image ?? offer.collection.metadata.avatar}
                         video={offer.nft.animation_url}
                         title={offer.nft.name ?? offer.collection.name}
-                        className="img-fluid img-rounded-8"
+                        className=""
                       />
                     </Box>
                   </Td>
@@ -95,6 +100,9 @@ const DataTable = ({data, onUpdate, onCancel}: ResponsiveOffersTableProps) => {
                         {offer.collection.name}
                       </Link>
                     )}
+                  </Td>
+                  <Td>
+                    {offer.nft.rank}
                   </Td>
                   <Td>
                     <HStack spacing={1}>
@@ -187,14 +195,14 @@ const DataAccordion = ({data, onUpdate, onCancel}: ResponsiveOffersTableProps) =
                     <>
                       <Button
                         type="legacy"
-                        onClick={onUpdate}
+                        onClick={() => onUpdate(offer)}
                         className="w-100"
                       >
                         Update
                       </Button>
                       <Button
                         type="legacy-outlined"
-                        onClick={onCancel}
+                        onClick={() => onCancel(offer)}
                         className="ms-2 w-100"
                       >
                         Cancel

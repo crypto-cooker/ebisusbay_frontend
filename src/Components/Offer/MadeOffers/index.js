@@ -16,13 +16,17 @@ export default function MadeOffers({ address, type}) {
 
   const [offerAction, setOfferAction] = useState(OFFER_TYPE.none);
   const [selectedOffer, setSelectedOffer] = useState(null);
+  const [sort, setSort] = useState({
+    sortBy: 'price',
+    direction: 'desc'
+  });
 
   const fetchProjects = async ({ pageParam = 0 }) => {
     return await NextApiService.getMadeOffersByUser(address, type, {
       state: offerType,
       page: pageParam + 1,
-      sortBy: 'price',
-      direction: 'desc'
+      sortBy: sort.sortBy,
+      direction: sort.direction
     });
   }
 
@@ -35,7 +39,7 @@ export default function MadeOffers({ address, type}) {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery(
-    ['MadeOffers', address, type, offerType],
+    ['MadeOffers', address, type, offerType, sort],
     fetchProjects,
     {
       getNextPageParam: (lastPage, pages) => lastPage.hasNextPage,
@@ -101,6 +105,17 @@ export default function MadeOffers({ address, type}) {
               onCancel={(offer) => {
                 setSelectedOffer(offer);
                 setOfferAction(OFFER_TYPE.cancel);
+              }}
+              onSort={(field) => {
+                let newSort = {
+                  sortBy: field,
+                  direction: 'desc'
+                }
+                if (sort.sortBy === newSort.sortBy) {
+                  newSort.direction = sort.direction === 'asc' ? 'desc' : 'asc'
+                }
+                console.log('sort', newSort)
+                setSort(newSort)
               }}
             />
           </InfiniteScroll>
