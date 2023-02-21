@@ -55,6 +55,17 @@ export default function MadeOffers({ address, type, filterVisible}) {
     setSelectedOffer(null);
   }, [setOfferAction, setSelectedOffer]);
 
+  const handleSort = useCallback((field) => {
+    let newSort = {
+      sortBy: field,
+      direction: 'desc'
+    }
+    if (sort.sortBy === newSort.sortBy) {
+      newSort.direction = sort.direction === 'asc' ? 'desc' : 'asc'
+    }
+    setSort(newSort)
+  }, [sort]);
+
   return (
     <div>
       <Wrap spacing={2}>
@@ -106,16 +117,7 @@ export default function MadeOffers({ address, type, filterVisible}) {
                 setSelectedOffer(offer);
                 setOfferAction(OFFER_TYPE.cancel);
               }}
-              onSort={(field) => {
-                let newSort = {
-                  sortBy: field,
-                  direction: 'desc'
-                }
-                if (sort.sortBy === newSort.sortBy) {
-                  newSort.direction = sort.direction === 'asc' ? 'desc' : 'asc'
-                }
-                setSort(newSort)
-              }}
+              onSort={handleSort}
               breakpointValue={filterVisible ? 'xl' : 'lg'}
             />
           </InfiniteScroll>

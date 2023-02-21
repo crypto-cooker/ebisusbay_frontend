@@ -17842,7 +17842,7 @@
       "name": "Fallen Angels - Demons",
       "slug": "fallen-angels-demons",
       "multiToken": false,
-      "address": "",
+      "address": "0xFA19C0f35Eb3Ef5D118D69d29AE793475527cF5A",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -18245,6 +18245,34 @@
         "website": "https://thecronosverse.com/",
         "twitter": "https://twitter.com/TheCronosVerse",
         "discord": "https://discord.gg/E9Mzzy9Hex",
+        "categories": [
+          "virtual-worlds",
+          "art",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
+    },
+    {
+      "name": "Alpha Lions Rebooted",
+      "slug": "alpha-lions-rebooted",
+      "multiToken": false,
+      "address": "0xAA6cb884573C97E0B26F771ACc0c5C94f6Ae8FFD",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Alpha Lions Rebooted (ALR) is a collection of 1500 NFTs with 3 factions Cyborg, Guerrilla and Spartan - 500 of each. Built with a sophisticated variety of distinctive traits on the Cronos blockchain. With over 100 hand-drawn features, each NFT is unique. Receive CRO airdrops from CRK and CRQ reflections and Staking Pool rewards earned via Cronos.Cash. Collect 1 x Alpha Lion from each faction (Cyborg, Guerilla and Spartan) and receive a surprise airdrop in the future.",
+        "avatar": "/img/collections/alpha-lions-rebooted/avatar.webp",
+        "card": "/img/collections/alpha-lions-rebooted/card.webp",
+        "banner": "/img/collections/alpha-lions-rebooted/banner.webp",
+        "website": "https://alphalionsrebooted.com/",
+        "twitter": "https://twitter.com/AlphaLionsRBT",
+        "discord": "https://discord.gg/alphalionsrbt",
+        "medium": "https://medium.com/@cronosalphalions",
         "categories": [
           "virtual-worlds",
           "art",
@@ -24417,7 +24445,7 @@
         "twitter": "https://twitter.com/PDemon_Official",
         "discord": "https://discord.gg/sXrJZR983J"
       },
-      "address": "",
+      "address": "0xFA19C0f35Eb3Ef5D118D69d29AE793475527cF5A",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 100,
       "totalSupply": 1998,
