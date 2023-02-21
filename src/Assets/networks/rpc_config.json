@@ -24505,10 +24505,10 @@
       "memberCost": "950",
       "whitelistCost": "850",
       "foundersOnly": false,
-      "start": 1677268800000,
+      "start": 1677283200000,
       "salePeriods": {
-        "presale": 1677268800000,
-        "public": 1677272400000
+        "presale": 1677283200000,
+        "public": 1677283200000
       },
       "priceDescription": "Whitelist-only presale for the first hour. Public sale after presale ends.",
       "end": null,
