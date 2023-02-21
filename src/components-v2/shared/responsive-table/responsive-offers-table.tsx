@@ -79,7 +79,7 @@ const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveOffersTableProp
                       width={50}
                       height={50}
                       position='relative'
-                      rounded='full'
+                      rounded='md'
                       overflow='hidden'
                     >
                       <AnyMedia
@@ -161,7 +161,7 @@ const DataAccordion = ({data, onUpdate, onCancel}: ResponsiveOffersTableProps) =
                       width={50}
                       height={50}
                       position='relative'
-                      rounded='full'
+                      rounded='md'
                       overflow='hidden'
                     >
                       <AnyMedia
