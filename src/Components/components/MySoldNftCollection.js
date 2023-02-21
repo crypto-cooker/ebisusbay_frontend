@@ -9,7 +9,7 @@ import ResponsiveSalesTable from "@src/components-v2/shared/responsive-table/res
 const MySoldNftCollection = ({ walletAddress = null }) => {
   const [sort, setSort] = useState({
     sortBy: 'listingTime',
-    direction: 'asc'
+    direction: 'desc'
   });
 
   const fetcher = async ({ pageParam = 1 }) => {
