@@ -168,10 +168,10 @@ export default function Offers({ address }) {
           </div>
           <Tab.Content >
             <Tab.Pane eventKey={tabs.madeDirect.key}>
-              <MadeOffers address={address} type={OfferType.DIRECT} />
+              <MadeOffers address={address} type={OfferType.DIRECT} filterVisible={filtersVisible} />
             </Tab.Pane>
             <Tab.Pane eventKey={tabs.madeCollection.key}>
-              <MadeOffers address={address} type={OfferType.COLLECTION} />
+              <MadeOffers address={address} type={OfferType.COLLECTION} filterVisible={filtersVisible} />
             </Tab.Pane>
             <Tab.Pane eventKey={tabs.receivedDirect.key}>
               {receivedOffersDeps && (

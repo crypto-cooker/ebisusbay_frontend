@@ -7,7 +7,6 @@ import {
   Box,
   Flex,
   HStack,
-  Stack,
   Table,
   TableContainer,
   Tbody,
@@ -16,14 +15,15 @@ import {
   Th,
   Thead,
   Tr,
-  useBreakpointValue, useColorModeValue
+  useBreakpointValue,
+  useColorModeValue,
+  VStack
 } from "@chakra-ui/react";
 import React from "react";
 import {AxiosResponse} from "axios";
-import {Offer} from "@src/core/models/offer";
 import {timeSince} from "@src/utils";
 import Button from "@src/Components/components/Button";
-import {OfferState} from "@src/core/services/api-service/types";
+import {ListingState} from "@src/core/services/api-service/types";
 import {InfiniteData} from "@tanstack/query-core";
 import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
@@ -31,16 +31,16 @@ import {commify} from "ethers/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
-interface ResponsiveOffersTableProps {
-  data: InfiniteData<AxiosResponse<IPaginatedList<Offer>>>;
-  onUpdate: (offer: Offer) => void;
-  onCancel: (offer: Offer) => void;
+interface ResponsiveListingsTableProps {
+  data: InfiniteData<AxiosResponse<IPaginatedList<any>>>;
+  onUpdate: (listing: any) => void;
+  onCancel: (listing: any) => void;
   onSort: (field: string) => void;
   breakpointValue?: string
 }
 
-const ResponsiveOffersTable = ({data, onUpdate, onCancel, onSort, breakpointValue}: ResponsiveOffersTableProps) => {
-  const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'md']: false}, {fallback: 'md'})
+const ResponsiveListingsTable = ({data, onUpdate, onCancel, onSort, breakpointValue}: ResponsiveListingsTableProps) => {
+  const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'lg']: false}, {fallback: 'lg'})
 
   return shouldUseAccordion ? (
     <DataAccordion data={data} onUpdate={onUpdate} onCancel={onCancel} onSort={onSort} />
@@ -50,10 +50,10 @@ const ResponsiveOffersTable = ({data, onUpdate, onCancel, onSort, breakpointValu
 }
 
 
-const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveOffersTableProps) => {
+const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveListingsTableProps) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
 
-  const getOfferDate = (timestamp: number) => {
+  const getTimeSince = (timestamp: number) => {
     return timeSince(new Date(timestamp * 1000));
   };
 
@@ -65,15 +65,16 @@ const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveOffersTableProp
             <Th colSpan={2}>Item</Th>
             <Th onClick={() => onSort('rank')} cursor='pointer'>Rank</Th>
             <Th onClick={() => onSort('price')} cursor='pointer'>Price</Th>
-            <Th onClick={() => onSort('listingTime')} cursor='pointer'>Offer Time</Th>
+            <Th onClick={() => onSort('listingTime')} cursor='pointer'>Listing Time</Th>
+            <Th>Valid</Th>
             <Th></Th>
           </Tr>
         </Thead>
         <Tbody>
           {data.pages.map((page: any, pageIndex: any) => (
             <React.Fragment key={pageIndex}>
-              {page.data.map((offer: Offer) => (
-                <Tr key={`${offer.offerId}`} _hover={{bg: hoverBackground}}>
+              {page.map((listing: any) => (
+                <Tr key={listing.listingId} _hover={{bg: listing.valid ? hoverBackground : 'red.600'}} bg={listing.valid ? 'auto' : 'red.500'}>
                   <Td w='50px'>
                     <Box
                       width={50}
@@ -83,48 +84,45 @@ const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveOffersTableProp
                       overflow='hidden'
                     >
                       <AnyMedia
-                        image={offer.nft.image ?? offer.collection.metadata.avatar}
-                        video={offer.nft.animation_url}
-                        title={offer.nft.name ?? offer.collection.name}
+                        image={listing.nft.image}
+                        video={listing.nft.animation_url}
+                        title={listing.nft.name}
                         className=""
                       />
                     </Box>
                   </Td>
                   <Td fontWeight='bold'>
-                    {offer.nftId ? (
-                      <Link href={`/collection/${offer.collection.slug}/${offer.nftId}`}>
-                        {offer.nft.name}
-                      </Link>
-                    ) : (
-                      <Link href={`/collection/${offer.collection.slug}`}>
-                        {offer.collection.name}
-                      </Link>
-                    )}
+                    <Link href={`/collection/${listing.nft.nftAddress}/${listing.nft.nftId}`}>
+                      {listing.nft.name}
+                    </Link>
                   </Td>
                   <Td>
-                    {offer.nft.rank}
+                    {listing.nft.rank}
                   </Td>
                   <Td>
                     <HStack spacing={1}>
                       <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
-                      <Box>{commify(offer.price)}</Box>
+                      <Box>{commify(listing.price)}</Box>
                     </HStack>
                   </Td>
-                  <Td>{getOfferDate(offer.listingTime)} ago</Td>
+                  <Td>{getTimeSince(listing.listingTime)} ago</Td>
+                  <Td>{listing.valid ? 'Valid' : 'Invalid'}</Td>
                   <Td>
                     <Flex>
-                      {offer.state === OfferState.ACTIVE && (
+                      {listing.state === ListingState.ACTIVE && (
                         <>
-                          <Button
-                            type="legacy"
-                            onClick={() => onUpdate(offer)}
-                          >
-                            Update
-                          </Button>
+                          {listing.isInWallet && (
+                            <Button
+                              type="legacy"
+                              onClick={() => onUpdate(listing)}
+                              className="me-2"
+                            >
+                              Update
+                            </Button>
+                          )}
                           <Button
                             type="legacy-outlined"
-                            onClick={() => onCancel(offer)}
-                            className="ms-2"
+                            onClick={() => onCancel(listing)}
                           >
                             Cancel
                           </Button>
@@ -142,9 +140,9 @@ const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveOffersTableProp
   )
 };
 
-const DataAccordion = ({data, onUpdate, onCancel}: ResponsiveOffersTableProps) => {
+const DataAccordion = ({data, onUpdate, onCancel}: ResponsiveListingsTableProps) => {
 
-  const getOfferDate = (timestamp: number) => {
+  const getTimeSince = (timestamp: number) => {
     return timeSince(new Date(timestamp * 1000));
   };
 
@@ -152,8 +150,8 @@ const DataAccordion = ({data, onUpdate, onCancel}: ResponsiveOffersTableProps) =
     <Accordion w='full' allowMultiple>
       {data.pages.map((page: any, pageIndex: any) => (
         <React.Fragment key={pageIndex}>
-          {page.data.map((offer: Offer) => (
-            <AccordionItem key={offer.offerId}>
+          {page.map((listing: any) => (
+            <AccordionItem key={listing.listingId} bg={listing.valid ? 'auto' : 'red.500'}>
               <Flex w='100%' my={2}>
                 <Box flex='1' textAlign='left' fontWeight='bold' my='auto'>
                   <HStack>
@@ -165,27 +163,21 @@ const DataAccordion = ({data, onUpdate, onCancel}: ResponsiveOffersTableProps) =
                       overflow='hidden'
                     >
                       <AnyMedia
-                        image={offer.nft.image ?? offer.collection.metadata.avatar}
-                        video={offer.nft.animation_url}
-                        title={offer.nft.name ?? offer.collection.name}
+                        image={listing.nft.image}
+                        video={listing.nft.animation_url}
+                        title={listing.nft.name}
                       />
                     </Box>
 
-                    {offer.nftId ? (
-                      <Link href={`/collection/${offer.collection.slug}/${offer.nftId}`}>
-                        {offer.nft.name}
-                      </Link>
-                    ) : (
-                      <Link href={`/collection/${offer.collection.slug}`}>
-                        {offer.collection.name}
-                      </Link>
-                    )}
+                    <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
+                      {listing.nft.name}
+                    </Link>
                   </HStack>
                 </Box>
                 <Box>
                   <HStack spacing={1} h="full">
                     <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
-                    <Box>{commify(offer.price)}</Box>
+                    <Box>{commify(listing.price)}</Box>
                   </HStack>
                 </Box>
                 <AccordionButton w='auto'>
@@ -194,31 +186,33 @@ const DataAccordion = ({data, onUpdate, onCancel}: ResponsiveOffersTableProps) =
               </Flex>
               <AccordionPanel pb={4}>
                 <Flex justify="space-between" fontSize="sm" mb={2}>
-                  {offer.nft.rank && (
-                    <Stack direction="row" spacing={2}>
+                  {listing.nft.rank && (
+                    <VStack direction="row" spacing={0}>
                       <Text fontWeight="bold">Rank:</Text>
-                      <Text>{offer.nft.rank}</Text>
-                    </Stack>
+                      <Text>{listing.nft.rank}</Text>
+                    </VStack>
                   )}
-                  <Stack direction="row" spacing={2}>
-                    <Text fontWeight="bold">Offer Time:</Text>
-                    <Text>{getOfferDate(offer.listingTime)} ago</Text>
-                  </Stack>
+                  <VStack direction="row" spacing={0}>
+                    <Text fontWeight="bold">Listing Time:</Text>
+                    <Text>{getTimeSince(listing.listingTime)} ago</Text>
+                  </VStack>
                 </Flex>
                 <Flex>
-                  {offer.state === OfferState.ACTIVE && (
+                  {listing.state === ListingState.ACTIVE && (
                     <>
-                      <Button
-                        type="legacy"
-                        onClick={() => onUpdate(offer)}
-                        className="w-100"
-                      >
-                        Update
-                      </Button>
+                      {listing.isInWallet && (
+                        <Button
+                          type="legacy"
+                          onClick={() => onUpdate(listing)}
+                          className="me-2 w-100"
+                        >
+                          Update
+                        </Button>
+                      )}
                       <Button
                         type="legacy-outlined"
-                        onClick={() => onCancel(offer)}
-                        className="ms-2 w-100"
+                        onClick={() => onCancel(listing)}
+                        className="w-100"
                       >
                         Cancel
                       </Button>
@@ -234,4 +228,5 @@ const DataAccordion = ({data, onUpdate, onCancel}: ResponsiveOffersTableProps) =
   )
 };
 
-export default ResponsiveOffersTable;
+
+export default ResponsiveListingsTable;
