@@ -1,13 +1,12 @@
-import {ListingsQuery} from "@src/core/services/api-service/mapi/queries/listings";
+import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
 import {PagedList} from "@src/core/services/api-service/paginated-list";
 import Cms from "@src/core/services/api-service/cms";
 import Mapi from "@src/core/services/api-service/mapi";
 import SearchQuery from "@src/core/services/api-service/mapi/queries/search";
-import OffersQuery, {OffersQueryParams} from "@src/core/services/api-service/mapi/queries/offers";
+import {OffersQueryParams} from "@src/core/services/api-service/mapi/queries/offers";
 import Listing from "@src/core/models/listing";
 import {Api} from "@src/core/services/api-service/types";
 import {Offer} from "@src/core/models/offer";
-
 
 
 export class ApiService implements Api {
@@ -23,7 +22,7 @@ export class ApiService implements Api {
     return new ApiService(apiKey);
   }
 
-  async getListings(query?: ListingsQuery): Promise<PagedList<any>> {
+  async getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>> {
     return await this.mapi.getListings(query);
   }
 

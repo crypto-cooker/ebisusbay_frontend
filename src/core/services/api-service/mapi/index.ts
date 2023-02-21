@@ -1,6 +1,5 @@
-import ProfilesRepository from "@src/core/services/api-service/cms/repositories/profiles";
 import ListingsRepository from "@src/core/services/api-service/mapi/repositories/listings";
-import {ListingsQuery} from "@src/core/services/api-service/mapi/queries/listings";
+import {ListingsQuery, ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
 import {PagedList} from "@src/core/services/api-service/paginated-list";
 import SearchQuery from "@src/core/services/api-service/mapi/queries/search";
 import axios from "axios";
@@ -20,8 +19,8 @@ class Mapi {
     this.offers = new OffersRepository(apiKey);
   }
 
-  async getListings(query?: ListingsQuery): Promise<PagedList<Listing>> {
-    const response = await this.listings.getListings(query);
+  async getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>> {
+    const response = await this.listings.getListings(new ListingsQuery(query));
 
     return new PagedList<Listing>(
       response.data.listings,

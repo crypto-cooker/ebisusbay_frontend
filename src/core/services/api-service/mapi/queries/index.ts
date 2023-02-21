@@ -12,12 +12,12 @@ abstract class Query<Params> {
 
   abstract defaultParams(): Params;
 
-  toQuery() {
+  toQuery(): Params {
     const obj = {...this.params};
 
     return Object.fromEntries(Object.entries(obj).filter(([k, v]) => {
       return v !== undefined && !isEmptyObj(v)
-    }));
+    })) as Params;
   }
 
 }
