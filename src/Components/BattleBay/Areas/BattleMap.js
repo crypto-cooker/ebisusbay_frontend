@@ -4,6 +4,7 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles from './BattleBay.module.scss';
 import { FactionForm } from './battleMap/components/index.js';
 import { useDisclosure } from '@chakra-ui/react'
+import { LogDescription } from 'ethers/lib/utils.js';
 
 const BattleMap = ({onBack, factions=[]}) => {
 
@@ -11,11 +12,34 @@ const BattleMap = ({onBack, factions=[]}) => {
   const gif = "/img/battle-bay/fire.gif";
 
   const troopsTableRef = useRef();
+  const mapRef = useRef();
   const [selectedRegion, setSelectedRegion] = useState("None");
   const regionFlags = ["pin-Southern-Trident", "pin-Dragonland", "pin-Human-Kingdoms", "pin-Dwarf-Mines"];
-  const flagSize = "32px";
- 
+  const  [flagSize, setFlagSize] = useState("32px");
+  const [buildingSize, setBuildingSize] = useState("50px");
+  const { height, width: windowWidth } = useWindowDimensions();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  function getWindowDimensions() {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height
+    };
+  }
+  function useWindowDimensions() {
+    const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+    useEffect(() => {
+      function handleResize() {
+        setWindowDimensions(getWindowDimensions());
+      }
+
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    return windowDimensions;
+  }
   class Deployment {
     constructor(region, faction, amount, deploymentOwner) {
       this.code = region + faction;
@@ -29,54 +53,47 @@ const BattleMap = ({onBack, factions=[]}) => {
     getDetails() {
         return "You have deployed " + this.amount +" troops on behalf of "+ this.faction +" to " + this.region + "<br>";
       }};
-class DeployedTroops {
-    constructor(){
-      this.deployments = []
+  class DeployedTroops {
+      constructor(){
+        this.deployments = []
+      }
+      newDeployment(region, faction, amount){
+        let d = new Deployment(region, faction, amount)
+        this.deployments.push(d)
+        return d
+      }
+      get allPlayers(){
+        return this.deployments
+      }
+      get numberOfPlayers(){
+          return this.deployments.length
+      }
+      get totalTroops(){
+          let total = 0
+          this.deployments.forEach(d => total += d.amount)
+          console.log(total)
+          return total
+      }
     }
-    newDeployment(region, faction, amount){
-      let d = new Deployment(region, faction, amount)
-      this.deployments.push(d)
-      return d
-    }
-    get allPlayers(){
-      return this.deployments
-    }
-    get numberOfPlayers(){
-        return this.deployments.length
-    }
-    get totalTroops(){
-        let total = 0
-        this.deployments.forEach(d => total += d.amount)
-        console.log(total)
-        return total
-    }
-  }
-let deployedTroops = new DeployedTroops()
-//#endregion
+  let deployedTroops = new DeployedTroops()
+  //#endregion
 
-//#region Map Zooming
-  // const [zoomState, setZoomState] = useState({
-  //   offsetX: 0,
-  //   offsetY: 0,
-  //   scale: 1,
-  // });
-  // const changeCanvasState = (ReactZoomPanPinchRef, event) => {
-  //   setZoomState({
-  //     offsetX: ReactZoomPanPinchRef.state.positionX,
-  //     offsetY: ReactZoomPanPinchRef.state.positionY,
-  //     scale: ReactZoomPanPinchRef.state.scale,
-  //   });
-  // };
-//#endregion
+  //#region Map Zooming
+    // const [zoomState, setZoomState] = useState({
+    //   offsetX: 0,
+    //   offsetY: 0,
+    //   scale: 1,
+    // });
+    // const changeCanvasState = (ReactZoomPanPinchRef, event) => {
+    //   setZoomState({
+    //     offsetX: ReactZoomPanPinchRef.state.positionX,
+    //     offsetY: ReactZoomPanPinchRef.state.positionY,
+    //     scale: ReactZoomPanPinchRef.state.scale,
+    //   });
+    // };
+  //#endregion
 
-//#region Map Functions
-useEffect(() => {
-  console.log("this is from battleMap useEffect")
-  // holdRefs(defenderFactionInputRef);
-  // resizeBattleMap();
-  setUpBattleMap();
-  // setUpMapZooming();
-});
+  //#region Map Functions
   function setUpBattleMap(){
     // console.log("Setting up battle map");
     RandomizeStats();
@@ -137,61 +154,61 @@ useEffect(() => {
         var icon = pins[i].getElementsByClassName("factionIcon")[0]
         icon.src = "/img/battle-bay/"+getWinningFactionInRegion(pins[i].title)+".png";
     }
-}
-function displayTop3InRegion(region, troopsTableRef)
-{
-    deployedTroops.deployments.sort(function(b, a){return a.amount - b.amount});
-    var troopsTable = document.getElementById("troopsTable");
-    while (troopsTable.firstChild) {
-        troopsTable.removeChild(troopsTable.lastChild);
-        }
-    var rank = 1;
+  }
+  function displayTop3InRegion(region, troopsTableRef)
+  {
+      deployedTroops.deployments.sort(function(b, a){return a.amount - b.amount});
+      var troopsTable = document.getElementById("troopsTable");
+      while (troopsTable.firstChild) {
+          troopsTable.removeChild(troopsTable.lastChild);
+          }
+      var rank = 1;
 
-    for(var i=0; i<deployedTroops.deployments.length; i++)  
-    {  
-        if(region == deployedTroops.deployments[i].region)
-        {  
-            var tr = document.createElement("tr");
+      for(var i=0; i<deployedTroops.deployments.length; i++)  
+      {  
+          if(region == deployedTroops.deployments[i].region)
+          {  
+              var tr = document.createElement("tr");
 
-            var tdRank = document.createElement("td");
-            tdRank.classList.add("text-center");
-            tdRank.scope = "row";
-            tdRank.innerHTML = rank;
-            tr.appendChild(tdRank);
+              var tdRank = document.createElement("td");
+              tdRank.classList.add("text-center");
+              tdRank.scope = "row";
+              tdRank.innerHTML = rank;
+              tr.appendChild(tdRank);
 
-            var tdFaction = document.createElement("td");
-            tdFaction.classList.add("text-center");
-            tdFaction.scope = "row";
-            tdFaction.innerHTML = deployedTroops.deployments[i].faction;
-            tr.appendChild(tdFaction);
+              var tdFaction = document.createElement("td");
+              tdFaction.classList.add("text-center");
+              tdFaction.scope = "row";
+              tdFaction.innerHTML = deployedTroops.deployments[i].faction;
+              tr.appendChild(tdFaction);
 
-            var tdTroops = document.createElement("td");
-            tdTroops.classList.add("text-center");
-            tdTroops.scope = "row";
-            tdTroops.innerHTML = deployedTroops.deployments[i].amount;
-            tr.appendChild(tdTroops);
+              var tdTroops = document.createElement("td");
+              tdTroops.classList.add("text-center");
+              tdTroops.scope = "row";
+              tdTroops.innerHTML = deployedTroops.deployments[i].amount;
+              tr.appendChild(tdTroops);
 
-            troopsTable.appendChild(tr);
+              troopsTable.appendChild(tr);
 
-            if(rank==3)
-            {
-                return;
-            }
-            rank++;
-        }
-    }
-}
-function getWinningFactionInRegion(region)
-{
-    deployedTroops.deployments.sort(function(b, a){return a.amount - b.amount});
-    for(var i=0; i<deployedTroops.deployments.length; i++)  
-    {  
-        if(region == deployedTroops.deployments[i].region)
-        {  
-            return deployedTroops.deployments[i].faction;
-        }
-    }
-}
+              if(rank==3)
+              {
+                  return;
+              }
+              rank++;
+          }
+      }
+  }
+  function getWinningFactionInRegion(region)
+  {
+      deployedTroops.deployments.sort(function(b, a){return a.amount - b.amount});
+      for(var i=0; i<deployedTroops.deployments.length; i++)  
+      {  
+          if(region == deployedTroops.deployments[i].region)
+          {  
+              return deployedTroops.deployments[i].faction;
+          }
+      }
+  }
   function getRegionStats(region)
   {
       // document.getElementById("regionName").innerHTML = region;
@@ -203,7 +220,6 @@ function getWinningFactionInRegion(region)
       // console.log(targetdiv)
       // targetdiv.textContent = getWinningFactionInRegion(region);
   }
-
   function selectRegion(x, troopsTableRef)
   {
       console.log("Selected region: "+x);
@@ -214,18 +230,23 @@ function getWinningFactionInRegion(region)
       // setUpDropDown(defenderFactionInput,'defenderFactionUL', getDefenderFactions(), selectDefenderFaction);
       // setUpDropDown('attackerFactionInput','attackerFactionUl', getAttackerFactions(), selectAttackerFaction);
   }
-  
-//#endregion
+  //#endregion
+
+  useEffect(() => {
+    resizeBattleMap();
+    setUpBattleMap();
+
+    setFlagSize(windowWidth/30 + "px");
+    setBuildingSize(windowWidth/20 + "px");
+    // setUpMapZooming();
+  });
 
   return (
-
-
   <section>
 
   <FactionForm isOpen={isOpen} onClose={onClose} title={selectedRegion} factions={factions}/>
 
   <button className="btn" onClick={onBack}>Back to Village Map</button>
-
   <p className="title text-center">Select a region to deploy troops to</p>
 
   <div className="container">
@@ -234,7 +255,7 @@ function getWinningFactionInRegion(region)
 
       <img src="/img/battle-bay/fantasyRisk2.png" alt="Trulli" useMap="#image-map" width="100%" 
         style={{backgroundRepeat: 'repeat', backgroundImage:'url("/img/battle-bay/ocean-3.png")'}} 
-        className={`${styles.mapImageArea}`} id="islandMap" />
+        className={`${styles.mapImageArea}`} id="islandMap" ref={mapRef} />
 
       <map name="image-map" width="100%" height="100%" className={`${styles.mapImageArea}`}>
         <area onMouseOver={getRegionStats("Southern Trident" , 'pin-Southern-Trident')} alt="Southern Trident" 
@@ -276,7 +297,7 @@ function getWinningFactionInRegion(region)
 
       <div 
         style={{position:"absolute", marginTop: '25%', marginLeft: '50%', zIndex:"9", pointerEvents:"none"}}>
-        <img src={gif}  width="50" height="50"/>
+        <img src={gif}  width={buildingSize} height={buildingSize}/>
       </div>
 
         </TransformComponent>
