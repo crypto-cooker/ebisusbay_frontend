@@ -1,7 +1,7 @@
 import {InvalidState, ListingState} from "@src/core/services/api-service/types";
-import {isEmptyObj} from "@src/utils";
+import Query from "@src/core/services/api-service/mapi/queries/index";
 
-export class ListingsQuery {
+export interface ListingsQueryParams {
     listingId?: string | string[];
     collection?: string | string[];
     tokenId?: string | string[];
@@ -11,8 +11,8 @@ export class ListingsQuery {
     state?: ListingState;
     page?: number;
     pageSize?: number;
-    traits = {};
-    powertraits = {};
+    traits?: object;
+    powertraits?: object;
     search?: string;
     invalid?: InvalidState;
     minPrice?: number;
@@ -24,63 +24,23 @@ export class ListingsQuery {
     minRank?: number;
     maxRank?: number;
     verified?: boolean;
+}
 
-    constructor(json: any) {
-        Object.assign(this, json);
-    }
+export class ListingsQuery extends Query<ListingsQueryParams> {
 
-    static default() {
-        return new ListingsQuery({});
-    }
-
-    static fromCollectionFilter(json: any) {
-        let query = new ListingsQuery(json);
-
-        if (Object.keys(json).includes('address')) {
-            query.collection = json.address;
-        }
-
-        return query;
-    }
-
-    static fromMarketFilter(json: any) {
-        let query = new ListingsQuery(json);
-        query.collection = json.address;
-
-        return query;
+    defaultParams(): ListingsQueryParams {
+        return {
+            state: ListingState.ACTIVE
+        };
     }
 
     toQuery() {
-        const collection = Array.isArray(this.collection) ? this.collection.join(',') : this.collection;
-        const tokenId = Array.isArray(this.tokenId) ? this.tokenId.join(',') : this.tokenId;
-        const listingId = Array.isArray(this.listingId) ? this.listingId.join(',') : this.listingId;
-        const obj = {
-            listingId: listingId,
-            collection: collection,
-            tokenId: tokenId,
-            seller: this.seller,
-            sortBy: this.sortBy,
-            direction: this.direction,
-            state: this.state,
-            page: this.page,
-            pageSize: this.pageSize,
-            traits: this.traits,
-            powertraits: this.powertraits,
-            search: this.search,
-            invalid: this.invalid,
-            minPrice: this.minPrice,
-            maxPrice: this.maxPrice,
-            minListingTime: this.minListingTime,
-            maxListingTime: this.maxListingTime,
-            minSaleTime: this.minSaleTime,
-            maxSaleTime: this.maxSaleTime,
-            minRank: this.minRank,
-            maxRank: this.maxRank,
-            verified: this.verified,
-        };
+        let query = super.toQuery();
+        query.collection = Array.isArray(query.collection) ? query.collection.join(',') : query.collection;
+        query.tokenId = Array.isArray(query.tokenId) ? query.tokenId.join(',') : query.tokenId;
+        query.listingId = Array.isArray(query.listingId) ? query.listingId.join(',') : query.listingId;
 
-        return Object.fromEntries(Object.entries(obj).filter(([k, v]) => {
-            return v !== undefined && !isEmptyObj(v)
-        }));
+        console.log(query)
+        return query;
     }
 }

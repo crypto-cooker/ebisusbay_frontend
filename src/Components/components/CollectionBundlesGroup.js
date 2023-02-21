@@ -15,12 +15,10 @@ const CollectionBundlesGroup = ({collection}) => {
 
   const fetcher = async ({ pageParam = 1 }) => {
     // @todo remove pageSize and fix paging when entire first page is filtered out
-    const query = new ListingsQuery({
+    const listings = await NextApiService.getListingsByCollection(config.contracts.bundle, {
       page: pageParam,
       pageSize: 1000
     });
-
-    const listings = await NextApiService.getListingsByCollection(config.contracts.bundle, query);
 
     return listings.data.filter((listing) => {
       return listing.nft.nfts.some((nft) => caseInsensitiveCompare(nft.address, collection.address));
