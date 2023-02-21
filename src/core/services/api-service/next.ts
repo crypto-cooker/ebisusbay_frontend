@@ -11,7 +11,12 @@ class NextApiService implements Api {
   private next: AxiosInstance;
 
   constructor() {
-    this.next = axios.create({baseURL: '/api'});
+    this.next = axios.create({
+      baseURL: '/api',
+      paramsSerializer: {
+        indexes: null
+      }
+    });
   }
 
   async getListings(query?: ListingsQuery): Promise<PagedList<any>> {

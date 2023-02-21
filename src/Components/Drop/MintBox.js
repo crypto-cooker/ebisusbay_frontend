@@ -308,7 +308,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
             )}
 
             {priceDescription && (
-              <Text fontSize="sm" my={2}>{priceDescription}</Text>
+              <Text fontSize="sm" my={2} align="center">{priceDescription}</Text>
             )}
 
             {status === statuses.LIVE && !drop.complete && (

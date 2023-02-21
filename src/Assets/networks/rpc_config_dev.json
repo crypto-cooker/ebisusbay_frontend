@@ -18229,6 +18229,33 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "The CronosVerse Suites",
+      "slug": "the-cronosverse-suites",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Each SUITE NFT represents ownership of either an office, studio, apartment or luxury sweet in one of the downtown towers within The CronosVerse.  By owning a SUITE NFT, users are able to access The CronosVerse and customize their metaverse experience inside of their digital property",
+        "avatar": "/img/collections/the-cronosverse-suites/avatar.webp",
+        "card": "/img/collections/the-cronosverse-suites/card.webp",
+        "banner": "/img/collections/the-cronosverse-suites/banner.webp",
+        "website": "https://thecronosverse.com/",
+        "twitter": "https://twitter.com/TheCronosVerse",
+        "discord": "https://discord.gg/E9Mzzy9Hex",
+        "categories": [
+          "virtual-worlds",
+          "art",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
     }
   ],
   "drops": [
@@ -24418,7 +24445,7 @@
       }
     },
     {
-      "id": 159,
+      "id": 160,
       "slug": "inventorapes",
       "title": "CroFam Ladies Inventorapes",
       "subtitle": "5% Mint Royalty for holders 10% Market Royalty Fee : 5% for Top Traders (Sweep Contest), 5% for project promotion  A lot of Swap contests to get Inventorbots components collections. Get free mint for each: Background, Eyes, Mouth, Body, Head, Ears  Get a 1:1 free mint of the Jewelry \uD83D\uDC8E Inventorbots components only for Inventorapes  For every 20 mints Inventorapes you will receive 1 x free mint next AI CrofamLadies collection  Top 15 holders will get Mythic (gif) Inventorapes  Top 100 holders receive an extra guaranteed drop of each 6 component  Take a mint at each stage and get or win Mythic Inventorapes -> check  Get the required Inventorbots components and build a Inventorbots that will be the most powerful NFT of the CrofamLadies / CrofamSpace ecosystem  Owner of Mythic Inventorapes has guaranteed 10 x free mint of Background, Eyes, Mouth, Body, Head, Ears components  More utility coming soon...",
@@ -24456,6 +24483,50 @@
         "doxx": false,
         "kyc": false,
         "escrow": false
+      }
+    },
+    {
+      "id": 161,
+      "slug": "the-cronosverse-suites",
+      "title": "The CronosVerse Suites",
+      "subtitle": "Each SUITE NFT represents ownership of either an office, studio, apartment or luxury sweet in one of the downtown towers within The CronosVerse.  By owning a SUITE NFT, users are able to access The CronosVerse and customize their metaverse experience inside of their digital property",
+      "description": "Each SUITE NFT represents ownership of either an office, studio, apartment or luxury sweet in one of the downtown towers within The CronosVerse.  By owning a SUITE NFT, users are able to access The CronosVerse and customize their metaverse experience inside of their digital property.\n\nThe CronosVerse is the first true metaverse project on the Cronos Blockchain.  Our goal is to create the ultimate Social MMO gaming experience for the entire Cronos community.",
+      "author": {
+        "name": "CronosVerse",
+        "website": "https://thecronosverse.com/",
+        "twitter": "https://twitter.com/TheCronosVerse",
+        "discord": "https://discord.gg/E9Mzzy9Hex"
+      },
+      "address": "",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 40,
+      "totalSupply": 668,
+      "cost": "950",
+      "memberCost": "950",
+      "whitelistCost": "850",
+      "foundersOnly": false,
+      "start": 1677268800000,
+      "salePeriods": {
+        "presale": 1677268800000,
+        "public": 1677272400000
+      },
+      "priceDescription": "Whitelist-only presale for the first hour. Public sale after presale ends.",
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/the-cronosverse-suites/drop.webp",
+        "banner": "/img/drops/the-cronosverse-suites/banner.webp",
+        "avatar": "/img/collections/the-cronosverse-suites/avatar.webp",
+        "preview": "/img/collections/the-cronosverse-suites/card.webp"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
       }
     }
   ]
