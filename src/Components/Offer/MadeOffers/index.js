@@ -11,7 +11,7 @@ import MakeOfferDialog from "@src/Components/Offer/Dialogs/MakeOfferDialog";
 import MakeCollectionOfferDialog from "@src/Components/Offer/Dialogs/MakeCollectionOfferDialog";
 import {CancelOfferDialog} from "@src/Components/Offer/Dialogs/CancelOfferDialog";
 
-export default function MadeOffers({ address, type}) {
+export default function MadeOffers({ address, type, filterVisible}) {
   const [offerType, setOfferType] = useState(OfferState.ACTIVE.toString());
 
   const [offerAction, setOfferAction] = useState(OFFER_TYPE.none);
@@ -114,9 +114,9 @@ export default function MadeOffers({ address, type}) {
                 if (sort.sortBy === newSort.sortBy) {
                   newSort.direction = sort.direction === 'asc' ? 'desc' : 'asc'
                 }
-                console.log('sort', newSort)
                 setSort(newSort)
               }}
+              breakpointValue={filterVisible ? 'xl' : 'lg'}
             />
           </InfiniteScroll>
         </>

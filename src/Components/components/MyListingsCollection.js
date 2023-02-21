@@ -1,22 +1,18 @@
-import React, { memo, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  MyListingsCollectionPageActions, MyNftPageActions,
-} from '@src/GlobalState/User';
-import { Form, Spinner } from 'react-bootstrap';
-import MyListingCard from './MyListingCard';
+import React, {memo, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {MyListingsCollectionPageActions, MyNftPageActions,} from '@src/GlobalState/User';
+import {Form, Spinner} from 'react-bootstrap';
 import MyNftCancelDialog from './MyNftCancelDialog';
 import InvalidListingsPopup from './InvalidListingsPopup';
-
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import { useRouter } from 'next/router';
+import {useRouter} from 'next/router';
 import {getUnfilteredListingsForAddress} from "@src/core/api";
 import MakeListingDialog from "@src/Components/MakeListing";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import {invalidState} from "@src/core/api/enums";
+import ResponsiveListingsTable from "@src/components-v2/shared/responsive-table/responsive-listings-table";
+import {Alert, AlertDescription, AlertIcon, AlertTitle, Text} from "@chakra-ui/react";
 
 
 const MyListingsCollection = ({ walletAddress = null }) => {
@@ -25,11 +21,15 @@ const MyListingsCollection = ({ walletAddress = null }) => {
 
   const [showInvalidOnly, setShowInvalidOnly] = useState(false);
   const [hasInvalidListings, setHasInvalidListings] = useState(false);
+  const [sort, setSort] = useState({
+    sortBy: 'listingTime',
+    direction: 'asc'
+  });
 
   const user = useSelector((state) => state.user);
 
   const fetcher = async ({ pageParam = 1 }) => {
-    const listings = await getUnfilteredListingsForAddress(walletAddress, user.provider, pageParam);
+    const listings = await getUnfilteredListingsForAddress(walletAddress, user.provider, pageParam, sort);
     if (listings.some((value) => !value.valid && value.invalid !== invalidState.LEGACY)) {
       setHasInvalidListings(true);
     }
@@ -47,7 +47,7 @@ const MyListingsCollection = ({ walletAddress = null }) => {
     isFetchingNextPage,
     status,
     refetch,
-  } = useInfiniteQuery(['MyListingsCollection', walletAddress], fetcher, {
+  } = useInfiniteQuery(['MyListingsCollection', walletAddress, sort], fetcher, {
     getNextPageParam: (lastPage, pages) => {
       return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
     },
@@ -61,33 +61,27 @@ const MyListingsCollection = ({ walletAddress = null }) => {
   return (
     <>
       {hasInvalidListings && (
-        <div className="alert alert-danger" role="alert">
-          <span>
-            {' '}
-            <FontAwesomeIcon color="var(--bs-danger)" icon={faExclamationCircle} size={'2x'} />{' '}
-          </span>
-          <p>
-            <strong>Some of your current listings are invalid.</strong> This can happen when a listed NFT was not
-            delisted from the marketplace before being staked, transferred, or approval being revoked. This can cause
-            NFTs to be sold significantly under floor price once the NFT returns to your wallet.
-          </p>
-          <h5>Option 1 (Recommended):</h5>
-          <p className="mb-4">
-            Cancel your listings below <strong>before</strong> those NFTs are returned to your wallet or approval
-            granted.
-          </p>
-          <h5>Option 2 (AT YOUR OWN RISK, lower gas fees):</h5>
-          <p>
-            Either cancel or update the price of the NFT as soon as it is in your wallet. This is cheaper but must be
-            done as soon as possible to avoid users from buying your listing before it can be cancelled or updated.
-          </p>
-          <p>
-            <strong>
-              Please note: No refunds will be given for sales at older prices. It is your own responsibility to cancel
-              listings for NFTs that you stake, transfer or revoke approval.
-            </strong>
-          </p>
-        </div>
+        <Alert
+          status='error'
+          flexDirection='column'
+          alignItems='center'
+          justifyContent='center'
+          textAlign='center'
+          minH='200px'
+        >
+          <AlertIcon boxSize='40px' mr={0} />
+          <AlertTitle mt={4} mb={1} fontSize='lg'>
+            Invalid listings detected!
+          </AlertTitle>
+          <AlertDescription>
+            <Text>
+              <strong>Some of your current listings are invalid.</strong> This can happen when a listed NFT was not
+              delisted from the marketplace before being staked, transferred, or approval being revoked. This can cause
+              NFTs to be sold significantly under floor price once the NFT returns to your wallet. Please cancel these
+              listings to prevent any unwanted sales.
+            </Text>
+          </AlertDescription>
+        </Alert>
       )}
 
       <div className="row pt-3">
@@ -127,29 +121,26 @@ const MyListingsCollection = ({ walletAddress = null }) => {
           ) : status === "error" ? (
             <p>Error: {error.message}</p>
           ) : (
-            <div className="card-group">
-              {data && data.pages.map((pages, index) => (
-                <React.Fragment key={index}>
-                  {pages.map((listing, index) => (
-                    <div key={index} className="d-item col-lg-6 col-md-12 mb-4 px-2">
-                      <MyListingCard
-                        nft={listing}
-                        key={index}
-                        canCancel={listing.state === 0}
-                        canUpdate={listing.state === 0 && listing.isInWallet}
-                        onUpdateButtonPressed={() =>{
-                          dispatch(MyListingsCollectionPageActions.showMyNftPageListDialog(listing.nft, listing))
-                        }}
-                        onCancelButtonPressed={() =>
-                          dispatch(MyListingsCollectionPageActions.showMyNftPageCancelDialog(listing))
-                        }
-                        newTab={true}
-                      />
-                    </div>
-                  ))}
-                </React.Fragment>
-              ))}
-            </div>
+
+            <ResponsiveListingsTable
+              data={data}
+              onUpdate={(listing) => {
+                dispatch(MyListingsCollectionPageActions.showMyNftPageListDialog(listing.nft, listing))
+              }}
+              onCancel={(listing) => {
+                dispatch(MyListingsCollectionPageActions.showMyNftPageCancelDialog(listing))
+              }}
+              onSort={(field) => {
+                let newSort = {
+                  sortBy: field,
+                  direction: 'desc'
+                }
+                if (sort.sortBy === newSort.sortBy) {
+                  newSort.direction = sort.direction === 'asc' ? 'desc' : 'asc'
+                }
+                setSort(newSort)
+              }}
+            />
           )}
         </InfiniteScroll>
       </div>
