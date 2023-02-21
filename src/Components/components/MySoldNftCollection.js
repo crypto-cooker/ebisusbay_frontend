@@ -1,15 +1,19 @@
-import React, { memo } from 'react';
-import { Spinner } from 'react-bootstrap';
-import SoldNftCard from './SoldNftCard';
+import React, {memo, useCallback, useState} from 'react';
+import {Spinner} from 'react-bootstrap';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {getNftSalesForAddress} from "@src/core/api";
 import {useInfiniteQuery} from "@tanstack/react-query";
+import ResponsiveSalesTable from "@src/components-v2/shared/responsive-table/responsive-sales-table";
 
 
 const MySoldNftCollection = ({ walletAddress = null }) => {
+  const [sort, setSort] = useState({
+    sortBy: 'listingTime',
+    direction: 'asc'
+  });
 
   const fetcher = async ({ pageParam = 1 }) => {
-    return await getNftSalesForAddress(walletAddress, pageParam);
+    return await getNftSalesForAddress(walletAddress, pageParam, sort);
   };
 
   const {
@@ -21,7 +25,7 @@ const MySoldNftCollection = ({ walletAddress = null }) => {
     isFetchingNextPage,
     status,
     refetch,
-  } = useInfiniteQuery(['MySoldNftCollection', walletAddress], fetcher, {
+  } = useInfiniteQuery(['MySoldNftCollection', walletAddress, sort], fetcher, {
     getNextPageParam: (lastPage, pages) => {
       return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
     },
@@ -31,6 +35,17 @@ const MySoldNftCollection = ({ walletAddress = null }) => {
   const loadMore = () => {
     fetchNextPage();
   };
+
+  const handleSort = useCallback((field) => {
+    let newSort = {
+      sortBy: field,
+      direction: 'desc'
+    }
+    if (sort.sortBy === newSort.sortBy) {
+      newSort.direction = sort.direction === 'asc' ? 'desc' : 'asc'
+    }
+    setSort(newSort)
+  }, [sort]);
 
   return (
     <InfiniteScroll
@@ -57,25 +72,10 @@ const MySoldNftCollection = ({ walletAddress = null }) => {
       ) : status === "error" ? (
         <p>Error: {error.message}</p>
       ) : (
-        <div className="row">
-          {data && data.pages.map((pages, index) => (
-            <React.Fragment key={index}>
-              {pages.map((listing, index) => {
-                if (!listing.nft) {
-                  listing = {
-                    ...listing,
-                    ...{
-                      nft: {
-                        missing: true,
-                      },
-                    },
-                  };
-                }
-                return <SoldNftCard nft={listing} index={index}  />;
-              })}
-            </React.Fragment>
-          ))}
-        </div>
+        <ResponsiveSalesTable
+          data={data}
+          onSort={handleSort}
+        />
       )}
     </InfiniteScroll>
   );

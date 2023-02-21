@@ -1,4 +1,4 @@
-import React, {memo, useState} from 'react';
+import React, {memo, useCallback, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {MyListingsCollectionPageActions, MyNftPageActions,} from '@src/GlobalState/User';
 import {Form, Spinner} from 'react-bootstrap';
@@ -57,6 +57,17 @@ const MyListingsCollection = ({ walletAddress = null }) => {
   const loadMore = () => {
     fetchNextPage();
   };
+
+  const handleSort = useCallback((field) => {
+    let newSort = {
+      sortBy: field,
+      direction: 'desc'
+    }
+    if (sort.sortBy === newSort.sortBy) {
+      newSort.direction = sort.direction === 'asc' ? 'desc' : 'asc'
+    }
+    setSort(newSort)
+  }, [sort]);
 
   return (
     <>
@@ -121,7 +132,6 @@ const MyListingsCollection = ({ walletAddress = null }) => {
           ) : status === "error" ? (
             <p>Error: {error.message}</p>
           ) : (
-
             <ResponsiveListingsTable
               data={data}
               onUpdate={(listing) => {
@@ -130,16 +140,7 @@ const MyListingsCollection = ({ walletAddress = null }) => {
               onCancel={(listing) => {
                 dispatch(MyListingsCollectionPageActions.showMyNftPageCancelDialog(listing))
               }}
-              onSort={(field) => {
-                let newSort = {
-                  sortBy: field,
-                  direction: 'desc'
-                }
-                if (sort.sortBy === newSort.sortBy) {
-                  newSort.direction = sort.direction === 'asc' ? 'desc' : 'asc'
-                }
-                setSort(newSort)
-              }}
+              onSort={handleSort}
             />
           )}
         </InfiniteScroll>

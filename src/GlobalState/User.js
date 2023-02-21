@@ -6,19 +6,12 @@ import detectEthereumProvider from '@metamask/detect-provider';
 import { DeFiWeb3Connector } from 'deficonnect';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import * as DefiWalletConnectProvider from '@deficonnect/web3-provider';
-import {
-  getNftRankings,
-  getNftSalesForAddress,
-  getNftsForAddress2,
-  getUnfilteredListingsForAddress,
-} from '../core/api';
 import { toast } from 'react-toastify';
 import {
   caseInsensitiveCompare,
   createSuccessfulTransactionToastContent,
   findCollectionByAddress,
   isUserBlacklisted,
-  sliceIntoChunks,
 } from '../utils';
 import { appAuthInitFinished } from './InitSlice';
 import { captureException } from '@sentry/react';

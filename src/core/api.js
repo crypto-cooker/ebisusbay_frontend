@@ -346,7 +346,7 @@ export async function getUnfilteredListingsForAddress(walletAddress, walletProvi
   }
 }
 
-export async function getNftSalesForAddress(walletAddress, page) {
+export async function getNftSalesForAddress(walletAddress, page, sort = null) {
   let query = {
     seller: walletAddress,
     state: 1,
@@ -355,6 +355,7 @@ export async function getNftSalesForAddress(walletAddress, page) {
     sortBy: 'saleTime',
     direction: 'desc',
   };
+  if (sort) query = {...query, ...sort};
 
   try {
     const queryString = new URLSearchParams(query);
