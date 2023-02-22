@@ -18285,6 +18285,31 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "Liminals Kingdom:The Corrupted Ones",
+      "slug": "liminals-kingdom-the-corrupted-ones",
+      "multiToken": false,
+      "address": "0xbD15E24Fca1F8198746A6661d4074D9D7E387192",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Basilik Council which is sworn to protect the liminals will be awakened across all lands.Demon Dragons and Corrupted Eggs will be joining  Bantas army. A collection  1699 nfts will be unleashed.",
+        "avatar": "/img/collections/liminals-kingdom-the-corrupted-ones/avatar.webp",
+        "card": "/img/collections/liminals-kingdom-the-corrupted-ones/card.webp",
+        "banner": "/img/collections/liminals-kingdom-the-corrupted-ones/banner.webp",
+        "website": "https://liminalsworld.com/",
+        "twitter": "https://twitter.com/liminalskingdom",
+        "discord": "https://discord.gg/nBupzhXZ3w",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
