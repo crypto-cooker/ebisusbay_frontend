@@ -3126,6 +3126,33 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "The CronosVerse Suites",
+      "slug": "the-cronosverse-suites",
+      "multiToken": false,
+      "address": "0x3443171b364B49B7D0f87861e961240D0b1D88a8",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Each SUITE NFT represents ownership of either an office, studio, apartment or luxury sweet in one of the downtown towers within The CronosVerse.  By owning a SUITE NFT, users are able to access The CronosVerse and customize their metaverse experience inside of their digital property",
+        "avatar": "/img/collections/the-cronosverse-suites/avatar.webp",
+        "card": "/img/collections/the-cronosverse-suites/card.webp",
+        "banner": "/img/collections/the-cronosverse-suites/banner.webp",
+        "website": "https://thecronosverse.com/",
+        "twitter": "https://twitter.com/TheCronosVerse",
+        "discord": "https://discord.gg/E9Mzzy9Hex",
+        "categories": [
+          "virtual-worlds",
+          "art",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
     }
   ],
   "drops": [
@@ -7535,6 +7562,50 @@
         "doxx": false,
         "kyc": true,
         "escrow": false
+      }
+    },
+    {
+      "id": 161,
+      "slug": "the-cronosverse-suites",
+      "title": "The CronosVerse Suites",
+      "subtitle": "Each SUITE NFT represents ownership of either an office, studio, apartment or luxury sweet in one of the downtown towers within The CronosVerse.  By owning a SUITE NFT, users are able to access The CronosVerse and customize their metaverse experience inside of their digital property",
+      "description": "Each SUITE NFT represents ownership of either an office, studio, apartment or luxury sweet in one of the downtown towers within The CronosVerse.  By owning a SUITE NFT, users are able to access The CronosVerse and customize their metaverse experience inside of their digital property.\n\nThe CronosVerse is the first true metaverse project on the Cronos Blockchain.  Our goal is to create the ultimate Social MMO gaming experience for the entire Cronos community.",
+      "author": {
+        "name": "CronosVerse",
+        "website": "https://thecronosverse.com/",
+        "twitter": "https://twitter.com/TheCronosVerse",
+        "discord": "https://discord.gg/E9Mzzy9Hex"
+      },
+      "address": "0x3443171b364B49B7D0f87861e961240D0b1D88a8",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 40,
+      "totalSupply": 668,
+      "cost": "950",
+      "memberCost": "950",
+      "whitelistCost": "850",
+      "foundersOnly": false,
+      "start": 1677092035000,
+      "salePeriods": {
+        "presale": 1677092035000,
+        "public": 1677095635000
+      },
+      "priceDescription": "Whitelist-only presale for the first hour. Public sale after presale ends.",
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/the-cronosverse-suites/drop.webp",
+        "banner": "/img/drops/the-cronosverse-suites/banner.webp",
+        "avatar": "/img/collections/the-cronosverse-suites/avatar.webp",
+        "preview": "/img/collections/the-cronosverse-suites/card.webp"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
       }
     }
   ]
