@@ -18259,6 +18259,32 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "Voxel Weird Apes",
+      "slug": "voxel-weird-apes",
+      "multiToken": false,
+      "address": "0xe02A74813053e96C5C98F817C0949E0B00728Ef6",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Voxel Weird Apes are the 3D transformation of the Weird Apes and will be your Social Avatar for the Metaverse! Voxel Weird Ape can be claimed by the owner of the respective Weird Ape, if it has not already happened, and will inherit its traits!  The claim gives access to the VoxBox and in order for it to cross the Portal of Void you will have to evolve it into the Explorable! This will not only give her the gift of the third dimension, but it will unlock her full potential and allow her to collect Weirdonite in Legends Of Weirdonite and earn $WAC and win other great prizes! Visit our Discord to join our wonderful community and stay updated on release dates!",
+        "avatar": "/img/collections/voxel-weird-apes/avatar.webp",
+        "card": "/img/collections/voxel-weird-apes/card.webp",
+        "banner": "/img/collections/voxel-weird-apes/banner.webp",
+        "website": "https://weirdapes.com/",
+        "twitter": "https://twitter.com/WeirdApesClub",
+        "discord": "https://discord.gg/xZtzYWAHJc",
+        "medium": "https://medium.com/@WeirdApesClub",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
     }
   ],
   "drops": [
