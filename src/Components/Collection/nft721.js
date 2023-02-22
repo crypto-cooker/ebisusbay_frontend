@@ -218,6 +218,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
   const [crognomideBreed, setCrognomideBreed] = useState(null);
   const [babyWeirdApeBreed, setBabyWeirdApeBreed] = useState(null);
   const [ladyWeirdApeChildren, setLadyWeirdApeChildren] = useState(null);
+  const [voxelClaimed, setVoxelClaimed] = useState(false);
   const [evoSkullTraits, setEvoSkullTraits] = useState([]);
   const [lazyHorseTraits, setLazyHorseTraits] = useState([]);
   const [customProfile, setCustomProfile] = useState({
@@ -333,6 +334,10 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
           let apeInfo;
           if (isWeirdApesCollection(address)) {
             apeInfo = await contract.getGenesisInfo(id);
+            const voxelAbi = require(`../../Assets/abis/voxel-weird-apes.json`);
+            const voxelContract = new Contract('0xe02a74813053e96c5c98f817c0949e0b00728ef6', voxelAbi, readProvider);
+            const isClaimed = await voxelContract.isClaimed(id);
+            setVoxelClaimed(isClaimed);
           } else if (isLadyWeirdApesCollection(address)) {
             apeInfo = await contract.getLadyInfo(id);
           } else if (isBabyWeirdApesCollection(address)) {
@@ -647,6 +652,18 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
                         title={`This Lady Weird Ape can make ${ladyWeirdApeChildren} ${ladyWeirdApeChildren === 1 ? 'baby' : 'babies'}`}
                       />
                       <span className="fw-bold">This Lady Weird Ape can make {`${ladyWeirdApeChildren} ${ladyWeirdApeChildren === 1 ? 'baby' : 'babies'}`}</span>
+                    </div>
+                  )}
+                  {isWeirdApesCollection(address) && voxelClaimed && (
+                    <div className="d-flex flex-row align-items-center mb-4">
+                      <LayeredIcon
+                        icon={faHeartSolid}
+                        bgColor={'#ffffff00'}
+                        color={'#dc143c'}
+                        inverse={false}
+                        title={`This Weird Ape has claimed a Voxel Weird Ape`}
+                      />
+                      <span className="fw-bold">This Weird Ape has claimed a Voxel Weird Ape</span>
                     </div>
                   )}
                   
