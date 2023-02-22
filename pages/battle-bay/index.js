@@ -1,6 +1,7 @@
 import Footer from "@src/Components/components/Footer";
 import PageHead from "@src/Components/Head/PageHead";
 import React, {useState} from "react";
+
 import Barracks from "@src/Components/BattleBay/Areas/Barracks";
 import BattleMap from "@src/Components/BattleBay/Areas/BattleMap";
 import Bank from "@src/Components/BattleBay/Areas/Bank";

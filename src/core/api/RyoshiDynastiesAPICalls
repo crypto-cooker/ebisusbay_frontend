@@ -1,0 +1,58 @@
+import axios from "axios";
+// import {ListingsQuery} from "@src/core/api/queries/listings";
+
+const api = axios.create({
+  baseURL: '/api',
+});
+
+export const getListingsByCollection = async (address, listingsQuery) => {
+  try{
+    // if (!listingsQuery) listingsQuery = ListingsQuery.default();
+
+    listingsQuery.collection = address;
+    return await api.get(`listings`, {params: listingsQuery.toApi()});
+  }
+  catch(error){
+    throw error;
+  }
+}
+
+export const getListingsByIds = async (listingIds) => {
+  try{
+    const ids = listingIds.join(',');
+    return await api.get(`listings`, {params: {listingId: ids}});
+  }
+  catch(error){
+    throw error;
+  }
+}
+
+export const getFactions = async (listingIds) => {
+    try{
+      const ids = listingIds.join(',');
+      return await api.get(`listings`, {params: {listingId: ids}});
+    }
+    catch(error){
+      throw error;
+    }
+}
+export const createFaction = async (listingIds) => {
+    try{
+      const ids = listingIds.join(',');
+      return await api.get(`listings`, {params: {listingId: ids}});
+    }
+    catch(error){
+      throw error;
+    }
+}
+export const getMap = async () => {
+  try{
+    return await api.get("https://testcms.ebisusbay.biz/api/ryoshi-dynasties/games/0");
+  }
+  catch(error){
+    throw error;
+  }
+}
+//   const response = await fetch(`https://api.coinmarketcap.com/v1/ticker/?limit=10`);
+  //   const json = await response.json();
+  //   this.setState({ data: json });

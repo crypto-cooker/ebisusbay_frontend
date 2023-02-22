@@ -1,10 +1,10 @@
-import React, {useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState, createElement } from 'react';
 import { resizeBattleMap, setUpMapZooming } from './mapFunctions.js'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles from './BattleBay.module.scss';
 import { FactionForm } from './battleMap/components/index.js';
 import { useDisclosure } from '@chakra-ui/react'
-import { LogDescription } from 'ethers/lib/utils.js';
+import { getMap } from "@src/core/api/RyoshiDynastiesAPICalls";
 
 const BattleMap = ({onBack, factions=[]}) => {
 
@@ -19,6 +19,7 @@ const BattleMap = ({onBack, factions=[]}) => {
   const [buildingSize, setBuildingSize] = useState("50px");
   const { height, width: windowWidth } = useWindowDimensions();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   function getWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
     return {
@@ -137,12 +138,11 @@ const BattleMap = ({onBack, factions=[]}) => {
       }
   }
   function displayWinningFactions()
-{
+  {
     var pins = [];
-    regionFlags.forEach(myFunction); 
+    regionFlags.forEach(pushPin); 
 
-    function myFunction(item, index) { 
-        // console.log("tried to push pin: " + item + ""); 
+    function pushPin(item, index) { 
         pins.push(document.getElementById(item));
     }
     
@@ -232,14 +232,37 @@ const BattleMap = ({onBack, factions=[]}) => {
   }
   //#endregion
 
-  useEffect(() => {
-    resizeBattleMap();
-    setUpBattleMap();
+  // useEffect(() => {
+  //   setFlagSize(windowWidth/30 + "px");
+  //   setBuildingSize(windowWidth/20 + "px");
+  //   console.log("windowWidth: " + windowWidth);
+  //   // setUpMapZooming();
+  // });
 
-    setFlagSize(windowWidth/30 + "px");
-    setBuildingSize(windowWidth/20 + "px");
-    // setUpMapZooming();
-  });
+  useEffect(() => {
+    setUpBattleMap();
+    SetUpMap();
+  }, []);
+
+  const mapData = [];
+  const [posts, setPosts] = useState([]);
+  const SetUpMap = async () => {
+    console.log("loading map");
+
+    getMap(0).then((data) => {
+      mapData = data.data.data.map; 
+      console.log(mapData.regions[0].controlPoints);
+
+      setPosts( mapData.regions[0].controlPoints.map((controlPoint, i) => 
+      (
+        console.log(controlPoint.name),
+      <area onMouseOver={getRegionStats(controlPoint.name)} alt= {controlPoint.name}
+          onClick={() => {selectRegion(controlPoint.name, troopsTableRef); onOpen();}}
+          coords={controlPoint.coordinates} shape="poly"/>
+      )))
+      resizeBattleMap();
+  }); 
+  }
 
   return (
   <section>
@@ -248,30 +271,38 @@ const BattleMap = ({onBack, factions=[]}) => {
 
   <button className="btn" onClick={onBack}>Back to Village Map</button>
   <p className="title text-center">Select a region to deploy troops to</p>
+  <div>
+     </div>
 
   <div className="container">
     <TransformWrapper>
       <TransformComponent>
-
+       
       <img src="/img/battle-bay/fantasyRisk2.png" alt="Trulli" useMap="#image-map" width="100%" 
         style={{backgroundRepeat: 'repeat', backgroundImage:'url("/img/battle-bay/ocean-3.png")'}} 
         className={`${styles.mapImageArea}`} id="islandMap" ref={mapRef} />
 
       <map name="image-map" width="100%" height="100%" className={`${styles.mapImageArea}`}>
-        <area onMouseOver={getRegionStats("Southern Trident" , 'pin-Southern-Trident')} alt="Southern Trident" 
+        {posts}
+
+        {/* <area onMouseOver={getRegionStats("Southern Trident" , 'pin-Southern-Trident')} alt="Southern Trident" 
           onClick={() => {selectRegion("Southern Trident", troopsTableRef); onOpen();}}
           coords="255,534,295,532,337,554,396,534,410,481,351,411,331,377,264,391,225,377,208,430,157,439,191,515" shape="poly"/> 
+
         <area onMouseOver={getRegionStats("Dragonland", 'pin-Dragonland')} alt="Dragonland" 
           onClick={() => {selectRegion("Dragonland", troopsTableRef); onOpen();}}
           coords="199,290,208,338,225,368,269,380,328,371,446,298,387,231,421,191,354,160,208,37,185,129,216,214,239,256,295,259,300,309,258,326,233,293" shape="poly"/> 
+
         <area onMouseOver={getRegionStats("Dwarf Mines", 'pin-Dwarf-Mines')} target="" alt="Dwarf Mines" 
           onClick={() => {selectRegion("Dwarf Mines", troopsTableRef); onOpen();}}
           coords="438,529,455,478,491,470,502,349,589,352,699,318,724,340,721,447,699,475,721,520,778,540,741,568,640,546,640,489,550,481,516,526,469,543" shape="poly"/>
+        
         <area onMouseOver={getRegionStats("Human Kingdoms", 'pin-Human-Kingdoms')} target="" alt="Human Kingdoms" 
           onClick={() => {selectRegion("Human Kingdoms", troopsTableRef); onOpen();}}
           coords="825,567,853,576,891,569,900,558,939,562,961,564,981,558,1018,564,1033,553,1038,517,1027,476,1004,499,954,521,918,517,914,497,902,474,
           889,458,898,427,900,400,893,379,877,359,850,361,821,357,807,366,776,363,753,352,737,339,712,361,728,370,724,384,735,397,719,418,728,449,708,
-          460,685,474,710,491,721,521,753,542,778,536,782,512,805,503,823,485,853,497,873,506,873,519,850,533,846,548,837,556" shape="poly"/>
+          460,685,474,710,491,721,521,753,542,778,536,782,512,805,503,823,485,853,497,873,506,873,519,850,533,846,548,837,556" shape="poly"/> */}
+
       </map>
 
       <div id="pin-Southern-Trident" title="Southern Trident"

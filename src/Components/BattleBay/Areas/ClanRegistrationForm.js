@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, Component} from "react";
 import { useSelector } from "react-redux";
 import {
   Modal,
@@ -15,16 +15,19 @@ import {
 } from "@chakra-ui/react"
 import { Spinner } from 'react-bootstrap';
 import { getTheme } from "@src/Theme/theme";
-import { add } from "lodash";
-import { faRightLeft } from "@fortawesome/free-solid-svg-icons";
+import { createFaction } from "@src/core/api/RyoshiDynastiesAPICalls";
 
 const ClanRegistrationForm = ({ isOpen, onClose, clans=[]}) => {
  
   const [isLoading, setIsLoading] = useState(false);
   const user = useSelector((state) => state.user);
 
-  const CreateClan = () => {
-    //add payment code here
+  const CreateClan = async () => {
+    const factionResponse = await createFaction(user.walletAddress);
+    if(factionResponse.status !== 200){
+      console.log("Error creating faction");
+      return;
+    }
     console.log("You created a clan");
     clans.push({clanType: "collection", rank: 1, faction: "yourWalletAddress", troops: 0, owned:true, addresses: [], registered: false})
     onClose();
@@ -41,18 +44,20 @@ const ClanRegistrationForm = ({ isOpen, onClose, clans=[]}) => {
             <ModalBody>
               <Flex alignContent={'center'} justifyContent={'center'}>
                 <Box p='3'>
-                <p>In order to participate in battle and be considered for listing rewards an NFT 
-                  collection MUST register as a faction each season</p>
-                <p>There is a one time creation fee of 20 $Mitama to create a faction</p>
-                <p>Each season a faction must pay 1000 $Fortune to participate in battle</p>
-                  </Box>
+                  <p>
+                    In order to participate in battle and be considered for listing rewards an NFT 
+                    collection MUST register as a faction each season
+                    <br/> <br/>You must have 20 $Mitama in your wallet to create a faction 
+                    <br/> <br/>Each season a faction must pay 1000 $Fortune to participate in battle
+                  </p>
+                </Box>
               </Flex>
               <Flex alignContent={'center'} justifyContent={'center'}>
                 
                 <Box p='3'>
               <Button style={{ display: 'flex', marginTop: '16px' }} 
                 onClick={CreateClan} variant='outline'size='lg'> 
-                Create Clan <br/> Cost: 20 Mitama </Button>
+                Create new Faction </Button>
                 </Box>
               </Flex>
             </ModalBody>
