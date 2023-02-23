@@ -353,6 +353,7 @@ export function caseInsensitiveCompare(str1, str2) {
 }
 
 export function ciIncludes(array, str) {
+  if (!array) return false;
   return array.map((item) => item.toLowerCase()).includes(str.toLowerCase());
 }
 

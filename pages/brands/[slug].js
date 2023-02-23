@@ -173,7 +173,7 @@ export const getServerSideProps = async ({ params, query }) => {
       c.position = brandKeyedAddresses.find((o) => caseInsensitiveCompare(o.address, c.address)).position;
       const drop = drops.find((d) => d.slug === c.slug);
       c.drop = drop ?? null;
-      c.hidden = ciIncludes(brand.hidden, c.address);
+      c.hidden = brand.hidden ? ciIncludes(brand.hidden, c.address) : false;
       return c;
     })
     .sort((a, b) => a.position > b.position ? 1 : -1);
