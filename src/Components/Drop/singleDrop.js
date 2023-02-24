@@ -446,7 +446,17 @@ const SingleDrop = ({drop}) => {
                   </div>
                 </div>
               ) : (
-                <div className="mt-3 mb-4">{newlineText(drop.description)}</div>
+                <div className="mt-3 mb-4">
+                  {drop.slug === 'the-cronosverse-suites' && (
+                    <Text mb={4}>
+                      Preview the CronosVerse Suites here: <br />
+                      <a href="https://thecronosverse.com/suite/virtual-viewer" target="_blank">
+                        https://thecronosverse.com/suite/virtual-viewer
+                    </a>
+                    </Text>
+                  )}
+                  {newlineText(drop.description)}
+                </div>
               )}
             </div>
           </div>
