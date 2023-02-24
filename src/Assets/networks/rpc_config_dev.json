@@ -18209,7 +18209,7 @@
       "name": "The CronosVerse Suites",
       "slug": "the-cronosverse-suites",
       "multiToken": false,
-      "address": "",
+      "address": "0x1eD88baF12Ec3fd8D2955B1b2a883e6E79a10828",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -24551,8 +24551,8 @@
         "twitter": "https://twitter.com/TheCronosVerse",
         "discord": "https://discord.gg/E9Mzzy9Hex"
       },
-      "address": "",
-      "maxMintPerTx": 40,
+      "address": "0x1eD88baF12Ec3fd8D2955B1b2a883e6E79a10828",
+      "maxMintPerTx": 2,
       "maxMintPerAddress": 40,
       "totalSupply": 668,
       "cost": "950",
