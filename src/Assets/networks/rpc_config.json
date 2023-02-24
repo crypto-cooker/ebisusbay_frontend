@@ -4266,7 +4266,7 @@
       "multiToken": false,
       "address": "0x899e75ec5e229fc80683e6fe4271600da4aadeb0",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "avatar": "/img/collections/succubus/avatar.png",
@@ -15719,7 +15719,7 @@
       "multiToken": false,
       "address": "0x7Ac7D6d0d981C8A00637234f8026a4f78C5df14a",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Cro Snowmen are the first collection from Holiday NFT, which is an NFT project managed by TopBlok Digital Asset Management.  TopBlok is known for other Cronos Projects such as The CronosVerse and CROmmandos.",
         "avatar": "/img/collections/cro-snowmen/avatar.webp",
@@ -23594,7 +23594,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "images": {
         "drop": "/img/drops/cro-clubs-vampires/drop.webp",
@@ -24562,7 +24562,7 @@
       "start": 1677283200000,
       "salePeriods": {
         "presale": 1677283200000,
-        "public": 1677283200000
+        "public": 1677286800000
       },
       "priceDescription": "Whitelist-only presale for the first hour. Public sale after presale ends.",
       "end": null,

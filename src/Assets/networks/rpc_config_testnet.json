@@ -2649,10 +2649,10 @@
       }
     },
     {
-      "slug": "sea-dragon",
+      "slug": "seashrine-vip",
       "name": "SeaShrine VIP",
       "onChain": false,
-      "address": "0xe7c594926cEb73B0669c72bfb641c5b7Cde0a4aE",
+      "address": "0xa4C40C51de20d1e75E0ac83D6F043AF2f9C6Faa9",
       "multiToken": false,
       "listable": true,
       "metadata": {
@@ -6246,6 +6246,49 @@
         "kyc": true,
         "escrow": false,
         "verified": true
+      }
+    },
+    {
+      "id": 115,
+      "slug": "seashrine-vip",
+      "title": "SeaShrine Founding Member VIP",
+      "subtitle": "SeaShrine is a new marketplace founded and built by the same team behind the Cronos success, Ebisu's Bay. With upcoming feature parity with their previous endeavor, the team looks to replicate their accomplishments and to recreate a Gold Standard for marketplaces on the new Aptos blockchain. Embark on this journey with us by minting a VIP Founding Member NFT now!",
+      "description": "SeaShrine is a new marketplace founded and built by the same team behind the Cronos success, Ebisu's Bay. With upcoming feature parity with their previous endeavor, the team looks to replicate their accomplishments and to recreate a Gold Standard for marketplaces on the new Aptos blockchain. Embark on this journey with us by minting a VIP Founding Member NFT now!",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "0xa4C40C51de20d1e75E0ac83D6F043AF2f9C6Faa9",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 8800,
+      "cost": "0.09",
+      "memberCost": "0.0777",
+      "whitelistCost": "0.0777",
+      "foundersOnly": false,
+      "start": 1664478000000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": false,
+      "images": {
+        "drop": "/img/drops/seashrine-vip/drop.webp",
+        "banner": "/img/drops/seashrine-vip/banner.webp",
+        "avatar": "/img/drops/seashrine-vip/avatar.webp",
+        "preview": "/img/drops/seashrine-vip/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
       }
     },
     {

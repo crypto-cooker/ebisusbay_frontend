@@ -1,7 +1,7 @@
 import {createIcon} from "@chakra-ui/icons";
 
 const CronosIcon = createIcon({
-    displayName: 'AptosIcon',
+    displayName: 'CronosIcon',
     viewBox: '0 0 121 139',
     path: [
         <path fill='currentColor'
