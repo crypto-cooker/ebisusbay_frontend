@@ -1,4 +1,4 @@
-import FactionForm from "./FactionForm";
+import FactionForm from "./ControlPointForm";
 import DeployTap from "./DeployTap";
 import InfoTap from "./InfoTap";
 import AttackTap from "./AttackTap";

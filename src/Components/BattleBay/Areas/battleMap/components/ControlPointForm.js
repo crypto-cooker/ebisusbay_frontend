@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
   Modal,
@@ -9,6 +9,7 @@ import {
   ModalHeader,
   ModalOverlay
 } from "@chakra-ui/react"
+import { getControlPoint } from "@src/core/api/RyoshiDynastiesAPICalls";
 import { Spinner } from 'react-bootstrap';
 
 import { getTheme } from "@src/Theme/theme";
@@ -17,7 +18,7 @@ import {
   DeployTap,
   InfoTap,
   AttackTap
-} from "./"
+} from "."
 
 const tabs = {
   info: 'info',
@@ -25,12 +26,20 @@ const tabs = {
   attack: 'attack',
 };
 
-const FactionForm = ({ isOpen, onClose, title, factions}) => {
-
-  const [isLoading, setIsLoading] = useState(false);
+const ControlPointForm = ({ isOpen, onClose, controlPoint=[], factions}) => {
+  console.log("factionForm controlPoint: " + controlPoint.name);
+  const [isLoading, setIsLoading] = useState(true);
+  const [title, setTitle] = useState('');
+  const [info, setInfo] = useState([]);
+  const [rewardID, setRewardID] = useState(0);
   const user = useSelector((state) => state.user);
 
   const [currentTab, setCurrentTab] = useState(tabs.info);
+
+  useEffect(() => {
+    setTitle(controlPoint.name);
+    setIsLoading(false);
+  }, [controlPoint]);
 
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
@@ -53,13 +62,13 @@ const FactionForm = ({ isOpen, onClose, title, factions}) => {
 
                   <div className="de_tab_content">
                     {currentTab === tabs.info && (
-                      <InfoTap factions={factions}/>
+                      <InfoTap factions={factions} controlPoint={controlPoint}/>
                     )}
                     {currentTab === tabs.deploy && (
-                      <DeployTap factions={factions} regionName={title}/>
+                      <DeployTap controlPoint={controlPoint}/>
                     )}
                     {currentTab === tabs.attack && (
-                      <AttackTap factions={factions}/>
+                      <AttackTap controlPoint={controlPoint}/>
                     )}
                   </div>
                 </div>
@@ -79,4 +88,4 @@ const FactionForm = ({ isOpen, onClose, title, factions}) => {
   )
 }
 
-export default FactionForm;
+export default ControlPointForm;

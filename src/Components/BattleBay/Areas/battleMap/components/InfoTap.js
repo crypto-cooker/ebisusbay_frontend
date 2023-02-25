@@ -1,4 +1,5 @@
 import { Flex } from "@chakra-ui/react";
+import React, {useEffect, useState } from 'react';
 
 import {
   Table,
@@ -10,20 +11,27 @@ import {
   TableContainer,
 } from '@chakra-ui/react';
 
-// interface faction {
-//   rank: number,
-//   faction: String,
-//   troops: number
-// }
-
-
-const InfoTap = ({ factions = [] }) => {
-
+const InfoTap = ({ factions = [], controlPoint=[]}) => {
+  const [area, setAreas] = useState([]);
+  useEffect(() => {
+    if(controlPoint.leaderBoard !== undefined)
+    {
+      setAreas(controlPoint.leaderBoard.map((faction, index) => 
+      (<Tr key={index}>
+        <Td textAlign='center'>{index+1}</Td>
+        <Td textAlign='center'>{faction.name}</Td>
+        <Td textAlign='center'>{faction.totalTroops}</Td>
+      </Tr>)))
+    }
+    
+    }, [controlPoint])
   return (
     <Flex flexDirection='column' textAlign='center' border={'1px solid white'} borderRadius={'10px'} justifyContent='space-around'>
       <div style={{ margin: '8px 24px' }}>
         <p>
-          The faction with the highest troop count on (Date & Time Here) will recieve a reward of (Reward Here)
+          The faction with the highest troop count on 
+          (Date & Time Here) 
+          will recieve a reward of RewardID: {controlPoint.rewardId}
         </p>
       </div>
       <TableContainer>
@@ -36,11 +44,7 @@ const InfoTap = ({ factions = [] }) => {
             </Tr>
           </Thead>
           <Tbody>
-            {factions.map((faction, index) => (<Tr key={index}>
-              <Td textAlign='center'>{faction.rank}</Td>
-              <Td textAlign='center'>{faction.faction}</Td>
-              <Td textAlign='center'>{faction.troops}</Td>
-            </Tr>))}
+            {area}
           </Tbody>
         </Table>
       </TableContainer>

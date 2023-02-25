@@ -30,26 +30,26 @@ import { Spinner } from 'react-bootstrap';
 import { getTheme } from "@src/Theme/theme";
 import { Formik, Form, Field, ErrorMessage, useFormik } from 'formik';
 import * as Yup from 'yup';
-import useGetSettings from '../../../../src/Components/Account/Settings/hooks/useGetSettings';
+import useGetSettings from '../../Account/Settings/hooks/useGetSettings';
 
-const ClanForm = ({ isOpen, onClose, clans=[], clanToModify}) => {
-  // console.log("clanToModify: "+clanToModify.faction)
+const FactionForm = ({ isOpen, onClose, factions=[], factionToModify}) => {
+  // console.log("factionToModify: "+factionToModify.faction)
   //addresses
   const addressInput = useRef(null);
   const [addresses, setAddresses] = useState([])
   const handleAddChange = (event) => setValue(event.target.value)
   const [addressToAdd, setValue] = useState('')
 
-  //clan name
-  const clanNameInput = useRef(null);
+  //faction name
+  const factionNameInput = useRef(null);
   const arrayColumn = (arr, n) => arr.map(x => x[n]);
-  const clanToModifyIndex = clans.findIndex(clan => clan === clanToModify)
-  const clanNames = arrayColumn(clans, 'faction').filter(clan => clan !== clans[clanToModifyIndex].faction)
-  const [clanName, setClanName] = useState(clans[clanToModifyIndex].faction)
+  const factionToModifyIndex = factions.findIndex(faction => faction === factionToModify)
+  const factionNames = arrayColumn(factions, 'faction').filter(faction => faction !== factions[factionToModifyIndex].faction)
+  const [factionName, setFactionName] = useState(factions[factionToModifyIndex].faction)
 
   
-  const handleClanNameChange = (event) => setClanName(event.target.value)
-  const [clanType, setClanType] = useState(clans[clanToModifyIndex].clanType)
+  const handleFactionNameChange = (event) => setFactionName(event.target.value)
+  const [factionType, setFactionType] = useState(factions[factionToModifyIndex].factionType)
 
   //alerts
   const [showAlert, setShowAlert] = useState(false)
@@ -61,25 +61,25 @@ const ClanForm = ({ isOpen, onClose, clans=[], clanToModify}) => {
 
   const SaveChanges = () => {
 
-    if(clanNameInput.current === undefined) {
-      setAlertMessage("You must enter a clan name")
+    if(factionNameInput.current === undefined) {
+      setAlertMessage("You must enter a faction name")
       setShowAlert(true)
       return;
     }
-    if(clanNames.includes(clanName)) {
-      setAlertMessage("Your Clan Name is already taken")
+    if(factionNames.includes(factionName)) {
+      setAlertMessage("Your Faction Name is already taken")
       setShowAlert(true)
       return;
     }
     // if(addresses.current.length > getMaxAddresses()) {
-    //   setAlertMessage("You are over the maximum number of addresses for this clan type")
+    //   setAlertMessage("You are over the maximum number of addresses for this faction type")
     //   setShowAlert(true)
     //   return;
     // }
     
     //add payment code here
-    console.log("You created a clan with the name "+clanNameInput);
-    clanType === 'collectionClan' ? console.log("You created a collection clan") : console.log("You created a user clan")
+    console.log("You created a faction with the name "+factionNameInput);
+    factionType === 'collectionFaction' ? console.log("You created a collection faction") : console.log("You created a user faction")
     onClose();
   }
   function AddAddress() {
@@ -92,7 +92,7 @@ const ClanForm = ({ isOpen, onClose, clans=[], clanToModify}) => {
     }
 
     if(addresses.includes(addressToAdd)) {
-      setAlertMessage("You already have this address in your clan")
+      setAlertMessage("You already have this address in your faction")
       setShowAlert(true)
       return;
     }
@@ -112,24 +112,24 @@ const ClanForm = ({ isOpen, onClose, clans=[], clanToModify}) => {
     addressInput.current.value = ''
     setValue('')
   }
-  function collectionClan() {
-    setClanType('collection')
+  function collectionFaction() {
+    setFactionType('collection')
   }
-  function userClan() {
-    setClanType('userClan')
+  function userFaction() {
+    setFactionType('userFaction')
   }
   function getMaxAddresses() {
-    return clanType === 'collection' ? 3 : 15
+    return factionType === 'collection' ? 3 : 15
   }
 
   const formik = useFormik({
     initialValues: {
-      clanName: clans[clanToModifyIndex].faction,
-      addresses: clans[clanToModifyIndex].addresses,
+      factionName: factions[factionToModifyIndex].faction,
+      addresses: factions[factionToModifyIndex].addresses,
     },
     onSubmit: (values) => {
       // alert(JSON.stringify(values, null, 2))
-      clans[clanToModifyIndex].faction = values.clanName
+      factions[factionToModifyIndex].faction = values.factionName
     },
   })
 
@@ -139,25 +139,25 @@ const ClanForm = ({ isOpen, onClose, clans=[], clanToModify}) => {
       <ModalContent>
         {!isLoading ? (
           <>
-          <ModalHeader className="text-center">Edit Clan</ModalHeader>
+          <ModalHeader className="text-center">Edit Faction</ModalHeader>
             <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
             <ModalBody>
             <form onSubmit={formik.handleSubmit}>
               <FormControl isRequired>
-                <FormLabel>Clan name:</FormLabel>
+                <FormLabel>Faction name:</FormLabel>
                 <Input
-                  id='clanName'
-                  name='clanName'
-                  // ref={clanNameInput}
-                  value={formik.values.clanName}
+                  id='factionName'
+                  name='factionName'
+                  // ref={factionNameInput}
+                  value={formik.values.factionName}
                   onChange={formik.handleChange}
                   placeholder=''
                   size='sm'/>
               </FormControl>
               <Tabs variant='unstyled' style={{ marginTop: '24px'}}>
                 <TabList>
-                  <Tab onClick={collectionClan} _selected={{ color: 'white', bg: 'blue.500' }}>Collection Clan</Tab>
-                  <Tab onClick={userClan} _selected={{ color: 'white', bg: 'blue.500' }}>User Clan</Tab>
+                  <Tab onClick={collectionFaction} _selected={{ color: 'white', bg: 'blue.500' }}>Collection Faction</Tab>
+                  <Tab onClick={userFaction} _selected={{ color: 'white', bg: 'blue.500' }}>User Faction</Tab>
                 </TabList>
                 <TabPanels>
                   <TabPanel>
@@ -219,4 +219,4 @@ const ClanForm = ({ isOpen, onClose, clans=[], clanToModify}) => {
   )
 }
 
-export default ClanForm;
+export default FactionForm;

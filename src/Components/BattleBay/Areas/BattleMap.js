@@ -1,24 +1,25 @@
-import React, {useEffect, useRef, useState, createElement } from 'react';
+import React, {useEffect, useRef, useState } from 'react';
 import { resizeBattleMap, setUpMapZooming } from './mapFunctions.js'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles from './BattleBay.module.scss';
 import { FactionForm } from './battleMap/components/index.js';
 import { useDisclosure } from '@chakra-ui/react'
 import { getMap } from "@src/core/api/RyoshiDynastiesAPICalls";
+import { getControlPoint } from "@src/core/api/RyoshiDynastiesAPICalls";
 
 const BattleMap = ({onBack, factions=[]}) => {
 
   //#region variables
   const gif = "/img/battle-bay/fire.gif";
-
-  const troopsTableRef = useRef();
   const mapRef = useRef();
-  const [selectedRegion, setSelectedRegion] = useState("None");
   const regionFlags = ["pin-Southern-Trident", "pin-Dragonland", "pin-Human-Kingdoms", "pin-Dwarf-Mines"];
   const  [flagSize, setFlagSize] = useState("32px");
   const [buildingSize, setBuildingSize] = useState("50px");
   const { height, width: windowWidth } = useWindowDimensions();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [controlPoint, setControlPoint] = useState([], () => {});
+  const mapData = [];
+  const [area, setAreas] = useState([]);
 
   function getWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
@@ -155,49 +156,6 @@ const BattleMap = ({onBack, factions=[]}) => {
         icon.src = "/img/battle-bay/"+getWinningFactionInRegion(pins[i].title)+".png";
     }
   }
-  function displayTop3InRegion(region, troopsTableRef)
-  {
-      deployedTroops.deployments.sort(function(b, a){return a.amount - b.amount});
-      var troopsTable = document.getElementById("troopsTable");
-      while (troopsTable.firstChild) {
-          troopsTable.removeChild(troopsTable.lastChild);
-          }
-      var rank = 1;
-
-      for(var i=0; i<deployedTroops.deployments.length; i++)  
-      {  
-          if(region == deployedTroops.deployments[i].region)
-          {  
-              var tr = document.createElement("tr");
-
-              var tdRank = document.createElement("td");
-              tdRank.classList.add("text-center");
-              tdRank.scope = "row";
-              tdRank.innerHTML = rank;
-              tr.appendChild(tdRank);
-
-              var tdFaction = document.createElement("td");
-              tdFaction.classList.add("text-center");
-              tdFaction.scope = "row";
-              tdFaction.innerHTML = deployedTroops.deployments[i].faction;
-              tr.appendChild(tdFaction);
-
-              var tdTroops = document.createElement("td");
-              tdTroops.classList.add("text-center");
-              tdTroops.scope = "row";
-              tdTroops.innerHTML = deployedTroops.deployments[i].amount;
-              tr.appendChild(tdTroops);
-
-              troopsTable.appendChild(tr);
-
-              if(rank==3)
-              {
-                  return;
-              }
-              rank++;
-          }
-      }
-  }
   function getWinningFactionInRegion(region)
   {
       deployedTroops.deployments.sort(function(b, a){return a.amount - b.amount});
@@ -209,65 +167,39 @@ const BattleMap = ({onBack, factions=[]}) => {
           }
       }
   }
-  function getRegionStats(region)
+  function selectRegion(x)
   {
-      // document.getElementById("regionName").innerHTML = region;
-      // document.getElementById("desc").innerHTML = "<br>" +getTroopsInRegion(region);
-
-
-      // console.log("Current holder: "+getWinningFactionInRegion(region))
-      // var targetdiv = document.getElementById(pin).getElementsByClassName("pin-text")[0].getElementsByClassName("head")[0];
-      // console.log(targetdiv)
-      // targetdiv.textContent = getWinningFactionInRegion(region);
+    GetControlPointInfo(x);
   }
-  function selectRegion(x, troopsTableRef)
-  {
-      console.log("Selected region: "+x);
-      //need to redo as refs
-      setSelectedRegion(x);
-      // document.getElementById("selectedRegion").innerHTML = selectedRegion;
-      // displayTop3InRegion(selectedRegion, troopsTableRef);
-      // setUpDropDown(defenderFactionInput,'defenderFactionUL', getDefenderFactions(), selectDefenderFaction);
-      // setUpDropDown('attackerFactionInput','attackerFactionUl', getAttackerFactions(), selectAttackerFaction);
+  const GetControlPointInfo = async (x) => {
+    getControlPoint(x).then((data) => {
+      setControlPoint(data.data.data);
+  }); 
   }
   //#endregion
-
-  // useEffect(() => {
-  //   setFlagSize(windowWidth/30 + "px");
-  //   setBuildingSize(windowWidth/20 + "px");
-  //   console.log("windowWidth: " + windowWidth);
-  //   // setUpMapZooming();
-  // });
 
   useEffect(() => {
     setUpBattleMap();
     SetUpMap();
-  }, []);
-
-  const mapData = [];
-  const [posts, setPosts] = useState([]);
+    setFlagSize(windowWidth/30 + "px");
+    setBuildingSize(windowWidth/20 + "px");
+  }, [controlPoint]);
+  
   const SetUpMap = async () => {
-    console.log("loading map");
-
     getMap(0).then((data) => {
       mapData = data.data.data.map; 
-      console.log(mapData.regions[0].controlPoints);
-
-      setPosts( mapData.regions[0].controlPoints.map((controlPoint, i) => 
-      (
-        console.log(controlPoint.name),
-      <area onMouseOver={getRegionStats(controlPoint.name)} alt= {controlPoint.name}
-          onClick={() => {selectRegion(controlPoint.name, troopsTableRef); onOpen();}}
-          coords={controlPoint.coordinates} shape="poly"/>
-      )))
+      setAreas( mapData.regions[0].controlPoints.map((controlPoint, i) => 
+        (<area onClick={() => {selectRegion(controlPoint.id); onOpen();}}
+            coords={controlPoint.coordinates} shape="poly" alt= {controlPoint.name}/>
+        )))
       resizeBattleMap();
-  }); 
+    }); 
   }
 
   return (
   <section>
 
-  <FactionForm isOpen={isOpen} onClose={onClose} title={selectedRegion} factions={factions}/>
+  <FactionForm isOpen={isOpen} onClose={onClose} controlPoint={controlPoint} factions={factions}/>
 
   <button className="btn" onClick={onBack}>Back to Village Map</button>
   <p className="title text-center">Select a region to deploy troops to</p>
@@ -283,7 +215,7 @@ const BattleMap = ({onBack, factions=[]}) => {
         className={`${styles.mapImageArea}`} id="islandMap" ref={mapRef} />
 
       <map name="image-map" width="100%" height="100%" className={`${styles.mapImageArea}`}>
-        {posts}
+        {area}
 
         {/* <area onMouseOver={getRegionStats("Southern Trident" , 'pin-Southern-Trident')} alt="Southern Trident" 
           onClick={() => {selectRegion("Southern Trident", troopsTableRef); onOpen();}}

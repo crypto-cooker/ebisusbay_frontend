@@ -17,12 +17,12 @@ import { Spinner } from 'react-bootstrap';
 import { getTheme } from "@src/Theme/theme";
 import { createFaction } from "@src/core/api/RyoshiDynastiesAPICalls";
 
-const ClanRegistrationForm = ({ isOpen, onClose, clans=[]}) => {
+const FactionRegistrationForm = ({ isOpen, onClose, clans=[]}) => {
  
   const [isLoading, setIsLoading] = useState(false);
   const user = useSelector((state) => state.user);
 
-  const CreateClan = async () => {
+  const CreateFaction = async () => {
     const factionResponse = await createFaction(user.walletAddress);
     if(factionResponse.status !== 200){
       console.log("Error creating faction");
@@ -56,14 +56,12 @@ const ClanRegistrationForm = ({ isOpen, onClose, clans=[]}) => {
                 
                 <Box p='3'>
               <Button style={{ display: 'flex', marginTop: '16px' }} 
-                onClick={CreateClan} variant='outline'size='lg'> 
+                onClick={CreateFaction} variant='outline'size='lg'> 
                 Create new Faction </Button>
                 </Box>
               </Flex>
             </ModalBody>
             <ModalFooter className="border-0"/>
-
-            
           </>
         ) : (
           <Spinner animation="border" role="status" size="sm" className="ms-1">
@@ -76,4 +74,4 @@ const ClanRegistrationForm = ({ isOpen, onClose, clans=[]}) => {
   )
 }
 
-export default ClanRegistrationForm;
+export default FactionRegistrationForm;

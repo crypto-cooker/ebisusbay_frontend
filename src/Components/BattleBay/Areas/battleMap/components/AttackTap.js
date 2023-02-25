@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { 
   Box, 
   Flex, 
@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
 
-const AttackTap = ({ factions = []}) => {
+const AttackTap = ({ controlPoint = []}) => {
 
   const attackSetUp = useRef();
   const attackConclusion = useRef();
@@ -26,19 +26,28 @@ const AttackTap = ({ factions = []}) => {
   const [defenderTroops, setDefenderTroops] = useState(0);
   const [attackerTroops, setAttackerTroops] = useState(1)
   const handleChange = (value) => setAttackerTroops(value)
+
+  const [attackerOptions, setAttackerOptions] = useState([]);
+  const [defenderOptions, setDefenderOptions] = useState([]);
+  const defenderTroopsAvailable = 0;
+  const attackerTroopsAvailable = 0;
   
   const arrayColumn = (arr, n) => arr.map(x => x[n]);
-  const defenderFactions = arrayColumn(factions.filter(faction => !faction.owned), 'faction')
-  const attackerFactions = arrayColumn(factions.filter(faction => faction.owned), 'faction')
+  // const defenderFactions = arrayColumn(factions.filter(faction => !faction.owned), 'faction')
+  // const attackerFactions = arrayColumn(factions.filter(faction => faction.owned), 'faction')
 
   const [dataForm, setDataForm] = useState({
-    attackersFaction: factions[0] ?? null,
+    attackersFaction: "" ?? null,
     // quantity: 0,
-    defenderFaction: factions[0] ?? null,
+    defenderFaction: "" ?? null,
   })
-  const onChangeInputs = (e) => {
-    console.log(e.target.name, e.target.value)
+  const onChangeInputsAttacker = (e) => {
     setDataForm({...dataForm, [e.target.name]: e.target.value})
+    attackerTroopsAvailable = controlPoint.leaderBoard.filter(faction => faction.name === e.target.value)[0].totalTroops;
+  }
+  const onChangeInputsDefender = (e) => {
+    setDataForm({...dataForm, [e.target.name]: e.target.value})
+    defenderTroopsAvailable = controlPoint.leaderBoard.filter(faction => faction.name === e.target.value)[0].totalTroops;
   }
 
 
@@ -60,7 +69,6 @@ const AttackTap = ({ factions = []}) => {
     attackSetUp.current.style.display = "block"
     attackConclusion.current.style.display = "none"
   }
-
   function Attack(attacker, defender)
   {
     var attackersSlain = 0;
@@ -100,40 +108,44 @@ const AttackTap = ({ factions = []}) => {
   //will need to be rewritten as a POST request
   function DestroyTroops(factionToRemoveTroopsFrom, amount)
   {
-    factions.forEach(faction => {
-      if(faction.faction === factionToRemoveTroopsFrom)
-      {
-        faction.troops -= amount;
-      }
-    });
+    // factions.forEach(faction => {
+    //   if(faction.faction === factionToRemoveTroopsFrom)
+    //   {
+    //     faction.troops -= amount;
+    //   }
+    // });
   }
   function getDefenderTroops(defenderFaction)
   {
     
-    var troops = 0;
-    if(defenderFaction === null)
-    {
-      return troops;
-    }
-    factions.forEach(faction => {
-      if(faction.faction === defenderFaction)
-      {
-        troops = faction.troops;
-      }
-    });
-    console.log(troops)
-    return troops;
+    // var troops = 0;
+    // if(defenderFaction === null)
+    // {
+    //   return troops;
+    // }
+    // factions.forEach(faction => {
+    //   if(faction.faction === defenderFaction)
+    //   {
+    //     troops = faction.troops;
+    //   }
+    // });
+    // console.log(troops)
+    // return troops;
   }
   function getAttackerTroopsInRegion()
   {
-    var troops = 0;
-    factions.forEach(faction => {
-      if(faction.faction === dataForm.attackersFaction)
-      {
-        troops = faction.troops;
-      }
-    });
-    return troops;
+    // var troops = 0;
+    // factions.forEach(faction => {
+    //   if(faction.faction === dataForm.attackersFaction)
+    //   {
+    //     troops = faction.troops;
+    //   }
+    // });
+    // return troops;
+  }
+  const getMax = () => { 
+    if(attackerTroopsAvailable>=3){return 3;}
+    else{return attackerTroopsAvailable;}
   }
   var dice = {
     sides: 6,
@@ -146,6 +158,19 @@ const AttackTap = ({ factions = []}) => {
   {
     battleLog.current.style.display = battleLog.current.style.display === "block" ? "none" : "block";
   }
+
+  useEffect(() => {
+    if(controlPoint.leaderBoard !== undefined)
+    {
+      setAttackerOptions(controlPoint.leaderBoard.map((faction, index) => (
+      <option value={faction.name} key={index}>{faction.name}</option>)
+      ))
+      setDefenderOptions(controlPoint.leaderBoard.map((faction, index) => (
+        <option value={faction.name} key={index}>{faction.name}</option>)
+        ))
+    }
+    
+    }, [controlPoint])
  
 
 
@@ -163,14 +188,15 @@ const AttackTap = ({ factions = []}) => {
           <p>Attackers</p>
           <FormControl mb={'24px'}>
             <FormLabel>Attacker Faction:</FormLabel>
-            <Select name='attackersFaction' me={2} value={dataForm.attackersFaction} onChange={onChangeInputs}>
-              {attackerFactions.map((faction, index) => (<option value={faction} key={index}>{faction}</option>))}
+            <Select name='attackersFaction' me={2} value={dataForm.attackersFaction} onChange={onChangeInputsAttacker}>
+              {attackerOptions}
             </Select>
+            <FormLabel>Troops available: {attackerTroopsAvailable}</FormLabel>
           </FormControl>
 
           <FormControl>
             <FormLabel>Quantity:</FormLabel>
-            <NumberInput defaultValue={1} min={1} max={3} name="quantity" 
+            <NumberInput defaultValue={0} min={0} max={getMax} name="quantity" 
               onChange={handleChange}
               value={attackerTroops} type ='number'>
              <NumberInputField />
@@ -186,9 +212,10 @@ const AttackTap = ({ factions = []}) => {
           <p>Defenders</p>
           <FormControl mb={'24px'}>
             <FormLabel>Select A Faction to attack:</FormLabel>
-            <Select name='defenderFaction' me={2} value={dataForm.defenderFaction} onChange={onChangeInputs}>
-              {defenderFactions.map((faction, index) => (<option value={faction} key={index}>{faction}</option>))}
+            <Select name='defenderFaction' me={2} value={dataForm.defenderFaction} onChange={onChangeInputsDefender}>
+              {defenderOptions}
             </Select>
+            <FormLabel>Troops available: {defenderTroopsAvailable}</FormLabel>
           </FormControl>
         </Box>
       </Flex>
