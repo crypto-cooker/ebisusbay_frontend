@@ -18211,7 +18211,7 @@
       "multiToken": false,
       "address": "0x1eD88baF12Ec3fd8D2955B1b2a883e6E79a10828",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Each SUITE NFT represents ownership of either an office, studio, apartment or luxury suite in one of the downtown towers within The CronosVerse.  By owning a SUITE NFT, users are able to access The CronosVerse and customize their metaverse experience inside of their digital property",
         "avatar": "/img/collections/the-cronosverse-suites/avatar.webp",
@@ -24569,7 +24569,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/the-cronosverse-suites/drop.webp",
         "banner": "/img/drops/the-cronosverse-suites/banner.webp",
