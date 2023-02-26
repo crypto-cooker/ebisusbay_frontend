@@ -18310,6 +18310,30 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "The Wyverns",
+      "slug": "the-wyverns",
+      "multiToken": false,
+      "address": "0x13Eb301c0AC03D777dE915423B34195D56C14a21",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Wyverns have been unleashed to save the M&W islands, the future depends on them \uD83D\uDC32 75% market royalties + investment pool return to holders and more ! ",
+        "avatar": "/img/collections/the-wyverns/avatar.webp",
+        "card": "/img/collections/the-wyverns/card.webp",
+        "banner": "/img/collections/the-wyverns/banner.webp",
+        "website": "https://babymonsters.ca/wyverns-mint",
+        "twitter": "https://twitter.com/babymonstersnft",
+        "discord": "https://discord.gg/R89ztkJfDC",
+        "medium": "https://crodoo.medium.com/baby-monsters-cronos-cb6f164ae277",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
