@@ -7493,7 +7493,7 @@
         ]
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
@@ -10323,7 +10323,7 @@
       "multiToken": false,
       "address": "0xe6f571551dcc680E789925117Aeb8C183E83295b",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The \"Whale Family\" features a collection of 5,555 fun & vibrant Whale\nPFPs swimming on the Cronos blockchain with different levels of rarity \nfrom over 160 hand-drawn traits by Barbara Redekop.",
         "avatar": "/img/collections/whalefam/avatar.webp",
@@ -18334,6 +18334,55 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Lizards of the East",
+      "slug": "lizards-of-the-east",
+      "multiToken": false,
+      "address": "0xf3A48a52B55e480D246a54C4efC26Cc36c56aF1B",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A collection of 501 Mighty Lizards ready to wage war in the Dragons of the West P2E Game.",
+        "avatar": "/img/collections/lizards-of-the-east/avatar.webp",
+        "card": "/img/collections/lizards-of-the-east/card.webp",
+        "banner": "/img/collections/lizards-of-the-east/banner.webp",
+        "website": "https://www.dragonsofthewestnft.com/",
+        "twitter": "https://twitter.com/DragonsoftheW",
+        "discord": "https://discord.gg/dbWKZTfNdF",
+        "categories": [
+          "gaming"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Journey to Exodus",
+      "slug": "journey-to-exodus",
+      "multiToken": false,
+      "address": "0x43420594f4ff5bab9ba7f3afa7c55d54a1883a59",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Journey to Exodus is an introduction video to VerAI’s upcoming collection named Exodus.",
+        "avatar": "/img/collections/journey-to-exodus/avatar.webp",
+        "card": "/img/collections/journey-to-exodus/card.webp",
+        "banner": "/img/collections/journey-to-exodus/banner.webp",
+        "twitter": "https://www.twitter.com/VerAI_Nft",
+        "discord": "https://discord.gg/qZFWU4YTNX",
+        "categories": [
+          "gaming"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
@@ -20794,11 +20843,11 @@
       "maxMintPerTx": 8,
       "maxMintPerAddress": 100,
       "totalSupply": 5000,
-      "cost": "640",
-      "memberCost": "490",
-      "whitelistCost": "490",
+      "cost": "330",
+      "memberCost": "300",
+      "whitelistCost": "300",
       "foundersOnly": false,
-      "start": 1651780800000,
+      "start": 1669665600000,
       "salePeriods": {
         "presale": 1651780800000,
         "public": 1651867200000
@@ -21925,9 +21974,9 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": true,
-      "featured": true,
+      "featured": false,
       "redirect": "https://www.argofinance.money/nft",
       "images": {
         "drop": "/img/drops/argonauts/drop.webp",
@@ -22042,7 +22091,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": true,
       "featured": false,
       "redirect": "https://teammustachios.com/mint",
@@ -22818,7 +22867,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": true,
       "featured": false,
       "redirect": "https://cronoslizards.com/",
@@ -23301,7 +23350,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": true,
       "featured": false,
       "redirect": "https://www.degenbrain.finance/#/planets/",
@@ -23340,7 +23389,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": true,
       "featured": false,
       "redirect": "https://mint.munk.finance",
@@ -23812,8 +23861,8 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
-      "complete": false,
+      "published": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/meta-planet-club/drop.webp",
         "banner": "/img/drops/meta-planet-club/banner.webp",
@@ -23970,7 +24019,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": true,
       "featured": false,
       "redirect": "https://www.crosea.io/mutantserum",
@@ -24052,7 +24101,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": true,
       "featured": false,
       "redirect": "https://daogames.online/mint",
@@ -24339,8 +24388,8 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
-      "complete": true,
+      "published": false,
+      "complete": false,
       "featured": false,
       "redirect": "https://ghostog.netlify.app/mint",
       "images": {
@@ -24546,7 +24595,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "featured": false,
       "redirect": "https://crofamladies.netlify.app/",
