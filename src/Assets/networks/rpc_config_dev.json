@@ -18334,6 +18334,31 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Lizards of the East",
+      "slug": "lizards-of-the-east",
+      "multiToken": false,
+      "address": "0xf3A48a52B55e480D246a54C4efC26Cc36c56aF1B",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A collection of 501 Mighty Lizards ready to wage war in the Dragons of the West P2E Game.",
+        "avatar": "/img/collections/lizards-of-the-east/avatar.webp",
+        "card": "/img/collections/lizards-of-the-east/card.webp",
+        "banner": "/img/collections/lizards-of-the-east/banner.webp",
+        "website": "https://www.dragonsofthewestnft.com/",
+        "twitter": "https://twitter.com/DragonsoftheW",
+        "discord": "https://discord.gg/dbWKZTfNdF",
+        "categories": [
+          "gaming"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
