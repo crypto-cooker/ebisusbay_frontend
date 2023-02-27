@@ -7493,7 +7493,7 @@
         ]
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
@@ -18355,7 +18355,31 @@
         ]
       },
       "verification": {
-        "verified": false,
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Journey to Exodus",
+      "slug": "journey-to-exodus",
+      "multiToken": false,
+      "address": "0x43420594f4ff5bab9ba7f3afa7c55d54a1883a59",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Journey to Exodus is an introduction video to VerAI’s upcoming collection named Exodus.",
+        "avatar": "/img/collections/journey-to-exodus/avatar.webp",
+        "card": "/img/collections/journey-to-exodus/card.webp",
+        "banner": "/img/collections/journey-to-exodus/banner.webp",
+        "twitter": "https://www.twitter.com/VerAI_Nft",
+        "discord": "https://discord.gg/qZFWU4YTNX",
+        "categories": [
+          "gaming"
+        ]
+      },
+      "verification": {
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
