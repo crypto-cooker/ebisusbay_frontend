@@ -20794,11 +20794,11 @@
       "maxMintPerTx": 8,
       "maxMintPerAddress": 100,
       "totalSupply": 5000,
-      "cost": "640",
-      "memberCost": "490",
-      "whitelistCost": "490",
+      "cost": "330",
+      "memberCost": "300",
+      "whitelistCost": "300",
       "foundersOnly": false,
-      "start": 1651780800000,
+      "start": 1669665600000,
       "salePeriods": {
         "presale": 1651780800000,
         "public": 1651867200000
@@ -23812,8 +23812,8 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
-      "complete": false,
+      "published": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/meta-planet-club/drop.webp",
         "banner": "/img/drops/meta-planet-club/banner.webp",
