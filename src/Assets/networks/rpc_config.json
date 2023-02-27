@@ -10323,7 +10323,7 @@
       "multiToken": false,
       "address": "0xe6f571551dcc680E789925117Aeb8C183E83295b",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The \"Whale Family\" features a collection of 5,555 fun & vibrant Whale\nPFPs swimming on the Cronos blockchain with different levels of rarity \nfrom over 160 hand-drawn traits by Barbara Redekop.",
         "avatar": "/img/collections/whalefam/avatar.webp",
