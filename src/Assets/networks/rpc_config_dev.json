@@ -18383,6 +18383,50 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "croFI$H Gen5 - The Jellyfish",
+      "slug": "crofish-gen5-the-jellyfish",
+      "multiToken": false,
+      "address": "0x411a8d9af16D101142247106B279fA2439a4B497",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/crofish-gen5-the-jellyfish/avatar.webp",
+        "card": "/img/collections/crofish-gen5-the-jellyfish/card.webp",
+        "banner": "/img/collections/crofish-gen5-the-jellyfish/banner.webp",
+        "twitter": "https://twitter.com/crofishteam",
+        "discord": "https://discord.gg/wsQjjZ3Zkm",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "croFI$H Gen6 - The Pufferfish",
+      "slug": "crofish-gen6-the-pufferfish",
+      "multiToken": false,
+      "address": "0x552D14464af0964F8173C37866D960AaD7d0b5f3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/crofish-gen6-the-pufferfish/avatar.webp",
+        "card": "/img/collections/crofish-gen6-the-pufferfish/card.webp",
+        "banner": "/img/collections/crofish-gen6-the-pufferfish/banner.webp",
+        "twitter": "https://twitter.com/crofishteam",
+        "discord": "https://discord.gg/wsQjjZ3Zkm",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
