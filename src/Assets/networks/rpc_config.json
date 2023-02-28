@@ -18451,6 +18451,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "CronosMarines",
+      "slug": "cronosmarines",
+      "multiToken": false,
+      "address": "0xd4A76bF660822BEDf8B2F05c0d206a3eF9Ae2347",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome to Cronos Marines, an innovative and cutting-edge AI-generated NFT project inspired by a dystopian future. With a limited supply of just 1518 NFTs, the Cronos Marines project is an exclusive and highly sought-after collection for any NFT enthusiast. The Cronos Marines project is minted in three phases, with a total of 506 NFTs available in each phase. This means that acquiring a Cronos Marine NFT is already a rare and valuable achievement. However, Cronos Marines also offer an exciting opportunity to upgrade your collection by allowing you to burn 20 Cronos Marines to acquire a Cronos Prime Weapon NFT, which will grant you an airdrop of a Cronos Primarch NFT. Cronos Primarchs are the ultimate prize of the Cronos Marines collection, and there are only 75 of them available in total, with just 25 being minted in each of the three phases. This means that acquiring a Cronos Primarch is an extremely exclusive and prestigious accomplishment that any NFT collector would be proud of. In addition to the exclusive collectability of the Cronos Marines NFTs, they also offer passive monthly income in Lcro without any need for staking. This means that by simply holding a Cronos Marine NFT, you will receive a monthly payout of Lcro, making it a valuable asset to add to any NFT collection. In summary, Cronos Marines offers an exciting opportunity for NFT enthusiasts to own a rare and exclusive collection of AI-generated NFTs, with the added benefit of passive monthly income and the possibility to upgrade to the coveted Cronos Prime Weapon and Cronos Primarch NFTs. Don't miss out on this unique and valuable opportunity to enhance your NFT collection.",
+        "avatar": "/img/collections/cronosmarines/avatar.webp",
+        "card": "/img/collections/cronosmarines/card.webp",
+        "banner": "/img/collections/cronosmarines/banner.webp",
+        "website": "https://croarmy.app",
+        "twitter": "https://twitter.com/ECrokind",
+        "discord": "https://discord.gg/mB3nnUKRYv",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
