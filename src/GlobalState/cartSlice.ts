@@ -1,12 +1,17 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, Dispatch} from '@reduxjs/toolkit';
 import {addToCartInStorage, clearCartInStorage, getCartInStorage, removeFromCartInStorage} from "@src/helpers/storage";
+
+type CartSliceState = {
+  nfts: any[];
+  shouldPrompt: boolean;
+}
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
     nfts: [],
     shouldPrompt: false,
-  },
+  } as CartSliceState,
   reducers: {
     addToCart: (state, action) => {
       const itemToAdd = action.payload;
@@ -40,7 +45,7 @@ export const { addToCart, removeFromCart, clearCart, acknowledgePrompt, openCart
 
 export default cartSlice.reducer;
 
-export const syncCartStorage = () => (dispatch) => {
+export const syncCartStorage = () => (dispatch: Dispatch) => {
   const nfts = getCartInStorage();
   dispatch(populateCart(nfts));
 }
