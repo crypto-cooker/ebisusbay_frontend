@@ -22,9 +22,9 @@ import {
   useOutsideClick
 } from "@chakra-ui/react";
 import Cart from "./cart";
-import {CloseIcon} from "@chakra-ui/icons";
+import {CloseIcon, HamburgerIcon} from "@chakra-ui/icons";
 import Search from "@src/components-v2/shared/layout/navbar/search";
-import MobileSearchDrawer from "@src/components-v2/shared/layout/navbar/search";
+import MobileSearchDrawer from "@src/components-v2/shared/layout/navbar/search/drawer";
 import {useAppSelector} from "@src/Store/hooks";
 
 const GlobalStyles = createGlobalStyle`
@@ -71,7 +71,7 @@ const Header = function () {
     <>
       <GlobalStyles />
       <Box px={{base:2, md:4}} as="header" position="fixed" w="100%" zIndex={200} id="myHeader" className="navbar2">
-        <Box maxW="2560px">
+        <Box maxW="2560px" ref={ref}>
           <Flex h={16} alignItems={'center'}>
             <Link href="/">
               <a>
@@ -123,18 +123,19 @@ const Header = function () {
               </span>
               <IconButton
                 size={'md'}
-                icon={isOpen ? <CloseIcon/> : <FontAwesomeIcon icon={faBars} />}
+                icon={isOpen ? <CloseIcon/> : <HamburgerIcon boxSize={6}/>}
                 aria-label={'Open Menu'}
                 display={{md: 'none'}}
                 onClick={isOpen ? onClose : onOpen}
                 color="white"
                 variant="unstyled"
+                ms={2}
               />
             </Flex>
           </Flex>
 
           {isOpen ? (
-            <Box pb={4} display={{md: 'none'}} textAlign="end" ref={ref}>
+            <Box pb={4} display={{md: 'none'}} textAlign="end">
               <Stack as={'nav'} spacing={4}>
                 <NavLink name={'Marketplace'} to={'/marketplace'} onClick={onClose} />
                 <NavLink name={'Collections'} to={'/collections'} onClick={onClose} />
