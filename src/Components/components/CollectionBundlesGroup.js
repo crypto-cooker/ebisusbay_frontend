@@ -81,7 +81,7 @@ const CollectionBundlesGroup = ({collection}) => {
                   {items.map((listing, index) => {
                     return (
                       <div
-                        className="d-item col-xxl-2 col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12 mb-4 px-2"
+                        className="d-item col-xxl-2 col-xl-3 col-lg-4 col-md-6 col-sm-4 col-6 mb-4 px-2"
                         key={`${listing.address}-${listing.id}-${index}`}
                       >
                         <ListingBundleCard

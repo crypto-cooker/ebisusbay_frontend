@@ -16,9 +16,9 @@ import {ImageKitService} from "@src/helpers/image";
 const SalesCollection = ({
   showLoadMore = true,
   collectionId = null,
-  tokenId = null,
+  tokenId = '',
   sellerId = null,
-  cacheName = null,
+  cacheName = '',
 }) => {
   const dispatch = useDispatch();
 
@@ -52,7 +52,7 @@ const SalesCollection = ({
     if (collectionId) {
       const filterOption = new MarketFilters();
       filterOption.collection.value = collectionId;
-      if (tokenId != null) {
+      if (tokenId !== '') {
         filterOption.tokenId = tokenId;
       }
 
