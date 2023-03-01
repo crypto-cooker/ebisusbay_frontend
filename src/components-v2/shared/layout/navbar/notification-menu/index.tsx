@@ -12,6 +12,16 @@ import useDeleteNotifications from "@src/hooks/useDeleteNotifications";
 import {getNotifications} from "@src/core/cms/next/notifications";
 import Button from "@src/Components/components/Button";
 import {useAppSelector} from "@src/Store/hooks";
+import {
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+  Text,
+  useBreakpointValue
+} from "@chakra-ui/react";
 
 const NotificationMenu = function () {
   const history = useRouter();
@@ -64,35 +74,19 @@ const NotificationMenu = function () {
         </span>
       </div>
 
-      <Offcanvas show={showMenu} onHide={handleClose} placement="end">
-        <Offcanvas.Header closeButton closeVariant={theme === 'dark' ? 'white': 'dark'}>
-          <Offcanvas.Title>Notifications</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          {isLoading ? (
-            profile.error ? (
-              <>
-                <p className="text-center">Error loading profile</p>
-              </>
-            ) : !profile.id ? (
-              <>
-                <p className="text-center">Create a profile to activate notifications</p>
-                <Button type="legacy"
-                        className="mx-auto"
-                        onClick={() => navigateTo('/account/settings/profile')}>
-                  Create Profile
-                </Button>
-              </>
-            ) : (
-              <div className="col-lg-12 text-center">
-                <Spinner animation="border" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </Spinner>
-              </div>
-            )
-          ) : isError ? (
-            <>
-              {profile.error ? (
+      <Drawer
+        isOpen={showMenu}
+        onClose={handleClose}
+        size="sm"
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Notifications</DrawerHeader>
+
+          <DrawerBody>
+            {isLoading ? (
+              profile.error ? (
                 <>
                   <p className="text-center">Error loading profile</p>
                 </>
@@ -106,48 +100,71 @@ const NotificationMenu = function () {
                   </Button>
                 </>
               ) : (
-                <p className="text-center">Error: {(error as any)?.message}</p>
-              )}
-            </>
-          ) : (
-            <>
-              <div className="d-flex justify-content-between">
-                <FontAwesomeIcon icon={faCog} onClick={handleSettingsClicked} className="cursor-pointer" />
-                {notifications.length > 0 && (
-                  <div className={classnames('mb-3 cursor-pointer text-end', styles.clear)} onClick={handleClearNotifications}>
-                    Clear All Notifications
-                  </div>
+                <div className="col-lg-12 text-center">
+                  <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
+                </div>
+              )
+            ) : isError ? (
+              <>
+                {profile.error ? (
+                  <>
+                    <p className="text-center">Error loading profile</p>
+                  </>
+                ) : !profile.id ? (
+                  <>
+                    <p className="text-center">Create a profile to activate notifications</p>
+                    <Button type="legacy"
+                            className="mx-auto"
+                            onClick={() => navigateTo('/account/settings/profile')}>
+                      Create Profile
+                    </Button>
+                  </>
+                ) : (
+                  <p className="text-center">Error: {(error as any)?.message}</p>
                 )}
-              </div>
-              {notifications.length > 0 ? (
-                <div className="flex-fill h-auto">
+              </>
+            ) : (
+              <>
+                <div className="d-flex justify-content-between">
+                  <FontAwesomeIcon icon={faCog} onClick={handleSettingsClicked} className="cursor-pointer" />
                   {notifications.length > 0 && (
-                    notifications.map((item: any) => (
-                      <div key={item.createdAt} className={classnames('card eb-nft__card px-3 py-2 mb-2', styles.card)}>
-                        <div className="d-flex">
-                          <div className="flex-fill">
-                            <div className="text-muted fst-italic">
-                              <div className="flex-fill">{timeSince(new Date(item.createdAt))} ago</div>
-                            </div>
-                            <span className="cursor-pointer" onClick={() => navigateTo(item.link)}>
-                                {item.message}
-                              </span>
-                          </div>
-                          <div className="cursor-pointer my-auto ms-4" onClick={handleDeleteNotification(item)}>
-                            <FontAwesomeIcon icon={faTrash} />
-                          </div>
-                        </div>
-                      </div>
-                    ))
+                    <div className={classnames('mb-3 cursor-pointer text-end', styles.clear)} onClick={handleClearNotifications}>
+                      Clear All Notifications
+                    </div>
                   )}
                 </div>
-              ) : (
-                <p className="text-center">There are no notifications to display</p>
-              )}
-            </>
-          )}
-        </Offcanvas.Body>
-      </Offcanvas>
+                {notifications.length > 0 ? (
+                  <div className="flex-fill h-auto">
+                    {notifications.length > 0 && (
+                      notifications.map((item: any) => (
+                        <div key={item.createdAt} className={classnames('card eb-nft__card px-3 py-2 mb-2', styles.card)}>
+                          <div className="d-flex">
+                            <div className="flex-fill">
+                              <div className="text-muted fst-italic">
+                                <div className="flex-fill">{timeSince(new Date(item.createdAt))} ago</div>
+                              </div>
+                              <span className="cursor-pointer" onClick={() => navigateTo(item.link)}>
+                                {item.message}
+                              </span>
+                            </div>
+                            <div className="cursor-pointer my-auto ms-4" onClick={handleDeleteNotification(item)}>
+                              <FontAwesomeIcon icon={faTrash} />
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                ) : (
+                  <Text align='center' py={6}>There are no notifications to display</Text>
+                )}
+              </>
+            )}
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </div>
   );
 };

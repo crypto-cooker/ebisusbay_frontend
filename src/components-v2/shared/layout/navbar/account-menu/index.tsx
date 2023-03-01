@@ -44,7 +44,19 @@ import {ImageKitService} from "@src/helpers/image";
 import classnames from "classnames";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import Button from "@src/Components/components/Button";
-import {Box, Flex, Heading, Link, Spacer, Text, useClipboard, useColorMode, VStack, Wrap} from "@chakra-ui/react";
+import {
+  Box, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader,
+  DrawerOverlay,
+  Flex,
+  Heading,
+  Link,
+  Spacer,
+  Text, useBreakpointValue,
+  useClipboard,
+  useColorMode, useMediaQuery,
+  VStack,
+  Wrap
+} from "@chakra-ui/react";
 import Image from "next/image";
 import {useQuery} from "@tanstack/react-query";
 import CronosIcon from "@src/components-v2/shared/icons/cronos";
@@ -66,10 +78,20 @@ const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 const Index = function () {
   const dispatch = useDispatch();
   const history = useRouter();
-
+  const [mobileSize] = useMediaQuery('(max-width: 400px)')
   const { colorMode, setColorMode } = useColorMode();
   const windowSize = useWindowSize();
   const [showMenu, setShowMenu] = useState(false);
+  const slideDirection = useBreakpointValue<'bottom' | 'right'>(
+    {
+      base: 'bottom',
+      md: 'right',
+    },
+    {
+      fallback: 'md',
+    },
+  );
+
   const walletAddress = useAppSelector((state) => {
     return state.user.address;
   });
@@ -302,9 +324,16 @@ const Index = function () {
       </StyledModal>
 
       {walletAddress && correctChain && (
-        <Offcanvas show={showMenu} onHide={closeMenu} placement={(windowSize.width ?? 0) > 400 ? 'end' : 'bottom'}>
-          <Offcanvas.Header closeButton closeVariant={theme === 'dark' ? 'white': 'dark'}>
-            <Offcanvas.Title>
+        <Drawer
+          isOpen={showMenu}
+          onClose={closeMenu}
+          size="sm"
+          placement={slideDirection}
+        >
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader>
               <div className="d-flex align-items-center">
                 <span className={classnames('me-2', styles.avatar)}>
                   {user.profile.profilePicture ? (
@@ -332,12 +361,11 @@ const Index = function () {
                   </div>
                 </div>
               </div>
-            </Offcanvas.Title>
-          </Offcanvas.Header>
-          <Offcanvas.Body>
+            </DrawerHeader>
+            <DrawerBody>
 
-            <div className={classnames("row row-cols-2 g-2", styles.navigation)}>
-              <div className="col">
+              <div className={classnames("row row-cols-2 g-2", styles.navigation)}>
+                <div className="col">
                 <span onClick={() => navigateTo(`/account/${walletAddress}`)}>
                   <div className={styles.col}>
                       <span>
@@ -346,8 +374,8 @@ const Index = function () {
                       <span className="ms-2">My Profile</span>
                   </div>
                 </span>
-              </div>
-              <div className="col">
+                </div>
+                <div className="col">
                 <span onClick={() => navigateTo(`/account/settings/profile`)}>
                   <div className={styles.col}>
                       <span>
@@ -356,8 +384,8 @@ const Index = function () {
                       <span className="ms-2">Edit Account</span>
                   </div>
                 </span>
-              </div>
-              <div className="col">
+                </div>
+                <div className="col">
                 <span onClick={() => navigateTo(`/account/${walletAddress}`, {tab:'offers'})}>
                   <div className={styles.col}>
                       <span>
@@ -366,8 +394,8 @@ const Index = function () {
                       <span className="ms-2">My Offers</span>
                   </div>
                 </span>
-              </div>
-              <div className="col">
+                </div>
+                <div className="col">
                 <span onClick={() => navigateTo(`/staking`)}>
                   <div className={styles.col}>
                     <span>
@@ -376,8 +404,8 @@ const Index = function () {
                     <span className="ms-2">Staking</span>
                   </div>
                 </span>
-              </div>
-              <div className="col">
+                </div>
+                <div className="col">
                 <span onClick={() => navigateTo(`/account/${walletAddress}`, {tab:'listings'})}>
                   <div className={styles.col}>
                       <span>
@@ -386,8 +414,8 @@ const Index = function () {
                       <span className="ms-2">Listings</span>
                   </div>
                 </span>
-              </div>
-              <div className="col">
+                </div>
+                <div className="col">
                 <span onClick={() => navigateTo(`/account/${walletAddress}`, {tab:'sales'})}>
                   <div className={styles.col}>
                       <span>
@@ -396,8 +424,8 @@ const Index = function () {
                       <span className="ms-2">Sales</span>
                   </div>
                 </span>
-              </div>
-              <div className="col">
+                </div>
+                <div className="col">
                 <span onClick={() => navigateTo(`/account/${walletAddress}`, {tab:'favorites'})}>
                   <div className={styles.col}>
                       <span>
@@ -406,8 +434,8 @@ const Index = function () {
                       <span className="ms-2">Favorites</span>
                   </div>
                 </span>
-              </div>
-              <div className="col">
+                </div>
+                <div className="col">
                 <span onClick={toggleTheme}>
                   <div className={styles.col}>
                       <span>
@@ -416,19 +444,19 @@ const Index = function () {
                       <span className="ms-2">Dark mode</span>
                   </div>
                 </span>
+                </div>
               </div>
-            </div>
 
-            <Heading as="h3" size="md" className="mt-4 mb-3">
-              <FontAwesomeIcon icon={faWallet} className="me-2"/>
-              <span>Wallet Info</span>
-            </Heading>
-            <div className="d-flex">
-              <div className="flex-fill">
-                <div className="text-muted">Balance</div>
-                <div>
-                  {!user.connectingWallet ? (
-                    <span className="d-wallet-value">
+              <Heading as="h3" size="md" className="mt-4 mb-3">
+                <FontAwesomeIcon icon={faWallet} className="me-2"/>
+                <span>Wallet Info</span>
+              </Heading>
+              <div className="d-flex">
+                <div className="flex-fill">
+                  <div className="text-muted">Balance</div>
+                  <div>
+                    {!user.connectingWallet ? (
+                      <span className="d-wallet-value">
                       {user.balance ? (
                         <div className="d-flex">
                           <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
@@ -440,186 +468,181 @@ const Index = function () {
                         <>N/A</>
                       )}
                     </span>
-                  ) : (
-                    <span>
+                    ) : (
+                      <span>
                       <Spinner animation="border" role="status" size={'sm'}>
                         <span className="visually-hidden">Loading...</span>
                       </Spinner>
                     </span>
+                    )}
+                  </div>
+                </div>
+                <div className="my-auto">
+                  <Button type="legacy"
+                          onClick={handleBuyCro}>
+                    <CronosIcon boxSize={4}/>
+                    <Text ms={1}>Buy CRO</Text>
+                  </Button>
+                </div>
+              </div>
+              <div className="d-flex mt-2">
+                <div className="flex-fill">
+                  <div className="text-muted">Market Escrow</div>
+                  {!user.connectingWallet ? (
+                    <div>
+                      {user.marketBalance ? (
+                        <>
+                          <div className="d-flex">
+                            <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+                            <span className="ms-1">
+                          {ethers.utils.commify(round(user.marketBalance, 2))}
+                        </span>
+                          </div>
+                        </>
+                      ) : (
+                        <span className="d-wallet-value">0.0 CRO</span>
+                      )}
+                    </div>
+                  ) : (
+                    <span>
+                    <Spinner animation="border" role="status" size={'sm'}>
+                      <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                  </span>
+                  )}
+                </div>
+                <div className="my-auto">
+                  {!user.connectingWallet && (
+                    <>
+                      <Wrap>
+                        {Number(user.marketBalance) > 0 && (
+                          <Button type="legacy"
+                                  onClick={withdrawBalance}
+                                  isLoading={user.withdrawingMarketBalance}
+                                  disabled={user.withdrawingMarketBalance}>
+                            Claim
+                          </Button>
+                        )}
+                        {user.usesEscrow ? (
+                          <Button type="legacy"
+                                  onClick={() => toggleEscrowOptIn(false)}
+                                  isLoading={user.updatingEscrowStatus}
+                                  disabled={user.updatingEscrowStatus}>
+                            Opt-Out
+                          </Button>
+                        ) : (
+                          <Button type="legacy"
+                                  onClick={() => toggleEscrowOptIn(true)}
+                                  isLoading={user.updatingEscrowStatus}
+                                  disabled={user.updatingEscrowStatus}>
+                            Opt-In to Escrow
+                          </Button>
+                        )}
+                      </Wrap>
+                    </>
                   )}
                 </div>
               </div>
-              <div className="my-auto">
-                <Button type="legacy"
-                        onClick={handleBuyCro}>
-                  <CronosIcon boxSize={4}/>
-                  <Text ms={1}>Buy CRO</Text>
-                </Button>
-              </div>
-            </div>
-            <div className="d-flex mt-2">
-              <div className="flex-fill">
-                <div className="text-muted">Market Escrow</div>
-                {!user.connectingWallet ? (
-                  <div>
-                    {user.usesEscrow ? (
+              <Text fontSize={'xs'}>
+                {user.usesEscrow ? <>Sales and royalties must be claimed from escrow. Opt-out to receive payments directly</>
+                  : <>Sales and royalties go directly to your wallet. If you prefer claiming from escrow, opt-in above</>
+                }
+              </Text>
+              <div className="d-flex mt-2">
+                <div className="flex-fill">
+                  <div className="text-muted">Staking Rewards</div>
+                  <div className="">
+                    {!user.connectingWallet ? (
                       <>
-                        {user.marketBalance ? (
+                        {user.stakingRewards ? (
                           <>
-                            <div className="d-flex">
-                              <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
-                              <span className="ms-1">
-                              {ethers.utils.commify(round(user.marketBalance, 2))}
-                            </span>
-                            </div>
+                          <span className="d-wallet-value">
+                            {ethers.utils.commify(round(user.stakingRewards, 2))} CRO
+                          </span>
                           </>
                         ) : (
                           <span className="d-wallet-value">0.0 CRO</span>
                         )}
                       </>
                     ) : (
-                      <Text>
-                        Direct to wallet
-                      </Text>
-                    )}
-                  </div>
-                ) : (
-                  <span>
-                    <Spinner animation="border" role="status" size={'sm'}>
-                      <span className="visually-hidden">Loading...</span>
-                    </Spinner>
-                  </span>
-                )}
-              </div>
-              <div className="my-auto">
-                {!user.connectingWallet && user.usesEscrow ? (
-                  <>
-                    <Wrap>
-                      {Number(user.marketBalance) > 0 && (
-                        <Button type="legacy"
-                                onClick={withdrawBalance}
-                                isLoading={user.withdrawingMarketBalance}
-                                disabled={user.withdrawingMarketBalance}>
-                          Claim
-                        </Button>
-                      )}
-                      <Button type="legacy"
-                              onClick={() => toggleEscrowOptIn(false)}
-                              isLoading={user.updatingEscrowStatus}
-                              disabled={user.updatingEscrowStatus}>
-                        Opt-Out
-                      </Button>
-                    </Wrap>
-                  </>
-                ) : !user.connectingWallet && (
-                  <Button type="legacy"
-                          onClick={() => toggleEscrowOptIn(true)}
-                          isLoading={user.updatingEscrowStatus}
-                          disabled={user.updatingEscrowStatus}>
-                    Opt-In to Escrow
-                  </Button>
-                )}
-              </div>
-            </div>
-            <Text fontSize={'xs'}>
-              {user.usesEscrow ? <>Opt-out of market escrow to receive payments directly</>
-                : <>If you prefer claiming from escrow, opt-in above</>
-              }
-            </Text>
-            <div className="d-flex mt-2">
-              <div className="flex-fill">
-                <div className="text-muted">Staking Rewards</div>
-                <div className="">
-                  {!user.connectingWallet ? (
-                    <>
-                      {user.stakingRewards ? (
-                        <>
-                          <span className="d-wallet-value">
-                            {ethers.utils.commify(round(user.stakingRewards, 2))} CRO
-                          </span>
-                        </>
-                      ) : (
-                        <span className="d-wallet-value">0.0 CRO</span>
-                      )}
-                    </>
-                  ) : (
-                    <span>
+                      <span>
                       <Spinner animation="border" role="status" size={'sm'}>
                         <span className="visually-hidden">Loading...</span>
                       </Spinner>
                     </span>
+                    )}
+                  </div>
+                </div>
+                <div className="my-auto">
+                  {user.stakingRewards > 0 && (
+                    <Button type="legacy"
+                            onClick={harvestStakingRewards}
+                            isLoading={user.harvestingStakingRewards}
+                            disabled={user.harvestingStakingRewards}>
+                      Harvest
+                    </Button>
                   )}
                 </div>
               </div>
-              <div className="my-auto">
-                {user.stakingRewards > 0 && (
-                  <Button type="legacy"
-                          onClick={harvestStakingRewards}
-                          isLoading={user.harvestingStakingRewards}
-                          disabled={user.harvestingStakingRewards}>
-                    Harvest
-                  </Button>
-                )}
-              </div>
-            </div>
-            <div className="d-flex mt-2">
-              <div className="flex-fill">
-                <Flex>
-                  <VStack spacing={0} align="left">
-                    <Box className="text-muted">
-                      CNSUSD Balance
-                    </Box>
-                    <Box>
-                      {!user.connectingWallet ? (
-                        <>
-                          {user.address ? (
-                            <Text  textAlign="left">
-                              ${cnsBalance}
-                            </Text>
-                          ) : (
-                            <span className="d-wallet-value">$0</span>
-                          )}
-                        </>
-                      ) : (
-                        <span>
+              <div className="d-flex mt-2">
+                <div className="flex-fill">
+                  <Flex>
+                    <VStack spacing={0} align="left">
+                      <Box className="text-muted">
+                        CNSUSD Balance
+                      </Box>
+                      <Box>
+                        {!user.connectingWallet ? (
+                          <>
+                            {user.address ? (
+                              <Text  textAlign="left">
+                                ${cnsBalance}
+                              </Text>
+                            ) : (
+                              <span className="d-wallet-value">$0</span>
+                            )}
+                          </>
+                        ) : (
+                          <span>
                           <Spinner animation="border" role="status" size={'sm'}>
                             <span className="visually-hidden">Loading...</span>
                           </Spinner>
                         </span>
-                      )}
+                        )}
+                      </Box>
+                    </VStack>
+                    <Spacer />
+                    <Box textAlign="right">
+                      <Link href="https://www.cronos.domains/" isExternal>
+                        <Text fontSize="xs">Powered by</Text>
+                        <SvgComponent />
+                      </Link>
                     </Box>
-                  </VStack>
-                  <Spacer />
-                  <Box textAlign="right">
-                    <Link href="https://www.cronos.domains/" isExternal>
-                      <Text fontSize="xs">Powered by</Text>
-                      <SvgComponent />
-                    </Link>
+                  </Flex>
+                  <Box mt={2}>
+                    <Text fontSize={'xs'} align="center">
+                      Use CNSUSD to buy or renew CRO domains on Cronos Name Service.{' '}
+                      <Link href="/collection/cronos-name-service?tab=cns" color={'blue.500'} fontWeight="bold">Find your Domain</Link>
+                    </Text>
                   </Box>
-                </Flex>
-                <Box mt={2}>
-                  <Text fontSize={'xs'} align="center">
-                    Use CNSUSD to buy or renew CRO domains on Cronos Name Service.{' '}
-                    <Link href="/collection/cronos-name-service?tab=cns" color={'blue.500'} fontWeight="bold">Find your Domain</Link>
-                  </Text>
-                </Box>
+                </div>
               </div>
-            </div>
 
-            <div className="row mt-3">
-              <div className="col">
-                <div className="d-flex justify-content-evenly">
+              <div className="row mt-3">
+                <div className="col">
+                  <div className="d-flex justify-content-evenly">
                     <span className="cursor-pointer" onClick={clearCookies}>
                       <span>Clear Cookies</span>
                     </span>
-                  <span className="cursor-pointer" onClick={logout}>
+                    <span className="cursor-pointer" onClick={logout}>
                       <span>Disconnect</span>
                     </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Offcanvas.Body>
-        </Offcanvas>
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
       )}
     </div>
   );
