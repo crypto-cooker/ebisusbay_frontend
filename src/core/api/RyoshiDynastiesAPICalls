@@ -10,7 +10,7 @@ const baseURL = 'https://testcms.ebisusbay.biz/';
 //gets the current game id
 export const getGameId = async (_controlPointId) => {
   try{
-    var data = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    var data = await api.get(baseURL + "api/ryoshi-dynasties/games/2");
     return data.data.data.id;
   }
   catch(error){
@@ -21,6 +21,15 @@ export const getGameId = async (_controlPointId) => {
 export const getMap = async (_gameNumber) => {
   try{
     return await api.get(baseURL + "api/ryoshi-dynasties/games/"+_gameNumber);
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const getProfileTroops = async (_address, _signature) => {
+  try{
+    return await api.get(baseURL + "api/ryoshi-dynasties/armies?",
+      {params: {address: _address, signature: _signature}});
   }
   catch(error){
     throw error;
