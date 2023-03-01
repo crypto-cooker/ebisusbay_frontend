@@ -1,35 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
 import Blockies from 'react-blockies';
 import {faCheck, faCircle} from '@fortawesome/free-solid-svg-icons';
 import {Collapse, Spinner} from 'react-bootstrap';
 import styled from 'styled-components';
-import LayeredIcon from '../components/LayeredIcon';
-import CollectionInfoBar from '../components/CollectionInfoBar';
-import SalesCollection from '../components/SalesCollection';
-import CollectionNftsGroup from '../components/CollectionNftsGroup';
-import CollectionListingsGroup from '../components/CollectionListingsGroup';
-import {init, fetchListings, getStats, updateTab} from '@src/GlobalState/collectionSlice';
+import LayeredIcon from '../../../Components/components/LayeredIcon';
+import CollectionInfoBar from '../../../Components/components/CollectionInfoBar';
+import SalesCollection from '../../../Components/components/SalesCollection';
+import CollectionNftsGroup from '../../../Components/components/CollectionNftsGroup';
+import CollectionListingsGroup from '../../../Components/components/CollectionListingsGroup';
+import {fetchListings, getStats, init, updateTab} from '@src/GlobalState/collectionSlice';
 import {isBundle, isCnsCollection, isCronosVerseCollection, isCrosmocraftsCollection} from '@src/utils';
-import SocialsBar from './SocialsBar';
-import { CollectionSortOption } from '../Models/collection-sort-option.model';
-import stakingPlatforms from '../../core/data/staking-platforms.json';
-import CollectionCronosverse from './Custom/Cronosverse';
+import SocialsBar from '@src/Components/Collection/SocialsBar';
+import {CollectionSortOption} from '@src/Components/Models/collection-sort-option.model';
+import stakingPlatforms from '@src/core/data/staking-platforms.json';
+import CollectionCronosverse from '@src/Components/Collection/Custom/Cronosverse';
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {useRouter} from "next/router";
-import {CollectionFilters} from "../Models/collection-filters.model";
+import {CollectionFilters} from "@src/Components/Models/collection-filters.model";
 import {pushQueryString} from "@src/helpers/query";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import {CollectionTaskBar} from "@src/Components/Collection/CollectionTaskBar";
 import {DesktopFilters} from "@src/Components/Collection/CollectionTaskBar/DesktopFilters";
-import useBreakpoint from "use-breakpoint";
 import {MobileFilters} from "@src/Components/Collection/CollectionTaskBar/MobileFilters";
 import {FilterResultsBar} from "@src/Components/Collection/FilterResultsBar";
 import {MobileSort} from "@src/Components/Collection/CollectionTaskBar/MobileSort";
 import {CnsRegistration} from "@src/Components/Collection/Custom/CnsRegistration";
-import {Flex, Heading} from "@chakra-ui/react";
+import {Flex, Heading, useBreakpointValue} from "@chakra-ui/react";
 import MintingButton from "@src/Components/Collection/MintingButton";
 import CollectionBundlesGroup from "@src/Components/components/CollectionBundlesGroup";
+import {useAppSelector} from "@src/Store/hooks";
 
 const NegativeMargin = styled.div`
   margin-left: -1.75rem !important;
@@ -48,30 +48,35 @@ const tabs = {
   cns: 'cns'
 };
 
-const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
-const Collection721 = ({ collection, query, activeDrop = null}) => {
+interface Collection721Props {
+  collection: any;
+  query: any;
+  activeDrop?: any;
+}
+
+const Collection721 = ({ collection, query, activeDrop = null}: Collection721Props) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const collectionStats = useSelector((state) => state.collection.stats);
-  const collectionLoading = useSelector((state) => state.collection.loading);
-  const initialLoadComplete = useSelector((state) => state.collection.initialLoadComplete);
+  const collectionStats = useAppSelector((state) => state.collection.stats);
+  const collectionLoading = useAppSelector((state) => state.collection.loading);
+  const initialLoadComplete = useAppSelector((state) => state.collection.initialLoadComplete);
 
   const [isFirstLoaded, setIsFirstLoaded] = useState(0);
 
-  const listings = useSelector((state) => state.collection.listings);
-  const hasRank = useSelector((state) => state.collection.hasRank);
-  const canLoadMore = useSelector((state) => {
+  const listings = useAppSelector((state) => state.collection.listings);
+  const hasRank = useAppSelector((state) => state.collection.hasRank);
+  const canLoadMore = useAppSelector((state) => {
     return (
       state.collection.listings.length > 0 &&
       (state.collection.query.page === 0 || state.collection.query.page < state.collection.totalPages)
     );
   });
 
-  const isUsingListingsFallback = useSelector((state) => state.collection.isUsingListingsFallback);
+  const isUsingListingsFallback = useAppSelector((state) => state.collection.isUsingListingsFallback);
 
   const [openMenu, setOpenMenu] = useState(tabs.items);
-  const handleBtnClick = (key) => (element) => {
+  const handleBtnClick = (key: string) => (e: any) => {
     setOpenMenu(key);
 
     if (key === tabs.items) {
@@ -85,7 +90,7 @@ const Collection721 = ({ collection, query, activeDrop = null}) => {
     dispatch(updateTab(key));
   };
 
-  const resetFilters = (preservedQuery) => {
+  const resetFilters = (preservedQuery?: any) => {
     const sortOption = CollectionSortOption.default();
     sortOption.key = 'price';
     sortOption.direction = 'asc';
@@ -146,17 +151,16 @@ const Collection721 = ({ collection, query, activeDrop = null}) => {
 
   const [filtersVisible, setFiltersVisible] = useState(true);
   const [mobileSortVisible, setMobileSortVisible] = useState(false);
-  const [useMobileMenu, setUseMobileMenu] = useState(false);
-  const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
+  const [useMobileMenu, setUseMobileMenu] = useState<boolean>(false);
+  const isMobileSize = useBreakpointValue({base: true, md: false}, {fallback: 'md'})
   const [hasManuallyToggledFilters, setHasManuallyToggledFilters] = useState(false);
 
   useEffect(() => {
-    const isMobileSize = minWidth < BREAKPOINTS.m;
-    setUseMobileMenu(isMobileSize);
+    setUseMobileMenu(isMobileSize!);
     if (!hasManuallyToggledFilters) {
       setFiltersVisible(!isMobileSize);
     }
-  }, [breakpoint]);
+  }, [isMobileSize]);
 
   const toggleFilterVisibility = () => {
     setHasManuallyToggledFilters(true);
@@ -266,8 +270,8 @@ const Collection721 = ({ collection, query, activeDrop = null}) => {
               <div className="row">
                 <div className="mx-auto text-center fw-bold" style={{ fontSize: '0.8em' }}>
                   NFTs from this collection can be staked at{' '}
-                  <a href={stakingPlatforms[collection.metadata.staking].url} target="_blank" rel="noreferrer">
-                    <span className="color">{stakingPlatforms[collection.metadata.staking].name}</span>
+                  <a href={(stakingPlatforms[collection.metadata.staking as keyof object] as any).url} target="_blank" rel="noreferrer">
+                    <span className="color">{(stakingPlatforms[collection.metadata.staking as keyof object] as any).name}</span>
                   </a>
                 </div>
               </div>
@@ -316,8 +320,8 @@ const Collection721 = ({ collection, query, activeDrop = null}) => {
                       <div className="me-4" style={{width: 250, top:'56px'}}>
                         <DesktopFilters
                           address={collection.address}
-                          traits={collectionStats?.traits}
-                          powertraits={collectionStats?.powertraits}
+                          traits={(collectionStats as any)?.traits}
+                          powertraits={(collectionStats as any)?.powertraits}
                         />
                       </div>
                     </div>
@@ -325,7 +329,14 @@ const Collection721 = ({ collection, query, activeDrop = null}) => {
                   <div className="flex-fill">
                     <FilterResultsBar collection={collection} />
                     {isUsingListingsFallback ? (
-                      <CollectionListingsGroup listings={listings} canLoadMore={canLoadMore} loadMore={loadMore} />
+                      <CollectionListingsGroup
+                        listings={listings}
+                        canLoadMore={canLoadMore}
+                        loadMore={loadMore}
+                        showLoadMore={true}
+                        address={null}
+                        collectionMetadata={null}
+                      />
                     ) : (
                       <CollectionNftsGroup
                         listings={listings}
@@ -361,7 +372,7 @@ const Collection721 = ({ collection, query, activeDrop = null}) => {
             )}
             {openMenu === tabs.map && (
               <NegativeMargin className="tab-2 onStep fadeIn overflow-auto mt-2">
-                <CollectionCronosverse collection={collection} slug={collection.slug} cacheName={collection.slug} />
+                <CollectionCronosverse collection={collection} />
               </NegativeMargin>
             )}
             {openMenu === tabs.cns && (
@@ -375,8 +386,8 @@ const Collection721 = ({ collection, query, activeDrop = null}) => {
         address={collection.address}
         show={useMobileMenu && filtersVisible}
         onHide={() => setFiltersVisible(false)}
-        traits={collectionStats?.traits}
-        powertraits={collectionStats?.powertraits}
+        traits={(collectionStats as any)?.traits}
+        powertraits={(collectionStats as any)?.powertraits}
       />
 
       <MobileSort

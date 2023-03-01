@@ -1,28 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import {faBullhorn, faCheck, faCircle} from '@fortawesome/free-solid-svg-icons';
+import React, {useEffect} from 'react';
+import {useDispatch} from 'react-redux';
+import {faCheck, faCircle} from '@fortawesome/free-solid-svg-icons';
 import Blockies from 'react-blockies';
 
-import CollectionListingsGroup from '../components/CollectionListingsGroup';
-import LayeredIcon from '../components/LayeredIcon';
-import {init, fetchListings, getStats, updateTab} from '@src/GlobalState/collectionSlice';
-import {isCrosmocraftsPartsCollection, isEbVipCollection} from '@src/utils';
-import SocialsBar from './SocialsBar';
-import { CollectionSortOption } from '../Models/collection-sort-option.model';
-import CollectionInfoBar from '../components/CollectionInfoBar';
-import stakingPlatforms from '../../core/data/staking-platforms.json';
-import SalesCollection from '../components/SalesCollection';
-import CollectionNftsGroup from '../components/CollectionNftsGroup';
+import CollectionListingsGroup from '../../../Components/components/CollectionListingsGroup';
+import LayeredIcon from '../../../Components/components/LayeredIcon';
+import {fetchListings, getStats, init, updateTab} from '@src/GlobalState/collectionSlice';
+import {isCrosmocraftsPartsCollection} from '@src/utils';
+import SocialsBar from '@src/Components/Collection/SocialsBar';
+import {CollectionSortOption} from '@src/Components/Models/collection-sort-option.model';
+import CollectionInfoBar from '@src/Components/components/CollectionInfoBar';
+import stakingPlatforms from '@src/core/data/staking-platforms.json';
+import SalesCollection from '@src/Components/components/SalesCollection';
+import CollectionNftsGroup from '@src/Components/components/CollectionNftsGroup';
 import {ImageKitService} from "@src/helpers/image";
-import {CollectionFilters} from "../Models/collection-filters.model";
+import {CollectionFilters} from "@src/Components/Models/collection-filters.model";
 import {Spinner} from "react-bootstrap";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import {pushQueryString} from "@src/helpers/query";
 import {useRouter} from "next/router";
-import {Box, Flex, Heading, Link, Text} from "@chakra-ui/react";
+import {Flex, Heading} from "@chakra-ui/react";
 import MintingButton from "@src/Components/Collection/MintingButton";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import NextLink from "next/link";
+import {useAppSelector} from "@src/Store/hooks";
 
 
 const tabs = {
@@ -30,29 +29,36 @@ const tabs = {
   activity: 'activity'
 };
 
-const Collection1155 = ({ collection, tokenId = null, query, activeDrop = null }) => {
+interface Collection1155Props {
+  collection: any;
+  query: any;
+  tokenId?: string | null;
+  activeDrop?: any;
+}
+
+const Collection1155 = ({ collection, tokenId = null, query, activeDrop = null }: Collection1155Props) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const collectionStats = useSelector((state) => state.collection.stats);
-  const initialLoadComplete = useSelector((state) => state.collection.initialLoadComplete);
+  const collectionStats = useAppSelector((state) => state.collection.stats);
+  const initialLoadComplete = useAppSelector((state) => state.collection.initialLoadComplete);
 
-  const listings = useSelector((state) => state.collection.listings);
-  const hasRank = useSelector((state) => state.collection.hasRank);
-  const canLoadMore = useSelector((state) => {
+  const listings = useAppSelector((state) => state.collection.listings);
+  const hasRank = useAppSelector((state) => state.collection.hasRank);
+  const canLoadMore = useAppSelector((state) => {
     return (
       state.collection.listings.length > 0 &&
       (state.collection.query.page === 0 || state.collection.query.page < state.collection.totalPages)
     );
   });
-  const isUsingListingsFallback = useSelector((state) => state.collection.isUsingListingsFallback);
+  const isUsingListingsFallback = useAppSelector((state) => state.collection.isUsingListingsFallback);
 
   const collectionName = () => {
     return collection.name;
   };
 
-  const [openMenu, setOpenMenu] = React.useState(0);
-  const handleBtnClick = (key) => (element) => {
+  const [openMenu, setOpenMenu] = React.useState(tabs.items);
+  const handleBtnClick = (key: string) => (e: any) => {
     setOpenMenu(key);
 
     pushQueryString(router, {
@@ -75,6 +81,7 @@ const Collection1155 = ({ collection, tokenId = null, query, activeDrop = null }
     const filterOption = CollectionFilters.default();
     filterOption.address = collection.address;
     if (tokenId != null) {
+      // @ts-ignore
       filterOption.token = tokenId;
     }
 
@@ -91,6 +98,7 @@ const Collection1155 = ({ collection, tokenId = null, query, activeDrop = null }
   useEffect(() => {
     async function asyncFunc() {
       if (tokenId != null) {
+        // @ts-ignore
         dispatch(getStats(collection, tokenId));
       } else {
         dispatch(getStats(collection));
@@ -197,8 +205,8 @@ const Collection1155 = ({ collection, tokenId = null, query, activeDrop = null }
               <div className="row">
                 <div className="mx-auto text-center fw-bold" style={{ fontSize: '0.8em' }}>
                   NFTs from this collection can be staked at{' '}
-                  <a href={stakingPlatforms[collection.metadata.staking].url} target="_blank" rel="noreferrer">
-                    <span className="color">{stakingPlatforms[collection.metadata.staking].name}</span>
+                  <a href={(stakingPlatforms[collection.metadata.staking as keyof object] as any).url} target="_blank" rel="noreferrer">
+                    <span className="color">{(stakingPlatforms[collection.metadata.staking as keyof object] as any).name}</span>
                   </a>
                 </div>
               </div>
@@ -222,14 +230,21 @@ const Collection1155 = ({ collection, tokenId = null, query, activeDrop = null }
                 <div className="row">
                   <div className="col-md-12">
                     {isUsingListingsFallback ? (
-                      <CollectionListingsGroup listings={listings} canLoadMore={canLoadMore} loadMore={loadMore} />
+                      <CollectionListingsGroup
+                        listings={listings}
+                        canLoadMore={canLoadMore}
+                        loadMore={loadMore}
+                        showLoadMore={true}
+                        address={null}
+                        collectionMetadata={null}
+                      />
                     ) : (
                       <CollectionNftsGroup
                         listings={listings}
                         canLoadMore={canLoadMore}
                         loadMore={loadMore}
-                        address={collection.address}
                         collection={collection}
+                        showLoadMore={true}
                       />
                     )}
                     {!initialLoadComplete && (
