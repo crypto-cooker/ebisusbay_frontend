@@ -1,36 +1,41 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, {RefObject} from 'react';
+import {useDispatch} from 'react-redux';
 import Link from 'next/link';
-import { createGlobalStyle } from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {createGlobalStyle} from 'styled-components';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faBars, faMoon, faSun} from '@fortawesome/free-solid-svg-icons';
 
-import AccountMenu from './accountMenu';
-import NotificationMenu from '../../../Components/components/NotificationMenu';
-import { setTheme } from '@src/GlobalState/User';
+import AccountMenu from './account-menu';
+import NotificationMenu from './notification-menu';
+import {setTheme} from '@src/GlobalState/User';
 import {
   Box,
   Flex,
   HStack,
-  IconButton, Input, Spacer,
-  Stack, Text, useBreakpointValue,
+  IconButton,
+  Spacer,
+  Stack,
+  Text,
+  useBreakpointValue,
   useColorMode,
-  useDisclosure, useOutsideClick
+  useDisclosure,
+  useOutsideClick
 } from "@chakra-ui/react";
-import Cart from "@src/Components/v2/modules/navbar/cart";
-import {CloseIcon, HamburgerIcon} from "@chakra-ui/icons";
-import Search from "@src/modules/layout/navbar/search";
-import MobileSearchDrawer from "@src/modules/layout/navbar/search/drawer";
+import Cart from "./cart";
+import {CloseIcon} from "@chakra-ui/icons";
+import Search from "@src/components-v2/shared/layout/navbar/search";
+import MobileSearchDrawer from "@src/components-v2/shared/layout/navbar/search";
+import {useAppSelector} from "@src/Store/hooks";
 
 const GlobalStyles = createGlobalStyle`
   header#myHeader {
-    background: ${({ theme }) => theme.colors.bgColor4};
+    background: ${({ theme }: {theme: any}) => theme.colors.bgColor4};
     border-bottom: 0;
     box-shadow: 0 4px 20px 0 rgba(10,10,10, .8);
   }
 `;
 
-const NavLink = ({name, to, onClick}) => {
+const NavLink = ({name, to, onClick}: {name: string, to: string, onClick?: any}) => {
   return (
     <Link href={to}>
       <a onClick={onClick}>
@@ -44,13 +49,13 @@ const Header = function () {
   const dispatch = useDispatch();
   const {isOpen, onOpen, onClose} = useDisclosure();
   const { colorMode, setColorMode } = useColorMode()
-  const {theme, profile, address} = useSelector((state) => state.user);
+  const {theme, profile, address} = useAppSelector((state) => state.user);
   const shouldUseMobileSearch = useBreakpointValue(
     { base: true, lg: false },
     { fallback: 'lg'},
   );
 
-  const ref = React.useRef()
+  const ref: RefObject<HTMLDivElement> = React.useRef(null)
   useOutsideClick({
     ref: ref,
     handler: onClose,

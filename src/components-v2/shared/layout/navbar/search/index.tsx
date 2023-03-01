@@ -1,28 +1,28 @@
 import {
-  Box, Button,
-  Center, CloseButton,
-  IconButton,
+  Box,
+  Button,
+  Center,
+  CloseButton,
   Input,
   InputGroup,
   InputLeftElement,
   InputRightElement,
   Spinner,
   Text,
-  useColorMode,
   useDisclosure,
   useOutsideClick,
   VStack
 } from "@chakra-ui/react";
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import React, {ChangeEvent, RefObject, useCallback, useEffect, useState} from "react";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {useQuery} from "@tanstack/react-query";
 import {search} from "@src/core/api/next/search";
 import {caseInsensitiveCompare} from "@src/utils";
 import {useRouter} from "next/router";
-import {ChevronDownIcon, CloseIcon, SearchIcon} from "@chakra-ui/icons";
+import {ChevronDownIcon, SearchIcon} from "@chakra-ui/icons";
 import useDebounce from "@src/core/hooks/useDebounce";
 import {appConfig} from "@src/Config";
-import ResultCollection from "@src/modules/layout/navbar/search/row";
+import ResultCollection from "@src/components-v2/shared/layout/navbar/search/row";
 import Scrollbars from "react-custom-scrollbars-2";
 import {addToSearchVisitsInStorage, getSearchVisitsInStorage, removeSearchVisitFromStorage} from "@src/helpers/storage";
 
@@ -49,7 +49,7 @@ const Search = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [value, setValue] = useState('');
-  const ref = useRef();
+  const ref: RefObject<HTMLDivElement> = React.useRef(null);
   useOutsideClick({
     ref: ref,
     handler: onClose,
@@ -64,18 +64,18 @@ const Search = () => {
       refetchOnWindowFocus: false,
       select: (d) => {
         return d.data.collections
-          .filter((collection) =>{
-            const knownContract = knownContracts.find((c) => caseInsensitiveCompare(c.address, collection.address));
+          .filter((collection: any) =>{
+            const knownContract = knownContracts.find((c: any) => caseInsensitiveCompare(c.address, collection.address));
             if (!knownContract) return false;
             return !knownContract.mergedWith;
           })
-          .sort((a, b) => b.verification?.verified - a.verification?.verified)
+          .sort((a: any, b: any) => b.verification?.verified - a.verification?.verified)
       }
     }
   );
   const hasDisplayableContent = searchVisits.length > 0 || (data && data.length > 0);
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setValue(value);
   };
@@ -93,14 +93,14 @@ const Search = () => {
     onClose();
   };
 
-  const handleCollectionClick = useCallback((collection) => {
+  const handleCollectionClick = useCallback((collection: any) => {
     addToSearchVisitsInStorage(collection);
     onClose();
     setValue('');
     router.push(`/collection/${collection.address}`);
   }, [onClose, router, setValue]);
 
-  const handleRemoveVisit = (collection) => {
+  const handleRemoveVisit = (collection: any) => {
     removeSearchVisitFromStorage(collection.address);
     const remainingVisits = getRelevantVisits();
     setSearchVisits(remainingVisits);
@@ -111,7 +111,7 @@ const Search = () => {
     const visits = getSearchVisitsInStorage();
 
     if (value && value.length >= minChars) {
-      return visits.filter((item) => {
+      return visits.filter((item: any) => {
         return item.name.toLowerCase().includes(value.toLowerCase());
       });
     }
@@ -179,7 +179,7 @@ const Search = () => {
               <Box mb={2}>
                 <Text textTransform="uppercase" ms={1} color={headingColor}>Recent</Text>
                 <VStack>
-                  {searchVisits.slice(0, 5).map((item) => (
+                  {searchVisits.slice(0, 5).map((item: any) => (
                     <ResultCollection
                       key={item.address}
                       collection={item}
@@ -198,7 +198,7 @@ const Search = () => {
                 </Center>
               ) : status === "error" ? (
                 <Center>
-                  <Text>Error: {error.message}</Text>
+                  <Text>Error: {(error as any)?.message}</Text>
                 </Center>
               ) : (
                 <>
@@ -206,7 +206,7 @@ const Search = () => {
                     <Box>
                       <Text textTransform="uppercase" ms={1} color={headingColor}>Collections</Text>
                       <VStack>
-                        {data.slice(0, maxResults).map((item) => (
+                        {data.slice(0, maxResults).map((item: any) => (
                           <ResultCollection
                             key={item.address}
                             collection={item}

@@ -231,7 +231,7 @@ export const imageDomains = [
  * @param key
  * @returns {null|*}
  */
-export const appConfig = (key = null) => {
+export const appConfig = (key = '') => {
   const env = environments[currentEnv()];
   const fallbackEnv = environments.production;
   if (!env) return configData[fallbackEnv];

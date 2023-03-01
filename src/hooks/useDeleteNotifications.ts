@@ -2,20 +2,26 @@ import { useState } from 'react';
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import useCreateSigner from '../Components/Account/Settings/hooks/useCreateSigner';
 import {deleteNotifications} from "@src/core/cms/next/notifications";
+import {ContractReceipt} from "ethers";
+
+type ResponseProps = {
+  loading: boolean;
+  error?: any;
+};
 
 const useDeleteNotifications = () => {
-  const [response, setResponse] = useState({
+  const [response, setResponse] = useState<ResponseProps>({
     loading: false,
-    error: null,
+    error: undefined,
   });
 
   const [isLoading, getSigner] = useCreateSigner();
 
-  const requestDeleteNotifications = async (address, notificationId) => {
+  const requestDeleteNotifications = async (address: string, notificationId?: string | number) => {
     setResponse({
       ...response,
       loading: true,
-      error: null,
+      error: undefined,
     });
 
     let signatureInStorage = getAuthSignerInStorage()?.signature;
@@ -25,7 +31,7 @@ const useDeleteNotifications = () => {
     }
     if (signatureInStorage) {
       try {
-        const fetchResponse = await deleteNotifications(notificationId, address, signatureInStorage);
+        const fetchResponse = await deleteNotifications(notificationId ?? null, address, signatureInStorage);
         
         setResponse({
           ...response,
@@ -43,14 +49,13 @@ const useDeleteNotifications = () => {
       }
     } else {
       setResponse({
-        isLoading: false,
-        response: [],
+        loading: false,
         error: { message: 'Something went wrong' },
       });
     }
   };
 
-  return [requestDeleteNotifications, response];
+  return [requestDeleteNotifications, response] as const;
 };
 
 export default useDeleteNotifications;

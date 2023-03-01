@@ -17,10 +17,9 @@ import {
   useDisclosure,
   VStack
 } from "@chakra-ui/react";
-import React, {useCallback, useEffect, useState} from "react";
+import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
-import {useSelector} from "react-redux";
 import {useQuery} from "@tanstack/react-query";
 import {search} from "@src/core/api/next/search";
 import {caseInsensitiveCompare} from "@src/utils";
@@ -29,8 +28,9 @@ import {CloseIcon, SearchIcon} from "@chakra-ui/icons";
 import {appConfig} from "@src/Config";
 import {useRouter} from "next/router";
 import {useColorModeValue} from "@chakra-ui/color-mode";
-import ResultCollection from "@src/modules/layout/navbar/search/row";
+import ResultCollection from "@src/components-v2/shared/layout/navbar/search/row";
 import {addToSearchVisitsInStorage, getSearchVisitsInStorage, removeSearchVisitFromStorage} from "@src/helpers/storage";
+import {useAppSelector} from "@src/Store/hooks";
 
 const minChars = 3;
 
@@ -39,7 +39,7 @@ const knownContracts = appConfig('collections');
 
 const MobileSearchDrawer = () => {
   const router = useRouter();
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
   const {isOpen, onOpen, onClose} = useDisclosure();
   const [value, setValue] = React.useState('');
   const searchIconColor = useColorModeValue('black', 'gray.300');
@@ -56,18 +56,18 @@ const MobileSearchDrawer = () => {
       select: (d) => {
         // console.log(d);
         return d.data.collections
-          .filter((collection) =>{
+          .filter((collection: any) =>{
             let validTokenCount = true;
             // if (collection.tokens) {
             //   validTokenCount = collection.tokens.filter((t) => Object.keys(t).length > 1).length > 0;
             // }
-            return knownContracts.find((c) => caseInsensitiveCompare(c.address, collection.address)) && validTokenCount;
+            return knownContracts.find((c: any) => caseInsensitiveCompare(c.address, collection.address)) && validTokenCount;
           })
       }
     }
   );
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setValue(value);
   };
@@ -76,14 +76,14 @@ const MobileSearchDrawer = () => {
     setValue('');
   };
 
-  const handleCollectionClick = useCallback((collection) => {
+  const handleCollectionClick = useCallback((collection: any) => {
     addToSearchVisitsInStorage(collection);
     onClose();
     setValue('');
     router.push(`/collection/${collection.address}`);
   }, [onClose, router, setValue]);
 
-  const handleRemoveVisit = (collection) => {
+  const handleRemoveVisit = (collection: any) => {
     removeSearchVisitFromStorage(collection.address);
     const remainingVisits = getRelevantVisits();
     setSearchVisits(remainingVisits);
@@ -94,7 +94,7 @@ const MobileSearchDrawer = () => {
     const visits = getSearchVisitsInStorage();
 
     if (value && value.length >= minChars) {
-      return visits.filter((item) => {
+      return visits.filter((item: any) => {
         return item.name.toLowerCase().includes(value.toLowerCase());
       });
     }
@@ -155,7 +155,7 @@ const MobileSearchDrawer = () => {
               <Box mb={2} fontSize="12px">
                 <Text textTransform="uppercase" ms={1} color={headingColor}>Recent</Text>
                 <VStack>
-                  {searchVisits.slice(0, 5).map((item) => (
+                  {searchVisits.slice(0, 5).map((item: any) => (
                     <ResultCollection
                       key={item.address}
                       collection={item}
@@ -175,7 +175,7 @@ const MobileSearchDrawer = () => {
                   </Center>
                 ) : status === "error" ? (
                   <Center>
-                    <Text>Error: {error.message}</Text>
+                    <Text>Error: {(error as any)?.message}</Text>
                   </Center>
                 ) : value.length >= minChars && (
                   <>
@@ -183,7 +183,7 @@ const MobileSearchDrawer = () => {
                       <>
                         <Text textTransform="uppercase" color={headingColor}>Collections</Text>
                         <VStack>
-                          {data.slice(0, 50).map((collection) => (
+                          {data.slice(0, 50).map((collection: any) => (
                             <ResultCollection
                               key={collection.address}
                               collection={collection}
