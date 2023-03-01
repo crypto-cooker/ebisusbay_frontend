@@ -32,11 +32,11 @@ const tabs = {
 interface Collection1155Props {
   collection: any;
   query: any;
-  tokenId?: string | null;
+  tokenId?: string;
   activeDrop?: any;
 }
 
-const Collection1155 = ({ collection, tokenId = null, query, activeDrop = null }: Collection1155Props) => {
+const Collection1155 = ({ collection, tokenId, query, activeDrop = null }: Collection1155Props) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -80,7 +80,7 @@ const Collection1155 = ({ collection, tokenId = null, query, activeDrop = null }
 
     const filterOption = CollectionFilters.default();
     filterOption.address = collection.address;
-    if (tokenId != null) {
+    if (tokenId !== undefined) {
       // @ts-ignore
       filterOption.token = tokenId;
     }
@@ -97,7 +97,7 @@ const Collection1155 = ({ collection, tokenId = null, query, activeDrop = null }
 
   useEffect(() => {
     async function asyncFunc() {
-      if (tokenId != null) {
+      if (tokenId !== undefined) {
         // @ts-ignore
         dispatch(getStats(collection, tokenId));
       } else {
