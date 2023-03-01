@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import Head from 'next/head';
 import { useDispatch, useSelector } from 'react-redux';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { toast, ToastContainer } from 'react-toastify';
@@ -7,7 +6,7 @@ import { initializeApp } from 'firebase/app';
 import { initializeAnalytics } from 'firebase/analytics';
 
 import ScrollToTopBtn from '@src/modules/layout/navbar/ScrollToTop';
-import Header from '@src/modules/layout/navbar/header';
+import Header from '@src/components-v2/shared/layout/navbar';
 import firebaseConfig from './Firebase/firebase_config';
 import { initProvider } from './GlobalState/User';
 import { appInitializer } from './GlobalState/InitSlice';

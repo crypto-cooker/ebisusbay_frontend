@@ -1,5 +1,4 @@
-import React, {memo, useCallback, useEffect, useState} from 'react';
-import { useSelector } from 'react-redux';
+import React, {memo, useCallback, useState} from 'react';
 import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faBell, faCog, faTrash} from '@fortawesome/free-solid-svg-icons';
@@ -12,17 +11,18 @@ import {useQuery} from "@tanstack/react-query";
 import useDeleteNotifications from "@src/hooks/useDeleteNotifications";
 import {getNotifications} from "@src/core/cms/next/notifications";
 import Button from "@src/Components/components/Button";
+import {useAppSelector} from "@src/Store/hooks";
 
 const NotificationMenu = function () {
   const history = useRouter();
-  const {address, theme, profile} = useSelector((state) => state.user);
+  const {address, theme, profile}: {address: any, theme: any, profile: any} = useAppSelector((state) => state.user);
   const [showMenu, setShowMenu] = useState(false);
   const [requestDeleteNotifications] = useDeleteNotifications();
 
   const { isLoading, isError, error, data:notifications, refetch } = useQuery(
     ['Notifications', address],
     () => getNotifications(address),
-    {enabled: !!profile.id}
+    {enabled: !!profile?.id}
   )
 
   const handleClose = () => {
@@ -33,7 +33,7 @@ const NotificationMenu = function () {
     setShowMenu(true);
   }, [showMenu]);
 
-  const navigateTo = (link) => {
+  const navigateTo = (link: string) => {
     handleClose();
     history.push(link);
   };
@@ -43,7 +43,7 @@ const NotificationMenu = function () {
     await refetch();
   };
 
-  const handleDeleteNotification = (notification) => async (e) => {
+  const handleDeleteNotification = (notification: any) => async (e: any) => {
     await requestDeleteNotifications(address, notification.id);
     await refetch();
   }
@@ -106,7 +106,7 @@ const NotificationMenu = function () {
                   </Button>
                 </>
               ) : (
-                <p className="text-center">Error: {error.message}</p>
+                <p className="text-center">Error: {(error as any)?.message}</p>
               )}
             </>
           ) : (
@@ -122,8 +122,8 @@ const NotificationMenu = function () {
               {notifications.length > 0 ? (
                 <div className="flex-fill h-auto">
                   {notifications.length > 0 && (
-                    notifications.map((item, index) => (
-                      <div key={index} className={classnames('card eb-nft__card px-3 py-2 mb-2', styles.card)}>
+                    notifications.map((item: any) => (
+                      <div key={item.createdAt} className={classnames('card eb-nft__card px-3 py-2 mb-2', styles.card)}>
                         <div className="d-flex">
                           <div className="flex-fill">
                             <div className="text-muted fst-italic">

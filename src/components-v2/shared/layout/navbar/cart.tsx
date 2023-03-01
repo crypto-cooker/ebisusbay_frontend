@@ -1,5 +1,5 @@
 import React, {forwardRef, memo, useCallback, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faShoppingBag, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {
@@ -38,6 +38,8 @@ import {LOCAL_STORAGE_ITEMS} from "@src/helpers/storage";
 import useBuyGaslessListings from '@src/hooks/useBuyGaslessListings';
 import Market from "@src/Contracts/Marketplace.json";
 import {appConfig} from "@src/Config";
+import {useAppSelector} from "@src/Store/hooks";
+import {AnchorProps} from "react-bootstrap";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -45,15 +47,15 @@ const readMarket = new Contract(config.contracts.market, Market.abi, readProvide
 
 const Cart = function () {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const cart = useSelector((state) => state.cart);
+  const user = useAppSelector((state) => state.user);
+  const cart = useAppSelector((state) => state.cart);
   const [showMenu, setShowMenu] = useState(false);
   const [executingBuy, setExecutingBuy] = useState(false);
-  const [soldItems, setSoldItems] = useState([]);
-  const [invalidItems, setInvalidItems] = useState([]);
+  const [soldItems, setSoldItems] = useState<string[]>([]);
+  const [invalidItems, setInvalidItems] = useState<string[]>([]);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const [buyGaslessListings, response] = useBuyGaslessListings();
-  const slideDirection = useBreakpointValue(
+  const slideDirection = useBreakpointValue<'bottom' | 'right'>(
     {
       base: 'bottom',
       md: 'right',
@@ -91,7 +93,7 @@ const Cart = function () {
   const handleClearCart = () => {
     dispatch(clearCart());
   };
-  const handleRemoveItem = (nft) => {
+  const handleRemoveItem = (nft: any) => {
     dispatch(removeFromCart(nft.listingId));
   };
 
@@ -134,7 +136,7 @@ const Cart = function () {
         setSoldItems([]);
 
         await executeBuy();
-      } catch (error) {
+      } catch (error: any) {
         console.log('ERROR:: ', error)
         if (error.data) {
           toast.error(error.data.message);
@@ -158,10 +160,12 @@ const Cart = function () {
     }
   }
 
-  const NftLink = forwardRef(({ onClick, href, name }, ref) => {
-    const closeAndGo = (e) => {
+  const NftLink = forwardRef<HTMLAnchorElement, AnchorProps & {name: string}>(({ onClick, href, name }, ref) => {
+    const closeAndGo = (event: any) => {
       setShowMenu(false);
-      onClick(e);
+      if (!!onClick) {
+        onClick(event);
+      }
     };
 
     return (
@@ -172,7 +176,7 @@ const Cart = function () {
   });
 
   useEffect(() => {
-    const onReceiveMessage = (e) => {
+    const onReceiveMessage = (e: any) => {
       const { key } = e;
       if (key === LOCAL_STORAGE_ITEMS.cart) {
         dispatch(syncCartStorage());
@@ -249,6 +253,7 @@ const Cart = function () {
                         {isBundle(nft.address) ? (
                           <AnyMedia
                             image={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')}
+                            video={null}
                             title={nft.name}
                             usePlaceholder={false}
                             className="img-rounded-8"
@@ -256,6 +261,7 @@ const Cart = function () {
                         ) : (
                           <AnyMedia
                             image={ImageKitService.buildFixedWidthUrl(nft.image, 100, 100)}
+                            video={null}
                             title={nft.name}
                             usePlaceholder={false}
                             className="img-rounded-8"
@@ -355,7 +361,7 @@ const Cart = function () {
                 className="w-100"
                 title="Refresh Metadata"
                 onClick={preparePurchase}
-                disabled={!cart.nfts.length > 0 || executingBuy || invalidItems.length > 0 || soldItems.length > 0}
+                disabled={!(cart.nfts.length > 0) || executingBuy || invalidItems.length > 0 || soldItems.length > 0}
                 isLoading={executingBuy}
               >
                 Complete Purchase

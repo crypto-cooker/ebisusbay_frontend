@@ -1,6 +1,6 @@
-import React, {memo, useEffect, useState} from 'react';
+import React, {memo, SVGProps, useEffect, useState} from 'react';
 import Blockies from 'react-blockies';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {useRouter} from 'next/router';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
@@ -48,6 +48,7 @@ import {Box, Flex, Heading, Link, Spacer, Text, useClipboard, useColorMode, VSta
 import Image from "next/image";
 import {useQuery} from "@tanstack/react-query";
 import CronosIcon from "@src/components-v2/shared/icons/cronos";
+import {useAppSelector} from "@src/Store/hooks";
 
 const StyledModal = styled(Modal)`
   .modal-content {
@@ -69,28 +70,31 @@ const Index = function () {
   const { colorMode, setColorMode } = useColorMode();
   const windowSize = useWindowSize();
   const [showMenu, setShowMenu] = useState(false);
-  const walletAddress = useSelector((state) => {
+  const walletAddress = useAppSelector((state) => {
     return state.user.address;
   });
-  const { setValue:setClipboardValue, onCopy } = useClipboard();
+  const { setValue:setClipboardValue, onCopy } = useClipboard(walletAddress ?? '');
 
-  const correctChain = useSelector((state) => {
+  const correctChain = useAppSelector((state) => {
     return state.user.correctChain;
   });
-  const theme = useSelector((state) => {
+  const theme = useAppSelector((state) => {
     return state.user.theme;
   });
-  const user = useSelector((state) => {
+  const user: any = useAppSelector((state) => {
     return state.user;
   });
-  const needsOnboard = useSelector((state) => {
+  const needsOnboard = useAppSelector((state) => {
     return state.user.needsOnboard;
   });
-  const collectionsStats = useSelector((state) => state.collections.collections);
-  const myNFTs = useSelector((state) => state.offer.myNFTs);
+  const collectionsStats = useAppSelector((state) => state.collections.collections);
+  const myNFTs = useAppSelector((state) => state.offer.myNFTs);
 
   const { data: balance } = useQuery(['getBalance', walletAddress, 'latest'], async () =>
-    await readProvider.getBalance(walletAddress)
+    await readProvider.getBalance(walletAddress!),
+    {
+      enabled: !!walletAddress
+    }
   );
 
   const closeMenu = () => {
@@ -133,7 +137,7 @@ const Index = function () {
     func();
   }, 1000 * 60);
 
-  const navigateTo = (pathname, query) => {
+  const navigateTo = (pathname: string, query?: any) => {
     closeMenu();
     history.push({pathname, query});
   };
@@ -179,7 +183,7 @@ const Index = function () {
     dispatch(AccountMenuActions.harvestStakingRewards());
   };
 
-  const toggleEscrowOptIn = async (optIn) => {
+  const toggleEscrowOptIn = async (optIn: boolean) => {
     dispatch(AccountMenuActions.toggleEscrowOptIn(optIn));
   };
 
@@ -234,7 +238,7 @@ const Index = function () {
     setColorMode(newTheme);
   };
 
-  const SvgComponent = (props) => (
+  const SvgComponent = (props: SVGProps<any>) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width={51}
@@ -271,7 +275,7 @@ const Index = function () {
           {user.profile.profilePicture ? (
             <img src={ImageKitService.buildAvatarUrl(user.profile.profilePicture)} alt={user.profile.username} />
           ) : (
-            <Blockies seed={user.address} size={9} scale={4} style={{width:'10px'}}/>
+            <Blockies seed={user.address} size={9} scale={4} />
           )}
         </Box>
       )}
@@ -298,7 +302,7 @@ const Index = function () {
       </StyledModal>
 
       {walletAddress && correctChain && (
-        <Offcanvas show={showMenu} onHide={closeMenu} placement={windowSize.width > 400 ? 'end' : 'bottom'}>
+        <Offcanvas show={showMenu} onHide={closeMenu} placement={(windowSize.width ?? 0) > 400 ? 'end' : 'bottom'}>
           <Offcanvas.Header closeButton closeVariant={theme === 'dark' ? 'white': 'dark'}>
             <Offcanvas.Title>
               <div className="d-flex align-items-center">
@@ -306,7 +310,7 @@ const Index = function () {
                   {user.profile.profilePicture ? (
                     <img src={ImageKitService.buildAvatarUrl(user.profile.profilePicture)} alt={user.profile.username} />
                   ) : (
-                    <Blockies seed={user.address} size={9} scale={4} style={{width:'10px'}}/>
+                    <Blockies seed={user.address} size={9} scale={4}/>
                   )}
                 </span>
                 <div>
@@ -586,7 +590,7 @@ const Index = function () {
                     </Box>
                   </VStack>
                   <Spacer />
-                  <Box align="right">
+                  <Box textAlign="right">
                     <Link href="https://www.cronos.domains/" isExternal>
                       <Text fontSize="xs">Powered by</Text>
                       <SvgComponent />

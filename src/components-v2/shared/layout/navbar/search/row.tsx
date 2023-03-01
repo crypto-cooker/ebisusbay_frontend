@@ -1,13 +1,19 @@
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import React, {useCallback} from "react";
-import {Box, CloseButton, Flex, IconButton, Image, Text, VStack} from "@chakra-ui/react";
+import {Box, CloseButton, Flex, Image, Text, VStack} from "@chakra-ui/react";
 import {ImageKitService} from "@src/helpers/image";
 import {commify} from "ethers/lib/utils";
 import {pluralize, round} from "@src/utils";
 import NextImage from "next/image";
-import {CloseIcon} from "@chakra-ui/icons";
 
-const ResultCollection = ({collection, floorPrice, onClick, onRemove, useCloseButton = false}) => {
+type ResultCollectionProps = {
+  collection: any;
+  floorPrice?: number;
+  onClick: (collection: any) => void;
+  onRemove?: (collection: any) => void;
+  useCloseButton?: boolean;
+}
+const ResultCollection = ({collection, floorPrice, onClick, onRemove, useCloseButton = false}: ResultCollectionProps) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const hoverColor = useColorModeValue('black', 'white');
 
@@ -15,9 +21,9 @@ const ResultCollection = ({collection, floorPrice, onClick, onRemove, useCloseBu
     onClick(collection);
   }, [onClick, collection]);
 
-  const handleRemove = useCallback((e) => {
+  const handleRemove = useCallback((e: any) => {
     e.stopPropagation();
-    onRemove(collection);
+    if (onRemove) onRemove(collection);
   }, [onRemove, collection]);
 
   return (
@@ -53,13 +59,13 @@ const ResultCollection = ({collection, floorPrice, onClick, onRemove, useCloseBu
             )}
           </VStack>
         </Box>
-        {(useCloseButton || floorPrice > 0) && (
+        {(useCloseButton || (!!floorPrice && floorPrice > 0)) && (
           <Flex ms={2} my="auto" className="text-muted">
             {useCloseButton ? (
               <>
                 <CloseButton onClick={handleRemove} _hover={{color: hoverColor}} />
               </>
-            ) : floorPrice > 0 && (
+            ) : (!!floorPrice && floorPrice > 0) && (
               <>
                 <NextImage src="/img/logos/cdc_icon.svg" width={16} height={16} />
                 <span className="ms-1">
