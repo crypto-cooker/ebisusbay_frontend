@@ -63,7 +63,7 @@ import Link from 'next/link';
 import axios from "axios";
 import Button, {LegacyOutlinedButton} from "@src/Components/components/common/Button";
 import {collectionRoyaltyPercent} from "@src/core/chain";
-import {Box, ButtonGroup, Flex, Heading, MenuButton as MenuButtonCK, Stack, Text, useClipboard} from "@chakra-ui/react";
+import {Box, Button as ChakraButton, ButtonGroup, Flex, Heading, MenuButton as MenuButtonCK, Stack, Text, useClipboard} from "@chakra-ui/react";
 import {toast} from "react-toastify";
 import {Menu} from '../components/chakra-components';
 import {faFacebook, faSquareTwitter, faTelegram} from '@fortawesome/free-brands-svg-icons';
@@ -73,6 +73,7 @@ import {getCollections} from "@src/core/api/next/collectioninfo";
 import {ImageContainer} from "@src/Components/Bundle";
 import {getTheme} from "@src/Theme/theme";
 import useToggleFavorite from "@src/components-v2/feature/nft/hooks/useToggleFavorite";
+import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 
 const config = appConfig();
 const tabs = {
@@ -94,6 +95,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [offerType, setOfferType] = useState(OFFER_TYPE.none);
   const [offerData, setOfferData] = useState();
+  const [showFullDescription, setShowFullDescription] = useState(false);
 
   const currentListing = useSelector((state) => state.nft.currentListing);
   const listingHistory = useSelector((state) =>
@@ -617,7 +619,19 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
                   ) : (
                     <Heading>{customProfile.name ?? nft.name}</Heading>
                   )}
-                  <p className="text-break mb-4">{customProfile.description ?? nft.description}</p>
+
+                  {(customProfile.description ?? nft.description) && (
+                    <Box mb={4}>
+                      <Text noOfLines={showFullDescription ? 0 : 2}>{customProfile.description ?? nft.description}</Text>
+                      {(customProfile.description ?? nft.description).length > 60 && (
+                        <ChakraButton variant="link" onClick={() => setShowFullDescription(!showFullDescription)}>
+                          See {showFullDescription ? 'less' : 'more'}
+                          {showFullDescription ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                        </ChakraButton>
+                      )}
+                    </Box>
+                  )}
+
                   {isCroCrowCollection(address) && croCrowBreed && (
                     <div className="d-flex flex-row align-items-center mb-4">
                       <LayeredIcon

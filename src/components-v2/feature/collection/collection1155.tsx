@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {faCheck, faCircle} from '@fortawesome/free-solid-svg-icons';
 import Blockies from 'react-blockies';
@@ -19,9 +19,10 @@ import {Spinner} from "react-bootstrap";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import {pushQueryString} from "@src/helpers/query";
 import {useRouter} from "next/router";
-import {Flex, Heading} from "@chakra-ui/react";
+import {Box, Button, Flex, Heading, Text} from "@chakra-ui/react";
 import MintingButton from "@src/Components/Collection/MintingButton";
 import {useAppSelector} from "@src/Store/hooks";
+import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 
 
 const tabs = {
@@ -42,6 +43,8 @@ const Collection1155 = ({ collection, tokenId, query, activeDrop = null }: Colle
 
   const collectionStats = useAppSelector((state) => state.collection.stats);
   const initialLoadComplete = useAppSelector((state) => state.collection.initialLoadComplete);
+
+  const [showFullDescription, setShowFullDescription] = useState(false);
 
   const listings = useAppSelector((state) => state.collection.listings);
   const hasRank = useAppSelector((state) => state.collection.hasRank);
@@ -161,7 +164,17 @@ const Collection1155 = ({ collection, tokenId, query, activeDrop = null }: Colle
                     creativeCommons={collection.verification?.creativeCommons}
                     center={true}
                   />
-                  {collection.metadata.description && <p>{collection.metadata.description}</p>}
+                  {collection.metadata.description && (
+                    <Box>
+                      <Text noOfLines={showFullDescription ? 0 : 2}>{collection.metadata.description}</Text>
+                      {collection.metadata.description.length > 255 && (
+                        <Button variant="link" onClick={() => setShowFullDescription(!showFullDescription)}>
+                          See {showFullDescription ? 'less' : 'more'}
+                          {showFullDescription ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                        </Button>
+                      )}
+                    </Box>
+                  )}
                   <span className="fs-4">
                   <SocialsBar
                     address={collection.address}

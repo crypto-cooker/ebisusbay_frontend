@@ -51,6 +51,8 @@ import { faFacebook, faSquareTwitter, faTelegram } from '@fortawesome/free-brand
 import { getStats } from '@src/GlobalState/collectionSlice';
 import NextLink from 'next/link';
 import useToggleFavorite from "@src/components-v2/feature/nft/hooks/useToggleFavorite";
+import {Button as ChakraButton} from "@chakra-ui/button";
+import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 
 const config = appConfig();
 const tabs = {
@@ -88,6 +90,7 @@ const Nft1155 = ({ address, id, collection }) => {
   const isLoading = useSelector((state) => state.nft.loading);
   const user = useSelector((state) => state.user);
   const [{ isLoading: isFavoriting, response, error }, toggleFavorite] = useToggleFavorite();
+  const [showFullDescription, setShowFullDescription] = useState(false);
 
   useEffect(() => {
     dispatch(getNftDetails(address, id));
@@ -277,7 +280,7 @@ const Nft1155 = ({ address, id, collection }) => {
           <Flex justify="center" px={3}>
             <FontAwesomeIcon icon={faBullhorn} className="my-auto"/>
             <Text ms={2}>
-              Ebisu's Bay VIP Founding Member will be migrating to the new Ryoshi Tales VIP collection on Friday Nov 11th.{' '}
+              Swap your Ebisu's Bay VIP Founding Member for 10x Ryoshi Tales VIP NFTs and enjoy increased benefits in the Ebisu's Bay ecosystem.{' '}
               <Box align="center">
                 <Link href="https://blog.ebisusbay.com/ebisus-bay-vip-split-506b05c619c7" isExternal fontWeight="bold">
                   Learn more
@@ -360,7 +363,19 @@ const Nft1155 = ({ address, id, collection }) => {
               {nft && (
                 <div className="item_info">
                   <Heading>{nft.name}</Heading>
-                  <p className="text-break mb-4">{nft.description}</p>
+
+                  {nft.description && (
+                    <Box mb={4}>
+                      <Text noOfLines={showFullDescription ? 0 : 2}>{nft.description}</Text>
+                      {nft.description.length > 60 && (
+                        <ChakraButton variant="link" onClick={() => setShowFullDescription(!showFullDescription)}>
+                          See {showFullDescription ? 'less' : 'more'}
+                          {showFullDescription ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                        </ChakraButton>
+                      )}
+                    </Box>
+                  )}
+
                   {collection.listable && (
                     <>
                       <PriceActionBar
