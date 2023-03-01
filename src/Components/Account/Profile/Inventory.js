@@ -141,7 +141,7 @@ export default function Inventory({ address }) {
                 if(isBundle(nft.address)){
                   return (
                     <div
-                      className={`d-item ${filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2'}  mb-4`}
+                      className={`d-item ${filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-6 col-sm-4 col-xl-3 col-xxl-2'}  mb-4`}
                       key={`${nft.address}-${nft.id}-${index}`}
                     >
                       {caseInsensitiveCompare(address, user.address) ? (
@@ -176,7 +176,7 @@ export default function Inventory({ address }) {
                 else{
                   return (
                     <div
-                      className={`d-item ${filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2'}  mb-4`}
+                      className={`d-item ${filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-6 col-sm-4 col-xl-3 col-xxl-2'}  mb-4`}
                       key={`${nft.address}-${nft.id}-${nft.listed}-${index}`}
                     >
                       {caseInsensitiveCompare(address, user.address) ? (
