@@ -161,28 +161,26 @@ const Table = ({ timeFrame, searchTerms, onlyVerified }) => {
                     <div className="col-12" style={{ paddingLeft: '75px' }}>
                       <div className="coll_list_pp" style={{ cursor: 'pointer' }}>
                         <Link href={`/collection/${collection.slug}`}>
-                          <a>
-                            {collection.metadata?.avatar ? (
-                              <CdnImage
-                                src={hostedImage(collection.metadata.avatar, true)}
-                                alt={collection?.name}
-                                width="50"
-                                height="50"
-                              />
-                            ) : (
-                              <Blockies seed={collection.collection.toLowerCase()} size={10} scale={5} />
-                            )}
-                            {collection.verification?.verified && (
-                              <VerifiedIcon>
-                                <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={7} />
-                              </VerifiedIcon>
-                            )}
-                          </a>
+                          {collection.metadata?.avatar ? (
+                            <CdnImage
+                              src={hostedImage(collection.metadata.avatar, true)}
+                              alt={collection?.name}
+                              width="50"
+                              height="50"
+                            />
+                          ) : (
+                            <Blockies seed={collection.collection.toLowerCase()} size={10} scale={5} />
+                          )}
+                          {collection.verification?.verified && (
+                            <VerifiedIcon>
+                              <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={7} />
+                            </VerifiedIcon>
+                          )}
                         </Link>
                       </div>
                       <span>
                         <Link href={`/collection/${collection.slug}`}>
-                          <a>{collection?.name ?? 'Unknown'}</a>
+                          {collection?.name ?? 'Unknown'}
                         </Link>
                       </span>
                     </div>

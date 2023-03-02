@@ -35,23 +35,21 @@ const ProfileImage = ({ title, displayName, address = '' }) => {
       {title && <h6>{title}</h6>}
       <div className="item_author">
         <Link href={`/account/${address}`}>
-          <a>
-            <div className="author_list_pp">
-              {!isLoading && data?.data?.profilePicture ? (
-                <img src={ImageKitService.buildAvatarUrl(data?.data?.profilePicture)} alt={data?.data?.username ? data?.data?.username : shortAddress(address)} />
-              ) : (
-                <Blockies seed={address} size={10} scale={5} style={{ width: '10px' }} />
-              )}
-              {data?.data?.isVerified && (
-                <VerifiedIcon>
-                  <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={8} />
-                </VerifiedIcon>
-              )}
-            </div>
-            {displayName && <div className="author_list_info">
-              <span>{data?.data?.username ? data?.data?.username : shortAddress(address)}</span>
-            </div>}
-          </a>
+          <div className="author_list_pp">
+            {!isLoading && data?.data?.profilePicture ? (
+              <img src={ImageKitService.buildAvatarUrl(data?.data?.profilePicture)} alt={data?.data?.username ? data?.data?.username : shortAddress(address)} />
+            ) : (
+              <Blockies seed={address} size={10} scale={5} style={{ width: '10px' }} />
+            )}
+            {data?.data?.isVerified && (
+              <VerifiedIcon>
+                <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={8} />
+              </VerifiedIcon>
+            )}
+          </div>
+          {displayName && <div className="author_list_info">
+            <span>{data?.data?.username ? data?.data?.username : shortAddress(address)}</span>
+          </div>}
         </Link>
       </div>
     </div>

@@ -38,9 +38,7 @@ const GlobalStyles = createGlobalStyle`
 const NavLink = ({name, to, onClick}: {name: string, to: string, onClick?: any}) => {
   return (
     <Link href={to}>
-      <a onClick={onClick}>
-        {name}
-      </a>
+      {name}
     </Link>
   );
 }
@@ -74,25 +72,23 @@ const Header = function () {
         <Box maxW="2560px" ref={ref}>
           <Flex h={16} alignItems={'center'}>
             <Link href="/">
-              <a>
-                <HStack spacing={2}>
-                  <Box w="44px" >
-                    <img
-                      src={theme === 'light' ? '/img/logo-light.svg' : '/img/logo-dark.svg'}
-                      alt="ebisus bay logo"
-                    />
-                  </Box>
-                  <Text
-                    fontSize="lg"
-                    fontWeight="normal"
-                    color="white"
-                    minW="97px"
-                    display={{base: 'none', sm: 'block'}}
-                  >
-                    Ebisu's Bay
-                  </Text>
-                </HStack>
-              </a>
+              <HStack spacing={2}>
+                <Box w="44px" >
+                  <img
+                    src={theme === 'light' ? '/img/logo-light.svg' : '/img/logo-dark.svg'}
+                    alt="ebisus bay logo"
+                  />
+                </Box>
+                <Text
+                  fontSize="lg"
+                  fontWeight="normal"
+                  color="white"
+                  minW="97px"
+                  display={{base: 'none', sm: 'block'}}
+                >
+                  Ebisu's Bay
+                </Text>
+              </HStack>
             </Link>
             {!shouldUseMobileSearch && (
               <Box w="100%" me={2} ms={4}>

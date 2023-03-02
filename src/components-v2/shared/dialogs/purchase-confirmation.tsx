@@ -168,7 +168,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                       <Flex justify="space-between" fontSize="lg">
                         <Text>Listing Price</Text>
                         <Flex justify="space-between" align="center">
-                          <Image src="/img/logos/cdc_icon.svg" width={24} height={24} />
+                          <Image src="/img/logos/cdc_icon.svg" width={24} height={24} alt='Cronos Logo' />
                           <Text as="span" ms={1}>
                             {commify(listing.price)}
                           </Text>
@@ -188,7 +188,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                       <Box className="card form_icon_button shadow active" alignItems="start !important" p={2}>
                         <DotIcon icon={faCheck} />
                         <Flex align="center">
-                          <Image src="/img/logos/cdc_icon.svg" width={24} height={24} />
+                          <Image src="/img/logos/cdc_icon.svg" width={24} height={24} alt="Cronos Logo" />
                           <Text as="span" ms={1}>CRO</Text>
                         </Flex>
                         <Flex mt={1}>
@@ -202,7 +202,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                       <Text>Total:</Text>
                       <Box>
                         <Flex justify="space-between" align="center">
-                          <Image src="/img/logos/cdc_icon.svg" width={24} height={24} />
+                          <Image src="/img/logos/cdc_icon.svg" width={24} height={24} alt="Cronos Logo" />
                           <Text as="span" ms={1} fontWeight="bold">
                             {getYouReceiveViewValue()} CRO
                           </Text>

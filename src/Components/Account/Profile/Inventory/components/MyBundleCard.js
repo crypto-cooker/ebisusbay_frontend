@@ -57,7 +57,7 @@ const MyNftCard = ({
     { base: false, md: true, },
     { fallback: 'md' },
   );
-  const { onCopy } = useClipboard(nftUrl);
+  const { onCopy } = useClipboard(nftUrl.toString());
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const navigateTo = (link) => {
@@ -230,7 +230,7 @@ const MyNftCard = ({
             <span className="card-text">
               {nft.listed && nft.price ? (
                 <div className="d-flex">
-                  <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+                  <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
                   <span className="ms-1">
                     {ethers.utils.commify(round(nft.price, 2))}
                   </span>

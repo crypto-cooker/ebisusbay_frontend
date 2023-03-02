@@ -128,20 +128,16 @@ const Tabs = ({ nft }) => {
                       <Stack>
                         {nft.collectionName && (
                           <Link href={`/collection/${nft.address}`}>
-                            <a>
-                              <h6
-                                className="card-title mt-auto fw-normal mb-0"
-                                style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
-                              >
-                                {nft.name}
-                              </h6>
-                            </a>
+                            <h6
+                              className="card-title mt-auto fw-normal mb-0"
+                              style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
+                            >
+                              {nft.name}
+                            </h6>
                           </Link>
                         )}
                         <Link href={`/collection/${nft.address}/${nft.id}`}>
-                          <a>
-                            <Text fontWeight='bold'>{nft.name}</Text>
-                          </a>
+                          <Text fontWeight='bold'>{nft.name}</Text>
                         </Link>
                       </Stack>
 

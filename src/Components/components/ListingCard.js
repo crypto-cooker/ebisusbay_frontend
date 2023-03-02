@@ -65,7 +65,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
   const cart = useSelector((state) => state.cart);
   const [isHovered, setIsHovered] = useState(false);
   const isInCart = cart.nfts.map((o) => o.listingId).includes(listing.listingId);
-  const { onCopy } = useClipboard(nftUrl);
+  const { onCopy } = useClipboard(nftUrl.toString());
 
   const getOptions = () => {
     const options = [];
@@ -244,24 +244,20 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
             <div className="d-flex flex-column justify-content-between p-2 pb-1">
               {listing.collection && (
                 <Link href={`/collection/${listing.collection.slug}`}>
-                  <a>
-                    <h6
-                      className="card-title mt-auto fw-normal"
-                      style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
-                    >
-                      {listing.collection.name}
-                    </h6>
-                  </a>
+                  <h6
+                    className="card-title mt-auto fw-normal"
+                    style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
+                  >
+                    {listing.collection.name}
+                  </h6>
                 </Link>
               )}
               <Link href={`/collection/${listing.collection.slug}/${listing.nftId}`}>
-                <a>
-                  <Heading as="h6" size="sm" className="card-title mt-auto mb-1">{listing.nft.name}</Heading>
-                </a>
+                <Heading as="h6" size="sm" className="card-title mt-auto mb-1">{listing.nft.name}</Heading>
               </Link>
               <MakeBuy>
                 <div className="d-flex">
-                  <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+                  <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
                   <span className="ms-1">
                     {getCorrectPrice(listing.price)}
                   </span>

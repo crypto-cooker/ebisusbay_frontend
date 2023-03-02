@@ -1,5 +1,17 @@
 import {getTheme} from "@src/Theme/theme";
-import {Box, Button, Heading, HStack, Input, SimpleGrid, Skeleton, Stack, Text, useNumberInput} from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  HStack,
+  Input,
+  SimpleGrid,
+  Skeleton,
+  Stack,
+  Text,
+  useNumberInput
+} from "@chakra-ui/react";
 import {dropState as statuses} from "@src/core/api/enums";
 import {constants, ethers} from "ethers";
 import {
@@ -227,7 +239,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
   };
   
   return (
-    <div className="card eb-nft__card h-100 shadow mt-2" style={{
+    <div className="card h-100 shadow mt-2" style={{
       borderColor:getTheme(userTheme).colors.borderColor3,
       borderWidth:'2px',
       backgroundColor:getTheme(userTheme).colors.bgColor5
@@ -244,8 +256,10 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                   )}
                   {regularCost && (
                     <Heading as="h5" size="md">
-                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
-                      <span className="ms-2">{ethers.utils.commify(round(regularCost))}</span>
+                      <Flex>
+                        <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                        <span className="ms-2">{ethers.utils.commify(round(regularCost))}</span>
+                      </Flex>
                     </Heading>
                   )}
                   {drop.erc20Cost && drop.erc20Token && (
@@ -258,8 +272,10 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                     <Heading as="h6" size="sm" className="mb-1">Member Price</Heading>
                     {memberCost && (
                       <Heading as="h5" size="md">
-                        <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
-                        <span className="ms-2">{ethers.utils.commify(round(memberCost))}</span>
+                        <Flex>
+                          <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                          <span className="ms-2">{ethers.utils.commify(round(memberCost))}</span>
+                        </Flex>
                       </Heading>
                     )}
                     {drop.erc20MemberCost && drop.erc20Cost !== drop.erc20MemberCost && (
@@ -272,8 +288,10 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                   <Box>
                     <Heading as="h6" size="sm" className="mb-1">Whitelist Price</Heading>
                     <Heading as="h5" size="md">
-                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
-                      <span className="ms-2">{ethers.utils.commify(round(whitelistCost))}</span>
+                      <Flex>
+                        <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                        <span className="ms-2">{ethers.utils.commify(round(whitelistCost))}</span>
+                      </Flex>
                     </Heading>
                   </Box>
                 )}
@@ -282,8 +300,10 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                   <Box>
                     <Heading as="h6" size="sm" className="mb-1">{specialWhitelist.name}</Heading>
                     <Heading as="h5" size="md">
-                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
-                      <span className="ms-2">{ethers.utils.commify(round(specialWhitelist.value))}</span>
+                      <Flex>
+                        <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                        <span className="ms-2">{ethers.utils.commify(round(specialWhitelist.value))}</span>
+                      </Flex>
                     </Heading>
                   </Box>
                 )}

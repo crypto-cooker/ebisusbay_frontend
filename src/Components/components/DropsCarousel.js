@@ -241,7 +241,7 @@ export default class Responsive extends Component {
                               ))}
                               {drop.erc20Cost && drop.erc20Token && (
                                 <HStack mt={2} mb={4}>
-                                  {drop.erc20Icon && <Image src={hostedImage(`/img/tokens/${drop.erc20Token}.svg`)} width={40} height={40} />}
+                                  {drop.erc20Icon && <Image src={hostedImage(`/img/tokens/${drop.erc20Token}.svg`)} width={40} height={40} alt='ERC20' />}
                                   <Text fontSize="4xl" fontWeight="bold" lineHeight={1}>
                                     {ethers.utils.commify(drop.erc20Cost)} {tokens[drop.erc20Token].symbol}
                                   </Text>

@@ -22,22 +22,20 @@ const ListingItem = ({
     <div className="listing-row">
       <div className="listing-container">
         <Link className="avatar" href={link}>
-          <a>
-            <div className="blockies me-3">
-              <span>
-                {/* <Link href={link}> */}
-                <Blockies seed={user} size={10} scale={5} />
-                {/* </Link> */}
-              </span>
-            </div>
-          </a>
+          <div className="blockies me-3">
+            <span>
+              {/* <Link href={link}> */}
+              <Blockies seed={user} size={10} scale={5} />
+              {/* </Link> */}
+            </span>
+          </div>
         </Link>
         <div className="p_list_info">
           <span>{time} ago</span>
           {`${primaryTitle} `}
           <b>
             <Link href={link}>
-              <a>{primaryText}</a>
+              {primaryText}
             </Link>
           </b>{' '}
           for <b>{price} CRO</b>

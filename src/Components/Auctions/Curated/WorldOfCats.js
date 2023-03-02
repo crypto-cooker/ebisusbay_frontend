@@ -32,6 +32,7 @@ const WorldOfCatsAuction = () => {
                 src={image}
                 width={168}
                 height={300}
+                alt="World of Cats"
               />
             </div>
           </div>
