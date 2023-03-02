@@ -262,7 +262,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
                     <div className="fs-6">Offer Price</div>
                     <div className="fs-2 fw-bold">
                       <div className="d-flex justify-content-center">
-                        <Image src="/img/logos/cdc_icon.svg" width={32} height={32} />
+                        <Image src="/img/logos/cdc_icon.svg" width={32} height={32} alt='Cronos Logo' />
                         <span className="ms-1">
                           {commify(offer.price)}
                         </span>

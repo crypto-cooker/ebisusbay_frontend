@@ -90,7 +90,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const { refreshing, favorites, loading:isLoading } = useSelector((state) => state.nft);
-  const { onCopy } = useClipboard(appUrl(`/collection/${address}/${id}`));
+  const { onCopy } = useClipboard(appUrl(`/collection/${address}/${id}`).toString());
 
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [offerType, setOfferType] = useState(OFFER_TYPE.none);
@@ -107,21 +107,21 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
 
   const collectionStats = useSelector((state) => state.collection.stats);
 
-  useEffect(() => {
-    if (collection) {
-      async function asyncFunc() {
-        dispatch(getStats(collection, null, collection.mergedAddresses));
-      }
-      asyncFunc();
-    }
-    // eslint-disable-next-line
-  }, [dispatch, collection]);
-
   const { isLoading: isLoadingCollection, error, data, status } = useQuery(['Collections', address], () =>
     getCollections({ address }), true
   )
 
   const [collection, setCollection] = useState(null);
+
+  // useEffect(() => {
+  //   if (collection) {
+  //     async function asyncFunc() {
+  //       dispatch(getStats(collection, null, collection.mergedAddresses));
+  //     }
+  //     asyncFunc();
+  //   }
+  //   // eslint-disable-next-line
+  // }, [dispatch, collection]);
 
   useEffect(() => {
     if (!isLoadingCollection && data) {
@@ -1006,20 +1006,16 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
                                 <Stack>
                                   {nft.collectionName && (
                                     <Link href={`/collection/${nft.collectionSlug ?? nft.address}`}>
-                                      <a>
-                                        <h6
-                                          className="card-title mt-auto fw-normal mb-0"
-                                          style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
-                                        >
-                                          {nft.collectionName}
-                                        </h6>
-                                      </a>
+                                      <h6
+                                        className="card-title mt-auto fw-normal mb-0"
+                                        style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
+                                      >
+                                        {nft.collectionName}
+                                      </h6>
                                     </Link>
                                   )}
                                   <Link href={`/collection/${nft.address}/${nft.id}`}>
-                                    <a>
-                                      <Text fontWeight='bold'>{nft.name}</Text>
-                                    </a>
+                                    <Text fontWeight='bold'>{nft.name}</Text>
                                   </Link>
                                 </Stack>
 
@@ -1092,9 +1088,7 @@ const Trait = ({
               query: { [queryKey]: JSON.stringify({ [title]: [value.toString()] }) },
             }}
           >
-            <a>
-              <Value />
-            </a>
+            <Value />
           </Link>
         ) : (
           <Value />

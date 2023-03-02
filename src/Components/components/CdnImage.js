@@ -1,5 +1,5 @@
 import {appConfig} from "../../Config";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 export const imageKitLoader = ({ src, width, quality }) => {
   return src;

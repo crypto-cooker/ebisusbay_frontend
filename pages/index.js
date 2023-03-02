@@ -185,9 +185,7 @@ const Home = () => {
               Explore
             </span>
             <Link href="/apply">
-              <a>
-                <Button type="legacy-outlined">Become a Creator</Button>
-              </a>
+              <Button type="legacy-outlined">Become a Creator</Button>
             </Link>
 
             <Button onClick={() => window.open(`/collection/founding-member`, '_self')} type="legacy-outlined">

@@ -208,7 +208,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
                   <span className="d-flex fs-3 ms-1 fw-bold">
                     {listing ? (
                       <>
-                        <Image src="/img/logos/cdc_icon.svg" width={25} height={25} className="my-auto" />
+                        <Image src="/img/logos/cdc_icon.svg" width={25} height={25} className="my-auto" alt='Cronos Logo' />
                         <span className="ms-1">{ethers.utils.commify(listing.price)}</span>
                       </>
                     ) : (

@@ -65,7 +65,7 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark })
   const [collection, setCollection] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
   const isInCart = cart.nfts.map((o) => o.listingId).includes(listing.listingId);
-  const { onCopy } = useClipboard(nftUrl);
+  const { onCopy } = useClipboard(nftUrl.toString());
 
   const getOptions = () => {
     const options = [];
@@ -226,13 +226,11 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark })
             {listing.nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{listing.nft.rank}</div>}
             <div className="d-flex flex-column justify-content-between p-2 pb-1">
               <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
-                <a>
-                  <Heading as="h6" size="sm" className="card-title mt-auto mb-1">{listing.nft.name}</Heading>
-                </a>
+                <Heading as="h6" size="sm" className="card-title mt-auto mb-1">{listing.nft.name}</Heading>
               </Link>
               <MakeBuy>
                 <div className="d-flex">
-                  <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+                  <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
                   <span className="ms-1">
                     {ethers.utils.commify(listing.price)}
                   </span>

@@ -142,7 +142,9 @@ const WeirdApesStakingTab = () => {
                 )}
                 <Center mt={4}>
                   Need some more apes? Pick some up in the&nbsp;
-                  <Link href="/collection/0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44"><a className="color fw-bold">Marketplace</a></Link>
+                  <Link href="/collection/0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44" className="color fw-bold">
+                    Marketplace
+                  </Link>
                 </Center>
               </InfiniteScroll>
             </>

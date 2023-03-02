@@ -101,7 +101,7 @@ const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveListingsTablePr
                   </Td>
                   <Td>
                     <HStack spacing={1}>
-                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
                       <Box>{commify(listing.price)}</Box>
                     </HStack>
                   </Td>
@@ -176,7 +176,7 @@ const DataAccordion = ({data, onUpdate, onCancel}: ResponsiveListingsTableProps)
                 </Box>
                 <Box>
                   <HStack spacing={1} h="full">
-                    <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+                    <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
                     <Box>{commify(listing.price)}</Box>
                   </HStack>
                 </Box>

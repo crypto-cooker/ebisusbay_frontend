@@ -231,16 +231,14 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
             {nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{nft.rank}</div>}
             <div className="d-flex flex-column justify-content-between p-2 pb-1">
               <Link href={`/collection/${nft.address}/${nft.id}`}>
-                <a>
-                  <Heading as="h6" size="sm" className="card-title mt-auto">{nft.name}</Heading>
-                </a>
+                <Heading as="h6" size="sm" className="card-title mt-auto">{nft.name}</Heading>
               </Link>
               {getListing() && (
                 <>
                   <MakeBuy>
                     {is1155 && <div>Floor:</div>}
                     <div className="d-flex">
-                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
                       <span className="ms-1">
                       {getListing().price > 6 ? siPrefixedNumber(getListing().price) : ethers.utils.commify(round(getListing().price))}
                     </span>

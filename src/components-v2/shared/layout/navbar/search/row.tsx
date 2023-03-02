@@ -67,7 +67,7 @@ const ResultCollection = ({collection, floorPrice, onClick, onRemove, useCloseBu
               </>
             ) : (!!floorPrice && floorPrice > 0) && (
               <>
-                <NextImage src="/img/logos/cdc_icon.svg" width={16} height={16} />
+                <NextImage src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
                 <span className="ms-1">
                   {commify(round(floorPrice))}
                 </span>

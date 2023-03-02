@@ -73,7 +73,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, canBuy = t
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const isInCart = nft.market?.id && cart.nfts.map((o) => o.listingId).includes(nft.market.id);
-  const { onCopy } = useClipboard(nftUrl);
+  const { onCopy } = useClipboard(nftUrl.toString());
 
   const getOptions = () => {
     const options = [];
@@ -241,15 +241,13 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, canBuy = t
             {nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{nft.rank}</div>}
             <div className="d-flex flex-column justify-content-between p-2 pb-1">
               <Link href={nftUrl}>
-                <a>
-                  <Heading as="h6" size="sm" className="card-title mt-auto">{nft.name}</Heading>
-                </a>
+                <Heading as="h6" size="sm" className="card-title mt-auto">{nft.name}</Heading>
               </Link>
               {getIsNftListed() && (
                 <>
                   <MakeBuy>
                     <div className="d-flex">
-                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
                       <span className="ms-1">
                       {nft.market?.price > 6 ? siPrefixedNumber(nft.market?.price) : ethers.utils.commify(round(nft.market?.price))}
                     </span>

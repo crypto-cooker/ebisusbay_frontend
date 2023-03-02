@@ -159,29 +159,27 @@ export default function TableRow({ data, type }) {
         <div className="table-row-item">
           <div className="coll_list_pp" style={{ cursor: 'pointer' }}>
             <Link href={`/collection/${collectionData?.slug}`}>
-              <a>
-                {getCollectionAvatar() ? (
-                  <img
-                    className="lazy"
-                    src={getCollectionAvatar()}
-                    alt={getCollectionName()}
-                    width="50"
-                    height="50"
-                    style={{ marginRight: '10px', borderRadius: '100px' }}
-                  />
-                ) : (
-                  <span style={{ marginRight: '10px', borderRadius: '100px' }}>
-                    <Blockies seed={nftAddress} size={10} scale={5} />
-                  </span>
-                )}
-              </a>
+              {getCollectionAvatar() ? (
+                <img
+                  className="lazy"
+                  src={getCollectionAvatar()}
+                  alt={getCollectionName()}
+                  width="50"
+                  height="50"
+                  style={{ marginRight: '10px', borderRadius: '100px' }}
+                />
+              ) : (
+                <span style={{ marginRight: '10px', borderRadius: '100px' }}>
+                  <Blockies seed={nftAddress} size={10} scale={5} />
+                </span>
+              )}
             </Link>
           </div>
           <a href={`/collection/${collectionData?.slug}/${nftId}`}>{shortString(nftId)}</a>
         </div>
         <div className="table-row-item">
           <div className="d-flex">
-            <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+            <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
             <span className="ms-1">
               {commify(price)}
             </span>

@@ -107,7 +107,7 @@ const StakingNftCard = ({
             <span className="card-text">
               {nft.listed && nft.price ? (
                 <div className="d-flex">
-                  <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+                  <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
                   <span className="ms-1">
                     {ethers.utils.commify(round(nft.price, 2))}
                   </span>
