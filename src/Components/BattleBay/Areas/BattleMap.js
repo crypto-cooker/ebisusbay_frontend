@@ -186,7 +186,7 @@ const BattleMap = ({onBack, factions=[]}) => {
   }, [controlPoint]);
   
   const SetUpMap = async () => {
-    getMap(0).then((data) => {
+    getMap(2).then((data) => {
       mapData = data.data.data.map; 
       setAreas( mapData.regions[0].controlPoints.map((controlPoint, i) => 
         (<area onClick={() => {selectRegion(controlPoint.id); onOpen();}}

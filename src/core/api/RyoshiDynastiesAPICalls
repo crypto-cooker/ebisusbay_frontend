@@ -8,10 +8,19 @@ const api = axios.create({
 const baseURL = 'https://testcms.ebisusbay.biz/';
 
 //gets the current game id
-export const getGameId = async (_controlPointId) => {
+export const getWeeklyGameId = async () => {
   try{
-    var data = await api.get(baseURL + "api/ryoshi-dynasties/games/2");
+    var data = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
     return data.data.data.id;
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const getSeasonGameId = async () => {
+  try{
+    var data = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    return data.data.data.parent.id;
   }
   catch(error){
     throw error;
@@ -56,10 +65,10 @@ export const createFaction = async (_walletAddress, _walletSignature) => {
   }
 }
 //gets specific factions
-export const getFactions = async (_walletAddress, _walletSignature, _profileOwnerId) => {
+export const getFactions = async ( _profileOwnerId) => {
   try{
     return await api.get(baseURL + "api/ryoshi-dynasties/factions?", 
-      {params: {walletAddress: _walletAddress, walletSignature: _walletSignature}});
+      {params: {profileOwnerId: _profileOwnerId}});
   }
   catch(error){
     throw error;
@@ -88,11 +97,19 @@ export const createArmy = async (_walletAddress, _walletSignature, _troops) => {
   }
 }
 //takes troops from a player's wallet and adds them to a faction
-export const delegateTroops = async (_walletAddress, _walletSignature, _troops, _factionId, _gameId) => {
+export const delegateTroops = async (address, signature, troops, factionId) => {
   try{
-    return await api.get(baseURL + "api/ryoshi-dynasties/army?", 
-      {params: {walletAddress: _walletAddress, walletSignature: _walletSignature, action: "DELEGATE"}},
-      {body: {troops: _troops, factionId: _factionId, gameId: _gameId}});
+    var gameID = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    // console.log("GameID: "+gameID.data.data.id);
+    let gameId = gameID.data.data.id;
+    console.log("GameID: "+gameId);
+    console.log("FactionID: "+factionId);
+    console.log("Troops: "+troops);
+    
+    return await api.patch(baseURL + "api/ryoshi-dynasties/armies?", 
+      {troops, factionId, gameId},
+      {params: {address: address, signature: signature, action: "DELEGATE"}},
+      );
   }
   catch(error){
     throw error;
@@ -115,6 +132,46 @@ export const recallTroops = async (_walletAddress, _walletSignature, _troops, _c
     return await api.get(baseURL + "api/ryoshi-dynasties/army?", 
       {params: {walletAddress: _walletAddress, walletSignature: _walletSignature, action: "RECALL"}},
       {body: {troops: _troops, controlPointId: _controlPointId, gameId: _gameId, factionId: _factionId}});
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const getReward= async (_rewardNumber) => {
+  try{
+    var data = await api.get(baseURL + "api/ryoshi-dynasties/rewards/"+_rewardNumber);
+    return data.data.data;
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const getProfileId = async (_address, _signature) => {
+  try{
+    var data = await api.get(baseURL + "api/ryoshi-dynasties/armies?",
+      {params: {address: _address, signature: _signature}});
+    return data;
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const getAllFactions = async () => {
+  try{
+    var gameID = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    var data = await api.get(baseURL + "api/ryoshi-dynasties/control-points/1",
+      {params: {gameId: gameID.data.data.id}});
+    return data.data.data.leaderBoard;
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const addTroops = async (address, signature, troops) => {
+  try{
+    return await api.post(baseURL + "api/ryoshi-dynasties/armies?", 
+      {troops},
+      {params: {address, signature}});
   }
   catch(error){
     throw error;
