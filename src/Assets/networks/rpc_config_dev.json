@@ -18476,6 +18476,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "The Kongz",
+      "slug": "the-kongz",
+      "multiToken": false,
+      "address": "0xFEF8E458B355bCaAf27d9d876D02FFae75BeDc9A",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The latest addition to the Titans of Cronos ecosystem. Claim your Kong and prepare for combat.",
+        "avatar": "/img/collections/cronosmarines/avatar.webp",
+        "card": "/img/collections/cronosmarines/card.webp",
+        "banner": "/img/collections/cronosmarines/banner.webp",
+        "website": "https://mint-kongz.netlify.app/",
+        "twitter": "https://twitter.com/kingkongcronos2",
+        "discord": "https://discord.gg/8ZQUXur8hH",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
