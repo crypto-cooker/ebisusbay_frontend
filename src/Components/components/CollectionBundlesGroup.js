@@ -21,7 +21,7 @@ const CollectionBundlesGroup = ({collection}) => {
     });
 
     return listings.data.filter((listing) => {
-      return listing.nft.nfts.some((nft) => caseInsensitiveCompare(nft.address, collection.address));
+      return !!listing.nft.nfts && listing.nft.nfts.some((nft) => caseInsensitiveCompare(nft.address, collection.address));
     });
   };
 
