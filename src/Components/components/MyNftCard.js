@@ -1,18 +1,19 @@
 import React, {memo, useState} from 'react';
-import { useRouter } from 'next/router';
-import { ethers } from 'ethers';
-import { toast } from 'react-toastify';
+import {useRouter} from 'next/router';
+import {ethers} from 'ethers';
+import {toast} from 'react-toastify';
 import {
-  faLink,
   faEllipsisH,
   faExchangeAlt,
-  faTag,
-  faTimes,
+  faLink,
   faPen,
-  faPlusCircle, faTags
+  faPlusCircle,
+  faTag,
+  faTags,
+  faTimes
 } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import  { MenuPopup } from '../components/chakra-components';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {MenuPopup} from '../components/chakra-components';
 import AnyMedia from './AnyMedia';
 import {nftCardUrl} from "@src/helpers/image";
 import {
@@ -21,6 +22,7 @@ import {
   Center,
   Flex,
   Heading,
+  HStack,
   Spacer,
   Text,
   useBreakpointValue,
@@ -219,12 +221,14 @@ const MyNftCard = ({
             </div>
             <span className="card-text">
               {nft.listed && nft.price ? (
-                <div className="d-flex">
-                  <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                <HStack>
+                  <Box>
+                    <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                  </Box>
                   <span className="ms-1">
                     {ethers.utils.commify(round(nft.price, 2))}
                   </span>
-                </div>
+                </HStack>
               ) : (
                 <>&nbsp;</>
               )}
