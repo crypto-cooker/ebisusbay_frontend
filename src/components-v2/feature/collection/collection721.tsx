@@ -13,7 +13,6 @@ import {fetchListings, getStats, init, updateTab} from '@src/GlobalState/collect
 import {isBundle, isCnsCollection, isCronosVerseCollection, isCrosmocraftsCollection} from '@src/utils';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
 import {CollectionSortOption} from '@src/Components/Models/collection-sort-option.model';
-import stakingPlatforms from '@src/core/data/staking-platforms.json';
 import CollectionCronosverse from '@src/Components/Collection/Custom/Cronosverse';
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {useRouter} from "next/router";
@@ -31,6 +30,7 @@ import MintingButton from "@src/Components/Collection/MintingButton";
 import CollectionBundlesGroup from "@src/Components/components/CollectionBundlesGroup";
 import {useAppSelector} from "@src/Store/hooks";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
+import useGetStakingPlatform from "@src/hooks/useGetStakingPlatform";
 
 const NegativeMargin = styled.div`
   margin-left: -1.75rem !important;
@@ -76,6 +76,7 @@ const Collection721 = ({ collection, query, activeDrop = null}: Collection721Pro
   });
 
   const isUsingListingsFallback = useAppSelector((state) => state.collection.isUsingListingsFallback);
+  const { stakingPlatform } = useGetStakingPlatform(collection.address);
 
   const [openMenu, setOpenMenu] = useState(tabs.items);
   const handleBtnClick = (key: string) => (e: any) => {
@@ -278,12 +279,12 @@ const Collection721 = ({ collection, query, activeDrop = null}: Collection721Pro
                 </div>
               </div>
             )}
-            {collection.metadata.staking && (
+            {!!stakingPlatform && (
               <div className="row">
                 <div className="mx-auto text-center fw-bold" style={{ fontSize: '0.8em' }}>
                   NFTs from this collection can be staked at{' '}
-                  <a href={(stakingPlatforms[collection.metadata.staking as keyof object] as any).url} target="_blank" rel="noreferrer">
-                    <span className="color">{(stakingPlatforms[collection.metadata.staking as keyof object] as any).name}</span>
+                  <a href={stakingPlatform.url} target="_blank" rel="noreferrer">
+                    <span className="color">{stakingPlatform.name}</span>
                   </a>
                 </div>
               </div>
