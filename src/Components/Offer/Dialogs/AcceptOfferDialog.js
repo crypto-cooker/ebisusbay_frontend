@@ -143,7 +143,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
   const handleApproval = async (e) => {
     e.preventDefault();
     try {
-      const nftAddress = nft.address ?? nft.nftAddress;
+      const nftAddress = collection.address;
       const marketContractAddress = config.contracts.market;
       const contract = new Contract(nftAddress, ERC721, user.provider.getSigner());
       setExecutingApproval(true);
