@@ -171,7 +171,7 @@ const Image = memo(({ image, title, className, blur, sizes, layout, width, heigh
       width={width}
       height={height}
       unoptimized="true"
-      style={{objectFit: 'contain'}}
+      objectFit="contain"
     />
   );
 });
