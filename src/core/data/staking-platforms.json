@@ -2,28 +2,58 @@
   "crodex": {
     "name": "Crodex",
     "url": "https://swap.crodex.app/#/rewards/nft",
-    "address": "0x4DF2947013D68BbDF1914815DB510d1eaf7b8e4e"
+    "address": "0x4DF2947013D68BbDF1914815DB510d1eaf7b8e4e",
+    "collections": [
+      "0x39128237ea72040B96D3ea516619A226126ec838",
+      "0xdCcCEd571dcbC82Bbeadf95Af20ee4442E21208C",
+      "0xE1bAa24525B5f48F9B9df54802E44E85c0D81099",
+      "0xD366dc03fE6cE8fd620A48Cb2b9a0F87752aF15b",
+      "0x0125Ce96f9A4324dD514D20bD8324c696619F9fe",
+      "0xf004d2f46e177eC8Ffc7c7c7f2623E212b450920",
+      "0xD56AFcdB787e233325757D3ED7A987F11FB3fa08",
+      "0x19e1f891002240fbea77ccc2adb6e73b93b3b97a",
+      "0xeE0F2Aa0A15d8A7Ddc8f0eE59bC555e43555C98d"
+    ]
   },
   "crodex-mhub": {
     "name": "Crodex",
-    "url": "https://swap.crodex.app/#/mhub?page=adventure"
+    "url": "https://swap.crodex.app/#/mhub?page=adventure",
+    "collections": [
+      "0xB6782F208ABe10E8962407d139f6698Bfc4FD13F"
+    ]
   },
   "croskull": {
     "name": "CroSkull",
-    "url": "https://app.croskull.com/"
+    "url": "https://app.croskull.com/",
+    "collections": [
+      "0xF87A517A5CaecaA03d7cCa770789BdB61e09e05F",
+      "0x0977Ee79F7f6BedE288DD0264C77B4A1b32C48e8"
+    ]
   },
   "cyborgswap": {
     "name": "CyborgSwap",
-    "url": "https://cyborgswap.io/nft-staking"
+    "url": "https://cyborgswap.io/nft-staking",
+    "collections": []
   },
   "mm-treehouse": {
     "name": "MM Treehouse",
     "url": "https://mmtreehouse.io/",
-    "address": "0x3bbfffb798b7bcba2726d3903468851163cf1aad"
+    "address": "0x3bbfffb798b7bcba2726d3903468851163cf1aad",
+    "collections": []
   },
   "world-of-cats": {
     "name": "World of Cats",
     "url": "https://stake.worldofcats.xyz/",
-    "address": "0x70E4bFAB4d470b9c485634289e8eB27248dE12A3"
+    "address": "0x70E4bFAB4d470b9c485634289e8eB27248dE12A3",
+    "collections": [
+      "0x4Ce0B9608006533dA056170f1efe8eEa771e0d19"
+    ]
+  },
+  "growth-chambers": {
+    "name": "Growth Chambers",
+    "url": "https://stake.worldofcats.xyz/",
+    "collections": [
+      "0xf0B2A653938f0E6A4620A140568D61D97F71978C"
+    ]
   }
 }
