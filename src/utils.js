@@ -582,16 +582,16 @@ export const findCollectionByAddress = (address, tokenId) => {
 
 export const findCollectionFloor = (knownContract, collectionsStats) => {
   const collectionStats = collectionsStats.find((o) => {
-    const address = o.collection ?? o.address;
+    const address = o.address ?? o.address;
     if (knownContract.multiToken && address.indexOf('-') !== -1) {
-      let parts = o.collection.split('-');
+      let parts = o.address.split('-');
       return caseInsensitiveCompare(knownContract.address, parts[0]) && knownContract.id === parseInt(parts[1]);
     } else {
-      return caseInsensitiveCompare(knownContract.address, o.collection);
+      return caseInsensitiveCompare(knownContract.address, o.address);
     }
   });
 
-  return collectionStats ? collectionStats.floorPrice : null;
+  return collectionStats ? collectionStats.stats.total.floorPrice : null;
 };
 
 export const round = (num, decimals) => {

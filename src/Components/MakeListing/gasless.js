@@ -158,9 +158,6 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
       if (collectionInfo.collections.length > 0) {
         const stats = collectionInfo.collections[0].stats;
         let floor = stats.total.floorPrice;
-        if (stats.tokens) {
-          floor = stats.tokens[nftId]?.floor_price ?? 0;
-        }
         setFloorPrice(floor);
       }
 
