@@ -29,11 +29,11 @@ import { getNftDetails, refreshMetadata, tickFavorite } from '@src/GlobalState/n
 import { specialImageTransform } from '@src/hacks';
 import { chainConnect, connectAccount, retrieveProfile } from '@src/GlobalState/User';
 
-import ListingItem from '../NftDetails/NFTTabListings/ListingItem';
+import ListingItem from '@src/components-v2/feature/nft/tabs/listings/item';
 import { listingState, offerState } from '@src/core/api/enums';
 import { getFilteredOffers } from '@src/core/subgraph';
-import PriceActionBar from '../NftDetails/PriceActionBar';
-import NFTTabListings from '../NftDetails/NFTTabListings';
+import PriceActionBar from '@src/components-v2/feature/nft/price-action-bar';
+import NFTTabListings from '@src/components-v2/feature/nft/tabs/listings';
 import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
 import { OFFER_TYPE } from '../Offer/MadeOffers/MadeOffersRow';
 import NFTTabOffers from '../Offer/NFTTabOffers';

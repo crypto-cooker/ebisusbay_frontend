@@ -5,7 +5,7 @@ import { specialImageTransform } from '@src/hacks';
 import Link from "next/link";
 import {shortAddress, timeSince} from "@src/utils";
 import NFTTabOffers from '@src/Components/Offer/NFTTabOffers';
-import ListingItem from "../NftDetails/NFTTabListings/ListingItem";
+import ListingItem from "@src/components-v2/feature/nft/tabs/listings/item";
 import { Contract, ethers } from 'ethers';
 import {getTheme} from "@src/Theme/theme";
 import {useSelector} from "react-redux";

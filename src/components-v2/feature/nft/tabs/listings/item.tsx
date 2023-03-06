@@ -5,6 +5,18 @@ import { Spinner } from 'react-bootstrap';
 
 import Blockies from 'react-blockies';
 
+interface ListingItemProps {
+  user: string;
+  route: string;
+  time: string;
+  price: string;
+  primaryTitle: string;
+  primaryText: string;
+  buttonText?: string;
+  onClick?: () => void;
+  isProcessing?: boolean;
+}
+
 const ListingItem = ({
   user,
   route,
@@ -15,7 +27,7 @@ const ListingItem = ({
   buttonText,
   onClick,
   isProcessing = false,
-}) => {
+}: ListingItemProps) => {
   const link = `${route}/${user}`;
 
   return (

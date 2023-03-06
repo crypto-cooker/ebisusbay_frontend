@@ -1,9 +1,20 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createSlice, Dispatch} from '@reduxjs/toolkit';
 import { listingState } from '../core/api/enums';
 import {refreshToken} from "@src/core/api/endpoints/refresh";
 import {toast} from "react-toastify";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {getNftFavorites} from "@src/core/cms/next/favorites";
+
+type NftSliceState = {
+  loading: boolean;
+  error: boolean;
+  nft: any;
+  history: any[];
+  powertraits: any[];
+  currentListing?: any;
+  refreshing: boolean;
+  favorites: number;
+}
 
 const nftSlice = createSlice({
   name: 'nft',
@@ -16,7 +27,7 @@ const nftSlice = createSlice({
     currentListing: null,
     refreshing: false,
     favorites: 0
-  },
+  } as NftSliceState,
   reducers: {
     nftLoading: (state) => {
       state.loading = true;
@@ -47,13 +58,13 @@ export const { nftLoading, nftReceived, nftRefreshing, nftRefreshingComplete, nf
 
 export default nftSlice.reducer;
 
-export const getNftDetails = (collectionAddress, nftId) => async (dispatch, getState) => {
+export const getNftDetails = (collectionAddress: string, nftId: string) => async (dispatch: Dispatch) => {
   dispatch(nftLoading());
   let response = await getNft(collectionAddress, nftId);
 
   const currentListing = response.listings ? response.listings
-    .sort((a, b) => (parseInt(a.price) > parseInt(b.price) ? 1 : -1))
-    .find((l) => l.state === listingState.ACTIVE) : null;
+    .sort((a: any, b: any) => (parseInt(a.price) > parseInt(b.price) ? 1 : -1))
+    .find((l: any) => l.state === listingState.ACTIVE) : null;
   response.nft = { ...response.nft, address: collectionAddress, id: nftId };
   response.currentListing = currentListing;
   try {
@@ -65,14 +76,14 @@ export const getNftDetails = (collectionAddress, nftId) => async (dispatch, getS
   return response.nft;
 };
 
-export const refreshMetadata = (collectionAddress, nftId, listingId) => async (dispatch, getState) => {
+export const refreshMetadata = (collectionAddress: string, nftId: string, listingId: string) => async (dispatch: Dispatch) => {
   dispatch(nftRefreshing());
   await refreshToken(collectionAddress, nftId, listingId);
   toast.success('Refresh queued! Check back in a few minutes.')
   dispatch(nftRefreshingComplete());
 }
 
-export const tickFavorite = (num) => async (dispatch, getState) => {
+export const tickFavorite = (num: number) => async (dispatch: Dispatch, getState: any) => {
   const { nft } = getState();
   let count = nft.favorites + num;
   dispatch(nftFavorited(count));

@@ -65,6 +65,7 @@ export const getTheme = (mode) => {
   } else if (mode === 'dark') {
     return { ...theme, colors: darkTheme };
   }
+  return { ...theme, colors: darkTheme };
 };
 
 const grayColor = {

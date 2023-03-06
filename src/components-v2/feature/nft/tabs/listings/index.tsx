@@ -1,7 +1,12 @@
 import React from 'react';
-import ListingsRow from './ListingsRow';
+import ListingsRow from './row';
 
-export default function NFTTabListings({ listings, nft }) {
+interface ListingsProps {
+  listings: any[];
+  nft: any;
+}
+
+export default function Listings({ listings, nft }: ListingsProps) {
   return (
     <div className='listing-tab'>
       {listings && listings.length > 0 ? (

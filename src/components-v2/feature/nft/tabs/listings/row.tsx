@@ -1,33 +1,38 @@
-import React, { useState } from 'react';
-import Blockies from 'react-blockies';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { ethers } from 'ethers';
-import { toast } from 'react-toastify';
+import React, {useState} from 'react';
+import {useRouter} from 'next/router';
+import {Contract, ethers} from 'ethers';
+import {toast} from 'react-toastify';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import { useDispatch, useSelector } from 'react-redux';
-import { Spinner } from 'react-bootstrap';
+import {useDispatch} from 'react-redux';
 
 import {
   createSuccessfulAddCartContent,
   createSuccessfulTransactionToastContent,
   shortAddress,
   timeSince
-} from '../../../../utils';
-import { chainConnect, connectAccount } from '../../../../GlobalState/User';
-import { getNftDetails } from '../../../../GlobalState/nftSlice';
-import ListingItem from '../ListingItem';
+} from '@src/utils';
+import {chainConnect, connectAccount} from '@src/GlobalState/User';
+import {getNftDetails} from '@src/GlobalState/nftSlice';
 import {addToCart, openCart} from "@src/GlobalState/cartSlice";
+import {useAppSelector} from "@src/Store/hooks";
+import ContractService from "@src/core/contractService";
+import {TransactionReceipt} from "@ethersproject/abstract-provider";
+import ListingItem from "@src/components-v2/feature/nft/tabs/listings/item";
 
-export default function ListingsRow({ listing, nft }) {
+interface ListingsRowProps {
+  listing: any;
+  nft: any;
+}
+
+export default function ListingsRow({ listing, nft }: ListingsRowProps) {
   const dispatch = useDispatch();
   const history = useRouter();
 
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
 
   const [executingBuy, setExecutingBuy] = useState(false);
 
-  const executeBuy = (amount) => async () => {
+  const executeBuy = (amount: number) => async () => {
     setExecutingBuy(true);
     await runFunction(async (writeContract) => {
       let price = ethers.utils.parseUnits(amount.toString());
@@ -40,13 +45,13 @@ export default function ListingsRow({ listing, nft }) {
     setExecutingBuy(false);
   };
 
-  const runFunction = async (fn) => {
+  const runFunction = async (fn: (c: Contract) => Promise<TransactionReceipt>) => {
     if (user.address) {
       try {
-        const receipt = await fn(user.contractService.market);
+        const receipt = await fn((user.contractService! as ContractService).market);
         dispatch(getNftDetails(listing.nftAddress, listing.nftId));
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      } catch (error) {
+      } catch (error: any) {
         if (error.data) {
           toast.error(error.data.message);
         } else if (error.message) {

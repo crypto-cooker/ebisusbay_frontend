@@ -1,18 +1,22 @@
 import { useState } from 'react';
-import {useSelector} from "react-redux";
 import { cancelListing } from '@src/core/cms/endpoints/gaslessListing';
-import {toast} from "react-toastify";
-import {pluralize} from "@src/utils";
+import {useAppSelector} from "@src/Store/hooks";
+import ContractService from "@src/core/contractService";
+
+type ResponseProps = {
+  loading: boolean;
+  error?: any;
+};
 
 const useCancelGaslessListing = () => {
-  const [response, setResponse] = useState({
+  const [response, setResponse] = useState<ResponseProps>({
     loading: false,
-    error: null,
+    error: undefined,
   });
 
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
 
-  const cancelGaslessListing = async (listingIds) => {
+  const cancelGaslessListing = async (listingIds: string[]) => {
     if (!Array.isArray(listingIds)) listingIds = [listingIds];
 
     setResponse({
@@ -24,7 +28,7 @@ const useCancelGaslessListing = () => {
     try {
       const { data: orders } = await cancelListing(listingIds);
 
-      const ship = user.contractService.ship;
+      const ship = (user.contractService! as ContractService).ship;
       const tx = await ship.cancelOrders(orders);
       await tx.wait();
 
@@ -46,7 +50,7 @@ const useCancelGaslessListing = () => {
     }
   };
 
-  return [cancelGaslessListing, response];
+  return [cancelGaslessListing, response] as const;
 };
 
 export default useCancelGaslessListing;
