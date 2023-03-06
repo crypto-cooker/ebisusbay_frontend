@@ -17747,9 +17747,9 @@
         ]
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -18496,7 +18496,7 @@
       "multiToken": false,
       "address": "0x9b72F7d5AecEE857CC3d1a1A3357AfF0e342d0a8",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Join us for this journey and reap the rewards of 100% royalties by staking your Time Machines. The Time Ecosystem will provide passive income for all the time nft collections!!",
         "avatar": "/img/collections/time-machine-101/avatar.webp",
@@ -18512,7 +18512,57 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": true
+        "kyc": false
+      }
+    },
+    {
+      "name": "Shields of CRO",
+      "slug": "shields-of-cro",
+      "multiToken": false,
+      "address": "0x46ca0C2F2df7dbB036405d470270FC5f9970D148",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The shields of CRO were once used by the ancient nobles who fought against the darkness that threatened us all. Through the powers that they gained, they banished the darkness for all eternity. Or so we thought. The Lords of Rosaria ",
+        "avatar": "/img/collections/shields-of-cro/avatar.webp",
+        "banner": "/img/collections/shields-of-cro/banner.webp",
+        "card": "/img/collections/shields-of-cro/card.webp",
+        "twitter": "https://twitter.com/LordsOfRosaria",
+        "discord": "https://discord.gg/QWHsgRfsDj",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Cronos Primarch",
+      "slug": "cronos-primarch",
+      "multiToken": false,
+      "address": "0xBf57545FEde12578fDDD3e2752466688c7183AE9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Want to get more out of your CronosMarines? Burn 20 of them and buy a Prime Weapon nft (details in discord) to acquire a CronosPrimarch. More points for the top 20 wallets, larger share of the treasury, Primarch-only discord channel and random weth airdrops.",
+        "avatar": "/img/collections/cronos-primarch/avatar.webp",
+        "card": "/img/collections/cronos-primarch/card.webp",
+        "banner": "/img/collections/cronos-primarch/banner.webp",
+        "website": "https://croarmy.app",
+        "twitter": "https://twitter.com/ECrokind",
+        "discord": "https://discord.gg/mB3nnUKRYv",
+        "medium": "https://cronos-marines.gitbook.io/cronos-marines-passive-income-nft-project./",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
@@ -24792,7 +24842,7 @@
       "slug": "cromorphs",
       "title": "CroMorphs",
       "subtitle": "CroMorphs are currently stuck in a timeloop - and need your help to mint safely out of the timeloop - and onto the cronos chain.\nThese mysterious creatures have connections to mythic anicent worlds - where they once lived.",
-      "description": "2500 CroMorphs with layers of utilities.\n-1000 free mints on CroSquitos to be found in the traits.\n-420 free airdropped Land Deeds to be found in the traits.\n\n3 main bodies - Crotakers, Crofennecs, and Croplings.\nThese are easely recognizable by their different looks. \n\nWith help from their friends CroSquitos - that are bonded to them as they mint into the lands - they discover many secrets in this barren desert world.\n \nExplore the world, and venture into the deepest parts of the underworld if you dare. Sacrifices might have to be made in Tartarus.\n\nGrow your CroMorphs and gain skills on your NFT while you also earn $MORPHS token.\n\nThere will be several elements within MetaMorphis - that you can utilize to boost your growth, and earn.\n\nThese are the 9 skills on your CroMorphs :\n-Cunning\n-Rapidness\n-Omnipotence\n-Mentality\n-Osmosis\n-Reputation\n-Perception\n-Health\n-Speed\n\nAll these stats have max-level 9, and start on level 3.\n\nWithin the collection there are some very special traits to look out for:\n\nLake Acherusia\nNekromanteion\nMount Ida\nDesert Shop x4\nDesert Izanami Temple\nDesert Izanagi Temple\n\nGolden Goose body\nMatrix Mage body\n\nThese have very special utilites - more info in our discord.\n\nThe mythical creature Kitsune / Ninetails can be found in the collection, only 26 in total - divided in several species. \n\nGet to know more in our story about Kitsu - an upcoming story about the adventurous ninetail-creature named Kitsu.\n\nGrow your CroMorphs, and increase the skills on your NFT.\nEarn $MORPHS token as we grow, and we will also commit to plant trees IRL between gen1 and gen2.\n\nGain a free mint for every CroMorphs you own - on ALL future collections above 2500. That is ALL upcoming collections above 2500 made by the creator of CroMorphs - across all chains.\n\nWe have a card game planned, and while you grow your CroMorphs in MetaMorphis, we'll develop a game where you can utilize you morphs. \nThere will be 6 main classes in this game, inspired by the 6 greek gods - that was born of  the Titan Cronos.\nThe lands of MetaMorphis are also divided into 6 main areas, one for each god.\n\nThere is alot to explore within the CroMorphs ecosystem, and we will grow together with our community and cronos.\n\nJoin our adventure today and explore the vast mysterious world that CroMorphs have settled down in.",
+      "description": "2500 CroMorphs with layers of utilities.\n\n3 main bodies - Crotakers, Crofennecs, and Croplings.\nThese are easely recognizable by their different looks. \n\nWith help from their friends CroSquitos - that are bonded to them as they mint into the lands - they discover many secrets in this barren desert world.\n \nExplore the world, and venture into the deepest parts of the underworld if you dare. Sacrifices might have to be made in Tartarus.\n\nGrow your CroMorphs and gain skills on your NFT while you also earn $MORPHS token.\n\nThere will be several elements within MetaMorphis - that you can utilize to boost your growth, and earn.\n\nThese are the 9 skills on your CroMorphs :\n-Cunning\n-Rapidness\n-Omnipotence\n-Mentality\n-Osmosis\n-Reputation\n-Perception\n-Health\n-Speed\n\nAll these stats have max-level 9, and start on level 3.\n\nWithin the collection there are some very special traits to look out for:\n\nLake Acherusia\nNekromanteion\nMount Ida\nDesert Shop x4\nDesert Izanami Temple\nDesert Izanagi Temple\n\nGolden Goose body\nMatrix Mage body\n\nThese have very special utilites - more info in our discord.\n\nThe mythical creature Kitsune / Ninetails can be found in the collection, only 26 in total - divided in several species. \n\nGet to know more in our story about Kitsu - an upcoming story about the adventurous ninetail-creature named Kitsu.\n\nGrow your CroMorphs, and increase the skills on your NFT.\nEarn $MORPHS token as we grow, and we will also commit to plant trees IRL between gen1 and gen2.\n\nGain a free mint for every CroMorphs you own - on ALL future collections above 2500. That is ALL upcoming collections above 2500 made by the creator of CroMorphs - across all chains.\n\nWe have a card game planned, and while you grow your CroMorphs in MetaMorphis, we'll develop a game where you can utilize you morphs. \nThere will be 6 main classes in this game, inspired by the 6 greek gods - that was born of  the Titan Cronos.\nThe lands of MetaMorphis are also divided into 6 main areas, one for each god.\n\nThere is alot to explore within the CroMorphs ecosystem, and we will grow together with our community and cronos.\n\nJoin our adventure today and explore the vast mysterious world that CroMorphs have settled down in.",
       "author": {
         "name": "CroMorphs",
         "website": "https://cromorphs.com/",
