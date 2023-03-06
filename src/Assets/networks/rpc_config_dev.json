@@ -18472,7 +18472,7 @@
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "Can be used in MetaMorphis",
+        "description": "CroMorphs are currently stuck in a timeloop - and need your help to mint safely out of the timeloop - and onto the cronos chain.\nThese mysterious creatures have connections to mythic anicent worlds - where they once lived.\n\nThey now find themselves in MetaMorphis - a barren desert land, where they are doing their best to grow and prosper.\nExplore the hidden secrets of MetaMorphis together with CroMorphs, and unlock all the mysteries of the world.",
         "avatar": "/img/collections/cromorphs/avatar.webp",
         "banner": "/img/collections/cromorphs/banner.webp",
         "card": "/img/collections/cromorphs/card.webp",
@@ -18480,6 +18480,31 @@
         "twitter": "https://twitter.com/CroMorphs",
         "discord": "https://discord.gg/JsUWNKnQjx",
         "medium": "https://medium.com/@nilsenorjan",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Time Machine 101",
+      "slug": "time-machine-101",
+      "multiToken": false,
+      "address": "0x9b72F7d5AecEE857CC3d1a1A3357AfF0e342d0a8",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Join us for this journey and reap the rewards of 100% royalties by staking your Time Machines. The Time Ecosystem will provide passive income for all the time nft collections!!",
+        "avatar": "/img/collections/time-machine-101/avatar.webp",
+        "banner": "/img/collections/time-machine-101/banner.webp",
+        "card": "/img/collections/time-machine-101/card.webp",
+        "website": "https://timemachine101.com/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/8whpvt3WEr",
         "categories": [
           "utility"
         ]

@@ -80,7 +80,7 @@ import {getTheme} from "@src/Theme/theme";
 import useToggleFavorite from "@src/components-v2/feature/nft/hooks/useToggleFavorite";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import {useAppSelector} from "@src/Store/hooks";
-import {ContractInterface} from "@ethersproject/contracts/src.ts";
+import {ContractInterface} from "@ethersproject/contracts";
 import Trait from "@src/components-v2/feature/nft/trait";
 
 const config = appConfig();
