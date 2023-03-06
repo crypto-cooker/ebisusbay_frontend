@@ -3153,6 +3153,31 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "For My Brothers",
+      "slug": "for-my-brothers",
+      "multiToken": false,
+      "address": "0x6DFdA93e4a23Ef5245278ff7328fC541FeC1DC3D",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "For My Brothers is a charity focused NFT collection created by Elkay, the artist behind Trooprz. \n\nThe collection will focus on 3 key goals;\n\n- Kick-start 'Hearts of Gold' charity fund (40%)\n- Raise awareness and support Mens Mental Health in the Crypto/NFT space\n- Support the development of the CroDraw Lottery (and give holder discount!)\n\n420 hand-crafted, algorithmically generated, unique NFTs.",
+        "avatar": "/img/collections/for-my-brothers/avatar.webp",
+        "card": "/img/collections/for-my-brothers/card.webp",
+        "banner": "/img/collections/for-my-brothers/banner.webp",
+        "website": "https://trooprz.army/",
+        "twitter": "https://twitter.com/trooprzarmy",
+        "discord": "https://discord.gg/Trooprz",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
@@ -7646,6 +7671,45 @@
       },
       "verification": {
         "doxx": true,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
+      }
+    },
+    {
+      "id": 163,
+      "slug": "for-my-brothers",
+      "title": "For My Brothers",
+      "subtitle": "For My Brothers is a charity focused NFT collection created by Elkay, the artist behind Trooprz. 420 hand-crafted, algorithmically generated, unique NFTs.",
+      "description": "'For My Brothers' is a charity focused NFT collection created by Elkay, the artist behind Trooprz. \n\nThe collection will focus on 3 key goals;\n\n- Kick-start 'Hearts of Gold' charity fund (40%)\n- Raise awareness and support Mens Mental Health in the Crypto/NFT space\n- Support the development of the CroDraw Lottery (and give holder discount!)\n\n420 hand-crafted, algorithmically generated, unique NFTs.",
+      "author": {
+        "name": "Trooprz",
+        "website": "https://trooprz.army/",
+        "twitter": "https://twitter.com/trooprzarmy",
+        "discord": "https://discord.gg/Trooprz"
+      },
+      "address": "0x6DFdA93e4a23Ef5245278ff7328fC541FeC1DC3D",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 20,
+      "totalSupply": 420,
+      "cost": "420",
+      "memberCost": "375",
+      "whitelistCost": "375",
+      "foundersOnly": false,
+      "start": 1678136007000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/for-my-brothers/drop.webp",
+        "banner": "/img/collections/for-my-brothers/banner.webp",
+        "avatar": "/img/collections/for-my-brothers/avatar.webp",
+        "preview": "/img/collections/for-my-brothers/card.webp"
+      },
+      "verification": {
+        "doxx": false,
         "kyc": true,
         "escrow": false,
         "verified": true
