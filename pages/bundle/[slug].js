@@ -13,7 +13,7 @@ import { caseInsensitiveCompare } from '@src/utils';
 import { getNftDetails } from '@src/GlobalState/nftSlice';
 import NftBundle from "@src/Components/Collection/nftBundle";
 import PageHead from "@src/components-v2/shared/layout/page-head";
-import Nft721 from "@src/Components/Collection/nft721";
+import Nft721 from '@src/components-v2/feature/nft/nft721';
 
 const Bundle = ({ bundle }) => {
   return (
