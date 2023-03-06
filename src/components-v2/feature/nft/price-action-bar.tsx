@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {ethers} from 'ethers';
+import {Contract, ethers} from 'ethers';
 import {toast} from 'react-toastify';
 import {
   createSuccessfulTransactionToastContent,
@@ -15,8 +15,8 @@ import MetaMaskOnboarding from '@metamask/onboarding';
 import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import {listingUpdated} from '@src/GlobalState/listingSlice';
 import {listingState} from '@src/core/api/enums';
-import {OFFER_TYPE} from "../Offer/MadeOffers/MadeOffersRow";
-import Button from "../components/Button";
+import {OFFER_TYPE} from "@src/Components/Offer/MadeOffers/MadeOffersRow";
+import Button from "@src/Components/components/Button";
 import {useRouter} from "next/router";
 import MakeListingDialog from "@src/Components/MakeListing";
 import Image from "next/image";
@@ -27,8 +27,21 @@ import useCancelGaslessListing from '@src/Components/Account/Settings/hooks/useC
 import {Flex, Heading, Table, TableContainer, Tbody, Td, Text, Tr, useDisclosure,} from '@chakra-ui/react';
 import PurchaseConfirmationDialog from "@src/components-v2/shared/dialogs/purchase-confirmation";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import {TransactionReceipt} from "@ethersproject/abstract-provider";
+import {useAppSelector} from "@src/Store/hooks";
+import ContractService from "@src/core/contractService";
 
-const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isVerified, isOwner, collectionStats }) => {
+interface PriceActionBarProps {
+  offerType: string;
+  onOfferSelected: () => void;
+  label?: string;
+  collectionName: string;
+  isVerified: boolean;
+  isOwner: boolean;
+  collectionStats: any;
+}
+
+const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isVerified, isOwner, collectionStats }: PriceActionBarProps) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -37,8 +50,8 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
   const { Features } = Constants;
   const isWarningMessageEnabled = useFeatureFlag(Features.UNVERIFIED_WARNING);
 
-  const user = useSelector((state) => state.user);
-  const { currentListing: listing, nft } = useSelector((state) => state.nft);
+  const user = useAppSelector((state) => state.user);
+  const { currentListing: listing, nft } = useAppSelector((state) => state.nft);
   const [executingCancel, setExecutingCancel] = useState(false);
   const [canBuy, setCanBuy] = useState(false);
   const [isSellDialogOpen, setIsSellDialogOpen] = useState(false);
@@ -62,7 +75,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
       else{
         await cancelGaslessListing(listing.listingId)
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error.data) {
         toast.error(error.data.message);
       } else if (error.message) {
@@ -76,10 +89,10 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
     }
   };
 
-  const runFunction = async (fn) => {
+  const runFunction = async (fn: (c: Contract) => Promise<TransactionReceipt>) => {
     if (user.address) {
       try {
-        const receipt = await fn(user.contractService.market);
+        const receipt = await fn((user.contractService! as ContractService).market);
         dispatch(
           listingUpdated({
             listing: {
@@ -90,7 +103,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
           })
         );
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      } catch (error) {
+      } catch (error: any) {
         if (error.data) {
           toast.error(error.data.message);
         } else if (error.message) {
@@ -182,7 +195,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
           <Button type="legacy-outlined" className="me-2" onClick={onClose}>
             Cancel
           </Button>
-          <Button type="legacy" onClick={() => executeBuy(listing?.price)}>
+          <Button type="legacy" onClick={executeBuy}>
             Continue
           </Button>
         </div>

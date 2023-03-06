@@ -14,15 +14,14 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import {Badge, Spinner} from 'react-bootstrap';
 
-import ProfilePreview from '../components/ProfilePreview';
-import LayeredIcon from '../components/LayeredIcon';
-import {AnyMedia} from '../components/AnyMedia';
-import ProfileImage from '../components/ProfileImage'
+import ProfilePreview from '@src/Components/components/ProfilePreview';
+import LayeredIcon from '@src/Components/components/LayeredIcon';
+import {AnyMedia} from '@src/Components/components/AnyMedia';
+import ProfileImage from '@src/Components/components/ProfileImage'
 
 import {
   appUrl,
   caseInsensitiveCompare,
-  humanize,
   isAnyWeirdApesCollection,
   isArgonautsBrandCollection,
   isBabyWeirdApesCollection,
@@ -36,25 +35,22 @@ import {
   isLazyHorsePonyCollection,
   isNftBlacklisted,
   isWeirdApesCollection,
-  mapAttributeString,
-  millisecondTimestamp,
   rankingsLinkForCollection,
   rankingsLogoForCollection,
   rankingsTitleForCollection,
-  relativePrecision,
   shortAddress,
   timeSince,
 } from '@src/utils';
 import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
 import {chainConnect, connectAccount, retrieveProfile} from '@src/GlobalState/User';
 import {specialImageTransform} from '@src/hacks';
-import ListingItem from '../NftDetails/NFTTabListings/ListingItem';
-import PriceActionBar from '../NftDetails/PriceActionBar';
+import ListingItem from './tabs/listings/item';
+import PriceActionBar from './price-action-bar';
 import {ERC721} from '@src/Contracts/Abis';
 import {getFilteredOffers} from '@src/core/subgraph';
-import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
-import NFTTabOffers from '../Offer/NFTTabOffers';
-import {OFFER_TYPE} from '../Offer/MadeOffers/MadeOffersRow';
+import MakeOfferDialog from '@src/Components/Offer/Dialogs/MakeOfferDialog';
+import NFTTabOffers from '@src/Components/Offer/NFTTabOffers';
+import {OFFER_TYPE} from '@src/Components/Offer/MadeOffers/MadeOffersRow';
 import {offerState} from '@src/core/api/enums';
 import {commify} from 'ethers/lib/utils';
 import {appConfig} from '@src/Config';
@@ -63,17 +59,29 @@ import Link from 'next/link';
 import axios from "axios";
 import Button, {LegacyOutlinedButton} from "@src/Components/components/common/Button";
 import {collectionRoyaltyPercent} from "@src/core/chain";
-import {Box, Button as ChakraButton, ButtonGroup, Flex, Heading, MenuButton as MenuButtonCK, Stack, Text, useClipboard} from "@chakra-ui/react";
+import {
+  Box,
+  Button as ChakraButton,
+  ButtonGroup,
+  Flex,
+  Heading,
+  MenuButton as MenuButtonCK,
+  Stack,
+  Text,
+  useClipboard
+} from "@chakra-ui/react";
 import {toast} from "react-toastify";
-import {Menu} from '../components/chakra-components';
+import {Menu} from '@src/Components/components/chakra-components';
 import {faFacebook, faSquareTwitter, faTelegram} from '@fortawesome/free-brands-svg-icons';
-import {getStats} from '@src/GlobalState/collectionSlice';
 import {useQuery} from "@tanstack/react-query";
 import {getCollections} from "@src/core/api/next/collectioninfo";
 import {ImageContainer} from "@src/Components/Bundle";
 import {getTheme} from "@src/Theme/theme";
 import useToggleFavorite from "@src/components-v2/feature/nft/hooks/useToggleFavorite";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
+import {useAppSelector} from "@src/Store/hooks";
+import {ContractInterface} from "@ethersproject/contracts/src.ts";
+import Trait from "@src/components-v2/feature/nft/trait";
 
 const config = appConfig();
 const tabs = {
@@ -86,10 +94,17 @@ const tabs = {
   items: 'items',
 };
 
-const Nft721 = ({ address, id, nft, isBundle = false }) => {
+interface Nft721Props {
+  address: string;
+  id: string;
+  nft: any;
+  isBundle?: boolean;
+}
+
+const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const { refreshing, favorites, loading:isLoading } = useSelector((state) => state.nft);
+  const user = useAppSelector((state) => state.user);
+  const { refreshing, favorites, loading:isLoading } = useAppSelector((state) => state.nft);
   const { onCopy } = useClipboard(appUrl(`/collection/${address}/${id}`).toString());
 
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
@@ -97,21 +112,21 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
   const [offerData, setOfferData] = useState();
   const [showFullDescription, setShowFullDescription] = useState(false);
 
-  const currentListing = useSelector((state) => state.nft.currentListing);
-  const listingHistory = useSelector((state) =>
-    state.nft.history.filter((i) => i.state === 1).sort((a, b) => (a.saleTime < b.saleTime ? 1 : -1))
+  const currentListing = useAppSelector((state) => state.nft.currentListing);
+  const listingHistory = useAppSelector((state) =>
+    state.nft.history.filter((i: any) => i.state === 1).sort((a: any, b: any) => (a.saleTime < b.saleTime ? 1 : -1))
   );
 
-  const powertraits = useSelector((state) => state.nft.nft?.powertraits);
+  const powertraits = useAppSelector((state) => state.nft.nft?.powertraits);
 
 
-  const collectionStats = useSelector((state) => state.collection.stats);
+  const collectionStats = useAppSelector((state) => state.collection.stats);
 
   const { isLoading: isLoadingCollection, error, data, status } = useQuery(['Collections', address], () =>
-    getCollections({ address }), true
+    getCollections({ address }),
   )
 
-  const [collection, setCollection] = useState(null);
+  const [collection, setCollection] = useState<any>(null);
 
   // useEffect(() => {
   //   if (collection) {
@@ -218,17 +233,17 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
   // Custom breeding considerations
   const [croCrowBreed, setCroCrowBreed] = useState(null);
   const [crognomideBreed, setCrognomideBreed] = useState(null);
-  const [babyWeirdApeBreed, setBabyWeirdApeBreed] = useState(null);
-  const [ladyWeirdApeChildren, setLadyWeirdApeChildren] = useState(null);
+  const [babyWeirdApeBreed, setBabyWeirdApeBreed] = useState<any>(null);
+  const [ladyWeirdApeChildren, setLadyWeirdApeChildren] = useState<number | null>(null);
   const [voxelClaimed, setVoxelClaimed] = useState(false);
-  const [evoSkullTraits, setEvoSkullTraits] = useState([]);
-  const [lazyHorseTraits, setLazyHorseTraits] = useState([]);
+  const [evoSkullTraits, setEvoSkullTraits] = useState<{ key: string; value: unknown; type: string; }[]>();
+  const [lazyHorseTraits, setLazyHorseTraits] = useState<any>([]);
   const [customProfile, setCustomProfile] = useState({
     name: null,
     description: null
   });
 
-  const [royalty, setRoyalty] = useState(null);
+  const [royalty, setRoyalty] = useState<number | null>(null);
   useEffect(() => {
     async function getRoyalty() {
       const royalty = await collectionRoyaltyPercent(address, id);
@@ -363,7 +378,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
   }, [address]);
 
   useEffect(() => {
-    async function getAttributes(abi) {
+    async function getAttributes(abi: ContractInterface) {
       const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
       const contract = new Contract(address, abi, readProvider);
       try {
@@ -380,7 +395,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
             } else if (key === 'lastClaimTimestamp') {
               type = 'date';
             } else if (key === 'lastActionBlock') {
-              value = commify(value);
+              value = commify(value as string);
             }
             return { key, value, type };
           });
@@ -394,7 +409,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
         const attributes = await getAttributes(abiFile);
         setEvoSkullTraits(attributes);
       } else {
-        setEvoSkullTraits(null);
+        setEvoSkullTraits([]);
       }
     }
     async function getCroSkullPetsAttributes() {
@@ -403,7 +418,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
         const attributes = await getAttributes(abiFile.abi);
         setEvoSkullTraits(attributes);
       } else {
-        setEvoSkullTraits(null);
+        setEvoSkullTraits([]);
       }
     }
     getEvoSkullAttributes();
@@ -423,8 +438,8 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
             .then((response) => {
               setCustomProfile({ name: response.data.name.length > 0 ? response.data.name : null, description: null });
               setLazyHorseTraits([
-                response.data.attributes.find((trait) => trait.trait_type === 'Race Count'),
-                response.data.attributes.find((trait) => trait.trait_type === 'Breeded'),
+                response.data.attributes.find((trait: any) => trait.trait_type === 'Race Count'),
+                response.data.attributes.find((trait: any) => trait.trait_type === 'Breeded'),
               ])
             });
         } catch (error) {
@@ -476,7 +491,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
 
   const [currentTab, setCurrentTab] = useState(tabs.properties);
   useEffect(() => { setCurrentTab(isBundle ? tabs.items : tabs.properties)}, [isBundle] )
-  const handleTabChange = useCallback((tab) => {
+  const handleTabChange = useCallback((tab: string) => {
     setCurrentTab(tab);
   }, [isBundle, currentTab]);
 
@@ -502,7 +517,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
   useEffect(() => {
     async function func() {
       const filteredOffers = await getFilteredOffers(nft.address, nft.id.toString(), user.address);
-      const data = filteredOffers ? filteredOffers.data.filter((o) => o.state === offerState.ACTIVE.toString()) : [];
+      const data = filteredOffers ? filteredOffers.data.filter((o: any) => o.state === offerState.ACTIVE.toString()) : [];
       if (data && data.length > 0) {
         setOfferType(OFFER_TYPE.update);
         setOfferData(data[0]);
@@ -518,11 +533,11 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
   }, [nft, user.address]);
 
   const onFavoriteClicked = async () => {
-    if (isEmptyObj(user.profile)) {
+    if (isEmptyObj(user.profile) || !user.address) {
       toast.info(`Connect wallet and create a profile to start adding favorites`);
       return;
     }
-    if (user.profile.error) {
+    if ((user.profile as any).error) {
       toast.info(`Error loading profile. Please try reconnecting wallet`);
       return;
     }
@@ -534,8 +549,8 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
   };
 
   const isFavorite = () => {
-    if (!user.profile?.favorites) return false;
-    return user.profile.favorites.find((f) => caseInsensitiveCompare(address, f.tokenAddress) && id === f.tokenId);
+    if (!(user.profile as any)?.favorites) return false;
+    return (user.profile as any).favorites.find((f: any) => caseInsensitiveCompare(address, f.tokenAddress) && id === f.tokenId);
   }
 
   return (
@@ -781,8 +796,8 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
                                 {nft.attributes &&
                                   Array.isArray(nft.attributes) &&
                                   nft.attributes
-                                    .filter((a) => a.value !== 'None')
-                                    .map((data, i) => {
+                                    .filter((a: any) => a.value !== 'None')
+                                    .map((data: any, i: number) => {
                                       return (
                                         <Trait
                                           key={i}
@@ -799,7 +814,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
                                     })}
                                 {nft.properties &&
                                   Array.isArray(nft.properties) &&
-                                  nft.properties.map((data, i) => {
+                                  nft.properties.map((data: any, i: number) => {
                                     return (
                                       <Trait
                                         key={i}
@@ -831,7 +846,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
                                 <div className="row gx-3 gy-2">
                                   {powertraits &&
                                     powertraits.length > 0 &&
-                                    powertraits.map((data, i) => {
+                                    powertraits.map((data: any, i: number) => {
                                       return (
                                         <Trait
                                           key={i}
@@ -849,7 +864,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
                                     })}
                                   {evoSkullTraits &&
                                     Array.isArray(evoSkullTraits) &&
-                                    evoSkullTraits.map((data, i) => {
+                                    evoSkullTraits.map((data: any, i) => {
                                       return (
                                         <Trait
                                           key={i}
@@ -862,7 +877,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
                                     })}
                                   {lazyHorseTraits &&
                                     Array.isArray(lazyHorseTraits) &&
-                                    lazyHorseTraits.map((data, i) => {
+                                    lazyHorseTraits.map((data: any, i) => {
                                       return (
                                         <Trait
                                           key={i}
@@ -885,7 +900,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
                         <div className="listing-tab tab-3 onStep fadeIn">
                           {listingHistory && listingHistory.length > 0 ? (
                             <>
-                              {listingHistory.map((listing, index) => (
+                              {listingHistory.map((listing: any, index: number) => (
                                 <ListingItem
                                   key={`sold-item-${index}`}
                                   route="/account"
@@ -990,7 +1005,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
 
                       {currentTab === tabs.items && (
                         <Flex flexDir='column' gap='8px' maxH='340ox' overflowY='auto'>
-                          {nft.nfts?.map((nft, i) => (
+                          {nft.nfts?.map((nft: any, i: number) => (
                             <Box p='16px' key={i}>
                               <Flex gap='15px'>
                                 <Box w='72px'>
@@ -1040,6 +1055,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
           onClose={() => setOpenMakeOfferDialog(false)}
           initialNft={nft}
           nftAddress={address}
+          nftId={undefined}
         />
       )}
     </div>
@@ -1048,57 +1064,4 @@ const Nft721 = ({ address, id, nft, isBundle = false }) => {
 
 export default memo(Nft721);
 
-const Trait = ({
-  title,
-  value,
-  valueDisplay,
-  percent,
-  occurrence,
-  type,
-  collectionAddress,
-  collectionSlug,
-  queryKey,
-}) => {
-  const Value = () => {
-    return (
-      <h4>
-        {value !== undefined ? (
-          <>
-            {type === 'date' ? (
-              <>{new Date(millisecondTimestamp(value)).toDateString()}</>
-            ) : (
-              <>{mapAttributeString(valueDisplay ?? value, collectionAddress, title, true)}</>
-            )}
-          </>
-        ) : (
-          <>N/A</>
-        )}
-      </h4>
-    );
-  };
 
-  return (
-    <div className="col-lg-4 col-md-6 col-sm-6">
-      <div className="nft_attr">
-        <h5>{humanize(title)}</h5>
-        {collectionSlug && queryKey && value ? (
-          <Link
-            href={{
-              pathname: `/collection/${collectionSlug}`,
-              query: { [queryKey]: JSON.stringify({ [title]: [value.toString()] }) },
-            }}
-          >
-            <Value />
-          </Link>
-        ) : (
-          <Value />
-        )}
-        {occurrence ? (
-          <span>{relativePrecision(occurrence)}% have this trait</span>
-        ) : (
-          percent && <span>{percent}% have this trait</span>
-        )}
-      </div>
-    </div>
-  );
-};
