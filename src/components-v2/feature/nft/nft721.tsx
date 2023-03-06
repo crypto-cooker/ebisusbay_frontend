@@ -324,7 +324,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
     async function getApeInfo() {
       if (isBabyWeirdApesCollection(address)) {
         const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-        const abiFile = require(`../../Assets/abis/baby-weird-apes.json`);
+        const abiFile = require(`@src/Assets/abis/baby-weird-apes.json`);
         const contract = new Contract(address, abiFile.abi, readProvider);
         try {
           const apeInfo = await contract.apeInfo(id);
@@ -345,13 +345,13 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
     async function getApeInfo() {
       if (isAnyWeirdApesCollection(address)) {
         const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-        const abiFile = require(`../../Assets/abis/weird-apes-bio.json`);
+        const abiFile = require(`@src/Assets/abis/weird-apes-bio.json`);
         const contract = new Contract('0x86dC98DB0AFd27d5cBD7501cd1a72Ff17f324609', abiFile, readProvider);
         try {
           let apeInfo;
           if (isWeirdApesCollection(address)) {
             apeInfo = await contract.getGenesisInfo(id);
-            const voxelAbi = require(`../../Assets/abis/voxel-weird-apes.json`);
+            const voxelAbi = require(`@src/Assets/abis/voxel-weird-apes.json`);
             const voxelContract = new Contract('0xe02a74813053e96c5c98f817c0949e0b00728ef6', voxelAbi, readProvider);
             const isClaimed = await voxelContract.isClaimed(id);
             setVoxelClaimed(isClaimed);
@@ -405,7 +405,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
     }
     async function getEvoSkullAttributes() {
       if (isEvoSkullCollection(address)) {
-        const abiFile = require(`../../Assets/abis/evo-skull.json`);
+        const abiFile = require(`@src/Assets/abis/evo-skull.json`);
         const attributes = await getAttributes(abiFile);
         setEvoSkullTraits(attributes);
       } else {
@@ -414,7 +414,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
     }
     async function getCroSkullPetsAttributes() {
       if (isCroSkullPetsCollection(address)) {
-        const abiFile = require(`../../Assets/abis/croskull-pets.json`);
+        const abiFile = require(`@src/Assets/abis/croskull-pets.json`);
         const attributes = await getAttributes(abiFile.abi);
         setEvoSkullTraits(attributes);
       } else {
@@ -458,7 +458,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
     async function getLadyApeInfo() {
       if (isLadyWeirdApesCollection(address)) {
         const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-        const abiFile = require(`../../Assets/abis/lady-weird-apes-children.json`);
+        const abiFile = require(`@src/Assets/abis/lady-weird-apes-children.json`);
         const contract = new Contract(address, abiFile.abi, readProvider);
         try {
           const numChildren = await contract.numChildren(id);
