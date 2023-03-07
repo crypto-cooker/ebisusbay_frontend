@@ -9,7 +9,7 @@ import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {caseInsensitiveCompare, isUserBlacklisted, shortAddress} from "@src/utils";
 import Inventory from "@src/Components/Account/Profile/Inventory";
 import Collections from "@src/Components/Account/Profile/Collections";
-import Listings from "@src/Components/Account/Profile/Listings";
+import Listings from "@src/components-v2/feature/account/profile/tabs/listings";
 import Offers from "@src/Components/Account/Profile/Offers";
 import Sales from "@src/Components/Account/Profile/Sales";
 import Favorites from "@src/Components/Account/Profile/Favorites";

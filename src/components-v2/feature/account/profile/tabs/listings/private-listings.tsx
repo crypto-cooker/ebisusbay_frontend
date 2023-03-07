@@ -1,8 +1,7 @@
 import React, {memo, useCallback, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {MyListingsCollectionPageActions, MyNftPageActions,} from '@src/GlobalState/User';
 import {Form, Spinner} from 'react-bootstrap';
-import MyNftCancelDialog from './MyNftCancelDialog';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import {useRouter} from 'next/router';
@@ -12,9 +11,15 @@ import {useInfiniteQuery} from "@tanstack/react-query";
 import {invalidState} from "@src/core/api/enums";
 import ResponsiveListingsTable from "@src/components-v2/shared/responsive-table/responsive-listings-table";
 import {Alert, AlertDescription, AlertIcon, AlertTitle, Text} from "@chakra-ui/react";
+import {useAppSelector} from "@src/Store/hooks";
+import MyNftCancelDialog from '@src/Components/components/MyNftCancelDialog';
 
 
-const MyListingsCollection = ({ walletAddress = null }) => {
+interface UserPrivateListingsProps {
+  walletAddress: string
+}
+
+const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -25,16 +30,17 @@ const MyListingsCollection = ({ walletAddress = null }) => {
     direction: 'asc'
   });
 
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
 
   const fetcher = async ({ pageParam = 1 }) => {
+    // @ts-ignore
     const listings = await getUnfilteredListingsForAddress(walletAddress, user.provider, pageParam, sort);
-    if (listings.some((value) => !value.valid && value.invalid !== invalidState.LEGACY)) {
+    if (listings.some((value: any) => !value.valid && value.invalid !== invalidState.LEGACY)) {
       setHasInvalidListings(true);
     }
     return listings
-      .filter((x) => x.listed && x.invalid !== invalidState.LEGACY)
-      .filter((x) => (showInvalidOnly ? !x.valid : true));
+      .filter((x: any) => x.listed && x.invalid !== invalidState.LEGACY)
+      .filter((x: any) => (showInvalidOnly ? !x.valid : true));
   };
 
   const {
@@ -57,7 +63,7 @@ const MyListingsCollection = ({ walletAddress = null }) => {
     fetchNextPage();
   };
 
-  const handleSort = useCallback((field) => {
+  const handleSort = useCallback((field: string) => {
     let newSort = {
       sortBy: field,
       direction: 'desc'
@@ -110,7 +116,7 @@ const MyListingsCollection = ({ walletAddress = null }) => {
         <InfiniteScroll
           dataLength={data?.pages ? data.pages.flat().length : 0}
           next={loadMore}
-          hasMore={hasNextPage}
+          hasMore={hasNextPage ?? false}
           style={{ overflow: 'hidden' }}
           loader={
             <div className="row">
@@ -129,7 +135,7 @@ const MyListingsCollection = ({ walletAddress = null }) => {
               </Spinner>
             </div>
           ) : status === "error" ? (
-            <p>Error: {error.message}</p>
+            <p>Error: {(error as any).message}</p>
           ) : (
             <ResponsiveListingsTable
               data={data}
@@ -158,4 +164,4 @@ const MyListingsCollection = ({ walletAddress = null }) => {
   );
 };
 
-export default memo(MyListingsCollection);
+export default memo(UserPrivateListings);
