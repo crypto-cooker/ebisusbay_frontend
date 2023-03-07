@@ -13,10 +13,10 @@ import {MarketFilters} from "../Models/market-filters.model";
 import ListingBundleCard from './ListingBundleCard';
 
 const ListingCollection = ({
-  limitSize,
+  limitSize = null,
   showLoadMore = true,
   collectionId = null,
-  sellerId = null,
+  sellerId = '',
   cacheName = null,
 }) => {
   const dispatch = useDispatch();
