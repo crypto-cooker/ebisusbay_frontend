@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect, Component} from "react";
-import { useSelector } from "react-redux";
 import {
   Modal,
   ModalBody,
@@ -15,22 +14,42 @@ import {
 } from "@chakra-ui/react"
 import { Spinner } from 'react-bootstrap';
 import { getTheme } from "@src/Theme/theme";
-import { createFaction } from "@src/core/api/RyoshiDynastiesAPICalls";
+import { createFaction, getFactionsOwned, getProfileId } from "@src/core/api/RyoshiDynastiesAPICalls";
 
-const FactionRegistrationForm = ({ isOpen, onClose, clans=[]}) => {
+import { getAuthSignerInStorage } from '@src/helpers/storage';
+import {useSelector} from "react-redux";
+import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
+
+const FactionRegistrationForm = ({ isOpen, onClose, handleClose}) => {
  
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, getSigner] = useCreateSigner();
   const user = useSelector((state) => state.user);
 
   const CreateFaction = async () => {
-    const factionResponse = await createFaction(user.walletAddress);
-    if(factionResponse.status !== 200){
-      console.log("Error creating faction");
-      return;
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
     }
-    console.log("You created a clan");
-    clans.push({clanType: "collection", rank: 1, faction: "yourWalletAddress", troops: 0, owned:true, addresses: [], registered: false})
-    onClose();
+    if (signatureInStorage) {
+      try {
+        const res = await getProfileId(user.address.toLowerCase(), signatureInStorage);
+        const factions = await getFactionsOwned(res.data.data[0].profileId);
+        var factionName = res.data.data[0].profileId +"_" + (factions.data.data.length+3);
+        
+        const data = await createFaction(user.address.toLowerCase(),
+          signatureInStorage, "WALLET", factionName, []);
+        // console.log(data);
+        console.log("You created a faction");
+      handleClose();
+      onClose();
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    
   }
  
   return (

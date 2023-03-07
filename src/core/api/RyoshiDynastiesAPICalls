@@ -55,17 +55,18 @@ export const getControlPoint = async (_controlPointId) => {
   }
 }
 //creates a faction
-export const createFaction = async (_walletAddress, _walletSignature) => {
+export const createFaction = async (address, signature, type, name, addresses=[]) => {
   try{
-    return await api.get(baseURL + "api/ryoshi-dynasties/factions?", 
-      {params: {walletAddress: _walletAddress, walletSignature: _walletSignature}});
+    return await api.post(baseURL + "api/ryoshi-dynasties/factions?", 
+      {name, type, addresses},
+      {params: {address, signature}});
   }
   catch(error){
     throw error;
   }
 }
 //gets specific factions
-export const getFactions = async ( _profileOwnerId) => {
+export const getFactionsOwned = async ( _profileOwnerId) => {
   try{
     return await api.get(baseURL + "api/ryoshi-dynasties/factions?", 
       {params: {profileOwnerId: _profileOwnerId}});
@@ -75,11 +76,36 @@ export const getFactions = async ( _profileOwnerId) => {
   }
 }
 //registers a faction for the season
-export const subscribeFaction = async (_walletAddress, _walletSignature, _gameId, _factionId) => {
+export const subscribeFaction = async (address, signature, factionId) => {
   try{
-    return await api.get(baseURL + "api/ryoshi-dynasties/subscriptions?", 
-      {params: {walletAddress: _walletAddress, walletSignature: _walletSignature}},
-      {body: {gameId: _gameId, factionId: _factionId}});
+    var gameID = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    let gameId = gameID.data.id;
+    console.log("GameID: "+gameId);
+
+    return await api.post(baseURL + "api/ryoshi-dynasties/subscriptions?", 
+      {params: {address, signature}},
+      {body: {gameId, factionId}});
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const editFaction = async (address, signature, id, name, addresses=[], type) => {
+  try{
+    return await api.patch(baseURL + "api/ryoshi-dynasties/factions?", 
+      {name, id, addresses, type},
+      {params: {address: address, signature: signature}},
+      );
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const deleteFaction = async (address, signature, id) => {
+  try{
+    return await api.delete(baseURL + "api/ryoshi-dynasties/factions?", 
+      {params: {address, signature, id}},
+      );
   }
   catch(error){
     throw error;
@@ -100,12 +126,12 @@ export const createArmy = async (_walletAddress, _walletSignature, _troops) => {
 export const delegateTroops = async (address, signature, troops, factionId) => {
   try{
     var gameID = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
-    // console.log("GameID: "+gameID.data.data.id);
     let gameId = gameID.data.data.id;
+
     console.log("GameID: "+gameId);
     console.log("FactionID: "+factionId);
     console.log("Troops: "+troops);
-    
+
     return await api.patch(baseURL + "api/ryoshi-dynasties/armies?", 
       {troops, factionId, gameId},
       {params: {address: address, signature: signature, action: "DELEGATE"}},

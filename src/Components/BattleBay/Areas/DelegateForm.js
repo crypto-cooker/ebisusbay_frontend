@@ -12,6 +12,9 @@ import {
   FormLabel,
   Select,
   Flex,
+  Alert,
+  AlertIcon,
+  AlertTitle,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
@@ -38,7 +41,9 @@ const DelegateForm = ({ isOpen, onClose, delegateMode, factions=[], troops}) => 
   // const troopsDelegatedToSlectedFaction = player[0].delegations.filter(delegation => delegation.faction === dataForm.faction).length > 0 
     // ? player[0].delegations.filter(delegation => delegation.faction === dataForm.faction)[0].troops : 0
   // const maxTroops = delegateMode==='delegate' ? troopsNotDelegated : troopsDelegatedToSlectedFaction
-
+  //alerts
+  const [showAlert, setShowAlert] = useState(false)
+  const [alertMessage, setAlertMessage] = useState("")
   
   const [troopsToDelegate, setTroopsToDelegate] = useState(0)
   const handleChange = (value) => setTroopsToDelegate(value)
@@ -79,11 +84,14 @@ const DelegateForm = ({ isOpen, onClose, delegateMode, factions=[], troops}) => 
       try {
         const res = await delegateTroops(user.address.toLowerCase(), signatureInStorage, troopsToDelegate, factionId);
         console.log(res)
+        setShowAlert(false)
+        onClose();
       } catch (error) {
         console.log(error)
+        setAlertMessage("Action Failed: faction is not registered")
+        setShowAlert(true)
       }
     }
-    onClose();
   }
   const RecallTroops = () => {
     //
@@ -150,6 +158,14 @@ const DelegateForm = ({ isOpen, onClose, delegateMode, factions=[], troops}) => 
                 className="flex-fill">
                 {delegateMode==='delegate' ? 'Delegate' : 'Recall'} 
               </Button>
+            </Flex>
+            <Flex>
+            {showAlert && (
+                <Alert status='error'>
+                  <AlertIcon />
+                  <AlertTitle>{alertMessage}</AlertTitle>
+                </Alert>
+                )}
             </Flex>
 
 

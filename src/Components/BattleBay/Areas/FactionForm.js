@@ -1,11 +1,9 @@
-import { useState, useRef, useEffect, useCallback  } from "react";
-import { useSelector } from "react-redux";
+import { useState, useRef, useEffect } from "react";
 import {
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
   Input,
@@ -18,56 +16,43 @@ import {
   TabPanel,
   Tab,
   Flex,
-  Spacer,
   Box,
   Alert,
   AlertIcon,
   AlertTitle,
   Stack,
-
+  Divider,
 } from "@chakra-ui/react"
 import { Spinner } from 'react-bootstrap';
 import { getTheme } from "@src/Theme/theme";
-import { Formik, Form, Field, ErrorMessage, useFormik } from 'formik';
-import * as Yup from 'yup';
-import useGetSettings from '../../Account/Settings/hooks/useGetSettings';
+import { useFormik } from 'formik';
+import { editFaction, deleteFaction, subscribeFaction} from "@src/core/api/RyoshiDynastiesAPICalls";
 
-const FactionForm = ({ isOpen, onClose, factions=[], factionToModify}) => {
-  // console.log("factionToModify: "+factionToModify.faction)
-  //addresses
+import { getAuthSignerInStorage } from '@src/helpers/storage';
+import {useSelector} from "react-redux";
+import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
+
+const FactionForm = ({ isOpen, onClose, faction, handleClose}) => {
+
   const addressInput = useRef(null);
   const [addresses, setAddresses] = useState([])
   const handleAddChange = (event) => setValue(event.target.value)
   const [addressToAdd, setValue] = useState('')
-
-  //faction name
   const factionNameInput = useRef(null);
-  const arrayColumn = (arr, n) => arr.map(x => x[n]);
-  const factionToModifyIndex = factions.findIndex(faction => faction === factionToModify)
-  const factionNames = arrayColumn(factions, 'faction').filter(faction => faction !== factions[factionToModifyIndex].faction)
-  const [factionName, setFactionName] = useState(factions[factionToModifyIndex].faction)
-
-  
-  const handleFactionNameChange = (event) => setFactionName(event.target.value)
-  const [factionType, setFactionType] = useState(factions[factionToModifyIndex].factionType)
+  const [factionType, setFactionType] = useState(0)
 
   //alerts
   const [showAlert, setShowAlert] = useState(false)
   const [alertMessage, setAlertMessage] = useState("")
+  const [registrationStatus, setRegistrationStatus] = useState("Unregistered")
 
   //other
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, getSigner] = useCreateSigner();
   const user = useSelector((state) => state.user);
 
-  const SaveChanges = () => {
-
+  const SaveChanges = async() => {
     if(factionNameInput.current === undefined) {
       setAlertMessage("You must enter a faction name")
-      setShowAlert(true)
-      return;
-    }
-    if(factionNames.includes(factionName)) {
-      setAlertMessage("Your Faction Name is already taken")
       setShowAlert(true)
       return;
     }
@@ -76,11 +61,65 @@ const FactionForm = ({ isOpen, onClose, factions=[], factionToModify}) => {
     //   setShowAlert(true)
     //   return;
     // }
-    
-    //add payment code here
-    console.log("You created a faction with the name "+factionNameInput);
-    factionType === 'collectionFaction' ? console.log("You created a collection faction") : console.log("You created a user faction")
-    onClose();
+    // console.log("faction id: "+faction.id)
+    // console.log("faction name: "+formik.values.factionName)
+    // console.log("faction type: "+formik.values.factionType)
+    // console.log("faction addresses: "+formik.values.addresses)
+
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      try {
+        const data = await editFaction(user.address.toLowerCase(), signatureInStorage,
+          faction.id, formik.values.factionName, formik.values.addresses, formik.values.factionType);
+        // console.log(data);
+        //add payment code here
+        handleClose();
+        onClose();
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+  const DeleteFaction = async() => {
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      try {
+        const data = await deleteFaction(user.address.toLowerCase(), signatureInStorage, faction.id);
+        console.log(data);
+        //add payment code here
+        handleClose();
+        onClose();
+      } catch (error) {
+        console.log(error)
+      }
+    }
+ }
+  const RegisterFaction = async() => {
+    // registrationStatus = 
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      try {
+        console.log("faction id: "+faction.id)
+        const data = await subscribeFaction(user.address.toLowerCase(), signatureInStorage, faction.id);
+        //add payment code here
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
   }
   function AddAddress() {
     setShowAlert(false)
@@ -113,25 +152,33 @@ const FactionForm = ({ isOpen, onClose, factions=[], factionToModify}) => {
     setValue('')
   }
   function collectionFaction() {
-    setFactionType('collection')
+    formik.values.factionType = 'COLLECTION'
   }
   function userFaction() {
-    setFactionType('userFaction')
+    formik.values.factionType = 'WALLET'
   }
   function getMaxAddresses() {
-    return factionType === 'collection' ? 3 : 15
+    return factionType === 'COLLECTION' ? 3 : 15
   }
-
   const formik = useFormik({
     initialValues: {
-      factionName: factions[factionToModifyIndex].faction,
-      addresses: factions[factionToModifyIndex].addresses,
+      factionName: faction.name,
+      factionType: faction.type,
+      addresses: faction.addresses
     },
     onSubmit: (values) => {
       // alert(JSON.stringify(values, null, 2))
-      factions[factionToModifyIndex].faction = values.factionName
     },
+    enableReinitialize: true,
   })
+  useEffect(() => {
+    console.log("faction change faction change"+faction.name)
+    if(faction.type === 'COLLECTION') {
+      setFactionType(0)
+    } else {
+      setFactionType(1)
+    }
+  }, [faction]);
 
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
@@ -142,19 +189,24 @@ const FactionForm = ({ isOpen, onClose, factions=[], factionToModify}) => {
           <ModalHeader className="text-center">Edit Faction</ModalHeader>
             <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
             <ModalBody>
-            <form onSubmit={formik.handleSubmit}>
+            <Flex>
+            <FormLabel>Current Status: {registrationStatus}</FormLabel>
+                <Button type="submit" style={{ display: 'flex' }} 
+                      onClick={RegisterFaction} variant='outline' size='lg'>Register Faction</Button>
+              </Flex>
+            <Divider />
+            <form onSubmit={formik.handleSubmit} style={{ marginTop: '24px'}}>
               <FormControl isRequired>
                 <FormLabel>Faction name:</FormLabel>
                 <Input
                   id='factionName'
                   name='factionName'
-                  // ref={factionNameInput}
                   value={formik.values.factionName}
                   onChange={formik.handleChange}
-                  placeholder=''
+                  placeholder={formik.values.factionName}
                   size='sm'/>
               </FormControl>
-              <Tabs variant='unstyled' style={{ marginTop: '24px'}}>
+              <Tabs variant='unstyled' style={{ marginTop: '24px'}} defaultIndex = {factionType}>
                 <TabList>
                   <Tab onClick={collectionFaction} _selected={{ color: 'white', bg: 'blue.500' }}>Collection Faction</Tab>
                   <Tab onClick={userFaction} _selected={{ color: 'white', bg: 'blue.500' }}>User Faction</Tab>
@@ -168,6 +220,7 @@ const FactionForm = ({ isOpen, onClose, factions=[], factionToModify}) => {
                   </TabPanel>
                 </TabPanels>
               </Tabs>
+            <Divider />
                     
               <FormLabel style={{ display: 'flex', marginTop: '24px' }}>Addresses of Wallets or Contracts:</FormLabel>
               
@@ -196,17 +249,24 @@ const FactionForm = ({ isOpen, onClose, factions=[], factionToModify}) => {
                 )}
                 </Box>
               </Flex>
+            <Divider />
+              
               <Flex justifyContent={"center"} align={"center"}>
                 
                 <Box p='3'>
-                <Button type="submit" style={{ display: 'flex', marginTop: '16px' }} 
-                      onClick={SaveChanges} variant='outline'size='lg'
+                <Button type="submit" style={{ display: 'flex', marginTop: '12px' }} 
+                      onClick={SaveChanges} variant='outline' size='lg'
                       >SaveChanges</Button>
                 </Box>
               </Flex>
+              <Flex justifyContent={"right"} align={"right"}>
+                <Button type="submit" style={{ display: 'flex', marginTop: '4px' }} 
+                      onClick={DeleteFaction} variant='outline'size='xs' colorScheme='red' 
+                      >Delete Faction</Button>
+              </Flex>
               </form>
             </ModalBody>
-            <ModalFooter className="border-0"/>            
+            {/* <ModalFooter className="border-0"/>             */}
           </>
         ) : (
           <Spinner animation="border" role="status" size="sm" className="ms-1">

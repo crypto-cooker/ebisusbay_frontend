@@ -17,25 +17,39 @@ import {
 
 } from '@chakra-ui/react';
 import FactionForm from './FactionForm';
-import SetTheFactionName from './FactionForm';
 import FactionRegistrationForm from './FactionRegistrationForm';
-import { getFactions, subscribeFaction, getGameId } from "@src/core/api/RyoshiDynastiesAPICalls";
-import { logEvent } from "firebase/analytics";
+import {subscribeFaction, getSeasonGameId, getProfileId, getFactionsOwned, createFaction} from "@src/core/api/RyoshiDynastiesAPICalls";
 
-const AllianceCenter = ({onBack, factions: factions=[]}) => {
+import { getAuthSignerInStorage } from '@src/helpers/storage';
+import {useSelector} from "react-redux";
+import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
+
+const AllianceCenter = ({onBack}) => {
+
+  const user = useSelector((state) => state.user);
+  const [isLoading, getSigner] = useCreateSigner();
+  const {address, theme, profile} = useSelector((state) => state.user);
 
   const { isOpen: isOpenFaction, onOpen: onOpenFaction, onClose: onCloseFaction } = useDisclosure();
   const { isOpen: isOpenRegister, onOpen: onOpenRegister, onClose: onCloseRegister } = useDisclosure();
-  const factionsData = [];
-  const playerFactions = factions.filter(faction => faction.owned);
-  const [selectedFaction, setSelectedFaction] = useState(playerFactions[0]);
   const GetRegistrationColor = (registered) => {if(registered) {return 'green'} else {return 'red'}}
   const GetRegisterButtonText = (registered) => {if(registered) {return 'Registered'} else {return 'Register'}}
-  const [factionsDisplay, setFactionDisplay] = useState([]);
+
   const [gameId, setGameId] = useState(0);
+  const playerFactions = [];
+  const [selectedFaction, setSelectedFaction] = useState(0);
+  const [factionsDisplay, setFactionDisplay] = useState([]);
   
+  //for refreshing the page after a faction is updated
+  const [modalOpen, setModalOpen] = useState(false);
+  const handleAddClick = () => {
+    setModalOpen(true);
+  };
+  const handleClose = ()=>{
+    setModalOpen(false)
+  }
+
   function RegistrationAction(registered) {
-      console.log(gameId)
       if(registered) {
       console.log('Registered')
     } else {
@@ -46,56 +60,61 @@ const AllianceCenter = ({onBack, factions: factions=[]}) => {
         }
       }
     }
+
   useEffect(() => {
-    setGameId(getGameId());
-    getFactions();
-  }, []);
-  
-  const getFactions = async () => {
-    // getFactions(0).then((data) => {
-    //   factionsData = data.factions; 
-    //   setFactionDisplay(factionsData.map((faction, i) => 
-    //     (
-    //       <Tr key={i}>
-    //         <Td textAlign='center'>{faction.faction}</Td>
-    //         <Td textAlign='center'>
-    //           <Button colorScheme={GetRegistrationColor(faction.registered)} 
-    //           // onClick={}
-    //           ></Button>
-    //         </Td>
-    //         <Td textAlign='center'>{faction.factionType}</Td>
-    //         <Td textAlign='center'>{faction.troops}</Td>
-    //         <Td textAlign='center'>{faction.addresses}</Td>
-    //         <Td textAlign='center'>
-    //           <Button colorScheme='blue' onClick={() => {setSelectedFaction(playerFactions[index]), onOpenFaction()}}>Edit</Button>
-    //         </Td>
-    //       </Tr>
-    //     )))
-    // });
+    setGameId(getSeasonGameId());
+    GetFactions();
+  }, [selectedFaction, modalOpen]);
+
+  function selectFaction(faction) {
+    setSelectedFaction(faction);
+    handleAddClick();
+    onOpenFaction();
+  }
+  const GetFactions = async () => {
+    console.log('Getting Factions');
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      try {
+        const res = await getProfileId(user.address.toLowerCase(), signatureInStorage);
+        const data = await getFactionsOwned(res.data.data[0].profileId);
+        playerFactions = data.data.data;
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
     setFactionDisplay(playerFactions.map((faction, index) => (
-      // <div style={{ margin: '8px 24px' }}>
       <Tr key={index}>
-        <Td textAlign='center'>{faction.faction}</Td>
+        <Td textAlign='center'>{faction.name}</Td>
         <Td textAlign='center'>
           <Button colorScheme={GetRegistrationColor(faction.registered)}
             onClick={() => {RegistrationAction(faction.registered)}}>{GetRegisterButtonText(faction.registered)}
           </Button>
         </Td>
-        <Td textAlign='center'>{faction.clanType}</Td>
-        <Td textAlign='center'>{faction.troops}</Td>
-        <Td textAlign='center'>{faction.addresses}</Td>
+        <Td textAlign='center'>{faction.type}</Td>
+        {/* <Td textAlign='center'>{faction.troops}</Td> */}
+        {/* <Td textAlign='center'>{faction.addresses}</Td> */}
         <Td textAlign='center'>
-          <Button colorScheme='blue' onClick={() => {setSelectedClan(playerClans[index]), onOpenClan()}}>Edit</Button>
+          <Button colorScheme='blue' onClick={() => {selectFaction(faction)}}>Edit</Button>
         </Td>
       </Tr>
       )))
-  }
+    }
+
+  
   return (
     <section className="gl-legacy container">
-      <FactionForm isOpen={isOpenFaction} onClose={onCloseFaction} factions={factions} factionToModify={selectedFaction}/>
-      <FactionRegistrationForm isOpen={isOpenRegister} onClose={onCloseRegister} factions={factions}/>
-      
-      <button onClick={onBack}>Back to Village Map</button>
+
+      <FactionForm isOpen={isOpenFaction} onClose={onCloseFaction} faction={selectedFaction} handleClose={handleClose}/>
+      <FactionRegistrationForm isOpen={isOpenRegister} onClose={onCloseRegister} handleClose={handleClose}/>
+      <Button margin={'36px'} position={'absolute'} onClick={onBack}>Back to Village Map</Button>
+
       <Box >
         <Center>
          <Image src="/img/battle-bay/allianceCenter.png" alt="Alliance Center" />
@@ -114,8 +133,8 @@ const AllianceCenter = ({onBack, factions: factions=[]}) => {
               <Th textAlign='center'>Faction Name</Th>
               <Th textAlign='center'>Registered this Season</Th>
               <Th textAlign='center'>Faction Type</Th>
-              <Th textAlign='center'>Troops</Th>
-              <Th textAlign='center'>Addresses</Th>
+              {/* <Th textAlign='center'>Troops</Th> */}
+              {/* <Th textAlign='center'>Addresses</Th> */}
               <Th textAlign='center'></Th>
             </Tr>
           </Thead>
