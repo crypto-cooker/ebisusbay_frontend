@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createSlice, Dispatch} from '@reduxjs/toolkit';
 import { ethers, BigNumber } from 'ethers';
 import Web3Modal from 'web3modal';
 
@@ -22,8 +22,44 @@ import { appConfig } from '../Config';
 import { MarketFilterCollection } from '../Components/Models/market-filters.model';
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import UserContractService from "@src/core/contractService";
+import {AppDispatch} from "@src/Store/store";
 
 const config = appConfig();
+
+interface UserState {
+  provider: any;
+  address: string | null;
+  web3modal: any;
+  connectingWallet: boolean;
+  gettingContractData: boolean;
+  isMember: boolean;
+  needsOnboard: boolean;
+  isStaking: boolean;
+  fee: number;
+  authSignature: string | null;
+  contractService: UserContractService | null;
+  correctChain: boolean;
+  showWrongChainModal: boolean;
+  balance: number | null;
+  marketBalance: number | null;
+  withdrawingMarketBalance: boolean;
+  stakingRewards: number | null;
+  harvestingStakingRewards: boolean;
+  usesEscrow: boolean;
+  updatingEscrowStatus: boolean;
+  myNftPageTransferDialog: any;
+  myNftPageListDialog: any;
+  myNftPageListDialogError: boolean;
+  myNftPageCancelDialog: any;
+  myNftPageListedOnly: boolean;
+  myNftPageActiveFilterOption: MarketFilterCollection;
+  mySoldNfts: any[];
+  mySoldNftsCurPage: number;
+  mySoldNftsTotalPages: number;
+  hasOutstandingOffers: boolean;
+  theme: 'light' | 'dark';
+  profile: {};
+}
 
 const userSlice = createSlice({
   name: 'user',
@@ -63,10 +99,8 @@ const userSlice = createSlice({
     updatingEscrowStatus: false,
 
     // My NFTs
-    fetchingNfts: false,
     nftsInitialized: false,
     nfts: [],
-    nftsFullyFetched: false,
     myNftPageTransferDialog: null,
     myNftPageListDialog: null,
     myNftPageListDialogError: false,
@@ -74,15 +108,7 @@ const userSlice = createSlice({
     myNftPageListedOnly: false,
     myNftPageActiveFilterOption: MarketFilterCollection.default(),
 
-    // My Listings
-    myUnfilteredListingsFetching: false,
-    myUnfilteredListings: [],
-    myUnfilteredListingsInvalidOnly: false,
-    myUnfilteredListingsCurPage: 0,
-    myUnfilteredListingsTotalPages: 0,
-
     // My Sales
-    mySoldNftsFetching: false,
     mySoldNfts: [],
     mySoldNftsCurPage: 0,
     mySoldNftsTotalPages: 0,
@@ -94,7 +120,7 @@ const userSlice = createSlice({
     theme: 'dark',
 
     profile: {},
-  },
+  } as UserState,
   reducers: {
     accountChanged(state, action) {
       state.balance = action.payload.balance;
@@ -114,16 +140,6 @@ const userSlice = createSlice({
       state.authSignature = action.payload;
     },
 
-    onCorrectChain(state, action) {
-      state.correctChain = action.payload.correctChain;
-    },
-
-    onProvider(state, action) {
-      state.provider = action.payload.provider;
-      state.needsOnboard = action.payload.needsOnboard;
-      state.correctChain = action.payload.correctChain;
-    },
-
     onBasicAccountData(state, action) {
       state.address = action.payload.address;
       state.provider = action.payload.provider;
@@ -134,31 +150,6 @@ const userSlice = createSlice({
 
     onContractServiceInitialized(state, action) {
       state.contractService = action.payload;
-    },
-
-    fetchingNfts(state, action) {
-      state.fetchingNfts = true;
-      state.nftsFullyFetched = false;
-      if (!action.payload?.persist) {
-        state.nfts = [];
-      }
-    },
-    onNftsAdded(state, action) {
-      state.nfts.push(...action.payload);
-    },
-    onNftsReplace(state, action) {
-      state.nfts = action.payload;
-    },
-    nftsFetched(state, action) {
-      state.fetchingNfts = false;
-      state.nftsInitialized = true;
-      if (action.payload) {
-        state.nfts = action.payload;
-      }
-    },
-    nftsFullyFetched(state) {
-      state.fetchingNfts = false;
-      state.nftsFullyFetched = true;
     },
     setMyNftPageTransferDialog(state, action) {
       state.myNftPageTransferDialog = action.payload;
@@ -178,71 +169,9 @@ const userSlice = createSlice({
     setMyNftPageActiveFilterOption(state, action) {
       state.myNftPageActiveFilterOption = action.payload;
     },
-    onNftLoading(state, action) {
-      state.currentNft = null;
-    },
-    onNftLoaded(state, action) {
-      state.currentNft = action.payload.nft;
-    },
-    mySoldNftsFetching(state, action) {
-      state.mySoldNftsFetching = true;
-    },
-    mySalesFetched(state, action) {
-      state.mySoldNftsFetching = false;
-      state.mySoldNfts.push(...action.payload.listings);
-      state.mySoldNftsCurPage = action.payload.page;
-      state.mySoldNftsTotalPages = action.payload.totalPages;
-    },
-    clearMySales(state) {
-      state.mySoldNfts = [];
-      state.mySoldNftsCurPage = 0;
-      state.mySoldNftsTotalPages = 0;
-    },
-    myUnfilteredListingsFetching(state, action) {
-      state.myUnfilteredListingsFetching = true;
-    },
-    myUnfilteredListingsFetched(state, action) {
-      state.myUnfilteredListingsFetching = false;
-      state.myUnfilteredListings.push(...action.payload.listings);
-      state.myUnfilteredListingsCurPage = action.payload.page;
-      state.myUnfilteredListingsTotalPages = action.payload.totalPages;
-    },
-    myUnfilteredListingsInvalidOnly(state, action) {
-      state.myUnfilteredListingsInvalidOnly = action.payload;
-    },
-    clearMyUnfilteredListings(state) {
-      state.myUnfilteredListings = [];
-      state.myUnfilteredListingsCurPage = 0;
-      state.myUnfilteredListingsTotalPages = 0;
-    },
-    listingUpdate(state, action) {
-      const nftUpdate = (nft, index, key) => {
-        const sameAddress = nft.contract.address.toLowerCase() === action.payload.contract.toLowerCase();
-        const sameId = nft.id === action.payload.id;
-        if (sameAddress && sameId) {
-          try {
-            state[key][index].listed = action.payload.listed;
-
-            if (action.payload.newPrice !== null) {
-              state[key][index].price = action.payload.newPrice;
-            }
-          } catch (error) {
-            console.log(error);
-          }
-        }
-      };
-      state.nfts.forEach((nft, index) => nftUpdate(nft, index, 'nfts'));
-      state.myUnfilteredListings.forEach((nft, index) => nftUpdate(nft, index, 'myUnfilteredListings'));
-    },
     connectingWallet(state, action) {
       state.connectingWallet = action.payload.connecting;
     },
-    // registeredCode(state, action) {
-    //   state.code = action.payload;
-    // },
-    // withdrewRewards(state) {
-    //   state.rewards = 0;
-    // },
     withdrawingMarketBalance(state) {
       state.withdrawingMarketBalance = true;
     },
@@ -268,23 +197,6 @@ const userSlice = createSlice({
       state.updatingEscrowStatus = false;
       if (action.payload !== undefined) state.usesEscrow = action.payload;
     },
-    transferedNFT(state, action) {
-      const indexesToRemove = state.nfts
-        .map((nft, index) => {
-          const sameId = ethers.BigNumber.from(nft.id).eq(action.payload.id);
-          const sameAddress = nft.address.toLowerCase() === action.payload.address.toLowerCase();
-          return sameId && sameAddress ? index : null;
-        })
-        .filter((x) => x !== null)
-        .reverse();
-
-      indexesToRemove.forEach((index) => {
-        state.nfts.splice(index, 1);
-      });
-    },
-    setIsMember(state, action) {
-      state.isMember = action.payload;
-    },
     setShowWrongChainModal(state, action) {
       state.showWrongChainModal = action.payload;
     },
@@ -292,7 +204,7 @@ const userSlice = createSlice({
       state.connectingWallet = false;
       const web3Modal = new Web3Modal({
         cacheProvider: false, // optional
-        providerOptions: [], // required
+        providerOptions: [] as any, // required
       });
       web3Modal.clearCachedProvider();
       if (state.web3modal != null) {
@@ -303,20 +215,10 @@ const userSlice = createSlice({
       state.address = '';
       state.provider = null;
       state.balance = null;
-      // state.rewards = null;
       state.marketBalance = null;
       state.stakingRewards = null;
       state.isMember = false;
-      // state.vipCount = 0;
-      // state.stakeCount = 0;
-      state.fetchingNfts = false;
-      state.nftsFullyFetched = false;
-      state.nftsInitialized = false;
-      state.nfts = [];
-      state.mySoldNftsFetching = false;
       state.mySoldNfts = [];
-      state.myUnfilteredListingsFetching = false;
-      state.myUnfilteredListings = [];
       state.profile = {};
       state.authSignature = null;
       state.contractService = null;
@@ -336,12 +238,6 @@ const userSlice = createSlice({
         state.stakingRewards = action.payload.stakingRewards;
       }
     },
-    // setVIPCount(state, action) {
-    //   state.vipCount = action.payload;
-    // },
-    // setStakeCount(state, action) {
-    //   state.stakeCount = action.payload;
-    // },
     onOutstandingOffersFound(state, action) {
       state.hasOutstandingOffers = action.payload;
     },
@@ -354,59 +250,27 @@ const userSlice = createSlice({
 export const {
   accountChanged,
   setAuthSigner,
-  onProvider,
-  fetchingNfts,
-  onNftsLoaded,
-  onNftLoading,
-  onNftsAdded,
-  onNftsReplace,
   onContractServiceInitialized,
-  nftsFetched,
-  nftsFullyFetched,
-  onNftLoaded,
-  myUnfilteredListingsFetching,
-  myUnfilteredListingsFetched,
-  myUnfilteredListingsAdded,
-  clearMyUnfilteredListings,
-  mySoldNftsFetching,
-  mySalesFetched,
-  mySalesOnNftsAdded,
-  clearMySales,
   connectingWallet,
-  onCorrectChain,
-  // registeredCode,
-  // withdrewRewards,
   withdrawingMarketBalance,
   withdrewMarketBalance,
   harvestingStakingRewards,
   harvestedStakingRewards,
   updatingEscrowStatus,
   updatedEscrowStatus,
-  listingUpdate,
-  transferedNFT,
-  setIsMember,
   setShowWrongChainModal,
   onBasicAccountData,
   onLogout,
-  elonContract,
   onThemeChanged,
   balanceUpdated,
-  // setVIPCount,
-  // setStakeCount,
   onOutstandingOffersFound,
   setProfile,
 } = userSlice.actions;
 export const user = userSlice.reducer;
 
-export const updateListed =
-  (contract, id, listed, newPrice = null) =>
-  async (dispatch) => {
-    dispatch(listingUpdate({ contract, id, listed, newPrice }));
-  };
-
 export const connectAccount =
   (firstRun = false, type = '') =>
-  async (dispatch, getState) => {
+  async (dispatch: any, getState: any) => {
     const state = getState();
     const providerOptions = {
       'custom-defiwallet': {
@@ -417,15 +281,11 @@ export const connectAccount =
         },
         options: {},
         package: DefiWalletConnectProvider,
-        connector: async (ProviderPackage, options) => {
+        connector: async (ProviderPackage: any, options: any) => {
           const connector = new DeFiWeb3Connector({
             supportedChainIds: [25],
             rpc: { 25: 'https://rpc.ebisusbay.com' },
             pollingInterval: 15000,
-            metadata: {
-              icons: ['https://ebisusbay.com/vector%20-%20face.svg'],
-              description: 'Cronos NFT Marketplace',
-            },
           });
 
           await connector.activate();
@@ -433,7 +293,7 @@ export const connectAccount =
           return provider;
         },
       },
-    };
+    } as any;
 
     if (type !== 'defi') {
       providerOptions.walletconnect = {
@@ -521,24 +381,24 @@ export const connectAccount =
       if (firstRun) {
         dispatch(appAuthInitFinished());
       }
-      web3provider.on('DeFiConnectorDeactivate', (error) => {
+      web3provider.on('DeFiConnectorDeactivate', (error: any) => {
         dispatch(onLogout());
       });
 
-      web3provider.on('disconnect', (error) => {
+      web3provider.on('disconnect', (error: any) => {
         dispatch(onLogout());
       });
 
-      web3provider.on('accountsChanged', (accounts) => {
+      web3provider.on('accountsChanged', (accounts: any) => {
         dispatch(onLogout());
         dispatch(connectAccount());
       });
 
-      web3provider.on('DeFiConnectorUpdate', (accounts) => {
+      web3provider.on('DeFiConnectorUpdate', (accounts: any) => {
         window.location.reload();
       });
 
-      web3provider.on('chainChanged', (chainId) => {
+      web3provider.on('chainChanged', (chainId: any) => {
         // Handle the new chain.
         // Correctly handling chain changes can be complicated.
         // We recommend reloading the page unless you have good reason not to.
@@ -548,7 +408,7 @@ export const connectAccount =
 
       let balance;
       let sales;
-      let stakingRewards = 0;
+      let stakingRewards: number | string = 0;
       let isMember = false;
       let fee;
       let usesEscrow = false;
@@ -606,7 +466,7 @@ export const connectAccount =
     dispatch(connectingWallet({ connecting: false }));
   };
 
-export const initProvider = () => async (dispatch) => {
+export const initProvider = () => async (dispatch: any) => {
   const ethereum = await detectEthereumProvider();
 
   if (ethereum == null || ethereum !== window.ethereum) {
@@ -631,8 +491,6 @@ export const initProvider = () => async (dispatch) => {
     //   correctChain: correctChain,
     // };
 
-    //dispatch(onProvider(obj))
-
     provider.on('accountsChanged', (accounts) => {
       dispatch(
         accountChanged({
@@ -651,7 +509,7 @@ export const initProvider = () => async (dispatch) => {
   }
 };
 
-export const chainConnect = (type) => async (dispatch) => {
+export const chainConnect = () => async (dispatch: any) => {
   if (window.ethereum) {
     const cid = ethers.utils.hexValue(BigNumber.from(config.chain.id));
     try {
@@ -659,7 +517,7 @@ export const chainConnect = (type) => async (dispatch) => {
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: cid }],
       });
-    } catch (error) {
+    } catch (error: any) {
       // This error code indicates that the chain has not been added to MetaMask
       // if it is not, then install it into the user MetaMask
       if (error.code === 4902) {
@@ -701,16 +559,16 @@ export const chainConnect = (type) => async (dispatch) => {
   }
 };
 
-export const checkForOutstandingOffers = () => async (dispatch, getState) => {
+export const checkForOutstandingOffers = () => async (dispatch: any, getState: any) => {
   const state = getState();
   const collectionsStats = state.collections.collections;
   const nfts = state.offer.myNFTs;
 
-  const collectionAddresses = nfts.map((nft) => nft.nftAddress.toLowerCase());
+  const collectionAddresses = nfts.map((nft: any) => nft.nftAddress.toLowerCase());
   const offers = await getAllOffers(collectionAddresses, offerState.ACTIVE.toString());
 
-  const findCollectionFloor = (knownContract) => {
-    const collectionStats = collectionsStats.find((o) => {
+  const findCollectionFloor = (knownContract: any) => {
+    const collectionStats = collectionsStats.find((o: any) => {
       if (knownContract.multiToken && o.collection.indexOf('-') !== -1) {
         let parts = o.collection.split('-');
         return caseInsensitiveCompare(knownContract.address, parts[0]) && knownContract.id === parseInt(parts[1]);
@@ -722,9 +580,9 @@ export const checkForOutstandingOffers = () => async (dispatch, getState) => {
     return collectionStats ? collectionStats.floorPrice : null;
   };
 
-  const receivedOffers = offers.data.filter((offer) => {
+  const receivedOffers = offers.data.filter((offer: any) => {
     const nft = nfts.find(
-      (c) => caseInsensitiveCompare(c.nftAddress, offer.nftAddress) && parseInt(c.nftId) === parseInt(offer.nftId)
+      (c: any) => caseInsensitiveCompare(c.nftAddress, offer.nftAddress) && parseInt(c.nftId) === parseInt(offer.nftId)
     );
 
     const knownContract = findCollectionByAddress(offer.nftAddress, offer.nftId);
@@ -744,19 +602,19 @@ export const checkForOutstandingOffers = () => async (dispatch, getState) => {
   dispatch(onOutstandingOffersFound(receivedOffers.length > 0));
 };
 
-export const setTheme = (theme) => async (dispatch) => {
+export const setTheme = (theme: string) => async (dispatch: any) => {
   setThemeInStorage(theme);
   dispatch(onThemeChanged(theme));
 };
 
-export const updateBalance = () => async (dispatch, getState) => {
+export const updateBalance = () => async (dispatch: any, getState: any) => {
   const { user } = getState();
   const { address, provider } = user;
   const balance = ethers.utils.formatEther(await provider.getBalance(address));
   dispatch(userSlice.actions.balanceUpdated(balance));
 };
 
-export const retrieveProfile = () => async (dispatch, getState) => {
+export const retrieveProfile = () => async (dispatch: any, getState: any) => {
   const { user } = getState();
   const { address } = user;
 
@@ -776,7 +634,6 @@ export class AccountMenuActions {
   //     const tx = await user.contractService.membership.withdrawPayments(user.address);
   //     const receipt = await tx.wait();
   //     toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-  //     dispatch(withdrewRewards());
   //     dispatch(updateBalance());
   //   } catch (error) {
   //     if (error.data) {
@@ -790,7 +647,7 @@ export class AccountMenuActions {
   //   }
   // };
 
-  static withdrawMarketBalance = () => async (dispatch, getState) => {
+  static withdrawMarketBalance = () => async (dispatch: any, getState: any) => {
     const { user } = getState();
     try {
       dispatch(withdrawingMarketBalance());
@@ -799,7 +656,7 @@ export class AccountMenuActions {
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       dispatch(withdrewMarketBalance({ success: true }));
       dispatch(updateBalance());
-    } catch (error) {
+    } catch (error: any) {
       dispatch(withdrewMarketBalance({ success: false }));
       if (error.data) {
         toast.error(error.data.message);
@@ -813,7 +670,7 @@ export class AccountMenuActions {
     }
   };
 
-  static harvestStakingRewards = () => async (dispatch, getState) => {
+  static harvestStakingRewards = () => async (dispatch: any, getState: any) => {
     const { user } = getState();
     try {
       dispatch(harvestingStakingRewards());
@@ -822,7 +679,7 @@ export class AccountMenuActions {
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       dispatch(harvestedStakingRewards({ success: true }));
       dispatch(updateBalance());
-    } catch (error) {
+    } catch (error: any) {
       dispatch(harvestedStakingRewards({ success: false }));
       if (error.data) {
         toast.error(error.data.message);
@@ -835,7 +692,7 @@ export class AccountMenuActions {
     }
   };
 
-  static toggleEscrowOptIn = (optIn) => async (dispatch, getState) => {
+  static toggleEscrowOptIn = (optIn: boolean) => async (dispatch: any, getState: any) => {
     const { user } = getState();
     try {
       dispatch(updatingEscrowStatus());
@@ -843,8 +700,8 @@ export class AccountMenuActions {
       const receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       dispatch(updatedEscrowStatus(optIn));
-    } catch (error) {
-      dispatch(updatedEscrowStatus());
+    } catch (error: any) {
+      dispatch(updatedEscrowStatus(undefined));
       if (error.data) {
         toast.error(error.data.message);
       } else if (error.message) {
@@ -865,51 +722,43 @@ export class AccountMenuActions {
  * after ts migration we can add private keyword.
  */
 export class MyNftPageActions {
-  static showMyNftPageTransferDialog = (nft) => async (dispatch) => {
+  static showMyNftPageTransferDialog = (nft: any) => async (dispatch: any) => {
     dispatch(userSlice.actions.setMyNftPageTransferDialog(nft));
   };
 
-  static hideMyNftPageTransferDialog = () => async (dispatch) => {
-    dispatch(userSlice.actions.setMyNftPageTransferDialog());
+  static hideMyNftPageTransferDialog = () => async (dispatch: any) => {
+    dispatch(userSlice.actions.setMyNftPageTransferDialog(null));
   };
 
-  static showMyNftPageListDialog = (nft, listing) => async (dispatch) => {
+  static showMyNftPageListDialog = (nft: any, listing: any) => async (dispatch: any) => {
     dispatch(userSlice.actions.setMyNftPageListDialog({ nft, listing }));
   };
 
-  static hideMyNftPageListDialog = () => async (dispatch) => {
+  static hideMyNftPageListDialog = () => async (dispatch: any) => {
     dispatch(userSlice.actions.setMyNftPageListDialog(null));
   };
 
-  static showMyNftPageCancelDialog = (nft) => async (dispatch) => {
+  static showMyNftPageCancelDialog = (nft: any) => async (dispatch: any) => {
     dispatch(userSlice.actions.setMyNftPageCancelDialog(nft));
   };
 
-  static hideNftPageCancelDialog = () => async (dispatch) => {
+  static hideNftPageCancelDialog = () => async (dispatch: any) => {
     dispatch(userSlice.actions.setMyNftPageCancelDialog(null));
   };
 }
 
 export class MyListingsCollectionPageActions {
-  static showMyNftPageCancelDialog = (nft) => async (dispatch) => {
+  static showMyNftPageCancelDialog = (nft: any) => async (dispatch: any) => {
     dispatch(userSlice.actions.setMyNftPageCancelDialog(nft));
   };
 
-  static showMyNftPageListDialog = (nft, listing) => async (dispatch) => {
+  static showMyNftPageListDialog = (nft: any, listing: any) => async (dispatch: any) => {
     dispatch(userSlice.actions.setMyNftPageListDialog({ nft, listing }));
   };
-
-  static setInvalidOnly =
-    (status = false) =>
-    async (dispatch) => {
-      dispatch(userSlice.actions.myUnfilteredListingsInvalidOnly(status));
-    };
 }
 
 export class MyNftCancelDialogActions {
-  static cancelListing =
-    ({ listingId, address, id }) =>
-    async (dispatch, getState) => {
+  static cancelListing = ({ listingId, address, id }: {listingId: string, address: string, id: any}) => async (dispatch: any, getState: any) => {
       const state = getState();
       const marketContract = state.user.contractService.market;
       try {
@@ -919,10 +768,8 @@ export class MyNftCancelDialogActions {
 
         dispatch(MyNftPageActions.hideNftPageCancelDialog());
 
-        dispatch(updateListed(address, id, false));
-
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      } catch (error) {
+      } catch (error: any) {
         dispatch(MyNftPageActions.hideNftPageCancelDialog());
 
         if (error.data) {

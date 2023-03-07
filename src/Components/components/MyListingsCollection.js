@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {MyListingsCollectionPageActions, MyNftPageActions,} from '@src/GlobalState/User';
 import {Form, Spinner} from 'react-bootstrap';
 import MyNftCancelDialog from './MyNftCancelDialog';
-import InvalidListingsPopup from './InvalidListingsPopup';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import {useRouter} from 'next/router';
@@ -147,7 +146,6 @@ const MyListingsCollection = ({ walletAddress = null }) => {
       </div>
 
       <MyNftCancelDialog/>
-      <InvalidListingsPopup navigateTo={false}/>
       {user.myNftPageListDialog?.nft && (
         <MakeListingDialog
           isOpen={!!user.myNftPageListDialog?.nft}
