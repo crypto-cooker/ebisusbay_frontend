@@ -797,3 +797,16 @@ export const pluralize = (val, word, plural = word + 's') => {
 export const isGaslessListing = (listingId) => {
   return listingId && listingId.toString().startsWith('0x')
 }
+
+export const croToUsd = (value, rate) => {
+  if (typeof value === 'string') value = Number(value);
+  if (typeof rate === 'string') rate = Number(rate);
+
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
+
+  console.log(value, rate)
+  return formatter.format(value * rate);
+}

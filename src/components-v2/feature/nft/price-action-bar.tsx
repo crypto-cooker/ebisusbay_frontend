@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Contract, ethers} from 'ethers';
 import {toast} from 'react-toastify';
 import {
-  createSuccessfulTransactionToastContent,
+  createSuccessfulTransactionToastContent, croToUsd,
   isGaslessListing,
   isNftBlacklisted,
   isUserBlacklisted,
@@ -24,12 +24,16 @@ import useFeatureFlag from "@src/hooks/useFeatureFlag";
 import Constants from "@src/constants";
 import useCancelGaslessListing from '@src/Components/Account/Settings/hooks/useCancelGaslessListing';
 
-import {Flex, Heading, Table, TableContainer, Tbody, Td, Text, Tr, useDisclosure,} from '@chakra-ui/react';
+import {Box, Flex, Heading, Stack, Table, TableContainer, Tbody, Td, Text, Tr, useDisclosure,} from '@chakra-ui/react';
 import PurchaseConfirmationDialog from "@src/components-v2/shared/dialogs/purchase-confirmation";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
 import {TransactionReceipt} from "@ethersproject/abstract-provider";
 import {useAppSelector} from "@src/Store/hooks";
 import ContractService from "@src/core/contractService";
+import {useGlobalPrice} from "@src/hooks/useGlobalPrices";
+import {appConfig} from "@src/Config";
+
+const config = appConfig();
 
 interface PriceActionBarProps {
   offerType: string;
@@ -46,6 +50,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [runAuthedFunction] = useAuthedFunction();
+  const globalPrice = useGlobalPrice(config.chain.id);
 
   const { Features } = Constants;
   const isWarningMessageEnabled = useFeatureFlag(Features.UNVERIFIED_WARNING);
@@ -218,12 +223,18 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
                       <Text fontSize="sm" className="text-muted">Ends in {timeSince(listing.expirationDate)}</Text>
                     )}
                   </Flex>
-                  <span className="d-flex fs-3 ms-1 fw-bold">
+                  <span>
                     {listing ? (
-                      <>
+                      <Stack direction='row' align='baseline'>
                         <Image src="/img/logos/cdc_icon.svg" width={25} height={25} className="my-auto" alt='Cronos Logo' />
-                        <span className="ms-1">{ethers.utils.commify(listing.price)}</span>
-                      </>
+
+                        <Text fontSize={28} ms={1} fontWeight='bold'>
+                          <span className="ms-1">{ethers.utils.commify(listing.price)}</span>
+                        </Text>
+                        {!!globalPrice.data && (
+                          <Box as='span' ms={1} fontSize='sm' className="text-muted">({croToUsd(listing.price, globalPrice.data.usdPrice)})</Box>
+                        )}
+                      </Stack>
                     ) : (
                       <span>-</span>
                     )}
