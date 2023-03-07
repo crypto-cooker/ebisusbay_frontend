@@ -36,7 +36,7 @@ interface UserState {
   needsOnboard: boolean;
   isStaking: boolean;
   fee: number;
-  authSignature: string | null;
+  authSignature: any;
   contractService: UserContractService | null;
   correctChain: boolean;
   showWrongChainModal: boolean;
