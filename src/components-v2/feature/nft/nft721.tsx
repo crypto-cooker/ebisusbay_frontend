@@ -236,7 +236,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
   const [babyWeirdApeBreed, setBabyWeirdApeBreed] = useState<any>(null);
   const [ladyWeirdApeChildren, setLadyWeirdApeChildren] = useState<number | null>(null);
   const [voxelClaimed, setVoxelClaimed] = useState(false);
-  const [evoSkullTraits, setEvoSkullTraits] = useState<{ key: string; value: unknown; type: string; }[]>();
+  const [onChainPowertraits, setOnChainPowertraits] = useState<{ key: string; value: unknown; type: string; }[]>();
   const [lazyHorseTraits, setLazyHorseTraits] = useState<any>([]);
   const [customProfile, setCustomProfile] = useState({
     name: null,
@@ -407,18 +407,18 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
       if (isEvoSkullCollection(address)) {
         const abiFile = require(`@src/Assets/abis/evo-skull.json`);
         const attributes = await getAttributes(abiFile);
-        setEvoSkullTraits(attributes);
+        setOnChainPowertraits(attributes);
       } else {
-        setEvoSkullTraits([]);
+        setOnChainPowertraits([]);
       }
     }
     async function getCroSkullPetsAttributes() {
       if (isCroSkullPetsCollection(address)) {
         const abiFile = require(`@src/Assets/abis/croskull-pets.json`);
         const attributes = await getAttributes(abiFile.abi);
-        setEvoSkullTraits(attributes);
+        setOnChainPowertraits(attributes);
       } else {
-        setEvoSkullTraits([]);
+        setOnChainPowertraits([]);
       }
     }
     getEvoSkullAttributes();
@@ -763,7 +763,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                           <span onClick={() => handleTabChange(tabs.properties)}>Properties</span>
                         </li>
                       )}
-                      {((powertraits && powertraits.length > 0) || (evoSkullTraits && evoSkullTraits.length > 0)) && (
+                      {((powertraits && powertraits.length > 0) || (onChainPowertraits && onChainPowertraits.length > 0)) && (
                         <li className={`tab ${currentTab === tabs.powertraits ? 'active' : ''}`}>
                           <span onClick={() => handleTabChange(tabs.powertraits)}>In-Game Attributes</span>
                         </li>
@@ -840,7 +840,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                       )}
                       {currentTab === tabs.powertraits && (
                         <div className="tab-2 onStep fadeIn">
-                          {(powertraits && powertraits.length > 0) || (evoSkullTraits && evoSkullTraits.length > 0) || (lazyHorseTraits && lazyHorseTraits.length > 0) ? (
+                          {(powertraits && powertraits.length > 0) || (onChainPowertraits && onChainPowertraits.length > 0) || (lazyHorseTraits && lazyHorseTraits.length > 0) ? (
                             <>
                               <div className="d-block mb-3">
                                 <div className="row gx-3 gy-2">
@@ -862,9 +862,9 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                                         />
                                       );
                                     })}
-                                  {evoSkullTraits &&
-                                    Array.isArray(evoSkullTraits) &&
-                                    evoSkullTraits.map((data: any, i) => {
+                                  {onChainPowertraits &&
+                                    Array.isArray(onChainPowertraits) &&
+                                    onChainPowertraits.map((data: any, i) => {
                                       return (
                                         <Trait
                                           key={i}

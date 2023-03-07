@@ -481,7 +481,9 @@ export const isEvoSkullCollection = (address) => {
 };
 
 export const isCroSkullPetsCollection = (address) => {
-  return isCollection(address, 'croskull-pets', '0xB77959DC7a12F7549ACC084Af01259Fc48813c89');
+  return isCollection(address, 'croskull-pets', '0xB77959DC7a12F7549ACC084Af01259Fc48813c89')||
+    isCollection(address, 'croskull-pets-s2', '0x54655D5468f072D5bcE1577c4a46F701C28a41A7') ||
+    isCollection(address, 'croskull-pets-s3', '0x31B378ac025a341839CD81C4D29A8457324D3EbC');
 };
 
 export const isCroniesCollection = (address) => {
