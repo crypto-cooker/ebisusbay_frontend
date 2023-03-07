@@ -809,6 +809,5 @@ export const croToUsd = (value, rate) => {
     currency: 'USD',
   });
 
-  console.log(value, rate)
   return formatter.format(value * rate);
 }
