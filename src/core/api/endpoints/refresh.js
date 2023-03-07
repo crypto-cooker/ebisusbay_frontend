@@ -7,9 +7,5 @@ const api = axios.create({
 });
 
 export async function refreshToken(address, token, listingId) {
-  const response = await api.put('refresh', {address, token, listingId})
-
-  console.log('response', response);
-
-  return response;
+  return await api.put('refresh', {address, token, listingId});
 }

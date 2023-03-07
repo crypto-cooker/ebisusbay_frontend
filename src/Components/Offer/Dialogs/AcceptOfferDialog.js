@@ -188,6 +188,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
       setExecutingAcceptOffer(false);
       onClose();
     } catch (error) {
+      console.log(error)
       if (error.data) {
         toast.error(error.data.message);
       } else if (error.message) {
