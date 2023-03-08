@@ -41,26 +41,32 @@ import {hostedImage} from "@src/helpers/image";
 import Blockies from "react-blockies";
 import {ethers} from "ethers";
 import {BlueCheckIcon} from "@src/components-v2/shared/icons/blue-check";
+import styled from "styled-components";
+import LayeredIcon from "@src/Components/components/LayeredIcon";
+import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
 
 interface ResponsiveCollectionsTableProps {
   data: InfiniteData<AxiosResponse<IPaginatedList<any>>>;
   timeFrame: string | null;
   onSort: (field: string) => void;
   breakpointValue?: string
+  primarySort?: SortKeys;
 }
 
-const ResponsiveCollectionsTable = ({data, timeFrame, onSort, breakpointValue}: ResponsiveCollectionsTableProps) => {
+export type SortKeys = 'totalvolume' | 'totalsales' | 'totalfloorprice' | 'totalaveragesaleprice' | 'totalactive';
+
+const ResponsiveCollectionsTable = ({data, timeFrame, onSort, breakpointValue, primarySort = 'totalvolume'}: ResponsiveCollectionsTableProps) => {
   const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'lg']: false}, {fallback: 'lg'})
 
   return shouldUseAccordion ? (
-    <DataAccordion data={data} timeFrame={timeFrame} onSort={onSort} />
+    <DataAccordion data={data} timeFrame={timeFrame} primarySort={primarySort} />
   ) : (
     <DataTable data={data} timeFrame={timeFrame} onSort={onSort} />
   )
 }
 
 
-const DataTable = ({data, timeFrame, onSort}: ResponsiveCollectionsTableProps) => {
+const DataTable = ({data, timeFrame, onSort}: Pick<ResponsiveCollectionsTableProps, 'data' | 'timeFrame' | 'onSort'>) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const textColor = useColorModeValue('#727272', '#a2a2a2');
 
@@ -185,8 +191,31 @@ const DataTable = ({data, timeFrame, onSort}: ResponsiveCollectionsTableProps) =
   )
 };
 
-const DataAccordion = ({data, timeFrame}: ResponsiveCollectionsTableProps) => {
+const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollectionsTableProps, 'data' | 'timeFrame' | 'primarySort'>) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
+
+  const stats = (collection: any): {[key: string]: { field: string, value: any }} => ({
+    totalvolume: {
+      field: 'Volume',
+      value: siPrefixedNumber(collectionVolume(collection, timeFrame))
+    },
+    totalsales: {
+      field: 'Sales',
+      value: siPrefixedNumber(collectionSales(collection, timeFrame))
+    },
+    totalfloorprice: {
+      field: 'Floor',
+      value: collection.listable && collection.numberActive > 0 ? siPrefixedNumber(Math.round(collection.floorPrice)) : 'N/A'
+    },
+    totalaveragesaleprice: {
+      field: 'Avg',
+      value: collectionAveragePrices(collection, timeFrame)
+    },
+    totalactive: {
+      field: 'Active',
+      value: siPrefixedNumber(collection.numberActive)
+    },
+  });
 
   return (
     <Accordion w='full' allowMultiple>
@@ -198,24 +227,29 @@ const DataAccordion = ({data, timeFrame}: ResponsiveCollectionsTableProps) => {
                 <Box my="auto" fontWeight="bold" fontSize="sm" me={2}>{(pageIndex * 50) + (index + 1)}</Box>
                 <Box flex='1' textAlign='left' fontWeight='bold' my='auto'>
                   <HStack>
-                    {collection.metadata?.avatar ? (
-                      <Box
-                        width={41}
-                        height={41}
-                        position='relative'
-                        rounded='full'
-                        overflow='hidden'
-                      >
-                        <CdnImage
-                          src={hostedImage(collection.metadata.avatar, true)}
-                          alt={collection?.name}
-                          width="40"
-                          height="40"
-                        />
-                      </Box>
-                    ) : (
-                      <Blockies seed={collection.collection.toLowerCase()} size={10} scale={5} />
-                    )}
+                    <Box position='relative'>
+                      {collection.metadata?.avatar ? (
+                        <Box
+                          width='40px'
+                          height='40px'
+                          position='relative'
+                          rounded='full'
+                          overflow='hidden'
+                        >
+                          <CdnImage
+                            src={hostedImage(collection.metadata.avatar, true)}
+                            alt={collection?.name}
+                            width="40"
+                            height="40"
+                          />
+                        </Box>
+                      ) : (
+                        <Blockies seed={collection.collection.toLowerCase()} size={10} scale={5} />
+                      )}
+                      <VerifiedIcon>
+                        <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={7} />
+                      </VerifiedIcon>
+                    </Box>
                     <VStack align='start' spacing={0} flex='1' fontSize='sm' >
                       <Link href={`/collection/${collection.slug}`}>
                         {collection.name}
@@ -228,10 +262,10 @@ const DataAccordion = ({data, timeFrame}: ResponsiveCollectionsTableProps) => {
                 </Box>
                 <Box>
                   <VStack align='end' spacing={0} fontSize='sm'>
-                    <Text>Volume</Text>
+                    <Text>{stats(collection)[primarySort as SortKeys].field}</Text>
                     <HStack spacing={1} h="full">
                       <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
-                      <Box fontWeight='bold'>{siPrefixedNumber(collectionVolume(collection, timeFrame))}</Box>
+                      <Box fontWeight='bold'>{stats(collection)[primarySort as SortKeys].value}</Box>
                     </HStack>
                   </VStack>
                 </Box>
@@ -322,5 +356,18 @@ const collectionAveragePrices = (collection: any, timeFrame: string | null) => {
   if (timeFrame === '7d') return Math.round(Math.round(collection.averageSalePrice7d));
   if (timeFrame === '30d') return Math.round(Math.round(collection.averageSalePrice30d));
 };
+
+const VerifiedIcon = styled.span`
+  font-size: 8px;
+  color: #ffffff;
+  background: $color;
+  border-radius: 100%;
+  -moz-border-radius: 100%;
+  -webkit-border-radius: 100%;
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  z-index: 2;
+`;
 
 export default ResponsiveCollectionsTable;
