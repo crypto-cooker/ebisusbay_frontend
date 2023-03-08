@@ -1,6 +1,4 @@
 import axios from "axios";
-// import {ListingsQuery} from "@src/core/api/queries/listings";
-
 const api = axios.create({
   baseURL: 'api/',
 });
@@ -198,6 +196,43 @@ export const addTroops = async (address, signature, troops) => {
     return await api.post(baseURL + "api/ryoshi-dynasties/armies?", 
       {troops},
       {params: {address, signature}});
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const getRegions= async () => {
+  try{
+    var gameID = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    var regions = gameID.data.data.parent.map.regions;
+    return regions;
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const getControlPoints= async (regionNumber) => {
+  try{
+    var gameID = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    var regions = gameID.data.data.parent.map.regions;
+    //get all control points under regions
+    var controlPoints = [];
+    regions[regionNumber].controlPoints.forEach((controlPoint) => {
+      controlPoints.push(controlPoint.id);
+    });
+    return controlPoints;
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const getLeaderBoard = async (controlPointId) => {
+  try{
+    var gameID = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    var data = await api.get(baseURL + "api/ryoshi-dynasties/control-points/"+controlPointId,
+      {params: {gameId: gameID.data.data.id}});
+    // console.log(data);
+    return data.data.data.leaderBoard;
   }
   catch(error){
     throw error;
