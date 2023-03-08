@@ -275,28 +275,42 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
               </Flex>
               <AccordionPanel px={0}>
                 <SimpleGrid columns={4} textAlign='center' fontSize='sm' bg={hoverBackground} rounded='md' py={2}>
-                  <Stack spacing={0}>
-                    <Text fontWeight='bold'>Sales</Text>
-                    <Text>{siPrefixedNumber(collectionSales(collection, timeFrame))}</Text>
-                  </Stack>
-                  <Stack spacing={0}>
-                    <Text fontWeight='bold'>Floor</Text>
-                    <HStack spacing={1} w="full" justify="center">
-                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
-                      <Box>{collection.listable && collection.numberActive > 0 ? siPrefixedNumber(Math.round(collection.floorPrice)) : 'N/A'}</Box>
-                    </HStack>
-                  </Stack>
-                  <Stack spacing={0}>
-                    <Text fontWeight='bold'>Avg</Text>
-                    <HStack spacing={1} w="full" justify="center">
-                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
-                      <Box>{collectionAveragePrices(collection, timeFrame)}</Box>
-                    </HStack>
-                  </Stack>
-                  <Stack spacing={0}>
-                    <Text fontWeight='bold'>Active</Text>
-                    <Text>{siPrefixedNumber(collection.numberActive)}</Text>
-                  </Stack>
+                  {primarySort !== 'totalvolume' && (
+                    <Stack spacing={0}>
+                      <Text fontWeight='bold'>Volume</Text>
+                      <Text>{siPrefixedNumber(collectionVolume(collection, timeFrame))}</Text>
+                    </Stack>
+                  )}
+                  {primarySort !== 'totalsales' && (
+                    <Stack spacing={0}>
+                      <Text fontWeight='bold'>Sales</Text>
+                      <Text>{siPrefixedNumber(collectionSales(collection, timeFrame))}</Text>
+                    </Stack>
+                  )}
+                  {primarySort !== 'totalfloorprice' && (
+                    <Stack spacing={0}>
+                      <Text fontWeight='bold'>Floor</Text>
+                      <HStack spacing={1} w="full" justify="center">
+                        <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                        <Box>{collection.listable && collection.numberActive > 0 ? siPrefixedNumber(Math.round(collection.floorPrice)) : 'N/A'}</Box>
+                      </HStack>
+                    </Stack>
+                  )}
+                  {primarySort !== 'totalaveragesaleprice' && (
+                    <Stack spacing={0}>
+                      <Text fontWeight='bold'>Avg</Text>
+                      <HStack spacing={1} w="full" justify="center">
+                        <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                        <Box>{collectionAveragePrices(collection, timeFrame)}</Box>
+                      </HStack>
+                    </Stack>
+                  )}
+                  {primarySort !== 'totalactive' && (
+                    <Stack spacing={0}>
+                      <Text fontWeight='bold'>Active</Text>
+                      <Text>{siPrefixedNumber(collection.numberActive)}</Text>
+                    </Stack>
+                  )}
                 </SimpleGrid>
               </AccordionPanel>
             </AccordionItem>
