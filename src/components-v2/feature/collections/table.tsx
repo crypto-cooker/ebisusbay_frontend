@@ -5,7 +5,9 @@ import {Spinner} from 'react-bootstrap';
 import useGetCollections from './hooks/useGetCollections';
 import {filter} from 'lodash';
 import {appConfig} from "@src/Config";
-import ResponsiveCollectionsTable from "@src/components-v2/shared/responsive-table/responsive-collections-table";
+import ResponsiveCollectionsTable, {
+  SortKeys
+} from "@src/components-v2/shared/responsive-table/responsive-collections-table";
 import {Box, Button as ChakraButton, ButtonGroup, Collapse} from "@chakra-ui/react";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 
@@ -60,7 +62,6 @@ const Table = ({ timeFrame, searchTerms, onlyVerified, showMobileSort }: TablePr
       params.direction = 'desc';
     }
     setTypeSort({ ...params });
-
   }
 
   useEffect(() => {
@@ -141,6 +142,7 @@ const Table = ({ timeFrame, searchTerms, onlyVerified, showMobileSort }: TablePr
             data={data}
             timeFrame={timeFrame}
             onSort={sortCollections}
+            primarySort={typeSort.sortBy as SortKeys}
           />
         )}
       </InfiniteScroll>
