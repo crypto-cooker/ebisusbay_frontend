@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ethers } from 'ethers';
+import {Contract, ethers} from 'ethers';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Form, ProgressBar, Spinner } from 'react-bootstrap';
@@ -15,16 +15,17 @@ import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Heading} from "@chakra-ui/react";
 
 import { getCollections } from "@src/core/api/next/collectioninfo";
+import {useAppSelector} from "@src/Store/hooks";
 
 const Drop = () => {
-  const [ships, setShips] = useState([]);
-  const [partsBalances, setPartsBalances] = useState([]);
-  const [shipContract, setShipContract] = useState(null);
+  const [ships, setShips] = useState<any[]>([]);
+  const [partsBalances, setPartsBalances] = useState<number[]>([]);
+  const [shipContract, setShipContract] = useState<Contract | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [totalSupply, setTotalSupply] = useState(0);
   const [maxSupply, setMaxSupply] = useState(0);
 
-  const user = useSelector((state) => {
+  const user = useAppSelector((state) => {
     return state.user;
   });
 
@@ -94,7 +95,7 @@ const Drop = () => {
     }
   }, [user.provider]);
 
-  const mint = async (address, quantity) => {
+  const mint = async (address: string, quantity: number) => {
     if (!shipContract) return;
 
     let extra = {
@@ -106,7 +107,7 @@ const Drop = () => {
       const receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       await refreshPartsBalance();
-    } catch (err) {
+    } catch (err: any) {
       toast.error(err.message);
     } finally {
     }
@@ -229,11 +230,18 @@ const GreyscaleImg = styled.img`
   filter: grayscale(100%);
 `;
 
-const ShipBuilderCard = ({ type, shipAddress, mintCallback, quantityCollected }) => {
+interface ShipBuilderCardProps {
+  type: string;
+  shipAddress: string;
+  mintCallback: (address: string, quantity: number) => void;
+  quantityCollected: number[];
+}
+
+const ShipBuilderCard = ({ type, shipAddress, mintCallback, quantityCollected }: ShipBuilderCardProps) => {
   const [isMinting, setIsMinting] = useState(false);
   const [quantity, setQuantity] = useState(0);
 
-  const onQuantityChange = (key, e) => {
+  const onQuantityChange = (key: string, e: any) => {
     const value = e.target.value;
     const maxAvailable = Math.min(...quantityCollected);
     console.log(value, quantityCollected, maxAvailable);
@@ -326,7 +334,7 @@ const ShipBuilderCard = ({ type, shipAddress, mintCallback, quantityCollected })
                       <div className="col d-flex justify-content-center">
                         <button
                           className="btn-main lead mb-5 mr15"
-                          onClick={() => onMint(shipAddress, quantity)}
+                          onClick={onMint}
                           disabled={quantity < 1}
                         >
                           {isMinting ? (

@@ -1,7 +1,12 @@
 import {Heading, Text} from "@chakra-ui/react";
 import React from "react";
 
-const Header = ({ title, subtitle }) => {
+interface HeaderProps {
+  title: string;
+  subtitle?: string;
+}
+
+const PageHeader = ({ title, subtitle }: HeaderProps) => {
 
   return (
     <section className="jumbotron breadcumb no-bg tint">
@@ -21,4 +26,4 @@ const Header = ({ title, subtitle }) => {
   )
 }
 
-export default Header;
+export default PageHeader;

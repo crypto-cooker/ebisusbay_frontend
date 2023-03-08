@@ -20,24 +20,28 @@ const useGetCollections = () => {
   });
   
 
-  const changeFilters = (newFilter) => {
+  const changeFilters = (newFilter: any) => {
     setFilters({...filters, ...newFilter});
   }
 
-  const formatCollections = (collections) => {
+  const formatCollections = (collections: any) => {
 
-    const skippableCollections = mergedCollections.reduce((p, n) => {
-      p.push(...n.addresses.map((a) => a.toLowerCase()));
+    const skippableCollections = mergedCollections.reduce((p: any[], n) => {
+      p.push(...n.addresses.map((a: any) => a.toLowerCase()));
       return p;
     }, []);
 
     return collections
-      .filter((collection) => {
+      .filter((collection: any) => {
         return !skippableCollections.some((c) => caseInsensitiveCompare(c, collection.address));
       })
-      .map((collection) => {
+      .map((collection: any) => {
       return {
         averageSalePrice: collection.stats?.total?.avgSalePrice,
+        averageSalePrice1d: collection.stats?.total?.avgSalePrice1d,
+        averageSalePrice7d: collection.stats?.total?.avgSalePrice7d,
+        averageSalePrice30d: collection.stats?.total?.avgSalePrice30d,
+        averageSalePrice1dIncrease: collection.stats?.total?.avgSalePrice1d_increase,
         collection: collection.address,
         floorPrice: collection.stats?.total?.floorPrice,
         listable: collection.listable,
@@ -45,10 +49,11 @@ const useGetCollections = () => {
         name: collection.name,
         numberActive: collection.stats?.total?.active,
         numberCancelled: collection.stats?.total?.cancelled,
-        numberOfSales: collection.stats?.total?.complete,
+        numberOfSales: collection.stats?.total?.sales,
         sales1d: collection.stats?.total?.sales1d,
         sales7d: collection.stats?.total?.sales7d,
         sales30d: collection.stats?.total?.sales30d,
+        sales1dIncrease: collection.stats?.total?.sales1d_increase,
         slug: collection.slug,
         totalFees: collection.stats?.total?.fee,
         totalRoyalties: collection.stats?.total?.royalty,
@@ -56,6 +61,7 @@ const useGetCollections = () => {
         volume1d: collection.stats?.total?.volume1d,
         volume7d: collection.stats?.total?.volume7d,
         volume30d: collection.stats?.total?.volume30d,
+        volume1dIncrease: collection.stats?.total?.volume1d_increase,
         multiToken: collection.multiToken,
         verification: collection.verification
       };
@@ -95,7 +101,7 @@ const useGetCollections = () => {
     return formatCollections(res.data.collections);
   }
 
-  return [filters, getCollections, changeFilters];
+  return [filters, getCollections, changeFilters] as const;
 }
 
 export default useGetCollections;
