@@ -570,8 +570,12 @@ async function getAllListingsForUser(walletAddress) {
     });
     const url = new URL(api.listings, `${api.baseUrl}`);
     const listingsReponse = await (await fetch(`${url}?${queryString}`)).json();
-    listings = [...listings, ...listingsReponse.listings];
-    chunkParams.complete = listingsReponse.listings.length < chunkParams.pageSize;
+
+    // Workaround in testnet in case testnet doesn't return the correct response
+    const responseListings = listingsReponse.listings ?? [];
+
+    listings = [...listings, ...responseListings];
+    chunkParams.complete = responseListings.length < chunkParams.pageSize;
     chunkParams.curPage++;
   }
 
