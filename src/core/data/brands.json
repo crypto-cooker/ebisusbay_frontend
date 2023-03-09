@@ -457,8 +457,7 @@
       "0x69B0F59900E123Ad5D3AA37BB022fDe32A4d24B0",
       "0x8333624EEb54E0c9FF6C96D41645d60463CE9b22",
       "0x8f97Bb2352fb1DD78C0A108a6ed279a3c2b6d9D1",
-      "0x13Eb301c0AC03D777dE915423B34195D56C14a21",
-      "0xca00aba7689e3c0f9f74e1f8d82e61c04c787734"
+      "0x13Eb301c0AC03D777dE915423B34195D56C14a21"
     ],
     "socials": {
       "website": "https://thedegenerated.art/",
@@ -932,6 +931,27 @@
       "twitter": "https://twitter.com/kaiju_of_cronos",
       "discord": "https://discord.gg/kaijuofcronos",
       "gitbook": "https://docs.kaijuofcronos.com/"
+    },
+    "featured": false,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "cr00ts-club",
+    "name": "Cr00ts Club",
+    "description": "Welcome in the growing ecosystem of the Cr00ts, we are here to takeover the Cronos chain \uD83D\uDE0E",
+    "images": {
+      "banner": "/img/brands/cr00ts-club/banner.webp",
+      "preview": "/img/brands/cr00ts-club/preview.webp"
+    },
+    "collections": [
+      "0xf8c82cc093D22f6dC782F0D781f4770E17266C23",
+      "0xca00aba7689e3c0f9f74e1f8d82e61c04c787734"
+    ],
+    "socials": {
+      "website": "https://cr00tsnft.ca/",
+      "twitter": "https://twitter.com/cr00tsnft",
+      "discord": "https://discord.gg/Xb5xv84mS2"
     },
     "featured": false,
     "categories": [],
