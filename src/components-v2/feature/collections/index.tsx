@@ -1,8 +1,5 @@
-import React, {ChangeEvent, useState} from 'react';
-import {Form} from 'react-bootstrap';
-
+import React, {ChangeEvent, useCallback, useState} from 'react';
 import Switch from '@src/Components/components/common/Switch';
-import {debounce} from '@src/utils';
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import PageHeader from '@src/components-v2/shared/layout/page-header';
 import Table from './table';
@@ -10,25 +7,38 @@ import useFeatureFlag from '@src/hooks/useFeatureFlag';
 import Constants from '@src/constants';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSort} from "@fortawesome/free-solid-svg-icons";
-import {Box, Stack, useBreakpointValue} from "@chakra-ui/react";
+import {
+  Box,
+  CloseButton,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Stack,
+  useBreakpointValue
+} from "@chakra-ui/react";
+import useDebounce from "@src/core/hooks/useDebounce";
 
 
 const Collections = () => {
   const isMobileLayout = useBreakpointValue({base: true, lg: false}, {fallback: 'lg'})
 
-  const [searchTerms, setSearchTerms] = useState<string | null>(null);
+  const [searchTerms, setSearchTerms] = useState<string>();
   const [timeFrame, setTimeFrame] = useState<string | null>(null);
   const [onlyVerified, setOnlyVerified] = useState(false);
   const [showMobileSort, setShowMobileSort] = useState(false);
+  const debouncedSearch = useDebounce(searchTerms, 500);
 
   const { Features } = Constants;
   const isSwitchEnabled = useFeatureFlag(Features.VERIFIED_SWITCH_COLLECTION);
 
-  const handleSearch = debounce((event: ChangeEvent<HTMLInputElement>) => {
+  const handleSearch = useCallback(async (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setSearchTerms(value);
-  }, 300);
+  }, []);
 
+  const handleClearSearch = () => {
+    setSearchTerms('');
+  }
 
   return (
     <div>
@@ -42,7 +52,21 @@ const Collections = () => {
       <section className="gl-legacy container no-top">
         <Stack direction={{base: 'column', md: 'row'}} mt={4} w='full'>
           <Box flex='1'>
-            <Form.Control type="text" placeholder="Search for Collection" onChange={handleSearch} />
+            <InputGroup>
+              <Input
+                placeholder="Search for Collection"
+                w="100%"
+                onChange={handleSearch}
+                value={searchTerms}
+                color="white"
+                _placeholder={{ color: 'gray.300' }}
+              />
+              {searchTerms?.length && (
+                <InputRightElement
+                  children={<CloseButton onClick={handleClearSearch} />}
+                />
+              )}
+            </InputGroup>
           </Box>
           <Box className="text-center text-lg-end">
             <ul className="activity-filter">
@@ -69,7 +93,7 @@ const Collections = () => {
             </ul>
           </Box>
         </Stack>
-        <Table timeFrame={timeFrame} searchTerms={searchTerms} onlyVerified={onlyVerified} showMobileSort={showMobileSort && isMobileLayout!} />
+        <Table timeFrame={timeFrame} searchTerms={debouncedSearch} onlyVerified={onlyVerified} showMobileSort={showMobileSort && isMobileLayout!} />
       </section>
     </div>
   );

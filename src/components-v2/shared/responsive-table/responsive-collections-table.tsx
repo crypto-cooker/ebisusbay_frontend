@@ -159,7 +159,7 @@ const DataTable = ({data, timeFrame, onSort}: Pick<ResponsiveCollectionsTablePro
                   </Td>
                   <Td isNumeric>
                     <RichDataTableCell
-                      value={collection.listable && collection.numberActive > 0 ? ethers.utils.commify(Math.round(collection.floorPrice)) : 'N/A'}
+                      value={collection.listable && collection.numberActive > 0 ? siPrefixedNumber(Math.round(collection.floorPrice ?? 0)) : 0}
                       change={0}
                       isCroValue={true}
                       showChange={false}
@@ -205,7 +205,7 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
     },
     totalfloorprice: {
       field: 'Floor',
-      value: collection.listable && collection.numberActive > 0 ? siPrefixedNumber(Math.round(collection.floorPrice)) : 'N/A'
+      value: collection.listable && collection.numberActive > 0 ? siPrefixedNumber(Math.round(collection.floorPrice ?? 0)) : 'N/A'
     },
     totalaveragesaleprice: {
       field: 'Avg',
@@ -254,9 +254,11 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
                       <Link href={`/collection/${collection.slug}`}>
                         {collection.name}
                       </Link>
-                      <Text fontWeight='normal' fontSize='xs' className='text-muted'>
-                        Floor: {collection.listable && collection.numberActive > 0 ? `${ethers.utils.commify(Math.round(collection.floorPrice))} CRO` : 'N/A'}
-                      </Text>
+                      {collection.listable && collection.numberActive > 0 && !!collection.floorPrice && (
+                        <Text fontWeight='normal' fontSize='xs' className='text-muted'>
+                          Floor: {`${siPrefixedNumber(Math.round(collection.floorPrice))} CRO`}
+                        </Text>
+                      )}
                     </VStack>
                   </HStack>
                 </Box>
@@ -290,10 +292,14 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
                   {primarySort !== 'totalfloorprice' && (
                     <Stack spacing={0}>
                       <Text fontWeight='bold'>Floor</Text>
-                      <HStack spacing={1} w="full" justify="center">
-                        <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
-                        <Box>{collection.listable && collection.numberActive > 0 ? siPrefixedNumber(Math.round(collection.floorPrice)) : 'N/A'}</Box>
-                      </HStack>
+                      {collection.listable && collection.numberActive > 0 && !!collection.floorPrice ? (
+                        <HStack spacing={1} w="full" justify="center">
+                          <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                          <Box>{siPrefixedNumber(Math.round(collection.floorPrice))}</Box>
+                        </HStack>
+                      ) : (
+                        <>-</>
+                      )}
                     </Stack>
                   )}
                   {primarySort !== 'totalaveragesaleprice' && (

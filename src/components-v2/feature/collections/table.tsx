@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {useInfiniteQuery} from '@tanstack/react-query';
 import {Spinner} from 'react-bootstrap';
@@ -38,7 +38,7 @@ const Table = ({ timeFrame, searchTerms, onlyVerified, showMobileSort }: TablePr
     status,
   } = useInfiniteQuery(['Collections', filters], fetcher, {
     getNextPageParam: (lastPage, pages) => {
-      return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
+      return pages[pages.length - 1].length >= filters.pageSize ? pages.length + 1 : undefined;
     },
     staleTime: 1
   })
@@ -85,6 +85,25 @@ const Table = ({ timeFrame, searchTerms, onlyVerified, showMobileSort }: TablePr
     changeFilters({ ...filter, verified: onlyVerified ? 1 : null })
   }, [onlyVerified]);
 
+  const content = useMemo(() => {
+    return status === "loading" ? (
+      <div className="col-lg-12 text-center">
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    ) : status === "error" ? (
+      <p>Error: {(error as any).message}</p>
+    ) : (
+      <ResponsiveCollectionsTable
+        data={data}
+        timeFrame={timeFrame}
+        onSort={sortCollections}
+        primarySort={typeSort.sortBy as SortKeys}
+      />
+    )
+  }, [data, timeFrame, typeSort, status]);
+
   return (
     <Box>
       <Collapse in={showMobileSort} animateOpacity>
@@ -128,26 +147,10 @@ const Table = ({ timeFrame, searchTerms, onlyVerified, showMobileSort }: TablePr
           </div>
         }
       >
-
-        {status === "loading" ? (
-          <div className="col-lg-12 text-center">
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          </div>
-        ) : status === "error" ? (
-          <p>Error: {(error as any).message}</p>
-        ) : (
-          <ResponsiveCollectionsTable
-            data={data}
-            timeFrame={timeFrame}
-            onSort={sortCollections}
-            primarySort={typeSort.sortBy as SortKeys}
-          />
-        )}
+        {content}
       </InfiniteScroll>
     </Box>
   )
 }
 
-export default Table; 
+export default Table;
