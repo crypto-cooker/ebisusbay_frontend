@@ -16,14 +16,13 @@ const InfoTap = ({ factions = [], controlPoint=[]}) => {
   useEffect(() => {
     if(controlPoint.leaderBoard !== undefined)
     {
-      setAreas(controlPoint.leaderBoard.map((faction, index) => 
+      setAreas(controlPoint.leaderBoard.filter((faction, index) => index < 5).map((faction, index ) => 
       (<Tr key={index}>
         <Td textAlign='center'>{index+1}</Td>
         <Td textAlign='center'>{faction.name}</Td>
         <Td textAlign='center'>{faction.totalTroops}</Td>
       </Tr>)))
     }
-    
     }, [controlPoint])
   return (
     <Flex flexDirection='column' textAlign='center' border={'1px solid white'} borderRadius={'10px'} justifyContent='space-around'>

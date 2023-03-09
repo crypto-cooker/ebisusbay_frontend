@@ -14,67 +14,133 @@ import {
 
 import { useState, useEffect } from "react";
 import Button from "@src/Components/components/Button";
+import { getAuthSignerInStorage } from '@src/helpers/storage';
+import {useSelector} from "react-redux";
+import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
+import {getProfileId, getFactionsOwned, deployTroops, recallTroops, getFactionTroops} from "@src/core/api/RyoshiDynastiesAPICalls";
+import { eslint } from "next.config";
 
 const tabs = {
   recall: 'recall',
   deploy: 'deploy',
 };
 
-const actions = {
-  listing: 'listing',
-  bundle: 'bundle',
-  transfer: 'transfer'
-};
 
 const DeployTap = ({controlPoint=[]}) => {
-  // const playerFactions = factions.filter(faction => faction.owned)
-  // const arrayColumn = (arr, n) => arr.map(x => x[n]);
-  // const playerFactionNames = arrayColumn(playerFactions, 'faction')
-  const troopsDeployed = 0;
-  const troopsAvailable = 0;
+
+  const user = useSelector((state) => state.user);
+  const [isLoading, getSigner] = useCreateSigner();
   const [currentTab, setCurrentTab] = useState(tabs.deploy);
+
   const [factionOption, setFactionOption] = useState([]);
   const [dataForm, setDataForm] = useState({
     faction: "" ?? null,
     quantity: 0,
   })
+
   const [selectedQuantity, setSelectedQuantity] = useState(0);
   const [selectedFaction, setSelectedFaction] = useState(dataForm.faction);
   const handleChange = (value) => setSelectedQuantity(value)
+  const [playerFactions, setPlayerFactions] = useState([]);
+  const [troopsAvailable, setTroopsAvailable] = useState(0);
 
-  const getMax = () => { 
-    if(currentTab === tabs.deploy)
-      {return troopsDeployed} 
-    else if(currentTab === tabs.recall) 
-      {return troopsAvailable}
-  }
   const onChangeInputsFaction = (e) => {
-    setDataForm({...dataForm, [e.target.name]: e.target.value})
+    console.log(e.target.value)
     setSelectedFaction(e.target.value)
-    troopsDeployed = controlPoint.leaderBoard.filter(faction => faction.name === e.target.value)[0].totalTroops;
+    // troopsDeployed = controlPoint.leaderBoard.filter(faction => faction.name === e.target.value)[0].totalTroops;
 
     //NEED TO ADD A NEW API CALL HERE TO DETERMINE HOW MANY TROOPS THE FACTION HAS AVAILABLE
-    troopsAvailable = controlPoint.leaderBoard.filter(faction => faction.name === e.target.value)[0].totalTroops;
+    // troopsAvailable = controlPoint.leaderBoard.filter(faction => faction.name === e.target.value)[0].totalTroops;
   }
-  const deployOrRecallTroops = () => {
-    if(currentTab === tabs.deploy)
-    {
-      console.log("You deployed", selectedQuantity, "troops to", controlPoint, "on behalf of", dataForm.faction)
+  const deployOrRecallTroops = async () => {
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
     }
-    else if(currentTab === tabs.recall)
-    {
-      console.log("You recalled", selectedQuantity, "troops from", controlPoint, "on behalf of", dataForm.faction)
+    if (signatureInStorage) {
+      try {
+        if(currentTab === tabs.deploy)
+        {
+          var factionId = playerFactions.filter(faction => faction.name === selectedFaction)[0].id
+          // console.log("controlPointId", controlPoint.id)
+          // console.log("selectedFaction", selectedFaction)
+          // console.log("playerFactions", playerFactions)
+          // console.log("factionId", factionId)
+          // console.log("selectedQuantity", selectedQuantity)
+          var data = await deployTroops(user.address.toLowerCase(), signatureInStorage, selectedQuantity, controlPoint.id, factionId)
+          // console.log("You deployed", selectedQuantity, "troops to", controlPoint, "on behalf of", selectedFaction)
+          
+        }
+        else if(currentTab === tabs.recall)
+        {
+          // console.log("You recalled", selectedQuantity, "troops from", controlPoint, "on behalf of", dataForm.faction)
+
+        }
+        // console.log('playerFactions', playerFactions);
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
+  const GetPlayerOwnedFactions = async () => {
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      try {
+        const res = await getProfileId(user.address.toLowerCase(), signatureInStorage);
+        const data = await getFactionsOwned(res.data.data[0].profileId);
+        setPlayerFactions(data.data.data);
+        // playerFactions = data.data.data;
+        // console.log('playerFactions', playerFactions);
+        // ShowAvailableFactions();
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+  const GetFactionTroops = async () => {
+    if(playerFactions.length == 0)
+      return;
+
+    var factionId = playerFactions.filter(faction => faction.name === selectedFaction)[0].id
+    const troops = await getFactionTroops(factionId);
+    setTroopsAvailable(troops)
+    // console.log("troops", troops)
+  }
+  const ShowAvailableFactions = async () => {
+      setFactionOption(playerFactions.map((faction, index) => (
+      <option value={faction.name} key={index}>{faction.name}</option>)))
+      // onChangeInputsFaction();
+      if(playerFactions.length > 0)
+        setSelectedFaction(playerFactions[0].name)
+  }
+  // const GetMax = () =>
+  // {
+  //   if(selectedFaction !== "")
+  //   {
+
+  //   }
+  //   else
+  //   {
+  //     return 0;
+  //   }
+  // }
 
   useEffect(() => {
-    if(controlPoint.leaderBoard !== undefined)
-    {
-      setFactionOption(controlPoint.leaderBoard.map((faction, index) => (
-      <option value={faction.name} key={index}>{faction.name}</option>)))
-    }
-    
+    GetPlayerOwnedFactions();
     }, [controlPoint])
+
+  useEffect(() => {
+    ShowAvailableFactions();
+    }, [playerFactions])
+
+  useEffect(() => {
+    GetFactionTroops();
+    }, [selectedFaction])
 
   return (
     <Flex flexDirection='column' textAlign='center' border={'1px solid white'} borderRadius={'10px'} justifyContent='space-around' padding='16px'>
@@ -86,7 +152,7 @@ const DeployTap = ({controlPoint=[]}) => {
 
       <FormControl mb={'24px'}>
         <FormLabel>Please select a faction:</FormLabel>
-        <Select me={2} value={dataForm.faction} name="faction" onChange={onChangeInputsFaction}>
+        <Select me={2} value={selectedFaction} name="faction" onChange={onChangeInputsFaction}>
           {factionOption}
         </Select>
       </FormControl>
@@ -102,7 +168,7 @@ const DeployTap = ({controlPoint=[]}) => {
 
       <FormControl>
         <FormLabel>Quantity:</FormLabel>
-        <NumberInput defaultValue={1} min={1} max={getMax()} name="quantity" 
+        <NumberInput defaultValue={1} min={1} max={troopsAvailable} name="quantity" 
           onChange={handleChange}
           value={selectedQuantity} type ='number'>
           <NumberInputField />

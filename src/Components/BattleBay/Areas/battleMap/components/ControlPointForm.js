@@ -27,7 +27,7 @@ const tabs = {
 };
 
 const ControlPointForm = ({ isOpen, onClose, controlPoint=[], factions}) => {
-  console.log("factionForm controlPoint: " + controlPoint.name);
+  // console.log("factionForm controlPoint: " + controlPoint.name);
   const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState('');
   const [info, setInfo] = useState([]);

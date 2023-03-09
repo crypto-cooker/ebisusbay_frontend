@@ -13,6 +13,10 @@ import {
   Heading
 } from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
+import { getAuthSignerInStorage } from '@src/helpers/storage';
+import {useSelector} from "react-redux";
+import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
+import {getProfileId, getFactionsOwned} from "@src/core/api/RyoshiDynastiesAPICalls";
 
 const AttackTap = ({ controlPoint = []}) => {
 
@@ -26,6 +30,10 @@ const AttackTap = ({ controlPoint = []}) => {
   const [defenderTroops, setDefenderTroops] = useState(0);
   const [attackerTroops, setAttackerTroops] = useState(1)
   const handleChange = (value) => setAttackerTroops(value)
+
+  const user = useSelector((state) => state.user);
+  const [isLoading, getSigner] = useCreateSigner();
+  const playerFactions = [];
 
   const [attackerOptions, setAttackerOptions] = useState([]);
   const [defenderOptions, setDefenderOptions] = useState([]);
@@ -50,6 +58,24 @@ const AttackTap = ({ controlPoint = []}) => {
     defenderTroopsAvailable = controlPoint.leaderBoard.filter(faction => faction.name === e.target.value)[0].totalTroops;
   }
 
+  const GetPlayerOwnedFactions = async () => {
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      try {
+        const res = await getProfileId(user.address.toLowerCase(), signatureInStorage);
+        const data = await getFactionsOwned(res.data.data[0].profileId);
+        playerFactions = data.data.data;
+        // console.log('playerFactions', playerFactions);
+        ShowAvailableFactions();
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
 
 
   function Battle()
@@ -158,13 +184,16 @@ const AttackTap = ({ controlPoint = []}) => {
   {
     battleLog.current.style.display = battleLog.current.style.display === "block" ? "none" : "block";
   }
-
-  useEffect(() => {
-    if(controlPoint.leaderBoard !== undefined)
-    {
-      setAttackerOptions(controlPoint.leaderBoard.map((faction, index) => (
+  const ShowAvailableFactions = async () => {
+    setAttackerOptions(playerFactions.map((faction, index) => (
       <option value={faction.name} key={index}>{faction.name}</option>)
       ))
+  }
+  useEffect(() => {
+    GetPlayerOwnedFactions();
+    if(controlPoint.leaderBoard !== undefined)
+    {
+      
       setDefenderOptions(controlPoint.leaderBoard.map((faction, index) => (
         <option value={faction.name} key={index}>{faction.name}</option>)
         ))

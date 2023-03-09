@@ -42,16 +42,6 @@ export const getProfileTroops = async (_address, _signature) => {
     throw error;
   }
 }
-//gets a specific control point
-export const getControlPoint = async (_controlPointId) => {
-  try{
-    return await api.get(baseURL + "api/ryoshi-dynasties/control-point?", 
-      {params: {controlPointId: _controlPointId}});
-  }
-  catch(error){
-    throw error;
-  }
-}
 //creates a faction
 export const createFaction = async (address, signature, type, name, addresses=[]) => {
   try{
@@ -109,6 +99,15 @@ export const deleteFaction = async (address, signature, id) => {
     throw error;
   }
 }
+export const getFactionTroops= async (factionId) => {
+  try{
+    var data = await api.get(baseURL + "api/ryoshi-dynasties/factions/"+factionId);
+    return data.data.data.troops;
+  }
+  catch(error){
+    throw error;
+  }
+}
 //adds troops to the player's wallet
 export const createArmy = async (_walletAddress, _walletSignature, _troops) => {
   try{
@@ -140,22 +139,37 @@ export const delegateTroops = async (address, signature, troops, factionId) => {
   }
 }
 //deploys troops from a faction to a control point
-export const deployTroops = async (_walletAddress, _walletSignature, _troops, _controlPointId, _gameId, _factionId) => {
+export const deployTroops = async (address, signature, troops, controlPointId, factionId) => {
   try{
-    return await api.get(baseURL + "api/ryoshi-dynasties/army?", 
-      {params: {walletAddress: _walletAddress, walletSignature: _walletSignature, action: "DEPLOY"}},
-      {body: {troops: _troops, controlPointId: _controlPointId, gameId: _gameId, factionId: _factionId}});
+    var gameID = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    var gameId = gameID.data.data.id;
+    
+    console.log("Troops: "+troops);
+    troops = Number(troops);
+    console.log("ControlPointID: "+controlPointId);
+    console.log("GameID: "+gameId);
+    console.log("FactionID: "+factionId);
+    
+    console.log("Address: "+address);
+    console.log("Signature: "+signature);
+
+    return await api.patch(baseURL + "api/ryoshi-dynasties/armies?", 
+      {troops, controlPointId, gameId, factionId},
+      {params: {address: address, signature: signature, action: "DEPLOY"}}
+      );
   }
   catch(error){
     throw error;
   }
 }
 //recalls troops from a control point and returns them to the faction
-export const recallTroops = async (_walletAddress, _walletSignature, _troops, _controlPointId, _gameId, _factionId) => {
+export const recallTroops = async (address, signature, troops, controlPointId, factionId) => {
   try{
-    return await api.get(baseURL + "api/ryoshi-dynasties/army?", 
-      {params: {walletAddress: _walletAddress, walletSignature: _walletSignature, action: "RECALL"}},
-      {body: {troops: _troops, controlPointId: _controlPointId, gameId: _gameId, factionId: _factionId}});
+    var gameID = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+
+    return await api.patch(baseURL + "api/ryoshi-dynasties/armies?", 
+      {params: {address, signature, action: "RECALL"}},
+      {body: {troops, controlPointId, gameId: gameID.data.data.id, factionId}});
   }
   catch(error){
     throw error;
@@ -233,6 +247,19 @@ export const getLeaderBoard = async (controlPointId) => {
       {params: {gameId: gameID.data.data.id}});
     // console.log(data);
     return data.data.data.leaderBoard;
+  }
+  catch(error){
+    throw error;
+  }
+}
+//gets a specific control point
+export const getControlPoint = async (controlPointId) => {
+  try{
+    var gameID = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    var data = await api.get(baseURL + "api/ryoshi-dynasties/control-points/"+controlPointId,
+      {params: {gameId: gameID.data.data.id}});
+    // console.log(data);
+    return data.data.data;
   }
   catch(error){
     throw error;

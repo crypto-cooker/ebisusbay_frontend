@@ -173,7 +173,7 @@ const BattleMap = ({onBack, factions=[]}) => {
   }
   const GetControlPointInfo = async (x) => {
     getControlPoint(x).then((data) => {
-      setControlPoint(data.data.data);
+      setControlPoint(data);
   }); 
   }
   //#endregion
