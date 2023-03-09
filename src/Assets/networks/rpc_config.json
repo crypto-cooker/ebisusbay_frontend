@@ -18589,6 +18589,52 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Coolbeans Garden O.G. Membership",
+      "slug": "coolbeans-garden-og-membership",
+      "multiToken": false,
+      "address": "0x5e963D8B2554565eD5c370FC3c5d09c4EF7d71A6",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "AI art created for Coolbeans Garden to serve as the membership for the reward/royalties from our product NFTs (Coolbeans Bean Drops)",
+        "avatar": "/img/collections/coolbeans-garden-og-membership/avatar.webp",
+        "card": "/img/collections/coolbeans-garden-og-membership/card.webp",
+        "banner": "/img/collections/coolbeans-garden-og-membership/banner.webp",
+        "website": "https://coolbeansgarden.wixsite.com/my-site/shop",
+        "twitter": "https://twitter.com/bscraver",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "BCK Kings",
+      "slug": "bck-kings",
+      "multiToken": false,
+      "address": "0xD9FFF27A45232950938896682141EF5BcF330AE8",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Every Kingdom needs a King. What are you waiting for Mint yours today and prepare for staking!!! Join us on discord and follow on twitter for more info.",
+        "avatar": "/img/collections/bck-kings/avatar.webp",
+        "twitter": "https://twitter.com/BChainKingdom",
+        "discord": "https://discord.gg/sCab6YQFrk",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
