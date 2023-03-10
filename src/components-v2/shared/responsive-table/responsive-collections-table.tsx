@@ -44,6 +44,7 @@ import {BlueCheckIcon} from "@src/components-v2/shared/icons/blue-check";
 import styled from "styled-components";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
 import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
+import {AnyMedia} from "@src/Components/components/AnyMedia";
 
 interface ResponsiveCollectionsTableProps {
   data: InfiniteData<AxiosResponse<IPaginatedList<any>>>;
@@ -236,11 +237,10 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
                           rounded='full'
                           overflow='hidden'
                         >
-                          <CdnImage
-                            src={hostedImage(collection.metadata.avatar, true)}
-                            alt={collection?.name}
-                            width="40"
-                            height="40"
+                          <AnyMedia
+                            image={hostedImage(collection.metadata.avatar, true)}
+                            video=''
+                            title={collection?.name}
                           />
                         </Box>
                       ) : (
@@ -250,7 +250,7 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
                         <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={7} />
                       </VerifiedIcon>
                     </Box>
-                    <VStack align='start' spacing={0} flex='1' fontSize='sm' >
+                    <VStack align='start' spacing={0} flex='1' fontSize='sm'>
                       <Link href={`/collection/${collection.slug}`}>
                         {collection.name}
                       </Link>

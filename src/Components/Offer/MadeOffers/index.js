@@ -3,7 +3,7 @@ import {Spinner} from 'react-bootstrap';
 import {OFFER_TYPE} from './MadeOffersRow';
 import {useInfiniteQuery} from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {Radio, RadioGroup, Stack, Text, Wrap, WrapItem} from "@chakra-ui/react";
+import {Box, Radio, RadioGroup, Stack, Text, Wrap, WrapItem} from "@chakra-ui/react";
 import NextApiService from "@src/core/services/api-service/next";
 import {OfferState} from "@src/core/services/api-service/types";
 import ResponsiveOffersTable from "@src/components-v2/shared/responsive-table/responsive-offers-table";
@@ -91,7 +91,7 @@ export default function MadeOffers({ address, type, filterVisible}) {
       ) : status === "error" ? (
         <p>Error: {error.message}</p>
       ) : (
-        <>
+        <Box mt={filterVisible ? {base: 4, xl: 0} : {base: 4, lg: 0}}>
           <InfiniteScroll
             dataLength={data?.pages ? data.pages.flat().length : 0}
             next={loadMore}
@@ -121,7 +121,7 @@ export default function MadeOffers({ address, type, filterVisible}) {
               breakpointValue={filterVisible ? 'xl' : 'lg'}
             />
           </InfiniteScroll>
-        </>
+        </Box>
       )}
 
       {!!offerAction && offerAction === OFFER_TYPE.update && !!selectedOffer?.nftId && (

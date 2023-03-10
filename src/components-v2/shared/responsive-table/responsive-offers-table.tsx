@@ -4,7 +4,7 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  Box,
+  Box, ButtonGroup,
   Flex,
   HStack,
   Stack,
@@ -30,6 +30,8 @@ import {AnyMedia} from "@src/Components/components/AnyMedia";
 import {commify} from "ethers/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import {hostedImage} from "@src/helpers/image";
+import {Button as ChakraButton} from "@chakra-ui/react";
 
 interface ResponsiveOffersTableProps {
   data: InfiniteData<AxiosResponse<IPaginatedList<Offer>>>;
@@ -142,72 +144,90 @@ const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveOffersTableProp
   )
 };
 
-const DataAccordion = ({data, onUpdate, onCancel}: ResponsiveOffersTableProps) => {
+const DataAccordion = ({data, onSort, onUpdate, onCancel}: ResponsiveOffersTableProps) => {
+  const hoverBackground = useColorModeValue('gray.100', '#424242');
 
   const getOfferDate = (timestamp: number) => {
     return timeSince(new Date(timestamp * 1000));
   };
 
   return (
-    <Accordion w='full' allowMultiple>
-      {data.pages.map((page: any, pageIndex: any) => (
-        <React.Fragment key={pageIndex}>
-          {page.data.map((offer: Offer) => (
-            <AccordionItem key={offer.offerId}>
-              <Flex w='100%' my={2}>
-                <Box flex='1' textAlign='left' fontWeight='bold' my='auto'>
-                  <HStack>
-                    <Box
-                      width={50}
-                      height={50}
-                      position='relative'
-                      rounded='md'
-                      overflow='hidden'
-                    >
-                      <AnyMedia
-                        image={offer.nft.image ?? offer.collection.metadata.avatar}
-                        video={offer.nft.animation_url}
-                        title={offer.nft.name ?? offer.collection.name}
-                      />
-                    </Box>
+    <>
+      <Box mb={2} textAlign='center'>
+        <HStack>
+          <Text fontSize='sm'>Sort:</Text>
+          <ButtonGroup>
+            <ChakraButton size={{base: 'xs', sm: 'sm'}} onClick={() => onSort('rank')}>
+              Rank
+            </ChakraButton>
+            <ChakraButton size={{base: 'xs', sm: 'sm'}} onClick={() => onSort('price')}>
+              Price
+            </ChakraButton>
+            <ChakraButton size={{base: 'xs', sm: 'sm'}} onClick={() => onSort('listingTime')}>
+              Sale Time
+            </ChakraButton>
+          </ButtonGroup>
+        </HStack>
+      </Box>
+      <Accordion w='full' allowMultiple>
+        {data.pages.map((page: any, pageIndex: any) => (
+          <React.Fragment key={pageIndex}>
+            {page.data.map((offer: Offer) => (
+              <AccordionItem key={offer.offerId}>
+                <Flex w='100%' my={2}>
+                  <Box flex='1' textAlign='left' fontWeight='bold' my='auto'>
+                    <HStack>
+                      <Box
+                        width='40px'
+                        position='relative'
+                        rounded='md'
+                        overflow='hidden'
+                      >
+                        <AnyMedia
+                          image={hostedImage(offer.nft.image ?? offer.collection.metadata.avatar, true)}
+                          video={offer.nft.animation_url}
+                          title={offer.nft.name ?? offer.collection.name}
+                        />
+                      </Box>
 
-                    {offer.nftId ? (
-                      <Link href={`/collection/${offer.collection.slug}/${offer.nftId}`}>
-                        {offer.nft.name}
-                      </Link>
-                    ) : (
-                      <Link href={`/collection/${offer.collection.slug}`}>
-                        {offer.collection.name}
-                      </Link>
-                    )}
-                  </HStack>
-                </Box>
-                <Box>
-                  <HStack spacing={1} h="full">
-                    <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
-                    <Box>{commify(offer.price)}</Box>
-                  </HStack>
-                </Box>
-                <AccordionButton w='auto'>
-                  <AccordionIcon />
-                </AccordionButton>
-              </Flex>
-              <AccordionPanel pb={4}>
-                <Flex justify="space-between" fontSize="sm" mb={2}>
-                  {offer.nft.rank && (
-                    <Stack direction="row" spacing={2}>
-                      <Text fontWeight="bold">Rank:</Text>
-                      <Text>{offer.nft.rank}</Text>
-                    </Stack>
-                  )}
-                  <Stack direction="row" spacing={2}>
-                    <Text fontWeight="bold">Offer Time:</Text>
-                    <Text>{getOfferDate(offer.listingTime)} ago</Text>
-                  </Stack>
+                      <Box flex='1' fontSize='sm'>
+                        {offer.nftId ? (
+                          <Link href={`/collection/${offer.collection.slug}/${offer.nftId}`}>
+                            {offer.nft.name}
+                          </Link>
+                        ) : (
+                          <Link href={`/collection/${offer.collection.slug}`}>
+                            {offer.collection.name}
+                          </Link>
+                        )}
+                      </Box>
+                    </HStack>
+                  </Box>
+                  <Box ms={2}>
+                    <HStack spacing={1} h="full" fontSize='sm'>
+                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                      <Box>{commify(offer.price)}</Box>
+                    </HStack>
+                  </Box>
+                  <AccordionButton w='auto'>
+                    <AccordionIcon />
+                  </AccordionButton>
                 </Flex>
-                <Flex>
+                <AccordionPanel pb={4} px={0}>
+                  <Flex justify='space-around' textAlign='center' fontSize='sm' bg={hoverBackground} rounded='md' py={2}>
+                    {offer.nft.rank && (
+                      <Stack direction="row" spacing={2}>
+                        <Text fontWeight="bold">Rank:</Text>
+                        <Text>{offer.nft.rank}</Text>
+                      </Stack>
+                    )}
+                    <Stack direction="row" spacing={2}>
+                      <Text fontWeight="bold">Offer Time:</Text>
+                      <Text>{getOfferDate(offer.listingTime)} ago</Text>
+                    </Stack>
+                  </Flex>
                   {offer.state === OfferState.ACTIVE && (
-                    <>
+                    <Flex mt={2}>
                       <Button
                         type="legacy"
                         onClick={() => onUpdate(offer)}
@@ -222,15 +242,15 @@ const DataAccordion = ({data, onUpdate, onCancel}: ResponsiveOffersTableProps) =
                       >
                         Cancel
                       </Button>
-                    </>
+                    </Flex>
                   )}
-                </Flex>
-              </AccordionPanel>
-            </AccordionItem>
-          ))}
-        </React.Fragment>
-      ))}
-    </Accordion>
+                </AccordionPanel>
+              </AccordionItem>
+            ))}
+          </React.Fragment>
+        ))}
+      </Accordion>
+    </>
   )
 };
 
