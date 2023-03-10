@@ -6330,7 +6330,7 @@
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "A collection of 5000 wicked Hippos came together with some sloths to take over the Play-to-Earn space! A dream that started on crypto.com/nft, has made its way onto Cronos, and is building a one-of-a-kind P2E game, using the already well established NFT Worlds as the land and token to build on/with. But that's not all!",
+        "description": "The Northern Hippo Syndicate brings the artistic and creative stylings of Little Sloth from Open Sea to the Cronos chain. This crazy collection of 5000 unique PFP grants you access to so much more than amazing art. Hold a minimum of 3 to receive a plot of metaverse land.",
         "avatar": "/img/collections/northern-hippo-syndicate/avatar.webp",
         "card": "/img/collections/northern-hippo-syndicate/card.webp",
         "banner": "/img/collections/northern-hippo-syndicate/banner.webp",
@@ -18640,7 +18640,7 @@
       "name": "Lab Rats",
       "slug": "lab-rats",
       "multiToken": false,
-      "address": "",
+      "address": "0x0793f726D9E912631dd32635fa24fA3EDA5C57bC",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -21500,7 +21500,7 @@
       "slug": "northern-hippo-syndicate",
       "title": "Northern Hippo Syndicate",
       "subtitle": "The Northern Hippo Syndicate brings the artistic and creative stylings of Little Sloth from Open Sea to the Cronos chain. This crazy collection of 5000 unique PFP grants you access to so much more than amazing art. Hold a minimum of 3 to receive a plot of metaverse land.",
-      "description": "A collection of 5000 wicked Hippos came together with some sloths to take over the Play-to-Earn space! A dream that started on http://crypto.com/nft, has made its way onto Cronos, and is building a one-of-a-kind P2E game, using the already well established NFT Worlds as the land and token to build on/with. But that's not all! The Hippos have also teamed up with Troopz and joined their Whitelist staking program, paying out TRPZ, a non-monetized token with jam packed with utility, as well as getting access to their super private Discord -- Moonshotz Bar & Grill, where members can win all kinds of prizes while having a great time!",
+      "description": "A collection of 5000 wicked Hippos came together with some sloths to take over the Play-to-Earn space! A dream that started on crypto.com/nft, has made its way onto Cronos, and is building a one-of-a-kind P2E game, using the already well established NFT Worlds as the land and token to build on/with. But that's not all!",
       "author": {
         "name": "Northern Hippo Syndicate",
         "website": "https://www.hipposyndicate.com/",
@@ -25053,7 +25053,7 @@
         "medium": "https://medium.com/@TheLaboratoryIO",
         "telegram": "https://t.me/thelaboratoryio"
       },
-      "address": "",
+      "address": "0x0793f726D9E912631dd32635fa24fA3EDA5C57bC",
       "maxMintPerTx": 7,
       "maxMintPerAddress": 10,
       "totalSupply": 10018,
