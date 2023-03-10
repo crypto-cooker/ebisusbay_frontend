@@ -18468,7 +18468,7 @@
       "name": "CroMorphs",
       "slug": "cromorphs",
       "multiToken": false,
-      "address": "",
+      "address": "0x4684619abcd81dBBfAa19438E9570F28008e180F",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -24974,7 +24974,7 @@
         "discord": "https://discord.gg/JsUWNKnQjx",
         "medium": "https://medium.com/@nilsenorjan"
       },
-      "address": "",
+      "address": "0x4684619abcd81dBBfAa19438E9570F28008e180F",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 100,
       "totalSupply": 2500,
