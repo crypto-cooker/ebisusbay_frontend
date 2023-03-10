@@ -16090,7 +16090,7 @@
       "verification": {
         "verified": false,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -18668,7 +18668,7 @@
       "name": "Inside an Alien",
       "slug": "inside-an-alien",
       "multiToken": false,
-      "address": "0x1fa6354767892C126Cad219023E21Cf1e182356d",
+      "address": "0xD6e807eE8B5513d7a5594be15Ef0cF81a3EEbc1d",
       "onChain": false,
       "listable": true,
       "metadata": {
