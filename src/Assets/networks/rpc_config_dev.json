@@ -18663,6 +18663,31 @@
         "kyc": "phenix",
         "verified": true
       }
+    },
+    {
+      "name": "Inside an Alien",
+      "slug": "inside-an-alien",
+      "multiToken": false,
+      "address": "0x1fa6354767892C126Cad219023E21Cf1e182356d",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Ever wondered what the little alien creatures looked like inside, wonder no longer. Inside an Alien is a 2500 Colllection of funky alien insides, minted with either GLXY (BAD Native Token) or CRO and gives holders 100% secondary Royalties and much more.",
+        "avatar": "/img/collections/inside-an-alien/avatar.webp",
+        "card": "/img/collections/inside-an-alien/card.webp",
+        "banner": "/img/collections/inside-an-alien/banner.webp",
+        "website": "https://www.glxyswap.io/launch?chain=glxy",
+        "twitter": "https://twitter.com/BAD__nfts",
+        "discord": "https://discord.gg/badaliens",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": true,
+        "kyc": false
+      }
     }
   ],
   "drops": [
