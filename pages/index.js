@@ -19,7 +19,7 @@ import Button from '../src/Components/components/Button';
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {appConfig} from "@src/Config";
 import Head from "next/head";
-import {Center, Heading, Wrap, WrapItem} from "@chakra-ui/react";
+import {Center, Heading, SimpleGrid} from "@chakra-ui/react";
 import ads from "@src/core/data/ads.json";
 
 const fadeInUp = keyframes`
@@ -90,7 +90,7 @@ const GlobalStyles = createGlobalStyle`
 const Jumbotron = {
   Host: styled.div`
     background-image: url(${({ isDark }) =>
-    isDark ? ImageKitService.buildBannerUrl('/img/background/banner-dark.webp') : ImageKitService.buildBannerUrl('/img/background/Ebisus-bg-1_L.webp')});    background-size: cover;
+    isDark ? ImageKitService.buildBannerUrl('/img/background/banner-ryoshi-dark.webp') : ImageKitService.buildBannerUrl('/img/background/banner-ryoshi-light.webp')});    background-size: cover;
     background-repeat: no-repeat;
     height: max(100vh, 800px);
     display: flex;
@@ -351,70 +351,76 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="row align-items-center text-center">
-          <Wrap align='center' justify='center' spacing={12}>
-            <WrapItem>
-              <Center>
-                <a href="https://nebkas.ro" target="_blank" rel="noreferrer">
-                  <img
-                    src={hostedImage(userTheme === 'light' ? '/img/logos/nebkas-logo.png' : '/img/logos/nebkas-logo.png')}
-                    alt="nebkas.co"
-                    width="128px"
-                  />
-                </a>
-              </Center>
-            </WrapItem>
-            <WrapItem>
-              <Center>
-                <a href="https://weare.fi/en/" target="_blank" rel="noreferrer">
-                  <img
-                    src={hostedImage(userTheme === 'light' ? '/img/logos/wearefi-logo.png' : '/img/logos/wearefi-white.png')}
-                    alt="WeAre Solutions"
-                    width={userTheme === 'light' ? '64px' : '160px'}
-                  />
-                </a>
-              </Center>
-            </WrapItem>
-            <WrapItem>
-              <Center>
-                <a href="https://crodex.app/" target="_blank" rel="noreferrer">
-                  <img
-                    src={hostedImage(userTheme === 'light' ? '/img/logos/crodex.png' : '/img/logos/crodex-white.png')}
-                    alt="CRODEX"
-                    width="150px"
-                  />
-                </a>
-              </Center>
-            </WrapItem>
-            <WrapItem>
-              <Center>
-                <a href="https://defiolio.com/" target="_blank" rel="noreferrer">
-                  <img
-                    src={hostedImage(userTheme === 'light' ? '/img/logos/defiolio.webp' : '/img/logos/defiolio-white.webp')}
-                    alt="Defiolio"
-                    width="150px"
-                  />
-                </a>
-              </Center>
-            </WrapItem>
-            <WrapItem>
-              <Center>
-                <a href="#">
-                  <img
-                    onClick={() => window['logBadgeClick']()}
-                    id="badge-button"
-                    style={{"width":"240px", "height":"53px"}}
-                    src={hostedImage(userTheme === 'light' ?
-                      '/img/logos/alchemy-light.svg' :
-                      '/img/logos/alchemy-dark.svg'
-                    )}
-                    alt="Alchemy Supercharged"
-                  />
-                </a>
-              </Center>
-            </WrapItem>
-          </Wrap>
-        </div>
+        <SimpleGrid columns={{base: 2, sm: 2, md: 3, lg: 4}} gap={6}>
+          <Center>
+            <a href="https://weare.fi/en/" target="_blank" rel="noreferrer">
+              <img
+                src={hostedImage(userTheme === 'light' ? '/img/logos/partners/wearefi-logo.png' : '/img/logos/partners/wearefi-white.png')}
+                alt="WeAre Solutions"
+                width={userTheme === 'light' ? '64px' : '160px'}
+              />
+            </a>
+          </Center>
+          <Center>
+            <a href="#">
+              <img
+                onClick={() => window['logBadgeClick']()}
+                id="badge-button"
+                style={{"width":"240px", "height":"53px"}}
+                src={hostedImage(userTheme === 'light' ?
+                  '/img/logos/partners/alchemy-light.svg' :
+                  '/img/logos/partners/alchemy-dark.svg'
+                )}
+                alt="Alchemy Supercharged"
+              />
+            </a>
+          </Center>
+          <Center>
+            <a href="https://www.cronoslabs.org/" target="_blank" rel="noreferrer">
+              <img
+                src={hostedImage(userTheme === 'light' ? '/img/logos/partners/cronos-labs.png' : '/img/logos/partners/cronos-labs-white.png')}
+                alt="Cronos Labs"
+                width="150px"
+              />
+            </a>
+          </Center>
+          <Center>
+            <a href="https://www.sentio.xyz/" target="_blank" rel="noreferrer">
+              <img
+                src={hostedImage(userTheme === 'light' ? '/img/logos/partners/sentio.webp' : '/img/logos/partners/sentio-white.webp')}
+                alt="sentio"
+                width="150px"
+              />
+            </a>
+          </Center>
+          <Center>
+            <a href="https://crodex.app/" target="_blank" rel="noreferrer">
+              <img
+                src={hostedImage(userTheme === 'light' ? '/img/logos/partners/crodex.png' : '/img/logos/partners/crodex-white.png')}
+                alt="CRODEX"
+                width="150px"
+              />
+            </a>
+          </Center>
+          <Center>
+            <a href="https://nebkas.ro" target="_blank" rel="noreferrer">
+              <img
+                src={hostedImage(userTheme === 'light' ? '/img/logos/partners/nebkas-logo.png' : '/img/logos/partners/nebkas-logo.png')}
+                alt="nebkas.co"
+                width="128px"
+              />
+            </a>
+          </Center>
+          <Center>
+            <a href="https://defiolio.com/" target="_blank" rel="noreferrer">
+              <img
+                src={hostedImage(userTheme === 'light' ? '/img/logos/partners/defiolio.webp' : '/img/logos/partners/defiolio-white.webp')}
+                alt="Defiolio"
+                width="150px"
+              />
+            </a>
+          </Center>
+        </SimpleGrid>
       </section>
     </div>
   );

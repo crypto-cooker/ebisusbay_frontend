@@ -310,7 +310,7 @@ const RyoshiDrop = ({drop}) => {
         <HeroSection
           className={`jumbotron h-vh tint`}
           style={{
-            backgroundImage: `url(${ImageKitService.buildBannerUrl(drop.images.banner ?? hostedImage('/img/background/Ebisus-bg-1_L.webp'))})`
+            backgroundImage: `url(${ImageKitService.buildBannerUrl(drop.images.banner ?? hostedImage('/img/background/banner-ryoshi-light.webp'))})`
           }}
         >
           <div className="container">

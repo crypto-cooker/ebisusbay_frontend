@@ -26,7 +26,7 @@ export const DefaultHead = () => {
         key="og_desc"
         content="The first NFT marketplace on Cronos. Create, buy, sell, trade and enjoy the #CroFam NFT community."
       />
-      <meta property="og:image" key="og_img" content="https://app.ebisusbay.com/img/background/Ebisus-bg-1_L.webp" />
+      <meta property="og:image" key="og_img" content="https://app.ebisusbay.com/img/background/banner-ryoshi-light.webp" />
 
       {/* Twitter */}
       <meta property="twitter:site" content="@EbisusBay" />
@@ -38,7 +38,7 @@ export const DefaultHead = () => {
         key="twitter_desc"
         content="The first NFT marketplace on Cronos. Create, buy, sell, trade and enjoy the #CroFam NFT community."
       />
-      <meta property="twitter:image" key="twitter_img" content="https://app.ebisusbay.com/img/background/Ebisus-bg-1_L.webp" />
+      <meta property="twitter:image" key="twitter_img" content="https://app.ebisusbay.com/img/background/banner-ryoshi-light.webp" />
     </Head>
   )
 }
