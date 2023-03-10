@@ -127,7 +127,7 @@ export default function Profile({ address, profile, tab }) {
               <div className="mainbreadcumb"></div>
             </section>
           )}
-          <section className="gl-legacy px-5 pt-4">
+          <section className={`gl-legacy px-4 pt-4 ${useMobileCartView ? 'px-4' : 'px-5'}`}>
             <div className={`${styles.userInfo} row`}>
               <div className="d-sm-flex text-center text-sm-start">
                 <div className="flex-shrink-0">
