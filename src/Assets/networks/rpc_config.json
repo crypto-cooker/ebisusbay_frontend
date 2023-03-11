@@ -18688,6 +18688,58 @@
         "doxx": true,
         "kyc": false
       }
+    },
+    {
+      "name": "Cowz",
+      "slug": "cowz",
+      "multiToken": false,
+      "address": "0xdbFDf81D1fDD2e79e8ffaDE50c219452587e9488",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Launched on the 1st of March on the Cronos Chain, Cowz are the next step in the Steakhouse NFT story line. In the future Cowz will be used to mint other NFT collections as if being sent to the auction house, or if you have what it takes to raise a herd you can to be eligible for airdrops without sacrificing your dairy queens!",
+        "avatar": "/img/collections/cowz/avatar.webp",
+        "card": "/img/collections/cowz/card.webp",
+        "banner": "/img/collections/cowz/banner.webp",
+        "website": "https://www.steakhouse.group/",
+        "twitter": "https://www.twitter.com/CronoSteakHouse",
+        "discord": "https://discord.gg/fpTgAReDyN",
+        "medium": "https://medium.com/@CronoSteakHouse",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Dark Pool Syndicate",
+      "slug": "dark-pool-syndicate",
+      "multiToken": false,
+      "address": "0xc6bf0b1a5713ef381080123e336d24997af557d7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Genesis Drop includes 12 unique sets and a pack of 'anomalies' that didn't fit anywhere else. 7 Royal Masters - 2 Blood Guard, 2 Heralds, Magus, Queen, and Grand Master - 12 sets are: Assassin / Dark Order / Dreamer / Fiend / Navigator / Scribe / Second Lord / Seer / Wall / Undying",
+        "avatar": "/img/collections/dark-pool-syndicate/avatar.webp",
+        "card": "/img/collections/dark-pool-syndicate/card.webp",
+        "banner": "/img/collections/dark-pool-syndicate/banner.webp",
+        "website": "https://darkpoolsyndicate.wixsite.com/dark-pool-syndicate",
+        "twitter": "https://www.twitter.com/AlienDPS",
+        "discord": "https://discord.gg/HSHvggesEV",
+        "telegram": "https://t.me/Inhiarashi",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
