@@ -1,6 +1,10 @@
 [
   {
-    "users": ["0x23c8BA092419b801f5d70b505FBF626a112e7764"],
+    "users": [
+      "0x23c8BA092419b801f5d70b505FBF626a112e7764",
+      "0x8dc14b46e36fcc5c6c3e903a999e155678d5153a",
+      "0xddc470e66dd82f703243f536a35a346dfae49b28"
+    ],
     "tokens": [
       {
         "slug": "ai-experiments",
@@ -26,6 +30,11 @@
         "slug": "ultimate-mutants",
         "address": "0x21037397bDA5CF87c17b5Ec7A07f6935B6c6EA65",
         "ids": [31, 68, 172, 166, 261, 206, 271, 286, 312, 308, 343, 333, 355, 375, 425, 406, 445, 443, 449, 446]
+      },
+      {
+        "slug": "ghost-og",
+        "address": "0xe0160145ec09f98fb3Dbc03b2b5da08D16871e3f",
+        "ids": [254, 255, 253, 252, 249, 248, 244, 1987, 257, 256]
       }
     ],
     "reason": "Scammed Dr Dao"
