@@ -1,5 +1,36 @@
 [
   {
+    "users": ["0x23c8BA092419b801f5d70b505FBF626a112e7764"],
+    "tokens": [
+      {
+        "slug": "ai-experiments",
+        "address": "0x51eaf8c081Cca683A5542c438f9429CE46D238e4",
+        "ids": [48, 92, 417, 229, 1073, 1474, 1729, 1605, 1746, 1748, 1756, 1751]
+      },
+      {
+        "slug": "ai-labs",
+        "address": "0x44aa4cB2efF7167A306449EDe9b550e57Ca33036",
+        "ids": [113, 122, 173, 136, 389, 211, 510, 506, 532, 522, 671, 639, 676, 879]
+      },
+      {
+        "slug": "daolist-pass-3d",
+        "address": "0x1C7F4fE849e52B013242CDCb0C88f6A3c2Ea28aF",
+        "ids": [572]
+      },
+      {
+        "slug": "dr-dao-x-mutant",
+        "address": "0x72c97F79867219381EFA83127534710D559a2220",
+        "ids": [10, 395]
+      },
+      {
+        "slug": "ultimate-mutants",
+        "address": "0x21037397bDA5CF87c17b5Ec7A07f6935B6c6EA65",
+        "ids": [31, 68, 172, 166, 261, 206, 271, 286, 312, 308, 343, 333, 355, 375, 425, 406, 445, 443, 449, 446]
+      }
+    ],
+    "reason": "Scammed Dr Dao"
+  },
+  {
     "users": [
       "0x35747AD66159fEf14C4331a902A27035D4a415f3",
       "0x359720b2051d025cefc438afd4d40e030b2b1cef"
