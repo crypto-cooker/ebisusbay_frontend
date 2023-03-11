@@ -18640,7 +18640,7 @@
       "name": "Lab Rats",
       "slug": "lab-rats",
       "multiToken": false,
-      "address": "0x0793f726D9E912631dd32635fa24fA3EDA5C57bC",
+      "address": "0x28e276E68bBe113Fee31bf125473568DC1761BcF",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -25105,7 +25105,7 @@
         "medium": "https://medium.com/@TheLaboratoryIO",
         "telegram": "https://t.me/thelaboratoryio"
       },
-      "address": "0x0793f726D9E912631dd32635fa24fA3EDA5C57bC",
+      "address": "0x28e276E68bBe113Fee31bf125473568DC1761BcF",
       "maxMintPerTx": 7,
       "maxMintPerAddress": 10,
       "totalSupply": 10018,
