@@ -38,7 +38,7 @@ const Table = ({ timeFrame, searchTerms, onlyVerified, showMobileSort }: TablePr
     status,
   } = useInfiniteQuery(['Collections', filters], fetcher, {
     getNextPageParam: (lastPage, pages) => {
-      return pages[pages.length - 1].length >= filters.pageSize ? pages.length + 1 : undefined;
+      return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
     },
     staleTime: 1
   })
