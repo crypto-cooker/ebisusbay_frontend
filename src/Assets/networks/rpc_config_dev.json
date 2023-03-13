@@ -18569,7 +18569,7 @@
       "name": "For My Brothers",
       "slug": "for-my-brothers",
       "multiToken": false,
-      "address": "",
+      "address": "0xe6aBe7e49129900f8C6b6C2FAe51eD5573f4E3f0",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -25064,7 +25064,7 @@
         "twitter": "https://twitter.com/trooprzarmy",
         "discord": "https://discord.gg/Trooprz"
       },
-      "address": "",
+      "address": "0xe6aBe7e49129900f8C6b6C2FAe51eD5573f4E3f0",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 20,
       "totalSupply": 420,
