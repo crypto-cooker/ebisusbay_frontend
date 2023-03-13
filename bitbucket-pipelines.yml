@@ -4,6 +4,8 @@ options:
 definitions:
   updateOS: &update
     apt-get update
+  upgradeNpm: &upgradenpm
+    npm install -g npm@latest
   printVersion: &version
     node --version && npm --version
   confBuildx: &buildx
@@ -36,6 +38,7 @@ definitions:
         size: 1x
         script:
           - *update
+          - *upgradenpm
           - *version
           - npm install --no-audit
           #- npm run test
@@ -56,6 +59,7 @@ pipelines:
           size: 2x
           script:
             - *update
+            - *upgradenpm
             - *version
             # RPC config
             - cp -p ./src/Assets/networks/rpc_config_testnet.json ./src/Assets/networks/rpc_config.json
@@ -123,6 +127,7 @@ pipelines:
           size: 2x
           script:
             - *update
+            - *upgradenpm
             - *version
             # RPC config
             - cp -p ./src/Assets/networks/rpc_config_dev.json ./src/Assets/networks/rpc_config.json
@@ -191,6 +196,7 @@ pipelines:
           size: 2x
           script:
             - *update
+            - *upgradenpm
             - *version
             # RPC config
             - cp -p ./src/Assets/networks/rpc_config_dev.json ./src/Assets/networks/rpc_config.json
@@ -254,6 +260,7 @@ pipelines:
           size: 2x
           script:
             - *update
+            - *upgradenpm
             - *version
             # Build frontend
             - *build
