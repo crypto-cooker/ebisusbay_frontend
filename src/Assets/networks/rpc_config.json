@@ -18569,7 +18569,7 @@
       "name": "For My Brothers",
       "slug": "for-my-brothers",
       "multiToken": false,
-      "address": "",
+      "address": "0xe6aBe7e49129900f8C6b6C2FAe51eD5573f4E3f0",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -18737,6 +18737,32 @@
       },
       "verification": {
         "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "3D Alien Crosmocraft",
+      "slug": "3d-alien-crosmocraft",
+      "multiToken": false,
+      "address": "0x6E99C54FE9B37D714AeBedebBC5Da41178A2c858",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "567 3D Spaceships, a free AI NFT collection airdropped by the Crosmonauts NFT project.",
+        "avatar": "/img/collections/3d-alien-crosmocraft/avatar.webp",
+        "banner": "/img/collections/3d-alien-crosmocraft/banner.webp",
+        "card": "/img/collections/3d-alien-crosmocraft/card.webp",
+        "website": "https://www.crosmonauts.club/",
+        "twitter": "https://twitter.com/crosmonaut",
+        "discord": "https://discord.gg/yhyJjZ2uWk",
+        "medium": "https://medium.com/@crosmonaut",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
@@ -25064,7 +25090,7 @@
         "twitter": "https://twitter.com/trooprzarmy",
         "discord": "https://discord.gg/Trooprz"
       },
-      "address": "",
+      "address": "0xe6aBe7e49129900f8C6b6C2FAe51eD5573f4E3f0",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 20,
       "totalSupply": 420,
