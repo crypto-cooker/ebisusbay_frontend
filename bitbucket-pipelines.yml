@@ -21,6 +21,8 @@ definitions:
     aws ecr get-login-password | docker login --password-stdin --username AWS "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
   buildApp: &appcontainer
     docker buildx build --push --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f Dockerfile .
+  buildAppOld: &appcontainerold
+    docker buildx build --push --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f Dockerfile_node16 .
   buildProxyWeb: &proxywebcontainer
     sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/web.conf &&
     sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/default.conf &&
@@ -30,7 +32,7 @@ definitions:
   steps:
     - step: &test
         name: Test
-        image: node:16
+        image: node:18
         runs-on:
           - 'self.hosted'
           - 'linux'
@@ -50,7 +52,7 @@ pipelines:
       - step: *test
       - step:
           name: Build
-          image: node:16
+          image: node:18
           deployment: TestnetBuildStep
           runs-on:
             - 'self.hosted'
@@ -118,7 +120,7 @@ pipelines:
       - step: *test
       - step:
           name: Build
-          image: node:16
+          image: node:18
           deployment: SandboxBuildStep
           runs-on:
             - 'self.hosted'
@@ -187,7 +189,7 @@ pipelines:
       - step: *test
       - step:
           name: Build
-          image: node:16
+          image: node:18
           deployment: DevelopmentBuildStep
           runs-on:
             - 'self.hosted'
@@ -293,7 +295,7 @@ pipelines:
             # Login to ECR
             - *ecrlogin
             # Build container images and push to ECR repositorys and push to ECR repository
-            - *appcontainer
+            - *appcontainerold
             - *proxywebcontainer
       - step:
          name: Deploy
