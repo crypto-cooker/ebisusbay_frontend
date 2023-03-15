@@ -15,7 +15,21 @@ class WalletNft {
   originalImage: string;
   owner: string;
   rank: number;
-  tokenUri: string;
+  tokenUri: string | any;
+
+  // Others that might show up
+  nfts?: any[] = [];
+  animationUrl?: string;
+  imageAws?: string;
+  properties?: any[];
+  balance?: number = 1;
+
+  isStaked?: boolean = false;
+  canTransfer?: boolean = true;
+  canSell?: boolean = true;
+  listable?: boolean = false;
+  listed?: boolean = false;
+  listingId?: string;
 
   constructor(props: WalletNft) {
     this.attributes = props.attributes;

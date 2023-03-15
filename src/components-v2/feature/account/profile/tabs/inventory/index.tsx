@@ -33,15 +33,20 @@ import {
   Wrap,
   WrapItem
 } from "@chakra-ui/react";
-import MyBundleCard from './Inventory/components/MyBundleCard';
+import MyBundleCard from '@src/Components/Account/Profile/Inventory/components/MyBundleCard';
 import {NftCard} from "@src/components-v2/shared/nft-card";
 import nextApiService from "@src/core/services/api-service/next";
+import {useAppSelector} from "@src/Store/hooks";
 
-export default function Inventory({ address }) {
+interface InventoryProps {
+  address: string;
+}
+
+export default function Inventory({ address }: InventoryProps) {
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.user);
-  const batchListingCart = useSelector((state) => state.batchListing);
+  const user = useAppSelector((state) => state.user);
+  const batchListingCart = useAppSelector((state) => state.batchListing);
 
   const [collections, setCollections] = useState([]);
   const [collectionFilter, setCollectionFilter] = useState([]);
@@ -51,13 +56,15 @@ export default function Inventory({ address }) {
     { fallback: 'lg' },
   );
 
-  const onFilterChange = (filterOption) => {
+  const onFilterChange = (filterOption: any) => {
     setCollectionFilter(filterOption ?? []);
     refetch();
   };
 
   const fetcher = async ({ pageParam = 1 }) => {
-    return await nextApiService.getWallet(address, {page: pageParam});
+    const test = await nextApiService.getWallet(address, {page: pageParam, collection: collectionFilter});
+    console.log('test', test);
+    return test;
   };
 
   const {data, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery(
@@ -79,10 +86,10 @@ export default function Inventory({ address }) {
     async function func() {
       const result = await getWalletOverview(address);
       setCollections(result.data
-        .reduce((arr, item) => {
+        .reduce((arr: any, item: any) => {
           const coll = findCollectionByAddress(item.nftAddress, item.nftId);
           if (!coll) return arr;
-          const existingIndex = arr.findIndex((c) => caseInsensitiveCompare(coll.address, c.address));
+          const existingIndex = arr.findIndex((c: any) => caseInsensitiveCompare(coll.address, c.address));
           if (existingIndex >= 0) {
             arr[existingIndex].balance += Number(item.balance);
           } else {
@@ -91,7 +98,7 @@ export default function Inventory({ address }) {
           }
           return arr;
         }, [])
-        .sort((a, b) => a.name > b.name ? 1 : -1)
+        .sort((a: any, b: any) => a.name > b.name ? 1 : -1)
       );
     }
 
@@ -111,7 +118,7 @@ export default function Inventory({ address }) {
     }
   };
 
-  const handleOpenBatchShortcut = (shortcut) => {
+  const handleOpenBatchShortcut = (shortcut: any) => {
     if (!batchListingCart.isDrawerOpen) {
       dispatch(openBatchListingCart());
     }
@@ -126,7 +133,7 @@ export default function Inventory({ address }) {
         </Spinner>
       </div>
     ) : status === "error" ? (
-      <p>Error: {error.message}</p>
+      <p>Error: {(error as any).message}</p>
     ) : (
       <>
         <div className="card-group row g-3">
@@ -144,15 +151,14 @@ export default function Inventory({ address }) {
                           nft={nft}
                           canTransfer={nft.canTransfer}
                           canSell={nft.listable && !nft.listed && nft.canSell}
-                          isStaked={nft.isStaked}
-                          canCancel={nft.listed && nft.listingId}
+                          canCancel={nft.listed && !!nft.listingId}
                           canUpdate={nft.listable && nft.listed}
                           onTransferButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageTransferDialog(nft))}
                           onSellButtonPressed={() => {
-                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
+                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft, null))
                           }}
                           onUpdateButtonPressed={() => {
-                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
+                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft, null))
                           }}
                           onCancelButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageCancelDialog(nft))}
                           onAddToBatchListingButtonPressed={() => dispatch(addToBatchListingCart(nft))}
@@ -172,7 +178,7 @@ export default function Inventory({ address }) {
                   return (
                     <div
                       className={`d-item ${filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-6 col-sm-4 col-xl-3 col-xxl-2'}  mb-4`}
-                      key={`${nft.address}-${nft.id}-${nft.listed}-${index}`}
+                      key={`${nft.nftAddress}-${nft.nftId}-${nft.listed}-${index}`}
                     >
                       {caseInsensitiveCompare(address, user.address) ? (
                         <MyNftCard
@@ -180,14 +186,14 @@ export default function Inventory({ address }) {
                           canTransfer={nft.canTransfer}
                           canSell={nft.listable && !nft.listed && nft.canSell}
                           isStaked={nft.isStaked}
-                          canCancel={nft.listed && nft.listingId}
+                          canCancel={nft.listed && !!nft.listingId}
                           canUpdate={nft.listable && nft.listed}
                           onTransferButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageTransferDialog(nft))}
                           onSellButtonPressed={() => {
-                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
+                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft, null))
                           }}
                           onUpdateButtonPressed={() => {
-                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
+                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft, null))
                           }}
                           onCancelButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageCancelDialog(nft)) }
                           onAddToBatchListingButtonPressed={() => dispatch(addToBatchListingCart(nft))}
@@ -198,7 +204,7 @@ export default function Inventory({ address }) {
                         <NftCard
                           nft={nft}
                           imgClass="collection"
-                          canBuy={!isNftBlacklisted(nft.address, nft.id)}
+                          canBuy={!isNftBlacklisted(nft.nftAddress, nft.nftId)}
                         />
                       )}
                     </div>
@@ -276,7 +282,7 @@ export default function Inventory({ address }) {
           <InfiniteScroll
             dataLength={data?.pages ? data.pages.flat().length : 0}
             next={loadMore}
-            hasMore={hasNextPage}
+            hasMore={hasNextPage ?? false}
             style={{ overflow: 'hidden' }}
             loader={
               <div className="row">

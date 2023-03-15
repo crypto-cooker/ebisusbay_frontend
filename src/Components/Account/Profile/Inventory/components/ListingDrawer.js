@@ -158,7 +158,7 @@ export const ListingDrawer = () => {
       setShowConfirmButton(false);
       setExecutingCreateListing(true);
       const filteredCartNfts = batchListingCart.nfts.filter((o) => {
-        return batchListingCart.extras[o.nft.address.toLowerCase()]?.approval;
+        return batchListingCart.extras[o.nft.nftAddress.toLowerCase()]?.approval;
       });
 
       const nftPrices = filteredCartNfts.map((o) => ethers.utils.parseEther(o.price.toString()));
@@ -182,15 +182,15 @@ export const ListingDrawer = () => {
   const executeGaslessListings = async (nfts) => {
     if (nfts.length < 1) return;
 
-    const nftAddresses = nfts.map((o) => o.nft.address);
-    const nftIds = nfts.map((o) => o.nft.id);
+    const nftAddresses = nfts.map((o) => o.nft.nftAddress);
+    const nftIds = nfts.map((o) => o.nft.nftId);
     const nftPrices = nfts.map((o) => ethers.utils.parseEther(o.price.toString()));
 
     Sentry.captureEvent({ message: 'handleBatchListings', extra: { nftAddresses, nftIds, nftPrices } });
 
     await upsertGaslessListings(nfts.map((item) => ({
-      collectionAddress: item.nft.address ?? item.nft.nftAddress,
-      tokenId: item.nft.id ?? item.nft.nftId,
+      collectionAddress: item.nft.nftAddress,
+      tokenId: item.nft.nftId,
       price: item.price.toString(),
       expirationDate: new Date().getTime() + parseInt(item.expiration),
       is1155: item.nft.multiToken
@@ -207,7 +207,7 @@ export const ListingDrawer = () => {
       .map((item) => item.nft.listingId);
     if (gaslessListingIds.length > 0) await cancelGaslessListing(gaslessListingIds);
 
-    const nftAddresses = items.map((o) => o.nft.address);
+    const nftAddresses = items.map((o) => o.nft.nftAddress);
     const nftIds = items.map((o) => o.nft.id);
     const nftPrices = items.map((o) => ethers.utils.parseEther(o.price.toString()));
 
@@ -236,13 +236,13 @@ export const ListingDrawer = () => {
       });
       let floorWarning = false;
       const nftPrices = batchListingCart.nfts.map((o) => {
-        const floorPriceObj = nftFloorPrices.find((fp) => caseInsensitiveCompare(fp.address, o.nft.address));
+        const floorPriceObj = nftFloorPrices.find((fp) => caseInsensitiveCompare(fp.address, o.nft.nftAddress));
         const isBelowFloor = (floorPriceObj.floorPrice !== 0 && ((floorPriceObj.floorPrice - Number(o.price)) / floorPriceObj.floorPrice) * 100 > floorThreshold);;
         if (isBelowFloor) {
           floorWarning = true;
         }
         return {
-          address: o.nft.address,
+          address: o.nft.nftAddress,
           price: o.price,
           ...floorPriceObj
         }
@@ -272,7 +272,7 @@ export const ListingDrawer = () => {
       !Object.values(batchListingCart.extras).some((o) => !o.approval) &&
       (isBundling || !batchListingCart.nfts.some((o) => !o.price || !(parseInt(o.price) > 0))) &&
       (isBundling || !batchListingCart.nfts.some((o) => !o.expiration || !(parseInt(o.expiration) > 0))) &&
-      !batchListingCart.nfts.some((o) => !o.nft.listable || o.nft.isStaked || (isBundling && isBundle(o.nft.address)));
+      !batchListingCart.nfts.some((o) => !o.nft.listable || o.nft.isStaked || (isBundling && isBundle(o.nft.nftAddress)));
   }
 
   const onBundleToggled = useCallback((e) => {
@@ -289,10 +289,10 @@ export const ListingDrawer = () => {
       setShowConfirmButton(false);
       setExecutingCreateListing(true);
       const filteredCartNfts = batchListingCart.nfts.filter((o) => {
-        return batchListingCart.extras[o.nft.address.toLowerCase()]?.approval;
+        return batchListingCart.extras[o.nft.nftAddress.toLowerCase()]?.approval;
       });
-      const nftAddresses = filteredCartNfts.map((o) => o.nft.address);
-      const nftIds = filteredCartNfts.map((o) => o.nft.id);
+      const nftAddresses = filteredCartNfts.map((o) => o.nft.nftAddress);
+      const nftIds = filteredCartNfts.map((o) => o.nft.nftId);
 
       Sentry.captureEvent({ message: 'handleBatchBundleListing', extra: {
           nftAddresses,
@@ -422,7 +422,7 @@ export const ListingDrawer = () => {
           <>
             {batchListingCart.nfts.map((item, key) => (
               <ListingDrawerItem
-                key={`${item.nft.address}-${item.nft.id}`}
+                key={`${item.nft.nftAddress}-${item.nft.nftId}`}
                 item={item}
                 onCascadePriceSelected={handleCascadePrices}
                 onApplyAllSelected={handleApplyAll}

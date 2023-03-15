@@ -49,7 +49,7 @@ const MyNftCard = ({
   newTab = false,
 }) => {
   const history = useRouter();
-  const nftUrl = appUrl(`/collection/${nft.address}/${nft.id}`);
+  const nftUrl = appUrl(`/collection/${nft.nftAddress}/${nft.nftId}`);
   const [isHovered, setIsHovered] = useState(false);
   const user = useSelector((state) => state.user);
   const batchListingCart = useSelector((state) => state.batchListing);
@@ -134,7 +134,7 @@ const MyNftCard = ({
   };
 
   const isInBatchListingCart = () => {
-    return batchListingCart.nfts.some((o) => o.nft.id === nft.id && caseInsensitiveCompare(o.nft.address, nft.address));
+    return batchListingCart.nfts.some((o) => o.nft.nftId === nft.nftId && caseInsensitiveCompare(o.nft.nftAddress, nft.nftAddress));
   };
 
   return (
@@ -202,8 +202,8 @@ const MyNftCard = ({
                   onClick={() => navigateTo(nftUrl)}
                   cursor="pointer"
                 >
-                  <AnyMedia image={nftCardUrl(currentNft.id, currentNft.image)}
-                    title={currentNft.id}
+                  <AnyMedia image={nftCardUrl(currentNft.nftId, currentNft.image)}
+                    title={currentNft.nftId}
                     newTab={false}
                     className="card-img-top marketplace"
                     height={440}

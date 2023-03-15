@@ -51,7 +51,7 @@ const BundleDrawerItem = ({ item, disabled, onAddCollection }) => {
   const [invalid, setInvalid] = useState(false);
 
   // Approvals
-  const extras = useSelector((state) => state.batchListing.extras[item.nft.address.toLowerCase()] ?? {});
+  const extras = useSelector((state) => state.batchListing.extras[item.nft.nftAddress.toLowerCase()] ?? {});
   const { approval: approvalStatus, canList } = extras;
   const [executingApproval, setExecutingApproval] = useState(false);
   const [initializing, setInitializing] = useState(false);
@@ -65,18 +65,18 @@ const BundleDrawerItem = ({ item, disabled, onAddCollection }) => {
   }, [item.quantity]);
 
   const checkApproval = async () => {
-    const contract = new Contract(item.nft.address, ERC721, user.provider.getSigner());
+    const contract = new Contract(item.nft.nftAddress, ERC721, user.provider.getSigner());
     return await contract.isApprovedForAll(user.address, config.contracts.market);
   };
 
   const approveContract = useCallback(async () => {
     try {
       setExecutingApproval(true);
-      const contract = new Contract(item.nft.address, ERC721, user.provider.getSigner());
+      const contract = new Contract(item.nft.nftAddress, ERC721, user.provider.getSigner());
       const tx = await contract.setApprovalForAll(config.contracts.market, true);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      dispatch(setApproval({ address: item.nft.address, status: true }));
+      dispatch(setApproval({ address: item.nft.nftAddress, status: true }));
 
     } catch (error) {
       if (error.data) {
@@ -96,8 +96,8 @@ const BundleDrawerItem = ({ item, disabled, onAddCollection }) => {
     async function func() {
       try {
         setInitializing(true);
-        if (!extras[item.nft.address.toLowerCase()]) {
-          const extras = { address: item.nft.address };
+        if (!extras[item.nft.nftAddress.toLowerCase()]) {
+          const extras = { address: item.nft.nftAddress };
 
           extras.approval = await checkApproval();
           extras.canList = !item.nft.isStaked;
@@ -135,7 +135,7 @@ const BundleDrawerItem = ({ item, disabled, onAddCollection }) => {
 
   return (
     <Box
-      key={`${item.nft.address}-${item.nft.id}`}
+      key={`${item.nft.nftAddress}-${item.nft.nftId}`}
       _hover={{ background: hoverBackground }}
       p={2}
       rounded="lg"
@@ -146,7 +146,7 @@ const BundleDrawerItem = ({ item, disabled, onAddCollection }) => {
           height={50}
           style={{ borderRadius: '20px' }}
         >
-          {isBundle(item.nft.address) ? (
+          {isBundle(item.nft.nftAddress) ? (
             <Image
               src={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')}
               alt={item.nft.name}
@@ -154,7 +154,7 @@ const BundleDrawerItem = ({ item, disabled, onAddCollection }) => {
             />
           ) : (
             <AnyMedia
-              image={specialImageTransform(item.nft.address, ImageKitService.buildAvatarUrl(item.nft.image))}
+              image={specialImageTransform(item.nft.nftAddress, ImageKitService.buildAvatarUrl(item.nft.image))}
               title={item.nft.name}
               usePlaceholder={true}
               className="img-fluid img-rounded-5"
@@ -163,13 +163,13 @@ const BundleDrawerItem = ({ item, disabled, onAddCollection }) => {
         </Box>
         <Box flex='1' ms={2} fontSize="14px">
           <VStack align="left" spacing={0}>
-            <Link href={`/collection/${item.nft.address}/${item.nft.id}`}>
+            <Link href={`/collection/${item.nft.nftAddress}/${item.nft.nftId}`}>
               <Text fontWeight="bold" noOfLines={1} cursor="pointer">{item.nft.name}</Text>
             </Link>
             <Skeleton isLoaded={!initializing}>
               {approvalStatus ? (
                 <>
-                  {isBundle(item.nft.address) ? (
+                  {isBundle(item.nft.nftAddress) ? (
                     <Box>
                       <Badge variant='outline' colorScheme='red'>
                         Can't Nest Bundles
@@ -250,7 +250,7 @@ const BundleDrawerItem = ({ item, disabled, onAddCollection }) => {
               <FontAwesomeIcon icon={faEllipsisH} />
             </MenuButton>
             <MenuList textAlign="right" fontSize="14px">
-              <MenuItem onClick={() => onAddCollection(item.nft.address)}>Add entire collection</MenuItem>
+              <MenuItem onClick={() => onAddCollection(item.nft.nftAddress)}>Add entire collection</MenuItem>
               <MenuItem onClick={handleRemoveItem}>Remove</MenuItem>
             </MenuList>
           </Menu>

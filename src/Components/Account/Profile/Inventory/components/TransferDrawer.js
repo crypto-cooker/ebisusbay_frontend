@@ -52,10 +52,10 @@ export const TransferDrawer = () => {
       setShowConfirmButton(false);
       setExecutingTransfer(true);
       const filteredCartNfts = batchListingCart.nfts.filter((o) => {
-        return batchListingCart.extras[o.nft.address.toLowerCase()]?.approval;
+        return batchListingCart.extras[o.nft.nftAddress.toLowerCase()]?.approval;
       });
-      const nftAddresses = filteredCartNfts.map((o) => o.nft.address);
-      const nftIds = filteredCartNfts.map((o) => o.nft.id);
+      const nftAddresses = filteredCartNfts.map((o) => o.nft.nftAddress);
+      const nftIds = filteredCartNfts.map((o) => o.nft.nftId);
 
       Sentry.captureEvent({ message: 'handleBatchTransfer', extra: { nftAddresses, nftIds } });
       let tx = await user.contractService.market.bulkTransfer(nftAddresses, nftIds, recipient);
@@ -187,7 +187,7 @@ export const TransferDrawer = () => {
           <>
             {batchListingCart.nfts.map((item) => (
               <TransferDrawerItem
-                key={`${item.nft.address}-${item.nft.id}`}
+                key={`${item.nft.nftAddress}-${item.nft.nftId}`}
                 item={item}
                 onAddCollection={handleAddCollection}
               />

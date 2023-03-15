@@ -7,7 +7,7 @@ import Avatar from './Avatar';
 import styles from './profile.module.scss';
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {caseInsensitiveCompare, isUserBlacklisted, shortAddress} from "@src/utils";
-import Inventory from "@src/Components/Account/Profile/Inventory";
+import Inventory from "@src/components-v2/feature/account/profile/tabs/inventory";
 import Collections from "@src/Components/Account/Profile/Collections";
 import Listings from "@src/components-v2/feature/account/profile/tabs/listings";
 import Offers from "@src/Components/Account/Profile/Offers";

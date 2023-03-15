@@ -51,7 +51,7 @@ const MyNftCard = ({
   newTab = false,
 }) => {
   const history = useRouter();
-  const nftUrl = appUrl(`/collection/${nft.address}/${nft.id}`);
+  const nftUrl = appUrl(`/collection/${nft.nftAddress}/${nft.nftId}`);
   const [isHovered, setIsHovered] = useState(false);
   const user = useSelector((state) => state.user);
   const batchListingCart = useSelector((state) => state.batchListing);
@@ -129,7 +129,7 @@ const MyNftCard = ({
   };
 
   const isInBatchListingCart = () => {
-    return batchListingCart.nfts.some((o) => o.nft.id === nft.id && caseInsensitiveCompare(o.nft.address, nft.address));
+    return batchListingCart.nfts.some((o) => o.nft.nftId === nft.nftId && caseInsensitiveCompare(o.nft.nftAddress, nft.nftAddress));
   };
 
   return (
@@ -195,7 +195,7 @@ const MyNftCard = ({
               onClick={() => navigateTo(nftUrl)}
               cursor="pointer"
             >
-              <AnyMedia image={nftCardUrl(nft.address, nft.image)}
+              <AnyMedia image={nftCardUrl(nft.nftAddress, nft.image)}
                         title={nft.name}
                         newTab={true}
                         className="card-img-top marketplace"
@@ -220,21 +220,21 @@ const MyNftCard = ({
               </span>
             </div>
             <span className="card-text">
-              {nft.listed && nft.price ? (
+              {!!nft.listed && !!nft.market.price ? (
                 <HStack>
                   <Box>
                     <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
                   </Box>
                   <span className="ms-1">
-                    {ethers.utils.commify(round(nft.price, 2))}
+                    {ethers.utils.commify(round(nft.market.price, 2))}
                   </span>
                 </HStack>
               ) : (
                 <>&nbsp;</>
               )}
             </span>
-            {nft.expirationDate && (
-              <Text className="text-muted mt-1" fontSize="sm">Ends in {timeSince(nft.expirationDate)}</Text>
+            {nft.market.expirationDate && (
+              <Text className="text-muted mt-1" fontSize="sm">Ends in {timeSince(nft.market.expirationDate)}</Text>
             )}
 
             {isStaked && (

@@ -11,6 +11,7 @@ import {Offer} from "@src/core/models/offer";
 import WalletsQuery, {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
 import WalletsRepository from "@src/core/services/api-service/mapi/repositories/wallets";
 import WalletNft from "@src/core/models/wallet-nft";
+import {enrichWalletNft} from "@src/core/services/api-service/mapi/enrichment";
 const config = appConfig();
 
 class Mapi {
@@ -53,7 +54,8 @@ class Mapi {
     const response = await this.wallets.get(new WalletsQuery(query));
 
     const nfts = await Promise.all(response.data.nfts.map(async (nft: any): Promise<WalletNft> => {
-      return WalletNft.fromMapi(nft);
+      const walletNft = WalletNft.fromMapi(nft);
+      return await enrichWalletNft(walletNft);
     }));
 
     return new PagedList<WalletNft>(

@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {Accordion, Form} from "react-bootstrap";
+import {Form} from "react-bootstrap";
 import {caseInsensitiveCompare, debounce} from "@src/utils";
-import {hostedImage, ImageKitService} from "@src/helpers/image";
-import {CdnImage} from "@src/Components/components/CdnImage";
+import {ImageKitService} from "@src/helpers/image";
 import Blockies from "react-blockies";
-import Image from "next/image";
 import {Heading} from "@chakra-ui/react";
 
 export const CollectionFilter = ({collections, currentFilter, onFilter, keyPrefix = null}) => {
