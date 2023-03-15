@@ -18865,6 +18865,33 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "100k $ARMY NFT",
+      "slug": "100k-army-nft",
+      "multiToken": false,
+      "address": "0x48354e47f58428017861FAd4E262271027BEb8Af",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Loaded with 100k+ $ARMY, these NFTs are making their way throughout the CRONOS chain",
+        "avatar": "/img/collections/100k-army-nft/avatar.webp",
+        "card": "/img/collections/100k-army-nft/card.webp",
+        "banner": "/img/collections/100k-army-nft/banner.webp",
+        "website": "https://croarmy.app/",
+        "twitter": "https://twitter.com/croarmy_eth",
+        "discord": "https://discord.gg/croarmy",
+        "telegram": "https://t.me/CroArmy_ETH",
+        "medium": "https://medium.com/@CroArmy",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
