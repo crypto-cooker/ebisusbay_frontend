@@ -3,7 +3,7 @@ import {PagedList} from "@src/core/services/api-service/paginated-list";
 import SearchQuery from "@src/core/services/api-service/mapi/queries/search";
 import {OffersQueryParams} from "@src/core/services/api-service/mapi/queries/offers";
 import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
-import {WalletNft} from "@src/core/models/wallet-nft";
+import WalletNft from "@src/core/models/wallet-nft";
 
 export interface Api {
     getListings(query?: ListingsQueryParams): Promise<PagedList<any>>;
