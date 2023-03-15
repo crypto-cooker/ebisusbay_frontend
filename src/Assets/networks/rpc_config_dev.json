@@ -18766,6 +18766,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Decentral Mamas",
+      "slug": "decentral-mamas",
+      "multiToken": false,
+      "address": "0xc536b6151599A3fdA22E63eD61AA918d738e1B7d",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A unique collection of 888 individually named Mamas coming to shake up Cronos",
+        "avatar": "/img/collections/decentral-mamas/avatar.webp",
+        "banner": "/img/collections/decentral-mamas/banner.webp",
+        "card": "/img/collections/decentral-mamas/card.webp",
+        "website": "https://www.decentralmamas.xyz/mint",
+        "twitter": "https://twitter.com/decentralmamas",
+        "discord": "https://discord.gg/Cc9dXMRnBX",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
