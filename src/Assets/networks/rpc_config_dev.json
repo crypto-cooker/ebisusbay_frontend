@@ -18842,6 +18842,29 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Pepe Bandits",
+      "slug": "pepe-bandits",
+      "multiToken": false,
+      "address": "0xe3bebD52e6a2D1a33aA6D04cDF7Bd796398fe04A",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Get ready for the adventure of a lifetime with Pepe Bandits! This NFT collection of 1111 unique and quirky characters is brought to you by KYC Project BANDITS. By staking your Pepe Bandits NFTs, you can earn PHNX tokens and gain early access to a cross-chain collection. And that's not all - who knows where these cross-chain adventures will take you? Join the Bandits community and embark on a journey full of excitement, rewards, and endless possibilities.",
+        "avatar": "/img/collections/pepe-bandits/avatar.webp",
+        "card": "/img/collections/pepe-bandits/card.webp",
+        "banner": "/img/collections/pepe-bandits/banner.webp",
+        "website": "https://nftlaunch.me/collection/bandits",
+        "twitter": "https://twitter.com/BANDITS750",
+        "discord": "https://discord.gg/gBTF4vfWb3",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
