@@ -18816,6 +18816,32 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "The Cyborg Armory",
+      "slug": "the-cyborg-armory",
+      "multiToken": false,
+      "address": "0x8355f376350f7FEEb9DeDb8eD940112C24c8a4cd",
+      "listable": true,
+      "metadata": {
+        "description": "Collect Cyborg Armory upgrades to evolve your Meta Cyborgs, Cyborg Guardians or Immortal Cyborgs into Ultra Cyborgs",
+        "avatar": "/img/collections/the-cyborg-armory/avatar.webp",
+        "banner": "/img/collections/the-cyborg-armory/banner.webp",
+        "card": "/img/collections/the-cyborg-armory/card.webp",
+        "website": "https://cyborgswap.io/",
+        "twitter": "https://twitter.com/CyborgSwapDEX",
+        "discord": "https://discord.gg/Ku6A7tJSVp",
+        "medium": "https://cyborgswap.medium.com/",
+        "telegram": "https://t.me/+IQJY2ugWLaVmODVk",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
