@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { getNftsForAddress2 } from "@src/core/api";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Spinner } from "react-bootstrap";
 import MyNftCard from "@src/Components/components/MyNftCard";
@@ -36,6 +35,7 @@ import {
 } from "@chakra-ui/react";
 import MyBundleCard from './Inventory/components/MyBundleCard';
 import {NftCard} from "@src/components-v2/shared/nft-card";
+import nextApiService from "@src/core/services/api-service/next";
 
 export default function Inventory({ address }) {
   const dispatch = useDispatch();
@@ -57,24 +57,19 @@ export default function Inventory({ address }) {
   };
 
   const fetcher = async ({ pageParam = 1 }) => {
-    return await getNftsForAddress2(address, user.provider, pageParam, collectionFilter);
+    return await nextApiService.getWallet(address, {page: pageParam});
   };
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-    status,
-    refetch,
-  } = useInfiniteQuery(['Inventory', address, collectionFilter], fetcher, {
-    getNextPageParam: (lastPage, pages) => {
-      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-    },
-    refetchOnWindowFocus: false
-  })
+  const {data, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery(
+    ['Inventory', address, collectionFilter],
+    fetcher,
+    {
+      getNextPageParam: (lastPage, pages) => {
+        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+      },
+      refetchOnWindowFocus: false
+    }
+  )
 
   const loadMore = () => {
     fetchNextPage();
@@ -137,12 +132,12 @@ export default function Inventory({ address }) {
         <div className="card-group row g-3">
           {data.pages.map((items, index) => (
             <React.Fragment key={index}>
-              {items.nfts.map((nft, index) => {
-                if(isBundle(nft.address)){
+              {items.data.map((nft, index) => {
+                if(isBundle(nft.nftAddress)){
                   return (
                     <div
                       className={`d-item ${filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-6 col-sm-4 col-xl-3 col-xxl-2'}  mb-4`}
-                      key={`${nft.address}-${nft.id}-${index}`}
+                      key={`${nft.nftAddress}-${nft.nftId}-${index}`}
                     >
                       {caseInsensitiveCompare(address, user.address) ? (
                         <MyBundleCard

@@ -1,0 +1,63 @@
+class WalletNft {
+  attributes: any[];
+  collectionName: string;
+  burnt: boolean;
+  description: string;
+  edition: number;
+  image: string;
+  type: '721' | '1155';
+  lastSale: any;
+  market: any;
+  name: string;
+  nftAddress: string;
+  nftId: string;
+  offer: any;
+  originalImage: string;
+  owner: string;
+  rank: number;
+  tokenUri: string;
+
+  constructor(props: WalletNft) {
+    this.attributes = props.attributes;
+    this.collectionName = props.collectionName;
+    this.burnt = props.burnt;
+    this.description = props.description;
+    this.edition = props.edition;
+    this.image = props.image;
+    this.type = props.type;
+    this.lastSale = props.lastSale;
+    this.market = props.market;
+    this.name = props.name;
+    this.nftAddress = props.nftAddress;
+    this.nftId = props.nftId;
+    this.offer = props.offer;
+    this.originalImage = props.originalImage;
+    this.owner = props.owner;
+    this.rank = props.rank;
+    this.tokenUri = props.tokenUri;
+  }
+
+  static fromMapi(props: any) {
+    return new WalletNft({
+      attributes: props.attributes,
+      collectionName: props.collectionName,
+      burnt: props.burnt,
+      description: props.description,
+      edition: props.edition,
+      image: props.image,
+      type: props.is1155 ? '1155' : '721',
+      lastSale: props.lastSale,
+      market: props.market,
+      name: props.name,
+      nftAddress: props.nftAddress,
+      nftId: props.nftId,
+      offer: props.offer,
+      originalImage: props.originalImage,
+      owner: props.owner,
+      rank: props.rank,
+      tokenUri: props.token_uri
+    })
+  }
+}
+
+export default WalletNft;
