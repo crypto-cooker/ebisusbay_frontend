@@ -11124,7 +11124,7 @@
       "multiToken": false,
       "address": "0xcfad4A3d1eE92f3A0c49B1758ac039Db41FAE94D",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "5555 Lucky Finger Monkeys are about to hit Cronos. Lookout for the interactive platform!",
         "avatar": "/img/collections/finger-monkeys/avatar.webp",
