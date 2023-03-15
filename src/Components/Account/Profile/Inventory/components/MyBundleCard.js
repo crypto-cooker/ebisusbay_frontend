@@ -218,9 +218,9 @@ const MyNftCard = ({
           <div className="d-flex flex-column p-2 pb-1">
             <div className="card-title mt-auto">
               <span onClick={() => navigateTo(nftUrl)} style={{ cursor: 'pointer' }}>
-                {nft.count && nft.count > 0 ? (
+                {nft.balance && nft.balance > 1 ? (
                   <Heading as="h6" size="sm">
-                    {nft.name} (x{nft.count})
+                    {nft.name} (x{nft.balance})
                   </Heading>
                 ) : (
                   <Heading as="h6" size="sm">{nft.name}</Heading>

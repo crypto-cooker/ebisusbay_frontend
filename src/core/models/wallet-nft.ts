@@ -19,10 +19,10 @@ class WalletNft {
 
   // Others that might show up
   nfts?: any[] = [];
+  balance?: number = 1;
   animationUrl?: string;
   imageAws?: string;
   properties?: any[];
-  balance?: number = 1;
 
   isStaked?: boolean = false;
   canTransfer?: boolean = true;
@@ -52,7 +52,7 @@ class WalletNft {
   }
 
   static fromMapi(props: any) {
-    return new WalletNft({
+    const nft = new WalletNft({
       attributes: props.attributes,
       collectionName: props.collectionName,
       burnt: props.burnt,
@@ -70,7 +70,12 @@ class WalletNft {
       owner: props.owner,
       rank: props.rank,
       tokenUri: props.token_uri
-    })
+    });
+
+    if (!!props.nfts) nft.nfts = props.nfts;
+    if (!!props.balance) nft.balance = Number(props.balance);
+
+    return nft;
   }
 }
 
