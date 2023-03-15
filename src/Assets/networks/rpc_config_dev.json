@@ -18791,6 +18791,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Sou-Sou Mamas",
+      "slug": "sou-sou-mamas",
+      "multiToken": false,
+      "address": "0x36060C15C8f69Ddc5C05975D58a8b29B81Df1D9D",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A crisp collection of 10000 Mama Bears traveling through Cronos in the pursuit of love and fortune.",
+        "avatar": "/img/collections/sou-sou-Mamas/avatar.webp",
+        "card": "/img/collections/sou-sou-Mamas/card.webp",
+        "banner": "/img/collections/sou-sou-Mamas/banner.webp",
+        "twitter": "https://twitter.com/sousoubears",
+        "discord": "https://discord.gg/rMR6YNw7ME",
+        "medium": "https://medium.com/@sousoubears",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
