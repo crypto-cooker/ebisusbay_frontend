@@ -20,7 +20,7 @@ import axios from "axios";
 import {getAuthSignerInStorage} from "@src/helpers/storage";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import Cms from "@src/core/services/api-service/cms";
-import {parseUnits} from "ethers/lib/utils";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -52,27 +52,13 @@ export default function GdcClaimConfirmation({ onClose, isOpen}: GdcClaimConfirm
         const service = new Cms();
         const serverSig = await service.getGdcClaimSignature((user.profile as any).email, user.address!, signatureInStorage);
 
-        console.log('serfasdf', serverSig)
-        const gasPrice = parseUnits('5000', 'gwei');
-        const gasEstimate = await user.contractService!.gdc.mint((user.profile as any).email, serverSig.data);
-        const gasLimit = gasEstimate.mul(2);
-        let extra = {
-          gasPrice,
-          gasLimit
-        };
-        const tx = await user.contractService!.gdc.mint((user.profile as any).email, serverSig.data, extra);
+        const tx = await user.contractService!.gdc.mint((user.profile as any).email, serverSig.data);
         const receipt = await tx.wait();
         setTx(receipt);
       }
       setIsComplete(true);
     } catch (error: any) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        toast.error('Unknown Error');
-      }
+      toast.error(parseErrorMessage(error));
     } finally {
       setExecutingClaim(false);
     }
