@@ -6,6 +6,7 @@ import Offer from "@src/Contracts/Offer.json";
 import StakeABI from "@src/Contracts/Stake.json";
 import Membership from "@src/Contracts/EbisusBayMembership.json";
 import gaslessListingContract from "@src/Contracts/GaslessListing.json";
+import gdcAbi from "@src/Contracts/GDC.json";
 
 const config = appConfig();
 
@@ -56,6 +57,13 @@ class UserContractService {
       this._ship = new Contract(config.contracts.gaslessListing, gaslessListingContract.abi, this.signer)
     }
     return this._ship;
+  }
+
+  get gdc() {
+    if (!this._gdc) {
+      this._gdc = new Contract(config.contracts.gdc, gdcAbi, this.signer)
+    }
+    return this._gdc;
   }
 }
 //

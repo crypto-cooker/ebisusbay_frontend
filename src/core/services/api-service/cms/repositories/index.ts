@@ -3,11 +3,11 @@ import {appConfig} from "@src/Config";
 const config = appConfig();
 
 abstract class CmsRepository {
-  public api: AxiosInstance;
+  public cms: AxiosInstance;
 
   constructor(apiKey?: string) {
-    this.api = axios.create({baseURL: config.urls.api});
-    if (apiKey) this.api.defaults.headers.common['eb-api-key'] = apiKey;
+    this.cms = axios.create({baseURL: config.urls.cms});
+    if (apiKey) this.cms.defaults.headers.common['eb-api-key'] = apiKey;
   }
 
 }
