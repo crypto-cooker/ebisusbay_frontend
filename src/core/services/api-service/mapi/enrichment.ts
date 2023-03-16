@@ -10,6 +10,7 @@ import {
 import {getAntMintPassMetadata, getWeirdApesStakingStatus} from "@src/core/api/chain";
 import {fallbackImageUrl} from "@src/core/constants";
 import WalletNft from "@src/core/models/wallet-nft";
+import axios from "axios";
 
 export async function enrichWalletNft(nft: WalletNft): Promise<WalletNft> {
   if(isBundle(nft.nftAddress)) {
@@ -39,15 +40,14 @@ export async function enrichWalletNft(nft: WalletNft): Promise<WalletNft> {
     }
 
     let image;
-    let name = nft.name;
     try {
       if (nft.imageAws || nft.image) {
         image = nft.imageAws ?? nft.image;
       } else if (!!nft.tokenUri) {
         if (typeof nft.tokenUri === 'string') {
-          const json = await (await fetch(nft.tokenUri)).json();
-          image = convertIpfsResource(json.image);
-          if (json.name) name = json.name;
+          const json = await axios.get(nft.tokenUri, {timeout: 10000});
+          image = convertIpfsResource(json.data.image);
+          if (json.data.name) nft.name = json.data.name;
         } else if (typeof nft.tokenUri === 'object') {
           image = nft.tokenUri.image;
         }
@@ -59,6 +59,7 @@ export async function enrichWalletNft(nft: WalletNft): Promise<WalletNft> {
       console.log(e);
     }
     if (!image) image = fallbackImageUrl();
+    nft.image = image;
 
     const video = nft.animationUrl ?? (image.split('.').pop() === 'mp4' ? image : null);
 
