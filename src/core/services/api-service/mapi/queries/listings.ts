@@ -39,8 +39,6 @@ export class ListingsQuery extends Query<ListingsQueryParams> {
         query.collection = Array.isArray(query.collection) ? query.collection.join(',') : query.collection;
         query.tokenId = Array.isArray(query.tokenId) ? query.tokenId.join(',') : query.tokenId;
         query.listingId = Array.isArray(query.listingId) ? query.listingId.join(',') : query.listingId;
-
-        console.log(query)
         return query;
     }
 }

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import {appConfig} from "@src/Config";
 import mergedCollections from "@src/core/data/merged-collections.json";
-import {caseInsensitiveCompare} from "@src/utils";
+import {caseInsensitiveCompare, isWeirdApesCollection} from "@src/utils";
 
 const config = appConfig();
 const api = axios.create({
@@ -36,36 +36,42 @@ const useGetCollections = () => {
         return !skippableCollections.some((c) => caseInsensitiveCompare(c, collection.address));
       })
       .map((collection: any) => {
-      return {
-        averageSalePrice: collection.stats?.total?.avgSalePrice,
-        averageSalePrice1d: collection.stats?.total?.avgSalePrice1d,
-        averageSalePrice7d: collection.stats?.total?.avgSalePrice7d,
-        averageSalePrice30d: collection.stats?.total?.avgSalePrice30d,
-        averageSalePrice1dIncrease: collection.stats?.total?.avgSalePrice1d_increase,
-        collection: collection.address,
-        floorPrice: collection.stats?.total?.floorPrice,
-        listable: collection.listable,
-        metadata: collection.metadata,
-        name: collection.name,
-        numberActive: collection.stats?.total?.active,
-        numberCancelled: collection.stats?.total?.cancelled,
-        numberOfSales: collection.stats?.total?.sales,
-        sales1d: collection.stats?.total?.sales1d,
-        sales7d: collection.stats?.total?.sales7d,
-        sales30d: collection.stats?.total?.sales30d,
-        sales1dIncrease: collection.stats?.total?.sales1d_increase,
-        slug: collection.slug,
-        totalFees: collection.stats?.total?.fee,
-        totalRoyalties: collection.stats?.total?.royalty,
-        totalVolume: collection.stats?.total?.volume,
-        volume1d: collection.stats?.total?.volume1d,
-        volume7d: collection.stats?.total?.volume7d,
-        volume30d: collection.stats?.total?.volume30d,
-        volume1dIncrease: collection.stats?.total?.volume1d_increase,
-        multiToken: collection.multiToken,
-        verification: collection.verification
-      };
-    });
+        let totalVolume = collection.stats?.total?.volume;
+        if (isWeirdApesCollection(collection.address)) {
+          totalVolume = (Number(totalVolume) + 679536.64).toString();
+        }
+
+        return {
+          averageSalePrice: collection.stats?.total?.avgSalePrice,
+          averageSalePrice1d: collection.stats?.total?.avgSalePrice1d,
+          averageSalePrice7d: collection.stats?.total?.avgSalePrice7d,
+          averageSalePrice30d: collection.stats?.total?.avgSalePrice30d,
+          averageSalePrice1dIncrease: collection.stats?.total?.avgSalePrice1d_increase,
+          collection: collection.address,
+          floorPrice: collection.stats?.total?.floorPrice,
+          listable: collection.listable,
+          metadata: collection.metadata,
+          name: collection.name,
+          numberActive: collection.stats?.total?.active,
+          numberCancelled: collection.stats?.total?.cancelled,
+          numberOfSales: collection.stats?.total?.sales,
+          sales1d: collection.stats?.total?.sales1d,
+          sales7d: collection.stats?.total?.sales7d,
+          sales30d: collection.stats?.total?.sales30d,
+          sales1dIncrease: collection.stats?.total?.sales1d_increase,
+          slug: collection.slug,
+          totalFees: collection.stats?.total?.fee,
+          totalRoyalties: collection.stats?.total?.royalty,
+          totalVolume: totalVolume,
+          volume1d: collection.stats?.total?.volume1d,
+          volume7d: collection.stats?.total?.volume7d,
+          volume30d: collection.stats?.total?.volume30d,
+          volume1dIncrease: collection.stats?.total?.volume1d_increase,
+          multiToken: collection.multiToken,
+          verification: collection.verification
+        };
+      }
+    );
   }
 
   // const mergeStats = (contract, response, index) => {
@@ -97,8 +103,16 @@ const useGetCollections = () => {
     const res = await api.get(`/collectioninfo`, { params: {
       ...filters,
       page
-    }})
-    return formatCollections(res.data.collections);
+    }});
+
+    let formattedCollections = formatCollections(res.data.collections);
+
+    // Weird Apes hack
+    if (filters.sortBy === 'totalvolume' && filters.direction === 'desc' && page === 1) {
+      formattedCollections = formattedCollections.sort((a: any, b: any) => Number(a.totalVolume) < Number(b.totalVolume) ? 1 : -1);
+    }
+    
+    return formattedCollections;
   }
 
   return [filters, getCollections, changeFilters] as const;
