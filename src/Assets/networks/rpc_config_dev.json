@@ -1,24 +1,4 @@
 {
-  "name": "Cronos Mainnet Beta",
-  "chain_id": "25",
-  "write_rpc": "https://evm.cronos.org/",
-  "read_rpc": "https://rpc.ebisusbay.com/",
-  "symbol": "CRO",
-  "explorer": "https://cronoscan.com/",
-  "api_base": "https://api.ebisusbay.com/",
-  "app_base": "https://app.ebisusbay.com/",
-  "cdn_base": "https://cdn.ebisusbay.com/",
-  "subgraph_base": "https://graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/",
-  "membership_contract": "0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5",
-  "auction_contract": "0xd488b38d19d5708cbda224c041a24c3e3149bc93",
-  "cronie_contract": "0xD961956B319A10CBdF89409C0aE7059788A4DaBb",
-  "market_contract": "0x7a3CdB2364f92369a602CAE81167d0679087e6a3",
-  "stake_contract": "0xeb074cc764F20d8fE4317ab63f45A85bcE2bEcB1",
-  "elon_contract": "0x3Bf0a68a03fE82A5D21445f3a2306bB012dd50D9",
-  "ebisu_contract": "0xd036b2223bcc2A96164B023022D6b78CD71A1a12",
-  "slothy_rugsurance_contract": "0xE9A540CBb2247f9bD86e98d1121aBDD084Ca0e89",
-  "offer_contract": "0x016b347aeb70cc45e3bbaf324feb3c7c464e18b0",
-  "mm_auction_contract": "0x47E79264A9d1343C04F4A56922bE7e6177aE03a0",
   "known_tokens": {
     "loot": {
       "name": "LOOT",
@@ -11124,7 +11104,7 @@
       "multiToken": false,
       "address": "0xcfad4A3d1eE92f3A0c49B1758ac039Db41FAE94D",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "5555 Lucky Finger Monkeys are about to hit Cronos. Lookout for the interactive platform!",
         "avatar": "/img/collections/finger-monkeys/avatar.webp",
