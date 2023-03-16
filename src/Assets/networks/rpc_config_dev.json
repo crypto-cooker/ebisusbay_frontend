@@ -10422,7 +10422,7 @@
       "multiToken": false,
       "address": "0x5eF6Dfee02F115eB5FF6bb473db895bD456D51f4",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Secret CRO Society is an exclusive club where holders have access to secret missions,  monthly giveaways, games and access to the full S.C.S community.",
         "avatar": "/img/collections/the-secret-cro-society/avatar.webp",
