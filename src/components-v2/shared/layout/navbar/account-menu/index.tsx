@@ -2,6 +2,7 @@ import React, {memo, SVGProps, useEffect, useState} from 'react';
 import Blockies from 'react-blockies';
 import {useDispatch} from 'react-redux';
 import {useRouter} from 'next/router';
+import NextLink from 'next/link';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
   faArrowRightArrowLeft,
@@ -10,6 +11,7 @@ import {
   faCopy,
   faDollarSign,
   faEdit,
+  faGift,
   faHand,
   faHeart,
   faMoon,
@@ -49,7 +51,7 @@ import {
   DrawerOverlay,
   Flex,
   Heading,
-  Link,
+  Link, SimpleGrid,
   Spacer,
   Text, useBreakpointValue,
   useClipboard,
@@ -61,6 +63,7 @@ import Image from "next/image";
 import {useQuery} from "@tanstack/react-query";
 import CronosIcon from "@src/components-v2/shared/icons/cronos";
 import {useAppSelector} from "@src/Store/hooks";
+import GdcClaimConfirmation from "@src/components-v2/shared/dialogs/gdc-claim-confirmation";
 
 const StyledModal = styled(Modal)`
   .modal-content {
@@ -91,6 +94,8 @@ const Index = function () {
       fallback: 'md',
     },
   );
+  const [isGdcConfirmationOpen, setIsGdcConfirmationOpen] = useState(false);
+  const [isGdcSuccessOpen, setIsGdcSuccesOpen] = useState(false);
 
   const walletAddress = useAppSelector((state) => {
     return state.user.address;
@@ -364,88 +369,81 @@ const Index = function () {
             </DrawerHeader>
             <DrawerBody>
 
-              <div className={classnames("row row-cols-2 g-2", styles.navigation)}>
-                <div className="col">
-                <span onClick={() => navigateTo(`/account/${walletAddress}`)}>
+              <SimpleGrid columns={2} gap={2} className={styles.navigation}>
+                <NextLink href={`/account/${walletAddress}`} onClick={closeMenu}>
                   <div className={styles.col}>
-                      <span>
-                        <FontAwesomeIcon icon={faUser} />
-                      </span>
-                      <span className="ms-2">My Profile</span>
+                    <span>
+                      <FontAwesomeIcon icon={faUser} />
+                    </span>
+                    <span className="ms-2">My Profile</span>
                   </div>
-                </span>
-                </div>
-                <div className="col">
-                <span onClick={() => navigateTo(`/account/settings/profile`)}>
+                </NextLink>
+                <NextLink href='/account/settings/profile' onClick={closeMenu}>
                   <div className={styles.col}>
-                      <span>
-                        <FontAwesomeIcon icon={faEdit} />
-                      </span>
-                      <span className="ms-2">Edit Account</span>
+                    <span>
+                      <FontAwesomeIcon icon={faEdit} />
+                    </span>
+                    <span className="ms-2">Edit Account</span>
                   </div>
-                </span>
-                </div>
-                <div className="col">
-                <span onClick={() => navigateTo(`/account/${walletAddress}`, {tab:'offers'})}>
+                </NextLink>
+                <NextLink href={`/account/${walletAddress}?tab=offers`} onClick={closeMenu}>
                   <div className={styles.col}>
-                      <span>
-                        <FontAwesomeIcon icon={faHand} />
-                      </span>
-                      <span className="ms-2">My Offers</span>
+                    <span>
+                      <FontAwesomeIcon icon={faHand} />
+                    </span>
+                    <span className="ms-2">My Offers</span>
                   </div>
-                </span>
-                </div>
-                <div className="col">
-                <span onClick={() => navigateTo(`/staking`)}>
+                </NextLink>
+                <NextLink href='/staking' onClick={closeMenu}>
                   <div className={styles.col}>
                     <span>
                       <FontAwesomeIcon icon={faBolt} />
                     </span>
                     <span className="ms-2">Staking</span>
                   </div>
-                </span>
-                </div>
-                <div className="col">
-                <span onClick={() => navigateTo(`/account/${walletAddress}`, {tab:'listings'})}>
+                </NextLink>
+                <NextLink href={`/account/${walletAddress}?tab=listings`} onClick={closeMenu}>
                   <div className={styles.col}>
-                      <span>
-                        <FontAwesomeIcon icon={faCoins} />
-                      </span>
-                      <span className="ms-2">Listings</span>
+                    <span>
+                      <FontAwesomeIcon icon={faCoins} />
+                    </span>
+                    <span className="ms-2">Listings</span>
                   </div>
-                </span>
-                </div>
-                <div className="col">
-                <span onClick={() => navigateTo(`/account/${walletAddress}`, {tab:'sales'})}>
+                </NextLink>
+                <NextLink href={`/account/${walletAddress}?tab=sales`} onClick={closeMenu}>
                   <div className={styles.col}>
-                      <span>
-                        <FontAwesomeIcon icon={faDollarSign} />
-                      </span>
-                      <span className="ms-2">Sales</span>
+                    <span>
+                      <FontAwesomeIcon icon={faDollarSign} />
+                    </span>
+                    <span className="ms-2">Sales</span>
                   </div>
-                </span>
-                </div>
-                <div className="col">
-                <span onClick={() => navigateTo(`/account/${walletAddress}`, {tab:'favorites'})}>
+                </NextLink>
+                <NextLink href={`/account/${walletAddress}?tab=favorites`} onClick={closeMenu}>
                   <div className={styles.col}>
-                      <span>
-                        <FontAwesomeIcon icon={faHeart} />
-                      </span>
-                      <span className="ms-2">Favorites</span>
+                    <span>
+                      <FontAwesomeIcon icon={faHeart} />
+                    </span>
+                    <span className="ms-2">Favorites</span>
                   </div>
-                </span>
-                </div>
-                <div className="col">
-                <span onClick={toggleTheme}>
-                  <div className={styles.col}>
-                      <span>
-                        <FontAwesomeIcon icon={theme === 'dark' ? faMoon : faSun} />
-                      </span>
-                      <span className="ms-2">Dark mode</span>
-                  </div>
-                </span>
-                </div>
-              </div>
+                </NextLink>
+                <Box as='span' onClick={toggleTheme}>
+                  <Box className={styles.col}>
+                    <span>
+                      <FontAwesomeIcon icon={theme === 'dark' ? faMoon : faSun} />
+                    </span>
+                    <span className="ms-2">Dark mode</span>
+                  </Box>
+                </Box>
+              </SimpleGrid>
+
+              {!!user.profile?.pendingGdcItem && (
+                <SimpleGrid columns={1} gap={2} mt={8} className={styles.navigation}>
+                  <Box textAlign='center' className={styles.col} onClick={() => setIsGdcConfirmationOpen(true)}>
+                    <FontAwesomeIcon icon={faGift} />
+                    <Box as='span' ms={2}>Claim NFT from GDC</Box>
+                  </Box>
+                </SimpleGrid>
+              )}
 
               <Heading as="h3" size="md" className="mt-4 mb-3">
                 <FontAwesomeIcon icon={faWallet} className="me-2"/>
@@ -643,6 +641,9 @@ const Index = function () {
             </DrawerBody>
           </DrawerContent>
         </Drawer>
+      )}
+      {isGdcConfirmationOpen && (
+        <GdcClaimConfirmation onClose={() => setIsGdcConfirmationOpen(false)} isOpen={isGdcConfirmationOpen} />
       )}
     </div>
   );
