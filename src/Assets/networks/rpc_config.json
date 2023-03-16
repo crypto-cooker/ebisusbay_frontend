@@ -18872,6 +18872,58 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Team Mustachios - Golden Exclusive Pass",
+      "slug": "team-mustachios-golden-executive-pass",
+      "multiToken": false,
+      "address": "0x459c8771A164A10D20A6963C0E07352f8589d73c",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Team Mustachios premium member pass for exclusive access",
+        "avatar": "/img/collections/team-mustachios-golden-executive-pass/avatar.webp",
+        "card": "/img/collections/team-mustachios-golden-executive-pass/card.webp",
+        "banner": "/img/collections/team-mustachios-golden-executive-pass/banner.webp",
+        "website": "https://teammustachios.com/",
+        "twitter": "https://twitter.com/teammustachios",
+        "discord": "https://discord.gg/eH4SCJY5Qw",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": "phenix",
+        "verified": true
+      }
+    },
+    {
+      "name": "Braindead Moonkeys",
+      "slug": "braindead-moonkeys",
+      "multiToken": false,
+      "address": "0x092791Ba7E03139C34103754689BcF8E6A3e8C0c",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Moon Key NFT, an ancient relic from the BDM Universe. This key unlocks deep mysteries and will connect you into the most exclusive parts of the BDM ecosystem. Join us on a journey through time and space as BDM Key Guardians as you unlock doors into new blockchains, rewards and future projects.",
+        "avatar": "/img/collections/braindead-moonkeys/avatar.webp",
+        "card": "/img/collections/braindead-moonkeys/card.webp",
+        "banner": "/img/collections/braindead-moonkeys/banner.webp",
+        "website": "https://www.braindeadmonkeys.com/",
+        "twitter": "https://twitter.com/BDMNFT_",
+        "discord": "https://discord.gg/cu6pZnwDfp",
+        "medium": "https://medium.com/@BDMNFT/moon-key-d306d738e31f",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
