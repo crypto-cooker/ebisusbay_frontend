@@ -4,7 +4,7 @@ import CmsRepository from "@src/core/services/api-service/cms/repositories/index
 class ProfilesRepository extends CmsRepository {
 
   async getProfile(addressOrUsername: string) {
-    const response = await this.api.get('profile', {
+    const response = await this.cms.get('profile', {
       params: {
         walletAddress: addressOrUsername
       }

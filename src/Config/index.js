@@ -23,7 +23,7 @@ export const configData = {
       api: 'https://api.ebisusbay.com/',
       app: 'https://app.ebisusbay.com/',
       cdn: 'https://cdn.ebisusbay.com/',
-      subgraph: 'https://graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
+      subgraph: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.com/api/',
       explorer: 'https://cronoscan.com/',
     },
@@ -41,7 +41,8 @@ export const configData = {
       slothtyRugsurance: '0x73063E236EadC1e511FbE7313C6D8C5c651009E9',
       bundle: '0x40874F18922267cc2Ca7933828594aB5078C1065',
       cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233',
-      gaslessListing: '0x523d6f30c4aaca133daad97ee2a0c48235bff137'
+      gaslessListing: '0x523d6f30c4aaca133daad97ee2a0c48235bff137',
+      gdc: ''
     },
     tokens: {
       loot: {
@@ -84,7 +85,7 @@ export const configData = {
       api: 'https://api.ebisusbay.biz/',
       app: 'https://app.ebisusbay.biz/',
       cdn: 'https://cdn.ebisusbay.biz/test/',
-      subgraph: 'https://graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
+      subgraph: 'https://cronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.biz/api/',
       explorer: 'https://cronoscan.com/',
     },
@@ -102,7 +103,8 @@ export const configData = {
       slothtyRugsurance: '0x73063E236EadC1e511FbE7313C6D8C5c651009E9',
       bundle: '0x40874F18922267cc2Ca7933828594aB5078C1065',
       cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233',
-      gaslessListing: '0x523d6f30c4aaca133daad97ee2a0c48235bff137'
+      gaslessListing: '0x523d6f30c4aaca133daad97ee2a0c48235bff137',
+      gdc: ''
     },
     tokens: {
       loot: {
@@ -145,7 +147,7 @@ export const configData = {
       api: 'https://testapi.ebisusbay.biz/',
       app: 'https://testapp.ebisusbay.biz/',
       cdn: 'https://cdn.ebisusbay.biz/test/',
-      subgraph: 'https://testgraph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
+      subgraph: 'https://testcronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
       cms: 'https://testcms.ebisusbay.biz/api/',
       explorer: 'https://testnet.cronoscan.com/',
     },
@@ -163,7 +165,8 @@ export const configData = {
       slothtyRugsurance: '0xC54821941Bb036463bDB1eea781f9b29a7f98fAc',
       bundle: '0xEbFB981D5a7A7C2133752F7787263B58495bb923',
       cnsusd: '0x263818f9693548446A41ad7025923612b490CB0D',
-      gaslessListing: '0xBbe0D0715AbCadb8A0Db41C0Bb7f272570907C45'
+      gaslessListing: '0xBbe0D0715AbCadb8A0Db41C0Bb7f272570907C45',
+      gdc: '0xd464f36885163e124e3a15e31c0e581ba3f648ab'
     },
     tokens: {
       loot: {

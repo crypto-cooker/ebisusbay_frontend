@@ -1,24 +1,4 @@
 {
-  "name": "Cronos Testnet",
-  "chain_id": "338",
-  "write_rpc": "https://evm-t3.cronos.org/",
-  "read_rpc": "https://rpc.ebisusbay.biz/",
-  "symbol": "tCRO",
-  "explorer": "https://cronos.org/explorer/testnet3/",
-  "api_base": "https://testapi.ebisusbay.biz/",
-  "app_base": "https://testapp.ebisusbay.biz/",
-  "cdn_base": "https://cdn.ebisusbay.biz/",
-  "subgraph_base": "https://testgraph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/",
-  "membership_contract": "0x3F1590A5984C89e6d5831bFB76788F3517Cdf034",
-  "market_contract": "0xb3cB12e7F9e442ef799a2B7e92f65ab8710d7b27",
-  "stake_contract": "0x70A9989dd73B026B34462BE158963587dD9ca16f",
-  "auction_contract": "0xbA272524C9BFDa68741Be1A06f8376A749fc4870",
-  "cronie_contract": "0xe9DCa9E03F31CBD538A19a89eA2cA3684AF2788f",
-  "elon_contract": "0x2fE1f2722fa215A68b92aECaD425259C0D645972",
-  "ebisu_contract": "0x65A422AB9c95fc94208E010B8d4ab50F7E79af19",
-  "offer_contract": "0x8Dd84fb5d7f8A504BA2398243D768C604f8Daf5E",
-  "slothy_rugsurance_contract": "0x99F3960E8219384BF0624D388cAD698d5A54AE6C",
-  "mm_auction_contract": "0x84356061d598A7bCE028dB6a37b14F84cf4A5905",
   "known_tokens": {
     "loot": {
       "name": "LOOT",
@@ -3203,6 +3183,31 @@
         "verified": true,
         "doxx": false,
         "kyc": true
+      }
+    },
+    {
+      "name": "GDC Proof-Of-Attendance VIP",
+      "slug": "gdc-poa-vip",
+      "multiToken": false,
+      "address": "0xd464f36885163e124e3a15e31c0e581ba3f648ab",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "hidden",
+        "verified": true
       }
     }
   ],
