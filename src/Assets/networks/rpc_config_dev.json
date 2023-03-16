@@ -7332,7 +7332,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -10627,7 +10627,7 @@
       },
       "verification": {
         "doxx": false,
-        "kyc": "ebisu",
+        "kyc": true,
         "verified": true
       }
     },
@@ -10738,7 +10738,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -13056,7 +13056,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
