@@ -1,34 +1,38 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {useDispatch} from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Spinner } from "react-bootstrap";
+import {Spinner} from "react-bootstrap";
 import MyNftCard from "@src/Components/components/MyNftCard";
 import {caseInsensitiveCompare, findCollectionByAddress, isBundle, isNftBlacklisted} from "@src/utils";
 import NftBundleCard from "@src/Components/components/NftBundleCard";
-import { MyNftPageActions } from "@src/GlobalState/User";
+import {MyNftPageActions} from "@src/GlobalState/User";
 import MyNftCancelDialog from "@src/Components/components/MyNftCancelDialog";
-import { getWalletOverview } from "@src/core/api/endpoints/walletoverview";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
+import {useInfiniteQuery} from "@tanstack/react-query";
 import MakeListingDialog from "@src/Components/MakeListing";
-import { CollectionFilter } from "@src/Components/Account/Profile/Inventory/CollectionFilter";
-import { MobileFilters } from "@src/Components/Account/Profile/Inventory/MobileFilters";
+import {CollectionFilter} from "./collection-filter";
+import {MobileFilters} from "./mobile-filters";
 import Button from "@src/Components/components/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft, faFilter } from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faAngleLeft, faFilter, faSort} from "@fortawesome/free-solid-svg-icons";
 import TransferNftDialog from "@src/Components/Account/Profile/Dialogs/TransferNftDialog";
 import {
-  addToBatchListingCart, closeBatchListingCart,
+  addToBatchListingCart,
+  closeBatchListingCart,
   openBatchListingCart,
-  removeFromBatchListingCart, setBatchType,
+  removeFromBatchListingCart,
+  setBatchType,
   setRefetchNfts
 } from "@src/GlobalState/batchListingSlice";
-import { MobileBatchListing } from "@src/Components/Account/Profile/Inventory/MobileBatchListing";
+import {MobileBatchListing} from "@src/Components/Account/Profile/Inventory/MobileBatchListing";
 import {
   Box,
   Button as ChakraButton,
   HStack,
+  ListItem,
   Spacer,
   Stack,
+  UnorderedList,
   useBreakpointValue,
   Wrap,
   WrapItem
@@ -37,6 +41,11 @@ import MyBundleCard from '@src/Components/Account/Profile/Inventory/components/M
 import {NftCard} from "@src/components-v2/shared/nft-card";
 import nextApiService from "@src/core/services/api-service/next";
 import {useAppSelector} from "@src/Store/hooks";
+import Select from "react-select";
+import {getTheme} from "@src/Theme/theme";
+import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
+import {SortOption, sortOptions} from "@src/components-v2/feature/account/profile/tabs/inventory/sort-options";
+import {MobileSort} from "@src/components-v2/feature/account/profile/tabs/inventory/mobile-sort";
 
 interface InventoryProps {
   address: string;
@@ -50,7 +59,9 @@ export default function Inventory({ address }: InventoryProps) {
 
   const [collections, setCollections] = useState([]);
   const [collectionFilter, setCollectionFilter] = useState([]);
+  const [sortOption, setSortOption] = useState<SortOption>(sortOptions[0])
   const [filtersVisible, setFiltersVisible] = useState(false);
+  const [sortVisible, setSortVisible] = useState(false);
   const useMobileMenu = useBreakpointValue(
     { base: true, lg: false },
     { fallback: 'lg' },
@@ -62,13 +73,17 @@ export default function Inventory({ address }: InventoryProps) {
   };
 
   const fetcher = async ({ pageParam = 1 }) => {
-    const test = await nextApiService.getWallet(address, {page: pageParam, collection: collectionFilter});
-    console.log('test', test);
-    return test;
+    const params: WalletsQueryParams = {
+      page: pageParam,
+      collection: collectionFilter,
+      sortBy: sortOption.key,
+      direction: sortOption.direction,
+    }
+    return nextApiService.getWallet(address, params);
   };
 
   const {data, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery(
-    ['Inventory', address, collectionFilter],
+    ['Inventory', address, collectionFilter, sortOption],
     fetcher,
     {
       getNextPageParam: (lastPage, pages) => {
@@ -223,6 +238,48 @@ export default function Inventory({ address }: InventoryProps) {
     setFiltersVisible(!filtersVisible)
   };
 
+  const toggleSortVisibility = () => {
+    setSortVisible(!sortVisible)
+  };
+
+  const handleSort = useCallback((sortOption: any) => {
+    setSortOption(sortOption as SortOption);
+  }, [setSortOption]);
+
+  const userTheme = useAppSelector((state) => state.user.theme);
+  const customStyles = {
+    option: (base: any, state: any) => ({
+      ...base,
+      background: getTheme(userTheme).colors.bgColor2,
+      color: getTheme(userTheme).colors.textColor3,
+      borderRadius: state.isFocused ? '0' : 0,
+      '&:hover': {
+        background: '#eee',
+        color: '#000',
+      },
+    }),
+    menu: (base: any) => ({
+      ...base,
+      borderRadius: 0,
+      marginTop: 0,
+    }),
+    menuList: (base: any) => ({
+      ...base,
+      padding: 0,
+    }),
+    singleValue: (base: any, state: any) => ({
+      ...base,
+      background: getTheme(userTheme).colors.bgColor2,
+      color: getTheme(userTheme).colors.textColor3
+    }),
+    control: (base: any, state: any) => ({
+      ...base,
+      background: getTheme(userTheme).colors.bgColor2,
+      color: getTheme(userTheme).colors.textColor3,
+      padding: 2,
+    }),
+  };
+
   return (
     <>
       <div className="d-flex">
@@ -240,14 +297,18 @@ export default function Inventory({ address }: InventoryProps) {
         <div className="flex-fill">
           <Stack direction="row" mb={2} align="center">
             {useMobileMenu ? (
-              <ul className="activity-filter">
-                <li className="active" onClick={toggleFilterVisibility}>
-                  <FontAwesomeIcon icon={filtersVisible ? faAngleLeft : faFilter} />
-                </li>
-                <li id="bulk" className={batchListingCart.isDrawerOpen ? 'active' : ''} onClick={toggleOpenBatchListingCart}>
+              <UnorderedList className="activity-filter">
+                <ListItem className="active" onClick={toggleFilterVisibility}>
+                  <FontAwesomeIcon icon={faFilter} />
+                </ListItem>
+                <ListItem onClick={toggleSortVisibility}>
+                  <FontAwesomeIcon icon={faSort} />
+                  <Box as='span' ms={2}>Sort</Box>
+                </ListItem>
+                <ListItem id="bulk" className={batchListingCart.isDrawerOpen ? 'active' : ''} onClick={toggleOpenBatchListingCart}>
                   Bulk Mode
-                </li>
-              </ul>
+                </ListItem>
+              </UnorderedList>
             ) : (
               <>
                 <Box>
@@ -276,6 +337,22 @@ export default function Inventory({ address }: InventoryProps) {
                     </WrapItem>
                   </Wrap>
                 </HStack>
+                <Spacer />
+                <Box>
+                  <Box className="items_filter" style={{ marginBottom: 0, marginTop: 0, minWidth: 200}}>
+                    <Box className="dropdownSelect mr-0 mb-0">
+                      <Select
+                        styles={customStyles}
+                        placeholder={'Sort Listings...'}
+                        options={sortOptions}
+                        getOptionLabel={(option: SortOption) => option.label}
+                        getOptionValue={(option: SortOption) => option.id}
+                        defaultValue={sortOptions[0]}
+                        onChange={handleSort}
+                      />
+                    </Box>
+                  </Box>
+                </Box>
               </>
             )}
           </Stack>
@@ -299,11 +376,17 @@ export default function Inventory({ address }: InventoryProps) {
         </div>
       </div>
       <MobileFilters
-        show={useMobileMenu && filtersVisible}
+        show={!!useMobileMenu && filtersVisible}
         collections={collections}
         currentFilter={collectionFilter}
         onFilter={onFilterChange}
         onHide={() => setFiltersVisible(false)}
+      />
+      <MobileSort
+        show={!!useMobileMenu && sortVisible}
+        currentSort={sortOption}
+        onSort={handleSort}
+        onHide={() => setSortVisible(false)}
       />
       <MyNftCancelDialog />
       {user.myNftPageTransferDialog && (
@@ -327,3 +410,4 @@ export default function Inventory({ address }: InventoryProps) {
     </>
   )
 }
+

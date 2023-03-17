@@ -5,14 +5,21 @@ import {ImageKitService} from "@src/helpers/image";
 import Blockies from "react-blockies";
 import {Heading} from "@chakra-ui/react";
 
-export const CollectionFilter = ({collections, currentFilter, onFilter, keyPrefix = null}) => {
+interface CollectionFilterProps {
+  collections: any;
+  currentFilter: any;
+  onFilter: (collections: any) => void;
+  keyPrefix?: string | null;
+}
+
+export const CollectionFilter = ({collections, currentFilter, onFilter, keyPrefix = null}: CollectionFilterProps) => {
   const [visibleCollections, setVisibleCollections] = useState(collections);
 
-  const viewGetDefaultCheckValue = (address) => {
+  const viewGetDefaultCheckValue = (address: string) => {
     return currentFilter.includes(address);
   };
 
-  const handleCheck = (event, collection) => {
+  const handleCheck = (event: any, collection: any) => {
     const { id, checked } = event.target;
 
     if (!collection) return;
@@ -20,12 +27,12 @@ export const CollectionFilter = ({collections, currentFilter, onFilter, keyPrefi
     if (checked && !currentFilter.includes(collection.address)) {
       tmpSelectedCollections.push(collection.address);
     } else if (!checked) {
-      tmpSelectedCollections = currentFilter.filter((c) => !caseInsensitiveCompare(c, collection.address));
+      tmpSelectedCollections = currentFilter.filter((c: any) => !caseInsensitiveCompare(c, collection.address));
     }
     onFilter(tmpSelectedCollections);
   };
 
-  const getKey = (collection) => {
+  const getKey = (collection: any) => {
     let key = collection.address;
     if (collection.id) {
       key += `-${collection.id}`
@@ -36,9 +43,9 @@ export const CollectionFilter = ({collections, currentFilter, onFilter, keyPrefi
     return key;
   };
 
-  const onTextFilterChange = debounce((event) => {
+  const onTextFilterChange = debounce((event: any) => {
     const { value } = event.target;
-    const list = value ? collections.filter((c) => c.name.toLowerCase().includes(value.toLowerCase())) : collections;
+    const list = value ? collections.filter((c: any) => c.name.toLowerCase().includes(value.toLowerCase())) : collections;
     setVisibleCollections(list);
   }, 300);
 
@@ -50,7 +57,7 @@ export const CollectionFilter = ({collections, currentFilter, onFilter, keyPrefi
     <div className="filter-pane">
       <Heading as="h5" size="md" className="mb-2">Collections</Heading>
       <Form.Control type="text" placeholder="Filter" onChange={onTextFilterChange}/>
-      {visibleCollections.map((collection) => (
+      {visibleCollections.map((collection: any) => (
         <div key={getKey(collection)}>
           <Form.Check
             type="checkbox"
@@ -67,7 +74,7 @@ export const CollectionFilter = ({collections, currentFilter, onFilter, keyPrefi
                 <div>
                   {collection.metadata?.avatar ? (
                     <img
-                      src={ImageKitService.buildAvatarUrl(collection.metadata.avatar, true)}
+                      src={ImageKitService.buildAvatarUrl(collection.metadata.avatare)}
                       alt={collection?.name}
                       width="25"
                       height="25"
