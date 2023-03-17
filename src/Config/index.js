@@ -23,7 +23,7 @@ export const configData = {
       api: 'https://api.ebisusbay.com/',
       app: 'https://app.ebisusbay.com/',
       cdn: 'https://cdn.ebisusbay.com/',
-      subgraph: 'https://graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
+      subgraph: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.com/api/',
       explorer: 'https://cronoscan.com/',
     },
@@ -42,7 +42,7 @@ export const configData = {
       bundle: '0x40874F18922267cc2Ca7933828594aB5078C1065',
       cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233',
       gaslessListing: '0x523d6f30c4aaca133daad97ee2a0c48235bff137',
-      gdc: ''
+      gdc: '0xe3e564252249ab55b47b84d6a934f4cbb94233a9'
     },
     tokens: {
       loot: {
@@ -104,7 +104,7 @@ export const configData = {
       bundle: '0x40874F18922267cc2Ca7933828594aB5078C1065',
       cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233',
       gaslessListing: '0x523d6f30c4aaca133daad97ee2a0c48235bff137',
-      gdc: ''
+      gdc: '0xe3e564252249ab55b47b84d6a934f4cbb94233a9'
     },
     tokens: {
       loot: {
