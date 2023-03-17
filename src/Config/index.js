@@ -23,7 +23,7 @@ export const configData = {
       api: 'https://api.ebisusbay.com/',
       app: 'https://app.ebisusbay.com/',
       cdn: 'https://cdn.ebisusbay.com/',
-      subgraph: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
+      subgraph: 'https://graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.com/api/',
       explorer: 'https://cronoscan.com/',
     },
