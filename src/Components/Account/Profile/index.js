@@ -10,7 +10,7 @@ import {caseInsensitiveCompare, isUserBlacklisted, shortAddress} from "@src/util
 import Inventory from "@src/components-v2/feature/account/profile/tabs/inventory";
 import Collections from "@src/Components/Account/Profile/Collections";
 import Listings from "@src/components-v2/feature/account/profile/tabs/listings";
-import Offers from "@src/Components/Account/Profile/Offers";
+import Offers from "@src/components-v2/feature/account/profile/tabs/offers";
 import Sales from "@src/Components/Account/Profile/Sales";
 import Favorites from "@src/Components/Account/Profile/Favorites";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
