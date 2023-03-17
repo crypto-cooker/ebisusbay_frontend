@@ -8,15 +8,21 @@ import Listing from "@src/core/models/listing";
 import OffersQuery, {OffersQueryParams} from "@src/core/services/api-service/mapi/queries/offers";
 import OffersRepository from "@src/core/services/api-service/mapi/repositories/offers";
 import {Offer} from "@src/core/models/offer";
+import WalletsQuery, {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
+import WalletsRepository from "@src/core/services/api-service/mapi/repositories/wallets";
+import WalletNft from "@src/core/models/wallet-nft";
+import {enrichWalletNft} from "@src/core/services/api-service/mapi/enrichment";
 const config = appConfig();
 
 class Mapi {
   private listings;
   private offers;
+  private wallets;
 
   constructor(apiKey?: string) {
     this.listings = new ListingsRepository(apiKey);
     this.offers = new OffersRepository(apiKey);
+    this.wallets = new WalletsRepository(apiKey);
   }
 
   async getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>> {
@@ -39,6 +45,21 @@ class Mapi {
 
     return new PagedList<Offer>(
       response.data.offers,
+      response.data.page,
+      response.data.page < response.data.totalPages
+    )
+  }
+
+  async getWallet(query?: WalletsQueryParams): Promise<PagedList<WalletNft>> {
+    const response = await this.wallets.get(new WalletsQuery(query));
+
+    const nfts = await Promise.all(response.data.nfts.map(async (nft: any): Promise<WalletNft> => {
+      const walletNft = WalletNft.fromMapi(nft);
+      return await enrichWalletNft(walletNft);
+    }));
+
+    return new PagedList<WalletNft>(
+      nfts,
       response.data.page,
       response.data.page < response.data.totalPages
     )

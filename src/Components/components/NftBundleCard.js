@@ -64,7 +64,7 @@ const MakeBuy = styled.div`
   align-items: center;
 `;
 
-const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, canBuy = true }) => {
+const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, canBuy = true }) => {
   const nftUrl = appUrl(`/collection/${nft.address}/${nft.id}`);
   const history = useRouter();
   const dispatch = useDispatch();

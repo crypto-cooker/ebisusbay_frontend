@@ -100,7 +100,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
   const [invalid, setInvalid] = useState(false);
 
   // Approvals
-  const extras = useSelector((state) => state.batchListing.extras[item.nft.address.toLowerCase()] ?? {});
+  const extras = useSelector((state) => state.batchListing.extras[item.nft.nftAddress.toLowerCase()] ?? {});
   const { approval: approvalStatus, canList } = extras;
   const [executingApproval, setExecutingApproval] = useState(false);
   const [initializing, setInitializing] = useState(false);
@@ -141,18 +141,18 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
   }, [item.expiration]);
 
   const checkApproval = async () => {
-    const contract = new Contract(item.nft.address, ERC721, user.provider.getSigner());
+    const contract = new Contract(item.nft.nftAddress, ERC721, user.provider.getSigner());
     return await contract.isApprovedForAll(user.address, config.contracts.market);
   };
 
   const approveContract = useCallback(async () => {
     try {
       setExecutingApproval(true);
-      const contract = new Contract(item.nft.address, ERC721, user.provider.getSigner());
+      const contract = new Contract(item.nft.nftAddress, ERC721, user.provider.getSigner());
       const tx = await contract.setApprovalForAll(config.contracts.market, true);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      dispatch(setApproval({ address: item.nft.address, status: true }));
+      dispatch(setApproval({ address: item.nft.nftAddress, status: true }));
 
     } catch (error) {
       if (error.data) {
@@ -172,17 +172,17 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
     async function func() {
       try {
         setInitializing(true);
-        if (!extras[item.nft.address.toLowerCase()]) {
-          const extras = { address: item.nft.address };
+        if (!extras[item.nft.nftAddress.toLowerCase()]) {
+          const extras = { address: item.nft.nftAddress };
 
           extras.approval = await checkApproval();
 
-          const metadata = await getCollectionMetadata(item.nft.address);
+          const metadata = await getCollectionMetadata(item.nft.nftAddress);
           if (metadata.collections.length > 0) {
             extras.floorPrice = metadata.collections[0].stats.total.floorPrice;
           }
 
-          extras.royalty = await collectionRoyaltyPercent(item.nft.address, item.nft.id);
+          extras.royalty = await collectionRoyaltyPercent(item.nft.nftAddress, item.nft.nftId);
           extras.canList = item.nft.listable && !item.nft.isStaked;
 
           dispatch(setExtras(extras));
@@ -206,7 +206,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
           height={50}
           style={{ borderRadius: '20px' }}
         > 
-        {isBundle(item.nft.address) ? (
+        {isBundle(item.nft.nftAddress) ? (
           <Image
             src={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')}
             alt={item.nft.name}
@@ -214,7 +214,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
           />
         ) : (
           <AnyMedia
-            image={specialImageTransform(item.nft.address, ImageKitService.buildAvatarUrl(item.nft.image))}
+            image={specialImageTransform(item.nft.nftAddress, ImageKitService.buildAvatarUrl(item.nft.image))}
             title={item.nft.name}
             usePlaceholder={true}
             className="img-fluid img-rounded-5"
@@ -223,13 +223,13 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
         </Box>
         <Box flex='1' ms={2} fontSize="14px">
           <VStack align="left" spacing={0}>
-            <Link href={`/collection/${item.nft.address}/${item.nft.id}`}>
+            <Link href={`/collection/${item.nft.nftAddress}/${item.nft.nftId}`}>
               <Text fontWeight="bold" noOfLines={1} cursor="pointer">{item.nft.name}</Text>
             </Link>
             <Skeleton isLoaded={!initializing}>
               {approvalStatus ? (
                 <>
-                  {isBundling && isBundle(item.nft.address) ? (
+                  {isBundling && isBundle(item.nft.nftAddress) ? (
                     <Box>
                       <Badge variant='outline' colorScheme='red'>
                         Can't Nest Bundles
@@ -275,7 +275,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
                             <MenuList textAlign="right">
                               <MenuItem onClick={() => onApplyAllSelected(price, expirationDate)}>Apply values to all</MenuItem>
                               <MenuItem onClick={() => onCascadePriceSelected(item, price)}>Cascade price</MenuItem>
-                              <MenuItem onClick={() => onAddCollection(item.nft.address)}>Add entire collection</MenuItem>
+                              <MenuItem onClick={() => onAddCollection(item.nft.nftAddress)}>Add entire collection</MenuItem>
                               <MenuItem onClick={handleRemoveItem}>Remove</MenuItem>
                             </MenuList>
                           </Menu>

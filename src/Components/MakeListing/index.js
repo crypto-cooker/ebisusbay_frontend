@@ -1,6 +1,5 @@
 import {isGaslessListing} from "@src/utils";
 
-import UpdateLegacyListingDialog from "@src/Components/MakeListing/legacy";
 import MakeGaslessListingDialog from "@src/Components/MakeListing/gasless";
 import useFeatureFlag from "@src/hooks/useFeatureFlag";
 import Constants from "@src/constants";

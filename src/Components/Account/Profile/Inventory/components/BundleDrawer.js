@@ -41,12 +41,12 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
   const onSubmitBundle = async (values) => {
     const validated = await formRef.current.validate();
     const arrays = batchListingCart.nfts.reduce((object, nft) => {
-      const addresses = [nft.nft.address];
-      const ids = [nft.nft.id];
+      const addresses = [nft.nft.nftAddress];
+      const ids = [nft.nft.nftId];
       if (nft.nft.multiToken && nft.quantity > 1) {
         for (let qty = 1; qty < nft.quantity; qty++) {
-          addresses.push(nft.nft.address);
-          ids.push(nft.nft.id);
+          addresses.push(nft.nft.nftAddress);
+          ids.push(nft.nft.nftId);
         }
       }
 
@@ -94,7 +94,7 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
     return !executingCreateBundle &&
       batchListingCart.nfts.length > 0 &&
       !Object.values(batchListingCart.extras).some((o) => !o.approval) &&
-      !batchListingCart.nfts.some((o) => o.nft.isStaked || isBundle(o.nft.address));
+      !batchListingCart.nfts.some((o) => o.nft.isStaked || isBundle(o.nft.nftAddress));
   }
 
   const handleSubmit = () => {
@@ -120,7 +120,7 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
           <>
             {batchListingCart.nfts.map((item) => (
               <BundleDrawerItem
-                key={`${item.nft.address}-${item.nft.id}`}
+                key={`${item.nft.nftAddress}-${item.nft.nftId}`}
                 item={item}
                 disabled={showConfirmButton || executingCreateBundle}
                 onAddCollection={handleAddCollection}

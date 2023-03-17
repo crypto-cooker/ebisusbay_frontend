@@ -49,7 +49,7 @@ const MyNftCard = ({
   newTab = false,
 }) => {
   const history = useRouter();
-  const nftUrl = appUrl(`/collection/${nft.address}/${nft.id}`);
+  const nftUrl = appUrl(`/collection/${nft.nftAddress}/${nft.nftId}`);
   const [isHovered, setIsHovered] = useState(false);
   const user = useSelector((state) => state.user);
   const batchListingCart = useSelector((state) => state.batchListing);
@@ -134,7 +134,7 @@ const MyNftCard = ({
   };
 
   const isInBatchListingCart = () => {
-    return batchListingCart.nfts.some((o) => o.nft.id === nft.id && caseInsensitiveCompare(o.nft.address, nft.address));
+    return batchListingCart.nfts.some((o) => o.nft.nftId === nft.nftId && caseInsensitiveCompare(o.nft.nftAddress, nft.nftAddress));
   };
 
   return (
@@ -202,8 +202,8 @@ const MyNftCard = ({
                   onClick={() => navigateTo(nftUrl)}
                   cursor="pointer"
                 >
-                  <AnyMedia image={nftCardUrl(currentNft.id, currentNft.image)}
-                    title={currentNft.id}
+                  <AnyMedia image={nftCardUrl(currentNft.nftId, currentNft.image)}
+                    title={currentNft.nftId}
                     newTab={false}
                     className="card-img-top marketplace"
                     height={440}
@@ -218,9 +218,9 @@ const MyNftCard = ({
           <div className="d-flex flex-column p-2 pb-1">
             <div className="card-title mt-auto">
               <span onClick={() => navigateTo(nftUrl)} style={{ cursor: 'pointer' }}>
-                {nft.count && nft.count > 0 ? (
+                {nft.balance && nft.balance > 1 ? (
                   <Heading as="h6" size="sm">
-                    {nft.name} (x{nft.count})
+                    {nft.name} (x{nft.balance})
                   </Heading>
                 ) : (
                   <Heading as="h6" size="sm">{nft.name}</Heading>

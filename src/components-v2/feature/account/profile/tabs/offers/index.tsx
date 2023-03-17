@@ -1,19 +1,19 @@
 import {Collapse, Offcanvas} from "react-bootstrap";
 import React, {useState, useEffect} from "react";
-import useBreakpoint from "use-breakpoint";
 import Button from "@src/Components/components/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faFilter} from "@fortawesome/free-solid-svg-icons";
 import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
-import MadeOffers from "@src/Components/Offer/MadeOffers";
+import MadeOffers from "./made-offers";
 import ReceivedOffers from "@src/Components/Offer/ReceivedOffers";
 import styled from "styled-components";
-import {useSelector} from "react-redux";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
 import {getQuickWallet} from "@src/core/api/endpoints/wallets";
 import {getCollectionMetadata} from "@src/core/api";
 import {OfferType} from "@src/core/services/api-service/types";
+import {useAppSelector} from "@src/Store/hooks";
+import {useBreakpointValue} from "@chakra-ui/react";
 
 const StyledNav = styled.div`
   .nav-link {
@@ -28,8 +28,13 @@ const StyledNav = styled.div`
   }
 `;
 
-const BREAKPOINTS = { xs: 0, m: 768, l: 1199, xl: 1200 };
-const tabs = {
+type OfferTab = {
+  key: string;
+  title: string;
+  description: string;
+}
+
+const tabs: {[key: string]: OfferTab} = {
   madeDirect: {
     key: 'made-direct',
     title: 'Made Direct Offers',
@@ -56,39 +61,44 @@ const tabs = {
     description: 'Offers received directly on collections you own'
   },
 }
-export default function Offers({ address }) {
-  const userTheme = useSelector((state) => state.user.theme);
+
+interface OffersProps {
+  address: string;
+}
+
+export default function Offers({ address }: OffersProps) {
+  const userTheme = useAppSelector((state) => state.user.theme);
 
   const [filtersVisible, setFiltersVisible] = useState(true);
-  const [useMobileMenu, setUseMobileMenu] = useState(false);
-  const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
   const [activeTab, setActiveTab] = useState(tabs.madeDirect);
   const [hasManuallyToggledFilters, setHasManuallyToggledFilters] = useState(false);
+  const useMobileMenu = useBreakpointValue(
+    { base: true, md: false },
+    { fallback: 'md' },
+  );
 
   useEffect(() => {
-    const isMobileSize = minWidth < BREAKPOINTS.m;
-    setUseMobileMenu(isMobileSize);
     if (!hasManuallyToggledFilters) {
-      setFiltersVisible(!isMobileSize);
+      setFiltersVisible(!useMobileMenu);
     }
-  }, [breakpoint]);
+  }, [useMobileMenu]);
 
   const toggleFilterVisibility = () => {
     setHasManuallyToggledFilters(true);
     setFiltersVisible(!filtersVisible)
   };
 
-  const setTab = (key) => {
+  const setTab = (key: any) => {
     const tabKey = Object.entries(tabs).find(([k, v]) =>  v.key === key);
-    setActiveTab(tabKey[1]);
+    if (!!tabKey) setActiveTab(tabKey[1]);
   };
 
-  const setMobileTab = (tab) => {
+  const setMobileTab = (tab: string) => {
     setTab(tab);
     setFiltersVisible(false);
   };
 
-  const [receivedOffersDeps, setReceivedOffersDeps] = useState(null);
+  const [receivedOffersDeps, setReceivedOffersDeps] = useState<any | null>(null);
   useEffect(() => {
     async function getDeps() {
 
@@ -108,7 +118,7 @@ export default function Offers({ address }) {
       const collectionStats = await getCollectionMetadata();
 
       const ret = {
-        collectionAddresses: collections.map((c) => c.nftAddress),
+        collectionAddresses: collections.map((c: any) => c.nftAddress),
         nfts: userNfts,
         stats: collectionStats.collections
       }

@@ -34,7 +34,7 @@ import {hostedImage} from "@src/helpers/image";
 import {Button as ChakraButton} from "@chakra-ui/react";
 
 interface ResponsiveOffersTableProps {
-  data: InfiniteData<AxiosResponse<IPaginatedList<Offer>>>;
+  data: InfiniteData<IPaginatedList<Offer>>;
   onUpdate: (offer: Offer) => void;
   onCancel: (offer: Offer) => void;
   onSort: (field: string) => void;
