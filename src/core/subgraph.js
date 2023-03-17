@@ -3,7 +3,7 @@ import {appConfig} from "../Config";
 import {caseInsensitiveCompare} from "@src/utils";
 
 const config = appConfig();
-const APIURL = `${config.urls.subgraph}${config.chain.id === '25' ? 'offers' : 'offers-testnet'}`;
+const APIURL = `${config.urls.subgraph}${config.chain.id === '25' ? 'offers2' : 'offers-testnet'}`;
 
 const FIRST = 1000;
 
