@@ -74,7 +74,7 @@ export const CollectionFilter = ({collections, currentFilter, onFilter, keyPrefi
                 <div>
                   {collection.metadata?.avatar ? (
                     <img
-                      src={ImageKitService.buildAvatarUrl(collection.metadata.avatare)}
+                      src={ImageKitService.buildAvatarUrl(collection.metadata.avatar)}
                       alt={collection?.name}
                       width="25"
                       height="25"
