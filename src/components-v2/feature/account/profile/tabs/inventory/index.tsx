@@ -1,80 +1,97 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { getNftsForAddress2 } from "@src/core/api";
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {useDispatch} from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Spinner } from "react-bootstrap";
+import {Spinner} from "react-bootstrap";
 import MyNftCard from "@src/Components/components/MyNftCard";
 import {caseInsensitiveCompare, findCollectionByAddress, isBundle, isNftBlacklisted} from "@src/utils";
 import NftBundleCard from "@src/Components/components/NftBundleCard";
-import { MyNftPageActions } from "@src/GlobalState/User";
+import {MyNftPageActions} from "@src/GlobalState/User";
 import MyNftCancelDialog from "@src/Components/components/MyNftCancelDialog";
-import { getWalletOverview } from "@src/core/api/endpoints/walletoverview";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
+import {useInfiniteQuery} from "@tanstack/react-query";
 import MakeListingDialog from "@src/Components/MakeListing";
-import { CollectionFilter } from "@src/Components/Account/Profile/Inventory/CollectionFilter";
-import { MobileFilters } from "@src/Components/Account/Profile/Inventory/MobileFilters";
+import {CollectionFilter} from "./collection-filter";
+import {MobileFilters} from "./mobile-filters";
 import Button from "@src/Components/components/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft, faFilter } from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faAngleLeft, faFilter, faSort} from "@fortawesome/free-solid-svg-icons";
 import TransferNftDialog from "@src/Components/Account/Profile/Dialogs/TransferNftDialog";
 import {
-  addToBatchListingCart, closeBatchListingCart,
+  addToBatchListingCart,
+  closeBatchListingCart,
   openBatchListingCart,
-  removeFromBatchListingCart, setBatchType,
+  removeFromBatchListingCart,
+  setBatchType,
   setRefetchNfts
 } from "@src/GlobalState/batchListingSlice";
-import { MobileBatchListing } from "@src/Components/Account/Profile/Inventory/MobileBatchListing";
+import {MobileBatchListing} from "@src/Components/Account/Profile/Inventory/MobileBatchListing";
 import {
   Box,
   Button as ChakraButton,
   HStack,
+  ListItem,
   Spacer,
   Stack,
+  UnorderedList,
   useBreakpointValue,
   Wrap,
   WrapItem
 } from "@chakra-ui/react";
-import MyBundleCard from './Inventory/components/MyBundleCard';
+import MyBundleCard from '@src/Components/Account/Profile/Inventory/components/MyBundleCard';
 import {NftCard} from "@src/components-v2/shared/nft-card";
+import nextApiService from "@src/core/services/api-service/next";
+import {useAppSelector} from "@src/Store/hooks";
+import Select from "react-select";
+import {getTheme} from "@src/Theme/theme";
+import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
+import {SortOption, sortOptions} from "@src/components-v2/feature/account/profile/tabs/inventory/sort-options";
+import {MobileSort} from "@src/components-v2/feature/account/profile/tabs/inventory/mobile-sort";
 
-export default function Inventory({ address }) {
+interface InventoryProps {
+  address: string;
+}
+
+export default function Inventory({ address }: InventoryProps) {
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.user);
-  const batchListingCart = useSelector((state) => state.batchListing);
+  const user = useAppSelector((state) => state.user);
+  const batchListingCart = useAppSelector((state) => state.batchListing);
 
   const [collections, setCollections] = useState([]);
   const [collectionFilter, setCollectionFilter] = useState([]);
+  const [sortOption, setSortOption] = useState<SortOption>(sortOptions[0])
   const [filtersVisible, setFiltersVisible] = useState(false);
+  const [sortVisible, setSortVisible] = useState(false);
   const useMobileMenu = useBreakpointValue(
     { base: true, lg: false },
     { fallback: 'lg' },
   );
 
-  const onFilterChange = (filterOption) => {
+  const onFilterChange = (filterOption: any) => {
     setCollectionFilter(filterOption ?? []);
     refetch();
   };
 
   const fetcher = async ({ pageParam = 1 }) => {
-    return await getNftsForAddress2(address, user.provider, pageParam, collectionFilter);
+    const params: WalletsQueryParams = {
+      page: pageParam,
+      collection: collectionFilter,
+      sortBy: sortOption.key,
+      direction: sortOption.direction,
+    }
+    return nextApiService.getWallet(address, params);
   };
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-    status,
-    refetch,
-  } = useInfiniteQuery(['Inventory', address, collectionFilter], fetcher, {
-    getNextPageParam: (lastPage, pages) => {
-      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-    },
-    refetchOnWindowFocus: false
-  })
+  const {data, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery(
+    ['Inventory', address, collectionFilter, sortOption],
+    fetcher,
+    {
+      getNextPageParam: (lastPage, pages) => {
+        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+      },
+      refetchOnWindowFocus: false
+    }
+  )
 
   const loadMore = () => {
     fetchNextPage();
@@ -84,10 +101,10 @@ export default function Inventory({ address }) {
     async function func() {
       const result = await getWalletOverview(address);
       setCollections(result.data
-        .reduce((arr, item) => {
+        .reduce((arr: any, item: any) => {
           const coll = findCollectionByAddress(item.nftAddress, item.nftId);
           if (!coll) return arr;
-          const existingIndex = arr.findIndex((c) => caseInsensitiveCompare(coll.address, c.address));
+          const existingIndex = arr.findIndex((c: any) => caseInsensitiveCompare(coll.address, c.address));
           if (existingIndex >= 0) {
             arr[existingIndex].balance += Number(item.balance);
           } else {
@@ -96,7 +113,7 @@ export default function Inventory({ address }) {
           }
           return arr;
         }, [])
-        .sort((a, b) => a.name > b.name ? 1 : -1)
+        .sort((a: any, b: any) => a.name > b.name ? 1 : -1)
       );
     }
 
@@ -116,7 +133,7 @@ export default function Inventory({ address }) {
     }
   };
 
-  const handleOpenBatchShortcut = (shortcut) => {
+  const handleOpenBatchShortcut = (shortcut: any) => {
     if (!batchListingCart.isDrawerOpen) {
       dispatch(openBatchListingCart());
     }
@@ -131,33 +148,32 @@ export default function Inventory({ address }) {
         </Spinner>
       </div>
     ) : status === "error" ? (
-      <p>Error: {error.message}</p>
+      <p>Error: {(error as any).message}</p>
     ) : (
       <>
         <div className="card-group row g-3">
           {data.pages.map((items, index) => (
             <React.Fragment key={index}>
-              {items.nfts.map((nft, index) => {
-                if(isBundle(nft.address)){
+              {items.data.map((nft, index) => {
+                if(isBundle(nft.nftAddress)){
                   return (
                     <div
                       className={`d-item ${filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-6 col-sm-4 col-xl-3 col-xxl-2'}  mb-4`}
-                      key={`${nft.address}-${nft.id}-${index}`}
+                      key={`${nft.nftAddress}-${nft.nftId}-${index}`}
                     >
                       {caseInsensitiveCompare(address, user.address) ? (
                         <MyBundleCard
                           nft={nft}
                           canTransfer={nft.canTransfer}
                           canSell={nft.listable && !nft.listed && nft.canSell}
-                          isStaked={nft.isStaked}
-                          canCancel={nft.listed && nft.listingId}
+                          canCancel={nft.listed && !!nft.listingId}
                           canUpdate={nft.listable && nft.listed}
                           onTransferButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageTransferDialog(nft))}
                           onSellButtonPressed={() => {
-                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
+                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft, null))
                           }}
                           onUpdateButtonPressed={() => {
-                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
+                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft, null))
                           }}
                           onCancelButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageCancelDialog(nft))}
                           onAddToBatchListingButtonPressed={() => dispatch(addToBatchListingCart(nft))}
@@ -177,7 +193,7 @@ export default function Inventory({ address }) {
                   return (
                     <div
                       className={`d-item ${filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-6 col-sm-4 col-xl-3 col-xxl-2'}  mb-4`}
-                      key={`${nft.address}-${nft.id}-${nft.listed}-${index}`}
+                      key={`${nft.nftAddress}-${nft.nftId}-${nft.listed}-${index}`}
                     >
                       {caseInsensitiveCompare(address, user.address) ? (
                         <MyNftCard
@@ -185,14 +201,14 @@ export default function Inventory({ address }) {
                           canTransfer={nft.canTransfer}
                           canSell={nft.listable && !nft.listed && nft.canSell}
                           isStaked={nft.isStaked}
-                          canCancel={nft.listed && nft.listingId}
+                          canCancel={nft.listed && !!nft.listingId}
                           canUpdate={nft.listable && nft.listed}
                           onTransferButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageTransferDialog(nft))}
                           onSellButtonPressed={() => {
-                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
+                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft, null))
                           }}
                           onUpdateButtonPressed={() => {
-                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft))
+                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft, null))
                           }}
                           onCancelButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageCancelDialog(nft)) }
                           onAddToBatchListingButtonPressed={() => dispatch(addToBatchListingCart(nft))}
@@ -203,7 +219,7 @@ export default function Inventory({ address }) {
                         <NftCard
                           nft={nft}
                           imgClass="collection"
-                          canBuy={!isNftBlacklisted(nft.address, nft.id)}
+                          canBuy={!isNftBlacklisted(nft.nftAddress, nft.nftId)}
                         />
                       )}
                     </div>
@@ -220,6 +236,48 @@ export default function Inventory({ address }) {
 
   const toggleFilterVisibility = () => {
     setFiltersVisible(!filtersVisible)
+  };
+
+  const toggleSortVisibility = () => {
+    setSortVisible(!sortVisible)
+  };
+
+  const handleSort = useCallback((sortOption: any) => {
+    setSortOption(sortOption as SortOption);
+  }, [setSortOption]);
+
+  const userTheme = useAppSelector((state) => state.user.theme);
+  const customStyles = {
+    option: (base: any, state: any) => ({
+      ...base,
+      background: getTheme(userTheme).colors.bgColor2,
+      color: getTheme(userTheme).colors.textColor3,
+      borderRadius: state.isFocused ? '0' : 0,
+      '&:hover': {
+        background: '#eee',
+        color: '#000',
+      },
+    }),
+    menu: (base: any) => ({
+      ...base,
+      borderRadius: 0,
+      marginTop: 0,
+    }),
+    menuList: (base: any) => ({
+      ...base,
+      padding: 0,
+    }),
+    singleValue: (base: any, state: any) => ({
+      ...base,
+      background: getTheme(userTheme).colors.bgColor2,
+      color: getTheme(userTheme).colors.textColor3
+    }),
+    control: (base: any, state: any) => ({
+      ...base,
+      background: getTheme(userTheme).colors.bgColor2,
+      color: getTheme(userTheme).colors.textColor3,
+      padding: 2,
+    }),
   };
 
   return (
@@ -239,14 +297,18 @@ export default function Inventory({ address }) {
         <div className="flex-fill">
           <Stack direction="row" mb={2} align="center">
             {useMobileMenu ? (
-              <ul className="activity-filter">
-                <li className="active" onClick={toggleFilterVisibility}>
-                  <FontAwesomeIcon icon={filtersVisible ? faAngleLeft : faFilter} />
-                </li>
-                <li id="bulk" className={batchListingCart.isDrawerOpen ? 'active' : ''} onClick={toggleOpenBatchListingCart}>
+              <UnorderedList className="activity-filter">
+                <ListItem className="active" onClick={toggleFilterVisibility}>
+                  <FontAwesomeIcon icon={faFilter} />
+                </ListItem>
+                <ListItem onClick={toggleSortVisibility}>
+                  <FontAwesomeIcon icon={faSort} />
+                  <Box as='span' ms={2}>Sort</Box>
+                </ListItem>
+                <ListItem id="bulk" className={batchListingCart.isDrawerOpen ? 'active' : ''} onClick={toggleOpenBatchListingCart}>
                   Bulk Mode
-                </li>
-              </ul>
+                </ListItem>
+              </UnorderedList>
             ) : (
               <>
                 <Box>
@@ -275,13 +337,29 @@ export default function Inventory({ address }) {
                     </WrapItem>
                   </Wrap>
                 </HStack>
+                <Spacer />
+                <Box>
+                  <Box className="items_filter" style={{ marginBottom: 0, marginTop: 0, minWidth: 200}}>
+                    <Box className="dropdownSelect mr-0 mb-0">
+                      <Select
+                        styles={customStyles}
+                        placeholder={'Sort Listings...'}
+                        options={sortOptions}
+                        getOptionLabel={(option: SortOption) => option.label}
+                        getOptionValue={(option: SortOption) => option.id}
+                        defaultValue={sortOptions[0]}
+                        onChange={handleSort}
+                      />
+                    </Box>
+                  </Box>
+                </Box>
               </>
             )}
           </Stack>
           <InfiniteScroll
             dataLength={data?.pages ? data.pages.flat().length : 0}
             next={loadMore}
-            hasMore={hasNextPage}
+            hasMore={hasNextPage ?? false}
             style={{ overflow: 'hidden' }}
             loader={
               <div className="row">
@@ -298,11 +376,17 @@ export default function Inventory({ address }) {
         </div>
       </div>
       <MobileFilters
-        show={useMobileMenu && filtersVisible}
+        show={!!useMobileMenu && filtersVisible}
         collections={collections}
         currentFilter={collectionFilter}
         onFilter={onFilterChange}
         onHide={() => setFiltersVisible(false)}
+      />
+      <MobileSort
+        show={!!useMobileMenu && sortVisible}
+        currentSort={sortOption}
+        onSort={handleSort}
+        onHide={() => setSortVisible(false)}
       />
       <MyNftCancelDialog />
       {user.myNftPageTransferDialog && (
@@ -326,3 +410,4 @@ export default function Inventory({ address }) {
     </>
   )
 }
+

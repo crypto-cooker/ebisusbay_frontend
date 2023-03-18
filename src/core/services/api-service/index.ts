@@ -7,6 +7,8 @@ import {OffersQueryParams} from "@src/core/services/api-service/mapi/queries/off
 import Listing from "@src/core/models/listing";
 import {Api} from "@src/core/services/api-service/types";
 import {Offer} from "@src/core/models/offer";
+import {WalletsQueryParams} from "./mapi/queries/wallets";
+import WalletNft from "@src/core/models/wallet-nft";
 
 
 export class ApiService implements Api {
@@ -36,6 +38,10 @@ export class ApiService implements Api {
 
   async getOffers(query?: OffersQueryParams): Promise<PagedList<Offer>> {
     return await this.mapi.getOffers(query);
+  }
+
+  async getWallet(address: string, query?: WalletsQueryParams): Promise<PagedList<WalletNft>> {
+    return await this.mapi.getWallet({...query, wallet: address});
   }
 
   async getMadeOffersByUser(address: string, query?: OffersQueryParams): Promise<PagedList<Offer>> {

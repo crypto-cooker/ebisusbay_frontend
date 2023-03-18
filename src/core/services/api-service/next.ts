@@ -6,6 +6,8 @@ import SearchQuery from "@src/core/services/api-service/mapi/queries/search";
 import {OffersQueryParams} from "@src/core/services/api-service/mapi/queries/offers";
 import {Api, OfferType} from "@src/core/services/api-service/types";
 import {Offer} from "@src/core/models/offer";
+import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
+import WalletNft from "@src/core/models/wallet-nft";
 
 class NextApiService implements Api {
   private next: AxiosInstance;
@@ -51,6 +53,13 @@ class NextApiService implements Api {
     return response.data;
   }
 
+  async getWallet(address: string, query?: WalletsQueryParams): Promise<PagedList<WalletNft>> {
+    const response = await this.next.get(`users/${address}/wallet`, {
+      params: query
+    });
+
+    return response.data;
+  }
 
   // Non-interface convenience methods
 

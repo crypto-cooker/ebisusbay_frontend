@@ -297,15 +297,15 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
 
 type NftCardProps = {
   nft: any;
-  imgClass: string;
-  watermark: boolean;
-  is1155: boolean;
-  canBuy:  boolean;
+  imgClass?: string;
+  watermark?: any;
+  is1155?: boolean;
+  canBuy?: boolean;
 
-  isInventory: boolean;
-  includeCollectionName: boolean;
+  isInventory?: boolean;
+  includeCollectionName?: boolean;
 }
-export const NftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false, canBuy = true }: NftCardProps) => {
+export const NftCard = ({ nft, imgClass = 'marketplace', watermark = false, is1155 = false, canBuy = true }: NftCardProps) => {
   return (
     <BaseNftCard
       nft={nft}
