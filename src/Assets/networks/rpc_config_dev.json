@@ -18924,6 +18924,32 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Selfie Buddies",
+      "slug": "selfie-buddies",
+      "multiToken": false,
+      "address": "0x84b766171b7803528c3e9c439Ce3aCf21401FE4b",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/selfie-guys/avatar.webp",
+        "card": "/img/collections/selfie-guys/card.webp",
+        "banner": "/img/collections/selfie-guys/banner.webp",
+        "website": "https://selfie-guys.com/",
+        "twitter": "https://twitter.com/Selfie_Guys_NFT",
+        "discord": "https://discord.gg/C7uGgYnTvM",
+        "medium": "https://medium.com/@selfie-guys-nft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
