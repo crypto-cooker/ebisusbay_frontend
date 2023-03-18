@@ -18931,7 +18931,7 @@
       "multiToken": false,
       "address": "0x84b766171b7803528c3e9c439Ce3aCf21401FE4b",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "avatar": "/img/collections/selfie-buddies/avatar.webp",
