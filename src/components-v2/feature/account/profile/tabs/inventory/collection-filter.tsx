@@ -3,31 +3,38 @@ import {Form} from "react-bootstrap";
 import {caseInsensitiveCompare, debounce} from "@src/utils";
 import {ImageKitService} from "@src/helpers/image";
 import Blockies from "react-blockies";
-import {Heading} from "@chakra-ui/react";
+import {
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Checkbox,
+  CheckboxGroup,
+  Flex,
+  HStack,
+  VStack
+} from "@chakra-ui/react";
 
 interface CollectionFilterProps {
   collections: any;
-  currentFilter: any;
+  filteredAddresses: any;
   onFilter: (collections: any) => void;
   keyPrefix?: string | null;
 }
 
-export const CollectionFilter = ({collections, currentFilter, onFilter, keyPrefix = null}: CollectionFilterProps) => {
+export const CollectionFilter = ({collections, filteredAddresses, onFilter, keyPrefix = null}: CollectionFilterProps) => {
   const [visibleCollections, setVisibleCollections] = useState(collections);
-
-  const viewGetDefaultCheckValue = (address: string) => {
-    return currentFilter.includes(address);
-  };
 
   const handleCheck = (event: any, collection: any) => {
     const { id, checked } = event.target;
 
     if (!collection) return;
-    let tmpSelectedCollections = currentFilter;
-    if (checked && !currentFilter.includes(collection.address)) {
-      tmpSelectedCollections.push(collection.address);
+    let tmpSelectedCollections = collections.filter((c: any) => filteredAddresses.includes(c.address));
+    if (checked && !tmpSelectedCollections.map((c: any) => c.address).includes(collection.address)) {
+      tmpSelectedCollections.push(collection);
     } else if (!checked) {
-      tmpSelectedCollections = currentFilter.filter((c: any) => !caseInsensitiveCompare(c, collection.address));
+      tmpSelectedCollections = tmpSelectedCollections.filter((c: any) => !caseInsensitiveCompare(c.address, collection.address));
     }
     onFilter(tmpSelectedCollections);
   };
@@ -54,43 +61,48 @@ export const CollectionFilter = ({collections, currentFilter, onFilter, keyPrefi
   }, [collections]);
 
   return (
-    <div className="filter-pane">
-      <Heading as="h5" size="md" className="mb-2">Collections</Heading>
-      <Form.Control type="text" placeholder="Filter" onChange={onTextFilterChange}/>
-      {visibleCollections.map((collection: any) => (
-        <div key={getKey(collection)}>
-          <Form.Check
-            type="checkbox"
-            id={getKey(collection)}
-            className="collection-checkbox my-2"
-          >
-            <Form.Check.Input type={'checkbox'}
-                              value={viewGetDefaultCheckValue(collection.address)}
-                              onChange={(t) => handleCheck(t, collection)}
-                              defaultChecked={viewGetDefaultCheckValue(collection.address)}
-            />
-            <Form.Check.Label className="w-100">
-              <div className="d-flex cursor-pointer w-100">
-                <div>
-                  {collection.metadata?.avatar ? (
-                    <img
-                      src={ImageKitService.buildAvatarUrl(collection.metadata.avatar)}
-                      alt={collection?.name}
-                      width="25"
-                      height="25"
-                      className="rounded-circle my-auto"
-                    />
-                  ) : (
-                    <Blockies seed={collection.address.toLowerCase()} size={5} scale={5} />
-                  )}
-                </div>
-                <div className="my-auto ms-2">{collection.name}</div>
-                <div className="text-muted flex-fill text-end my-auto">({collection.balance})</div>
-              </div>
-            </Form.Check.Label>
-          </Form.Check>
-        </div>
-      ))}
-    </div>
+    <AccordionItem border='none'>
+      <h2>
+        <AccordionButton>
+          <Box as="span" flex='1' textAlign='left' fontWeight='bold'>
+            Collections
+          </Box>
+          <AccordionIcon />
+        </AccordionButton>
+      </h2>
+      <AccordionPanel maxH='350px' overflow='scroll'>
+        <Form.Control type="text" placeholder="Filter" onChange={onTextFilterChange}/>
+        <CheckboxGroup colorScheme='blue' value={filteredAddresses.map((address: any) => `collection-${address}`)}>
+          <VStack align='start' w='full' spacing={2}>
+            {visibleCollections.map((collection: any) => (
+              <Flex key={getKey(collection)} w='full' justify='space-between'>
+                <Checkbox
+                  value={`collection-${collection.address}`}
+                  onChange={(t) => handleCheck(t, collection)}
+                >
+                  <HStack>
+                    <Box>
+                      {collection.metadata?.avatar ? (
+                        <img
+                          src={ImageKitService.buildAvatarUrl(collection.metadata.avatar)}
+                          alt={collection?.name}
+                          width="25"
+                          height="25"
+                          className="rounded-circle my-auto"
+                        />
+                      ) : (
+                        <Blockies seed={collection.address.toLowerCase()} size={5} scale={5} />
+                      )}
+                    </Box>
+                    <Box ms={2}>{collection.name}</Box>
+                  </HStack>
+                </Checkbox>
+                <Box className="text-muted">({collection.balance})</Box>
+              </Flex>
+            ))}
+          </VStack>
+        </CheckboxGroup>
+      </AccordionPanel>
+    </AccordionItem>
   )
 }

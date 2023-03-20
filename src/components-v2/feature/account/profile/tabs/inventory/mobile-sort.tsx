@@ -10,7 +10,7 @@ import {Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, Draw
 interface MobileSortProps {
   show: boolean;
   onHide: () => void;
-  currentSort: SortOption;
+  currentSort?: SortOption;
   onSort: (sortOption: SortOption) => void;
 }
 
@@ -34,7 +34,7 @@ export const MobileSort = ({show, onHide, currentSort, onSort}: MobileSortProps)
                   <Form.Check.Input type={'radio'}
                                     value={`${option.key}-${option.direction}`}
                                     onChange={() => onSort(option)}
-                                    checked={currentSort.key === option.key && currentSort.direction === option.direction}
+                                    checked={!!currentSort && currentSort.key === option.key && currentSort.direction === option.direction}
                   />
                   <Form.Check.Label className="w-100">
                     <div className="d-flex justify-content-between cursor-pointer w-100">

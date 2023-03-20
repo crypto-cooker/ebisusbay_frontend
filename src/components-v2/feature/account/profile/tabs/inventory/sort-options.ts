@@ -13,6 +13,12 @@ export const sortOptions: SortOption[] = [
     label: 'Recently Received',
   },
   {
+    id: 'receivedTimestamp',
+    key: 'receivedTimestamp',
+    direction: 'asc',
+    label: 'Oldest Received',
+  },
+  {
     id: 'rank-asc',
     key: 'rank',
     direction: 'asc',

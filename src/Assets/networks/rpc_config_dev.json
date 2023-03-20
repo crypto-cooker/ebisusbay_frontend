@@ -18950,6 +18950,32 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "GDC Proof-Of-Attendance NFT",
+      "slug": "gdc-poa-nft",
+      "multiToken": false,
+      "address": "0xe3e564252249ab55b47b84d6a934f4cbb94233a9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A token of appreciation for users who participated in the Ryoshi Tales demo at the 2023 Game Developers Conference",
+        "avatar": "/img/collections/gdc-poa-nft/avatar.webp",
+        "banner": "/img/collections/gdc-poa-nft/banner.webp",
+        "card": "/img/collections/gdc-poa-nft/card.webp",
+        "website": "https://www.ryoshitales.io/",
+        "twitter": "https://twitter.com/RyoshiTales",
+        "discord": "https://discord.gg/NJwcSZuCpd",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "hidden",
+        "verified": true
+      }
     }
   ],
   "drops": [

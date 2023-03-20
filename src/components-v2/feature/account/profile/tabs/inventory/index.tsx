@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from 'react';
 import {useDispatch} from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {Spinner} from "react-bootstrap";
@@ -10,11 +10,9 @@ import MyNftCancelDialog from "@src/Components/components/MyNftCancelDialog";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import MakeListingDialog from "@src/Components/MakeListing";
-import {CollectionFilter} from "./collection-filter";
-import {MobileFilters} from "./mobile-filters";
 import Button from "@src/Components/components/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faAngleLeft, faFilter, faSort} from "@fortawesome/free-solid-svg-icons";
+import {faAngleLeft, faFilter, faLayerGroup, faMagnifyingGlass, faSort} from "@fortawesome/free-solid-svg-icons";
 import TransferNftDialog from "@src/Components/Account/Profile/Dialogs/TransferNftDialog";
 import {
   addToBatchListingCart,
@@ -27,15 +25,18 @@ import {
 import {MobileBatchListing} from "@src/Components/Account/Profile/Inventory/MobileBatchListing";
 import {
   Box,
-  Button as ChakraButton,
+  CloseButton,
+  Collapse,
   HStack,
+  Icon,
+  Input,
+  InputGroup,
+  InputRightElement,
   ListItem,
-  Spacer,
   Stack,
   UnorderedList,
   useBreakpointValue,
-  Wrap,
-  WrapItem
+  VStack
 } from "@chakra-ui/react";
 import MyBundleCard from '@src/Components/Account/Profile/Inventory/components/MyBundleCard';
 import {NftCard} from "@src/components-v2/shared/nft-card";
@@ -46,6 +47,9 @@ import {getTheme} from "@src/Theme/theme";
 import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
 import {SortOption, sortOptions} from "@src/components-v2/feature/account/profile/tabs/inventory/sort-options";
 import {MobileSort} from "@src/components-v2/feature/account/profile/tabs/inventory/mobile-sort";
+import InventoryFilterContainer
+  from "@src/components-v2/feature/account/profile/tabs/inventory/inventory-filter-container";
+import useDebounce from "@src/core/hooks/useDebounce";
 
 interface InventoryProps {
   address: string;
@@ -58,32 +62,30 @@ export default function Inventory({ address }: InventoryProps) {
   const batchListingCart = useAppSelector((state) => state.batchListing);
 
   const [collections, setCollections] = useState([]);
-  const [collectionFilter, setCollectionFilter] = useState([]);
-  const [sortOption, setSortOption] = useState<SortOption>(sortOptions[0])
+  const [searchTerms, setSearchTerms] = useState<string>();
+  const debouncedSearch = useDebounce(searchTerms, 500);
   const [filtersVisible, setFiltersVisible] = useState(false);
   const [sortVisible, setSortVisible] = useState(false);
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
   const useMobileMenu = useBreakpointValue(
     { base: true, lg: false },
     { fallback: 'lg' },
   );
-
-  const onFilterChange = (filterOption: any) => {
-    setCollectionFilter(filterOption ?? []);
-    refetch();
-  };
+  const [queryParams, setQueryParams] = useState<WalletsQueryParams>({
+    sortBy: 'receivedTimestamp',
+    direction: 'desc'
+  });
 
   const fetcher = async ({ pageParam = 1 }) => {
     const params: WalletsQueryParams = {
       page: pageParam,
-      collection: collectionFilter,
-      sortBy: sortOption.key,
-      direction: sortOption.direction,
+      ...queryParams
     }
     return nextApiService.getWallet(address, params);
   };
 
   const {data, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery(
-    ['Inventory', address, collectionFilter, sortOption],
+    ['Inventory', address, queryParams],
     fetcher,
     {
       getNextPageParam: (lastPage, pages) => {
@@ -158,7 +160,7 @@ export default function Inventory({ address }: InventoryProps) {
                 if(isBundle(nft.nftAddress)){
                   return (
                     <div
-                      className={`d-item ${filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-6 col-sm-4 col-xl-3 col-xxl-2'}  mb-4`}
+                      className={`d-item ${!useMobileMenu && filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-6 col-sm-4 col-xl-3 col-xxl-2'}  mb-4`}
                       key={`${nft.nftAddress}-${nft.nftId}-${index}`}
                     >
                       {caseInsensitiveCompare(address, user.address) ? (
@@ -192,7 +194,7 @@ export default function Inventory({ address }: InventoryProps) {
                 else{
                   return (
                     <div
-                      className={`d-item ${filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-6 col-sm-4 col-xl-3 col-xxl-2'}  mb-4`}
+                      className={`d-item ${!useMobileMenu && filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-6 col-sm-4 col-xl-3 col-xxl-2'}  mb-4`}
                       key={`${nft.nftAddress}-${nft.nftId}-${nft.listed}-${index}`}
                     >
                       {caseInsensitiveCompare(address, user.address) ? (
@@ -243,8 +245,12 @@ export default function Inventory({ address }: InventoryProps) {
   };
 
   const handleSort = useCallback((sortOption: any) => {
-    setSortOption(sortOption as SortOption);
-  }, [setSortOption]);
+    const sort: WalletsQueryParams = {
+      sortBy: sortOption.key,
+      direction: sortOption.direction
+    }
+    setQueryParams({...queryParams, ...sort});
+  }, [queryParams]);
 
   const userTheme = useAppSelector((state) => state.user.theme);
   const customStyles = {
@@ -280,111 +286,146 @@ export default function Inventory({ address }: InventoryProps) {
     }),
   };
 
+  const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerms(e.target.value);
+  }, []);
+
+  const handleClearSearch = useCallback(() => {
+    setSearchTerms('');
+  }, []);
+
+  useEffect(() => {
+    setQueryParams({...queryParams, search: debouncedSearch});
+  }, [debouncedSearch]);
+
   return (
     <>
-      <div className="d-flex">
-        {filtersVisible && !useMobileMenu && (
-          <div className="m-0 p-0">
-            <div className="me-4 px-2" style={{ width: 320 }}>
-              <CollectionFilter
-                collections={collections}
-                currentFilter={collectionFilter}
-                onFilter={onFilterChange}
+      <Stack direction="row" mb={2} align="center">
+        {useMobileMenu ? (
+          <VStack spacing={0} mb={2} w='full'>
+            <UnorderedList className="activity-filter" ms={0}>
+              <ListItem className="active" onClick={toggleFilterVisibility}>
+                <FontAwesomeIcon icon={faFilter} />
+              </ListItem>
+              <ListItem id="bulk" className={showMobileSearch ? 'active' : ''} onClick={() => setShowMobileSearch(!showMobileSearch)}>
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+              </ListItem>
+              <ListItem onClick={toggleSortVisibility}>
+                <FontAwesomeIcon icon={faSort} />
+                <Box as='span' ms={2}>Sort</Box>
+              </ListItem>
+              <ListItem id="bulk" className={batchListingCart.isDrawerOpen ? 'active' : ''} onClick={toggleOpenBatchListingCart}>
+                <FontAwesomeIcon icon={faLayerGroup} />
+                <Box as='span' ms={2}>Bulk Mode</Box>
+              </ListItem>
+            </UnorderedList>
+
+            <Box w='full'>
+              <Collapse in={showMobileSearch} animateOpacity>
+                <InputGroup>
+                  <Input
+                    placeholder="Search by name"
+                    w="100%"
+                    onChange={handleSearch}
+                    value={searchTerms}
+                    color="white"
+                    _placeholder={{ color: 'gray.300' }}
+                  />
+                  {searchTerms?.length && (
+                    <InputRightElement
+                      children={<CloseButton onClick={handleClearSearch} />}
+                    />
+                  )}
+                </InputGroup>
+              </Collapse>
+            </Box>
+          </VStack>
+        ) : (
+          <HStack w='full'>
+            <Box>
+              <Button
+                type="legacy-outlined"
+                onClick={toggleFilterVisibility}
+              >
+                <FontAwesomeIcon icon={filtersVisible ? faAngleLeft : faFilter} className="py-1" />
+              </Button>
+            </Box>
+            <InputGroup>
+              <Input
+                placeholder="Search by name"
+                w="100%"
+                onChange={handleSearch}
+                value={searchTerms}
+                color="white"
+                _placeholder={{ color: 'gray.300' }}
               />
-            </div>
-          </div>
-        )}
-        <div className="flex-fill">
-          <Stack direction="row" mb={2} align="center">
-            {useMobileMenu ? (
-              <UnorderedList className="activity-filter">
-                <ListItem className="active" onClick={toggleFilterVisibility}>
-                  <FontAwesomeIcon icon={faFilter} />
-                </ListItem>
-                <ListItem onClick={toggleSortVisibility}>
-                  <FontAwesomeIcon icon={faSort} />
-                  <Box as='span' ms={2}>Sort</Box>
-                </ListItem>
-                <ListItem id="bulk" className={batchListingCart.isDrawerOpen ? 'active' : ''} onClick={toggleOpenBatchListingCart}>
-                  Bulk Mode
-                </ListItem>
-              </UnorderedList>
-            ) : (
-              <>
-                <Box>
-                  <Button
-                    type="legacy-outlined"
-                    onClick={toggleFilterVisibility}
-                  >
-                    <FontAwesomeIcon icon={filtersVisible ? faAngleLeft : faFilter} className="py-1" />
-                  </Button>
-                </Box>
-                <HStack align="center" spacing={2} border="1px solid white" rounded='md' ps={2} pe={1} py={1}>
+              {searchTerms?.length && (
+                <InputRightElement
+                  children={<CloseButton onClick={handleClearSearch} />}
+                />
+              )}
+            </InputGroup>
+            <Box>
+              <Button
+                type="legacy-outlined"
+                onClick={() => handleOpenBatchShortcut('listing')}
+              >
+                <HStack>
+                  <Icon as={FontAwesomeIcon} icon={faLayerGroup} />
                   <Box>
-                    Bulk mode:
+                    Bulk mode
                   </Box>
-                  <Wrap gap={2}>
-                    <WrapItem>
-                      <ChakraButton variant="ghost" size="sm" onClick={() => handleOpenBatchShortcut('listing')}>
-                        Sell
-                      </ChakraButton>
-                      <ChakraButton variant="ghost" size="sm" onClick={() => handleOpenBatchShortcut('bundle')}>
-                        Bundle
-                      </ChakraButton>
-                      <ChakraButton variant="ghost" size="sm" onClick={() => handleOpenBatchShortcut('transfer')}>
-                        Transfer
-                      </ChakraButton>
-                    </WrapItem>
-                  </Wrap>
                 </HStack>
-                <Spacer />
-                <Box>
-                  <Box className="items_filter" style={{ marginBottom: 0, marginTop: 0, minWidth: 200}}>
-                    <Box className="dropdownSelect mr-0 mb-0">
-                      <Select
-                        styles={customStyles}
-                        placeholder={'Sort Listings...'}
-                        options={sortOptions}
-                        getOptionLabel={(option: SortOption) => option.label}
-                        getOptionValue={(option: SortOption) => option.id}
-                        defaultValue={sortOptions[0]}
-                        onChange={handleSort}
-                      />
-                    </Box>
-                  </Box>
+              </Button>
+            </Box>
+            <Box>
+              <Box className="items_filter" style={{ marginBottom: 0, marginTop: 0, minWidth: 200}}>
+                <Box className="dropdownSelect mr-0 mb-0">
+                  <Select
+                    styles={customStyles}
+                    placeholder={'Sort Listings...'}
+                    options={sortOptions}
+                    getOptionLabel={(option: SortOption) => option.label}
+                    getOptionValue={(option: SortOption) => option.id}
+                    defaultValue={sortOptions[0]}
+                    onChange={handleSort}
+                  />
                 </Box>
-              </>
-            )}
-          </Stack>
-          <InfiniteScroll
-            dataLength={data?.pages ? data.pages.flat().length : 0}
-            next={loadMore}
-            hasMore={hasNextPage ?? false}
-            style={{ overflow: 'hidden' }}
-            loader={
-              <div className="row">
-                <div className="col-lg-12 text-center">
-                  <Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>
-                </div>
-              </div>
-            }
-          >
-            {historyContent}
-          </InfiniteScroll>
-        </div>
-      </div>
-      <MobileFilters
-        show={!!useMobileMenu && filtersVisible}
+              </Box>
+            </Box>
+          </HStack>
+        )}
+      </Stack>
+
+      <InventoryFilterContainer
+        queryParams={queryParams}
         collections={collections}
-        currentFilter={collectionFilter}
-        onFilter={onFilterChange}
-        onHide={() => setFiltersVisible(false)}
-      />
+        onFilter={(newParams) => setQueryParams(newParams)}
+        filtersVisible={filtersVisible}
+        useMobileMenu={!!useMobileMenu}
+        onMobileMenuClose={() => setFiltersVisible(false)}
+      >
+        <InfiniteScroll
+          dataLength={data?.pages ? data.pages.flat().length : 0}
+          next={loadMore}
+          hasMore={hasNextPage ?? false}
+          style={{ overflow: 'hidden' }}
+          loader={
+            <div className="row">
+              <div className="col-lg-12 text-center">
+                <Spinner animation="border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </div>
+            </div>
+          }
+        >
+          {historyContent}
+        </InfiniteScroll>
+      </InventoryFilterContainer>
       <MobileSort
         show={!!useMobileMenu && sortVisible}
-        currentSort={sortOption}
+        currentSort={sortOptions.find((option) => option.key === queryParams.sortBy && option.direction === queryParams.direction)}
         onSort={handleSort}
         onHide={() => setSortVisible(false)}
       />

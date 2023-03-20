@@ -4,6 +4,7 @@ import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import {getTheme} from "@src/Theme/theme";
 import {
+  Center,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -74,8 +75,8 @@ export default function GdcClaimConfirmation({ onClose, isOpen}: GdcClaimConfirm
           Claim GDC Proof-Of-Attendance NFT
         </ModalHeader>
         <ModalCloseButton color={getTheme(user.theme)!.colors.textColor4} />
-        <ModalBody>
-          Claim it please
+        <ModalBody textAlign='center'>
+          Thank you for participating in our GDC demo! Click the button below to claim your free NFT
         </ModalBody>
         <ModalFooter className="border-0">
           <div className="w-100">
