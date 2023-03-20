@@ -7,6 +7,9 @@ import DesktopFilterContainer, {FilteredItem} from "@src/components-v2/shared/fi
 import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
 import {caseInsensitiveCompare} from "@src/utils";
 import {MobileFilters} from "@src/components-v2/feature/account/profile/tabs/inventory/mobile-filters";
+import { appConfig } from '@src/Config';
+
+const config = appConfig();
 
 interface InventoryFilterContainerProps {
   queryParams: WalletsQueryParams;
@@ -47,6 +50,17 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
     const params = queryParams;
     if (item.key === 'status-buy-now') params.listed = checked ? 1 : undefined;
     if (item.key === 'status-has-offers') params.offered = checked ? 1 : undefined;
+    if (item.key === 'status-bundles') {
+      if (checked) {
+        handleCollectionFilter([{name: 'Bundles', address: config.contracts.bundle}]);
+      } else {
+        let tmpSelectedCollections = collections.filter(
+          (c: any) => params.collection?.includes(c.address) && c.address !== config.contracts.bundle
+        );
+        handleCollectionFilter(tmpSelectedCollections);
+      }
+      return;
+    }
     onFilter({...queryParams, ...params});
 
     const i = filteredItems.findIndex((fi) => fi.key === item.key)
@@ -104,6 +118,13 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
         items={[
           {label: 'Buy Now', key: 'status-buy-now', isChecked: filteredItems.some((fi) => fi.key === 'status-buy-now')},
           {label: 'Has Offers', key: 'status-has-offers', isChecked: filteredItems.some((fi) => fi.key === 'status-has-offers')}
+        ]}
+        onCheck={handleStatusFilter}
+      />
+      <CheckboxFilter
+        title='Quantity'
+        items={[
+          {label: 'Bundles', key: 'status-bundles', isChecked: filteredItems.some((fi) => fi.key === `collection-${config.contracts.bundle}`)}
         ]}
         onCheck={handleStatusFilter}
       />
