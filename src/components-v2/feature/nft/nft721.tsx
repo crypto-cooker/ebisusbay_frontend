@@ -33,7 +33,7 @@ import {
   isLadyWeirdApesCollection,
   isLazyHorseCollection,
   isLazyHorsePonyCollection,
-  isNftBlacklisted,
+  isNftBlacklisted, isVoxelWeirdApesCollection,
   isWeirdApesCollection,
   rankingsLinkForCollection,
   rankingsLogoForCollection,
@@ -346,24 +346,26 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
       if (isAnyWeirdApesCollection(address)) {
         const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
         const abiFile = require(`@src/Assets/abis/weird-apes-bio.json`);
-        const contract = new Contract('0x86dC98DB0AFd27d5cBD7501cd1a72Ff17f324609', abiFile, readProvider);
+        const contract = new Contract('0x213f9b2ead19522a063b3d5c8429ca759ffda812', abiFile, readProvider);
         try {
           let apeInfo;
           if (isWeirdApesCollection(address)) {
-            apeInfo = await contract.getGenesisInfo(id);
+            apeInfo = await contract.infoGWAC(id);
             const voxelAbi = require(`@src/Assets/abis/voxel-weird-apes.json`);
             const voxelContract = new Contract('0xe02a74813053e96c5c98f817c0949e0b00728ef6', voxelAbi, readProvider);
             const isClaimed = await voxelContract.isClaimed(id);
             setVoxelClaimed(isClaimed);
           } else if (isLadyWeirdApesCollection(address)) {
-            apeInfo = await contract.getLadyInfo(id);
+            apeInfo = await contract.infoLWAC(id);
           } else if (isBabyWeirdApesCollection(address)) {
-            apeInfo = await contract.getBabyInfo(id);
+            apeInfo = await contract.infoBWAC(id);
+          } else if (isVoxelWeirdApesCollection(address)) {
+            apeInfo = await contract.infoVWAC(id);
           } else return;
 
           setCustomProfile({
-            name: apeInfo.name.length > 0 ? apeInfo.name : null,
-            description: apeInfo.bio.length > 0 ? apeInfo.bio : null
+            name: apeInfo._name.length > 0 ? apeInfo._name : null,
+            description: apeInfo._lore.length > 0 ? apeInfo._lore : null
           });
         } catch (error) {
           console.log(error);

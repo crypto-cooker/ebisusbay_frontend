@@ -36,15 +36,13 @@ const RangeFilter = ({field, label, onChange, currentMin, currentMax}: RangeFilt
 
   return (
     <AccordionItem border='none'>
-      <h2>
-        <AccordionButton>
-          <Box as="span" flex='1' textAlign='left' fontWeight='bold'>
-            {label}
-          </Box>
-          <AccordionIcon/>
-        </AccordionButton>
-      </h2>
-      <AccordionPanel pb={4}>
+      <AccordionButton>
+        <Box as="span" flex='1' textAlign='left' fontWeight='bold' fontSize='lg'>
+          {label}
+        </Box>
+        <AccordionIcon/>
+      </AccordionButton>
+      <AccordionPanel px={4}>
         <Stack>
           <SimpleGrid columns={2} gap={2}>
             <Input placeholder={`Min ${label}`} type='number' onChange={handleMinChange} value={min} />

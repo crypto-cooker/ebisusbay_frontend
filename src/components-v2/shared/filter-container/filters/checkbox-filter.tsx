@@ -29,15 +29,13 @@ const CheckboxFilter = ({title, items, onCheck}: CheckboxFilterProps) => {
 
   return (
     <AccordionItem border='none'>
-      <h2>
-        <AccordionButton>
-          <Box as="span" flex='1' textAlign='left' fontWeight='bold'>
-            {title}
-          </Box>
-          <AccordionIcon />
-        </AccordionButton>
-      </h2>
-      <AccordionPanel p={4}>
+      <AccordionButton>
+        <Box as="span" flex='1' textAlign='left' fontWeight='bold' fontSize='lg'>
+          {title}
+        </Box>
+        <AccordionIcon />
+      </AccordionButton>
+      <AccordionPanel px={4}>
         <CheckboxGroup colorScheme='blue' value={items.filter(i => i.isChecked).map(i => i.key)}>
           {items.map((item) => (
             <Box key={item.key}>

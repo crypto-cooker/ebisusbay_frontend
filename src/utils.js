@@ -456,18 +456,24 @@ export const isLadyWeirdApesCollection = (address) => {
   return isCollection(address, 'lady-weird-apes', '0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1');
 };
 
+export const isVoxelWeirdApesCollection = (address) => {
+  return isCollection(address, 'voxel-weird-apes', '0xe02A74813053e96C5C98F817C0949E0B00728Ef6');
+};
+
 export const isAnyWeirdApesCollection = (address) => {
   return isCollection(
     address,
     [
       'weird-apes-club',
       'baby-weird-apes',
-      'lady-weird-apes'
+      'lady-weird-apes',
+      'voxel-weird-apes'
     ],
     [
       '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44',
       '0x89F7114C73d5cef7d7EDCbDb14DaA092EB2194c9',
-      '0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1'
+      '0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1',
+      '0xe02A74813053e96C5C98F817C0949E0B00728Ef6'
     ]
   );
 };

@@ -62,14 +62,12 @@ export const CollectionFilter = ({collections, filteredAddresses, onFilter, keyP
 
   return (
     <AccordionItem border='none'>
-      <h2>
-        <AccordionButton>
-          <Box as="span" flex='1' textAlign='left' fontWeight='bold'>
-            Collections
-          </Box>
-          <AccordionIcon />
-        </AccordionButton>
-      </h2>
+      <AccordionButton>
+        <Box as="span" flex='1' textAlign='left' fontWeight='bold' fontSize='lg'>
+          Collections
+        </Box>
+        <AccordionIcon />
+      </AccordionButton>
       <AccordionPanel maxH='350px' overflow='scroll'>
         <Form.Control type="text" placeholder="Filter" onChange={onTextFilterChange}/>
         <CheckboxGroup colorScheme='blue' value={filteredAddresses.map((address: any) => `collection-${address}`)}>
