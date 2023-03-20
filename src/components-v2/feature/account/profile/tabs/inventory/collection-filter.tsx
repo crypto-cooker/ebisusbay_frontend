@@ -68,7 +68,7 @@ export const CollectionFilter = ({collections, filteredAddresses, onFilter, keyP
         </Box>
         <AccordionIcon />
       </AccordionButton>
-      <AccordionPanel maxH='350px' overflow='scroll'>
+      <AccordionPanel maxH='350px' overflowY='scroll'>
         <Form.Control type="text" placeholder="Filter" onChange={onTextFilterChange}/>
         <CheckboxGroup colorScheme='blue' value={filteredAddresses.map((address: any) => `collection-${address}`)}>
           <VStack align='start' w='full' spacing={2}>
