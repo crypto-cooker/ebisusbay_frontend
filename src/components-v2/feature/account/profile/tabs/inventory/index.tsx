@@ -10,7 +10,6 @@ import MyNftCancelDialog from "@src/Components/components/MyNftCancelDialog";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import MakeListingDialog from "@src/Components/MakeListing";
-import {CollectionFilter} from "./collection-filter";
 import {MobileFilters} from "./mobile-filters";
 import Button from "@src/Components/components/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -46,6 +45,8 @@ import {getTheme} from "@src/Theme/theme";
 import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
 import {SortOption, sortOptions} from "@src/components-v2/feature/account/profile/tabs/inventory/sort-options";
 import {MobileSort} from "@src/components-v2/feature/account/profile/tabs/inventory/mobile-sort";
+import InventoryFilterContainer
+  from "@src/components-v2/feature/account/profile/tabs/inventory/inventory-filter-container";
 
 interface InventoryProps {
   address: string;
@@ -59,31 +60,27 @@ export default function Inventory({ address }: InventoryProps) {
 
   const [collections, setCollections] = useState([]);
   const [collectionFilter, setCollectionFilter] = useState([]);
-  const [sortOption, setSortOption] = useState<SortOption>(sortOptions[0])
   const [filtersVisible, setFiltersVisible] = useState(false);
   const [sortVisible, setSortVisible] = useState(false);
   const useMobileMenu = useBreakpointValue(
     { base: true, lg: false },
     { fallback: 'lg' },
   );
-
-  const onFilterChange = (filterOption: any) => {
-    setCollectionFilter(filterOption ?? []);
-    refetch();
-  };
+  const [queryParams, setQueryParams] = useState<WalletsQueryParams>({
+    sortBy: 'receivedTimestamp',
+    direction: 'desc'
+  });
 
   const fetcher = async ({ pageParam = 1 }) => {
     const params: WalletsQueryParams = {
       page: pageParam,
-      collection: collectionFilter,
-      sortBy: sortOption.key,
-      direction: sortOption.direction,
+      ...queryParams
     }
     return nextApiService.getWallet(address, params);
   };
 
   const {data, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery(
-    ['Inventory', address, collectionFilter, sortOption],
+    ['Inventory', address, collectionFilter, queryParams],
     fetcher,
     {
       getNextPageParam: (lastPage, pages) => {
@@ -243,8 +240,12 @@ export default function Inventory({ address }: InventoryProps) {
   };
 
   const handleSort = useCallback((sortOption: any) => {
-    setSortOption(sortOption as SortOption);
-  }, [setSortOption]);
+    const sort: WalletsQueryParams = {
+      sortBy: sortOption.key,
+      direction: sortOption.direction
+    }
+    setQueryParams({...queryParams, ...sort});
+  }, [queryParams]);
 
   const userTheme = useAppSelector((state) => state.user.theme);
   const customStyles = {
@@ -282,109 +283,97 @@ export default function Inventory({ address }: InventoryProps) {
 
   return (
     <>
-      <div className="d-flex">
-        {filtersVisible && !useMobileMenu && (
-          <div className="m-0 p-0">
-            <div className="me-4 px-2" style={{ width: 320 }}>
-              <CollectionFilter
-                collections={collections}
-                currentFilter={collectionFilter}
-                onFilter={onFilterChange}
-              />
-            </div>
-          </div>
+      <Stack direction="row" mb={2} align="center">
+        {useMobileMenu ? (
+          <UnorderedList className="activity-filter">
+            <ListItem className="active" onClick={toggleFilterVisibility}>
+              <FontAwesomeIcon icon={faFilter} />
+            </ListItem>
+            <ListItem onClick={toggleSortVisibility}>
+              <FontAwesomeIcon icon={faSort} />
+              <Box as='span' ms={2}>Sort</Box>
+            </ListItem>
+            <ListItem id="bulk" className={batchListingCart.isDrawerOpen ? 'active' : ''} onClick={toggleOpenBatchListingCart}>
+              Bulk Mode
+            </ListItem>
+          </UnorderedList>
+        ) : (
+          <>
+            <Box>
+              <Button
+                type="legacy-outlined"
+                onClick={toggleFilterVisibility}
+              >
+                <FontAwesomeIcon icon={filtersVisible ? faAngleLeft : faFilter} className="py-1" />
+              </Button>
+            </Box>
+            <HStack align="center" spacing={2} border="1px solid white" rounded='md' ps={2} pe={1} py={1}>
+              <Box>
+                Bulk mode:
+              </Box>
+              <Wrap gap={2}>
+                <WrapItem>
+                  <ChakraButton variant="ghost" size="sm" onClick={() => handleOpenBatchShortcut('listing')}>
+                    Sell
+                  </ChakraButton>
+                  <ChakraButton variant="ghost" size="sm" onClick={() => handleOpenBatchShortcut('bundle')}>
+                    Bundle
+                  </ChakraButton>
+                  <ChakraButton variant="ghost" size="sm" onClick={() => handleOpenBatchShortcut('transfer')}>
+                    Transfer
+                  </ChakraButton>
+                </WrapItem>
+              </Wrap>
+            </HStack>
+            <Spacer />
+            <Box>
+              <Box className="items_filter" style={{ marginBottom: 0, marginTop: 0, minWidth: 200}}>
+                <Box className="dropdownSelect mr-0 mb-0">
+                  <Select
+                    styles={customStyles}
+                    placeholder={'Sort Listings...'}
+                    options={sortOptions}
+                    getOptionLabel={(option: SortOption) => option.label}
+                    getOptionValue={(option: SortOption) => option.id}
+                    defaultValue={sortOptions[0]}
+                    onChange={handleSort}
+                  />
+                </Box>
+              </Box>
+            </Box>
+          </>
         )}
-        <div className="flex-fill">
-          <Stack direction="row" mb={2} align="center">
-            {useMobileMenu ? (
-              <UnorderedList className="activity-filter">
-                <ListItem className="active" onClick={toggleFilterVisibility}>
-                  <FontAwesomeIcon icon={faFilter} />
-                </ListItem>
-                <ListItem onClick={toggleSortVisibility}>
-                  <FontAwesomeIcon icon={faSort} />
-                  <Box as='span' ms={2}>Sort</Box>
-                </ListItem>
-                <ListItem id="bulk" className={batchListingCart.isDrawerOpen ? 'active' : ''} onClick={toggleOpenBatchListingCart}>
-                  Bulk Mode
-                </ListItem>
-              </UnorderedList>
-            ) : (
-              <>
-                <Box>
-                  <Button
-                    type="legacy-outlined"
-                    onClick={toggleFilterVisibility}
-                  >
-                    <FontAwesomeIcon icon={filtersVisible ? faAngleLeft : faFilter} className="py-1" />
-                  </Button>
-                </Box>
-                <HStack align="center" spacing={2} border="1px solid white" rounded='md' ps={2} pe={1} py={1}>
-                  <Box>
-                    Bulk mode:
-                  </Box>
-                  <Wrap gap={2}>
-                    <WrapItem>
-                      <ChakraButton variant="ghost" size="sm" onClick={() => handleOpenBatchShortcut('listing')}>
-                        Sell
-                      </ChakraButton>
-                      <ChakraButton variant="ghost" size="sm" onClick={() => handleOpenBatchShortcut('bundle')}>
-                        Bundle
-                      </ChakraButton>
-                      <ChakraButton variant="ghost" size="sm" onClick={() => handleOpenBatchShortcut('transfer')}>
-                        Transfer
-                      </ChakraButton>
-                    </WrapItem>
-                  </Wrap>
-                </HStack>
-                <Spacer />
-                <Box>
-                  <Box className="items_filter" style={{ marginBottom: 0, marginTop: 0, minWidth: 200}}>
-                    <Box className="dropdownSelect mr-0 mb-0">
-                      <Select
-                        styles={customStyles}
-                        placeholder={'Sort Listings...'}
-                        options={sortOptions}
-                        getOptionLabel={(option: SortOption) => option.label}
-                        getOptionValue={(option: SortOption) => option.id}
-                        defaultValue={sortOptions[0]}
-                        onChange={handleSort}
-                      />
-                    </Box>
-                  </Box>
-                </Box>
-              </>
-            )}
-          </Stack>
-          <InfiniteScroll
-            dataLength={data?.pages ? data.pages.flat().length : 0}
-            next={loadMore}
-            hasMore={hasNextPage ?? false}
-            style={{ overflow: 'hidden' }}
-            loader={
-              <div className="row">
-                <div className="col-lg-12 text-center">
-                  <Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>
-                </div>
-              </div>
-            }
-          >
-            {historyContent}
-          </InfiniteScroll>
-        </div>
-      </div>
-      <MobileFilters
-        show={!!useMobileMenu && filtersVisible}
+      </Stack>
+
+      <InventoryFilterContainer
+        queryParams={queryParams}
         collections={collections}
-        currentFilter={collectionFilter}
-        onFilter={onFilterChange}
-        onHide={() => setFiltersVisible(false)}
-      />
+        onFilter={(newParams) => setQueryParams(newParams)}
+        filtersVisible={filtersVisible}
+        useMobileMenu={!!useMobileMenu}
+        onMobileMenuClose={() => setFiltersVisible(false)}
+      >
+        <InfiniteScroll
+          dataLength={data?.pages ? data.pages.flat().length : 0}
+          next={loadMore}
+          hasMore={hasNextPage ?? false}
+          style={{ overflow: 'hidden' }}
+          loader={
+            <div className="row">
+              <div className="col-lg-12 text-center">
+                <Spinner animation="border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </div>
+            </div>
+          }
+        >
+          {historyContent}
+        </InfiniteScroll>
+      </InventoryFilterContainer>
       <MobileSort
         show={!!useMobileMenu && sortVisible}
-        currentSort={sortOption}
+        currentSort={sortOptions.find((option) => option.key === queryParams.sortBy && option.direction === queryParams.direction)}
         onSort={handleSort}
         onHide={() => setSortVisible(false)}
       />
