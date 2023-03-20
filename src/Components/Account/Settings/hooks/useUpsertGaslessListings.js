@@ -6,6 +6,7 @@ import {cancelListing, upsertListing} from '@src/core/cms/endpoints/gaslessListi
 import UUID from "uuid-int";
 import {caseInsensitiveCompare, isGaslessListing} from "@src/utils";
 import NextApiService from "@src/core/services/api-service/next";
+import {getItemType} from "@src/helpers/chain";
 
 const generator = UUID(0);
 
@@ -61,10 +62,15 @@ const useUpsertGaslessListings = () => {
     }
 
     try {
+      let itemTypes = {};
       for (const pendingListing of pendingListings) {
+        if (itemTypes[pendingListing.collectionAddress] === undefined) {
+          itemTypes[pendingListing.collectionAddress] = await getItemType(pendingListing.collectionAddress);
+        }
+        pendingListing.itemType = itemTypes[pendingListing.collectionAddress];
         pendingListing.salt = generator.uuid();
         pendingListing.listingTime = Math.round(new Date().getTime() / 1000);
-        pendingListing.expirationDate = Math.round(pendingListing.expirationDate / 1000)
+        pendingListing.expirationDate = Math.round(pendingListing.expirationDate / 1000);
         const {objectSignature, objectHash} = await createListingSigner(pendingListing);
         pendingListing.sellerSignature = objectSignature;
         pendingListing.seller = user.address.toLowerCase();

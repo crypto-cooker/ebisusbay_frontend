@@ -31,6 +31,28 @@ export const ERC2981 = [
   'function royaltyInfo(uint256 tokenId, uint256 salePrice) external view returns (address receiver, uint256 royaltyAmount)',
 ];
 
+export const ERC165 = [
+  {
+    inputs: [
+      {
+        internalType: "bytes4",
+        name: "interfaceId",
+        type: "bytes4",
+      },
+    ],
+    name: "supportsInterface",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+];
+
 export const Elon = ['function mint(uint256 count) public payable'];
 
 export const EbisuDropAbi = [

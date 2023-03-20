@@ -9,7 +9,7 @@ import {
   faTag,
   faTimes,
   faPen,
-  faPlusCircle, faTags, faArrowUpFromBracket
+  faPlusCircle, faTags, faArrowUpFromBracket, faBoltLightning, faHand
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MenuPopup } from '@src/Components/components/chakra-components';
@@ -18,15 +18,15 @@ import { nftCardUrl } from "@src/helpers/image";
 import {
   Box,
   Flex,
-  Heading,
+  Heading, HStack,
   Spacer,
-  Text,
+  Text, Tooltip,
   useBreakpointValue,
   useClipboard,
   useDisclosure
 } from "@chakra-ui/react";
 import Image from "next/image";
-import {appUrl, caseInsensitiveCompare, round, timeSince} from "@src/utils";
+import {appUrl, caseInsensitiveCompare, round, siPrefixedNumber, timeSince} from "@src/utils";
 import { useColorModeValue } from "@chakra-ui/color-mode";
 import { darkTheme, lightTheme } from "@src/Theme/theme";
 import { useSelector } from "react-redux";
@@ -215,7 +215,7 @@ const MyNftCard = ({
               ))}
             </Slider>
           </div>
-          <div className="d-flex flex-column p-2 pb-1">
+          <Flex direction='column' justify='space-between' px={2} py={1}>
             <div className="card-title mt-auto">
               <span onClick={() => navigateTo(nftUrl)} style={{ cursor: 'pointer' }}>
                 {nft.balance && nft.balance > 1 ? (
@@ -227,22 +227,44 @@ const MyNftCard = ({
                 )}
               </span>
             </div>
-            <span className="card-text">
-              {nft.listed && nft.price ? (
-                <div className="d-flex">
-                  <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
-                  <span className="ms-1">
-                    {ethers.utils.commify(round(nft.price, 2))}
-                  </span>
-                </div>
-              ) : (
-                <>&nbsp;</>
-              )}
-            </span>
-            {nft.expirationDate && (
-              <Text className="text-muted mt-1" fontSize="sm">Ends in {timeSince(nft.expirationDate)}</Text>
+            {!!nft.listed && !!nft.market.price && (
+              <Tooltip label="Listing Price" placement='top-start'>
+                <HStack w='full' fontSize='sm'>
+                  <Box w='16px'>
+                    <FontAwesomeIcon icon={faBoltLightning} />
+                  </Box>
+                  <Box>
+                    <Flex>
+                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                      <Box as='span' ms={1}>
+                        {nft.market.price > 6 ? siPrefixedNumber(nft.market.price) : ethers.utils.commify(round(nft.market.price))}
+                      </Box>
+                    </Flex>
+                  </Box>
+                  {nft.market.expirationDate && (
+                    <Text mt={1} flex={1} align='end' className='text-muted'>{timeSince(nft.market.expirationDate)}</Text>
+                  )}
+                </HStack>
+              </Tooltip>
             )}
-          </div>
+            {nft.offer?.id && (
+              <Tooltip label="Best Offer Price" placement='top-start'>
+                <HStack w='full' fontSize='sm'>
+                  <Box w='16px'>
+                    <FontAwesomeIcon icon={faHand} />
+                  </Box>
+                  <Box>
+                    <Flex>
+                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                      <Box as='span' ms={1}>
+                        {nft.offer.price > 6 ? siPrefixedNumber(nft.offer.price) : ethers.utils.commify(round(nft.offer.price))}
+                      </Box>
+                    </Flex>
+                  </Box>
+                </HStack>
+              </Tooltip>
+            )}
+          </Flex>
           <Spacer />
           <Box
             borderBottomRadius={15}

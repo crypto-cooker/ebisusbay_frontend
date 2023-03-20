@@ -63,7 +63,7 @@ const useSignature = () => {
     setIsLoading(true);
     const considerationPrice= ethers.utils.parseEther(`${signatureValues.price}`);
     const offerItem = {
-      itemType: signatureValues?.is1155 ? ItemType.ERC1155 : ItemType.ERC721, 
+      itemType: signatureValues.itemType,
       token: signatureValues.collectionAddress.toLowerCase(),
       identifierOrCriteria: BigNumber.from(signatureValues.tokenId),
       startAmount: 1,

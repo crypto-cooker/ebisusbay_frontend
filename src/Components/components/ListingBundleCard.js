@@ -1,22 +1,23 @@
-import React, { memo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {memo, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import Link from 'next/link';
-import { ethers } from 'ethers';
+import {ethers} from 'ethers';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
 import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
 import {darkTheme, getTheme, lightTheme} from '@src/Theme/theme';
-import { AnyMedia } from './AnyMedia';
-import { connectAccount, chainConnect } from '@src/GlobalState/User';
+import {AnyMedia} from './AnyMedia';
+import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import {appUrl, createSuccessfulAddCartContent, round, timeSince} from '@src/utils';
 import {convertGateway, nftCardUrl} from "@src/helpers/image";
-import {Box, Flex, Heading, Spacer, Text, useClipboard} from "@chakra-ui/react";
+import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useClipboard} from "@chakra-ui/react";
 import Image from "next/image";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {MenuPopup} from "@src/Components/components/chakra-components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
+  faBoltLightning,
   faEllipsisH,
   faExternalLink,
   faHand,
@@ -47,12 +48,6 @@ const Watermarked = styled.div`
     background-repeat: no-repeat;
     opacity: 0.3;
   }
-`;
-
-const MakeBuy = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 `;
 
 const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
@@ -255,7 +250,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
             ) : (
               <div>&nbsp;</div>
             )}
-            <div className="d-flex flex-column justify-content-between p-2 pb-1">
+            <Flex direction='column' justify='space-between' px={2} py={1}>
               {listing.collection && (
                 <Link href={`/collection/${listing.collection.slug}`}>
                   <h6
@@ -269,18 +264,26 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
               <Link href={nftUrl}>
                 <Heading as="h6" size="sm" className="card-title mt-auto mb-1">{listing.nft.name}</Heading>
               </Link>
-              <MakeBuy>
-                <div className="d-flex">
-                  <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
-                  <span className="ms-1">
-                    {getCorrectPrice(listing.price)}
-                  </span>
-                </div>
-              </MakeBuy>
-              {listing.expirationDate && (
-                <Text className="text-muted mt-1" fontSize="sm">Ends in {timeSince(listing.expirationDate)}</Text>
-              )}
-            </div>
+
+              <Tooltip label="Listing Price" placement='top-start'>
+                <HStack w='full' fontSize='sm'>
+                  <Box w='16px'>
+                    <FontAwesomeIcon icon={faBoltLightning} />
+                  </Box>
+                  <Box>
+                    <Flex>
+                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                      <Box as='span' ms={1}>
+                        {getCorrectPrice(listing.price)}
+                      </Box>
+                    </Flex>
+                  </Box>
+                  {listing.expirationDate && (
+                    <Text mt={1} flex={1} align='end' className='text-muted'>{timeSince(listing.expirationDate)}</Text>
+                  )}
+                </HStack>
+              </Tooltip>
+            </Flex>
             <Spacer />
             <Box
               borderBottomRadius={15}
