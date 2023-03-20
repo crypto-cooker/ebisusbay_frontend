@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from 'react';
 import {useDispatch} from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {Spinner} from "react-bootstrap";
@@ -10,10 +10,9 @@ import MyNftCancelDialog from "@src/Components/components/MyNftCancelDialog";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import MakeListingDialog from "@src/Components/MakeListing";
-import {MobileFilters} from "./mobile-filters";
 import Button from "@src/Components/components/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faAngleLeft, faFilter, faSort} from "@fortawesome/free-solid-svg-icons";
+import {faAngleLeft, faFilter, faLayerGroup, faMagnifyingGlass, faSort} from "@fortawesome/free-solid-svg-icons";
 import TransferNftDialog from "@src/Components/Account/Profile/Dialogs/TransferNftDialog";
 import {
   addToBatchListingCart,
@@ -26,15 +25,18 @@ import {
 import {MobileBatchListing} from "@src/Components/Account/Profile/Inventory/MobileBatchListing";
 import {
   Box,
-  Button as ChakraButton,
+  CloseButton,
+  Collapse,
   HStack,
+  Icon,
+  Input,
+  InputGroup,
+  InputRightElement,
   ListItem,
-  Spacer,
   Stack,
   UnorderedList,
   useBreakpointValue,
-  Wrap,
-  WrapItem
+  VStack
 } from "@chakra-ui/react";
 import MyBundleCard from '@src/Components/Account/Profile/Inventory/components/MyBundleCard';
 import {NftCard} from "@src/components-v2/shared/nft-card";
@@ -47,6 +49,7 @@ import {SortOption, sortOptions} from "@src/components-v2/feature/account/profil
 import {MobileSort} from "@src/components-v2/feature/account/profile/tabs/inventory/mobile-sort";
 import InventoryFilterContainer
   from "@src/components-v2/feature/account/profile/tabs/inventory/inventory-filter-container";
+import useDebounce from "@src/core/hooks/useDebounce";
 
 interface InventoryProps {
   address: string;
@@ -59,9 +62,11 @@ export default function Inventory({ address }: InventoryProps) {
   const batchListingCart = useAppSelector((state) => state.batchListing);
 
   const [collections, setCollections] = useState([]);
-  const [collectionFilter, setCollectionFilter] = useState([]);
+  const [searchTerms, setSearchTerms] = useState<string>();
+  const debouncedSearch = useDebounce(searchTerms, 500);
   const [filtersVisible, setFiltersVisible] = useState(false);
   const [sortVisible, setSortVisible] = useState(false);
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
   const useMobileMenu = useBreakpointValue(
     { base: true, lg: false },
     { fallback: 'lg' },
@@ -80,7 +85,7 @@ export default function Inventory({ address }: InventoryProps) {
   };
 
   const {data, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery(
-    ['Inventory', address, collectionFilter, queryParams],
+    ['Inventory', address, queryParams],
     fetcher,
     {
       getNextPageParam: (lastPage, pages) => {
@@ -155,7 +160,7 @@ export default function Inventory({ address }: InventoryProps) {
                 if(isBundle(nft.nftAddress)){
                   return (
                     <div
-                      className={`d-item ${filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-6 col-sm-4 col-xl-3 col-xxl-2'}  mb-4`}
+                      className={`d-item ${!useMobileMenu && filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-6 col-sm-4 col-xl-3 col-xxl-2'}  mb-4`}
                       key={`${nft.nftAddress}-${nft.nftId}-${index}`}
                     >
                       {caseInsensitiveCompare(address, user.address) ? (
@@ -189,7 +194,7 @@ export default function Inventory({ address }: InventoryProps) {
                 else{
                   return (
                     <div
-                      className={`d-item ${filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-6 col-sm-4 col-xl-3 col-xxl-2'}  mb-4`}
+                      className={`d-item ${!useMobileMenu && filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-6 col-sm-4 col-xl-3 col-xxl-2'}  mb-4`}
                       key={`${nft.nftAddress}-${nft.nftId}-${nft.listed}-${index}`}
                     >
                       {caseInsensitiveCompare(address, user.address) ? (
@@ -281,24 +286,62 @@ export default function Inventory({ address }: InventoryProps) {
     }),
   };
 
+  const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerms(e.target.value);
+  }, []);
+
+  const handleClearSearch = useCallback(() => {
+    setSearchTerms('');
+  }, []);
+
+  useEffect(() => {
+    setQueryParams({...queryParams, search: debouncedSearch});
+  }, [debouncedSearch]);
+
   return (
     <>
       <Stack direction="row" mb={2} align="center">
         {useMobileMenu ? (
-          <UnorderedList className="activity-filter">
-            <ListItem className="active" onClick={toggleFilterVisibility}>
-              <FontAwesomeIcon icon={faFilter} />
-            </ListItem>
-            <ListItem onClick={toggleSortVisibility}>
-              <FontAwesomeIcon icon={faSort} />
-              <Box as='span' ms={2}>Sort</Box>
-            </ListItem>
-            <ListItem id="bulk" className={batchListingCart.isDrawerOpen ? 'active' : ''} onClick={toggleOpenBatchListingCart}>
-              Bulk Mode
-            </ListItem>
-          </UnorderedList>
+          <VStack spacing={0} mb={2} w='full'>
+            <UnorderedList className="activity-filter" ms={0}>
+              <ListItem className="active" onClick={toggleFilterVisibility}>
+                <FontAwesomeIcon icon={faFilter} />
+              </ListItem>
+              <ListItem id="bulk" className={showMobileSearch ? 'active' : ''} onClick={() => setShowMobileSearch(!showMobileSearch)}>
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+              </ListItem>
+              <ListItem onClick={toggleSortVisibility}>
+                <FontAwesomeIcon icon={faSort} />
+                <Box as='span' ms={2}>Sort</Box>
+              </ListItem>
+              <ListItem id="bulk" className={batchListingCart.isDrawerOpen ? 'active' : ''} onClick={toggleOpenBatchListingCart}>
+                <FontAwesomeIcon icon={faLayerGroup} />
+                <Box as='span' ms={2}>Bulk Mode</Box>
+              </ListItem>
+            </UnorderedList>
+
+            <Box w='full'>
+              <Collapse in={showMobileSearch} animateOpacity>
+                <InputGroup>
+                  <Input
+                    placeholder="Search by name"
+                    w="100%"
+                    onChange={handleSearch}
+                    value={searchTerms}
+                    color="white"
+                    _placeholder={{ color: 'gray.300' }}
+                  />
+                  {searchTerms?.length && (
+                    <InputRightElement
+                      children={<CloseButton onClick={handleClearSearch} />}
+                    />
+                  )}
+                </InputGroup>
+              </Collapse>
+            </Box>
+          </VStack>
         ) : (
-          <>
+          <HStack w='full'>
             <Box>
               <Button
                 type="legacy-outlined"
@@ -307,25 +350,34 @@ export default function Inventory({ address }: InventoryProps) {
                 <FontAwesomeIcon icon={filtersVisible ? faAngleLeft : faFilter} className="py-1" />
               </Button>
             </Box>
-            <HStack align="center" spacing={2} border="1px solid white" rounded='md' ps={2} pe={1} py={1}>
-              <Box>
-                Bulk mode:
-              </Box>
-              <Wrap gap={2}>
-                <WrapItem>
-                  <ChakraButton variant="ghost" size="sm" onClick={() => handleOpenBatchShortcut('listing')}>
-                    Sell
-                  </ChakraButton>
-                  <ChakraButton variant="ghost" size="sm" onClick={() => handleOpenBatchShortcut('bundle')}>
-                    Bundle
-                  </ChakraButton>
-                  <ChakraButton variant="ghost" size="sm" onClick={() => handleOpenBatchShortcut('transfer')}>
-                    Transfer
-                  </ChakraButton>
-                </WrapItem>
-              </Wrap>
-            </HStack>
-            <Spacer />
+            <InputGroup>
+              <Input
+                placeholder="Search by name"
+                w="100%"
+                onChange={handleSearch}
+                value={searchTerms}
+                color="white"
+                _placeholder={{ color: 'gray.300' }}
+              />
+              {searchTerms?.length && (
+                <InputRightElement
+                  children={<CloseButton onClick={handleClearSearch} />}
+                />
+              )}
+            </InputGroup>
+            <Box>
+              <Button
+                type="legacy-outlined"
+                onClick={() => handleOpenBatchShortcut('listing')}
+              >
+                <HStack>
+                  <Icon as={FontAwesomeIcon} icon={faLayerGroup} />
+                  <Box>
+                    Bulk mode
+                  </Box>
+                </HStack>
+              </Button>
+            </Box>
             <Box>
               <Box className="items_filter" style={{ marginBottom: 0, marginTop: 0, minWidth: 200}}>
                 <Box className="dropdownSelect mr-0 mb-0">
@@ -341,7 +393,7 @@ export default function Inventory({ address }: InventoryProps) {
                 </Box>
               </Box>
             </Box>
-          </>
+          </HStack>
         )}
       </Stack>
 

@@ -127,7 +127,7 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
   return (
     <>
       <DesktopFilterContainer
-        visible={filtersVisible}
+        visible={!useMobileMenu && filtersVisible}
         filters={FilterAccordion}
         filteredItems={filteredItems}
         onRemoveFilters={handleRemoveFilters}
