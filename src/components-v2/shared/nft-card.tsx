@@ -18,9 +18,10 @@ import {
 } from '@src/utils';
 import {AnyMedia} from '@src/Components/components/AnyMedia';
 import {convertGateway, nftCardUrl} from '@src/helpers/image';
-import {Box, Flex, Heading, Spacer, Text, useClipboard} from "@chakra-ui/react";
+import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useClipboard} from "@chakra-ui/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
+  faBoltLightning,
   faEllipsisH,
   faExchangeAlt,
   faExternalLink,
@@ -60,12 +61,6 @@ const Watermarked = styled.div<{ watermark: string }>`
     background-repeat: no-repeat;
     opacity: 0.3;
   }
-`;
-
-const MakeBuy = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 `;
 
 type BaseNftCardProps = {
@@ -229,27 +224,49 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
               </Box>
             </div>
             {nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{nft.rank}</div>}
-            <div className="d-flex flex-column justify-content-between p-2 pb-1">
-              <Link href={`/collection/${nft.address}/${nft.id}`}>
+            <Flex direction='column' justify='space-between' px={2} py={1}>
+              <Link href={`/collection/${nft.address ?? nft.nftAddress}/${nft.id ?? nft.nftId}`}>
                 <Heading as="h6" size="sm" className="card-title mt-auto">{nft.name}</Heading>
               </Link>
               {getListing() && (
-                <>
-                  <MakeBuy>
-                    {is1155 && <div>Floor:</div>}
-                    <div className="d-flex">
-                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
-                      <span className="ms-1">
-                      {getListing().price > 6 ? siPrefixedNumber(getListing().price) : ethers.utils.commify(round(getListing().price))}
-                    </span>
-                    </div>
-                  </MakeBuy>
-                  {getListing().expirationDate && (
-                    <Text className="text-muted mt-1" fontSize="sm">Ends in {timeSince(getListing().expirationDate)}</Text>
-                  )}
-                </>
+                <Tooltip label="Listing Price" placement='top-start'>
+                  <HStack w='full' fontSize='sm'>
+                    <Box w='16px'>
+                      <FontAwesomeIcon icon={faBoltLightning} />
+                    </Box>
+                    <Box>
+                      {is1155 && <div>Floor:</div>}
+                      <Flex>
+                        <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                        <Box as='span' ms={1}>
+                          {getListing().price > 6 ? siPrefixedNumber(getListing().price) : ethers.utils.commify(round(getListing().price))}
+                        </Box>
+                      </Flex>
+                    </Box>
+                    {getListing().expirationDate && (
+                      <Text mt={1} flex={1} align='end' className='text-muted'>{timeSince(getListing().expirationDate)}</Text>
+                    )}
+                  </HStack>
+                </Tooltip>
               )}
-            </div>
+              {nft.offer?.id && (
+                <Tooltip label="Best Offer Price" placement='top-start'>
+                  <HStack w='full' fontSize='sm'>
+                    <Box w='16px'>
+                      <FontAwesomeIcon icon={faHand} />
+                    </Box>
+                    <Box>
+                      <Flex>
+                        <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                        <Box as='span' ms={1}>
+                          {nft.offer.price > 6 ? siPrefixedNumber(nft.offer.price) : ethers.utils.commify(round(nft.offer.price))}
+                        </Box>
+                      </Flex>
+                    </Box>
+                  </HStack>
+                </Tooltip>
+              )}
+            </Flex>
             <Spacer />
             <Box
               borderBottomRadius={15}
@@ -258,22 +275,22 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
               py={1}
             >
               <div className="d-flex justify-content-between">
-                  <Box
-                    _groupHover={{visibility:'visible', color:lightTheme.textColor1}}
-                    visibility="hidden"
-                  >
-                    {getListing()?.price && canBuy ? (
-                      <>
-                        {isInCart ? (
-                          <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={handleRemoveFromCart}>Remove From Cart</Text>
-                        ) : (
-                          <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={handleAddToCart}>Add to Cart</Text>
-                        )}
-                      </>
-                    ) : (
-                      <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={handleMakeOffer}>Make Offer</Text>
-                    )}
-                  </Box>
+                <Box
+                  _groupHover={{visibility:'visible', color:lightTheme.textColor1}}
+                  visibility="hidden"
+                >
+                  {getListing()?.price && canBuy ? (
+                    <>
+                      {isInCart ? (
+                        <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={handleRemoveFromCart}>Remove From Cart</Text>
+                      ) : (
+                        <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={handleAddToCart}>Add to Cart</Text>
+                      )}
+                    </>
+                  ) : (
+                    <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={handleMakeOffer}>Make Offer</Text>
+                  )}
+                </Box>
                 <MenuPopup options={menuOptions}>
                   <FontAwesomeIcon icon={faEllipsisH} style={{ cursor: 'pointer' }} className="my-auto" />
                 </MenuPopup>
