@@ -6,7 +6,7 @@ import {faAngleLeft, faFilter} from "@fortawesome/free-solid-svg-icons";
 import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
 import MadeOffers from "./made-offers";
-import ReceivedOffers from "@src/Components/Offer/ReceivedOffers";
+import ReceivedOffers from "./received-offers";
 import styled from "styled-components";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
 import {getQuickWallet} from "@src/core/api/endpoints/wallets";
@@ -53,7 +53,7 @@ const tabs: {[key: string]: OfferTab} = {
   receivedPublic: {
     key: 'received-public',
     title: 'Received Public Offers',
-    description: 'Offers received on your ERC1155 NFTs'
+    description: 'Offers received on your CRC-1155 NFTs'
   },
   receivedCollection: {
     key: 'received-collection',
@@ -191,6 +191,7 @@ export default function Offers({ address }: OffersProps) {
                   collectionAddresses={receivedOffersDeps.collectionAddresses}
                   nfts={receivedOffersDeps.nfts}
                   stats={receivedOffersDeps.stats}
+                  filterVisible={filtersVisible}
                 />
               )}
             </Tab.Pane>
@@ -202,6 +203,7 @@ export default function Offers({ address }: OffersProps) {
                   collectionAddresses={receivedOffersDeps.collectionAddresses}
                   nfts={receivedOffersDeps.nfts}
                   stats={receivedOffersDeps.stats}
+                  filterVisible={filtersVisible}
                 />
               )}
             </Tab.Pane>
@@ -213,6 +215,7 @@ export default function Offers({ address }: OffersProps) {
                   collectionAddresses={receivedOffersDeps.collectionAddresses}
                   nfts={receivedOffersDeps.nfts}
                   stats={receivedOffersDeps.stats}
+                  filterVisible={filtersVisible}
                 />
               )}
             </Tab.Pane>
