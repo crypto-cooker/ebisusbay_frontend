@@ -18976,6 +18976,33 @@
         "kyc": "hidden",
         "verified": true
       }
+    },
+    {
+      "name": "Zoomer Squad",
+      "slug": "zoomer-squad",
+      "multiToken": false,
+      "address": "0x3D03292D428fd7d6C81a6E76b4A333A3d8a0E296",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A collection of 7007 Zoomers from the Boomer Squad Project. Built to play in the game branch of the Boomer Squad Ecosystem, Zoomers play while Boomers earn.",
+        "avatar": "/img/collections/zoomer-squad/avatar.webp",
+        "banner": "/img/collections/zoomer-squad/banner.webp",
+        "card": "/img/collections/zoomer-squad/card.webp",
+        "website": "https://www.boomersquad.io/",
+        "twitter": "https://twitter.com/BoomerSquadNFT1",
+        "discord": "https://discord.gg/boomersquad",
+        "medium": "https://medium.com/@BoomerSquadNFT",
+        "categories": [
+          "collectibles",
+          "gaming"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
     }
   ],
   "drops": [
