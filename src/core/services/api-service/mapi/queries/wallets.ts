@@ -7,7 +7,7 @@ export const walletsQuerySchema: Yup.SchemaOf<WalletsQueryParams> = Yup.object()
   collection: Yup.array().of(Yup.string()).optional(),
   pageSize: Yup.number().optional().default(50),
   page: Yup.number().optional().default(1),
-  sortBy: Yup.mixed().oneOf(['id', 'rank', 'receivedTimestamp', 'address']).default('receivedTimestamp'),
+  sortBy: Yup.mixed().oneOf(['id', 'rank', 'receivedTimestamp', 'address', 'price', 'offerPrice']).default('receivedTimestamp'),
   direction: Yup.mixed().oneOf(['asc', 'desc']).default('desc'),
   type: Yup.mixed().oneOf(['1155', '721']),
   listed: Yup.number().optional(),
@@ -26,7 +26,7 @@ export interface WalletsQueryParams {
   collection?: string[];
   pageSize?: number;
   page?: number;
-  sortBy?: 'id' | 'rank' | 'receivedTimestamp' | 'address';
+  sortBy?: 'id' | 'rank' | 'receivedTimestamp' | 'address' | 'price' | 'offerPrice';
   direction?: 'asc' | 'desc';
   type?: '1155' | '721';
   listed?: number;
