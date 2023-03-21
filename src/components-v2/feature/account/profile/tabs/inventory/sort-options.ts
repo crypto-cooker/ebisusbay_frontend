@@ -1,6 +1,6 @@
 export type SortOption = {
   id: string;
-  key: 'id' | 'rank' | 'receivedTimestamp' | 'address';
+  key: 'id' | 'rank' | 'receivedTimestamp' | 'address' | 'price' | 'offerPrice';
   direction: 'asc' | 'desc';
   label: string;
 }
@@ -29,6 +29,30 @@ export const sortOptions: SortOption[] = [
     key: 'rank',
     direction: 'desc',
     label: 'Rank: Common to Rare',
+  },
+  {
+    id: 'price-desc',
+    key: 'price',
+    direction: 'desc',
+    label: 'Price: High to Low',
+  },
+  {
+    id: 'price-asc',
+    key: 'price',
+    direction: 'asc',
+    label: 'Price: Low to High',
+  },
+  {
+    id: 'offerPrice-desc',
+    key: 'offerPrice',
+    direction: 'desc',
+    label: 'Offer Price: High to Low',
+  },
+  {
+    id: 'offerPrice-asc',
+    key: 'offerPrice',
+    direction: 'asc',
+    label: 'Offer Price: Low to High',
   },
   {
     id: 'id-desc',
