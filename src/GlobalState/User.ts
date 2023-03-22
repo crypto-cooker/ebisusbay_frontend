@@ -23,6 +23,7 @@ import { MarketFilterCollection } from '../Components/Models/market-filters.mode
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import UserContractService from "@src/core/contractService";
 import {AppDispatch} from "@src/Store/store";
+import {getNft} from "@src/core/api/endpoints/nft";
 
 const config = appConfig();
 
@@ -58,7 +59,7 @@ interface UserState {
   mySoldNftsTotalPages: number;
   hasOutstandingOffers: boolean;
   theme: 'light' | 'dark';
-  profile: {};
+  profile: {[key: string]: any};
 }
 
 const userSlice = createSlice({
@@ -620,6 +621,15 @@ export const retrieveProfile = () => async (dispatch: any, getState: any) => {
 
   try {
     let profile = await getProfile(address);
+    if (profile?.data?.pendingGdcItem) {
+      try {
+        const gdcCollection = config.collections.find((c: any) => c.slug === 'gdc-poa-nft');
+        const nft = await getNft(gdcCollection.address, profile.data.pendingGdcItem.id);
+        profile.data.pendingGdcItem = {...profile.data.pendingGdcItem, address: gdcCollection.address, nft: nft.nft}
+      } catch {
+        //throw away
+      }
+    }
     dispatch(setProfile(profile?.data ?? {}));
   } catch (e) {
     console.log('failed to retrieve profile', e);

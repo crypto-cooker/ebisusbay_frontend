@@ -95,7 +95,6 @@ const Index = function () {
     },
   );
   const [isGdcConfirmationOpen, setIsGdcConfirmationOpen] = useState(false);
-  const [isGdcSuccessOpen, setIsGdcSuccesOpen] = useState(false);
 
   const walletAddress = useAppSelector((state) => {
     return state.user.address;
