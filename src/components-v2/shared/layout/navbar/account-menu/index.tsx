@@ -110,6 +110,9 @@ const Index = function () {
   const user: any = useAppSelector((state) => {
     return state.user;
   });
+  const pendingGdcItem = useAppSelector((state) => {
+    return state.user.profile?.pendingGdcItem;
+  });
   const needsOnboard = useAppSelector((state) => {
     return state.user.needsOnboard;
   });
@@ -435,7 +438,7 @@ const Index = function () {
                 </Box>
               </SimpleGrid>
 
-              {!!user.profile?.pendingGdcItem && (
+              {!!pendingGdcItem && (
                 <SimpleGrid columns={1} gap={2} mt={8} className={styles.navigation}>
                   <Box textAlign='center' className={styles.col} onClick={() => setIsGdcConfirmationOpen(true)}>
                     <FontAwesomeIcon icon={faGift} />

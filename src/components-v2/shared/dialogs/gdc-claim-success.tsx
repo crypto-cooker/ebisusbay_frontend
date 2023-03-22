@@ -28,6 +28,8 @@ import {appConfig} from "@src/Config";
 import {ContractReceipt} from "ethers";
 import {useAppSelector} from "@src/Store/hooks";
 import CronosIcon from "@src/components-v2/shared/icons/cronos";
+import {retrieveProfile} from "@src/GlobalState/User";
+import {useDispatch} from "react-redux";
 
 const config = appConfig();
 
@@ -38,6 +40,7 @@ type GdcClaimSuccessDialogProps = {
 };
 
 export default function GdcClaimSuccess({ onClose, isOpen, tx}: GdcClaimSuccessDialogProps) {
+  const dispatch = useDispatch();
   const { onCopy, setValue } = useClipboard(appUrl(`/account}`).toString());
 
   const user = useAppSelector((state) => state.user);
@@ -71,8 +74,13 @@ export default function GdcClaimSuccess({ onClose, isOpen, tx}: GdcClaimSuccessD
     }
   ];
 
+  const handleClose = () => {
+    dispatch(retrieveProfile());
+    onClose();
+  };
+
   return (
-    <Modal onClose={onClose} isOpen={isOpen} size="2xl" isCentered>
+    <Modal onClose={handleClose} isOpen={isOpen} size="2xl" isCentered>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
