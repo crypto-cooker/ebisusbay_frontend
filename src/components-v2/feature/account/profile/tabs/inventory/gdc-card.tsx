@@ -24,10 +24,7 @@ const GdcCard = ({nft, onClaim}: GdcCardProps) => {
       data-group
       _hover={{
         borderColor:useColorModeValue('#595d69', '#ddd'),
-        boxShadow:"0 0 .5rem #FFD700"
       }}
-      borderColor="#FFD700 !important"
-      boxShadow="0 0 .5rem #FFD700"
     >
       <Box
         _groupHover={{
@@ -46,7 +43,6 @@ const GdcCard = ({nft, onClaim}: GdcCardProps) => {
               transform="scale(1.0)"
               onClick={() => navigateTo(nftUrl.toString())}
               cursor="pointer"
-              filter='grayscale(100%)'
             >
               <AnyMedia
                 image={nftCardUrl(nft.nftAddress, nft.image)}
