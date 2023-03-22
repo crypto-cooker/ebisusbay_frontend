@@ -624,8 +624,13 @@ export const retrieveProfile = () => async (dispatch: any, getState: any) => {
     if (profile?.data?.pendingGdcItem) {
       try {
         const gdcCollection = config.collections.find((c: any) => c.slug === 'gdc-poa-nft');
-        const nft = await getNft(gdcCollection.address, profile.data.pendingGdcItem.id);
-        profile.data.pendingGdcItem = {...profile.data.pendingGdcItem, address: gdcCollection.address, nft: nft.nft}
+        const nft = {
+          nftAddress: gdcCollection.address,
+          nftId: profile.data.pendingGdcItem.id,
+          name: 'Ryoshi Tales - GDC 2023 Commemorative NFT',
+          image: 'https://cdn.ebisusbay.com/QmYQ1bB1UisN4YnW1WvRfbETweQGxrchkdyXQzJfYte5ck'
+        }
+        profile.data.pendingGdcItem = {...profile.data.pendingGdcItem, address: gdcCollection.address, nft}
       } catch {
         //throw away
       }
