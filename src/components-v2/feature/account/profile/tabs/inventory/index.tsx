@@ -32,7 +32,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  ListItem,
+  ListItem, SimpleGrid,
   Stack,
   UnorderedList,
   useBreakpointValue,
@@ -50,6 +50,8 @@ import {MobileSort} from "@src/components-v2/feature/account/profile/tabs/invent
 import InventoryFilterContainer
   from "@src/components-v2/feature/account/profile/tabs/inventory/inventory-filter-container";
 import useDebounce from "@src/core/hooks/useDebounce";
+import GdcCard from "@src/components-v2/feature/account/profile/tabs/inventory/gdc-card";
+import GdcClaimConfirmation from "@src/components-v2/shared/dialogs/gdc-claim-confirmation";
 
 interface InventoryProps {
   address: string;
@@ -59,6 +61,7 @@ export default function Inventory({ address }: InventoryProps) {
   const dispatch = useDispatch();
 
   const user = useAppSelector((state) => state.user);
+  const pendingGdcNft = useAppSelector((state) => state.user.profile?.pendingGdcItem?.nft);
   const batchListingCart = useAppSelector((state) => state.batchListing);
 
   const [collections, setCollections] = useState([]);
@@ -75,6 +78,7 @@ export default function Inventory({ address }: InventoryProps) {
     sortBy: 'receivedTimestamp',
     direction: 'desc'
   });
+  const [isGdcConfirmationOpen, setIsGdcConfirmationOpen] = useState(false);
 
   const fetcher = async ({ pageParam = 1 }) => {
     const params: WalletsQueryParams = {
@@ -153,16 +157,24 @@ export default function Inventory({ address }: InventoryProps) {
       <p>Error: {(error as any).message}</p>
     ) : (
       <>
-        <div className="card-group row g-3">
+        <SimpleGrid
+          columns={!useMobileMenu && filtersVisible ? {base: 1, sm: 2, lg: 3, xl: 4} : {base: 2, sm: 3, md: 4, lg: 5, xl: 6, '2xl': 7}}
+          gap={3}
+        >
+          {!!pendingGdcNft && caseInsensitiveCompare(user.address, address) && (
+            <GdcCard
+              key='gdc-promo'
+              nft={pendingGdcNft}
+              onClaim={() => setIsGdcConfirmationOpen(true)}
+            />
+          )}
+
           {data.pages.map((items, index) => (
             <React.Fragment key={index}>
               {items.data.map((nft, index) => {
                 if(isBundle(nft.nftAddress)){
                   return (
-                    <div
-                      className={`d-item ${!useMobileMenu && filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-6 col-sm-4 col-xl-3 col-xxl-2'}  mb-4`}
-                      key={`${nft.nftAddress}-${nft.nftId}-${index}`}
-                    >
+                    <div key={`${nft.nftAddress}-${nft.nftId}-${index}`}>
                       {caseInsensitiveCompare(address, user.address) ? (
                         <MyBundleCard
                           nft={nft}
@@ -193,10 +205,7 @@ export default function Inventory({ address }: InventoryProps) {
                 }
                 else{
                   return (
-                    <div
-                      className={`d-item ${!useMobileMenu && filtersVisible ? 'col-xs-12 col-sm-6 col-lg-4 col-xl-3' : 'col-6 col-sm-4 col-xl-3 col-xxl-2'}  mb-4`}
-                      key={`${nft.nftAddress}-${nft.nftId}-${nft.listed}-${index}`}
-                    >
+                    <div key={`${nft.nftAddress}-${nft.nftId}-${nft.listed}-${index}`}>
                       {caseInsensitiveCompare(address, user.address) ? (
                         <MyNftCard
                           nft={nft}
@@ -231,7 +240,7 @@ export default function Inventory({ address }: InventoryProps) {
               
             </React.Fragment>
           ))}
-        </div>
+        </SimpleGrid>
       </>
     );
   }, [data, error, status, address, user.address, filtersVisible]);
@@ -447,6 +456,9 @@ export default function Inventory({ address }: InventoryProps) {
       )}
       {useMobileMenu && (
         <MobileBatchListing />
+      )}
+      {isGdcConfirmationOpen && (
+        <GdcClaimConfirmation onClose={() => setIsGdcConfirmationOpen(false)} isOpen={isGdcConfirmationOpen} />
       )}
     </>
   )
