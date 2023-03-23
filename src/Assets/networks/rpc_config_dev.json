@@ -6308,7 +6308,7 @@
       "multiToken": false,
       "address": "0xd9C2Aa899c031F565071e1b966C3c1710b3c6D63",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Northern Hippo Syndicate brings the artistic and creative stylings of Little Sloth from Open Sea to the Cronos chain. This crazy collection of 5000 unique PFP grants you access to so much more than amazing art. Hold a minimum of 3 to receive a plot of metaverse land.",
         "avatar": "/img/collections/northern-hippo-syndicate/avatar.webp",
@@ -21835,7 +21835,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/northern-hippo-syndicate/drop.webp",
         "banner": "/img/collections/northern-hippo-syndicate/banner.webp",
