@@ -19262,6 +19262,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Crotech Redacted",
+      "slug": "crotech-redacted",
+      "multiToken": false,
+      "address": "0x3f8a63DC014CBc352d413F86bcD93E4720a74383",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Inner Systems of the Crotech Frontier are on the brink of a cataclysmic event as a message from beyond the edges of the the Frontier has left humanity's best minds in a frenzied scramble to decipher its meaning. However, amidst the chaos, one thing has become undeniably clear - whoever sent the message is on their way to the Frontier.  As the people and their Crotech companions brace themselves for the arrival of this unknown entity, dark forces from within their own ranks threaten to tear them apart from the inside. Betrayal, war, and corruption loom on the horizon, with the unfathomable abyss of the Void looming ominously beyond the edges of the Frontier. For decades, all inhabitants of the Inner Systems have lived in peace, but now everything is about to change. Follow the gripping story of the Crotech Frontier and unravel the mystery of the message and experience the first-ever ARGxWeb3 event on Cronos, and immerse yourself in unravelling the story as the fate of the Crotech Frontier hangs in the balance. This is just the beginning. ",
+        "avatar": "/img/collections/crotech-redacted/avatar.webp",
+        "card": "/img/collections/crotech-redacted/card.webp",
+        "banner": "/img/collections/crotech-redacted/banner.webp",
+        "website": "https://thedegenerated.art/collection/5-crotech-redacted",
+        "twitter": "https://twitter.com/CrotechFrontier",
+        "discord": "https://discord.gg/CUX3MQT4HK",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
