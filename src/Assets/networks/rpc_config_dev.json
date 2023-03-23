@@ -19003,6 +19003,28 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "Humanoidz",
+      "slug": "humanoidz",
+      "multiToken": false,
+      "address": "0x90ace476bD5e85ff110f141fcFc054C07f4dedDe",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Step into a world of sophistication and style with the Humanoidz NFT collection. This limited edition series features 420 one-of-a-kind, cybernetic women from the future society of Cronos. Each NFT offers a unique and captivating representation of female strength and beauty, reimagined through a technologically advanced lens. Join our exclusive Discord community to connect with other collectors and delve deeper into the world of Troll Town. Don't miss your chance to own a piece of this unforgettable collection, designed to stand the test of time and technology.",
+        "avatar": "/img/collections/humanoidz/avatar.webp",
+        "card": "/img/collections/humanoidz/card.webp",
+        "banner": "/img/collections/humanoidz/banner.webp",
+        "twitter": "https://twitter.com/cromutation",
+        "discord": "https://discord.gg/DCuRPMx9Xd",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
     }
   ],
   "drops": [
