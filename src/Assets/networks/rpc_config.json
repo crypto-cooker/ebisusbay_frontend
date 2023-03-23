@@ -19025,6 +19025,168 @@
         "kyc": false,
         "verified": false
       }
+    },
+    {
+      "name": "MetaMorphis Hestia",
+      "slug": "metamorphis-hestia",
+      "multiToken": false,
+      "address": "0xE4770128444469b38E7aB0E7aB07cEAbDb896267",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Lands in MetaMorphis where you can pay tribute to the goddess Hestia. You can earn MORPHS token by staking this NFT.",
+        "avatar": "/img/collections/metamorphis-hestia/avatar.webp",
+        "card": "/img/collections/metamorphis-hestia/card.webp",
+        "banner": "/img/collections/metamorphis-hestia/banner.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/vQaBeUv5tX",
+        "medium": "https://medium.com/@CroMorphs/",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "MetaMorphis Demeter",
+      "slug": "metamorphis-demeter",
+      "multiToken": false,
+      "address": "0x215f7eA5EDe562FBe129c9cf78Fe4e6D27f28241",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Lands in MetaMorphis where you can pay tribute to the goddess Demeter. You can earn MORPHS tokens with this LAND.",
+        "avatar": "/img/collections/metamorphis-demeter/avatar.webp",
+        "card": "/img/collections/metamorphis-demeter/card.webp",
+        "banner": "/img/collections/metamorphis-demeter/banner.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/vQaBeUv5tX",
+        "medium": "https://medium.com/@CroMorphs/",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "MetaMorphis Hera",
+      "slug": "metamorphis-hera",
+      "multiToken": false,
+      "address": "0xDcCc20c7eE16bE0deEb3c74CCE5B4B0334c6E4ee",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Lands in MetaMorphis where you can pay tribute to the goddess Hera. You can earn MORPHS tokens in these LANDS.",
+        "avatar": "/img/collections/metamorphis-hera/avatar.webp",
+        "card": "/img/collections/metamorphis-hera/card.webp",
+        "banner": "/img/collections/metamorphis-hera/banner.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/vQaBeUv5tX",
+        "medium": "https://medium.com/@CroMorphs/",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "MetaMorphis Poseidon",
+      "slug": "metamorphis-poseidon",
+      "multiToken": false,
+      "address": "0x5D69eAbc087ee6e8ec399C98dE376a3974202045",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Lands in MetaMorphis where you can pay tribute to the god Poseidon. You can earn MORPHS tokens in these LANDS.",
+        "avatar": "/img/collections/metamorphis-poseidon/avatar.webp",
+        "card": "/img/collections/metamorphis-poseidon/card.webp",
+        "banner": "/img/collections/metamorphis-poseidon/banner.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/vQaBeUv5tX",
+        "medium": "https://medium.com/@CroMorphs/",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "MetaMorphis Hades",
+      "slug": "metamorphis-hades",
+      "multiToken": false,
+      "address": "0x4A6cC87B923682701a40E2e5B79bEF544Fd1129e",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Lands in MetaMorphis where you can pay tribute to the god Hades. You can earn MORPHS tokens in these LANDS.",
+        "avatar": "/img/collections/metamorphis-hades/avatar.webp",
+        "card": "/img/collections/metamorphis-hades/card.webp",
+        "banner": "/img/collections/metamorphis-hades/banner.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/vQaBeUv5tX",
+        "medium": "https://medium.com/@CroMorphs/",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "MetaMorphis Zeus",
+      "slug": "metamorphis-zeus",
+      "multiToken": false,
+      "address": "0xD4182E397A700A6f93AE02018523A82adCb8e9F2",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Lands in MetaMorphis where you can pay tribute to the god Zeus. You can earn MORPHS tokens in these LANDS.",
+        "avatar": "/img/collections/metamorphis-zeus/avatar.webp",
+        "card": "/img/collections/metamorphis-zeus/card.webp",
+        "banner": "/img/collections/metamorphis-zeus/banner.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/vQaBeUv5tX",
+        "medium": "https://medium.com/@CroMorphs/",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
