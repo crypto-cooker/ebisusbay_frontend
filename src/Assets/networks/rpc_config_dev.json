@@ -11341,7 +11341,8 @@
         "banner": "/img/collections/mini-morphs/banner.webp",
         "website": "https://www.cromorphs.com/MiniMorphs.html",
         "twitter": "https://twitter.com/CroMorphs",
-        "discord": "https://http://discord.gg/8N2g6YYJxz",
+        "discord": "https://discord.gg/8N2g6YYJxz",
+        "medium": "https://medium.com/@cromorphs",
         "categories": [
           "collectibles"
         ]
@@ -18459,7 +18460,7 @@
         "website": "https://cromorphs.com/",
         "twitter": "https://twitter.com/CroMorphs",
         "discord": "https://discord.gg/JsUWNKnQjx",
-        "medium": "https://medium.com/@nilsenorjan",
+        "medium": "https://medium.com/@cromorphs",
         "categories": [
           "utility"
         ]
@@ -25571,7 +25572,7 @@
         "website": "https://cromorphs.com/",
         "twitter": "https://twitter.com/CroMorphs",
         "discord": "https://discord.gg/JsUWNKnQjx",
-        "medium": "https://medium.com/@nilsenorjan"
+        "medium": "https://medium.com/@cromorphs"
       },
       "address": "0x4684619abcd81dBBfAa19438E9570F28008e180F",
       "maxMintPerTx": 40,
