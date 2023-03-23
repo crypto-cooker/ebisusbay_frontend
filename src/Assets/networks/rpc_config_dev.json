@@ -19187,6 +19187,31 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "croFI$H Gen7 - The Octopus",
+      "slug": "crofish-gen7-the-octopus",
+      "multiToken": false,
+      "address": "0xf30a8479D448f1dd7C84f2022C4b8Ad40f8759Be",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "croFI$H is an exciting new NFT project that celebrates the wonder and beauty of ocean life. With stunning digital artwork featuring a wide range of colorful and unique ocean animals, this project is a must-have for anyone who loves the sea.    What makes croFI$H so special is its endless nature. With new drops every week, there's always something new and exciting to collect. And with each new NFT comes the potential for passive income through earning $MAC tokens.    The croFI$H NFTs are not only beautiful and unique, but they also offer real-world value. As a holder of croFI$H NFTs, you'll have the opportunity to earn $MAC tokens simply by holding them in your wallet. This means that not only will you be able to enjoy the beauty of these digital artworks, but you'll also have the chance to earn a passive income at the same time.    But beyond the financial benefits, croFI$H is also a project with a purpose. By raising awareness of ocean life and the importance of preserving it, this project aims to inspire people to take action to protect our oceans and the amazing creatures that call them home.    So join the croFI$H community today and start collecting these stunning NFTs. With new drops every week, you'll never run out of amazing ocean animals to add to your collection, and you'll be doing your part to help protect our oceans and the incredible creatures that inhabit them. ",
+        "avatar": "/img/collections/crofish-gen7-the-octopus/avatar.webp",
+        "card": "/img/collections/crofish-gen7-the-octopus/card.webp",
+        "banner": "/img/collections/crofish-gen7-the-octopus/banner.webp",
+        "twitter": "https://twitter.com/crofishteam",
+        "discord": "https://discord.gg/wsQjjZ3Zkm",
+        "medium": "https://medium.com/@crofishteam",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
