@@ -13,8 +13,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Spinner } from 'react-bootstrap';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
-import ProfilePreview from '../components/ProfilePreview';
+import ProfilePreview from '@src/Components/components/ProfilePreview';
 import {
+  appUrl,
   caseInsensitiveCompare,
   findCollectionByAddress,
   humanize,
@@ -34,10 +35,10 @@ import { listingState, offerState } from '@src/core/api/enums';
 import { getFilteredOffers } from '@src/core/subgraph';
 import PriceActionBar from '@src/components-v2/feature/nft/price-action-bar';
 import NFTTabListings from '@src/components-v2/feature/nft/tabs/listings';
-import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
-import { OFFER_TYPE } from '../Offer/MadeOffers/MadeOffersRow';
-import NFTTabOffers from '../Offer/NFTTabOffers';
-import { AnyMedia } from '../components/AnyMedia';
+import MakeOfferDialog from '@src/Components/Offer/Dialogs/MakeOfferDialog';
+import { OFFER_TYPE } from '@src/Components/Offer/MadeOffers/MadeOffersRow';
+import NFTTabOffers from '@src/Components/Offer/NFTTabOffers';
+import { AnyMedia } from '@src/Components/components/AnyMedia';
 import { hostedImage } from '@src/helpers/image';
 import { appConfig } from "@src/Config";
 import { collectionRoyaltyPercent } from "@src/core/chain";
@@ -45,7 +46,7 @@ import Button, { LegacyOutlinedButton } from "@src/Components/components/common/
 import {Box, ButtonGroup, Flex, Heading, Link, MenuButton as MenuButtonCK, Text, useClipboard} from "@chakra-ui/react";
 import { toast } from "react-toastify";
 import { faHeart as faHeartOutline } from "@fortawesome/free-regular-svg-icons";
-import { Menu } from '../components/chakra-components';
+import { Menu } from '@src/Components/components/chakra-components';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faSquareTwitter, faTelegram } from '@fortawesome/free-brands-svg-icons';
 import { getStats } from '@src/GlobalState/collectionSlice';
@@ -53,6 +54,7 @@ import NextLink from 'next/link';
 import useToggleFavorite from "@src/components-v2/feature/nft/hooks/useToggleFavorite";
 import {Button as ChakraButton} from "@chakra-ui/button";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
+import {useAppSelector} from "@src/Store/hooks";
 
 const config = appConfig();
 const tabs = {
@@ -64,31 +66,37 @@ const tabs = {
   info: 'info',
 };
 
-const Nft1155 = ({ address, id, collection }) => {
+interface Nft721Props {
+  address: string;
+  id: string;
+  collection: any;
+}
+
+const Nft1155 = ({ address, id, collection }: Nft721Props) => {
   const dispatch = useDispatch();
   const history = useRouter();
-  const { onCopy } = useClipboard(window.location);
+  const { onCopy } = useClipboard(appUrl(`/collection/${address}/${id}`).toString());
 
-  const { nft, refreshing, favorites } = useSelector((state) => state.nft);
-  const soldListings = useSelector((state) =>
+  const { nft, refreshing, favorites } = useAppSelector((state) => state.nft);
+  const soldListings = useAppSelector((state) =>
     state.nft.history.filter((i) => i.state === listingState.SOLD).sort((a, b) => (a.saleTime < b.saleTime ? 1 : -1))
   );
-  const activeListings = useSelector((state) =>
+  const activeListings = useAppSelector((state) =>
     state.nft.history.filter((i) => i.state === listingState.ACTIVE).sort((a, b) => a.price - b.price)
   );
 
-  const powertraits = useSelector((state) => state.nft.nft?.powertraits);
-  const collectionMetadata = useSelector((state) => {
+  const powertraits = useAppSelector((state) => state.nft.nft?.powertraits);
+  const collectionMetadata = useAppSelector((state) => {
     return collection?.metadata;
   });
-  const collectionName = useSelector((state) => {
+  const collectionName = useAppSelector((state) => {
     return collection?.name;
   });
-  const collectionSlug = useSelector((state) => {
+  const collectionSlug = useAppSelector((state) => {
     return collection?.slug;
   });
-  const isLoading = useSelector((state) => state.nft.loading);
-  const user = useSelector((state) => state.user);
+  const isLoading = useAppSelector((state) => state.nft.loading);
+  const user = useAppSelector((state) => state.user);
   const [{ isLoading: isFavoriting, response, error }, toggleFavorite] = useToggleFavorite();
   const [showFullDescription, setShowFullDescription] = useState(false);
 
@@ -96,7 +104,7 @@ const Nft1155 = ({ address, id, collection }) => {
     dispatch(getNftDetails(address, id));
   }, [dispatch, address, id]);
 
-  const [royalty, setRoyalty] = useState(null);
+  const [royalty, setRoyalty] = useState<number | null>(null);
   useEffect(() => {
     async function getRoyalty() {
       const royalty = await collectionRoyaltyPercent(address, id);
@@ -196,7 +204,7 @@ const Nft1155 = ({ address, id, collection }) => {
   };
 
 
-  const collectionStats = useSelector((state) => state.collection.stats);
+  const collectionStats = useAppSelector((state) => state.collection.stats);
 
   useEffect(() => {
     async function asyncFunc() {
@@ -207,7 +215,7 @@ const Nft1155 = ({ address, id, collection }) => {
   }, [dispatch, collection]);
 
   const [currentTab, setCurrentTab] = useState(tabs.properties);
-  const handleTabChange = useCallback((tab) => {
+  const handleTabChange = useCallback((tab: string) => {
     setCurrentTab(tab);
   }, []);
 
@@ -237,7 +245,7 @@ const Nft1155 = ({ address, id, collection }) => {
   useEffect(() => {
     async function func() {
       const filteredOffers = await getFilteredOffers(nft.address, nft.id.toString(), user.address);
-      const data = filteredOffers ? filteredOffers.data.filter((o) => o.state === offerState.ACTIVE.toString()) : [];
+      const data = filteredOffers ? filteredOffers.data.filter((o: any) => o.state === offerState.ACTIVE.toString()) : [];
       if (data && data.length > 0) {
         setOfferType(OFFER_TYPE.update);
         setOfferData(data[0]);
@@ -253,7 +261,7 @@ const Nft1155 = ({ address, id, collection }) => {
   }, [nft, user.address]);
 
   const onFavoriteClicked = async () => {
-    if (isEmptyObj(user.profile)) {
+    if (isEmptyObj(user.profile) || !user.address) {
       toast.info(`Connect wallet and create a profile to start adding favorites`);
       return;
     }
@@ -270,7 +278,7 @@ const Nft1155 = ({ address, id, collection }) => {
 
   const isFavorite = () => {
     if (!user.profile?.favorites) return false;
-    return user.profile.favorites.find((f) => caseInsensitiveCompare(address, f.tokenAddress) && id === f.tokenId);
+    return user.profile.favorites.find((f: any) => caseInsensitiveCompare(address, f.tokenAddress) && id === f.tokenId);
   }
 
   return (
@@ -281,7 +289,7 @@ const Nft1155 = ({ address, id, collection }) => {
             <FontAwesomeIcon icon={faBullhorn} className="my-auto"/>
             <Text ms={2}>
               Swap your Ebisu's Bay VIP Founding Member for 10x Ryoshi Tales VIP NFTs and enjoy increased benefits in the Ebisu's Bay ecosystem.{' '}
-              <Box align="center">
+              <Box textAlign="center">
                 <Link href="https://blog.ebisusbay.com/ebisus-bay-vip-split-506b05c619c7" isExternal fontWeight="bold">
                   Learn more
                 </Link>
@@ -385,6 +393,7 @@ const Nft1155 = ({ address, id, collection }) => {
                         collectionName={collectionName}
                         isVerified={collection.verification?.verified}
                         collectionStats={collectionStats}
+                        isOwner={false}
                       />
                     </>
                   )}
@@ -448,8 +457,8 @@ const Nft1155 = ({ address, id, collection }) => {
                                 {nft.attributes &&
                                   Array.isArray(nft.attributes) &&
                                   nft.attributes
-                                    .filter((a) => a.value !== 'None')
-                                    .map((data, i) => {
+                                    .filter((a: any) => a.value !== 'None')
+                                    .map((data: any, i: number) => {
                                       return (
                                         <div key={i} className="col-lg-4 col-md-6 col-sm-6">
                                           <div className="nft_attr">
@@ -478,7 +487,7 @@ const Nft1155 = ({ address, id, collection }) => {
                                     })}
                                 {nft.properties &&
                                   Array.isArray(nft.properties) &&
-                                  nft.properties.map((data, i) => {
+                                  nft.properties.map((data: any, i: number) => {
                                     return (
                                       <div key={i} className="col-lg-4 col-md-6 col-sm-6">
                                         <div className="nft_attr">
@@ -526,7 +535,7 @@ const Nft1155 = ({ address, id, collection }) => {
                             <>
                               <div className="d-block mb-3">
                                 <div className="row gx-3 gy-2">
-                                  {powertraits.map((data, i) => {
+                                  {powertraits.map((data: any, i: number) => {
                                     return (
                                       <div key={i} className="col-lg-4 col-md-6 col-sm-6">
                                         <div className="nft_attr">
@@ -650,6 +659,7 @@ const Nft1155 = ({ address, id, collection }) => {
           onClose={() => setOpenMakeOfferDialog(false)}
           nftId={id}
           nftAddress={address}
+          initialNft={null}
         />
       )}
     </div>

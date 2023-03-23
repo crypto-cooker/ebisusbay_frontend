@@ -6308,7 +6308,7 @@
       "multiToken": false,
       "address": "0xd9C2Aa899c031F565071e1b966C3c1710b3c6D63",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Northern Hippo Syndicate brings the artistic and creative stylings of Little Sloth from Open Sea to the Cronos chain. This crazy collection of 5000 unique PFP grants you access to so much more than amazing art. Hold a minimum of 3 to receive a plot of metaverse land.",
         "avatar": "/img/collections/northern-hippo-syndicate/avatar.webp",
@@ -11208,10 +11208,10 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Cronos Apes is the first ever NFT collection with an holders-exclusive Community in the Cronos chain. 6% of royalties income distributed to holders.",
+        "description": "Cronos Apes is the first collection of the Cronos Apes brand. The collection consists of 5,000 utility-enabled and fully animated PFP generated from 160+ unique hand-drawn traits. Each NFT grants you access to an ever-growing set of utilities, including revenue distribution and access to the first holders-only community in Cronos.",
         "avatar": "/img/collections/cronos-apes/avatar.webp",
-        "card": "/img/collections/cronos-apes/card.webp",
-        "banner": "/img/collections/cronos-apes/banner.webp",
+        "card": "/img/collections/cronos-apes/card.gif",
+        "banner": "/img/collections/cronos-apes/banner.gif",
         "website": "https://www.cronosapesnft.com/",
         "twitter": "https://www.twitter.com/cronosapesnft",
         "discord": "https://discord.gg/G3JkKJAYVB",
@@ -13341,10 +13341,10 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "By owning one Cronos Mutant Ape you will have access to a lifetime passive income (6% of Marketplaces royalties). Burn one Mutant Serum to get a Cronos Mutant Ape. Exclusive collection of Cronos Apes.",
+        "description": "Cronos Mutant Apes is an official collection of the Cronos Apes brand. You can obtain one of the remaining Mutant Apes by burning a mutant serum inside our Dapp. The collection consists of 1,000 utility-enabled and fully animated PFP generated from 100+ unique hand-drawn traits. Each NFT grants you access to an ever-growing set of utilities, including revenue distribution and access to the first holders-only community in Cronos.",
         "avatar": "/img/collections/cronos-mutant-apes/avatar.webp",
-        "card": "/img/collections/cronos-mutant-apes/card.webp",
-        "banner": "/img/collections/cronos-mutant-apes/banner.webp",
+        "card": "/img/collections/cronos-mutant-apes/card.gif",
+        "banner": "/img/collections/cronos-mutant-apes/banner.gif",
         "website": "https://www.cronosapesnft.com/",
         "twitter": "https://www.twitter.com/cronosapesnft",
         "discord": "https://discord.gg/cronosapes",
@@ -13364,10 +13364,10 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Burn one Mutant Serum to get a Cronos Mutant Ape. By owning one Cronos Mutant Ape you will have access to a lifetime passive income (6% of Marketplaces royalties). Exclusive collection of Cronos Apes.",
-        "avatar": "/img/collections/cronos-mutant-apes-serums/avatar.webp",
-        "card": "/img/collections/cronos-mutant-apes-serums/card.webp",
-        "banner": "/img/collections/cronos-mutant-apes-serums/banner.webp",
+        "description": "Cronos Mutant Apes Serums is an official side collection of the Cronos Apes brand. Each serum has the power to mutate one of your Cronos Apes into a Cronos Mutant Ape. To do that, you’ll just need to burn one of your serums inside our Dapp.",
+        "avatar": "/img/collections/cronos-mutant-apes-serums/avatar.gif",
+        "card": "/img/collections/cronos-mutant-apes-serums/card.gif",
+        "banner": "/img/collections/cronos-mutant-apes-serums/banner.gif",
         "website": "https://www.cronosapesnft.com/",
         "twitter": "https://www.twitter.com/cronosapesnft",
         "discord": "https://discord.gg/cronosapes",
@@ -19003,6 +19003,290 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "Humanoidz",
+      "slug": "humanoidz",
+      "multiToken": false,
+      "address": "0x90ace476bD5e85ff110f141fcFc054C07f4dedDe",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Step into a world of sophistication and style with the Humanoidz NFT collection. This limited edition series features 420 one-of-a-kind, cybernetic women from the future society of Cronos. Each NFT offers a unique and captivating representation of female strength and beauty, reimagined through a technologically advanced lens. Join our exclusive Discord community to connect with other collectors and delve deeper into the world of Troll Town. Don't miss your chance to own a piece of this unforgettable collection, designed to stand the test of time and technology.",
+        "avatar": "/img/collections/humanoidz/avatar.webp",
+        "card": "/img/collections/humanoidz/card.webp",
+        "banner": "/img/collections/humanoidz/banner.webp",
+        "twitter": "https://twitter.com/cromutation",
+        "discord": "https://discord.gg/DCuRPMx9Xd",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "MetaMorphis Hestia",
+      "slug": "metamorphis-hestia",
+      "multiToken": false,
+      "address": "0xE4770128444469b38E7aB0E7aB07cEAbDb896267",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Lands in MetaMorphis where you can pay tribute to the goddess Hestia. You can earn MORPHS token by staking this NFT.",
+        "avatar": "/img/collections/metamorphis-hestia/avatar.webp",
+        "card": "/img/collections/metamorphis-hestia/card.webp",
+        "banner": "/img/collections/metamorphis-hestia/banner.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/vQaBeUv5tX",
+        "medium": "https://medium.com/@CroMorphs/",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "MetaMorphis Demeter",
+      "slug": "metamorphis-demeter",
+      "multiToken": false,
+      "address": "0x215f7eA5EDe562FBe129c9cf78Fe4e6D27f28241",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Lands in MetaMorphis where you can pay tribute to the goddess Demeter. You can earn MORPHS tokens with this LAND.",
+        "avatar": "/img/collections/metamorphis-demeter/avatar.webp",
+        "card": "/img/collections/metamorphis-demeter/card.webp",
+        "banner": "/img/collections/metamorphis-demeter/banner.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/vQaBeUv5tX",
+        "medium": "https://medium.com/@CroMorphs/",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "MetaMorphis Hera",
+      "slug": "metamorphis-hera",
+      "multiToken": false,
+      "address": "0xDcCc20c7eE16bE0deEb3c74CCE5B4B0334c6E4ee",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Lands in MetaMorphis where you can pay tribute to the goddess Hera. You can earn MORPHS tokens in these LANDS.",
+        "avatar": "/img/collections/metamorphis-hera/avatar.webp",
+        "card": "/img/collections/metamorphis-hera/card.webp",
+        "banner": "/img/collections/metamorphis-hera/banner.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/vQaBeUv5tX",
+        "medium": "https://medium.com/@CroMorphs/",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "MetaMorphis Poseidon",
+      "slug": "metamorphis-poseidon",
+      "multiToken": false,
+      "address": "0x5D69eAbc087ee6e8ec399C98dE376a3974202045",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Lands in MetaMorphis where you can pay tribute to the god Poseidon. You can earn MORPHS tokens in these LANDS.",
+        "avatar": "/img/collections/metamorphis-poseidon/avatar.webp",
+        "card": "/img/collections/metamorphis-poseidon/card.webp",
+        "banner": "/img/collections/metamorphis-poseidon/banner.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/vQaBeUv5tX",
+        "medium": "https://medium.com/@CroMorphs/",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "MetaMorphis Hades",
+      "slug": "metamorphis-hades",
+      "multiToken": false,
+      "address": "0x4A6cC87B923682701a40E2e5B79bEF544Fd1129e",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Lands in MetaMorphis where you can pay tribute to the god Hades. You can earn MORPHS tokens in these LANDS.",
+        "avatar": "/img/collections/metamorphis-hades/avatar.webp",
+        "card": "/img/collections/metamorphis-hades/card.webp",
+        "banner": "/img/collections/metamorphis-hades/banner.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/vQaBeUv5tX",
+        "medium": "https://medium.com/@CroMorphs/",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "MetaMorphis Zeus",
+      "slug": "metamorphis-zeus",
+      "multiToken": false,
+      "address": "0xD4182E397A700A6f93AE02018523A82adCb8e9F2",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Lands in MetaMorphis where you can pay tribute to the god Zeus. You can earn MORPHS tokens in these LANDS.",
+        "avatar": "/img/collections/metamorphis-zeus/avatar.webp",
+        "card": "/img/collections/metamorphis-zeus/card.webp",
+        "banner": "/img/collections/metamorphis-zeus/banner.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/vQaBeUv5tX",
+        "medium": "https://medium.com/@CroMorphs/",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "croFI$H Gen7 - The Octopus",
+      "slug": "crofish-gen7-the-octopus",
+      "multiToken": false,
+      "address": "0xf30a8479D448f1dd7C84f2022C4b8Ad40f8759Be",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "croFI$H is an exciting new NFT project that celebrates the wonder and beauty of ocean life. With stunning digital artwork featuring a wide range of colorful and unique ocean animals, this project is a must-have for anyone who loves the sea.    What makes croFI$H so special is its endless nature. With new drops every week, there's always something new and exciting to collect. And with each new NFT comes the potential for passive income through earning $MAC tokens.    The croFI$H NFTs are not only beautiful and unique, but they also offer real-world value. As a holder of croFI$H NFTs, you'll have the opportunity to earn $MAC tokens simply by holding them in your wallet. This means that not only will you be able to enjoy the beauty of these digital artworks, but you'll also have the chance to earn a passive income at the same time.    But beyond the financial benefits, croFI$H is also a project with a purpose. By raising awareness of ocean life and the importance of preserving it, this project aims to inspire people to take action to protect our oceans and the amazing creatures that call them home.    So join the croFI$H community today and start collecting these stunning NFTs. With new drops every week, you'll never run out of amazing ocean animals to add to your collection, and you'll be doing your part to help protect our oceans and the incredible creatures that inhabit them. ",
+        "avatar": "/img/collections/crofish-gen7-the-octopus/avatar.webp",
+        "card": "/img/collections/crofish-gen7-the-octopus/card.webp",
+        "banner": "/img/collections/crofish-gen7-the-octopus/banner.webp",
+        "twitter": "https://twitter.com/crofishteam",
+        "discord": "https://discord.gg/wsQjjZ3Zkm",
+        "medium": "https://medium.com/@crofishteam",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crofam Ladies AI",
+      "slug": "crofam-ladies-ai",
+      "multiToken": false,
+      "address": "0xeA747C57CD02b94ba80F0caE80f9a986776dfD4d",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Are you ready for the most beautiful ladies on Cronos?  CrofamSpace goint to the Age of Inventors.  Before the same like CrofamLadies allowed you to get VIP  CrofamLadiesAI allows you to create an Intelligent Robot  Get your InventorBot and guarantee Staking to yourself.  The last Inventorbots component (SKIN) - you need 1 x CrofamLadiesAI to build 1 x Inventorbot  Find Special Ai Robot and get guaranteed 1:1 Free Mint Inventor Bot  More utility coming soon...",
+        "avatar": "/img/collections/crofam-ladies-ai/avatar.webp",
+        "card": "/img/collections/crofam-ladies-ai/card.webp",
+        "banner": "/img/collections/crofam-ladies-ai/banner.webp",
+        "website": "https://crofamladies.netlify.app/",
+        "twitter": "https://www.twitter.com/CrofamLadies",
+        "discord": "https://discord.gg/uaE6Sd26Qa",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Cyborg Brotherhood Evo",
+      "slug": "cyborg-brotherhood-evo",
+      "multiToken": false,
+      "address": "0x672ff79657f0f03baaab249f87f35cb5c3fb62aa",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Evo collection from MC & BH",
+        "avatar": "/img/collections/cyborg-brotherhood-evo/avatar.webp",
+        "card": "/img/collections/cyborg-brotherhood-evo/card.webp",
+        "banner": "/img/collections/cyborg-brotherhood-evo/banner.webp",
+        "website": "https://www.cyborgbh.io/",
+        "twitter": "https://twitter.com/cyborgbh",
+        "discord": "https://discord.gg/R2Qj4aJvsS",
+        "medium": "https://medium.com/@mariescyborgs",
+        "telegram": "https://t.me/mariescyborgs",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crotech Redacted",
+      "slug": "crotech-redacted",
+      "multiToken": false,
+      "address": "0x3f8a63DC014CBc352d413F86bcD93E4720a74383",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Inner Systems of the Crotech Frontier are on the brink of a cataclysmic event as a message from beyond the edges of the the Frontier has left humanity's best minds in a frenzied scramble to decipher its meaning. However, amidst the chaos, one thing has become undeniably clear - whoever sent the message is on their way to the Frontier.  As the people and their Crotech companions brace themselves for the arrival of this unknown entity, dark forces from within their own ranks threaten to tear them apart from the inside. Betrayal, war, and corruption loom on the horizon, with the unfathomable abyss of the Void looming ominously beyond the edges of the Frontier. For decades, all inhabitants of the Inner Systems have lived in peace, but now everything is about to change. Follow the gripping story of the Crotech Frontier and unravel the mystery of the message and experience the first-ever ARGxWeb3 event on Cronos, and immerse yourself in unravelling the story as the fate of the Crotech Frontier hangs in the balance. This is just the beginning. ",
+        "avatar": "/img/collections/crotech-redacted/avatar.webp",
+        "card": "/img/collections/crotech-redacted/card.webp",
+        "banner": "/img/collections/crotech-redacted/banner.webp",
+        "website": "https://thedegenerated.art/collection/5-crotech-redacted",
+        "twitter": "https://twitter.com/CrotechFrontier",
+        "discord": "https://discord.gg/CUX3MQT4HK",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
@@ -21835,7 +22119,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/northern-hippo-syndicate/drop.webp",
         "banner": "/img/collections/northern-hippo-syndicate/banner.webp",
