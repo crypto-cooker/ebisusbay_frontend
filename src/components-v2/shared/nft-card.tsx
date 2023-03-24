@@ -199,10 +199,10 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
                 {watermark ? (
                   <Watermarked watermark={watermark}>
                     <AnyMedia
-                      image={nftCardUrl(nft.address, nft.image)}
+                      image={nftCardUrl(nft.address ?? nft.nftAddress, nft.image)}
                       className={`card-img-top ${imgClass}`}
                       title={nft.name}
-                      url={`/collection/${nft.address}/${nft.id}`}
+                      url={`/collection/${nft.address ?? nft.nftAddress}/${nft.id ?? nft.nftId}`}
                       width={440}
                       height={440}
                       video={nft.video ?? nft.animation_url}
@@ -211,10 +211,10 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
                   </Watermarked>
                 ) : (
                   <AnyMedia
-                    image={nftCardUrl(nft.address, nft.image)}
+                    image={nftCardUrl(nft.address ?? nft.nftAddress, nft.image)}
                     className={`card-img-top ${imgClass}`}
                     title={nft.name}
-                    url={`/collection/${nft.address}/${nft.id}`}
+                    url={`/collection/${nft.address ?? nft.nftAddress}/${nft.id ?? nft.nftId}`}
                     width={440}
                     height={440}
                     video={nft.video ?? nft.animation_url}
