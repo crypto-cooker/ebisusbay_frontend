@@ -1,40 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
 import {ethers} from 'ethers';
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 import Countdown from 'react-countdown';
-import { getAnalytics, logEvent } from '@firebase/analytics';
-import { keyframes } from '@emotion/react';
+import {getAnalytics, logEvent} from '@firebase/analytics';
+import {keyframes} from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
-import { useRouter } from 'next/router';
-import {Form, ProgressBar, Spinner} from 'react-bootstrap';
+import {useRouter} from 'next/router';
+import {ProgressBar, Spinner} from 'react-bootstrap';
 import ReactPlayer from 'react-player';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
 
 import {chainConnect, connectAccount} from '@src/GlobalState/User';
-import { fetchMemberInfo, fetchVipInfo } from '@src/GlobalState/Memberships';
-import {
-  createSuccessfulTransactionToastContent, isBossFrogzDrop,
-  isCrosmocraftsPartsDrop,
-  isFounderDrop,
-  newlineText,
-  percentage, round,
-} from '@src/utils';
-import { dropState as statuses } from '../../core/api/enums';
-import {EbisuDropAbi, ERC1155} from '@src/Contracts/Abis';
-import { getTheme } from '@src/Theme/theme';
-import SocialsBar from '../Collection/SocialsBar';
+import {createSuccessfulTransactionToastContent, isFounderDrop, percentage,} from '@src/utils';
+import {dropState as statuses} from '@src/core/api/enums';
+import {ERC1155} from '@src/Contracts/Abis';
+import {getTheme} from '@src/Theme/theme';
+import SocialsBar from '@src/Components/Collection/SocialsBar';
 import {parseUnits} from "ethers/lib/utils";
 import {appConfig} from "@src/Config";
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import {
   Box,
-  Button, Flex,
+  Button,
   Heading,
-  HStack, Input,
-  ListItem, SimpleGrid, Stack,
+  HStack,
+  Input,
+  ListItem,
+  Stack,
   Text,
   UnorderedList,
   useColorModeValue,
@@ -42,6 +37,7 @@ import {
 } from "@chakra-ui/react";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import Link from "next/link";
+import {useAppSelector} from "@src/Store/hooks";
 
 const config = appConfig();
 const collections = config.collections;
@@ -79,7 +75,11 @@ const HeroSection = styled.section`
   }
 `;
 
-const RyoshiDrop = ({drop}) => {
+interface RyoshiDropProps {
+  drop: any;
+}
+
+const RyoshiDrop = ({drop}: RyoshiDropProps) => {
   const router = useRouter();
   const { slug } = router.query;
 
@@ -91,11 +91,11 @@ const RyoshiDrop = ({drop}) => {
   const [status, setStatus] = useState(statuses.UNSET);
   const [numToMint, setNumToMint] = useState(1);
 
-  const [abi, setAbi] = useState(null);
+  const [abi, setAbi] = useState<any>(null);
   const [maxSupply, setMaxSupply] = useState(0);
   const [totalSupply, setTotalSupply] = useState(0);
   const [canMintQuantity, setCanMintQuantity] = useState(0);
-  const [mintingState, setMintingState] = useState(null);
+  const [mintingState, setMintingState] = useState<string | null>(null);
 
   // useEffect(() => {
   //   logEvent(getAnalytics(), 'screen_view', {
@@ -113,15 +113,15 @@ const RyoshiDrop = ({drop}) => {
   //   // eslint-disable-next-line
   // }, []);
 
-  const user = useSelector((state) => {
+  const user = useAppSelector((state) => {
     return state.user;
   });
 
-  const collection = useSelector((state) => {
-    return collections.find((n) => n.slug === slug);
+  const collection = useAppSelector((state) => {
+    return collections.find((n: any) => n.slug === slug);
   });
 
-  const userTheme = useSelector((state) => {
+  const userTheme = useAppSelector((state) => {
     return state.user.theme;
   });
 
@@ -141,7 +141,7 @@ const RyoshiDrop = ({drop}) => {
       return;
     }
 
-    const abiJson = require(`../../Assets/abis/ryoshi.json`);
+    const abiJson = require(`@src/Assets/abis/ryoshi.json`);
     let abi = abiJson;
     setAbi(abiJson);
 
@@ -157,19 +157,19 @@ const RyoshiDrop = ({drop}) => {
     }
   };
 
-  const setDropInfo = (drop, supply) => {
+  const setDropInfo = (drop: any, supply: number) => {
     setMaxSupply(drop.totalSupply);
     setTotalSupply(supply);
     setCanMintQuantity(drop.maxMintPerTx);
   };
 
-  const setDropInfoFromContract = (infos, canMint) => {
+  const setDropInfoFromContract = (infos: any, canMint: number) => {
     setMaxSupply(infos.maxSupply);
     setTotalSupply(infos.totalSupply);
     setCanMintQuantity(Math.min(canMint, infos.maxMintPerTx));
   };
 
-  const calculateStatus = (drop, totalSupply, maxSupply) => {
+  const calculateStatus = (drop: any, totalSupply: number, maxSupply: number) => {
     const sTime = new Date(drop.start);
     const eTime = new Date(drop.end);
     const now = new Date();
@@ -198,7 +198,7 @@ const RyoshiDrop = ({drop}) => {
           await tx.wait();
         }
 
-        const vipCollection = collections.find((c) => c.slug === 'founding-member');
+        const vipCollection = collections.find((c: any) => c.slug === 'founding-member');
         const vipContract = await new ethers.Contract(vipCollection.address, ERC1155, user.provider.getSigner());
         const isApprovedVip = await vipContract.isApprovedForAll(user.address, drop.address);
         if (!isApprovedVip) {
@@ -234,12 +234,11 @@ const RyoshiDrop = ({drop}) => {
             totalSupply: drop.totalSupply,
             cost: drop.cost,
             memberCost: drop.memberCost,
-            foundersOnly: drop.foundersOnly,
           };
 
           const purchaseAnalyticParams = {
             currency: 'CRO',
-            value: ethers.utils.formatEther(finalCost),
+            value: Number(ethers.utils.formatEther(finalCost)),
             transaction_id: receipt.transactionHash,
             quantity: numToMint,
             items: [dropObjectAnalytics],
@@ -249,7 +248,7 @@ const RyoshiDrop = ({drop}) => {
         }
 
         await retrieveDropInfo();
-      } catch (error) {
+      } catch (error: any) {
         Sentry.captureException(error);
         if (error.data) {
           console.log(error);
@@ -270,7 +269,7 @@ const RyoshiDrop = ({drop}) => {
     }
   };
 
-  const convertTime = (time) => {
+  const convertTime = (time: any) => {
     let date = new Date(time);
     const fullDateString = date.toLocaleString('default', { timeZone: 'UTC' });
     const month = date.toLocaleString('default', { month: 'long', timeZone: 'UTC' });
@@ -297,7 +296,7 @@ const RyoshiDrop = ({drop}) => {
       max: canMintQuantity,
       precision: 0,
       onChange(valueAsString, valueAsNumber) {
-        setNumToMint(valueAsString);
+        setNumToMint(valueAsNumber);
       }
     })
   const inc = getIncrementButtonProps()
@@ -327,7 +326,7 @@ const RyoshiDrop = ({drop}) => {
                           config={{
                             file: {
                               attributes: {
-                                onContextMenu: (e) => e.preventDefault(),
+                                onContextMenu: (e: any) => e.preventDefault(),
                                 controlsList: 'nodownload',
                               },
                             },
@@ -341,15 +340,7 @@ const RyoshiDrop = ({drop}) => {
                       </div>
                     )}
 
-                    {drop.slug === 'psycho-golden-lady' || drop.slug === 'smash-stunts' ? (
-                      <>
-                        {new Date() > 1651449600000 && new Date() < 1651464000000 && (
-                          <div dangerouslySetInnerHTML={{ __html: drop.embed }} />
-                        )}
-                      </>
-                    ) : (
-                      <>{drop.embed && <div dangerouslySetInnerHTML={{ __html: drop.embed }} />}</>
-                    )}
+                    <>{drop.embed && <div dangerouslySetInnerHTML={{ __html: drop.embed }} />}</>
                   </>
                 </Reveal>
               </div>
@@ -486,7 +477,7 @@ const RyoshiDrop = ({drop}) => {
                               <Input {...input} />
                               <Button {...inc}>+</Button>
                             </HStack>
-                            <button className="btn-main lead w-100" onClick={() => mintNow(false)} disabled={minting}>
+                            <button className="btn-main lead w-100" onClick={() => mintNow()} disabled={minting}>
                               {minting ? (
                                 <>
                                   {mintingState ?? 'Swapping...'}

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { toast, ToastContainer } from 'react-toastify';
 import { initializeApp } from 'firebase/app';
-import { initializeAnalytics } from 'firebase/analytics';
+import { getAnalytics } from "@firebase/analytics";
 
 import ScrollToTopBtn from '@src/modules/layout/navbar/ScrollToTop';
 import Header from '@src/components-v2/shared/layout/navbar';
@@ -42,6 +42,9 @@ const GlobalStyles = createGlobalStyle`
   }
 `;
 
+
+const firebase = initializeApp(firebaseConfig);
+
 function App({ Component, pageProps }) {
   const dispatch = useDispatch();
   const { colorMode } = useColorMode()
@@ -59,9 +62,8 @@ function App({ Component, pageProps }) {
   }, [dispatch]);
 
   useEffect(() => {
-    const firebase = initializeApp(firebaseConfig);
     if (typeof window !== 'undefined') {
-      initializeAnalytics(firebase);
+      getAnalytics(firebase);
       dispatch(initProvider());
     }
   }, [dispatch]);
