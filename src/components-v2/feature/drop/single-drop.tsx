@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
 import {ethers} from 'ethers';
 import Countdown from 'react-countdown';
 import {keyframes} from '@emotion/react';
@@ -9,14 +8,15 @@ import ReactPlayer from 'react-player';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
 import {isFounderDrop, newlineText,} from '@src/utils';
-import {dropState as statuses} from '../../core/api/enums';
+import {dropState as statuses} from '@src/core/api/enums';
 import {EbisuDropAbi, ERC20} from '@src/Contracts/Abis';
-import SocialsBar from '../Collection/SocialsBar';
+import SocialsBar from '@src/Components/Collection/SocialsBar';
 import {appConfig} from "@src/Config";
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import {Box, Heading, Text, VStack} from "@chakra-ui/react";
 import {MintBox} from "@src/components-v2/feature/drop/mint-box";
+import {useAppSelector} from "@src/Store/hooks";
 
 const config = appConfig();
 
@@ -58,12 +58,15 @@ const tabs = {
   roadmap: 'roadmap'
 };
 
-const SingleDrop = ({drop}) => {
+interface SingleDropProps {
+  drop: any;
+}
+
+const SingleDrop = ({drop}: SingleDropProps) => {
   const router = useRouter();
   const { slug } = router.query;
 
   const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-  const dispatch = useDispatch();
 
   // const [loading, setLoading] = useState(true);
   const [dropObject, setDropObject] = useState(null);
@@ -83,15 +86,15 @@ const SingleDrop = ({drop}) => {
 
 
   const [openMenu, setOpenMenu] = useState(tabs.description);
-  const handleBtnClick = (key) => (element) => {
+  const handleBtnClick = (key: string) => (element: any) => {
     setOpenMenu(key);
   };
 
-  const user = useSelector((state) => {
+  const user = useAppSelector((state) => {
     return state.user;
   });
 
-  const membership = useSelector((state) => {
+  const membership = useAppSelector((state) => {
     return state.memberships;
   });
 
@@ -117,7 +120,7 @@ const SingleDrop = ({drop}) => {
     // Use the new contract format if applicable
     let abi = currentDrop.abi;
     if (isUsingAbiFile(abi)) {
-      const abiJson = require(`../../Assets/abis/${currentDrop.abi}`);
+      const abiJson = require(`@src/Assets/abis/${currentDrop.abi}`);
       abi = abiJson.abi ?? abiJson;
     } else if (isUsingDefaultDropAbi(abi)) {
       abi = EbisuDropAbi;
@@ -130,7 +133,7 @@ const SingleDrop = ({drop}) => {
         currentDrop = Object.assign({ writeContract: writeContract }, currentDrop);
 
         if (currentDrop.erc20Token) {
-          const token = config.tokens[dropObject.erc20Token];
+          const token = config.tokens[currentDrop.erc20Token];
           const erc20Contract = await new ethers.Contract(token.address, ERC20, user.provider.getSigner());
           const erc20ReadContract = await new ethers.Contract(token.address, ERC20, readProvider);
           currentDrop = {
@@ -207,7 +210,7 @@ const SingleDrop = ({drop}) => {
     setDropObject(currentDrop);
   };
 
-  const setDropInfo = (drop, supply) => {
+  const setDropInfo = (drop: any, supply: number) => {
     // setMaxMintPerAddress(drop.maxMintPerAddress ?? 100);
     setMaxMintPerTx(drop.maxMintPerTx);
     setMaxSupply(drop.totalSupply);
@@ -219,18 +222,18 @@ const SingleDrop = ({drop}) => {
     setCanMintQuantity(drop.maxMintPerTx);
   };
 
-  const setDropInfoFromContract = (infos, canMint) => {
+  const setDropInfoFromContract = (infos: any, canMint: number) => {
     // setMaxMintPerAddress(infos.maxMintPerAddress);
     setMaxMintPerTx(infos.maxMintPerTx);
     setMaxSupply(infos.maxSupply);
-    setMemberCost(ethers.utils.formatEther(infos.memberCost));
-    setRegularCost(ethers.utils.formatEther(infos.regularCost));
+    setMemberCost(Number(ethers.utils.formatEther(infos.memberCost)));
+    setRegularCost(Number(ethers.utils.formatEther(infos.regularCost)));
     setTotalSupply(infos.totalSupply);
-    if (infos.whitelistCost) setWhitelistCost(ethers.utils.formatEther(infos.whitelistCost));
+    if (infos.whitelistCost) setWhitelistCost(Number(ethers.utils.formatEther(infos.whitelistCost)));
     setCanMintQuantity(Math.min(canMint, infos.maxMintPerTx));
   };
 
-  const calculateStatus = (drop, totalSupply, maxSupply) => {
+  const calculateStatus = (drop: any, totalSupply: number, maxSupply: number) => {
     const sTime = new Date(drop.start);
     const eTime = new Date(drop.end);
     const now = new Date();
@@ -243,11 +246,11 @@ const SingleDrop = ({drop}) => {
     else setStatus(statuses.NOT_STARTED);
   };
 
-  const isUsingAbiFile = (dropAbi) => {
+  const isUsingAbiFile = (dropAbi: any) => {
     return typeof dropAbi === 'string' && dropAbi.length > 0;
   };
 
-  const isUsingDefaultDropAbi = (dropAbi) => {
+  const isUsingDefaultDropAbi = (dropAbi: any) => {
     return typeof dropAbi === 'undefined' || dropAbi.length === 0;
   };
 
@@ -273,7 +276,7 @@ const SingleDrop = ({drop}) => {
                         config={{
                           file: {
                             attributes: {
-                              onContextMenu: (e) => e.preventDefault(),
+                              onContextMenu: (e: any) => e.preventDefault(),
                               controlsList: 'nodownload',
                             },
                           },
@@ -287,15 +290,7 @@ const SingleDrop = ({drop}) => {
                     </div>
                   )}
 
-                  {drop.slug === 'psycho-golden-lady' || drop.slug === 'smash-stunts' ? (
-                    <>
-                      {new Date() > 1651449600000 && new Date() < 1651464000000 && (
-                        <div dangerouslySetInnerHTML={{ __html: drop.embed }} />
-                      )}
-                    </>
-                  ) : (
-                    <>{drop.embed && <div dangerouslySetInnerHTML={{ __html: drop.embed }} />}</>
-                  )}
+                  <>{drop.embed && <div dangerouslySetInnerHTML={{ __html: drop.embed }} />}</>
                 </>
               </Reveal>
             </div>
@@ -417,7 +412,7 @@ const SingleDrop = ({drop}) => {
                     {openMenu === tabs.roadmap && (
                       <div className="mt-3 mb-4">
                         <VStack spacing={4} align='start'>
-                          {drop.escrow.milestones.map((milestone, index) => (
+                          {drop.escrow.milestones.map((milestone: string, index: number) => (
                             <Box key={index}>
                               <Text fontWeight="bold" fontSize="lg">Phase {index + 1}</Text>
                               <Text>{milestone}</Text>

@@ -1,19 +1,17 @@
 import React from 'react';
-import Link from 'next/link';
-import { useSelector } from 'react-redux';
 
 import DropsCarousel from '../../src/Components/components/DropsCarousel';
-import CurrentDrops from '../../src/Components/components/CurrentDrops';
-import UpcomingDrops from '../../src/Components/Drops/UpcomingDrops';
-import PastDrops from '../../src/Components/Drops/PastDrops';
-import { getTheme } from '../../src/Theme/theme';
-import {hostedImage} from "../../src/helpers/image";
-import Head from "next/head";
+import CurrentDrops from '@src/components-v2/shared/drops/current-drops';
+import UpcomingDrops from '@src/components-v2/feature/drops/upcoming-drops';
+import PastDrops from '@src/components-v2/feature/drops/past-drops';
+import {getTheme} from '@src/Theme/theme';
+import {hostedImage} from "@src/helpers/image";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Heading} from "@chakra-ui/react";
+import {useAppSelector} from "@src/Store/hooks";
 
 const Drops = () => {
-  const userTheme = useSelector((state) => {
+  const userTheme = useAppSelector((state) => {
     return state.user.theme;
   });
   return (

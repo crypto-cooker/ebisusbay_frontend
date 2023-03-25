@@ -215,7 +215,6 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
             totalSupply: drop.totalSupply,
             cost: drop.cost,
             memberCost: drop.memberCost,
-            foundersOnly: drop.foundersOnly,
           };
 
           const purchaseAnalyticParams = {

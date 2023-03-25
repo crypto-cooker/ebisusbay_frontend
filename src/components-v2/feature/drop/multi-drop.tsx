@@ -1,24 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import Head from 'next/head';
-import { ethers } from 'ethers';
-import { toast } from 'react-toastify';
+import React, {useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {ethers} from 'ethers';
+import {toast} from 'react-toastify';
 import Countdown from 'react-countdown';
-import { getAnalytics, logEvent } from '@firebase/analytics';
-import { keyframes } from '@emotion/react';
+import {getAnalytics, logEvent} from '@firebase/analytics';
+import {keyframes} from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
-import { useRouter } from 'next/router';
-import { Form, ProgressBar, Spinner } from 'react-bootstrap';
+import {useRouter} from 'next/router';
+import {Form, ProgressBar, Spinner} from 'react-bootstrap';
 import ReactPlayer from 'react-player';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
 
-import { connectAccount } from '../../GlobalState/User';
-import { fetchMemberInfo, fetchVipInfo } from '../../GlobalState/Memberships';
-import { createSuccessfulTransactionToastContent, isCmbDrop, newlineText, percentage } from '../../utils';
-import { dropState as statuses } from '../../core/api/enums';
-import { EbisuDropAbi } from '../../Contracts/Abis';
-import {appConfig} from "../../Config";
+import {connectAccount} from '@src/GlobalState/User';
+import {createSuccessfulTransactionToastContent, isCmbDrop, newlineText, percentage} from '@src/utils';
+import {dropState as statuses} from '@src/core/api/enums';
+import {EbisuDropAbi} from '@src/Contracts/Abis';
+import {appConfig} from "@src/Config";
+import {useAppSelector} from "@src/Store/hooks";
 
 const config = appConfig();
 const drops = config.drops;
@@ -66,11 +65,11 @@ const MultiDrop = () => {
   // const [loading, setLoading] = useState(true);
   // const [minting, setMinting] = useState(false);
   // const [referral, setReferral] = useState('');
-  const [dropObject, setDropObject] = useState(null);
+  const [dropObject, setDropObject] = useState<any>(null);
   const [status, setStatus] = useState(statuses.UNSET);
   // const [numToMint, setNumToMint] = useState(1);
 
-  const [abi, setAbi] = useState(null);
+  const [abi, setAbi] = useState<any>(null);
   // const [maxMintPerAddress, setMaxMintPerAddress] = useState(0);
   // const [maxMintPerTx, setMaxMintPerTx] = useState(0);
   // const [maxSupply, setMaxSupply] = useState(0);
@@ -79,34 +78,18 @@ const MultiDrop = () => {
   const [whitelistCost, setWhitelistCost] = useState(0);
   // const [specialWhitelistCost, setSpecialWhitelistCost] = useState(0);
   // const [totalSupply, setTotalSupply] = useState(0);
-  const [canMintQuantity, setCanMintQuantity] = useState(0);
-  const [factionCurrentSupply, setFactionCurrentSupply] = useState([]);
+  const [canMintQuantity, setCanMintQuantity] = useState<number[]>([0, 0, 0]);
+  const [factionCurrentSupply, setFactionCurrentSupply] = useState<any>({});
 
-  useEffect(() => {
-    logEvent(getAnalytics(), 'screen_view', {
-      firebase_screen: 'drop',
-      drop_id: slug,
-    });
-    // eslint-disable-next-line
-  }, []);
-
-  // useEffect(() => {
-  //   dispatch(fetchMemberInfo());
-  //   if (process.env.NODE_ENV === 'development') {
-  //     dispatch(fetchVipInfo());
-  //   }
-  //   // eslint-disable-next-line
-  // }, []);
-
-  const user = useSelector((state) => {
+  const user = useAppSelector((state) => {
     return state.user;
   });
 
-  const drop = useSelector((state) => {
-    return drops.find((n) => n.slug === slug);
+  const drop = useAppSelector((state) => {
+    return drops.find((n: any) => n.slug === slug);
   });
 
-  const membership = useSelector((state) => {
+  const membership = useAppSelector((state) => {
     return state.memberships;
   });
 
@@ -132,7 +115,7 @@ const MultiDrop = () => {
     // Use the new contract format if applicable
     let abi = currentDrop.abi;
     if (isUsingAbiFile(abi)) {
-      const abiJson = require(`../../Assets/abis/${currentDrop.abi}`);
+      const abiJson = require(`@src/Assets/abis/${currentDrop.abi}`);
       abi = abiJson.abi ?? abiJson;
     } else if (isUsingDefaultDropAbi(abi)) {
       abi = EbisuDropAbi;
@@ -172,10 +155,10 @@ const MultiDrop = () => {
       // setMaxMintPerAddress(infos.maxMintPerAddress);
       // setMaxMintPerTx(infos.maxMintPerTx);
       // setMaxSupply(infos.maxSupply);
-      setMemberCost(ethers.utils.formatEther(infos.memberCost));
-      setRegularCost(ethers.utils.formatEther(infos.regularCost));
+      setMemberCost(Number(ethers.utils.formatEther(infos.memberCost)));
+      setRegularCost(Number(ethers.utils.formatEther(infos.regularCost)));
       // setTotalSupply(infos.totalSupply);
-      setWhitelistCost(ethers.utils.formatEther(infos.whitelistCost));
+      setWhitelistCost(Number(ethers.utils.formatEther(infos.whitelistCost)));
       setCanMintQuantity(canMint);
       setFactionCurrentSupply(infoTuple[1]);
       calculateStatus(currentDrop, infos.totalSupply, infos.maxSupply);
@@ -187,7 +170,7 @@ const MultiDrop = () => {
     setDropObject(currentDrop);
   };
 
-  const setDropInfo = (drop, supply) => {
+  const setDropInfo = (drop: any, supply: number) => {
     // setMaxMintPerAddress(drop.maxMintPerAddress ?? 100);
     // setMaxMintPerTx(drop.maxMintPerTx);
     // setMaxSupply(drop.totalSupply);
@@ -199,7 +182,7 @@ const MultiDrop = () => {
     setCanMintQuantity(drop.maxMintPerTx);
   };
 
-  const calculateStatus = (drop, totalSupply, maxSupply) => {
+  const calculateStatus = (drop: any, totalSupply: number, maxSupply: number) => {
     const sTime = new Date(drop.start);
     const eTime = new Date(drop.end);
     const now = new Date();
@@ -212,10 +195,10 @@ const MultiDrop = () => {
     else setStatus(statuses.NOT_STARTED);
   };
 
-  const calculateCost = async (user) => {
+  const calculateCost = async (user: any) => {
     if (isUsingDefaultDropAbi(dropObject.abi) || isUsingAbiFile(dropObject.abi)) {
       let readContract = await new ethers.Contract(dropObject.address, abi, readProvider);
-      if (abi.find((m) => m.name === 'cost')) {
+      if (abi.find((m: any) => m.name === 'cost')) {
         return await readContract.cost(user.address);
       }
       return await readContract.mintCost(user.address);
@@ -236,15 +219,15 @@ const MultiDrop = () => {
     return cost;
   };
 
-  const isUsingAbiFile = (dropAbi) => {
+  const isUsingAbiFile = (dropAbi: any) => {
     return typeof dropAbi === 'string' && dropAbi.length > 0;
   };
 
-  const isUsingDefaultDropAbi = (dropAbi) => {
+  const isUsingDefaultDropAbi = (dropAbi: any) => {
     return typeof dropAbi === 'undefined' || dropAbi.length === 0;
   };
 
-  const mintNow = async (quantity, faction) => {
+  const mintNow = async (quantity: number, faction: string) => {
     if (user.address) {
       if (!dropObject.writeContract) {
         return;
@@ -279,12 +262,11 @@ const MultiDrop = () => {
             totalSupply: dropObject.totalSupply,
             cost: dropObject.cost,
             memberCost: dropObject.memberCost,
-            foundersOnly: dropObject.foundersOnly,
           };
 
           const purchaseAnalyticParams = {
             currency: 'CRO',
-            value: ethers.utils.formatEther(finalCost),
+            value: Number(ethers.utils.formatEther(finalCost)),
             transaction_id: receipt.transactionHash,
             quantity: quantity,
             items: [dropObjectAnalytics],
@@ -294,7 +276,7 @@ const MultiDrop = () => {
         }
 
         await retrieveDropInfo();
-      } catch (error) {
+      } catch (error: any) {
         Sentry.captureException(error);
         if (error.data) {
           console.log(error);
@@ -339,7 +321,7 @@ const MultiDrop = () => {
                     config={{
                       file: {
                         attributes: {
-                          onContextMenu: (e) => e.preventDefault(),
+                          onContextMenu: (e: any) => e.preventDefault(),
                           controlsList: 'nodownload',
                         },
                       },
@@ -530,8 +512,18 @@ const MultiDrop = () => {
 };
 export default MultiDrop;
 
-const MultiDropCard = ({ title, img, canMintQuantity, mintNow, currentSupply, maxSupply, dropStatus }) => {
-  const user = useSelector((state) => {
+interface MultiDropCardProps {
+  title: string;
+  img: string;
+  canMintQuantity: number;
+  mintNow: (quantity: number) => void;
+  currentSupply: number;
+  maxSupply: number;
+  dropStatus: number;
+}
+
+const MultiDropCard = ({ title, img, canMintQuantity, mintNow, currentSupply, maxSupply, dropStatus }: MultiDropCardProps) => {
+  const user = useAppSelector((state) => {
     return state.user;
   });
 
@@ -544,7 +536,7 @@ const MultiDropCard = ({ title, img, canMintQuantity, mintNow, currentSupply, ma
     // eslint-disable-next-line
   }, [currentSupply, canMintQuantity, dropStatus]);
 
-  const calculateStatus = (currentSupply, maxSupply) => {
+  const calculateStatus = (currentSupply: number, maxSupply: number) => {
     if (dropStatus === statuses.LIVE) {
       if (currentSupply >= maxSupply) setStatus(statuses.SOLD_OUT);
       else setStatus(statuses.LIVE);
@@ -575,7 +567,7 @@ const MultiDropCard = ({ title, img, canMintQuantity, mintNow, currentSupply, ma
                     value={numToMint}
                     min="1"
                     max={canMintQuantity}
-                    onChange={(e) => setNumToMint(e.target.value)}
+                    onChange={(e) => setNumToMint(Number(e.target.value))}
                   />
                 </div>
                 <div className="text-center">
