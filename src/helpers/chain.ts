@@ -1,4 +1,4 @@
-import {Contract, ethers} from "ethers";
+import {Contract} from "ethers";
 import {ERC165} from "@src/Contracts/Abis";
 import {JsonRpcProvider} from "@ethersproject/providers";
 import {appConfig} from "@src/Config";
@@ -16,4 +16,8 @@ export async function getItemType(nftAddress: string) {
   const is1155 = await checkContract.supportsInterface(ERC1155InterfaceId);
 
   return is1155 ? ItemType.ERC1155 : ItemType.ERC721;
+}
+
+export async function is1155(nftAddress: string) {
+  return await getItemType(nftAddress) === ItemType.ERC1155
 }
