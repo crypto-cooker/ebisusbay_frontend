@@ -18984,7 +18984,7 @@
       "multiToken": false,
       "address": "0x3D03292D428fd7d6C81a6E76b4A333A3d8a0E296",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A collection of 7007 Zoomers from the Boomer Squad Project. Built to play in the game branch of the Boomer Squad Ecosystem, Zoomers play while Boomers earn.",
         "avatar": "/img/collections/zoomer-squad/avatar.webp",
