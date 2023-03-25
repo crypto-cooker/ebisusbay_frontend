@@ -326,22 +326,24 @@ const SingleDrop = ({drop}: SingleDropProps) => {
 
             <div className="item_info">
 
-              <MintBox
-                drop={dropObject}
-                abi={abi}
-                status={status}
-                totalSupply={totalSupply}
-                maxSupply={maxSupply}
-                priceDescription={drop.priceDescription}
-                onMintSuccess={async () => {
-                  await retrieveDropInfo()
-                }}
-                canMintQuantity={canMintQuantity}
-                regularCost={regularCost}
-                memberCost={memberCost}
-                whitelistCost={whitelistCost}
-                specialWhitelist={specialWhitelist}
-              />
+              {!!dropObject && (
+                <MintBox
+                  drop={dropObject}
+                  abi={abi}
+                  status={status}
+                  totalSupply={totalSupply}
+                  maxSupply={maxSupply}
+                  priceDescription={drop.priceDescription}
+                  onMintSuccess={async () => {
+                    await retrieveDropInfo()
+                  }}
+                  canMintQuantity={canMintQuantity}
+                  regularCost={regularCost}
+                  memberCost={memberCost}
+                  whitelistCost={whitelistCost}
+                  specialWhitelist={specialWhitelist}
+                />
+              )}
 
               {drop.escrow ? (
                 <div className="de_tab mt-2">
