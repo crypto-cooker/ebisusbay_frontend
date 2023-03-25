@@ -38,6 +38,7 @@ import {
 import MetaMaskOnboarding from "@metamask/onboarding";
 import Link from "next/link";
 import {useAppSelector} from "@src/Store/hooks";
+import {Drop} from "@src/core/models/drop";
 
 const config = appConfig();
 const collections = config.collections;
@@ -76,7 +77,7 @@ const HeroSection = styled.section`
 `;
 
 interface RyoshiDropProps {
-  drop: any;
+  drop: Drop;
 }
 
 const RyoshiDrop = ({drop}: RyoshiDropProps) => {
@@ -223,25 +224,14 @@ const RyoshiDrop = ({drop}: RyoshiDropProps) => {
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
 
         {
-          const dropObjectAnalytics = {
-            address: drop.address,
-            id: drop.id,
-            title: drop.title,
-            slug: drop.slug,
-            author_name: drop.author.name,
-            author_link: drop.author.link,
-            maxMintPerTx: drop.maxMintPerTx,
-            totalSupply: drop.totalSupply,
-            cost: drop.cost,
-            memberCost: drop.memberCost,
-          };
-
           const purchaseAnalyticParams = {
             currency: 'CRO',
             value: Number(ethers.utils.formatEther(finalCost)),
             transaction_id: receipt.transactionHash,
             quantity: numToMint,
-            items: [dropObjectAnalytics],
+            drop_name: drop.title.toString(),
+            drop_slug: drop.slug.toString(),
+            drop_address: drop.address.toString(),
           };
 
           logEvent(getAnalytics(), 'purchase', purchaseAnalyticParams);
@@ -409,15 +399,7 @@ const RyoshiDrop = ({drop}: RyoshiDropProps) => {
                     <div className="profile_name">
                       <Heading as="h4" size="md">
                         {drop.title}
-                        {drop.author.link ? (
-                          <span className="profile_username">
-                            <a href={drop.author.link} target="_blank" rel="noreferrer">
-                              View Website
-                            </a>
-                          </span>
-                        ) : (
-                          <SocialsBar address={drop.address} socials={drop.author} />
-                        )}
+                        <SocialsBar address={drop.address} socials={drop.author} />
                       </Heading>
                     </div>
                   </div>

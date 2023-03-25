@@ -1,30 +1,11 @@
 import {getTheme} from "@src/Theme/theme";
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  HStack,
-  Input,
-  SimpleGrid,
-  Skeleton,
-  Stack,
-  Text,
-  useNumberInput
-} from "@chakra-ui/react";
+import {Box, Button, Flex, Heading, HStack, Input, Skeleton, Stack, Text, useNumberInput} from "@chakra-ui/react";
 import {dropState as statuses} from "@src/core/api/enums";
 import {constants, ethers} from "ethers";
-import {
-  createSuccessfulTransactionToastContent,
-  isCreaturesDrop,
-  isFounderVipDrop,
-  percentage,
-  round
-} from "@src/utils";
+import {createSuccessfulTransactionToastContent, percentage, round} from "@src/utils";
 import {ProgressBar, Spinner} from "react-bootstrap";
-import Link from "next/link";
 import React, {useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {parseUnits} from "ethers/lib/utils";
@@ -34,17 +15,18 @@ import * as Sentry from "@sentry/react";
 import {appConfig} from "@src/Config";
 import Image from "next/image";
 import {useAppSelector} from "@src/Store/hooks";
+import {Drop} from "@src/core/models/drop";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
 interface MintBoxProps {
-  drop: any;
+  drop: Drop;
   abi: any;
   status: number;
   totalSupply: number;
   maxSupply: number;
-  priceDescription: string;
+  priceDescription?: string;
   onMintSuccess: () => void;
   canMintQuantity: number;
   regularCost: number;
@@ -111,11 +93,11 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
       return await readContract.mintCost(user.address);
     }
 
-    const memberCost = ethers.utils.parseEther(isErc20 ? drop.erc20MemberCost : drop.memberCost);
-    const regCost = ethers.utils.parseEther(isErc20 ? drop.erc20Cost : drop.cost);
+    const memberCost = ethers.utils.parseEther(isErc20 && !!drop.erc20MemberCost ? drop.erc20MemberCost.toString() : drop.memberCost!.toString());
+    const regCost = ethers.utils.parseEther(isErc20 && !!drop.erc20Cost ? drop.erc20Cost.toString() : drop.cost.toString());
     let cost;
-    if (drop.abi.join().includes('isReducedTime()')) {
-      const readContract = await new ethers.Contract(drop.address, drop.abi, readProvider);
+    if ((drop.abi! as string[]).join().includes('isReducedTime()')) {
+      const readContract = await new ethers.Contract(drop.address, drop.abi!, readProvider);
       const isReduced = await readContract.isReducedTime();
       cost = isReduced ? memberCost : regCost;
     } else if (user.isMember) {
@@ -130,8 +112,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
     let date = new Date(time);
     const fullDateString = date.toLocaleString('default', { timeZone: 'UTC' });
     const month = date.toLocaleString('default', { month: 'long', timeZone: 'UTC' });
-    let dateString = `${fullDateString.split(', ')[1]} ${date.getUTCDate()} ${month} ${date.getUTCFullYear()} UTC`;
-    return dateString;
+    return `${fullDateString.split(', ')[1]} ${date.getUTCDate()} ${month} ${date.getUTCFullYear()} UTC`;
   };
 
   const mintNow = async (isErc20 = false) => {
@@ -180,18 +161,17 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
             }
           } else {
             let method;
-            for (const abiMethod of drop.abi) {
+            for (const abiMethod of drop.abi!) {
               if (abiMethod.includes('mint') && !abiMethod.includes('view')) method = abiMethod;
             }
 
-            if (method.includes('address') && method.includes('uint256')) {
+            if (!!method && method.includes('address') && method.includes('uint256')) {
               if (isErc20) {
                 response = await contract.mintWithLoot(user.address, numToMint);
               } else {
                 response = await contract.mint(user.address, numToMint, extra);
               }
             } else {
-              console.log(`contract ${contract}  num: ${numToMint}   extra ${extra}`);
               if (isErc20) {
                 response = await contract.mintWithLoot(numToMint);
               } else {
@@ -204,25 +184,14 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
 
         {
-          const dropObjectAnalytics = {
-            address: drop.address,
-            id: drop.id,
-            title: drop.title,
-            slug: drop.slug,
-            author_name: drop.author.name,
-            author_link: drop.author.link,
-            maxMintPerTx: drop.maxMintPerTx,
-            totalSupply: drop.totalSupply,
-            cost: drop.cost,
-            memberCost: drop.memberCost,
-          };
-
           const purchaseAnalyticParams = {
             currency: 'CRO',
-            items: [dropObjectAnalytics],
             value: Number(ethers.utils.formatEther(finalCost)),
             transaction_id: receipt.transactionHash,
             quantity: numToMint,
+            drop_name: drop.title.toString(),
+            drop_slug: drop.slug.toString(),
+            drop_address: drop.address.toString(),
           };
 
           logEvent(getAnalytics(), 'purchase', purchaseAnalyticParams);
@@ -293,7 +262,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                         </Flex>
                       </Heading>
                     )}
-                    {drop.erc20MemberCost && drop.erc20Cost !== drop.erc20MemberCost && (
+                    {!!drop.erc20Token && !!drop.erc20MemberCost && drop.erc20Cost !== drop.erc20MemberCost && (
                       <Heading as="h5" size="md">{`${ethers.utils.commify(round(drop.erc20MemberCost))} ${config.tokens[drop.erc20Token].symbol}`}</Heading>
                     )}
                   </Box>

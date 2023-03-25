@@ -3,17 +3,18 @@ import { useRouter } from 'next/router';
 
 import MultiDrop from '@src/components-v2/feature/drop/multi-drop';
 import SingleDrop from '@src/components-v2/feature/drop/single-drop';
-import {caseInsensitiveCompare} from "@src/utils";
 import {appConfig} from "@src/Config";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {hostedImage} from "@src/helpers/image";
 import RyoshiDrop from "@src/components-v2/feature/drop/ryoshi-drop";
+import localDataService from "@src/core/services/local-data-service";
+import {Drop} from "@src/core/models/drop";
 
 export const drops = appConfig('drops');
 const config = appConfig();
 
 interface DropProps {
-  ssrDrop: any;
+  ssrDrop: Drop;
   ssrCollection: any;
 }
 
@@ -48,7 +49,7 @@ const Drop = ({ssrDrop, ssrCollection}: DropProps) => {
 
 export const getServerSideProps = async ({ params }: {params: any}) => {
   const slug = params?.slug;
-  const drop = drops.find((c: any) => caseInsensitiveCompare(c.slug, slug));
+  const drop = localDataService.getDrop(slug);
   const res = await fetch(`${config.urls.api}collectioninfo?slug=${slug}`)
   const json = await res.json();
   const collection = json.collections[0] ?? null;

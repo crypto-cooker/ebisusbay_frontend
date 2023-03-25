@@ -17,6 +17,7 @@ import {CollectionVerificationRow} from "@src/Components/components/CollectionVe
 import {Box, Heading, Text, VStack} from "@chakra-ui/react";
 import {MintBox} from "@src/components-v2/feature/drop/mint-box";
 import {useAppSelector} from "@src/Store/hooks";
+import {Drop, SpecialWhitelist} from "@src/core/models/drop";
 
 const config = appConfig();
 
@@ -59,7 +60,7 @@ const tabs = {
 };
 
 interface SingleDropProps {
-  drop: any;
+  drop: Drop;
 }
 
 const SingleDrop = ({drop}: SingleDropProps) => {
@@ -69,18 +70,18 @@ const SingleDrop = ({drop}: SingleDropProps) => {
   const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
   // const [loading, setLoading] = useState(true);
-  const [dropObject, setDropObject] = useState(null);
+  const [dropObject, setDropObject] = useState<Drop | null>(null);
   const [status, setStatus] = useState(statuses.UNSET);
   const [numToMint, setNumToMint] = useState(1);
 
-  const [abi, setAbi] = useState(null);
+  const [abi, setAbi] = useState<string | string[] | null>(null);
   // const [maxMintPerAddress, setMaxMintPerAddress] = useState(0);
   const [maxMintPerTx, setMaxMintPerTx] = useState(0);
   const [maxSupply, setMaxSupply] = useState(0);
   const [memberCost, setMemberCost] = useState(0);
   const [regularCost, setRegularCost] = useState(0);
   const [whitelistCost, setWhitelistCost] = useState(0);
-  const [specialWhitelist, setSpecialWhitelist] = useState(null);
+  const [specialWhitelist, setSpecialWhitelist] = useState<SpecialWhitelist | null>(null);
   const [totalSupply, setTotalSupply] = useState(0);
   const [canMintQuantity, setCanMintQuantity] = useState(0);
 
@@ -125,11 +126,11 @@ const SingleDrop = ({drop}: SingleDropProps) => {
     } else if (isUsingDefaultDropAbi(abi)) {
       abi = EbisuDropAbi;
     }
-    setAbi(abi);
+    setAbi(abi!);
 
     if (user.provider) {
       try {
-        let writeContract = await new ethers.Contract(currentDrop.address, abi, user.provider.getSigner());
+        let writeContract = await new ethers.Contract(currentDrop.address, abi!, user.provider.getSigner());
         currentDrop = Object.assign({ writeContract: writeContract }, currentDrop);
 
         if (currentDrop.erc20Token) {
@@ -148,52 +149,14 @@ const SingleDrop = ({drop}: SingleDropProps) => {
       }
     }
     try {
-      // if (isFounderDrop(currentDrop.address)) {
-      //   setDropInfo(currentDrop, membership.founders.count);
-      //   calculateStatus(currentDrop, membership.founders.count, currentDrop.totalSupply);
-      // } else if (isFounderVipDrop(currentDrop.address)) {
-      //   setDropInfo(currentDrop, membership.vips.count);
-      //   calculateStatus(currentDrop, membership.vips.count, currentDrop.totalSupply);
-      // } else
-      // if (isMagBrewVikingsDrop(currentDrop.address)) {
-      //   let readContract = await new ethers.Contract(currentDrop.address, abi, readProvider);
-      //   const supply = await readContract.totalSupply();
-      //   setDropInfo(currentDrop, supply.toString());
-      //   const canMint = user.address ? await readContract.canMint(user.address) : 0;
-      //   setCanMintQuantity(canMint);
-      //   calculateStatus(currentDrop, supply, currentDrop.totalSupply);
-      // } else if (isCyberCloneDrop(drop.address)) {
-      //   let readContract = await new ethers.Contract(currentDrop.address, abi, readProvider);
-      //   const infos = await readContract.getInfo();
-      //   const canMint = user.address ? await readContract.canMint(user.address) : 0;
-      //   setDropInfoFromContract(infos, canMint);
-      //   setMaxSupply(1000);
-      //   calculateStatus(currentDrop, infos.totalSupply, currentDrop.totalSupply);
-      // } else if (isCarkayousCollection(drop.address)) {
-      //   let readContract = await new ethers.Contract(currentDrop.address, abi, readProvider);
-      //   const infos = await readContract.getInfo();
-      //   const canMint = user.address ? await readContract.canMint(user.address) : 0;
-      //   setDropInfoFromContract(infos, canMint);
-      //   setMaxSupply(2222);
-      //   calculateStatus(currentDrop, infos.totalSupply, currentDrop.totalSupply);
-      // } else if (isSscCollection(drop.address)) {
-      //   let readContract = await new ethers.Contract(currentDrop.address, abi, readProvider);
-      //   const infos = await readContract.getInfo();
-      //   const canMint = user.address ? await readContract.canMint(user.address) : 0;
-      //   setDropInfoFromContract(infos, canMint);
-      //   setMemberCost(600);
-      //   setWhitelistCost(600);
-      //   setMaxSupply(1888);
-      //   calculateStatus(currentDrop, infos.totalSupply, currentDrop.totalSupply);
-      // } else {
       if (currentDrop.address && (isUsingDefaultDropAbi(currentDrop.abi) || isUsingAbiFile(currentDrop.abi))) {
-        let readContract = await new ethers.Contract(currentDrop.address, abi, readProvider);
+        let readContract = await new ethers.Contract(currentDrop.address, abi!, readProvider);
         const infos = await readContract.getInfo();
         const canMint = user.address ? await readContract.canMint(user.address) : 0;
         setDropInfoFromContract(infos, canMint);
         calculateStatus(currentDrop, infos.totalSupply, infos.maxSupply);
       } else {
-        let readContract = await new ethers.Contract(currentDrop.address, abi, readProvider);
+        let readContract = await new ethers.Contract(currentDrop.address, abi!, readProvider);
         const currentSupply = await readContract.totalSupply();
         setDropInfo(currentDrop, currentSupply);
         calculateStatus(currentDrop, currentSupply, currentDrop.totalSupply);
@@ -201,7 +164,6 @@ const SingleDrop = ({drop}: SingleDropProps) => {
       if (drop.specialWhitelistCost) {
         setSpecialWhitelist(drop.specialWhitelistCost);
       }
-      // }
     } catch (error) {
       console.log(error);
       Sentry.captureException(error);
@@ -321,12 +283,6 @@ const SingleDrop = ({drop}: SingleDropProps) => {
               <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
                 <div className="lead col-white mb-4">{newlineText(drop.subtitle)}</div>
               </Reveal>
-              {drop.foundersOnly && (
-                <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
-                  <Heading as="h1" size="2xl" className="col-white">{drop.title}</Heading>
-                  {drop.foundersOnly && <Heading as="h3" size="md" className="col-white">Founding Member Presale</Heading>}
-                </Reveal>
-              )}
               <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
                 <div>
                   <a href="#drop_detail" className="btn-main">
@@ -354,15 +310,7 @@ const SingleDrop = ({drop}: SingleDropProps) => {
                   <div className="profile_name">
                     <Heading as="h4" size="md">
                       {drop.title}
-                      {drop.author.link ? (
-                        <span className="profile_username">
-                          <a href={drop.author.link} target="_blank" rel="noreferrer">
-                            View Website
-                          </a>
-                        </span>
-                      ) : (
-                        <SocialsBar address={drop.address} socials={drop.author} />
-                      )}
+                      <SocialsBar address={drop.address} socials={drop.author} />
                     </Heading>
                   </div>
                 </div>
@@ -378,22 +326,24 @@ const SingleDrop = ({drop}: SingleDropProps) => {
 
             <div className="item_info">
 
-              <MintBox
-                drop={dropObject}
-                abi={abi}
-                status={status}
-                totalSupply={totalSupply}
-                maxSupply={maxSupply}
-                priceDescription={drop.priceDescription}
-                onMintSuccess={async () => {
-                  await retrieveDropInfo()
-                }}
-                canMintQuantity={canMintQuantity}
-                regularCost={regularCost}
-                memberCost={memberCost}
-                whitelistCost={whitelistCost}
-                specialWhitelist={specialWhitelist}
-              />
+              {!!dropObject && (
+                <MintBox
+                  drop={dropObject}
+                  abi={abi}
+                  status={status}
+                  totalSupply={totalSupply}
+                  maxSupply={maxSupply}
+                  priceDescription={drop.priceDescription}
+                  onMintSuccess={async () => {
+                    await retrieveDropInfo()
+                  }}
+                  canMintQuantity={canMintQuantity}
+                  regularCost={regularCost}
+                  memberCost={memberCost}
+                  whitelistCost={whitelistCost}
+                  specialWhitelist={specialWhitelist}
+                />
+              )}
 
               {drop.escrow ? (
                 <div className="de_tab mt-2">
