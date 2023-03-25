@@ -8,18 +8,7 @@ import {useRouter} from 'next/router';
 import ReactPlayer from 'react-player';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
-
-import {fetchMemberInfo, fetchVipInfo} from '@src/GlobalState/Memberships';
-import {
-  isBundle,
-  isCarkayousCollection, isCnsCollection, isCronosVerseCollection,
-  isCyberCloneDrop,
-  isFounderDrop,
-  isFounderVipDrop,
-  isMagBrewVikingsDrop,
-  isSscCollection,
-  newlineText,
-} from '@src/utils';
+import {isFounderDrop, newlineText,} from '@src/utils';
 import {dropState as statuses} from '../../core/api/enums';
 import {EbisuDropAbi, ERC20} from '@src/Contracts/Abis';
 import SocialsBar from '../Collection/SocialsBar';
@@ -27,13 +16,7 @@ import {appConfig} from "@src/Config";
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import {Box, Heading, Text, VStack} from "@chakra-ui/react";
-import {MintBox} from "@src/Components/Drop/MintBox";
-
-import {useQuery} from "@tanstack/react-query";
-import { getCollections } from "@src/core/api/next/collectioninfo";
-import {Spinner} from "react-bootstrap";
-import {pushQueryString} from "@src/helpers/query";
-import {updateTab} from "@src/GlobalState/collectionSlice";
+import {MintBox} from "@src/components-v2/feature/drop/mint-box";
 
 const config = appConfig();
 

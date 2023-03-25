@@ -33,16 +33,32 @@ import {getAnalytics, logEvent} from "@firebase/analytics";
 import * as Sentry from "@sentry/react";
 import {appConfig} from "@src/Config";
 import Image from "next/image";
+import {useAppSelector} from "@src/Store/hooks";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
-export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescription, onMintSuccess, canMintQuantity, regularCost, memberCost, whitelistCost, specialWhitelist}) => {
+interface MintBoxProps {
+  drop: any;
+  abi: any;
+  status: number;
+  totalSupply: number;
+  maxSupply: number;
+  priceDescription: string;
+  onMintSuccess: () => void;
+  canMintQuantity: number;
+  regularCost: number;
+  memberCost: number;
+  whitelistCost: number;
+  specialWhitelist: any;
+}
+
+export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescription, onMintSuccess, canMintQuantity, regularCost, memberCost, whitelistCost, specialWhitelist}: MintBoxProps) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => {
+  const user = useAppSelector((state) => {
     return state.user;
   });
-  const userTheme = useSelector((state) => {
+  const userTheme = useAppSelector((state) => {
     return state.user.theme;
   });
   
@@ -71,32 +87,32 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
       max: canMintQuantity,
       precision: 0,
       onChange(valueAsString, valueAsNumber) {
-        setNumToMint(valueAsString);
+        setNumToMint(valueAsNumber);
       }
     })
   const inc = getIncrementButtonProps()
   const dec = getDecrementButtonProps()
   const input = getInputProps()
 
-  const isUsingAbiFile = (dropAbi) => {
+  const isUsingAbiFile = (dropAbi: any) => {
     return typeof dropAbi === 'string' && dropAbi.length > 0;
   };
 
-  const isUsingDefaultDropAbi = (dropAbi) => {
+  const isUsingDefaultDropAbi = (dropAbi: any) => {
     return typeof dropAbi === 'undefined' || dropAbi.length === 0;
   };
   
-  const calculateCost = async (user, isErc20) => {
+  const calculateCost = async (user: any, isErc20: boolean) => {
     if (isUsingDefaultDropAbi(drop.abi) || isUsingAbiFile(drop.abi)) {
       let readContract = await new ethers.Contract(drop.address, abi, readProvider);
-      if (abi.find((m) => m.name === 'cost')) {
+      if (abi.find((m: any) => m.name === 'cost')) {
         return await readContract.cost(user.address);
       }
       return await readContract.mintCost(user.address);
     }
 
-    const memberCost = ethers.utils.parseEther(isErc20 === true ? drop.erc20MemberCost : drop.memberCost);
-    const regCost = ethers.utils.parseEther(isErc20 === true ? drop.erc20Cost : drop.cost);
+    const memberCost = ethers.utils.parseEther(isErc20 ? drop.erc20MemberCost : drop.memberCost);
+    const regCost = ethers.utils.parseEther(isErc20 ? drop.erc20Cost : drop.cost);
     let cost;
     if (drop.abi.join().includes('isReducedTime()')) {
       const readContract = await new ethers.Contract(drop.address, drop.abi, readProvider);
@@ -110,7 +126,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
     return cost;
   };
 
-  const convertTime = (time) => {
+  const convertTime = (time: any) => {
     let date = new Date(time);
     const fullDateString = date.toLocaleString('default', { timeZone: 'UTC' });
     const month = date.toLocaleString('default', { month: 'long', timeZone: 'UTC' });
@@ -124,7 +140,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
         console.log('nooo')
         return;
       }
-      if (isErc20 === true) {
+      if (isErc20) {
         setMintingERC20(true);
       } else {
         setMinting(true);
@@ -134,7 +150,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
         const cost = await calculateCost(user, isErc20);
         let finalCost = cost.mul(numToMint);
 
-        if (isErc20 === true) {
+        if (isErc20) {
           const allowance = await drop.erc20ReadContract.allowance(user.address, drop.address);
           if (allowance.sub(finalCost) < 0) {
             await drop.erc20Contract.approve(drop.address, constants.MaxUint256);
@@ -169,14 +185,14 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
             }
 
             if (method.includes('address') && method.includes('uint256')) {
-              if (isErc20 === true) {
+              if (isErc20) {
                 response = await contract.mintWithLoot(user.address, numToMint);
               } else {
                 response = await contract.mint(user.address, numToMint, extra);
               }
             } else {
               console.log(`contract ${contract}  num: ${numToMint}   extra ${extra}`);
-              if (isErc20 === true) {
+              if (isErc20) {
                 response = await contract.mintWithLoot(numToMint);
               } else {
                 response = await contract.mint(numToMint, extra);
@@ -204,17 +220,17 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
 
           const purchaseAnalyticParams = {
             currency: 'CRO',
-            value: ethers.utils.formatEther(finalCost),
+            items: [dropObjectAnalytics],
+            value: Number(ethers.utils.formatEther(finalCost)),
             transaction_id: receipt.transactionHash,
             quantity: numToMint,
-            items: [dropObjectAnalytics],
           };
 
           logEvent(getAnalytics(), 'purchase', purchaseAnalyticParams);
         }
 
         await onMintSuccess();
-      } catch (error) {
+      } catch (error: any) {
         Sentry.captureException(error);
         if (error.data) {
           console.log(error);
@@ -227,7 +243,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
           toast.error('Unknown Error');
         }
       } finally {
-        if (isErc20 === true) {
+        if (isErc20) {
           setMintingERC20(false);
         } else {
           setMinting(false);
@@ -249,7 +265,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
           <>
             <div className="d-flex flex-row justify-content-center">
               <HStack spacing={4}>
-                <Box align="center">
+                <Box textAlign="center">
                   <Heading as="h6" size="sm" className="mb-1">Mint Price</Heading>
                   {!regularCost && !drop.erc20Cost && (
                     <Heading as="h5" size="md">TBA</Heading>

@@ -33,7 +33,7 @@ const Drop = ({ssrDrop, ssrCollection}) => {
   return (
     <>
       <PageHead
-        title={ssrDrop.title}
+        title={`${ssrDrop.title} - Drop`}
         description={ssrDrop.subtitle}
         url={`/drops/${ssrDrop.slug}`}
         image={hostedImage(ssrCollection?.metadata.card ?? ssrDrop.images.drop)}
