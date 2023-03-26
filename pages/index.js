@@ -10,7 +10,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import ListingCollection from '../src/Components/components/ListingCollection';
 import HotCollections from '../src/Components/components/HotCollections';
-import CurrentDrops from '../src/Components/components/CurrentDrops';
+import CurrentDrops from '@src/components-v2/shared/drops/current-drops';
 import {getMarketData} from '@src/GlobalState/marketplaceSlice';
 import {millisecondTimestamp, newlineText, siPrefixedNumber} from '@src/utils';
 import {getTheme, theme} from '@src/Theme/theme';
