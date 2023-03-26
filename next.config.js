@@ -150,6 +150,16 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/collection/dr-boo-resurrection',
+        destination: '/collection/imagine-artists',
+        permanent: true,
+      },
+      {
+        source: '/collection/dr-boo-resurrection/:id',
+        destination: '/collection/imagine-artists/:id',
+        permanent: true,
+      },
+      {
         source: '/mad-auction',
         destination: '/auctions/mad-auction',
         permanent: false,
