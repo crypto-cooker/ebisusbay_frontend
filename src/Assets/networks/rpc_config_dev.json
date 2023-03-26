@@ -19283,6 +19283,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Skimps",
+      "slug": "skimps",
+      "multiToken": false,
+      "address": "0xF7EB66f4D8Cc442d7258215C52f3595a5902b206",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Join the pirate skimps and skimp around the world",
+        "avatar": "/img/collections/skimps/avatar.webp",
+        "card": "/img/collections/skimps/card.webp",
+        "banner": "/img/collections/skimps/banner.webp",
+        "website": "http://skimps.eu",
+        "twitter": "https://twitter.com/Skimps_NFT",
+        "discord": "https://discord.gg/Q5VHVJG976",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
