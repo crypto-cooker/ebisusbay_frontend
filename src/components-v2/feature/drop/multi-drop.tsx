@@ -18,6 +18,7 @@ import {dropState as statuses} from '@src/core/api/enums';
 import {EbisuDropAbi} from '@src/Contracts/Abis';
 import {appConfig} from "@src/Config";
 import {useAppSelector} from "@src/Store/hooks";
+import {formatEther} from "ethers/lib/utils";
 
 const config = appConfig();
 const drops = config.drops;
@@ -265,11 +266,20 @@ const MultiDrop = () => {
           };
 
           const purchaseAnalyticParams = {
-            currency: 'CRO',
             value: Number(ethers.utils.formatEther(finalCost)),
+            currency: 'CRO',
             transaction_id: receipt.transactionHash,
-            quantity: quantity,
-            items: [dropObjectAnalytics],
+            drop_name: dropObject.title.toString(),
+            drop_slug: dropObject.slug.toString(),
+            drop_address: dropObject.address.toString(),
+            items: [{
+              item_id: dropObject.slug,
+              item_name: dropObject.title,
+              item_brand: dropObject.author.name,
+              price: dropObject.cost,
+              discount: Number(dropObject.cost) - Number(formatEther(extra.value)),
+              quantity: quantity
+            }]
           };
 
           logEvent(getAnalytics(), 'purchase', purchaseAnalyticParams);

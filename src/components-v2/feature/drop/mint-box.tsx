@@ -8,7 +8,7 @@ import React, {useState} from "react";
 import {useDispatch} from "react-redux";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {parseUnits} from "ethers/lib/utils";
+import {formatEther, parseUnits} from "ethers/lib/utils";
 import {toast} from "react-toastify";
 import {getAnalytics, logEvent} from "@firebase/analytics";
 import * as Sentry from "@sentry/react";
@@ -185,13 +185,20 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
 
         {
           const purchaseAnalyticParams = {
-            currency: 'CRO',
             value: Number(ethers.utils.formatEther(finalCost)),
+            currency: 'CRO',
             transaction_id: receipt.transactionHash,
-            quantity: numToMint,
             drop_name: drop.title.toString(),
             drop_slug: drop.slug.toString(),
             drop_address: drop.address.toString(),
+            items: [{
+              item_id: drop.slug,
+              item_name: drop.title,
+              item_brand: drop.author.name,
+              price: drop.cost,
+              discount: Number(drop.cost) - Number(formatEther(extra.value)),
+              quantity: numToMint
+            }]
           };
 
           logEvent(getAnalytics(), 'purchase', purchaseAnalyticParams);

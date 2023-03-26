@@ -18,7 +18,7 @@ import {dropState as statuses} from '@src/core/api/enums';
 import {ERC1155} from '@src/Contracts/Abis';
 import {getTheme} from '@src/Theme/theme';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
-import {parseUnits} from "ethers/lib/utils";
+import {formatEther, parseUnits} from "ethers/lib/utils";
 import {appConfig} from "@src/Config";
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
@@ -225,13 +225,20 @@ const RyoshiDrop = ({drop}: RyoshiDropProps) => {
 
         {
           const purchaseAnalyticParams = {
-            currency: 'CRO',
             value: Number(ethers.utils.formatEther(finalCost)),
+            currency: 'CRO',
             transaction_id: receipt.transactionHash,
-            quantity: numToMint,
             drop_name: drop.title.toString(),
             drop_slug: drop.slug.toString(),
             drop_address: drop.address.toString(),
+            items: [{
+              item_id: drop.slug,
+              item_name: drop.title,
+              item_brand: drop.author.name,
+              price: drop.cost,
+              discount: Number(drop.cost) - Number(formatEther(extra.value)),
+              quantity: numToMint
+            }]
           };
 
           logEvent(getAnalytics(), 'purchase', purchaseAnalyticParams);
