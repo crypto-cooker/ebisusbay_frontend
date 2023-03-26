@@ -8,7 +8,7 @@ import React, {useState} from "react";
 import {useDispatch} from "react-redux";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {formatEther, parseUnits} from "ethers/lib/utils";
+import {parseUnits} from "ethers/lib/utils";
 import {toast} from "react-toastify";
 import {getAnalytics, logEvent} from "@firebase/analytics";
 import * as Sentry from "@sentry/react";
@@ -196,7 +196,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
               item_name: drop.title,
               item_brand: drop.author.name,
               price: drop.cost,
-              discount: Number(drop.cost) - Number(formatEther(extra.value)),
+              discount: regularCost - Number(ethers.utils.formatEther(finalCost)),
               quantity: numToMint
             }]
           };
