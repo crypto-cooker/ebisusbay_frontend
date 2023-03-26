@@ -13434,9 +13434,8 @@
         "avatar": "/img/collections/imagine-artists/avatar.webp",
         "card": "/img/collections/imagine-artists/card.webp",
         "banner": "/img/collections/imagine-artists/banner.webp",
-        "website": "https://drbghosts.com/",
-        "twitter": "https://www.twitter.com/drbghosts",
-        "discord": "https://discord.gg/EFW8bAZW3J",
+        "twitter": "https://www.twitter.com/iacreators",
+        "discord": "https://discord.gg/GrC8ctZZ",
         "categories": []
       },
       "verification": {
@@ -17560,7 +17559,7 @@
       "multiToken": false,
       "address": "0xC5Fe01a64e63EDefC40d620A5716B90c52D444f9",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "BOB Spaceships is AI generated collection on Cronos that focuses on community and passive income. All of our Spaceship NFTs is all unique 1 of 1 created by AI.",
         "avatar": "/img/collections/bob-spaceships/avatar.webp",
@@ -19281,6 +19280,31 @@
       },
       "verification": {
         "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Skimps",
+      "slug": "skimps",
+      "multiToken": false,
+      "address": "0xF7EB66f4D8Cc442d7258215C52f3595a5902b206",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Join the pirate skimps and skimp around the world",
+        "avatar": "/img/collections/skimps/avatar.webp",
+        "card": "/img/collections/skimps/card.webp",
+        "banner": "/img/collections/skimps/banner.webp",
+        "website": "http://skimps.eu",
+        "twitter": "https://twitter.com/Skimps_NFT",
+        "discord": "https://discord.gg/Q5VHVJG976",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
         "doxx": false,
         "kyc": false
       }
