@@ -17559,7 +17559,7 @@
       "multiToken": false,
       "address": "0xC5Fe01a64e63EDefC40d620A5716B90c52D444f9",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "BOB Spaceships is AI generated collection on Cronos that focuses on community and passive income. All of our Spaceship NFTs is all unique 1 of 1 created by AI.",
         "avatar": "/img/collections/bob-spaceships/avatar.webp",
