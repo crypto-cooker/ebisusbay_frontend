@@ -1,36 +1,42 @@
-import React, { memo, useState } from 'react';
-import { useRouter } from 'next/router';
-import { ethers } from 'ethers';
-import { toast } from 'react-toastify';
+import React, {memo, useState} from 'react';
+import {useRouter} from 'next/router';
+import {ethers} from 'ethers';
+import {toast} from 'react-toastify';
 import {
-  faLink,
+  faArrowUpFromBracket,
+  faBoltLightning,
   faEllipsisH,
   faExchangeAlt,
-  faTag,
-  faTimes,
+  faHand,
+  faLink,
   faPen,
-  faPlusCircle, faTags, faArrowUpFromBracket, faBoltLightning, faHand
+  faPlusCircle,
+  faTag,
+  faTags,
+  faTimes
 } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { MenuPopup } from '@src/Components/components/chakra-components';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {MenuPopup} from '@src/Components/components/chakra-components';
 import AnyMedia from '@src/Components/components/AnyMedia';
-import { nftCardUrl } from "@src/helpers/image";
+import {nftCardUrl} from "@src/helpers/image";
 import {
   Box,
   Flex,
-  Heading, HStack,
+  Heading,
+  HStack,
   Spacer,
-  Text, Tooltip,
+  Text,
+  Tooltip,
   useBreakpointValue,
   useClipboard,
   useDisclosure
 } from "@chakra-ui/react";
 import Image from "next/image";
 import {appUrl, caseInsensitiveCompare, round, siPrefixedNumber, timeSince} from "@src/utils";
-import { useColorModeValue } from "@chakra-ui/color-mode";
-import { darkTheme, lightTheme } from "@src/Theme/theme";
-import { useSelector } from "react-redux";
-import { faCheckCircle } from "@fortawesome/free-regular-svg-icons";
+import {useColorModeValue} from "@chakra-ui/color-mode";
+import {darkTheme, lightTheme} from "@src/Theme/theme";
+import {useSelector} from "react-redux";
+import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
 import Slider from './Slider';
 import UnwrapBundleDialog from '@src/Components/UnwrapBundleDialog';
 
@@ -134,7 +140,7 @@ const MyNftCard = ({
   };
 
   const isInBatchListingCart = () => {
-    return batchListingCart.nfts.some((o) => o.nft.nftId === nft.nftId && caseInsensitiveCompare(o.nft.nftAddress, nft.nftAddress));
+    return batchListingCart.items.some((o) => o.nft.nftId === nft.nftId && caseInsensitiveCompare(o.nft.nftAddress, nft.nftAddress));
   };
 
   return (
@@ -208,7 +214,7 @@ const MyNftCard = ({
                     className="card-img-top marketplace"
                     height={440}
                     width={440}
-                    video={batchListingCart.nfts.length > 0 ? undefined : (currentNft.video ?? currentNft.animation_url)}
+                    video={batchListingCart.items.length > 0 ? undefined : (currentNft.video ?? currentNft.animation_url)}
                     usePlaceholder={true}
                   />
                 </Box>

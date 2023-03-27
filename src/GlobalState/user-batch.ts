@@ -1,39 +1,63 @@
-import {createSlice, current} from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 import {caseInsensitiveCompare, round} from "@src/utils";
+import WalletNft from "@src/core/models/wallet-nft";
+
+export interface UserBatchItem {
+  nft: WalletNft;
+  quantity: number;
+  price?: number;
+  expiration?: number;
+}
+
+export interface UserBatchExtras {
+  address: string;
+  approval: boolean,
+  canTransfer?: boolean;
+  canList?: boolean;
+  royalty?: number;
+  floorPrice?: number;
+}
+
+interface UserBatchState {
+  items: UserBatchItem[];
+  isDrawerOpen: boolean;
+  extras: {[key: string]: UserBatchExtras};
+  refetchNfts: boolean;
+  type: 'listing' | 'bundle' | 'transfer';
+}
 
 const batchListingSlice = createSlice({
   name: 'batchListing',
   initialState: {
-    nfts: [],
+    items: [],
     isDrawerOpen: false,
     extras: {},
-    extrasBundle: {},
     refetchNfts: false,
     type: 'listing'
-  },
+  } as UserBatchState,
   reducers: {
     addToBatchListingCart: (state, action) => {
       const nftToAdd = action.payload;
-      if (!state.nfts.some((o) => caseInsensitiveCompare(o.nft.nftAddress, nftToAdd.nftAddress) && o.nft.nftId === nftToAdd.nftId)) {
-        state.nfts.push({nft: nftToAdd, price: null, quantity: null, expiration: 2592000000});
+      if (!state.items.some((o) => caseInsensitiveCompare(o.nft.nftAddress, nftToAdd.nftAddress) && o.nft.nftId === nftToAdd.nftId)) {
+        state.items.push({nft: nftToAdd, price: undefined, quantity: 1, expiration: 2592000000});
       }
 
-      if (state.nfts.length === 1) {
+      if (state.items.length === 1) {
         state.isDrawerOpen = true;
       }
     },
     removeFromBatchListingCart: (state, action) => {
       const nftToRemove = action.payload;
-      state.nfts = state.nfts.filter((o) => !(caseInsensitiveCompare(o.nft.nftAddress, nftToRemove.nftAddress) && o.nft.nftId === nftToRemove.nftId));
+      state.items = state.items.filter((o) => !(caseInsensitiveCompare(o.nft.nftAddress, nftToRemove.nftAddress) && o.nft.nftId === nftToRemove.nftId));
 
-      if (!state.nfts.some((o) => caseInsensitiveCompare(o.nft.nftAddress, nftToRemove.nftAddress))) {
+      if (!state.items.some((o) => caseInsensitiveCompare(o.nft.nftAddress, nftToRemove.nftAddress))) {
         const extras = state.extras;
         delete extras[nftToRemove.nftAddress.toLowerCase()];
         state.extras = extras;
       }
     },
     clearBatchListingCart: (state) => {
-      state.nfts = [];
+      state.items = [];
       state.extras = {};
     },
     openBatchListingCart: (state) => {
@@ -41,7 +65,7 @@ const batchListingSlice = createSlice({
     },
     closeBatchListingCart: (state) => {
       state.isDrawerOpen = false;
-      state.nfts = [];
+      state.items = [];
       state.extras = {};
     },
     minimizeBatchListingCart: (state) => {
@@ -49,45 +73,45 @@ const batchListingSlice = createSlice({
     },
     initialize: (state) => {
       state.isDrawerOpen = false;
-      state.nfts = [];
+      state.items = [];
       state.extras = {};
     },
     updatePrice: (state, action) => {
       const itemToModify = action.payload.nft;
       const price = action.payload.price;
-      const foundIndex = state.nfts.findIndex((o) => caseInsensitiveCompare(o.nft.nftAddress, itemToModify.nftAddress) && o.nft.nftId === itemToModify.nftId);
+      const foundIndex = state.items.findIndex((o) => caseInsensitiveCompare(o.nft.nftAddress, itemToModify.nftAddress) && o.nft.nftId === itemToModify.nftId);
       if (foundIndex >= 0) {
-        const nft = state.nfts[foundIndex]
+        const nft = state.items[foundIndex]
         nft.price = price;
-        state.nfts[foundIndex] = nft;
+        state.items[foundIndex] = nft;
       }
     },
     updateExpiration: (state, action) => {
       const itemToModify = action.payload.nft;
       const expiration = action.payload.expiration;
-      const foundIndex = state.nfts.findIndex((o) => caseInsensitiveCompare(o.nft.nftAddress, itemToModify.nftAddress) && o.nft.nftId === itemToModify.nftId);
+      const foundIndex = state.items.findIndex((o) => caseInsensitiveCompare(o.nft.nftAddress, itemToModify.nftAddress) && o.nft.nftId === itemToModify.nftId);
       if (foundIndex >= 0) {
-        const nft = state.nfts[foundIndex]
+        const nft = state.items[foundIndex]
         nft.expiration = expiration;
-        state.nfts[foundIndex] = nft;
+        state.items[foundIndex] = nft;
       }
     },
     update1155Quantity: (state, action) => {
       const itemToModify = action.payload.nft;
       const quantity = action.payload.quantity;
-      const foundIndex = state.nfts.findIndex((o) => caseInsensitiveCompare(o.nft.nftAddress, itemToModify.nftAddress) && o.nft.nftId === itemToModify.nftId);
+      const foundIndex = state.items.findIndex((o) => caseInsensitiveCompare(o.nft.nftAddress, itemToModify.nftAddress) && o.nft.nftId === itemToModify.nftId);
       if (foundIndex >= 0 && itemToModify.multiToken) {
-        const nft = state.nfts[foundIndex]
+        const nft = state.items[foundIndex]
         nft.quantity = quantity;
-        state.nfts[foundIndex] = nft;
+        state.items[foundIndex] = nft;
       }
     },
     cascadePrices: (state, action) => {
-      const startingItem = action.payload.startingItem ?? state.nfts[0];
+      const startingItem = action.payload.startingItem ?? state.items[0];
       let currentPrice = Number(action.payload.startingPrice);
       const step = Number(action.payload.step ?? 1);
-      let startingIndex = null;
-      state.nfts = state.nfts.map((o, index) => {
+      let startingIndex: number | null = null;
+      state.items = state.items.map((o, index) => {
         const isStartingItem = caseInsensitiveCompare(o.nft.nftAddress, startingItem.nft.nftAddress) && o.nft.nftId === startingItem.nft.nftId;
 
         if (isStartingItem) startingIndex = index;
@@ -101,11 +125,11 @@ const batchListingSlice = createSlice({
       });
     },
     cascadePricesPercent: (state, action) => {
-      const startingItem = action.payload.startingItem ?? state.nfts[0];
+      const startingItem = action.payload.startingItem ?? state.items[0];
       let currentPrice = Number(action.payload.startingPrice);
       const step = Number(action.payload.step ?? 1);
-      let startingIndex = null;
-      state.nfts = state.nfts.map((o, index) => {
+      let startingIndex: number | null = null;
+      state.items = state.items.map((o, index) => {
         const isStartingItem = caseInsensitiveCompare(o.nft.nftAddress, startingItem.nft.nftAddress) && o.nft.nftId === startingItem.nft.nftId;
 
         if (isStartingItem) startingIndex = index;
@@ -119,7 +143,7 @@ const batchListingSlice = createSlice({
     },
     applyPriceToAll: (state, action) => {
       const { price, expiration } = action.payload;
-      state.nfts = state.nfts.map((o) => {
+      state.items = state.items.map((o) => {
         const obj = {...o, price};
         if (expiration) obj.expiration = expiration;
         return obj;
@@ -127,12 +151,12 @@ const batchListingSlice = createSlice({
     },
     applyExpirationToAll: (state, action) => {
       const expiration = action.payload;
-      state.nfts = state.nfts.map((o) => {
+      state.items = state.items.map((o) => {
         return {...o, expiration};
       });
     },
     applyFloorPriceToAll: (state, action) => {
-      state.nfts = state.nfts.map((o) => {
+      state.items = state.items.map((o) => {
         const extra = state.extras[o.nft.nftAddress.toLowerCase()] ?? {};
         if (extra?.floorPrice) return {...o, price: extra.floorPrice}
         return o;
@@ -140,7 +164,7 @@ const batchListingSlice = createSlice({
     },
     applyFloorPctToAll: (state, action) => {
       const { pct } = action.payload;
-      state.nfts = state.nfts.map((o) => {
+      state.items = state.items.map((o) => {
         const extra = state.extras[o.nft.nftAddress.toLowerCase()] ?? {};
         if (extra?.floorPrice) {
           const price = round(extra.floorPrice * (1 + (pct / 100)))
@@ -170,7 +194,7 @@ const batchListingSlice = createSlice({
     },
     sortAll: (state, action) => {
       const { field, direction } = action.payload;
-      state.nfts = state.nfts.sort((a, b) => {
+      state.items = (state.items as UserBatchItem[]).sort((a, b) => {
         const dir1 = direction === 'asc' ? 1 : -1;
         const dir2 = direction === 'asc' ? -1 : 1;
 
@@ -186,6 +210,7 @@ const batchListingSlice = createSlice({
           const bFloorPrice = bExtra?.floorPrice ? Number(bExtra.floorPrice) : 0;
           return aFloorPrice > bFloorPrice ? dir1 : dir2;
         }
+        return 1;
       });
     },
   },

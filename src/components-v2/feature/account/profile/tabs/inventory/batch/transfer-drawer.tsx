@@ -2,45 +2,49 @@ import {Alert, AlertDescription, AlertIcon, Box, Center, Flex, GridItem, Spacer,
 import Button from "@src/Components/components/Button";
 import {Spinner} from "react-bootstrap";
 import React, {useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {addToBatchListingCart, clearBatchListingCart, setRefetchNfts} from "@src/GlobalState/batchListingSlice";
+import {useDispatch} from "react-redux";
+import {addToBatchListingCart, clearBatchListingCart, setRefetchNfts} from "@src/GlobalState/user-batch";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, pluralize, shortAddress} from "@src/utils";
 import * as Sentry from "@sentry/react";
-import {TransferDrawerItem} from "@src/Components/Account/Profile/Inventory/components/TransferDrawerItem";
+import TransferDrawerItem from "@src/components-v2/feature/account/profile/tabs/inventory/batch/transfer-drawer-item";
 import {FormControl as FormControlCK} from "@src/Components/components/chakra-components";
 import * as Yup from "yup";
 import {useFormik} from "formik";
 import {getCnsAddress, isCnsName} from "@src/helpers/cns";
-import {getNftsForAddress2} from "@src/core/api";
+import {useAppSelector} from "@src/Store/hooks";
+import nextApiService from "@src/core/services/api-service/next";
 
 const MAX_NFTS_IN_CART = 100;
 
-export const TransferDrawer = () => {
+const TransferDrawer = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const batchListingCart = useSelector((state) => state.batchListing);
+  const user = useAppSelector((state) => state.user);
+  const batchListingCart = useAppSelector((state) => state.batchListing);
   const [executingTransfer, setExecutingTransfer] = useState(false);
   const [showConfirmButton, setShowConfirmButton] = useState(false);
-  const [recipient, setRecipient] = useState(null);
-  const [mappedCnsAddress, setMappedCnsAddress] = useState(null);
+  const [recipient, setRecipient] = useState<string | null>(null);
+  const [mappedCnsAddress, setMappedCnsAddress] = useState<string | null>(null);
 
   const handleClearCart = () => {
     setShowConfirmButton(false);
     dispatch(clearBatchListingCart());
   };
 
-  const handleAddCollection = async (address) => {
+  const handleAddCollection = async (address: string) => {
     if (!address) return;
-    const nfts = await getNftsForAddress2(user.address, user.provider, 1, [address]);
-    for (const nft of nfts.nfts) {
+    const nfts = await nextApiService.getWallet(user.address!, {
+      page: 1,
+      collection: [address],
+    });
+    for (const nft of nfts.data) {
       dispatch(addToBatchListingCart(nft));
     }
   }
 
   const resetDrawer = () => {
     handleClearCart();
-    handleReset();
+    handleReset(null);
     setRecipient(null);
     setMappedCnsAddress(null);
   }
@@ -51,19 +55,19 @@ export const TransferDrawer = () => {
     try {
       setShowConfirmButton(false);
       setExecutingTransfer(true);
-      const filteredCartNfts = batchListingCart.nfts.filter((o) => {
-        return batchListingCart.extras[o.nft.nftAddress.toLowerCase()]?.approval;
+      const filteredCartNfts = batchListingCart.items.filter((o) => {
+        return batchListingCart.extras[o.nft.nftAddress.toLowerCase()]?.approval ?? false;
       });
       const nftAddresses = filteredCartNfts.map((o) => o.nft.nftAddress);
       const nftIds = filteredCartNfts.map((o) => o.nft.nftId);
 
       Sentry.captureEvent({ message: 'handleBatchTransfer', extra: { nftAddresses, nftIds } });
-      let tx = await user.contractService.market.bulkTransfer(nftAddresses, nftIds, recipient);
+      let tx = await user.contractService!.market.bulkTransfer(nftAddresses, nftIds, recipient);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       resetDrawer();
       dispatch(setRefetchNfts(true))
-    } catch (error) {
+    } catch (error: any) {
       if (error.data) {
         toast.error(error.data.message);
       } else if (error.message) {
@@ -95,7 +99,7 @@ export const TransferDrawer = () => {
       }
 
       setShowConfirmButton(true);
-    } catch (error) {
+    } catch (error: any) {
       if (error.data) {
         toast.error(error.data.message);
       } else if (error.message) {
@@ -109,9 +113,9 @@ export const TransferDrawer = () => {
 
   const canSubmit = () => {
     return !executingTransfer &&
-      batchListingCart.nfts.length > 0 &&
+      batchListingCart.items.length > 0 &&
       !Object.values(batchListingCart.extras).some((o) => !o.approval) &&
-      !batchListingCart.nfts.some((o) => o.nft.isStaked);
+      !batchListingCart.items.some((o) => o.nft.isStaked);
   }
 
   const validationForm = async () => {
@@ -177,15 +181,15 @@ export const TransferDrawer = () => {
       </GridItem>
       <GridItem p={4} overflowY="auto">
         <Flex mb={2}>
-          <Text fontWeight="bold" color={batchListingCart.nfts.length > MAX_NFTS_IN_CART && 'red'}>
-            {batchListingCart.nfts.length} / {MAX_NFTS_IN_CART} Items
+          <Text fontWeight="bold" color={batchListingCart.items.length > MAX_NFTS_IN_CART ? 'red' : 'auto'}>
+            {batchListingCart.items.length} / {MAX_NFTS_IN_CART} Items
           </Text>
           <Spacer />
           <Text fontWeight="bold" onClick={handleClearCart} cursor="pointer">Clear all</Text>
         </Flex>
-        {batchListingCart.nfts.length > 0 ? (
+        {batchListingCart.items.length > 0 ? (
           <>
-            {batchListingCart.nfts.map((item) => (
+            {batchListingCart.items.map((item) => (
               <TransferDrawerItem
                 key={`${item.nft.nftAddress}-${item.nft.nftId}`}
                 item={item}
@@ -208,7 +212,7 @@ export const TransferDrawer = () => {
             {!executingTransfer && (
               <Alert status="error" mb={2}>
                 <AlertIcon />
-                <AlertDescription>Transferring {batchListingCart.nfts.length} {pluralize(batchListingCart.nfts.length, 'item')}. Please double check the receiving address before continuing</AlertDescription>
+                <AlertDescription>Transferring {batchListingCart.items.length} {pluralize(batchListingCart.items.length, 'item')}. Please double check the receiving address before continuing</AlertDescription>
               </Alert>
             )}
             {executingTransfer && (
@@ -247,13 +251,13 @@ export const TransferDrawer = () => {
             >
               {executingTransfer ? (
                 <>
-                  Transferring {pluralize(batchListingCart.nfts.length, 'Item')}...
+                  Transferring {pluralize(batchListingCart.items.length, 'Item')}...
                   <Spinner animation="border" role="status" size="sm" className="ms-1">
                     <span className="visually-hidden">Loading...</span>
                   </Spinner>
                 </>
               ) : (
-                <>Transfer {pluralize(batchListingCart.nfts.length, 'Item')}</>
+                <>Transfer {pluralize(batchListingCart.items.length, 'Item')}</>
               )}
             </Button>
           </>
@@ -263,3 +267,5 @@ export const TransferDrawer = () => {
     </>
   )
 }
+
+export default TransferDrawer;

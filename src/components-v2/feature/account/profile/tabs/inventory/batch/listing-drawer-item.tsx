@@ -1,4 +1,4 @@
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {
   Badge,
   Box,
@@ -11,7 +11,8 @@ import {
   Menu,
   MenuButton,
   MenuItem,
-  MenuList, Select,
+  MenuList,
+  Select,
   Skeleton,
   Spacer,
   Stack,
@@ -25,8 +26,10 @@ import {
   setApproval,
   setExtras,
   updateExpiration,
-  updatePrice
-} from "@src/GlobalState/batchListingSlice";
+  updatePrice,
+  UserBatchExtras,
+  UserBatchItem
+} from "@src/GlobalState/user-batch";
 import {Contract} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
@@ -42,6 +45,7 @@ import {faEllipsisH, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {appConfig} from "@src/Config";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
 import {specialImageTransform} from "@src/hacks";
+import {useAppSelector} from "@src/Store/hooks";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -90,17 +94,26 @@ const expirationDatesValues = [
 
 const defaultExpiry = 2592000000;
 
-export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, onAddCollection, disabled, isBundling = false }) => {
+interface ListingDrawerItemProps {
+  item: UserBatchItem;
+  onCascadePriceSelected: (startingItem: UserBatchItem, startingPrice: number) => void;
+  onApplyAllSelected: (price: number, expirationDate: number) => void;
+  onAddCollection: (address: string) => void;
+  disabled: boolean;
+  isBundling?: boolean;
+}
+
+export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, onAddCollection, disabled, isBundling = false }: ListingDrawerItemProps) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [price, setPrice] = useState('');
   const [expirationDate, setExpirationDate] = useState(defaultExpiry.toString());
-  const [invalid, setInvalid] = useState(false);
+  const [invalid, setInvalid] = useState<string | boolean>(false);
 
   // Approvals
-  const extras = useSelector((state) => state.batchListing.extras[item.nft.nftAddress.toLowerCase()] ?? {});
+  const extras = useAppSelector((state) => state.batchListing.extras[item.nft.nftAddress.toLowerCase()] ?? {});
   const { approval: approvalStatus, canList } = extras;
   const [executingApproval, setExecutingApproval] = useState(false);
   const [initializing, setInitializing] = useState(false);
@@ -109,7 +122,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
     dispatch(removeFromBatchListingCart(item.nft));
   };
 
-  const handlePriceChange = useCallback((e) => {
+  const handlePriceChange = useCallback((e: any) => {
     const newSalePrice = e.target.value;
     if (numberRegexValidation.test(newSalePrice) || newSalePrice === '') {
       setInvalid(false);
@@ -119,7 +132,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
     }
   }, [dispatch, item.nft, price]);
 
-  const handleExpirationDateChange = useCallback((e) => {
+  const handleExpirationDateChange = useCallback((e: any) => {
     const expirationLength = parseInt(e.target.value);
     if (isNaN(expirationLength) || Number(expirationLength) < 1) {
       setInvalid('expiration');
@@ -131,7 +144,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
   }, [dispatch, item.nft, expirationDate]);
 
   useEffect(() => {
-    setPrice(item.price);
+    setPrice(item.price?.toString() ?? '');
   }, [item.price]);
 
   useEffect(() => {
@@ -154,7 +167,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       dispatch(setApproval({ address: item.nft.nftAddress, status: true }));
 
-    } catch (error) {
+    } catch (error: any) {
       if (error.data) {
         toast.error(error.data.message);
       } else if (error.message) {
@@ -172,21 +185,19 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
     async function func() {
       try {
         setInitializing(true);
-        if (!extras[item.nft.nftAddress.toLowerCase()]) {
-          const extras = { address: item.nft.nftAddress };
+        const newExtras: UserBatchExtras = { address: item.nft.nftAddress, approval: false };
 
-          extras.approval = await checkApproval();
+        newExtras.approval = await checkApproval();
 
-          const metadata = await getCollectionMetadata(item.nft.nftAddress);
-          if (metadata.collections.length > 0) {
-            extras.floorPrice = metadata.collections[0].stats.total.floorPrice;
-          }
-
-          extras.royalty = await collectionRoyaltyPercent(item.nft.nftAddress, item.nft.nftId);
-          extras.canList = item.nft.listable && !item.nft.isStaked;
-
-          dispatch(setExtras(extras));
+        const metadata = await getCollectionMetadata(item.nft.nftAddress);
+        if (metadata.collections.length > 0) {
+          newExtras.floorPrice = metadata.collections[0].stats.total.floorPrice;
         }
+
+        newExtras.royalty = await collectionRoyaltyPercent(item.nft.nftAddress, item.nft.nftId);
+        newExtras.canList = item.nft.listable && !item.nft.isStaked;
+
+        dispatch(setExtras(newExtras));
       } finally {
         setInitializing(false);
       }
@@ -215,6 +226,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
         ) : (
           <AnyMedia
             image={specialImageTransform(item.nft.nftAddress, ImageKitService.buildAvatarUrl(item.nft.image))}
+            video={null}
             title={item.nft.name}
             usePlaceholder={true}
             className="img-fluid img-rounded-5"
@@ -273,8 +285,8 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
                               <FontAwesomeIcon icon={faEllipsisH} />
                             </MenuButton>
                             <MenuList textAlign="right">
-                              <MenuItem onClick={() => onApplyAllSelected(price, expirationDate)}>Apply values to all</MenuItem>
-                              <MenuItem onClick={() => onCascadePriceSelected(item, price)}>Cascade price</MenuItem>
+                              <MenuItem onClick={() => onApplyAllSelected(Number(price), Number(expirationDate))}>Apply values to all</MenuItem>
+                              <MenuItem onClick={() => onCascadePriceSelected(item, Number(price))}>Cascade price</MenuItem>
                               <MenuItem onClick={() => onAddCollection(item.nft.nftAddress)}>Add entire collection</MenuItem>
                               <MenuItem onClick={handleRemoveItem}>Remove</MenuItem>
                             </MenuList>

@@ -132,7 +132,7 @@ const MyNftCard = ({
   };
 
   const isInBatchListingCart = () => {
-    return batchListingCart.nfts.some((o) => o.nft.nftId === nft.nftId && caseInsensitiveCompare(o.nft.nftAddress, nft.nftAddress));
+    return batchListingCart.items.some((o) => o.nft.nftId === nft.nftId && caseInsensitiveCompare(o.nft.nftAddress, nft.nftAddress));
   };
 
   return (
@@ -204,7 +204,7 @@ const MyNftCard = ({
                         className="card-img-top marketplace"
                         height={440}
                         width={440}
-                        video={batchListingCart.nfts.length > 0 ? undefined : (nft.video ?? nft.animation_url)}
+                        video={batchListingCart.items.length > 0 ? undefined : (nft.video ?? nft.animation_url)}
                         usePlaceholder={true}
               />
             </Box>

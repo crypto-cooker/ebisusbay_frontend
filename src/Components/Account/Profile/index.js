@@ -20,8 +20,8 @@ import {ethers} from "ethers";
 import {Badge} from "react-bootstrap";
 import {Grid, GridItem, useBreakpointValue, useColorModeValue} from "@chakra-ui/react";
 import { motion } from 'framer-motion'
-import {BatchListingDrawer} from "@src/Components/Account/Profile/Inventory/BatchListingDrawer";
-import {closeBatchListingCart} from "@src/GlobalState/batchListingSlice";
+import BatchDrawer from "@src/components-v2/feature/account/profile/tabs/inventory/batch/batch-drawer";
+import {closeBatchListingCart} from "@src/GlobalState/user-batch";
 
 const MotionGrid = motion(Grid)
 
@@ -207,7 +207,7 @@ export default function Profile({ address, profile, tab }) {
           </section>
         </GridItem>
         <GridItem borderLeft={useMobileCartView ? 'none' : '0.5px solid'} borderLeftColor={batchListingBorderColor}>
-          <BatchListingDrawer
+          <BatchDrawer
             onClose={() => dispatch(closeBatchListingCart())}
             position="fixed"
             w="358px"

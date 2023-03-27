@@ -1,19 +1,27 @@
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {
   Badge,
   Box,
-  Flex, IconButton,
+  Flex,
   Image,
   Menu,
-  MenuButton, MenuItem,
+  MenuButton,
+  MenuItem,
   MenuList,
-  Skeleton, Stack,
+  Skeleton,
+  Stack,
   Text,
   useColorModeValue,
   VStack
 } from "@chakra-ui/react";
 import React, {useCallback, useEffect, useState} from "react";
-import {removeFromBatchListingCart, setApproval, setExtras} from "@src/GlobalState/batchListingSlice";
+import {
+  removeFromBatchListingCart,
+  setApproval,
+  setExtras,
+  UserBatchExtras,
+  UserBatchItem
+} from "@src/GlobalState/user-batch";
 import {Contract} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
@@ -26,16 +34,22 @@ import {faEllipsisH, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {appConfig} from "@src/Config";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
 import {specialImageTransform} from "@src/hacks";
+import {useAppSelector} from "@src/Store/hooks";
 
 const config = appConfig();
 
-export const TransferDrawerItem = ({ item, onAddCollection }) => {
+interface TransferDrawerItemProps {
+  item: UserBatchItem;
+  onAddCollection: (address: string) => void;
+}
+
+const TransferDrawerItem = ({ item, onAddCollection }: TransferDrawerItemProps) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
 
   // Approvals
-  const extras = useSelector((state) => state.batchListing.extras[item.nft.nftAddress.toLowerCase()] ?? {});
+  const extras: UserBatchExtras = useAppSelector((state) => state.batchListing.extras[item.nft.nftAddress.toLowerCase()] ?? {});
   const { approval: approvalStatus, canTransfer} = extras;
   const [executingApproval, setExecutingApproval] = useState(false);
   const [initializing, setInitializing] = useState(false);
@@ -58,7 +72,7 @@ export const TransferDrawerItem = ({ item, onAddCollection }) => {
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       dispatch(setApproval({ address: item.nft.nftAddress, status: true }));
 
-    } catch (error) {
+    } catch (error: any) {
       if (error.data) {
         toast.error(error.data.message);
       } else if (error.message) {
@@ -76,14 +90,12 @@ export const TransferDrawerItem = ({ item, onAddCollection }) => {
     async function func() {
       setInitializing(true);
       try {
-        if (!extras[item.nft.nftAddress.toLowerCase()]) {
-          const extras = { address: item.nft.nftAddress };
+        const newExtras: UserBatchExtras = { address: item.nft.nftAddress, approval: false };
 
-          extras.approval = await checkApproval();
-          extras.canTransfer = !item.nft.isStaked;
+        newExtras.approval = await checkApproval();
+        newExtras.canTransfer = !item.nft.isStaked;
 
-          dispatch(setExtras(extras));
-        }
+        dispatch(setExtras(newExtras));
       } finally {
         setInitializing(false);
       }
@@ -113,6 +125,7 @@ export const TransferDrawerItem = ({ item, onAddCollection }) => {
           ) : (
             <AnyMedia
               image={specialImageTransform(item.nft.nftAddress, ImageKitService.buildAvatarUrl(item.nft.image))}
+              video={null}
               title={item.nft.name}
               usePlaceholder={true}
               className="img-fluid img-rounded-5"
@@ -171,3 +184,5 @@ export const TransferDrawerItem = ({ item, onAddCollection }) => {
     </Box>
   )
 }
+
+export default TransferDrawerItem;
