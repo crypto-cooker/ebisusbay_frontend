@@ -2,7 +2,7 @@
 ### Build image ###
 ###################
 
-FROM node:16 as build
+FROM node:18 as build
 
 # Install build dependencies for underlying OS
 RUN apt-get update && apt-get install -y g++ build-essential
@@ -24,6 +24,8 @@ COPY pages ./pages
 COPY public ./public
 COPY src ./src
 COPY next.config.js ./
+COPY jsconfig.json ./
+COPY tsconfig.json ./
 
 # Build the project
 RUN NEXT_PUBLIC_ENV=development npm run build
@@ -32,7 +34,7 @@ RUN NEXT_PUBLIC_ENV=development npm run build
 ### Runtime image ###
 #####################
 
-FROM node:16-slim
+FROM node:18-slim
 
 # Update packages
 RUN apt-get update && apt-get install -y git curl procps htop net-tools netcat dnsutils

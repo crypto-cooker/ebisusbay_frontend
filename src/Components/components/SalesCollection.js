@@ -16,9 +16,9 @@ import {ImageKitService} from "@src/helpers/image";
 const SalesCollection = ({
   showLoadMore = true,
   collectionId = null,
-  tokenId = null,
+  tokenId = '',
   sellerId = null,
-  cacheName = null,
+  cacheName = '',
 }) => {
   const dispatch = useDispatch();
 
@@ -52,7 +52,7 @@ const SalesCollection = ({
     if (collectionId) {
       const filterOption = new MarketFilters();
       filterOption.collection.value = collectionId;
-      if (tokenId != null) {
+      if (tokenId !== '') {
         filterOption.tokenId = tokenId;
       }
 
@@ -186,40 +186,38 @@ const SalesCollection = ({
                 <tr key={index}>
                   <td style={{ minWidth: '50px' }}>
                     <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
-                      <a>
-                        {isBundle(listing.nftAddress) ? (
-                          <img
-                            className="lazy rounded"
-                            src={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')}
-                            alt={listing.nft.name}
-                            style={{ maxHeight: '75px' }}
-                          />
-                        ) : (
-                          <img
-                            className="lazy rounded"
-                            src={listing.nft.image}
-                            alt={listing.nft.name}
-                            style={{ maxHeight: '75px' }}
-                          />
-                        )}
-                      </a>
+                      {isBundle(listing.nftAddress) ? (
+                        <img
+                          className="lazy rounded"
+                          src={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')}
+                          alt={listing.nft.name}
+                          style={{ maxHeight: '75px' }}
+                        />
+                      ) : (
+                        <img
+                          className="lazy rounded"
+                          src={listing.nft.image}
+                          alt={listing.nft.name}
+                          style={{ maxHeight: '75px' }}
+                        />
+                      )}
                     </Link>
                   </td>
                   <th style={{ minWidth: '115px' }}>
                     <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
-                      <a>{listing.nft.name ?? 'Unknown'}</a>
+                      {listing.nft.name ?? 'Unknown'}
                     </Link>
                   </th>
                   <td>{listing.nft.rank ?? '-'}</td>
                   <td style={{ minWidth: '100px' }}>{ethers.utils.commify(Math.round(listing.price))} CRO</td>
                   <td>
                     <Link href={`/account/${listing.seller}`}>
-                      <a>{shortAddress(listing.seller)}</a>
+                      {shortAddress(listing.seller)}
                     </Link>
                   </td>
                   <td>
                     <Link href={`/account/${listing.purchaser}`}>
-                      <a>{shortAddress(listing.purchaser)}</a>
+                      {shortAddress(listing.purchaser)}
                     </Link>
                   </td>
                   <td className="px-2" style={{ minWidth: '115px' }}>

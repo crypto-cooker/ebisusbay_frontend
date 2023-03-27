@@ -8,6 +8,12 @@ const sort = [
     label: 'Latest Listings',
   },
   {
+    id: 'expirationDate',
+    key: 'expirationDate',
+    direction: 'asc',
+    label: 'Ending Soon',
+  },
+  {
     id: 'price-desc',
     key: 'price',
     direction: 'desc',
@@ -23,14 +29,14 @@ const sort = [
     id: 'rank-asc',
     key: 'rank',
     direction: 'asc',
-    label: 'Rare to Common',
+    label: 'Rank: Rare to Common',
   },
   {
     id: 'rank-desc',
     key: 'rank',
     direction: 'desc',
-    label: 'Common to Rare',
-  },
+    label: 'Rank: Common to Rare',
+  }
 ];
 
 export const sortOptions = sort.map((x) => SortOption.fromJson(x));

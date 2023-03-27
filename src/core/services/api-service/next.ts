@@ -1,20 +1,27 @@
 import axios, {AxiosInstance} from "axios";
-import {ListingsQuery} from "@src/core/services/api-service/mapi/queries/listings";
+import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
 import {PagedList} from "@src/core/services/api-service/paginated-list";
 import Listing from "@src/core/models/listing";
 import SearchQuery from "@src/core/services/api-service/mapi/queries/search";
-import OffersQuery, {OffersQueryParams} from "@src/core/services/api-service/mapi/queries/offers";
+import {OffersQueryParams} from "@src/core/services/api-service/mapi/queries/offers";
 import {Api, OfferType} from "@src/core/services/api-service/types";
 import {Offer} from "@src/core/models/offer";
+import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
+import WalletNft from "@src/core/models/wallet-nft";
 
 class NextApiService implements Api {
   private next: AxiosInstance;
 
   constructor() {
-    this.next = axios.create({baseURL: '/api'});
+    this.next = axios.create({
+      baseURL: '/api',
+      paramsSerializer: {
+        indexes: null
+      }
+    });
   }
 
-  async getListings(query?: ListingsQuery): Promise<PagedList<any>> {
+  async getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>> {
     const response = await this.next.get(`listings`, {
       params: query
     });
@@ -46,20 +53,27 @@ class NextApiService implements Api {
     return response.data;
   }
 
+  async getWallet(address: string, query?: WalletsQueryParams): Promise<PagedList<WalletNft>> {
+    const response = await this.next.get(`users/${address}/wallet`, {
+      params: query
+    });
+
+    return response.data;
+  }
 
   // Non-interface convenience methods
 
-  async getListingsByCollection(address: string, query?: ListingsQuery): Promise<PagedList<any>> {
-    if (!query) query = ListingsQuery.default();
+  async getListingsByCollection(address: string, query?: ListingsQueryParams): Promise<PagedList<any>> {
+    if (!query) query = {};
     query.collection = address;
 
     return await this.getListings(query);
   }
 
-  async getListingsByIds(listingIds: string | string[], query?: ListingsQuery): Promise<PagedList<any>> {
+  async getListingsByIds(listingIds: string | string[], query?: ListingsQueryParams): Promise<PagedList<any>> {
     if (!Array.isArray(listingIds)) listingIds = [listingIds];
 
-    if (!query) query = ListingsQuery.default();
+    if (!query) query = {};
     query.listingId = listingIds;
 
     return await this.getListings(query);
@@ -71,8 +85,8 @@ class NextApiService implements Api {
    * @param address
    * @param query
    */
-  async getAllListingsByUser(address: string, query?: ListingsQuery): Promise<PagedList<any>> {
-    if (!query) query = ListingsQuery.default();
+  async getAllListingsByUser(address: string, query?: ListingsQueryParams): Promise<PagedList<any>> {
+    if (!query) query = {};
     query.seller = address;
     query.pageSize = 1000;
 

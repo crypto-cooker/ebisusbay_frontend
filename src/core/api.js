@@ -250,7 +250,7 @@ export async function getCollectionPowertraits(contractAddress) {
 }
 
 
-export async function getUnfilteredListingsForAddress(walletAddress, walletProvider, page) {
+export async function getUnfilteredListingsForAddress(walletAddress, walletProvider, page, sort = null) {
   let query = {
     seller: walletAddress,
     state: 0,
@@ -259,6 +259,7 @@ export async function getUnfilteredListingsForAddress(walletAddress, walletProvi
     sortBy: 'listingTime',
     direction: 'asc',
   };
+  if (sort) query = {...query, ...sort};
 
   // const signer = walletProvider.getSigner();
 
@@ -272,7 +273,7 @@ export async function getUnfilteredListingsForAddress(walletAddress, walletProvi
     const listings = json.listings || [];
 
     //  array of {id, address} wallet nfts
-    const quickWallet = await getQuickWallet(walletAddress, {pageSize: 500});
+    const quickWallet = await getQuickWallet(walletAddress, {pageSize: 1000});
     const walletNfts = quickWallet.data.map((nft) => {
       return { id: nft.nftId, address: nft.nftAddress };
     });
@@ -282,7 +283,7 @@ export async function getUnfilteredListingsForAddress(walletAddress, walletProvi
         const { listingId, price, nft, purchaser, valid, state, is1155, nftAddress, invalid } = item;
         const { name, image, rank } = nft || {};
 
-        const listingTime = moment(new Date(item.listingTime * 1000)).format('DD/MM/YYYY, HH:mm');
+        const listingTime = item.listingTime;
         const id = item.nftId;
         const isInWallet = !!walletNfts.find((walletNft) => caseInsensitiveCompare(walletNft.address, nftAddress) && walletNft.id === id);
         const listed = true;
@@ -345,7 +346,7 @@ export async function getUnfilteredListingsForAddress(walletAddress, walletProvi
   }
 }
 
-export async function getNftSalesForAddress(walletAddress, page) {
+export async function getNftSalesForAddress(walletAddress, page, sort = null) {
   let query = {
     seller: walletAddress,
     state: 1,
@@ -354,6 +355,7 @@ export async function getNftSalesForAddress(walletAddress, page) {
     sortBy: 'saleTime',
     direction: 'desc',
   };
+  if (sort) query = {...query, ...sort};
 
   try {
     const queryString = new URLSearchParams(query);
@@ -568,8 +570,12 @@ async function getAllListingsForUser(walletAddress) {
     });
     const url = new URL(api.listings, `${api.baseUrl}`);
     const listingsReponse = await (await fetch(`${url}?${queryString}`)).json();
-    listings = [...listings, ...listingsReponse.listings];
-    chunkParams.complete = listingsReponse.listings.length < chunkParams.pageSize;
+
+    // Workaround in testnet in case testnet doesn't return the correct response
+    const responseListings = listingsReponse.listings ?? [];
+
+    listings = [...listings, ...responseListings];
+    chunkParams.complete = responseListings.length < chunkParams.pageSize;
     chunkParams.curPage++;
   }
 

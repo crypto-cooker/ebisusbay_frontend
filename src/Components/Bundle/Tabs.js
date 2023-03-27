@@ -5,7 +5,7 @@ import { specialImageTransform } from '@src/hacks';
 import Link from "next/link";
 import {shortAddress, timeSince} from "@src/utils";
 import NFTTabOffers from '@src/Components/Offer/NFTTabOffers';
-import ListingItem from "../NftDetails/NFTTabListings/ListingItem";
+import ListingItem from "@src/components-v2/feature/nft/tabs/listings/item";
 import { Contract, ethers } from 'ethers';
 import {getTheme} from "@src/Theme/theme";
 import {useSelector} from "react-redux";
@@ -128,20 +128,16 @@ const Tabs = ({ nft }) => {
                       <Stack>
                         {nft.collectionName && (
                           <Link href={`/collection/${nft.address}`}>
-                            <a>
-                              <h6
-                                className="card-title mt-auto fw-normal mb-0"
-                                style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
-                              >
-                                {nft.name}
-                              </h6>
-                            </a>
+                            <h6
+                              className="card-title mt-auto fw-normal mb-0"
+                              style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
+                            >
+                              {nft.name}
+                            </h6>
                           </Link>
                         )}
                         <Link href={`/collection/${nft.address}/${nft.id}`}>
-                          <a>
-                            <Text fontWeight='bold'>{nft.name}</Text>
-                          </a>
+                          <Text fontWeight='bold'>{nft.name}</Text>
                         </Link>
                       </Stack>
 

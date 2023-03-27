@@ -844,6 +844,7 @@ html[data-theme='dark'] {
   .accordion-item {
     background-color: transparent;
     border-bottom: 1px solid $dividerSoft;
+    color: $textColor1 !important;
   }
   hr {
     border: 1px solid $dividerSoft;

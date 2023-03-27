@@ -27,7 +27,7 @@ const RyoshiStakingNftCard = ({
   const [isHovered, setIsHovered] = useState(false);
   const user = useSelector((state) => state.user);
   const ryoshiStakingCart = useSelector((state) => state.ryoshiStakingCart);
-  const { onCopy } = useClipboard(nftUrl);
+  const { onCopy } = useClipboard(nftUrl.toString());
 
   const handleCopyLinkButtonPressed = () => {
     onCopy();
@@ -174,7 +174,7 @@ const RyoshiStakingNftCard = ({
             <span className="card-text">
               {nft.listed && nft.price ? (
                 <div className="d-flex">
-                  <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
+                  <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
                   <span className="ms-1">
                     {ethers.utils.commify(round(nft.price, 2))}
                   </span>

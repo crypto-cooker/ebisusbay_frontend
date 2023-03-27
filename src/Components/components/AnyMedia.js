@@ -123,18 +123,16 @@ export const AnyMedia = ({
             <IFrame url={image} />
           ) : url ? (
             <Link href={url} target={newTab ? '_blank' : '_self'}>
-              <a>
-                <Image
-                  image={transformedImage}
-                  title={title}
-                  className={className}
-                  blur={blurImageUrl(transformedImage)}
-                  sizes={sizes}
-                  layout={layout}
-                  width={width}
-                  height={height}
-                />
-              </a>
+              <Image
+                image={transformedImage}
+                title={title}
+                className={className}
+                blur={blurImageUrl(transformedImage)}
+                sizes={sizes}
+                layout={layout}
+                width={width}
+                height={height}
+              />
             </Link>
           ) : (
             <Image

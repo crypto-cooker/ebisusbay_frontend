@@ -1,24 +1,4 @@
 {
-  "name": "Cronos Testnet",
-  "chain_id": "338",
-  "write_rpc": "https://evm-t3.cronos.org/",
-  "read_rpc": "https://rpc.ebisusbay.biz/",
-  "symbol": "tCRO",
-  "explorer": "https://cronos.org/explorer/testnet3/",
-  "api_base": "https://testapi.ebisusbay.biz/",
-  "app_base": "https://testapp.ebisusbay.biz/",
-  "cdn_base": "https://cdn.ebisusbay.biz/",
-  "subgraph_base": "https://testgraph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/",
-  "membership_contract": "0x3F1590A5984C89e6d5831bFB76788F3517Cdf034",
-  "market_contract": "0xb3cB12e7F9e442ef799a2B7e92f65ab8710d7b27",
-  "stake_contract": "0x70A9989dd73B026B34462BE158963587dD9ca16f",
-  "auction_contract": "0xbA272524C9BFDa68741Be1A06f8376A749fc4870",
-  "cronie_contract": "0xe9DCa9E03F31CBD538A19a89eA2cA3684AF2788f",
-  "elon_contract": "0x2fE1f2722fa215A68b92aECaD425259C0D645972",
-  "ebisu_contract": "0x65A422AB9c95fc94208E010B8d4ab50F7E79af19",
-  "offer_contract": "0x8Dd84fb5d7f8A504BA2398243D768C604f8Daf5E",
-  "slothy_rugsurance_contract": "0x99F3960E8219384BF0624D388cAD698d5A54AE6C",
-  "mm_auction_contract": "0x84356061d598A7bCE028dB6a37b14F84cf4A5905",
   "known_tokens": {
     "loot": {
       "name": "LOOT",
@@ -2649,10 +2629,10 @@
       }
     },
     {
-      "slug": "sea-dragon",
+      "slug": "seashrine-vip",
       "name": "SeaShrine VIP",
       "onChain": false,
-      "address": "0xe7c594926cEb73B0669c72bfb641c5b7Cde0a4aE",
+      "address": "0xa4C40C51de20d1e75E0ac83D6F043AF2f9C6Faa9",
       "multiToken": false,
       "listable": true,
       "metadata": {
@@ -3125,6 +3105,109 @@
         "verified": true,
         "doxx": false,
         "kyc": false
+      }
+    },
+    {
+      "name": "The CronosVerse Suites",
+      "slug": "the-cronosverse-suites",
+      "multiToken": false,
+      "address": "0x3443171b364B49B7D0f87861e961240D0b1D88a8",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Each SUITE NFT represents ownership of either an office, studio, apartment or luxury sweet in one of the downtown towers within The CronosVerse.  By owning a SUITE NFT, users are able to access The CronosVerse and customize their metaverse experience inside of their digital property",
+        "avatar": "/img/collections/the-cronosverse-suites/avatar.webp",
+        "card": "/img/collections/the-cronosverse-suites/card.webp",
+        "banner": "/img/collections/the-cronosverse-suites/banner.webp",
+        "website": "https://thecronosverse.com/",
+        "twitter": "https://twitter.com/TheCronosVerse",
+        "discord": "https://discord.gg/E9Mzzy9Hex",
+        "categories": [
+          "virtual-worlds",
+          "art",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
+    },
+    {
+      "name": "For My Brothers",
+      "slug": "for-my-brothers",
+      "multiToken": false,
+      "address": "0x6DFdA93e4a23Ef5245278ff7328fC541FeC1DC3D",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "For My Brothers is a charity focused NFT collection created by Elkay, the artist behind Trooprz. \n\nThe collection will focus on 3 key goals;\n\n- Kick-start 'Hearts of Gold' charity fund (40%)\n- Raise awareness and support Mens Mental Health in the Crypto/NFT space\n- Support the development of the CroDraw Lottery (and give holder discount!)\n\n420 hand-crafted, algorithmically generated, unique NFTs.",
+        "avatar": "/img/collections/for-my-brothers/avatar.webp",
+        "card": "/img/collections/for-my-brothers/card.webp",
+        "banner": "/img/collections/for-my-brothers/banner.webp",
+        "website": "https://trooprz.army/",
+        "twitter": "https://twitter.com/trooprzarmy",
+        "discord": "https://discord.gg/Trooprz",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "CroMorphs",
+      "slug": "cromorphs",
+      "multiToken": false,
+      "address": "0x0a9aDe7c04AF4902c84D120B18d69fFFe5AE099E",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CroMorphs are currently stuck in a timeloop - and need your help to mint safely out of the timeloop - and onto the cronos chain.\nThese mysterious creatures have connections to mythic anicent worlds - where they once lived.\n\nThey now find themselves in MetaMorphis - a barren desert land, where they are doing their best to grow and prosper.\nExplore the hidden secrets of MetaMorphis together with CroMorphs, and unlock all the mysteries of the world.",
+        "avatar": "/img/collections/cromorphs/avatar.webp",
+        "banner": "/img/collections/cromorphs/banner.webp",
+        "card": "/img/collections/cromorphs/card.webp",
+        "website": "https://cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/JsUWNKnQjx",
+        "medium": "https://medium.com/@nilsenorjan",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "GDC Proof-Of-Attendance VIP",
+      "slug": "gdc-poa-vip",
+      "multiToken": false,
+      "address": "0xd464f36885163e124e3a15e31c0e581ba3f648ab",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "hidden",
+        "verified": true
       }
     }
   ],
@@ -6222,6 +6305,49 @@
       }
     },
     {
+      "id": 115,
+      "slug": "seashrine-vip",
+      "title": "SeaShrine Founding Member VIP",
+      "subtitle": "SeaShrine is a new marketplace founded and built by the same team behind the Cronos success, Ebisu's Bay. With upcoming feature parity with their previous endeavor, the team looks to replicate their accomplishments and to recreate a Gold Standard for marketplaces on the new Aptos blockchain. Embark on this journey with us by minting a VIP Founding Member NFT now!",
+      "description": "SeaShrine is a new marketplace founded and built by the same team behind the Cronos success, Ebisu's Bay. With upcoming feature parity with their previous endeavor, the team looks to replicate their accomplishments and to recreate a Gold Standard for marketplaces on the new Aptos blockchain. Embark on this journey with us by minting a VIP Founding Member NFT now!",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "0xa4C40C51de20d1e75E0ac83D6F043AF2f9C6Faa9",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 8800,
+      "cost": "0.09",
+      "memberCost": "0.0777",
+      "whitelistCost": "0.0777",
+      "foundersOnly": false,
+      "start": 1664478000000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": false,
+      "images": {
+        "drop": "/img/drops/seashrine-vip/drop.webp",
+        "banner": "/img/drops/seashrine-vip/banner.webp",
+        "avatar": "/img/drops/seashrine-vip/avatar.webp",
+        "preview": "/img/drops/seashrine-vip/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
       "id": 117,
       "slug": "cronos-fighters-v2",
       "title": "Cronos Fighters",
@@ -7535,6 +7661,128 @@
         "doxx": false,
         "kyc": true,
         "escrow": false
+      }
+    },
+    {
+      "id": 161,
+      "slug": "the-cronosverse-suites",
+      "title": "The CronosVerse Suites",
+      "subtitle": "Each SUITE NFT represents ownership of either an office, studio, apartment or luxury sweet in one of the downtown towers within The CronosVerse.  By owning a SUITE NFT, users are able to access The CronosVerse and customize their metaverse experience inside of their digital property",
+      "description": "Each SUITE NFT represents ownership of either an office, studio, apartment or luxury sweet in one of the downtown towers within The CronosVerse.  By owning a SUITE NFT, users are able to access The CronosVerse and customize their metaverse experience inside of their digital property.\n\nThe CronosVerse is the first true metaverse project on the Cronos Blockchain.  Our goal is to create the ultimate Social MMO gaming experience for the entire Cronos community.",
+      "author": {
+        "name": "CronosVerse",
+        "website": "https://thecronosverse.com/",
+        "twitter": "https://twitter.com/TheCronosVerse",
+        "discord": "https://discord.gg/E9Mzzy9Hex"
+      },
+      "address": "0x3443171b364B49B7D0f87861e961240D0b1D88a8",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 40,
+      "totalSupply": 668,
+      "cost": "950",
+      "memberCost": "950",
+      "whitelistCost": "850",
+      "foundersOnly": false,
+      "start": 1677092035000,
+      "salePeriods": {
+        "presale": 1677092035000,
+        "public": 1677095635000
+      },
+      "priceDescription": "Whitelist-only presale for the first hour. Public sale after presale ends.",
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/the-cronosverse-suites/drop.webp",
+        "banner": "/img/drops/the-cronosverse-suites/banner.webp",
+        "avatar": "/img/collections/the-cronosverse-suites/avatar.webp",
+        "preview": "/img/collections/the-cronosverse-suites/card.webp"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
+      }
+    },
+    {
+      "id": 162,
+      "slug": "cromorphs",
+      "title": "CroMorphs",
+      "subtitle": "CroMorphs are currently stuck in a timeloop - and need your help to mint safely out of the timeloop - and onto the cronos chain.\nThese mysterious creatures have connections to mythic anicent worlds - where they once lived.",
+      "description": "2500 CroMorphs with layers of utilities.\n\n3 main bodies - Crotakers, Crofennecs, and Croplings.\nThese are easely recognizable by their different looks. \n\nWith help from their friends CroSquitos - that are bonded to them as they mint into the lands - they discover many secrets in this barren desert world.\n \nExplore the world, and venture into the deepest parts of the underworld if you dare. Sacrifices might have to be made in Tartarus.\n\nGrow your CroMorphs and gain skills on your NFT while you also earn $MORPHS token.\n\nThere will be several elements within MetaMorphis - that you can utilize to boost your growth, and earn.\n\nThese are the 9 skills on your CroMorphs :\n-Cunning\n-Rapidness\n-Omnipotence\n-Mentality\n-Osmosis\n-Reputation\n-Perception\n-Health\n-Speed\n\nAll these stats have max-level 9, and start on level 3.\n\nWithin the collection there are some very special traits to look out for:\n\nLake Acherusia\nNekromanteion\nMount Ida\nDesert Shop x4\nDesert Izanami Temple\nDesert Izanagi Temple\n\nGolden Goose body\nMatrix Mage body\n\nThese have very special utilites - more info in our discord.\n\nThe mythical creature Kitsune / Ninetails can be found in the collection, only 26 in total - divided in several species. \n\nGet to know more in our story about Kitsu - an upcoming story about the adventurous ninetail-creature named Kitsu.\n\nGrow your CroMorphs, and increase the skills on your NFT.\nEarn $MORPHS token as we grow, and we will also commit to plant trees IRL between gen1 and gen2.\n\nGain a free mint for every CroMorphs you own - on ALL future collections above 2500. That is ALL upcoming collections above 2500 made by the creator of CroMorphs - across all chains.\n\nWe have a card game planned, and while you grow your CroMorphs in MetaMorphis, we'll develop a game where you can utilize you morphs. \nThere will be 6 main classes in this game, inspired by the 6 greek gods - that was born of  the Titan Cronos.\nThe lands of MetaMorphis are also divided into 6 main areas, one for each god.\n\nThere is alot to explore within the CroMorphs ecosystem, and we will grow together with our community and cronos.\n\nJoin our adventure today and explore the vast mysterious world that CroMorphs have settled down in.",
+      "author": {
+        "name": "CroMorphs",
+        "website": "https://cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/JsUWNKnQjx",
+        "medium": "https://medium.com/@nilsenorjan"
+      },
+      "address": "0x0a9aDe7c04AF4902c84D120B18d69fFFe5AE099E",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 100,
+      "totalSupply": 2500,
+      "cost": "199",
+      "memberCost": "149",
+      "foundersOnly": false,
+      "start": 1678226515000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/cromorphs/drop.webp",
+        "banner": "/img/drops/cromorphs/banner.webp",
+        "avatar": "/img/collections/cromorphs/avatar.webp",
+        "preview": "/img/collections/cromorphs/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
+      }
+    },
+    {
+      "id": 163,
+      "slug": "for-my-brothers",
+      "title": "For My Brothers",
+      "subtitle": "For My Brothers is a charity focused NFT collection created by Elkay, the artist behind Trooprz. 420 hand-crafted, algorithmically generated, unique NFTs.",
+      "description": "'For My Brothers' is a charity focused NFT collection created by Elkay, the artist behind Trooprz. \n\nThe collection will focus on 3 key goals;\n\n- Kick-start 'Hearts of Gold' charity fund (40%)\n- Raise awareness and support Mens Mental Health in the Crypto/NFT space\n- Support the development of the CroDraw Lottery (and give holder discount!)\n\n420 hand-crafted, algorithmically generated, unique NFTs.",
+      "author": {
+        "name": "Trooprz",
+        "website": "https://trooprz.army/",
+        "twitter": "https://twitter.com/trooprzarmy",
+        "discord": "https://discord.gg/Trooprz"
+      },
+      "address": "0x6DFdA93e4a23Ef5245278ff7328fC541FeC1DC3D",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 20,
+      "totalSupply": 420,
+      "cost": "420",
+      "memberCost": "375",
+      "whitelistCost": "375",
+      "foundersOnly": false,
+      "start": 1678136007000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/for-my-brothers/drop.webp",
+        "banner": "/img/collections/for-my-brothers/banner.webp",
+        "avatar": "/img/collections/for-my-brothers/avatar.webp",
+        "preview": "/img/collections/for-my-brothers/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
       }
     }
   ]

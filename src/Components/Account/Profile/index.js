@@ -7,10 +7,10 @@ import Avatar from './Avatar';
 import styles from './profile.module.scss';
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {caseInsensitiveCompare, isUserBlacklisted, shortAddress} from "@src/utils";
-import Inventory from "@src/Components/Account/Profile/Inventory";
+import Inventory from "@src/components-v2/feature/account/profile/tabs/inventory";
 import Collections from "@src/Components/Account/Profile/Collections";
-import Listings from "@src/Components/Account/Profile/Listings";
-import Offers from "@src/Components/Account/Profile/Offers";
+import Listings from "@src/components-v2/feature/account/profile/tabs/listings";
+import Offers from "@src/components-v2/feature/account/profile/tabs/offers";
 import Sales from "@src/Components/Account/Profile/Sales";
 import Favorites from "@src/Components/Account/Profile/Favorites";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
@@ -127,7 +127,7 @@ export default function Profile({ address, profile, tab }) {
               <div className="mainbreadcumb"></div>
             </section>
           )}
-          <section className="gl-legacy px-5 pt-4">
+          <section className={`gl-legacy px-4 pt-4 ${useMobileCartView ? 'px-4' : 'px-5'}`}>
             <div className={`${styles.userInfo} row`}>
               <div className="d-sm-flex text-center text-sm-start">
                 <div className="flex-shrink-0">

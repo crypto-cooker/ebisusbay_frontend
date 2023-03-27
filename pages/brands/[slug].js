@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
 import EndpointProxyService from "@src/services/endpoint-proxy.service";
-import {caseInsensitiveCompare, siPrefixedNumber} from "@src/utils";
+import {caseInsensitiveCompare, ciIncludes, siPrefixedNumber} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {appConfig} from "@src/Config";
 import {useRouter} from "next/router";
@@ -173,7 +173,7 @@ export const getServerSideProps = async ({ params, query }) => {
       c.position = brandKeyedAddresses.find((o) => caseInsensitiveCompare(o.address, c.address)).position;
       const drop = drops.find((d) => d.slug === c.slug);
       c.drop = drop ?? null;
-      c.hidden = brand.hidden?.includes(c.address) ?? false;
+      c.hidden = brand.hidden ? ciIncludes(brand.hidden, c.address) : false;
       return c;
     })
     .sort((a, b) => a.position > b.position ? 1 : -1);

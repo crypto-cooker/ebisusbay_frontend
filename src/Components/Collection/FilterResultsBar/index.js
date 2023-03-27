@@ -287,7 +287,7 @@ export const FilterResultsBar = ({collection}) => {
     dispatch(filterListingsByListed(null));
   }
 
-  return !currentFilter.isEmpty() && (
+  return !currentFilter.isEmpty() ? (
     <div className="my-2">
       <div className="d-flex justify-content-between my-2">
         <div>
@@ -313,5 +313,5 @@ export const FilterResultsBar = ({collection}) => {
         </div>
       </div>
     </div>
-  )
+  ) : <></>
 }

@@ -1,19 +1,8 @@
-import React, {useState, useEffect} from 'react';
-
-import { ImageContainer, ImageSubMenu, Tabs } from "@src/Components/Bundle";
-import { Flex, Text } from "@chakra-ui/react";
-import { Heading } from "@chakra-ui/react";
-import { useHasHydrated } from '@src/hooks/useHasHydrated';
-import { getBundle } from '@src/core/api/endpoints/collectioninfo';
-import PriceActionBar from '@src/Components/NftDetails/PriceActionBar';
-import { OFFER_TYPE } from '@src/Components/Offer/MadeOffers/MadeOffersRow';
-import { getFilteredOffers } from '@src/core/subgraph';
-import { useSelector, useDispatch } from 'react-redux';
-import { caseInsensitiveCompare } from '@src/utils';
-import { getNftDetails } from '@src/GlobalState/nftSlice';
-import NftBundle from "@src/Components/Collection/nftBundle";
+import React from 'react';
+import {useHasHydrated} from '@src/hooks/useHasHydrated';
+import {getBundle} from '@src/core/api/endpoints/collectioninfo';
 import PageHead from "@src/components-v2/shared/layout/page-head";
-import Nft721 from "@src/Components/Collection/nft721";
+import Nft721 from '@src/components-v2/feature/nft/nft721';
 
 const Bundle = ({ bundle }) => {
   return (

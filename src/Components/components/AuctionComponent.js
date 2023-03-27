@@ -211,7 +211,6 @@ const AuctionComponent = (props) => {
                                 {bidHistory.map((item, index) => (
                                   <div className="p_list" key={index}>
                                     <Link href={`/account/${item.bidder}`}>
-                                      <a>
                                         <div className="p_list_pp">
                                           <span>
                                             <span>
@@ -219,12 +218,11 @@ const AuctionComponent = (props) => {
                                             </span>
                                           </span>
                                         </div>
-                                      </a>
                                     </Link>
                                     <div className="p_list_info">
                                       <b>
                                         <Link href={`/account/${item.bidder}`}>
-                                          <a>{shortAddress(item.bidder)}</a>
+                                          {shortAddress(item.bidder)}
                                         </Link>
                                       </b>{' '}
                                       bid <b>{ethers.utils.commify(item.price)} MAD</b>

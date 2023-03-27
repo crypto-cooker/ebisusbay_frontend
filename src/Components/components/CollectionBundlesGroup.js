@@ -15,15 +15,13 @@ const CollectionBundlesGroup = ({collection}) => {
 
   const fetcher = async ({ pageParam = 1 }) => {
     // @todo remove pageSize and fix paging when entire first page is filtered out
-    const query = new ListingsQuery({
+    const listings = await NextApiService.getListingsByCollection(config.contracts.bundle, {
       page: pageParam,
       pageSize: 1000
     });
 
-    const listings = await NextApiService.getListingsByCollection(config.contracts.bundle, query);
-
     return listings.data.filter((listing) => {
-      return listing.nft.nfts.some((nft) => caseInsensitiveCompare(nft.address, collection.address));
+      return !!listing.nft.nfts && listing.nft.nfts.some((nft) => caseInsensitiveCompare(nft.address, collection.address));
     });
   };
 
@@ -83,7 +81,7 @@ const CollectionBundlesGroup = ({collection}) => {
                   {items.map((listing, index) => {
                     return (
                       <div
-                        className="d-item col-xxl-2 col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12 mb-4 px-2"
+                        className="d-item col-xxl-2 col-xl-3 col-lg-4 col-md-6 col-sm-4 col-6 mb-4 px-2"
                         key={`${listing.address}-${listing.id}-${index}`}
                       >
                         <ListingBundleCard

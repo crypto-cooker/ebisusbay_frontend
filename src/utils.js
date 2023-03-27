@@ -353,6 +353,7 @@ export function caseInsensitiveCompare(str1, str2) {
 }
 
 export function ciIncludes(array, str) {
+  if (!array) return false;
   return array.map((item) => item.toLowerCase()).includes(str.toLowerCase());
 }
 
@@ -455,18 +456,24 @@ export const isLadyWeirdApesCollection = (address) => {
   return isCollection(address, 'lady-weird-apes', '0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1');
 };
 
+export const isVoxelWeirdApesCollection = (address) => {
+  return isCollection(address, 'voxel-weird-apes', '0xe02A74813053e96C5C98F817C0949E0B00728Ef6');
+};
+
 export const isAnyWeirdApesCollection = (address) => {
   return isCollection(
     address,
     [
       'weird-apes-club',
       'baby-weird-apes',
-      'lady-weird-apes'
+      'lady-weird-apes',
+      'voxel-weird-apes'
     ],
     [
       '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44',
       '0x89F7114C73d5cef7d7EDCbDb14DaA092EB2194c9',
-      '0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1'
+      '0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1',
+      '0xe02A74813053e96C5C98F817C0949E0B00728Ef6'
     ]
   );
 };
@@ -480,7 +487,9 @@ export const isEvoSkullCollection = (address) => {
 };
 
 export const isCroSkullPetsCollection = (address) => {
-  return isCollection(address, 'croskull-pets', '0xB77959DC7a12F7549ACC084Af01259Fc48813c89');
+  return isCollection(address, 'croskull-pets', '0xB77959DC7a12F7549ACC084Af01259Fc48813c89')||
+    isCollection(address, 'croskull-pets-s2', '0x54655D5468f072D5bcE1577c4a46F701C28a41A7') ||
+    isCollection(address, 'croskull-pets-s3', '0x31B378ac025a341839CD81C4D29A8457324D3EbC');
 };
 
 export const isCroniesCollection = (address) => {
@@ -581,16 +590,16 @@ export const findCollectionByAddress = (address, tokenId) => {
 
 export const findCollectionFloor = (knownContract, collectionsStats) => {
   const collectionStats = collectionsStats.find((o) => {
-    const address = o.collection ?? o.address;
+    const address = o.address ?? o.address;
     if (knownContract.multiToken && address.indexOf('-') !== -1) {
-      let parts = o.collection.split('-');
+      let parts = o.address.split('-');
       return caseInsensitiveCompare(knownContract.address, parts[0]) && knownContract.id === parseInt(parts[1]);
     } else {
-      return caseInsensitiveCompare(knownContract.address, o.collection);
+      return caseInsensitiveCompare(knownContract.address, o.address);
     }
   });
 
-  return collectionStats ? collectionStats.floorPrice : null;
+  return collectionStats ? collectionStats.stats.total.floorPrice : null;
 };
 
 export const round = (num, decimals) => {
@@ -795,4 +804,16 @@ export const pluralize = (val, word, plural = word + 's') => {
 
 export const isGaslessListing = (listingId) => {
   return listingId && listingId.toString().startsWith('0x')
+}
+
+export const croToUsd = (value, rate) => {
+  if (typeof value === 'string') value = Number(value);
+  if (typeof rate === 'string') rate = Number(rate);
+
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
+
+  return formatter.format(value * rate);
 }

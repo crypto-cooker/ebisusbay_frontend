@@ -75,7 +75,7 @@ const GlobalStyles = createGlobalStyle`
 const Jumbotron = {
   Host: styled.div`
     background-image: url(${({ isDark }) =>
-    isDark ? hostedImage('/img/background/banner-dark.webp') : hostedImage('/img/background/Ebisus-bg-1_L.webp')});
+    isDark ? hostedImage('/img/background/banner-ryoshi-dark.webp') : hostedImage('/img/background/banner-ryoshi-lightL.webp')});
     background-size: cover;
     background-repeat: no-repeat;
     height: max(100vh, 800px);

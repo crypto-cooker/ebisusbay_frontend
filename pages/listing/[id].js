@@ -36,6 +36,7 @@ import NFTTabOffers from '../../src/Components/Offer/NFTTabOffers';
 import {appConfig} from "@src/Config";
 import {hostedImage} from "@src/helpers/image";
 import PageHead from "@src/components-v2/shared/layout/page-head";
+import {getListing} from "@src/core/api";
 
 const config = appConfig();
 const tabs = {
@@ -496,22 +497,20 @@ const Listing = () => {
                               {history.map((item, index) => (
                                 <div className="p_list" key={index}>
                                   <Link href={`/account/${item.purchaser}`}>
-                                    <a>
-                                      <div className="p_list_pp">
+                                    <div className="p_list_pp">
+                                      <span>
                                         <span>
-                                          <span>
-                                            <Blockies seed={item.purchaser} size={10} scale={5} />
-                                          </span>
+                                          <Blockies seed={item.purchaser} size={10} scale={5} />
                                         </span>
-                                      </div>
-                                    </a>
+                                      </span>
+                                    </div>
                                   </Link>
                                   <div className="p_list_info">
                                     <span>{timeSince(item.saleTime)} ago</span>
                                     Bought by{' '}
                                     <b>
                                       <Link href={`/account/${item.purchaser}`}>
-                                        <a>{shortAddress(item.purchaser)}</a>
+                                        {shortAddress(item.purchaser)}
                                       </Link>
                                     </b>{' '}
                                     for <b>{ethers.utils.commify(item.price)} CRO</b>
@@ -627,4 +626,28 @@ const Listing = () => {
   );
 };
 
+
+export const getServerSideProps = async ({ params, query }) => {
+
+  if (!query.id) {
+    return {
+      notFound: true
+    }
+  }
+  let listing = await getListing(query.id);
+
+  if (!listing) {
+    return {
+      notFound: true
+    }
+  }
+
+  return {
+    redirect: {
+      permanent: false,
+      destination: `/collection/${listing.nftAddress}/${listing.nftId}`
+    }
+  }
+}
 export default memo(Listing);
+

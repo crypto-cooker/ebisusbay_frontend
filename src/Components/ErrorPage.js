@@ -69,7 +69,7 @@ const Jumbotron = {
     className: '',
   }))`
     background-image: url(${({ isDark }) =>
-      hostedImage(isDark ? '/img/background/banner-dark.webp' : '/img/background/Ebisus-bg-1_L.webp')});
+      hostedImage(isDark ? '/img/background/banner-ryoshi-dark.webp' : '/img/background/banner-ryoshi-light.webp')});
     background-size: cover;
     height: max(100vh, 800px);
     display: flex;
