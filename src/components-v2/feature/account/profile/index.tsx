@@ -1,8 +1,7 @@
 import React, {useCallback, useEffect, useLayoutEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import { useRouter } from 'next/router';
+import {useRouter} from 'next/router';
 import Button from '@src/Components/components/common/Button';
-import Avatar from './Avatar';
+import Avatar from './avatar';
 
 import styles from './profile.module.scss';
 import {hostedImage, ImageKitService} from "@src/helpers/image";
@@ -19,9 +18,10 @@ import {pushQueryString} from "@src/helpers/query";
 import {ethers} from "ethers";
 import {Badge} from "react-bootstrap";
 import {Grid, GridItem, useBreakpointValue, useColorModeValue} from "@chakra-ui/react";
-import { motion } from 'framer-motion'
+import {motion} from 'framer-motion'
 import BatchDrawer from "@src/components-v2/feature/account/profile/tabs/inventory/batch/batch-drawer";
 import {closeBatchListingCart} from "@src/GlobalState/user-batch";
+import {useAppDispatch, useAppSelector} from "@src/Store/hooks";
 
 const MotionGrid = motion(Grid)
 
@@ -34,10 +34,16 @@ const tabs = {
   favorites: 'favorites',
 };
 
-export default function Profile({ address, profile, tab }) {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const batchListingCart = useSelector((state) => state.batchListing);
+interface ProfileProps {
+  address: string;
+  profile: any;
+  tab?: string;
+}
+
+export default function Profile({ address, profile, tab }: ProfileProps) {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
+  const batchListingCart = useAppSelector((state) => state.batchListing);
   const router = useRouter();
   const batchListingBorderColor = useColorModeValue('#000', '#FFF');
   const variants = {
@@ -49,12 +55,12 @@ export default function Profile({ address, profile, tab }) {
     {fallback: 'lg'},
   );
 
-  const navigateTo = (route) => {
+  const navigateTo = (route: string) => {
     router.push(route);
   };
 
   const [currentTab, setCurrentTab] = React.useState(tab ?? tabs.inventory);
-  const handleTabChange = useCallback((newTab) => {
+  const handleTabChange = useCallback((newTab: string) => {
     pushQueryString(router, {address: profile.username ?? address, tab: newTab});
     setCurrentTab(newTab);
   }, [address]);
