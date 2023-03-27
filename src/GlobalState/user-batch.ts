@@ -155,7 +155,7 @@ const batchListingSlice = createSlice({
         return {...o, expiration};
       });
     },
-    applyFloorPriceToAll: (state, action) => {
+    applyFloorPriceToAll: (state) => {
       state.items = state.items.map((o) => {
         const extra = state.extras[o.nft.nftAddress.toLowerCase()] ?? {};
         if (extra?.floorPrice) return {...o, price: extra.floorPrice}

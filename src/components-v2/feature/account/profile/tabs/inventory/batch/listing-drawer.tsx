@@ -63,7 +63,7 @@ import useCancelGaslessListing from "@src/Components/Account/Settings/hooks/useC
 import {QuestionOutlineIcon} from "@chakra-ui/icons";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppDispatch, useAppSelector} from "@src/Store/hooks";
 import nextApiService from "@src/core/services/api-service/next";
 import ListingBundleDrawerForm, {
   ListingBundleDrawerFormHandle
@@ -76,7 +76,7 @@ const floorThreshold = 5;
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 
 export const ListingDrawer = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
   const batchListingCart = useAppSelector((state) => state.batchListing);
   const [executingCreateListing, setExecutingCreateListing] = useState(false);
