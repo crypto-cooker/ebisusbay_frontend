@@ -18749,7 +18749,7 @@
       "multiToken": false,
       "address": "0xc536b6151599A3fdA22E63eD61AA918d738e1B7d",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A unique collection of 888 individually named Mamas coming to shake up Cronos",
         "avatar": "/img/collections/decentral-mamas/avatar.webp",
