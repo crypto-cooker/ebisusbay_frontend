@@ -731,6 +731,29 @@
     "style": {}
   },
   {
+    "slug": "bob-adventures",
+    "name": "BOB Adventures",
+    "description": "BOB Adventures is community driven project on Cronos with our own story and utility. We will be traveling from planet to planet to meet new friends. Join our adventure and let's explore universe together!",
+    "images": {
+      "banner": "/img/brands/bob-adventures/banner.webp",
+      "preview": "/img/brands/bob-adventures/preview.webp"
+    },
+    "collections": [
+      "0x7841dA84C0eC87744306C6420Eb039b8Cbd39d70",
+      "0x4ab89f361a7db22beee8df47630c52b9167f7bb7",
+      "0xa45894D91395580D5D5D2178795d3F0b2F27CF32",
+      "0xC5Fe01a64e63EDefC40d620A5716B90c52D444f9"
+    ],
+    "socials": {
+      "website": "https://bob-adventures.netlify.app/",
+      "twitter": "https://twitter.com/CroBobAdventure",
+      "discord": "https://discord.gg/kemzRExMju"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "carkayous",
     "name": "Carkayous",
     "description": "Carkayous is a fictitious continent created by Jesse Smith (Ink Master | TV Celeb | Tattoo Artist) where his art lives.",
@@ -873,29 +896,6 @@
       "twitter": "https://twitter.com/cronosrocksnft"
     },
     "featured": true,
-    "categories": [],
-    "style": {}
-  },
-  {
-    "slug": "bob-adventures",
-    "name": "BOB Adventures",
-    "description": "BOB Adventures is community driven project on Cronos with our own story and utility. We will be traveling from planet to planet to meet new friends. Join our adventure and let's explore universe together!",
-    "images": {
-      "banner": "/img/brands/bob-adventures/banner.webp",
-      "preview": "/img/brands/bob-adventures/preview.webp"
-    },
-    "collections": [
-      "0x7841dA84C0eC87744306C6420Eb039b8Cbd39d70",
-      "0x4ab89f361a7db22beee8df47630c52b9167f7bb7",
-      "0xa45894D91395580D5D5D2178795d3F0b2F27CF32",
-      "0xC5Fe01a64e63EDefC40d620A5716B90c52D444f9"
-    ],
-    "socials": {
-      "website": "https://bob-adventures.netlify.app/",
-      "twitter": "https://twitter.com/CroBobAdventure",
-      "discord": "https://discord.gg/kemzRExMju"
-    },
-    "featured": false,
     "categories": [],
     "style": {}
   },
