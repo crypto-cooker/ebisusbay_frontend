@@ -584,49 +584,6 @@ const Index = function () {
                   )}
                 </div>
               </div>
-              <div className="d-flex mt-2">
-                <div className="flex-fill">
-                  <Flex>
-                    <VStack spacing={0} align="left">
-                      <Box className="text-muted">
-                        CNSUSD Balance
-                      </Box>
-                      <Box>
-                        {!user.connectingWallet ? (
-                          <>
-                            {user.address ? (
-                              <Text  textAlign="left">
-                                ${cnsBalance}
-                              </Text>
-                            ) : (
-                              <span className="d-wallet-value">$0</span>
-                            )}
-                          </>
-                        ) : (
-                          <span>
-                          <Spinner animation="border" role="status" size={'sm'}>
-                            <span className="visually-hidden">Loading...</span>
-                          </Spinner>
-                        </span>
-                        )}
-                      </Box>
-                    </VStack>
-                    <Spacer />
-                    <Box textAlign="right">
-                      <Link href="https://www.cronos.domains/" isExternal>
-                        <Text fontSize="xs">Powered by</Text>
-                        <SvgComponent />
-                      </Link>
-                    </Box>
-                  </Flex>
-                  <Box mt={2}>
-                    <Text fontSize={'xs'} align="center">
-                      Use CNSUSD to buy or renew CRO domains on Cronos Name Service.{' '}
-                      <Link href="/collection/cronos-name-service?tab=cns" color={'blue.500'} fontWeight="bold">Find your Domain</Link>
-                    </Text>
-                  </Box>
-                </div>
-              </div>
 
               <div className="row mt-3">
                 <div className="col">
