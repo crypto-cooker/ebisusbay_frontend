@@ -168,7 +168,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
       <MotionGrid
         animate={batchListingCart.isDrawerOpen && !useMobileCartView ? 'expand' : 'collapse'}
         variants={variants}
-        gridTemplateColumns="1fr 0"
+        gridTemplateColumns="1fr 0px"
       >
         <GridItem>
           {profile.banner ? (
@@ -280,7 +280,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                         rounded='3px'
                       />
                     )}
-                    <MenuList zIndex={10}>
+                    <MenuList zIndex={10} fontSize={{base: 'sm', sm: 'md'}}>
                       {Object.entries(tabs).filter(([k, v]) => !!v.overflow).map(([key, value]) => (
                         <MenuItem onClick={() => handleOverflowTabChange(key)}>{value.label}</MenuItem>
                       ))}
