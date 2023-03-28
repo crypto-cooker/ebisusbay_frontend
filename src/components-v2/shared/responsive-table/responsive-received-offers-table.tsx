@@ -43,7 +43,6 @@ interface ResponsiveReceivedOffersTableProps {
 }
 
 const ResponsiveReceivedOffersTable = ({data, onAccept, onReject, canReject, onSort, breakpointValue}: ResponsiveReceivedOffersTableProps) => {
-  console.log('DATA=', data);
   const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'md']: false}, {fallback: 'md'})
 
   const handleAccept = useCallback((offer: any) => {

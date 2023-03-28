@@ -4,6 +4,7 @@ import { faCheck, faCircle } from '@fortawesome/free-solid-svg-icons';
 
 import LayeredIcon from '@src/Components/components/LayeredIcon';
 import styles from './avatar.module.scss';
+import {Box} from "@chakra-ui/react";
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
@@ -16,11 +17,11 @@ interface AvatarProps {
 
 export default function Avatar({ src, alt = 'pfp', address = ZERO_ADDRESS, isVerified = false }: AvatarProps) {
   return (
-    <div className={styles.avatar}>
-      <div className={styles.pfp}>
+    <Box maxW='200px' className={styles.avatar}>
+      <Box className={styles.pfp}>
         {src ? <img src={src} alt={alt} /> : <Blockies seed={address} size={15} scale={10} />}
         {isVerified && <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={8} stackClass={styles.avatar_badge} />}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }

@@ -1,8 +1,5 @@
-import React, {useCallback, useEffect, useLayoutEffect, useState} from 'react';
+import React, {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {useRouter} from 'next/router';
-import Button from '@src/Components/components/common/Button';
-import Avatar from './avatar';
-
 import styles from './profile.module.scss';
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {caseInsensitiveCompare, isUserBlacklisted, shortAddress} from "@src/utils";
@@ -17,21 +14,65 @@ import PageHead from "@src/components-v2/shared/layout/page-head";
 import {pushQueryString} from "@src/helpers/query";
 import {ethers} from "ethers";
 import {Badge} from "react-bootstrap";
-import {Grid, GridItem, useBreakpointValue, useColorModeValue} from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Button as ChakraButton,
+  Flex,
+  Grid,
+  GridItem,
+  Heading,
+  HStack,
+  IconButton,
+  Image,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Spacer,
+  Text,
+  useBreakpointValue,
+  useColorModeValue,
+  useMediaQuery
+} from "@chakra-ui/react";
 import {motion} from 'framer-motion'
 import BatchDrawer from "@src/components-v2/feature/account/profile/tabs/inventory/batch/batch-drawer";
 import {closeBatchListingCart} from "@src/GlobalState/user-batch";
 import {useAppDispatch, useAppSelector} from "@src/Store/hooks";
+import {getTheme} from "@src/Theme/theme";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEllipsisV} from "@fortawesome/free-solid-svg-icons";
+import {ChevronDownIcon} from "@chakra-ui/icons";
 
 const MotionGrid = motion(Grid)
 
-const tabs = {
-  inventory: 'inventory',
-  collections: 'collections',
-  listings: 'listings',
-  offers: 'offers',
-  sales: 'sales',
-  favorites: 'favorites',
+enum TabKey {
+  inventory = 'inventory',
+  collections = 'collections',
+  listings = 'listings',
+  offers = 'offers',
+  sales = 'sales',
+  favorites = 'favorites'
+}
+
+const tabs: {[key: string]: {label: string, overflow?: string}} = {
+  inventory: {
+    label: 'Inventory',
+  },
+  listings: {
+    label: 'Listings',
+  },
+  offers: {
+    label: 'Offers',
+  },
+  sales: {
+    label: 'Sales',
+    overflow: 'Sales',
+  },
+  favorites: {
+    label: 'Favorites',
+    overflow: 'Favs',
+  }
 };
 
 interface ProfileProps {
@@ -54,12 +95,17 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
     {base: true, lg: false},
     {fallback: 'lg'},
   );
+  const useMobileLayout = useMediaQuery('(min-width: 580px)');
+  const overflowCount = useBreakpointValue<number>(
+    {base: 2, sm: 1, md: 0},
+    {fallback: 'md'},
+  );
 
   const navigateTo = (route: string) => {
     router.push(route);
   };
 
-  const [currentTab, setCurrentTab] = React.useState(tab ?? tabs.inventory);
+  const [currentTab, setCurrentTab] = React.useState(tab ?? TabKey.inventory);
   const handleTabChange = useCallback((newTab: string) => {
     pushQueryString(router, {address: profile.username ?? address, tab: newTab});
     setCurrentTab(newTab);
@@ -88,7 +134,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
 
   // Ensure correct tab highlighted when changing from AccountMenu while already in Profile page
   useEffect(() => {
-    setCurrentTab(tab ?? tabs.inventory);
+    setCurrentTab(tab ?? TabKey.inventory);
   }, [tab]);
 
   useEffect(() => {
@@ -102,6 +148,14 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
       dispatch(closeBatchListingCart());
     }, []);
   }
+
+
+  const [overflowTabKey, setOverflowTabKey] = useState<string>();
+
+  const handleOverflowTabChange = (tabKey: string) => {
+    setOverflowTabKey(tabKey);
+    handleTabChange(TabKey[tabKey as keyof typeof TabKey]);
+  };
 
   return (
     <div className={styles.profile} >
@@ -118,93 +172,141 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
       >
         <GridItem>
           {profile.banner ? (
-            <section
-              id="profile_banner"
-              className="jumbotron breadcumb no-bg"
-              style={{
-                backgroundImage: `url(${ImageKitService.buildBannerUrl(profile.banner)})`,
-                backgroundPosition: '50% 50%',
-              }}
-            >
-              <div className="mainbreadcumb"></div>
-            </section>
+              <Image
+                h={{base: '100px', sm: '150px', md: '250px', lg: '300px', xl: '360px'}}
+                w='full'
+                src={ImageKitService.buildBannerUrl(profile.banner)}
+                objectFit='cover'
+                backgroundRepeat='no-repeat'
+                backgroundPosition='50% 50%'
+              />
           ) : (
-            <section className="jumbotron breadcumb no-bg tint">
-              <div className="mainbreadcumb"></div>
-            </section>
+            <Image
+              h={{base: '100px', sm: '150px', md: '250px', lg: '300px', xl: '360px'}}
+              w='full'
+              src={user.theme === 'dark' ? '/img/background/header-dark.webp' : '/img/background/Ebisu-DT-Header.webp'}
+              objectFit='cover'
+              backgroundRepeat='no-repeat'
+            />
           )}
-          <section className={`gl-legacy px-4 pt-4 ${useMobileCartView ? 'px-4' : 'px-5'}`}>
-            <div className={`${styles.userInfo} row`}>
-              <div className="d-sm-flex text-center text-sm-start">
-                <div className="flex-shrink-0">
-                  <Avatar src={profilePicture} />
-                </div>
-                <div className="flex-grow-1 ms-sm-4 me-sm-4">
-                  <div className={styles.username}>{username()}</div>
-                  {isUserBlacklisted(address) && (
-                    <div className="d-flex">
-                      <Badge bg="danger">Blacklisted</Badge>
-                    </div>
-                  )}
-                  <div className={styles.bio}>{profile.bio}</div>
-                  <div className={`${styles.socials} text-center text-sm-start mb-2 mb-sm-0`}>
-                    <span className="fs-4"><SocialsBar socials={profile} address={address} /></span>
-                  </div>
-                </div>
-
-                {isProfileOwner && (
-                  <div className="d-flex flex-column bd-highlight mb-3">
-                    <Button onClick={() => navigateTo('/account/settings/profile')} className="w-auto">Settings</Button>
-                    {/*<Button styleType="default-outlined" className="mt-2 w-auto">More</Button>*/}
-                  </div>
+          <section className={`px-4 pt-2 ${useMobileCartView ? 'px-4' : 'px-5'}`}>
+            <Box mb={6}>
+              <Flex>
+                <Flex mt={{base: -16, lg: -20, xl: -20}}>
+                  <Avatar
+                    src={profilePicture}
+                    rounded='full'
+                    size={{base: 'xl', lg: '2xl'}}
+                    border={`4px solid ${getTheme(user.theme).colors.bgColor1}`}
+                  />
+                </Flex>
+                {!useMobileLayout && (
+                  <Flex direction='column' ms={4} flex={1}>
+                    <Heading>{username()}</Heading>
+                    {isUserBlacklisted(address) && (
+                      <Flex>
+                        <Badge bg="danger">Blacklisted</Badge>
+                      </Flex>
+                    )}
+                    <Text className={styles.bio}>{profile.bio}</Text>
+                  </Flex>
                 )}
-              </div>
-            </div>
-            <div className="row mt-2 mt-sm-4">
+                <HStack align='top' flex='1'>
+                  <Spacer/>
+                  <Box style={{marginTop: '1px !important'}}>
+                    <SocialsBar socials={profile} address={address} />
+                  </Box>
+
+                  {isProfileOwner && (
+                    <ChakraButton
+                      variant='primary'
+                      size='sm'
+                      fontSize='sm'
+                      onClick={() => navigateTo('/account/settings/profile')}
+                    >
+                      Settings
+                    </ChakraButton>
+                  )}
+                  {/*<Button styleType="default-outlined" className="mt-2 w-auto">More</Button>*/}
+                </HStack>
+              </Flex>
+              {useMobileLayout && (
+                <Flex direction='column' flex={1}>
+                  <Heading>{username()}</Heading>
+                  {isUserBlacklisted(address) && (
+                    <Flex>
+                      <Badge bg="danger">Blacklisted</Badge>
+                    </Flex>
+                  )}
+                  <Text className={styles.bio}>{profile.bio}</Text>
+                </Flex>
+              )}
+            </Box>
+
+              <HStack spacing={1} w='full'>
+                {Object.entries(tabs).slice(0, Object.keys(tabs).length - overflowCount!).map(([key, tab]) => (
+                  <ChakraButton
+                    isActive={currentTab === key}
+                    onClick={() => handleTabChange(key)}
+                    rounded='3px'
+                    variant='tab'
+                    size={{base: 'sm', sm: 'md'}}
+                  >
+                    {tab.label}
+                  </ChakraButton>
+                ))}
+                <Spacer />
+                {overflowCount && (
+                  <Menu>
+                    {overflowTabKey ? (
+                      <MenuButton
+                        as={ChakraButton}
+                        aria-label='More'
+                        rightIcon={<ChevronDownIcon />}
+                        size={{base: 'sm', sm: 'md'}}
+                        variant='tab'
+                        rounded='3px'
+                        bg={overflowTabKey === currentTab ? '#35669e' : 'auto'}
+                      >
+                        {tabs[overflowTabKey].overflow}
+                      </MenuButton>
+                    ) : (
+                      <MenuButton
+                        as={IconButton}
+                        aria-label='More'
+                        icon={<FontAwesomeIcon icon={faEllipsisV} />}
+                        size={{base: 'sm', sm: 'md'}}
+                        variant='tab'
+                        rounded='3px'
+                      />
+                    )}
+                    <MenuList zIndex={10}>
+                      {Object.entries(tabs).filter(([k, v]) => !!v.overflow).map(([key, value]) => (
+                        <MenuItem onClick={() => handleOverflowTabChange(key)}>{value.label}</MenuItem>
+                      ))}
+                    </MenuList>
+                  </Menu>
+                )}
+              </HStack>
+            <div className="row mt-4 mt-sm-4">
               <div className="de_tab">
-                <ul className="de_nav mb-4 text-center text-sm-start">
-                  <li className={`tab mb-2 ${currentTab === tabs.inventory ? 'active' : ''}`}>
-                    <span onClick={() => handleTabChange(tabs.inventory)}>Inventory</span>
-                  </li>
-                  {isProfileOwner && (
-                    <li className={`tab mb-2 ${currentTab === tabs.collections ? 'active' : ''}`}>
-                      <span onClick={() => handleTabChange(tabs.collections)}>Collections</span>
-                    </li>
-                  )}
-                  <li className={`tab mb-2 ${currentTab === tabs.listings ? 'active' : ''}`}>
-                    <span onClick={() => handleTabChange(tabs.listings)}>Listings</span>
-                  </li>
-                  {isProfileOwner && (
-                    <li className={`tab mb-2 ${currentTab === tabs.offers ? 'active' : ''}`}>
-                      <span onClick={() => handleTabChange(tabs.offers)}>Offers</span>
-                    </li>
-                  )}
-                  <li className={`tab ${currentTab === tabs.sales ? 'active' : ''}`}>
-                    <span onClick={() => handleTabChange(tabs.sales)}>Sales</span>
-                  </li>
-                  {isProfileOwner && (
-                    <li className={`tab ${currentTab === tabs.favorites ? 'active' : ''}`}>
-                      <span onClick={() => handleTabChange(tabs.favorites)}>Favorites</span>
-                    </li>
-                  )}
-                </ul>
                 <div className="de_tab_content">
-                  {currentTab === tabs.inventory && (
+                  {currentTab === TabKey.inventory && (
                     <Inventory address={address} />
                   )}
-                  {currentTab === tabs.collections && isProfileOwner && (
+                  {currentTab === TabKey.collections && isProfileOwner && (
                     <Collections address={address} />
                   )}
-                  {currentTab === tabs.listings && (
+                  {currentTab === TabKey.listings && (
                     <Listings address={address} />
                   )}
-                  {currentTab === tabs.offers && isProfileOwner && (
+                  {currentTab === TabKey.offers && isProfileOwner && (
                     <Offers address={address} />
                   )}
-                  {currentTab === tabs.sales && (
+                  {currentTab === TabKey.sales && (
                     <Sales address={address} />
                   )}
-                  {currentTab === tabs.favorites && isProfileOwner && (
+                  {currentTab === TabKey.favorites && isProfileOwner && (
                     <Favorites address={address} />
                   )}
                 </div>
@@ -223,4 +325,19 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
       </MotionGrid>
     </div>
   );
+}
+
+function useScrollTabIntoView(index: number) {
+  const tablistRef = useRef<HTMLDivElement>();
+
+  useEffect(() => {
+    const selectedTab = tablistRef.current?.querySelector(
+      "[role=tab][aria-selected]"
+    );
+    console.log('scrollllllorrr')
+
+    selectedTab?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [index]);
+
+  return tablistRef;
 }

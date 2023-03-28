@@ -235,7 +235,6 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
                       <FontAwesomeIcon icon={faBoltLightning} />
                     </Box>
                     <Box>
-                      {is1155 && <div>Floor:</div>}
                       <Flex>
                         <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
                         <Box as='span' ms={1}>
