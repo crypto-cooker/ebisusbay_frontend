@@ -21,8 +21,8 @@ import {
   removeFromBatchListingCart,
   setBatchType,
   setRefetchNfts
-} from "@src/GlobalState/batchListingSlice";
-import {MobileBatchListing} from "@src/Components/Account/Profile/Inventory/MobileBatchListing";
+} from "@src/GlobalState/user-batch";
+import {MobileBatchPreview} from "@src/components-v2/feature/account/profile/tabs/inventory/mobile-batch-preview";
 import {
   Box,
   CloseButton,
@@ -455,7 +455,7 @@ export default function Inventory({ address }: InventoryProps) {
         />
       )}
       {useMobileMenu && (
-        <MobileBatchListing />
+        <MobileBatchPreview />
       )}
       {isGdcConfirmationOpen && (
         <GdcClaimConfirmation onClose={() => setIsGdcConfirmationOpen(false)} isOpen={isGdcConfirmationOpen} />

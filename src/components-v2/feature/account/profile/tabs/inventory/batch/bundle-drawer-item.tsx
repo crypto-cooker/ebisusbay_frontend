@@ -9,7 +9,11 @@ import {
   FormErrorMessage,
   HStack,
   Image,
-  Input, Menu, MenuButton, MenuItem, MenuList,
+  Input,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Skeleton,
   Spacer,
   Stack,
@@ -24,34 +28,43 @@ import {ImageKitService} from "@src/helpers/image";
 import Link from "next/link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEllipsisH, faTrash} from "@fortawesome/free-solid-svg-icons";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {toast} from "react-toastify";
 import {
   removeFromBatchListingCart,
   setApproval,
   setExtras,
-  update1155Quantity
-} from "@src/GlobalState/batchListingSlice";
+  update1155Quantity,
+  UserBatchExtras,
+  UserBatchItem
+} from "@src/GlobalState/user-batch";
 import {Contract} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {appConfig} from "@src/Config";
 import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
 import {specialImageTransform} from "@src/hacks";
+import {useAppSelector} from "@src/Store/hooks";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 
-const BundleDrawerItem = ({ item, disabled, onAddCollection }) => {
+interface BundleDrawerItemProps {
+  item: UserBatchItem;
+  disabled: boolean;
+  onAddCollection: (address: string) => void;
+}
+
+const BundleDrawerItem = ({ item, disabled, onAddCollection }: BundleDrawerItemProps) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [quantity, setQuantity] = useState('');
   const [invalid, setInvalid] = useState(false);
 
   // Approvals
-  const extras = useSelector((state) => state.batchListing.extras[item.nft.nftAddress.toLowerCase()] ?? {});
+  const extras = useAppSelector((state) => state.batchListing.extras[item.nft.nftAddress.toLowerCase()] ?? {});
   const { approval: approvalStatus, canList } = extras;
   const [executingApproval, setExecutingApproval] = useState(false);
   const [initializing, setInitializing] = useState(false);
@@ -61,7 +74,7 @@ const BundleDrawerItem = ({ item, disabled, onAddCollection }) => {
   };
 
   useEffect(() => {
-    setQuantity(item.quantity);
+    setQuantity(item.quantity.toString());
   }, [item.quantity]);
 
   const checkApproval = async () => {
@@ -78,7 +91,7 @@ const BundleDrawerItem = ({ item, disabled, onAddCollection }) => {
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       dispatch(setApproval({ address: item.nft.nftAddress, status: true }));
 
-    } catch (error) {
+    } catch (error: any) {
       if (error.data) {
         toast.error(error.data.message);
       } else if (error.message) {
@@ -96,14 +109,12 @@ const BundleDrawerItem = ({ item, disabled, onAddCollection }) => {
     async function func() {
       try {
         setInitializing(true);
-        if (!extras[item.nft.nftAddress.toLowerCase()]) {
-          const extras = { address: item.nft.nftAddress };
+        const newExtras: UserBatchExtras = { address: item.nft.nftAddress, approval: false };
 
-          extras.approval = await checkApproval();
-          extras.canList = !item.nft.isStaked;
+        newExtras.approval = await checkApproval();
+        newExtras.canList = !item.nft.isStaked;
 
-          dispatch(setExtras(extras));
-        }
+        dispatch(setExtras(extras));
       } finally {
         setInitializing(false);
       }
@@ -120,10 +131,9 @@ const BundleDrawerItem = ({ item, disabled, onAddCollection }) => {
       precision: 0,
       isDisabled: disabled,
       onChange(valueAsString, valueAsNumber) {
-        const newQuantity = valueAsNumber;
-        if (numberRegexValidation.test(newQuantity) || newQuantity === '') {
+        if (numberRegexValidation.test(valueAsString) || valueAsString === '') {
           setInvalid(false);
-          dispatch(update1155Quantity({ nft: item.nft, quantity: newQuantity }));
+          dispatch(update1155Quantity({ nft: item.nft, quantity: valueAsNumber }));
         } else {
           setInvalid(true);
         }
@@ -155,6 +165,7 @@ const BundleDrawerItem = ({ item, disabled, onAddCollection }) => {
           ) : (
             <AnyMedia
               image={specialImageTransform(item.nft.nftAddress, ImageKitService.buildAvatarUrl(item.nft.image))}
+              video={null}
               title={item.nft.name}
               usePlaceholder={true}
               className="img-fluid img-rounded-5"

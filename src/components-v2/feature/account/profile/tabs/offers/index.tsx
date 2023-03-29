@@ -74,7 +74,7 @@ export default function Offers({ address }: OffersProps) {
   const [hasManuallyToggledFilters, setHasManuallyToggledFilters] = useState(false);
   const useMobileMenu = useBreakpointValue(
     { base: true, md: false },
-    { fallback: 'md' },
+    { fallback: 'md', ssr: false },
   );
 
   useEffect(() => {

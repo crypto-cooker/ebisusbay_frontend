@@ -582,6 +582,9 @@ async function getAllListingsForUser(walletAddress) {
   return listings;
 }
 
+/**
+ * @deprecated - use nextApiService instead
+ */
 export async function getNftsForAddress2(walletAddress, walletProvider, page, collectionAddresses) {
   let query = { page };
   if (collectionAddresses && collectionAddresses.length > 0) {

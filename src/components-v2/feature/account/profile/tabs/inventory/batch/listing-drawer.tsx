@@ -11,7 +11,8 @@ import {
   Button as ChakraButton,
   Center,
   Flex,
-  FormControl, FormErrorMessage,
+  FormControl,
+  FormErrorMessage,
   FormLabel,
   GridItem,
   HStack,
@@ -30,17 +31,20 @@ import {
 } from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
 import {Spinner} from "react-bootstrap";
-import React, {useCallback, useRef, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import React, {ChangeEvent, useCallback, useRef, useState} from "react";
+import {useDispatch} from "react-redux";
 import {
-  addToBatchListingCart, applyExpirationToAll,
+  addToBatchListingCart,
+  applyExpirationToAll,
   applyFloorPctToAll,
   applyFloorPriceToAll,
   applyPriceToAll,
-  cascadePrices, cascadePricesPercent,
+  cascadePrices,
+  cascadePricesPercent,
   clearBatchListingCart,
-  sortAll
-} from "@src/GlobalState/batchListingSlice";
+  sortAll,
+  UserBatchItem
+} from "@src/GlobalState/user-batch";
 import {Contract, ethers} from "ethers";
 import {toast} from "react-toastify";
 import {
@@ -52,15 +56,18 @@ import {
 } from "@src/utils";
 import * as Sentry from "@sentry/react";
 import {appConfig} from "@src/Config";
-import {ListingDrawerItem} from "@src/Components/Account/Profile/Inventory/components/ListingDrawerItem";
-import ListingBundleDrawerForm from "@src/Components/Account/Profile/Inventory/components/ListingBundleDrawerForm";
+import {ListingDrawerItem} from "@src/components-v2/feature/account/profile/tabs/inventory/batch/listing-drawer-item";
 import Bundle from "@src/Contracts/Bundle.json";
 import useUpsertGaslessListings from "@src/Components/Account/Settings/hooks/useUpsertGaslessListings";
 import useCancelGaslessListing from "@src/Components/Account/Settings/hooks/useCancelGaslessListing";
 import {QuestionOutlineIcon} from "@chakra-ui/icons";
-import {getNftsForAddress2} from "@src/core/api";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {useAppDispatch, useAppSelector} from "@src/Store/hooks";
+import nextApiService from "@src/core/services/api-service/next";
+import ListingBundleDrawerForm, {
+  ListingBundleDrawerFormHandle
+} from "@src/components-v2/feature/account/profile/tabs/inventory/batch/listing-bundle-drawer-form";
 
 const config = appConfig();
 const MAX_NFTS_IN_CART = 40;
@@ -69,16 +76,16 @@ const floorThreshold = 5;
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 
 export const ListingDrawer = () => {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const batchListingCart = useSelector((state) => state.batchListing);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
+  const batchListingCart = useAppSelector((state) => state.batchListing);
   const [executingCreateListing, setExecutingCreateListing] = useState(false);
   const [showConfirmButton, setShowConfirmButton] = useState(false);
   const [isBundling, setIsBundling] = useState(false);
-  const formRef = useRef(null);
+  const formRef = useRef<ListingBundleDrawerFormHandle>(null);
   const [expressMode, setExpressMode] = useState(false);
-  const [sortAllOption, setSortAllOption] = useState();
-  const [expirationDateAllOption, setExpirationDateAllOption] = useState();
+  const [sortAllOption, setSortAllOption] = useState<string>();
+  const [expirationDateAllOption, setExpirationDateAllOption] = useState<string>();
 
   const [upsertGaslessListings, responseUpdate] = useUpsertGaslessListings();
   const [cancelGaslessListing, response] = useCancelGaslessListing();
@@ -87,25 +94,28 @@ export const ListingDrawer = () => {
     setShowConfirmButton(false);
     dispatch(clearBatchListingCart());
   };
-  const handleCascadePrices = (startingItem, startingPrice) => {
+  const handleCascadePrices = (startingItem: UserBatchItem, startingPrice: number) => {
     if (!startingPrice) return;
     dispatch(cascadePrices({ startingItem, startingPrice }));
   }
-  const handleApplyAll = (price, expiration) => {
+  const handleApplyAll = (price: number, expiration: number) => {
     if (!price && !expiration) return;
     dispatch(applyPriceToAll({price, expiration}));
   }
-  const handleAddCollection = async (address) => {
+  const handleAddCollection = async (address: string) => {
     if (!address) return;
-    const nfts = await getNftsForAddress2(user.address, user.provider, 1, [address]);
-    for (const nft of nfts.nfts) {
+    const nfts = await nextApiService.getWallet(user.address!, {
+      page: 1,
+      collection: [address],
+    });
+    for (const nft of nfts.data) {
       dispatch(addToBatchListingCart(nft));
     }
   }
   const handleFloorAll = () => {
     dispatch(applyFloorPriceToAll());
   }
-  const handleApplyCustomPriceToAll = (option, value) => {
+  const handleApplyCustomPriceToAll = (option: string, value: number) => {
     if (!value) return;
 
     if (option === customPriceOptions.price) {
@@ -116,7 +126,7 @@ export const ListingDrawer = () => {
       dispatch(applyFloorPctToAll({pct: value * -1}));
     }
   }
-  const handleCascadePriceToAll = (option, value, step) => {
+  const handleCascadePriceToAll = (option: string, value: number, step: number) => {
     if (!value) return;
 
     if (option === customCascadeOptions.priceDown) {
@@ -129,12 +139,12 @@ export const ListingDrawer = () => {
       dispatch(cascadePricesPercent({ startingPrice: value, step }));
     }
   }
-  const handleApplyExpirationDateToAll = (value) => {
+  const handleApplyExpirationDateToAll = (value?: string) => {
     if (!value) return;
     
-    dispatch(applyExpirationToAll(value));
+    dispatch(applyExpirationToAll(Number(value)));
   }
-  const handleSortAll = (value) => {
+  const handleSortAll = (value?: string) => {
     if (!value) return;
 
     if (value === sortOptions.rankCommonToRare) {
@@ -157,11 +167,11 @@ export const ListingDrawer = () => {
     try {
       setShowConfirmButton(false);
       setExecutingCreateListing(true);
-      const filteredCartNfts = batchListingCart.nfts.filter((o) => {
+      const filteredCartNfts = batchListingCart.items.filter((o) => {
         return batchListingCart.extras[o.nft.nftAddress.toLowerCase()]?.approval;
       });
 
-      const nftPrices = filteredCartNfts.map((o) => ethers.utils.parseEther(o.price.toString()));
+      const nftPrices = filteredCartNfts.map((o) => ethers.utils.parseEther(o.price!.toString()));
       if (nftPrices.some((o) => !o.gt(0))) {
         toast.error('0 priced item detected!');
         return;
@@ -179,37 +189,37 @@ export const ListingDrawer = () => {
     }
   }
 
-  const executeGaslessListings = async (nfts) => {
-    if (nfts.length < 1) return;
+  const executeGaslessListings = async (items: UserBatchItem[]) => {
+    if (items.length < 1) return;
 
-    const nftAddresses = nfts.map((o) => o.nft.nftAddress);
-    const nftIds = nfts.map((o) => o.nft.nftId);
-    const nftPrices = nfts.map((o) => ethers.utils.parseEther(o.price.toString()));
+    const nftAddresses = items.map((o) => o.nft.nftAddress);
+    const nftIds = items.map((o) => o.nft.nftId);
+    const nftPrices = items.map((o) => ethers.utils.parseEther(o.price!.toString()));
 
     Sentry.captureEvent({ message: 'handleBatchListings', extra: { nftAddresses, nftIds, nftPrices } });
 
-    await upsertGaslessListings(nfts.map((item) => ({
+    await upsertGaslessListings(items.map((item) => ({
       collectionAddress: item.nft.nftAddress,
       tokenId: item.nft.nftId,
-      price: item.price.toString(),
-      expirationDate: new Date().getTime() + parseInt(item.expiration),
+      price: item.price!,
+      expirationDate: new Date().getTime() + item.expiration!,
       is1155: item.nft.multiToken
     })))
     toast.success("Listings Successful");
   }
 
-  const executeExpressListings = async (items) => {
+  const executeExpressListings = async (items: UserBatchItem[]) => {
     if (items.length < 1) return;
 
     // Cancel gasless listings
     const gaslessListingIds = items
-      .filter((item) => item.nft.listingId && isGaslessListing(item.nft.listingId))
-      .map((item) => item.nft.listingId);
+      .filter((item) => !!item.nft.listingId && isGaslessListing(item.nft.listingId))
+      .map((item) => item.nft.listingId!);
     if (gaslessListingIds.length > 0) await cancelGaslessListing(gaslessListingIds);
 
     const nftAddresses = items.map((o) => o.nft.nftAddress);
-    const nftIds = items.map((o) => o.nft.id);
-    const nftPrices = items.map((o) => ethers.utils.parseEther(o.price.toString()));
+    const nftIds = items.map((o) => o.nft.nftId);
+    const nftPrices = items.map((o) => ethers.utils.parseEther(o.price!.toString()));
 
     if (nftPrices.some((o) => !o.gt(0))) {
       toast.error('0 priced item detected!');
@@ -218,7 +228,7 @@ export const ListingDrawer = () => {
 
     Sentry.captureEvent({ message: 'handleBatchExpressListings', extra: { nftAddresses, nftIds, nftPrices } });
 
-    let tx = await user.contractService.market.makeListings(nftAddresses, nftIds, nftPrices);
+    let tx = await user.contractService!.market.makeListings(nftAddresses, nftIds, nftPrices);
     let receipt = await tx.wait();
 
     toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -227,7 +237,7 @@ export const ListingDrawer = () => {
   const prepareListing = async () => {
     try {
       if (isBundling) {
-        formRef.current.submitForm();
+        formRef.current?.submitForm();
         return;
       }
 
@@ -235,9 +245,9 @@ export const ListingDrawer = () => {
         return { address: k, floorPrice: v.floorPrice }
       });
       let floorWarning = false;
-      const nftPrices = batchListingCart.nfts.map((o) => {
+      const nftPrices = batchListingCart.items.map((o) => {
         const floorPriceObj = nftFloorPrices.find((fp) => caseInsensitiveCompare(fp.address, o.nft.nftAddress));
-        const isBelowFloor = (floorPriceObj.floorPrice !== 0 && ((floorPriceObj.floorPrice - Number(o.price)) / floorPriceObj.floorPrice) * 100 > floorThreshold);;
+        const isBelowFloor = !!floorPriceObj?.floorPrice && (floorPriceObj.floorPrice !== 0 && ((floorPriceObj.floorPrice - Number(o.price)) / floorPriceObj.floorPrice) * 100 > floorThreshold);
         if (isBelowFloor) {
           floorWarning = true;
         }
@@ -254,7 +264,7 @@ export const ListingDrawer = () => {
         await executeCreateListing();
       }
 
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
       if (error.data) {
         toast.error(error.data.message);
@@ -268,19 +278,19 @@ export const ListingDrawer = () => {
 
   const canSubmit = () => {
     return !executingCreateListing &&
-      batchListingCart.nfts.length > 0 &&
+      batchListingCart.items.length > 0 &&
       !Object.values(batchListingCart.extras).some((o) => !o.approval) &&
-      (isBundling || !batchListingCart.nfts.some((o) => !o.price || !(parseInt(o.price) > 0))) &&
-      (isBundling || !batchListingCart.nfts.some((o) => !o.expiration || !(parseInt(o.expiration) > 0))) &&
-      !batchListingCart.nfts.some((o) => !o.nft.listable || o.nft.isStaked || (isBundling && isBundle(o.nft.nftAddress)));
+      (isBundling || !batchListingCart.items.some((o) => !o.price || !(o.price > 0))) &&
+      (isBundling || !batchListingCart.items.some((o) => !o.expiration || !(o.expiration > 0))) &&
+      !batchListingCart.items.some((o) => !o.nft.listable || o.nft.isStaked || (isBundling && isBundle(o.nft.nftAddress)));
   }
 
-  const onBundleToggled = useCallback((e) => {
+  const onBundleToggled = useCallback((e: any) => {
     setIsBundling(e.target.checked);
   }, [setIsBundling, isBundling]);
 
-  const onSubmitListingBundle = async (values) => {
-    if (batchListingCart.nfts.length < MIN_NFTS_IN_BUNDLE) {
+  const onSubmitListingBundle = async (values: any) => {
+    if (batchListingCart.items.length < MIN_NFTS_IN_BUNDLE) {
       toast.error(`Need at least ${MIN_NFTS_IN_BUNDLE} NFTs to bundle`);
       return;
     }
@@ -288,7 +298,7 @@ export const ListingDrawer = () => {
     try {
       setShowConfirmButton(false);
       setExecutingCreateListing(true);
-      const filteredCartNfts = batchListingCart.nfts.filter((o) => {
+      const filteredCartNfts = batchListingCart.items.filter((o) => {
         return batchListingCart.extras[o.nft.nftAddress.toLowerCase()]?.approval;
       });
       const nftAddresses = filteredCartNfts.map((o) => o.nft.nftAddress);
@@ -329,7 +339,7 @@ export const ListingDrawer = () => {
           <Switch id='debug-legacy-toggle' isChecked={expressMode} onChange={() => setExpressMode(!expressMode)}/>
           <Popover>
             <PopoverTrigger>
-              <IconButton icon={<QuestionOutlineIcon />} variant='unstyled'/>
+              <IconButton aria-label='Express Mode Help' icon={<QuestionOutlineIcon />} variant='unstyled'/>
             </PopoverTrigger>
             <PopoverContent>
               <PopoverArrow />
@@ -378,6 +388,7 @@ export const ListingDrawer = () => {
                       ))}
                     </Select>
                     <IconButton
+                      aria-label='Apply Expiration'
                       icon={<FontAwesomeIcon icon={faArrowRight}/>}
                       size='sm'
                       mt={1}
@@ -395,6 +406,7 @@ export const ListingDrawer = () => {
                       <option value={sortOptions.floorLowToHigh}>Floor: Low to High</option>
                     </Select>
                     <IconButton
+                      aria-label='Sort All'
                       icon={<FontAwesomeIcon icon={faArrowRight}/>}
                       size='sm'
                       mt={1}
@@ -412,15 +424,15 @@ export const ListingDrawer = () => {
           </Box>
         )}
         <Flex mb={2}>
-          <Text fontWeight="bold" color={batchListingCart.nfts.length > 40 && 'red'}>
-            {batchListingCart.nfts.length} / {MAX_NFTS_IN_CART} Items
+          <Text fontWeight="bold" color={batchListingCart.items.length > 40 ? 'red' : 'auto'}>
+            {batchListingCart.items.length} / {MAX_NFTS_IN_CART} Items
           </Text>
           <Spacer />
           <Text fontWeight="bold" onClick={handleClearCart} cursor="pointer">Clear all</Text>
         </Flex>
-        {batchListingCart.nfts.length > 0 ? (
+        {batchListingCart.items.length > 0 ? (
           <>
-            {batchListingCart.nfts.map((item, key) => (
+            {batchListingCart.items.map((item, key) => (
               <ListingDrawerItem
                 key={`${item.nft.nftAddress}-${item.nft.nftId}`}
                 item={item}
@@ -486,13 +498,13 @@ export const ListingDrawer = () => {
             >
               {executingCreateListing ? (
                 <>
-                  Creating {pluralize(batchListingCart.nfts.length, 'Listing')}...
+                  Creating {pluralize(batchListingCart.items.length, 'Listing')}...
                   <Spinner animation="border" role="status" size="sm" className="ms-1">
                     <span className="visually-hidden">Loading...</span>
                   </Spinner>
                 </>
               ) : (
-                <>Create {pluralize(batchListingCart.nfts.length, 'Listing')}</>
+                <>Create {pluralize(batchListingCart.items.length, 'Listing')}</>
               )}
             </Button>
           </>
@@ -558,13 +570,19 @@ const customPriceOptions = {
   pctAboveFloor: 'pctAboveFloor',
   pctBelowFloor: 'pctBelowFloor'
 }
-const CustomPriceRow = ({onChange, onFloor}) => {
+
+interface CustomPriceRowProps {
+  onChange: (option: string, value: number) => void;
+  onFloor: () => void;
+}
+
+const CustomPriceRow = ({onChange, onFloor}: CustomPriceRowProps) => {
   const [inputType, setInputType] = useState('price');
   const [option, setOption] = useState(customPriceOptions.price);
   const [value, setValue] = useState('');
-  const [error, setError] = useState();
+  const [error, setError] = useState<string | null>();
 
-  const onOptionChange = (e) => {
+  const onOptionChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const newType = e.target.value;
     if ([customPriceOptions.pctAboveFloor, customPriceOptions.pctBelowFloor].includes(newType)) {
       if (inputType !== 'percent') setValue('');
@@ -576,7 +594,7 @@ const CustomPriceRow = ({onChange, onFloor}) => {
     setOption(newType);
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     if (newValue.length > 7) return;
     if (!numberRegexValidation.test(newValue) && newValue !== '') return;
@@ -594,11 +612,11 @@ const CustomPriceRow = ({onChange, onFloor}) => {
       return;
     }
 
-    onChange(option, value);
+    onChange(option, Number(value));
   };
 
   return (
-    <FormControl isInvalid={error}>
+    <FormControl isInvalid={!!error}>
       <HStack w='full'>
         <ChakraButton size='sm' px={4} onClick={onFloor}>
           Floor
@@ -616,6 +634,7 @@ const CustomPriceRow = ({onChange, onFloor}) => {
           value={value}
         />
         <IconButton
+          aria-label='Apply Price'
           icon={<FontAwesomeIcon icon={faArrowRight}/>}
           size='sm'
           mt={1}
@@ -633,14 +652,19 @@ const customCascadeOptions = {
   pctUp: 'pctUp',
   pctDown: 'pctDown'
 }
-const CustomCascadeRow = ({onChange}) => {
+
+interface CustomCascadeRowProps {
+  onChange: (option: string, startingPrice: number, step: number) => void;
+}
+
+const CustomCascadeRow = ({onChange}: CustomCascadeRowProps) => {
   const [inputType, setInputType] = useState('price');
   const [option, setOption] = useState(customCascadeOptions.priceDown);
   const [startingPrice, setStartingPrice] = useState('');
   const [step, setStep] = useState('');
-  const [error, setError] = useState();
+  const [error, setError] = useState<string | null>();
 
-  const onOptionChange = (e) => {
+  const onOptionChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const newType = e.target.value;
     if ([customCascadeOptions.pctUp, customCascadeOptions.pctDown].includes(newType)) {
       if (inputType !== 'percent') setStep('');
@@ -652,7 +676,7 @@ const CustomCascadeRow = ({onChange}) => {
     setOption(newType);
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     if (newValue.length > 5) return;
     if (!numberRegexValidation.test(newValue) && newValue !== '') return;
@@ -660,7 +684,7 @@ const CustomCascadeRow = ({onChange}) => {
     setStartingPrice(e.target.value);
   };
 
-  const handleStepChange = (e) => {
+  const handleStepChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     const isPct = [customCascadeOptions.pctUp, customCascadeOptions.pctDown].includes(option);
     if (newValue.length > 5) return;
@@ -686,11 +710,11 @@ const CustomCascadeRow = ({onChange}) => {
       return;
     }
 
-    onChange(option, startingPrice, step);
+    onChange(option, Number(startingPrice), Number(step));
   };
 
   return (
-    <FormControl isInvalid={error}>
+    <FormControl isInvalid={!!error}>
       <HStack w='full'>
         <Select size="sm" minW="110px" onChange={onOptionChange} value={option}>
           <option value={customCascadeOptions.priceUp}>Price &uarr;</option>
@@ -714,6 +738,7 @@ const CustomCascadeRow = ({onChange}) => {
           value={step}
         />
         <IconButton
+          aria-label='Apply Cascade'
           icon={<FontAwesomeIcon icon={faArrowRight}/>}
           size='sm'
           mt={1}

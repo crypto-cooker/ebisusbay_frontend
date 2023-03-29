@@ -1,26 +1,46 @@
-import { useState } from 'react';
+import {useState} from 'react';
 
-import useCreateListingSigner from '../../../../hooks/useCreateListingSigner';
-import {useSelector} from "react-redux";
+import useCreateListingSigner, {ListingSignerProps} from '../../../../hooks/useCreateListingSigner';
 import {cancelListing, upsertListing} from '@src/core/cms/endpoints/gaslessListing';
 import UUID from "uuid-int";
 import {caseInsensitiveCompare, isGaslessListing} from "@src/utils";
 import NextApiService from "@src/core/services/api-service/next";
 import {getItemType} from "@src/helpers/chain";
+import {useAppSelector} from "@src/Store/hooks";
 
 const generator = UUID(0);
 
+export interface PendingListings {
+  collectionAddress: string;
+  tokenId: string;
+  price: number;
+  expirationDate: number;
+  is1155: boolean;
+}
+
+interface ListingCandidate {
+  itemType: string;
+  salt: string;
+  listingTime: number;
+  expirationDate: number;
+}
+
+type ResponseProps = {
+  loading: boolean;
+  error?: any;
+};
+
 const useUpsertGaslessListings = () => {
-  const [response, setResponse] = useState({
+  const [response, setResponse] = useState<ResponseProps>({
     loading: false,
     error: null,
   });
 
   const [isLoadingListing, createListingSigner] = useCreateListingSigner();
 
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
 
-  const upsertGaslessListings = async (pendingListings) => {
+  const upsertGaslessListings = async (pendingListings: PendingListings[]) => {
     if (!Array.isArray(pendingListings)) pendingListings = [pendingListings];
 
     setResponse({
@@ -30,7 +50,7 @@ const useUpsertGaslessListings = () => {
     });
 
     // Get any existing listings
-    const listingsResponse = await NextApiService.getAllListingsByUser(user.address);
+    const listingsResponse = await NextApiService.getAllListingsByUser(user.address!);
     const existingListings = listingsResponse.data.filter((eListing) => {
       return pendingListings.some((pListing) => {
         return caseInsensitiveCompare(eListing.nftAddress, pListing.collectionAddress) &&
@@ -56,26 +76,36 @@ const useUpsertGaslessListings = () => {
     // Cancel the old gasless
     if (cancelIds.gasless.length > 0) {
       const { data: orders } = await cancelListing(cancelIds.gasless);
-      const ship = user.contractService.ship;
+      const ship = user.contractService!.ship;
       const tx = await ship.cancelOrders(orders);
       await tx.wait()
     }
 
     try {
-      let itemTypes = {};
+      let itemTypes: {[key: string]: number} = {};
       for (const pendingListing of pendingListings) {
         if (itemTypes[pendingListing.collectionAddress] === undefined) {
           itemTypes[pendingListing.collectionAddress] = await getItemType(pendingListing.collectionAddress);
         }
-        pendingListing.itemType = itemTypes[pendingListing.collectionAddress];
-        pendingListing.salt = generator.uuid();
-        pendingListing.listingTime = Math.round(new Date().getTime() / 1000);
-        pendingListing.expirationDate = Math.round(pendingListing.expirationDate / 1000);
-        const {objectSignature, objectHash} = await createListingSigner(pendingListing);
-        pendingListing.sellerSignature = objectSignature;
-        pendingListing.seller = user.address.toLowerCase();
-        pendingListing.digest = objectHash;
-        const res = await upsertListing(pendingListing);
+
+        const listingSignerProps: ListingSignerProps = {
+          price: pendingListing.price,
+          itemType: itemTypes[pendingListing.collectionAddress],
+          collectionAddress: pendingListing.collectionAddress,
+          tokenId: pendingListing.tokenId,
+          listingTime: Math.round(new Date().getTime() / 1000),
+          expirationDate: Math.round(pendingListing.expirationDate / 1000),
+          salt: generator.uuid(),
+        };
+
+        const {objectSignature, objectHash} = await createListingSigner(listingSignerProps);
+
+        const res = await upsertListing({
+          ...listingSignerProps,
+          sellerSignature: objectSignature,
+          seller: user.address!.toLowerCase(),
+          digest: objectHash,
+        });
       }
 
       setResponse({
@@ -95,7 +125,7 @@ const useUpsertGaslessListings = () => {
     }
   };
 
-  return [upsertGaslessListings, response];
+  return [upsertGaslessListings, response] as const;
 };
 
 export default useUpsertGaslessListings;

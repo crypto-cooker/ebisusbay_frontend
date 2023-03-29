@@ -406,7 +406,9 @@ const RyoshiDrop = ({drop}: RyoshiDropProps) => {
                     <div className="profile_name">
                       <Heading as="h4" size="md">
                         {drop.title}
-                        <SocialsBar address={drop.address} socials={drop.author} />
+                        <Box mt={2}>
+                          <SocialsBar address={drop.address} socials={drop.author} />
+                        </Box>
                       </Heading>
                     </div>
                   </div>

@@ -2,27 +2,30 @@ import {Box, Center, Flex, GridItem, Spacer, Text,} from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
 import React, {useRef, useState} from "react";
 
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {toast} from "react-toastify";
-import {addToBatchListingCart, clearBatchListingCart, setRefetchNfts,} from "@src/GlobalState/batchListingSlice";
+import {addToBatchListingCart, clearBatchListingCart, setRefetchNfts,} from "@src/GlobalState/user-batch";
 
 
 import useCreateBundle from '@src/Components/Account/Settings/hooks/useCreateBundle';
-import BundleDrawerItem from "./BundleDrawerItem";
+import BundleDrawerItem from "./bundle-drawer-item";
 import {isBundle} from "@src/utils";
-import BundleDrawerForm from "@src/Components/Account/Profile/Inventory/components/BundleDrawerForm";
-import {getNftsForAddress2} from "@src/core/api";
+import BundleDrawerForm, {
+  BundleDrawerFormHandle
+} from "@src/components-v2/feature/account/profile/tabs/inventory/batch/bundle-drawer-form";
+import {useAppSelector} from "@src/Store/hooks";
+import nextApiService from "@src/core/services/api-service/next";
 
 const MAX_NFTS_IN_BUNDLE = 40;
 const MIN_NFTS_IN_BUNDLE = 2;
 
-export const BundleDrawer = ({ onClose, ...gridProps }) => {
+export const BundleDrawer = () => {
   const dispatch = useDispatch();
-  const batchListingCart = useSelector((state) => state.batchListing);
-  const user = useSelector((state) => state.user);
+  const batchListingCart = useAppSelector((state) => state.batchListing);
+  const user = useAppSelector((state) => state.user);
   const [showConfirmButton, setShowConfirmButton] = useState(false);
   const [executingCreateBundle, setExecutingCreateBundle] = useState(false);
-  const formRef = useRef(null);
+  const formRef = useRef<BundleDrawerFormHandle>(null);
   const [createBundle, responseBundle] = useCreateBundle();
 
   const handleClearCart = () => {
@@ -30,23 +33,30 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
     dispatch(clearBatchListingCart());
   };
 
-  const handleAddCollection = async (address) => {
+  const handleAddCollection = async (address: string) => {
     if (!address) return;
-    const nfts = await getNftsForAddress2(user.address, user.provider, 1, [address]);
-    for (const nft of nfts.nfts) {
+    const nfts = await nextApiService.getWallet(user.address!, {
+      page: 1,
+      collection: [address],
+    });
+    for (const nft of nfts.data) {
       dispatch(addToBatchListingCart(nft));
     }
   }
 
-  const onSubmitBundle = async (values) => {
-    const validated = await formRef.current.validate();
-    const arrays = batchListingCart.nfts.reduce((object, nft) => {
-      const addresses = [nft.nft.nftAddress];
-      const ids = [nft.nft.nftId];
-      if (nft.nft.multiToken && nft.quantity > 1) {
-        for (let qty = 1; qty < nft.quantity; qty++) {
-          addresses.push(nft.nft.nftAddress);
-          ids.push(nft.nft.nftId);
+  const onSubmitBundle = async (values: any) => {
+    const validated = await formRef.current?.validate();
+    type ReducedItems = {
+      tokens: string[];
+      ids: string[];
+    };
+    const arrays: ReducedItems = batchListingCart.items.reduce<ReducedItems>((object, item) => {
+      const addresses = [item.nft.nftAddress];
+      const ids = [item.nft.nftId];
+      if (item.nft.multiToken && item.quantity > 1) {
+        for (let qty = 1; qty < item.quantity; qty++) {
+          addresses.push(item.nft.nftAddress);
+          ids.push(item.nft.nftId);
         }
       }
 
@@ -54,10 +64,7 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
         tokens: [...object.tokens, ...addresses],
         ids: [...object.ids, ...ids]
       }
-    }, {
-      tokens: [],
-      ids: []
-    });
+    }, {tokens: [], ids: []});
 
     if (MAX_NFTS_IN_BUNDLE < arrays.tokens.length || MIN_NFTS_IN_BUNDLE > arrays.tokens.length) {
       if (MAX_NFTS_IN_BUNDLE < arrays.tokens.length) {
@@ -77,8 +84,8 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
           toast.success('The bundle was created successfully');
           dispatch(setRefetchNfts(true))
           dispatch(clearBatchListingCart())
-          if (typeof formRef.current.resetForm === 'function') {
-            formRef.current.resetForm();
+          if (typeof formRef.current?.reset === 'function') {
+            formRef.current?.reset();
           }
         } catch (error) {
           console.log(error);
@@ -92,9 +99,9 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
 
   const canSubmit = () => {
     return !executingCreateBundle &&
-      batchListingCart.nfts.length > 0 &&
+      batchListingCart.items.length > 0 &&
       !Object.values(batchListingCart.extras).some((o) => !o.approval) &&
-      !batchListingCart.nfts.some((o) => o.nft.isStaked || isBundle(o.nft.nftAddress));
+      !batchListingCart.items.some((o) => o.nft.isStaked || isBundle(o.nft.nftAddress));
   }
 
   const handleSubmit = () => {
@@ -110,15 +117,15 @@ export const BundleDrawer = ({ onClose, ...gridProps }) => {
       </GridItem>
       <GridItem p={4} overflowY="auto">
         <Flex mb={2}>
-          <Text fontWeight="bold" color={batchListingCart.nfts.length > 40 && 'red'}>
-            {batchListingCart.nfts.length} / {MAX_NFTS_IN_BUNDLE} Items
+          <Text fontWeight="bold" color={batchListingCart.items.length > 40 ? 'red' : 'auto'}>
+            {batchListingCart.items.length} / {MAX_NFTS_IN_BUNDLE} Items
           </Text>
           <Spacer />
           <Text fontWeight="bold" onClick={handleClearCart} cursor="pointer">Clear all</Text>
         </Flex>
-        {batchListingCart.nfts.length > 0 ? (
+        {batchListingCart.items.length > 0 ? (
           <>
-            {batchListingCart.nfts.map((item) => (
+            {batchListingCart.items.map((item) => (
               <BundleDrawerItem
                 key={`${item.nft.nftAddress}-${item.nft.nftId}`}
                 item={item}
