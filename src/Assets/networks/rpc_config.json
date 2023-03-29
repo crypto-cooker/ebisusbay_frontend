@@ -19358,6 +19358,84 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "Battle Retired Boyz",
+      "slug": "battle-retired-boyz",
+      "multiToken": false,
+      "address": "0xb99ef457ed3681040fb9d54adee7ebb7ef3819f8",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "1600 hand drawn nfts that are treasury backed to help maintain floor price. Each nft is a 1/1600 share of the treasury. We are a community ran project with all important decisions being voted on. Come join our revolution as we tackle the ruggers head on.",
+        "avatar": "/img/collections/battle-retired-boyz/avatar.webp",
+        "card": "/img/collections/battle-retired-boyz/card.webp",
+        "banner": "/img/collections/battle-retired-boyz/banner.webp",
+        "website": "https://battlereadyboyz.netlify.app/",
+        "twitter": "https://twitter.com/BRB_Rev",
+        "discord": "https://discord.gg/NyhK4Krv",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Paradise Square",
+      "slug": "paradise-square",
+      "multiToken": false,
+      "address": "0x7665D80D37d268FA46D3ef1c147d22a63CC74E7E",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A New Way to invest in Real Estate in a paradisiaq island \uD83C\uDF34 U MINT: We BUILD \uD83D\uDCB0 15% to 25% APR Garanteed in stable",
+        "avatar": "/img/collections/paradise-square/avatar.webp",
+        "card": "/img/collections/paradise-square/card.webp",
+        "banner": "/img/collections/paradise-square/banner.webp",
+        "website": "https://paradise-square.com/",
+        "twitter": "https://twitter.com/ParadiseSquare1",
+        "discord": "https://discord.gg/gAdw2AnZYU",
+        "medium": "https://medium.com/@ParadiseSquare1",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "MuscleMorphs",
+      "slug": "musclemorphs",
+      "multiToken": false,
+      "address": "0x06c508E5Cb315bBD8fF0ADEA53CE3B177A63Ad9a",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Muscular Morphs running a secret fighting club.",
+        "avatar": "/img/collections/musclemorphs/avatar.webp",
+        "card": "/img/collections/musclemorphs/card.webp",
+        "banner": "/img/collections/musclemorphs/banner.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/vQaBeUv5tX",
+        "medium": "https://medium.com/@CroMorphs/",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
