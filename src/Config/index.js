@@ -64,6 +64,11 @@ export const configData = {
         name: 'BACC',
         symbol: 'BACC',
         address: '',
+      },
+      vrse: {
+        name: 'VRSE',
+        symbol: 'VRSE',
+        address: '0x2ba01269eafce04c8dccc4a9887884ab66e4bcb1',
       }
     },
     collections: rpcConfig.known_contracts,
@@ -126,6 +131,11 @@ export const configData = {
         name: 'BACC',
         symbol: 'BACC',
         address: '',
+      },
+      vrse: {
+        name: 'VRSE',
+        symbol: 'VRSE',
+        address: '0x2ba01269eafce04c8dccc4a9887884ab66e4bcb1',
       }
     },
     collections: rpcConfigDev.known_contracts,
@@ -187,6 +197,11 @@ export const configData = {
       bacc: {
         name: 'BACC',
         symbol: 'BACC',
+        address: '',
+      },
+      vrse: {
+        name: 'VRSE',
+        symbol: 'VRSE',
         address: '',
       }
     },

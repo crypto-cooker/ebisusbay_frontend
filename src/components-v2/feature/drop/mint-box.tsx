@@ -257,7 +257,6 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                     <Heading as="h5" size="md">{`${ethers.utils.commify(round(drop.erc20Cost))} ${config.tokens[drop.erc20Token].symbol}`}</Heading>
                   )}
                 </Box>
-
                 {(memberCost || (drop.erc20MemberCost && drop.erc20Cost !== drop.erc20MemberCost)) && (
                   <Box>
                     <Heading as="h6" size="sm" className="mb-1">Member Price</Heading>
