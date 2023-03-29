@@ -33,7 +33,8 @@ import {
   Text,
   useBreakpointValue,
   useColorModeValue,
-  useMediaQuery
+  useMediaQuery,
+  Wrap
 } from "@chakra-ui/react";
 import {motion} from 'framer-motion'
 import BatchDrawer from "@src/components-v2/feature/account/profile/tabs/inventory/batch/batch-drawer";
@@ -41,7 +42,7 @@ import {closeBatchListingCart} from "@src/GlobalState/user-batch";
 import {useAppDispatch, useAppSelector} from "@src/Store/hooks";
 import {getTheme} from "@src/Theme/theme";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEllipsisV} from "@fortawesome/free-solid-svg-icons";
+import {faCog, faEllipsisV} from "@fortawesome/free-solid-svg-icons";
 import {ChevronDownIcon} from "@chakra-ui/icons";
 
 const MotionGrid = motion(Grid)
@@ -95,7 +96,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
     {base: true, lg: false},
     {fallback: 'lg'},
   );
-  const useMobileLayout = useMediaQuery('(min-width: 580px)');
+  const [useMobileLayout] = useMediaQuery('(max-width: 580px)');
   const overflowCount = useBreakpointValue<number>(
     {base: 2, sm: 1, md: 0},
     {fallback: 'md'},
@@ -202,7 +203,10 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                 </Flex>
                 {!useMobileLayout && (
                   <Flex direction='column' ms={4} flex={1}>
-                    <Heading>{username()}</Heading>
+                    <Wrap align='center'>
+                      <Heading>{username()}</Heading>
+                      <SocialsBar socials={profile} address={address} />
+                    </Wrap>
                     {isUserBlacklisted(address) && (
                       <Flex>
                         <Badge bg="danger">Blacklisted</Badge>
@@ -211,21 +215,36 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                     <Text className={styles.bio}>{profile.bio}</Text>
                   </Flex>
                 )}
-                <HStack align='top' flex='1'>
+                <HStack align='top' flex={useMobileLayout ? 1 : 0}>
                   <Spacer/>
-                  <Box style={{marginTop: '1px !important'}}>
-                    <SocialsBar socials={profile} address={address} />
-                  </Box>
-
+                  {useMobileLayout && (
+                    <Box style={{marginTop: '1px !important'}}>
+                      <SocialsBar socials={profile} address={address} />
+                    </Box>
+                  )}
                   {isProfileOwner && (
-                    <ChakraButton
-                      variant='primary'
-                      size='sm'
-                      fontSize='sm'
-                      onClick={() => navigateTo('/account/settings/profile')}
-                    >
-                      Settings
-                    </ChakraButton>
+                    <>
+                      {useMobileLayout ? (
+                        <IconButton
+                          aria-label='User Settings'
+                          variant='primary'
+                          size='sm'
+                          fontSize='sm'
+                          icon={<FontAwesomeIcon icon={faCog} />}
+                          rounded='full'
+                          onClick={() => navigateTo('/account/settings/profile')}
+                        />
+                      ) : (
+                        <ChakraButton
+                          variant='primary'
+                          size='sm'
+                          fontSize='sm'
+                          onClick={() => navigateTo('/account/settings/profile')}
+                        >
+                          Settings
+                        </ChakraButton>
+                      )}
+                    </>
                   )}
                   {/*<Button styleType="default-outlined" className="mt-2 w-auto">More</Button>*/}
                 </HStack>
