@@ -17,7 +17,7 @@ import { appInitializeStateReducer } from '../GlobalState/InitSlice';
 import offerReducer from '../GlobalState/offerSlice';
 import leaderBoardReducer from '../GlobalState/leaderBoardSlice';
 import cartReducer from '../GlobalState/cartSlice';
-import batchListingReducer from '../GlobalState/batchListingSlice';
+import batchListingReducer from '../GlobalState/user-batch';
 import ryoshiStakingReducer from '../GlobalState/ryoshiStakingCartSlice';
 import { user } from '../GlobalState/User';
 

@@ -1,12 +1,7 @@
-@import '../../../Assets/styles/vars';
+@import '@src/Assets/styles/vars';
 
 .profile {
   .userInfo {
-    .username {
-      font-size: 40px;
-      line-height: 48px;
-    }
-
     .bio {
       overflow: hidden;
       text-overflow: ellipsis;
@@ -16,10 +11,5 @@
       -webkit-box-orient: vertical;
       color: $textColor2;
     }
-  }
-
-  .socials {
-    align-items: center;
-    margin: 4px -6px;
   }
 }

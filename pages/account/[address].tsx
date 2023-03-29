@@ -1,8 +1,15 @@
-import Profile from '@src/Components/Account/Profile';
+import Profile from '@src/components-v2/feature/account/profile';
 import {caseInsensitiveCompare} from "@src/utils";
 import {getProfile} from "@src/core/cms/endpoints/profile";
+import {GetServerSidePropsContext, NextPage} from "next";
 
-export default function Account({ address, profile, query }) {
+interface PageProps {
+  address: string;
+  profile: any;
+  query: any;
+}
+
+const Account: NextPage<PageProps> = ({ address, profile, query }: PageProps) => {
   return (
     <>
       <Profile address={address} profile={profile} tab={query?.tab} />
@@ -10,7 +17,9 @@ export default function Account({ address, profile, query }) {
   );
 }
 
-export const getServerSideProps = async ({ params, query }) => {
+export default Account;
+
+export const getServerSideProps = async ({ params, query }: GetServerSidePropsContext) => {
   const addressOrUsername = params?.address;
 
   let user;

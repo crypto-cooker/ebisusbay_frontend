@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
 
 import LegacyStaking from '@src/Components/Staking/LegacyStaking';
-import withAuth from '../src/Components/withAuth';
 import {Box, Container, Grid, GridItem, Heading, Text, useBreakpointValue, useColorModeValue} from "@chakra-ui/react";
-import RyoshiStaking from "@src/Components/Staking/RyoshiStaking";
+import RyoshiStaking from "@src/components-v2/feature/staking/ryoshi-staking";
 import {motion} from "framer-motion";
 import {useDispatch, useSelector} from "react-redux";
 import {closeCart} from "@src/GlobalState/ryoshiStakingCartSlice";

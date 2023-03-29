@@ -3,12 +3,66 @@ import { useSelector } from 'react-redux';
 import { appConfig } from "@src/Config";
 import {BigNumber, ethers} from "ethers";
 import Constants from '@src/constants';
+import {useAppSelector} from "@src/Store/hooks";
 
+export interface ListingSignerProps {
+  price: number;
+  itemType: ItemType;
+  collectionAddress: string;
+  tokenId: string;
+  listingTime: number;
+  expirationDate: number;
+  salt: number;
+}
 
-const { ItemType } = Constants;
+export enum ItemType {
+  // 0: CRO on mainnet, MATIC on polygon, etc.
+  NATIVE,
+
+  // 1: ERC721 items
+  ERC721,
+
+  // 2: ERC1155 items
+  ERC1155,
+
+  // 3: ERC20 items (ERC777 and ERC20 analogues could also technically work)
+  ERC20,
+
+  // 4: ERC721 items where a number of tokenIds are supported
+  ERC721_WITH_CRITERIA,
+
+  // 5: ERC1155 items where a number of ids are supported
+  ERC1155_WITH_CRITERIA,
+
+  // 6: Legacy Listing from OG bay contract
+  LEGACY_LISTING
+}
+
+export enum OrderType {
+  //0: NFTS -> NATIVE
+  SELL_NFT_NATIVE
+}
+
+export type Order = {
+  offerer: string,
+  offerings: OfferItem[],
+  considerations: OfferItem[],
+  orderType: OrderType,
+  startAt: number,
+  endAt: number,
+  salt: number
+}
+
+export type OfferItem = {
+  itemType: ItemType,
+  token: string,
+  identifierOrCriteria: BigNumber | number,
+  startAmount: BigNumber | number,
+  endAmount: BigNumber | number
+}
 
 const useSignature = () => {
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
   const config = appConfig();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +95,7 @@ const useSignature = () => {
   }
 
   const signMessage = useCallback(
-    async (value) => {
+    async (value: Order) => {
       if (!user.provider) throw new Error();
       try {
         const provider = user.provider;
@@ -51,7 +105,7 @@ const useSignature = () => {
         const objectSignature = await signer._signTypedData(domain, typeOrder, value);
 
         return { objectSignature, objectHash }
-      } catch (err) {
+      } catch (err: any) {
         console.log(err)
         throw new Error(err);
       }
@@ -59,7 +113,7 @@ const useSignature = () => {
     [user.provider]
   );
 
-  const createSigner = useCallback(async (signatureValues) => {
+  const createSigner = useCallback(async (signatureValues: ListingSignerProps) => {
     setIsLoading(true);
     const considerationPrice= ethers.utils.parseEther(`${signatureValues.price}`);
     const offerItem = {
@@ -79,7 +133,7 @@ const useSignature = () => {
     };
 
     const order = {
-      offerer: user.address.toLowerCase(),
+      offerer: user.address!.toLowerCase(),
       offerings: [offerItem],
       considerations: [considerationItem],
       orderType: 0, //OrderType.SELL_NFT_NATIVE -> 0
@@ -94,14 +148,14 @@ const useSignature = () => {
       setIsLoading(false);
 
       return signature;
-    } catch (err) {
+    } catch (err: any) {
       console.log(err?.message);
       throw new Error(err);
 
     }
   }, [signMessage]);
 
-  return [isLoading, createSigner];
+  return [isLoading, createSigner] as const;
 };
 
 export default useSignature;

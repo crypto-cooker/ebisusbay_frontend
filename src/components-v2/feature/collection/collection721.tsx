@@ -234,9 +234,9 @@ const Collection721 = ({ collection, query, activeDrop = null}: Collection721Pro
                       )}
                     </Box>
                   )}
-                  <span className="fs-4">
+                  <Box className="fs-4 mt-2">
                     <SocialsBar address={collection.address} socials={collection.metadata} />
-                  </span>
+                  </Box>
                 </div>
               </div>
             </div>

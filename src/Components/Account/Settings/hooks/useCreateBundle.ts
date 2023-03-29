@@ -1,12 +1,17 @@
 import {useState} from 'react';
 import {Contract} from "ethers";
 import useCreateSigner from './useCreateSigner';
-import {useSelector} from "react-redux";
 import {appConfig} from "@src/Config";
 import Bundle from "@src/Contracts/Bundle.json";
+import {useAppSelector} from "@src/Store/hooks";
+
+type ResponseProps = {
+  loading: boolean;
+  error?: any;
+};
 
 const useCreateBundle = () => {
-  const [response, setResponse] = useState({
+  const [response, setResponse] = useState<ResponseProps>({
     loading: false,
     error: null,
   });
@@ -15,9 +20,9 @@ const useCreateBundle = () => {
 
   const [isLoading, getSigner] = useCreateSigner();
 
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
 
-  const createBundle = async (tokens, ids, title, description, createListing = false) => {
+  const createBundle = async (tokens: string[], ids: string[], title: string, description: string, createListing = false) => {
     setResponse({
       ...response,
       loading: true,
@@ -46,7 +51,7 @@ const useCreateBundle = () => {
     }
   };
 
-  return [createBundle, response];
+  return [createBundle, response] as const;
 };
 
 export default useCreateBundle;

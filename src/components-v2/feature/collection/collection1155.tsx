@@ -176,12 +176,12 @@ const Collection1155 = ({ collection, tokenId, query, activeDrop = null }: Colle
                       )}
                     </Box>
                   )}
-                  <span className="fs-4">
-                  <SocialsBar
-                    address={collection.address}
-                    socials={collection.metadata}
-                  />
-                </span>
+                  <Box className="fs-4 mt-2">
+                    <SocialsBar
+                      address={collection.address}
+                      socials={collection.metadata}
+                    />
+                  </Box>
                 </div>
               </div>
             </div>

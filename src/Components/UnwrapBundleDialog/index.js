@@ -21,7 +21,7 @@ import useUnwrapBundle from "../Account/Settings/hooks/useUnwrapBundle";
 import { toast } from 'react-toastify';
 import {
   setRefetchNfts,
-} from "@src/GlobalState/batchListingSlice";
+} from "@src/GlobalState/user-batch";
 import ImageContainer from "../Bundle/ImagesContainer";
 
 

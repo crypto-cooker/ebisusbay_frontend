@@ -78,9 +78,11 @@ const Brand = ({ brand, collections, stats, query }) => {
         <SimpleGrid columns={{base: 1, md: 2}} position="relative" bottom={0} px={10} pt={{base: '75px', md:'40px'}} pb={4} maxW="2560px">
           <Box>
             <Heading color="inherit">{brand.name}</Heading>
-            <SocialsBar
-              socials={brand.socials}
-            />
+            <Box my={2}>
+              <SocialsBar
+                socials={brand.socials}
+              />
+            </Box>
             <Text maxW="800px" mt={1} noOfLines={viewMore ? 0 : {base: 3, md: 5}}>
               {brand.description}
             </Text>

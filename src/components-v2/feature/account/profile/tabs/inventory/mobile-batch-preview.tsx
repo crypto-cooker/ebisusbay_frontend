@@ -1,19 +1,17 @@
 import React, {useState} from "react";
-import {Box, Drawer, DrawerContent, DrawerOverlay, Flex, HStack, Slide, Text, VStack} from "@chakra-ui/react";
-import {
-  closeBatchListingCart,
-  openBatchListingCart
-} from "@src/GlobalState/batchListingSlice";
-import {BatchListingDrawer} from "@src/Components/Account/Profile/Inventory/BatchListingDrawer";
-import {useDispatch, useSelector} from "react-redux";
+import {Box, Drawer, DrawerContent, DrawerOverlay, Flex, HStack, Slide, Text} from "@chakra-ui/react";
+import {closeBatchListingCart, openBatchListingCart} from "@src/GlobalState/user-batch";
+import BatchDrawer from "@src/components-v2/feature/account/profile/tabs/inventory/batch/batch-drawer";
+import {useDispatch} from "react-redux";
 import Button from "@src/Components/components/Button";
 import {pluralize} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
+import {useAppSelector} from "@src/Store/hooks";
 
-export const MobileBatchListing = () => {
+export const MobileBatchPreview = () => {
   const dispatch = useDispatch();
   const [showBatchListingDrawer, setShowBatchListingDrawer] = useState(false);
-  const batchListingCart = useSelector((state) => state.batchListing);
+  const batchListingCart = useAppSelector((state) => state.batchListing);
   const sliderBackground = useColorModeValue('gray.50', 'gray.700')
 
   const handleOpen = () => {
@@ -28,7 +26,7 @@ export const MobileBatchListing = () => {
 
   const handleClose = () => {
     setShowBatchListingDrawer(false);
-    if (!(batchListingCart.nfts.length > 0)) {
+    if (!(batchListingCart.items.length > 0)) {
       dispatch(closeBatchListingCart());
     }
   }
@@ -39,7 +37,7 @@ export const MobileBatchListing = () => {
         <Box p={3} backgroundColor={sliderBackground}>
           <Flex justify="space-between">
             <Text fontSize="14px" my="auto" fontWeight="bold">
-              {batchListingCart.nfts.length} {pluralize(batchListingCart.nfts.length, 'item')} selected
+              {batchListingCart.items.length} {pluralize(batchListingCart.items.length, 'item')} selected
             </Text>
             <Box my="auto">
               <HStack>
@@ -61,7 +59,7 @@ export const MobileBatchListing = () => {
       >
         <DrawerOverlay />
         <DrawerContent>
-          <BatchListingDrawer
+          <BatchDrawer
             maxH="100vh"
             onClose={handleClose}
           />

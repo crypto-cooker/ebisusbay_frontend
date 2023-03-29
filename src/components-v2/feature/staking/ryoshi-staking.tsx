@@ -7,7 +7,6 @@ import {getStakedRyoshi} from "@src/core/subgraph/staking";
 import {appConfig} from "@src/Config";
 import InfiniteScroll from "react-infinite-scroll-component";
 import RyoshiStakingNftCard from "@src/Components/components/RyoshiStakingNftCard";
-import {getNftsForAddress2} from "@src/core/api";
 import {addToCart, clearCart, removeFromCart, setCartContext} from "@src/GlobalState/ryoshiStakingCartSlice";
 import {sortAndFetchCollectionDetails} from "@src/core/api/endpoints/fullcollections";
 import {FullCollectionsQuery} from "@src/core/api/queries/fullcollections";
@@ -15,8 +14,10 @@ import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {CollectionSortOption} from "@src/Components/Models/collection-sort-option.model";
 import Link from "next/link";
+import nextApiService from "@src/core/services/api-service/next";
+import {useAppSelector} from "@src/Store/hooks";
 
-const ryoshiCollectionAddress = appConfig('collections').find((c) => c.slug === 'ryoshi-tales-vip').address;
+const ryoshiCollectionAddress = appConfig('collections').find((c: any) => c.slug === 'ryoshi-tales-vip').address;
 const displayTypes = {
   staked: 'staked',
   unstaked: 'unstaked'
@@ -24,13 +25,17 @@ const displayTypes = {
 
 const RyoshiStaking = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
   const [displayType, setDisplayType] = useState(displayTypes.staked)
-  const { data, status, refetch } = useQuery(['RyoshiStaking', user.address], () =>
-    getStakedRyoshi(user.address), !!user.address
+  const { data, status, refetch } = useQuery(
+    ['RyoshiStaking', user.address],
+    () => getStakedRyoshi(user.address),
+    {
+      enabled: !!user.address
+    }
   )
 
-  const handleDisplayTypeClick = (value) => {
+  const handleDisplayTypeClick = (value: string) => {
     setDisplayType(value);
   }
 
@@ -74,7 +79,7 @@ const RyoshiStaking = () => {
           {displayType === displayTypes.staked && (
             <StakedRyoshiList />
           )}
-          <Box mt={4} align="center">
+          <Box mt={4} textAlign="center">
             Looking for more Ryoshi VIPs to stake? Swap a Legacy VIP on the&nbsp;
             <Link href="/drops/ryoshi-tales-vip">
               <span className="color cursor-pointer fw-bold">drop page</span>
@@ -106,12 +111,15 @@ const RyoshiStaking = () => {
 
 export default memo(RyoshiStaking);
 
-const UnstakedRyoshiNftList = ({onSelect}) => {
+const UnstakedRyoshiNftList = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
 
   const fetcher = async ({ pageParam = 1 }) => {
-    return await getNftsForAddress2(user.address, user.provider, pageParam, [ryoshiCollectionAddress]);
+    return await nextApiService.getWallet(user.address!, {
+      page: pageParam,
+      collection: [ryoshiCollectionAddress],
+    });
   };
 
   const {
@@ -144,7 +152,7 @@ const UnstakedRyoshiNftList = ({onSelect}) => {
         <InfiniteScroll
           dataLength={data?.pages ? data.pages.flat().length : 0}
           next={loadMore}
-          hasMore={hasNextPage}
+          hasMore={hasNextPage ?? false}
           style={{ overflow: 'hidden' }}
           loader={
             <div className="row">
@@ -163,19 +171,19 @@ const UnstakedRyoshiNftList = ({onSelect}) => {
               </Spinner>
             </div>
           ) : status === "error" ? (
-            <p>Error: {error.message}</p>
+            <p>Error: {(error as any).message}</p>
           ) : (
             <>
               <div className="card-group row g-3">
-                {data.pages[0]?.nfts?.length > 0 ? (
+                {data.pages[0]?.data?.length > 0 ? (
                   <>
                     {data.pages.map((items, index) => (
                       <React.Fragment key={index}>
-                        {items.nfts.map((nft, index) => {
+                        {items.data.map((nft, index) => {
                           return (
                             <div
                               className={`d-item col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2 mb-4`}
-                              key={`${nft.address}-${nft.id}-${index}`}
+                              key={`${nft.nftAddress}-${nft.nftId}-${index}`}
                             >
                               <RyoshiStakingNftCard
                                 nft={nft}
@@ -206,7 +214,7 @@ const UnstakedRyoshiNftList = ({onSelect}) => {
 
 const StakedRyoshiList = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
 
   const fetcher = async ({ pageParam = 1 }) => {
     const stakedRyoshis = await getStakedRyoshi(user.address);
@@ -252,7 +260,7 @@ const StakedRyoshiList = () => {
         <InfiniteScroll
           dataLength={data?.pages ? data.pages.flat().length : 0}
           next={loadMore}
-          hasMore={hasNextPage}
+          hasMore={hasNextPage ?? false}
           style={{ overflow: 'hidden' }}
           loader={
             <div className="row">
@@ -271,7 +279,7 @@ const StakedRyoshiList = () => {
               </Spinner>
             </div>
           ) : status === "error" ? (
-            <p>Error: {error.message}</p>
+            <p>Error: {(error as any).message}</p>
           ) : (
             <>
               <div className="card-group row g-3">
@@ -279,7 +287,7 @@ const StakedRyoshiList = () => {
                   <>
                     {data.pages.map((items, index) => (
                       <React.Fragment key={index}>
-                        {items.nfts?.map((nft, index) => {
+                        {items.nfts?.map((nft: any, index: number) => {
                           return (
                             <div
                               className={`d-item col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2 mb-4`}
