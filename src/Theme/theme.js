@@ -93,6 +93,10 @@ const Button = defineStyleConfig({
       },
       _active: {
         bg: '#1B72CF'
+      },
+      _disabled: {
+        color: 'white',
+        bg: '#b3d7ffff'
       }
     },
     tab: {
