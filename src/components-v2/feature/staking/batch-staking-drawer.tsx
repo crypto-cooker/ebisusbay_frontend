@@ -41,6 +41,7 @@ import {getCollectionMetadata} from "@src/core/api";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {parseUnits} from "ethers/lib/utils";
 import {useAppSelector} from "@src/Store/hooks";
+import {PrimaryButton} from "@src/components-v2/foundation/button";
 
 const config = appConfig();
 
@@ -56,11 +57,9 @@ export const BatchStakingDrawer = ({onClose, ...gridProps}: BatchStakingDrawer &
   const [showConfirmButton, setShowConfirmButton] = useState(false);
 
   const handleClose = () => {
-    setShowConfirmButton(false);
     onClose();
   };
   const handleClearCart = () => {
-    setShowConfirmButton(false);
     dispatch(clearCart());
   };
 
@@ -142,7 +141,7 @@ export const BatchStakingDrawer = ({onClose, ...gridProps}: BatchStakingDrawer &
             {ryoshiStakingCart.nfts.map((item, key) => (
               <BatchStakingDrawerItem
                 item={item}
-                disabled={showConfirmButton || executingAction}
+                disabled={executingAction}
               />
             ))}
           </>
@@ -155,54 +154,15 @@ export const BatchStakingDrawer = ({onClose, ...gridProps}: BatchStakingDrawer &
         )}
       </GridItem>
       <GridItem px={6} py={4}>
-        {showConfirmButton ? (
-          <>
-            {!executingAction && (
-              <Alert status="error" mb={2}>
-                <AlertIcon />
-                <AlertDescription>Some items above are below their current floor price. Are you sure?</AlertDescription>
-              </Alert>
-            )}
-            {executingAction && (
-              <Text mb={2} fontStyle="italic" fontSize="sm" align="center">
-                Please check your wallet for confirmation
-              </Text>
-            )}
-            <Flex>
-              <Button type="legacy"
-                      onClick={() => setShowConfirmButton(false)}
-                      disabled={executingAction}
-                      className="me-2 flex-fill">
-                Go Back
-              </Button>
-              <Button type="legacy-outlined"
-                      onClick={executeAction}
-                      isLoading={executingAction}
-                      disabled={executingAction}
-                      className="flex-fill">
-                I understand, continue
-              </Button>
-            </Flex>
-          </>
-        ) : (
-          <Button
-            type="legacy"
-            className="w-100"
-            onClick={prepareListing}
-            disabled={!canSubmit()}
-          >
-            {executingAction ? (
-              <>
-                Staking {pluralize(ryoshiStakingCart.nfts.length, 'NFT')}...
-                <Spinner animation="border" role="status" size="sm" className="ms-1">
-                  <span className="visually-hidden">Loading...</span>
-                </Spinner>
-              </>
-            ) : (
-              <>{ryoshiStakingCart.context === 'stake' ? 'Stake' : 'Unstake'} {pluralize(ryoshiStakingCart.nfts.length, 'NFT')}</>
-            )}
-          </Button>
-        )}
+        <PrimaryButton
+          w='full'
+          onClick={prepareListing}
+          disabled={!canSubmit()}
+          isLoading={executingAction}
+          loadingText={ryoshiStakingCart.context === 'stake' ? 'Staking' : 'Unstaking'}
+        >
+          {ryoshiStakingCart.context === 'stake' ? 'Stake' : 'Unstake'} {pluralize(ryoshiStakingCart.nfts.length, 'NFT')}
+        </PrimaryButton>
       </GridItem>
     </Grid>
   )

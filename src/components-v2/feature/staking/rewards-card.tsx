@@ -9,6 +9,7 @@ import StakeABI from "@src/Contracts/Stake.json";
 import {appConfig} from "@src/Config";
 import {Box, SimpleGrid} from "@chakra-ui/react";
 import {useAppSelector} from "@src/Store/hooks";
+import {PrimaryButton} from "@src/components-v2/foundation/button";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -168,23 +169,17 @@ const RewardsCard = () => {
                         You have <strong>{ethers.utils.commify(round(userPendingRewards, 3))} CRO</strong> available for
                         harvest!
                       </p>
-                      <button
-                        className="btn-main lead mx-1 mb-1 mt-2"
+                      <PrimaryButton
+                        w='full'
+                        mb={1}
+                        mt={2}
                         onClick={harvest}
                         disabled={!(userPendingRewards > 0)}
-                        style={{ width: '100%' }}
+                        loadingText='Harvesting...'
+                        isLoading={isHarvesting}
                       >
-                        {isHarvesting ? (
-                          <>
-                            Harvesting...
-                            <Spinner animation="border" role="status" size="sm" className="ms-1">
-                              <span className="visually-hidden">Loading...</span>
-                            </Spinner>
-                          </>
-                        ) : (
-                          <>Harvest</>
-                        )}
-                      </button>
+                        Harvest
+                      </PrimaryButton>
                     </>
                   ) : (
                     <p className="text-center my-auto">No harvestable rewards yet. Check back later!</p>

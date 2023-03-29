@@ -7,6 +7,7 @@ import {pluralize} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {BatchStakingDrawer} from "@src/components-v2/feature/staking/batch-staking-drawer";
 import {useAppSelector} from "@src/Store/hooks";
+import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 
 export const MobileBatchStaking = () => {
   const dispatch = useDispatch();
@@ -41,12 +42,17 @@ export const MobileBatchStaking = () => {
             </Text>
             <Box my="auto">
               <HStack>
-                <Button type="legacy-outlined" onClick={handleCancel}>
+
+                <SecondaryButton
+                  onClick={handleCancel}
+                >
                   Cancel
-                </Button>
-                <Button type="legacy" onClick={handleOpen}>
+                </SecondaryButton>
+                <PrimaryButton
+                  onClick={handleOpen}
+                >
                   Continue
-                </Button>
+                </PrimaryButton>
               </HStack>
             </Box>
           </Flex>

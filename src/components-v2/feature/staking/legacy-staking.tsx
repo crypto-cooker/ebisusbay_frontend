@@ -13,10 +13,11 @@ import {
   faBatteryThreeQuarters,
   faBolt,
 } from '@fortawesome/free-solid-svg-icons';
-import {Box, Heading, HStack, Link, Tag, Text} from "@chakra-ui/react";
+import {Box, Center, Heading, HStack, Link, Tag, Text} from "@chakra-ui/react";
 import {appConfig} from "@src/Config";
 import {useAppSelector} from "@src/Store/hooks";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {PrimaryButton} from "@src/components-v2/foundation/button";
 
 const txExtras = {
   gasPrice: ethers.utils.parseUnits('5000', 'gwei'),
@@ -208,18 +209,14 @@ const LegacyStaking = () => {
               <div className="card eb-nft__card h-100 shadow px-4">
                 <div className="card-body d-flex flex-row justify-content-center">
                   <span className="my-auto">
-                    <button className="btn-main lead me-2" onClick={approve}>
-                      {isApproving ? (
-                        <>
-                          Approving...
-                          <Spinner animation="border" role="status" size="sm" className="ms-1">
-                            <span className="visually-hidden">Loading...</span>
-                          </Spinner>
-                        </>
-                      ) : (
-                        <>Approve</>
-                      )}
-                    </button>
+                    <PrimaryButton
+                      me={2}
+                      onClick={approve}
+                      loadingText='Approving...'
+                      isLoading={isApproving}
+                    >
+                      Approve
+                    </PrimaryButton>
                   </span>
                   <span className="my-auto text-center">Please approve the staking contract to continue</span>
                 </div>
@@ -295,24 +292,18 @@ const StakeCard = ({ stake, threshold, buttonName, buttonActionName }: StakeCard
             />
           </div>
 
-          <div className="btn-group mt-4 flex-wrap">
-            <button
-              className="btn-main lead mx-1 mb-2 mx-auto"
+          <Center>
+            <PrimaryButton
+              mx={2}
+              mb={2}
               onClick={execute}
+              loadingText={buttonActionName}
+              isLoading={isStaking}
               disabled={quantity === 0 || threshold === 0}
             >
-              {isStaking ? (
-                <>
-                  {buttonActionName}
-                  <Spinner animation="border" role="status" size="sm" className="ms-1">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>
-                </>
-              ) : (
-                <>{buttonName}</>
-              )}
-            </button>
-          </div>
+              {buttonName}
+            </PrimaryButton>
+          </Center>
         </div>
       </div>
     </div>
