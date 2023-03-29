@@ -1,5 +1,5 @@
 import React, {memo, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {Form, Spinner} from 'react-bootstrap';
 import {toast} from 'react-toastify';
 import {createSuccessfulTransactionToastContent} from '@src/utils';
@@ -13,10 +13,10 @@ import {
   faBatteryThreeQuarters,
   faBolt,
 } from '@fortawesome/free-solid-svg-icons';
-import {hostedImage} from "@src/helpers/image";
-import {AnyMedia} from "../components/AnyMedia";
 import {Box, Heading, HStack, Link, Tag, Text} from "@chakra-ui/react";
 import {appConfig} from "@src/Config";
+import {useAppSelector} from "@src/Store/hooks";
+import {AnyMedia} from "@src/Components/components/AnyMedia";
 
 const txExtras = {
   gasPrice: ethers.utils.parseUnits('5000', 'gwei'),
@@ -25,7 +25,7 @@ const config = appConfig();
 const stakingAddress = config.contracts.stake
 const LegacyStaking = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
   const [isApproved, setIsApproved] = useState(false);
   const [isApproving, setIsApproving] = useState(false);
   const [isInitializing, setIsInitializing] = useState(true);
@@ -34,9 +34,9 @@ const LegacyStaking = () => {
 
   // Allow exception to be thrown for other functions to catch it
   const setApprovalForAll = async () => {
-    const isApproved = await user.contractService.membership.isApprovedForAll(config.contracts.stake, user.address);
+    const isApproved = await user.contractService!.membership.isApprovedForAll(config.contracts.stake, user.address);
     if (!isApproved) {
-      let tx = await user.contractService.membership.setApprovalForAll(config.contracts.stake, true, txExtras);
+      let tx = await user.contractService!.membership.setApprovalForAll(config.contracts.stake, true, txExtras);
       await tx.wait();
     }
   };
@@ -46,7 +46,7 @@ const LegacyStaking = () => {
       setIsApproving(true);
       await setApprovalForAll();
       setIsApproved(true);
-    } catch (error) {
+    } catch (error: any) {
       if (error.data) {
         toast.error(error.data.message);
       } else if (error.message) {
@@ -77,7 +77,7 @@ const LegacyStaking = () => {
   //   }
   // };
 
-  const unStake = async (quantity) => {
+  const unStake = async (quantity: number) => {
     if (!user.contractService || quantity <= 0) return;
     if (quantity > stakeCount) {
       toast.error('You do not have enough available VIPs');
@@ -89,7 +89,7 @@ const LegacyStaking = () => {
       setStakeCount(stakeCount - quantity);
       setVipCount(vipCount + quantity);
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-    } catch (err) {
+    } catch (err: any) {
       toast.error(err.message);
     }
   };
@@ -98,13 +98,13 @@ const LegacyStaking = () => {
   useEffect(() => {
     async function checkApproval() {
       try {
-        const isApproved = await user.contractService.membership.isApprovedForAll(user.address, config.contracts.stake);
+        const isApproved = await user.contractService!.membership.isApprovedForAll(user.address, config.contracts.stake);
         setIsApproved(isApproved);
 
-        const stakeCount = await user.contractService.staking.amountStaked(user.address);
+        const stakeCount = await user.contractService!.staking.amountStaked(user.address);
         setStakeCount(Number(stakeCount));
 
-        const vipCount = await user.contractService.membership.balanceOf(user.address, 2)
+        const vipCount = await user.contractService!.membership.balanceOf(user.address, 2)
         setVipCount(Number(vipCount));
 
       } catch (e) {
@@ -166,6 +166,8 @@ const LegacyStaking = () => {
               videoProps={
                 {autoPlay: true}
               }
+              image={null}
+              title="VIP Founding Member Staking"
             />
           </div>
           <div className="col-md-8">
@@ -196,7 +198,7 @@ const LegacyStaking = () => {
                     </div>
                   </>
                 ) : (
-                  <Box align="center" mt={6}>
+                  <Box textAlign="center" mt={6}>
                     No Legacy VIPs found.
                   </Box>
                 )}
@@ -240,11 +242,18 @@ const LegacyStaking = () => {
 
 export default memo(LegacyStaking);
 
-const StakeCard = ({ stake, threshold, buttonName, buttonActionName }) => {
+interface StakeCardProps {
+  stake: (quantity: number) => Promise<void>;
+  threshold: number;
+  buttonName: string;
+  buttonActionName: string;
+}
+
+const StakeCard = ({ stake, threshold, buttonName, buttonActionName }: StakeCardProps) => {
   const [quantity, setQuantity] = useState(1);
   const [isStaking, setIsStaking] = useState(false);
 
-  const onAmountChange = (e) => {
+  const onAmountChange = (e: any) => {
     const value = parseInt(e.target.value);
     if (value > 0 && value <= threshold) {
       setQuantity(parseInt(e.target.value));

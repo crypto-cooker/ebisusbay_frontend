@@ -18,7 +18,7 @@ import offerReducer from '../GlobalState/offerSlice';
 import leaderBoardReducer from '../GlobalState/leaderBoardSlice';
 import cartReducer from '../GlobalState/cartSlice';
 import batchListingReducer from '../GlobalState/user-batch';
-import ryoshiStakingReducer from '../GlobalState/ryoshiStakingCartSlice';
+import ryoshiStakingReducer from '../GlobalState/ryoshi-staking-cart-slice';
 import { user } from '../GlobalState/User';
 
 const rootReducer = combineReducers({

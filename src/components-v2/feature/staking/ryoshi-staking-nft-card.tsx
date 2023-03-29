@@ -4,16 +4,24 @@ import {ethers} from 'ethers';
 import {toast} from 'react-toastify';
 import {faEllipsisH, faInfoCircle, faLink, faMinus, faPlus, faPlusCircle} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {MenuPopup} from '../components/chakra-components';
-import AnyMedia from './AnyMedia';
+import {MenuPopup} from '@src/Components/components/chakra-components';
+import AnyMedia from '@src/Components/components/AnyMedia';
 import {nftCardUrl} from "@src/helpers/image";
 import {Badge, Box, Center, Flex, Heading, Spacer, Text, useClipboard} from "@chakra-ui/react";
 import Image from "next/image";
 import {appUrl, caseInsensitiveCompare, round} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {darkTheme, lightTheme} from "@src/Theme/theme";
-import {useSelector} from "react-redux";
 import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
+import {useAppSelector} from "@src/Store/hooks";
+
+interface RyoshiStakingNftCardProps {
+  nft: any;
+  canStake?: boolean;
+  isStaked?: boolean;
+  onAddToCartButtonPressed: () => void;
+  onRemoveFromCartButtonPressed: () => void;
+}
 
 const RyoshiStakingNftCard = ({
    nft,
@@ -21,12 +29,12 @@ const RyoshiStakingNftCard = ({
    isStaked = false,
    onAddToCartButtonPressed,
    onRemoveFromCartButtonPressed,
- }) => {
+ }: RyoshiStakingNftCardProps) => {
   const router = useRouter();
-  const nftUrl = appUrl(`/collection/${nft.address}/${nft.id}`);
+  const nftUrl = appUrl(`/collection/${nft.nftAddress}/${nft.nftId}`);
   const [isHovered, setIsHovered] = useState(false);
-  const user = useSelector((state) => state.user);
-  const ryoshiStakingCart = useSelector((state) => state.ryoshiStakingCart);
+  const user = useAppSelector((state) => state.user);
+  const ryoshiStakingCart = useAppSelector((state) => state.ryoshiStakingCart);
   const { onCopy } = useClipboard(nftUrl.toString());
 
   const handleCopyLinkButtonPressed = () => {
@@ -38,7 +46,7 @@ const RyoshiStakingNftCard = ({
     router.push(nftUrl)
   };
 
-  const navigateTo = (link) => {
+  const navigateTo = (link: string) => {
     if (ryoshiStakingCart.isDrawerOpen) {
       if (isInCart()) {
         onRemoveFromCartButtonPressed();
@@ -83,7 +91,7 @@ const RyoshiStakingNftCard = ({
   };
 
   const isInCart = () => {
-    return ryoshiStakingCart.nfts.some((o) => o.nft.id === nft.id && caseInsensitiveCompare(o.nft.address, nft.address));
+    return ryoshiStakingCart.nfts.some((o) => o.nft.nftId === nft.nftId && caseInsensitiveCompare(o.nft.nftAddress, nft.nftAddress));
   };
 
   return (
@@ -143,9 +151,9 @@ const RyoshiStakingNftCard = ({
               transition="0.3s ease"
               transform="scale(1.0)"
               cursor="pointer"
-              onClick={() => navigateTo(nftUrl)}
+              onClick={() => navigateTo(nftUrl.toString())}
             >
-              <AnyMedia image={nftCardUrl(nft.address, nft.image)}
+              <AnyMedia image={nftCardUrl(nft.nftAddress, nft.image)}
                         title={nft.name}
                         newTab={true}
                         className="card-img-top marketplace"
@@ -161,7 +169,7 @@ const RyoshiStakingNftCard = ({
           )}
           <div className="d-flex flex-column p-2 pb-1">
             <div className="card-title mt-auto">
-              <span onClick={() => navigateTo(nftUrl)} style={{ cursor: 'pointer' }}>
+              <span onClick={() => navigateTo(nftUrl.toString())} style={{ cursor: 'pointer' }}>
                 {nft.count && nft.count > 0 ? (
                   <Heading as="h6" size="sm">
                     {nft.name} (x{nft.count})

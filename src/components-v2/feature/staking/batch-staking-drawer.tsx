@@ -9,6 +9,7 @@ import {
   Flex,
   Grid,
   GridItem,
+  GridProps,
   Skeleton,
   Spacer,
   Text,
@@ -23,9 +24,15 @@ import {ImageKitService} from "@src/helpers/image";
 import Link from "next/link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {toast} from "react-toastify";
-import {clearCart, removeFromCart, setApproval, setExtras} from "@src/GlobalState/ryoshiStakingCartSlice";
+import {
+  BatchExtras,
+  clearCart,
+  removeFromCart,
+  setApproval,
+  setExtras
+} from "@src/GlobalState/ryoshi-staking-cart-slice";
 import {Contract} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {appConfig} from "@src/Config";
@@ -33,13 +40,18 @@ import {createSuccessfulTransactionToastContent, pluralize} from "@src/utils";
 import {getCollectionMetadata} from "@src/core/api";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {parseUnits} from "ethers/lib/utils";
+import {useAppSelector} from "@src/Store/hooks";
 
 const config = appConfig();
 
-export const BatchStakingDrawer = ({onClose, ...gridProps}) => {
+interface BatchStakingDrawer {
+  onClose: () => void;
+}
+
+export const BatchStakingDrawer = ({onClose, ...gridProps}: BatchStakingDrawer & GridProps) => {
   const dispatch = useDispatch();
-  const ryoshiStakingCart = useSelector((state) => state.ryoshiStakingCart);
-  const user = useSelector((state) => state.user);
+  const ryoshiStakingCart = useAppSelector((state) => state.ryoshiStakingCart);
+  const user = useAppSelector((state) => state.user);
   const [executingAction, setExecutingAction] = useState(false);
   const [showConfirmButton, setShowConfirmButton] = useState(false);
 
@@ -56,28 +68,28 @@ export const BatchStakingDrawer = ({onClose, ...gridProps}) => {
     try {
       setExecutingAction(true);
       const filteredCartNfts = ryoshiStakingCart.nfts.filter((o) => {
-        return ryoshiStakingCart.extras[o.nft.address.toLowerCase()]?.approval;
+        return ryoshiStakingCart.extras[o.nft.nftAddress.toLowerCase()]?.approval;
       });
-      const nftAddresses = filteredCartNfts.map((o) => o.nft.id);
+      const nftAddresses = filteredCartNfts.map((o) => o.nft.nftId);
 
       const gasPrice = parseUnits('5000', 'gwei');
       let tx;
       if (ryoshiStakingCart.context === 'stake') {
-        const gasEstimate = await user.contractService.staking.estimateGas.stakeRyoshi(nftAddresses);
+        const gasEstimate = await user.contractService!.staking.estimateGas.stakeRyoshi(nftAddresses);
         const gasLimit = gasEstimate.mul(2);
         let extra = {
           gasPrice,
           gasLimit
         };
-        tx = await user.contractService.staking.stakeRyoshi(nftAddresses, extra);
+        tx = await user.contractService!.staking.stakeRyoshi(nftAddresses, extra);
       } else {
-        const gasEstimate = await user.contractService.staking.estimateGas.unstakeRyoshi(nftAddresses);
+        const gasEstimate = await user.contractService!.staking.estimateGas.unstakeRyoshi(nftAddresses);
         const gasLimit = gasEstimate.mul(2);
         let extra = {
           gasPrice,
           gasLimit
         };
-        tx = await user.contractService.staking.unstakeRyoshi(nftAddresses, extra);
+        tx = await user.contractService!.staking.unstakeRyoshi(nftAddresses, extra);
       }
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -90,7 +102,7 @@ export const BatchStakingDrawer = ({onClose, ...gridProps}) => {
   const prepareListing = async () => {
     try {
       await executeAction();
-    } catch (error) {
+    } catch (error: any) {
       if (error.data) {
         toast.error(error.data.message);
       } else if (error.message) {
@@ -196,14 +208,18 @@ export const BatchStakingDrawer = ({onClose, ...gridProps}) => {
   )
 }
 
-const BatchStakingDrawerItem = ({item, disabled}) => {
+interface BatchStakingDrawerItemProps {
+  item: any;
+  disabled: boolean;
+}
+
+const BatchStakingDrawerItem = ({item, disabled}: BatchStakingDrawerItemProps) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
-  const [invalid, setInvalid] = useState(false);
 
   // Approvals
-  const extras = useSelector((state) => state.ryoshiStakingCart.extras[item.nft.address.toLowerCase()] ?? {});
+  const extras = useAppSelector((state) => state.ryoshiStakingCart.extras[item.nft.nftAddress.toLowerCase()] ?? {});
   const approvalStatus = extras.approval;
   const [executingApproval, setExecutingApproval] = useState(false);
 
@@ -213,20 +229,20 @@ const BatchStakingDrawerItem = ({item, disabled}) => {
 
   const checkApproval = async () => {
     if (!user.provider) return false;
-    const contract = new Contract(item.nft.address, ERC721, user.provider.getSigner());
+    const contract = new Contract(item.nft.nftAddress, ERC721, user.provider.getSigner());
     return await contract.isApprovedForAll(user.address, config.contracts.stake);
   };
 
   const approveContract = useCallback(async () => {
     try {
       setExecutingApproval(true);
-      const contract = new Contract(item.nft.address, ERC721, user.provider.getSigner());
+      const contract = new Contract(item.nft.nftAddress, ERC721, user.provider.getSigner());
       const tx = await contract.setApprovalForAll(config.contracts.stake, true);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      dispatch(setApproval({address: item.nft.address, status: true}));
+      dispatch(setApproval({address: item.nft.nftAddress, status: true}));
 
-    } catch (error) {
+    } catch (error: any) {
       if (error.data) {
         toast.error(error.data.message);
       } else if (error.message) {
@@ -242,17 +258,17 @@ const BatchStakingDrawerItem = ({item, disabled}) => {
 
   useEffect(() => {
     async function func() {
-      if (!extras[item.nft.address.toLowerCase()]) {
-        const extras = {address: item.nft.address};
+      if (!extras[item.nft.nftAddress.toLowerCase() as keyof BatchExtras]) {
+        const extras: BatchExtras = {address: item.nft.nftAddress, approval: false};
 
         extras.approval = await checkApproval();
 
-        const metadata = await getCollectionMetadata(item.nft.address);
+        const metadata = await getCollectionMetadata(item.nft.nftAddress);
         if (metadata.collections.length > 0) {
           extras.floorPrice = metadata.collections[0].floorPrice;
         }
 
-        extras.royalty = await collectionRoyaltyPercent(item.nft.address, item.nft.id);
+        extras.royalty = await collectionRoyaltyPercent(item.nft.nftAddress, item.nft.nftId);
 
         dispatch(setExtras(extras));
       }
@@ -262,7 +278,7 @@ const BatchStakingDrawerItem = ({item, disabled}) => {
 
   return (
     <Box
-      key={`${item.nft.address}-${item.nft.id}`}
+      key={`${item.nft.nftAddress}-${item.nft.nftId}`}
       _hover={{background: hoverBackground}}
       p={2}
       rounded="lg"
@@ -275,6 +291,7 @@ const BatchStakingDrawerItem = ({item, disabled}) => {
         >
           <AnyMedia
             image={ImageKitService.buildAvatarUrl(item.nft.image)}
+            video={null}
             title={item.nft.name}
             usePlaceholder={false}
             className="img-rounded-8"
@@ -282,7 +299,7 @@ const BatchStakingDrawerItem = ({item, disabled}) => {
         </Box>
         <Box flex='1' ms={2} fontSize="14px">
           <VStack align="left" spacing={0}>
-            <Link href={`/collection/${item.nft.address}/${item.nft.id}`}>
+            <Link href={`/collection/${item.nft.nftAddress}/${item.nft.nftId}`}>
               <Text fontWeight="bold" noOfLines={1} cursor="pointer">{item.nft.name}</Text>
             </Link>
             <Skeleton isLoaded={typeof approvalStatus === 'boolean'}>

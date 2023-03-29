@@ -1,4 +1,4 @@
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import React, {useEffect, useState} from "react";
 import {Contract, ethers} from "ethers";
 import {toast} from "react-toastify";
@@ -8,6 +8,7 @@ import {getTheme} from "@src/Theme/theme";
 import StakeABI from "@src/Contracts/Stake.json";
 import {appConfig} from "@src/Config";
 import {Box, SimpleGrid} from "@chakra-ui/react";
+import {useAppSelector} from "@src/Store/hooks";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -15,8 +16,8 @@ const stakeContract = new Contract(config.contracts.stake, StakeABI.abi, readPro
 
 const RewardsCard = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const userTheme = useSelector((state) => {
+  const user = useAppSelector((state) => state.user);
+  const userTheme = useAppSelector((state) => {
     return state.user.theme;
   });
 
@@ -25,11 +26,11 @@ const RewardsCard = () => {
   const [rewardsInfoLoading, setRewardsInfoLoading] = useState(false);
 
   // Stats
-  const [userPendingRewards, setUserPendingRewards] = useState(0);
-  const [userStakedTotal, setUserStakedTotal] = useState(0);
-  const [userReleasedRewards, setUserReleasedRewards] = useState(0);
-  const [globalPaidRewards, setGlobalPaidRewards] = useState(0);
-  const [globalStakedTotal, setGlobalStakedTotal] = useState(0);
+  const [userPendingRewards, setUserPendingRewards] = useState<string | number>(0);
+  const [userStakedTotal, setUserStakedTotal] = useState<string | number>(0);
+  const [userReleasedRewards, setUserReleasedRewards] = useState<string | number>(0);
+  const [globalPaidRewards, setGlobalPaidRewards] = useState<string | number>(0);
+  const [globalStakedTotal, setGlobalStakedTotal] = useState<string | number>(0);
 
   const getRewardsInfo = async () => {
     if (!stakeContract) return;
@@ -83,13 +84,13 @@ const RewardsCard = () => {
           const receipt = await tx.wait();
           await getRewardsInfo();
           toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-        } catch (err) {
+        } catch (err: any) {
           toast.error(err.message);
         }
       } else {
         toast.error('Amount to harvest is zero');
       }
-    } catch (err) {
+    } catch (err: any) {
       toast.error(err.message);
     } finally {
       setIsHarvesting(false);
@@ -132,7 +133,7 @@ const RewardsCard = () => {
           ) : (
             <>
               <Box>
-                <SimpleGrid columns={{base: 1, sm: 2, md: 4}} align="center">
+                <SimpleGrid columns={{base: 1, sm: 2, md: 4}} textAlign="center">
                   <Box>
                     <div>Global Staked</div>
                     <div className="fw-bold" style={{ color: getTheme(userTheme).colors.textColor3 }}>

@@ -1,15 +1,16 @@
 import React, {useEffect, useState} from 'react';
 
-import LegacyStaking from '@src/Components/Staking/LegacyStaking';
-import {Box, Container, Grid, GridItem, Heading, Text, useBreakpointValue, useColorModeValue} from "@chakra-ui/react";
+import LegacyStaking from '@src/components-v2/feature/staking/legacy-staking';
+import {Container, Grid, GridItem, Heading, Text, useBreakpointValue, useColorModeValue} from "@chakra-ui/react";
 import RyoshiStaking from "@src/components-v2/feature/staking/ryoshi-staking";
 import {motion} from "framer-motion";
-import {useDispatch, useSelector} from "react-redux";
-import {closeCart} from "@src/GlobalState/ryoshiStakingCartSlice";
-import {BatchStakingDrawer} from "@src/Components/Staking/BatchStakingDrawer";
-import RewardsCard from "@src/Components/Staking/RewardsCard";
+import {useDispatch} from "react-redux";
+import {closeCart} from "@src/GlobalState/ryoshi-staking-cart-slice";
+import {BatchStakingDrawer} from "@src/components-v2/feature/staking/batch-staking-drawer";
+import RewardsCard from "@src/components-v2/feature/staking/rewards-card";
 import PageHead from "@src/components-v2/shared/layout/page-head";
-import {MobileBatchStaking} from "@src/Components/Staking/MobileBatchStaking";
+import {MobileBatchStaking} from "@src/components-v2/feature/staking/mobile-batch-staking";
+import {useAppSelector} from "@src/Store/hooks";
 
 const MotionGrid = motion(Grid)
 const tabs = {
@@ -19,12 +20,12 @@ const tabs = {
 
 const MyStaking = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const ryoshiStakingCart = useSelector((state) => state.ryoshiStakingCart);
+  const user = useAppSelector((state) => state.user);
+  const ryoshiStakingCart = useAppSelector((state) => state.ryoshiStakingCart);
 
   const batchListingBorderColor = useColorModeValue('#000', '#FFF');
   const [openMenu, setOpenMenu] = useState(tabs.ryoshi);
-  const handleBtnClick = (key) => (element) => {
+  const handleBtnClick = (key: string) => (element: any) => {
     setOpenMenu(key);
   };
   const variants = {

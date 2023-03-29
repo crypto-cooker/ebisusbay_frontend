@@ -246,7 +246,6 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                       )}
                     </>
                   )}
-                  {/*<Button styleType="default-outlined" className="mt-2 w-auto">More</Button>*/}
                 </HStack>
               </Flex>
               {useMobileLayout && (
@@ -261,7 +260,6 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                 </Flex>
               )}
             </Box>
-
               <HStack spacing={1} w='full'>
                 {Object.entries(tabs).slice(0, Object.keys(tabs).length - overflowCount!).map(([key, tab]) => (
                   <ChakraButton
