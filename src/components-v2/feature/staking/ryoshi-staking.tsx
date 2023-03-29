@@ -1,7 +1,7 @@
 import React, {memo, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {Spinner} from 'react-bootstrap';
-import {Box, Center, Heading, Text} from "@chakra-ui/react";
+import {Box, Center, Heading, Text, VStack} from "@chakra-ui/react";
 import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
 import {getStakedRyoshi} from "@src/core/subgraph/staking";
 import {appConfig} from "@src/Config";
@@ -16,6 +16,7 @@ import {CollectionSortOption} from "@src/Components/Models/collection-sort-optio
 import Link from "next/link";
 import nextApiService from "@src/core/services/api-service/next";
 import {useAppSelector} from "@src/Store/hooks";
+import {PrimaryButton} from "@src/components-v2/foundation/button";
 
 const ryoshiCollectionAddress = appConfig('collections').find((c: any) => c.slug === 'ryoshi-tales-vip').address;
 const displayTypes = {
@@ -90,19 +91,14 @@ const RyoshiStaking = () => {
           </Box>
         </>
       ) : (
-        <div className="row mt-4">
-          <div className="col-lg-12 text-center">
-            <span>Connect wallet below to start staking</span>
-
-            <button
-              className="btn-main lead mx-auto"
-              onClick={connectWalletPressed}
-              style={{ width: 'auto' }}
-            >
-              Connect
-            </button>
-          </div>
-        </div>
+        <VStack mt={4}>
+          <Box>Connect wallet below to start staking</Box>
+          <PrimaryButton
+            onClick={connectWalletPressed}
+          >
+            Connect
+          </PrimaryButton>
+        </VStack>
       )}
 
     </Box>
