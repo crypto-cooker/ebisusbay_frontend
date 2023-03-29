@@ -1,13 +1,13 @@
 import React, {memo, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {Spinner} from 'react-bootstrap';
 import {Box, Center, Heading, Text} from "@chakra-ui/react";
 import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
 import {getStakedRyoshi} from "@src/core/subgraph/staking";
 import {appConfig} from "@src/Config";
 import InfiniteScroll from "react-infinite-scroll-component";
-import RyoshiStakingNftCard from "@src/Components/components/RyoshiStakingNftCard";
-import {addToCart, clearCart, removeFromCart, setCartContext} from "@src/GlobalState/ryoshiStakingCartSlice";
+import RyoshiStakingNftCard from "@src/components-v2/feature/staking/ryoshi-staking-nft-card";
+import {addToCart, clearCart, removeFromCart, setCartContext} from "@src/GlobalState/ryoshi-staking-cart-slice";
 import {sortAndFetchCollectionDetails} from "@src/core/api/endpoints/fullcollections";
 import {FullCollectionsQuery} from "@src/core/api/queries/fullcollections";
 import MetaMaskOnboarding from "@metamask/onboarding";
@@ -228,6 +228,16 @@ const StakedRyoshiList = () => {
       label: 'Rare to Common',
     });
     const data = await sortAndFetchCollectionDetails(pageParam, sort, query);
+
+    // TODO: temporary shim. remove this when there is proper object mapping for Full Collections tokens
+    data.response.nfts = data.response.nfts?.map((nft: any) => {
+      return {
+        ...nft,
+        nftAddress: nft.address,
+        nftId: nft.id,
+      }
+    });
+
     return data.response;
   };
 
