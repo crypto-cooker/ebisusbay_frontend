@@ -19308,6 +19308,56 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Elf Citizens",
+      "slug": "elf-citizens",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Elf Citizens is a collection of 1,111 characters generated randomly. All are on the Cronos Chain with unique identity and rarity.",
+        "avatar": "/img/collections/elf-citizens/avatar.webp",
+        "card": "/img/collections/elf-citizens/card.webp",
+        "banner": "/img/collections/elf-citizens/banner.webp",
+        "twitter": "https://twitter.com/zap7project",
+        "discord": "https://discord.gg/tBgUbvsSZX",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "The CronosVerse In-Game Assets",
+      "slug": "cronosverse-in-game-assets",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The CronosVerse is offering 143 Unique In-Game Furniture and Decorative Items for you to place on your Land or in your Suite.  With 12 multiples of each item available, there will be a total of 1716 NFTs available in this drop. ",
+        "avatar": "/img/collections/cronosverse-in-game-assets/avatar.webp",
+        "card": "/img/collections/cronosverse-in-game-assets/card.webp",
+        "banner": "/img/collections/cronosverse-in-game-assets/banner.webp",
+        "website": "https://thecronosverse.com/",
+        "twitter": "https://twitter.com/TheCronosVerse",
+        "discord": "https://discord.gg/E9Mzzy9Hex",
+        "categories": [
+          "virtual-worlds",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
     }
   ],
   "drops": [
@@ -25697,6 +25747,87 @@
         "doxx": false,
         "kyc": true,
         "escrow": false
+      }
+    },
+    {
+      "id": 161,
+      "slug": "elf-citizens",
+      "title": "Elf Citizens",
+      "subtitle": "Elf Citizens is a collection of 1,111 characters generated randomly. All are on the Cronos Chain with unique identity and rarity.",
+      "description": "Elf Citizens is a collection with a total of 1,111 different characters created by an artist named ZAP7, each one has a different rarity depending on the rarity of the piece, and Elf Citizens holders will receive the following benefits: \\n\n      -The holder will receive Airdrops from a Collection called \\\"Baby Elves\\\" with a ratio of 2:1 \\n\n      - The holder will be able to claim Royalties from Secondary Market sales, also 50% of     Secondary Market sales will be in the Royalty Pool. The more you hold, the more Royalties     you can claim. \\n\n      - The holder will participate in the Mint Phase where there will be a raffle with many prizes,     1 Mint=1 Ticket. \\n\n      - The holder will have a chance to obtain items used in Custom or Fusion NFTs under the     name ZAP PROJECT, which will be in the form of 1/1 Edition NFTs.\n      Come and join us! And LET THEM BE YOUR AVATAR!",
+      "author": {
+        "name": "ZAP7",
+        "twitter": "https://twitter.com/zap7project",
+        "discord": "https://discord.gg/tBgUbvsSZX"
+      },
+      "address": "",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 200,
+      "totalSupply": 1111,
+      "cost": "150",
+      "memberCost": "135",
+      "whitelistCost": "135",
+      "foundersOnly": false,
+      "start": 1680552000000,
+      "salePeriods": {
+        "presale": 1680552000000,
+        "public": 1680552000000
+      },
+      "priceDescription": "",
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/elf-citizens/drop.webp",
+        "banner": "/img/drops/elf-citizens/banner.webp",
+        "avatar": "/img/collections/elf-citizens/avatar.webp",
+        "preview": "/img/collections/elf-citizens/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
+      }
+    },
+    {
+      "id": 161,
+      "slug": "cronosverse-in-game-assets",
+      "title": "The CronosVerse In-Game Assets",
+      "subtitle": "The CronosVerse is offering 143 Unique In-Game Furniture and Decorative Items for you to place on your Land or in your Suite.  With 12 multiples of each item available, there will be a total of 1716 NFTs available in this drop. ",
+      "description": "The CronosVerse is the first true metaverse project on the Cronos Blockchain.  Offering users a piece of digital real estate where they can build their own immersive, virtual reality and metaverse experience.  \\n\n\n      The CronosVerse In-Game items are the first of their kind on The Cronos Blockchain.  Owners are able to spawn 1 of each their In-Game NFTs on their property and show it off however they see fit.  In-Game NFTs are also linked straight back to the marketplace so that you can buy and sell your In-Game Assets from within the CronosVerse.  \\n\n\n      There are 1716 total NFTs available in this drop, minting exclusively with the CronosVerse Native Token:  $VRSE \\n\n\n      $VRSE can be purchased at Crodex:  https://swap.crodex.app/#/swap",
+      "author": {
+        "name": "CronosVerse",
+        "website": "https://thecronosverse.com/",
+        "twitter": "https://twitter.com/TheCronosVerse",
+        "discord": "https://discord.gg/E9Mzzy9Hex"
+      },
+      "address": "",
+      "maxMintPerTx": 5,
+      "maxMintPerAddress": 200,
+      "totalSupply": 1716,
+      "erc20Cost": "1500",
+      "erc20Token": "vrse",
+      "foundersOnly": false,
+      "start": 1680303600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/cronosverse-in-game-assets/drop.webp",
+        "banner": "/img/drops/cronosverse-in-game-assets/banner.webp",
+        "avatar": "/img/collections/cronosverse-in-game-assets/avatar.webp",
+        "preview": "/img/collections/cronosverse-in-game-assets/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
       }
     }
   ]
