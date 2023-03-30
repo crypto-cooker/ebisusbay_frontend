@@ -18,7 +18,7 @@ import {
 } from '@chakra-ui/react';
 import FactionForm from './FactionForm';
 import FactionRegistrationForm from './FactionRegistrationForm';
-import {subscribeFaction, getSeasonGameId, getProfileId, getFactionsOwned, createFaction} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {subscribeFaction, getSeasonGameId, getProfileId, getFactionsOwned, getFactionsRegistered} from "@src/core/api/RyoshiDynastiesAPICalls";
 
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
@@ -36,7 +36,10 @@ const AllianceCenter = ({onBack}) => {
   const GetRegisterButtonText = (registered) => {if(registered) {return 'Registered'} else {return 'Register'}}
 
   const [gameId, setGameId] = useState(0);
-  const playerFactions = [];
+  // const playerFactions = [];
+  const [registeredFactions, setRegisteredFactions] = useState([]);
+  const [playerFactions, setPlayerFactions] = useState([]);
+
   const [selectedFaction, setSelectedFaction] = useState(0);
   const [factionsDisplay, setFactionDisplay] = useState([]);
   
@@ -47,17 +50,42 @@ const AllianceCenter = ({onBack}) => {
   };
   const handleClose = ()=>{
     setModalOpen(false)
+    setGameId(getSeasonGameId());
+    GetFactions();
+  }
+  //return wheter the faction exists in the registered factions array
+  const isRegistered = (factionId) => {
+    for (let i = 0; i < registeredFactions.length; i++) {
+      if (registeredFactions[i].id === factionId) {
+        return true;
+      }
+    }
+    return false;
   }
 
-  function RegistrationAction(registered) {
-      if(registered) {
-      console.log('Registered')
+  const RegistrationAction = async (factionId) => {
+    if(isRegistered(factionId)) {
+      console.log('Already Registered')
     } else {
-      subscribeFaction(faction.factionId, gameId);
-        console.log(data);
-        if(data.status === 200) {
-          console.log('Registered')
+      let signatureInStorage = getAuthSignerInStorage()?.signature;
+      if (!signatureInStorage) {
+        const { signature } = await getSigner();
+        signatureInStorage = signature;
+      }
+      if (signatureInStorage) {
+        try {
+          // console.log("factionId: " + Number(factionId));
+          var data = await subscribeFaction(user.address.toLowerCase(), signatureInStorage, Number(factionId));
+          if(data.status === 200) {
+            // console.log('Registered')
+            GetFactions();
+          }
+        } catch (error) {
+          console.log(error)
         }
+      }
+
+        
       }
     }
 
@@ -80,41 +108,46 @@ const AllianceCenter = ({onBack}) => {
     }
     if (signatureInStorage) {
       try {
-        const res = await getProfileId(user.address.toLowerCase(), signatureInStorage);
-        const data = await getFactionsOwned(res.data.data[0].profileId);
-        playerFactions = data.data.data;
+        const data = await getFactionsOwned(user.address.toLowerCase(), signatureInStorage);
+        const data2 = await getFactionsRegistered(user.address.toLowerCase(), signatureInStorage);
+
+        setRegisteredFactions(data2.data.data);
+        setPlayerFactions(data.data.data);
 
       } catch (error) {
         console.log(error)
       }
     }
+  }
 
-    setFactionDisplay(playerFactions.map((faction, index) => (
-      <Tr key={index}>
-        <Td textAlign='center'>{faction.name}</Td>
-        <Td textAlign='center'>
-          <Button colorScheme={GetRegistrationColor(faction.registered)}
-            onClick={() => {RegistrationAction(faction.registered)}}>{GetRegisterButtonText(faction.registered)}
-          </Button>
-        </Td>
-        <Td textAlign='center'>{faction.type}</Td>
-        {/* <Td textAlign='center'>{faction.troops}</Td> */}
-        {/* <Td textAlign='center'>{faction.addresses}</Td> */}
-        <Td textAlign='center'>
-          <Button colorScheme='blue' onClick={() => {selectFaction(faction)}}>Edit</Button>
-        </Td>
-      </Tr>
-      )))
+  useEffect(() => {
+    if(registeredFactions.length > 0) {
+      setFactionDisplay(playerFactions.map((faction, index) => (
+        <Tr key={index}>
+          <Td textAlign='center'>{faction.name}</Td>
+          <Td textAlign='center'>
+            <Button colorScheme={GetRegistrationColor(isRegistered(faction.id))}
+              onClick={() => {RegistrationAction(faction.id)}}>{GetRegisterButtonText(isRegistered(faction.id))}
+            </Button>
+          </Td>
+          <Td textAlign='center'>{faction.type}</Td>
+          {/* <Td textAlign='center'>{faction.troops}</Td> */}
+          {/* <Td textAlign='center'>{faction.addresses}</Td> */}
+          <Td textAlign='center'>
+            <Button colorScheme='blue' onClick={() => {selectFaction(faction)}}>Edit</Button>
+          </Td>
+        </Tr>
+        )))
     }
-
+  }, [registeredFactions]);
   
   return (
     <section className="gl-legacy container">
 
       <FactionForm isOpen={isOpenFaction} onClose={onCloseFaction} faction={selectedFaction} handleClose={handleClose}/>
       <FactionRegistrationForm isOpen={isOpenRegister} onClose={onCloseRegister} handleClose={handleClose}/>
-      <Button margin={'36px'} position={'absolute'} onClick={onBack}>Back to Village Map</Button>
 
+      <Button margin={'36px'} position={'absolute'} onClick={onBack}>Back to Village Map</Button>
       <Box >
         <Center>
          <Image src="/img/battle-bay/allianceCenter.png" alt="Alliance Center" />

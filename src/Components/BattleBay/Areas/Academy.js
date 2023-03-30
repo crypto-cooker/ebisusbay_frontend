@@ -8,7 +8,7 @@ import {
   Box,
   VStack,
 } from '@chakra-ui/react';
-import { getProfileTroops, getWeeklyGameId, getReward, getProfileId, getFactions, subscribeFaction, getSeasonGameId } from "@src/core/api/RyoshiDynastiesAPICalls";
+import { getProfileTroops, getWeeklyGameId, getReward, getProfileId, getFactionsOwned, subscribeFaction, getSeasonGameId } from "@src/core/api/RyoshiDynastiesAPICalls";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import { useState, useEffect } from "react";
@@ -54,9 +54,9 @@ const Academy = ({onBack}) => {
       if (signatureInStorage) {
         try {
     
-          const res = await getProfileId(user.address.toLowerCase(), signatureInStorage);
-          console.log("Profile Id: "+res.data.data[0].profileId)
-          const data = await getFactions(res.data.data[0].profileId);
+          // const res = await getProfileId(user.address.toLowerCase(), signatureInStorage);
+          // console.log("Profile Id: "+res.data.data[0].profileId)
+          const data = await getFactionsOwned(user.address.toLowerCase(), signatureInStorage);
           console.log(data.data.data[0])
 
         } catch (error) {

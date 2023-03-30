@@ -32,15 +32,11 @@ import { getAuthSignerInStorage } from '@src/helpers/storage';
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 
 const UserPage = ({onBack}) => {
-  // const clansContainingPlayer = factions.filter(faction => faction.addresses.includes(player[0].addresses));
+
   const [factions, setFactions] = useState([]);
   const [isLoading, getSigner] = useCreateSigner();
   
   const [troops, setTotalTroops] = useState(0);
-  // const troopsTotal = player[0].troops;
-  // const troopsDelegated = player[0].delegations.reduce((a, b) => a + b.troops, 0);
-  // const troopsNotDelegated = troopsTotal - troopsDelegated;
-  // const delegations = player[0].delegations;
   const user = useSelector((state) => state.user);
 
   const SetUp = async () => {
@@ -53,14 +49,8 @@ const UserPage = ({onBack}) => {
       try {
         const factionResponse = await getAllFactions();
         setFactions(factionResponse);
-        //itterate through factions
-        // factions.forEach(faction => {
-        //   console.log(faction.name)
-        // });
- 
-        // setFactions(factions.data.data)
-        const res = await getProfileTroops(user.address.toLowerCase(), signatureInStorage);
-        setTotalTroops(res.data.data[0].troops)
+        const tr = await getProfileTroops(user.address.toLowerCase(), signatureInStorage);
+        setTotalTroops(tr)
       } catch (error) {
         console.log(error)
       }
@@ -75,26 +65,24 @@ const UserPage = ({onBack}) => {
     if (signatureInStorage) {
       try {
         const res = await addTroops(user.address.toLowerCase(), signatureInStorage, 8);
-        console.log(res)
+        SetUp();
       } catch (error) {
         console.log(error)
       }
     }
   }
 
-  //for delegate form
-  // const arrayColumn = (arr, n) => arr.map(x => x[n]);
-  // const factionNames = arrayColumn(factions, 'name')
   const { isOpen, onOpen: onOpenDelegate, onClose } = useDisclosure();
   const [delegateMode, setDelegateMode] = useState("delegate");
 
   useEffect(() => {
     SetUp();
-  }, []);
+    console.log("useEffect")
+  }, [troops]);
 
   return (
     <section className="gl-legacy container">
-      <DelegateForm isOpen={isOpen} onClose={onClose} delegateMode={delegateMode} factions={factions} troops={troops}/>
+      <DelegateForm isOpen={isOpen} onClose={onClose} delegateMode={delegateMode} factions={factions} troops={troops} setTotalTroops = {setTotalTroops}/>
 
       <Flex>
           <Button style={{ display: 'flex', marginTop: '16px', marginBottom: '16px'}} 

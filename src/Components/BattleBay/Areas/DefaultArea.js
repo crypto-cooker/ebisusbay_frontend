@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import { resizeMap } from './mapFunctions.js'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles from './BattleBay.module.scss';
@@ -57,7 +57,7 @@ const DefaultArea = ({onChange}) => {
         <TransformComponent>
 
         <div className="mapDiv">
-        <img src="/img/battle-bay/fancyMenu2.png" useMap="#image-map" width="100%" className={`${styles.mapImageArea}`} id="fancyMenu"/>
+        {/* <img src="/img/battle-bay/fancyMenu2.png" useMap="#image-map" width="100%" className={`${styles.mapImageArea}`} id="fancyMenu"/>
             <map name="image-map" width="100%" height="100%" className={`${styles.mapImageArea}`} >
             <area onClick={() => onChange('bank')} alt="bank" title="bank" coords="396,763,237,839" shape="rect"/>
             <area onClick={() => onChange('barracks')} alt="barracks" title="barracks" coords="705,770,940,871" shape="rect"/>
@@ -68,6 +68,17 @@ const DefaultArea = ({onChange}) => {
             <area onClick={() => onChange('tavern')} alt="tavern" title="tavern" coords="113,159,298,253" shape="rect"/>
             <area onClick={() => onChange('academy')} alt="academy" title="academy" coords="1331,122,1570,215" shape="rect"/>
             <area onClick={() => onChange('allianceCenter')} alt="allianceCenter" title="allianceCenter" coords="611,175,957,261" shape="rect"/>
+          </map> */}
+          <img src="/img/battle-bay/newMap.png" useMap="#image-map" width="100%" className={`${styles.mapImageArea}`} id="fancyMenu"/>
+          <map name="image-map">
+              <area onClick={() => onChange('barracks')} alt="Barracks" title="Barracks" coords="194,622,568,968" shape="rect"/>
+              <area onClick={() => onChange('townHall')} alt="Town Hall" title="Town Hall" coords="793,434,1259,861" shape="rect"/>
+              <area onClick={() => onChange('tavern')} alt="Tavern" title="Tavern" coords="377,255,763,531" shape="rect"/>
+              <area onClick={() => onChange('allianceCenter')} alt="Alliance Center" title="Alliance Center" coords="1044,45,1342,414" shape="rect"/>
+              <area onClick={() => onChange('bank')} alt="Bank" title="Bank" coords="1367,283,1808,575" shape="rect"/>
+              <area onClick={() => onChange('academy')} alt="Academy" title="Academy" coords="2118,246,2523,565" shape="rect"/>
+              <area onClick={() => onChange('battleMap')} alt="Fish Market" title="Fish Market" coords="1971,974,2487,1361" shape="rect"/>
+              <area onClick={() => onChange('announcementBoard')} alt="Announcement Board" title="Announcement Board" coords="1813,494,2073,798" shape="rect"/>
           </map>
         </div>
 

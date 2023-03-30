@@ -49,8 +49,8 @@ const Barracks = ({onBack}) => {
       const { signature } = await getSigner();
       signatureInStorage = signature;
     }
-    console.log(signatureInStorage)
-    console.log(user.address.toLowerCase())
+    // console.log(signatureInStorage)
+    // console.log(user.address.toLowerCase())
     // if (signatureInStorage) {
     //   try {
     //     const res = await getProfile(signatureInStorage, user.address.toLowerCase())

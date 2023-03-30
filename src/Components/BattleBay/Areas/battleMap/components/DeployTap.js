@@ -17,14 +17,13 @@ import Button from "@src/Components/components/Button";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
-import {getProfileId, getFactionsOwned, deployTroops, recallTroops, getFactionTroops} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {getProfileTroops, getFactionsOwned, deployTroops, recallTroops, getFactionTroops} from "@src/core/api/RyoshiDynastiesAPICalls";
 import { eslint } from "next.config";
 
 const tabs = {
   recall: 'recall',
   deploy: 'deploy',
 };
-
 
 const DeployTap = ({controlPoint=[]}) => {
 
@@ -63,14 +62,10 @@ const DeployTap = ({controlPoint=[]}) => {
         if(currentTab === tabs.deploy)
         {
           var factionId = playerFactions.filter(faction => faction.name === selectedFaction)[0].id
-          // console.log("controlPointId", controlPoint.id)
-          // console.log("selectedFaction", selectedFaction)
-          // console.log("playerFactions", playerFactions)
-          // console.log("factionId", factionId)
-          // console.log("selectedQuantity", selectedQuantity)
           var data = await deployTroops(user.address.toLowerCase(), signatureInStorage, selectedQuantity, controlPoint.id, factionId)
+          GetPlayerTroops();
+          setSelectedQuantity(0);
           // console.log("You deployed", selectedQuantity, "troops to", controlPoint, "on behalf of", selectedFaction)
-          
         }
         else if(currentTab === tabs.recall)
         {
@@ -83,33 +78,21 @@ const DeployTap = ({controlPoint=[]}) => {
       }
     }
   }
-  const GetPlayerOwnedFactions = async () => {
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const res = await getProfileId(user.address.toLowerCase(), signatureInStorage);
-        const data = await getFactionsOwned(res.data.data[0].profileId);
-        setPlayerFactions(data.data.data);
-        // playerFactions = data.data.data;
-        // console.log('playerFactions', playerFactions);
-        // ShowAvailableFactions();
+  const GetPlayerTroops = async () => {
+      let signatureInStorage = getAuthSignerInStorage()?.signature;
+        if (!signatureInStorage) {
+          const { signature } = await getSigner();
+          signatureInStorage = signature;
+        }
+        if (signatureInStorage) {
+          try {
+            const troops = await getProfileTroops(user.address.toLowerCase(), signatureInStorage);
+            setTroopsAvailable(troops)
+            // console.log("troops", troops)
       } catch (error) {
         console.log(error)
       }
     }
-  }
-  const GetFactionTroops = async () => {
-    if(playerFactions.length == 0)
-      return;
-
-    var factionId = playerFactions.filter(faction => faction.name === selectedFaction)[0].id
-    const troops = await getFactionTroops(factionId);
-    setTroopsAvailable(troops)
-    // console.log("troops", troops)
   }
   const ShowAvailableFactions = async () => {
       setFactionOption(playerFactions.map((faction, index) => (
@@ -118,29 +101,22 @@ const DeployTap = ({controlPoint=[]}) => {
       if(playerFactions.length > 0)
         setSelectedFaction(playerFactions[0].name)
   }
-  // const GetMax = () =>
-  // {
-  //   if(selectedFaction !== "")
-  //   {
-
-  //   }
-  //   else
-  //   {
-  //     return 0;
-  //   }
-  // }
 
   useEffect(() => {
-    GetPlayerOwnedFactions();
-    }, [controlPoint])
+    if(controlPoint.leaderBoard !== undefined)
+    {
+      setPlayerFactions(controlPoint.leaderBoard);
+    }
+  }, [controlPoint])
 
   useEffect(() => {
     ShowAvailableFactions();
-    }, [playerFactions])
+  }, [playerFactions])
 
   useEffect(() => {
-    GetFactionTroops();
-    }, [selectedFaction])
+    // GetFactionTroops();
+    GetPlayerTroops();
+  }, [selectedFaction])
 
   return (
     <Flex flexDirection='column' textAlign='center' border={'1px solid white'} borderRadius={'10px'} justifyContent='space-around' padding='16px'>
@@ -168,7 +144,7 @@ const DeployTap = ({controlPoint=[]}) => {
 
       <FormControl>
         <FormLabel>Quantity:</FormLabel>
-        <NumberInput defaultValue={1} min={1} max={troopsAvailable} name="quantity" 
+        <NumberInput defaultValue={0} min={0} max={troopsAvailable} name="quantity" 
           onChange={handleChange}
           value={selectedQuantity} type ='number'>
           <NumberInputField />

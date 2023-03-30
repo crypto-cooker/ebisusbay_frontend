@@ -84,8 +84,8 @@ export function resizeMap()
 {
     // var imageToResize = document.getElementById('fancyMenu');
     const imageToResize = new ImageResize({
-    width: 1920,
-    height: 1080,
+    width: 2560,
+    height: 1440,
     element : '#fancyMenu'
   })
 }

@@ -29,18 +29,12 @@ import { getAuthSignerInStorage } from '@src/helpers/storage';
 import { useCreateSigner } from '@src/Components/Account/Settings/hooks/useCreateSigner'
 import { delegateTroops } from "@src/core/api/RyoshiDynastiesAPICalls";
 
-const DelegateForm = ({ isOpen, onClose, delegateMode, factions=[], troops}) => {
-
+const DelegateForm = ({ isOpen, onClose, delegateMode, factions=[], troops, setTotalTroops}) => {
   
   const [dataForm, setDataForm] = useState({
     faction: factions[0]
   })
   const [factionId, setFactionId] = useState(0)
-
-  // const troopsNotDelegated = player[0].troops - player[0].delegations.reduce((a, b) => a + b.troops, 0);
-  // const troopsDelegatedToSlectedFaction = player[0].delegations.filter(delegation => delegation.faction === dataForm.faction).length > 0 
-    // ? player[0].delegations.filter(delegation => delegation.faction === dataForm.faction)[0].troops : 0
-  // const maxTroops = delegateMode==='delegate' ? troopsNotDelegated : troopsDelegatedToSlectedFaction
   //alerts
   const [showAlert, setShowAlert] = useState(false)
   const [alertMessage, setAlertMessage] = useState("")
@@ -62,19 +56,6 @@ const DelegateForm = ({ isOpen, onClose, delegateMode, factions=[], troops}) => 
   }
   
   const DelegateTroops = async () => {
-    //check if player already has a delegation to this faction
-    // const delegationExists = player[0].delegations.filter(delegation => delegation.faction === dataForm.faction).length > 0
-    // if(delegationExists)
-    // {
-    //   //if so, update the existing delegation
-    //   const delegationIndex = player[0].delegations.findIndex(delegation => delegation.faction === dataForm.faction)
-    //   player[0].delegations[delegationIndex].troops += parseInt(troopsDelegated);
-    // }
-    // else
-    // {
-    //   //add a new delegation to the player.delegations array
-    //   player[0].delegations.push({faction: dataForm.faction, troops: troopsDelegated})
-    // }
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
@@ -83,6 +64,7 @@ const DelegateForm = ({ isOpen, onClose, delegateMode, factions=[], troops}) => 
     if (signatureInStorage) {
       try {
         const res = await delegateTroops(user.address.toLowerCase(), signatureInStorage, troopsToDelegate, factionId);
+        setTotalTroops(troops - troopsToDelegate)
         console.log(res)
         setShowAlert(false)
         onClose();

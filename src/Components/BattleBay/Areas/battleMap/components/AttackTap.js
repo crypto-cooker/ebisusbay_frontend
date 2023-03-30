@@ -16,7 +16,7 @@ import Button from "@src/Components/components/Button";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
-import {getProfileId, getFactionsOwned} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {attack, getFactionsOwned} from "@src/core/api/RyoshiDynastiesAPICalls";
 
 const AttackTap = ({ controlPoint = []}) => {
 
@@ -27,8 +27,11 @@ const AttackTap = ({ controlPoint = []}) => {
   const attackerOutcome = useRef();
   const defenderOutcome = useRef();
   const battleLogText = useRef();
+
   const [defenderTroops, setDefenderTroops] = useState(0);
-  const [attackerTroops, setAttackerTroops] = useState(1)
+  const [attackerTroops, setAttackerTroops] = useState(0);
+  const [attackerTroopsAvailable, setAttackerTroopsAvailable] = useState(0);
+
   const handleChange = (value) => setAttackerTroops(value)
 
   const user = useSelector((state) => state.user);
@@ -37,13 +40,7 @@ const AttackTap = ({ controlPoint = []}) => {
 
   const [attackerOptions, setAttackerOptions] = useState([]);
   const [defenderOptions, setDefenderOptions] = useState([]);
-  const defenderTroopsAvailable = 0;
-  const attackerTroopsAvailable = 0;
   
-  const arrayColumn = (arr, n) => arr.map(x => x[n]);
-  // const defenderFactions = arrayColumn(factions.filter(faction => !faction.owned), 'faction')
-  // const attackerFactions = arrayColumn(factions.filter(faction => faction.owned), 'faction')
-
   const [dataForm, setDataForm] = useState({
     attackersFaction: "" ?? null,
     // quantity: 0,
@@ -55,9 +52,8 @@ const AttackTap = ({ controlPoint = []}) => {
   }
   const onChangeInputsDefender = (e) => {
     setDataForm({...dataForm, [e.target.name]: e.target.value})
-    defenderTroopsAvailable = controlPoint.leaderBoard.filter(faction => faction.name === e.target.value)[0].totalTroops;
+    defenderTroops = controlPoint.leaderBoard.filter(faction => faction.name === e.target.value)[0].totalTroops;
   }
-
   const GetPlayerOwnedFactions = async () => {
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
@@ -66,8 +62,8 @@ const AttackTap = ({ controlPoint = []}) => {
     }
     if (signatureInStorage) {
       try {
-        const res = await getProfileId(user.address.toLowerCase(), signatureInStorage);
-        const data = await getFactionsOwned(res.data.data[0].profileId);
+        // const res = await getProfileId(user.address.toLowerCase(), signatureInStorage);
+        const data = await getFactionsOwned(user.address.toLowerCase(), signatureInStorage);
         playerFactions = data.data.data;
         // console.log('playerFactions', playerFactions);
         ShowAvailableFactions();
@@ -76,8 +72,29 @@ const AttackTap = ({ controlPoint = []}) => {
       }
     }
   }
+  const RealAttack = async () => {
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      try {
+        var controlPointId = controlPoint.id;
+        var attackerFactionId = controlPoint.leaderBoard.filter(faction => faction.name === dataForm.attackersFaction)[0].id;
+        var defenderFactionId = controlPoint.leaderBoard.filter(faction => faction.name === dataForm.defenderFaction)[0].id;
 
+        console.log("controlPoint.id", controlPoint.id)
+        console.log("attackerFactionId", attackerFactionId)
+        console.log("defenderFactionId", defenderFactionId)
+        console.log("attackerTroops", Number(attackerTroops))
 
+        const data = await attack(user.address.toLowerCase(), signatureInStorage, Number(attackerTroops), controlPointId, attackerFactionId, defenderFactionId);
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
   function Battle()
   {
     if(getAttackerTroopsInRegion() <= 1)
@@ -85,8 +102,12 @@ const AttackTap = ({ controlPoint = []}) => {
       alert("You must have at least 2 troops to attack")
       return;
     }
-    setDefenderTroops(getDefenderTroops(dataForm.defenderFaction));
+    getDefenderTroopsInRegion(dataForm.defenderFaction);
+
     Attack(attackerTroops, defenderTroops)
+    // RealAttack();
+
+
     attackSetUp.current.style.display = "none"
     attackConclusion.current.style.display = "block"
   }
@@ -116,7 +137,7 @@ const AttackTap = ({ controlPoint = []}) => {
             attacker--;
             attackersSlain++;
         }
-        outcomeLog += "attackerRoll: " + attackerRoll + " defenderRoll: " + defenderRoll+"<br>";
+        outcomeLog += "Attacker: " + attackerRoll + " Defender: " + defenderRoll+"<br>";
     }
     if(attacker > 0)
     {
@@ -125,8 +146,8 @@ const AttackTap = ({ controlPoint = []}) => {
     
     battleLogText.current.innerHTML = outcomeLog;
     battleOutcome.current.textContent = attackerWins ? "You won!" : "You lost!";
-    attackerOutcome.current.textContent = dataForm.attackersFaction+" lost "+attackersSlain+" out of "+attacker+" troops";
-    defenderOutcome.current.textContent = dataForm.defenderFaction+" lost "+defendersSlain+" out of "+defender+" troops";
+    attackerOutcome.current.textContent = dataForm.attackersFaction+" lost "+attackersSlain+" out of "+attackerTroops+" troops";
+    defenderOutcome.current.textContent = dataForm.defenderFaction+" lost "+defendersSlain+" out of "+defenderTroops+" troops";
     
     DestroyTroops(dataForm.defenderFaction, defendersSlain);
     DestroyTroops(dataForm.attackersFaction, attackersSlain);
@@ -141,33 +162,23 @@ const AttackTap = ({ controlPoint = []}) => {
     //   }
     // });
   }
-  function getDefenderTroops(defenderFaction)
+  function getDefenderTroopsInRegion()
   {
-    
-    // var troops = 0;
-    // if(defenderFaction === null)
-    // {
-    //   return troops;
-    // }
-    // factions.forEach(faction => {
-    //   if(faction.faction === defenderFaction)
-    //   {
-    //     troops = faction.troops;
-    //   }
-    // });
-    // console.log(troops)
-    // return troops;
+    controlPoint.leaderBoard.forEach(faction => {
+      if(faction.name === dataForm.defenderFaction)
+      {
+        setDefenderTroops(faction.totalTroops);
+      }
+    });
   }
   function getAttackerTroopsInRegion()
   {
-    // var troops = 0;
-    // factions.forEach(faction => {
-    //   if(faction.faction === dataForm.attackersFaction)
-    //   {
-    //     troops = faction.troops;
-    //   }
-    // });
-    // return troops;
+    controlPoint.leaderBoard.forEach(faction => {
+      if(faction.name === dataForm.attackersFaction)
+      {
+        setAttackerTroopsAvailable(faction.totalTroops);
+      }
+    });
   }
   const getMax = () => { 
     if(attackerTroopsAvailable>=3){return 3;}
@@ -188,12 +199,14 @@ const AttackTap = ({ controlPoint = []}) => {
     setAttackerOptions(playerFactions.map((faction, index) => (
       <option value={faction.name} key={index}>{faction.name}</option>)
       ))
+
+    
   }
+
   useEffect(() => {
     GetPlayerOwnedFactions();
     if(controlPoint.leaderBoard !== undefined)
     {
-      
       setDefenderOptions(controlPoint.leaderBoard.map((faction, index) => (
         <option value={faction.name} key={index}>{faction.name}</option>)
         ))
@@ -201,7 +214,34 @@ const AttackTap = ({ controlPoint = []}) => {
     
     }, [controlPoint])
  
+    useEffect(() => {
+      if(dataForm.attackersFaction!="")
+      {
+        console.log("dataForm.attackersFaction", dataForm.attackersFaction)
+        getAttackerTroopsInRegion()
+      }
+      }, [dataForm.attackersFaction])
 
+  useEffect(() => {
+    if(attackerOptions!="")
+    {
+      dataForm.attackersFaction = attackerOptions[0].props.value;
+    }
+    }, [attackerOptions])
+
+  useEffect(() => {
+      if(defenderOptions!="")
+      {
+        dataForm.defenderFaction = defenderOptions[0].props.value;
+      }
+      }, [defenderOptions])
+
+    useEffect(() => {
+      if(dataForm.defenderFaction!=null)
+      {
+        getDefenderTroopsInRegion()
+      }
+      }, [dataForm.defenderFaction])
 
   return (
     <Flex flexDirection='column' textAlign='center' border={'1px solid white'} borderRadius={'10px'} justifyContent='space-around' padding='16px'>
@@ -225,7 +265,7 @@ const AttackTap = ({ controlPoint = []}) => {
 
           <FormControl>
             <FormLabel>Quantity:</FormLabel>
-            <NumberInput defaultValue={0} min={0} max={getMax} name="quantity" 
+            <NumberInput defaultValue={0} min={0} max={attackerTroopsAvailable} name="quantity" 
               onChange={handleChange}
               value={attackerTroops} type ='number'>
              <NumberInputField />
@@ -244,7 +284,7 @@ const AttackTap = ({ controlPoint = []}) => {
             <Select name='defenderFaction' me={2} value={dataForm.defenderFaction} onChange={onChangeInputsDefender}>
               {defenderOptions}
             </Select>
-            <FormLabel>Troops available: {defenderTroopsAvailable}</FormLabel>
+            <FormLabel>Troops available: {defenderTroops}</FormLabel>
           </FormControl>
         </Box>
       </Flex>
