@@ -16,6 +16,7 @@ import {appConfig} from "@src/Config";
 import Image from "next/image";
 import {useAppSelector} from "@src/Store/hooks";
 import {Drop} from "@src/core/models/drop";
+import {PrimaryButton} from "@src/components-v2/foundation/button";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -245,7 +246,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                   {!regularCost && !drop.erc20Cost && (
                     <Heading as="h5" size="md">TBA</Heading>
                   )}
-                  {regularCost && (
+                  {!!regularCost && (
                     <Heading as="h5" size="md">
                       <Flex>
                         <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
@@ -330,18 +331,28 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                       <Input {...input} />
                       <Button {...inc}>+</Button>
                     </HStack>
-                    <button className="btn-main lead w-100" onClick={() => mintNow(false)} disabled={minting}>
-                      {minting ? (
-                        <>
-                          {mintingState ?? 'Minting...'}
-                          <Spinner animation="border" role="status" size="sm" className="ms-1">
-                            <span className="visually-hidden">Loading...</span>
-                          </Spinner>
-                        </>
-                      ) : (
-                        <>{drop.maxMintPerTx && drop.maxMintPerTx > 1 ? <>Mint {numToMint}</> : <>Mint</>}</>
-                      )}
-                    </button>
+                    {!!drop.cost && (
+                      <PrimaryButton
+                        w='full'
+                        onClick={() => mintNow(false)}
+                        disabled={minting}
+                        isLoading={minting}
+                        loadingText='Minting...'
+                      >
+                        Mint
+                      </PrimaryButton>
+                    )}
+                    {!!drop.erc20Cost && !!drop.erc20Token && (
+                      <PrimaryButton
+                        w='full'
+                        onClick={() => mintNow(true)}
+                        disabled={mintingERC20}
+                        isLoading={mintingERC20}
+                        loadingText='Minting...'
+                      >
+                        Mint with {config.tokens[drop.erc20Token].symbol}
+                      </PrimaryButton>
+                    )}
                   </Stack>
                 )}
                 {canMintQuantity === 0 && !user.address && !drop.complete && (

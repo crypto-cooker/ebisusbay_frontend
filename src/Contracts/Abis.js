@@ -61,6 +61,7 @@ export const EbisuDropAbi = [
   'function mint(uint256 _amount) external payable',
   'function maxSupply() external view returns (uint256)',
   'function getInfo() view returns (tuple(uint256 regularCost,uint256 memberCost,uint256 whitelistCost,uint256 maxSupply,uint256 totalSupply,uint256 maxMintPerAddress,uint256 maxMintPerTx))',
+  'function mintWithToken(uint256 _amount) external payable'
 ];
 
 export const SouthSideAntsReadAbi = [...ERC721, 'function getNftByUser(address) public view returns (uint256[])'];
