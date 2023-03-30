@@ -202,7 +202,7 @@ export const configData = {
       vrse: {
         name: 'VRSE',
         symbol: 'VRSE',
-        address: '',
+        address: '0x100123d24a69bd8862da338129471c41e3ca8791',
       }
     },
     collections: rpcConfigTestnet.known_contracts,
