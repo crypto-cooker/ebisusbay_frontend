@@ -25787,7 +25787,7 @@
       }
     },
     {
-      "id": 160,
+      "id": 164,
       "slug": "lab-rats",
       "title": "Lab Rats",
       "subtitle": "The Laboratory Rats collection consists of 10018 unique rats with 231 unique traits and 18 x 1 of 1 legendary NFTs. A large amount will be taken out of the mint to be given out as prizes to the Critters Arena, marketing, Mod & community incentives.",
@@ -25828,7 +25828,7 @@
       }
     },
     {
-      "id": 161,
+      "id": 165,
       "slug": "elf-citizens",
       "title": "Elf Citizens",
       "subtitle": "Elf Citizens is a collection of 1,111 characters generated randomly. All are on the Cronos Chain with unique identity and rarity.",
@@ -25871,7 +25871,7 @@
       }
     },
     {
-      "id": 161,
+      "id": 166,
       "slug": "cronosverse-in-game-assets",
       "title": "The CronosVerse In-Game Assets",
       "subtitle": "The CronosVerse is offering 143 Unique In-Game Furniture and Decorative Items for you to place on your Land or in your Suite.  With 12 multiples of each item available, there will be a total of 1716 NFTs available in this drop. ",
@@ -25882,7 +25882,7 @@
         "twitter": "https://twitter.com/TheCronosVerse",
         "discord": "https://discord.gg/E9Mzzy9Hex"
       },
-      "address": "",
+      "address": "0xaf038d14905409de31fb5577c460d18b1013e4f1",
       "maxMintPerTx": 5,
       "maxMintPerAddress": 200,
       "totalSupply": 1716,
