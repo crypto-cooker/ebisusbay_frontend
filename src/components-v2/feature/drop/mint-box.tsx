@@ -86,27 +86,22 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
   };
   
   const calculateCost = async (user: any, isErc20: boolean) => {
-    if (isUsingDefaultDropAbi(drop.abi) || isUsingAbiFile(drop.abi)) {
-      let readContract = await new ethers.Contract(drop.address, abi, readProvider);
-      if (abi.find((m: any) => m.name === 'cost')) {
-        return await readContract.cost(user.address);
-      }
-      return await readContract.mintCost(user.address);
-    }
-
-    const memberCost = ethers.utils.parseEther(isErc20 && !!drop.erc20MemberCost ? drop.erc20MemberCost.toString() : drop.memberCost!.toString());
-    const regCost = ethers.utils.parseEther(isErc20 && !!drop.erc20Cost ? drop.erc20Cost.toString() : drop.cost.toString());
-    let cost;
-    if ((drop.abi! as string[]).join().includes('isReducedTime()')) {
-      const readContract = await new ethers.Contract(drop.address, drop.abi!, readProvider);
-      const isReduced = await readContract.isReducedTime();
-      cost = isReduced ? memberCost : regCost;
-    } else if (user.isMember) {
-      cost = memberCost;
+    if (isErc20) {
+      const regCost = ethers.utils.parseEther(drop.erc20Cost?.toString() ?? '0');
+      const memberCost = ethers.utils.parseEther(drop.erc20MemberCost?.toString() ?? '0');
+      return user.isMember && !!drop.erc20MemberCost ? memberCost : regCost;
     } else {
-      cost = regCost;
+      if (isUsingDefaultDropAbi(drop.abi) || isUsingAbiFile(drop.abi)) {
+        let readContract = await new ethers.Contract(drop.address, abi, readProvider);
+        if (abi.find((m: any) => m.name === 'cost')) {
+          return await readContract.cost(user.address);
+        }
+        return await readContract.mintCost(user.address);
+      }
+      const regCost = ethers.utils.parseEther(drop.cost.toString() ?? '0');
+      const memberCost = ethers.utils.parseEther(drop.memberCost?.toString() ?? '0');
+      return user.isMember && !!drop.memberCost ? memberCost : regCost;
     }
-    return cost;
   };
 
   const convertTime = (time: any) => {
