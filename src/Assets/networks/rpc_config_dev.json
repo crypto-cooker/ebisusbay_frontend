@@ -10266,7 +10266,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "The \"Whale Family\" features a collection of 5,555 fun & vibrant Whale\nPFPs swimming on the Cronos blockchain with different levels of rarity \nfrom over 160 hand-drawn traits by Barbara Redekop.",
+        "description": "The \"Whale Family\" features a collection of fun & vibrant Whale PFPs swimming on the Cronos blockchain with different levels of rarity from over 160 hand-drawn traits by Barbara Redekop.",
         "avatar": "/img/collections/whalefam/avatar.webp",
         "banner": "/img/collections/whalefam/banner.webp",
         "card": "/img/collections/whalefam/card.webp",
@@ -18279,9 +18279,9 @@
       "multiToken": false,
       "address": "0x08d6628656732822A448E626F7ea7d30322A4D8f",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
-        "description": "A collection of 501 Mighty Lizards ready to wage war in the Dragons of the West P2E Game.",
+        "description": "A collection of 333 Mighty Lizards ready to wage war in the Dragons of the West P2E Game.",
         "avatar": "/img/collections/lizards-of-the-east/avatar.webp",
         "card": "/img/collections/lizards-of-the-east/card.webp",
         "banner": "/img/collections/lizards-of-the-east/banner.webp",
@@ -19243,7 +19243,7 @@
         "description": "Evo collection from MC & BH",
         "avatar": "/img/collections/cyborg-brotherhood-evo/avatar.webp",
         "card": "/img/collections/cyborg-brotherhood-evo/card.webp",
-        "banner": "/img/collections/cyborg-brotherhood-evo/banner2.webp",
+        "banner": "/img/collections/cyborg-brotherhood-evo/banner3.webp",
         "website": "https://www.cyborgbh.io/",
         "twitter": "https://twitter.com/cyborgbh",
         "discord": "https://discord.gg/R2Qj4aJvsS",
@@ -25871,10 +25871,6 @@
       "whitelistCost": "135",
       "foundersOnly": false,
       "start": 1680552000000,
-      "salePeriods": {
-        "presale": 1680552000000,
-        "public": 1680552000000
-      },
       "priceDescription": "",
       "end": null,
       "referral": false,
