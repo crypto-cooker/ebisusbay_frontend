@@ -25,7 +25,7 @@ const tabs = {
   deploy: 'deploy',
 };
 
-const DeployTap = ({controlPoint=[]}) => {
+const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
 
   const user = useSelector((state) => state.user);
   const [isLoading, getSigner] = useCreateSigner();

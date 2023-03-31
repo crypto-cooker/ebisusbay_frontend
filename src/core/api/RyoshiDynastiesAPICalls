@@ -24,6 +24,15 @@ export const getSeasonGameId = async () => {
     throw error;
   }
 }
+export const getWeekEndDate = async () => {
+  try{
+    var data = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    return data.data.data.endAt;
+  }
+  catch(error){
+    throw error;
+  }
+}
 //gets the map for the game
 export const getMap = async (_gameNumber) => {
   try{
@@ -45,7 +54,7 @@ export const getProfileTroops = async (_address, _signature) => {
       if(element.controlPointId == null){
         troops += element.troops;
       }
-      console.log(element.controlPointId)
+      // console.log(element.controlPointId)
     });
     return troops;
   }

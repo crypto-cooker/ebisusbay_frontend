@@ -6,6 +6,7 @@ import { FactionForm } from './battleMap/components/index.js';
 import { useDisclosure } from '@chakra-ui/react'
 import { getMap } from "@src/core/api/RyoshiDynastiesAPICalls";
 import { getControlPoint } from "@src/core/api/RyoshiDynastiesAPICalls";
+import ControlPointForm from './battleMap/components/ControlPointForm.js';
 
 const BattleMap = ({onBack, factions=[]}) => {
 
@@ -20,6 +21,7 @@ const BattleMap = ({onBack, factions=[]}) => {
   const [controlPoint, setControlPoint] = useState([], () => {});
   const mapData = [];
   const [area, setAreas] = useState([]);
+  const [selectedControlPoint, setSelectedControlPoint] = useState(0);
 
   function getWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
@@ -176,6 +178,11 @@ const BattleMap = ({onBack, factions=[]}) => {
       setControlPoint(data);
   }); 
   }
+  const RefreshControlPoint = async () => {
+    getControlPoint(selectedControlPoint).then((data) => {
+      setControlPoint(data);
+  });
+}
   //#endregion
 
   useEffect(() => {
@@ -190,7 +197,7 @@ const BattleMap = ({onBack, factions=[]}) => {
       mapData = data.data.data.map; 
       // console.log(mapData);
       setAreas(mapData.regions[0].controlPoints.map((controlPoint, i) => 
-        (<area onClick={() => {selectRegion(controlPoint.id); onOpen();}}
+        (<area onClick={() => {setSelectedControlPoint(controlPoint.id); selectRegion(controlPoint.id); onOpen();}}
             coords={controlPoint.coordinates} shape="poly" alt= {controlPoint.name}/>
         )))
       resizeBattleMap();
@@ -200,7 +207,7 @@ const BattleMap = ({onBack, factions=[]}) => {
   return (
   <section>
 
-  <FactionForm isOpen={isOpen} onClose={onClose} controlPoint={controlPoint} factions={factions}/>
+  <ControlPointForm isOpen={isOpen} onClose={onClose} controlPoint={controlPoint} factions={factions} refreshControlPoint={RefreshControlPoint}/>
 
   <button className="btn" onClick={onBack}>Back to Village Map</button>
   <p className="title text-center">Select a region to deploy troops to</p>

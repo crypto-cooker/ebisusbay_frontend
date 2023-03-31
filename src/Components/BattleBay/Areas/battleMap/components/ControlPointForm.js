@@ -26,7 +26,7 @@ const tabs = {
   attack: 'attack',
 };
 
-const ControlPointForm = ({ isOpen, onClose, controlPoint=[], factions}) => {
+const ControlPointForm = ({ isOpen, onClose, controlPoint=[], factions, refreshControlPoint}) => {
   // console.log("factionForm controlPoint: " + controlPoint.name);
   const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState('');
@@ -62,13 +62,13 @@ const ControlPointForm = ({ isOpen, onClose, controlPoint=[], factions}) => {
 
                   <div className="de_tab_content">
                     {currentTab === tabs.info && (
-                      <InfoTap factions={factions} controlPoint={controlPoint}/>
+                      <InfoTap factions={factions} controlPoint={controlPoint} refreshControlPoint={refreshControlPoint}/>
                     )}
                     {currentTab === tabs.deploy && (
-                      <DeployTap controlPoint={controlPoint}/>
+                      <DeployTap controlPoint={controlPoint} refreshControlPoint={refreshControlPoint}/>
                     )}
                     {currentTab === tabs.attack && (
-                      <AttackTap controlPoint={controlPoint}/>
+                      <AttackTap controlPoint={controlPoint} refreshControlPoint={refreshControlPoint}/>
                     )}
                   </div>
                 </div>

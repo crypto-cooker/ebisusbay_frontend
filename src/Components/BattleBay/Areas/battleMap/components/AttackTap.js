@@ -10,7 +10,10 @@ import {
   NumberIncrementStepper, 
   NumberDecrementStepper, 
   Select ,
-  Heading
+  Heading,
+  Alert,
+  AlertIcon,
+  AlertTitle,
 } from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
@@ -18,7 +21,7 @@ import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 import {attack, getFactionsOwned} from "@src/core/api/RyoshiDynastiesAPICalls";
 
-const AttackTap = ({ controlPoint = []}) => {
+const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
   const attackSetUp = useRef();
   const attackConclusion = useRef();
@@ -40,6 +43,10 @@ const AttackTap = ({ controlPoint = []}) => {
 
   const [attackerOptions, setAttackerOptions] = useState([]);
   const [defenderOptions, setDefenderOptions] = useState([]);
+
+  //alerts
+  const [showAlert, setShowAlert] = useState(false)
+  const [alertMessage, setAlertMessage] = useState("")
   
   const [dataForm, setDataForm] = useState({
     attackersFaction: "" ?? null,
@@ -80,16 +87,44 @@ const AttackTap = ({ controlPoint = []}) => {
     }
     if (signatureInStorage) {
       try {
+
         var controlPointId = controlPoint.id;
         var attackerFactionId = controlPoint.leaderBoard.filter(faction => faction.name === dataForm.attackersFaction)[0].id;
         var defenderFactionId = controlPoint.leaderBoard.filter(faction => faction.name === dataForm.defenderFaction)[0].id;
-
-        console.log("controlPoint.id", controlPoint.id)
-        console.log("attackerFactionId", attackerFactionId)
-        console.log("defenderFactionId", defenderFactionId)
-        console.log("attackerTroops", Number(attackerTroops))
-
+        // console.log("controlPoint.id", controlPoint.id)
+        // console.log("attackerFactionId", attackerFactionId)
+        // console.log("defenderFactionId", defenderFactionId)
+        // console.log("attackerTroops", Number(attackerTroops))
         const data = await attack(user.address.toLowerCase(), signatureInStorage, Number(attackerTroops), controlPointId, attackerFactionId, defenderFactionId);
+
+        var attackersAlive = Number(attackerTroops);
+        var attackersSlain = 0;
+        var defendersSlain = 0;
+        var outcomeLog = ""
+        var attackerDice = data.data.data[0].diceScores1;
+        var defenderDice = data.data.data[0].diceScores2;
+
+        for(var i = 0; i < attackerDice.length; i++)
+        {
+          if(attackerDice[i] <= defenderDice[i])
+          {
+            attackersAlive--;
+            attackersSlain++;
+            console.log("attacker dies")
+          }
+          else
+          {
+            defendersSlain++;
+          }
+
+          outcomeLog += "Attacker: " + attackerDice[i] + " Defender: " + defenderDice[i]+"<br>";
+        }
+
+        battleLogText.current.innerHTML = outcomeLog;
+        battleOutcome.current.textContent = attackersAlive>0 ? "You won!" : "You lost!";
+        attackerOutcome.current.textContent = dataForm.attackersFaction+" lost "+attackersSlain+" out of "+ Number(attackerTroops)+" troops";
+        defenderOutcome.current.textContent = dataForm.defenderFaction+" lost "+defendersSlain+" out of "+defenderTroops+" troops";
+
       } catch (error) {
         console.log(error)
       }
@@ -97,15 +132,33 @@ const AttackTap = ({ controlPoint = []}) => {
   }
   function Battle()
   {
+    setShowAlert(false)
+
     if(getAttackerTroopsInRegion() <= 1)
     {
-      alert("You must have at least 2 troops to attack")
+      setAlertMessage("You must have at least 2 troops to attack")
+      setShowAlert(true)
       return;
     }
+
     getDefenderTroopsInRegion(dataForm.defenderFaction);
 
-    Attack(attackerTroops, defenderTroops)
-    // RealAttack();
+    if(defenderTroops <= 0)
+    {
+      setAlertMessage("Defender must have at least 1 troop")
+      setShowAlert(true)
+      return;
+    }
+
+    if(attackerTroops <= 0)
+    {
+      setAlertMessage("Must attack with atleast 1 troop")
+      setShowAlert(true)
+      return;
+    }
+
+    // FakeAttack(attackerTroops, defenderTroops)
+    RealAttack();
 
 
     attackSetUp.current.style.display = "none"
@@ -113,10 +166,11 @@ const AttackTap = ({ controlPoint = []}) => {
   }
   function Reset()
   {
+    refreshControlPoint();
     attackSetUp.current.style.display = "block"
     attackConclusion.current.style.display = "none"
   }
-  function Attack(attacker, defender)
+  function FakeAttack(attacker, defender)
   {
     var attackersSlain = 0;
     var defendersSlain = 0;
@@ -181,6 +235,7 @@ const AttackTap = ({ controlPoint = []}) => {
     });
   }
   const getMax = () => { 
+    console.log("attackerTroopsAvailable", attackerTroopsAvailable)
     if(attackerTroopsAvailable>=3){return 3;}
     else{return attackerTroopsAvailable;}
   }
@@ -208,40 +263,45 @@ const AttackTap = ({ controlPoint = []}) => {
     if(controlPoint.leaderBoard !== undefined)
     {
       setDefenderOptions(controlPoint.leaderBoard.map((faction, index) => (
-        <option value={faction.name} key={index}>{faction.name}</option>)
-        ))
+        <option value={faction.name} key={index}>{faction.name}</option>)))
     }
-    
-    }, [controlPoint])
+  }, [controlPoint])
  
-    useEffect(() => {
+  useEffect(() => {
       if(dataForm.attackersFaction!="")
       {
         console.log("dataForm.attackersFaction", dataForm.attackersFaction)
         getAttackerTroopsInRegion()
       }
-      }, [dataForm.attackersFaction])
+  }, [dataForm.attackersFaction])
 
   useEffect(() => {
     if(attackerOptions!="")
     {
+      setShowAlert(false)
       dataForm.attackersFaction = attackerOptions[0].props.value;
     }
-    }, [attackerOptions])
+  }, [attackerOptions])
 
   useEffect(() => {
       if(defenderOptions!="")
       {
         dataForm.defenderFaction = defenderOptions[0].props.value;
       }
-      }, [defenderOptions])
+  }, [defenderOptions])
 
-    useEffect(() => {
+  useEffect(() => {
       if(dataForm.defenderFaction!=null)
       {
+        setShowAlert(false)
         getDefenderTroopsInRegion()
       }
-      }, [dataForm.defenderFaction])
+  }, [dataForm.defenderFaction])
+  
+  useEffect(() => {
+    console.log("opened attack tap")
+    refreshControlPoint();
+  }, [])
 
   return (
     <Flex flexDirection='column' textAlign='center' border={'1px solid white'} borderRadius={'10px'} justifyContent='space-around' padding='16px'>
@@ -265,7 +325,7 @@ const AttackTap = ({ controlPoint = []}) => {
 
           <FormControl>
             <FormLabel>Quantity:</FormLabel>
-            <NumberInput defaultValue={0} min={0} max={attackerTroopsAvailable} name="quantity" 
+            <NumberInput defaultValue={0} min={0} max={3} name="quantity" 
               onChange={handleChange}
               value={attackerTroops} type ='number'>
              <NumberInputField />
@@ -293,16 +353,26 @@ const AttackTap = ({ controlPoint = []}) => {
             The lower roll (ties going to defender) loses a troop. This continues until one 
               side has run out of troops">How are Attacks Calculated? (Hover for info)</div>
 
-      <div style={{ display: 'flex', marginTop: '16px' }}>
-        <Button type="legacy"
-          onClick={Battle}
-          // onClick={processCreateListingRequest}
-          // isLoading={executingCreateListing}
-          // disabled={executingCreateListing}
-          className="flex-fill">
-          Attack
-        </Button>
-      </div>
+        <Flex justify={"center"} align={"center"} style={{ marginTop: '16px' }}>
+          <Box p='3'>
+            {showAlert && (
+            <Alert status='error'>
+              <AlertIcon />
+              <AlertTitle>{alertMessage}</AlertTitle>
+            </Alert>)}
+          </Box>
+        </Flex>
+        <div style={{ display: 'flex', marginTop: '16px' }}>
+          <Button type="legacy"
+            onClick={Battle}
+            // onClick={processCreateListingRequest}
+            // isLoading={executingCreateListing}
+            // disabled={executingCreateListing}
+            className="flex-fill">
+            Attack
+          </Button>
+        </div>
+        
       </div>
 
       <div ref={attackConclusion} style={{ display: 'none'}}>
