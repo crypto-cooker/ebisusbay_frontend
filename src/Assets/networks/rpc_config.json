@@ -18279,9 +18279,9 @@
       "multiToken": false,
       "address": "0x08d6628656732822A448E626F7ea7d30322A4D8f",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
-        "description": "A collection of 501 Mighty Lizards ready to wage war in the Dragons of the West P2E Game.",
+        "description": "A collection of 333 Mighty Lizards ready to wage war in the Dragons of the West P2E Game.",
         "avatar": "/img/collections/lizards-of-the-east/avatar.webp",
         "card": "/img/collections/lizards-of-the-east/card.webp",
         "banner": "/img/collections/lizards-of-the-east/banner.webp",
