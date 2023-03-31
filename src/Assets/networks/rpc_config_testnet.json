@@ -3214,7 +3214,7 @@
       "name": "Elf Citizens",
       "slug": "elf-citizens",
       "multiToken": false,
-      "address": "",
+      "address": "0xa3a9bd5142bfaf3126734096cacc96a71103611f",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -7846,7 +7846,7 @@
         "twitter": "https://twitter.com/zap7project",
         "discord": "https://discord.gg/tBgUbvsSZX"
       },
-      "address": "",
+      "address": "0xa3a9bd5142bfaf3126734096cacc96a71103611f",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 200,
       "totalSupply": 1111,
@@ -7855,10 +7855,6 @@
       "whitelistCost": "135",
       "foundersOnly": false,
       "start": 1680191285000,
-      "salePeriods": {
-        "presale": 1680191285000,
-        "public": 1680191405000
-      },
       "priceDescription": "",
       "end": null,
       "referral": false,

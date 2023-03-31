@@ -25871,10 +25871,6 @@
       "whitelistCost": "135",
       "foundersOnly": false,
       "start": 1680552000000,
-      "salePeriods": {
-        "presale": 1680552000000,
-        "public": 1680552000000
-      },
       "priceDescription": "",
       "end": null,
       "referral": false,
