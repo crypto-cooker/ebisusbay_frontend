@@ -19436,6 +19436,30 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "JAFC - Black Panthers",
+      "slug": "jafc-black-panthers",
+      "multiToken": false,
+      "address": "0x8bE63187fad2f8824D5eFFA5D90eBbd7318f449b",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Jungle Animal Fight Club is a unique and at the same time hidden place in the depths of the oldest jungle where the wild animals have created a spectacular club to demonstrate their special martial arts. Competitions are held regularly and there are also championship titles for the strongest of these brave fighters. The pioneers and founders of this club and this sport were the black panthers. The panther gives a strong resonance of energy, usually show courage and bravery. His physical attributes allow him the highest level of respect from any jungle dweller. He is commonly known as the Original Gangster of the JAFC.",
+        "avatar": "/img/collections/jafc-black-panthers/avatar.webp",
+        "card": "/img/collections/jafc-black-panthers/card.webp",
+        "banner": "/img/collections/jafc-black-panthers/banner.webp",
+        "twitter": "https://twitter.com/JAFC_nft",
+        "discord": "https://discord.gg/SKByY3QTxp",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
