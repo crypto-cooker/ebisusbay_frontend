@@ -160,6 +160,16 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/collection/inventorapes',
+        destination: '/collection/inventorsapes',
+        permanent: true,
+      },
+      {
+        source: '/collection/inventorapes/:id',
+        destination: '/collection/inventorsapes/:id',
+        permanent: true,
+      },
+      {
         source: '/mad-auction',
         destination: '/auctions/mad-auction',
         permanent: false,

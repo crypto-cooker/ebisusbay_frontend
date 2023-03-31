@@ -17975,8 +17975,8 @@
       }
     },
     {
-      "name": "Inventorapes",
-      "slug": "inventorapes",
+      "name": "Inventorsapes",
+      "slug": "inventorsapes",
       "multiToken": false,
       "address": "0x5E1aeeE81D92B9Af08DFe8743ebb4e310e495e8D",
       "onChain": false,
@@ -25859,7 +25859,7 @@
       "complete": false,
       "images": {
         "drop": "/img/drops/elf-citizens/drop.webp",
-        "banner": "/img/drops/elf-citizens/banner.webp",
+        "banner": "/img/collections/elf-citizens/banner.webp",
         "avatar": "/img/collections/elf-citizens/avatar.webp",
         "preview": "/img/collections/elf-citizens/card.webp"
       },

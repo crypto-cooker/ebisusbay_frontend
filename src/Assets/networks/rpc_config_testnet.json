@@ -7867,7 +7867,7 @@
       "complete": false,
       "images": {
         "drop": "/img/drops/elf-citizens/drop.webp",
-        "banner": "/img/drops/elf-citizens/banner.webp",
+        "banner": "/img/collections/elf-citizens/banner.webp",
         "avatar": "/img/collections/elf-citizens/avatar.webp",
         "preview": "/img/collections/elf-citizens/card.webp"
       },
