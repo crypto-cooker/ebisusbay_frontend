@@ -19460,6 +19460,52 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Skronos Dark Potions",
+      "slug": "skronos-dark-potions",
+      "multiToken": false,
+      "address": "0x3fb3C2c73feF4f63a3F6C15f8c7f67859713b414",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Dark Potions has the ability to bring together all the unique components of Skronos that includes the skull, hands, legs, torso, and heart, to create the ultimate Skronos edition.",
+        "avatar": "/img/collections/skronos-dark-potions/avatar.webp",
+        "card": "/img/collections/skronos-dark-potions/card.webp",
+        "banner": "/img/collections/skronos-dark-potions/banner.webp",
+        "website": "https://skronos-syndicate.com/",
+        "twitter": "https://twitter.com/skronosNFT",
+        "discord": "https://discord.gg/VH78mEQ2cE",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "GanjaFarmers",
+      "slug": "ganjafarmers",
+      "multiToken": false,
+      "address": "0x5f089D7d7EB1786A8A1d91561d559036aE221942",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "4200 GanjaFarmers Growing togheter . Earn 2% of the trading tax on $WeedCoin ",
+        "avatar": "/img/collections/ganjafarmers/avatar.webp",
+        "card": "/img/collections/ganjafarmers/card.webp",
+        "banner": "/img/collections/ganjafarmers/banner.webp",
+        "website": "https://weedcoin.clubcro.com/",
+        "twitter": "https://twitter.com/weedcoincro",
+        "discord": "https://discord.gg/bTAVNUuChT",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
