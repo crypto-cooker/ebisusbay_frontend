@@ -19506,6 +19506,32 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Peepz",
+      "slug": "peepz",
+      "multiToken": false,
+      "address": "0xE0eF98948B187c5Cd23CDE3339B78dDdEFe44f92",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Aliens in Disguise",
+        "avatar": "/img/collections/peepz/avatar.webp",
+        "card": "/img/collections/peepz/card.webp",
+        "banner": "/img/collections/peepz/banner.webp",
+        "website": "https://peepz.badaliens.io/",
+        "twitter": "https://twitter.com/BAD__nfts",
+        "discord": "https://discord.gg/badaliens",
+        "medium": "https://medium.com/@babyaliendivision",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "verified": true
+      }
     }
   ],
   "drops": [

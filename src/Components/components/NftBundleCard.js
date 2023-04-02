@@ -51,7 +51,7 @@ const Watermarked = styled.div`
 `;
 
 const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, canBuy = true }) => {
-  const nftUrl = appUrl(`/collection/${nft.address}/${nft.id}`);
+  const nftUrl = appUrl(`/collection/${nft.address ?? nft.nftAddress}/${nft.id ?? nft.nftId}`);
   const history = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -108,7 +108,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, ca
   };
 
   const handleMakeOffer = () => {
-    const isBlacklisted = isNftBlacklisted(nft.address, nft.id);
+    const isBlacklisted = isNftBlacklisted(nft.address ?? nft.nftAddress, nft.id ?? nft.nftId);
     if (isBlacklisted) return;
 
     if (user.address) {
@@ -131,8 +131,8 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, ca
       name: nft.name,
       image: nft.image,
       price: nft.market.price,
-      address: nft.address,
-      id: nft.id,
+      address: nft.address ?? nft.nftAddress,
+      id: nft.id ?? nft.nftId,
       rank: nft.rank
     }));
     toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
@@ -145,12 +145,12 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, ca
 
   const handleOpenOriginal = () => {
     if (nft.original_image) {
-      window.open(specialImageTransform(nft.address, convertGateway(nft.original_image)), '_blank')
+      window.open(specialImageTransform(nft.address ?? nft.nftAddress, convertGateway(nft.original_image)), '_blank')
     }
   };
 
   const handleRefresh = () => {
-    dispatch(refreshMetadata(nft.address, nft.id, nft.market?.id));
+    dispatch(refreshMetadata(nft.address ?? nft.nftAddress, nft.id ?? nft.nftId, nft.market?.id));
   };
 
   const handleCopy = () => {
