@@ -12907,7 +12907,7 @@
       "verification": {
         "doxx": false,
         "kyc": false,
-        "verified": false
+        "verified": true
       }
     },
     {
@@ -19406,8 +19406,8 @@
       },
       "verification": {
         "doxx": false,
-        "kyc": false,
-        "verified": false
+        "kyc": true,
+        "verified": true
       }
     },
     {
@@ -19529,6 +19529,29 @@
       },
       "verification": {
         "doxx": true,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Tata's Guardians",
+      "slug": "tatas-guardians",
+      "multiToken": false,
+      "address": "0x146cF0eE7B6B986769782EA832e8327f9dFf55e7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Tata's Guardians: a 5000 piece AI generated art, that will be gamified, investment pool based, and the main NFT in the Tonic ecosystem.",
+        "avatar": "/img/collections/tatas-guardians/avatar.webp",
+        "card": "/img/collections/tatas-guardians/card.webp",
+        "banner": "/img/collections/tatas-guardians/banner.webp",
+        "website": "https://www.tatastwistedtonics.com/",
+        "twitter": "https://twitter.com/tatastonics",
+        "discord": "https://discord.gg/8whpvt3WEr",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
         "kyc": false,
         "verified": true
       }
