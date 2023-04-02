@@ -12936,7 +12936,7 @@
       "name": "Rebel Punks",
       "slug": "rebel-punks",
       "multiToken": false,
-      "address": "0x20C4512a2D6FB66E5Ee3A704167c0c67B9B846dD",
+      "address": "0xc7E77C602D549747AB33C2F0137Cbcb42eeF2bB8",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -12953,7 +12953,7 @@
         "categories": []
       },
       "verification": {
-        "verified": true,
+        "verified": false,
         "doxx": false,
         "kyc": false
       }
