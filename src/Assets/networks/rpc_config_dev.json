@@ -15909,7 +15909,7 @@
       "multiToken": false,
       "address": "0x06C226C929AFB2c2EEb4caE586A63B90ce1584aD",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The DCA is made by degens for degens. Join the DCA community and get full control in the Degen DAO, and share 100% royalties with the Degen Distributor.",
         "avatar": "/img/collections/degen-cronos-apes/avatar.webp",
