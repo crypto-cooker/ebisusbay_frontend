@@ -6,7 +6,7 @@ import Constants from '@src/constants';
 import {useAppSelector} from "@src/Store/hooks";
 
 export interface ListingSignerProps {
-  price: number;
+  price: string;
   itemType: ItemType;
   collectionAddress: string;
   tokenId: string;
