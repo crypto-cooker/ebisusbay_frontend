@@ -19555,6 +19555,31 @@
         "kyc": false,
         "verified": true
       }
+    },
+    {
+      "name": "MUTANT AIKO BEANZ",
+      "slug": "mutant-aiko-beanz",
+      "multiToken": false,
+      "address": "0xA869e4c032D4E3786f211520E20754F4347ec67D",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "5,555 pfp generated with different traits and with different rarities, MUTANT AIKO BEANZ (MAB), one of the Official Collections of AIKOSociety.  These little Mutant Aiko Beanz will release benefits, gifts and more to their Holders.",
+        "avatar": "/img/collections/mutant-aiko-beanz/avatar.webp",
+        "banner": "/img/collections/mutant-aiko-beanz/banner.webp",
+        "card": "/img/collections/mutant-aiko-beanz/card.webp",
+        "website": "https://www.aikosociety.com/",
+        "twitter": "https://twitter.com/MutantAikoBeanz",
+        "discord": "https://discord.gg/uPGhuAFPFw",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
