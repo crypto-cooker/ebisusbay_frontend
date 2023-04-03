@@ -89,7 +89,7 @@ const useUpsertGaslessListings = () => {
         }
 
         const listingSignerProps: ListingSignerProps = {
-          price: pendingListing.price,
+          price: pendingListing.price.toString(),
           itemType: itemTypes[pendingListing.collectionAddress],
           collectionAddress: pendingListing.collectionAddress,
           tokenId: pendingListing.tokenId,
