@@ -19313,7 +19313,7 @@
       "name": "Elf Citizens",
       "slug": "elf-citizens",
       "multiToken": false,
-      "address": "",
+      "address": "0x7C144DBF04cf991d932bf6DC404C8B37c8807946",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -25957,7 +25957,7 @@
         "twitter": "https://twitter.com/zap7project",
         "discord": "https://discord.gg/tBgUbvsSZX"
       },
-      "address": "",
+      "address": "0x7C144DBF04cf991d932bf6DC404C8B37c8807946",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 200,
       "totalSupply": 1111,
