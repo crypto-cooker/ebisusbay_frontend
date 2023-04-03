@@ -19313,7 +19313,7 @@
       "name": "Elf Citizens",
       "slug": "elf-citizens",
       "multiToken": false,
-      "address": "",
+      "address": "0x7C144DBF04cf991d932bf6DC404C8B37c8807946",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -19554,6 +19554,31 @@
         "doxx": false,
         "kyc": false,
         "verified": true
+      }
+    },
+    {
+      "name": "MUTANT AIKO BEANZ",
+      "slug": "mutant-aiko-beanz",
+      "multiToken": false,
+      "address": "0xA869e4c032D4E3786f211520E20754F4347ec67D",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "5,555 pfp generated with different traits and with different rarities, MUTANT AIKO BEANZ (MAB), one of the Official Collections of AIKOSociety.  These little Mutant Aiko Beanz will release benefits, gifts and more to their Holders.",
+        "avatar": "/img/collections/mutant-aiko-beanz/avatar.webp",
+        "banner": "/img/collections/mutant-aiko-beanz/banner.webp",
+        "card": "/img/collections/mutant-aiko-beanz/card.webp",
+        "website": "https://www.aikosociety.com/",
+        "twitter": "https://twitter.com/MutantAikoBeanz",
+        "discord": "https://discord.gg/uPGhuAFPFw",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
@@ -25957,7 +25982,7 @@
         "twitter": "https://twitter.com/zap7project",
         "discord": "https://discord.gg/tBgUbvsSZX"
       },
-      "address": "",
+      "address": "0x7C144DBF04cf991d932bf6DC404C8B37c8807946",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 200,
       "totalSupply": 1111,
