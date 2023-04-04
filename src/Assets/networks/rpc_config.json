@@ -12905,8 +12905,8 @@
         "categories": []
       },
       "verification": {
-        "doxx": false,
-        "kyc": false,
+        "doxx": true,
+        "kyc": true,
         "verified": true
       }
     },
@@ -19551,8 +19551,8 @@
         "categories": []
       },
       "verification": {
-        "doxx": false,
-        "kyc": false,
+        "doxx": true,
+        "kyc": true,
         "verified": true
       }
     },
