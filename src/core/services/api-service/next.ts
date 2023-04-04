@@ -1,7 +1,7 @@
 import axios, {AxiosInstance} from "axios";
 import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
 import {PagedList} from "@src/core/services/api-service/paginated-list";
-import Listing from "@src/core/models/listing";
+import {Listing, OwnerListing} from "@src/core/models/listing";
 import SearchQuery from "@src/core/services/api-service/mapi/queries/search";
 import {OffersQueryParams} from "@src/core/services/api-service/mapi/queries/offers";
 import {Api, OfferType} from "@src/core/services/api-service/types";
@@ -61,11 +61,19 @@ class NextApiService implements Api {
     return response.data;
   }
 
+  async getUserUnfilteredListings(address: string, query?: ListingsQueryParams): Promise<PagedList<OwnerListing>> {
+    const response = await this.next.get(`users/${address}/unfilteredlistings`, {
+      params: query
+    });
+
+    return response.data;
+  }
+
   // Non-interface convenience methods
 
   async getListingsByCollection(address: string, query?: ListingsQueryParams): Promise<PagedList<any>> {
     if (!query) query = {};
-    query.collection = address;
+    query.collection = [address];
 
     return await this.getListings(query);
   }

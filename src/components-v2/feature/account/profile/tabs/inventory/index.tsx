@@ -29,10 +29,12 @@ import {
   Collapse,
   HStack,
   Icon,
+  IconButton,
   Input,
   InputGroup,
   InputRightElement,
-  ListItem, SimpleGrid,
+  ListItem,
+  SimpleGrid,
   Stack,
   UnorderedList,
   useBreakpointValue,
@@ -352,12 +354,12 @@ export default function Inventory({ address }: InventoryProps) {
         ) : (
           <HStack w='full'>
             <Box>
-              <Button
-                type="legacy-outlined"
+              <IconButton
+                aria-label={'Toggle Filter'}
                 onClick={toggleFilterVisibility}
-              >
-                <FontAwesomeIcon icon={filtersVisible ? faAngleLeft : faFilter} className="py-1" />
-              </Button>
+                variant='outline'
+                icon={<Icon as={FontAwesomeIcon} icon={filtersVisible ? faAngleLeft : faFilter} className="py-1" />}
+              />
             </Box>
             <InputGroup>
               <Input

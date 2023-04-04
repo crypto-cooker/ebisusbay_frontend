@@ -3,7 +3,7 @@ import React from "react";
 import {getTheme} from "@src/Theme/theme";
 import {sortOptions} from "./sort-options";
 import {useAppSelector} from "@src/Store/hooks";
-import {SortOption} from "@src/components-v2/feature/account/profile/tabs/inventory/sort-options";
+import {SortOption} from "@src/components-v2/feature/account/profile/tabs/listings/sort-options";
 import {
   Box,
   Drawer,

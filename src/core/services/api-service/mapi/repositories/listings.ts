@@ -18,6 +18,19 @@ class ListingsRepository extends MapiRepository {
       params: {...defaultQuery, ...query?.toQuery()}
     });
   }
+
+  async getUnfilteredListings(query?: ListingsQuery) {
+    let defaultQuery = {
+      page: 1,
+      pageSize: limitSizeOptions.lg,
+      sortBy: 'listingTime',
+      direction: 'desc'
+    };
+
+    return await this.api.get(`unfilteredlistings`, {
+      params: {...defaultQuery, ...query?.toQuery()}
+    });
+  }
 }
 
 export default ListingsRepository;

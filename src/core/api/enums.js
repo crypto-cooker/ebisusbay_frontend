@@ -35,13 +35,3 @@ export const excludeBurnState = {
   UNBURNT: 0,
   BURNT: 1
 }
-
-export const invalidState = {
-  FALSE: 0,
-  UNKNOWN: 1,
-  OWNER_SELLER: 2,
-  SELLER_BALANCE: 3,
-  APPROVALS: 4,
-  IS_STAKED: 5,
-  LEGACY: 6
-}

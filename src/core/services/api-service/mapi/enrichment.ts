@@ -1,4 +1,5 @@
 import {
+  caseInsensitiveCompare,
   convertIpfsResource,
   findCollectionByAddress,
   isAntMintPassCollection,
@@ -11,6 +12,8 @@ import {getAntMintPassMetadata, getWeirdApesStakingStatus} from "@src/core/api/c
 import {fallbackImageUrl} from "@src/core/constants";
 import WalletNft from "@src/core/models/wallet-nft";
 import axios from "axios";
+import {Listing, OwnerListing} from "@src/core/models/listing";
+import {InvalidState} from "@src/core/services/api-service/types";
 
 export async function enrichWalletNft(nft: WalletNft): Promise<WalletNft> {
   if(isBundle(nft.nftAddress)) {
@@ -91,4 +94,21 @@ export async function enrichWalletNft(nft: WalletNft): Promise<WalletNft> {
       animationUrl: video
     };
   }
+}
+
+/**
+ * Currently used to track ownership of ERC1155 where MAPI falls short
+ *
+ * @param listing
+ * @param walletNfts
+ */
+export function enrichOwnerListing(listing: Listing, walletNfts: WalletNft[]): OwnerListing {
+  const isInWallet = !!walletNfts.find((walletNft) => caseInsensitiveCompare(walletNft.nftAddress, listing.nftAddress) && walletNft.nftId == listing.nftId);
+
+  return {
+    ...listing,
+    isInWallet,
+    valid: listing.valid && isInWallet,
+    invalid: listing.invalid ?? isInWallet ? listing.invalid : InvalidState.OWNER_SELLER
+  };
 }
