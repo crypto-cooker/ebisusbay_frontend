@@ -4,15 +4,16 @@ import {PagedList} from "@src/core/services/api-service/paginated-list";
 import SearchQuery from "@src/core/services/api-service/mapi/queries/search";
 import axios from "axios";
 import {appConfig} from "@src/Config";
-import Listing from "@src/core/models/listing";
+import {Listing, ListingMapper, OwnerListing} from "@src/core/models/listing";
 import OffersQuery, {OffersQueryParams} from "@src/core/services/api-service/mapi/queries/offers";
 import OffersRepository from "@src/core/services/api-service/mapi/repositories/offers";
 import {Offer} from "@src/core/models/offer";
 import WalletsQuery, {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
 import WalletsRepository from "@src/core/services/api-service/mapi/repositories/wallets";
 import WalletNft from "@src/core/models/wallet-nft";
-import {enrichWalletNft} from "@src/core/services/api-service/mapi/enrichment";
+import {enrichOwnerListing, enrichWalletNft} from "@src/core/services/api-service/mapi/enrichment";
 import {findCollectionByAddress} from "@src/utils";
+
 const config = appConfig();
 
 class Mapi {
@@ -31,6 +32,30 @@ class Mapi {
 
     return new PagedList<Listing>(
       response.data.listings,
+      response.data.page,
+      response.data.page < response.data.totalPages
+    )
+  }
+
+  async getUnfilteredListings(query?: ListingsQueryParams): Promise<PagedList<OwnerListing>> {
+    const response = await this.listings.getUnfilteredListings(new ListingsQuery(query));
+
+    const walletNfts: WalletNft[] = [];
+    let hasNextPage = true;
+    let page = 1;
+    while(hasNextPage) {
+      const walletData = await this.getWallet({wallet: query?.seller, pageSize: 100, page});
+      walletNfts.push(...walletData.data);
+      hasNextPage = walletData.hasNextPage;
+      page++;
+    }
+
+    const listings = await Promise.all(response.data.listings.map(async (listing: any): Promise<OwnerListing> => {
+      return enrichOwnerListing(ListingMapper.fromMapi(listing), walletNfts);
+    }));
+
+    return new PagedList<OwnerListing>(
+      listings,
       response.data.page,
       response.data.page < response.data.totalPages
     )

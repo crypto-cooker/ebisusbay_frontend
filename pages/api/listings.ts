@@ -2,7 +2,7 @@ import {ApiService} from "@src/core/services/api-service";
 import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
 import {NextApiRequest, NextApiResponse} from "next";
 import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
-import Listing from "@src/core/models/listing";
+import {Listing} from "@src/core/models/listing";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<IPaginatedList<Listing>>) {
   const {query} = req;

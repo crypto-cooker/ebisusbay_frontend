@@ -4,7 +4,7 @@ import Cms from "@src/core/services/api-service/cms";
 import Mapi from "@src/core/services/api-service/mapi";
 import SearchQuery from "@src/core/services/api-service/mapi/queries/search";
 import {OffersQueryParams} from "@src/core/services/api-service/mapi/queries/offers";
-import Listing from "@src/core/models/listing";
+import {Listing, OwnerListing} from "@src/core/models/listing";
 import {Api} from "@src/core/services/api-service/types";
 import {Offer} from "@src/core/models/offer";
 import {WalletsQueryParams} from "./mapi/queries/wallets";
@@ -26,6 +26,13 @@ export class ApiService implements Api {
 
   async getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>> {
     return await this.mapi.getListings(query);
+  }
+
+  async getUserUnfilteredListings(address: string, query?: ListingsQueryParams): Promise<PagedList<OwnerListing>> {
+    if (!query) query = {};
+    query.seller = address;
+
+    return await this.mapi.getUnfilteredListings(query);
   }
 
   async getProfile(addressOrUsername: string): Promise<any> {

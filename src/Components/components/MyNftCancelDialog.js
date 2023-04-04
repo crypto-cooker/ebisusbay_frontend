@@ -22,8 +22,8 @@ const MyNftCancelDialog = ({ myNftPageCancelDialog }) => {
       const res = await cancelGaslessListing(myNftPageCancelDialog.listingId)
       dispatch(MyNftPageActions.hideNftPageCancelDialog());
       toast.success('Canceled successfully')
-    }
-    catch(error){
+    } catch(error) {
+      dispatch(MyNftPageActions.hideNftPageCancelDialog());
       console.log(error)
       toast.error('Error')
     }

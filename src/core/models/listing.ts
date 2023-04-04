@@ -1,27 +1,51 @@
 import {InvalidState, ListingState} from "@src/core/services/api-service/types";
 
-class Listing {
-  listingId: string | any;
-  nftId: string | any;
-  nftAddress: string | any;
-  valid: boolean | any;
-  invalid: InvalidState | any;
-  seller: string | any;
-  purchaser: string | any;
-  state: ListingState | any;
-  price: number | any;
-  royalty: number | any;
-  fee: number | any;
-  saleTime: number | any;
-  listingTime: number | any;
-  expirationDate: number | any;
+export interface Listing {
+  listingId: string;
+  nftId: string;
+  nftAddress: string;
+  valid: boolean;
+  invalid: InvalidState;
+  seller: string;
+  purchaser: string;
+  state: ListingState;
+  price: string;
+  royalty: string;
+  fee: string;
+  saleTime: number | null;
+  listingTime: number;
+  expirationDate: number | null;
+  transactionHash: string | null;
   nft: any;
   collection: any;
+}
 
-  public constructor(init: Listing) {
-    Object.assign(this, init);
+export interface OwnerListing extends Listing {
+  isInWallet: boolean;
+}
+
+export class ListingMapper {
+
+  static fromMapi(props: any): Listing {
+    return {
+      listingId: props.listingId,
+      nftId: props.nftId,
+      nftAddress: props.nftAddress,
+      valid: props.valid,
+      invalid: props.invalid,
+      seller: props.seller,
+      purchaser: props.purchaser,
+      state: props.state,
+      price: props.price,
+      royalty: props.royalty,
+      fee: props.fee,
+      saleTime: Number(props.saleTime),
+      listingTime: Number(props.listingTime),
+      expirationDate: Number(props.expirationDate),
+      transactionHash: props.transactionHash,
+      nft: props.nft,
+      collection: props.collection
+    }
   }
 
 }
-
-export default Listing;

@@ -21,9 +21,10 @@ interface CollectionFilterProps {
   filteredAddresses: any;
   onFilter: (collections: any) => void;
   keyPrefix?: string | null;
+  showBalance?: boolean;
 }
 
-export const CollectionFilter = ({collections, filteredAddresses, onFilter, keyPrefix = null}: CollectionFilterProps) => {
+export const CollectionFilter = ({collections, filteredAddresses, onFilter, keyPrefix = null, showBalance = true}: CollectionFilterProps) => {
   const [visibleCollections, setVisibleCollections] = useState(collections);
 
   const handleCheck = (event: any, collection: any) => {
@@ -95,7 +96,9 @@ export const CollectionFilter = ({collections, filteredAddresses, onFilter, keyP
                     <Box ms={2}>{collection.name}</Box>
                   </HStack>
                 </Checkbox>
-                <Box className="text-muted">({collection.balance})</Box>
+                {showBalance && (
+                  <Box className="text-muted">({collection.balance})</Box>
+                )}
               </Flex>
             ))}
           </VStack>

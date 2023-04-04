@@ -4,7 +4,9 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  Box, ButtonGroup,
+  Box,
+  Button as ChakraButton,
+  ButtonGroup,
   Flex,
   HStack,
   Table,
@@ -20,9 +22,7 @@ import {
   VStack
 } from "@chakra-ui/react";
 import React from "react";
-import {AxiosResponse} from "axios";
-import {timeSince} from "@src/utils";
-import Button from "@src/Components/components/Button";
+import {isBundle, timeSince} from "@src/utils";
 import {ListingState} from "@src/core/services/api-service/types";
 import {InfiniteData} from "@tanstack/query-core";
 import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
@@ -30,11 +30,12 @@ import {AnyMedia} from "@src/Components/components/AnyMedia";
 import {commify} from "ethers/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import {hostedImage} from "@src/helpers/image";
-import {Button as ChakraButton} from "@chakra-ui/react";
+import {hostedImage, ImageKitService} from "@src/helpers/image";
+import {OwnerListing} from "@src/core/models/listing";
+import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 
 interface ResponsiveListingsTableProps {
-  data: InfiniteData<AxiosResponse<IPaginatedList<any>>>;
+  data: InfiniteData<IPaginatedList<OwnerListing>>;
   onUpdate: (listing: any) => void;
   onCancel: (listing: any) => void;
   onSort: (field: string) => void;
@@ -73,9 +74,9 @@ const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveListingsTablePr
           </Tr>
         </Thead>
         <Tbody>
-          {data.pages.map((page: any, pageIndex: any) => (
+          {data.pages.map((page, pageIndex) => (
             <React.Fragment key={pageIndex}>
-              {page.map((listing: any) => (
+              {page.data.map((listing) => (
                 <Tr key={listing.listingId} _hover={{bg: listing.valid ? hoverBackground : 'red.600'}} bg={listing.valid ? 'auto' : 'red.500'}>
                   <Td w='50px'>
                     <Box
@@ -86,7 +87,7 @@ const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveListingsTablePr
                       overflow='hidden'
                     >
                       <AnyMedia
-                        image={listing.nft.image}
+                        image={ImageKitService.buildAvatarUrl(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image)}
                         video={listing.nft.animation_url}
                         title={listing.nft.name}
                         className=""
@@ -114,20 +115,18 @@ const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveListingsTablePr
                       {listing.state === ListingState.ACTIVE && (
                         <>
                           {listing.isInWallet && (
-                            <Button
-                              type="legacy"
+                            <PrimaryButton
                               onClick={() => onUpdate(listing)}
                               className="me-2"
                             >
                               Update
-                            </Button>
+                            </PrimaryButton>
                           )}
-                          <Button
-                            type="legacy-outlined"
+                          <SecondaryButton
                             onClick={() => onCancel(listing)}
                           >
                             Cancel
-                          </Button>
+                          </SecondaryButton>
                         </>
                       )}
                     </Flex>
@@ -168,9 +167,9 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel}: ResponsiveListingsTab
         </HStack>
       </Box>
       <Accordion w='full' allowMultiple>
-        {data.pages.map((page: any, pageIndex: any) => (
+        {data.pages.map((page, pageIndex) => (
           <React.Fragment key={pageIndex}>
-            {page.map((listing: any) => (
+            {page.data.map((listing) => (
               <AccordionItem key={listing.listingId} bg={listing.valid ? 'auto' : 'red.500'}>
                 <Flex w='100%' my={2}>
                   <Box flex='1' textAlign='left' fontWeight='bold' my='auto'>
@@ -182,7 +181,7 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel}: ResponsiveListingsTab
                         overflow='hidden'
                       >
                         <AnyMedia
-                          image={hostedImage(listing.nft.image, true)}
+                          image={ImageKitService.buildAvatarUrl(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image)}
                           video={listing.nft.animation_url}
                           title={listing.nft.name}
                         />
@@ -221,21 +220,19 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel}: ResponsiveListingsTab
                   {listing.state === ListingState.ACTIVE && (
                     <Flex mt={2}>
                       {listing.isInWallet && (
-                        <Button
-                          type="legacy"
+                        <PrimaryButton
                           onClick={() => onUpdate(listing)}
                           className="me-2 w-100"
                         >
                           Update
-                        </Button>
+                        </PrimaryButton>
                       )}
-                      <Button
-                        type="legacy-outlined"
+                      <SecondaryButton
                         onClick={() => onCancel(listing)}
                         className="w-100"
                       >
                         Cancel
-                      </Button>
+                      </SecondaryButton>
                     </Flex>
                   )}
                 </AccordionPanel>
