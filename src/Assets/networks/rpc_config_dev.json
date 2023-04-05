@@ -4225,7 +4225,7 @@
         ]
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
@@ -6478,7 +6478,7 @@
         ]
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
@@ -19606,6 +19606,32 @@
         "doxx": false,
         "kyc": true,
         "verified": true
+      }
+    },
+    {
+      "name": "Alpha Lions Customs",
+      "slug": "alpha-lions-customs",
+      "multiToken": false,
+      "address": "0x551df5F2a8264E78b486d0b2f1b58a206b6168cE",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A limited edition custom range from the Alpha Lions Rebooted (ALR) collection of 1500 NFTs drawn by UltraPog.",
+        "avatar": "/img/collections/alpha-lions-customs/avatar.webp",
+        "card": "/img/collections/alpha-lions-customs/card.webp",
+        "banner": "/img/collections/alpha-lions-customs/banner.webp",
+        "website": "https://alphalionsrebooted.com/",
+        "twitter": "https://twitter.com/AlphaLionsRBT",
+        "discord": "https://discord.gg/alphalionsrbt",
+        "medium": "https://medium.com/@cronosalphalions",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
       }
     }
   ],
