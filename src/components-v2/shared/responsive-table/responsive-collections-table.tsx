@@ -147,7 +147,7 @@ const DataTable = ({data, timeFrame, onSort}: Pick<ResponsiveCollectionsTablePro
                       value={siPrefixedNumber(collectionVolume(collection, timeFrame))}
                       change={collection.volume1dIncrease}
                       isCroValue={true}
-                      showChange={false}
+                      showChange={timeFrame === '1d'}
                     />
                   </Td>
                   <Td isNumeric>
@@ -155,10 +155,10 @@ const DataTable = ({data, timeFrame, onSort}: Pick<ResponsiveCollectionsTablePro
                       value={siPrefixedNumber(collectionSales(collection, timeFrame))}
                       change={collection.sales1dIncrease}
                       isCroValue={false}
-                      showChange={false}
+                      showChange={timeFrame === '1d'}
                     />
                   </Td>
-                  <Td isNumeric>
+                  <Td valign={timeFrame === '1d' ? 'top' : 'middle'} isNumeric>
                     <RichDataTableCell
                       value={collection.listable && collection.numberActive > 0 ? siPrefixedNumber(Math.round(collection.floorPrice ?? 0)) : 0}
                       change={0}
@@ -169,12 +169,12 @@ const DataTable = ({data, timeFrame, onSort}: Pick<ResponsiveCollectionsTablePro
                   <Td isNumeric>
                     <RichDataTableCell
                       value={collectionAveragePrices(collection, timeFrame)}
-                      change={collection.avgSalePrice1dIncrease}
+                      change={collection.averageSalePrice1dIncrease}
                       isCroValue={true}
-                      showChange={false}
+                      showChange={timeFrame === '1d'}
                     />
                   </Td>
-                  <Td isNumeric>
+                  <Td valign={timeFrame === '1d' ? 'top' : 'middle'} isNumeric>
                     <RichDataTableCell
                       value={siPrefixedNumber(collection.numberActive)}
                       change={0}

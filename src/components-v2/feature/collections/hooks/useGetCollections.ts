@@ -15,8 +15,8 @@ const useGetCollections = () => {
     pageSize: 50,
     direction: 'desc',
     verified: null,
-    sortBy: 'totalvolume',
-    search: ''
+    sortBy: 'totalvolume7d',
+    search: '',
   });
   
 
