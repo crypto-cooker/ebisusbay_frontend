@@ -26,7 +26,7 @@ export class ImageKitService {
 
   static thumbify(url) {
     if(url.pathname.includes('.')){
-      //try to use imagekit thumbnail (check for period it doesn't work if no exension)
+      //try to use imagekit thumbnail (check for period it doesn't work if no extension)
       url.pathname += '/ik-thumbnail.jpg'
       return url.toString();
     }

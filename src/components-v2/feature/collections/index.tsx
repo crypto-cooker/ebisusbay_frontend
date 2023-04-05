@@ -23,7 +23,7 @@ const Collections = () => {
   const isMobileLayout = useBreakpointValue({base: true, lg: false}, {fallback: 'lg'})
 
   const [searchTerms, setSearchTerms] = useState<string>();
-  const [timeFrame, setTimeFrame] = useState<string | null>(null);
+  const [timeFrame, setTimeFrame] = useState<string | null>('7d');
   const [onlyVerified, setOnlyVerified] = useState(false);
   const [showMobileSort, setShowMobileSort] = useState(false);
   const debouncedSearch = useDebounce(searchTerms, 500);
