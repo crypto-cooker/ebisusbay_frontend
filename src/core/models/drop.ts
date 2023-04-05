@@ -97,8 +97,8 @@ export function mapDrop(drop: any): Drop {
     video: drop.video,
   }
 
-  if (!!drop.memberCost) obj.erc20Cost = Number(drop.memberCost);
-  if (!!drop.whitelistCost) obj.erc20Cost = Number(drop.erc20Cost);
+  if (!!drop.memberCost) obj.memberCost = Number(drop.memberCost);
+  if (!!drop.whitelistCost) obj.whitelistCost = Number(drop.whitelistCost);
   if (!!drop.erc20Cost) obj.erc20Cost = Number(drop.erc20Cost);
   if (!!drop.erc20MemberCost) obj.erc20MemberCost = Number(drop.erc20MemberCost);
   if (!!drop.erc20WhitelistCost) obj.erc20WhitelistCost = Number(drop.erc20MemberCost);
