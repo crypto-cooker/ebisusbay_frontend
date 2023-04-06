@@ -10,10 +10,8 @@ export const useGetStakingPlatform = (address: string) => {
       return collections.includes(address.toLowerCase());
     })
 
-    if (platform) {
-      setStakingPlatform(platform[1]);
-    }
-  }, []);
+    setStakingPlatform(!!platform ? platform[1] : undefined);
+  }, [address]);
 
   return { stakingPlatform };
 };
