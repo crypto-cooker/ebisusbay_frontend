@@ -14,6 +14,7 @@ import {
   Stat,
   StatArrow,
   StatHelpText,
+  StatLabel,
   StatNumber,
   Table,
   TableContainer,
@@ -39,7 +40,6 @@ import Link from "next/link";
 import {CdnImage} from "@src/Components/components/CdnImage";
 import {hostedImage} from "@src/helpers/image";
 import Blockies from "react-blockies";
-import {ethers} from "ethers";
 import {BlueCheckIcon} from "@src/components-v2/shared/icons/blue-check";
 import styled from "styled-components";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
@@ -168,7 +168,7 @@ const DataTable = ({data, timeFrame, onSort}: Pick<ResponsiveCollectionsTablePro
                   </Td>
                   <Td isNumeric>
                     <RichDataTableCell
-                      value={collectionAveragePrices(collection, timeFrame)}
+                      value={siPrefixedNumber(collectionAveragePrices(collection, timeFrame))}
                       change={collection.averageSalePrice1dIncrease}
                       isCroValue={true}
                       showChange={timeFrame === '1d'}
@@ -195,26 +195,34 @@ const DataTable = ({data, timeFrame, onSort}: Pick<ResponsiveCollectionsTablePro
 const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollectionsTableProps, 'data' | 'timeFrame' | 'primarySort'>) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
 
-  const stats = (collection: any): {[key: string]: { field: string, value: any }} => ({
+  const stats = (collection: any): {[key: string]: { field: string, value: number, displayValue: any, oneDayDelta?: number }} => ({
     totalvolume: {
       field: 'Volume',
-      value: siPrefixedNumber(collectionVolume(collection, timeFrame))
+      value: collectionVolume(collection, timeFrame),
+      displayValue: siPrefixedNumber(collectionVolume(collection, timeFrame)),
+      oneDayDelta: Number(collection.volume1dIncrease)
     },
     totalsales: {
       field: 'Sales',
-      value: siPrefixedNumber(collectionSales(collection, timeFrame))
+      value: collectionSales(collection, timeFrame),
+      displayValue: siPrefixedNumber(collectionSales(collection, timeFrame)),
+      oneDayDelta: Number(collection.sales1dIncrease)
     },
     totalfloorprice: {
       field: 'Floor',
-      value: collection.listable && collection.numberActive > 0 ? siPrefixedNumber(Math.round(collection.floorPrice ?? 0)) : 'N/A'
+      value: collection.listable && collection.numberActive > 0 ? Math.round(collection.floorPrice ?? 0) : 0,
+      displayValue: collection.listable && collection.numberActive > 0 ? siPrefixedNumber(Math.round(collection.floorPrice ?? 0)) : 'N/A'
     },
     totalaveragesaleprice: {
       field: 'Avg',
-      value: collectionAveragePrices(collection, timeFrame)
+      value: collectionAveragePrices(collection, timeFrame),
+      displayValue: siPrefixedNumber(collectionAveragePrices(collection, timeFrame)),
+      oneDayDelta: Number(collection.averageSalePrice1dIncrease)
     },
     totalactive: {
       field: 'Active',
-      value: siPrefixedNumber(collection.numberActive)
+      value: collection.numberActive,
+      displayValue: siPrefixedNumber(collection.numberActive)
     },
   });
 
@@ -264,11 +272,21 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
                 </Box>
                 <Box>
                   <VStack align='end' spacing={0} fontSize='sm'>
-                    <Text>{stats(collection)[primarySort as SortKeys].field}</Text>
-                    <HStack spacing={1} h="full">
-                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
-                      <Box fontWeight='bold'>{stats(collection)[primarySort as SortKeys].value}</Box>
-                    </HStack>
+                    <Stat size='sm' textAlign='end'>
+                      <StatLabel>{stats(collection)[primarySort as SortKeys].field}</StatLabel>
+                      <StatNumber>
+                        <HStack spacing={1} h="full" justify='end'>
+                          <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                          <Box fontWeight='bold'>{stats(collection)[primarySort as SortKeys].displayValue}</Box>
+                        </HStack>
+                      </StatNumber>
+                      {stats(collection)[primarySort as SortKeys].oneDayDelta! !== 0 && timeFrame === '1d' && !!primarySort && ['totalvolume', 'totalsales', 'totalaveragesaleprice'].includes(primarySort) && (
+                        <StatHelpText>
+                          <StatArrow type={stats(collection)[primarySort as SortKeys].oneDayDelta! > 0 ? 'increase' : 'decrease'} />
+                          {commify(round(stats(collection)[primarySort as SortKeys].oneDayDelta, 2))}%
+                        </StatHelpText>
+                      )}
+                    </Stat>
                   </VStack>
                 </Box>
                 <AccordionButton w='auto' _hover={{bg: 'none'}}>
@@ -280,13 +298,28 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
                   {primarySort !== 'totalvolume' && (
                     <Stack spacing={0}>
                       <Text fontWeight='bold'>Volume</Text>
-                      <Text>{siPrefixedNumber(collectionVolume(collection, timeFrame))}</Text>
+                      <HStack spacing={1} w="full" justify="center">
+                        <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                        <Text>{siPrefixedNumber(collectionVolume(collection, timeFrame))}</Text>
+                      </HStack>
+                      {Number(collection.volume1dIncrease) !== 0 && timeFrame === '1d' && (
+                        <Stat>
+                          <StatArrow type={Number(collection.volume1dIncrease) > 0 ? 'increase' : 'decrease'} />
+                          {commify(round(collection.volume1dIncrease))}%
+                        </Stat>
+                      )}
                     </Stack>
                   )}
                   {primarySort !== 'totalsales' && (
                     <Stack spacing={0}>
                       <Text fontWeight='bold'>Sales</Text>
                       <Text>{siPrefixedNumber(collectionSales(collection, timeFrame))}</Text>
+                      {Number(collection.sales1dIncrease) !== 0 && timeFrame === '1d' && (
+                        <Stat>
+                          <StatArrow type={Number(collection.sales1dIncrease) > 0 ? 'increase' : 'decrease'} />
+                          {commify(round(collection.sales1dIncrease))}%
+                        </Stat>
+                      )}
                     </Stack>
                   )}
                   {primarySort !== 'totalfloorprice' && (
@@ -307,8 +340,14 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
                       <Text fontWeight='bold'>Avg</Text>
                       <HStack spacing={1} w="full" justify="center">
                         <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
-                        <Box>{collectionAveragePrices(collection, timeFrame)}</Box>
+                        <Box>{siPrefixedNumber(collectionAveragePrices(collection, timeFrame))}</Box>
                       </HStack>
+                      {Number(collection.averageSalePrice1dIncrease) !== 0 && timeFrame === '1d' && (
+                        <Stat>
+                          <StatArrow type={Number(collection.averageSalePrice1dIncrease) > 0 ? 'increase' : 'decrease'} />
+                          {commify(round(collection.averageSalePrice1dIncrease))}%
+                        </Stat>
+                      )}
                     </Stack>
                   )}
                   {primarySort !== 'totalactive' && (
@@ -361,6 +400,7 @@ const collectionVolume = (collection: any, timeFrame: string | null) => {
   if (timeFrame === '1d') return Math.round(collection.volume1d);
   if (timeFrame === '7d') return Math.round(collection.volume7d);
   if (timeFrame === '30d') return Math.round(collection.volume30d);
+  return 0;
 };
 
 const collectionSales = (collection: any, timeFrame: string | null) => {
@@ -368,13 +408,15 @@ const collectionSales = (collection: any, timeFrame: string | null) => {
   if (timeFrame === '1d') return Math.round(collection.sales1d);
   if (timeFrame === '7d') return Math.round(collection.sales7d);
   if (timeFrame === '30d') return Math.round(collection.sales30d);
+  return 0;
 };
 
 const collectionAveragePrices = (collection: any, timeFrame: string | null) => {
-  if (timeFrame === null) return ethers.utils.commify(Math.round(collection.averageSalePrice));
+  if (timeFrame === null) return Math.round(collection.averageSalePrice);
   if (timeFrame === '1d') return Math.round(Math.round(collection.averageSalePrice1d));
   if (timeFrame === '7d') return Math.round(Math.round(collection.averageSalePrice7d));
   if (timeFrame === '30d') return Math.round(Math.round(collection.averageSalePrice30d));
+  return 0;
 };
 
 const VerifiedIcon = styled.span`
