@@ -32,6 +32,15 @@ export class ImageKitService {
     }
   }
 
+  static appendMp4Extension(url) {
+    if (typeof url === 'string') {
+      url = new URL(url);
+    }
+
+    url.pathname = `${url.pathname}/ik-video.mp4`;
+    return url.toString();
+  }
+
   static gifToMp4(url) {
     url.pathname = `${url.pathname}/ik-gif-video.mp4`;
     return url.toString();

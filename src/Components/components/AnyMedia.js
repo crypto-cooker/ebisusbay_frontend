@@ -1,8 +1,8 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import ReactPlayer from 'react-player/lazy';
 import Link from 'next/link';
-import { CdnImage } from './CdnImage';
-import { ImageKitService } from '@src/helpers/image';
+import {CdnImage} from './CdnImage';
+import {ImageKitService} from '@src/helpers/image';
 import {fallbackImageUrl} from "@src/core/constants";
 
 export const AnyMedia = ({
@@ -42,6 +42,13 @@ export const AnyMedia = ({
     determineMediaType();
   }, []);
 
+  const hasFileExtension = (filename) => {
+    const filenameParts = filename.split('?')[0].split('/');
+    const filenamePart = filenameParts[filenameParts.length - 1];
+    const fileExt = filenamePart.slice(filenamePart.lastIndexOf('.') + 1);
+    return fileExt !== filenamePart && fileExt !== '';
+  };
+
   const determineMediaType = () => {
     if (!image || image.startsWith('data')) {
       setDynamicType(mediaTypes.image);
@@ -70,7 +77,11 @@ export const AnyMedia = ({
           const [mediaType, format] = contentType.split('/');
           let type = mediaTypes[mediaType] ?? mediaTypes.image;
           if (type === mediaTypes.video) {
-            setVideoThumbNail(makeThumb(transformedImage));
+            let target = transformedImage;
+            if (!hasFileExtension(transformedImage)) {
+              target = ImageKitService.appendMp4Extension(target);
+            }
+            setVideoThumbNail(makeThumb(target));
           }
           if (format === 'gif') {
             setTransformedImage(ImageKitService.gifToMp4(imageURL).toString());
