@@ -91,7 +91,7 @@ const Barracks = ({onBack}) => {
       <Container>
       <Box >
         <Center>
-         <Image src="/img/battle-bay/bld0.png" alt="Barracks" />
+        <Image src='img/battle-bay/barracks_day.png'/>
         </Center>
       </Box>
       <Heading className="title text-center">Barracks</Heading>

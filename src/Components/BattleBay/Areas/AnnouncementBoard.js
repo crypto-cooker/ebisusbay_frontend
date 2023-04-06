@@ -98,7 +98,7 @@ const AnnouncementBoard = ({onBack}) => {
       <Button margin={'36px'} position={'absolute'} onClick={onBack}> Back to Village Map</Button>
       <Box >
         <Center>
-         <Image src="/img/battle-bay/allianceCenter.png" alt="Alliance Center" />
+         <Image src="/img/battle-bay/academy_day.png" alt="Alliance Center" />
         </Center>
       </Box>
 

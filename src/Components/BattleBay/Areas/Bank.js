@@ -43,7 +43,7 @@ const Bank = ({onBack}) => {
       <Container>
         <Box >
           <Center>
-          <Image src="/img/battle-bay/bld0.png" alt="Barracks" />
+            <Image src='img/battle-bay/bank_day.png'/>
           </Center>
         </Box>
         <Heading className="title text-center">Bank</Heading>

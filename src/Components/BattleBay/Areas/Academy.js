@@ -95,28 +95,17 @@ const Academy = ({onBack}) => {
 
       <Grid templateColumns='repeat(2, 1fr)' gap={6}>
 
-      <GridItem w='100%' h='150'>
+      <GridItem w='100%' h='100%'>
         <Flex alignContent={'center'} justifyContent={'center'}>
-          <Image
-            borderRadius='full'
-            align={'center'}
-            objectFit='cover'
-            boxSize='150px'
-            src='img/battle-bay/bld0.png'
-          />
+          <Image src='img/battle-bay/alliancecenter_day.png'/>
         </Flex>
       </GridItem>
-      <GridItem w='100%' h='150'>
+      <GridItem w='100%' h='100%'>
         <Flex alignContent={'center'} justifyContent={'center'}>
-          <Image
-            borderRadius='full'
-            align={'center'}
-            objectFit='cover'
-            boxSize='150px'
-            src='img/battle-bay/bld1.png'
-          />
+          <Image src='img/battle-bay/townhall_day.png'/>
         </Flex>
       </GridItem>
+
       <GridItem w='100%' h='150' margin={'auto'}>
         <Heading className="title text-center">Alliance Center</Heading>
         <Flex alignContent={'center'} justifyContent={'center'}>
@@ -131,6 +120,17 @@ const Academy = ({onBack}) => {
           </Flex>
         </GridItem>
 
+        <GridItem w='100%' h='100%'>
+        <Flex alignContent={'center'} justifyContent={'center'}>
+          <Image src='img/battle-bay/academy_day.png'/>
+        </Flex>
+      </GridItem>
+      <GridItem w='100%' h='100%'>
+        <Flex alignContent={'center'} justifyContent={'center'}>
+          <Image src='img/battle-bay/academy_day.png'/>
+        </Flex>
+      </GridItem>
+
         <GridItem w='100%' h='150' margin={'auto'}>
           <Heading className="title text-center">Announcement Board</Heading>
           <Flex alignContent={'center'} justifyContent={'center'}>
@@ -142,9 +142,20 @@ const Academy = ({onBack}) => {
         <GridItem w='100%' h='150' margin={'auto'}>
           <Heading className="title text-center">Leaderboard</Heading>
           <Flex alignContent={'center'} justifyContent={'center'}>
-            <p>hows the amount of Battle Units (which factions have the most units), and Leaderboard Victory Points (which factions have won the most battles).</p>
+            <p>Shows the amount of Battle Units (which factions have the most units), and Leaderboard Victory Points (which factions have won the most battles).</p>
           </Flex>
         </GridItem>
+
+        <GridItem w='100%' h='100%'>
+        <Flex alignContent={'center'} justifyContent={'center'}>
+          <Image src='img/battle-bay/bank_day.png'/>
+        </Flex>
+      </GridItem>
+      <GridItem w='100%' h='100%'>
+        <Flex alignContent={'center'} justifyContent={'center'}>
+          <Image src='img/battle-bay/fishmarket_day.png'/>
+        </Flex>
+      </GridItem>
 
         <GridItem w='100%' h='150' margin={'auto'}>
         <Heading className="title text-center">Bank</Heading>
@@ -155,7 +166,18 @@ const Academy = ({onBack}) => {
       <GridItem w='100%' h='150' margin={'auto'}>
         <Heading className="title text-center">Fish Market</Heading>
         <Flex alignContent={'center'} justifyContent={'center'}>
-          <p>llows for NFT Trading of Ryoshi items only</p>
+          <p>Allows for NFT Trading of Ryoshi items only</p>
+        </Flex>
+      </GridItem>
+
+      <GridItem w='100%' h='100%'>
+        <Flex alignContent={'center'} justifyContent={'center'}>
+          <Image src='img/battle-bay/tavern_day.png'/>
+        </Flex>
+      </GridItem>
+      <GridItem w='100%' h='100%'>
+        <Flex alignContent={'center'} justifyContent={'center'}>
+          <Image src='img/battle-bay/barracks_day.png'/>
         </Flex>
       </GridItem>
 
@@ -174,13 +196,13 @@ const Academy = ({onBack}) => {
       </GridItem>
 
       </Grid>
-    <VStack spacing={4} align="stretch">
+    {/* <VStack spacing={4} align="stretch">
     <Button onClick={GetGameId}>Get Game ID: </Button>
     <Button onClick={GetProfileTroops}>Get ProfileTroops: </Button>
     <Button onClick={GetReward}>Get Reward: 1</Button>
     <Button onClick={GetFactions}>Get Factions owned</Button>
     <Button onClick={SubscribeFaction}>Subscribe Faction: </Button>
-    </VStack>
+    </VStack> */}
 
     </section>
   )
