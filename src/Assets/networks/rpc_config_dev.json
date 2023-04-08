@@ -19661,6 +19661,28 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "Dragon Warriors",
+      "slug": "dragon-warriors",
+      "multiToken": false,
+      "address": "0xFa58F603261f996f02e3ed2e5eF7d2D94bD5FD68",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome to dragon warriors brand new project on the cronos blockchain gen 1 will be 1650 dragon female and male warriors which you will be able to stake  We will use mint fund for supplying wcro staking on corgi studio and also for future devolpment and puttin in vault to airdrop holder every 3 months We will do massive raffles also where funds will go towards project and topping up staking pools There will be gen 2 but all in due time so there will be more to come  and thank you to everyone that's here and supporting \uD83D\uDCAF ❤\uFE0F  Fasten your seat belt and Enjoy the ride",
+        "avatar": "/img/collections/dragon-warriors/avatar.webp",
+        "card": "/img/collections/dragon-warriors/card.webp",
+        "banner": "/img/collections/dragon-warriors/banner.webp",
+        "twitter": "https://twitter.com/DragonW2307",
+        "discord": "https://discord.gg/cbnqqStG",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
