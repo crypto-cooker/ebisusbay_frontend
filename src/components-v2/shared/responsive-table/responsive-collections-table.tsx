@@ -7,6 +7,7 @@ import {
   Box,
   Flex,
   HStack,
+  Image as ChakraImage,
   LinkBox,
   LinkOverlay,
   SimpleGrid,
@@ -245,10 +246,9 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
                           rounded='full'
                           overflow='hidden'
                         >
-                          <AnyMedia
-                            image={hostedImage(collection.metadata.avatar, true)}
-                            video=''
-                            title={collection?.name}
+                          <ChakraImage
+                            src={hostedImage(collection.metadata.avatar, true)}
+                            alt={collection?.name}
                           />
                         </Box>
                       ) : (
