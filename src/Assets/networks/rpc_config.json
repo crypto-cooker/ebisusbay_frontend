@@ -19730,6 +19730,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "BTFDCro",
+      "slug": "btfdcro",
+      "multiToken": false,
+      "address": "0xBBeCb670d04bC0e695f0af4c6FebbAC7DD0BC276",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "BTFDCRO is a collection of 4454 NFTs on the Cronos Blockchain. Your BTFDCRO NFT will give you 10% of the mint back, 80% of the secondary market royalties, access down the rabbit hole, BTFD membership, ip rights, access to future projects and holder benefits all Powered by the community! \uD83D\uDC30 Come Hop in on this Adventure with us! \uD83D\uDC30",
+        "avatar": "/img/collections/btfdcro/avatar.webp",
+        "card": "/img/collections/btfdcro/card.webp",
+        "banner": "/img/collections/btfdcro/banner.webp",
+        "website": "https://www.btfdcro.com/",
+        "twitter": "https://twitter.com/BTFDRabbits ",
+        "discord": "https://discord.gg/U9RKbvnzPy/",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
