@@ -19683,6 +19683,53 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Wolf of Crostreet",
+      "slug": "wolf-of-crostreet",
+      "multiToken": false,
+      "address": "0x5c2828FdD93cA9F0147276743eB5EE48f77c87fB",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "3 cro to the Moon!",
+        "avatar": "/img/collections/wolf-of-crostreet/avatar.webp",
+        "website": "https://wolf-cro.netlify.app/",
+        "twitter": "https://twitter.com/kingkongcronos2",
+        "discord": "https://discord.gg/8ZQUXur8hH",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Bobble Joey",
+      "slug": "bobble-joey",
+      "multiToken": false,
+      "address": "0x6f6F280786Aeb03c08e79C50fc553102FB6AB498",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A 3D 4K resolution collection of various BabyJoey’s from all walks of life, housing different professions/elements and styles to connect with any holders personal preference. Intended for use in BabyJoey Shooter game!",
+        "avatar": "/img/collections/bobble-joey/avatar.webp",
+        "card": "/img/collections/bobble-joey/card.webp",
+        "banner": "/img/collections/bobble-joey/banner.webp",
+        "website": "https://www.babyhop.finance/",
+        "twitter": "https://twitter.com/BabyJoeyNFT ",
+        "discord": "https://discord.gg/X78A66tu/",
+        "telegram": "https://t.me/BabyJoeyNFT",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [

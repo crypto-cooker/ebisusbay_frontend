@@ -819,7 +819,8 @@
     },
     "collections": [
       "0x04eE3890b7d6c5e1D9B7FEcd19bADA7Fa60A2770",
-      "0xee40C7EeB6bA2E1B9Bf5caA73D29B133175aAF1F"
+      "0xee40C7EeB6bA2E1B9Bf5caA73D29B133175aAF1F",
+      "0x6f6F280786Aeb03c08e79C50fc553102FB6AB498"
     ],
     "socials": {
       "website": "https://www.babyhop.finance/",
@@ -959,6 +960,31 @@
       "website": "https://cr00tsnft.ca/",
       "twitter": "https://twitter.com/cr00tsnft",
       "discord": "https://discord.gg/Xb5xv84mS2"
+    },
+    "featured": false,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "titans-of-cronos",
+    "name": "Titans of Cronos",
+    "description": "3 cro to the moon",
+    "images": {
+      "banner": "/img/brands/titans-of-cronos/banner.webp",
+      "preview": "/img/brands/titans-of-cronos/preview.webp"
+    },
+    "collections": [
+      "0x671bD56D29216a8C7A43498515A1B629e9B52895",
+      "0xFEF8E458B355bCaAf27d9d876D02FFae75BeDc9A",
+      "0xfB9c657A58b46010B292321f871cC690084CB34f",
+      "0x90589753d2A1071f931a323711911675Ae3120aa",
+      "0x6A69ac09e86aBca5b5d926a9047C03260C222aa5",
+      "0xf8D969a553F2ca0a77553B02a4fCBe486A5c1735"
+    ],
+    "socials": {
+      "website": "https://kingkong-cronos.netlify.app/",
+      "twitter": "https://twitter.com/kingkongcronos2",
+      "discord": "https://discord.gg/8ZQUXur8hH"
     },
     "featured": false,
     "categories": [],
