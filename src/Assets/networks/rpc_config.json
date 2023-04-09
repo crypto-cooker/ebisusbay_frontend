@@ -10960,7 +10960,7 @@
         ]
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
@@ -15034,7 +15034,7 @@
         ]
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
@@ -16015,7 +16015,7 @@
         ]
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
@@ -17573,7 +17573,7 @@
         ]
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
@@ -19745,7 +19745,7 @@
         "banner": "/img/collections/btfdcro/banner.webp",
         "website": "https://www.btfdcro.com/",
         "twitter": "https://twitter.com/BTFDRabbits ",
-        "discord": "https://discord.gg/U9RKbvnzPy/",
+        "discord": "https://discord.gg/U9RKbvnzPy",
         "categories": [
           "collectibles"
         ]
