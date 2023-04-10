@@ -1,19 +1,16 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import * as Sentry from '@sentry/react';
 
-import { ErrorPage } from '@src/Components/ErrorPage';
+import {ErrorPage} from '@src/Components/ErrorPage';
 import store from '../src/Store/store';
 import App from '../src/App';
-import { SentryLoggingService } from '@src/services/sentry-logging.service';
-import { Site24x7LoggingService } from '@src/services/site24x7-logging.service';
-import {
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query'
-import {ChakraProvider, extendTheme} from '@chakra-ui/react'
+import {SentryLoggingService} from '@src/services/sentry-logging.service';
+import {Site24x7LoggingService} from '@src/services/site24x7-logging.service';
+import {QueryClient, QueryClientProvider,} from '@tanstack/react-query'
+import {ChakraProvider} from '@chakra-ui/react'
 
-import { config } from '@fortawesome/fontawesome-svg-core';
+import {config} from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
@@ -29,6 +26,7 @@ import customThemeCK from "@src/Theme/themeCK";
 
 import useFeatureFlag from '@src/hooks/useFeatureFlag';
 import Constants from '@src/constants';
+import {LoadingProgressProvider} from "@src/components-v2/shared/layout/loader";
 
 SentryLoggingService.init();
 Site24x7LoggingService.init();
@@ -47,7 +45,9 @@ export default function MyApp({ Component, pageProps }) {
         <Sentry.ErrorBoundary fallback={() => <ErrorPage />}>
           <QueryClientProvider client={queryClient} >
             <ChakraProvider theme={useNewTheme? customThemeCK : customTheme}>
-              <App Component={Component} pageProps={pageProps} />
+              <LoadingProgressProvider>
+                <App Component={Component} pageProps={pageProps} />
+              </LoadingProgressProvider>
             </ChakraProvider>
           </QueryClientProvider>
         </Sentry.ErrorBoundary>
