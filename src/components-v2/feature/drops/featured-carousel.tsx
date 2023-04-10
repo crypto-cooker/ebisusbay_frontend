@@ -1,27 +1,24 @@
-import React, { Component } from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import React, {Component} from 'react';
+import styled, {createGlobalStyle} from 'styled-components';
 import Blockies from 'react-blockies';
-import { ethers } from 'ethers';
-import {
-  faCheck,
-  faCircle,
-  faExternalLinkAlt
-} from '@fortawesome/free-solid-svg-icons';
+import {ethers} from 'ethers';
+import {faCheck, faCircle, faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons';
 
-import Clock from './Clock';
-import LayeredIcon from './LayeredIcon';
-import { dropState } from '@src/core/api/enums';
-import { appConfig } from "@src/Config";
-import { hostedImage } from "@src/helpers/image";
+import Clock from '@src/Components/components/Clock';
+import LayeredIcon from '@src/Components/components/LayeredIcon';
+import {dropState} from '@src/core/api/enums';
+import {appConfig} from "@src/Config";
+import {hostedImage} from "@src/helpers/image";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation, Pagination} from "swiper";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
-import {Heading, HStack, Tag, Text} from "@chakra-ui/react";
+import {Box, Heading, HStack, Tag, Text} from "@chakra-ui/react";
 import Image from "next/image";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Drop, mapDrop} from "@src/core/models/drop";
 
 const tokens = appConfig('tokens')
-const drops = appConfig('drops');
+const drops: Drop[] = appConfig('drops').map((drop: any) => mapDrop(drop));
 
 const GlobalStyles = createGlobalStyle`
   .nft-big .slick-prev::before{
@@ -70,21 +67,23 @@ class CustomSlide extends Component {
 }
 
 export default class Responsive extends Component {
-  constructor(props) {
+  private featuredDrops: Drop[];
+
+  constructor(props: any) {
     super(props);
     this.state = {};
-    this.featuredDrops = drops;
+    this.featuredDrops = [];
     this.arrangeCollections();
   }
 
   // @todo refactor out
-  isFounderDrop(drop) {
+  isFounderDrop(drop: any) {
     return drop.slug === 'founding-member';
   }
 
-  calculateStatus(startDate, endDate) {
+  calculateStatus(startDate: number, endDate?: number) {
     const sTime = new Date(startDate);
-    const eTime = new Date(endDate);
+    const eTime = !!endDate ? new Date(endDate) : 0;
     const now = new Date();
 
     if (sTime > now) return dropState.NOT_STARTED;
@@ -99,7 +98,7 @@ export default class Responsive extends Component {
     const maxFreshnessInHours = 3600000 * 8;    // Threshold to label live drops as "stale"
     const defaultMaxCount = 5;                  // Maximum drops on the carousel
 
-    const topLevelDrops = drops.filter((d) => !d.complete && d.featured)
+    const topLevelDrops = drops.filter((d) => !d.complete && d.featured && d.published)
       .sort((a, b) => (a.start < b.start ? 1 : -1));
     const topLevelKeys = topLevelDrops.map((d) => d.slug);
 
@@ -150,7 +149,7 @@ export default class Responsive extends Component {
     this.featuredDrops = [...upcomingDrops,  ...liveFreshDrops, ...topLevelDrops, ...liveStaleDrops];
   }
 
-  navigateToDrop(drop) {
+  navigateToDrop(drop: Drop) {
     if (typeof window === 'undefined') return;
     if (drop.redirect) {
       window.open(drop.redirect, '_blank');
@@ -173,7 +172,7 @@ export default class Responsive extends Component {
           {this.featuredDrops &&
             this.featuredDrops.map((drop, index) => (
               <SwiperSlide key={index}>
-                <CustomSlide className="itm">
+                <Box className="itm">
                   <div className="nft__item_lg">
                     <div className="row align-items-center">
                       <div className="col-lg-6 text-center">
@@ -192,6 +191,7 @@ export default class Responsive extends Component {
                             doxx={drop.verification?.doxx}
                             kyc={drop.verification?.kyc}
                             escrow={drop.verification?.escrow}
+                            creativeCommons={null}
                           />
                           <div className="d-flex">
                           </div>
@@ -211,9 +211,9 @@ export default class Responsive extends Component {
                             <div className="author_list_info">
                               <div className="title">{drop.author.name}</div>
                               <div className="subtitle">
-                                {drop.author.link || drop.author.website && (
+                                {!!drop.author.website && (
                                   <span className="profile_username">
-                                  <a href={drop.author.link ?? drop.author.website} target="_blank" rel="noreferrer">
+                                  <a href={drop.author.website} target="_blank" rel="noreferrer">
                                     View Website
                                   </a>
                                 </span>
@@ -270,8 +270,8 @@ export default class Responsive extends Component {
                                 (Array.isArray(drop.whitelistCost) ? (
                                   <Heading as="h5" size="sm">
                                     Whitelist:{' '}
-                                    {ethers.utils.commify(Math.min(...drop.memberCost.map((c) => parseInt(c))))} -{' '}
-                                    {ethers.utils.commify(Math.max(...drop.memberCost.map((c) => parseInt(c))))} CRO
+                                    {ethers.utils.commify(Math.min(...(drop.whitelistCost as any[])?.map((c) => parseInt(c))))} -{' '}
+                                    {ethers.utils.commify(Math.max(...(drop.whitelistCost as any[])?.map((c) => parseInt(c))))} CRO
                                   </Heading>
                                 ) : (
                                   <Heading as="h5" size="sm">Whitelist: {ethers.utils.commify(drop.whitelistCost)} {drop.chain ? 'ETH' : 'CRO'}</Heading>
@@ -354,7 +354,7 @@ export default class Responsive extends Component {
                       </div>
                     </div>
                   </div>
-                </CustomSlide>
+                </Box>
               </SwiperSlide>
             ))}
         </Swiper>

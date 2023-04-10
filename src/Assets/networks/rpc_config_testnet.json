@@ -3259,6 +3259,31 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "Rebel AUT Club",
+      "slug": "rebel-aut-club",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Rebel AUT Club is a collection of 7777 Rebels generated on the Cronos Chain. \nWith over 300+ attributes and different rarities,  \nthe collection consists of 8 animal-themed digital collectible NFTs. \nThe collection’s primary objective is to generate awareness and raise funds to support children who are impacted by ASD, Autism Spectrum Disorder, with essential sensory equipment.",
+        "avatar": "/img/collections/rebel-aut-club/avatar.webp",
+        "card": "/img/collections/rebel-aut-club/card.webp",
+        "banner": "/img/collections/rebel-aut-club/banner.webp",
+        "website":"https://happyautclub.com/",
+        "twitter": "https://twitter.com/HappyAUTclub",
+        "discord": "https://discord.gg/4gz4wJHjNV",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
@@ -7908,6 +7933,45 @@
       "verification": {
         "doxx": false,
         "kyc": true,
+        "escrow": false,
+        "verified": true
+      }
+    },
+    {
+      "id": 168,
+      "slug": "rebel-aut-club",
+      "title": "Rebel AUT Club",
+      "subtitle": "The Rebel AUT Club is a collection of 7777 Rebels generated on the Cronos Chain. \nWith over 300+ attributes and different rarities,  \nthe collection consists of 8 animal-themed digital collectible NFTs. \nThe collection’s primary objective is to generate awareness and raise funds to support children who are impacted by ASD, Autism Spectrum Disorder, with essential sensory equipment.",
+      "description": "The Rebel AUT Club is a new digital collection that is being launched to provide support to children with autism and their families. The collection will consist of 8 animal-themed NFTs with different attributes and rarities. \n\nWhen purchasing one of these unique NFTs, collectors will not only have the opportunity to own a one-of-a-kind piece of digital art, they will also be contributing to a good cause. Making a real impact in the lives of children with autism. \n\nAs you may know, children with autism often have difficulty with sensory processing. This can impact their ability to engage in daily activities and interact with their environment.\n\nOur project is centred around the donation of unique sensory equipment that is essential to the development and growth of vital social, fine, and gross motor skills. Along with the goal of providing support to these children in their daily lives.\n\nTogether we can make a difference! We would love for you to be a part of this amazing project and assist us in making a difference for children with ASD in all our communities. \n\nThank you for your support!",
+      "author": {
+        "name": "Happy AUT Club",
+        "website":"https://happyautclub.com/",
+        "twitter": "https://twitter.com/HappyAUTclub",
+        "discord": "https://discord.gg/4gz4wJHjNV"
+      },
+      "address": "",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 100,
+      "totalSupply": 7777,
+      "cost": "175",
+      "memberCost": "150",
+      "whitelistCost": "125",
+      "foundersOnly": false,
+      "start": 1681146939000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/rebel-aut-club/drop.webp",
+        "banner": "/img/collections/rebel-aut-club/banner.webp",
+        "avatar": "/img/collections/rebel-aut-club/avatar.webp",
+        "preview": "/img/collections/rebel-aut-club/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
         "escrow": false,
         "verified": true
       }
