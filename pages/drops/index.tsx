@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DropsCarousel from '../../src/Components/components/DropsCarousel';
+import DropsCarousel from '@src/components-v2/feature/drops/featured-carousel';
 import CurrentDrops from '@src/components-v2/shared/drops/current-drops';
 import UpcomingDrops from '@src/components-v2/feature/drops/upcoming-drops';
 import PastDrops from '@src/components-v2/feature/drops/past-drops';
