@@ -1,19 +1,20 @@
-import React, {useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {createGlobalStyle, ThemeProvider} from 'styled-components';
-import {toast, ToastContainer} from 'react-toastify';
-import {initializeApp} from 'firebase/app';
-import {getAnalytics} from "@firebase/analytics";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { toast, ToastContainer } from 'react-toastify';
+import { initializeApp } from 'firebase/app';
+import { getAnalytics } from "@firebase/analytics";
 
 import ScrollToTopBtn from '@src/modules/layout/navbar/ScrollToTop';
+import Header from '@src/components-v2/shared/layout/navbar';
 import firebaseConfig from './Firebase/firebase_config';
-import {initProvider} from './GlobalState/User';
-import {appInitializer} from './GlobalState/InitSlice';
-import {getTheme} from './Theme/theme';
+import { initProvider } from './GlobalState/User';
+import { appInitializer } from './GlobalState/InitSlice';
+import { getTheme } from './Theme/theme';
 import DefaultHead from "@src/components-v2/shared/layout/default-head";
 import {useColorMode} from "@chakra-ui/react";
 import {syncCartStorage} from "@src/GlobalState/cartSlice";
-import Layout from "@src/components-v2/shared/layout";
+import Footer from "@src/components-v2/shared/layout/footer";
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -82,16 +83,18 @@ function App({ Component, pageProps }) {
     <ThemeProvider theme={getTheme(userTheme)}>
       <DefaultHead />
       <div className="wraper">
-        <Layout>
-            <GlobalStyles isDark={userTheme === 'dark'} />
-            <Component {...pageProps} />
-            <ScrollToTopBtn />
-            <ToastContainer
-              position={toast.POSITION.BOTTOM_LEFT}
-              hideProgressBar={true}
-              theme={colorMode}
-            />
-        </Layout>
+        <GlobalStyles isDark={userTheme === 'dark'} />
+        <Header />
+        <div style={{paddingTop:'74px'}}>
+          <Component {...pageProps} />
+        </div>
+        <Footer />
+        <ScrollToTopBtn />
+        <ToastContainer
+          position={toast.POSITION.BOTTOM_LEFT}
+          hideProgressBar={true}
+          theme={colorMode}
+        />
       </div>
     </ThemeProvider>
   );
