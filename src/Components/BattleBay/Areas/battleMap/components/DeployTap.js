@@ -123,7 +123,7 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
       
       <div className="taps-buttons-group" >
         <button type="button" className={`smallBtn ${currentTab === tabs.deploy ? 'selected' : ''}`} onClick={() => setCurrentTab(tabs.deploy)}>Deploy</button>
-        <button type="button" className={`smallBtn ${currentTab === tabs.recall ? 'selected' : ''}`} onClick={() => setCurrentTab(tabs.recall)}>Recall</button>
+        {/* <button type="button" className={`smallBtn ${currentTab === tabs.recall ? 'selected' : ''}`} onClick={() => setCurrentTab(tabs.recall)}>Recall</button> */}
       </div>
 
       <FormControl mb={'24px'}>

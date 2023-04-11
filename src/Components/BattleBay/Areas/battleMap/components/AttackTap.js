@@ -14,6 +14,10 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
+  Image,
+  Grid,
+  GridItem,
+  VStack,
 } from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
@@ -122,8 +126,13 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
         battleLogText.current.innerHTML = outcomeLog;
         battleOutcome.current.textContent = attackersAlive>0 ? "You won!" : "You lost!";
-        attackerOutcome.current.textContent = dataForm.attackersFaction+" lost "+attackersSlain+" out of "+ Number(attackerTroops)+" troops";
-        defenderOutcome.current.textContent = dataForm.defenderFaction+" lost "+defendersSlain+" out of "+defenderTroops+" troops";
+        attackerOutcome.current.textContent = dataForm.attackersFaction+" lost "+attackersSlain+"/"+ Number(attackerTroops)+" troops";
+        defenderOutcome.current.textContent = dataForm.defenderFaction+" lost "+defendersSlain+"/"+defenderTroops+" troops";
+        
+        setupDice(attackerDice, defenderDice);
+
+        attackSetUp.current.style.display = "none"
+        attackConclusion.current.style.display = "block"
 
       } catch (error) {
         console.log(error)
@@ -159,10 +168,6 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
     // FakeAttack(attackerTroops, defenderTroops)
     RealAttack();
-
-
-    attackSetUp.current.style.display = "none"
-    attackConclusion.current.style.display = "block"
   }
   function Reset()
   {
@@ -303,9 +308,42 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
     refreshControlPoint();
   }, [])
 
+  const [att, setAtt] = useState([])
+  const [def, setDef] = useState([])
+  function setupDice(attackerDice, defenderDice)
+  {
+    attackerDice.length = Math.min(attackerDice.length, 3);
+    defenderDice.length = Math.min(defenderDice.length, 3);
+    
+    // var diceRolls = [5,6,2]
+    setAtt(
+      attackerDice.map((i) => (<Image
+          borderRadius='full'
+          align={'center'}
+          objectFit='cover'
+          boxSize='200px'
+          src = {'img/battle-bay/dice/dice_'+i+'.gif'}
+        />))
+      )
+    // diceRolls = [3,1]
+    setDef(
+      defenderDice.map((i) => (<Image
+        borderRadius='full'
+        align={'center'}
+        objectFit='cover'
+        boxSize='200px'
+        src = {'img/battle-bay/dice/dice_'+i+'.gif'}
+      />))
+    )
+  }
+  useEffect(() => {
+    // attackSetUp.current.style.display = "none"
+    // attackConclusion.current.style.display = "block"
+    // setupDice()
+  }, [])
+
   return (
     <Flex flexDirection='column' textAlign='center' border={'1px solid white'} borderRadius={'10px'} justifyContent='space-around' padding='16px'>
-      
       <div ref={attackSetUp} style={{ display: 'block'}}>
       <Box m='8px 24px 34px'>
         <p>
@@ -372,12 +410,27 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
             Attack
           </Button>
         </div>
-        
       </div>
 
       <div ref={attackConclusion} style={{ display: 'none'}}>
         <div class="container">
           <Heading ref={battleOutcome} >Victory!</Heading>
+          <Grid
+        templateAreas={`"att def"`}
+        gridTemplateColumns={'1fr 1fr'}
+        h='200px'
+        gap='1'
+        color='blackAlpha.700'
+        fontWeight='bold'
+      >
+        <GridItem pl='2'  area={'att'}>
+          <VStack spacing='-180px'>{att}</VStack>
+        </GridItem>
+        <GridItem pl='2'  area={'def'}>
+        <VStack spacing='-180px'>{def}</VStack>
+        </GridItem>
+
+      </Grid>
           <div class="row">
             <Box >
               <p style={{textAlign:'left'}}>Attackers</p>
