@@ -19803,7 +19803,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     }
   ],
@@ -26346,7 +26346,7 @@
       },
       "verification": {
         "doxx": false,
-        "kyc": false,
+        "kyc": true,
         "escrow": false,
         "verified": true
       }
