@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Form} from "react-bootstrap";
 import {caseInsensitiveCompare, debounce} from "@src/utils";
-import {ImageKitService} from "@src/helpers/image";
 import Blockies from "react-blockies";
 import {
   AccordionButton,
@@ -15,6 +14,7 @@ import {
   HStack,
   VStack
 } from "@chakra-ui/react";
+import ImageService from "@src/core/services/image";
 
 interface CollectionFilterProps {
   collections: any;
@@ -83,7 +83,7 @@ export const CollectionFilter = ({collections, filteredAddresses, onFilter, keyP
                     <Box>
                       {collection.metadata?.avatar ? (
                         <img
-                          src={ImageKitService.buildAvatarUrl(collection.metadata.avatar)}
+                          src={ImageService.instance.provider.avatar(collection.metadata.avatar)}
                           alt={collection?.name}
                           width="25"
                           height="25"

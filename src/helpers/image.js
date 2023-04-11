@@ -1,147 +1,6 @@
 import {appConfig, isLocalEnv} from "../Config";
 import {specialImageTransform} from "../hacks";
-
-export class ImageKitService {
-  imageUrl = '';
-  trValues = {};
-
-  constructor(imageUrl) {
-    this.imageUrl = imageUrl;
-  }
-
-  static from(imageUrl) {
-    return new ImageKitService(imageUrl);
-  }
-
-  static buildBlurUrl(imageUrl, {width, height}) {
-    const kit = ImageKitService.from(imageUrl)
-      .setBlur(30)
-      .setQuality(10);
-
-    if (width) kit.setWidth(width);
-    if (height) kit.setHeight(height);
-
-    return kit.buildUrl();
-  }
-
-  static thumbify(url) {
-    if(url.pathname.includes('.')){
-      //try to use imagekit thumbnail (check for period it doesn't work if no extension)
-      url.pathname += '/ik-thumbnail.jpg'
-      return url.toString();
-    }
-  }
-
-  static appendMp4Extension(url) {
-    if (typeof url === 'string') {
-      url = new URL(url);
-    }
-
-    url.pathname = `${url.pathname}/ik-video.mp4`;
-    return url.toString();
-  }
-
-  static gifToMp4(url) {
-    url.pathname = `${url.pathname}/ik-gif-video.mp4`;
-    return url.toString();
-  }
-
-  static buildNftCardUrl(imageUrl) {
-    const kit = ImageKitService.from(imageUrl).setNamed('ml_card');
-    return kit.buildUrl();
-  }
-
-  static buildAvatarUrl(imageUrl) {
-    const kit = ImageKitService.from(imageUrl).setNamed('avatar');
-    return kit.buildUrl();
-  }
-
-  static buildBannerPreviewUrl(imageUrl) {
-    const kit = ImageKitService.from(imageUrl).setNamed('wide_preview');
-    return kit.buildUrl();
-  }
-
-  static buildBannerUrl(imageUrl) {
-    const kit = ImageKitService.from(imageUrl)
-      .setWidth(1920)
-      .setHeight(1080)
-      .setCrop('at_max');
-
-    return kit.buildUrl();
-  }
-
-  static buildFixedWidthUrl(imageUrl, width, height) {
-    const kit = ImageKitService.from(imageUrl)
-      .setWidth(width)
-      .setHeight(height)
-      .setCrop('at_max');
-
-    return kit.buildUrl();
-  }
-
-  // setAsCard() {
-  //   this.setParam('n', 'n-ml_card');
-  //   return this;
-  // }
-  //
-  // setAsThumbnail() {
-  //   this.setParam('n', 'n-avatar');
-  //   return this;
-  // }
-
-  setWidth(value) {
-    this.setParam('w', value);
-    return this;
-  }
-
-  setHeight(value) {
-    this.setParam('h', value);
-    return this;
-  }
-
-  setBlur(value) {
-    this.setParam('bl', value);
-    return this;
-  }
-
-  setQuality(value) {
-    this.setParam('q', value);
-    return this;
-  }
-
-  setCrop(value) {
-    this.setParam('c', value);
-    return this;
-  }
-
-  setNamed(value) {
-    this.setParam('n', value);
-    return this;
-  }
-
-  setParam(key, value) {
-    this.trValues[key] = value;
-    return this;
-  }
-
-  buildUrl() {
-    if (isLocalEnv() && this.imageUrl?.startsWith('/')) return this.imageUrl;
-    if(!this.imageUrl || this.imageUrl.startsWith('data')) return this.imageUrl;
-
-    const cdn = appConfig('urls.cdn');
-    const url = new URL(this.imageUrl, !this.imageUrl.includes(cdn) ? cdn : undefined);
-    if(!url.searchParams){
-      url.searchParams = new URLSearchParams();
-    }
-
-    if (Object.entries(this.trValues).length > 0) {
-      const mapped = Object.entries(this.trValues).map(([k,v]) => `${k}-${v}`);
-      url.searchParams.set('tr', mapped.join());
-    }
-
-    return url.toString();
-  }
-}
+import ImageService from "@src/core/services/image";
 
 /**
  * Build a hosted image URL from our CDN
@@ -160,9 +19,9 @@ export const hostedImage = (imgPath, useThumbnail = false) => {
   const imageUrl = new URL(imgPath, cdn);
 
   if (useThumbnail) {
-    return ImageKitService.buildAvatarUrl(imageUrl.toString());
+    return ImageService.instance.provider.avatar(imageUrl.toString());
   }
-  return ImageKitService.from(imageUrl.toString()).buildUrl();
+  return ImageService.instance.provider.convert(imageUrl.toString());
 }
 /**
  * Build a hosted image URL from our CDN that is fit for the NFT cards
@@ -173,7 +32,7 @@ export const hostedImage = (imgPath, useThumbnail = false) => {
  */
 export const nftCardUrl = (nftAddress, nftImage) => {
   if (!nftImage || nftImage.startsWith('data')) return nftImage;
-  return ImageKitService.buildNftCardUrl(specialImageTransform(nftAddress, nftImage));
+  return ImageService.withProvider('bunny').provider.nftCard(specialImageTransform(nftAddress, nftImage));
 }
 
 export const convertGateway = (imageUrl) => {

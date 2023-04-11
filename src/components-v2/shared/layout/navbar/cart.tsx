@@ -23,7 +23,6 @@ import {
 } from "@chakra-ui/react";
 import NextApiService from "@src/core/services/api-service/next";
 import {acknowledgePrompt, clearCart, removeFromCart, syncCartStorage} from "@src/GlobalState/cartSlice";
-import {ImageKitService} from "@src/helpers/image";
 import {commify} from "ethers/lib/utils";
 import {Contract, ethers} from "ethers";
 import {toast} from "react-toastify";
@@ -40,6 +39,7 @@ import Market from "@src/Contracts/Marketplace.json";
 import {appConfig} from "@src/Config";
 import {useAppSelector} from "@src/Store/hooks";
 import {AnchorProps} from "react-bootstrap";
+import ImageService from "@src/core/services/image";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -252,7 +252,7 @@ const Cart = function () {
                       >
                         {isBundle(nft.address) ? (
                           <AnyMedia
-                            image={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')}
+                            image={ImageService.instance.provider.avatar('/img/logos/bundle.webp')}
                             video={null}
                             title={nft.name}
                             usePlaceholder={false}
@@ -260,7 +260,7 @@ const Cart = function () {
                           />
                         ) : (
                           <AnyMedia
-                            image={ImageKitService.buildFixedWidthUrl(nft.image, 100, 100)}
+                            image={ImageService.instance.provider.fixedWidth(nft.image, 100, 100)}
                             video={null}
                             title={nft.name}
                             usePlaceholder={false}

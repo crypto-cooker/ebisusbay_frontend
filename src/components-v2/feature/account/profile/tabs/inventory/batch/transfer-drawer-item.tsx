@@ -26,7 +26,6 @@ import {Contract} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
-import {ImageKitService} from "@src/helpers/image";
 import Link from "next/link";
 import {Button as ChakraButton} from "@chakra-ui/button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -35,6 +34,7 @@ import {appConfig} from "@src/Config";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
 import {specialImageTransform} from "@src/hacks";
 import {useAppSelector} from "@src/Store/hooks";
+import ImageService from "@src/core/services/image";
 
 const config = appConfig();
 
@@ -118,13 +118,13 @@ const TransferDrawerItem = ({ item, onAddCollection }: TransferDrawerItemProps) 
         >
           {isBundle(item.nft.nftAddress) ? (
             <Image
-              src={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')}
+              src={ImageService.instance.provider.avatar('/img/logos/bundle.webp')}
               alt={item.nft.name}
               rounded="md"
             />
           ) : (
             <AnyMedia
-              image={specialImageTransform(item.nft.nftAddress, ImageKitService.buildAvatarUrl(item.nft.image))}
+              image={specialImageTransform(item.nft.nftAddress, ImageService.instance.provider.avatar(item.nft.image))}
               video={null}
               title={item.nft.name}
               usePlaceholder={true}

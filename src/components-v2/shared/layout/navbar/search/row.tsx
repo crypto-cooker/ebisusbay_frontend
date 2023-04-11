@@ -1,10 +1,10 @@
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import React, {useCallback} from "react";
 import {Box, CloseButton, Flex, Image, Text, VStack} from "@chakra-ui/react";
-import {ImageKitService} from "@src/helpers/image";
 import {commify} from "ethers/lib/utils";
 import {pluralize, round} from "@src/utils";
 import NextImage from "next/image";
+import ImageService from "@src/core/services/image";
 
 type ResultCollectionProps = {
   collection: any;
@@ -45,7 +45,7 @@ const ResultCollection = ({collection, floorPrice, onClick, onRemove, useCloseBu
         >
           {collection.metadata && (
             <Image
-              src={ImageKitService.buildAvatarUrl(collection.metadata.avatar)}
+              src={ImageService.instance.provider.avatar(collection.metadata.avatar)}
               alt={collection.name}
               rounded="md"
             />

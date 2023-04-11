@@ -3,11 +3,11 @@ import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Box, Container, Heading} from "@chakra-ui/react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import {ImageKitService} from "@src/helpers/image";
 import Reveal from "react-awesome-reveal";
 import styled from "styled-components";
 import {keyframes} from "@emotion/react";
 import CuratedAuctionCollection from "@src/Components/Auctions/Curated/CuratedAuctionCollection";
+import ImageService from "@src/core/services/image";
 
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 const HeroSection = styled.section`
@@ -62,7 +62,7 @@ const CronosMutantApesAuction = () => {
       <HeroSection
         className={`jumbotron tint`}
         style={{
-          backgroundImage: `url(${ImageKitService.buildBannerUrl(background)})`
+          backgroundImage: `url(${ImageService.instance.provider.banner(background)})`
         }}
       >
         <Container maxW='2560px' mx="1.75em" my={2}>

@@ -28,7 +28,7 @@ import Image from "next/image";
 import {commify} from "ethers/lib/utils";
 import {getAllCollectionOffers} from "@src/core/subgraph";
 import {getCollectionMetadata} from "@src/core/api";
-import {ImageKitService} from "@src/helpers/image";
+import ImageService from "@src/core/services/image";
 
 const config = appConfig();
 const floorThreshold = 5;
@@ -413,7 +413,7 @@ const NftPicker = ({collectionAddress, nfts, onSelect, initialNft}) => {
     <>
       {isBundle(chosenNft.nftAddress) ? (
         <ImageContainer className="mx-auto">
-          <img src={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')} alt={chosenNft.name} />
+          <img src={ImageService.instance.provider.avatar('/img/logos/bundle.webp')} alt={chosenNft.name} />
         </ImageContainer>
       ) : (
         <ImageContainer className="mx-auto">

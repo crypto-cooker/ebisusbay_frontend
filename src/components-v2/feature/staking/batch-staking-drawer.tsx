@@ -16,11 +16,8 @@ import {
   useColorModeValue,
   VStack
 } from "@chakra-ui/react";
-import Button from "@src/Components/components/Button";
-import {Spinner} from "react-bootstrap";
 import React, {useCallback, useEffect, useState} from "react";
 import {AnyMedia} from "@src/Components/components/AnyMedia";
-import {ImageKitService} from "@src/helpers/image";
 import Link from "next/link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
@@ -42,6 +39,7 @@ import {collectionRoyaltyPercent} from "@src/core/chain";
 import {parseUnits} from "ethers/lib/utils";
 import {useAppSelector} from "@src/Store/hooks";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
+import ImageService from "@src/core/services/image";
 
 const config = appConfig();
 
@@ -250,7 +248,7 @@ const BatchStakingDrawerItem = ({item, disabled}: BatchStakingDrawerItemProps) =
           style={{borderRadius: '20px'}}
         >
           <AnyMedia
-            image={ImageKitService.buildAvatarUrl(item.nft.image)}
+            image={ImageService.instance.provider.avatar(item.nft.image)}
             video={null}
             title={item.nft.name}
             usePlaceholder={false}

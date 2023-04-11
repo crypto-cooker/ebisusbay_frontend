@@ -12,7 +12,6 @@ import {CollectionSortOption} from '@src/Components/Models/collection-sort-optio
 import CollectionInfoBar from '@src/Components/components/CollectionInfoBar';
 import SalesCollection from '@src/Components/components/SalesCollection';
 import CollectionNftsGroup from '@src/Components/components/CollectionNftsGroup';
-import {ImageKitService} from "@src/helpers/image";
 import {CollectionFilters} from "@src/Components/Models/collection-filters.model";
 import {Spinner} from "react-bootstrap";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
@@ -23,6 +22,7 @@ import MintingButton from "@src/Components/Collection/MintingButton";
 import {useAppSelector} from "@src/Store/hooks";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import useGetStakingPlatform from "@src/hooks/useGetStakingPlatform";
+import ImageService from "@src/core/services/image";
 
 
 const tabs = {
@@ -126,7 +126,7 @@ const Collection1155 = ({ collection, tokenId, query, activeDrop = null }: Colle
         id="profile_banner"
         className="jumbotron breadcumb no-bg"
         style={{
-          backgroundImage: `url(${ImageKitService.buildBannerUrl(collection.metadata?.banner ?? '')})`,
+          backgroundImage: `url(${ImageService.instance.provider.banner(collection.metadata?.banner ?? '')})`,
           backgroundPosition: '50% 50%',
         }}
       >

@@ -21,7 +21,7 @@ import {
   stripSpaces
 } from "@src/utils";
 import * as Sentry from '@sentry/react';
-import {hostedImage, ImageKitService} from "@src/helpers/image";
+import {hostedImage} from "@src/helpers/image";
 import Blockies from "react-blockies";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
 import DotIcon from "@src/Components/components/DotIcon";
@@ -45,6 +45,7 @@ import {
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
 import useBuyGaslessListings from "@src/hooks/useBuyGaslessListings";
+import ImageService from "@src/core/services/image";
 
 const numberRegexValidation = /[^0-9]/g;
 const sweepType = {
@@ -687,7 +688,7 @@ const Results = ({listings, cost, isMobile}) => {
                   <div className="text-center" style={{fontSize:'14px'}}>#{shortString(listing.nftId, 3, 3)}</div>
                   {isBundle(listing.nft.address ?? listing.nft.nftAddress) ? (
                     <AnyMedia
-                      image={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')}
+                      image={ImageService.instance.provider.avatar('/img/logos/bundle.webp')}
                       title={listing.nft.name}
                       usePlaceholder={false}
                       className="img-fluid img-rounded swiper-lazy"

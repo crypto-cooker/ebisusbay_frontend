@@ -42,7 +42,6 @@ import {
 
 import {getThemeInStorage, setThemeInStorage} from '@src/helpers/storage';
 import {appConfig} from '@src/Config';
-import {ImageKitService} from "@src/helpers/image";
 import classnames from "classnames";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import Button from "@src/Components/components/Button";
@@ -64,6 +63,7 @@ import {useQuery} from "@tanstack/react-query";
 import CronosIcon from "@src/components-v2/shared/icons/cronos";
 import {useAppSelector} from "@src/Store/hooks";
 import GdcClaimConfirmation from "@src/components-v2/shared/dialogs/gdc-claim-confirmation";
+import ImageService from "@src/core/services/image";
 
 const StyledModal = styled(Modal)`
   .modal-content {
@@ -302,7 +302,7 @@ const Index = function () {
       {walletAddress && correctChain && (
         <Box className="de-menu-profile" onClick={() => setShowMenu(!showMenu)}>
           {user.profile.profilePicture ? (
-            <img src={ImageKitService.buildAvatarUrl(user.profile.profilePicture)} alt={user.profile.username} />
+            <img src={ImageService.instance.provider.avatar(user.profile.profilePicture)} alt={user.profile.username} />
           ) : (
             <Blockies seed={user.address} size={9} scale={4} />
           )}
@@ -344,7 +344,7 @@ const Index = function () {
               <div className="d-flex align-items-center">
                 <span className={classnames('me-2', styles.avatar)}>
                   {user.profile.profilePicture ? (
-                    <img src={ImageKitService.buildAvatarUrl(user.profile.profilePicture)} alt={user.profile.username} />
+                    <img src={ImageService.instance.provider.avatar(user.profile.profilePicture)} alt={user.profile.username} />
                   ) : (
                     <Blockies seed={user.address} size={9} scale={4}/>
                   )}

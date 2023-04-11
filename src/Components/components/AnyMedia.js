@@ -2,8 +2,8 @@ import React, {memo, useEffect, useState} from 'react';
 import ReactPlayer from 'react-player/lazy';
 import Link from 'next/link';
 import {CdnImage} from './CdnImage';
-import {ImageKitService} from '@src/helpers/image';
 import {fallbackImageUrl} from "@src/core/constants";
+import ImageService from '@src/core/services/image';
 
 export const AnyMedia = ({
   image,
@@ -24,11 +24,11 @@ export const AnyMedia = ({
   const [videoThumbnail, setVideoThumbNail] = useState(image);
 
   const blurImageUrl = (img) => {
-    return ImageKitService.buildBlurUrl(img, { width: 30, height: 30 });
+    return ImageService.instance.provider.blurred(img);
   };
 
   const makeThumb = (vid) => {
-    return ImageKitService.thumbify(new URL(vid));
+    return ImageService.instance.provider.thumbnail(vid);
   };
 
   const mediaTypes = {
@@ -61,7 +61,7 @@ export const AnyMedia = ({
       const imageURL = new URL(image);
       //prefer mp4 over gif
       if (imageURL.pathname && imageURL.pathname.endsWith('.gif')) {
-        setTransformedImage(ImageKitService.gifToMp4(imageURL).toString());
+        setTransformedImage(ImageService.instance.provider.gifToMp4(imageURL.toString()).toString());
         setVideoThumbNail(null);
         setDynamicType(mediaTypes.video);
       } else if (imageURL.pathname && imageURL.pathname.endsWith('.html')) {
@@ -79,12 +79,12 @@ export const AnyMedia = ({
           if (type === mediaTypes.video) {
             let target = transformedImage;
             if (!hasFileExtension(transformedImage)) {
-              target = ImageKitService.appendMp4Extension(target);
+              target = ImageService.instance.provider.appendMp4Extension(target);
             }
             setVideoThumbNail(makeThumb(target));
           }
           if (format === 'gif') {
-            setTransformedImage(ImageKitService.gifToMp4(imageURL).toString());
+            setTransformedImage(ImageService.instance.provider.gifToMp4(imageURL));
             setVideoThumbNail(null);
             setDynamicType(mediaTypes.video);
           } else {
