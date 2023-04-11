@@ -80,9 +80,6 @@ class BunnyBuilder {
   constructor(url: string) {
     this.url = url;
     this.params = new URLSearchParams();
-    // this.url = new URL(
-    //   url.replace('cdn.ebisusbay', 'cdn2.ebisusbay')
-    // );
   }
 
   static from(url: string) {
@@ -105,14 +102,14 @@ class BunnyBuilder {
   }
 
   build() {
-
     if (isLocalEnv() && this.url?.startsWith('/')) return this.url;
     if(!this.url || this.url.startsWith('data')) return this.url;
 
-    const cdn = appConfig('urls.cdn');
-    const cdn2 = 'https://cdn2.ebisusbay.com/';
-    this.url = this.url.replace(cdn, cdn2);
-    const url = new URL(`${this.url}?${this.params}`, !this.url.includes(cdn) && !this.url.includes(cdn2) ? cdn2 : undefined);
+    const oldCdns = ['https://cdn.ebisusbay.com/', 'https://cdn.ebisusbay.biz/', 'https://cdn.ebisusbay.biz/test/'];
+    const newCdn = 'https://cdn2.ebisusbay.com/';
+    const isCdnUrl = oldCdns.some(cdn => this.url.includes(cdn));
+    this.url = oldCdns.reduce((p, n) => p.replace(n, newCdn), this.url);
+    const url = new URL(`${this.url}?${this.params}`, !isCdnUrl ? newCdn : undefined);
 
     return url.toString();
   }
