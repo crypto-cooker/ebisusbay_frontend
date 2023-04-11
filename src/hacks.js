@@ -34,9 +34,9 @@ export function specialImageTransform(address, defaultImage) {
 
   const filteredDomains = imageDomains.filter((domain) => defaultImage.includes(domain));
   if (filteredDomains.length) {
-    return ImageService.withProvider('bunny').provider.convert(defaultImage);
+    return ImageService.dynamic(defaultImage);
   }
 
-  return ImageService.withProvider('bunny').provider.convert(defaultImage);
+  return ImageService.dynamic(defaultImage);
 }
 

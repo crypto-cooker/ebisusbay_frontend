@@ -35,6 +35,18 @@ class ImageService {
     }
     return service;
   }
+
+  static dynamic(url: string) {
+    if (url.includes('/proxy/')) {
+      return new ImageKitProvider().convert(url);
+    }
+
+    const oldCdns = ['https://cdn.ebisusbay.com/', 'https://cdn.ebisusbay.biz/', 'https://cdn.ebisusbay.biz/test/'];
+    const newCdn = 'https://cdn2.ebisusbay.com/';
+    url = oldCdns.reduce((p, n) => p.replace(n, newCdn), url);
+
+    return new BunnyCdnProvider().convert(url);
+  }
 }
 
 const instance = new ImageService();
