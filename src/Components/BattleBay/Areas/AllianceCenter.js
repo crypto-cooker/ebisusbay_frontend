@@ -24,6 +24,9 @@ import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 
+import { useFormik } from 'formik';
+import Pfp from './FactionIconUpload';
+
 const AllianceCenter = ({onBack}) => {
 
   const user = useSelector((state) => state.user);
@@ -53,6 +56,12 @@ const AllianceCenter = ({onBack}) => {
     setGameId(getSeasonGameId());
     GetFactions();
   }
+  const formikProps = useFormik({
+    onSubmit,
+    // validationSchema: userInfoValidation,
+    // initialValues: getInitialValues(),
+    enableReinitialize: true,
+  });
   //return wheter the faction exists in the registered factions array
   const isRegistered = (factionId) => {
     for (let i = 0; i < registeredFactions.length; i++) {
@@ -83,12 +92,38 @@ const AllianceCenter = ({onBack}) => {
         } catch (error) {
           console.log(error)
         }
-      }
-
-        
-      }
+      } 
     }
+  }
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    setFieldValue,
+    setFieldTouched,
+    handleBlur,
+    handleSubmit,
+    validateForm,
+  } = formikProps;
+  const onSubmit = async (values) => {
+    try {
 
+      const response = settings?.data?.walletAddress
+        ? await requestUpdateSettings(user.address, values)
+        : await requestNewSettings(user.address, values);
+      if (!response || response?.message?.error) {
+        toast.error('Something went wrong!');
+      } else {
+        toast.success('Your profile was saved successfully');
+        updateProfileSettings();
+      }
+
+    } catch (error) {
+      console.log(error);
+      toast.error('Error');
+    }
+  };
   useEffect(() => {
     setGameId(getSeasonGameId());
     GetFactions();
@@ -124,6 +159,17 @@ const AllianceCenter = ({onBack}) => {
     if(registeredFactions.length > 0) {
       setFactionDisplay(playerFactions.map((faction, index) => (
         <Tr key={index}>
+          <Td textAlign='center'>
+            <form id="userSettings" autoComplete="off" onSubmit={handleSubmit} className="user-settings-form">
+            <Pfp values={values}
+              errors={errors}
+              touched={touched}
+              handleChange={handleChange}
+              setFieldValue={setFieldValue}
+              setFieldTouched={setFieldTouched}
+              handleBlur={handleBlur}
+            /></form>
+          </Td>
           <Td textAlign='center'>{faction.name}</Td>
           <Td textAlign='center'>
             <Button colorScheme={GetRegistrationColor(isRegistered(faction.id))}
@@ -131,8 +177,6 @@ const AllianceCenter = ({onBack}) => {
             </Button>
           </Td>
           <Td textAlign='center'>{faction.type}</Td>
-          {/* <Td textAlign='center'>{faction.troops}</Td> */}
-          {/* <Td textAlign='center'>{faction.addresses}</Td> */}
           <Td textAlign='center'>
             <Button colorScheme='blue' onClick={() => {selectFaction(faction)}}>Edit</Button>
           </Td>
@@ -163,6 +207,7 @@ const AllianceCenter = ({onBack}) => {
         <Table variant='simple'>
           <Thead>
             <Tr>
+              <Th textAlign='center'></Th>
               <Th textAlign='center'>Faction Name</Th>
               <Th textAlign='center'>Registered this Season</Th>
               <Th textAlign='center'>Faction Type</Th>

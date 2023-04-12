@@ -4,40 +4,35 @@ import {
   Heading,
   useDisclosure,
   Flex,
-  Box,
   Button,
   Table,
-  TableContainer,
   Thead,
   Tbody,
   Tr,
   Th,
-  Td,
   Image,
-  Grid,
-  GridItem,
   Tabs,
   TabList,
   TabPanels,
   Tab,
   TabPanel,
   VStack,
-  StackDivider,
   Spacer,
-
 } from '@chakra-ui/react';
 import DelegateForm from './DelegateForm';
 import { getProfileTroops, getAllFactions, addTroops } from "@src/core/api/RyoshiDynastiesAPICalls";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
+import {getProfile} from "@src/core/cms/endpoints/profile";
+import {hostedImage, ImageKitService} from "@src/helpers/image";
 
 const UserPage = ({onBack}) => {
 
   const [factions, setFactions] = useState([]);
   const [isLoading, getSigner] = useCreateSigner();
-  
   const [troops, setTotalTroops] = useState(0);
   const user = useSelector((state) => state.user);
+  const {address, theme, profile} = useSelector((state) => state.user);
 
   const SetUp = async () => {
     let signatureInStorage = getAuthSignerInStorage()?.signature;
@@ -47,6 +42,8 @@ const UserPage = ({onBack}) => {
     }
     if (signatureInStorage) {
       try {
+        let profile = await getProfile(user.address.toLowerCase());
+
         const factionResponse = await getAllFactions();
         setFactions(factionResponse);
         const tr = await getProfileTroops(user.address.toLowerCase(), signatureInStorage);
@@ -72,6 +69,10 @@ const UserPage = ({onBack}) => {
     }
   }
 
+  const profilePicture = profile.profilePicture ?
+    ImageKitService.from(profile.profilePicture).setWidth(200).setHeight(200).buildUrl() :
+    hostedImage('/img/profile-avatar.webp');
+
   const { isOpen, onOpen: onOpenDelegate, onClose } = useDisclosure();
   const [delegateMode, setDelegateMode] = useState("delegate");
 
@@ -96,12 +97,11 @@ const UserPage = ({onBack}) => {
           align={'center'}
           objectFit='cover'
           boxSize='150px'
-          src='img/battle-bay/profile-avatar.png'
+          src={profilePicture}
         />
       </Flex>
 
-      <Heading marginTop={6} marginBottom={6} textAlign={'center'}>{user.address}</Heading>
-      <Tabs marginTop={18}>
+      <Tabs>
         <TabList>
           {/* <Tab>Troops</Tab> */}
           <Tab>Troops</Tab>
