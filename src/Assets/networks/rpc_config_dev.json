@@ -19639,7 +19639,7 @@
       "name": "0xLuckless v2.2",
       "slug": "0xluckless-v2-2",
       "multiToken": false,
-      "address": "",
+      "address": "0x5141E99523002317BE6D63214Bf300cBD8269bE6",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -26285,7 +26285,7 @@
         "twitter": "https://twitter.com/0xLuckless",
         "discord": "https://discord.gg/qPFZhAdGRq"
       },
-      "address": "",
+      "address": "0x5141E99523002317BE6D63214Bf300cBD8269bE6",
       "maxMintPerTx": 5,
       "maxMintPerAddress": 10,
       "totalSupply": 200,

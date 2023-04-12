@@ -2,7 +2,6 @@ import {ImageResponse, NextRequest} from "next/server";
 import {caseInsensitiveCompare, isAddress, siPrefixedNumber} from "@src/utils";
 import {appConfig} from "@src/Config";
 import {hostedImage, ImageKitService} from "@src/helpers/image";
-import {NextApiResponse} from "next";
 import imageSize from "image-size";
 
 
@@ -18,11 +17,13 @@ const boldFont = fetch(
   new URL('/public/fonts/dm-sans/DMSans-Bold.ttf', import.meta.url)
 ).then((res) => res.arrayBuffer());
 
-const cronosIcon = fetch(
-  new URL('/public/img/logos/cronos_white.png', import.meta.url))
-.then((res) => res.arrayBuffer());
+// const cronosIcon = fetch(
+//   new URL('/public/img/logos/cronos_white.png', import.meta.url))
+// .then((res) => res.arrayBuffer());
 
 const defaultBanner = `${appConfig('urls').app}img/background/banner-ryoshi-light.webp`;
+
+const collections = appConfig('collections');
 
 const getBanner = (collection: any) => {
   let banner = defaultBanner;
@@ -34,19 +35,19 @@ const getBanner = (collection: any) => {
   return banner;
 }
 
-export default async function handler(req: NextRequest, res: NextApiResponse) {
+export default async function handler(req: NextRequest) {
   const slug = req.nextUrl.pathname.split('/')[3];
   const [regularFontData, boldFontData] = await Promise.all([
     regularFont,
     boldFont
   ]);
-  const cronosIconData = await cronosIcon;
+  // const cronosIconData = await cronosIcon;
 
   let collection;
   if (isAddress(slug)) {
-    collection = appConfig('collections').find((c: any) => caseInsensitiveCompare(c.address, slug));
+    collection = collections.find((c: any) => caseInsensitiveCompare(c.address, slug));
   } else {
-    collection = appConfig('collections').find((c: any) => caseInsensitiveCompare(c.slug, slug));
+    collection = collections.find((c: any) => caseInsensitiveCompare(c.slug, slug));
   }
 
   if (!collection) {
@@ -55,7 +56,6 @@ export default async function handler(req: NextRequest, res: NextApiResponse) {
     }
   }
 
-  console.log('banner', getBanner(collection));
   try {
     const data = await fetch(
       `${appConfig('urls').api}collectioninfo?address=${collection.address}`,
@@ -95,6 +95,7 @@ export default async function handler(req: NextRequest, res: NextApiResponse) {
             }}
           >
             <img
+              alt={collection.name}
               src={ImageKitService.buildAvatarUrl(collection.metadata.avatar)}
               width='50px'
               height='50px'
@@ -129,7 +130,7 @@ export default async function handler(req: NextRequest, res: NextApiResponse) {
                   marginLeft: 12
                 }}
               >
-                <div style={{fontWeight:'bold', fontSize: 20}}>{collectionData.holders ?? '-'}</div>
+                <div style={{fontWeight:'bold', fontSize: 20}}>{!!collectionData.holders && collection.slug !== 'ryoshi-tales-vip' ? siPrefixedNumber(collectionData.holders) : '-'}</div>
                 <div style={{fontWeight:'bold', fontSize: 16, color:'#DDDDDDCC'}}>Owners</div>
               </div>
               <div
@@ -185,6 +186,7 @@ export default async function handler(req: NextRequest, res: NextApiResponse) {
     return new ImageResponse(
       (
         <img
+          alt={collection.name}
           src={getBanner(collection)}
           width='100%'
           height='100%'
