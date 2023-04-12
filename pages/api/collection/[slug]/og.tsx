@@ -7,17 +7,14 @@ export const config = {
   runtime: 'edge',
 }
 
-// @ts-ignore
 const regularFont = fetch(
   new URL('/public/fonts/dm-sans/DMSans-Regular.ttf', import.meta.url)
 ).then((res) => res.arrayBuffer());
 
-// @ts-ignore
 const boldFont = fetch(
   new URL('/public/fonts/dm-sans/DMSans-Bold.ttf', import.meta.url)
 ).then((res) => res.arrayBuffer());
 
-// @ts-ignore
 const cronosIcon = fetch(
   new URL('/public/img/logos/cronos_white.png', import.meta.url))
 .then((res) => res.arrayBuffer());
