@@ -1,6 +1,7 @@
 import {ImageResponse, NextRequest} from "next/server";
 import {caseInsensitiveCompare, isAddress, siPrefixedNumber} from "@src/utils";
 import {appConfig} from "@src/Config";
+import {hostedImage, ImageKitService} from "@src/helpers/image";
 
 
 export const config = {
@@ -75,7 +76,7 @@ export default async function handler(req: NextRequest) {
           }}
         >
           <img
-            src={`https://cdn.ebisusbay.com${collection.metadata.avatar}`}
+            src={ImageKitService.buildAvatarUrl(collection.metadata.avatar)}
             width='50px'
             height='50px'
             style={{
