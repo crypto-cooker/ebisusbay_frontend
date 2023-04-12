@@ -1,5 +1,5 @@
 import React, {useEffect, useState } from 'react';
-import { resizeMap } from './mapFunctions.js'
+import { resizeNewMap } from './mapFunctions.js'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles from './BattleBay.module.scss';
 import {
@@ -11,28 +11,34 @@ import {
 
 const DefaultArea = ({onChange}) => {
 
-  const [tempWidth, setTempWidth] = useState(1);
-  const [tempHeight, setTempHeight] = useState(1);
-  const [subDistanceX, setSubDistanceX] = useState(0);
-  const [subDistanceY, setSubDistanceY] = useState(0);
+  // const [tempWidth, setTempWidth] = useState(1);
+  // const [tempHeight, setTempHeight] = useState(1);
+  // const [subDistanceX, setSubDistanceX] = useState(0);
+  // const [subDistanceY, setSubDistanceY] = useState(0);
+  // const [tavernGif, setTavernGif] = useState();
 
   const [zoomState, setZoomState] = useState({
     offsetX: 0,
     offsetY: 0,
     scale: 1,
   });
+  
   useEffect(() => {
-    // Update the document title using the browser API
-    // document.title = `Page has loaded`;
-    // setUpLeaderboard();
-    resizeMap();
-  });
+    // resizeNewMap();
+    console.log("DefaultArea useEffect");
+    console.log("zoomState: " + zoomState.scale)
+    // setTavernGif(<div style={{position:"absolute", marginTop: '5%', marginLeft: '10%', zIndex:"9", pointerEvents:"none"}}>
+    //              <img src='/img/battle-bay/tavern_gif.gif' width={200} height={200} />
+    //              </div>)
+  }, []);
+
   const changeCanvasState = (ReactZoomPanPinchRef, event) => {
     setZoomState({
       offsetX: ReactZoomPanPinchRef.state.positionX,
       offsetY: ReactZoomPanPinchRef.state.positionY,
       scale: ReactZoomPanPinchRef.state.scale,
     });
+    // console.log("scale: " + ReactZoomPanPinchRef.state.scale)
   };
 
   return (
@@ -48,7 +54,8 @@ const DefaultArea = ({onChange}) => {
         </Box>
       </Flex>
 
-      <TransformWrapper
+      <TransformWrapper scale={0.5} positionX={200} positionY={100}
+        limitToBounds={true}
         onZoom={changeCanvasState}
         onPinching={changeCanvasState}
         onPinchingStop={changeCanvasState}
@@ -56,20 +63,10 @@ const DefaultArea = ({onChange}) => {
         >
         <TransformComponent>
 
-        <div className="mapDiv">
-        {/* <img src="/img/battle-bay/fancyMenu2.png" useMap="#image-map" width="100%" className={`${styles.mapImageArea}`} id="fancyMenu"/>
-            <map name="image-map" width="100%" height="100%" className={`${styles.mapImageArea}`} >
-            <area onClick={() => onChange('bank')} alt="bank" title="bank" coords="396,763,237,839" shape="rect"/>
-            <area onClick={() => onChange('barracks')} alt="barracks" title="barracks" coords="705,770,940,871" shape="rect"/>
-            <area onClick={() => onChange('battleMap')} alt="tradeport" title="tradeport" coords="1365,807,1638,912" shape="rect" />
-            <area onClick={() => onChange('announcementBoard')} alt="announcementBoard" title="announcementBoard" coords="742,675,1197,578" shape="rect"/>
-            <area onClick={() => onChange('townHall')} alt="townHall" title="townHall" coords="293,441,588,549" shape="rect"/>
-            <area onClick={() => onChange('fishMarket')} alt="fishMarket" title="fishMarket" coords="1312,400,1570,502" shape="rect"/>
-            <area onClick={() => onChange('tavern')} alt="tavern" title="tavern" coords="113,159,298,253" shape="rect"/>
-            <area onClick={() => onChange('academy')} alt="academy" title="academy" coords="1331,122,1570,215" shape="rect"/>
-            <area onClick={() => onChange('allianceCenter')} alt="allianceCenter" title="allianceCenter" coords="611,175,957,261" shape="rect"/>
-          </map> */}
-          <img src="/img/battle-bay/newMap.png" useMap="#image-map" width="100%" className={`${styles.mapImageArea}`} id="fancyMenu"/>
+        <div className={[styles.background, "mapDiv"].join(' ')} id="fancyMenu">
+        {/* {tavernGif} */}
+
+          {/* <img src="/img/battle-bay/newMap.png" useMap="#image-map" width="100%" className={`${styles.mapImageArea}`} id="fancyMenu"/>
           <map name="image-map">
               <area onClick={() => onChange('barracks')} alt="Barracks" title="Barracks" coords="194,622,568,968" shape="rect"/>
               <area onClick={() => onChange('townHall')} alt="Town Hall" title="Town Hall" coords="793,434,1259,861" shape="rect"/>
@@ -79,14 +76,39 @@ const DefaultArea = ({onChange}) => {
               <area onClick={() => onChange('academy')} alt="Academy" title="Academy" coords="2118,246,2523,565" shape="rect"/>
               <area onClick={() => onChange('battleMap')} alt="Fish Market" title="Fish Market" coords="1971,974,2487,1361" shape="rect"/>
               <area onClick={() => onChange('announcementBoard')} alt="Announcement Board" title="Announcement Board" coords="1813,494,2073,798" shape="rect"/>
-          </map>
+          </map> */}
+
+          <div className={styles.pond} ></div>	
+          <div className={styles.flowers1}></div>
+          <div className={[styles.bank, styles.enlarge].join(' ')} onClick={() => onChange('bank')}/>
+          <div className={[styles.tavern, styles.enlarge].join(' ')}>
+            <img className={styles.image1} src="/img/battle-bay/mapImages/tavern_turbine.png" />
+            <img className={styles.image2} src="/img/battle-bay/mapImages/tavern.png" onClick={() => onChange('tavern')}/>
+          </div>
+          <div className={[styles.academy, styles.enlarge].join(' ')} onClick={() => onChange('academy')}/>
+          <div className={[styles.townhall, styles.enlarge].join(' ')}/>
+          <div className={[styles.announcement, styles.enlarge].join(' ')}/>
+
+          <div className={styles.water}/>
+          <div className={[styles.fishmarket, styles.enlarge].join(' ')}/>
+          <div className={[styles.boat, styles.enlarge].join(' ')}  onClick={() => onChange('battleMap')}/>
+          <div className={styles.flowers2}></div>
+
+          <div className={[styles.allianceCenter, styles.enlarge].join(' ')} onClick={() => onChange('allianceCenter')}/>
+          <div className={[styles.barracks, styles.enlarge].join(' ')} onClick={() => onChange('barracks')}>
+            <div className={[styles.swordsmen, styles.enlarge].join(' ')} onClick={() => onChange('barracks')}/>
+          </div>
+          <div className={[styles.ebisustatue, styles.enlarge].join(' ')}/>
+          <div className={[styles.moongate, styles.enlarge].join(' ')}/>
+          <div className={styles.torii}/>
+          <div className={styles.flowers3}></div>
         </div>
+        {/* </Flex> */}
 
         </TransformComponent>
       </TransformWrapper>
 
       </div>
-      
     </section>
   )
 };

@@ -212,3 +212,187 @@ opacity:0;
   text-shadow: 3px 3px 3px #000;
 }
 
+
+// body{
+// 	margin: auto;
+//     cursor: grab;
+// 	//overflow: hidden;
+// }
+.background{
+	height: 1620px;
+	width: 2880px;
+  overflow: hidden;
+  object-fit: contain;
+	background-image: url("/img/battle-bay/mapImages/background.png");
+}
+.tavern{
+  position: absolute;
+  top: 0;
+  left: 0;
+	height: 573px;
+	width: 725px;	
+  transition: all .2s ease-in-out; /* Animation */
+	z-index: 2;
+}
+.tavern{
+	position: absolute;
+	top: 100px;
+	left: 520px;
+}
+.enlarge:hover{
+  transform: scale(1.03); 
+}
+.image1 {
+  position: absolute;
+  z-index: 3;
+}
+.image2 {
+  position: absolute;
+  z-index: 2;
+}
+.academy{
+	position: absolute;
+	height: 792px;
+	width: 744px;
+	top: 110px;
+	left: 2136px;
+	background-image: url("/img/battle-bay/mapImages/academy.png");
+	transition: all .2s ease-in-out; /* Animation */
+}
+.townhall{
+	position: absolute;
+	height: 607px;
+	width: 707px;
+	top: 390px;
+	left: 1040px;
+	background-image: url("/img/battle-bay/mapImages/townhall.png");
+	transition: all .2s ease-in-out; /* Animation */
+}
+.announcement{
+	position: absolute;
+	height: 243px;
+	width: 206px;
+	top: 810px;
+	left: 1716px;
+	background-image: url("/img/battle-bay/mapImages/announcement.png");
+	transition: all .2s ease-in-out; /* Animation */
+}
+.bank{
+	position: absolute;
+	height: 456px;
+	width: 579px;
+	top: 33px;
+	left: 982px;
+	background-image: url("/img/battle-bay/mapImages/bank_day.png");
+	transition: all .2s ease-in-out; /* Animation */
+	z-index: 1;
+}
+.water{
+	position: absolute;
+	height: 703px;
+	width: 2880px;
+	top: 933px;
+	left: 0px;
+	background-image: url("/img/battle-bay/mapImages/water.png");
+}
+.fishmarket{
+	position: absolute;
+	height: 545px;
+	width: 793px;
+	top: 1050px;
+	left: 1602px;
+	background-image: url("/img/battle-bay/mapImages/fishmarket.png");
+	transition: all .2s ease-in-out; /* Animation */
+}
+.boat{
+	position: absolute;
+	height: 613px;
+	width: 718px;
+	top: 950px;
+	left: 102px;
+	background-image: url("/img/battle-bay/mapImages/boat.png");
+	transition: all .2s ease-in-out; /* Animation */
+}
+.flowers{
+	position: absolute;
+	height: 229px;
+	width: 251px;
+	background-image: url("/img/battle-bay/mapImages/flowers1.png");
+}
+.allianceCenter{
+	position: absolute;
+	height: 438px;
+	width: 554px;
+	top: 200px;
+	left: 1580px;
+	background-image: url("/img/battle-bay/mapImages/alliancecenter_day.png");
+	transition: all .2s ease-in-out; /* Animation */
+}
+.swordsmen{
+	position: absolute;
+	height: 270px;
+	width: 383px;
+	top: 280px;
+	left: 420px;
+	background-image: url("/img/battle-bay/mapImages/swordsmen.png");
+}
+.barracks{
+	position: absolute;
+	height: 579px;
+	width: 832px;
+	top: 400px;
+	left: 0px;
+	background-image: url("/img/battle-bay/mapImages/barracks.png");
+	transition: all .2s ease-in-out; /* Animation */
+}
+.ebisustatue{
+	position: absolute;
+	height: 542px;
+	width: 279px;
+	top: 1050px;
+	left: 1140px;
+	background-image: url("/img/battle-bay/mapImages/ebisustatue.png");
+}
+.moongate{
+	position: absolute;
+	height: 482px;
+	width: 443px;
+	top: 690px;
+	left: 2050px;
+	background-image: url("/img/battle-bay/mapImages/moongate.png");
+	transition: all .2s ease-in-out; /* Animation */
+}
+.pond{
+	position: absolute;
+	height: 311px;
+	width: 783px;
+	top: 20px;
+	left: 1840px;
+	background-image: url("/img/battle-bay/mapImages/pond1.png");
+}
+.torii{
+	position: absolute;
+	height: 201px;
+	width: 236px;
+	top: 232px;
+	left: 110px;
+	background-image: url("/img/battle-bay/mapImages/torii.png");
+}
+.flowers1{
+  position: absolute;
+  top: 76px;
+  left: 2220px;
+  background-image: url("/img/battle-bay/mapImages/flowers1.png");
+}
+.flowers2{
+  position: absolute;
+  top: 820px;
+  left: 1140px;
+  background-image: url("/img/battle-bay/mapImages/flowers1.png");
+}
+.flowers3{
+  position: absolute;
+  top: 700px;
+  left: 620px;
+  background-image: url("/img/battle-bay/mapImages/flowers1.png");
+}
