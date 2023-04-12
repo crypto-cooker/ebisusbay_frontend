@@ -1,7 +1,6 @@
 import rpcConfig from '../Assets/networks/rpc_config.json';
 import rpcConfigDev from '../Assets/networks/rpc_config_dev.json';
 import rpcConfigTestnet from '../Assets/networks/rpc_config_testnet.json';
-import _ from 'lodash';
 import Constants from '../constants';
 const { Features } = Constants;
 
@@ -255,7 +254,7 @@ export const appConfig = (key = '') => {
   if (!env) return configData[fallbackEnv];
 
   const config = isLocalEnv() ?
-    _.merge(configData[environments.production], configData[environments.local]) :
+    {...configData[environments.production], ...configData[environments.local]} :
     configData[env];
 
   if (!key) return config;
