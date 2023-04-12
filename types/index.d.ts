@@ -1,0 +1,1 @@
+declare module '@pinata/ipfs-gateway-tools/dist/node'
