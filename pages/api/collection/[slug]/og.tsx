@@ -80,7 +80,7 @@ export default async function handler(req: NextRequest) {
               position: 'absolute',
               width: '100%',
               height: '100%',
-              backgroundImage: `linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.85)), url(${getBanner(collection)})`,
+              backgroundImage: `linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.85) 90%), url(${getBanner(collection)})`,
               backgroundRepeat: 'no-repeat',
             }}
           >
@@ -177,7 +177,10 @@ export default async function handler(req: NextRequest) {
             data: boldFontData,
             weight: 700
           }
-        ]
+        ],
+        headers: {
+          'cache-control': 'max-age=180, stale-while-revalidate=300'
+        }
       }
     )
   } catch (e: any) {
@@ -194,7 +197,10 @@ export default async function handler(req: NextRequest) {
       ),
       {
         width: dimensions.width,
-        height: dimensions.height
+        height: dimensions.height,
+        headers: {
+          'cache-control': 'max-age=180, stale-while-revalidate=300'
+        }
       }
     )
   }
