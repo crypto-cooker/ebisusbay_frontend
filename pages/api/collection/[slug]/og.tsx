@@ -41,7 +41,10 @@ export default async function handler(req: NextRequest) {
     }
   }
 
-  const data = await fetch(`${appConfig('urls').api}collectioninfo?address=${collection.address}`);
+  const data = await fetch(
+    `${appConfig('urls').api}collectioninfo?address=${collection.address}`,
+    { next: { revalidate: 10 }}
+  );
   const collectionData = (await data.json()).collections[0];
 
   return new ImageResponse(
