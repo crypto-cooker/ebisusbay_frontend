@@ -1,4 +1,5 @@
 import {ImageResponse, NextRequest} from "next/server";
+import {caseInsensitiveCompare, isAddress, siPrefixedNumber} from "@src/utils";
 import {appConfig} from "@src/Config";
 
 
@@ -158,37 +159,4 @@ export default async function handler(req: NextRequest) {
       ]
     }
   )
-}
-
-function siPrefixedNumber(num: string | number, exclude = 5) {
-  if (!num) return 0;
-
-  const wholeNumbers = Math.round(Number(num)).toString().length;
-  const shouldPrefix = wholeNumbers > exclude;
-
-  // Twelve Zeroes for Trillions
-  return Math.abs(Number(num)) >= 1.0e12 && shouldPrefix
-    ? Number((Math.abs(Number(num)) / 1.0e12).toFixed(2)) + 'T'
-    : // Nine Zeroes for Billions
-    Math.abs(Number(num)) >= 1.0e9 && shouldPrefix
-      ? Number((Math.abs(Number(num)) / 1.0e9).toFixed(2)) + 'B'
-      : // Six Zeroes for Millions
-      Math.abs(Number(num)) >= 1.0e6 && shouldPrefix
-        ? Number((Math.abs(Number(num)) / 1.0e6).toFixed(2)) + 'M'
-        : // Three Zeroes for Thousands
-        Math.abs(Number(num)) >= 1.0e3 && shouldPrefix
-          ? Number((Math.abs(Number(num)) / 1.0e3).toFixed(2)) + 'K'
-          : commify(Number(Math.abs(Number(num))));
-}
-
-const isAddress = (address: string) => {
-  return /^(0x){1}[0-9a-fA-F]{40}$/i.test(address);
-};
-
-function caseInsensitiveCompare(str1: string, str2: string) {
-  return str1?.toLowerCase() === str2?.toLowerCase();
-}
-
-function commify(value: string | number): string {
-  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
