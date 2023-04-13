@@ -26,10 +26,19 @@ export class ImageKitService {
 
   static thumbify(url) {
     if(url.pathname.includes('.')){
-      //try to use imagekit thumbnail (check for period it doesn't work if no exension)
+      //try to use imagekit thumbnail (check for period it doesn't work if no extension)
       url.pathname += '/ik-thumbnail.jpg'
       return url.toString();
     }
+  }
+
+  static appendMp4Extension(url) {
+    if (typeof url === 'string') {
+      url = new URL(url);
+    }
+
+    url.pathname = `${url.pathname}/ik-video.mp4`;
+    return url.toString();
   }
 
   static gifToMp4(url) {
@@ -141,7 +150,7 @@ export class ImageKitService {
  * @param useThumbnail
  * @returns {string}
  */
-export const hostedImage = (imgPath, useThumbnail) => {
+export const hostedImage = (imgPath, useThumbnail = false) => {
   if (isLocalEnv()) return imgPath;
   if (!imgPath) return imgPath;
 

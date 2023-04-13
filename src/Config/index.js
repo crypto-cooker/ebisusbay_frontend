@@ -1,7 +1,6 @@
 import rpcConfig from '../Assets/networks/rpc_config.json';
 import rpcConfigDev from '../Assets/networks/rpc_config_dev.json';
 import rpcConfigTestnet from '../Assets/networks/rpc_config_testnet.json';
-import _ from 'lodash';
 import Constants from '../constants';
 const { Features } = Constants;
 
@@ -23,7 +22,7 @@ export const configData = {
       api: 'https://api.ebisusbay.com/',
       app: 'https://app.ebisusbay.com/',
       cdn: 'https://cdn.ebisusbay.com/',
-      subgraph: 'https://graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
+      subgraph: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.com/api/',
       explorer: 'https://cronoscan.com/',
     },
@@ -40,7 +39,9 @@ export const configData = {
       madAuction: '0x47E79264A9d1343C04F4A56922bE7e6177aE03a0',
       slothtyRugsurance: '0x73063E236EadC1e511FbE7313C6D8C5c651009E9',
       bundle: '0x40874F18922267cc2Ca7933828594aB5078C1065',
-      cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233'
+      cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233',
+      gaslessListing: '0x523d6f30c4aaca133daad97ee2a0c48235bff137',
+      gdc: '0xe3e564252249ab55b47b84d6a934f4cbb94233a9'
       // allianceCenter: '0xba7Eb8a6BD856b652cF9CA4ed2bbE7fE4325Da17'
     },
     tokens: {
@@ -63,6 +64,11 @@ export const configData = {
         name: 'BACC',
         symbol: 'BACC',
         address: '',
+      },
+      vrse: {
+        name: 'VRSE',
+        symbol: 'VRSE',
+        address: '0x2ba01269eafce04c8dccc4a9887884ab66e4bcb1',
       }
     },
     collections: rpcConfig.known_contracts,
@@ -84,7 +90,7 @@ export const configData = {
       api: 'https://api.ebisusbay.biz/',
       app: 'https://app.ebisusbay.biz/',
       cdn: 'https://cdn.ebisusbay.biz/test/',
-      subgraph: 'https://graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
+      subgraph: 'https://cronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.biz/api/',
       explorer: 'https://cronoscan.com/',
     },
@@ -101,7 +107,9 @@ export const configData = {
       madAuction: '0x47E79264A9d1343C04F4A56922bE7e6177aE03a0',
       slothtyRugsurance: '0x73063E236EadC1e511FbE7313C6D8C5c651009E9',
       bundle: '0x40874F18922267cc2Ca7933828594aB5078C1065',
-      cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233'
+      cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233',
+      gaslessListing: '0x523d6f30c4aaca133daad97ee2a0c48235bff137',
+      gdc: '0xe3e564252249ab55b47b84d6a934f4cbb94233a9'
     },
     tokens: {
       loot: {
@@ -123,6 +131,11 @@ export const configData = {
         name: 'BACC',
         symbol: 'BACC',
         address: '',
+      },
+      vrse: {
+        name: 'VRSE',
+        symbol: 'VRSE',
+        address: '0x2ba01269eafce04c8dccc4a9887884ab66e4bcb1',
       }
     },
     collections: rpcConfigDev.known_contracts,
@@ -144,7 +157,7 @@ export const configData = {
       api: 'https://testapi.ebisusbay.biz/',
       app: 'https://testapp.ebisusbay.biz/',
       cdn: 'https://cdn.ebisusbay.biz/test/',
-      subgraph: 'https://testgraph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
+      subgraph: 'https://testcronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
       cms: 'https://testcms.ebisusbay.biz/api/',
       explorer: 'https://testnet.cronoscan.com/',
     },
@@ -162,6 +175,8 @@ export const configData = {
       slothtyRugsurance: '0xC54821941Bb036463bDB1eea781f9b29a7f98fAc',
       bundle: '0xEbFB981D5a7A7C2133752F7787263B58495bb923',
       cnsusd: '0x263818f9693548446A41ad7025923612b490CB0D',
+      gaslessListing: '0xBbe0D0715AbCadb8A0Db41C0Bb7f272570907C45',
+      gdc: '0xd464f36885163e124e3a15e31c0e581ba3f648ab',
       allianceCenter: '0xba7Eb8a6BD856b652cF9CA4ed2bbE7fE4325Da17'
     },
     tokens: {
@@ -184,6 +199,11 @@ export const configData = {
         name: 'BACC',
         symbol: 'BACC',
         address: '',
+      },
+      vrse: {
+        name: 'VRSE',
+        symbol: 'VRSE',
+        address: '0x100123d24a69bd8862da338129471c41e3ca8791',
       }
     },
     collections: rpcConfigTestnet.known_contracts,
@@ -230,13 +250,13 @@ export const imageDomains = [
  * @param key
  * @returns {null|*}
  */
-export const appConfig = (key) => {
+export const appConfig = (key = '') => {
   const env = environments[currentEnv()];
   const fallbackEnv = environments.production;
   if (!env) return configData[fallbackEnv];
 
   const config = isLocalEnv() ?
-    _.merge(configData[environments.production], configData[environments.local]) :
+    {...configData[environments.production], ...configData[environments.local]} :
     configData[env];
 
   if (!key) return config;
@@ -254,19 +274,18 @@ export const isLocalEnv = () => {
   return currentEnv() === environments.local;
 }
 
+export const isTestnet = () => {
+  return currentEnv() === environments.testnet;
+}
+
 export const featureFlags = {
   [Features.AUCTION_OPTION_SALE]: false,          // Auction listing option
-  [Features.CMS_NOTIFICATIONS]: true,             // Notifications
-  [Features.CMS_FULL_PROFILES]: true,             // User Profiles
-  [Features.GET_COLLECTION_NEW_ENDPOINT]: false,   // Paginated collections endpoint
+  [Features.GET_COLLECTION_NEW_ENDPOINT]: true,   // Paginated collections endpoint
   [Features.CMS_COLLECTIONS]: false,               // Collection editing
   [Features.VERIFIED_SWITCH_COLLECTION]: false,    // Filter verified collections
   [Features.VERIFIED_SWITCH_MARKETPLACE]: false,   // Filter verified in marketplace
-  [Features.INFINITE_QUERY_COLLECTION]: false,     // Paginated collections endpoint
   [Features.UNVERIFIED_WARNING]: false,            // Warning when buying from unverified collection
   [Features.REPORT_COLLECTION]: false,             // Report button on collection page
   [Features.NEW_CHAKRA_THEME]: false,             // Update theme
-  [Features.GLOBAL_SEARCH]: true,                // Global search bar
-  [Features.BUNDLES]: true,                      // Bundles
-  [Features.GASLESS_LISTING]: false                //Gasless listings
+  [Features.GASLESS_LISTING]: true                //Gasless listings
 }

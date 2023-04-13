@@ -1,0 +1,293 @@
+import React, {ChangeEvent, memo, useCallback, useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {MyListingsCollectionPageActions, MyNftPageActions,} from '@src/GlobalState/User';
+import {Form, Spinner} from 'react-bootstrap';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import MakeListingDialog from "@src/Components/MakeListing";
+import {useInfiniteQuery} from "@tanstack/react-query";
+import ResponsiveListingsTable from "@src/components-v2/shared/responsive-table/responsive-listings-table";
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  Box,
+  CloseButton,
+  HStack,
+  Icon,
+  IconButton,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Stack,
+  Text,
+  useBreakpointValue
+} from "@chakra-ui/react";
+import {useAppSelector} from "@src/Store/hooks";
+import MyNftCancelDialog from '@src/Components/components/MyNftCancelDialog';
+import ListingsFilterContainer
+  from "@src/components-v2/feature/account/profile/tabs/listings/listings-filter-container";
+import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
+import nextApiService from "@src/core/services/api-service/next";
+import {InvalidState} from "@src/core/services/api-service/types";
+import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
+import {caseInsensitiveCompare, findCollectionByAddress} from "@src/utils";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faAngleLeft, faFilter} from "@fortawesome/free-solid-svg-icons";
+import useDebounce from "@src/core/hooks/useDebounce";
+
+interface UserPrivateListingsProps {
+  walletAddress: string
+}
+
+const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
+  const dispatch = useDispatch();
+
+  const [collections, setCollections] = useState([]);
+  const [searchTerms, setSearchTerms] = useState<string>();
+  const debouncedSearch = useDebounce(searchTerms, 500);
+  const [showInvalidOnly, setShowInvalidOnly] = useState(false);
+  const [hasInvalidListings, setHasInvalidListings] = useState(false);
+  const [queryParams, setQueryParams] = useState<ListingsQueryParams>({
+    sortBy: 'listingTime',
+    direction: 'desc'
+  });
+  const [sortVisible, setSortVisible] = useState(false);
+  const [filtersVisible, setFiltersVisible] = useState(false);
+  const useMobileMenu = useBreakpointValue(
+    { base: true, lg: false },
+    { fallback: 'lg' },
+  );
+  const user = useAppSelector((state) => state.user);
+
+  const fetcher = async ({ pageParam = 1 }) => {
+    const listings = await nextApiService.getUserUnfilteredListings(walletAddress, {
+      ...queryParams,
+      page: pageParam,
+    });
+    if (listings.data.some((value) => !value.valid && value.invalid !== InvalidState.LEGACY)) {
+      setHasInvalidListings(true);
+    }
+    listings.data = listings.data
+      .filter((x) => x.invalid !== InvalidState.LEGACY)
+      .filter((x) => (showInvalidOnly ? !x.valid : true));
+
+    return listings;
+  };
+
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    status,
+  } = useInfiniteQuery(
+    ['MyListingsCollection', walletAddress, queryParams, showInvalidOnly],
+    fetcher,
+    {
+      getNextPageParam: (lastPage, pages) => {
+        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+      },
+      refetchOnWindowFocus: false
+    }
+  );
+
+  const toggleFilterVisibility = () => {
+    setFiltersVisible(!filtersVisible)
+  };
+
+  const loadMore = () => {
+    fetchNextPage();
+  };
+
+  const handleSort = useCallback((field: string) => {
+    let newSort = {
+      sortBy: field,
+      direction: 'desc'
+    }
+    if (queryParams.sortBy === newSort.sortBy) {
+      newSort.direction = queryParams.direction === 'asc' ? 'desc' : 'asc'
+    }
+    setQueryParams({
+      ...queryParams,
+      sortBy: newSort.sortBy as any,
+      direction: newSort.direction as any
+    });
+  }, [queryParams]);
+
+  const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerms(e.target.value);
+  }, []);
+
+  const handleClearSearch = useCallback(() => {
+    setSearchTerms('');
+  }, []);
+
+  useEffect(() => {
+    setQueryParams({...queryParams, search: debouncedSearch});
+  }, [debouncedSearch]);
+
+  useEffect(() => {
+    async function func() {
+      const result = await getWalletOverview(walletAddress);
+      setCollections(result.data
+        .reduce((arr: any, item: any) => {
+          const coll = findCollectionByAddress(item.nftAddress, item.nftId);
+          if (!coll) return arr;
+          const existingIndex = arr.findIndex((c: any) => caseInsensitiveCompare(coll.address, c.address));
+          if (existingIndex >= 0) {
+            arr[existingIndex].balance += Number(item.balance);
+          } else {
+            coll.balance = Number(item.balance);
+            arr.push(coll);
+          }
+          return arr;
+        }, [])
+        .sort((a: any, b: any) => a.name > b.name ? 1 : -1)
+      );
+    }
+
+    func();
+  }, [walletAddress]);
+
+  return (
+    <>
+      {hasInvalidListings && (
+        <Alert
+          status='error'
+          flexDirection='column'
+          alignItems='center'
+          justifyContent='center'
+          textAlign='center'
+          minH='200px'
+        >
+          <AlertIcon boxSize='40px' mr={0} />
+          <AlertTitle mt={4} mb={1} fontSize='lg'>
+            Invalid listings detected!
+          </AlertTitle>
+          <AlertDescription>
+            <Text>
+              <strong>Some of your current listings are invalid.</strong> This can happen when a listed NFT was not
+              delisted from the marketplace before being staked, transferred, or approval being revoked. This can cause
+              NFTs to be sold significantly under floor price once the NFT returns to your wallet. Please cancel these
+              listings to prevent any unwanted sales.
+            </Text>
+          </AlertDescription>
+        </Alert>
+      )}
+
+      <div className="row pt-3">
+        <div className="col-12 col-sm-6 col-md-4 m-0 text-nowrap d-flex align-items-center">
+          <div className="items_filter">
+            <Form.Switch
+              className=""
+              label={'Only invalid'}
+              checked={showInvalidOnly}
+              onChange={() => setShowInvalidOnly(!showInvalidOnly)}
+            />
+          </div>
+        </div>
+      </div>
+      <Stack direction="row" mb={2} align="center">
+        <HStack w='full'>
+          <Box>
+            <IconButton
+              aria-label={'Toggle Filter'}
+              onClick={toggleFilterVisibility}
+              variant='outline'
+              icon={<Icon as={FontAwesomeIcon} icon={filtersVisible ? faAngleLeft : faFilter} className="py-1" />}
+           />
+          </Box>
+          <InputGroup>
+            <Input
+              placeholder="Search by name"
+              w="100%"
+              onChange={handleSearch}
+              value={searchTerms}
+              color="white"
+              _placeholder={{ color: 'gray.300' }}
+            />
+            {searchTerms?.length && (
+              <InputRightElement
+                children={<CloseButton onClick={handleClearSearch} />}
+              />
+            )}
+          </InputGroup>
+          {/*<Box>*/}
+          {/*  <Button*/}
+          {/*    type="legacy-outlined"*/}
+          {/*  >*/}
+          {/*    <HStack>*/}
+          {/*      <Icon as={FontAwesomeIcon} icon={faLayerGroup} />*/}
+          {/*      <Box>*/}
+          {/*        Bulk mode*/}
+          {/*      </Box>*/}
+          {/*    </HStack>*/}
+          {/*  </Button>*/}
+          {/*</Box>*/}
+        </HStack>
+      </Stack>
+
+      <Box>
+        <ListingsFilterContainer
+          queryParams={queryParams}
+          collections={collections}
+          onFilter={(newParams) => setQueryParams(newParams)}
+          filtersVisible={filtersVisible}
+          useMobileMenu={!!useMobileMenu}
+          onMobileMenuClose={() => setFiltersVisible(false)}
+        >
+          <InfiniteScroll
+            dataLength={data?.pages ? data.pages.flat().length : 0}
+            next={loadMore}
+            hasMore={hasNextPage ?? false}
+            style={{ overflow: 'hidden' }}
+            loader={
+              <div className="row">
+                <div className="col-lg-12 text-center">
+                  <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
+                </div>
+              </div>
+            }
+          >
+            {status === "loading" ? (
+              <div className="col-lg-12 text-center">
+                <Spinner animation="border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </div>
+            ) : status === "error" ? (
+              <p>Error: {(error as any).message}</p>
+            ) : (
+              <ResponsiveListingsTable
+                data={data}
+                onUpdate={(listing) => {
+                  dispatch(MyListingsCollectionPageActions.showMyNftPageListDialog(listing.nft, listing))
+                }}
+                onCancel={(listing) => {
+                  dispatch(MyListingsCollectionPageActions.showMyNftPageCancelDialog(listing))
+                }}
+                onSort={handleSort}
+                breakpointValue={filtersVisible ? 'xl' : 'lg'}
+              />
+            )}
+          </InfiniteScroll>
+        </ListingsFilterContainer>
+      </Box>
+
+      <MyNftCancelDialog/>
+      {user.myNftPageListDialog?.nft && (
+        <MakeListingDialog
+          isOpen={!!user.myNftPageListDialog?.nft}
+          nft={user.myNftPageListDialog?.nft}
+          onClose={() => dispatch(MyNftPageActions.hideMyNftPageListDialog())}
+          listing={user.myNftPageListDialog?.listing}
+        />
+      )}
+    </>
+  );
+};
+
+export default memo(UserPrivateListings);

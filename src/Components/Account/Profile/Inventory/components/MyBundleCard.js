@@ -1,36 +1,42 @@
-import React, { memo, useState } from 'react';
-import { useRouter } from 'next/router';
-import { ethers } from 'ethers';
-import { toast } from 'react-toastify';
+import React, {memo, useState} from 'react';
+import {useRouter} from 'next/router';
+import {ethers} from 'ethers';
+import {toast} from 'react-toastify';
 import {
-  faLink,
+  faArrowUpFromBracket,
+  faBoltLightning,
   faEllipsisH,
   faExchangeAlt,
-  faTag,
-  faTimes,
+  faHand,
+  faLink,
   faPen,
-  faPlusCircle, faTags, faArrowUpFromBracket
+  faPlusCircle,
+  faTag,
+  faTags,
+  faTimes
 } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { MenuPopup } from '@src/Components/components/chakra-components';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {MenuPopup} from '@src/Components/components/chakra-components';
 import AnyMedia from '@src/Components/components/AnyMedia';
-import { nftCardUrl } from "@src/helpers/image";
+import {nftCardUrl} from "@src/helpers/image";
 import {
   Box,
   Flex,
   Heading,
+  HStack,
   Spacer,
   Text,
+  Tooltip,
   useBreakpointValue,
   useClipboard,
   useDisclosure
 } from "@chakra-ui/react";
 import Image from "next/image";
-import { appUrl, caseInsensitiveCompare, round } from "@src/utils";
-import { useColorModeValue } from "@chakra-ui/color-mode";
-import { darkTheme, lightTheme } from "@src/Theme/theme";
-import { useSelector } from "react-redux";
-import { faCheckCircle } from "@fortawesome/free-regular-svg-icons";
+import {appUrl, caseInsensitiveCompare, round, siPrefixedNumber, timeSince} from "@src/utils";
+import {useColorModeValue} from "@chakra-ui/color-mode";
+import {darkTheme, lightTheme} from "@src/Theme/theme";
+import {useSelector} from "react-redux";
+import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
 import Slider from './Slider';
 import UnwrapBundleDialog from '@src/Components/UnwrapBundleDialog';
 
@@ -49,7 +55,7 @@ const MyNftCard = ({
   newTab = false,
 }) => {
   const history = useRouter();
-  const nftUrl = appUrl(`/collection/${nft.address}/${nft.id}`);
+  const nftUrl = appUrl(`/collection/${nft.nftAddress}/${nft.nftId}`);
   const [isHovered, setIsHovered] = useState(false);
   const user = useSelector((state) => state.user);
   const batchListingCart = useSelector((state) => state.batchListing);
@@ -57,7 +63,7 @@ const MyNftCard = ({
     { base: false, md: true, },
     { fallback: 'md' },
   );
-  const { onCopy } = useClipboard(nftUrl);
+  const { onCopy } = useClipboard(nftUrl.toString());
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const navigateTo = (link) => {
@@ -134,7 +140,7 @@ const MyNftCard = ({
   };
 
   const isInBatchListingCart = () => {
-    return batchListingCart.nfts.some((o) => o.nft.id === nft.id && caseInsensitiveCompare(o.nft.address, nft.address));
+    return batchListingCart.items.some((o) => o.nft.nftId === nft.nftId && caseInsensitiveCompare(o.nft.nftAddress, nft.nftAddress));
   };
 
   return (
@@ -202,44 +208,69 @@ const MyNftCard = ({
                   onClick={() => navigateTo(nftUrl)}
                   cursor="pointer"
                 >
-                  <AnyMedia image={nftCardUrl(currentNft.id, currentNft.image)}
-                    title={currentNft.id}
+                  <AnyMedia image={nftCardUrl(currentNft.nftId, currentNft.image)}
+                    title={currentNft.nftId}
                     newTab={false}
                     className="card-img-top marketplace"
                     height={440}
                     width={440}
-                    video={batchListingCart.nfts.length > 0 ? undefined : (currentNft.video ?? currentNft.animation_url)}
+                    video={batchListingCart.items.length > 0 ? undefined : (currentNft.video ?? currentNft.animation_url)}
                     usePlaceholder={true}
                   />
                 </Box>
               ))}
             </Slider>
           </div>
-          <div className="d-flex flex-column p-2 pb-1">
+          <Flex direction='column' justify='space-between' px={2} py={1}>
             <div className="card-title mt-auto">
               <span onClick={() => navigateTo(nftUrl)} style={{ cursor: 'pointer' }}>
-                {nft.count && nft.count > 0 ? (
+                {nft.balance && nft.balance > 1 ? (
                   <Heading as="h6" size="sm">
-                    {nft.name} (x{nft.count})
+                    {nft.name} (x{nft.balance})
                   </Heading>
                 ) : (
                   <Heading as="h6" size="sm">{nft.name}</Heading>
                 )}
               </span>
             </div>
-            <span className="card-text">
-              {nft.listed && nft.price ? (
-                <div className="d-flex">
-                  <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
-                  <span className="ms-1">
-                    {ethers.utils.commify(round(nft.price, 2))}
-                  </span>
-                </div>
-              ) : (
-                <>&nbsp;</>
-              )}
-            </span>
-          </div>
+            {!!nft.listed && !!nft.market.price && (
+              <Tooltip label="Listing Price" placement='top-start'>
+                <HStack w='full' fontSize='sm'>
+                  <Box w='16px'>
+                    <FontAwesomeIcon icon={faBoltLightning} />
+                  </Box>
+                  <Box>
+                    <Flex>
+                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                      <Box as='span' ms={1}>
+                        {nft.market.price > 6 ? siPrefixedNumber(nft.market.price) : ethers.utils.commify(round(nft.market.price))}
+                      </Box>
+                    </Flex>
+                  </Box>
+                  {nft.market.expirationDate && (
+                    <Text mt={1} flex={1} align='end' className='text-muted'>{timeSince(nft.market.expirationDate)}</Text>
+                  )}
+                </HStack>
+              </Tooltip>
+            )}
+            {nft.offer?.id && (
+              <Tooltip label="Best Offer Price" placement='top-start'>
+                <HStack w='full' fontSize='sm'>
+                  <Box w='16px'>
+                    <FontAwesomeIcon icon={faHand} />
+                  </Box>
+                  <Box>
+                    <Flex>
+                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                      <Box as='span' ms={1}>
+                        {nft.offer.price > 6 ? siPrefixedNumber(nft.offer.price) : ethers.utils.commify(round(nft.offer.price))}
+                      </Box>
+                    </Flex>
+                  </Box>
+                </HStack>
+              </Tooltip>
+            )}
+          </Flex>
           <Spacer />
           <Box
             borderBottomRadius={15}

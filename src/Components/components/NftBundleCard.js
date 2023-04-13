@@ -1,43 +1,35 @@
-import React, { memo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {memo, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
-import { useRouter } from 'next/router';
+import {useRouter} from 'next/router';
 import Link from 'next/link';
-import { ethers } from 'ethers';
+import {ethers} from 'ethers';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
 import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
-import { connectAccount, chainConnect } from '@src/GlobalState/User';
+import {chainConnect, connectAccount} from '@src/GlobalState/User';
+import {appUrl, createSuccessfulAddCartContent, isNftBlacklisted, round, siPrefixedNumber, timeSince} from '@src/utils';
+import {AnyMedia} from './AnyMedia';
+import {convertGateway, nftCardUrl} from '@src/helpers/image';
+import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useClipboard} from "@chakra-ui/react";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-  appUrl,
-  createSuccessfulAddCartContent,
-  isNftBlacklisted,
-  openWithCronosExplorer,
-  round,
-  siPrefixedNumber
-} from '@src/utils';
-import { AnyMedia } from './AnyMedia';
-import { convertGateway, nftCardUrl } from '@src/helpers/image';
-import {
-  Box, Flex,
-  Heading, Spacer,
-  Text, useClipboard
-} from "@chakra-ui/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBolt,
-  faEllipsisH, faExternalLink, faHand,
-  faLink, faShoppingBag, faSync,
+  faBoltLightning,
+  faEllipsisH,
+  faExternalLink,
+  faHand,
+  faLink,
+  faShoppingBag,
+  faSync,
 } from "@fortawesome/free-solid-svg-icons";
-import { useColorModeValue } from "@chakra-ui/color-mode";
+import {useColorModeValue} from "@chakra-ui/color-mode";
 import Image from "next/image";
-import { darkTheme, lightTheme } from "@src/Theme/theme";
-import { MenuPopup } from "@src/Components/components/chakra-components";
-import { addToCart, openCart, removeFromCart } from "@src/GlobalState/cartSlice";
-import { toast } from "react-toastify";
-import { refreshMetadata } from "@src/GlobalState/nftSlice";
-import { appConfig } from "@src/Config";
-import { specialImageTransform } from "@src/hacks";
+import {darkTheme, lightTheme} from "@src/Theme/theme";
+import {MenuPopup} from "@src/Components/components/chakra-components";
+import {addToCart, openCart, removeFromCart} from "@src/GlobalState/cartSlice";
+import {toast} from "react-toastify";
+import {refreshMetadata} from "@src/GlobalState/nftSlice";
+import {specialImageTransform} from "@src/hacks";
 import Slider from '../Account/Profile/Inventory/components/Slider';
 
 const Watermarked = styled.div`
@@ -58,14 +50,8 @@ const Watermarked = styled.div`
   }
 `;
 
-const MakeBuy = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, canBuy = true }) => {
-  const nftUrl = appUrl(`/collection/${nft.address}/${nft.id}`);
+const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, canBuy = true }) => {
+  const nftUrl = appUrl(`/collection/${nft.address ?? nft.nftAddress}/${nft.id ?? nft.nftId}`);
   const history = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -73,7 +59,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, canBuy = t
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const isInCart = nft.market?.id && cart.nfts.map((o) => o.listingId).includes(nft.market.id);
-  const { onCopy } = useClipboard(nftUrl);
+  const { onCopy } = useClipboard(nftUrl.toString());
 
   const getOptions = () => {
     const options = [];
@@ -122,7 +108,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, canBuy = t
   };
 
   const handleMakeOffer = () => {
-    const isBlacklisted = isNftBlacklisted(nft.address, nft.id);
+    const isBlacklisted = isNftBlacklisted(nft.address ?? nft.nftAddress, nft.id ?? nft.nftId);
     if (isBlacklisted) return;
 
     if (user.address) {
@@ -145,8 +131,8 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, canBuy = t
       name: nft.name,
       image: nft.image,
       price: nft.market.price,
-      address: nft.address,
-      id: nft.id,
+      address: nft.address ?? nft.nftAddress,
+      id: nft.id ?? nft.nftId,
       rank: nft.rank
     }));
     toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
@@ -159,12 +145,12 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, canBuy = t
 
   const handleOpenOriginal = () => {
     if (nft.original_image) {
-      window.open(specialImageTransform(nft.address, convertGateway(nft.original_image)), '_blank')
+      window.open(specialImageTransform(nft.address ?? nft.nftAddress, convertGateway(nft.original_image)), '_blank')
     }
   };
 
   const handleRefresh = () => {
-    dispatch(refreshMetadata(nft.address, nft.id, nft.market?.id));
+    dispatch(refreshMetadata(nft.address ?? nft.nftAddress, nft.id ?? nft.nftId, nft.market?.id));
   };
 
   const handleCopy = () => {
@@ -239,23 +225,48 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark, canBuy = t
             </Slider>
               </div>
             {nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{nft.rank}</div>}
-            <div className="d-flex flex-column justify-content-between p-2 pb-1">
+            <Flex direction='column' justify='space-between' px={2} py={1}>
               <Link href={nftUrl}>
-                <a>
-                  <Heading as="h6" size="sm" className="card-title mt-auto">{nft.name}</Heading>
-                </a>
+                <Heading as="h6" size="sm" className="card-title mt-auto">{nft.name}</Heading>
               </Link>
               {getIsNftListed() && (
-                <MakeBuy>
-                  <div className="d-flex">
-                    <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
-                    <span className="ms-1">
-                      {nft.market?.price > 6 ? siPrefixedNumber(nft.market?.price) : ethers.utils.commify(round(nft.market?.price))}
-                    </span>
-                  </div>
-                </MakeBuy>
+                <Tooltip label="Listing Price" placement='top-start'>
+                  <HStack w='full' fontSize='sm'>
+                    <Box w='16px'>
+                      <FontAwesomeIcon icon={faBoltLightning} />
+                    </Box>
+                    <Box>
+                      <Flex>
+                        <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                        <Box as='span' ms={1}>
+                          {nft.market?.price > 6 ? siPrefixedNumber(nft.market?.price) : ethers.utils.commify(round(nft.market?.price))}
+                        </Box>
+                      </Flex>
+                    </Box>
+                    {nft.market?.expirationDate && (
+                      <Text mt={1} flex={1} align='end' className='text-muted'>{timeSince(nft.market.expirationDate)}</Text>
+                    )}
+                  </HStack>
+                </Tooltip>
               )}
-            </div>
+              {nft.offer?.id && (
+                <Tooltip label="Best Offer Price" placement='top-start'>
+                  <HStack w='full' fontSize='sm'>
+                    <Box w='16px'>
+                      <FontAwesomeIcon icon={faHand} />
+                    </Box>
+                    <Box>
+                      <Flex>
+                        <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                        <Box as='span' ms={1}>
+                          {nft.offer.price > 6 ? siPrefixedNumber(nft.offer.price) : ethers.utils.commify(round(nft.offer.price))}
+                        </Box>
+                      </Flex>
+                    </Box>
+                  </HStack>
+                </Tooltip>
+              )}
+            </Flex>
             <Spacer />
             <Box
               borderBottomRadius={15}

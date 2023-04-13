@@ -1,6 +1,5 @@
 import React from 'react';
-import Footer from '../../components/Footer';
-import PageHead from "../../Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Box, Container, Heading} from "@chakra-ui/react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
@@ -82,7 +81,7 @@ const CronosMutantApesAuction = () => {
                   <p>By burning this special Serum you are guaranteed to get one of the 10 Legendary Mutant Apes (Last Sale: 100K CRO).</p>
                   <p>To do so, you'll just need to hold 1 Cronos Apes and use this DAPP: <a href="https://app.cronosapesnft.com/lab" target="_blank">https://app.cronosapesnft.com/lab</a></p>
                   <div className="mt-4">
-                    <Image src={image} width={350} height={350} />
+                    <Image src={image} width={350} height={350} alt='Crono Apes'/>
                   </div>
                 </div>
               </Reveal>
@@ -122,7 +121,6 @@ const CronosMutantApesAuction = () => {
           </div>
         </div>
       </section>
-      <Footer />
     </>
   );
 };

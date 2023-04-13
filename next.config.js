@@ -22,6 +22,7 @@ const nextConfig = {
       'cdn.ebisusbay.com',
       'cdn.ebisusbay.biz'
     ],
+    formats: ['image/webp'],
   },
   i18n: {
     locales: ["en"],
@@ -57,6 +58,16 @@ const nextConfig = {
       {
         source: '/drops/boss-frogz',
         destination: '/drops/trooprz-boss-frogz',
+        permanent: true,
+      },
+      {
+        source: '/collection/vip-founding-member',
+        destination: '/collection/founding-member',
+        permanent: true,
+      },
+      {
+        source: '/collection/vip-founding-member/:id',
+        destination: '/collection/founding-member/:id',
         permanent: true,
       },
       {
@@ -137,6 +148,26 @@ const nextConfig = {
       {
         source: '/collection/seasonal-cats/:id',
         destination: '/collection/world-of-cats-seasonal/:id',
+        permanent: true,
+      },
+      {
+        source: '/collection/dr-boo-resurrection',
+        destination: '/collection/imagine-artists',
+        permanent: true,
+      },
+      {
+        source: '/collection/dr-boo-resurrection/:id',
+        destination: '/collection/imagine-artists/:id',
+        permanent: true,
+      },
+      {
+        source: '/collection/inventorapes',
+        destination: '/collection/inventorsapes',
+        permanent: true,
+      },
+      {
+        source: '/collection/inventorapes/:id',
+        destination: '/collection/inventorsapes/:id',
         permanent: true,
       },
       {

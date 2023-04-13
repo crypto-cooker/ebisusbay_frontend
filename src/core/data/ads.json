@@ -1,10 +1,26 @@
 [
   {
+    "name": "Wedripz Cro",
+    "image": "/img/promos/wedripz-cro.webp",
+    "description": "WeDripz Cro is a collection of 5555 Dripz with 4 evolved bloodlines from the OG Eth collection \uD83D\uDC8E  Artwork by TikTok trending artist: MrSaintVon \uD83C\uDFA8  Official collaboration with \"Trust me Vodka\" for events and IRL items ✅",
+    "page": "front",
+    "weight": 1,
+    "start": 1675535324,
+    "end": 1676140124,
+    "links": [
+      {
+        "label": "Mint Now",
+        "url": "https://wedripz.netlify.app",
+        "external": true
+      }
+    ]
+  },
+  {
     "name": "SeaShrine Founding Member VIP",
     "image": "/img/promos/seashrine.webp",
     "description": "SeaShrine is a new marketplace founded and built by the same team behind the Cronos success, Ebisu’s Bay. With upcoming feature parity with their previous endeavor, the team looks to replicate their accomplishments and to recreate a Gold Standard for marketplaces on the new Aptos blockchain. Embark on this journey with us by minting a VIP Founding Member NFT now!",
     "page": "front",
-    "weight": 1,
+    "weight": 0,
     "start": 1666895575,
     "end": null,
     "links": [

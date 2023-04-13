@@ -21,6 +21,7 @@ import {
   ModalOverlay
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
+import {is1155} from "@src/helpers/chain";
 
 export default function TransferNftDialog({ isOpen, nft, onClose }) {
   const [recipientAddress, setRecipientAddress] = useState(null);
@@ -89,7 +90,7 @@ export default function TransferNftDialog({ isOpen, nft, onClose }) {
       Sentry.captureEvent({message: 'handleTransfer', extra: {address: nftAddress, targetAddress}});
 
       let tx;
-      if (nft.multiToken) {
+      if (await is1155(nftAddress)) {
         const contract = new Contract(nftAddress, ERC1155, user.provider.getSigner());
         tx = await contract.safeTransferFrom(user.address, targetAddress, nftId, 1, []);
       } else {

@@ -1,9 +1,9 @@
 import React, {memo, useEffect, useState} from 'react';
 import {caseInsensitiveCompare, humanize, isAddress, isBundle, relativePrecision} from '@src/utils';
-import Nft1155 from '../../../src/Components/Collection/nft1155';
-import Nft721 from '../../../src/Components/Collection/nft721';
+import Nft1155 from '@src/components-v2/feature/nft/nft1155';
+import Nft721 from '@src/components-v2/feature/nft/nft721';
 import {appConfig} from "@src/Config";
-import PageHead from "../../../src/Components/Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 import {getNft} from "@src/core/api/endpoints/nft";
 
 const config = appConfig();

@@ -2,10 +2,16 @@ import { SortOption } from '../../Models/sort-option.model';
 
 const sort = [
   {
-    id: 'listingId',
-    key: 'listingId',
+    id: 'listingTime',
+    key: 'listingTime',
     direction: 'desc',
     label: 'Latest Listings',
+  },
+  {
+    id: 'expirationDate',
+    key: 'expirationDate',
+    direction: 'asc',
+    label: 'Ending Soon',
   },
   {
     id: 'price-desc',
@@ -23,14 +29,14 @@ const sort = [
     id: 'rank-asc',
     key: 'rank',
     direction: 'asc',
-    label: 'Rare to Common',
+    label: 'Rank: Rare to Common',
   },
   {
     id: 'rank-desc',
     key: 'rank',
     direction: 'desc',
-    label: 'Common to Rare',
-  },
+    label: 'Rank: Common to Rare',
+  }
 ];
 
 export const sortOptions = sort.map((x) => SortOption.fromJson(x));

@@ -1,4 +1,4 @@
-import {extendTheme} from "@chakra-ui/react";
+import {defineStyleConfig, extendTheme} from "@chakra-ui/react";
 import { mode } from '@chakra-ui/theme-tools';
 
 export const lightTheme = {
@@ -65,6 +65,7 @@ export const getTheme = (mode) => {
   } else if (mode === 'dark') {
     return { ...theme, colors: darkTheme };
   }
+  return { ...theme, colors: darkTheme };
 };
 
 const grayColor = {
@@ -79,6 +80,34 @@ const grayColor = {
   // 900: '#888888',
 }
 
+const Button = defineStyleConfig({
+  variants: {
+    primary: {
+      bg: '#218cff',
+      color: 'white',
+      _hover: {
+        bg: '#1E7EE6',
+        _disabled: {
+          bg: '#b3d7ff'
+        }
+      },
+      _active: {
+        bg: '#1B72CF'
+      },
+      _disabled: {
+        color: 'white',
+        bg: '#b3d7ffff'
+      }
+    },
+    tab: {
+      color: 'white',
+      _active: {
+        bg: '#35669e'
+      }
+    }
+  }
+});
+
 const customTheme = extendTheme({
   config: {
     initialColorMode: 'dark',
@@ -92,6 +121,7 @@ const customTheme = extendTheme({
     gray: grayColor
   },
   components: {
+    Button,
     Switch: {
       baseStyle: {
         track: {

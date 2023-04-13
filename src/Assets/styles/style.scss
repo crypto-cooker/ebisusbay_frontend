@@ -5687,6 +5687,27 @@ iframe.metaverse {
   color: #555;
 }
 
+.icon-fa {
+  width: 23px;
+  height: 23px;
+  color: $textColor1;
+}
+
+.simple-button {
+  background: $cardColor2 !important;
+  border-radius: 2px !important;
+  border-color: $borderColor1 !important;
+  &::placeholder {color: $textColor2;} 
+  margin-bottom: 0px;
+}
+
+.collection_info_bar {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
 .taps-buttons-group{
   padding: 8px;
   display: flex; 

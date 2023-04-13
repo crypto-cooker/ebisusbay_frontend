@@ -7,9 +7,12 @@
         <loc>https://app.ebisusbay.com/marketplace</loc>
     </url>
     <url>
-        <loc>https://app.ebisusbay.com/drops</loc>
+        <loc>https://app.ebisusbay.com/collections</loc>
     </url>
     <url>
-        <loc>https://app.ebisusbay.com/collections</loc>
+        <loc>https://app.ebisusbay.com/brands</loc>
+    </url>
+    <url>
+        <loc>https://app.ebisusbay.com/drops</loc>
     </url>
 </urlset>

@@ -83,7 +83,7 @@ const ProfilePreview = ({
       } else {
         return (
           <Link href={url}>
-            <a>{AvatarElement}</a>
+            {AvatarElement}
           </Link>
         );
       }

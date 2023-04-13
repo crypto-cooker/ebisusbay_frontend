@@ -59,3 +59,7 @@ export const cleanedQuery = (query) => {
     return !!v && !isEmptyObj(v) && v.toString().length > 0;
   }));
 }
+
+export const boolToInt = (bool) => {
+  return bool ? 1 : 0;
+}

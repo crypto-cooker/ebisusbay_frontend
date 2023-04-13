@@ -44,6 +44,7 @@ import {
   ModalOverlay, Tooltip
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
+import useBuyGaslessListings from "@src/hooks/useBuyGaslessListings";
 
 const numberRegexValidation = /[^0-9]/g;
 const sweepType = {
@@ -78,6 +79,7 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
 
   const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
   const user = useSelector((state) => state.user);
+  const [buyGaslessListings, response] = useBuyGaslessListings();
 
   useEffect(() => {
     async function asyncFunc() {
@@ -170,19 +172,10 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
       }
 
       const listingIds = filteredListings.map((listing) => listing.listingId);
-      const totalCost = ethers.utils.parseUnits(filteredListings.reduce((p, n) => p + parseInt(n.price), 0).toString());
+      const totalCost = filteredListings.reduce((p, n) => p + parseInt(n.price), 0);
 
-      const gasPrice = parseUnits('5000', 'gwei');
-      const gasEstimate = await user.contractService.market.estimateGas.makePurchases(listingIds, {value: totalCost});
-      const gasLimit = gasEstimate.mul(2);
-      let extra = {
-        value: totalCost,
-        gasPrice,
-        gasLimit
-      };
-      let tx = await user.contractService.market.makePurchases(listingIds, extra);
-      let receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      await buyGaslessListings(listingIds, totalCost)
+
       setExecutingSweepFloor(false);
       onClose();
     } catch (error) {

@@ -8,10 +8,9 @@ import styled, {createGlobalStyle} from 'styled-components';
 import {faFire} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import Footer from '../src/Components/components/Footer';
 import ListingCollection from '../src/Components/components/ListingCollection';
 import HotCollections from '../src/Components/components/HotCollections';
-import CurrentDrops from '../src/Components/components/CurrentDrops';
+import CurrentDrops from '@src/components-v2/shared/drops/current-drops';
 import {getMarketData} from '@src/GlobalState/marketplaceSlice';
 import {millisecondTimestamp, newlineText, siPrefixedNumber} from '@src/utils';
 import {getTheme, theme} from '@src/Theme/theme';
@@ -20,7 +19,7 @@ import Button from '../src/Components/components/Button';
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {appConfig} from "@src/Config";
 import Head from "next/head";
-import {Center, Heading} from "@chakra-ui/react";
+import {Center, Heading, SimpleGrid} from "@chakra-ui/react";
 import ads from "@src/core/data/ads.json";
 
 const fadeInUp = keyframes`
@@ -91,7 +90,7 @@ const GlobalStyles = createGlobalStyle`
 const Jumbotron = {
   Host: styled.div`
     background-image: url(${({ isDark }) =>
-    isDark ? ImageKitService.buildBannerUrl('/img/background/banner-dark.webp') : ImageKitService.buildBannerUrl('/img/background/Ebisus-bg-1_L.webp')});    background-size: cover;
+    isDark ? ImageKitService.buildBannerUrl('/img/background/banner-ryoshi-dark.webp') : ImageKitService.buildBannerUrl('/img/background/banner-ryoshi-light.webp')});    background-size: cover;
     background-repeat: no-repeat;
     height: max(100vh, 800px);
     display: flex;
@@ -186,9 +185,7 @@ const Home = () => {
               Explore
             </span>
             <Link href="/apply">
-              <a>
-                <Button type="legacy-outlined">Become a Creator</Button>
-              </a>
+              <Button type="legacy-outlined">Become a Creator</Button>
             </Link>
 
             <Button onClick={() => window.open(`/collection/founding-member`, '_self')} type="legacy-outlined">
@@ -354,54 +351,77 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="row align-items-center text-center">
-          <div className="col">
-            <Center>
-              <a href="https://nebkas.ro" target="_blank" rel="noreferrer">
-                <img
-                  src={hostedImage(userTheme === 'light' ? '/img/logos/nebkas-logo.png' : '/img/logos/nebkas-logo.png')}
-                  alt="nebkas.co"
-                  width="128px"
-                />
-              </a>
-            </Center>
-          </div>
-          <div className="col">
-            <Center>
-              <a href="https://weare.fi/en/" target="_blank" rel="noreferrer">
-                <img
-                  src={hostedImage(userTheme === 'light' ? '/img/logos/wearefi-logo.png' : '/img/logos/wearefi-white.png')}
-                  alt="WeAre Solutions"
-                  width={userTheme === 'light' ? '64px' : '160px'}
-                />
-              </a>
-            </Center>
-          </div>
-          <div className="col">
-            <Center>
-              <a href="https://crodex.app/" target="_blank" rel="noreferrer">
-                <img
-                  src={hostedImage(userTheme === 'light' ? '/img/logos/crodex.png' : '/img/logos/crodex-white.png')}
-                  alt="CRODEX"
-                  width="150px"
-                />
-              </a>
-            </Center>
-          </div>
-          <div className="col">
-            <Center>
-              <a href="https://defiolio.com/" target="_blank" rel="noreferrer">
-                <img
-                  src={hostedImage(userTheme === 'light' ? '/img/logos/defiolio.webp' : '/img/logos/defiolio-white.webp')}
-                  alt="Defiolio"
-                  width="150px"
-                />
-              </a>
-            </Center>
-          </div>
-        </div>
+        <SimpleGrid columns={{base: 2, sm: 2, md: 3, lg: 4}} gap={6}>
+          <Center>
+            <a href="https://weare.fi/en/" target="_blank" rel="noreferrer">
+              <img
+                src={hostedImage(userTheme === 'light' ? '/img/logos/partners/wearefi-logo.png' : '/img/logos/partners/wearefi-white.png')}
+                alt="WeAre Solutions"
+                width={userTheme === 'light' ? '64px' : '160px'}
+              />
+            </a>
+          </Center>
+          <Center>
+            <a href="#">
+              <img
+                onClick={() => window['logBadgeClick']()}
+                id="badge-button"
+                style={{"width":"240px", "height":"53px"}}
+                src={hostedImage(userTheme === 'light' ?
+                  '/img/logos/partners/alchemy-light.svg' :
+                  '/img/logos/partners/alchemy-dark.svg'
+                )}
+                alt="Alchemy Supercharged"
+              />
+            </a>
+          </Center>
+          <Center>
+            <a href="https://www.cronoslabs.org/" target="_blank" rel="noreferrer">
+              <img
+                src={hostedImage(userTheme === 'light' ? '/img/logos/partners/cronos-labs.png' : '/img/logos/partners/cronos-labs-white.png')}
+                alt="Cronos Labs"
+                width="150px"
+              />
+            </a>
+          </Center>
+          <Center>
+            <a href="https://www.sentio.xyz/" target="_blank" rel="noreferrer">
+              <img
+                src={hostedImage(userTheme === 'light' ? '/img/logos/partners/sentio.webp' : '/img/logos/partners/sentio-white.webp')}
+                alt="sentio"
+                width="150px"
+              />
+            </a>
+          </Center>
+          <Center>
+            <a href="https://crodex.app/" target="_blank" rel="noreferrer">
+              <img
+                src={hostedImage(userTheme === 'light' ? '/img/logos/partners/crodex.png' : '/img/logos/partners/crodex-white.png')}
+                alt="CRODEX"
+                width="150px"
+              />
+            </a>
+          </Center>
+          <Center>
+            <a href="https://nebkas.ro" target="_blank" rel="noreferrer">
+              <img
+                src={hostedImage(userTheme === 'light' ? '/img/logos/partners/nebkas-logo.png' : '/img/logos/partners/nebkas-logo.png')}
+                alt="nebkas.co"
+                width="128px"
+              />
+            </a>
+          </Center>
+          <Center>
+            <a href="https://defiolio.com/" target="_blank" rel="noreferrer">
+              <img
+                src={hostedImage(userTheme === 'light' ? '/img/logos/partners/defiolio.webp' : '/img/logos/partners/defiolio-white.webp')}
+                alt="Defiolio"
+                width="150px"
+              />
+            </a>
+          </Center>
+        </SimpleGrid>
       </section>
-      <Footer />
     </div>
   );
 };

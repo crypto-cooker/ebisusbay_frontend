@@ -143,7 +143,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
   const handleApproval = async (e) => {
     e.preventDefault();
     try {
-      const nftAddress = nft.address ?? nft.nftAddress;
+      const nftAddress = collection.address;
       const marketContractAddress = config.contracts.market;
       const contract = new Contract(nftAddress, ERC721, user.provider.getSigner());
       setExecutingApproval(true);
@@ -188,6 +188,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
       setExecutingAcceptOffer(false);
       onClose();
     } catch (error) {
+      console.log(error)
       if (error.data) {
         toast.error(error.data.message);
       } else if (error.message) {
@@ -262,7 +263,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
                     <div className="fs-6">Offer Price</div>
                     <div className="fs-2 fw-bold">
                       <div className="d-flex justify-content-center">
-                        <Image src="/img/logos/cdc_icon.svg" width={32} height={32} />
+                        <Image src="/img/logos/cdc_icon.svg" width={32} height={32} alt='Cronos Logo' />
                         <span className="ms-1">
                           {commify(offer.price)}
                         </span>

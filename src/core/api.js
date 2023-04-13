@@ -12,7 +12,7 @@ import {
   caseInsensitiveCompare,
   convertIpfsResource,
   findCollectionByAddress,
-  isAntMintPassCollection, isBundle, isCroniesCollection, isCroskullSbtCollection,
+  isAntMintPassCollection, isBundle, isCroniesCollection, isCroskullSbtCollection, isGaslessListing,
   isMetapixelsCollection,
   isNftBlacklisted,
   isSouthSideAntsCollection,
@@ -122,7 +122,7 @@ export async function getCollectionMetadata(contractAddress, sort, filter) {
     query = { ...query, ...sortProps };
   }
   if (contractAddress != null) {
-    query['collection'] = Array.isArray(contractAddress)
+    query['address'] = Array.isArray(contractAddress)
       ? contractAddress.map((c) => ethers.utils.getAddress(c.toLowerCase()))
       : ethers.utils.getAddress(contractAddress.toLowerCase());
   }
@@ -131,7 +131,7 @@ export async function getCollectionMetadata(contractAddress, sort, filter) {
 
   const uri = `${api.baseUrl}${api.collections}?${queryString}`;
   if(newEndpointEnabled){
-    const data = await getCollections();
+    const data = await getCollections(query);
     return data.data;
   }
   else{
@@ -250,7 +250,7 @@ export async function getCollectionPowertraits(contractAddress) {
 }
 
 
-export async function getUnfilteredListingsForAddress(walletAddress, walletProvider, page) {
+export async function getUnfilteredListingsForAddress(walletAddress, walletProvider, page, sort = null) {
   let query = {
     seller: walletAddress,
     state: 0,
@@ -259,6 +259,7 @@ export async function getUnfilteredListingsForAddress(walletAddress, walletProvi
     sortBy: 'listingTime',
     direction: 'asc',
   };
+  if (sort) query = {...query, ...sort};
 
   // const signer = walletProvider.getSigner();
 
@@ -272,17 +273,17 @@ export async function getUnfilteredListingsForAddress(walletAddress, walletProvi
     const listings = json.listings || [];
 
     //  array of {id, address} wallet nfts
-    const quickWallet = await getQuickWallet(walletAddress, {pageSize: 500});
+    const quickWallet = await getQuickWallet(walletAddress, {pageSize: 1000});
     const walletNfts = quickWallet.data.map((nft) => {
       return { id: nft.nftId, address: nft.nftAddress };
     });
 
     const filteredListings = listings
       .map((item) => {
-        const { listingId, price, nft, purchaser, valid, state, is1155, nftAddress } = item;
+        const { listingId, price, nft, purchaser, valid, state, is1155, nftAddress, invalid } = item;
         const { name, image, rank } = nft || {};
 
-        const listingTime = moment(new Date(item.listingTime * 1000)).format('DD/MM/YYYY, HH:mm');
+        const listingTime = item.listingTime;
         const id = item.nftId;
         const isInWallet = !!walletNfts.find((walletNft) => caseInsensitiveCompare(walletNft.address, nftAddress) && walletNft.id === id);
         const listed = true;
@@ -325,7 +326,8 @@ export async function getUnfilteredListingsForAddress(walletAddress, walletProvi
           price,
           purchaser,
           rank,
-          valid,
+          valid: valid && isInWallet,
+          invalid: invalid || !isInWallet,
           useIframe: isMetaPixels,
           nft,
           iframeSource: isMetaPixels ? `https://www.metaversepixels.app/grid?id=${id}&zoom=3` : null,
@@ -344,7 +346,7 @@ export async function getUnfilteredListingsForAddress(walletAddress, walletProvi
   }
 }
 
-export async function getNftSalesForAddress(walletAddress, page) {
+export async function getNftSalesForAddress(walletAddress, page, sort = null) {
   let query = {
     seller: walletAddress,
     state: 1,
@@ -353,6 +355,7 @@ export async function getNftSalesForAddress(walletAddress, page) {
     sortBy: 'saleTime',
     direction: 'desc',
   };
+  if (sort) query = {...query, ...sort};
 
   try {
     const queryString = new URLSearchParams(query);
@@ -567,14 +570,21 @@ async function getAllListingsForUser(walletAddress) {
     });
     const url = new URL(api.listings, `${api.baseUrl}`);
     const listingsReponse = await (await fetch(`${url}?${queryString}`)).json();
-    listings = [...listings, ...listingsReponse.listings];
-    chunkParams.complete = listingsReponse.listings.length < chunkParams.pageSize;
+
+    // Workaround in testnet in case testnet doesn't return the correct response
+    const responseListings = listingsReponse.listings ?? [];
+
+    listings = [...listings, ...responseListings];
+    chunkParams.complete = responseListings.length < chunkParams.pageSize;
     chunkParams.curPage++;
   }
 
   return listings;
 }
 
+/**
+ * @deprecated - use nextApiService instead
+ */
 export async function getNftsForAddress2(walletAddress, walletProvider, page, collectionAddresses) {
   let query = { page };
   if (collectionAddresses && collectionAddresses.length > 0) {
@@ -586,6 +596,9 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
 
   const results = quickWallet.data;
 
+  // Determine before filters if there is a next page to avoid page cutoffs
+  const hasNextPage = results.length > 0;
+
   let zeroMatched = false;
   for (const nft of results) {
     const matchedContract = findCollectionByAddress(nft.nftAddress, nft.nftId);
@@ -593,7 +606,10 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
   }
 
   if (!zeroMatched && results.length > 0) {
-    return [0];
+    return {
+      hasNextPage,
+      nfts: []
+    };
   }
 
   const signer = walletProvider?.getSigner();
@@ -610,7 +626,7 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
     });
   };
   const writeContracts = [];
-  return await Promise.all(
+  const mappedResults = await Promise.all(
     results
       .filter((nft) => {
         if(isBundle(nft.nftAddress) && nft.metadata?.nfts) return true
@@ -644,23 +660,25 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
         } else {
           const knownContract = findCollectionByAddress(nft.nftAddress, nft.nftId);
 
-          let key = knownContract.address;
-          if (knownContract.multiToken) {
-            key = `${key}${knownContract.id}`;
-          }
-          const writeContract = signer ?
-            (writeContracts[key] ??
-            new Contract(knownContract.address, knownContract.multiToken ? ERC1155 : ERC721, signer)) : null;
-          writeContracts[key] = writeContract;
+        let key = knownContract.address;
+        if (knownContract.multiToken) {
+          key = `${key}${knownContract.id}`;
+        }
+        const writeContract = signer ?
+          (writeContracts[key] ??
+          new Contract(knownContract.address, knownContract.multiToken ? ERC1155 : ERC721, signer)) : null;
+        writeContracts[key] = writeContract;
 
-          const listed = !!getListing(knownContract.address, nft.nftId);
-          const listingId = listed ? getListing(knownContract.address, nft.nftId).listingId : null;
-          const price = listed ? getListing(knownContract.address, nft.nftId).price : null;
+        const listing = getListing(knownContract.address, nft.nftId);
+        const listingId = !!listing ? listing.listingId : null;
+        const price = !!listing ? listing.price : null;
+        const isGasless = !!listing && isGaslessListing(listing.listingId);
+        const expirationDate = !!listing ? listing.expirationDate : null;
 
-          if (isAntMintPassCollection(nft.nftAddress)) {
-            const metadata = await getAntMintPassMetadata(nft.nftAddress, nft.nftId);
-            if (metadata) nft = { ...nft, ...metadata };
-          }
+        if (isAntMintPassCollection(nft.nftAddress)) {
+          const metadata = await getAntMintPassMetadata(nft.nftAddress, nft.nftId);
+          if (metadata) nft = { ...nft, ...metadata };
+        }
 
           let image;
           let name = nft.name;
@@ -703,29 +721,35 @@ export async function getNftsForAddress2(walletAddress, walletProvider, page, co
             canSell = false;
           }
 
-          return {
-            id: nft.nftId,
-            name: name,
-            description: nft.description,
-            properties: nft.properties && nft.properties.length > 0 ? nft.properties : nft.attributes,
-            image: image,
-            video: video,
-            count: nft.balance,
-            address: knownContract.address,
-            contract: writeContract,
-            multiToken: knownContract.multiToken,
-            rank: nft.rank,
-            listable: knownContract.listable,
-            listed,
-            listingId,
-            price,
-            canSell: canSell,
-            canTransfer: canTransfer,
-            isStaked: isStaked,
-          };
-        }
-      })
+        return {
+          id: nft.nftId,
+          name: name,
+          description: nft.description,
+          properties: nft.properties && nft.properties.length > 0 ? nft.properties : nft.attributes,
+          image: image,
+          video: video,
+          count: nft.balance,
+          address: knownContract.address,
+          contract: writeContract,
+          multiToken: knownContract.multiToken,
+          rank: nft.rank,
+          listable: knownContract.listable,
+          listed: !!listing,
+          listingId,
+          price,
+          expirationDate,
+          canSell: canSell,
+          canTransfer: canTransfer,
+          isStaked: isStaked,
+          isGaslessListing: isGasless
+        };
+      }})
   );
+
+  return {
+    hasNextPage,
+    nfts: mappedResults
+  }
 }
 
 export async function getLeaders(timeframe) {

@@ -1,8 +1,7 @@
 import React from 'react';
 
-import Footer from '../../components/Footer';
 import CuratedAuctionCollection from "./CuratedAuctionCollection";
-import PageHead from "../../Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Heading} from "@chakra-ui/react";
 import Image from "next/image";
 
@@ -33,6 +32,7 @@ const WorldOfCatsAuction = () => {
                 src={image}
                 width={168}
                 height={300}
+                alt="World of Cats"
               />
             </div>
           </div>
@@ -45,7 +45,6 @@ const WorldOfCatsAuction = () => {
           </div>
         </div>
       </section>
-      <Footer />
     </>
   );
 };

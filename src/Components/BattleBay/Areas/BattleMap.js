@@ -19,7 +19,6 @@ const BattleMap = ({onBack, factions=[]}) => {
   const { height, width: windowWidth } = useWindowDimensions();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [controlPoint, setControlPoint] = useState([], () => {});
-  const mapData = [];
   const [area, setAreas] = useState([]);
   const [selectedControlPoint, setSelectedControlPoint] = useState(0);
 
@@ -194,7 +193,7 @@ const BattleMap = ({onBack, factions=[]}) => {
   
   const SetUpMap = async () => {
     getMap().then((data) => {
-      mapData = data.data.data.map; 
+      const mapData = data.data.data.map;
       // console.log(mapData);
       setAreas(mapData.regions[0].controlPoints.map((controlPoint, i) => 
         (<area onClick={() => {setSelectedControlPoint(controlPoint.id); selectRegion(controlPoint.id); onOpen();}}

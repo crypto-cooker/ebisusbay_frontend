@@ -16,7 +16,7 @@ const SocialsBar = ({ address, socials, showCopy = true }) => {
   };
 
   return (
-    <div className="mt-2">
+    <div>
       {website && (
         <a href={website} target="_blank" rel="noreferrer" title="View Website">
           <LayeredIcon icon={faGlobe} />

@@ -1,7 +1,7 @@
 export class CollectionSortOption {
   label = 'None';
-  key = null;
-  direction = null;
+  key = '';
+  direction = '';
 
   get getOptionLabel() {
     return this.label;

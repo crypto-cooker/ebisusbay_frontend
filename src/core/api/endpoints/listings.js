@@ -36,7 +36,7 @@ export async function sortAndFetchListings(
     state: state ?? 0,
     page: page,
     pageSize: pagesize,
-    sortBy: 'listingId',
+    sortBy: 'listingTime',
     direction: 'desc'
   };
   if (filter && (filter instanceof ListingsQuery)) {
@@ -142,4 +142,8 @@ export const getListings = async (listingsQuery) => {
     abortController = null;
     throw error;
   }
+}
+
+export const getValidListings = async (listingsQuery) => {
+  return api.get('listings/validate', {params: listingsQuery})
 }

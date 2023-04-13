@@ -233,7 +233,7 @@ const ManageAuctionList = () => {
                   </div>
                   <div className="card-footer d-flex justify-content-between">
                     <Link href={`/auctions/${auction.getAuctionId}`}>
-                      <a>View</a>
+                      View
                     </Link>
                     {auction.state === auctionState.NOT_STARTED && (
                       <span className="cursor-pointer" onClick={() => showConfirmationDialog(auction)}>Start</span>
@@ -263,7 +263,7 @@ const ManageAuctionList = () => {
                 </div>
                 <div className="card-footer d-flex justify-content-between">
                   <Link href={`/auctions/${auction.getAuctionId}`}>
-                    <a>View</a>
+                    View
                   </Link>
                   <span className="cursor-pointer" onClick={() => handleReturnBids(auction)}>Return {auction.unwithdrawnCount} Bids</span>
                 </div>

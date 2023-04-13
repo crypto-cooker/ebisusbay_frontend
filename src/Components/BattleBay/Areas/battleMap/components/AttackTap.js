@@ -43,7 +43,6 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
   const user = useSelector((state) => state.user);
   const [isLoading, getSigner] = useCreateSigner();
-  const playerFactions = [];
 
   const [attackerOptions, setAttackerOptions] = useState([]);
   const [defenderOptions, setDefenderOptions] = useState([]);
@@ -59,11 +58,11 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   })
   const onChangeInputsAttacker = (e) => {
     setDataForm({...dataForm, [e.target.name]: e.target.value})
-    attackerTroopsAvailable = controlPoint.leaderBoard.filter(faction => faction.name === e.target.value)[0].totalTroops;
+    setAttackerTroopsAvailable(controlPoint.leaderBoard.filter(faction => faction.name === e.target.value)[0].totalTroops);
   }
   const onChangeInputsDefender = (e) => {
     setDataForm({...dataForm, [e.target.name]: e.target.value})
-    defenderTroops = controlPoint.leaderBoard.filter(faction => faction.name === e.target.value)[0].totalTroops;
+    setDefenderTroops(controlPoint.leaderBoard.filter(faction => faction.name === e.target.value)[0].totalTroops);
   }
   const GetPlayerOwnedFactions = async () => {
     let signatureInStorage = getAuthSignerInStorage()?.signature;
@@ -75,9 +74,9 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
       try {
         // const res = await getProfileId(user.address.toLowerCase(), signatureInStorage);
         const data = await getFactionsOwned(user.address.toLowerCase(), signatureInStorage);
-        playerFactions = data.data.data;
+        const playerFactions = data.data.data;
         // console.log('playerFactions', playerFactions);
-        ShowAvailableFactions();
+        ShowAvailableFactions(playerFactions);
       } catch (error) {
         console.log(error)
       }
@@ -255,7 +254,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   {
     battleLog.current.style.display = battleLog.current.style.display === "block" ? "none" : "block";
   }
-  const ShowAvailableFactions = async () => {
+  const ShowAvailableFactions = async (playerFactions) => {
     setAttackerOptions(playerFactions.map((faction, index) => (
       <option value={faction.name} key={index}>{faction.name}</option>)
       ))

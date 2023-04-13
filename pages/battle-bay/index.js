@@ -1,5 +1,4 @@
-import Footer from "@src/Components/components/Footer";
-import PageHead from "@src/Components/Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 import React, {useState} from "react";
 
 import Barracks from "@src/Components/BattleBay/Areas/Barracks";
@@ -58,7 +57,6 @@ const BattleBay = () => {
         <DefaultArea onChange={navigate} />
         // <BattleMap onChange={navigate} />
       )}
-      <Footer />
     </>
   )
 }

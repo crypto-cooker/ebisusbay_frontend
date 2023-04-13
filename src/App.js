@@ -1,20 +1,20 @@
 import React, { useEffect } from 'react';
-import Head from 'next/head';
 import { useDispatch, useSelector } from 'react-redux';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { toast, ToastContainer } from 'react-toastify';
 import { initializeApp } from 'firebase/app';
-import { initializeAnalytics } from 'firebase/analytics';
+import { getAnalytics } from "@firebase/analytics";
 
 import ScrollToTopBtn from '@src/modules/layout/navbar/ScrollToTop';
-import Header from '@src/modules/layout/navbar/header';
+import Header from '@src/components-v2/shared/layout/navbar';
 import firebaseConfig from './Firebase/firebase_config';
 import { initProvider } from './GlobalState/User';
 import { appInitializer } from './GlobalState/InitSlice';
 import { getTheme } from './Theme/theme';
-import {DefaultHead} from "./Components/Head/DefaultHead";
+import DefaultHead from "@src/components-v2/shared/layout/default-head";
 import {useColorMode} from "@chakra-ui/react";
 import {syncCartStorage} from "@src/GlobalState/cartSlice";
+import Footer from "@src/components-v2/shared/layout/footer";
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -42,6 +42,9 @@ const GlobalStyles = createGlobalStyle`
   }
 `;
 
+
+const firebase = initializeApp(firebaseConfig);
+
 function App({ Component, pageProps }) {
   const dispatch = useDispatch();
   const { colorMode } = useColorMode()
@@ -59,9 +62,8 @@ function App({ Component, pageProps }) {
   }, [dispatch]);
 
   useEffect(() => {
-    const firebase = initializeApp(firebaseConfig);
     if (typeof window !== 'undefined') {
-      initializeAnalytics(firebase);
+      getAnalytics(firebase);
       dispatch(initProvider());
     }
   }, [dispatch]);
@@ -86,6 +88,7 @@ function App({ Component, pageProps }) {
         <div style={{paddingTop:'74px'}}>
           <Component {...pageProps} />
         </div>
+        <Footer />
         <ScrollToTopBtn />
         <ToastContainer
           position={toast.POSITION.BOTTOM_LEFT}

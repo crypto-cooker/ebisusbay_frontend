@@ -1,23 +1,23 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import ReactPlayer from 'react-player/lazy';
 import Link from 'next/link';
-import { CdnImage } from './CdnImage';
-import { ImageKitService } from '@src/helpers/image';
+import {CdnImage} from './CdnImage';
+import {ImageKitService} from '@src/helpers/image';
 import {fallbackImageUrl} from "@src/core/constants";
 
 export const AnyMedia = ({
   image,
   video,
   title,
-  url,
-  newTab,
+  url = '',
+  newTab = false,
   usePlaceholder = false,
-  videoProps,
-  className,
+  videoProps = {},
+  className = '',
   layout = 'responsive',
   width = 1,
   height = 1,
-  sizes,
+  sizes = null,
 }) => {
   const [dynamicType, setDynamicType] = useState(null);
   const [transformedImage, setTransformedImage] = useState(image);
@@ -41,6 +41,13 @@ export const AnyMedia = ({
   useEffect(() => {
     determineMediaType();
   }, []);
+
+  const hasFileExtension = (filename) => {
+    const filenameParts = filename.split('?')[0].split('/');
+    const filenamePart = filenameParts[filenameParts.length - 1];
+    const fileExt = filenamePart.slice(filenamePart.lastIndexOf('.') + 1);
+    return fileExt !== filenamePart && fileExt !== '';
+  };
 
   const determineMediaType = () => {
     if (!image || image.startsWith('data')) {
@@ -70,7 +77,11 @@ export const AnyMedia = ({
           const [mediaType, format] = contentType.split('/');
           let type = mediaTypes[mediaType] ?? mediaTypes.image;
           if (type === mediaTypes.video) {
-            setVideoThumbNail(makeThumb(transformedImage));
+            let target = transformedImage;
+            if (!hasFileExtension(transformedImage)) {
+              target = ImageKitService.appendMp4Extension(target);
+            }
+            setVideoThumbNail(makeThumb(target));
           }
           if (format === 'gif') {
             setTransformedImage(ImageKitService.gifToMp4(imageURL).toString());
@@ -123,18 +134,16 @@ export const AnyMedia = ({
             <IFrame url={image} />
           ) : url ? (
             <Link href={url} target={newTab ? '_blank' : '_self'}>
-              <a>
-                <Image
-                  image={transformedImage}
-                  title={title}
-                  className={className}
-                  blur={blurImageUrl(transformedImage)}
-                  sizes={sizes}
-                  layout={layout}
-                  width={width}
-                  height={height}
-                />
-              </a>
+              <Image
+                image={transformedImage}
+                title={title}
+                className={className}
+                blur={blurImageUrl(transformedImage)}
+                sizes={sizes}
+                layout={layout}
+                width={width}
+                height={height}
+              />
             </Link>
           ) : (
             <Image

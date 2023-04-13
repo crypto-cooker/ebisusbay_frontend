@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import ListingCollection from '../src/Components/components/ListingCollection';
-import Footer from '../src/Components/components/Footer';
 import TopFilterBar from '../src/Components/components/TopFilterBar';
 import { sortOptions } from '../src/Components/components/constants/sort-options';
 import { marketPlaceCollectionFilterOptions } from '../src/Components/components/constants/filter-options';
@@ -11,7 +10,7 @@ import { filterListings, getMarketData, searchListings, sortListings, filterList
 import { debounce, siPrefixedNumber } from '../src/utils';
 import { SortOption } from '../src/Components/Models/sort-option.model';
 import { MarketFilterCollection } from "../src/Components/Models/market-filters.model";
-import PageHead from "../src/Components/Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Heading} from "@chakra-ui/react";
 
 const Marketplace = () => {
@@ -168,8 +167,6 @@ const Marketplace = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

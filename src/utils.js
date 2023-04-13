@@ -1,10 +1,10 @@
 import moment from 'moment';
 import blacklist from './core/configs/blacklist.json';
 import attributes from './core/configs/attributes.json';
-import { useEffect, useRef } from 'react';
+import {useEffect, useRef} from 'react';
 import IPFSGatewayTools from '@pinata/ipfs-gateway-tools/dist/node';
-import { appConfig } from './Config';
-import { hostedImage } from './helpers/image';
+import {appConfig} from './Config';
+import {hostedImage} from './helpers/image';
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import {commify} from "ethers/lib/utils";
 import brands from '../src/core/data/brands.json';
@@ -254,31 +254,35 @@ export function shortString(str, leftChars = 3, rightChars = 3) {
   return `${str.substring(0, leftChars)}...${str.substring(str.length - rightChars, str.length)}`;
 }
 
-export function timeSince(date) {
-  var seconds = Math.floor((new Date() - date) / 1000);
+export function timeSince(timestamp) {
+  if (!timestamp) return timestamp;
 
-  var interval = seconds / 31536000;
+  timestamp = millisecondTimestamp(timestamp);
+  const seconds = Math.floor(Math.abs((new Date() - timestamp) / 1000));
+  let interval = Math.floor(seconds / 31536000);
 
   if (interval > 1) {
-    return Math.floor(interval) + ' years';
+    return `${interval} ${pluralize(interval, 'year')}`;
   }
-  interval = seconds / 2592000;
+  interval = Math.floor(seconds / 2592000);
+  if (interval >= 1) {
+    return `${interval} ${pluralize(interval, 'month')}`;
+  }
+  interval = Math.floor(seconds / 86400);
+  if (interval >= 1) {
+    return `${interval} ${pluralize(interval, 'day')}`;
+  }
+  interval = Math.floor(seconds / 3600);
+  if (interval >= 1) {
+    return `${interval} ${pluralize(interval, 'hour')}`;
+  }
+  interval = Math.floor(seconds / 60);
   if (interval > 1) {
-    return Math.floor(interval) + ' months';
+    return `${interval} ${pluralize(interval, 'minute')}`;
   }
-  interval = seconds / 86400;
-  if (interval > 1) {
-    return Math.floor(interval) + ' days';
-  }
-  interval = seconds / 3600;
-  if (interval > 1) {
-    return Math.floor(interval) + ' hours';
-  }
-  interval = seconds / 60;
-  if (interval > 1) {
-    return Math.floor(interval) + ' minutes';
-  }
-  return Math.floor(seconds) + ' seconds';
+
+  interval = Math.floor(seconds);
+  return `${interval} ${pluralize(interval, 'second')}`;
 }
 
 export function secondsToDhms(seconds) {
@@ -346,6 +350,11 @@ export function createSuccessfulAddCartContent(onClickView) {
  */
 export function caseInsensitiveCompare(str1, str2) {
   return str1?.toLowerCase() === str2?.toLowerCase();
+}
+
+export function ciIncludes(array, str) {
+  if (!array) return false;
+  return array.map((item) => item.toLowerCase()).includes(str.toLowerCase());
 }
 
 export function newlineText(text) {
@@ -447,18 +456,24 @@ export const isLadyWeirdApesCollection = (address) => {
   return isCollection(address, 'lady-weird-apes', '0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1');
 };
 
+export const isVoxelWeirdApesCollection = (address) => {
+  return isCollection(address, 'voxel-weird-apes', '0xe02A74813053e96C5C98F817C0949E0B00728Ef6');
+};
+
 export const isAnyWeirdApesCollection = (address) => {
   return isCollection(
     address,
     [
       'weird-apes-club',
       'baby-weird-apes',
-      'lady-weird-apes'
+      'lady-weird-apes',
+      'voxel-weird-apes'
     ],
     [
       '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44',
       '0x89F7114C73d5cef7d7EDCbDb14DaA092EB2194c9',
-      '0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1'
+      '0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1',
+      '0xe02A74813053e96C5C98F817C0949E0B00728Ef6'
     ]
   );
 };
@@ -472,7 +487,9 @@ export const isEvoSkullCollection = (address) => {
 };
 
 export const isCroSkullPetsCollection = (address) => {
-  return isCollection(address, 'croskull-pets', '0xB77959DC7a12F7549ACC084Af01259Fc48813c89');
+  return isCollection(address, 'croskull-pets', '0xB77959DC7a12F7549ACC084Af01259Fc48813c89')||
+    isCollection(address, 'croskull-pets-s2', '0x54655D5468f072D5bcE1577c4a46F701C28a41A7') ||
+    isCollection(address, 'croskull-pets-s3', '0x31B378ac025a341839CD81C4D29A8457324D3EbC');
 };
 
 export const isCroniesCollection = (address) => {
@@ -508,10 +525,16 @@ export const isArgonautsBrandCollection = (address) => {
 };
 
 export const isEbVipCollection = (address, id) => {
-  const collection = collections.find((c) => c.slug === 'vip-founding-member');
+  const collection = collections.find((c) => c.slug === 'founding-member');
   return collection &&
     caseInsensitiveCompare(collection.address, address) &&
-    collection.id.toString() === id.toString();
+    id?.toString() === '2';
+};
+
+export const isFoundingMemberCollection = (address, id) => {
+  const collection = collections.find((c) => c.slug === 'founding-member');
+  return collection &&
+    caseInsensitiveCompare(collection.address, address);
 };
 
 export const isBundle = (addressOrSlug) => {
@@ -567,15 +590,16 @@ export const findCollectionByAddress = (address, tokenId) => {
 
 export const findCollectionFloor = (knownContract, collectionsStats) => {
   const collectionStats = collectionsStats.find((o) => {
-    if (knownContract.multiToken && o.collection.indexOf('-') !== -1) {
-      let parts = o.collection.split('-');
+    const address = o.address ?? o.address;
+    if (knownContract.multiToken && address.indexOf('-') !== -1) {
+      let parts = o.address.split('-');
       return caseInsensitiveCompare(knownContract.address, parts[0]) && knownContract.id === parseInt(parts[1]);
     } else {
-      return caseInsensitiveCompare(knownContract.address, o.collection);
+      return caseInsensitiveCompare(knownContract.address, o.address);
     }
   });
 
-  return collectionStats ? collectionStats.floorPrice : null;
+  return collectionStats ? collectionStats.stats.total.floorPrice : null;
 };
 
 export const round = (num, decimals) => {
@@ -777,3 +801,24 @@ export const pluralize = (val, word, plural = word + 's') => {
   if (typeof val === 'object') return (num, word) => _pluralize(num, word, val[word]);
   return _pluralize(val, word, plural);
 };
+
+export const isGaslessListing = (listingId) => {
+  return listingId && listingId.toString().startsWith('0x')
+}
+
+export const croToUsd = (value, rate) => {
+  if (typeof value === 'string') value = Number(value);
+  if (typeof rate === 'string') rate = Number(rate);
+
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
+
+  return formatter.format(value * rate);
+}
+
+export const cacheBustingKey = (minutes = 5, date = Date.now()) => {
+  const coeff = 1000 * 60 * minutes;
+  return Math.round(date / coeff) * coeff;
+}

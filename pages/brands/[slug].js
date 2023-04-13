@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import PageHead from "../../src/Components/Head/PageHead";
+import PageHead from "@src/components-v2/shared/layout/page-head";
 import {hostedImage, ImageKitService} from "@src/helpers/image";
 import brands from '@src/core/data/brands.json';
 import {
@@ -15,16 +15,16 @@ import {
   useBreakpointValue
 } from "@chakra-ui/react";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
-import Footer from "@src/Components/components/Footer";
 import EndpointProxyService from "@src/services/endpoint-proxy.service";
-import {caseInsensitiveCompare, siPrefixedNumber} from "@src/utils";
+import {caseInsensitiveCompare, ciIncludes, siPrefixedNumber} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {appConfig} from "@src/Config";
 import {useRouter} from "next/router";
 import CollectionsTab from "@src/Components/Brand/Tabs/CollectionsTab/CollectionsTab";
 import ListingsTab from "@src/Components/Brand/Tabs/ListingsTab/ListingsTab";
-import WeirdApesStakingTab from "@src/Components/Brand/Tabs/StakingTab/WeirdApesStakingTab";
 import {pushQueryString} from "@src/helpers/query";
+import StakingTab from "@src/components-v2/feature/brand/tabs/staking";
+import {stakers} from "@src/components-v2/feature/brand/tabs/staking/config";
 
 const drops = appConfig('drops');
 const tabs = {
@@ -78,9 +78,11 @@ const Brand = ({ brand, collections, stats, query }) => {
         <SimpleGrid columns={{base: 1, md: 2}} position="relative" bottom={0} px={10} pt={{base: '75px', md:'40px'}} pb={4} maxW="2560px">
           <Box>
             <Heading color="inherit">{brand.name}</Heading>
-            <SocialsBar
-              socials={brand.socials}
-            />
+            <Box my={2}>
+              <SocialsBar
+                socials={brand.socials}
+              />
+            </Box>
             <Text maxW="800px" mt={1} noOfLines={viewMore ? 0 : {base: 3, md: 5}}>
               {brand.description}
             </Text>
@@ -112,7 +114,7 @@ const Brand = ({ brand, collections, stats, query }) => {
             <li className={`tab ${currentTab === tabs.listings ? 'active' : ''} my-1`}>
               <span onClick={handleBtnClick(tabs.listings)}>Listings</span>
             </li>
-            {brand.slug === 'weird-apes-club' && (
+            {Object.keys(stakers).includes(brand.slug) && (
               <li className={`tab ${currentTab === tabs.staking ? 'active' : ''} my-1`}>
                 <span onClick={handleBtnClick(tabs.staking)}>Staking</span>
               </li>
@@ -127,12 +129,11 @@ const Brand = ({ brand, collections, stats, query }) => {
               <ListingsTab brand={brand} collections={collections} />
             )}
             {currentTab === tabs.staking && (
-              <WeirdApesStakingTab />
+              <StakingTab brand={brand} collections={collections} />
             )}
           </div>
         </div>
       </Box>
-      <Footer />
     </>
   );
 };
@@ -174,21 +175,7 @@ export const getServerSideProps = async ({ params, query }) => {
       c.position = brandKeyedAddresses.find((o) => caseInsensitiveCompare(o.address, c.address)).position;
       const drop = drops.find((d) => d.slug === c.slug);
       c.drop = drop ?? null;
-      c.hidden = brand.hidden?.includes(c.address) ?? false;
-
-      if (c.slug === 'founding-member') {
-        const vip = c.tokens[2];
-        vip.stats = {
-          total: c.stats.tokens[2]
-        }
-        vip.totalSupply = 1000;
-        splitCollections.push(vip);
-
-        c.stats = {
-          total: c.stats.tokens[1],
-        };
-        c.totalSupply = 10000;
-      }
+      c.hidden = brand.hidden ? ciIncludes(brand.hidden, c.address) : false;
       return c;
     })
     .sort((a, b) => a.position > b.position ? 1 : -1);

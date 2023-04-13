@@ -1,22 +1,23 @@
-import React, { memo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {memo, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import Link from 'next/link';
-import { ethers } from 'ethers';
+import {ethers} from 'ethers';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
 import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
 import {darkTheme, getTheme, lightTheme} from '@src/Theme/theme';
-import { AnyMedia } from './AnyMedia';
-import { connectAccount, chainConnect } from '@src/GlobalState/User';
-import {appUrl, createSuccessfulAddCartContent, round} from '@src/utils';
+import {AnyMedia} from './AnyMedia';
+import {chainConnect, connectAccount} from '@src/GlobalState/User';
+import {appUrl, createSuccessfulAddCartContent, round, timeSince} from '@src/utils';
 import {convertGateway, nftCardUrl} from "@src/helpers/image";
-import {Box, Flex, Heading, Spacer, Text, useClipboard} from "@chakra-ui/react";
+import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useClipboard} from "@chakra-ui/react";
 import Image from "next/image";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {MenuPopup} from "@src/Components/components/chakra-components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
+  faBoltLightning,
   faEllipsisH,
   faExternalLink,
   faHand,
@@ -28,6 +29,9 @@ import {addToCart, openCart, removeFromCart} from "@src/GlobalState/cartSlice";
 import {toast} from "react-toastify";
 import {refreshMetadata} from "@src/GlobalState/nftSlice";
 import {specialImageTransform} from "@src/hacks";
+import {appConfig} from "@src/Config";
+
+const config = appConfig();
 
 const Watermarked = styled.div`
   position: relative;
@@ -47,12 +51,6 @@ const Watermarked = styled.div`
   }
 `;
 
-const MakeBuy = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
 const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
   const nftUrl = appUrl(`/collection/${listing.nftAddress}/${listing.nftId}`);
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
@@ -61,7 +59,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
   const cart = useSelector((state) => state.cart);
   const [isHovered, setIsHovered] = useState(false);
   const isInCart = cart.nfts.map((o) => o.listingId).includes(listing.listingId);
-  const { onCopy } = useClipboard(nftUrl);
+  const { onCopy } = useClipboard(nftUrl.toString());
 
   const getOptions = () => {
     const options = [];
@@ -107,6 +105,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
     return options;
   };
 
+
   const handleMakeOffer = () => {
     if (user.address) {
       setOpenMakeOfferDialog(!openMakeOfferDialog);
@@ -130,7 +129,11 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
       price: listing.price,
       address: listing.nftAddress,
       id: listing.nftId,
-      rank: listing.nft.rank
+      rank: listing.nft.rank,
+      expirationDate: listing.expirationDate ?? null,
+      seller: listing.seller ?? null,
+      listingTime:  listing.listingTime ?? null,
+      is1155: listing.is1155
     }));
     toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
   };
@@ -232,33 +235,40 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
             ) : (
               <div>&nbsp;</div>
             )}
-            <div className="d-flex flex-column justify-content-between p-2 pb-1">
+            <Flex direction='column' justify='space-between' px={2} py={1}>
               {listing.collection && (
                 <Link href={`/collection/${listing.collection.slug}`}>
-                  <a>
-                    <h6
-                      className="card-title mt-auto fw-normal"
-                      style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
-                    >
-                      {listing.collection.name}
-                    </h6>
-                  </a>
+                  <h6
+                    className="card-title mt-auto fw-normal"
+                    style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
+                  >
+                    {listing.collection.name}
+                  </h6>
                 </Link>
               )}
               <Link href={`/collection/${listing.collection.slug}/${listing.nftId}`}>
-                <a>
-                  <Heading as="h6" size="sm" className="card-title mt-auto">{listing.nft.name}</Heading>
-                </a>
+                <Heading as="h6" size="sm" className="card-title mt-auto mb-1">{listing.nft.name}</Heading>
               </Link>
-              <MakeBuy>
-                <div className="d-flex">
-                  <Image src="/img/logos/cdc_icon.svg" width={16} height={16} />
-                  <span className="ms-1">
-                    {getCorrectPrice(listing.price)}
-                  </span>
-                </div>
-              </MakeBuy>
-            </div>
+
+              <Tooltip label="Listing Price" placement='top-start'>
+                <HStack w='full' fontSize='sm'>
+                  <Box w='16px'>
+                    <FontAwesomeIcon icon={faBoltLightning} />
+                  </Box>
+                  <Box>
+                    <Flex>
+                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                      <Box as='span' ms={1}>
+                        {getCorrectPrice(listing.price)}
+                      </Box>
+                    </Flex>
+                  </Box>
+                  {listing.expirationDate && (
+                    <Text mt={1} flex={1} align='end' className='text-muted'>{timeSince(listing.expirationDate)}</Text>
+                  )}
+                </HStack>
+              </Tooltip>
+            </Flex>
             <Spacer />
             <Box
               borderBottomRadius={15}

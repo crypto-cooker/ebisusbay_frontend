@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { UpdateOwner, EditCollection as EditCollectionTab} from '@src/Components/EditCollection';
 import Royalties from "@src/Components/EditCollection/Royalties/Royalties";
-import Footer from "@src/Components/components/Footer";
 
 const tabs = {
   editCollection: 'editCollection',
@@ -67,7 +66,6 @@ const EditCollection = ({ tab }) => {
           </div>
         </div>
       </section>
-      <Footer />
     </>
   )
 }

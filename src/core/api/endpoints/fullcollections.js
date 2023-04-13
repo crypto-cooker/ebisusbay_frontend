@@ -32,6 +32,9 @@ export async function sortAndFetchCollectionDetails(
 
   if (sort && sort instanceof CollectionSortOption) {
     query = { ...query, ...sort.toApi() };
+    if (query.sortBy === 'listingTime') {
+      query.listed = 1;
+    }
   }
 
   if (filter.traits && Object.keys(filter.traits).length > 0) {

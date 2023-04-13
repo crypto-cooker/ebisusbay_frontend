@@ -1,0 +1,23 @@
+[
+  {
+    "label": "Weird Apes v1/OG",
+    "anchor": "0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44",
+    "addresses": [
+      "0x7D5f8F9560103E1ad958A6Ca43d49F954055340a"
+    ]
+  },
+  {
+    "label": "Cronos Apes",
+    "anchor": "0x50a6aA29b9E99c9B8b81069a12EeFeDAC85919B7",
+    "addresses": [
+      "0x5Cb9a12d31CF751ACc58B12B47cc4E093A6AB580"
+    ]
+  },
+  {
+    "label": "Gold Partner",
+    "anchor": "0xddd1486dbf9d65fcedcc8fd50779e6e66daad5bc",
+    "addresses": [
+      "0xF4C80B77AA1F73E09348693a81d744Fcd1263A2D"
+    ]
+  }
+]

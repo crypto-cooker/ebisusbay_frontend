@@ -98,7 +98,7 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
 
       const collection = await getCollection(nftAddress);
       if (collection.multiToken) {
-        setFloorPrice(collection.stats.tokens[fetchedNft.id ?? fetchedNft.nftId].floor_price ?? 0);
+        setFloorPrice(collection.stats.total.floorPrice ?? 0);
       } else {
         setFloorPrice(collection.stats.total.floorPrice ?? 0);
       }
@@ -203,7 +203,7 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
               {nft ? (
                 <>{existingOffer ? <>Update Offer on {nft.name}</> : <>Offer on {nft.name}</>}</>
               ) : (
-                <>{existingOffer ? <>Update Offer</> : <>Make Offer}</>}</>
+                <>{existingOffer ? <>Update Offer</> : <>Make Offer</>}</>
               )}
             </ModalHeader>
             <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />

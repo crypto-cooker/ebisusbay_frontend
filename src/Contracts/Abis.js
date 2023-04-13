@@ -31,6 +31,28 @@ export const ERC2981 = [
   'function royaltyInfo(uint256 tokenId, uint256 salePrice) external view returns (address receiver, uint256 royaltyAmount)',
 ];
 
+export const ERC165 = [
+  {
+    inputs: [
+      {
+        internalType: "bytes4",
+        name: "interfaceId",
+        type: "bytes4",
+      },
+    ],
+    name: "supportsInterface",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+];
+
 export const Elon = ['function mint(uint256 count) public payable'];
 
 export const EbisuDropAbi = [
@@ -39,6 +61,7 @@ export const EbisuDropAbi = [
   'function mint(uint256 _amount) external payable',
   'function maxSupply() external view returns (uint256)',
   'function getInfo() view returns (tuple(uint256 regularCost,uint256 memberCost,uint256 whitelistCost,uint256 maxSupply,uint256 totalSupply,uint256 maxMintPerAddress,uint256 maxMintPerTx))',
+  'function mintWithToken(uint256 _amount) external payable'
 ];
 
 export const SouthSideAntsReadAbi = [...ERC721, 'function getNftByUser(address) public view returns (uint256[])'];

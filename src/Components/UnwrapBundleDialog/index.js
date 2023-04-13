@@ -21,7 +21,7 @@ import useUnwrapBundle from "../Account/Settings/hooks/useUnwrapBundle";
 import { toast } from 'react-toastify';
 import {
   setRefetchNfts,
-} from "@src/GlobalState/batchListingSlice";
+} from "@src/GlobalState/user-batch";
 import ImageContainer from "../Bundle/ImagesContainer";
 
 
@@ -36,7 +36,7 @@ const UnwrapBundleDialog = ({ isOpen, onClose, nftBundle }) => {
   const unwrapNftEvent = async () => {
     setIsLoading(true)
     try {
-      await unwrapBundle(nftBundle.id)
+      await unwrapBundle(nftBundle.nftId)
       toast.success('Your bundle was unwrapped successfully');
       onClose();
       dispatch(setRefetchNfts(true))

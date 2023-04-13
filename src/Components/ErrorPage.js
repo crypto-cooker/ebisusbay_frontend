@@ -4,7 +4,6 @@ import { createGlobalStyle, default as styled } from 'styled-components';
 import { keyframes } from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
 
-import Footer from '../Components/components/Footer';
 import { getMarketData } from '../GlobalState/marketplaceSlice';
 import { theme } from '../Theme/theme';
 import {hostedImage} from "../helpers/image";
@@ -70,7 +69,7 @@ const Jumbotron = {
     className: '',
   }))`
     background-image: url(${({ isDark }) =>
-      hostedImage(isDark ? '/img/background/banner-dark.webp' : '/img/background/Ebisus-bg-1_L.webp')});
+      hostedImage(isDark ? '/img/background/banner-ryoshi-dark.webp' : '/img/background/banner-ryoshi-light.webp')});
     background-size: cover;
     height: max(100vh, 800px);
     display: flex;
@@ -157,7 +156,6 @@ export const ErrorPage = () => {
         {!mobile && <div className="container">{JumbotronData()}</div>}
       </Jumbotron.Host>
       {mobile && JumbotronData()}
-      <Footer />
     </div>
   );
 };

@@ -5,7 +5,7 @@ import { Flex, Text } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react";
 import { useHasHydrated } from '@src/hooks/useHasHydrated';
 import { getBundle } from '@src/core/api/endpoints/collectioninfo';
-import PriceActionBar from '@src/Components/NftDetails/PriceActionBar';
+import PriceActionBar from '@src/components-v2/feature/nft/price-action-bar';
 import { OFFER_TYPE } from '@src/Components/Offer/MadeOffers/MadeOffersRow';
 import { getFilteredOffers } from '@src/core/subgraph';
 import { useSelector, useDispatch } from 'react-redux';
