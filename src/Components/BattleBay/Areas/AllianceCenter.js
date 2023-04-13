@@ -19,19 +19,24 @@ import {
 import FactionForm from './FactionForm';
 import FactionRegistrationForm from './FactionRegistrationForm';
 import {subscribeFaction, getSeasonGameId, getProfileId, getFactionsOwned, getFactionsRegistered} from "@src/core/api/RyoshiDynastiesAPICalls";
-
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
+
+import {Contract} from "ethers";
+import {appConfig} from "@src/Config";
+import {toast} from "react-toastify";
+import AllianceCenterContract from "@src/Contracts/AllianceCenterContract.json";
 
 import { useFormik } from 'formik';
 import Pfp from './FactionIconUpload';
 
 const AllianceCenter = ({onBack}) => {
 
+  const config = appConfig();
   const user = useSelector((state) => state.user);
   const [isLoading, getSigner] = useCreateSigner();
-  const {address, theme, profile} = useSelector((state) => state.user);
+  // const {address, theme, profile} = useSelector((state) => state.user);
 
   const { isOpen: isOpenFaction, onOpen: onOpenFaction, onClose: onCloseFaction } = useDisclosure();
   const { isOpen: isOpenRegister, onOpen: onOpenRegister, onClose: onCloseRegister } = useDisclosure();
@@ -83,12 +88,16 @@ const AllianceCenter = ({onBack}) => {
       }
       if (signatureInStorage) {
         try {
-          // console.log("factionId: " + Number(factionId));
-          var data = await subscribeFaction(user.address.toLowerCase(), signatureInStorage, Number(factionId));
-          if(data.status === 200) {
-            // console.log('Registered')
-            GetFactions();
-          }
+          console.log(config.contracts.allianceCenter)
+          console.log(AllianceCenterContract)
+          // console.log(user.provider.getSigner())
+
+          const registerFactionContract = new Contract(config.contracts.allianceCenter, AllianceCenterContract, user.provider.getSigner());
+          const tx = await registerFactionContract.registerFaction(user.address.toLowerCase())
+          const receipt = await tx.wait();
+          toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+
+          console.log('Registered')
         } catch (error) {
           console.log(error)
         }
@@ -144,6 +153,7 @@ const AllianceCenter = ({onBack}) => {
     if (signatureInStorage) {
       try {
         const data = await getFactionsOwned(user.address.toLowerCase(), signatureInStorage);
+        console.log(data.data.data);
         const data2 = await getFactionsRegistered(user.address.toLowerCase(), signatureInStorage);
 
         setRegisteredFactions(data2.data.data);
@@ -156,11 +166,11 @@ const AllianceCenter = ({onBack}) => {
   }
 
   useEffect(() => {
-    if(registeredFactions.length > 0) {
+    if(playerFactions.length > 0) {
       setFactionDisplay(playerFactions.map((faction, index) => (
         <Tr key={index}>
           <Td textAlign='center'>
-            <form id="userSettings" autoComplete="off" onSubmit={handleSubmit} className="user-settings-form">
+            <form onSubmit={handleSubmit}>
             <Pfp values={values}
               errors={errors}
               touched={touched}
@@ -168,7 +178,9 @@ const AllianceCenter = ({onBack}) => {
               setFieldValue={setFieldValue}
               setFieldTouched={setFieldTouched}
               handleBlur={handleBlur}
+              faction={faction}
             /></form>
+            {/* <Image src={faction.image} width={100} height={100}/> */}
           </Td>
           <Td textAlign='center'>{faction.name}</Td>
           <Td textAlign='center'>
@@ -183,7 +195,7 @@ const AllianceCenter = ({onBack}) => {
         </Tr>
         )))
     }
-  }, [registeredFactions]);
+  }, [playerFactions]);
   
   return (
     <section className="gl-legacy container">

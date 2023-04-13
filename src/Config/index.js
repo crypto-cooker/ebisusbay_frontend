@@ -41,6 +41,7 @@ export const configData = {
       slothtyRugsurance: '0x73063E236EadC1e511FbE7313C6D8C5c651009E9',
       bundle: '0x40874F18922267cc2Ca7933828594aB5078C1065',
       cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233'
+      // allianceCenter: '0xba7Eb8a6BD856b652cF9CA4ed2bbE7fE4325Da17'
     },
     tokens: {
       loot: {
@@ -160,7 +161,8 @@ export const configData = {
       madAuction: '0x84356061d598A7bCE028dB6a37b14F84cf4A5905',
       slothtyRugsurance: '0xC54821941Bb036463bDB1eea781f9b29a7f98fAc',
       bundle: '0xEbFB981D5a7A7C2133752F7787263B58495bb923',
-      cnsusd: '0x263818f9693548446A41ad7025923612b490CB0D'
+      cnsusd: '0x263818f9693548446A41ad7025923612b490CB0D',
+      allianceCenter: '0xba7Eb8a6BD856b652cF9CA4ed2bbE7fE4325Da17'
     },
     tokens: {
       loot: {
