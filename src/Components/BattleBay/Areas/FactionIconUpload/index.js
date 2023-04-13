@@ -1,8 +1,9 @@
 import { useSelector } from 'react-redux';
 import { UploadFactionIcon } from '../../../Form'
 import { editProfileFormFields } from '../Form/constants';
+import { faC } from '@fortawesome/free-solid-svg-icons';
 
-export default function Pfp({ values, errors, touched, handleChange, setFieldValue, setFieldTouched, handleBlur }) {
+export default function Pfp({ values, errors, touched, handleChange, setFieldValue, setFieldTouched, handleBlur, faction }) {
   const user = useSelector((state) => state.user);
 
   return (
@@ -13,8 +14,8 @@ export default function Pfp({ values, errors, touched, handleChange, setFieldVal
           const fieldKey = props.key;
           const subFormKey = editProfileFormFields[1].key;
           const name = `userInfo.${subFormKey}.${[fieldKey]}`;
-          props.name = name;
-          props.key = `${type}-${fieldKey}`;
+          props.name = faction.name;
+          // props.key = `${type}-${fieldKey}`;
           // props.value = values.userInfo[subFormKey]?.[fieldKey];
 
           props.error = 
@@ -23,7 +24,7 @@ export default function Pfp({ values, errors, touched, handleChange, setFieldVal
           if (props.inputType) props.type = props.inputType;
 
           return type === 'upload' ? (
-            <UploadFactionIcon {...props} fieldKey={fieldKey} onChange={setFieldValue} onTouched={setFieldTouched} />
+            <UploadFactionIcon {...props} fieldKey={fieldKey} onChange={setFieldValue} onTouched={setFieldTouched} faction={faction}/>
           ) : null;
         })}
       </div>

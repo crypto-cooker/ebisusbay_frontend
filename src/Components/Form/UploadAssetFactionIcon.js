@@ -6,7 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useGetSettings from '../Account/Settings/hooks/useGetSettings';
 import useUpdatePfp from '../Account/Settings/hooks/useUpdatePfp';
 import styles from "@src/Components/Account/Settings/Profile/Pfp/pfp.module.scss";
-import {Stack} from "@chakra-ui/react";
+import {
+  Stack
+} from "@chakra-ui/react";
 
 const UploadAssetFactionIcon = ({
   id,
@@ -15,6 +17,7 @@ const UploadAssetFactionIcon = ({
   accept = 'image/png, image/jpeg, image/jpg',
   onChange,
   onClose,
+  faction
 }) => {
   const user = useSelector((state) => state.user);
   const [file, setFile] = useState(null);
@@ -94,7 +97,7 @@ const UploadAssetFactionIcon = ({
           style={{ display: 'none' }}
         />
         {value?.result ? (
-          isVideo ? (
+            isVideo ? (
             <video src={value.result} />
           ) : isImage ? (
             <div className={styles.pfp}>
@@ -107,6 +110,10 @@ const UploadAssetFactionIcon = ({
           </div>
         ) : (
           <div className="cursor-pointer">
+            <img src={faction.image} 
+            style={{width:"125px", height:"125px", position:"absolute"}}
+            position={"absolute"}
+            />
             <Blockies seed={user?.address} size={25} scale={5} />
           </div>
         )}

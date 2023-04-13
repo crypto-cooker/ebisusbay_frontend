@@ -1,8 +1,12 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
+import axios from "axios";
 
 import { deepValidation } from '../../helpers/validator';
 import UploadAssetFactionIcon from './UploadAssetFactionIcon';
+// import UploadFactionIconPfp from "@src/core/api/RyoshiDynastiesAPICalls";
+import { getAuthSignerInStorage } from '@src/helpers/storage';
+import {useSelector} from "react-redux";
 
 const UploadFactionIcon = ({
   value = [],
@@ -15,17 +19,57 @@ const UploadFactionIcon = ({
   isRequired,
   onChange,
   onTouched,
+  faction
 }) => {
+    const user = useSelector((state) => state.user);
+
+    
   const onUpload = (i) => (asset) => {
     const newAsset = { ...asset, position: i };
     const index = value.findIndex(({ position }) => position === i);
 
     const newData = index !== -1 ? value.map((data, j) => (index === j ? newAsset : data)) : [...value, newAsset];
     console.log(newData);
+    console.log(faction);
+    CreateFaction(newData, faction);
 
     // onChange(name, newData);
     onTouched(name);
   };
+
+  const CreateFaction = async (newData, faction) => {
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      try {
+        console.log(faction.name, newData[0].result)
+        const res = await UploadFactionIconPfp(user.address.toLowerCase(), signatureInStorage, faction.name, Number(faction.id), newData[0].result);
+        // console.log(res);
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+const api = axios.create({
+  baseURL: 'api/',
+});
+
+const baseURL = 'https://testcms.ebisusbay.biz/';
+  const UploadFactionIconPfp = async (address, signature, name, id, image) => {
+    try{
+      // console.log(address, signature, name, image);
+      return await api.patch(baseURL + "api/ryoshi-dynasties/factions?", 
+        {name, id, image},
+        {params: {address, signature}});
+    }
+    catch(error){
+      throw error;
+    }
+  }
 
   const onClean = (i) => () => {
     onChange(
@@ -45,7 +89,7 @@ const UploadFactionIcon = ({
       <div className="upload-container overflow-auto justify-content-center">
         {[...Array(numberOfAssets).keys()].map((_, i) => {
           const asset = value.find(({ position }) => position === i);
-          
+          // console.log("asset:" + asset);
           return (
             <UploadAssetFactionIcon
               key={`${name}-${i}`}
@@ -55,6 +99,7 @@ const UploadFactionIcon = ({
               url={value?.[0]?.url}
               onClose={asset?.result ? onClean(i) : undefined}
               onChange={onUpload(i)}
+              faction={faction}
             />
           );
         })}

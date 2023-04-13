@@ -63,10 +63,21 @@ export const getProfileTroops = async (_address, _signature) => {
   }
 }
 //creates a faction
-export const createFaction = async (address, signature, type, name, addresses=[]) => {
+export const createFaction = async (address, signature, type, name, addresses=[], image) => {
   try{
     return await api.post(baseURL + "api/ryoshi-dynasties/factions?", 
       {name, type, addresses},
+      {params: {address, signature, image}});
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const UploadFactionIconPfp = async (address, signature, name, image) => {
+  try{
+    console.log(address, signature, name, image);
+    return await api.patch(baseURL + "api/ryoshi-dynasties/factions?", 
+      {name, id, image},
       {params: {address, signature}});
   }
   catch(error){
