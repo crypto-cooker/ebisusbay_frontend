@@ -12,5 +12,12 @@
     "addresses": [
       "0x5Cb9a12d31CF751ACc58B12B47cc4E093A6AB580"
     ]
+  },
+  {
+    "label": "Gold Partner",
+    "anchor": "0xddd1486dbf9d65fcedcc8fd50779e6e66daad5bc",
+    "addresses": [
+      "0xF4C80B77AA1F73E09348693a81d744Fcd1263A2D"
+    ]
   }
 ]

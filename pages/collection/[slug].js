@@ -103,6 +103,7 @@ export const getServerSideProps = async ({ params, query }) => {
   if (collection.slug === 'weird-apes-club-v1') collection.mergedWith = ['0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44'];
   if (collection.slug === 'cronos-apes') collection.mergedAddresses = ['0x5Cb9a12d31CF751ACc58B12B47cc4E093A6AB580'];
   if (collection.slug === 'degen-ape-cronos-club') collection.mergedAddresses = ['0x47C4184a9c5Ad620D5243c850A33833a3Cd010f5'];
+  if (collection.slug === 'gold-partner') collection.mergedAddresses = ['0xF4C80B77AA1F73E09348693a81d744Fcd1263A2D'];
 
   const activeDrop = appConfig('drops')
     .find((drop) => !!collection.address && caseInsensitiveCompare(collection.address, drop.address) && !drop.complete);

@@ -3141,7 +3141,10 @@
       "name": "Gold Partner",
       "slug": "gold-partner",
       "multiToken": false,
-      "address": "0xF4C80B77AA1F73E09348693a81d744Fcd1263A2D",
+      "address": "0xddd1486dbf9d65fcedcc8fd50779e6e66daad5bc",
+      "mergedAddresses": [
+        "0xF4C80B77AA1F73E09348693a81d744Fcd1263A2D"
+      ],
       "onChain": false,
       "listable": true,
       "metadata": {

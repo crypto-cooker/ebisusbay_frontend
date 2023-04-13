@@ -22,6 +22,7 @@ const nextConfig = {
       'cdn.ebisusbay.com',
       'cdn.ebisusbay.biz'
     ],
+    formats: ['image/webp'],
   },
   i18n: {
     locales: ["en"],
