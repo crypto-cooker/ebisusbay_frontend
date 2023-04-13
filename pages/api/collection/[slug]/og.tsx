@@ -179,7 +179,7 @@ export default async function handler(req: NextRequest) {
           }
         ],
         headers: {
-          'cache-control': 'max-age=180, stale-while-revalidate=300'
+          'cache-control': 'public, max-age=180, stale-while-revalidate=300, no-transform'
         }
       }
     )
@@ -199,7 +199,7 @@ export default async function handler(req: NextRequest) {
         width: dimensions.width,
         height: dimensions.height,
         headers: {
-          'cache-control': 'max-age=180, stale-while-revalidate=300'
+          'cache-control': 'public, max-age=180, stale-while-revalidate=300, no-transform'
         }
       }
     )
