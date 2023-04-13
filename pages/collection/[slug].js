@@ -37,7 +37,7 @@ const Collection = ({ ssrCollection, query, redirect, activeDrop }) => {
         title={ssrCollection.name}
         description={ssrCollection.metadata.description}
         url={`/collection/${ssrCollection.slug}`}
-        image={appUrl(`api/collection/${ssrCollection.slug}/og`)}
+        image={appUrl(`api/collection/${ssrCollection.slug}/og?763781`)}
       />
       {initialized && ssrCollection && (
         <>
