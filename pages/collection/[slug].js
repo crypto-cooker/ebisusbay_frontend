@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Collection1155 from '@src/components-v2/feature/collection/collection1155';
 import Collection721 from '@src/components-v2/feature/collection/collection721';
-import {appUrl, caseInsensitiveCompare} from '@src/utils';
+import {appUrl, cacheBustingKey, caseInsensitiveCompare} from '@src/utils';
 import {appConfig} from "@src/Config";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {hostedImage} from "@src/helpers/image";
@@ -37,7 +37,7 @@ const Collection = ({ ssrCollection, query, redirect, activeDrop }) => {
         title={ssrCollection.name}
         description={ssrCollection.metadata.description}
         url={`/collection/${ssrCollection.slug}`}
-        image={appUrl(`api/collection/${ssrCollection.slug}/og?763781`)}
+        image={appUrl(`api/collection/${ssrCollection.slug}/og?${cacheBustingKey()}`)}
       />
       {initialized && ssrCollection && (
         <>
