@@ -3264,7 +3264,7 @@
       "name": "Rebel AUT Club",
       "slug": "rebel-aut-club",
       "multiToken": false,
-      "address": "",
+      "address": "0xFAD821B0aA4C1a749BD71be595C223240B232d62",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -8015,7 +8015,7 @@
         "twitter": "https://twitter.com/HappyAUTclub",
         "discord": "https://discord.gg/4gz4wJHjNV"
       },
-      "address": "",
+      "address": "0xFAD821B0aA4C1a749BD71be595C223240B232d62",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 100,
       "totalSupply": 7777,
@@ -8023,7 +8023,7 @@
       "memberCost": "150",
       "whitelistCost": "125",
       "foundersOnly": false,
-      "start": 1681146939000,
+      "start": 1681428769000,
       "end": null,
       "referral": false,
       "is1155": false,
