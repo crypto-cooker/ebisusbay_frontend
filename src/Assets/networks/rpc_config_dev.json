@@ -11888,7 +11888,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "8K Resolution Artworks that are unique and unlike anything else on the blockchain, created with the power of A.I. and advanced editing techniques across multiple platforms to produce the highest quality artwork on Cronos. No roadmaps, no staking, no games, just art, community, and utility.",
+        "description": "8K Resolution Artworks that are unique and unlike anything else on the blockchain, created with the power of A.I. and advanced editing techniques across multiple platforms to produce the highest quality artwork on Cronos. Art, Community, and Utility.",
         "avatar": "/img/collections/0xluckless-v2-0/avatar.webp",
         "card": "/img/collections/0xluckless-v2-0/card.webp",
         "banner": "/img/collections/0xluckless-v2-0/banner.webp",
@@ -26431,9 +26431,9 @@
       },
       "escrow": {
         "milestones": [
-          "",
-          "",
-          ""
+          "The first installment will be released after proof of donation to a relevant autism charity has been made in May",
+          "The second installment released after proof of donation to a relevant autism charity has been made in June and a portion of funds have been staked on the Crypto.com DeFi app",
+          "The third installment released when all Rebel AUT Club NFT's have been minted and either 7777 sold out, or the project decides to stop the mint"
         ]
       }
     }
