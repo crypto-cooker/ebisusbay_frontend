@@ -62,7 +62,7 @@ const AllianceCenter = ({onBack}) => {
     GetFactions();
   }
   const formikProps = useFormik({
-    onSubmit,
+    // onSubmit,
     // validationSchema: userInfoValidation,
     // initialValues: getInitialValues(),
     enableReinitialize: true,
@@ -91,6 +91,7 @@ const AllianceCenter = ({onBack}) => {
           console.log(config.contracts.allianceCenter)
           console.log(AllianceCenterContract)
           // console.log(user.provider.getSigner())
+          //0x0000000000000000000000000000000000000001
 
           const registerFactionContract = new Contract(config.contracts.allianceCenter, AllianceCenterContract, user.provider.getSigner());
           const tx = await registerFactionContract.registerFaction(user.address.toLowerCase())
