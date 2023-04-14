@@ -31,7 +31,7 @@ import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import Button from "@src/Components/components/common/Button";
 import {listingState} from "@src/core/api/enums";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import Link from "next/link";
 import {LOCAL_STORAGE_ITEMS} from "@src/helpers/storage";
 import useBuyGaslessListings from '@src/hooks/useBuyGaslessListings';

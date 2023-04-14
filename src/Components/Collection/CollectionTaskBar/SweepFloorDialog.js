@@ -31,7 +31,7 @@ import {commify, parseUnits} from "ethers/lib/utils";
 import useBreakpoint from "use-breakpoint";
 import {getListings} from "@src/core/api/endpoints/listings";
 import {specialImageTransform} from "@src/hacks";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {Lazy, Navigation} from "swiper";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {

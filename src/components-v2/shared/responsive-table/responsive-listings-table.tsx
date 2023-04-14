@@ -26,7 +26,7 @@ import {isBundle, timeSince} from "@src/utils";
 import {ListingState} from "@src/core/services/api-service/types";
 import {InfiniteData} from "@tanstack/query-core";
 import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {commify} from "ethers/lib/utils";
 import Image from "next/image";
 import Link from "next/link";

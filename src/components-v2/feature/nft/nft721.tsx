@@ -16,7 +16,7 @@ import {Badge, Spinner} from 'react-bootstrap';
 
 import ProfilePreview from '@src/Components/components/ProfilePreview';
 import LayeredIcon from '@src/Components/components/LayeredIcon';
-import {AnyMedia} from '@src/Components/components/AnyMedia';
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import ProfileImage from '@src/Components/components/ProfileImage'
 
 import {

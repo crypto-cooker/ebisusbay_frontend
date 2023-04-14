@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {specialImageTransform} from "@src/hacks";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {Spinner} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {Contract, ethers} from "ethers";

@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {AnyMedia} from '@src/Components/components/AnyMedia'
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from '@src/hacks';
 import {Box, Center, Flex} from "@chakra-ui/react";
 import {Swiper, SwiperSlide} from "swiper/react";

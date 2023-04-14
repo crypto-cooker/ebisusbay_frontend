@@ -17,7 +17,7 @@ import {
   VStack
 } from "@chakra-ui/react";
 import React, {useCallback, useEffect, useState} from "react";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import Link from "next/link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";

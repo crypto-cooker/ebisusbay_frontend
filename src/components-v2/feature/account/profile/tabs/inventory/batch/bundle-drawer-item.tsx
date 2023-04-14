@@ -41,7 +41,7 @@ import {Contract} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {appConfig} from "@src/Config";
 import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@src/hacks";
 import {useAppSelector} from "@src/Store/hooks";
 import ImageService from "@src/core/services/image";

@@ -16,7 +16,7 @@ import {
 import {Box, Center, Heading, HStack, Link, Tag, Text} from "@chakra-ui/react";
 import {appConfig} from "@src/Config";
 import {useAppSelector} from "@src/Store/hooks";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 
 const txExtras = {

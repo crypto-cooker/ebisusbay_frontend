@@ -1,7 +1,7 @@
 import React, {memo, useState} from 'react';
 import {useRouter} from 'next/router';
 import {ethers} from 'ethers';
-import AnyMedia from '../../../components/AnyMedia';
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {nftCardUrl} from "@src/helpers/image";
 import {Badge, Box, Center, Flex, Heading, Spacer} from "@chakra-ui/react";
 import Image from "next/image";

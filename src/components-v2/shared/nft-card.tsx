@@ -16,7 +16,7 @@ import {
   siPrefixedNumber,
   timeSince
 } from '@src/utils';
-import {AnyMedia} from '@src/Components/components/AnyMedia';
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {convertGateway, nftCardUrl} from '@src/helpers/image';
 import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useClipboard} from "@chakra-ui/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";

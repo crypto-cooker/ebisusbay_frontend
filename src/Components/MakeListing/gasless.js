@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {specialImageTransform} from "@src/hacks";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Badge, Form, Spinner} from "react-bootstrap";

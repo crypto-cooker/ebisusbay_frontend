@@ -3,11 +3,11 @@ import React, { memo } from 'react';
 import Link from 'next/link';
 import { ethers } from 'ethers';
 import Clock from './Clock';
-import { auctionState } from '../../core/api/enums';
+import { auctionState } from '@src/core/api/enums';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faGavel, faGem} from "@fortawesome/free-solid-svg-icons";
-import {AnyMedia} from "./AnyMedia";
-import {nftCardUrl} from "../../helpers/image";
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
+import {nftCardUrl} from "@src/helpers/image";
 
 // const Outer = styled.div`
 //   display: flex;

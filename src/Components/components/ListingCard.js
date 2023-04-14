@@ -7,7 +7,7 @@ import MetaMaskOnboarding from '@metamask/onboarding';
 
 import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
 import {darkTheme, getTheme, lightTheme} from '@src/Theme/theme';
-import {AnyMedia} from './AnyMedia';
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import {appUrl, createSuccessfulAddCartContent, round, timeSince} from '@src/utils';
 import {convertGateway, nftCardUrl} from "@src/helpers/image";
