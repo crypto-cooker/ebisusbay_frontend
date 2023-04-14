@@ -19788,7 +19788,7 @@
       "name": "Rebel AUT Club",
       "slug": "rebel-aut-club",
       "multiToken": false,
-      "address": "",
+      "address": "0x3a1dFa4aD3ac25CDb8032e78427e489566aA194F",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -19832,6 +19832,57 @@
         "verified": false,
         "doxx": false,
         "kyc": false
+      }
+    },
+    {
+      "name": "OG Dark Carnival",
+      "slug": "og-dark-carnival",
+      "multiToken": false,
+      "address": "0xe48902A911a4a319Adee7E4769eC2D784952565C",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Welcome to the Dark Carnival, a unique NFT project that takes you on a twisted journey through a sinister circus world. The Dark Carnival NFTs feature eerie, yet captivating designs of circus performers, attractions, and creatures that inhabit this macabre realm. Each NFT is generated with AI, with attention to detail that immerses you in the haunting atmosphere of the carnival. As you explore the Dark Carnival NFT collection, you'll encounter a wide range of characters, from the bearded lady and the clown to the strongman and the ringmaster. Each character has its own unique backstory and personality, adding depth and intrigue to the world of the Dark Carnival. But be warned, the Dark Carnival is not for the faint of heart. This is a world where nothing is quite what it seems, and danger lurks around every corner. But for those brave enough to enter, the Dark Carnival offers a thrilling and unforgettable experience. Collect your own piece of the Dark Carnival today and join us on a journey into the unknown.",
+        "avatar": "/img/collections/og-dark-carnival/avatar.webp",
+        "banner": "/img/collections/og-dark-carnival/banner.webp",
+        "card": "/img/collections/og-dark-carnival/card.webp",
+        "website": "https://cronosogcollections.com/",
+        "twitter": "https://www.twitter.com/og_cronos",
+        "discord": "https://discord.gg/cGAyAP47QF",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "HellMorphs",
+      "slug": "hellmorphs",
+      "multiToken": false,
+      "address": "0x14B6ed0B3D7B13bb75e98565eBcC51DbB86bBd4F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "HellMorphs spawn in the underworld of Tartarus, and have various forms they can take.",
+        "avatar": "/img/collections/hellmorphs/avatar.webp",
+        "banner": "/img/collections/hellmorphs/banner.webp",
+        "card": "/img/collections/hellmorphs/card.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/MNvcEe7g4E",
+        "medium": "https://medium.com/@CroMorphs",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
       }
     }
   ],
@@ -26352,7 +26403,7 @@
         "twitter": "https://twitter.com/HappyAUTclub",
         "discord": "https://discord.gg/4gz4wJHjNV"
       },
-      "address": "",
+      "address": "0x3a1dFa4aD3ac25CDb8032e78427e489566aA194F",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 100,
       "totalSupply": 7777,
