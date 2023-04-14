@@ -1,10 +1,10 @@
 import moment from 'moment';
 import blacklist from './core/configs/blacklist.json';
 import attributes from './core/configs/attributes.json';
-import { useEffect, useRef } from 'react';
+import {useEffect, useRef} from 'react';
 import IPFSGatewayTools from '@pinata/ipfs-gateway-tools/dist/node';
-import { appConfig } from './Config';
-import { hostedImage } from './helpers/image';
+import {appConfig} from './Config';
+import {hostedImage} from './helpers/image';
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import {commify} from "ethers/lib/utils";
 import brands from '../src/core/data/brands.json';
@@ -816,4 +816,9 @@ export const croToUsd = (value, rate) => {
   });
 
   return formatter.format(value * rate);
+}
+
+export const cacheBustingKey = (minutes = 5, date = Date.now()) => {
+  const coeff = 1000 * 60 * minutes;
+  return Math.round(date / coeff) * coeff;
 }

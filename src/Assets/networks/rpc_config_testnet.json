@@ -3264,7 +3264,7 @@
       "name": "Rebel AUT Club",
       "slug": "rebel-aut-club",
       "multiToken": false,
-      "address": "",
+      "address": "0xFAD821B0aA4C1a749BD71be595C223240B232d62",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -3283,6 +3283,33 @@
         "verified": true,
         "doxx": false,
         "kyc": false
+      }
+    },
+    {
+      "name": "0xLuckless v2.2",
+      "slug": "0xluckless-v2-2",
+      "multiToken": false,
+      "address": "0x367f3dbad544885264388507008cd91c4766684a",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome to 0xLuckless v2.2, a 6K resolution art project, unique and unlike anything else on the blockchain Created with the power of A.I. and advanced editing techniques across multiple platforms to produce the highest quality artwork on Cronos.",
+        "avatar": "/img/collections/0xluckless-v2-2/avatar.webp",
+        "card": "/img/collections/0xluckless-v2-2/card.webp",
+        "banner": "/img/collections/0xluckless-v2-2/banner.webp",
+        "website": "https://0xluckless.com",
+        "twitter": "https://twitter.com/0xLuckless",
+        "discord": "https://discord.gg/qPFZhAdGRq",
+        "medium": "https://medium.com/@0xLuckless",
+        "instagram": "https://www.instagram.com/0xLuckless",
+        "categories": [
+          "art"
+        ]
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "verified": true
       }
     }
   ],
@@ -7938,6 +7965,45 @@
       }
     },
     {
+      "id": 167,
+      "slug": "0xluckless-v2-2",
+      "title": "OxLuckless v2.2",
+      "subtitle": "Welcome to 0xLuckless v2.2, a 6K resolution art project, unique and unlike anything else on the blockchain Created with the power of A.I. and advanced editing techniques across multiple platforms to produce the highest quality artwork on Cronos.",
+      "description": "0xLuckless art holders earn exclusive airdrops, Passive CRO earnings via NFT staking with CroDex, Whitelist access to all future drops and secret releases, discounts on 0xLuckless merch and canvas art on EvergreenKings.com and unlock private channel access on the 0xLuckless Discord server which comes with tons of extra benefits including giveaways, custom art, sneak peeks, and helping shape the future of the project.",
+      "author": {
+        "name": "OxLuckless",
+        "website":"https://linktr.ee/0xLuckless",
+        "twitter": "https://twitter.com/0xLuckless",
+        "discord": "https://discord.gg/qPFZhAdGRq"
+      },
+      "address": "0x367f3dbad544885264388507008cd91c4766684a",
+      "maxMintPerTx": 5,
+      "maxMintPerAddress": 10,
+      "totalSupply": 200,
+      "cost": "650",
+      "memberCost": "600",
+      "whitelistCost": "550",
+      "foundersOnly": false,
+      "start": 1681312178000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/0xluckless-v2-2/drop.webp",
+        "banner": "/img/drops/0xluckless-v2-2/banner.webp",
+        "avatar": "/img/collections/0xluckless-v2-2/avatar.webp",
+        "preview": "/img/collections/0xluckless-v2-2/card.webp"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
+      }
+    },
+    {
       "id": 168,
       "slug": "rebel-aut-club",
       "title": "Rebel AUT Club",
@@ -7949,7 +8015,7 @@
         "twitter": "https://twitter.com/HappyAUTclub",
         "discord": "https://discord.gg/4gz4wJHjNV"
       },
-      "address": "",
+      "address": "0xFAD821B0aA4C1a749BD71be595C223240B232d62",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 100,
       "totalSupply": 7777,
@@ -7957,7 +8023,7 @@
       "memberCost": "150",
       "whitelistCost": "125",
       "foundersOnly": false,
-      "start": 1681146939000,
+      "start": 1681428769000,
       "end": null,
       "referral": false,
       "is1155": false,

@@ -1,8 +1,8 @@
 import rpcConfig from '../Assets/networks/rpc_config.json';
 import rpcConfigDev from '../Assets/networks/rpc_config_dev.json';
 import rpcConfigTestnet from '../Assets/networks/rpc_config_testnet.json';
-import _ from 'lodash';
 import Constants from '../constants';
+import _ from "lodash";
 const { Features } = Constants;
 
 export const environments = {
@@ -256,6 +256,28 @@ export const appConfig = (key = '') => {
 
   const config = isLocalEnv() ?
     _.merge(configData[environments.production], configData[environments.local]) :
+    configData[env];
+
+  if (!key) return config;
+
+  const keys = key.split('.');
+
+  return keys.reduce((o, i) => o[i], env ? config : configData[fallbackEnv]);
+}
+
+/**
+ * Edge runtime can't use lodash, so we have to do this the hard way
+ *
+ * @param key
+ * @returns {(*)|*|string}
+ */
+export const appConfigEdge = (key = '') => {
+  const env = environments[currentEnv()];
+  const fallbackEnv = environments.production;
+  if (!env) return configData[fallbackEnv];
+
+  const config = isLocalEnv() ?
+    {...configData[environments.production], ...configData[environments.local]} :
     configData[env];
 
   if (!key) return config;

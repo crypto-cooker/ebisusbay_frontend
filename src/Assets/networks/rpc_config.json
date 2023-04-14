@@ -400,7 +400,7 @@
         "description": "CRO CROW is the very first NFT deployed on the Cronos Chain.\n\nEdition #1 was minted on block #946, just 1 hour and 27 minutes after Cronos was launched.\n\nThe CRO CROW Ecosystem revolves around this historic NFT and the art of Alemf, the artist behind the crows and some other side collections.\n\nThese NFTs can be staked to The Forest to passively earn $CRO which is automatically distributed from secondary market royalties and other sources of income.\n\nCAW CAW!",
         "avatar": "/img/collections/crocrow/avatar.webp",
         "banner": "/img/collections/crocrow/banner.webp",
-        "card": "/img/collections/crocrow/card.webp",
+        "card": "/img/collections/crocrow/card.jpg",
         "rankings": {
           "source": "rarity_sniper",
           "slug": "cro-crow"
@@ -3141,7 +3141,10 @@
       "name": "Gold Partner",
       "slug": "gold-partner",
       "multiToken": false,
-      "address": "0xF4C80B77AA1F73E09348693a81d744Fcd1263A2D",
+      "address": "0xddd1486dbf9d65fcedcc8fd50779e6e66daad5bc",
+      "mergedAddresses": [
+        "0xF4C80B77AA1F73E09348693a81d744Fcd1263A2D"
+      ],
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -3658,7 +3661,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "5000 Fruit Farmers living and loving on the Cronos Blockchain.",
+        "description": "Slavik Fruit Farm is a Vibrant Community Focused on Innovation, Positivity & Sustainability.",
         "avatar": "/img/collections/slavikfruitfarm/avatar.webp",
         "banner": "/img/collections/slavikfruitfarm/banner.webp",
         "card": "/img/collections/slavikfruitfarm/card.webp",
@@ -11885,7 +11888,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "8K Resolution Artworks that are unique and unlike anything else on the blockchain, created with the power of A.I. and advanced editing techniques across multiple platforms to produce the highest quality artwork on Cronos. No roadmaps, no staking, no games, just art, community, and utility.",
+        "description": "8K Resolution Artworks that are unique and unlike anything else on the blockchain, created with the power of A.I. and advanced editing techniques across multiple platforms to produce the highest quality artwork on Cronos. Art, Community, and Utility.",
         "avatar": "/img/collections/0xluckless-v2-0/avatar.webp",
         "card": "/img/collections/0xluckless-v2-0/card.webp",
         "banner": "/img/collections/0xluckless-v2-0/banner.webp",
@@ -19639,7 +19642,7 @@
       "name": "0xLuckless v2.2",
       "slug": "0xluckless-v2-2",
       "multiToken": false,
-      "address": "",
+      "address": "0x5141E99523002317BE6D63214Bf300cBD8269bE6",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -19785,11 +19788,11 @@
       "name": "Rebel AUT Club",
       "slug": "rebel-aut-club",
       "multiToken": false,
-      "address": "",
+      "address": "0x3a1dFa4aD3ac25CDb8032e78427e489566aA194F",
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "The Rebel AUT Club is a collection of 7777 Rebels generated on the Cronos Chain. \nWith over 300+ attributes and different rarities,  \nthe collection consists of 8 animal-themed digital collectible NFTs. \nThe collection’s primary objective is to generate awareness and raise funds to support children who are impacted by ASD, Autism Spectrum Disorder, with essential sensory equipment.",
+        "description": "The Rebel AUT Club is a collection of 7777 Rebels generated on the Cronos Chain. \nWith over 300+ attributes and different rarities,  \nthe collection consists of 8 animal-themed digital collectible NFTs. \nThe collection's primary objective is to generate awareness and raise funds to support children who are impacted by ASD, Autism Spectrum Disorder, with essential sensory equipment.",
         "avatar": "/img/collections/rebel-aut-club/avatar.webp",
         "card": "/img/collections/rebel-aut-club/card.webp",
         "banner": "/img/collections/rebel-aut-club/banner.webp",
@@ -19803,7 +19806,83 @@
       "verification": {
         "verified": true,
         "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Cronos Foxes Evolution",
+      "slug": "cronos-foxes-evolution",
+      "multiToken": false,
+      "address": "0x3cdE8EA53AE063698334dDf7114B7051400bE78B",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "AI Foxes on cronos.",
+        "avatar": "/img/collections/cronos-foxes-evolution/avatar.webp",
+        "card": "/img/collections/cronos-foxes-evolution/card.webp",
+        "banner": "/img/collections/cronos-foxes-evolution/banner.webp",
+        "website": "https://www.cronosfoxfraternity.com/",
+        "twitter": "https://twitter.com/FoxFraternity",
+        "discord": "https://discord.gg/f2CvddETGa",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
         "kyc": false
+      }
+    },
+    {
+      "name": "OG Dark Carnival",
+      "slug": "og-dark-carnival",
+      "multiToken": false,
+      "address": "0xe48902A911a4a319Adee7E4769eC2D784952565C",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Welcome to the Dark Carnival, a unique NFT project that takes you on a twisted journey through a sinister circus world. The Dark Carnival NFTs feature eerie, yet captivating designs of circus performers, attractions, and creatures that inhabit this macabre realm. Each NFT is generated with AI, with attention to detail that immerses you in the haunting atmosphere of the carnival. As you explore the Dark Carnival NFT collection, you'll encounter a wide range of characters, from the bearded lady and the clown to the strongman and the ringmaster. Each character has its own unique backstory and personality, adding depth and intrigue to the world of the Dark Carnival. But be warned, the Dark Carnival is not for the faint of heart. This is a world where nothing is quite what it seems, and danger lurks around every corner. But for those brave enough to enter, the Dark Carnival offers a thrilling and unforgettable experience. Collect your own piece of the Dark Carnival today and join us on a journey into the unknown.",
+        "avatar": "/img/collections/og-dark-carnival/avatar.webp",
+        "banner": "/img/collections/og-dark-carnival/banner.webp",
+        "card": "/img/collections/og-dark-carnival/card.webp",
+        "website": "https://cronosogcollections.com/",
+        "twitter": "https://www.twitter.com/og_cronos",
+        "discord": "https://discord.gg/cGAyAP47QF",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "HellMorphs",
+      "slug": "hellmorphs",
+      "multiToken": false,
+      "address": "0x14B6ed0B3D7B13bb75e98565eBcC51DbB86bBd4F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "HellMorphs spawn in the underworld of Tartarus, and have various forms they can take.",
+        "avatar": "/img/collections/hellmorphs/avatar.webp",
+        "banner": "/img/collections/hellmorphs/banner.webp",
+        "card": "/img/collections/hellmorphs/card.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/MNvcEe7g4E",
+        "medium": "https://medium.com/@CroMorphs",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
       }
     }
   ],
@@ -26285,7 +26364,7 @@
         "twitter": "https://twitter.com/0xLuckless",
         "discord": "https://discord.gg/qPFZhAdGRq"
       },
-      "address": "",
+      "address": "0x5141E99523002317BE6D63214Bf300cBD8269bE6",
       "maxMintPerTx": 5,
       "maxMintPerAddress": 10,
       "totalSupply": 200,
@@ -26316,7 +26395,7 @@
       "id": 168,
       "slug": "rebel-aut-club",
       "title": "Rebel AUT Club",
-      "subtitle": "The Rebel AUT Club is a collection of 7777 Rebels generated on the Cronos Chain. \nWith over 300+ attributes and different rarities,  \nthe collection consists of 8 animal-themed digital collectible NFTs. \nThe collection’s primary objective is to generate awareness and raise funds to support children who are impacted by ASD, Autism Spectrum Disorder, with essential sensory equipment.",
+      "subtitle": "The Rebel AUT Club is a collection of 7777 Rebels generated on the Cronos Chain. \nWith over 300+ attributes and different rarities,  \nthe collection consists of 8 animal-themed digital collectible NFTs. \nThe collection's primary objective is to generate awareness and raise funds to support children who are impacted by ASD, Autism Spectrum Disorder, with essential sensory equipment.",
       "description": "The Rebel AUT Club is a new digital collection that is being launched to provide support to children with autism and their families. The collection will consist of 8 animal-themed NFTs with different attributes and rarities. \n\nWhen purchasing one of these unique NFTs, collectors will not only have the opportunity to own a one-of-a-kind piece of digital art, they will also be contributing to a good cause. Making a real impact in the lives of children with autism. \n\nAs you may know, children with autism often have difficulty with sensory processing. This can impact their ability to engage in daily activities and interact with their environment.\n\nOur project is centred around the donation of unique sensory equipment that is essential to the development and growth of vital social, fine, and gross motor skills. Along with the goal of providing support to these children in their daily lives.\n\nTogether we can make a difference! We would love for you to be a part of this amazing project and assist us in making a difference for children with ASD in all our communities. \n\nThank you for your support!",
       "author": {
         "name": "Happy AUT Club",
@@ -26324,7 +26403,7 @@
         "twitter": "https://twitter.com/HappyAUTclub",
         "discord": "https://discord.gg/4gz4wJHjNV"
       },
-      "address": "",
+      "address": "0x3a1dFa4aD3ac25CDb8032e78427e489566aA194F",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 100,
       "totalSupply": 7777,
@@ -26346,9 +26425,16 @@
       },
       "verification": {
         "doxx": false,
-        "kyc": false,
-        "escrow": false,
+        "kyc": true,
+        "escrow": true,
         "verified": true
+      },
+      "escrow": {
+        "milestones": [
+          "The first installment will be released after proof of donation to a relevant autism charity has been made in May",
+          "The second installment released after proof of donation to a relevant autism charity has been made in June and a portion of funds have been staked on the Crypto.com DeFi app",
+          "The third installment released when all Rebel AUT Club NFT's have been minted and either 7777 sold out, or the project decides to stop the mint"
+        ]
       }
     }
   ]
