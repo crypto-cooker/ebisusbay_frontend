@@ -167,7 +167,6 @@ const LegacyStaking = () => {
               videoProps={
                 {autoPlay: true}
               }
-              image={null}
               title="VIP Founding Member Staking"
             />
           </div>
