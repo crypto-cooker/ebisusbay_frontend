@@ -249,7 +249,6 @@ const BatchStakingDrawerItem = ({item, disabled}: BatchStakingDrawerItemProps) =
         >
           <AnyMedia
             image={ImageService.instance.provider.avatar(item.nft.image)}
-            video={null}
             title={item.nft.name}
             usePlaceholder={false}
             className="img-rounded-8"

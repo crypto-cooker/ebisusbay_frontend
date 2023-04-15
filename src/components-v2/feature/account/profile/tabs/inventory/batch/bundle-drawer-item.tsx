@@ -165,7 +165,6 @@ const BundleDrawerItem = ({ item, disabled, onAddCollection }: BundleDrawerItemP
           ) : (
             <AnyMedia
               image={specialImageTransform(item.nft.nftAddress, ImageService.instance.provider.avatar(item.nft.image))}
-              video={null}
               title={item.nft.name}
               usePlaceholder={true}
               className="img-fluid img-rounded-5"

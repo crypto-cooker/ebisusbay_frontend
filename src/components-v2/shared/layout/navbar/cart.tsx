@@ -253,7 +253,6 @@ const Cart = function () {
                         {isBundle(nft.address) ? (
                           <AnyMedia
                             image={ImageService.instance.provider.avatar('/img/logos/bundle.webp')}
-                            video={null}
                             title={nft.name}
                             usePlaceholder={false}
                             className="img-rounded-8"
@@ -261,7 +260,6 @@ const Cart = function () {
                         ) : (
                           <AnyMedia
                             image={ImageService.instance.provider.fixedWidth(nft.image, 100, 100)}
-                            video={null}
                             title={nft.name}
                             usePlaceholder={false}
                             className="img-rounded-8"
