@@ -12,14 +12,20 @@ class ImageKitProvider implements CdnProvider {
   }
 
   thumbnail(url: string) {
-    const location = new URL(url);
-    if(location.pathname.includes('.')){
-      //try to use imagekit thumbnail (check for period it doesn't work if no extension)
-      location.pathname += '/ik-thumbnail.jpg'
-      return location.toString();
+    const kit = ImageBuilder.from(url);
+
+    let useThumb = false;
+    if (!this.hasFileExtension(kit.url)) {
+      kit.addAppendage('ik-video.mp4');
+      useThumb = true;
     }
 
-    return '';
+    const location = new URL(kit.url);
+    if(useThumb || location.pathname.includes('.')){
+      kit.addAppendage('ik-thumbnail.jpg');
+    }
+
+    return kit.build();
   }
 
   nftCard(url: string) {
@@ -55,16 +61,11 @@ class ImageKitProvider implements CdnProvider {
     return kit.build();
   }
 
-  appendMp4Extension(url: string | URL) {
-    url = new URL(url);
-    url.pathname = `${url.pathname}/ik-video.mp4`;
-    return url.toString();
-  }
-
   gifToMp4(url: string | URL) {
-    url = new URL(url);
-    url.pathname = `${url.pathname}/ik-gif-video.mp4`;
-    return url.toString();
+    const kit = ImageBuilder.from(url.toString())
+      .addAppendage('ik-gif-video.mp4');
+
+    return kit.build();
   }
 
   convert(url: string) {
@@ -82,6 +83,19 @@ class ImageKitProvider implements CdnProvider {
 
     return kit.build();
   }
+
+  private appendMp4Extension(url: string | URL) {
+    url = new URL(url);
+    url.pathname = `${url.pathname}/ik-video.mp4`;
+    return url.toString();
+  }
+
+  private hasFileExtension(url: string) {
+    const filenameParts = url.split('?')[0].split('/');
+    const filenamePart = filenameParts[filenameParts.length - 1];
+    const fileExt = filenamePart.slice(filenamePart.lastIndexOf('.') + 1);
+    return fileExt !== filenamePart && fileExt !== '';
+  };
 }
 
 export default ImageKitProvider;
@@ -89,10 +103,12 @@ export default ImageKitProvider;
 class ImageBuilder {
   url: string;
   trValues: any;
+  appendages: string[];
 
   constructor(url: string) {
-    this.url = url;
+    this.url = this.specialTransform(url);
     this.trValues = {};
+    this.appendages = [];
   }
 
   static from(url: string) {
@@ -134,12 +150,25 @@ class ImageBuilder {
     return this;
   }
 
+  addAppendage(appendage: string) {
+    this.appendages.push(appendage);
+    return this;
+  }
+
   build() {
-    if (isLocalEnv() && this.url?.startsWith('/')) return this.url;
     if(!this.url || this.url.startsWith('data')) return this.url;
 
+    const fixedUrl = this.url.includes('cdn2') ? this.url.replace('cdn2', 'cdn') : this.url;
+
+    if (isLocalEnv() && fixedUrl?.startsWith('/')) return fixedUrl;
+
     const cdn = appConfig('urls.cdn');
-    const url = new URL(this.url, !this.url.includes(cdn) ? cdn : undefined);
+    const baseUrl = !fixedUrl.includes(cdn) ? cdn : undefined;
+    const url = new URL(fixedUrl, baseUrl);
+
+    for (const appendage of this.appendages) {
+      url.pathname += `/${appendage}`;
+    }
 
     if (Object.entries(this.trValues).length > 0) {
       const mapped = Object.entries(this.trValues).map(([k,v]) => `${k}-${v}`);
@@ -147,5 +176,19 @@ class ImageBuilder {
     }
 
     return url.toString();
+  }
+
+  private specialTransform(url: string) {
+    if (!url) return url;
+
+    if (url.toLowerCase().includes('/QmTeJ3UYT6BG8v4Scy9E3W9cxEq6TCeg5SiuLKNFXbsW87'.toLowerCase())) {
+      return url.replace('/QmTeJ3UYT6BG8v4Scy9E3W9cxEq6TCeg5SiuLKNFXbsW87', '/QmX97CwY2NcmPmdS6XtcqLFMV2JGEjnEWjxBQbj4Q6NC2i.mp4');
+    }
+
+    if (url.toLowerCase().includes('/QmX97CwY2NcmPmdS6XtcqLFMV2JGEjnEWjxBQbj4Q6NC2i'.toLowerCase())) {
+      return url.replace('/QmX97CwY2NcmPmdS6XtcqLFMV2JGEjnEWjxBQbj4Q6NC2i', '/QmX97CwY2NcmPmdS6XtcqLFMV2JGEjnEWjxBQbj4Q6NC2i.mp4');
+    }
+
+    return url;
   }
 }

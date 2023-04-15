@@ -44,6 +44,7 @@ import {toast} from "react-toastify";
 import {refreshMetadata} from "@src/GlobalState/nftSlice";
 import {specialImageTransform} from "@src/hacks";
 import {useAppSelector} from "@src/Store/hooks";
+import ImageService from "@src/core/services/image";
 
 const Watermarked = styled.div<{ watermark: string }>`
   position: relative;
@@ -205,7 +206,8 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
                       url={`/collection/${nft.address ?? nft.nftAddress}/${nft.id ?? nft.nftId}`}
                       width={440}
                       height={440}
-                      video={nft.video ?? nft.animation_url}
+                      video={nft.video ?? nft.animationUrl ?? nft.animation_url}
+                      thumbnail={!!nft.video || !!nft.animationUrl || !!nft.animation_url ? ImageService.proxy.thumbnail(nft.video ?? nft.animationUrl ?? nft.animation_url) : undefined}
                       usePlaceholder={true}
                     />
                   </Watermarked>
@@ -217,7 +219,8 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
                     url={`/collection/${nft.address ?? nft.nftAddress}/${nft.id ?? nft.nftId}`}
                     width={440}
                     height={440}
-                    video={nft.video ?? nft.animation_url}
+                    video={nft.video ?? nft.animationUrl ?? nft.animation_url}
+                    thumbnail={!!nft.video || !!nft.animationUrl || !!nft.animation_url ? ImageService.proxy.thumbnail(nft.video ?? nft.animationUrl ?? nft.animation_url) : undefined}
                     usePlaceholder={true}
                   />
                 )}

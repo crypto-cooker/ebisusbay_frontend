@@ -30,6 +30,7 @@ import {toast} from "react-toastify";
 import {refreshMetadata} from "@src/GlobalState/nftSlice";
 import {specialImageTransform} from "@src/hacks";
 import Slider from '../Account/Profile/Inventory/components/Slider';
+import ImageService from "@src/core/services/image";
 
 
 const Watermarked = styled.div`
@@ -239,6 +240,9 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                         url={nftUrl}
                         height={440}
                         width={440}
+                        video={currentNft.video ?? currentNft.animationUrl ?? currentNft.animation_url}
+                        thumbnail={!!currentNft.video || !!currentNft.animationUrl || !!currentNft.animation_url ? ImageService.proxy.thumbnail(currentNft.video ?? currentNft.animationUrl ?? currentNft.animation_url) : undefined}
+                        usePlaceholder={true}
                       />
                     )}
                   </Box>

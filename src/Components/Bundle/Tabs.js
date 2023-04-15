@@ -1,6 +1,6 @@
 import { Flex, Box, Stack, Text } from "@chakra-ui/react";
 import React, { useState, useCallback } from "react";
-import { AnyMedia } from '@src/Components/components/AnyMedia'
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import { specialImageTransform } from '@src/hacks';
 import Link from "next/link";
 import {shortAddress, timeSince} from "@src/utils";

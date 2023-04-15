@@ -30,6 +30,7 @@ import {MenuPopup} from "@src/Components/components/chakra-components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {refreshMetadata} from "@src/GlobalState/nftSlice";
 import {specialImageTransform} from "@src/hacks";
+import ImageService from "@src/core/services/image";
 
 const config = appConfig();
 
@@ -204,6 +205,9 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark })
                       url={`/collection/${listing.nftAddress}/${listing.nftId}`}
                       width={440}
                       height={440}
+                      video={listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url}
+                      thumbnail={!!listing.nft.video || !!listing.nft.animationUrl || !!listing.nft.animation_url ? ImageService.proxy.thumbnail(listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url) : undefined}
+                      usePlaceholder={true}
                     />
                   </Watermarked>
                 ) : (
@@ -214,6 +218,9 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark })
                     url={`/collection/${listing.nftAddress}/${listing.nftId}`}
                     width={440}
                     height={440}
+                    video={listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url}
+                    thumbnail={!!listing.nft.video || !!listing.nft.animationUrl || !!listing.nft.animation_url ? ImageService.proxy.thumbnail(listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url) : undefined}
+                    usePlaceholder={true}
                   />
                 )}
               </Box>

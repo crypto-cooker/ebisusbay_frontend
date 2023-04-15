@@ -32,7 +32,7 @@ export const hostedImage = (imgPath, useThumbnail = false) => {
  */
 export const nftCardUrl = (nftAddress, nftImage) => {
   if (!nftImage || nftImage.startsWith('data')) return nftImage;
-  return ImageService.withProvider('bunny').provider.nftCard(specialImageTransform(nftAddress, nftImage));
+  return ImageService.proxy.nftCard(specialImageTransform(nftAddress, nftImage));
 }
 
 export const convertGateway = (imageUrl) => {

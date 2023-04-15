@@ -73,8 +73,8 @@ export const AnyMedia = ({
       const imageURL = new URL(image);
       //prefer mp4 over gif
       if (imageURL.pathname && imageURL.pathname.endsWith('.gif')) {
-        setTransformedImage(ImageService.instance.provider.gifToMp4(imageURL.toString()).toString());
-        setVideoThumbNail(null);
+        setTransformedImage(ImageService.proxy.gifToMp4(imageURL.toString()));
+        setVideoThumbNail(thumbnail ?? null);
         setDynamicType(MediaType.Video);
       } else if (imageURL.pathname && imageURL.pathname.endsWith('.html')) {
         setDynamicType(MediaType.IFrame);
@@ -97,16 +97,12 @@ export const AnyMedia = ({
             if (!!thumbnail) {
               setVideoThumbNail(thumbnail);
             } else {
-              let target = transformedImage;
-              if (!hasFileExtension(transformedImage)) {
-                target = ImageService.instance.provider.appendMp4Extension(target);
-              }
-              setVideoThumbNail(makeThumb(target));
+              setVideoThumbNail(makeThumb(transformedImage));
             }
           }
           if (format === 'gif') {
-            setTransformedImage(ImageService.instance.provider.gifToMp4(imageURL.toString()));
-            setVideoThumbNail(null);
+            setTransformedImage(ImageService.proxy.gifToMp4(imageURL.toString()));
+            setVideoThumbNail(thumbnail ?? null);
             setDynamicType(MediaType.Video);
           } else {
             setDynamicType(type);

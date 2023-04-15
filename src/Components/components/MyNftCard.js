@@ -37,6 +37,7 @@ import {useColorModeValue} from "@chakra-ui/color-mode";
 import {darkTheme, lightTheme} from "@src/Theme/theme";
 import {useSelector} from "react-redux";
 import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
+import ImageService from "@src/core/services/image";
 
 const MyNftCard = ({
   nft,
@@ -204,7 +205,8 @@ const MyNftCard = ({
                         className="card-img-top marketplace"
                         height={440}
                         width={440}
-                        video={batchListingCart.items.length > 0 ? undefined : (nft.video ?? nft.animation_url)}
+                        video={batchListingCart.items.length > 0 ? undefined : (nft.video ?? nft.animationUrl ?? nft.animation_url)}
+                        thumbnail={!!nft.video || !!nft.animationUrl || !!nft.animation_url ? ImageService.proxy.thumbnail(nft.video ?? nft.animationUrl ?? nft.animation_url) : undefined}
                         usePlaceholder={true}
               />
             </Box>

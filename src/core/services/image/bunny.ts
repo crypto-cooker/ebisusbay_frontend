@@ -1,5 +1,5 @@
 import {CdnProvider} from "@src/core/services/image/index";
-import {appConfig, isLocalEnv} from "@src/Config";
+import {isLocalEnv} from "@src/Config";
 
 class BunnyCdnProvider implements CdnProvider {
   avatar(url: string): string {
@@ -48,10 +48,6 @@ class BunnyCdnProvider implements CdnProvider {
       .setWidth(440)
       .setHeight(440)
       .build();
-  }
-
-  appendMp4Extension(url: string) {
-    return BunnyBuilder.from(url).build();
   }
 
   gifToMp4(url: string) {
