@@ -18,6 +18,7 @@ import {appConfig} from "@src/Config";
 import {useAppSelector} from "@src/Store/hooks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
+import ImageService from "@src/core/services/image";
 
 const txExtras = {
   gasPrice: ethers.utils.parseUnits('5000', 'gwei'),
@@ -167,6 +168,7 @@ const LegacyStaking = () => {
               videoProps={
                 {autoPlay: true}
               }
+              image={ImageService.proxy.thumbnail('https://cdn.ebisusbay.com/QmX97CwY2NcmPmdS6XtcqLFMV2JGEjnEWjxBQbj4Q6NC2i.mp4')}
               title="VIP Founding Member Staking"
             />
           </div>
