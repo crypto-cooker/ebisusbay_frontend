@@ -285,13 +285,13 @@ useEffect(() => {
             <img src='/img/battle-bay/mapImages/tavern_turbine.png' width={tavernSpinWidth} height={tavernSpinHeight} /></div>
 
           <div className={[styles.enlarge]} style={{position:"absolute", marginTop: boatTop, marginLeft: boatLeft, zIndex:"9"}} onClick={() => onChange('battleMap')}>
-            <img src='/img/battle-bay/mapImages/boat.png' width={boatWidth} height={boatHeight} /> </div>
+            <img src='/img/battle-bay/mapImages/boat_day.png' width={boatWidth} height={boatHeight} /> </div>
 
           <div className={[styles.enlarge]} style={{position:"absolute", marginTop: ebisustatueTop, marginLeft: ebisustatueLeft, zIndex:"9"}} >
             <img src='/img/battle-bay/mapImages/ebisustatue.png' width={ebisustatueWidth} height={ebisustatueHeight} /> </div>
 
           <div className={[styles.enlarge]} style={{position:"absolute", marginTop: fishmarketTop, marginLeft: fishmarketLeft, zIndex:"9"}} >
-            <img src='/img/battle-bay/mapImages/fishmarket.png' width={fishmarketWidth} height={fishmarketHeight} /> </div>
+            <img src='/img/battle-bay/mapImages/fishmarket_day.png' width={fishmarketWidth} height={fishmarketHeight} /> </div>
 
           <div style={{position:"absolute", marginTop: waterTop, marginLeft: waterLeft, zIndex:"8"}} >
             <img src='/img/battle-bay/mapImages/water.png' width={waterWidth} height={waterHeight} /> </div>
@@ -309,7 +309,7 @@ useEffect(() => {
             <img src='/img/battle-bay/mapImages/swordsmen.png' width={swordsmenWidth} height={swordsmenHeight} /> </div>
           
           <div className={[styles.enlarge]} style={{position:"absolute", marginTop: moongateTop, marginLeft: moongateLeft, zIndex:"9"}}>
-            <img src='/img/battle-bay/mapImages/moongate.png' width={moongateWidth} height={moongateHeight} /> </div>
+            <img src='/img/battle-bay/mapImages/moongate_day.png' width={moongateWidth} height={moongateHeight} /> </div>
         
           <div className={[styles.enlarge]} style={{position:"absolute", marginTop: toriiTop, marginLeft: toriiLeft, zIndex:"9"}} >
             <img src='/img/battle-bay/mapImages/torii.png' width={toriiWidth} height={toriiHeight} /> </div>
