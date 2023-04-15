@@ -1,6 +1,6 @@
 import {ImageResponse, NextRequest} from "next/server";
 import {caseInsensitiveCompare, isAddress, siPrefixedNumber} from "@src/utils";
-import {appConfigEdge} from "@src/Config";
+import {appConfig} from "@src/Config";
 import {hostedImage} from "@src/helpers/image";
 import imageSize from "image-size";
 import ImageService from "@src/core/services/image";
@@ -22,9 +22,9 @@ const boldFont = fetch(
 //   new URL('/public/img/logos/cronos_white.png', import.meta.url))
 // .then((res) => res.arrayBuffer());
 
-const defaultBanner = `${appConfigEdge('urls').app}img/background/banner-ryoshi-light.webp`;
+const defaultBanner = `${appConfig('urls').app}img/background/banner-ryoshi-light.webp`;
 
-const collections = appConfigEdge('collections');
+const collections = appConfig('collections');
 
 const getBanner = (collection: any) => {
   let banner = defaultBanner;
@@ -59,7 +59,7 @@ export default async function handler(req: NextRequest) {
 
   try {
     const data = await fetch(
-      `${appConfigEdge('urls').api}collectioninfo?address=${collection.address}`,
+      `${appConfig('urls').api}collectioninfo?address=${collection.address}`,
       { next: { revalidate: 10 }}
     );
     const collectionData = (await data.json()).collections[0];
