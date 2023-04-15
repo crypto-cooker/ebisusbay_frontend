@@ -1,8 +1,9 @@
 import {ImageResponse, NextRequest} from "next/server";
 import {caseInsensitiveCompare, isAddress, siPrefixedNumber} from "@src/utils";
 import {appConfigEdge} from "@src/Config";
-import {hostedImage, ImageKitService} from "@src/helpers/image";
+import {hostedImage} from "@src/helpers/image";
 import imageSize from "image-size";
+import ImageService from "@src/core/services/image";
 
 
 export const config = {
@@ -96,7 +97,7 @@ export default async function handler(req: NextRequest) {
           >
             <img
               alt={collection.name}
-              src={ImageKitService.buildAvatarUrl(collection.metadata.avatar)}
+              src={ImageService.proxy.avatar(collection.metadata.avatar)}
               width='50px'
               height='50px'
               style={{
