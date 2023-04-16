@@ -19884,6 +19884,34 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "3D CROW",
+      "slug": "3d-crow",
+      "multiToken": false,
+      "address": "0x3d7777ff1908B54b57038A2556d6904f71468e2D",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Immerse yourself in the world of 7777 distinct 3D CROWs, each featuring a one-of-a-kind 3D model, masterfully designed by RaulPM. These 3D CROWs boast attributes that correspond to their original CRO CROW counterparts, so CRO CROW #1 should have the same attributes as 3D CROW #1 and so on.",
+        "avatar": "/img/collections/3d-crow/avatar.webp",
+        "banner": "/img/collections/3d-crow/banner.webp",
+        "card": "/img/collections/3d-crow/card.webp",
+        "website": "https://crocrow.com",
+        "twitter": "https://twitter.com/cronoscrocrow",
+        "discord": "https://discord.gg/8a8Xm4wwR9",
+        "telegram": "https://t.me/crocrownft",
+        "medium": "https://medium.com/@cronoscrocrow",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
