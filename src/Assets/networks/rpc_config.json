@@ -8009,7 +8009,10 @@
       "name": "Mascot Booster Bags",
       "slug": "mascot-booster-bags",
       "multiToken": false,
-      "address": "0x9433e3e85652f4972c9a2cb603d901f591737c9b",
+      "address": "0x112DB64120195C1deEa10f86Db259CA88b526d80",
+      "mergedAddresses": [
+        "0x7D5f8F9560103E1ad958A6Ca43d49F954055340a"
+      ],
       "onChain": false,
       "listable": true,
       "metadata": {
