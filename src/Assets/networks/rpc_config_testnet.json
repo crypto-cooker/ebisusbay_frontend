@@ -3311,6 +3311,32 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "Diamond Coins of the Grind Guild",
+      "slug": "diamond-coins",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "There's a coin lying on the ground! Pick it up?",
+        "avatar": "/img/collections/Diamond-coins/avatar.webp",
+        "banner": "/img/collections/Diamond-coins/banner.webp",
+        "card": "/img/collections/Diamond-coins/card.webp",
+        "website":"https://cronosgrind.io",
+        "twitter": "https://twitter.com/cronosgrind",
+        "discord": "https://discord.gg/An3rafeAWP",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
@@ -8061,7 +8087,7 @@
       "memberCost": "0",
       "whitelistCost": "0",
       "foundersOnly": false,
-      "start":     1682020800,
+      "start": 1681840552000,
       "priceDescription": "",
       "end": null,
       "referral": false,
