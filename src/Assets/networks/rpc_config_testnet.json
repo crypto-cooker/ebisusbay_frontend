@@ -3311,6 +3311,32 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "Diamond Coins of the Grind Guild",
+      "slug": "diamond-coins",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "There's a coin lying on the ground! Pick it up?",
+        "avatar": "/img/collections/Diamond-coins/avatar.webp",
+        "banner": "/img/collections/Diamond-coins/banner.webp",
+        "card": "/img/collections/Diamond-coins/card.webp",
+        "website":"https://cronosgrind.io",
+        "twitter": "https://twitter.com/cronosgrind",
+        "discord": "https://discord.gg/An3rafeAWP",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
@@ -8038,6 +8064,45 @@
       "verification": {
         "doxx": false,
         "kyc": false,
+        "escrow": false,
+        "verified": true
+      }
+    },{
+      "id": 169,
+      "slug": "Diamond-coins",
+      "title": "Diamond Coins of the Grind Guild",
+      "subtitle": "There's a coin lying on the ground! Pick it up?",
+      "description": "𝘊𝘩𝘢𝘱𝘵𝘦𝘳 1\n𝘠𝘰𝘶𝘳 𝘦𝘹𝘱𝘦𝘥𝘪𝘵𝘪𝘰𝘯 𝘩𝘢𝘴 𝘭𝘦𝘥 𝘺𝘰𝘶 𝘵𝘰 𝘢 𝘥𝘢𝘳𝘬 𝘤𝘢𝘷𝘦 𝘮𝘢𝘥𝘦 𝘰𝘶𝘵 𝘰𝘧 𝘥𝘪𝘢𝘮𝘰𝘯𝘥. 𝘚𝘵𝘢𝘯𝘥𝘪𝘯𝘨 𝘢𝘵 𝘵𝘩𝘦 𝘰𝘱𝘦𝘯𝘪𝘯𝘨 𝘰𝘧 𝘴𝘰𝘮𝘦𝘵𝘩𝘪𝘯𝘨 𝘦𝘱𝘪𝘤, 𝘵𝘩𝘦 𝘦𝘯𝘤𝘩𝘢𝘯𝘵𝘪𝘯𝘨 𝘩𝘶𝘮 𝘥𝘳𝘢𝘸𝘴 𝘺𝘰𝘶 𝘪𝘯...\n𝐶ℎ𝑎𝑝𝑡𝑒𝑟 2\n𝐻𝑦𝑝𝑛𝑜𝑡𝑖𝑧𝑒𝑑 𝑏𝑦 𝑡ℎ𝑒 𝑣𝑖𝑏𝑟𝑎𝑡𝑖𝑜𝑛𝑎𝑙 𝑓𝑟𝑒𝑞𝑢𝑒𝑛𝑐𝑦 𝑜𝑓 𝑡ℎ𝑒 ℎ𝑢𝑚 𝑎𝑛𝑑 𝑜𝑙𝑑 𝑓𝑜𝑙𝑘𝑙𝑜𝑟𝑒 𝑜𝑓 𝑡𝑟𝑒𝑎𝑠𝑢𝑟𝑒𝑠 𝑙𝑜𝑛𝑔 𝑓𝑜𝑟𝑔𝑜𝑡𝑡𝑒𝑛....\n𝐴 𝑏𝑟𝑖𝑙𝑙𝑖𝑎𝑛𝑐𝑒 𝑎𝑝𝑝𝑒𝑎𝑟𝑠.\n𝐶ℎ𝑎𝑝𝑡𝑒𝑟 3\n𝘛𝘩𝘦 𝘩𝘶𝘮𝘴 𝘣𝘦𝘤𝘰𝘮𝘦 𝘢 𝘤𝘩𝘢𝘯𝘵:\n𝘏𝘦𝘭𝘭𝘦𝘧 𝘎'𝘙𝘩𝘺𝘯𝘦𝘥, 𝘏𝘦𝘭𝘭𝘦𝘧 𝘎'𝘙𝘩𝘺𝘯𝘦𝘥...\n𝑌𝑜𝑢 𝑡ℎ𝑖𝑛𝑘 𝘵𝘰 𝘺𝘰𝘶𝘳𝘴𝘦𝘭𝘧,\n𝑇ℎ𝑎𝑡'𝑠 𝑛𝑜𝑡 𝑚𝑦 𝑛𝑎𝑚𝑒, 𝘢𝘯𝘥 𝘳𝑒𝑎𝑐ℎ 𝑜𝑢𝑡 𝑡𝑜 𝑔𝑟𝑎𝑏 𝑡ℎ𝑒 𝑐𝑟𝑦𝑠𝑡𝑎𝑙...\n𝐶ℎ𝑎𝑝𝑡𝑒𝑟 4\n𝐴 𝑏𝑒𝑎𝑚 𝑜𝑓 𝑒𝑛𝑒𝑟𝑔𝑦 𝑒𝑟𝑢𝑝𝑡𝑠, 𝑐𝑟𝑒𝑎𝑡𝑖𝑛𝑔 𝑎 𝑏𝑙𝑖𝑛𝑑𝑖𝑛𝑔 𝑓𝑙𝑎𝑠ℎ 𝑎𝑡 𝑡ℎ𝑒 𝑏𝑎𝑐𝑘 𝑜𝑓 𝑡ℎ𝑒 𝑐𝑎𝑣𝑒 𝑎𝑠 𝑎 𝑛𝑒𝑤𝑙𝑦-𝑓𝑜𝑟𝑚𝑒𝑑 𝑟𝑖𝑓𝑡 𝑠𝑡𝑎𝑟𝑡𝑠 𝑝𝑢𝑙𝑙𝑖𝑛𝑔 𝑦𝑜𝑢 𝑖𝑛𝑤𝑎𝑟𝑑.\n[𝐻𝑜𝑙𝑑 𝑜𝑛 𝑡𝑖𝑔ℎ𝑡.]\n𝐶ℎ𝑎𝑝𝑡𝑒𝑟 5\n𝑈𝑝𝑜𝑛 𝑐𝑜𝑚𝑝𝑙𝑒𝑡𝑖𝑜𝑛 𝑜𝑓 𝑖𝑡𝑠 𝑠𝑢𝑚𝑚𝑜𝑛𝑖𝑛𝑔, 𝑎 𝑝𝑜𝑟𝑡𝑎𝑙 𝑠𝑡𝑜𝑜𝑑 𝑠𝑢𝑠𝑝𝑒𝑛𝑑𝑒𝑑 𝑖𝑛 𝑠𝑜𝑙𝑖𝑡𝑢𝑑𝑒 𝑖𝑛𝑠𝑖𝑑𝑒 𝑡ℎ𝑒 𝑑𝑖𝑎𝑚𝑜𝑛𝑑 𝑐𝑎𝑣𝑒.", 
+      "author": {
+        "name": "CDN",
+        "website":"https://cronosgrind.io",
+        "twitter": "https://twitter.com/cronosgrind",
+        "discord": "https://discord.gg/An3rafeAWP"
+      },
+      "address": "",
+      "maxMintPerTx": 1,
+      "maxMintPerAddress": 1,
+      "totalSupply": 1000,
+      "cost": "0",
+      "memberCost": "0",
+      "whitelistCost": "0",
+      "foundersOnly": false,
+      "start": 1681840552000,
+      "priceDescription": "",
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/Diamond-coins/drop.webp",
+        "banner": "/img/collections/Diamond-coins/banner.webp",
+        "avatar": "/img/collections/Diamond-coins/avatar.webp",
+        "preview": "/img/collections/Diamond-coins/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
         "escrow": false,
         "verified": true
       }
