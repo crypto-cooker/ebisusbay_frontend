@@ -101,15 +101,12 @@ class BunnyBuilder {
     if (isLocalEnv() && this.url?.startsWith('/')) return this.url;
     if(!this.url || this.url.startsWith('data')) return this.url;
 
-    // const oldCdns = ['https://cdn.ebisusbay.com/', 'https://cdn.ebisusbay.biz/', 'https://cdn.ebisusbay.biz/test/'];
-    // const newCdn = 'https://cdn2.ebisusbay.com/';
-    // const isCdnUrl = oldCdns.some(cdn => this.url.includes(cdn));
-    // this.url = oldCdns.reduce((p, n) => p.replace(n, newCdn), this.url);
-    // const url = new URL(`${this.url}?${this.params}`, !isCdnUrl ? newCdn : undefined);
-    //
-    // return url.toString();
+    let str = this.url;
+    if (this.params.toString() !== '') {
+      str += `?${this.params}`;
+    }
 
-    const url = new URL(`${this.url}?${this.params}`, 'https://cdn2.ebisusbay.com/');
+    const url = new URL(str, 'https://cdn2.ebisusbay.com/');
 
     return url.toString();
   }

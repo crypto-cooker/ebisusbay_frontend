@@ -31,7 +31,7 @@ import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import Button from "@src/Components/components/common/Button";
 import {listingState} from "@src/core/api/enums";
-import {AnyMedia} from "@src/components-v2/shared/media/any-media";
+import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import Link from "next/link";
 import {LOCAL_STORAGE_ITEMS} from "@src/helpers/storage";
 import useBuyGaslessListings from '@src/hooks/useBuyGaslessListings';
@@ -40,6 +40,7 @@ import {appConfig} from "@src/Config";
 import {useAppSelector} from "@src/Store/hooks";
 import {AnchorProps} from "react-bootstrap";
 import ImageService from "@src/core/services/image";
+import {specialImageTransform} from "@src/hacks";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -258,10 +259,10 @@ const Cart = function () {
                             className="img-rounded-8"
                           />
                         ) : (
-                          <AnyMedia
-                            image={ImageService.instance.provider.fixedWidth(nft.image, 100, 100)}
+                          <MultimediaImage
+                            source={ImageService.proxy.fixedWidth(specialImageTransform(nft.address, nft.image), 100, 100)}
+                            fallbackSource={ImageService.instance.provider.fixedWidth(ImageService.proxy.thumbnail(nft.image), 100, 100)}
                             title={nft.name}
-                            usePlaceholder={false}
                             className="img-rounded-8"
                           />
                         )}

@@ -63,7 +63,7 @@ export const AnyMedia = ({
 
   const determineMediaType = () => {
     if (!image || image.startsWith('data')) {
-      setDynamicType(MediaType.Image);
+      setDynamicType(MediaType.image);
       return;
     }
 
@@ -75,11 +75,11 @@ export const AnyMedia = ({
       if (imageURL.pathname && imageURL.pathname.endsWith('.gif')) {
         setTransformedImage(ImageService.proxy.gifToMp4(imageURL.toString()));
         setVideoThumbNail(thumbnail ?? null);
-        setDynamicType(MediaType.Video);
+        setDynamicType(MediaType.video);
       } else if (imageURL.pathname && imageURL.pathname.endsWith('.html')) {
-        setDynamicType(MediaType.IFrame);
+        setDynamicType(MediaType.iFrame);
       } else if (imageURL.pathname && knownImageTypes.some((o) => imageURL.pathname.endsWith(o))) {
-        setDynamicType(MediaType.Image);
+        setDynamicType(MediaType.image);
       } else {
         const xhr = new XMLHttpRequest();
         xhr.open('HEAD', transformedImage, true);
@@ -87,13 +87,13 @@ export const AnyMedia = ({
         xhr.onload = function () {
           const contentType = xhr.getResponseHeader('Content-Type');
           if (!contentType) {
-            setDynamicType(MediaType.Image);
+            setDynamicType(MediaType.image);
             return;
           }
 
           const [mediaType, format] = contentType.split('/');
-          let type = MediaType[mediaType as keyof typeof MediaType] ?? MediaType.Image;
-          if (type === MediaType.Video) {
+          let type = MediaType[mediaType as keyof typeof MediaType] ?? MediaType.image;
+          if (type === MediaType.video) {
             if (!!thumbnail) {
               setVideoThumbNail(thumbnail);
             } else {
@@ -103,7 +103,7 @@ export const AnyMedia = ({
           if (format === 'gif') {
             setTransformedImage(ImageService.proxy.gifToMp4(imageURL.toString()));
             setVideoThumbNail(thumbnail ?? null);
-            setDynamicType(MediaType.Video);
+            setDynamicType(MediaType.video);
           } else {
             setDynamicType(type);
           }
@@ -113,7 +113,7 @@ export const AnyMedia = ({
       }
     } catch (e) {
       console.log('Unable to determine media type', e, image);
-      setDynamicType(MediaType.Image);
+      setDynamicType(MediaType.image);
     }
   };
 
@@ -121,7 +121,7 @@ export const AnyMedia = ({
     <>
       {dynamicType && (
         <>
-          {video || dynamicType === MediaType.Video ? (
+          {video || dynamicType === MediaType.video ? (
             <Video
               video={video ?? transformedImage}
               image={videoThumbnail ?? undefined}
@@ -147,7 +147,7 @@ export const AnyMedia = ({
                 />
               }
             />
-          ) : dynamicType === MediaType.IFrame ? (
+          ) : dynamicType === MediaType.iFrame ? (
             <IFrame url={image} />
           ) : url ? (
             <Link href={url} target={newTab ? '_blank' : '_self'}>
@@ -273,12 +273,87 @@ const Video = memo(
 );
 
 enum MediaType {
-  Image = 1,
-  Video,
-  Audio,
-  IFrame,
+  image = 1,
+  video,
+  audio,
+  iFrame,
 }
 
 const IFrame = memo(({ url }: {url: string}) => {
   return <iframe src={url} width="100%" height="100%" />;
 });
+
+
+interface MultimediaImageProps {
+  source: string;
+  fallbackSource?: string;
+  title: string;
+  width?: number;
+  height?: number;
+  className?: string;
+}
+export const MultimediaImage = ({ source, fallbackSource, title, width = 1, height = 1, className }: MultimediaImageProps) => {
+  const [image, setImage] = useState<string>(source);
+
+  const determineMediaType = () => {
+    if (!source || source.startsWith('data')) {
+      setImage(source);
+      return;
+    }
+
+    const knownImageTypes = ['.png', '.jpg', '.jpeg', 'webp'];
+
+    try {
+      const imageURL = new URL(source);
+      //prefer mp4 over gif
+      if (imageURL.pathname && imageURL.pathname.endsWith('.gif')) {
+        setImage(source);
+      } else if (imageURL.pathname && imageURL.pathname.endsWith('.html')) {
+        //
+      } else if (imageURL.pathname && knownImageTypes.some((o) => imageURL.pathname.endsWith(o))) {
+        setImage(source);
+      } else {
+        const xhr = new XMLHttpRequest();
+        xhr.open('HEAD', source, true);
+
+        xhr.onload = function () {
+          const contentType = xhr.getResponseHeader('Content-Type');
+          if (!contentType) {
+            setImage(source);
+            return;
+          }
+
+          const [mediaType, format] = contentType.split('/');
+          let type = MediaType[mediaType as keyof typeof MediaType] ?? MediaType.image;
+          if (type === MediaType.video && !!fallbackSource) {
+            setImage(fallbackSource);
+          } else setImage(source);
+        };
+
+        xhr.send();
+      }
+    } catch (e) {
+      console.log('Unable to determine media type', e, source);
+      setImage(source);
+    }
+  };
+
+  useEffect(() => {
+    determineMediaType();
+  }, [source, fallbackSource]);
+
+  return image ? (
+    <Image
+      image={image}
+      title={title}
+      className={className}
+      // blur={blurImageUrl(transformedImage)}
+      // sizes={sizes}
+      layout='responsive'
+      width={width}
+      height={height}
+    />
+  ) : (
+    <></>
+  )
+};

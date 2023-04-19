@@ -16,7 +16,7 @@ import {Badge, Spinner} from 'react-bootstrap';
 
 import ProfilePreview from '@src/Components/components/ProfilePreview';
 import LayeredIcon from '@src/Components/components/LayeredIcon';
-import {AnyMedia} from "@src/components-v2/shared/media/any-media";
+import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import ProfileImage from '@src/Components/components/ProfileImage'
 
 import {
@@ -82,6 +82,7 @@ import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import {useAppSelector} from "@src/Store/hooks";
 import {ContractInterface} from "@ethersproject/contracts";
 import Trait from "@src/components-v2/feature/nft/trait";
+import ImageService from "@src/core/services/image";
 
 const config = appConfig();
 const tabs = {
@@ -579,7 +580,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                 ) : (
                   <>
                     <AnyMedia
-                      image={specialImageTransform(address, nft.image)}
+                      image={ImageService.proxy.convert(specialImageTransform(address, nft.image))}
                       video={nft.video ?? nft.animation_url}
                       videoProps={{ height: 'auto', autoPlay: true }}
                       title={nft.name}
@@ -1011,12 +1012,10 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                             <Box p='16px' key={i}>
                               <Flex gap='15px'>
                                 <Box w='72px'>
-                                  <AnyMedia
-                                    image={specialImageTransform(nft.address, nft.image)}
-                                    video={nft.video ?? nft.animation_url}
-                                    videoProps={{ height: 'auto', autoPlay: true }}
-                                    title={'title'}
-                                    usePlaceholder={false}
+                                  <MultimediaImage
+                                    source={ImageService.proxy.fixedWidth(specialImageTransform(nft.address, nft.image), 100, 100)}
+                                    fallbackSource={ImageService.instance.provider.fixedWidth(ImageService.proxy.thumbnail(nft.image), 100, 100)}
+                                    title={nft.name}
                                     className="img-fluid img-rounded mb-sm-30"
                                   />
                                 </Box>

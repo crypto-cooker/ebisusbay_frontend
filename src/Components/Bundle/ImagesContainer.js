@@ -1,13 +1,13 @@
 import React, {useRef, useState} from 'react';
-import {AnyMedia} from "@src/components-v2/shared/media/any-media";
+import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from '@src/hacks';
 import {Box, Center, Flex} from "@chakra-ui/react";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {FreeMode, Navigation, Thumbs} from "swiper";
 import {fallbackImageUrl} from "@src/core/constants";
+import ImageService from "@src/core/services/image";
 
 const ImageContainer = ({ nft }) => {
-  console.log('NFT', nft);
   const [currentIndex, setCurrentIndex] = useState(0)
   const sliderRef = useRef(null)
 
@@ -38,11 +38,12 @@ const ImageContainer = ({ nft }) => {
             <SwiperSlide key={nft.id}>
               <Flex className='main-image' flexDir='column'>
                 <AnyMedia
-                  image={specialImageTransform(nft.address, nft.image)}
-                  video={nft.video ?? nft.animation_url}
+                  image={ImageService.proxy.convert(specialImageTransform(nft.address, nft.image))}
+                  video={nft.video ?? nft.animationUrl ?? nft.animation_url}
                   videoProps={{ height: 'auto', autoPlay: true }}
-                  title={'title'}
-                  usePlaceholder={false}
+                  thumbnail={!!nft.video || !!nft.animationUrl || !!nft.animation_url ? ImageService.proxy.thumbnail(nft.video ?? nft.animationUrl ?? nft.animation_url) : undefined}
+                  title={nft.name}
+                  usePlaceholder={true}
                   className="img-fluid img-rounded mb-sm-30"
                 />
               </Flex>
@@ -54,12 +55,10 @@ const ImageContainer = ({ nft }) => {
         <Flex>
           {nft.nfts.map((nft, index) => (
             <Box key={nft.id} className={currentIndex === index ? 'active' : ''} w='72px' marginRight='16px' onClick={() => { selectImage(index) }}>
-              <AnyMedia
-                image={specialImageTransform(nft.address, nft.image)}
-                video={nft.video ?? nft.animation_url}
-                videoProps={{ height: 'auto', autoPlay: true }}
-                title={'title'}
-                usePlaceholder={false}
+              <MultimediaImage
+                source={ImageService.proxy.fixedWidth(specialImageTransform(nft.address, nft.image), 100, 100)}
+                fallbackSource={ImageService.instance.provider.fixedWidth(ImageService.proxy.thumbnail(nft.image), 100, 100)}
+                title={nft.name}
                 className="img-fluid img-rounded mb-sm-30"
               />
             </Box>))}

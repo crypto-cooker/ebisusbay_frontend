@@ -42,7 +42,7 @@ import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEllipsisH, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {appConfig} from "@src/Config";
-import {AnyMedia} from "@src/components-v2/shared/media/any-media";
+import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@src/hacks";
 import {useAppSelector} from "@src/Store/hooks";
 import ImageService from "@src/core/services/image";
@@ -224,10 +224,10 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
             rounded="md"
           />
         ) : (
-          <AnyMedia
-            image={specialImageTransform(item.nft.nftAddress, ImageService.instance.provider.avatar(item.nft.image))}
+          <MultimediaImage
+            source={ImageService.proxy.fixedWidth(specialImageTransform(item.nft.nftAddress, item.nft.image), 100, 100)}
+            fallbackSource={ImageService.instance.provider.fixedWidth(ImageService.proxy.thumbnail(item.nft.image), 100, 100)}
             title={item.nft.name}
-            usePlaceholder={true}
             className="img-fluid img-rounded-5"
           />
         )}
