@@ -19925,9 +19925,9 @@
       "listable": false,
       "metadata": {
         "description": "There's a coin lying on the ground! Pick it up?",
-        "avatar": "/img/collections/Diamond-coins/avatar.webp",
-        "banner": "/img/collections/Diamond-coins/banner.webp",
-        "card": "/img/collections/Diamond-coins/card.webp",
+        "avatar": "/img/collections/diamond-coins/avatar.webp",
+        "banner": "/img/collections/diamond-coins/banner.webp",
+        "card": "/img/collections/diamond-coins/card.webp",
         "website":"https://cronosgrind.io",
         "twitter": "https://twitter.com/cronosgrind",
         "discord": "https://discord.gg/An3rafeAWP",
@@ -26512,6 +26512,7 @@
       "cost": "0",
       "memberCost": "0",
       "whitelistCost": "0",
+      "freeMint": true,
       "foundersOnly": false,
       "start": 1682452800000,
       "priceDescription": "",
@@ -26521,10 +26522,10 @@
       "published": true,
       "complete": false,
       "images": {
-        "drop": "/img/drops/Diamond-coins/drop.webp",
-        "banner": "/img/drops/Diamond-coins/banner.webp",
-        "avatar": "/img/collections/Diamond-coins/avatar.webp",
-        "preview": "/img/collections/Diamond-coins/card.webp"
+        "drop": "/img/drops/diamond-coins/drop.webp",
+        "banner": "/img/collections/diamond-coins/banner.webp",
+        "avatar": "/img/collections/diamond-coins/avatar.webp",
+        "preview": "/img/collections/diamond-coins/card.webp"
       },
       "verification": {
         "doxx": false,

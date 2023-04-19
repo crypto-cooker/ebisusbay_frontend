@@ -32,6 +32,7 @@ export interface Drop {
   mediaPosition?: string;
   specialWhitelistCost?: SpecialWhitelist;
   video?: string;
+  freeMint?: boolean;
   [key: string]: any;
 }
 
@@ -95,6 +96,7 @@ export function mapDrop(drop: any): Drop {
     priceDescription: drop.priceDescription,
     specialWhitelistCost: drop.specialWhitelistCost,
     video: drop.video,
+    freeMint: drop.freeMint ?? false
   }
 
   if (!!drop.memberCost) obj.memberCost = Number(drop.memberCost);
