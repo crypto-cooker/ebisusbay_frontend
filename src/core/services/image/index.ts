@@ -106,7 +106,9 @@ class CdnProxy implements CdnProvider {
     let gatewayTools = new IPFSGatewayTools();
     const isIpfs = gatewayTools.containsCID(url).containsCid;
 
-    return isIpfs ? this.bunny : this.imagekit;
+    const containsProxy = url.includes('/proxy/');
+
+    return isIpfs && !containsProxy ? this.bunny : this.imagekit;
   }
 
   cdnUrl(url: string) {

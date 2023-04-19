@@ -109,6 +109,8 @@ class BunnyBuilder {
     //
     // return url.toString();
 
-    return this.url.toString();
+    const url = new URL(`${this.url}?${this.params}`, 'https://cdn2.ebisusbay.com/');
+
+    return url.toString();
   }
 }
