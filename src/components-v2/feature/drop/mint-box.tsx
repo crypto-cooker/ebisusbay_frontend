@@ -238,19 +238,25 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
               <HStack spacing={4}>
                 <Box textAlign="center">
                   <Heading as="h6" size="sm" className="mb-1">Mint Price</Heading>
-                  {!regularCost && !drop.erc20Cost && (
-                    <Heading as="h5" size="md">TBA</Heading>
-                  )}
-                  {!!regularCost && (
-                    <Heading as="h5" size="md">
-                      <Flex>
-                        <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
-                        <span className="ms-2">{ethers.utils.commify(round(regularCost))}</span>
-                      </Flex>
-                    </Heading>
-                  )}
-                  {drop.erc20Cost && drop.erc20Token && (
-                    <Heading as="h5" size="md">{`${ethers.utils.commify(round(drop.erc20Cost))} ${config.tokens[drop.erc20Token].symbol}`}</Heading>
+                  {drop.freeMint ? (
+                    <Heading as="h5" size="md">Free Mint</Heading>
+                  ) : (
+                    <>
+                      {!regularCost && !drop.erc20Cost && (
+                        <Heading as="h5" size="md">TBA</Heading>
+                      )}
+                      {!!regularCost && (
+                        <Heading as="h5" size="md">
+                          <Flex>
+                            <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                            <span className="ms-2">{ethers.utils.commify(round(regularCost))}</span>
+                          </Flex>
+                        </Heading>
+                      )}
+                      {drop.erc20Cost && drop.erc20Token && (
+                        <Heading as="h5" size="md">{`${ethers.utils.commify(round(drop.erc20Cost))} ${config.tokens[drop.erc20Token].symbol}`}</Heading>
+                      )}
+                    </>
                   )}
                 </Box>
                 {(!!memberCost || (drop.erc20MemberCost && drop.erc20Cost !== drop.erc20MemberCost)) && (

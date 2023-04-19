@@ -29,7 +29,7 @@
       ],
       "metadata": {
         "description": "Holding this NFT grants reduced service fees, discounts on drops and early access to features.",
-        "avatar": "/img/avatar.png",
+        "avatar": "/img/collections/ebisu/avatar.webp",
         "card": "/img/collections/ebisu/card.webp",
         "banner": "/img/collections/ebisu/banner.png",
         "website": "https://app.ebisusbay.com/",
@@ -68,7 +68,7 @@
       "listable": true,
       "metadata": {
         "description": "Happy Valentine's Day from ebisusbay.com staff! We \u2764 you!",
-        "avatar": "/img/avatar.png",
+        "avatar": "/img/collections/ebisu/avatar.webp",
         "card": "/img/collections/ebisu/card.webp",
         "banner": "/img/collections/ebisu/banner.png",
         "website": "https://app.ebisusbay.com/",
@@ -430,7 +430,7 @@
       "listable": true,
       "metadata": {
         "description": "Cronies are a NFT to commemorate the launch of the Cronos network. Randomly generated 100% on-chain SVG with the Cronos logo and the block number in which it was minted.\n\nWe are really excited to see the unique collections you will build. Such as, sequential block numbers, block numbers that have a special meaning to you like a birthday, and color schemes.",
-        "avatar": "/img/avatar.png",
+        "avatar": "/img/collections/ebisu/avatar.webp",
         "card": "/img/collections/cronies/card.png",
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
@@ -8009,7 +8009,10 @@
       "name": "Mascot Booster Bags",
       "slug": "mascot-booster-bags",
       "multiToken": false,
-      "address": "0x9433e3e85652f4972c9a2cb603d901f591737c9b",
+      "address": "0x750bd33b39cee357983f1cdafd2cee51dfb03a62",
+      "mergedAddresses": [
+        "0x7D5f8F9560103E1ad958A6Ca43d49F954055340a"
+      ],
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -13684,7 +13687,7 @@
       "listable": false,
       "metadata": {
         "description": "Art collectible version of the original Ebisu's Bay VIP Founding Member.",
-        "avatar": "/img/avatar.png",
+        "avatar": "/img/collections/ebisu/avatar.webp",
         "card": "/img/collections/ebisu/card.webp",
         "banner": "/img/collections/ebisu/banner.png",
         "website": "https://app.ebisusbay.com/",
@@ -19884,6 +19887,60 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "3D CROW",
+      "slug": "3d-crow",
+      "multiToken": false,
+      "address": "0x3d7777ff1908B54b57038A2556d6904f71468e2D",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Immerse yourself in the world of 7777 distinct 3D CROWs, each featuring a one-of-a-kind 3D model, masterfully designed by RaulPM. These 3D CROWs boast attributes that correspond to their original CRO CROW counterparts, so CRO CROW #1 should have the same attributes as 3D CROW #1 and so on.",
+        "avatar": "/img/collections/3d-crow/avatar.webp",
+        "banner": "/img/collections/3d-crow/banner.webp",
+        "card": "/img/collections/3d-crow/card.webp",
+        "website": "https://crocrow.com",
+        "twitter": "https://twitter.com/cronoscrocrow",
+        "discord": "https://discord.gg/8a8Xm4wwR9",
+        "telegram": "https://t.me/crocrownft",
+        "medium": "https://medium.com/@cronoscrocrow",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Diamond Coins of the Grind Guild",
+      "slug": "diamond-coins",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "There's a coin lying on the ground! Pick it up?",
+        "avatar": "/img/collections/diamond-coins/avatar.webp",
+        "banner": "/img/collections/diamond-coins/banner.webp",
+        "card": "/img/collections/diamond-coins/card.webp",
+        "website":"https://cronosgrind.io",
+        "twitter": "https://twitter.com/cronosgrind",
+        "discord": "https://discord.gg/An3rafeAWP",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
@@ -19915,7 +19972,7 @@
       "complete": true,
       "images": {
         "drop": "/img/drops/cronies/cronies-drop.webp",
-        "avatar": "/img/avatar.png",
+        "avatar": "/img/collections/ebisu/avatar.webp",
         "preview": "/img/collections/cronies/card.png"
       },
       "verification": {
@@ -19953,7 +20010,7 @@
       "complete": true,
       "images": {
         "drop": "/img/drops/founding_member/founding_member_sm.png",
-        "avatar": "/img/avatar.png",
+        "avatar": "/img/collections/ebisu/avatar.webp",
         "preview": "/img/collections/ebisu/card.webp"
       },
       "verification": {
@@ -25322,7 +25379,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "images": {
         "drop": "/img/drops/buds/drop.webp",
@@ -26355,11 +26412,11 @@
     {
       "id": 167,
       "slug": "0xluckless-v2-2",
-      "title": "OxLuckless v2.2",
+      "title": "0xLuckless v2.2",
       "subtitle": "Welcome to 0xLuckless v2.2, a 6K resolution art project, unique and unlike anything else on the blockchain Created with the power of A.I. and advanced editing techniques across multiple platforms to produce the highest quality artwork on Cronos.",
       "description": "0xLuckless art holders earn exclusive airdrops, Passive CRO earnings via NFT staking with CroDex, Whitelist access to all future drops and secret releases, discounts on 0xLuckless merch and canvas art on EvergreenKings.com and unlock private channel access on the 0xLuckless Discord server which comes with tons of extra benefits including giveaways, custom art, sneak peeks, and helping shape the future of the project.",
       "author": {
-        "name": "OxLuckless",
+        "name": "0xLuckless",
         "website":"https://linktr.ee/0xLuckless",
         "twitter": "https://twitter.com/0xLuckless",
         "discord": "https://discord.gg/qPFZhAdGRq"
@@ -26435,6 +26492,46 @@
           "The second installment released after proof of donation to a relevant autism charity has been made in June and a portion of funds have been staked on the Crypto.com DeFi app",
           "The third installment released when all Rebel AUT Club NFT's have been minted and either 7777 sold out, or the project decides to stop the mint"
         ]
+      }
+    },{
+      "id": 169,
+      "slug": "diamond-coins",
+      "title": "Diamond Coins of the Grind Guild",
+      "subtitle": "There's a coin lying on the ground! Pick it up?",
+      "description": "𝘊𝘩𝘢𝘱𝘵𝘦𝘳 1\n𝘠𝘰𝘶𝘳 𝘦𝘹𝘱𝘦𝘥𝘪𝘵𝘪𝘰𝘯 𝘩𝘢𝘴 𝘭𝘦𝘥 𝘺𝘰𝘶 𝘵𝘰 𝘢 𝘥𝘢𝘳𝘬 𝘤𝘢𝘷𝘦 𝘮𝘢𝘥𝘦 𝘰𝘶𝘵 𝘰𝘧 𝘥𝘪𝘢𝘮𝘰𝘯𝘥. 𝘚𝘵𝘢𝘯𝘥𝘪𝘯𝘨 𝘢𝘵 𝘵𝘩𝘦 𝘰𝘱𝘦𝘯𝘪𝘯𝘨 𝘰𝘧 𝘴𝘰𝘮𝘦𝘵𝘩𝘪𝘯𝘨 𝘦𝘱𝘪𝘤, 𝘵𝘩𝘦 𝘦𝘯𝘤𝘩𝘢𝘯𝘵𝘪𝘯𝘨 𝘩𝘶𝘮 𝘥𝘳𝘢𝘸𝘴 𝘺𝘰𝘶 𝘪𝘯...\n𝐶ℎ𝑎𝑝𝑡𝑒𝑟 2\n𝐻𝑦𝑝𝑛𝑜𝑡𝑖𝑧𝑒𝑑 𝑏𝑦 𝑡ℎ𝑒 𝑣𝑖𝑏𝑟𝑎𝑡𝑖𝑜𝑛𝑎𝑙 𝑓𝑟𝑒𝑞𝑢𝑒𝑛𝑐𝑦 𝑜𝑓 𝑡ℎ𝑒 ℎ𝑢𝑚 𝑎𝑛𝑑 𝑜𝑙𝑑 𝑓𝑜𝑙𝑘𝑙𝑜𝑟𝑒 𝑜𝑓 𝑡𝑟𝑒𝑎𝑠𝑢𝑟𝑒𝑠 𝑙𝑜𝑛𝑔 𝑓𝑜𝑟𝑔𝑜𝑡𝑡𝑒𝑛....\n𝐴 𝑏𝑟𝑖𝑙𝑙𝑖𝑎𝑛𝑐𝑒 𝑎𝑝𝑝𝑒𝑎𝑟𝑠.\n𝐶ℎ𝑎𝑝𝑡𝑒𝑟 3\n𝘛𝘩𝘦 𝘩𝘶𝘮𝘴 𝘣𝘦𝘤𝘰𝘮𝘦 𝘢 𝘤𝘩𝘢𝘯𝘵:\n𝘏𝘦𝘭𝘭𝘦𝘧 𝘎'𝘙𝘩𝘺𝘯𝘦𝘥, 𝘏𝘦𝘭𝘭𝘦𝘧 𝘎'𝘙𝘩𝘺𝘯𝘦𝘥...\n𝑌𝑜𝑢 𝑡ℎ𝑖𝑛𝑘 𝘵𝘰 𝘺𝘰𝘶𝘳𝘴𝘦𝘭𝘧,\n𝑇ℎ𝑎𝑡'𝑠 𝑛𝑜𝑡 𝑚𝑦 𝑛𝑎𝑚𝑒, 𝘢𝘯𝘥 𝘳𝑒𝑎𝑐ℎ 𝑜𝑢𝑡 𝑡𝑜 𝑔𝑟𝑎𝑏 𝑡ℎ𝑒 𝑐𝑟𝑦𝑠𝑡𝑎𝑙...\n𝐶ℎ𝑎𝑝𝑡𝑒𝑟 4\n𝐴 𝑏𝑒𝑎𝑚 𝑜𝑓 𝑒𝑛𝑒𝑟𝑔𝑦 𝑒𝑟𝑢𝑝𝑡𝑠, 𝑐𝑟𝑒𝑎𝑡𝑖𝑛𝑔 𝑎 𝑏𝑙𝑖𝑛𝑑𝑖𝑛𝑔 𝑓𝑙𝑎𝑠ℎ 𝑎𝑡 𝑡ℎ𝑒 𝑏𝑎𝑐𝑘 𝑜𝑓 𝑡ℎ𝑒 𝑐𝑎𝑣𝑒 𝑎𝑠 𝑎 𝑛𝑒𝑤𝑙𝑦-𝑓𝑜𝑟𝑚𝑒𝑑 𝑟𝑖𝑓𝑡 𝑠𝑡𝑎𝑟𝑡𝑠 𝑝𝑢𝑙𝑙𝑖𝑛𝑔 𝑦𝑜𝑢 𝑖𝑛𝑤𝑎𝑟𝑑.\n[𝐻𝑜𝑙𝑑 𝑜𝑛 𝑡𝑖𝑔ℎ𝑡.]\n𝐶ℎ𝑎𝑝𝑡𝑒𝑟 5\n𝑈𝑝𝑜𝑛 𝑐𝑜𝑚𝑝𝑙𝑒𝑡𝑖𝑜𝑛 𝑜𝑓 𝑖𝑡𝑠 𝑠𝑢𝑚𝑚𝑜𝑛𝑖𝑛𝑔, 𝑎 𝑝𝑜𝑟𝑡𝑎𝑙 𝑠𝑡𝑜𝑜𝑑 𝑠𝑢𝑠𝑝𝑒𝑛𝑑𝑒𝑑 𝑖𝑛 𝑠𝑜𝑙𝑖𝑡𝑢𝑑𝑒 𝑖𝑛𝑠𝑖𝑑𝑒 𝑡ℎ𝑒 𝑑𝑖𝑎𝑚𝑜𝑛𝑑 𝑐𝑎𝑣𝑒.\n📖𝐶ℎ𝑎𝑝𝑡𝑒𝑟 6\n𝑊𝑖𝑡ℎ 𝑒𝑎𝑐ℎ 𝑠𝑡𝑒𝑝 𝑓𝑜𝑟𝑤𝑎𝑟𝑑, 𝑡ℎ𝑒 𝑝𝑎𝑡ℎ 𝑏𝑒ℎ𝑖𝑛𝑑 𝑦𝑜𝑢 𝑑𝑖𝑠𝑠𝑖𝑝𝑎𝑡𝑒𝑠, 𝑙𝑒𝑎𝑣𝑖𝑛𝑔 𝑦𝑜𝑢 𝑛𝑜 𝑐ℎ𝑜𝑖𝑐𝑒 𝑏𝑢𝑡 𝑡𝑜 𝑐𝑜𝑛𝑡𝑖𝑛𝑢𝑒.\n𝐴𝑛 𝑎𝑛𝑐𝑖𝑒𝑛𝑡 𝑡𝑜𝑛𝑔𝑢𝑒 𝑠𝑡𝑖𝑙𝑙 𝑒𝑐ℎ𝑜𝑒𝑠 \"𝐻𝑒𝑙𝑙𝑒𝑓 𝐺'𝑅ℎ𝑦𝑛𝑒𝑑\"",
+      "author": {
+        "name": "CDN",
+        "website":"https://cronosgrind.io",
+        "twitter": "https://twitter.com/cronosgrind",
+        "discord": "https://discord.gg/An3rafeAWP"
+      },
+      "address": "",
+      "maxMintPerTx": 1,
+      "maxMintPerAddress": 1,
+      "totalSupply": 1000,
+      "cost": "0",
+      "memberCost": "0",
+      "whitelistCost": "0",
+      "freeMint": true,
+      "foundersOnly": false,
+      "start": 1682452800000,
+      "priceDescription": "",
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/diamond-coins/drop.webp",
+        "banner": "/img/collections/diamond-coins/banner.webp",
+        "avatar": "/img/collections/diamond-coins/avatar.webp",
+        "preview": "/img/collections/diamond-coins/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
       }
     }
   ]
