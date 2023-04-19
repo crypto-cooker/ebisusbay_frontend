@@ -12,8 +12,9 @@ type ResultCollectionProps = {
   onClick: (collection: any) => void;
   onRemove?: (collection: any) => void;
   useCloseButton?: boolean;
+  isFocused?: boolean;
 }
-const ResultCollection = ({collection, floorPrice, onClick, onRemove, useCloseButton = false}: ResultCollectionProps) => {
+const ResultCollection = ({collection, floorPrice, onClick, onRemove, useCloseButton = false, isFocused = false}: ResultCollectionProps) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const hoverColor = useColorModeValue('black', 'white');
 
@@ -36,6 +37,7 @@ const ResultCollection = ({collection, floorPrice, onClick, onRemove, useCloseBu
       fontSize="12px"
       cursor="pointer"
       onClick={handleClick}
+      bg={isFocused ? hoverBackground : 'inherit'}
     >
       <Flex>
         <Box
@@ -63,7 +65,7 @@ const ResultCollection = ({collection, floorPrice, onClick, onRemove, useCloseBu
           <Flex ms={2} my="auto" className="text-muted">
             {useCloseButton ? (
               <>
-                <CloseButton onClick={handleRemove} _hover={{color: hoverColor}} />
+                <CloseButton onClick={handleRemove} _hover={{color: hoverColor}} color={isFocused ? hoverColor : 'inherit'} />
               </>
             ) : (!!floorPrice && floorPrice > 0) && (
               <>
