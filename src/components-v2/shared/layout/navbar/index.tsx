@@ -107,7 +107,7 @@ const Header = function () {
                 <NavLink name={'Collections'} to={'/collections'} />
                 <NavLink name={'Brands'} to={'/brands'} />
                 <NavLink name={'Drops'} to={'/drops'} />
-                <NavLink name={'Stats'} to={'/stats'} />
+                {/*<NavLink name={'Stats'} to={'/stats'} />*/}
                 {/*<NavLink name={'Auction'} to={'/auctions/mutant-serum'} />*/}
               </HStack>
 
@@ -137,7 +137,7 @@ const Header = function () {
                 <NavLink name={'Collections'} to={'/collections'} onClick={onClose} />
                 <NavLink name={'Brands'} to={'/brands'} onClick={onClose} />
                 <NavLink name={'Drops'} to={'/drops'} onClick={onClose} />
-                <NavLink name={'Stats'} to={'/stats'} onClick={onClose} />
+                {/*<NavLink name={'Stats'} to={'/stats'} onClick={onClose} />*/}
                 {/*<NavLink name={'Auction'} to={'/auctions/mutant-serum'} />*/}
 
                 <Box onClick={toggleTheme} fontSize="14px" fontWeight="bold" color="#fff" cursor="pointer">
