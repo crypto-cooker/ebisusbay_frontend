@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import PageHead from "@src/components-v2/shared/layout/page-head";
-import {hostedImage, ImageKitService} from "@src/helpers/image";
+import {hostedImage} from "@src/helpers/image";
 import brands from '@src/core/data/brands.json';
 import {
   Box,
@@ -25,6 +25,7 @@ import ListingsTab from "@src/Components/Brand/Tabs/ListingsTab/ListingsTab";
 import {pushQueryString} from "@src/helpers/query";
 import StakingTab from "@src/components-v2/feature/brand/tabs/staking";
 import {stakers} from "@src/components-v2/feature/brand/tabs/staking/config";
+import ImageService from "@src/core/services/image";
 
 const drops = appConfig('drops');
 const tabs = {
@@ -65,7 +66,7 @@ const Brand = ({ brand, collections, stats, query }) => {
       >
         <Box
           style={{
-            backgroundImage: `url(${ImageKitService.buildBannerUrl(brand.images.banner ?? brand.images.preview ?? '')})`,
+            backgroundImage: `url(${ImageService.instance.provider.banner(brand.images.banner ?? brand.images.preview ?? '')})`,
             backgroundPosition: '50% 50%',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover'

@@ -26,13 +26,13 @@ import {isBundle, timeSince} from "@src/utils";
 import {ListingState} from "@src/core/services/api-service/types";
 import {InfiniteData} from "@tanstack/query-core";
 import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {commify} from "ethers/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import {hostedImage, ImageKitService} from "@src/helpers/image";
 import {OwnerListing} from "@src/core/models/listing";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
+import ImageService from "@src/core/services/image";
 
 interface ResponsiveListingsTableProps {
   data: InfiniteData<IPaginatedList<OwnerListing>>;
@@ -87,7 +87,7 @@ const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveListingsTablePr
                       overflow='hidden'
                     >
                       <AnyMedia
-                        image={ImageKitService.buildAvatarUrl(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image)}
+                        image={ImageService.instance.provider.avatar(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image)}
                         video={listing.nft.animation_url}
                         title={listing.nft.name}
                         className=""
@@ -181,7 +181,7 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel}: ResponsiveListingsTab
                         overflow='hidden'
                       >
                         <AnyMedia
-                          image={ImageKitService.buildAvatarUrl(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image)}
+                          image={ImageService.instance.provider.avatar(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image)}
                           video={listing.nft.animation_url}
                           title={listing.nft.name}
                         />

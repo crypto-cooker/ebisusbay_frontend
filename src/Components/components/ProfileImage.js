@@ -6,9 +6,9 @@ import styled from 'styled-components';
 import { faCheck, faCircle } from '@fortawesome/free-solid-svg-icons';
 
 import LayeredIcon from './LayeredIcon';
-import { ImageKitService } from "@src/helpers/image";
 import { shortAddress } from '@src/utils';
 import { getProfile } from "@src/core/cms/endpoints/profile";
+import ImageService from "@src/core/services/image";
 
 const VerifiedIcon = styled.span`
   font-size: 8px;
@@ -37,7 +37,7 @@ const ProfileImage = ({ title, displayName, address = '' }) => {
         <Link href={`/account/${address}`}>
           <div className="author_list_pp">
             {!isLoading && data?.data?.profilePicture ? (
-              <img src={ImageKitService.buildAvatarUrl(data?.data?.profilePicture)} alt={data?.data?.username ? data?.data?.username : shortAddress(address)} />
+              <img src={ImageService.instance.provider.avatar(data?.data?.profilePicture)} alt={data?.data?.username ? data?.data?.username : shortAddress(address)} />
             ) : (
               <Blockies seed={address} size={10} scale={5} style={{ width: '10px' }} />
             )}

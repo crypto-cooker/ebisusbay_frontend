@@ -23,7 +23,6 @@ import {
 } from "@chakra-ui/react";
 import NextApiService from "@src/core/services/api-service/next";
 import {acknowledgePrompt, clearCart, removeFromCart, syncCartStorage} from "@src/GlobalState/cartSlice";
-import {ImageKitService} from "@src/helpers/image";
 import {commify} from "ethers/lib/utils";
 import {Contract, ethers} from "ethers";
 import {toast} from "react-toastify";
@@ -32,7 +31,7 @@ import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import Button from "@src/Components/components/common/Button";
 import {listingState} from "@src/core/api/enums";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import Link from "next/link";
 import {LOCAL_STORAGE_ITEMS} from "@src/helpers/storage";
 import useBuyGaslessListings from '@src/hooks/useBuyGaslessListings';
@@ -40,6 +39,8 @@ import Market from "@src/Contracts/Marketplace.json";
 import {appConfig} from "@src/Config";
 import {useAppSelector} from "@src/Store/hooks";
 import {AnchorProps} from "react-bootstrap";
+import ImageService from "@src/core/services/image";
+import {specialImageTransform} from "@src/hacks";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -252,18 +253,16 @@ const Cart = function () {
                       >
                         {isBundle(nft.address) ? (
                           <AnyMedia
-                            image={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')}
-                            video={null}
+                            image={ImageService.instance.provider.avatar('/img/logos/bundle.webp')}
                             title={nft.name}
                             usePlaceholder={false}
                             className="img-rounded-8"
                           />
                         ) : (
-                          <AnyMedia
-                            image={ImageKitService.buildFixedWidthUrl(nft.image, 100, 100)}
-                            video={null}
+                          <MultimediaImage
+                            source={ImageService.proxy.fixedWidth(specialImageTransform(nft.address, nft.image), 100, 100)}
+                            fallbackSource={ImageService.instance.provider.fixedWidth(ImageService.proxy.thumbnail(nft.image), 100, 100)}
                             title={nft.name}
-                            usePlaceholder={false}
                             className="img-rounded-8"
                           />
                         )}

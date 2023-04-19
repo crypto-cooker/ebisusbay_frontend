@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {specialImageTransform} from "@src/hacks";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {Spinner} from "react-bootstrap";
 import {Contract, ContractReceipt, ethers} from "ethers";
 import Button from "@src/Components/components/Button";

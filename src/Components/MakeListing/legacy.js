@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { specialImageTransform } from "@src/hacks";
-import { AnyMedia } from "@src/Components/components/AnyMedia";
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import DotIcon from "@src/Components/components/DotIcon";
 import { faCheck, faDollarSign, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

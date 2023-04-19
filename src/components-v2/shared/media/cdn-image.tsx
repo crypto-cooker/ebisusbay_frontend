@@ -1,7 +1,7 @@
-import {appConfig} from "../../Config";
 import Image from "next/legacy/image";
+import {ImageLoaderProps, ImageProps} from "next/image";
 
-export const imageKitLoader = ({ src, width, quality }) => {
+export const imageKitLoader = ({ src, width, quality }: ImageLoaderProps) => {
   return src;
   // if(src[0] === "/") src = src.slice(1);
   // const params = [`w-${width}`];
@@ -18,7 +18,12 @@ export const imageKitLoader = ({ src, width, quality }) => {
   // return `${urlEndpoint}/${src}?tr=${paramsString}`
 }
 
-export const CdnImage = ({...props}) => {
+// CdnImageProps
+export interface CdnImageProps {
+  src: string;
+}
+
+export const CdnImage = ({...props}: any) => {
   return (
     <Image
       loader={imageKitLoader}

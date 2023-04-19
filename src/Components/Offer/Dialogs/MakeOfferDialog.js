@@ -16,7 +16,7 @@ import {getFilteredOffers} from "@src/core/subgraph";
 import {offerState} from "@src/core/api/enums";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {collectionRoyaltyPercent} from "@src/core/chain";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@src/hacks";
 import {
   Modal,

@@ -11,7 +11,7 @@ import {useSelector} from "react-redux";
 import {toast} from "react-toastify";
 import * as Sentry from "@sentry/react";
 import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {
   Modal,
   ModalBody,

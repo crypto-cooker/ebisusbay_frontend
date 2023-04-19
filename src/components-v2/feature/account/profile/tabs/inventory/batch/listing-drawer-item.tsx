@@ -36,16 +36,16 @@ import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
 import {getCollectionMetadata} from "@src/core/api";
 import {collectionRoyaltyPercent} from "@src/core/chain";
-import {ImageKitService} from "@src/helpers/image";
 import Link from "next/link";
 import {Button as ChakraButton} from "@chakra-ui/button";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEllipsisH, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {appConfig} from "@src/Config";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@src/hacks";
 import {useAppSelector} from "@src/Store/hooks";
+import ImageService from "@src/core/services/image";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -219,16 +219,15 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
         > 
         {isBundle(item.nft.nftAddress) ? (
           <Image
-            src={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')}
+            src={ImageService.instance.provider.avatar('/img/logos/bundle.webp')}
             alt={item.nft.name}
             rounded="md"
           />
         ) : (
-          <AnyMedia
-            image={specialImageTransform(item.nft.nftAddress, ImageKitService.buildAvatarUrl(item.nft.image))}
-            video={null}
+          <MultimediaImage
+            source={ImageService.proxy.fixedWidth(specialImageTransform(item.nft.nftAddress, item.nft.image), 100, 100)}
+            fallbackSource={ImageService.instance.provider.fixedWidth(ImageService.proxy.thumbnail(item.nft.image), 100, 100)}
             title={item.nft.name}
-            usePlaceholder={true}
             className="img-fluid img-rounded-5"
           />
         )}
