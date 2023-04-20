@@ -10193,7 +10193,7 @@
       "multiToken": false,
       "address": "0x91B0C2e86576AC85A096599300BfDF6b2F1A9b22",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model.\nStake will start on Crodex at 13 Sep. 21:00 UTC (HUGE APR)",
         "avatar": "/img/collections/cronos-women/avatar.webp",
