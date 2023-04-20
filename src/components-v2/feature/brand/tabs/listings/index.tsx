@@ -1,26 +1,25 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Center, Flex, Grid, GridItem, useBreakpointValue} from "@chakra-ui/react";
 import {motion} from "framer-motion";
-import {useSelector} from "react-redux";
-import {Form, Spinner} from "react-bootstrap";
-import Filters from "@src/Components/Brand/Tabs/ListingsTab/Filters";
+import {Spinner} from "react-bootstrap";
+import Filters from "@src/components-v2/feature/brand/tabs/listings/filters";
 import {useInfiniteQuery} from "@tanstack/react-query";
-import {getListings} from "@src/core/api/endpoints/listings";
-import {ListingsQuery} from "@src/core/api/queries/listings";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ListingCard from "@src/Components/components/ListingCard";
 import {isMetapixelsCollection} from "@src/utils";
 import ListingBundleCard from "@src/Components/components/ListingBundleCard";
-import {CollectionSortOption} from "@src/Components/Models/collection-sort-option.model";
-import {sortOptions} from "@src/Components/components/constants/collection-sort-options";
-import {getTheme} from "@src/Theme/theme";
-import Select from "react-select";
-import TaskBar from "@src/Components/Brand/Tabs/ListingsTab/TaskBar";
-import useDebounce from "@src/core/hooks/useDebounce";
+import TaskBar from "@src/components-v2/feature/brand/tabs/listings/taskbar";
+import NextApiService from "@src/core/services/api-service/next";
+import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
 
 const MotionGrid = motion(Grid)
 
-const ListingsTab = ({brand, collections}) => {
+interface ListingsTabProps {
+  brand: any;
+  collections: any[];
+}
+
+const ListingsTab = ({brand, collections}: ListingsTabProps) => {
   const useMobileViews = useBreakpointValue(
     {base: true, lg: false},
     {fallback: 'lg'},
@@ -30,19 +29,15 @@ const ListingsTab = ({brand, collections}) => {
     collapse: { gridTemplateColumns: '0px 1fr' },
   }
   const [isFilterOpen, setIsFilterOpen] = useState(!useMobileViews);
-  const [filter, setFilter] = useState([]);
-  const [sort, setSort] = useState(null);
-  const [search, setSearch] = useState(null);
+  const [queryParams, setQueryParams] = useState<ListingsQueryParams>({
+    collection: collections.map((c) => c.address)
+  });
 
   const fetcher = async ({ pageParam = 1 }) => {
-    const query = new ListingsQuery({
-      sortBy: sort?.key ?? undefined,
-      direction: sort?.direction ?? undefined,
-      collection: filter,
-      search: search,
-      page: pageParam
+    return NextApiService.getListings({
+      ...queryParams,
+      page: pageParam + 1,
     });
-    return await getListings(query);
   };
 
   const {
@@ -54,36 +49,32 @@ const ListingsTab = ({brand, collections}) => {
     isFetchingNextPage,
     status,
     refetch,
-  } = useInfiniteQuery(['BrandListings', brand.slug, filter, sort, search], fetcher, {
+  } = useInfiniteQuery(['BrandListings', brand.slug, queryParams], fetcher, {
     getNextPageParam: (lastPage, pages) => {
-      return pages[pages.length - 1].data.listings.length > 0 ? pages.length + 1 : undefined;
+      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
     },
     refetchOnWindowFocus: false,
-    enabled: Array.isArray(filter) && filter.length > 0
+    enabled: Array.isArray(queryParams.collection) && queryParams.collection.length > 0
   })
 
   const loadMore = () => {
     fetchNextPage();
   };
 
-  const handleCollectionFilter = (collectionAddresses) => {
+  const handleCollectionFilter = (collectionAddresses: string[]) => {
     if (collectionAddresses.length < 1) {
       collectionAddresses = collections.map((c) => c.address);
     }
-    setFilter(collectionAddresses);
+    setQueryParams({ ...queryParams, collection: collectionAddresses });
   }
 
-  const handleSort = (sortOption) => {
-    setSort(sortOption);
+  const handleSort = (sortOption: any) => {
+    setQueryParams({ ...queryParams, sortBy: sortOption.key, direction: sortOption.direction })
   }
 
-  const handleSearch = (value) => {
-    setSearch(value);
+  const handleSearch = (value: string) => {
+    setQueryParams({ ...queryParams, search: value });
   }
-
-  useEffect(() => {
-    setFilter(collections.map((c) => c.address));
-  }, []);
 
   useEffect(() => {
     if (useMobileViews) {
@@ -114,7 +105,7 @@ const ListingsTab = ({brand, collections}) => {
           <InfiniteScroll
             dataLength={data?.pages ? data.pages.flat().length : 0}
             next={loadMore}
-            hasMore={hasNextPage}
+            hasMore={hasNextPage ?? false}
             style={{ overflow: 'hidden' }}
             loader={
               <div className="row">
@@ -133,14 +124,14 @@ const ListingsTab = ({brand, collections}) => {
                 </Spinner>
               </div>
             ) : status === "error" ? (
-              <p>Error: {error.message}</p>
+              <p>Error: {(error as any).message}</p>
             ) : (
               <>
-                {data.pages[0]?.data?.listings?.length > 0 ? (
+                {data.pages[0]?.data?.length > 0 ? (
                   <div className="card-group row g-3">
                     {data.pages.map((items, pageIndex) => (
                       <React.Fragment key={pageIndex}>
-                        {items.data.listings.map((listing, index) => {
+                        {items.data.map((listing, index) => {
                           return (
                             <div
                               className={`d-item col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2 mb-4`}
@@ -184,88 +175,3 @@ const ListingsTab = ({brand, collections}) => {
 }
 
 export default ListingsTab;
-
-export const SearchBar = ({onSearch}) => {
-  const currentFilter = useSelector((state) => state.collection.query.filter);
-  const [value, setValue] = useState('');
-  const debouncedSearch = useDebounce(value, 500);
-
-  const handleSearch = useCallback((event) => {
-    const newValue = event.target.value;
-    setValue(newValue)
-  }, [setValue]);
-
-  useEffect(() => {
-    onSearch(debouncedSearch);
-  }, [debouncedSearch]);
-
-  return (
-    <Form.Control
-      id="collection-search"
-      type="text"
-      placeholder="Search by name"
-      onChange={handleSearch}
-      style={{ marginBottom: 0, marginTop: 0 }}
-      defaultValue={currentFilter.search}
-    />
-  )
-}
-
-export const SortDropdown = ({onSort}) => {
-  const userTheme = useSelector((state) => state.user.theme);
-  const selectDefaultSortValue = CollectionSortOption.default();
-  const selectCollectionSortOptions = sortOptions;
-
-  const customStyles = {
-    option: (base, state) => ({
-      ...base,
-      background: getTheme(userTheme).colors.bgColor2,
-      color: getTheme(userTheme).colors.textColor3,
-      borderRadius: state.isFocused ? '0' : 0,
-      '&:hover': {
-        background: '#eee',
-        color: '#000',
-      },
-    }),
-    menu: (base) => ({
-      ...base,
-      borderRadius: 0,
-      marginTop: 0,
-    }),
-    menuList: (base) => ({
-      ...base,
-      padding: 0,
-    }),
-    singleValue: (base, state) => ({
-      ...base,
-      background: getTheme(userTheme).colors.bgColor2,
-      color: getTheme(userTheme).colors.textColor3
-    }),
-    control: (base, state) => ({
-      ...base,
-      background: getTheme(userTheme).colors.bgColor2,
-      color: getTheme(userTheme).colors.textColor3,
-      padding: 2,
-    }),
-  };
-
-  const handleSortChange = useCallback((sortOption) => {
-    onSort(sortOption);
-  }, []);
-
-  return (
-    <div className="items_filter" style={{ marginBottom: 0, marginTop: 0, maxWidth: 200}}>
-      <div className="dropdownSelect two w-100 mr-0 mb-0">
-        <Select
-          styles={customStyles}
-          placeholder={'Sort Listings...'}
-          options={[CollectionSortOption.default(), ...selectCollectionSortOptions]}
-          getOptionLabel={(option) => option.getOptionLabel}
-          getOptionValue={(option) => option.getOptionValue}
-          defaultValue={selectDefaultSortValue}
-          onChange={handleSortChange}
-        />
-      </div>
-    </div>
-  )
-}

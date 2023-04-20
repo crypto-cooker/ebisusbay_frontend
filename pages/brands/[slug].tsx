@@ -20,12 +20,13 @@ import {caseInsensitiveCompare, ciIncludes, siPrefixedNumber} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {appConfig} from "@src/Config";
 import {useRouter} from "next/router";
-import CollectionsTab from "@src/Components/Brand/Tabs/CollectionsTab/CollectionsTab";
-import ListingsTab from "@src/Components/Brand/Tabs/ListingsTab/ListingsTab";
+import CollectionsTab from "@src/components-v2/feature/brand/tabs/collections";
+import ListingsTab from "@src/components-v2/feature/brand/tabs/listings";
 import {pushQueryString} from "@src/helpers/query";
 import StakingTab from "@src/components-v2/feature/brand/tabs/staking";
 import {stakers} from "@src/components-v2/feature/brand/tabs/staking/config";
 import ImageService from "@src/core/services/image";
+import {GetServerSidePropsContext} from "next";
 
 const drops = appConfig('drops');
 const tabs = {
@@ -34,7 +35,14 @@ const tabs = {
   staking: 'staking'
 };
 
-const Brand = ({ brand, collections, stats, query }) => {
+interface BrandProps {
+  brand: any,
+  collections: any[],
+  stats: any,
+  query: any
+}
+
+const Brand = ({ brand, collections, stats, query }: BrandProps) => {
   const router = useRouter();
   const [viewMore, setViewMore] = useState(false);
   const isClippingDescription = useBreakpointValue(
@@ -44,7 +52,7 @@ const Brand = ({ brand, collections, stats, query }) => {
   const bannerBgColor= useColorModeValue('black', 'transparent');
 
   const [currentTab, setCurrentTab] = useState(query.tab ?? tabs.collections);
-  const handleBtnClick = (key) => () => {
+  const handleBtnClick = (key: string) => () => {
     pushQueryString(router, {...query, tab: key});
     setCurrentTab(key);
   };
@@ -81,6 +89,7 @@ const Brand = ({ brand, collections, stats, query }) => {
             <Heading color="inherit">{brand.name}</Heading>
             <Box my={2}>
               <SocialsBar
+                address={null}
                 socials={brand.socials}
               />
             </Box>
@@ -95,7 +104,7 @@ const Brand = ({ brand, collections, stats, query }) => {
           </Box>
           <Flex my="auto" ms={{base: 0, md: 2}} justify={{base: 'start', md: 'end'}} mt={{base: 2, md: 'auto'}}>
             <SimpleGrid columns={{base: 2, sm: 4, md: 2, lg: 4}} spacing={3}>
-              {Object.entries(stats).map(([key, stat]) => (
+              {Object.entries(stats).map(([key, stat]: [string, any]) => (
                 <Stat key={key}>
                   <StatLabel>{stat.label}</StatLabel>
                   <StatNumber>{siPrefixedNumber(stat.value, 4)}</StatNumber>
@@ -139,7 +148,7 @@ const Brand = ({ brand, collections, stats, query }) => {
   );
 };
 
-export const getServerSideProps = async ({ params, query }) => {
+export const getServerSideProps = async ({ params, query }: GetServerSidePropsContext) => {
   const slug = params?.slug;
   const brand = brands.find((brand) => brand.slug === slug);
 
@@ -169,17 +178,17 @@ export const getServerSideProps = async ({ params, query }) => {
   const brandAddresses = brandKeyedAddresses.map((o) => o.address);
   const endpointService = new EndpointProxyService();
   const collections = await endpointService.getCollections({address: brandAddresses.join(',')});
-  let splitCollections = [];
+  let splitCollections: any[] = [];
   let sortedCollections = collections.data.collections
-    .filter((c) => !!c.metadata && Object.keys(c.metadata).length > 0)
-    .map((c) => {
-      c.position = brandKeyedAddresses.find((o) => caseInsensitiveCompare(o.address, c.address)).position;
-      const drop = drops.find((d) => d.slug === c.slug);
+    .filter((c: any) => !!c.metadata && Object.keys(c.metadata).length > 0)
+    .map((c: any) => {
+      c.position = brandKeyedAddresses.find((o) => caseInsensitiveCompare(o.address, c.address))?.position;
+      const drop = drops.find((d: any) => d.slug === c.slug);
       c.drop = drop ?? null;
       c.hidden = brand.hidden ? ciIncludes(brand.hidden, c.address) : false;
       return c;
     })
-    .sort((a, b) => a.position > b.position ? 1 : -1);
+    .sort((a: any, b: any) => a.position > b.position ? 1 : -1);
   sortedCollections.splice(sortedCollections.length - 1, 0, ...splitCollections);
 
   let initialStats = {
@@ -201,7 +210,7 @@ export const getServerSideProps = async ({ params, query }) => {
     }
   }
 
-  const stats = sortedCollections.reduce((p, n) => {
+  const stats = sortedCollections.reduce((p: any, n: any) => {
     p.items.value += Number(n.totalSupply ?? 0);
     p.listings.value += Number(n.stats.total.active ?? 0);
     p.complete.value += Number(n.stats.total.complete ?? 0);
@@ -211,11 +220,11 @@ export const getServerSideProps = async ({ params, query }) => {
 
 
   // Weird Apes stats merge
-  sortedCollections.map((c) => {
+  sortedCollections.map((c: any) => {
     const weirdApes = '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44'
     const weirdApesV1 = '0x7D5f8F9560103E1ad958A6Ca43d49F954055340a'
     if (caseInsensitiveCompare(c.address, weirdApes)) {
-      const v1Collection = collections.data.collections.find((v1c) => caseInsensitiveCompare(v1c.address, weirdApesV1));
+      const v1Collection = collections.data.collections.find((v1c: any) => caseInsensitiveCompare(v1c.address, weirdApesV1));
       c.stats.total.active = Number(c.stats.total.active) + Number(v1Collection.stats.total.active)
       c.stats.total.complete = Number(c.stats.total.complete) + Number(v1Collection.stats.total.complete)
       c.stats.total.volume = Number(c.stats.total.volume) + Number(v1Collection.stats.total.volume)
@@ -224,7 +233,7 @@ export const getServerSideProps = async ({ params, query }) => {
   });
 
   // Remove hidden now that we're done with them
-  sortedCollections = sortedCollections.filter((c) => !c.hidden);
+  sortedCollections = sortedCollections.filter((c: any) => !c.hidden);
 
   return {
     props: {
