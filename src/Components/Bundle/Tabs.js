@@ -4,11 +4,12 @@ import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import { specialImageTransform } from '@src/hacks';
 import Link from "next/link";
 import {shortAddress, timeSince} from "@src/utils";
-import NFTTabOffers from '@src/Components/Offer/NFTTabOffers';
 import ListingItem from "@src/components-v2/feature/nft/tabs/listings/item";
 import { Contract, ethers } from 'ethers';
 import {getTheme} from "@src/Theme/theme";
 import {useSelector} from "react-redux";
+import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
+import {OfferType} from "@src/core/services/api-service/types";
 
 const tabs = {
   properties: 'properties',
@@ -87,7 +88,13 @@ const Tabs = ({ nft }) => {
               </div>
             )}
 
-            {currentTab === tabs.offers && <NFTTabOffers nftAddress={nft.address} nftId={nft.id} />}
+            {currentTab === tabs.offers && (
+              <OffersTab
+                nftAddress={nft.address}
+                nftId={nft.id}
+                type={OfferType.DIRECT}
+              />
+            )}
 
             {currentTab === tabs.info && (
               <div className="tab-1 onStep fadeIn">
