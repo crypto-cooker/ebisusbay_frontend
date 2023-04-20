@@ -1,7 +1,8 @@
 import { Heading, Text, Box, Image, Center, Link } from "@chakra-ui/react";
 import PageHead from "@src/components-v2/shared/layout/page-head";
-import {hostedImage, ImageKitService} from "@src/helpers/image";
+import {hostedImage} from "@src/helpers/image";
 import {useColorModeValue} from "@chakra-ui/color-mode";
+import ImageService from "@src/core/services/image";
 
 
 const ryoshiTalesInfo = [
@@ -171,7 +172,7 @@ const RyoshiTales = () => {
         image={hostedImage('/img/ryoshiTales/preview.webp')}
       />
       <Center w='100%' height={300}>
-        <Image src={ImageKitService.buildBannerUrl('img/ryoshiTales/banner.png')} alt={'banner'} width='100%' height='100%' objectFit='cover'/>
+        <Image src={ImageService.instance.provider.banner('img/ryoshiTales/banner.png')} alt={'banner'} width='100%' height='100%' objectFit='cover'/>
       </Center>
       <div>
         <section className="gl-legacy container mt-0" >

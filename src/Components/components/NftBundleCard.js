@@ -9,7 +9,7 @@ import MetaMaskOnboarding from '@metamask/onboarding';
 import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
 import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import {appUrl, createSuccessfulAddCartContent, isNftBlacklisted, round, siPrefixedNumber, timeSince} from '@src/utils';
-import {AnyMedia} from './AnyMedia';
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {convertGateway, nftCardUrl} from '@src/helpers/image';
 import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useClipboard} from "@chakra-ui/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -31,6 +31,7 @@ import {toast} from "react-toastify";
 import {refreshMetadata} from "@src/GlobalState/nftSlice";
 import {specialImageTransform} from "@src/hacks";
 import Slider from '../Account/Profile/Inventory/components/Slider';
+import ImageService from "@src/core/services/image";
 
 const Watermarked = styled.div`
   position: relative;
@@ -203,7 +204,8 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, ca
                       url={nftUrl}
                       width={440}
                       height={440}
-                      video={currentNft.video ?? currentNft.animation_url}
+                      video={currentNft.video ?? currentNft.animationUrl ?? currentNft.animation_url}
+                      thumbnail={!!currentNft.video || !!currentNft.animationUrl || !!currentNft.animation_url ? ImageService.proxy.thumbnail(currentNft.video ?? currentNft.animationUrl ?? currentNft.animation_url) : undefined}
                       usePlaceholder={true}
                     />
                   </Watermarked>
@@ -215,7 +217,8 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, ca
                     url={nftUrl}
                     width={440}
                     height={440}
-                    video={currentNft.video ?? currentNft.animation_url}
+                    video={currentNft.video ?? currentNft.animationUrl ?? currentNft.animation_url}
+                    thumbnail={!!currentNft.video || !!currentNft.animationUrl || !!currentNft.animation_url ? ImageService.proxy.thumbnail(currentNft.video ?? currentNft.animationUrl ?? currentNft.animation_url) : undefined}
                     usePlaceholder={true}
                   />
                 )}

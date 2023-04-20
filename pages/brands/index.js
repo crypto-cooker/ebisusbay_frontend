@@ -2,10 +2,10 @@ import brands from "@src/core/data/brands.json";
 import {Box, SimpleGrid, Text, useMediaQuery, VStack, Wrap, WrapItem} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import PageHead from "@src/components-v2/shared/layout/page-head";
-import {ImageKitService} from "@src/helpers/image";
 import React from "react";
 import Header from "@src/components-v2/shared/layout/page-header";
 import categories from "@src/core/data/categories.json";
+import ImageService from "@src/core/services/image";
 
 const Brands = ({ssrBrands}) => {
   const router = useRouter();
@@ -37,7 +37,7 @@ const Brands = ({ssrBrands}) => {
               onClick={() => navigate(brand.slug)}
             >
               <Box
-                backgroundImage={ImageKitService.buildBannerPreviewUrl(brand.images.preview ?? brand.images.banner)}
+                backgroundImage={ImageService.instance.provider.bannerPreview(brand.images.preview ?? brand.images.banner)}
                 backgroundSize="cover"
                 backgroundPosition="50% 50%"
                 h="100%"

@@ -1,10 +1,10 @@
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import React, {useCallback} from "react";
 import {Box, CloseButton, Flex, Image, Text, VStack} from "@chakra-ui/react";
-import {ImageKitService} from "@src/helpers/image";
 import {commify} from "ethers/lib/utils";
 import {pluralize, round} from "@src/utils";
 import NextImage from "next/image";
+import ImageService from "@src/core/services/image";
 
 type ResultCollectionProps = {
   collection: any;
@@ -12,8 +12,9 @@ type ResultCollectionProps = {
   onClick: (collection: any) => void;
   onRemove?: (collection: any) => void;
   useCloseButton?: boolean;
+  isFocused?: boolean;
 }
-const ResultCollection = ({collection, floorPrice, onClick, onRemove, useCloseButton = false}: ResultCollectionProps) => {
+const ResultCollection = ({collection, floorPrice, onClick, onRemove, useCloseButton = false, isFocused = false}: ResultCollectionProps) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const hoverColor = useColorModeValue('black', 'white');
 
@@ -36,6 +37,7 @@ const ResultCollection = ({collection, floorPrice, onClick, onRemove, useCloseBu
       fontSize="12px"
       cursor="pointer"
       onClick={handleClick}
+      bg={isFocused ? hoverBackground : 'inherit'}
     >
       <Flex>
         <Box
@@ -45,7 +47,7 @@ const ResultCollection = ({collection, floorPrice, onClick, onRemove, useCloseBu
         >
           {collection.metadata && (
             <Image
-              src={ImageKitService.buildAvatarUrl(collection.metadata.avatar)}
+              src={ImageService.instance.provider.avatar(collection.metadata.avatar)}
               alt={collection.name}
               rounded="md"
             />
@@ -63,7 +65,7 @@ const ResultCollection = ({collection, floorPrice, onClick, onRemove, useCloseBu
           <Flex ms={2} my="auto" className="text-muted">
             {useCloseButton ? (
               <>
-                <CloseButton onClick={handleRemove} _hover={{color: hoverColor}} />
+                <CloseButton onClick={handleRemove} _hover={{color: hoverColor}} color={isFocused ? hoverColor : 'inherit'} />
               </>
             ) : (!!floorPrice && floorPrice > 0) && (
               <>

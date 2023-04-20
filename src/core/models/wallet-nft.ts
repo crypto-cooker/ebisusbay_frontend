@@ -78,6 +78,7 @@ class WalletNft {
 
     if (!!props.nfts) nft.nfts = props.nfts;
     if (!!props.balance) nft.balance = Number(props.balance);
+    if (!!props.animation_url) nft.animationUrl = props.animation_url;
 
     return nft;
   }

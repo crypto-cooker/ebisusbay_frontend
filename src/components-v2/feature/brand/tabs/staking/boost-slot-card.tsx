@@ -3,7 +3,7 @@ import {nftCardUrl} from "@src/helpers/image";
 import {Box, Center, Flex, Heading, Spacer, VStack} from "@chakra-ui/react";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import Button from "@src/Components/components/Button";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {BoosterSlot} from "@src/components-v2/feature/brand/tabs/staking/types";
 
 type BoostSlotCardProps = {

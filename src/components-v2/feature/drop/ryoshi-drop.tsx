@@ -20,7 +20,7 @@ import {getTheme} from '@src/Theme/theme';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
 import {formatEther, parseUnits} from "ethers/lib/utils";
 import {appConfig} from "@src/Config";
-import {hostedImage, ImageKitService} from "@src/helpers/image";
+import {hostedImage} from "@src/helpers/image";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import {
   Box,
@@ -39,6 +39,7 @@ import MetaMaskOnboarding from "@metamask/onboarding";
 import Link from "next/link";
 import {useAppSelector} from "@src/Store/hooks";
 import {Drop} from "@src/core/models/drop";
+import ImageService from "@src/core/services/image";
 
 const config = appConfig();
 const collections = config.collections;
@@ -306,7 +307,7 @@ const RyoshiDrop = ({drop}: RyoshiDropProps) => {
         <HeroSection
           className={`jumbotron h-vh tint`}
           style={{
-            backgroundImage: `url(${ImageKitService.buildBannerUrl(drop.images.banner ?? hostedImage('/img/background/banner-ryoshi-light.webp'))})`
+            backgroundImage: `url(${ImageService.instance.provider.banner(drop.images.banner ?? hostedImage('/img/background/banner-ryoshi-light.webp'))})`
           }}
         >
           <div className="container">

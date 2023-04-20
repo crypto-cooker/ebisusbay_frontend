@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {specialImageTransform} from "@src/hacks";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {Spinner} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {Contract, ethers} from "ethers";
@@ -29,7 +29,6 @@ import {
 import Image from "next/image";
 import {commify} from "ethers/lib/utils";
 import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
-import {ImageKitService} from "@src/helpers/image";
 import {useQuery} from "@tanstack/react-query";
 import {getNft} from "@src/core/api/endpoints/nft";
 
@@ -436,7 +435,7 @@ const NftPicker = ({collectionAddress, nfts, onSelect, initialNft}) => {
     <>
       {isBundle(chosenNft.nftAddress) ? (
         <ImageContainer className="mx-auto">
-          <img src={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')} alt={chosenNft.name} />
+          <img src={ImageService.instance.provider.avatar('/img/logos/bundle.webp')} alt={chosenNft.name} />
         </ImageContainer>
       ) : (
         <ImageContainer className="mx-auto">

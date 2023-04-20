@@ -38,7 +38,7 @@ import NFTTabListings from '@src/components-v2/feature/nft/tabs/listings';
 import MakeOfferDialog from '@src/Components/Offer/Dialogs/MakeOfferDialog';
 import { OFFER_TYPE } from '@src/Components/Offer/MadeOffers/MadeOffersRow';
 import NFTTabOffers from '@src/Components/Offer/NFTTabOffers';
-import { AnyMedia } from '@src/Components/components/AnyMedia';
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import { hostedImage } from '@src/helpers/image';
 import { appConfig } from "@src/Config";
 import { collectionRoyaltyPercent } from "@src/core/chain";

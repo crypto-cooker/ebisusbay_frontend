@@ -13,7 +13,7 @@ import {
   useOutsideClick,
   VStack
 } from "@chakra-ui/react";
-import React, {ChangeEvent, RefObject, useCallback, useEffect, useState} from "react";
+import React, {ChangeEvent, KeyboardEventHandler, RefObject, useCallback, useEffect, useState} from "react";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {useQuery} from "@tanstack/react-query";
 import {search} from "@src/core/api/next/search";
@@ -55,6 +55,7 @@ const Search = () => {
     handler: onClose,
   });
   const debouncedSearch = useDebounce(value, 500);
+  const [cursor, setCursor] = useState(-1);
 
   const { data, status, error, refetch } = useQuery(
     ['Search', debouncedSearch],
@@ -107,6 +108,20 @@ const Search = () => {
     if (remainingVisits?.length < 1 && (!data || data.length < 1)) onClose();
   };
 
+  const handleKeyDown = (e: any) => {
+    if (e.code === 'ArrowUp' && cursor > -1) {
+      setCursor(cursor - 1);
+    } else if (e.code === 'ArrowDown' && cursor < (searchVisits.length + (data?.length ?? 0) - 1)) {
+      setCursor(cursor + 1);
+    } else if (e.code === 'Enter' && cursor > -1) {
+      if (cursor < searchVisits.length) {
+        handleCollectionClick(searchVisits[cursor]);
+      } else {
+        handleCollectionClick(data[cursor - searchVisits.length]);
+      }
+    }
+  }
+
   const getRelevantVisits = () => {
     const visits = getSearchVisitsInStorage();
 
@@ -145,6 +160,7 @@ const Search = () => {
           w="100%"
           onChange={handleChange}
           onFocus={handleFocus}
+          onKeyDown={handleKeyDown}
           value={value}
           borderColor={inputBorderColor}
           focusBorderColor={inputBorderColorFocused}
@@ -179,13 +195,14 @@ const Search = () => {
               <Box mb={2}>
                 <Text textTransform="uppercase" ms={1} color={headingColor}>Recent</Text>
                 <VStack>
-                  {searchVisits.slice(0, 5).map((item: any) => (
+                  {searchVisits.slice(0, 5).map((item: any, key: number) => (
                     <ResultCollection
                       key={item.address}
                       collection={item}
                       onClick={handleCollectionClick}
                       useCloseButton={true}
                       onRemove={handleRemoveVisit}
+                      isFocused={cursor === key}
                     />
                   ))}
                 </VStack>
@@ -206,12 +223,13 @@ const Search = () => {
                     <Box>
                       <Text textTransform="uppercase" ms={1} color={headingColor}>Collections</Text>
                       <VStack>
-                        {data.slice(0, maxResults).map((item: any) => (
+                        {data.slice(0, maxResults).map((item: any, key: number) => (
                           <ResultCollection
                             key={item.address}
                             collection={item}
                             floorPrice={item.stats.total.floorPrice}
                             onClick={handleCollectionClick}
+                            isFocused={cursor === key + searchVisits.length}
                           />
                         ))}
                       </VStack>

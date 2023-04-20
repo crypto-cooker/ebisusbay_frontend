@@ -12,12 +12,13 @@ import {dropState as statuses} from '@src/core/api/enums';
 import {EbisuDropAbi, ERC20} from '@src/Contracts/Abis';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
 import {appConfig} from "@src/Config";
-import {hostedImage, ImageKitService} from "@src/helpers/image";
+import {hostedImage} from "@src/helpers/image";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import {Box, Heading, Text, VStack} from "@chakra-ui/react";
 import {MintBox} from "@src/components-v2/feature/drop/mint-box";
 import {useAppSelector} from "@src/Store/hooks";
 import {Drop, SpecialWhitelist} from "@src/core/models/drop";
+import ImageService from "@src/core/services/image";
 
 const config = appConfig();
 
@@ -221,7 +222,7 @@ const SingleDrop = ({drop}: SingleDropProps) => {
       <HeroSection
         className={`jumbotron h-vh tint`}
         style={{
-          backgroundImage: `url(${ImageKitService.buildBannerUrl(drop.images.banner ?? hostedImage('/img/background/banner-ryoshi-light.webp'))})`
+          backgroundImage: `url(${ImageService.instance.provider.banner(drop.images.banner ?? hostedImage('/img/background/banner-ryoshi-light.webp'))})`
         }}
       >
         <div className="container">

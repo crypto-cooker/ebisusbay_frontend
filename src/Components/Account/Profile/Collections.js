@@ -5,7 +5,7 @@ import { Spinner } from 'react-bootstrap';
 import {useRouter} from "next/router";
 
 import useFeatureFlag from '@src/hooks/useFeatureFlag';
-import { CdnImage } from "@src/Components/components/CdnImage";
+import { CdnImage } from "@src/components-v2/shared/media/cdn-image";
 import { hostedImage } from "@src/helpers/image";
 
 import Constants from '@src/constants';

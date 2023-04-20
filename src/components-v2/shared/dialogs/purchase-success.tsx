@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect} from 'react';
 import {specialImageTransform} from "@src/hacks";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {toast} from "react-toastify";
 import {appUrl, isBundle} from "@src/utils";
 import {getTheme} from "@src/Theme/theme";

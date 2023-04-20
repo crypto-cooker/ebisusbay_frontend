@@ -7,7 +7,7 @@ import Image from "next/image";
 import {appUrl, round} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import Button from "@src/Components/components/Button";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 
 type StakingNftCardProps = {
   nft: any;

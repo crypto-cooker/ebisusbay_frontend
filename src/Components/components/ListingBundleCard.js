@@ -7,7 +7,7 @@ import MetaMaskOnboarding from '@metamask/onboarding';
 
 import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
 import {darkTheme, getTheme, lightTheme} from '@src/Theme/theme';
-import {AnyMedia} from './AnyMedia';
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import {appUrl, createSuccessfulAddCartContent, round, timeSince} from '@src/utils';
 import {convertGateway, nftCardUrl} from "@src/helpers/image";
@@ -30,6 +30,7 @@ import {toast} from "react-toastify";
 import {refreshMetadata} from "@src/GlobalState/nftSlice";
 import {specialImageTransform} from "@src/hacks";
 import Slider from '../Account/Profile/Inventory/components/Slider';
+import ImageService from "@src/core/services/image";
 
 
 const Watermarked = styled.div`
@@ -239,6 +240,9 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                         url={nftUrl}
                         height={440}
                         width={440}
+                        video={currentNft.video ?? currentNft.animationUrl ?? currentNft.animation_url}
+                        thumbnail={!!currentNft.video || !!currentNft.animationUrl || !!currentNft.animation_url ? ImageService.proxy.thumbnail(currentNft.video ?? currentNft.animationUrl ?? currentNft.animation_url) : undefined}
+                        usePlaceholder={true}
                       />
                     )}
                   </Box>
