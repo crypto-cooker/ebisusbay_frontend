@@ -1,28 +1,49 @@
-import React, {useEffect, useLayoutEffect, useState } from 'react';
+import React, {useEffect, useLayoutEffect, useState, useRef } from 'react';
 import { resizeMap, resizeNewMap } from './mapFunctions.js'
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { TransformWrapper, TransformComponent, ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
 import styles from './BattleBay.module.scss';
 import {
   Button,
   Flex,
   Box,
   Spacer,
-  Image
+  Image,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  useDisclosure
 } from "@chakra-ui/react"
 
 const DefaultArea = ({onChange}) => {
 
-  // const [tempWidth, setTempWidth] = useState(1);
-  // const [tempHeight, setTempHeight] = useState(1);
-  // const [subDistanceX, setSubDistanceX] = useState(0);
-  // const [subDistanceY, setSubDistanceY] = useState(0);
-  // const [tavernGif, setTavernGif] = useState();
-
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const btnRef = React.useRef()
+  const Controls = ({ zoomIn, zoomOut, resetTransform }) => (
+    <>
+      {/* <Button onClick={() => zoomIn()}variant='outline'size='lg'>+</Button>
+      <Button onClick={() => zoomOut()}variant='outline'size='lg'>-</Button>
+      <Button onClick={() => resetTransform()}variant='outline'size='lg'>x</Button> */}
+    </>
+  );
+  const [pins, setPins] = useState([]);
+  const transformComponentRef = useRef()
+  const [elementToZoomTo, setElementToZoomTo] = useState("");
   const [zoomState, setZoomState] = useState({
     offsetX: 0,
     offsetY: 0,
     scale: 1,
   });
+
+  useEffect(() => {
+    if (transformComponentRef.current) {
+      const { zoomToElement } = transformComponentRef.current;
+      zoomToElement(elementToZoomTo);
+    }
+  }, [elementToZoomTo]);
   
   const changeCanvasState = (ReactZoomPanPinchRef, event) => {
     setZoomState({
@@ -30,6 +51,7 @@ const DefaultArea = ({onChange}) => {
       offsetY: ReactZoomPanPinchRef.state.positionY,
       scale: ReactZoomPanPinchRef.state.scale,
     });
+    // console.log(ReactZoomPanPinchRef.state.positionX, ReactZoomPanPinchRef.state.positionY, ReactZoomPanPinchRef.state.scale)
   };
 
   const buildings ={ "allianceCenter" : {height:438, width:554, top:'7%', left:'55%'},
@@ -49,14 +71,16 @@ const DefaultArea = ({onChange}) => {
                       "flowers2" : {height: 251, width: 229, top: '3%', left: '14%'},
                       "flowers3" : {height: 251, width: 229, top: '3%', left: '14%'},
 
-                      "bank" : {height: 456, width: 579, top: '%', left: '33%'},
+                      "bank" : {height: 456, width: 579, top: '%', left: '33%', x: 444, y: 444, scale: 4},
                       "announcement" : {height: 243, width: 206, top: '28%', left: '60%'},
 
                       "moongate" : {height: 482, width: 443, top: '23%', left: '67%'},
                       "torii" : {height: 201, width: 236, top: '6%', left: '0%'},
                       "pond" : {height: 311, width: 783, top: '0%', left: '65%'}, 
                     }
+  const buttonsNames = ["bank", "alliancecenter", "torii", "moongate", "barracks", "announcement", "fishmarket","boat", "academy", "tavern", "townhall"];
 
+//#region all resizing stuff
   const [sizeMultiplier, setSizeMultiplier] = useState(0.5);
 
   const [allianceCenterWidth, setAllianceCenterWidth] = useState(buildings.allianceCenter.width);
@@ -153,7 +177,7 @@ const DefaultArea = ({onChange}) => {
   const [pondHeight, setPondHeight] = useState(buildings.pond.height);
   const [pondTop, setPondTop] = useState(buildings.pond.top);
   const [pondLeft, setPondLeft] = useState(buildings.pond.left);
-
+//#endregion
 
 useEffect(() => {
   resizeMap();
@@ -228,10 +252,18 @@ useEffect(() => {
 
 useEffect(() => {
   resizeMap();
+  SetUpButtons();
   setSizeMultiplier(window.innerWidth / 2880);
   // console.log('sizeMultiplier: ', sizeMultiplier);
 }, [])
 
+const SetUpButtons = async () => {
+  setPins(buttonsNames.map((button, i) => 
+    (<Button style={{ marginTop: '4px', marginLeft: '4px' }} 
+    onClick={() => setElementToZoomTo(button)} variant='outline'size='sm'> 
+    {button}</Button>
+    )))
+}
   return (
     <section>
       <div width="50%">
@@ -243,84 +275,113 @@ useEffect(() => {
             User Profile</Button>
         </Box>
       </Flex>
-      <TransformWrapper scale={0.5} positionX={200} positionY={100}
-        limitToBounds={true}
+      
+
+      <TransformWrapper
+        // limitToBounds={true}
+        ref={transformComponentRef}
         onZoom={changeCanvasState}
         onPinching={changeCanvasState}
         onPinchingStop={changeCanvasState}
         onPanningStop={changeCanvasState}
-        >
-        <TransformComponent>
-        
-          <img 
-          src='/img/battle-bay/mapImages/background.png'
-          // src="/img/battle-bay/newMap.png" 
-          useMap="#image-map" width="100%" className={`${styles.mapImageArea}`} id="fancyMenu"/>
-          <map name="image-map">
-            {/* <area onClick={() => onChange('townHall')} alt="Town Hall" title="Town Hall" coords="793,434,1259,861" shape="rect"/> */}
+        initialScale={1}
+        > 
+        {(utils) => (
+          <React.Fragment>
+            {/* <button onClick={zoomToImage}>Zoom to 1</button> */}
+          <Controls {...utils} />
+          <TransformComponent>
+          
+            <img 
+            src='/img/battle-bay/mapImages/background.png'
+            // src="/img/battle-bay/newMap.png" 
+            useMap="#image-map" width="100%" className={`${styles.mapImageArea}`} id="fancyMenu"/>
+            <map name="image-map">
+              {/* <area onClick={() => onChange('townHall')} alt="Town Hall" title="Town Hall" coords="793,434,1259,861" shape="rect"/> */}
+              
+                {/* <area onClick={() => onChange('barracks')} alt="Barracks" title="Barracks" coords="194,622,568,968" shape="rect"/>
+                <area onClick={() => onChange('')} alt="Town Hall" title="Town Hall" coords="793,434,1259,861" shape="rect"/>
+                <area onClick={() => onChange('tavern')} alt="Tavern" title="Tavern" coords="377,255,763,531" shape="rect"/>
+                <area onClick={() => onChange('allianceCenter')} alt="Alliance Center" title="Alliance Center" coords="1044,45,1342,414" shape="rect"/>
+                <area onClick={() => onChange('bank')} alt="Bank" title="Bank" coords="1367,283,1808,575" shape="rect"/>
+                <area onClick={() => onChange('academy')} alt="Academy" title="Academy" coords="2118,246,2523,565" shape="rect"/>
+                <area onClick={() => onChange('battleMap')} alt="Fish Market" title="Fish Market" coords="1971,974,2487,1361" shape="rect"/>
+                <area onClick={() => onChange('announcementBoard')} alt="Announcement Board" title="Announcement Board" coords="1813,494,2073,798" shape="rect"/> */}
+            </map>
+
+            <div id="alliancecenter" className={[styles.enlarge]} style={{position:"absolute", marginTop: allianceCenterTop, marginLeft: allianceCenterLeft, zIndex:"9"}} onClick={() => onChange('allianceCenter')}>
+              <img src='/img/battle-bay/mapImages/alliancecenter_day.png' width={allianceCenterWidth} height={allianceCenterHeight} /> </div>
+
+            <div id="townhall" className={[styles.enlarge]} style={{position:"absolute", marginTop: townhallTop, marginLeft: townhallLeft, zIndex:"9"}} onClick={() => onChange('townHall')}>
+              <img src='/img/battle-bay/mapImages/townhall.png' width={townhallWidth} height={townhallHeight}/> </div>
+
+            <div id="tavern" className={[styles.enlarge]} style={{position:"absolute", marginTop: tavernTop, marginLeft: tavernLeft, zIndex:"9"}} onClick={() => onChange('tavern')}>
+              <img src='/img/battle-bay/mapImages/tavern.png' width={tavernWidth} height={tavernHeight}/> </div>
+
+            <div id="academy" className={[styles.enlarge]} style={{position:"absolute", marginTop: academyTop, marginLeft: academyLeft, zIndex:"9"}} onClick={() => onChange('academy')}>
+              <img src='/img/battle-bay/mapImages/academy.png' width={academyWidth} height={academyHeight} /> </div>
+
+            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: tavernSpinTop, marginLeft: tavernSpinLeft, zIndex:"9", pointerEvents:"none"}}>
+              <img src='/img/battle-bay/mapImages/tavern_turbine.png' width={tavernSpinWidth} height={tavernSpinHeight} /></div>
+
+            <div id="boat" className={[styles.enlarge]} style={{position:"absolute", marginTop: boatTop, marginLeft: boatLeft, zIndex:"9"}} onClick={() => onChange('battleMap')}>
+              <img src='/img/battle-bay/mapImages/boat_day.png' width={boatWidth} height={boatHeight} /> </div>
+
+            <div id="ebisustatue" className={[styles.enlarge]} style={{position:"absolute", marginTop: ebisustatueTop, marginLeft: ebisustatueLeft, zIndex:"9"}} >
+              <img src='/img/battle-bay/mapImages/ebisustatue.png' width={ebisustatueWidth} height={ebisustatueHeight} /> </div>
+
+            <div id="fishmarket" className={[styles.enlarge]} style={{position:"absolute", marginTop: fishmarketTop, marginLeft: fishmarketLeft, zIndex:"9"}} >
+              <img src='/img/battle-bay/mapImages/fishmarket_day.png' width={fishmarketWidth} height={fishmarketHeight} /> </div>
+
+            <div style={{position:"absolute", marginTop: waterTop, marginLeft: waterLeft, zIndex:"8"}} >
+              <img src='/img/battle-bay/mapImages/water.png' width={waterWidth} height={waterHeight} /> </div>
+
+            <div id="bank" className={[styles.enlarge]} style={{position:"absolute", marginTop: bankTop, marginLeft: bankLeft, zIndex:"8"}} onClick={() => onChange('bank')}>
+              <img src='/img/battle-bay/mapImages/bank_day.png' width={bankWidth} height={bankHeight} /> </div>
+
+            <div id="announcement" className={[styles.enlarge]} style={{position:"absolute", marginTop: announcementTop, marginLeft: announcementLeft, zIndex:"9"}} onClick={() => onChange('announcementBoard')}>
+              <img src='/img/battle-bay/mapImages/announcement.png' width={announcementWidth} height={announcementHeight} /> </div>
+
+            <div id="barracks" className={[styles.enlarge]} style={{position:"absolute", marginTop: barracksTop, marginLeft: barracksLeft, zIndex:"9"}} onClick={() => onChange('barracks')}>
+              <img src='/img/battle-bay/mapImages/barracks.png' width={barracksWidth} height={barracksHeight} /> </div>
+
+            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: swordsmenTop, marginLeft: swordsmenLeft, zIndex:"9", pointerEvents:"none"}} >
+              <img src='/img/battle-bay/mapImages/swordsmen.png' width={swordsmenWidth} height={swordsmenHeight} /> </div>
             
-              {/* <area onClick={() => onChange('barracks')} alt="Barracks" title="Barracks" coords="194,622,568,968" shape="rect"/>
-              <area onClick={() => onChange('')} alt="Town Hall" title="Town Hall" coords="793,434,1259,861" shape="rect"/>
-              <area onClick={() => onChange('tavern')} alt="Tavern" title="Tavern" coords="377,255,763,531" shape="rect"/>
-              <area onClick={() => onChange('allianceCenter')} alt="Alliance Center" title="Alliance Center" coords="1044,45,1342,414" shape="rect"/>
-              <area onClick={() => onChange('bank')} alt="Bank" title="Bank" coords="1367,283,1808,575" shape="rect"/>
-              <area onClick={() => onChange('academy')} alt="Academy" title="Academy" coords="2118,246,2523,565" shape="rect"/>
-              <area onClick={() => onChange('battleMap')} alt="Fish Market" title="Fish Market" coords="1971,974,2487,1361" shape="rect"/>
-              <area onClick={() => onChange('announcementBoard')} alt="Announcement Board" title="Announcement Board" coords="1813,494,2073,798" shape="rect"/> */}
-          </map>
-
-          <div className={[styles.enlarge]} style={{position:"absolute", marginTop: allianceCenterTop, marginLeft: allianceCenterLeft, zIndex:"9"}} onClick={() => onChange('allianceCenter')}>
-            <img src='/img/battle-bay/mapImages/alliancecenter_day.png' width={allianceCenterWidth} height={allianceCenterHeight} /> </div>
-
-          <div className={[styles.enlarge]} style={{position:"absolute", marginTop: townhallTop, marginLeft: townhallLeft, zIndex:"9"}} onClick={() => onChange('townHall')}>
-            <img src='/img/battle-bay/mapImages/townhall.png' width={townhallWidth} height={townhallHeight}/> </div>
-
-          <div className={[styles.enlarge]} style={{position:"absolute", marginTop: tavernTop, marginLeft: tavernLeft, zIndex:"9"}} onClick={() => onChange('tavern')}>
-            <img src='/img/battle-bay/mapImages/tavern.png' width={tavernWidth} height={tavernHeight}/> </div>
-
-          <div className={[styles.enlarge]} style={{position:"absolute", marginTop: academyTop, marginLeft: academyLeft, zIndex:"9"}} onClick={() => onChange('academy')}>
-            <img src='/img/battle-bay/mapImages/academy.png' width={academyWidth} height={academyHeight} /> </div>
-
-          <div className={[styles.enlarge]} style={{position:"absolute", marginTop: tavernSpinTop, marginLeft: tavernSpinLeft, zIndex:"9", pointerEvents:"none"}}>
-            <img src='/img/battle-bay/mapImages/tavern_turbine.png' width={tavernSpinWidth} height={tavernSpinHeight} /></div>
-
-          <div className={[styles.enlarge]} style={{position:"absolute", marginTop: boatTop, marginLeft: boatLeft, zIndex:"9"}} onClick={() => onChange('battleMap')}>
-            <img src='/img/battle-bay/mapImages/boat_day.png' width={boatWidth} height={boatHeight} /> </div>
-
-          <div className={[styles.enlarge]} style={{position:"absolute", marginTop: ebisustatueTop, marginLeft: ebisustatueLeft, zIndex:"9"}} >
-            <img src='/img/battle-bay/mapImages/ebisustatue.png' width={ebisustatueWidth} height={ebisustatueHeight} /> </div>
-
-          <div className={[styles.enlarge]} style={{position:"absolute", marginTop: fishmarketTop, marginLeft: fishmarketLeft, zIndex:"9"}} >
-            <img src='/img/battle-bay/mapImages/fishmarket_day.png' width={fishmarketWidth} height={fishmarketHeight} /> </div>
-
-          <div style={{position:"absolute", marginTop: waterTop, marginLeft: waterLeft, zIndex:"8"}} >
-            <img src='/img/battle-bay/mapImages/water.png' width={waterWidth} height={waterHeight} /> </div>
-
-          <div className={[styles.enlarge]} style={{position:"absolute", marginTop: bankTop, marginLeft: bankLeft, zIndex:"8"}} onClick={() => onChange('bank')}>
-            <img src='/img/battle-bay/mapImages/bank_day.png' width={bankWidth} height={bankHeight} /> </div>
-
-          <div className={[styles.enlarge]} style={{position:"absolute", marginTop: announcementTop, marginLeft: announcementLeft, zIndex:"9"}} onClick={() => onChange('announcementBoard')}>
-            <img src='/img/battle-bay/mapImages/announcement.png' width={announcementWidth} height={announcementHeight} /> </div>
-
-          <div className={[styles.enlarge]} style={{position:"absolute", marginTop: barracksTop, marginLeft: barracksLeft, zIndex:"9"}} onClick={() => onChange('barracks')}>
-            <img src='/img/battle-bay/mapImages/barracks.png' width={barracksWidth} height={barracksHeight} /> </div>
-
-          <div className={[styles.enlarge]} style={{position:"absolute", marginTop: swordsmenTop, marginLeft: swordsmenLeft, zIndex:"9", pointerEvents:"none"}} >
-            <img src='/img/battle-bay/mapImages/swordsmen.png' width={swordsmenWidth} height={swordsmenHeight} /> </div>
+            <div id="moongate" className={[styles.enlarge]} style={{position:"absolute", marginTop: moongateTop, marginLeft: moongateLeft, zIndex:"9"}}>
+              <img src='/img/battle-bay/mapImages/moongate_day.png' width={moongateWidth} height={moongateHeight} /> </div>
           
-          <div className={[styles.enlarge]} style={{position:"absolute", marginTop: moongateTop, marginLeft: moongateLeft, zIndex:"9"}}>
-            <img src='/img/battle-bay/mapImages/moongate_day.png' width={moongateWidth} height={moongateHeight} /> </div>
-        
-          <div className={[styles.enlarge]} style={{position:"absolute", marginTop: toriiTop, marginLeft: toriiLeft, zIndex:"9"}} >
-            <img src='/img/battle-bay/mapImages/torii.png' width={toriiWidth} height={toriiHeight} /> </div>
+            <div id="torii" className={[styles.enlarge]} style={{position:"absolute", marginTop: toriiTop, marginLeft: toriiLeft, zIndex:"9"}} >
+              <img src='/img/battle-bay/mapImages/torii.png' width={toriiWidth} height={toriiHeight} /> </div>
 
-          <div className={[styles.enlarge]} style={{position:"absolute", marginTop: pondTop, marginLeft: pondLeft, zIndex:"8"}}>
-            <img src='/img/battle-bay/mapImages/pond1.png' width={pondWidth} height={pondHeight} /> </div>
+            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: pondTop, marginLeft: pondLeft, zIndex:"8"}}>
+              <img src='/img/battle-bay/mapImages/pond1.png' width={pondWidth} height={pondHeight} /> </div>
 
-          
-        </TransformComponent>
+          </TransformComponent>
+        </React.Fragment>
+        )}
       </TransformWrapper>
+      <Flex style={{ display: 'flex', marginTop: '16px' }} textAlign='center' justifyContent='space-around'>
+      <Button ref={btnRef} colorScheme='teal' onClick={onOpen} >
+        Buildings
+      </Button>
+      <Drawer
+        isOpen={isOpen}
+        placement='bottom'
+        onClose={onClose}
+        finalFocusRef={btnRef}
+      >
+        {/* <DrawerOverlay /> */}
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Zoom to Building</DrawerHeader>
 
+          <DrawerBody>
+            {pins}
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+      </Flex>
       </div>
     </section>
   )

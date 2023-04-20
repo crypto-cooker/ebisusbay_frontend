@@ -11,16 +11,32 @@ import ControlPointForm from './battleMap/components/ControlPointForm.js';
 const BattleMap = ({onBack, factions=[]}) => {
 
   //#region variables
-  const gif = "/img/battle-bay/fire.gif";
+  // const gif = "/img/battle-bay/fire.gif";
   const mapRef = useRef();
-  const regionFlags = ["pin-Southern-Trident", "pin-Dragonland", "pin-Human-Kingdoms", "pin-Dwarf-Mines"];
-  const  [flagSize, setFlagSize] = useState("32px");
+  // const regionFlags = ["pin-Southern-Trident", "pin-Dragonland", "pin-Human-Kingdoms", "pin-Dwarf-Mines"];
+  const  [flagSize, setFlagSize] = useState("1px");
   const [buildingSize, setBuildingSize] = useState("50px");
   const { height, width: windowWidth } = useWindowDimensions();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [controlPoint, setControlPoint] = useState([], () => {});
+  const imageRef1 = useRef();
+  const imageRef2 = useRef();
+  const imageRef3 = useRef();
+  const imageRef4 = useRef();
+
+  // const [mapData, setMap] = useState([], () => {});
+  // const mapData = [];
+
   const [area, setAreas] = useState([]);
   const [selectedControlPoint, setSelectedControlPoint] = useState(0);
+  const [pins, setPins] = useState([]);
+  const [explosion, setExplosion] = useState([]);
+  const [playExlplosion, setPlayExplosion] = useState(false);
+
+  const controlPoints = [{id:4, title:"Southern Trident",pinName: "pin-Southern-Trident",marginTop: '32%', marginLeft: '20%'},
+                         {id:3, title:"Dragonland",pinName: "pin-Dragonland",marginTop: '17%', marginLeft: '24%'},
+                         {id:1, title:"Human Kingdoms",pinName: "pin-Human-Kingdoms",marginTop: '32%', marginLeft: '47%'},
+                         {id:2, title:"Dwarf Mines",pinName: "pin-Dwarf-Mines",marginTop: '30%', marginLeft: '63%'}];
 
   function getWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
@@ -43,131 +59,52 @@ const BattleMap = ({onBack, factions=[]}) => {
 
     return windowDimensions;
   }
-  class Deployment {
-    constructor(region, faction, amount, deploymentOwner) {
-      this.code = region + faction;
-      this.region = region;
-      this.faction = faction;
-      this.amount = amount;
-    }
-    addTroops(amount) {
-        this.amount += amount;
-      }
-    getDetails() {
-        return "You have deployed " + this.amount +" troops on behalf of "+ this.faction +" to " + this.region + "<br>";
-      }};
-  class DeployedTroops {
-      constructor(){
-        this.deployments = []
-      }
-      newDeployment(region, faction, amount){
-        let d = new Deployment(region, faction, amount)
-        this.deployments.push(d)
-        return d
-      }
-      get allPlayers(){
-        return this.deployments
-      }
-      get numberOfPlayers(){
-          return this.deployments.length
-      }
-      get totalTroops(){
-          let total = 0
-          this.deployments.forEach(d => total += d.amount)
-          console.log(total)
-          return total
-      }
-    }
-  let deployedTroops = new DeployedTroops()
-  //#endregion
+  const GetControlPointImage = async (id) => 
+  {
+    // console.log(id);
+    var data = await getControlPoint(id)
+    console.log(data.leaderBoard[0].image);
+    return data.leaderBoard[0].image;
+    // .then((data) => {
+    //   // setControlPoint(data);
+      
+    // }); 
+    // console.log("done");
 
-  //#region Map Zooming
-    // const [zoomState, setZoomState] = useState({
-    //   offsetX: 0,
-    //   offsetY: 0,
-    //   scale: 1,
-    // });
-    // const changeCanvasState = (ReactZoomPanPinchRef, event) => {
-    //   setZoomState({
-    //     offsetX: ReactZoomPanPinchRef.state.positionX,
-    //     offsetY: ReactZoomPanPinchRef.state.positionY,
-    //     scale: ReactZoomPanPinchRef.state.scale,
-    //   });
-    // };
+    // return "/img/battle-bay/townhall_day.png";
+  }
+
+  function wait(ms){
+    var start = new Date().getTime();
+    var end = start;
+    while(end < start + ms) {
+      end = new Date().getTime();
+   }
+ }
+
+  const randomlyPlayExplosion = async () => {
+    //get random control point
+    var explosionPoint = controlPoints[Math.floor(Math.random() * controlPoints.length)];
+
+    setExplosion(
+      <div style={{position:"absolute", marginTop: explosionPoint.marginTop, marginLeft: explosionPoint.marginLeft, zIndex:"9", pointerEvents:"none"}}>
+        <img src='/img/battle-bay/explosion.png' width={flagSize} height={flagSize} className="factionIcon"/>
+      </div>
+    )
+    // console.log("waiting");
+    await new Promise(r => setTimeout(r, 1000));
+    // console.log("done waiting");
+
+    // setExplosion(
+    //   <div style={{position:"absolute", marginTop: explosionPoint.marginTop, marginLeft: explosionPoint.marginLeft, zIndex:"9", pointerEvents:"none"}}>
+    //     <img src='/img/battle-bay/explosion.png' width={0} height={0} className="factionIcon"/>
+    //   </div>
+    // )
+    setPlayExplosion(!playExlplosion);
+  }
   //#endregion
 
   //#region Map Functions
-  function setUpBattleMap(){
-    // console.log("Setting up battle map");
-    RandomizeStats();
-    displayWinningFactions();
-  }
-  function RandomizeStats()
-  {
-    //this is for adding dummy data to the map
-    console.log("Randomizing stats");
-      function checkIfDeploymentExists(region, faction)
-      {
-          for(var i=0; i<deployedTroops.deployments.length; i++)  
-          {  
-              var code = deployedTroops.deployments[i].code;  
-              if(code == region + faction){  
-                  return true;  
-              }
-          }
-          return false;
-      }
-      const factions = ["Mad Merkat", "CroSkull", "Boomer Squad", "Flaming Phenix Club"];
-      const regions = ["Dwarf Mines", "Southern Trident", "Dragonland", "Human Kingdoms"];
-
-      for (let index = 0; index < 100; index++) 
-      {
-          var faction = factions[Math.floor(Math.random()*factions.length)];
-          var region = regions[Math.floor(Math.random()*regions.length)];
-
-          //if deployment exists, add troops to it
-          if(checkIfDeploymentExists(region, faction) == true)
-          {
-  
-                  // deployedTroops.deployments[].addTroops(val);
-                  // deployedTroops.allPlayers.forEach(player => total += player.getDetails())
-                  // document.getElementById("deploymentNotes").innerHTML = total;
-          }
-          else    //create new deployment
-          {
-              deployedTroops.newDeployment(region, faction, Math.floor(Math.random()*10));
-          }
-      }
-  }
-  function displayWinningFactions()
-  {
-    var pins = [];
-    regionFlags.forEach(pushPin); 
-
-    function pushPin(item, index) { 
-        pins.push(document.getElementById(item));
-    }
-    
-    for(var i=0; i<pins.length; i++)
-    {
-        var targetdiv = pins[i].getElementsByClassName("pinText")[0].getElementsByClassName("head")[0];
-        // console.log("targetdiv: " + targetdiv);
-        targetdiv.textContent = getWinningFactionInRegion(pins[i].title);
-        var icon = pins[i].getElementsByClassName("factionIcon")[0]
-        icon.src = "/img/battle-bay/"+getWinningFactionInRegion(pins[i].title)+".png";
-    }
-  }
-  function getWinningFactionInRegion(region)
-  {
-      deployedTroops.deployments.sort(function(b, a){return a.amount - b.amount});
-      for(var i=0; i<deployedTroops.deployments.length; i++)  
-      {  
-          if(region == deployedTroops.deployments[i].region)
-          {  
-              return deployedTroops.deployments[i].faction;
-          }
-      }
-  }
   function selectRegion(x)
   {
     GetControlPointInfo(x);
@@ -185,22 +122,57 @@ const BattleMap = ({onBack, factions=[]}) => {
   //#endregion
 
   useEffect(() => {
-    setUpBattleMap();
     SetUpMap();
     setFlagSize(windowWidth/30 + "px");
     setBuildingSize(windowWidth/20 + "px");
   }, [controlPoint]);
-  
+
+  useEffect(() => {
+    SetUpPins();
+    // randomlyPlayExplosion();
+  }, [flagSize]);
+
+  useEffect(() => {
+    randomlyPlayExplosion();
+  }, [playExlplosion]);
+
   const SetUpMap = async () => {
     getMap().then((data) => {
-      const mapData = data.data.data.map;
-      // console.log(mapData);
-      setAreas(mapData.regions[0].controlPoints.map((controlPoint, i) => 
+      // mapData = data.data.data.map; 
+      console.log(data.data.data.map);
+      setAreas(data.data.data.map.regions[0].controlPoints.map((controlPoint, i) => 
         (<area onClick={() => {setSelectedControlPoint(controlPoint.id); selectRegion(controlPoint.id); onOpen();}}
             coords={controlPoint.coordinates} shape="poly" alt= {controlPoint.name}/>
         )))
       resizeBattleMap();
     }); 
+  }
+  const getImageRef = (id) => {
+    if(id === 1)
+      return imageRef1;
+    else if(id === 2)
+      return imageRef2;
+    else if(id === 3)
+      return imageRef3;
+    else if(id === 4)
+      return imageRef4;
+  }
+  const SetUpPins = async () => {
+      setPins(controlPoints.map((controlPoint, i) => 
+        (<div id={controlPoint.pinName} title={controlPoint.title}
+        style={{position:"absolute", marginTop: controlPoint.marginTop, marginLeft: controlPoint.marginLeft, zIndex:"9", pointerEvents:"none"}}>
+        <img width={flagSize} height={flagSize} ref={getImageRef(controlPoint.id)} className={controlPoint.id}/>
+        <div className= "pinText"><h3 className="head">{controlPoint.title}</h3></div>
+      </div>
+        )))
+      if(imageRef1.current != null)
+      {
+        imageRef1.current.src = await GetControlPointImage(1);
+        imageRef2.current.src = await GetControlPointImage(2);
+        imageRef3.current.src = await GetControlPointImage(3);
+        imageRef4.current.src = await GetControlPointImage(4);
+      }
+
   }
 
   return (
@@ -243,13 +215,10 @@ const BattleMap = ({onBack, factions=[]}) => {
           460,685,474,710,491,721,521,753,542,778,536,782,512,805,503,823,485,853,497,873,506,873,519,850,533,846,548,837,556" shape="poly"/> */}
 
       </map>
-
-      <div id="pin-Southern-Trident" title="Southern Trident"
-        style={{position:"absolute", marginTop: '32%', marginLeft: '20%', zIndex:"9", pointerEvents:"none"}}>
-        <img src=""  width={flagSize} height={flagSize} className="factionIcon"/>
-        <div className= "pinText"><h3 className="head">pin-Southern-Trident</h3></div>
-      </div>
-      <div id="pin-Dragonland" title="Dragonland" 
+      {pins}
+      {explosion}
+      
+      {/* <div id="pin-Dragonland" title="Dragonland" 
         style={{position:"absolute", marginTop: '17%', marginLeft: '24%', zIndex:"9", pointerEvents:"none"}}>
         <img src=""  width={flagSize} height={flagSize} className="factionIcon"/>
         <div  className="pinText"><h3 className="head">pin-dragon</h3></div>
@@ -263,22 +232,11 @@ const BattleMap = ({onBack, factions=[]}) => {
         style={{position:"absolute", marginTop: '30%', marginLeft: '63%', zIndex:"9", pointerEvents:"none"}}>
         <img src=""  width={flagSize} height={flagSize} className="factionIcon"/>
         <div className="pinText"><h3 className="head">pin-Human-Kingdoms</h3></div>
-      </div>
-
-      <div 
-        style={{position:"absolute", marginTop: '25%', marginLeft: '50%', zIndex:"9", pointerEvents:"none"}}>
-        <img src={gif}  width={buildingSize} height={buildingSize}/>
-      </div>
+      </div> */}
 
         </TransformComponent>
       </TransformWrapper>
-
     </div>
-
-    {/* <p  className = "TitleText"></p>
-    <p id="desc" className="css-1fzih88">Mouse over a region to see the troops deployed to it.</p>
-    <p id="deploymentNotes" className = "basicText"></p> */}
-
   </section>
   )
 };

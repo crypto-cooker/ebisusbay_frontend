@@ -34,9 +34,9 @@ const FactionRegistrationForm = ({ isOpen, onClose, handleClose}) => {
     }
     if (signatureInStorage) {
       try {
-        const res = await getProfileId(user.address.toLowerCase(), signatureInStorage);
+        // const res = await getProfileId(user.address.toLowerCase(), signatureInStorage);
         // console.log(res);
-        // console.log("Creating a faction");
+        console.log("Creating a faction");
         // const factions = await getFactionsOwned(user.address.toLowerCase(), signatureInStorage);
         // var factionName = res.data.data[0].profileId +"_" + (factions.data.data.length+20);
         //get random number 
