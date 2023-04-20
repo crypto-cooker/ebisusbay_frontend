@@ -11438,7 +11438,7 @@
       "slug": "immortal-cyborgs",
       "multiToken": false,
       "address": "0xDA565665a546582774De08EC03AA0eac92592f11",
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "THE FOUNDING MEMBER NFT RELEASE FOR CYBORG CORP. NEWEST ECOSYSTEM ADDITION IS FINALLY HERE, CYBORGS! THE 10 000 IMMORTAL CYBORGS ARE BRINGING BOOSTING TO THE NON FUNGIBLE CYBORG PLATFORM LP FARMS BUT ALSO TO NFT STAKING POOLS!",
         "avatar": "/img/collections/immortal-cyborgs/avatar.webp",
