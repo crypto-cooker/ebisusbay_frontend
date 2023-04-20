@@ -3,9 +3,16 @@ import CustomSlide from "@src/Components/components/CustomSlide";
 import MintingButton from "@src/Components/Collection/MintingButton";
 import {round, siPrefixedNumber} from "@src/utils";
 import React from "react";
+import {useRouter} from "next/router";
 
-const CollectionsTab = ({collections}) => {
-  const handleMintingButtonClick = (drop) => {
+interface CollectionsTabProps {
+  collections: any[]
+}
+
+const CollectionsTab = ({collections}: CollectionsTabProps) => {
+  const router = useRouter();
+
+  const handleMintingButtonClick = (drop: any) => {
     if (drop.redirect) {
       window.open(drop.redirect, '_blank');
     } else {
@@ -58,6 +65,8 @@ const CollectionsTab = ({collections}) => {
           }
           url={`/collection/${collection.slug ?? collection.address}`}
           verified={collection.verification?.verified}
+          avatar={null}
+          collectionId={null}
         />
       ))}
     </SimpleGrid>

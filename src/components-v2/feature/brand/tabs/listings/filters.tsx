@@ -19,16 +19,21 @@ import NextLink from 'next/link'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 
-const Filters = ({collections, onChange}) => {
-  const [selectedCollections, setSelectedCollections] = useState([]);
+interface FiltersProps {
+  collections: any[];
+  onChange: (filter: string[]) => void;
+}
 
-  const viewGetDefaultCheckValue = (address) => {
+const Filters = ({collections, onChange}: FiltersProps) => {
+  const [selectedCollections, setSelectedCollections] = useState<string[]>([]);
+
+  const viewGetDefaultCheckValue = (address: string) => {
     if (!address) return false;
 
     return selectedCollections.includes(address.toLowerCase());
   };
 
-  const handleCheck = (e) => {
+  const handleCheck = (e: any) => {
     const address = e.target.value;
     if (!address) return;
 

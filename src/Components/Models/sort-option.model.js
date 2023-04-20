@@ -1,7 +1,7 @@
 export class SortOption {
   label = 'None';
   id = null;
-  key = null;
+  key = '';
   direction = null;
 
   get getOptionLabel() {
