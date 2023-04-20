@@ -33,7 +33,8 @@ import {
   isLadyWeirdApesCollection,
   isLazyHorseCollection,
   isLazyHorsePonyCollection,
-  isNftBlacklisted, isVoxelWeirdApesCollection,
+  isNftBlacklisted,
+  isVoxelWeirdApesCollection,
   isWeirdApesCollection,
   rankingsLinkForCollection,
   rankingsLogoForCollection,
@@ -49,7 +50,6 @@ import PriceActionBar from './price-action-bar';
 import {ERC721} from '@src/Contracts/Abis';
 import {getFilteredOffers} from '@src/core/subgraph';
 import MakeOfferDialog from '@src/Components/Offer/Dialogs/MakeOfferDialog';
-import NFTTabOffers from '@src/Components/Offer/NFTTabOffers';
 import {OFFER_TYPE} from '@src/Components/Offer/MadeOffers/MadeOffersRow';
 import {offerState} from '@src/core/api/enums';
 import {commify} from 'ethers/lib/utils';
@@ -83,6 +83,8 @@ import {useAppSelector} from "@src/Store/hooks";
 import {ContractInterface} from "@ethersproject/contracts";
 import Trait from "@src/components-v2/feature/nft/trait";
 import ImageService from "@src/core/services/image";
+import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
+import {OfferType} from "@src/core/services/api-service/types";
 
 const config = appConfig();
 const tabs = {
@@ -923,7 +925,13 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                         </div>
                       )}
 
-                      {currentTab === tabs.offers && <NFTTabOffers nftAddress={address} nftId={id} />}
+                      {currentTab === tabs.offers && (
+                        <OffersTab
+                          nftAddress={address}
+                          nftId={id}
+                          type={OfferType.DIRECT}
+                        />
+                      )}
 
                       {currentTab === tabs.info && (
                         <div className="tab-1 onStep fadeIn">
