@@ -8086,6 +8086,7 @@
       "cost": "0",
       "memberCost": "0",
       "whitelistCost": "0",
+      "freeMint": true,
       "foundersOnly": false,
       "start": 1681840552000,
       "priceDescription": "",
