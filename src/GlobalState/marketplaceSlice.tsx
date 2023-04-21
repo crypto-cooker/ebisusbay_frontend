@@ -5,6 +5,19 @@ import {MarketFilters} from "../Components/Models/market-filters.model";
 import {ListingsQuery} from "../core/api/queries/listings";
 import {sortAndFetchListings} from "../core/api/endpoints/listings";
 
+interface MarketplaceState {
+  loading: boolean;
+  error: boolean;
+  listings: any[];
+  query: any;
+  totalPages: number;
+  collection: any;
+  marketData: any;
+  hasRank: boolean;
+  cachedFilter: any;
+  cachedSort: any;
+}
+
 const marketplaceSlice = createSlice({
   name: 'marketplace',
   initialState: {
@@ -22,9 +35,9 @@ const marketplaceSlice = createSlice({
     hasRank: false,
     cachedFilter: {},
     cachedSort: {},
-  },
+  } as MarketplaceState,
   reducers: {
-    listingsLoading: (state, action) => {
+    listingsLoading: (state) => {
       state.loading = true;
       state.error = false;
     },
@@ -106,7 +119,6 @@ export const {
   onSearch,
   clearSet,
   onCollectionDataLoaded,
-  onRankingsLoaded,
   onMarketDataLoaded,
   onCollectionFilter,
   onVerifiedFilter,
@@ -114,7 +126,7 @@ export const {
 
 export default marketplaceSlice.reducer;
 
-export const init = (sortOption, filterOption) => async (dispatch, getState) => {
+export const init = (sortOption: any, filterOption: any) => async (dispatch: any, getState: any) => {
   dispatch(clearSet(false));
 
   if (sortOption && sortOption instanceof SortOption) {
@@ -126,9 +138,7 @@ export const init = (sortOption, filterOption) => async (dispatch, getState) => 
   }
 };
 
-export const fetchListings =
-  (isSales = false) =>
-  async (dispatch, getState) => {
+export const fetchListings = (isSales = false) => async (dispatch: any, getState: any) => {
     const state = getState();
 
     dispatch(listingsLoading());
@@ -146,40 +156,38 @@ export const fetchListings =
     }
   };
 
-export const filterListings =
-  (filterOption, cacheName, isSales = false) =>
-  async (dispatch) => {
+export const filterListings = (filterOption: any, cacheName: string, isSales = false) =>
+  async (dispatch: any) => {
     dispatch(onCollectionFilter({ option: filterOption, cacheName }));
     dispatch(fetchListings(isSales));
   };
 
-export const filterListingsByVerification =
-  (isSales = false, verified = null) =>
-  async (dispatch) => {
+export const filterListingsByVerification = (isSales = false, verified: boolean | null = null) =>
+  async (dispatch: any) => {
     dispatch(onVerifiedFilter({verified}));
-    dispatch(fetchListings(isSales, verified));
+    dispatch(fetchListings(isSales));
   };
 
 export const sortListings =
-  (sortOption, cacheName, isSales = false) =>
-  async (dispatch) => {
+  (sortOption: any, cacheName: string, isSales = false) =>
+  async (dispatch: any) => {
     dispatch(onSort({ option: sortOption, cacheName }));
     dispatch(fetchListings(isSales));
   };
 
-export const searchListings = (value, cacheName, isSales) => async (dispatch) => {
+export const searchListings = (value: string, cacheName: string, isSales: boolean) => async (dispatch: any) => {
   dispatch(onSearch({ search: value, cacheName }));
   dispatch(fetchListings(isSales));
 };
 
 export const resetListings =
   (isSales = false) =>
-  async (dispatch) => {
-    dispatch(clearSet());
+  async (dispatch: any) => {
+    dispatch(clearSet(false));
     dispatch(fetchListings(isSales));
   };
 
-export const getCollectionData = (address) => async (dispatch) => {
+export const getCollectionData = (address: string) => async (dispatch: any) => {
   try {
     const response = await getCollectionMetadata(address);
     dispatch(
@@ -192,7 +200,7 @@ export const getCollectionData = (address) => async (dispatch) => {
   }
 };
 
-export const getMarketData = () => async (dispatch) => {
+export const getMarketData = () => async (dispatch: any) => {
   try {
     const response = await getMarketMetadata();
     dispatch(

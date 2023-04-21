@@ -12,7 +12,7 @@ import {MarketFilters} from "../Models/market-filters.model";
 import ListingBundleCard from './ListingBundleCard';
 
 const ListingCollection = ({
-  limitSize = null,
+  limitSize = 0,
   showLoadMore = true,
   collectionId = null,
   sellerId = '',
