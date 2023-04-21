@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {useRouter} from 'next/router';
 import Link from 'next/link';
 import {keyframes} from '@emotion/react';
@@ -22,6 +22,7 @@ import Head from "next/head";
 import {Center, Heading, SimpleGrid} from "@chakra-ui/react";
 import ads from "@src/core/data/ads.json";
 import ImageService from "@src/core/services/image";
+import {useAppSelector} from "@src/Store/hooks";
 
 const fadeInUp = keyframes`
   0% {
@@ -90,7 +91,7 @@ const GlobalStyles = createGlobalStyle`
 
 const Jumbotron = {
   Host: styled.div`
-    background-image: url(${({ isDark }) =>
+    background-image: url(${({ isDark }: {isDark: boolean}) =>
     isDark ? ImageService.instance.provider.banner('/img/background/banner-ryoshi-dark.webp') : ImageService.instance.provider.banner('/img/background/banner-ryoshi-light.webp')});    background-size: cover;
     background-repeat: no-repeat;
     height: max(100vh, 800px);
@@ -126,16 +127,16 @@ const Home = () => {
 
   const [mobile, setMobile] = useState(typeof window !== 'undefined' && window.innerWidth < theme.breakpointsNum.md);
 
-  const marketData = useSelector((state) => {
+  const marketData = useAppSelector((state) => {
     return state.marketplace.marketData;
   });
-  const userTheme = useSelector((state) => {
+  const userTheme = useAppSelector((state) => {
     return state.user.theme;
   });
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const breakpointObserver = ({ target }) => {
+      const breakpointObserver = ({ target }: {target: any}) => {
         const { innerWidth } = target;
         const newValue = innerWidth < theme.breakpointsNum.md;
         setMobile(newValue);
@@ -149,7 +150,7 @@ const Home = () => {
     }
   }, [dispatch]);
 
-  const navigateTo = (link) => {
+  const navigateTo = (link: string) => {
     history.push(link);
   };
 
@@ -365,7 +366,7 @@ const Home = () => {
           <Center>
             <a href="#">
               <img
-                onClick={() => window['logBadgeClick']()}
+                onClick={() => window.logBadgeClick()}
                 id="badge-button"
                 style={{"width":"240px", "height":"53px"}}
                 src={hostedImage(userTheme === 'light' ?
@@ -427,3 +428,9 @@ const Home = () => {
   );
 };
 export default Home;
+
+declare global {
+  interface Window {
+    logBadgeClick: any;
+  }
+}

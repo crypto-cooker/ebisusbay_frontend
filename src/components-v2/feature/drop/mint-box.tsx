@@ -332,7 +332,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                       <Input {...input} />
                       <Button {...inc}>+</Button>
                     </HStack>
-                    {!!drop.cost && (
+                    {(!!drop.cost || drop.freeMint) && (
                       <PrimaryButton
                         w='full'
                         onClick={() => mintNow(false)}
