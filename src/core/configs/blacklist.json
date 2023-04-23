@@ -1,6 +1,24 @@
 [
   {
     "users": [
+      "0x0df0af284c6d7635cad315d0165433aa07805836",
+      "0x988c29a4f0296dfb6ef7528dd4fdf43b21ee3c81"
+    ],
+    "tokens": [
+      {
+        "slug": "croskull-pets",
+        "address": "0xB77959DC7a12F7549ACC084Af01259Fc48813c89",
+        "ids": [1434, 1474]
+      },
+      {
+        "slug": "red-skull-potions",
+        "address": "0x508378E99F5527Acb6eB4f0fc22f954c5783e5F9",
+        "ids": [180]
+      }
+    ]
+  },
+  {
+    "users": [
       "0x23c8BA092419b801f5d70b505FBF626a112e7764",
       "0x8dc14b46e36fcc5c6c3e903a999e155678d5153a",
       "0xddc470e66dd82f703243f536a35a346dfae49b28"
