@@ -7,6 +7,7 @@ import {
   Box,
   Button as ChakraButton,
   ButtonGroup,
+  Checkbox,
   Flex,
   HStack,
   Table,
@@ -16,13 +17,14 @@ import {
   Text,
   Th,
   Thead,
+  Tooltip,
   Tr,
   useBreakpointValue,
   useColorModeValue,
   VStack
 } from "@chakra-ui/react";
-import React from "react";
-import {isBundle, timeSince} from "@src/utils";
+import React, {useContext} from "react";
+import {caseInsensitiveCompare, isBundle, timeSince} from "@src/utils";
 import {ListingState} from "@src/core/services/api-service/types";
 import {InfiniteData} from "@tanstack/query-core";
 import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
@@ -30,9 +32,14 @@ import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {commify} from "ethers/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import {OwnerListing} from "@src/core/models/listing";
+import {Listing, OwnerListing} from "@src/core/models/listing";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import ImageService from "@src/core/services/image";
+import {
+  MultiSelectContext,
+  MultiSelectContextProps
+} from "@src/components-v2/feature/account/profile/tabs/listings/context";
+import {WarningIcon} from "@chakra-ui/icons";
 
 interface ResponsiveListingsTableProps {
   data: InfiniteData<IPaginatedList<OwnerListing>>;
@@ -42,29 +49,64 @@ interface ResponsiveListingsTableProps {
   breakpointValue?: string
 }
 
+interface MultiSelectProps {
+  onCheck: (listing: Listing, checked?: boolean) => void;
+  onToggleAll: (checked: boolean) => void;
+}
+
 const ResponsiveListingsTable = ({data, onUpdate, onCancel, onSort, breakpointValue}: ResponsiveListingsTableProps) => {
   const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'lg']: false}, {fallback: 'lg'})
+  const { selected, setSelected, isMobileEnabled } = useContext(MultiSelectContext) as MultiSelectContextProps;
+
+  const handleCheck = (targetListing: Listing, checked?: boolean) => {
+    if (!shouldUseAccordion && isMobileEnabled) return;
+
+    const alreadyChecked = selected.some((listing) => caseInsensitiveCompare(listing.listingId, targetListing.listingId));
+    if ((checked !== undefined && !checked) || alreadyChecked) {
+      setSelected(selected.filter((listing: Listing) => !caseInsensitiveCompare(listing.listingId, targetListing.listingId)));
+    } else if (checked || !alreadyChecked) {
+      setSelected([...selected, targetListing]);
+    }
+  }
+
+  const toggleAll = (checked: boolean) => {
+    if (checked) {
+      setSelected(data.pages.map((page) => page.data).flat());
+    } else {
+      setSelected([]);
+    }
+  }
 
   return shouldUseAccordion ? (
-    <DataAccordion data={data} onUpdate={onUpdate} onCancel={onCancel} onSort={onSort} />
+    <DataAccordion data={data} onUpdate={onUpdate} onCancel={onCancel} onSort={onSort} onCheck={handleCheck} onToggleAll={toggleAll }/>
   ) : (
-    <DataTable data={data} onUpdate={onUpdate} onCancel={onCancel} onSort={onSort} />
+    <DataTable data={data} onUpdate={onUpdate} onCancel={onCancel} onSort={onSort} onCheck={handleCheck} onToggleAll={toggleAll } />
   )
 }
 
 
-const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveListingsTableProps) => {
+const DataTable = ({data, onUpdate, onCancel, onSort, onCheck, onToggleAll}: ResponsiveListingsTableProps & MultiSelectProps) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
+  const { selected  } = useContext(MultiSelectContext) as MultiSelectContextProps;
 
   const getTimeSince = (timestamp: number) => {
     return timeSince(new Date(timestamp * 1000));
   };
+
+
 
   return (
     <TableContainer w='full'>
       <Table variant='simple'>
         <Thead>
           <Tr>
+            <Th>
+              <Checkbox
+                isChecked={selected.length === data.pages.map((page) => page.data).flat().length}
+                size='lg'
+                onChange={(e) => onToggleAll(e.target.checked)}
+              />
+            </Th>
             <Th colSpan={2}>Item</Th>
             <Th onClick={() => onSort('rank')} cursor='pointer'>Rank</Th>
             <Th onClick={() => onSort('price')} cursor='pointer'>Price</Th>
@@ -77,7 +119,14 @@ const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveListingsTablePr
           {data.pages.map((page, pageIndex) => (
             <React.Fragment key={pageIndex}>
               {page.data.map((listing) => (
-                <Tr key={listing.listingId} _hover={{bg: listing.valid ? hoverBackground : 'red.600'}} bg={listing.valid ? 'auto' : 'red.500'}>
+                <Tr key={listing.listingId} _hover={{bg: hoverBackground}}>
+                  <Td w='20px'>
+                    <Checkbox
+                      isChecked={selected.some((selectedListing: Listing) => caseInsensitiveCompare(selectedListing.listingId, listing.listingId))}
+                      size='lg'
+                      onChange={(e) => onCheck(listing, e.target.checked)}
+                    />
+                  </Td>
                   <Td w='50px'>
                     <Box
                       width={50}
@@ -86,12 +135,29 @@ const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveListingsTablePr
                       rounded='md'
                       overflow='hidden'
                     >
-                      <AnyMedia
-                        image={ImageService.instance.provider.avatar(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image)}
-                        video={listing.nft.animation_url}
-                        title={listing.nft.name}
-                        className=""
-                      />
+                      {listing.valid ? (
+                        <AnyMedia
+                          image={ImageService.instance.provider.avatar(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image)}
+                          video={listing.nft.animation_url}
+                          title={listing.nft.name}
+                          className=""
+                        />
+                      ) : (
+                        <Tooltip label="This listing is invalid" aria-label='Invalid listing'>
+                          <Box position='relative'>
+                            <Box filter='brightness(0.5)'>
+                              <AnyMedia
+                                image={ImageService.instance.provider.blurred(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image)}
+                                video={listing.nft.animation_url}
+                                title={listing.nft.name}
+                              />
+                            </Box>
+                            <Box position='absolute' top='50%' left='50%' transform='translate(-50%, -50%)'>
+                              <WarningIcon boxSize={5} color='red.300' verticalAlign='center'/>
+                            </Box>
+                          </Box>
+                        </Tooltip>
+                      )}
                     </Box>
                   </Td>
                   <Td fontWeight='bold'>
@@ -141,8 +207,9 @@ const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveListingsTablePr
   )
 };
 
-const DataAccordion = ({data, onSort, onUpdate, onCancel}: ResponsiveListingsTableProps) => {
+const DataAccordion = ({data, onSort, onUpdate, onCancel, onCheck, onToggleAll}: ResponsiveListingsTableProps & MultiSelectProps) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
+  const { selected, isMobileEnabled: multiSelectMode } = useContext(MultiSelectContext) as MultiSelectContextProps;
 
   const getTimeSince = (timestamp: number) => {
     return timeSince(new Date(timestamp * 1000));
@@ -170,21 +237,43 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel}: ResponsiveListingsTab
         {data.pages.map((page, pageIndex) => (
           <React.Fragment key={pageIndex}>
             {page.data.map((listing) => (
-              <AccordionItem key={listing.listingId} bg={listing.valid ? 'auto' : 'red.500'}>
+              <AccordionItem key={listing.listingId}>
                 <Flex w='100%' my={2}>
                   <Box flex='1' textAlign='left' fontWeight='bold' my='auto'>
                     <HStack>
+                      {multiSelectMode && (
+                        <Checkbox
+                          isChecked={selected.some((selectedListing: Listing) => caseInsensitiveCompare(selectedListing.listingId, listing.listingId))}
+                          onChange={(e) => onCheck(listing, e.target.checked)}
+                        />
+                      )}
                       <Box
                         width='40px'
                         position='relative'
                         rounded='md'
                         overflow='hidden'
+                        onClick={() => onCheck(listing)}
                       >
-                        <AnyMedia
-                          image={ImageService.instance.provider.avatar(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image)}
-                          video={listing.nft.animation_url}
-                          title={listing.nft.name}
-                        />
+                        {listing.valid ? (
+                          <AnyMedia
+                            image={ImageService.instance.provider.avatar(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image)}
+                            video={listing.nft.animation_url}
+                            title={listing.nft.name}
+                          />
+                        ) : (
+                          <Box position='relative'>
+                            <Box filter='brightness(0.5)'>
+                              <AnyMedia
+                                image={ImageService.instance.provider.blurred(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image)}
+                                video={listing.nft.animation_url}
+                                title={listing.nft.name}
+                              />
+                            </Box>
+                            <Box position='absolute' top='50%' left='50%' transform='translate(-50%, -50%)'>
+                              <WarningIcon boxSize={5} color='red.300' verticalAlign='center'/>
+                            </Box>
+                          </Box>
+                        )}
                       </Box>
 
                       <Box flex='1' fontSize='sm'>
