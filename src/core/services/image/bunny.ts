@@ -106,7 +106,7 @@ class BunnyBuilder {
       str += `?${this.params}`;
     }
 
-    const url = new URL(str, 'https://cdn2.ebisusbay.com/');
+    const url = new URL(str, 'https://cdn.lotusgalaxy.io/');
 
     return url.toString();
   }
