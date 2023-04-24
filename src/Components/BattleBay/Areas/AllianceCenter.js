@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect, useRef, useLayoutEffect} from "react";
 import {
   Heading,
   useDisclosure,
@@ -30,33 +30,33 @@ import {toast} from "react-toastify";
 import AllianceCenterContract from "@src/Contracts/AllianceCenterContract.json";
 
 import { useFormik } from 'formik';
-import Pfp from './FactionIconUpload';
+import FactionPfp from './FactionIconUpload';
 
 const AllianceCenter = ({onBack}) => {
 
   const config = appConfig();
   const user = useSelector((state) => state.user);
   const [isLoading, getSigner] = useCreateSigner();
-  // const {address, theme, profile} = useSelector((state) => state.user);
 
   const { isOpen: isOpenFaction, onOpen: onOpenFaction, onClose: onCloseFaction } = useDisclosure();
   const { isOpen: isOpenRegister, onOpen: onOpenRegister, onClose: onCloseRegister } = useDisclosure();
   const GetRegistrationColor = (registered) => {if(registered) {return 'green'} else {return 'red'}}
   const GetRegisterButtonText = (registered) => {if(registered) {return 'Registered'} else {return 'Register'}}
 
-  const [gameId, setGameId] = useState(0);
-  // const playerFactions = [];
   const [registeredFactions, setRegisteredFactions] = useState([]);
   const [playerFactions, setPlayerFactions] = useState([]);
 
   const [selectedFaction, setSelectedFaction] = useState(0);
   const [factionsDisplay, setFactionDisplay] = useState([]);
+  const [createFactionButton, setCreateFactionButton] = useState([]);
   
   //for refreshing the page after a faction is updated
   const [modalOpen, setModalOpen] = useState(false);
+
   const handleAddClick = () => {
     setModalOpen(true);
   };
+
   const handleClose = ()=>{
     setModalOpen(false)
     setGameId(getSeasonGameId());
@@ -114,31 +114,22 @@ const AllianceCenter = ({onBack}) => {
     setFieldValue,
     setFieldTouched,
     handleBlur,
-    handleSubmit,
     validateForm,
+    handleSubmit,
   } = formikProps;
-  const onSubmit = async (values) => {
-    try {
 
-      const response = settings?.data?.walletAddress
-        ? await requestUpdateSettings(user.address, values)
-        : await requestNewSettings(user.address, values);
-      if (!response || response?.message?.error) {
-        toast.error('Something went wrong!');
-      } else {
-        toast.success('Your profile was saved successfully');
-        updateProfileSettings();
-      }
-
-    } catch (error) {
-      console.log(error);
-      toast.error('Error');
+  const firstUpdateGF = useRef(true);
+  useLayoutEffect(() => {
+    if (firstUpdateGF.current) {
+      firstUpdateGF.current = false;
+      return;
     }
-  };
-  useEffect(() => {
-    setGameId(getSeasonGameId());
     GetFactions();
-  }, [selectedFaction, modalOpen]);
+  }, [modalOpen]);
+
+  const handleTJUploadSuccess = (e) => {
+    GetFactions();
+  }
 
   function selectFaction(faction) {
     setSelectedFaction(faction);
@@ -155,7 +146,7 @@ const AllianceCenter = ({onBack}) => {
     if (signatureInStorage) {
       try {
         const data = await getFactionsOwned(user.address.toLowerCase(), signatureInStorage);
-        console.log(data.data.data);
+        // console.log(data.data.data);
         const data2 = await getFactionsRegistered(user.address.toLowerCase(), signatureInStorage);
 
         setRegisteredFactions(data2.data.data);
@@ -167,20 +158,27 @@ const AllianceCenter = ({onBack}) => {
     }
   }
 
-  useEffect(() => {
+  const firstUpdate = useRef(true);
+  useLayoutEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    console.log('Updating ');
     if(playerFactions.length > 0) {
       setFactionDisplay(playerFactions.map((faction, index) => (
         <Tr key={index}>
           <Td textAlign='center'>
             <form onSubmit={handleSubmit}>
-            <Pfp values={values}
+            <FactionPfp values={values}
               errors={errors}
               touched={touched}
-              handleChange={handleChange}
+              handleChange={handleSubmit}
               setFieldValue={setFieldValue}
               setFieldTouched={setFieldTouched}
               handleBlur={handleBlur}
               faction={faction}
+              onSuccess={handleTJUploadSuccess}
             /></form>
             {/* <Image src={faction.image} width={100} height={100}/> */}
           </Td>
@@ -196,6 +194,18 @@ const AllianceCenter = ({onBack}) => {
           </Td>
         </Tr>
         )))
+        //empty due to only being allowed one faction
+        setCreateFactionButton()
+    }
+    else
+    {
+      setCreateFactionButton(
+        <Button type="legacy"
+          onClick={() => {onOpenRegister()}}
+          className="flex-fill">
+          + Create New Faction
+        </Button>
+      )
     }
   }, [playerFactions]);
   
@@ -237,11 +247,7 @@ const AllianceCenter = ({onBack}) => {
       </TableContainer>
 
       <Flex mt='30pt' mb='30pt'>
-      <Button type="legacy"
-          onClick={() => {onOpenRegister()}}
-          className="flex-fill">
-          + Create New Faction
-        </Button>
+        {createFactionButton}
       </Flex>
       </div>
       </Flex>

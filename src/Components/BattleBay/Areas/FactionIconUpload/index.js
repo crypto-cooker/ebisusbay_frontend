@@ -3,7 +3,7 @@ import { UploadFactionIcon } from '../../../Form'
 import { editProfileFormFields } from '../Form/constants';
 import { faC } from '@fortawesome/free-solid-svg-icons';
 
-export default function Pfp({ values, errors, touched, handleChange, setFieldValue, setFieldTouched, handleBlur, faction }) {
+export default function FactionPfp({ values, errors, touched, handleChange, setFieldValue, setFieldTouched, handleBlur, faction, onSuccess }) {
   const user = useSelector((state) => state.user);
 
   return (
@@ -24,7 +24,7 @@ export default function Pfp({ values, errors, touched, handleChange, setFieldVal
           if (props.inputType) props.type = props.inputType;
 
           return type === 'upload' ? (
-            <UploadFactionIcon {...props} fieldKey={fieldKey} onChange={setFieldValue} onTouched={setFieldTouched} faction={faction}/>
+            <UploadFactionIcon {...props} fieldKey={fieldKey} onChange={setFieldValue} onTouched={setFieldTouched} faction={faction} onSuccess={onSuccess}/>
           ) : null;
         })}
       </div>

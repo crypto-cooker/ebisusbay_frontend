@@ -19,7 +19,8 @@ const UploadFactionIcon = ({
   isRequired,
   onChange,
   onTouched,
-  faction
+  faction,
+  onSuccess
 }) => {
     const user = useSelector((state) => state.user);
 
@@ -29,15 +30,14 @@ const UploadFactionIcon = ({
     const index = value.findIndex(({ position }) => position === i);
 
     const newData = index !== -1 ? value.map((data, j) => (index === j ? newAsset : data)) : [...value, newAsset];
-    console.log(newData);
-    console.log(faction);
-    CreateFaction(newData, faction);
-
+    // console.log(newData);
+    // console.log(faction);
+    CallPatchFaction(newData, faction);
     // onChange(name, newData);
     onTouched(name);
   };
 
-  const CreateFaction = async (newData, faction) => {
+  const CallPatchFaction = async (newData, faction) => {
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
@@ -45,20 +45,24 @@ const UploadFactionIcon = ({
     }
     if (signatureInStorage) {
       try {
-        console.log(faction.name, newData[0].result)
-        const res = await UploadFactionIconPfp(user.address.toLowerCase(), signatureInStorage, faction.name, Number(faction.id), newData[0].result);
+        console.log(faction.id, newData[0].result)
+        const res = await UploadFactionIconPfp(user.address.toLowerCase(), signatureInStorage, 
+          faction.name, Number(faction.id), newData[0].result);
         // console.log(res);
+        onSuccess();
 
       } catch (error) {
         console.log(error)
       }
     }
   }
-const api = axios.create({
-  baseURL: 'api/',
-});
 
-const baseURL = 'https://testcms.ebisusbay.biz/';
+  const api = axios.create({
+    baseURL: 'api/',
+  });
+
+  const baseURL = 'https://testcms.ebisusbay.biz/';
+
   const UploadFactionIconPfp = async (address, signature, name, id, image) => {
     try{
       // console.log(address, signature, name, image);

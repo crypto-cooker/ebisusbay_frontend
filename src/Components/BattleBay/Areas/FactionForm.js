@@ -182,9 +182,6 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose}) => {
   }, [faction]);
 
   useEffect(() => {
-    // display all addresses
-    // console.log("addresses: "+faction.addresses)
-    console.log("addresses: " + addresses)
     if(addresses !== undefined) {
     setAddressDisplay(addresses.map((address, index) => {
       return (
