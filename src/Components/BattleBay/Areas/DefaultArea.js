@@ -77,6 +77,17 @@ const DefaultArea = ({onChange}) => {
                       "moongate" : {height: 482, width: 443, top: '23%', left: '67%'},
                       "torii" : {height: 201, width: 236, top: '6%', left: '0%'},
                       "pond" : {height: 311, width: 783, top: '0%', left: '65%'}, 
+
+                      'alliancecenter_label' : {height: 438, width: 554, top: '0%', left: '0%'},
+                      'announcementboard_label' : {height: 243, width: 279, top: '28%', left: '60%'},
+                      'moongate_label' : {height: 482, width: 443, top: '23%', left: '67%'},
+                      'academy_label' : {height: 792, width: 744, top: '4%', left: '74%'},
+                      'tavern_label' : {height: 573, width: 725, top: '3%', left: '14%'},
+                      
+                      'townhall_label' : {height: 607, width: 707, top: '13%', left: '36%'},
+                      'barracks_label' : {height: 579, width: 832, top: '12.5%', left: '-0.5%'},
+                      'fishmarket_label' : {height: 545, width: 793, top: '36.5%', left: '55%'},
+                      'bank_label' : {height: 456, width: 579, top: '7%', left: '33%'},
                     }
   const buttonsNames = ["bank", "alliancecenter", "torii", "moongate", "barracks", "announcement", "fishmarket","boat", "academy", "tavern", "townhall"];
 
@@ -177,6 +188,52 @@ const DefaultArea = ({onChange}) => {
   const [pondHeight, setPondHeight] = useState(buildings.pond.height);
   const [pondTop, setPondTop] = useState(buildings.pond.top);
   const [pondLeft, setPondLeft] = useState(buildings.pond.left);
+
+  const [alliancecenter_labelWidth, setalliancecenter_labelWidth] = useState(buildings.alliancecenter_label.left);
+  const [alliancecenter_labelHeight, setalliancecenter_labelHeight] = useState(buildings.alliancecenter_label.top);
+  const [alliancecenter_labelTop, setalliancecenter_labelTop] = useState(buildings.alliancecenter_label.width);
+  const [alliancecenter_labelLeft, setalliancecenter_labelLeft] = useState(buildings.alliancecenter_label.height);
+
+  const [townhall_labelWidth, settownhall_labelWidth] = useState(buildings.townhall_label.left);
+  const [townhall_labelHeight, settownhall_labelHeight] = useState(buildings.townhall_label.top);
+  const [townhall_labelTop, settownhall_labelTop] = useState(buildings.townhall_label.width);
+  const [townhall_labelLeft, settownhall_labelLeft] = useState(buildings.townhall_label.height);
+
+  const [tavern_labelWidth, settavern_labelWidth] = useState(buildings.tavern_label.left);
+  const [tavern_labelHeight, settavern_labelHeight] = useState(buildings.tavern_label.top);
+  const [tavern_labelTop, settavern_labelTop] = useState(buildings.tavern_label.width);
+  const [tavern_labelLeft, settavern_labelLeft] = useState(buildings.tavern_label.height);
+
+  const [academy_labelWidth, setacademy_labelWidth] = useState(buildings.academy_label.left);
+  const [academy_labelHeight, setacademy_labelHeight] = useState(buildings.academy_label.top);
+  const [academy_labelTop, setacademy_labelTop] = useState(buildings.academy_label.width);
+  const [academy_labelLeft, setacademy_labelLeft] = useState(buildings.academy_label.height);
+
+  const [announcementboard_labelWidth, setannouncementboard_labelWidth] = useState(buildings.announcementboard_label.left);
+  const [announcementboard_labelHeight, setannouncementboard_labelHeight] = useState(buildings.announcementboard_label.top);
+  const [announcementboard_labelTop, setannouncementboard_labelTop] = useState(buildings.announcementboard_label.width);
+  const [announcementboard_labelLeft, setannouncementboard_labelLeft] = useState(buildings.announcementboard_label.height);
+
+  const [fishmarket_labelWidth, setfishmarket_labelWidth] = useState(buildings.fishmarket_label.left);
+  const [fishmarket_labelHeight, setfishmarket_labelHeight] = useState(buildings.fishmarket_label.top);
+  const [fishmarket_labelTop, setfishmarket_labelTop] = useState(buildings.fishmarket_label.width);
+  const [fishmarket_labelLeft, setfishmarket_labelLeft] = useState(buildings.fishmarket_label.height);
+
+  const [moongate_labelWidth, setmoongate_labelWidth] = useState(buildings.moongate_label.left);
+  const [moongate_labelHeight, setmoongate_labelHeight] = useState(buildings.moongate_label.top);
+  const [moongate_labelTop, setmoongate_labelTop] = useState(buildings.moongate_label.width);
+  const [moongate_labelLeft, setmoongate_labelLeft] = useState(buildings.moongate_label.height);
+
+  const [bank_labelWidth, setbank_labelWidth] = useState(buildings.bank_label.left);
+  const [bank_labelHeight, setbank_labelHeight] = useState(buildings.bank_label.top);
+  const [bank_labelTop, setbank_labelTop] = useState(buildings.bank_label.width);
+  const [bank_labelLeft, setbank_labelLeft] = useState(buildings.bank_label.height);
+
+  const [barracks_labelWidth, setbarracks_labelWidth] = useState(buildings.barracks_label.left);
+  const [barracks_labelHeight, setbarracks_labelHeight] = useState(buildings.barracks_label.top);
+  const [barracks_labelTop, setbarracks_labelTop] = useState(buildings.barracks_label.width);
+  const [barracks_labelLeft, setbarracks_labelLeft] = useState(buildings.barracks_label.height);
+
 //#endregion
 
 useEffect(() => {
@@ -238,6 +295,32 @@ useEffect(() => {
   setPondWidth( buildings.pond.width * sizeMultiplier);
   setPondHeight( buildings.pond.height * sizeMultiplier);
 
+  setalliancecenter_labelWidth( buildings.alliancecenter_label.width * sizeMultiplier);
+  setalliancecenter_labelHeight( buildings.alliancecenter_label.height * sizeMultiplier);
+
+  settownhall_labelWidth( buildings.townhall_label.width * sizeMultiplier);
+  settownhall_labelHeight( buildings.townhall_label.height * sizeMultiplier);
+
+  settavern_labelWidth( buildings.tavern_label.width * sizeMultiplier);
+  settavern_labelHeight( buildings.tavern_label.height * sizeMultiplier);
+
+  setacademy_labelWidth( buildings.academy_label.width * sizeMultiplier);
+  setacademy_labelHeight( buildings.academy_label.height * sizeMultiplier);
+
+  setbank_labelWidth( buildings.bank_label.width * sizeMultiplier);
+  setbank_labelHeight( buildings.bank_label.height * sizeMultiplier);
+
+  setbarracks_labelWidth( buildings.barracks_label.width * sizeMultiplier);
+  setbarracks_labelHeight( buildings.barracks_label.height * sizeMultiplier);
+
+  setmoongate_labelWidth( buildings.moongate_label.width * sizeMultiplier);
+  setmoongate_labelHeight( buildings.moongate_label.height * sizeMultiplier);
+
+  setfishmarket_labelWidth( buildings.fishmarket_label.width * sizeMultiplier);
+  setfishmarket_labelHeight( buildings.fishmarket_label.height * sizeMultiplier);
+
+  setannouncementboard_labelWidth( buildings.announcementboard_label.width * sizeMultiplier);
+  setannouncementboard_labelHeight( buildings.announcementboard_label.height * sizeMultiplier);
 }, [sizeMultiplier]);
 
 useEffect(() => {
@@ -310,7 +393,10 @@ const SetUpButtons = async () => {
             </map>
 
             <div id="alliancecenter" className={[styles.enlarge]} style={{position:"absolute", marginTop: allianceCenterTop, marginLeft: allianceCenterLeft, zIndex:"9"}} onClick={() => onChange('allianceCenter')}>
-              <img src='/img/battle-bay/mapImages/alliancecenter_day.png' width={allianceCenterWidth} height={allianceCenterHeight} /> </div>
+              <img src='/img/battle-bay/mapImages/alliancecenter_day.png' width={allianceCenterWidth} height={allianceCenterHeight} /> 
+              <div className={[styles.enlarge]} style={{position:"absolute", marginTop: alliancecenter_labelTop, marginLeft: alliancecenter_labelLeft, zIndex:"20"}}>
+              <img src='/img/battle-bay/building_labels/alliancecenter_label.png' /> </div>
+            </div>
 
             <div id="townhall" className={[styles.enlarge]} style={{position:"absolute", marginTop: townhallTop, marginLeft: townhallLeft, zIndex:"9"}} onClick={() => onChange('townHall')}>
               <img src='/img/battle-bay/mapImages/townhall.png' width={townhallWidth} height={townhallHeight}/> </div>
@@ -349,13 +435,41 @@ const SetUpButtons = async () => {
               <img src='/img/battle-bay/mapImages/swordsmen.png' width={swordsmenWidth} height={swordsmenHeight} /> </div>
             
             <div id="moongate" className={[styles.enlarge]} style={{position:"absolute", marginTop: moongateTop, marginLeft: moongateLeft, zIndex:"9"}}>
-              <img src='/img/battle-bay/mapImages/moongate_day.png' width={moongateWidth} height={moongateHeight} /> </div>
+              <img src='/img/battle-bay/mapImages/moongate_day.png' width={moongateWidth} height={moongateHeight} />
+              <div className={[styles.enlarge]} style={{position:"absolute",  zIndex:"20"}}>
+                <img src='/img/battle-bay/building_labels/moongate_label.png' /> </div>
+            </div>
           
             <div id="torii" className={[styles.enlarge]} style={{position:"absolute", marginTop: toriiTop, marginLeft: toriiLeft, zIndex:"9"}} >
               <img src='/img/battle-bay/mapImages/torii.png' width={toriiWidth} height={toriiHeight} /> </div>
 
             <div className={[styles.enlarge]} style={{position:"absolute", marginTop: pondTop, marginLeft: pondLeft, zIndex:"8"}}>
               <img src='/img/battle-bay/mapImages/pond1.png' width={pondWidth} height={pondHeight} /> </div>
+
+            
+
+            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: townhall_labelTop, marginLeft: townhall_labelLeft, zIndex:"20"}}>
+              <img src='/img/battle-bay/building_labels/townhall_label.png' width={townhall_labelWidth} height={townhall_labelHeight} /> </div>
+
+            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: tavern_labelTop, marginLeft: tavern_labelLeft, zIndex:"20"}}>
+              <img src='/img/battle-bay/building_labels/tavern_label.png' width={tavern_labelWidth} height={tavern_labelHeight} /> </div>
+
+            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: academy_labelTop, marginLeft: academy_labelLeft, zIndex:"20"}}>
+              <img src='/img/battle-bay/building_labels/academy_label.png' width={academy_labelWidth} height={academy_labelHeight} /> </div>
+
+            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: bank_labelTop, marginLeft: bank_labelLeft, zIndex:"20"}}>
+              <img src='/img/battle-bay/building_labels/bank_label.png' width={bank_labelWidth} height={bank_labelHeight} /> </div>
+
+            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: barracks_labelTop, marginLeft: barracks_labelLeft, zIndex:"20"}}>
+              <img src='/img/battle-bay/building_labels/barracks_label.png' width={barracks_labelWidth} height={barracks_labelHeight} /> </div>
+     
+            
+            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: fishmarket_labelTop, marginLeft: fishmarket_labelLeft, zIndex:"20"}}>
+              <img src='/img/battle-bay/building_labels/fishmarket_label.png' width={fishmarket_labelWidth} height={fishmarket_labelHeight} /> </div>
+
+            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: announcementboard_labelTop, marginLeft: announcementboard_labelLeft, zIndex:"20"}}>
+              <img src='/img/battle-bay/building_labels/announcementboard_label.png' width={announcementboard_labelWidth} height={announcementboard_labelHeight} /> </div>
+            
 
           </TransformComponent>
         </React.Fragment>

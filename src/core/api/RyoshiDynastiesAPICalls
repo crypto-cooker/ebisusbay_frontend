@@ -313,7 +313,7 @@ export const attack = async (address, signature, troops, controlPointId, faction
     var gameID = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
     var gameId = gameID.data.data.id;
 
-    return await api.post(baseURL + "api/ryoshi-dynasties/battles?", 
+    return await api.post(baseURL + "api/ryoshi-dynasties/battle-transactions?", 
       {troops, controlPointId, gameId, factionId, defendingFactionId},
       {params: {address, signature}}
       );

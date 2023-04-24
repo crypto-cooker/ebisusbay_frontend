@@ -177,7 +177,8 @@ export const configData = {
       cnsusd: '0x263818f9693548446A41ad7025923612b490CB0D',
       gaslessListing: '0xBbe0D0715AbCadb8A0Db41C0Bb7f272570907C45',
       gdc: '0xd464f36885163e124e3a15e31c0e581ba3f648ab',
-      allianceCenter: '0x9770d8b97A61520E008f648e7879c337D705D021'
+      allianceCenter: '0x9770d8b97A61520E008f648e7879c337D705D021',
+      attack: '0x8b85e49b5a59b113656Fa1A36efa9Aeb70DE27C1',
     },
     tokens: {
       loot: {

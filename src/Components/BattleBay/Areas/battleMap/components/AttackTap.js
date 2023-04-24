@@ -19,13 +19,22 @@ import {
   GridItem,
   VStack,
 } from "@chakra-ui/react";
+
 import Button from "@src/Components/components/Button";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 import {attack, getFactionsOwned} from "@src/core/api/RyoshiDynastiesAPICalls";
 
+//contracts
+import {Contract} from "ethers";
+import {appConfig} from "@src/Config";
+import {toast} from "react-toastify";
+import AttackContract from "@src/Contracts/Attack.json";
+
 const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
+
+  const config = appConfig();
 
   const attackSetUp = useRef();
   const attackConclusion = useRef();
@@ -99,6 +108,22 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
         // console.log("defenderFactionId", defenderFactionId)
         // console.log("attackerTroops", Number(attackerTroops))
         const data = await attack(user.address.toLowerCase(), signatureInStorage, Number(attackerTroops), controlPointId, attackerFactionId, defenderFactionId);
+        console.log("data", data)
+        //Signature, timestamp and attackId are returned
+        var attackId = data.data.data.attackId;
+        var timestamp = data.data.data.timestamp;
+        var signature = data.data.data.signature;
+
+        console.log(config.contracts.attack)
+        console.log(AttackContract)
+        
+        const attackContract = new Contract(config.contracts.attack, AttackContract, user.provider.getSigner());
+        const tx = await attackContract.attackFaction([attackId, timestamp, signature], user.provider.getSigner());
+        const receipt = await tx.wait();
+        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+
+        console.log('Attack completed')
+
 
         var attackersAlive = Number(attackerTroops);
         var attackersSlain = 0;

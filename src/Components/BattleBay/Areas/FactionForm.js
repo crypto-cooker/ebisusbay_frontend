@@ -22,6 +22,9 @@ import {
   AlertTitle,
   Stack,
   Divider,
+  ListItem,
+  OrderedList,
+
 } from "@chakra-ui/react"
 import { Spinner } from 'react-bootstrap';
 import { getTheme } from "@src/Theme/theme";
@@ -40,6 +43,7 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose}) => {
   const [addressToAdd, setValue] = useState('')
   const factionNameInput = useRef(null);
   const [factionType, setFactionType] = useState(0)
+  const [addressDisplay, setAddressDisplay] = useState([])
 
   //alerts
   const [showAlert, setShowAlert] = useState(false)
@@ -56,15 +60,6 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose}) => {
       setShowAlert(true)
       return;
     }
-    // if(addresses.current.length > getMaxAddresses()) {
-    //   setAlertMessage("You are over the maximum number of addresses for this faction type")
-    //   setShowAlert(true)
-    //   return;
-    // }
-    // console.log("faction id: "+faction.id)
-    // console.log("faction name: "+formik.values.factionName)
-    // console.log("faction type: "+formik.values.factionType)
-    // console.log("faction addresses: "+formik.values.addresses)
 
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
@@ -74,7 +69,7 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose}) => {
     if (signatureInStorage) {
       try {
         const data = await editFaction(user.address.toLowerCase(), signatureInStorage,
-          faction.id, formik.values.factionName, formik.values.addresses, formik.values.factionType);
+          faction.id, formik.values.factionName, addresses, formik.values.factionType);
         // console.log(data);
         //add payment code here
         handleClose();
@@ -135,6 +130,11 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose}) => {
       setShowAlert(true)
       return;
     }
+    if(addresses.length >= getMaxAddresses()) {
+      setAlertMessage("You are over the maximum number of addresses for this faction type")
+      setShowAlert(true)
+      return;
+    }
     setAddresses(addresses => [...addresses, addressToAdd])
     addressInput.current.value = ''
     setValue('')
@@ -172,13 +172,28 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose}) => {
     enableReinitialize: true,
   })
   useEffect(() => {
-    console.log("faction change faction change"+faction.name)
+    // console.log("faction change faction change"+faction.name)
     if(faction.type === 'COLLECTION') {
       setFactionType(0)
     } else {
       setFactionType(1)
     }
+    setAddresses(faction.addresses)
   }, [faction]);
+
+  useEffect(() => {
+    // display all addresses
+    // console.log("addresses: "+faction.addresses)
+    console.log("addresses: " + addresses)
+    if(addresses !== undefined) {
+    setAddressDisplay(addresses.map((address, index) => {
+      return (
+          <ListItem>{address}</ListItem>
+      )
+    }))
+  }
+  }, [addresses]);
+
 
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
@@ -191,8 +206,8 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose}) => {
             <ModalBody>
             <Flex>
             <FormLabel>Current Status: {registrationStatus}</FormLabel>
-                <Button type="submit" style={{ display: 'flex' }} 
-                      onClick={RegisterFaction} variant='outline' size='lg'>Register Faction</Button>
+                {/* <Button type="submit" style={{ display: 'flex' }} 
+                      onClick={RegisterFaction} variant='outline' size='lg'>Register Faction</Button> */}
               </Flex>
             <Divider />
             <form onSubmit={formik.handleSubmit} style={{ marginTop: '24px'}}>
@@ -218,6 +233,9 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose}) => {
                   <TabPanel>
                     <p>Maximum of 15 wallet addresses</p>
                   </TabPanel>
+                  <OrderedList>
+                    {addressDisplay}
+                  </OrderedList>
                 </TabPanels>
               </Tabs>
             <Divider />
