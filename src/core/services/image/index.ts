@@ -116,7 +116,7 @@ class CdnProxy implements CdnProvider {
       return url;
     }
     const oldCdns = ['https://cdn.ebisusbay.com/', 'https://cdn.ebisusbay.biz/', 'https://cdn.ebisusbay.biz/test/'];
-    const newCdn = 'https://cdn2.ebisusbay.com/';
+    const newCdn = 'https://cdn.lotusgalaxy.io/';
     url = oldCdns.reduce((p, n) => p.replace(n, newCdn), url);
     return url;
   }
