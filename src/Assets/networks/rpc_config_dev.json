@@ -17541,7 +17541,7 @@
       "multiToken": false,
       "address": "0x89D3671ed4561C1775b3B2a5713B08224f610D4D",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "700 ZGBs are the result of burning 2100 CGBS. Zombies are more powerful then regular gorillas",
         "avatar": "/img/collections/zombie-gorilla-business/avatar.webp",
