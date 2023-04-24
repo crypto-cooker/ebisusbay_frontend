@@ -9093,7 +9093,7 @@
         "card": "/img/collections/moon-crew-apes/card.webp",
         "banner": "/img/collections/moon-crew-apes/banner.webp",
         "website": "https://mooncrew.club/",
-        "twitter": "https://twitter.com/moonapecrew",
+        "twitter": "https://twitter.com/mooncrew_cro",
         "discord": "https://discord.gg/nRUBVDE7bM",
         "categories": [
           "utility"
@@ -15132,7 +15132,7 @@
         "card": "/img/collections/moon-crew-pandas/card.webp",
         "banner": "/img/collections/moon-crew-pandas/banner.webp",
         "website": "https://mooncrew.club/",
-        "twitter": "https://twitter.com/moonapecrew",
+        "twitter": "https://twitter.com/mooncrew_cro",
         "discord": "https://discord.gg/nRUBVDE7bM",
         "categories": [
           "utility"
@@ -17541,7 +17541,7 @@
       "multiToken": false,
       "address": "0x89D3671ed4561C1775b3B2a5713B08224f610D4D",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "700 ZGBs are the result of burning 2100 CGBS. Zombies are more powerful then regular gorillas",
         "avatar": "/img/collections/zombie-gorilla-business/avatar.webp",
@@ -19940,6 +19940,55 @@
         "verified": true,
         "doxx": false,
         "kyc": true
+      }
+    },
+    {
+      "name": "Uncle Austin's Syrup Serum",
+      "slug": "uncle-austins-syrup-farm",
+      "multiToken": false,
+      "address": "0xfebdfe84DE667cbC0f4319F9558b6aC0cFDe3C2F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "In the realm of the ultra-wealthy, Uncle Austin's infamous Syrup Serum was the stuff of legends, and when the privileged rich kids imbibed it, they were transformed into enchanting Candy Kids, with sugary abilities that left the world spellbound.",
+        "avatar": "/img/collections/uncle-austins-syrup-farm/avatar.webp",
+        "banner": "/img/collections/uncle-austins-syrup-farm/banner.webp",
+        "card": "/img/collections/uncle-austins-syrup-farm/card.webp",
+        "website":"https://www.trknft.com/serum",
+        "twitter": "https://twitter.com/TRK_CRO",
+        "discord": "https://discord.gg/RFHbbRHhPD",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Mega Kong",
+      "slug": "mega-kong",
+      "multiToken": false,
+      "address": "0x90028aaf9653a81db0940fd3c4a6859251087b44",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "ToC's premier Titan PFP. Join the community with this token and take your place amongst Olympians.",
+        "avatar": "/img/collections/mega-kong/avatar.webp",
+        "card": "/img/collections/mega-kong/card.webp",
+        "banner": "/img/collections/mega-kong/banner.webp",
+        "twitter": "https://twitter.com/kingkongcronos2",
+        "discord": "https://discord.gg/8ZQUXur8hH",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],

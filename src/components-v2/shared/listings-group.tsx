@@ -46,7 +46,7 @@ const ListingsGroup = ({limitSize, showLoadMore = true, queryParams, smallWindow
     ) : (
       <>
         <SimpleGrid
-          columns={!smallWindow ? {base: 1, sm: 2, lg: 3, xl: 4} : {base: 2, sm: 3, md: 4, lg: 5, xl: 6, '2xl': 7}}
+          columns={!smallWindow ? {base: 2, sm: 2, lg: 3, xl: 4} : {base: 2, sm: 3, md: 4, lg: 5, xl: 6, '2xl': 7}}
           gap={3}
         >
           {data?.pages.map((items, index) => (

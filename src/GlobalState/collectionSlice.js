@@ -4,7 +4,7 @@ import {
   getCollectionPowertraits,
   getCollectionTraits,
 } from '../core/api';
-import {caseInsensitiveCompare, isFoundingMemberCollection} from '../utils';
+import {caseInsensitiveCompare, isCronosGorillaBusinessCollection, isFoundingMemberCollection} from '../utils';
 import {appConfig} from "../Config";
 import {listingType} from "../core/api/enums";
 import {ListingsQuery} from "../core/api/queries/listings";
@@ -328,14 +328,20 @@ export const getStats =
       }
       const traits = await getCollectionTraits(collection.address);
       const powertraits = collection.powertraits ? await getCollectionPowertraits(collection.address) : null;
+
+      let remainingStats = {
+        traits: traits,
+        powertraits: powertraits
+      };
+      if (isCronosGorillaBusinessCollection(collection.address)) {
+        remainingStats.totalSupply = 4000;
+      }
+
       dispatch(
         onCollectionStatsLoaded({
           stats: {
             ...combineStats(response.collections, collection.address),
-            ...{
-              traits: traits,
-              powertraits: powertraits,
-            },
+            ...remainingStats,
           },
         })
       );

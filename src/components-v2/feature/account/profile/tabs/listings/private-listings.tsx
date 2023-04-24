@@ -33,8 +33,10 @@ import {InvalidState} from "@src/core/services/api-service/types";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
 import {caseInsensitiveCompare, findCollectionByAddress} from "@src/utils";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faAngleLeft, faFilter} from "@fortawesome/free-solid-svg-icons";
+import {faAngleLeft, faCheckDouble, faFilter} from "@fortawesome/free-solid-svg-icons";
 import useDebounce from "@src/core/hooks/useDebounce";
+import BatchPreview from "@src/components-v2/feature/account/profile/tabs/listings/batch-preview";
+import {MultiSelectContext} from './context';
 
 interface UserPrivateListingsProps {
   walletAddress: string
@@ -59,6 +61,8 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
     { fallback: 'lg' },
   );
   const user = useAppSelector((state) => state.user);
+  const [selected, setSelected] = useState<any[]>([]);
+  const [mobileMultiSelectMode, setMobileMultiSelectMode] = useState(false);
 
   const fetcher = async ({ pageParam = 1 }) => {
     const listings = await nextApiService.getUserUnfilteredListings(walletAddress, {
@@ -123,6 +127,15 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
     setSearchTerms('');
   }, []);
 
+  const handleSelected = useCallback((selectedListing: any, checked?: boolean) => {
+    const alreadyChecked = !!selected.find((listing: any) => caseInsensitiveCompare(listing.listingId, selectedListing.listingId));
+    if ((checked !== undefined && !checked) || alreadyChecked) {
+      setSelected(selected.filter((listing: any) => !caseInsensitiveCompare(listing.listingId, selectedListing.listingId)));
+    } else if (checked || !alreadyChecked) {
+      setSelected([...selected, selectedListing]);
+    }
+  }, [selected]);
+
   useEffect(() => {
     setQueryParams({...queryParams, search: debouncedSearch});
   }, [debouncedSearch]);
@@ -151,7 +164,7 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
   }, [walletAddress]);
 
   return (
-    <>
+    <MultiSelectContext.Provider value={{ selected, setSelected, isMobileEnabled: mobileMultiSelectMode }}>
       {hasInvalidListings && (
         <Alert
           status='error'
@@ -190,6 +203,17 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
       </div>
       <Stack direction="row" mb={2} align="center">
         <HStack w='full'>
+          {useMobileMenu && (
+            <Box>
+              <IconButton
+                aria-label='Multiselect'
+                icon={<Icon as={FontAwesomeIcon} icon={faCheckDouble} />}
+                variant='outline'
+                colorScheme={mobileMultiSelectMode ? 'blue' : 'gray'}
+                onClick={() => setMobileMultiSelectMode(!mobileMultiSelectMode)}
+              />
+            </Box>
+          )}
           <Box>
             <IconButton
               aria-label={'Toggle Filter'}
@@ -213,18 +237,6 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
               />
             )}
           </InputGroup>
-          {/*<Box>*/}
-          {/*  <Button*/}
-          {/*    type="legacy-outlined"*/}
-          {/*  >*/}
-          {/*    <HStack>*/}
-          {/*      <Icon as={FontAwesomeIcon} icon={faLayerGroup} />*/}
-          {/*      <Box>*/}
-          {/*        Bulk mode*/}
-          {/*      </Box>*/}
-          {/*    </HStack>*/}
-          {/*  </Button>*/}
-          {/*</Box>*/}
         </HStack>
       </Stack>
 
@@ -286,7 +298,10 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
           listing={user.myNftPageListDialog?.listing}
         />
       )}
-    </>
+      <BatchPreview
+        mutationKey={['MyListingsCollection', walletAddress, queryParams, showInvalidOnly]}
+      />
+    </MultiSelectContext.Provider>
   );
 };
 
