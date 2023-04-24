@@ -118,12 +118,8 @@ const AllianceCenter = ({onBack}) => {
     handleSubmit,
   } = formikProps;
 
-  const firstUpdateGF = useRef(true);
-  useLayoutEffect(() => {
-    if (firstUpdateGF.current) {
-      firstUpdateGF.current = false;
-      return;
-    }
+
+  useEffect(() => {
     GetFactions();
   }, [modalOpen]);
 
