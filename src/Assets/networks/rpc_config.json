@@ -19922,7 +19922,7 @@
       "multiToken": false,
       "address": "0xA86f74B47F1193d9d6DBe4029cAf4A2056607D7C",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "There's a coin lying on the ground! Pick it up?",
         "avatar": "/img/collections/diamond-coins/avatar.webp",
@@ -26569,7 +26569,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/diamond-coins/drop.webp",
         "banner": "/img/collections/diamond-coins/banner.webp",
