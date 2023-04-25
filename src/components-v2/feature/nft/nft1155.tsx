@@ -60,6 +60,7 @@ import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import {useAppSelector} from "@src/Store/hooks";
 import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
 import {OfferType} from "@src/core/services/api-service/types";
+import ImageService from "@src/core/services/image";
 
 const config = appConfig();
 const tabs = {
@@ -406,7 +407,7 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
                     <ProfilePreview
                       type="Collection"
                       title={collectionName ?? 'View Collection'}
-                      avatar={hostedImage(collectionMetadata?.avatar, true)}
+                      avatar={ImageService.staticAsset.avatar(collectionMetadata?.avatar)}
                       address={address}
                       verified={collection.verification?.verified}
                       to={`/collection/${collectionSlug}`}

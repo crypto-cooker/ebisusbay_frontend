@@ -13,6 +13,7 @@ import {useQuery} from "@tanstack/react-query";
 import {getOwnerCollections} from "@src/core/cms/next/collections";
 import {Text, VStack} from "@chakra-ui/react";
 import {shortAddress} from "@src/utils";
+import ImageService from "@src/core/services/image";
 const { Features } = Constants;
 
 const mobileListBreakpoint = 1000;
@@ -98,7 +99,7 @@ export default function Collections({ address }) {
                             <Link href={`/collection/${collection.slug}`}>
                               {collection.metadata?.avatar ? (
                                 <CdnImage
-                                  src={hostedImage(collection.metadata.avatar, true)}
+                                  src={ImageService.staticAsset.avatar(collection.metadata.avatar)}
                                   alt={collection?.name}
                                   width="50"
                                   height="50"

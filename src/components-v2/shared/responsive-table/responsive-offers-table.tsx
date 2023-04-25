@@ -32,6 +32,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {hostedImage} from "@src/helpers/image";
 import {Button as ChakraButton} from "@chakra-ui/react";
+import ImageService from "@src/core/services/image";
 
 interface ResponsiveOffersTableProps {
   data: InfiniteData<IPaginatedList<Offer>>;
@@ -85,7 +86,7 @@ const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveOffersTableProp
                       overflow='hidden'
                     >
                       <AnyMedia
-                        image={offer.nft.image ?? offer.collection.metadata.avatar}
+                        image={ImageService.proxy.avatar(offer.nft.image ?? offer.collection.metadata.avatar)}
                         video={offer.nft.animation_url}
                         title={offer.nft.name ?? offer.collection.name}
                         className=""
@@ -184,7 +185,7 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel}: ResponsiveOffersTable
                         overflow='hidden'
                       >
                         <AnyMedia
-                          image={hostedImage(offer.nft.image ?? offer.collection.metadata.avatar, true)}
+                          image={ImageService.proxy.avatar(offer.nft.image ?? offer.collection.metadata.avatar)}
                           video={offer.nft.animation_url}
                           title={offer.nft.name ?? offer.collection.name}
                         />

@@ -93,19 +93,19 @@ const DataTable = ({data, onUpdate, onCancel, onSort, onCheck, onToggleAll}: Res
     return timeSince(new Date(timestamp * 1000));
   };
 
-
-
   return (
     <TableContainer w='full'>
       <Table variant='simple'>
         <Thead>
           <Tr>
             <Th>
-              <Checkbox
-                isChecked={selected.length === data.pages.map((page) => page.data).flat().length}
-                size='lg'
-                onChange={(e) => onToggleAll(e.target.checked)}
-              />
+              {data.pages.map((page) => page.data).flat().length > 0 && (
+                <Checkbox
+                  isChecked={selected.length === data.pages.map((page) => page.data).flat().length}
+                  size='lg'
+                  onChange={(e) => onToggleAll(e.target.checked)}
+                />
+              )}
             </Th>
             <Th colSpan={2}>Item</Th>
             <Th onClick={() => onSort('rank')} cursor='pointer'>Rank</Th>
@@ -137,7 +137,7 @@ const DataTable = ({data, onUpdate, onCancel, onSort, onCheck, onToggleAll}: Res
                     >
                       {listing.valid ? (
                         <AnyMedia
-                          image={ImageService.instance.provider.avatar(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image)}
+                          image={ImageService.proxy.avatar(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image)}
                           video={listing.nft.animation_url}
                           title={listing.nft.name}
                           className=""
@@ -147,7 +147,7 @@ const DataTable = ({data, onUpdate, onCancel, onSort, onCheck, onToggleAll}: Res
                           <Box position='relative'>
                             <Box filter='brightness(0.5)'>
                               <AnyMedia
-                                image={ImageService.instance.provider.blurred(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image)}
+                                image={ImageService.proxy.blurred(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image)}
                                 video={listing.nft.animation_url}
                                 title={listing.nft.name}
                               />
@@ -256,7 +256,7 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel, onCheck, onToggleAll}:
                       >
                         {listing.valid ? (
                           <AnyMedia
-                            image={ImageService.instance.provider.avatar(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image)}
+                            image={ImageService.proxy.avatar(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image)}
                             video={listing.nft.animation_url}
                             title={listing.nft.name}
                           />

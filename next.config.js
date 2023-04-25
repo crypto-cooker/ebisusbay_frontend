@@ -20,7 +20,10 @@ const nextConfig = {
       'metadata.cronos.domains',
       'ik.imagekit.io',
       'cdn.ebisusbay.com',
-      'cdn.ebisusbay.biz'
+      'cdn.ebisusbay.biz',
+      'ebisusbay-prod.b-cdn.net',
+      'ebisusbay-dev.b-cdn.net',
+      'ebisusbay-test.b-cdn.net',
     ],
     formats: ['image/webp'],
   },

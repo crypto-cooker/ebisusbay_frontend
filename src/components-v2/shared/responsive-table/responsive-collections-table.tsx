@@ -45,6 +45,7 @@ import {BlueCheckIcon} from "@src/components-v2/shared/icons/blue-check";
 import styled from "styled-components";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
 import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
+import ImageService from "@src/core/services/image";
 
 interface ResponsiveCollectionsTableProps {
   data: InfiniteData<AxiosResponse<IPaginatedList<any>>>;
@@ -122,7 +123,7 @@ const DataTable = ({data, timeFrame, onSort}: Pick<ResponsiveCollectionsTablePro
                         overflow='hidden'
                       >
                         <CdnImage
-                          src={hostedImage(collection.metadata.avatar, true)}
+                          src={ImageService.staticAsset.avatar(collection.metadata.avatar)}
                           alt={collection?.name}
                           width="50"
                           height="50"
@@ -246,7 +247,7 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
                           overflow='hidden'
                         >
                           <ChakraImage
-                            src={hostedImage(collection.metadata.avatar, true)}
+                            src={ImageService.staticAsset.avatar(collection.metadata.avatar)}
                             alt={collection?.name}
                           />
                         </Box>

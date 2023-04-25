@@ -1,6 +1,7 @@
 import ImageKitProvider from "@src/core/services/image/imagekit";
 import BunnyCdnProvider from "@src/core/services/image/bunny";
 import IPFSGatewayTools from '@pinata/ipfs-gateway-tools/dist/node';
+import {appConfig} from "@src/Config";
 
 export interface CdnProvider {
   blurred(url: string): string;
@@ -31,13 +32,17 @@ class ImageService {
     if (provider === 'imagekit') {
       service.provider = new ImageKitProvider();
     } else if (provider === 'bunny') {
-      service.provider = new BunnyCdnProvider();
+      service.provider = new BunnyCdnProvider(appConfig('urls.cdn.primary'));
     }
     return service;
   }
 
   static get proxy(): CdnProvider {
     return new CdnProxy();
+  }
+
+  static get staticAsset(): CdnProvider {
+    return new BunnyCdnProvider(appConfig('urls.cdn.assets'));
   }
 }
 
@@ -49,7 +54,7 @@ class CdnProxy implements CdnProvider {
   private readonly imagekit: ImageKitProvider;
 
   constructor() {
-    this.bunny = new BunnyCdnProvider();
+    this.bunny = new BunnyCdnProvider(appConfig('urls.cdn.primary'));
     this.imagekit = new ImageKitProvider();
   }
 

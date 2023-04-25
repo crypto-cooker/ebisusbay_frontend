@@ -33,6 +33,7 @@ import Link from "next/link";
 import {hostedImage} from "@src/helpers/image";
 import {Button as ChakraButton} from "@chakra-ui/react";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
+import ImageService from "@src/core/services/image";
 
 interface ResponsiveTableProps {
   data: InfiniteData<AxiosResponse<IPaginatedList<any>>>;
@@ -159,7 +160,7 @@ const DataAccordion = ({data, onSort}: ResponsiveTableProps) => {
                         overflow='hidden'
                       >
                         <AnyMedia
-                          image={hostedImage(listing.nft.image, true)}
+                          image={ImageService.staticAsset.avatar(listing.nft.image)}
                           video={listing.nft.animation_url}
                           title={listing.nft.name}
                         />
