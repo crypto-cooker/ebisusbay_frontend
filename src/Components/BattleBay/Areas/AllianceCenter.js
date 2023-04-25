@@ -18,7 +18,7 @@ import {
 } from '@chakra-ui/react';
 import FactionForm from './FactionForm';
 import FactionRegistrationForm from './FactionRegistrationForm';
-import {subscribeFaction, getSeasonGameId, getProfileId, getFactionsOwned, getFactionsRegistered} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {getFactionsOwned, getFactionsRegistered} from "@src/core/api/RyoshiDynastiesAPICalls";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
@@ -59,7 +59,6 @@ const AllianceCenter = ({onBack}) => {
 
   const handleClose = ()=>{
     setModalOpen(false)
-    setGameId(getSeasonGameId());
     GetFactions();
   }
   const formikProps = useFormik({

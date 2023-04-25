@@ -15,20 +15,15 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  useDisclosure
+  useDisclosure,
+  AspectRatio
 } from "@chakra-ui/react"
 
 const DefaultArea = ({onChange}) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = React.useRef()
-  const Controls = ({ zoomIn, zoomOut, resetTransform }) => (
-    <>
-      {/* <Button onClick={() => zoomIn()}variant='outline'size='lg'>+</Button>
-      <Button onClick={() => zoomOut()}variant='outline'size='lg'>-</Button>
-      <Button onClick={() => resetTransform()}variant='outline'size='lg'>x</Button> */}
-    </>
-  );
+
   const [pins, setPins] = useState([]);
   const transformComponentRef = useRef()
   const [elementToZoomTo, setElementToZoomTo] = useState("");
@@ -37,12 +32,17 @@ const DefaultArea = ({onChange}) => {
     offsetY: 0,
     scale: 1,
   });
+  const [initialPositionX, setInitialPositionX] = useState(0);
+  const [initialPositionY, setInitialPositionY] = useState(0);
+
 
   useEffect(() => {
     if (transformComponentRef.current) {
       const { zoomToElement } = transformComponentRef.current;
       zoomToElement(elementToZoomTo);
     }
+    console.log("current state " + transformComponentRef?.current?.state) ;
+    // transformComponentRef.current.state;
   }, [elementToZoomTo]);
   
   const changeCanvasState = (ReactZoomPanPinchRef, event) => {
@@ -51,7 +51,7 @@ const DefaultArea = ({onChange}) => {
       offsetY: ReactZoomPanPinchRef.state.positionY,
       scale: ReactZoomPanPinchRef.state.scale,
     });
-    // console.log(ReactZoomPanPinchRef.state.positionX, ReactZoomPanPinchRef.state.positionY, ReactZoomPanPinchRef.state.scale)
+    console.log(ReactZoomPanPinchRef.state.positionX, ReactZoomPanPinchRef.state.positionY, ReactZoomPanPinchRef.state.scale)
   };
 
   const buildings ={ "allianceCenter" : {height:438, width:554, top:'7%', left:'55%'},
@@ -237,7 +237,7 @@ const DefaultArea = ({onChange}) => {
 //#endregion
 
 useEffect(() => {
-  resizeMap();
+  // resizeMap();
   setAllianceCenterWidth( buildings.allianceCenter.width * sizeMultiplier);
   setAllianceCenterHeight( buildings.allianceCenter.height * sizeMultiplier);
 
@@ -324,20 +324,29 @@ useEffect(() => {
 }, [sizeMultiplier]);
 
 useEffect(() => {
-  function handleResize() {
+  
+  function handleResize(){
     // console.log('resized to: ', window.innerWidth, 'x', window.innerHeight)
     if (window.innerWidth < 2880) {
       setSizeMultiplier(window.innerWidth / 2880);
+      // setInitialPositionX(window.innerWidth / 2);
+      // setInitialPositionY(window.innerHeight / 2);
+      // setZoomState({
+      //   offsetX: window.innerWidth / 2,
+      //   offsetY: window.innerHeight / 2,
+      //   // scale: ReactZoomPanPinchRef.state.scale,
+      // });
+
     }
-}
+  }
+
   window.addEventListener('resize', handleResize)
 })
 
 useEffect(() => {
-  resizeMap();
+  // resizeMap();
   SetUpButtons();
   setSizeMultiplier(window.innerWidth / 2880);
-  // console.log('sizeMultiplier: ', sizeMultiplier);
 }, [])
 
 const SetUpButtons = async () => {
@@ -349,16 +358,12 @@ const SetUpButtons = async () => {
 }
   return (
     <section>
-      <div width="50%">
-      <Flex>
-        <Spacer/>
-        <Box p='3'>
-          <Button style={{ display: 'flex', marginTop: '16px' }} 
-            onClick={() => onChange('userPage')} variant='outline'size='lg'> 
-            User Profile</Button>
-        </Box>
-      </Flex>
-      
+       <Box
+        position='relative'
+        bg='red.800'
+        h='calc(100vh - 74px)'
+      >
+      <AspectRatio ratio={2880/1620} overflow='visible'>
 
       <TransformWrapper
         // limitToBounds={true}
@@ -367,18 +372,20 @@ const SetUpButtons = async () => {
         onPinching={changeCanvasState}
         onPinchingStop={changeCanvasState}
         onPanningStop={changeCanvasState}
+        // initialPositionX={initialPositionX}
+        // initialPositionY={initialPositionY}
         initialScale={1}
         > 
         {(utils) => (
           <React.Fragment>
             {/* <button onClick={zoomToImage}>Zoom to 1</button> */}
-          <Controls {...utils} />
+          {/* <Controls {...utils} /> */}
           <TransformComponent>
           
             <img 
             src='/img/battle-bay/mapImages/background.png'
             // src="/img/battle-bay/newMap.png" 
-            useMap="#image-map" width="100%" className={`${styles.mapImageArea}`} id="fancyMenu"/>
+            useMap="#image-map" className={`${styles.mapImageArea}`} id="fancyMenu"/>
             <map name="image-map">
               {/* <area onClick={() => onChange('townHall')} alt="Town Hall" title="Town Hall" coords="793,434,1259,861" shape="rect"/> */}
               
@@ -475,10 +482,29 @@ const SetUpButtons = async () => {
         </React.Fragment>
         )}
       </TransformWrapper>
-      <Flex style={{ display: 'flex', marginTop: '16px' }} textAlign='center' justifyContent='space-around'>
+
+      {/* <Flex style={{ display: 'flex', marginTop: '16px' }} textAlign='center' justifyContent='space-around'>
       <Button ref={btnRef} colorScheme='teal' onClick={onOpen} >
         Buildings
-      </Button>
+      </Button> */}
+
+   
+      </AspectRatio>
+    
+<Box  position='absolute' top={0} left={0} p={4}>
+  <Flex direction='row' justify='space-between'>
+    <Box>
+      <Image style={{ display: 'flex', marginTop: '16px' }} src='\img\battle-bay\bankinterior\banker_chat_background.png' w='140px' position={'absolute'} />
+      <Button style={{ display: 'flex', marginTop: '16px' }}  color='white' onClick={() => onChange('userPage')} variant='ghost'size='lg'>  User Profile </Button>
+      <Image style={{ display: 'flex', marginTop: '16px' }}src='\img\battle-bay\bankinterior\banker_chat_background.png' w='140px' position={'absolute'} />
+      <Button style={{ display: 'flex', marginTop: '16px' }}  color='white' ref={btnRef}  variant='ghost' onClick={onOpen} size='lg'>Buildings</Button>
+    </Box>
+    
+  </Flex>
+</Box>
+
+</Box>
+
       <Drawer
         isOpen={isOpen}
         placement='bottom'
@@ -495,8 +521,8 @@ const SetUpButtons = async () => {
           </DrawerBody>
         </DrawerContent>
       </Drawer>
-      </Flex>
-      </div>
+      {/* </Flex> */}
+      {/* </div> */}
     </section>
   )
 };
