@@ -19920,7 +19920,7 @@
       "name": "Diamond Coins of the Grind Guild",
       "slug": "diamond-coins",
       "multiToken": false,
-      "address": "",
+      "address": "0xA86f74B47F1193d9d6DBe4029cAf4A2056607D7C",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -26554,7 +26554,7 @@
         "twitter": "https://twitter.com/cronosgrind",
         "discord": "https://discord.gg/An3rafeAWP"
       },
-      "address": "",
+      "address": "0xA86f74B47F1193d9d6DBe4029cAf4A2056607D7C",
       "maxMintPerTx": 1,
       "maxMintPerAddress": 1,
       "totalSupply": 1000,

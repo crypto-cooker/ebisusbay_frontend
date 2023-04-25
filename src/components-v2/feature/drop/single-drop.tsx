@@ -78,6 +78,7 @@ const SingleDrop = ({drop}: SingleDropProps) => {
   const [abi, setAbi] = useState<string | string[] | null>(null);
   // const [maxMintPerAddress, setMaxMintPerAddress] = useState(0);
   const [maxMintPerTx, setMaxMintPerTx] = useState(0);
+  const [maxMintPerAddress, setMaxMintPerAddress] = useState(0);
   const [maxSupply, setMaxSupply] = useState(0);
   const [memberCost, setMemberCost] = useState(0);
   const [regularCost, setRegularCost] = useState(0);
@@ -174,7 +175,7 @@ const SingleDrop = ({drop}: SingleDropProps) => {
   };
 
   const setDropInfo = (drop: any, supply: number) => {
-    // setMaxMintPerAddress(drop.maxMintPerAddress ?? 100);
+    setMaxMintPerAddress(drop.maxMintPerAddress ?? 100);
     setMaxMintPerTx(drop.maxMintPerTx);
     setMaxSupply(drop.totalSupply);
     setMemberCost(drop.memberCost);
@@ -186,7 +187,7 @@ const SingleDrop = ({drop}: SingleDropProps) => {
   };
 
   const setDropInfoFromContract = (infos: any, canMint: number) => {
-    // setMaxMintPerAddress(infos.maxMintPerAddress);
+    setMaxMintPerAddress(Number(infos.maxMintPerAddress));
     setMaxMintPerTx(infos.maxMintPerTx);
     setMaxSupply(infos.maxSupply);
     setMemberCost(Number(ethers.utils.formatEther(infos.memberCost)));
@@ -345,6 +346,8 @@ const SingleDrop = ({drop}: SingleDropProps) => {
                   memberCost={memberCost}
                   whitelistCost={whitelistCost}
                   specialWhitelist={specialWhitelist}
+                  maxMintPerTx={maxMintPerTx}
+                  maxMintPerAddress={maxMintPerAddress}
                 />
               )}
 

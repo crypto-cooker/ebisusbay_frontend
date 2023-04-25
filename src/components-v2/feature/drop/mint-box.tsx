@@ -34,9 +34,11 @@ interface MintBoxProps {
   memberCost: number;
   whitelistCost: number;
   specialWhitelist: any;
+  maxMintPerTx: number;
+  maxMintPerAddress: number;
 }
 
-export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescription, onMintSuccess, canMintQuantity, regularCost, memberCost, whitelistCost, specialWhitelist}: MintBoxProps) => {
+export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescription, onMintSuccess, canMintQuantity, regularCost, memberCost, whitelistCost, specialWhitelist, maxMintPerTx, maxMintPerAddress}: MintBoxProps) => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => {
     return state.user;
@@ -234,7 +236,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
       <div className="card-body d-flex flex-column">
         {isReady ? (
           <>
-            <div className="d-flex flex-row justify-content-center">
+            <Flex justify='center'>
               <HStack spacing={4}>
                 <Box textAlign="center">
                   <Heading as="h6" size="sm" className="mb-1">Mint Price</Heading>
@@ -300,7 +302,12 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                   </Box>
                 )}
               </HStack>
-            </div>
+            </Flex>
+            {!!maxMintPerAddress && maxMintPerAddress < 20 && (
+              <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
+                Limit: {maxMintPerAddress} per wallet
+              </Text>
+            )}
             {(status === statuses.UNSET || status === statuses.NOT_STARTED || drop.complete) && (
               <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
                 Supply: {ethers.utils.commify(maxSupply.toString())}
