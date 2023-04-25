@@ -38,14 +38,13 @@ import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
 import {commify} from "ethers/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import {CdnImage} from "@src/Components/components/CdnImage";
+import {CdnImage} from "@src/components-v2/shared/media/cdn-image";
 import {hostedImage} from "@src/helpers/image";
 import Blockies from "react-blockies";
 import {BlueCheckIcon} from "@src/components-v2/shared/icons/blue-check";
 import styled from "styled-components";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
 import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
-import {AnyMedia} from "@src/Components/components/AnyMedia";
 
 interface ResponsiveCollectionsTableProps {
   data: InfiniteData<AxiosResponse<IPaginatedList<any>>>;

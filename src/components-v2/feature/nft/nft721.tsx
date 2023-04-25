@@ -16,7 +16,7 @@ import {Badge, Spinner} from 'react-bootstrap';
 
 import ProfilePreview from '@src/Components/components/ProfilePreview';
 import LayeredIcon from '@src/Components/components/LayeredIcon';
-import {AnyMedia} from '@src/Components/components/AnyMedia';
+import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import ProfileImage from '@src/Components/components/ProfileImage'
 
 import {
@@ -33,7 +33,8 @@ import {
   isLadyWeirdApesCollection,
   isLazyHorseCollection,
   isLazyHorsePonyCollection,
-  isNftBlacklisted, isVoxelWeirdApesCollection,
+  isNftBlacklisted,
+  isVoxelWeirdApesCollection,
   isWeirdApesCollection,
   rankingsLinkForCollection,
   rankingsLogoForCollection,
@@ -49,7 +50,6 @@ import PriceActionBar from './price-action-bar';
 import {ERC721} from '@src/Contracts/Abis';
 import {getFilteredOffers} from '@src/core/subgraph';
 import MakeOfferDialog from '@src/Components/Offer/Dialogs/MakeOfferDialog';
-import NFTTabOffers from '@src/Components/Offer/NFTTabOffers';
 import {OFFER_TYPE} from '@src/Components/Offer/MadeOffers/MadeOffersRow';
 import {offerState} from '@src/core/api/enums';
 import {commify} from 'ethers/lib/utils';
@@ -82,6 +82,9 @@ import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import {useAppSelector} from "@src/Store/hooks";
 import {ContractInterface} from "@ethersproject/contracts";
 import Trait from "@src/components-v2/feature/nft/trait";
+import ImageService from "@src/core/services/image";
+import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
+import {OfferType} from "@src/core/services/api-service/types";
 
 const config = appConfig();
 const tabs = {
@@ -579,7 +582,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                 ) : (
                   <>
                     <AnyMedia
-                      image={specialImageTransform(address, nft.image)}
+                      image={ImageService.proxy.convert(specialImageTransform(address, nft.image))}
                       video={nft.video ?? nft.animation_url}
                       videoProps={{ height: 'auto', autoPlay: true }}
                       title={nft.name}
@@ -922,7 +925,13 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                         </div>
                       )}
 
-                      {currentTab === tabs.offers && <NFTTabOffers nftAddress={address} nftId={id} />}
+                      {currentTab === tabs.offers && (
+                        <OffersTab
+                          nftAddress={address}
+                          nftId={id}
+                          type={OfferType.DIRECT}
+                        />
+                      )}
 
                       {currentTab === tabs.info && (
                         <div className="tab-1 onStep fadeIn">
@@ -1011,12 +1020,10 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                             <Box p='16px' key={i}>
                               <Flex gap='15px'>
                                 <Box w='72px'>
-                                  <AnyMedia
-                                    image={specialImageTransform(nft.address, nft.image)}
-                                    video={nft.video ?? nft.animation_url}
-                                    videoProps={{ height: 'auto', autoPlay: true }}
-                                    title={'title'}
-                                    usePlaceholder={false}
+                                  <MultimediaImage
+                                    source={ImageService.proxy.fixedWidth(specialImageTransform(nft.address, nft.image), 100, 100)}
+                                    fallbackSource={ImageService.instance.provider.fixedWidth(ImageService.proxy.thumbnail(nft.image), 100, 100)}
+                                    title={nft.name}
                                     className="img-fluid img-rounded mb-sm-30"
                                   />
                                 </Box>

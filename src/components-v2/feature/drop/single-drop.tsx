@@ -12,12 +12,13 @@ import {dropState as statuses} from '@src/core/api/enums';
 import {EbisuDropAbi, ERC20} from '@src/Contracts/Abis';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
 import {appConfig} from "@src/Config";
-import {hostedImage, ImageKitService} from "@src/helpers/image";
+import {hostedImage} from "@src/helpers/image";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import {Box, Heading, Text, VStack} from "@chakra-ui/react";
 import {MintBox} from "@src/components-v2/feature/drop/mint-box";
 import {useAppSelector} from "@src/Store/hooks";
 import {Drop, SpecialWhitelist} from "@src/core/models/drop";
+import ImageService from "@src/core/services/image";
 
 const config = appConfig();
 
@@ -77,6 +78,7 @@ const SingleDrop = ({drop}: SingleDropProps) => {
   const [abi, setAbi] = useState<string | string[] | null>(null);
   // const [maxMintPerAddress, setMaxMintPerAddress] = useState(0);
   const [maxMintPerTx, setMaxMintPerTx] = useState(0);
+  const [maxMintPerAddress, setMaxMintPerAddress] = useState(0);
   const [maxSupply, setMaxSupply] = useState(0);
   const [memberCost, setMemberCost] = useState(0);
   const [regularCost, setRegularCost] = useState(0);
@@ -173,7 +175,7 @@ const SingleDrop = ({drop}: SingleDropProps) => {
   };
 
   const setDropInfo = (drop: any, supply: number) => {
-    // setMaxMintPerAddress(drop.maxMintPerAddress ?? 100);
+    setMaxMintPerAddress(drop.maxMintPerAddress ?? 100);
     setMaxMintPerTx(drop.maxMintPerTx);
     setMaxSupply(drop.totalSupply);
     setMemberCost(drop.memberCost);
@@ -185,7 +187,7 @@ const SingleDrop = ({drop}: SingleDropProps) => {
   };
 
   const setDropInfoFromContract = (infos: any, canMint: number) => {
-    // setMaxMintPerAddress(infos.maxMintPerAddress);
+    setMaxMintPerAddress(Number(infos.maxMintPerAddress));
     setMaxMintPerTx(infos.maxMintPerTx);
     setMaxSupply(infos.maxSupply);
     setMemberCost(Number(ethers.utils.formatEther(infos.memberCost)));
@@ -221,7 +223,7 @@ const SingleDrop = ({drop}: SingleDropProps) => {
       <HeroSection
         className={`jumbotron h-vh tint`}
         style={{
-          backgroundImage: `url(${ImageKitService.buildBannerUrl(drop.images.banner ?? hostedImage('/img/background/banner-ryoshi-light.webp'))})`
+          backgroundImage: `url(${ImageService.instance.provider.banner(drop.images.banner ?? hostedImage('/img/background/banner-ryoshi-light.webp'))})`
         }}
       >
         <div className="container">
@@ -344,6 +346,8 @@ const SingleDrop = ({drop}: SingleDropProps) => {
                   memberCost={memberCost}
                   whitelistCost={whitelistCost}
                   specialWhitelist={specialWhitelist}
+                  maxMintPerTx={maxMintPerTx}
+                  maxMintPerAddress={maxMintPerAddress}
                 />
               )}
 

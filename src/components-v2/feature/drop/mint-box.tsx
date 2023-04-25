@@ -34,9 +34,11 @@ interface MintBoxProps {
   memberCost: number;
   whitelistCost: number;
   specialWhitelist: any;
+  maxMintPerTx: number;
+  maxMintPerAddress: number;
 }
 
-export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescription, onMintSuccess, canMintQuantity, regularCost, memberCost, whitelistCost, specialWhitelist}: MintBoxProps) => {
+export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescription, onMintSuccess, canMintQuantity, regularCost, memberCost, whitelistCost, specialWhitelist, maxMintPerTx, maxMintPerAddress}: MintBoxProps) => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => {
     return state.user;
@@ -234,23 +236,29 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
       <div className="card-body d-flex flex-column">
         {isReady ? (
           <>
-            <div className="d-flex flex-row justify-content-center">
+            <Flex justify='center'>
               <HStack spacing={4}>
                 <Box textAlign="center">
                   <Heading as="h6" size="sm" className="mb-1">Mint Price</Heading>
-                  {!regularCost && !drop.erc20Cost && (
-                    <Heading as="h5" size="md">TBA</Heading>
-                  )}
-                  {!!regularCost && (
-                    <Heading as="h5" size="md">
-                      <Flex>
-                        <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
-                        <span className="ms-2">{ethers.utils.commify(round(regularCost))}</span>
-                      </Flex>
-                    </Heading>
-                  )}
-                  {drop.erc20Cost && drop.erc20Token && (
-                    <Heading as="h5" size="md">{`${ethers.utils.commify(round(drop.erc20Cost))} ${config.tokens[drop.erc20Token].symbol}`}</Heading>
+                  {drop.freeMint ? (
+                    <Heading as="h5" size="md">Free Mint</Heading>
+                  ) : (
+                    <>
+                      {!regularCost && !drop.erc20Cost && (
+                        <Heading as="h5" size="md">TBA</Heading>
+                      )}
+                      {!!regularCost && (
+                        <Heading as="h5" size="md">
+                          <Flex>
+                            <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                            <span className="ms-2">{ethers.utils.commify(round(regularCost))}</span>
+                          </Flex>
+                        </Heading>
+                      )}
+                      {drop.erc20Cost && drop.erc20Token && (
+                        <Heading as="h5" size="md">{`${ethers.utils.commify(round(drop.erc20Cost))} ${config.tokens[drop.erc20Token].symbol}`}</Heading>
+                      )}
+                    </>
                   )}
                 </Box>
                 {(!!memberCost || (drop.erc20MemberCost && drop.erc20Cost !== drop.erc20MemberCost)) && (
@@ -294,7 +302,12 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                   </Box>
                 )}
               </HStack>
-            </div>
+            </Flex>
+            {!!maxMintPerAddress && maxMintPerAddress < 20 && (
+              <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
+                Limit: {maxMintPerAddress} per wallet
+              </Text>
+            )}
             {(status === statuses.UNSET || status === statuses.NOT_STARTED || drop.complete) && (
               <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
                 Supply: {ethers.utils.commify(maxSupply.toString())}
@@ -326,7 +339,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                       <Input {...input} />
                       <Button {...inc}>+</Button>
                     </HStack>
-                    {!!drop.cost && (
+                    {(!!drop.cost || drop.freeMint) && (
                       <PrimaryButton
                         w='full'
                         onClick={() => mintNow(false)}

@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {useRouter} from 'next/router';
 import styles from './profile.module.scss';
-import {hostedImage, ImageKitService} from "@src/helpers/image";
+import {hostedImage} from "@src/helpers/image";
 import {caseInsensitiveCompare, isUserBlacklisted, shortAddress} from "@src/utils";
 import Inventory from "@src/components-v2/feature/account/profile/tabs/inventory";
 import Collections from "@src/Components/Account/Profile/Collections";
@@ -44,6 +44,7 @@ import {getTheme} from "@src/Theme/theme";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCog, faEllipsisV} from "@fortawesome/free-solid-svg-icons";
 import {ChevronDownIcon} from "@chakra-ui/icons";
+import ImageService from "@src/core/services/image";
 
 const MotionGrid = motion(Grid)
 
@@ -130,7 +131,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
   }
 
   const profilePicture = profile.profilePicture ?
-    ImageKitService.from(profile.profilePicture).setWidth(200).setHeight(200).buildUrl() :
+    ImageService.instance.provider.custom(profile.profilePicture, {width: 200, height: 200}) :
     hostedImage('/img/profile-avatar.webp');
 
   // Ensure correct tab highlighted when changing from AccountMenu while already in Profile page
@@ -176,7 +177,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
               <Image
                 h={{base: '100px', sm: '150px', md: '250px', lg: '300px', xl: '360px'}}
                 w='full'
-                src={ImageKitService.buildBannerUrl(profile.banner)}
+                src={ImageService.instance.provider.banner(profile.banner)}
                 objectFit='cover'
                 backgroundRepeat='no-repeat'
                 backgroundPosition='50% 50%'

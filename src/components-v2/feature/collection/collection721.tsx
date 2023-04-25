@@ -14,7 +14,7 @@ import {isBundle, isCnsCollection, isCronosVerseCollection, isCrosmocraftsCollec
 import SocialsBar from '@src/Components/Collection/SocialsBar';
 import {CollectionSortOption} from '@src/Components/Models/collection-sort-option.model';
 import CollectionCronosverse from '@src/Components/Collection/Custom/Cronosverse';
-import {hostedImage, ImageKitService} from "@src/helpers/image";
+import {hostedImage} from "@src/helpers/image";
 import {useRouter} from "next/router";
 import {CollectionFilters} from "@src/Components/Models/collection-filters.model";
 import {pushQueryString} from "@src/helpers/query";
@@ -31,6 +31,7 @@ import CollectionBundlesGroup from "@src/Components/components/CollectionBundles
 import {useAppSelector} from "@src/Store/hooks";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import useGetStakingPlatform from "@src/hooks/useGetStakingPlatform";
+import ImageService from "@src/core/services/image";
 
 const NegativeMargin = styled.div`
   margin-left: -1.75rem !important;
@@ -184,7 +185,7 @@ const Collection721 = ({ collection, query, activeDrop = null}: Collection721Pro
         id="profile_banner"
         className="jumbotron breadcumb no-bg"
         style={{
-          backgroundImage: `url(${ImageKitService.buildBannerUrl(collection.metadata.banner ?? '')})`,
+          backgroundImage: `url(${ImageService.instance.provider.banner(collection.metadata.banner ?? '')})`,
           backgroundPosition: '50% 50%',
         }}
       >

@@ -29,7 +29,7 @@
       ],
       "metadata": {
         "description": "Holding this NFT grants reduced service fees, discounts on drops and early access to features.",
-        "avatar": "/img/avatar.png",
+        "avatar": "/img/collections/ebisu/avatar.webp",
         "card": "/img/collections/ebisu/card.webp",
         "banner": "/img/collections/ebisu/banner.png",
         "website": "https://app.ebisusbay.com/",
@@ -68,7 +68,7 @@
       "listable": true,
       "metadata": {
         "description": "Happy Valentine's Day from ebisusbay.com staff! We \u2764 you!",
-        "avatar": "/img/avatar.png",
+        "avatar": "/img/collections/ebisu/avatar.webp",
         "card": "/img/collections/ebisu/card.webp",
         "banner": "/img/collections/ebisu/banner.png",
         "website": "https://app.ebisusbay.com/",
@@ -430,7 +430,7 @@
       "listable": true,
       "metadata": {
         "description": "Cronies are a NFT to commemorate the launch of the Cronos network. Randomly generated 100% on-chain SVG with the Cronos logo and the block number in which it was minted.\n\nWe are really excited to see the unique collections you will build. Such as, sequential block numbers, block numbers that have a special meaning to you like a birthday, and color schemes.",
-        "avatar": "/img/avatar.png",
+        "avatar": "/img/collections/ebisu/avatar.webp",
         "card": "/img/collections/cronies/card.png",
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
@@ -8009,7 +8009,10 @@
       "name": "Mascot Booster Bags",
       "slug": "mascot-booster-bags",
       "multiToken": false,
-      "address": "0x9433e3e85652f4972c9a2cb603d901f591737c9b",
+      "address": "0x750bd33b39cee357983f1cdafd2cee51dfb03a62",
+      "mergedAddresses": [
+        "0x7D5f8F9560103E1ad958A6Ca43d49F954055340a"
+      ],
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -9090,7 +9093,7 @@
         "card": "/img/collections/moon-crew-apes/card.webp",
         "banner": "/img/collections/moon-crew-apes/banner.webp",
         "website": "https://mooncrew.club/",
-        "twitter": "https://twitter.com/moonapecrew",
+        "twitter": "https://twitter.com/mooncrew_cro",
         "discord": "https://discord.gg/nRUBVDE7bM",
         "categories": [
           "utility"
@@ -10190,7 +10193,7 @@
       "multiToken": false,
       "address": "0x91B0C2e86576AC85A096599300BfDF6b2F1A9b22",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model.\nStake will start on Crodex at 13 Sep. 21:00 UTC (HUGE APR)",
         "avatar": "/img/collections/cronos-women/avatar.webp",
@@ -11435,7 +11438,7 @@
       "slug": "immortal-cyborgs",
       "multiToken": false,
       "address": "0xDA565665a546582774De08EC03AA0eac92592f11",
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "THE FOUNDING MEMBER NFT RELEASE FOR CYBORG CORP. NEWEST ECOSYSTEM ADDITION IS FINALLY HERE, CYBORGS! THE 10 000 IMMORTAL CYBORGS ARE BRINGING BOOSTING TO THE NON FUNGIBLE CYBORG PLATFORM LP FARMS BUT ALSO TO NFT STAKING POOLS!",
         "avatar": "/img/collections/immortal-cyborgs/avatar.webp",
@@ -11888,7 +11891,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "8K Resolution Artworks that are unique and unlike anything else on the blockchain, created with the power of A.I. and advanced editing techniques across multiple platforms to produce the highest quality artwork on Cronos. No roadmaps, no staking, no games, just art, community, and utility.",
+        "description": "8K Resolution Artworks that are unique and unlike anything else on the blockchain, created with the power of A.I. and advanced editing techniques across multiple platforms to produce the highest quality artwork on Cronos. Art, Community, and Utility.",
         "avatar": "/img/collections/0xluckless-v2-0/avatar.webp",
         "card": "/img/collections/0xluckless-v2-0/card.webp",
         "banner": "/img/collections/0xluckless-v2-0/banner.webp",
@@ -13684,7 +13687,7 @@
       "listable": false,
       "metadata": {
         "description": "Art collectible version of the original Ebisu's Bay VIP Founding Member.",
-        "avatar": "/img/avatar.png",
+        "avatar": "/img/collections/ebisu/avatar.webp",
         "card": "/img/collections/ebisu/card.webp",
         "banner": "/img/collections/ebisu/banner.png",
         "website": "https://app.ebisusbay.com/",
@@ -15129,7 +15132,7 @@
         "card": "/img/collections/moon-crew-pandas/card.webp",
         "banner": "/img/collections/moon-crew-pandas/banner.webp",
         "website": "https://mooncrew.club/",
-        "twitter": "https://twitter.com/moonapecrew",
+        "twitter": "https://twitter.com/mooncrew_cro",
         "discord": "https://discord.gg/nRUBVDE7bM",
         "categories": [
           "utility"
@@ -17538,7 +17541,7 @@
       "multiToken": false,
       "address": "0x89D3671ed4561C1775b3B2a5713B08224f610D4D",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "700 ZGBs are the result of burning 2100 CGBS. Zombies are more powerful then regular gorillas",
         "avatar": "/img/collections/zombie-gorilla-business/avatar.webp",
@@ -19788,11 +19791,11 @@
       "name": "Rebel AUT Club",
       "slug": "rebel-aut-club",
       "multiToken": false,
-      "address": "",
+      "address": "0x3a1dFa4aD3ac25CDb8032e78427e489566aA194F",
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "The Rebel AUT Club is a collection of 7777 Rebels generated on the Cronos Chain. \nWith over 300+ attributes and different rarities,  \nthe collection consists of 8 animal-themed digital collectible NFTs. \nThe collection’s primary objective is to generate awareness and raise funds to support children who are impacted by ASD, Autism Spectrum Disorder, with essential sensory equipment.",
+        "description": "The Rebel AUT Club is a collection of 7777 Rebels generated on the Cronos Chain. \nWith over 300+ attributes and different rarities,  \nthe collection consists of 8 animal-themed digital collectible NFTs. \nThe collection's primary objective is to generate awareness and raise funds to support children who are impacted by ASD, Autism Spectrum Disorder, with essential sensory equipment.",
         "avatar": "/img/collections/rebel-aut-club/avatar.webp",
         "card": "/img/collections/rebel-aut-club/card.webp",
         "banner": "/img/collections/rebel-aut-club/banner.webp",
@@ -19807,6 +19810,185 @@
         "verified": true,
         "doxx": false,
         "kyc": true
+      }
+    },
+    {
+      "name": "Cronos Foxes Evolution",
+      "slug": "cronos-foxes-evolution",
+      "multiToken": false,
+      "address": "0x3cdE8EA53AE063698334dDf7114B7051400bE78B",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "AI Foxes on cronos.",
+        "avatar": "/img/collections/cronos-foxes-evolution/avatar.webp",
+        "card": "/img/collections/cronos-foxes-evolution/card.webp",
+        "banner": "/img/collections/cronos-foxes-evolution/banner.webp",
+        "website": "https://www.cronosfoxfraternity.com/",
+        "twitter": "https://twitter.com/FoxFraternity",
+        "discord": "https://discord.gg/f2CvddETGa",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "OG Dark Carnival",
+      "slug": "og-dark-carnival",
+      "multiToken": false,
+      "address": "0xe48902A911a4a319Adee7E4769eC2D784952565C",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Welcome to the Dark Carnival, a unique NFT project that takes you on a twisted journey through a sinister circus world. The Dark Carnival NFTs feature eerie, yet captivating designs of circus performers, attractions, and creatures that inhabit this macabre realm. Each NFT is generated with AI, with attention to detail that immerses you in the haunting atmosphere of the carnival. As you explore the Dark Carnival NFT collection, you'll encounter a wide range of characters, from the bearded lady and the clown to the strongman and the ringmaster. Each character has its own unique backstory and personality, adding depth and intrigue to the world of the Dark Carnival. But be warned, the Dark Carnival is not for the faint of heart. This is a world where nothing is quite what it seems, and danger lurks around every corner. But for those brave enough to enter, the Dark Carnival offers a thrilling and unforgettable experience. Collect your own piece of the Dark Carnival today and join us on a journey into the unknown.",
+        "avatar": "/img/collections/og-dark-carnival/avatar.webp",
+        "banner": "/img/collections/og-dark-carnival/banner.webp",
+        "card": "/img/collections/og-dark-carnival/card.webp",
+        "website": "https://cronosogcollections.com/",
+        "twitter": "https://www.twitter.com/og_cronos",
+        "discord": "https://discord.gg/cGAyAP47QF",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "HellMorphs",
+      "slug": "hellmorphs",
+      "multiToken": false,
+      "address": "0x14B6ed0B3D7B13bb75e98565eBcC51DbB86bBd4F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "HellMorphs spawn in the underworld of Tartarus, and have various forms they can take.",
+        "avatar": "/img/collections/hellmorphs/avatar.webp",
+        "banner": "/img/collections/hellmorphs/banner.webp",
+        "card": "/img/collections/hellmorphs/card.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/MNvcEe7g4E",
+        "medium": "https://medium.com/@CroMorphs",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "3D CROW",
+      "slug": "3d-crow",
+      "multiToken": false,
+      "address": "0x3d7777ff1908B54b57038A2556d6904f71468e2D",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Immerse yourself in the world of 7777 distinct 3D CROWs, each featuring a one-of-a-kind 3D model, masterfully designed by RaulPM. These 3D CROWs boast attributes that correspond to their original CRO CROW counterparts, so CRO CROW #1 should have the same attributes as 3D CROW #1 and so on.",
+        "avatar": "/img/collections/3d-crow/avatar.webp",
+        "banner": "/img/collections/3d-crow/banner.webp",
+        "card": "/img/collections/3d-crow/card.webp",
+        "website": "https://crocrow.com",
+        "twitter": "https://twitter.com/cronoscrocrow",
+        "discord": "https://discord.gg/8a8Xm4wwR9",
+        "telegram": "https://t.me/crocrownft",
+        "medium": "https://medium.com/@cronoscrocrow",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Diamond Coins of the Grind Guild",
+      "slug": "diamond-coins",
+      "multiToken": false,
+      "address": "0xA86f74B47F1193d9d6DBe4029cAf4A2056607D7C",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "There's a coin lying on the ground! Pick it up?",
+        "avatar": "/img/collections/diamond-coins/avatar.webp",
+        "banner": "/img/collections/diamond-coins/banner.webp",
+        "card": "/img/collections/diamond-coins/card.webp",
+        "website":"https://cronosgrind.io",
+        "twitter": "https://twitter.com/cronosgrind",
+        "discord": "https://discord.gg/An3rafeAWP",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Uncle Austin's Syrup Serum",
+      "slug": "uncle-austins-syrup-farm",
+      "multiToken": false,
+      "address": "0xfebdfe84DE667cbC0f4319F9558b6aC0cFDe3C2F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "In the realm of the ultra-wealthy, Uncle Austin's infamous Syrup Serum was the stuff of legends, and when the privileged rich kids imbibed it, they were transformed into enchanting Candy Kids, with sugary abilities that left the world spellbound.",
+        "avatar": "/img/collections/uncle-austins-syrup-farm/avatar.webp",
+        "banner": "/img/collections/uncle-austins-syrup-farm/banner.webp",
+        "card": "/img/collections/uncle-austins-syrup-farm/card.webp",
+        "website":"https://www.trknft.com/serum",
+        "twitter": "https://twitter.com/TRK_CRO",
+        "discord": "https://discord.gg/RFHbbRHhPD",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Mega Kong",
+      "slug": "mega-kong",
+      "multiToken": false,
+      "address": "0x90028aaf9653a81db0940fd3c4a6859251087b44",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "ToC's premier Titan PFP. Join the community with this token and take your place amongst Olympians.",
+        "avatar": "/img/collections/mega-kong/avatar.webp",
+        "card": "/img/collections/mega-kong/card.webp",
+        "banner": "/img/collections/mega-kong/banner.webp",
+        "twitter": "https://twitter.com/kingkongcronos2",
+        "discord": "https://discord.gg/8ZQUXur8hH",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
@@ -19839,7 +20021,7 @@
       "complete": true,
       "images": {
         "drop": "/img/drops/cronies/cronies-drop.webp",
-        "avatar": "/img/avatar.png",
+        "avatar": "/img/collections/ebisu/avatar.webp",
         "preview": "/img/collections/cronies/card.png"
       },
       "verification": {
@@ -19877,7 +20059,7 @@
       "complete": true,
       "images": {
         "drop": "/img/drops/founding_member/founding_member_sm.png",
-        "avatar": "/img/avatar.png",
+        "avatar": "/img/collections/ebisu/avatar.webp",
         "preview": "/img/collections/ebisu/card.webp"
       },
       "verification": {
@@ -25246,7 +25428,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "images": {
         "drop": "/img/drops/buds/drop.webp",
@@ -26279,11 +26461,11 @@
     {
       "id": 167,
       "slug": "0xluckless-v2-2",
-      "title": "OxLuckless v2.2",
+      "title": "0xLuckless v2.2",
       "subtitle": "Welcome to 0xLuckless v2.2, a 6K resolution art project, unique and unlike anything else on the blockchain Created with the power of A.I. and advanced editing techniques across multiple platforms to produce the highest quality artwork on Cronos.",
       "description": "0xLuckless art holders earn exclusive airdrops, Passive CRO earnings via NFT staking with CroDex, Whitelist access to all future drops and secret releases, discounts on 0xLuckless merch and canvas art on EvergreenKings.com and unlock private channel access on the 0xLuckless Discord server which comes with tons of extra benefits including giveaways, custom art, sneak peeks, and helping shape the future of the project.",
       "author": {
-        "name": "OxLuckless",
+        "name": "0xLuckless",
         "website":"https://linktr.ee/0xLuckless",
         "twitter": "https://twitter.com/0xLuckless",
         "discord": "https://discord.gg/qPFZhAdGRq"
@@ -26319,7 +26501,7 @@
       "id": 168,
       "slug": "rebel-aut-club",
       "title": "Rebel AUT Club",
-      "subtitle": "The Rebel AUT Club is a collection of 7777 Rebels generated on the Cronos Chain. \nWith over 300+ attributes and different rarities,  \nthe collection consists of 8 animal-themed digital collectible NFTs. \nThe collection’s primary objective is to generate awareness and raise funds to support children who are impacted by ASD, Autism Spectrum Disorder, with essential sensory equipment.",
+      "subtitle": "The Rebel AUT Club is a collection of 7777 Rebels generated on the Cronos Chain. \nWith over 300+ attributes and different rarities,  \nthe collection consists of 8 animal-themed digital collectible NFTs. \nThe collection's primary objective is to generate awareness and raise funds to support children who are impacted by ASD, Autism Spectrum Disorder, with essential sensory equipment.",
       "description": "The Rebel AUT Club is a new digital collection that is being launched to provide support to children with autism and their families. The collection will consist of 8 animal-themed NFTs with different attributes and rarities. \n\nWhen purchasing one of these unique NFTs, collectors will not only have the opportunity to own a one-of-a-kind piece of digital art, they will also be contributing to a good cause. Making a real impact in the lives of children with autism. \n\nAs you may know, children with autism often have difficulty with sensory processing. This can impact their ability to engage in daily activities and interact with their environment.\n\nOur project is centred around the donation of unique sensory equipment that is essential to the development and growth of vital social, fine, and gross motor skills. Along with the goal of providing support to these children in their daily lives.\n\nTogether we can make a difference! We would love for you to be a part of this amazing project and assist us in making a difference for children with ASD in all our communities. \n\nThank you for your support!",
       "author": {
         "name": "Happy AUT Club",
@@ -26327,7 +26509,7 @@
         "twitter": "https://twitter.com/HappyAUTclub",
         "discord": "https://discord.gg/4gz4wJHjNV"
       },
-      "address": "",
+      "address": "0x3a1dFa4aD3ac25CDb8032e78427e489566aA194F",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 100,
       "totalSupply": 7777,
@@ -26346,6 +26528,53 @@
         "banner": "/img/collections/rebel-aut-club/banner.webp",
         "avatar": "/img/collections/rebel-aut-club/avatar.webp",
         "preview": "/img/collections/rebel-aut-club/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "escrow": true,
+        "verified": true
+      },
+      "escrow": {
+        "milestones": [
+          "The first installment will be released after proof of donation to a relevant autism charity has been made in May",
+          "The second installment released after proof of donation to a relevant autism charity has been made in June and a portion of funds have been staked on the Crypto.com DeFi app",
+          "The third installment released when all Rebel AUT Club NFT's have been minted and either 7777 sold out, or the project decides to stop the mint"
+        ]
+      }
+    },{
+      "id": 169,
+      "slug": "diamond-coins",
+      "title": "Diamond Coins of the Grind Guild",
+      "subtitle": "There's a coin lying on the ground! Pick it up?",
+      "description": "𝘊𝘩𝘢𝘱𝘵𝘦𝘳 1\n𝘠𝘰𝘶𝘳 𝘦𝘹𝘱𝘦𝘥𝘪𝘵𝘪𝘰𝘯 𝘩𝘢𝘴 𝘭𝘦𝘥 𝘺𝘰𝘶 𝘵𝘰 𝘢 𝘥𝘢𝘳𝘬 𝘤𝘢𝘷𝘦 𝘮𝘢𝘥𝘦 𝘰𝘶𝘵 𝘰𝘧 𝘥𝘪𝘢𝘮𝘰𝘯𝘥. 𝘚𝘵𝘢𝘯𝘥𝘪𝘯𝘨 𝘢𝘵 𝘵𝘩𝘦 𝘰𝘱𝘦𝘯𝘪𝘯𝘨 𝘰𝘧 𝘴𝘰𝘮𝘦𝘵𝘩𝘪𝘯𝘨 𝘦𝘱𝘪𝘤, 𝘵𝘩𝘦 𝘦𝘯𝘤𝘩𝘢𝘯𝘵𝘪𝘯𝘨 𝘩𝘶𝘮 𝘥𝘳𝘢𝘸𝘴 𝘺𝘰𝘶 𝘪𝘯...\n𝐶ℎ𝑎𝑝𝑡𝑒𝑟 2\n𝐻𝑦𝑝𝑛𝑜𝑡𝑖𝑧𝑒𝑑 𝑏𝑦 𝑡ℎ𝑒 𝑣𝑖𝑏𝑟𝑎𝑡𝑖𝑜𝑛𝑎𝑙 𝑓𝑟𝑒𝑞𝑢𝑒𝑛𝑐𝑦 𝑜𝑓 𝑡ℎ𝑒 ℎ𝑢𝑚 𝑎𝑛𝑑 𝑜𝑙𝑑 𝑓𝑜𝑙𝑘𝑙𝑜𝑟𝑒 𝑜𝑓 𝑡𝑟𝑒𝑎𝑠𝑢𝑟𝑒𝑠 𝑙𝑜𝑛𝑔 𝑓𝑜𝑟𝑔𝑜𝑡𝑡𝑒𝑛....\n𝐴 𝑏𝑟𝑖𝑙𝑙𝑖𝑎𝑛𝑐𝑒 𝑎𝑝𝑝𝑒𝑎𝑟𝑠.\n𝐶ℎ𝑎𝑝𝑡𝑒𝑟 3\n𝘛𝘩𝘦 𝘩𝘶𝘮𝘴 𝘣𝘦𝘤𝘰𝘮𝘦 𝘢 𝘤𝘩𝘢𝘯𝘵:\n𝘏𝘦𝘭𝘭𝘦𝘧 𝘎'𝘙𝘩𝘺𝘯𝘦𝘥, 𝘏𝘦𝘭𝘭𝘦𝘧 𝘎'𝘙𝘩𝘺𝘯𝘦𝘥...\n𝑌𝑜𝑢 𝑡ℎ𝑖𝑛𝑘 𝘵𝘰 𝘺𝘰𝘶𝘳𝘴𝘦𝘭𝘧,\n𝑇ℎ𝑎𝑡'𝑠 𝑛𝑜𝑡 𝑚𝑦 𝑛𝑎𝑚𝑒, 𝘢𝘯𝘥 𝘳𝑒𝑎𝑐ℎ 𝑜𝑢𝑡 𝑡𝑜 𝑔𝑟𝑎𝑏 𝑡ℎ𝑒 𝑐𝑟𝑦𝑠𝑡𝑎𝑙...\n𝐶ℎ𝑎𝑝𝑡𝑒𝑟 4\n𝐴 𝑏𝑒𝑎𝑚 𝑜𝑓 𝑒𝑛𝑒𝑟𝑔𝑦 𝑒𝑟𝑢𝑝𝑡𝑠, 𝑐𝑟𝑒𝑎𝑡𝑖𝑛𝑔 𝑎 𝑏𝑙𝑖𝑛𝑑𝑖𝑛𝑔 𝑓𝑙𝑎𝑠ℎ 𝑎𝑡 𝑡ℎ𝑒 𝑏𝑎𝑐𝑘 𝑜𝑓 𝑡ℎ𝑒 𝑐𝑎𝑣𝑒 𝑎𝑠 𝑎 𝑛𝑒𝑤𝑙𝑦-𝑓𝑜𝑟𝑚𝑒𝑑 𝑟𝑖𝑓𝑡 𝑠𝑡𝑎𝑟𝑡𝑠 𝑝𝑢𝑙𝑙𝑖𝑛𝑔 𝑦𝑜𝑢 𝑖𝑛𝑤𝑎𝑟𝑑.\n[𝐻𝑜𝑙𝑑 𝑜𝑛 𝑡𝑖𝑔ℎ𝑡.]\n𝐶ℎ𝑎𝑝𝑡𝑒𝑟 5\n𝑈𝑝𝑜𝑛 𝑐𝑜𝑚𝑝𝑙𝑒𝑡𝑖𝑜𝑛 𝑜𝑓 𝑖𝑡𝑠 𝑠𝑢𝑚𝑚𝑜𝑛𝑖𝑛𝑔, 𝑎 𝑝𝑜𝑟𝑡𝑎𝑙 𝑠𝑡𝑜𝑜𝑑 𝑠𝑢𝑠𝑝𝑒𝑛𝑑𝑒𝑑 𝑖𝑛 𝑠𝑜𝑙𝑖𝑡𝑢𝑑𝑒 𝑖𝑛𝑠𝑖𝑑𝑒 𝑡ℎ𝑒 𝑑𝑖𝑎𝑚𝑜𝑛𝑑 𝑐𝑎𝑣𝑒.\n📖𝐶ℎ𝑎𝑝𝑡𝑒𝑟 6\n𝑊𝑖𝑡ℎ 𝑒𝑎𝑐ℎ 𝑠𝑡𝑒𝑝 𝑓𝑜𝑟𝑤𝑎𝑟𝑑, 𝑡ℎ𝑒 𝑝𝑎𝑡ℎ 𝑏𝑒ℎ𝑖𝑛𝑑 𝑦𝑜𝑢 𝑑𝑖𝑠𝑠𝑖𝑝𝑎𝑡𝑒𝑠, 𝑙𝑒𝑎𝑣𝑖𝑛𝑔 𝑦𝑜𝑢 𝑛𝑜 𝑐ℎ𝑜𝑖𝑐𝑒 𝑏𝑢𝑡 𝑡𝑜 𝑐𝑜𝑛𝑡𝑖𝑛𝑢𝑒.\n𝐴𝑛 𝑎𝑛𝑐𝑖𝑒𝑛𝑡 𝑡𝑜𝑛𝑔𝑢𝑒 𝑠𝑡𝑖𝑙𝑙 𝑒𝑐ℎ𝑜𝑒𝑠 \"𝐻𝑒𝑙𝑙𝑒𝑓 𝐺'𝑅ℎ𝑦𝑛𝑒𝑑\"",
+      "author": {
+        "name": "CDN",
+        "website":"https://cronosgrind.io",
+        "twitter": "https://twitter.com/cronosgrind",
+        "discord": "https://discord.gg/An3rafeAWP"
+      },
+      "address": "0xA86f74B47F1193d9d6DBe4029cAf4A2056607D7C",
+      "maxMintPerTx": 1,
+      "maxMintPerAddress": 1,
+      "totalSupply": 1000,
+      "cost": "0",
+      "memberCost": "0",
+      "whitelistCost": "0",
+      "freeMint": true,
+      "foundersOnly": false,
+      "start": 1682452800000,
+      "priceDescription": "",
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/diamond-coins/drop.webp",
+        "banner": "/img/collections/diamond-coins/banner.webp",
+        "avatar": "/img/collections/diamond-coins/avatar.webp",
+        "preview": "/img/collections/diamond-coins/card.webp"
       },
       "verification": {
         "doxx": false,

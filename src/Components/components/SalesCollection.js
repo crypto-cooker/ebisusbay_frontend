@@ -11,7 +11,6 @@ import TopFilterBar from './TopFilterBar';
 import {marketPlaceCollectionFilterOptions} from './constants/filter-options';
 import {sortOptions} from './constants/sort-options';
 import {MarketFilters} from "../Models/market-filters.model";
-import {ImageKitService} from "@src/helpers/image";
 
 const SalesCollection = ({
   showLoadMore = true,
@@ -189,7 +188,7 @@ const SalesCollection = ({
                       {isBundle(listing.nftAddress) ? (
                         <img
                           className="lazy rounded"
-                          src={ImageKitService.buildAvatarUrl('/img/logos/bundle.webp')}
+                          src={ImageService.instance.provider.avatar('/img/logos/bundle.webp')}
                           alt={listing.nft.name}
                           style={{ maxHeight: '75px' }}
                         />

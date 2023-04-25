@@ -7,7 +7,7 @@ import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
 import * as Sentry from '@sentry/react';
-import {AnyMedia} from "@src/Components/components/AnyMedia";
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@src/hacks";
 import {ERC1155, ERC721} from "@src/Contracts/Abis";
 import {getCnsAddress, isCnsName} from "@src/helpers/cns";

@@ -1,60 +1,65 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useRouter } from 'next/router';
+import React, {memo, useCallback, useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {useRouter} from 'next/router';
 import {ethers} from 'ethers';
 import {
+  faBullhorn,
+  faCopy,
   faExternalLinkAlt,
   faHeart as faHeartSolid,
-  faSync,
   faShareAlt,
-  faBullhorn
+  faSync
 } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Spinner } from 'react-bootstrap';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {Spinner} from 'react-bootstrap';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
 import ProfilePreview from '@src/Components/components/ProfilePreview';
 import {
   appUrl,
   caseInsensitiveCompare,
-  findCollectionByAddress,
   humanize,
-  isCrosmocraftsPartsDrop, isEbVipCollection, isEmptyObj,
+  isCrosmocraftsPartsDrop,
+  isEbVipCollection,
+  isEmptyObj,
   mapAttributeString,
-  millisecondTimestamp, rankingsLinkForCollection, rankingsLogoForCollection, rankingsTitleForCollection,
+  millisecondTimestamp,
+  rankingsLinkForCollection,
+  rankingsLogoForCollection,
+  rankingsTitleForCollection,
   relativePrecision,
   shortAddress,
   timeSince,
 } from '@src/utils';
-import { getNftDetails, refreshMetadata, tickFavorite } from '@src/GlobalState/nftSlice';
-import { specialImageTransform } from '@src/hacks';
-import { chainConnect, connectAccount, retrieveProfile } from '@src/GlobalState/User';
+import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
+import {specialImageTransform} from '@src/hacks';
+import {chainConnect, connectAccount, retrieveProfile} from '@src/GlobalState/User';
 
 import ListingItem from '@src/components-v2/feature/nft/tabs/listings/item';
-import { listingState, offerState } from '@src/core/api/enums';
-import { getFilteredOffers } from '@src/core/subgraph';
+import {listingState, offerState} from '@src/core/api/enums';
+import {getFilteredOffers} from '@src/core/subgraph';
 import PriceActionBar from '@src/components-v2/feature/nft/price-action-bar';
 import NFTTabListings from '@src/components-v2/feature/nft/tabs/listings';
 import MakeOfferDialog from '@src/Components/Offer/Dialogs/MakeOfferDialog';
-import { OFFER_TYPE } from '@src/Components/Offer/MadeOffers/MadeOffersRow';
-import NFTTabOffers from '@src/Components/Offer/NFTTabOffers';
-import { AnyMedia } from '@src/Components/components/AnyMedia';
-import { hostedImage } from '@src/helpers/image';
-import { appConfig } from "@src/Config";
-import { collectionRoyaltyPercent } from "@src/core/chain";
-import Button, { LegacyOutlinedButton } from "@src/Components/components/common/Button";
+import {OFFER_TYPE} from '@src/Components/Offer/MadeOffers/MadeOffersRow';
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
+import {hostedImage} from '@src/helpers/image';
+import {appConfig} from "@src/Config";
+import {collectionRoyaltyPercent} from "@src/core/chain";
+import Button, {LegacyOutlinedButton} from "@src/Components/components/common/Button";
 import {Box, ButtonGroup, Flex, Heading, Link, MenuButton as MenuButtonCK, Text, useClipboard} from "@chakra-ui/react";
-import { toast } from "react-toastify";
-import { faHeart as faHeartOutline } from "@fortawesome/free-regular-svg-icons";
-import { Menu } from '@src/Components/components/chakra-components';
-import { faCopy } from '@fortawesome/free-solid-svg-icons';
-import { faFacebook, faSquareTwitter, faTelegram } from '@fortawesome/free-brands-svg-icons';
-import { getStats } from '@src/GlobalState/collectionSlice';
+import {toast} from "react-toastify";
+import {faHeart as faHeartOutline} from "@fortawesome/free-regular-svg-icons";
+import {Menu} from '@src/Components/components/chakra-components';
+import {faFacebook, faSquareTwitter, faTelegram} from '@fortawesome/free-brands-svg-icons';
+import {getStats} from '@src/GlobalState/collectionSlice';
 import NextLink from 'next/link';
 import useToggleFavorite from "@src/components-v2/feature/nft/hooks/useToggleFavorite";
 import {Button as ChakraButton} from "@chakra-ui/button";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import {useAppSelector} from "@src/Store/hooks";
+import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
+import {OfferType} from "@src/core/services/api-service/types";
 
 const config = appConfig();
 const tabs = {
@@ -644,7 +649,13 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
                         </div>
                       )}
 
-                      {currentTab === tabs.offers && <NFTTabOffers nftAddress={address} nftId={id} />}
+                      {currentTab === tabs.offers && (
+                        <OffersTab
+                          nftAddress={address}
+                          nftId={id}
+                          type={OfferType.COLLECTION}
+                        />
+                      )}
                     </div>
                   </div>
                 </div>

@@ -1,6 +1,5 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { Contract, ethers } from 'ethers';
@@ -32,11 +31,12 @@ import {
   isNftBlacklisted, rankingsLogoForCollection, rankingsTitleForCollection, rankingsLinkForCollection,
 } from '@src/utils';
 import {specialImageTransform} from '@src/hacks';
-import NFTTabOffers from '../../src/Components/Offer/NFTTabOffers';
 import {appConfig} from "@src/Config";
 import {hostedImage} from "@src/helpers/image";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {getListing} from "@src/core/api";
+import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
+import {OfferType} from "@src/core/services/api-service/types";
 
 const config = appConfig();
 const tabs = {
@@ -525,7 +525,13 @@ const Listing = () => {
                           )}
                         </div>
                       )}
-                      {currentTab === 3 && <NFTTabOffers nftAddress={listing.nftAddress} nftId={listing.nftId} />}
+                      {currentTab === 3 && (
+                        <OffersTab
+                          nftAddress={listing.nftAddress}
+                          nftId={listing.nftId}
+                          type={OfferType.DIRECT}
+                        />
+                      )}
                       {currentTab === 9 && babyWeirdApeBreed && (
                         <div className="tab-2 onStep fadeIn">
                           <div className="d-block mb-3">
