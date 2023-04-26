@@ -11,8 +11,8 @@ export default function Document() {
       <Head>
         <meta charSet="utf-8" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4" />
-        <link rel="icon" type="image/png" href={`${cdn}favicon.png`} sizes="any" />
-        <link rel="shortcut icon" type="image/png" href={`${cdn}favicon.png`} sizes="any" />
+        <link rel="icon" type="image/png" href={`/favicon.png`} sizes="any" />
+        <link rel="shortcut icon" type="image/png" href={`/favicon.png`} sizes="any" />
         <link rel="manifest" href="/site.webmanifest?v=3" />
         <link rel="mask-icon" href="/safari-pinned-tab.svg?v=3" color="#5bbad5" />
         <link
@@ -41,7 +41,6 @@ export default function Document() {
         </Script>
         <Script
           src="https://static.alchemyapi.io/scripts/analytics/badge-analytics.js"
-          alt="Alchemy Supercharged"
           strategy="beforeInteractive"
         />
       </Head>
