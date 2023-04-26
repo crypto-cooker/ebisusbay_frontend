@@ -108,6 +108,8 @@ class CdnProxy implements CdnProvider {
    * @param url
    */
   restrictedCdn(url: string): CdnProvider {
+    if (!url) return this.bunny;
+
     let gatewayTools = new IPFSGatewayTools();
     const isIpfs = gatewayTools.containsCID(url).containsCid;
 
@@ -117,6 +119,8 @@ class CdnProxy implements CdnProvider {
   }
 
   cdnUrl(url: string) {
+    if (!url) return '';
+
     if (this.restrictedCdn(url) === this.imagekit) {
       return url;
     }
