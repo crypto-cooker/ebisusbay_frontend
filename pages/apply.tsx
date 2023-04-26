@@ -9,6 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {useRouter} from "next/router";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Heading} from "@chakra-ui/react";
+import {GetServerSidePropsContext} from "next";
+import {useAppSelector} from "@src/Store/hooks";
 const NativeForms = dynamic(() => import('native-forms-react'), { ssr: false });
 
 const fadeInUp = keyframes`
@@ -77,19 +79,19 @@ const choice = {
   launchpad: 'launchpad'
 };
 
-const Application = ({type}) => {
+const Application = ({type}: { type: string }) => {
   const router = useRouter();
 
-  const userTheme = useSelector((state) => {
+  const userTheme = useAppSelector((state) => {
     return state.user.theme;
   });
 
   const [openTab, setOpenTab] = useState(type);
-  const handleBtnClick = (index) => (element) => {
-    if (choice[index]) {
+  const handleBtnClick = (index: string) => (element: any) => {
+    if (choice[index as keyof typeof choice]) {
       router.push({
         pathname: '/apply',
-        query: { type: choice[index] }
+        query: { type: choice[index as keyof typeof choice] }
       },
         undefined, { shallow: true }
       );
@@ -97,10 +99,10 @@ const Application = ({type}) => {
   };
 
   useEffect(() => {
-    if (router.query.type && choice[router.query.type]) {
-      setOpenTab(router.query.type);
+    if (router.query.type && choice[router.query.type as keyof typeof choice]) {
+      setOpenTab(router.query.type as string);
       const element = document.getElementById('form');
-      element.scrollIntoView();
+      element?.scrollIntoView();
     }
   }, [router.query])
 
@@ -179,16 +181,16 @@ const Application = ({type}) => {
               {openTab === choice.listing && (
                 <>
                   <Heading as="h3" size="md" className="text-center">Listing Request</Heading>
-                  <StyledForm isDark={userTheme === 'dark'}>
-                    <NativeForms form="https://form.nativeforms.com/iNHbm1jZmoWRPBXaK1Db" />
+                  <StyledForm>
+                    <NativeForms {...{form: 'https://form.nativeforms.com/iNHbm1jZmoWRPBXaK1Db'} as any} />
                   </StyledForm>
                 </>
               )}
               {openTab === choice.launchpad && (
                 <>
                   <Heading as="h3" size="md" className="text-center">Launchpad Request</Heading>
-                  <StyledForm isDark={userTheme === 'dark'}>
-                    <NativeForms form="https://form.nativeforms.com/AM0YjZ50jZmoWRPBXaK1Db" />
+                  <StyledForm>
+                    <NativeForms {...{form: 'https://form.nativeforms.com/AM0YjZ50jZmoWRPBXaK1Db'} as any} />
                   </StyledForm>
                 </>
               )}
@@ -201,7 +203,7 @@ const Application = ({type}) => {
 };
 export default Application;
 
-export const getServerSideProps = async ({ query }) => {
+export const getServerSideProps = async ({ query }: GetServerSidePropsContext) => {
   return {
     props: {
       type: query?.type ?? null,

@@ -159,11 +159,11 @@ class ImageBuilder {
     if(!this.url || this.url.startsWith('data')) return this.url;
 
     const cdn = appConfig('urls.cdn');
-    const fixedUrl = this.url.includes('https://cdn.lotusgalaxy.io/') ? this.url.replace('https://cdn.lotusgalaxy.io/', cdn) : this.url;
+    const fixedUrl = this.url.includes(cdn.primary) ? this.url.replace(cdn.primary, cdn.legacy) : this.url;
 
     if (isLocalEnv() && fixedUrl?.startsWith('/')) return fixedUrl;
 
-    const baseUrl = !fixedUrl.includes(cdn) ? cdn : undefined;
+    const baseUrl = !fixedUrl.includes(cdn.legacy) ? cdn.legacy : undefined;
     const url = new URL(fixedUrl, baseUrl);
 
     for (const appendage of this.appendages) {

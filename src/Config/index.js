@@ -21,10 +21,14 @@ export const configData = {
     urls: {
       api: 'https://api.ebisusbay.com/',
       app: 'https://app.ebisusbay.com/',
-      cdn: 'https://cdn.ebisusbay.com/',
       subgraph: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.com/api/',
       explorer: 'https://cronoscan.com/',
+      cdn: {
+        primary: 'https://cdn.lotusgalaxy.io/',
+        assets: 'https://ebisusbay-prod.b-cdn.net/',
+        legacy: 'https://cdn.ebisusbay.com/',
+      }
     },
     rpc: {
       read: 'https://rpc.ebisusbay.com/',
@@ -88,10 +92,14 @@ export const configData = {
     urls: {
       api: 'https://api.ebisusbay.biz/',
       app: 'https://app.ebisusbay.biz/',
-      cdn: 'https://cdn.ebisusbay.biz/test/',
       subgraph: 'https://cronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.biz/api/',
       explorer: 'https://cronoscan.com/',
+      cdn: {
+        primary: 'https://cdn.lotusgalaxy.io/',
+        assets: 'https://ebisusbay-dev.b-cdn.net/',
+        legacy: 'https://cdn.ebisusbay.biz/test/',
+      }
     },
     rpc: {
       read: 'https://rpc.ebisusbay.com/',
@@ -155,10 +163,14 @@ export const configData = {
     urls: {
       api: 'https://testapi.ebisusbay.biz/',
       app: 'https://testapp.ebisusbay.biz/',
-      cdn: 'https://cdn.ebisusbay.biz/test/',
       subgraph: 'https://testcronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
       cms: 'https://testcms.ebisusbay.biz/api/',
       explorer: 'https://testnet.cronoscan.com/',
+      cdn: {
+        current: 'https://cdn.lotusgalaxy.io/',
+        assets: 'https://ebisusbay-test.b-cdn.net/',
+        legacy: 'https://cdn.ebisusbay.biz/test/',
+      }
     },
     rpc: {
       read: 'https://rpc.ebisusbay.biz/',

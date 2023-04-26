@@ -37,6 +37,7 @@ import PageHead from "@src/components-v2/shared/layout/page-head";
 import {getListing} from "@src/core/api";
 import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
 import {OfferType} from "@src/core/services/api-service/types";
+import ImageService from "@src/core/services/image";
 
 const config = appConfig();
 const tabs = {
@@ -331,7 +332,7 @@ const Listing = () => {
                     <ProfilePreview
                       type="Collection"
                       title={collection.name}
-                      avatar={hostedImage(collection.metadata.avatar, true)}
+                      avatar={ImageService.staticAsset.avatar(collection.metadata.avatar)}
                       address={listing.nftAddress}
                       verified={collection.verification.verified}
                       to={`/collection/${collection.slug}`}

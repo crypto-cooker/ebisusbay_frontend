@@ -227,7 +227,7 @@ export async function sortAndFetchCollectionDetails(
 
 export async function getCollectionTraits(contractAddress) {
   try {
-    const internalUri = new URL(`/files/${contractAddress.toLowerCase()}/rarity.json`, `${config.urls.cdn}`);
+    const internalUri = new URL(`/files/${contractAddress.toLowerCase()}/rarity.json`, `${config.urls.cdn.legacy}`);
 
     return await (await fetch(internalUri)).json();
   } catch (error) {
@@ -239,7 +239,7 @@ export async function getCollectionTraits(contractAddress) {
 
 export async function getCollectionPowertraits(contractAddress) {
   try {
-    const internalUri = new URL(`/files/${contractAddress.toLowerCase()}/powertraits.json`, `${config.urls.cdn}`);
+    const internalUri = new URL(`/files/${contractAddress.toLowerCase()}/powertraits.json`, `${config.urls.cdn.legacy}`);
 
     return await (await fetch(internalUri)).json();
   } catch (error) {

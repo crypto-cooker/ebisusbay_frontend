@@ -16,6 +16,7 @@ import {Box, Heading, HStack, Tag, Text} from "@chakra-ui/react";
 import Image from "next/image";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Drop, mapDrop} from "@src/core/models/drop";
+import ImageService from "@src/core/services/image";
 
 const tokens = appConfig('tokens')
 const drops: Drop[] = appConfig('drops').map((drop: any) => mapDrop(drop));
@@ -198,7 +199,7 @@ export default class Responsive extends Component {
                           <div className="d-author">
                             <div className="author_list_pp">
                               {drop.images.avatar ? (
-                                <img className="lazy" src={hostedImage(drop.images.avatar, true)} alt={drop.author.name} />
+                                <img className="lazy" src={ImageService.staticAsset.avatar(drop.images.avatar)} alt={drop.author.name} />
                               ) : (
                                 <Blockies seed={drop.slug} size={10} scale={5} />
                               )}

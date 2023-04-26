@@ -6,12 +6,17 @@ import React from "react";
 import Header from "@src/components-v2/shared/layout/page-header";
 import categories from "@src/core/data/categories.json";
 import ImageService from "@src/core/services/image";
+import {GetServerSidePropsContext} from "next";
 
-const Brands = ({ssrBrands}) => {
+interface BrandsProps {
+  ssrBrands: any[]
+}
+
+const Brands = ({ssrBrands}: BrandsProps) => {
   const router = useRouter();
   const [supportsHover] = useMediaQuery('(hover: hover)')
 
-  const navigate = (slug) => {
+  const navigate = (slug: string) => {
     router.push(`/brands/${slug}`)
   };
 
@@ -37,7 +42,7 @@ const Brands = ({ssrBrands}) => {
               onClick={() => navigate(brand.slug)}
             >
               <Box
-                backgroundImage={ImageService.instance.provider.bannerPreview(brand.images.preview ?? brand.images.banner)}
+                backgroundImage={ImageService.staticAsset.bannerPreview(brand.images.preview ?? brand.images.banner)}
                 backgroundSize="cover"
                 backgroundPosition="50% 50%"
                 h="100%"
@@ -68,7 +73,7 @@ const Brands = ({ssrBrands}) => {
                 </Text>
                 <Wrap>
                   <WrapItem>
-                    {brand.categories.map((cat) => (
+                    {brand.categories.map((cat: any) => (
                       <div className="eb-de_countdown text-center" style={{backgroundColor: 'transparent', color: 'white'}}>
                         {categories.find((c) => c.key === cat)?.label}
                       </div>
@@ -84,7 +89,7 @@ const Brands = ({ssrBrands}) => {
   )
 }
 
-export const getServerSideProps = async ({ params, query }) => {
+export const getServerSideProps = async ({ params, query }: GetServerSidePropsContext) => {
   const filteredBrands = brands.filter((b) => b.featured);
 
   return {

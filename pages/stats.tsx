@@ -14,6 +14,8 @@ import {Button, Heading, Link, Menu, MenuButton, MenuItem, MenuList} from "@chak
 import {ChevronDownIcon} from "@chakra-ui/icons";
 import {useRouter} from "next/router";
 import {hostedImage} from "@src/helpers/image";
+import {useAppSelector} from "@src/Store/hooks";
+import {GetServerSidePropsContext} from "next";
 
 const headers = {
   totalVolume: ['User', 'Sales Volume', 'Buy Volume', 'Total Volume'],
@@ -22,18 +24,23 @@ const headers = {
   biggestSingleSale: ['User', 'Total Volume'],
 };
 
-export default function Stats({pageHead, initialTimeframe}) {
+interface StatsProps {
+  pageHead: any,
+  initialTimeframe: string
+}
+
+export default function Stats({pageHead, initialTimeframe}: StatsProps) {
   const router = useRouter();
   const dispatch = useDispatch();
   const [timeframe, setTimeframe] = useState(initialTimeframe);
   const [type, setType] = useState('totalVolume');
   const [showDialog, setShowDialog] = useState(false);
 
-  const leaderBoard = useSelector((state) => {
+  const leaderBoard = useAppSelector((state) => {
     return state.leaderBoard;
   });
 
-  const updateTimeframe = (val) => {
+  const updateTimeframe = (val: string) => {
     let query = {
       time: val
     }
@@ -49,7 +56,7 @@ export default function Stats({pageHead, initialTimeframe}) {
   };
 
   useEffect(() => {
-    let filter = timeframe;
+    let filter: string | null = timeframe;
     if (timeframe === 'bc-all') {
       filter = 'custom'
     } else if (timeframe === 'bc-1d') {
@@ -149,8 +156,8 @@ export default function Stats({pageHead, initialTimeframe}) {
                   <Card
                     title="Most Total Volume"
                     onClick={() => setType('totalVolume')}
-                    totalVolume={utils.commify(leaderBoard?.totalVolume[0]?.totalVolume || 0)}
-                    name={shortAddress(leaderBoard?.totalVolume[0]?.address) || 0}
+                    totalVolume={utils.commify((leaderBoard?.totalVolume[0] as any)?.totalVolume || 0)}
+                    name={shortAddress((leaderBoard?.totalVolume[0] as any)?.address) || 0}
                     active={type === 'totalVolume'}
                   />
                 </SwiperSlide>
@@ -158,8 +165,8 @@ export default function Stats({pageHead, initialTimeframe}) {
                   <Card
                     title="Most Buy Volume"
                     onClick={() => setType('buyVolume')}
-                    totalVolume={utils.commify(leaderBoard?.buyVolume[0]?.totalVolume || 0)}
-                    name={shortAddress(leaderBoard?.buyVolume[0]?.address) || 0}
+                    totalVolume={utils.commify((leaderBoard?.buyVolume[0] as any)?.totalVolume || 0)}
+                    name={shortAddress((leaderBoard?.buyVolume[0] as any)?.address) || 0}
                     active={type === 'buyVolume'}
                   />
                 </SwiperSlide>
@@ -167,8 +174,8 @@ export default function Stats({pageHead, initialTimeframe}) {
                   <Card
                     title="Most Sell Volume"
                     onClick={() => setType('sellVolume')}
-                    totalVolume={utils.commify(leaderBoard?.sellVolume[0]?.totalVolume || 0)}
-                    name={shortAddress(leaderBoard?.sellVolume[0]?.address) || 0}
+                    totalVolume={utils.commify((leaderBoard?.sellVolume[0] as any)?.totalVolume || 0)}
+                    name={shortAddress((leaderBoard?.sellVolume[0] as any)?.address) || 0}
                     active={type === 'sellVolume'}
                   />
                 </SwiperSlide>
@@ -176,8 +183,8 @@ export default function Stats({pageHead, initialTimeframe}) {
                   <Card
                     title="Biggest Single Sale"
                     onClick={() => setType('biggestSingleSale')}
-                    totalVolume={utils.commify(leaderBoard?.biggestSingleSale[0]?.totalVolume || 0)}
-                    name={shortAddress(leaderBoard?.biggestSingleSale[0]?.address) || 0}
+                    totalVolume={utils.commify((leaderBoard?.biggestSingleSale[0] as any)?.totalVolume || 0)}
+                    name={shortAddress((leaderBoard?.biggestSingleSale[0] as any)?.address) || 0}
                     active={type === 'biggestSingleSale'}
                   />
                 </SwiperSlide>
@@ -185,7 +192,7 @@ export default function Stats({pageHead, initialTimeframe}) {
             </div>
           </div>
           <div className="mt-4 table-responsive">
-            <Table headers={headers[type]} items={leaderBoard[type]} />
+            <Table headers={headers[type as keyof typeof headers]} items={leaderBoard[type as keyof typeof leaderBoard]} />
           </div>
       </section>
       {/*<p className="text-center small"><a href="https://cdn.ebisusbay.com/Contest_Terms_and_Conditions.html">Contest Terms and*/}
@@ -205,19 +212,20 @@ export default function Stats({pageHead, initialTimeframe}) {
   );
 }
 
-export const getServerSideProps = async ({ query }) => {
+export const getServerSideProps = async ({ query }: GetServerSidePropsContext) => {
   const { time } = query;
 
   let initialTimeframe = time ?? '30d'
   const pageHead = {
     title: 'Stats',
     description: 'View the top performing NFTs and users on Ebisu\'s Bay Marketplace',
-    url: '/stats'
+    url: '/stats',
+    image: ''
   };
 
   if (time) {
     pageHead.url = `/stats?time=${time}`;
-    if (time.startsWith('bc-')) {
+    if ((time as string).startsWith('bc-')) {
       pageHead.title = 'Bored Candy Volume Competition';
       pageHead.description = 'Daily prizes up for grabs for the top Bored Candy buyers and sellers! Competition runs from Nov 1st - 15th.';
       pageHead.image = hostedImage('/img/collections/bored-candy/card.webp')

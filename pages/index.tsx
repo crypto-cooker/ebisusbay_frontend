@@ -92,7 +92,7 @@ const GlobalStyles = createGlobalStyle`
 const Jumbotron = {
   Host: styled.div`
     background-image: url(${({ isDark }: {isDark: boolean}) =>
-    isDark ? ImageService.instance.provider.banner('/img/background/banner-ryoshi-dark.webp') : ImageService.instance.provider.banner('/img/background/banner-ryoshi-light.webp')});    background-size: cover;
+    isDark ? ImageService.staticAsset.banner('/img/background/banner-ryoshi-dark.webp') : ImageService.staticAsset.banner('/img/background/banner-ryoshi-light.webp')});    background-size: cover;
     background-repeat: no-repeat;
     height: max(100vh, 800px);
     display: flex;

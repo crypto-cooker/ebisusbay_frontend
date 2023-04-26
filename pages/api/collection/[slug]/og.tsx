@@ -29,10 +29,11 @@ const collections = appConfig('collections');
 const getBanner = (collection: any) => {
   let banner = defaultBanner;
   if (!!collection.metadata.card) {
-    banner = hostedImage(collection.metadata.card);
+    banner = ImageService.proxy.convert(collection.metadata.card);
   } else if (!!collection.metadata.banner) {
-    banner = hostedImage(collection.metadata.banner);
+    banner = ImageService.proxy.convert(collection.metadata.banner);
   }
+
   return banner;
 }
 

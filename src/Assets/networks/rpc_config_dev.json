@@ -19990,6 +19990,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "World of Cats: MILK",
+      "slug": "world-of-cats-milk",
+      "multiToken": false,
+      "address": "0xFd14Cb97102eC422ADF507138580798cb2e6B824",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "MILK is your access pass to the World of Cats: Pussy Edition. \nEach MILK can be redeemed for a whitelist spot, or kept for potential future utility.\nMILK was minted by using $FEL during 11/04/23-25/04/23.",
+        "avatar": "/img/collections/world-of-cats-milk/avatar.webp",
+        "card": "/img/collections/world-of-cats-milk/card.webp",
+        "banner": "/img/collections/world-of-cats-milk/banner.webp",
+        "website": "https://worldofcats.xyz/",
+        "twitter": "https://twitter.com/worldofcatsnft",
+        "discord": "https://discord.gg/worldofcats",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": true,
+        "verified": true
+      }
     }
   ],
   "drops": [

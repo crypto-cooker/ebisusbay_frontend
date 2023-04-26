@@ -11,7 +11,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
-import {ChakraProvider, extendTheme} from '@chakra-ui/react'
+import {ChakraProvider} from '@chakra-ui/react'
 
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
@@ -29,6 +29,7 @@ import customThemeCK from "@src/Theme/themeCK";
 
 import useFeatureFlag from '@src/hooks/useFeatureFlag';
 import Constants from '@src/constants';
+import {AppProps} from "next/app";
 
 SentryLoggingService.init();
 Site24x7LoggingService.init();
@@ -36,7 +37,7 @@ const queryClient = new QueryClient()
 
 config.autoAddCss = false;
 
-export default function MyApp({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }: AppProps) {
 
   const { Features } = Constants;
   const useNewTheme = useFeatureFlag(Features.NEW_CHAKRA_THEME);
