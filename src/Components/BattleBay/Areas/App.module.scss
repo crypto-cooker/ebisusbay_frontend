@@ -22,24 +22,24 @@
   }
   
   @font-face {
-    font-family: 'gotham_book';
-    src: local('./Gotham-Book.otf')  format('opentype'), /* Safari, Android, iOS */
+    font-family: 'GothamBook';
+    src: local('Gotham-Book'), url('../../../fonts/Gotham-Book.ttf') format('truetype'), /* Safari, Android, iOS */
   }
   @font-face {
-    font-family: 'gotham_xLight';
-    src: url('../../../../src/fonts/Gotham-XLight.ttf')  format('truetype'), /* Safari, Android, iOS */
+    font-family: 'GothamXLight';
+    src: local('Gotham-XLight'), url('../../../fonts/Gotham-XLight.ttf') format('truetype'), /* Safari, Android, iOS */
   }
   @font-face {
-    font-family: 'gotham_narrow_book';
-    src: url('../../../../src/fonts/GothamNarrow-Book.ttf')  format('truetype'), /* Safari, Android, iOS */
+    font-family: 'GothamNarrowBook';
+    src: local('GothamNarrow-Book'), url('../../../fonts/GothamNarrow-Book.ttf') format('truetype'), /* Safari, Android, iOS */
   }
 
   .gotham_book {
-    font-family: 'gotham_book', Fallback, sans-serif;
+    font-family: 'GothamBook', Fallback, sans-serif;
   }
   .gotham_xLight {
-    font-family: 'gotham_xLight', Fallback, sans-serif;
+    font-family: 'GothamXLight', Fallback, sans-serif;
   }
   .gotham_narrow_book {
-    font-family: 'gotham_narrow_book', Fallback, sans-serif;
+    font-family: 'GothamNarrowBook', Fallback, sans-serif;
   }

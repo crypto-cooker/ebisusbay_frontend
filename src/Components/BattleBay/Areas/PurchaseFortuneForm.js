@@ -96,8 +96,7 @@ const PurchaseFortuneForm = ({ isOpen, onClose}) => {
     } 
   }
   return (
-    <Modal onClose={onClose} isOpen={isOpen} isCentered size="lg" sx={{bgColor:"rgba(255, 0, 0, 0.3)"}}
-    >
+    <Modal onClose={onClose} isOpen={isOpen} isCentered size="lg" sx={{bgColor:"rgba(255, 0, 0, 0.3)"}}>
       <ModalOverlay />
       <ModalContent>
         {!isLoading ? (
@@ -121,7 +120,7 @@ const PurchaseFortuneForm = ({ isOpen, onClose}) => {
                 >
                   <GridItem colSpan={4} bg=''>
                     <Center >
-                      <Text className={[styles.gotham_book]} style={{ textAlign:"right", fontSize:"24px"}} >Fortune Purchase Menu</Text>
+                      <Text className={[styles.gotham_xLight]} style={{ textAlign:"right", fontSize:"24px"}} >Fortune Purchase Menu</Text>
                     </Center>
                   </GridItem>
 
