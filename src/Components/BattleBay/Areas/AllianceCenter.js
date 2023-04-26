@@ -90,7 +90,8 @@ const AllianceCenter = ({onBack}) => {
         try {
           console.log(config.contracts.allianceCenter)
           console.log(AllianceCenterContract)
-          // console.log(user.provider.getSigner())
+          console.log(user.provider.getSigner())
+          console.log(user.address.toLowerCase())
           //0x0000000000000000000000000000000000000001
 
           const registerFactionContract = new Contract(config.contracts.allianceCenter, AllianceCenterContract, user.provider.getSigner());

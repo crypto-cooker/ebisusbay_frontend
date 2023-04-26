@@ -21,6 +21,7 @@ import {
   NumberDecrementStepper,
   Heading,
   Text,
+  Image
 } from "@chakra-ui/react"
 import { Spinner } from 'react-bootstrap';
 import { getTheme } from "@src/Theme/theme";
@@ -47,6 +48,10 @@ const StakeForm = ({ isOpen, onClose}) => {
 
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
+      <div style={{position:"absolute", zIndex:"1",top:"20%",left:"28%",width: "50%",height: "50%"}} justifyContent='center'>
+        <Image src='img\battle-bay\bankinterior\bank_menu_background.png' style={{position:"absolute", zIndex:"2"}}/>
+      </div>
+      
       <ModalOverlay />
       <ModalContent>
         {!isLoading ? (

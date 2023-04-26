@@ -20,3 +20,26 @@
   .td {
     text-align: center;
   }
+  
+  @font-face {
+    font-family: 'gotham_book';
+    src: local('./Gotham-Book.otf')  format('opentype'), /* Safari, Android, iOS */
+  }
+  @font-face {
+    font-family: 'gotham_xLight';
+    src: url('../../../../src/fonts/Gotham-XLight.ttf')  format('truetype'), /* Safari, Android, iOS */
+  }
+  @font-face {
+    font-family: 'gotham_narrow_book';
+    src: url('../../../../src/fonts/GothamNarrow-Book.ttf')  format('truetype'), /* Safari, Android, iOS */
+  }
+
+  .gotham_book {
+    font-family: 'gotham_book', Fallback, sans-serif;
+  }
+  .gotham_xLight {
+    font-family: 'gotham_xLight', Fallback, sans-serif;
+  }
+  .gotham_narrow_book {
+    font-family: 'gotham_narrow_book', Fallback, sans-serif;
+  }
