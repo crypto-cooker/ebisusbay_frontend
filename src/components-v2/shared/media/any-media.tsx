@@ -43,11 +43,11 @@ export const AnyMedia = ({
   const [videoThumbnail, setVideoThumbNail] = useState<string | null>(thumbnail ?? image);
 
   const blurImageUrl = (img: string) => {
-    return ImageService.instance.provider.blurred(img);
+    return ImageService.proxy.blurred(img);
   };
 
   const makeThumb = (vid: string) => {
-    return ImageService.instance.provider.thumbnail(vid);
+    return ImageService.proxy.thumbnail(vid);
   };
 
   useEffect(() => {
