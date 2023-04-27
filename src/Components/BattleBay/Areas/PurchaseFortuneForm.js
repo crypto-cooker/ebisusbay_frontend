@@ -30,9 +30,11 @@ import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 import styles from './App.module.scss';
-
+import { createSuccessfulTransactionToastContent } from '@src/utils';
 //contracts
-import {Contract} from "ethers";
+import {constants, Contract} from "ethers";
+import {ERC20} from "@src/Contracts/Abis";
+
 import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
 import PurchaseFortune from "@src/Contracts/PurchaseFortune.json";
@@ -61,6 +63,7 @@ const PurchaseFortuneForm = ({ isOpen, onClose}) => {
   const fortunePrice = 0.03;
   const [totalPrice, setTotalPrice] = useState(fortuneToPurchase * fortunePrice);
 
+
   const updateFortuneAmount = (value) =>
   {
     setFortuneToPurchase(value);
@@ -69,7 +72,8 @@ const PurchaseFortuneForm = ({ isOpen, onClose}) => {
 
   const attemptPurchase = async () => {
 
-    console.log(fortuneToPurchase)
+    // console.log(fortuneToPurchase)
+    const usdcAddress = config.contracts.usdc;
 
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
@@ -78,18 +82,26 @@ const PurchaseFortuneForm = ({ isOpen, onClose}) => {
     }
     if (signatureInStorage) {
       try {
-        // console.log(config.contracts.purchaseFortune)
-        // console.log(PurchaseFortune)
-        // console.log(user.provider.getSigner())
-        // console.log(user.address.toLowerCase())
-        //0x0000000000000000000000000000000000000001
+
+        // Convert the desired amount of $Fortune to $USDC
+        var desiredAmount = fortuneToPurchase / 1000;
+
+        // Instantiate USDC contract and check how much USDC the user has already approved
+        const usdcContract = new Contract(usdcAddress, ERC20, user.provider.getSigner());
+        const allowance = await usdcContract.allowance(user.address, config.contracts.purchaseFortune);
+
+        // If the user has not approved the token sale contract to spend enough of their USDC, approve it
+        if (allowance.sub(desiredAmount) < 0) {
+          await usdcContract.approve(config.contracts.purchaseFortune, constants.MaxUint256);
+        }
 
         const purchaseFortuneContract = new Contract(config.contracts.purchaseFortune, PurchaseFortune, user.provider.getSigner());
         const tx = await purchaseFortuneContract.purchase(fortuneToPurchase)
         const receipt = await tx.wait();
-        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
 
-        console.log('Registered')
+        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+        console.log('Purchased $Fortune!')
+
       } catch (error) {
         console.log(error)
       }

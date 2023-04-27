@@ -179,7 +179,8 @@ export const configData = {
       gdc: '0xd464f36885163e124e3a15e31c0e581ba3f648ab',
       allianceCenter: '0x9770d8b97A61520E008f648e7879c337D705D021',
       attack: '0x8b85e49b5a59b113656Fa1A36efa9Aeb70DE27C1',
-      purchaseFortune: '0x5c1349293eE9ffFD370fCefE1c9e17Db8dAc98B4'
+      purchaseFortune: '0x5c1349293eE9ffFD370fCefE1c9e17Db8dAc98B4',
+      usdc: '0x1E1d0765439d0d53ee40CC4fB454C2343c84342b'
     },
     tokens: {
       loot: {
