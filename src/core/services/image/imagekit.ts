@@ -2,9 +2,14 @@ import {CdnProvider} from "@src/core/services/image/index";
 import {appConfig, isLocalEnv} from "@src/Config";
 
 class ImageKitProvider implements CdnProvider {
+  private readonly baseUrl: string;
+
+  constructor(baseUrl: string) {
+    this.baseUrl = baseUrl;
+  }
 
   blurred(url: string) {
-    const kit = ImageBuilder.from(url)
+    const kit = ImageBuilder.from(url, this.baseUrl)
       .setBlur(30)
       .setQuality(10);
 
@@ -12,7 +17,7 @@ class ImageKitProvider implements CdnProvider {
   }
 
   thumbnail(url: string) {
-    const kit = ImageBuilder.from(url);
+    const kit = ImageBuilder.from(url, this.baseUrl);
 
     let useThumb = false;
     if (!this.hasFileExtension(kit.url)) {
@@ -29,17 +34,17 @@ class ImageKitProvider implements CdnProvider {
   }
 
   nftCard(url: string) {
-    const kit = ImageBuilder.from(url).setNamed('ml_card');
+    const kit = ImageBuilder.from(url, this.baseUrl).setNamed('ml_card');
     return kit.build();
   }
 
   avatar(url: string) {
-    const kit = ImageBuilder.from(url).setNamed('avatar');
+    const kit = ImageBuilder.from(url, this.baseUrl).setNamed('avatar');
     return kit.build();
   }
 
   banner(url: string) {
-    const kit = ImageBuilder.from(url)
+    const kit = ImageBuilder.from(url, this.baseUrl)
       .setWidth(1920)
       .setHeight(1080)
       .setCrop('at_max');
@@ -48,12 +53,12 @@ class ImageKitProvider implements CdnProvider {
   }
 
   bannerPreview(url: string) {
-    const kit = ImageBuilder.from(url).setNamed('wide_preview');
+    const kit = ImageBuilder.from(url, this.baseUrl).setNamed('wide_preview');
     return kit.build();
   }
 
   fixedWidth(url: string, width: number, height: number) {
-    const kit = ImageBuilder.from(url)
+    const kit = ImageBuilder.from(url, this.baseUrl)
       .setWidth(width)
       .setHeight(height)
       .setCrop('at_max');
@@ -62,18 +67,18 @@ class ImageKitProvider implements CdnProvider {
   }
 
   gifToMp4(url: string | URL) {
-    const kit = ImageBuilder.from(url.toString())
+    const kit = ImageBuilder.from(url.toString(), this.baseUrl)
       .addAppendage('ik-gif-video.mp4');
 
     return kit.build();
   }
 
   convert(url: string) {
-    return ImageBuilder.from(url).build();
+    return ImageBuilder.from(url, this.baseUrl).build();
   }
 
   custom(url: string, options: any) {
-    const kit = ImageBuilder.from(url);
+    const kit = ImageBuilder.from(url, this.baseUrl);
     if(options.width) kit.setWidth(options.width);
     if(options.height) kit.setHeight(options.height);
     if(options.blur) kit.setBlur(options.blur);
@@ -102,17 +107,19 @@ export default ImageKitProvider;
 
 class ImageBuilder {
   url: string;
+  baseUrl: string;
   trValues: any;
   appendages: string[];
 
-  constructor(url: string) {
+  constructor(url: string, baseUrl: string) {
     this.url = this.specialTransform(url);
+    this.baseUrl = baseUrl;
     this.trValues = {};
     this.appendages = [];
   }
 
-  static from(url: string) {
-    return new ImageBuilder(url);
+  static from(url: string, baseUrl: string) {
+    return new ImageBuilder(url, baseUrl);
   }
 
   setBlur(value: number) {
@@ -158,12 +165,11 @@ class ImageBuilder {
   build() {
     if(!this.url || this.url.startsWith('data')) return this.url;
 
-    const cdn = appConfig('urls.cdn');
-    const fixedUrl = this.url.includes(cdn.primary) ? this.url.replace(cdn.primary, cdn.legacy) : this.url;
+    const fixedUrl = this.remappedUrl();
 
     if (isLocalEnv() && fixedUrl?.startsWith('/')) return fixedUrl;
 
-    const baseUrl = !fixedUrl.includes(cdn.legacy) ? cdn.legacy : undefined;
+    const baseUrl = !fixedUrl.includes(this.baseUrl) ? this.baseUrl : undefined;
     const url = new URL(fixedUrl, baseUrl);
 
     for (const appendage of this.appendages) {
@@ -187,6 +193,18 @@ class ImageBuilder {
 
     if (url.toLowerCase().includes('/QmX97CwY2NcmPmdS6XtcqLFMV2JGEjnEWjxBQbj4Q6NC2i'.toLowerCase())) {
       return url.replace('/QmX97CwY2NcmPmdS6XtcqLFMV2JGEjnEWjxBQbj4Q6NC2i', '/QmX97CwY2NcmPmdS6XtcqLFMV2JGEjnEWjxBQbj4Q6NC2i.mp4');
+    }
+
+    return url;
+  }
+
+  private remappedUrl() {
+    const cdn = appConfig('urls.cdn');
+    let url = this.url;
+    if (this.url.includes(cdn.primary)) {
+      url = this.url.replace(cdn.primary, this.baseUrl);
+    } else if (this.url.includes(cdn.legacy)) {
+      url = this.url.replace(cdn.legacy, this.baseUrl);
     }
 
     return url;

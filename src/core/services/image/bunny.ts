@@ -109,8 +109,7 @@ class BunnyBuilder {
     if (isLocalEnv() && this.url?.startsWith('/')) return this.url;
     if(!this.url || this.url.startsWith('data')) return this.url;
 
-    const cdn = appConfig('urls.cdn');
-    let str = this.url.includes(cdn.legacy) ? this.url.replace(cdn.legacy, this.baseUrl) : this.url;
+    let str = this.remappedUrl();
 
     if (this.params.toString() !== '') {
       str += `?${this.params}`;
@@ -119,5 +118,18 @@ class BunnyBuilder {
     const url = new URL(str, this.baseUrl);
 
     return url.toString();
+  }
+
+
+  private remappedUrl() {
+    const cdn = appConfig('urls.cdn');
+    let url = this.url;
+    if (this.url.includes(cdn.primary)) {
+      url = this.url.replace(cdn.primary, this.baseUrl);
+    } else if (this.url.includes(cdn.legacy)) {
+      url = this.url.replace(cdn.legacy, this.baseUrl);
+    }
+
+    return url;
   }
 }

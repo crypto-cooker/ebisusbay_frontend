@@ -20,7 +20,7 @@ class ImageService {
   public provider: CdnProvider;
 
   constructor() {
-    this.provider = new ImageKitProvider();
+    this.provider = new ImageKitProvider(appConfig('urls.cdn.bunnykit'));
   }
 
   static get instance() {
@@ -30,7 +30,7 @@ class ImageService {
   static withProvider(provider: 'imagekit' | 'bunny') {
     const service = new ImageService();
     if (provider === 'imagekit') {
-      service.provider = new ImageKitProvider();
+      service.provider = new ImageKitProvider(appConfig('urls.cdn.bunnykit'));
     } else if (provider === 'bunny') {
       service.provider = new BunnyCdnProvider(appConfig('urls.cdn.primary'));
     }
@@ -55,7 +55,7 @@ class CdnProxy implements CdnProvider {
 
   constructor() {
     this.bunny = new BunnyCdnProvider(appConfig('urls.cdn.primary'));
-    this.imagekit = new ImageKitProvider();
+    this.imagekit = new ImageKitProvider(appConfig('urls.cdn.bunnykit'));
   }
 
   avatar(url: string): string {
@@ -71,12 +71,10 @@ class CdnProxy implements CdnProvider {
   }
 
   blurred(url: string): string {
-    url = this.cdnUrl(url);
     return this.restrictedCdn(url).blurred(url);
   }
 
   convert(url: string): string {
-    url = this.cdnUrl(url);
     return this.restrictedCdn(url).convert(url);
   }
 
@@ -85,7 +83,6 @@ class CdnProxy implements CdnProvider {
   }
 
   fixedWidth(url: string, width: number, height: number): string {
-    url = this.cdnUrl(url);
     return this.restrictedCdn(url).fixedWidth(url, width, height);
   }
 
@@ -94,7 +91,6 @@ class CdnProxy implements CdnProvider {
   }
 
   nftCard(url: string): string {
-    url = this.cdnUrl(url);
     return this.restrictedCdn(url).nftCard(url);
   }
 
@@ -114,19 +110,8 @@ class CdnProxy implements CdnProvider {
     const isIpfs = gatewayTools.containsCID(url).containsCid;
 
     const containsProxy = url.includes('/proxy/');
+    const isGif = new URL(url).pathname.endsWith('.gif');
 
-    return isIpfs && !containsProxy ? this.bunny : this.imagekit;
-  }
-
-  cdnUrl(url: string) {
-    if (!url) return '';
-
-    if (this.restrictedCdn(url) === this.imagekit) {
-      return url;
-    }
-    const oldCdns = ['https://cdn.ebisusbay.com/', 'https://cdn.ebisusbay.biz/', 'https://cdn.ebisusbay.biz/test/'];
-    const newCdn = 'https://cdn.lotusgalaxy.io/';
-    url = oldCdns.reduce((p, n) => p.replace(n, newCdn), url);
-    return url;
+    return isIpfs && !containsProxy && !isGif ? this.bunny : this.imagekit;
   }
 }

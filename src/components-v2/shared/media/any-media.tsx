@@ -67,16 +67,12 @@ export const AnyMedia = ({
       return;
     }
 
-    const knownImageTypes = ['.png', '.jpg', '.jpeg', 'webp'];
+    const knownImageTypes = ['.png', '.jpg', '.jpeg', '.webp', '.gif'];
 
     try {
       const imageURL = new URL(image);
-      //prefer mp4 over gif
-      if (imageURL.pathname && imageURL.pathname.endsWith('.gif')) {
-        setTransformedImage(ImageService.proxy.gifToMp4(imageURL.toString()));
-        setVideoThumbNail(thumbnail ?? null);
-        setDynamicType(MediaType.video);
-      } else if (imageURL.pathname && imageURL.pathname.endsWith('.html')) {
+
+      if (imageURL.pathname && imageURL.pathname.endsWith('.html')) {
         setDynamicType(MediaType.iFrame);
       } else if (imageURL.pathname && knownImageTypes.some((o) => imageURL.pathname.endsWith(o))) {
         setDynamicType(MediaType.image);
@@ -301,14 +297,12 @@ export const MultimediaImage = ({ source, fallbackSource, title, width = 1, heig
       return;
     }
 
-    const knownImageTypes = ['.png', '.jpg', '.jpeg', 'webp'];
+    const knownImageTypes = ['.png', '.jpg', '.jpeg', '.webp', '.gif'];
 
     try {
       const imageURL = new URL(source);
-      //prefer mp4 over gif
-      if (imageURL.pathname && imageURL.pathname.endsWith('.gif')) {
-        setImage(source);
-      } else if (imageURL.pathname && imageURL.pathname.endsWith('.html')) {
+
+      if (imageURL.pathname && imageURL.pathname.endsWith('.html')) {
         //
       } else if (imageURL.pathname && knownImageTypes.some((o) => imageURL.pathname.endsWith(o))) {
         setImage(source);
