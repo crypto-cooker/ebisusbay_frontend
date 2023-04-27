@@ -100,7 +100,7 @@ export const configData = {
         primary: 'https://cdn.lotusgalaxy.io/',
         assets: 'https://ebisusbay-dev.b-cdn.net/',
         bunnykit: 'https://ik-proxy.b-cdn.net/',
-        legacy: 'https://cdn.ebisusbay.biz/test/',
+        legacy: 'https://cdn.ebisusbay.biz/',
       }
     },
     rpc: {
