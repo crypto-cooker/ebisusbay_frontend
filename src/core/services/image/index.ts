@@ -110,7 +110,13 @@ class CdnProxy implements CdnProvider {
     const isIpfs = gatewayTools.containsCID(url).containsCid;
 
     const containsProxy = url.includes('/proxy/');
-    const isGif = new URL(url).pathname.endsWith('.gif');
+
+    let isGif = false;
+    try {
+      isGif = new URL(url).pathname.endsWith('.gif');
+    } catch (e) {
+      // ignore
+    }
 
     return isIpfs && !containsProxy && !isGif ? this.bunny : this.imagekit;
   }
