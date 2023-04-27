@@ -40,7 +40,13 @@ const Bank = ({onBack}) => {
   var ok = 'img/battle-bay/gifBanker/OK.gif';
   var welcome = 'img/battle-bay/gifBanker/welcome.gif';
   
-  
+  const breakpoints = {
+    sm: '30em', // 480px
+    md: '48em', // 768px
+    lg: '62em', // 992px
+    xl: '80em', // 1280px
+    '2xl': '96em', // 1536px
+  }
 
  var greetings = ['Greetings, traveler. I am the best person to talk to when it comes to your $Fortune possessions… or lack-thereof… which I could help you address.',
                   'Hail, brave hero! How may I assist you with your $Fortune possessions today? Stake, purchase, or withdraw?',
@@ -52,7 +58,8 @@ const Bank = ({onBack}) => {
   const randomGreeting = useState(greetings[Math.floor(Math.random() * greetings.length)]);
 
   useEffect(() => {
-    talk();
+    setCurrentGif(blink);
+    // talk();
   }, [])
 
   useEffect(() => {
@@ -81,7 +88,10 @@ const Bank = ({onBack}) => {
       
       <div style={{position:"absolute", zIndex:"2",width: "40%", height: "100%", left:"0%",top:"5%"}} >
         <Image style={{position:"absolute"}} src='\img\battle-bay\bankinterior\banker_chat_background.png' /> 
-        <Text style={{position:"absolute", zIndex:"3", color:"white", fontSize:"28px", padding:"60px"}} className={[styles.gotham_book]}>{randomGreeting}</Text>
+        <Text 
+        fontSize={{ base: '6px', md: '12px', lg:'16', xl: '18px' }} 
+        padding ={{ base: '10px', md: '25px', lg:'40px', xl: '60px'}}
+        style={{position:"absolute", zIndex:"3", color:"white"}} className={[styles.gotham_book]}>{randomGreeting}</Text>
     </div>
 
       <div style={{position:"absolute", zIndex:"1",width: "95%",height: "30%"}}>
@@ -96,8 +106,13 @@ const Bank = ({onBack}) => {
 
       
 
-      <div style={{position:"absolute", zIndex:"2",width: "20%", height: "100%", left:"80%",top:"35%"}} onClick={() => onOpenStake()}>
-        <Image style={{ content: buyImage }} onMouseEnter={() => setbuyImage(buy_h)} onMouseOut={() => setbuyImage(buy)} /> 
+      <div style={{position:"absolute", zIndex:"2",left:"80%",top:"35%"}} onClick={() => onOpenStake()}
+      
+      >
+        <Image style={{ content: buyImage }} onMouseEnter={() => setbuyImage(buy_h)} onMouseOut={() => setbuyImage(buy)} 
+        width={{ base: '400px', md: '100%', lg:'100%', xl: '100%' }} 
+        height={{ base: '100%', md: '100%', lg:'100%', xl: '100%' }}
+        /> 
       </div>
 
       <div style={{position:"absolute", zIndex:"2",width: "20%", height: "100%", left:"80%",top:"65%"}} onClick={() => onOpenWithdraw()}>

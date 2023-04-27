@@ -128,19 +128,26 @@ const PurchaseFortuneForm = ({ isOpen, onClose}) => {
                   h='5px'
                   templateRows='repeat(2, 1fr)'
                   templateColumns='repeat(4, 1fr)'
-                  gap={4}
-                  padding={12}
-                >
+                  gap={{ base: '2', md: '4'}} 
+                  padding={{ base: '10', md: '12'}} 
+                  >
                   <GridItem colSpan={4} bg=''>
                     <Center >
-                      <Text className={[styles.gotham_xLight]} style={{ textAlign:"right", fontSize:"24px"}} >Fortune Purchase Menu</Text>
+                      <Text className={[styles.gotham_xLight]}
+                       style={{ textAlign:"right"}}
+                       fontSize={{ base: '16px', md: '18px' }} 
+                        >Fortune Purchase Menu</Text>
                     </Center>
                   </GridItem>
 
-                  <GridItem colSpan={3} bg=''>
-                    <Text className={[styles.gotham_book]} style={{fontSize:"18px"}}>How much $FRTN would you like to purchase? </Text>
+                  <GridItem 
+                  colSpan={{ base: '2', md: '2' }} 
+                  bg=''>
+                    <Text className={[styles.gotham_book]}
+                      fontSize={{ base: '12px', md: '12px' }} 
+                     >How much $FRTN would you like to purchase? </Text>
                   </GridItem>
-                  <GridItem colSpan={1} bg=''>
+                  <GridItem colSpan={{ base: '2', md: '2' }}  bg=''>
                   <FormControl>
                     <NumberInput defaultValue={0} min={1000} name="quantity" 
                       onChange={updateFortuneAmount}
@@ -155,30 +162,47 @@ const PurchaseFortuneForm = ({ isOpen, onClose}) => {
                   </GridItem>
 
                   <GridItem colSpan={2} bg=''>
-                    <Text className={[styles.gotham_book]} >Current Price of $FRTN token: </Text>
+                    <Text className={[styles.gotham_book]} fontSize={{ base: '12px', md: '18px' }} >Current Price of $FRTN token: </Text>
                   </GridItem>
                   <GridItem colSpan={2} bg=''style={{ textAlign:"right"}}>
-                    <Text style={{fontSize:"18px"}}  >USD ${fortunePrice} </Text>
+                    <Text fontSize={{ base: '12px', md: '18px' }}   >USD ${fortunePrice} </Text>
                   </GridItem>
 
                   <GridItem colSpan={2} bg=''>
-                    <Text className={[styles.gotham_book]} style={{fontSize:"18px"}}  >Your total cost: </Text>
+                    <Text className={[styles.gotham_book]} fontSize={{ base: '12px', md: '18px' }}  >Your total cost: </Text>
                   </GridItem>
                   <GridItem colSpan={2} bg=''style={{paddingBottom:"25%", textAlign:"right"}}>
-                    <Text className={[styles.gotham_book]} style={{fontSize:"18px", }} >{totalPrice} </Text>
+                    <Text className={[styles.gotham_book]} fontSize={{ base: '12px', md: '18px' }}  >{totalPrice} </Text>
                   </GridItem>
 
                   <GridItem colSpan={4} style={{paddingBottom:"27%"}} >
                     <Center >
-                    <Image style={{ content: buyImage, position:"absolute",width: "70%",height: "100px"}} 
+                    <Image style={{ content: buyImage, position:"absolute"}} 
+                    width={{ base: '50%', md: '70%' }} 
+                    height={{ base: '50px', md: '100px' }}
                       onMouseEnter={() => setbuyImage(buy_h)} onMouseOut={() => setbuyImage(buy)} onClick={() => attemptPurchase()}/> 
                     </Center>
                   </GridItem>
                   <GridItem colSpan={4}  >
                     <Center >
-                    <Image src="/img/battle-bay/bankinterior/progress_bar_background.png" style={{ position:"absolute",width: "95%",height: "70px"}} /> 
-                    <Image src="/img/battle-bay/bankinterior/progress_bar.png" style={{ position:"absolute",width: "75%",height: "50px"}} /> 
-                    <Image src="/img/battle-bay/bankinterior/progress_bar_overlay.png" style={{ position:"absolute",width: "75%",height: "50px"}} /> 
+                    <Image src="/img/battle-bay/bankinterior/progress_bar_background.png" 
+                    style={{ position:"absolute"}}
+                    width={{ base: '95%', md: '95%' }} 
+                    height={{ base: '50px', md: '70px' }}
+                    marginTop={{ base: '-50px', md: '-75px' }}
+                    /> 
+                    <Image src="/img/battle-bay/bankinterior/progress_bar.png" 
+                    style={{ position:"absolute"}}
+                    width={{ base: '75%', md: '75%' }} 
+                    height={{ base: '40px', md: '50px' }}
+                    marginTop={{ base: '-50px', md: '-75px' }}
+                    /> 
+                    <Image src="/img/battle-bay/bankinterior/progress_bar_overlay.png" 
+                    style={{ position:"absolute"}}
+                    width={{ base: '75%', md: '75%' }} 
+                    height={{ base: '40px', md: '50px' }}
+                    marginTop={{ base: '-50px', md: '-75px' }}
+                    /> 
                     </Center>
                   </GridItem>
                   
