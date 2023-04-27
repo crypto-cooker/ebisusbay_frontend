@@ -20015,6 +20015,31 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "Crypto Crows",
+      "slug": "crypto-crows",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Crypto Crows NFT collection is the first from Corvus Labs. In addition to owning one of a kind NFTs, it's primary utility is free shipping on orders from the Crypto Crows custom merchandise website. There will be additional perks such as discounts on rotation based on traits as well as the usual giveaways, contests, airdrops/free mint for future projects.",
+        "avatar": "/img/collections/crypto-crows/avatar.webp",
+        "card": "/img/collections/crypto-crows/card.webp",
+        "banner": "/img/collections/crypto-crows/banner.webp",
+        "website":"https://almurraydesign.com/cryptocrows",
+        "twitter": "https://twitter.com/Corvuslabs_ltd",
+        "discord": "https://discord.gg/ykEJAt8Pce",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
     }
   ],
   "drops": [
@@ -26567,7 +26592,8 @@
           "The third installment released when all Rebel AUT Club NFT's have been minted and either 7777 sold out, or the project decides to stop the mint"
         ]
       }
-    },{
+    },
+    {
       "id": 169,
       "slug": "diamond-coins",
       "title": "Diamond Coins of the Grind Guild",
@@ -26600,6 +26626,45 @@
         "banner": "/img/collections/diamond-coins/banner.webp",
         "avatar": "/img/collections/diamond-coins/avatar.webp",
         "preview": "/img/collections/diamond-coins/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
+      }
+    },
+    {
+      "id": 170,
+      "slug": "crypto-crows",
+      "title": "Crypto Crows",
+      "subtitle": "The Crypto Crows NFT collection is the first from Corvus Labs. In addition to owning one of a kind NFTs, it's primary utility is free shipping on orders from the Crypto Crows custom merchandise website. There will be additional perks such as discounts on rotation based on traits as well as the usual giveaways, contests, airdrops/free mint for future projects.",
+      "description": "Our goal is to create a community for web3/crypto entrepreneurs to forge stronger relationships with brands and their communities. Join us to learn, build and showcase the technology's true power as a tool to add value to products and services.",
+      "author": {
+        "name": "Corvus Labs",
+        "website":"https://almurraydesign.com/cryptocrows",
+        "twitter": "https://twitter.com/Corvuslabs_ltd",
+        "discord": "https://discord.gg/ykEJAt8Pce"
+      },
+      "address": "",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 99,
+      "totalSupply": 1876,
+      "cost": "300",
+      "memberCost": "250",
+      "whitelistCost": "200",
+      "foundersOnly": false,
+      "start": 1683230400000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/crypto-crows/drop.webp",
+        "banner": "/img/drops/crypto-crows/banner.webp",
+        "avatar": "/img/collections/crypto-crows/avatar.webp",
+        "preview": "/img/collections/crypto-crows/card.webp"
       },
       "verification": {
         "doxx": false,
