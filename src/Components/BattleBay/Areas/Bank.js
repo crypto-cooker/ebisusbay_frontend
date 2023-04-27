@@ -6,14 +6,17 @@ import {
   Image,
   useDisclosure,
   useMediaQuery,
+  Text,
+
 } from '@chakra-ui/react';
 import PurchaseFortuneForm from './PurchaseFortuneForm';
-import WithdrawForm from './WithdrawForm';
+import FortuneFAQForm from './FortuneFAQForm';
+import styles from './App.module.scss';
 
 const Bank = ({onBack}) => {
 
   const { isOpen: isOpenStake, onOpen: onOpenStake, onClose: onCloseStake} = useDisclosure();
-  const { isOpen: isOpenWithdraw, onOpen: onOpenWithdraw, onClose: onCloseWithdraw} = useDisclosure();
+  const { isOpen: isOpenFAQ, onOpen: onOpenWithdraw, onClose: onCloseFAQ} = useDisclosure();
 
   const [isLargerThan1280] = useMediaQuery('(min-width: 1280px)')
   const [powerUps, setPowerUps] = useState([])
@@ -36,6 +39,21 @@ const Bank = ({onBack}) => {
   var mouth = 'img/battle-bay/gifBanker/mouth.gif';
   var ok = 'img/battle-bay/gifBanker/OK.gif';
   var welcome = 'img/battle-bay/gifBanker/welcome.gif';
+  
+  
+
+ var greetings = ['Greetings, traveler. I am the best person to talk to when it comes to your $Fortune possessions… or lack-thereof… which I could help you address.',
+                  'Hail, brave hero! How may I assist you with your $Fortune possessions today? Stake, purchase, or withdraw?',
+                  'Welcome, honored guest! Ready to ride the waves of fortune? Stake, purchase, or withdraw your tokens with me.',
+                  'Welcome, traveler. It seems that since Ebisu has created all these Fortune tokens, that our world has gone through quite an evolution.', 
+                  'I am here to help all citizens of the Lotus Galaxy stake, purchase or withdraw their tokens. How may I help?',
+                  'Blessings, traveler! Let me guess, you want me to help with your Fortune possessions. Say no more. What can I do for you today?']
+  
+  const randomGreeting = useState(greetings[Math.floor(Math.random() * greetings.length)]);
+
+  useEffect(() => {
+    talk();
+  }, [])
 
   useEffect(() => {
     setPowerUps([<Button height={'20px'}>Power Ups</Button>])
@@ -43,6 +61,7 @@ const Bank = ({onBack}) => {
 
   const talk = async () => {
     setCurrentGif(mouth);
+    console.log(randomGreeting)
     await new Promise(r => setTimeout(r, 1000));
     setCurrentGif(blink);
   }
@@ -51,7 +70,7 @@ const Bank = ({onBack}) => {
     <section>
 
     <PurchaseFortuneForm isOpen={isOpenStake} onClose={onCloseStake}/>
-    <WithdrawForm isOpen={isOpenWithdraw} onClose={onCloseWithdraw}/>
+    <FortuneFAQForm isOpen={isOpenFAQ} onClose={onCloseFAQ}/>
 
     <Box
      position='relative'
@@ -59,6 +78,12 @@ const Bank = ({onBack}) => {
      h='calc(100vh - 74px)'
     >
       <Box p='6'>
+      
+      <div style={{position:"absolute", zIndex:"2",width: "40%", height: "100%", left:"0%",top:"5%"}} >
+        <Image style={{position:"absolute"}} src='\img\battle-bay\bankinterior\banker_chat_background.png' /> 
+        <Text style={{position:"absolute", zIndex:"3", color:"white", fontSize:"28px", padding:"60px"}} className={[styles.gotham_book]}>{randomGreeting}</Text>
+    </div>
+
       <div style={{position:"absolute", zIndex:"1",width: "95%",height: "30%"}}>
 
       <div style={{position:"absolute", zIndex:"1",width: "100%",height: "100%"}} >
@@ -69,11 +94,13 @@ const Bank = ({onBack}) => {
         <Image src={currentGif} style={{position:"absolute", zIndex:"2"}}/>
       </div>
 
+      
+
       <div style={{position:"absolute", zIndex:"2",width: "20%", height: "100%", left:"80%",top:"35%"}} onClick={() => onOpenStake()}>
         <Image style={{ content: buyImage }} onMouseEnter={() => setbuyImage(buy_h)} onMouseOut={() => setbuyImage(buy)} /> 
       </div>
 
-      <div style={{position:"absolute", zIndex:"2",width: "20%", height: "100%", left:"80%",top:"65%"}} onClick={() => onBack()}>
+      <div style={{position:"absolute", zIndex:"2",width: "20%", height: "100%", left:"80%",top:"65%"}} onClick={() => onOpenWithdraw()}>
         <Image style={{ content: faqImage }} onMouseEnter={() => setfaqImage(faq_h)} onMouseOut={() => setfaqImage(faq)} /> 
       </div>
 

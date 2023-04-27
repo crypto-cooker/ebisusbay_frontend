@@ -11,13 +11,19 @@ import {
   Flex,
   Spacer,
   Box,
+  Container,
   FormControl,
   FormLabel,
+  VStack,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
+  StackDivider,
+  UnorderedList,
+  ListItem,
+
   Heading,
   Text,
   Image,
@@ -48,7 +54,7 @@ const theme = extendTheme({
 import { Spinner } from 'react-bootstrap';
 import { getTheme } from "@src/Theme/theme";
 
-const PurchaseFortuneForm = ({ isOpen, onClose}) => {
+const FortuneFAQForm = ({ isOpen, onClose}) => {
 
   const config = appConfig();
   const buy = 'url("/img/battle-bay/bankinterior/buy_FRTN_button.png")';
@@ -121,54 +127,48 @@ const PurchaseFortuneForm = ({ isOpen, onClose}) => {
                 >
                   <GridItem colSpan={4} bg=''>
                     <Center >
-                      <Text className={[styles.gotham_xLight]} style={{ textAlign:"right", fontSize:"24px"}} >Fortune Purchase Menu</Text>
+                      <Text className={[styles.gotham_xLight]} style={{ textAlign:"right", fontSize:"24px"}} >Bank</Text>
                     </Center>
                   </GridItem>
 
-                  <GridItem colSpan={3} bg=''>
-                    <Text className={[styles.gotham_book]} style={{fontSize:"18px"}}>How much $FRTN would you like to purchase? </Text>
-                  </GridItem>
-                  <GridItem colSpan={1} bg=''>
-                  <FormControl>
-                    <NumberInput defaultValue={0} min={1000} name="quantity" 
-                      onChange={updateFortuneAmount}
-                      value={fortuneToPurchase} type ='number'>
-                    <NumberInputField />
-                      <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
-                      </NumberInputStepper>
-                      </NumberInput>
-                    </FormControl>
-                  </GridItem>
+                  <GridItem colSpan={4} bg=''>
+     
+          
+        <Box textAlign={'center'}>
+          <Text className={[styles.gotham_xLight]} style={{ textAlign:"left", fontSize:"12px", marginTop:"-12px", paddingBottom:"12px"}} >To receive $Mitama, you must stake $Fortune for AT LEAST the duration of 1 season (90 days).
+          If you stake longer than 1 season, you will receive bonus spirit multiplier for each additional season.
+          </Text>
+          <Text className={[styles.gotham_xLight]} style={{ textAlign:"left", fontSize:"12px"}} >
+          APR from staking goes into the seasonal release pool for user.
+          These rewards will be released linearly counting down to end of current season. 
+          You can spend out of your rewards pool early to buy powerUps without penalty.
+          </Text>
+        </Box>
 
-                  <GridItem colSpan={2} bg=''>
-                    <Text className={[styles.gotham_book]} >Current Price of $FRTN token: </Text>
-                  </GridItem>
-                  <GridItem colSpan={2} bg=''style={{ textAlign:"right"}}>
-                    <Text style={{fontSize:"18px"}}  >USD ${fortunePrice} </Text>
-                  </GridItem>
+      <Text className={[styles.gotham_book]} style={{marginTop:"-12px",}}  textAlign={'center'}>About APR</Text>
+      <Text className={[styles.gotham_xLight]} style={{ textAlign:"left", fontSize:"12px"}} >Staking will also generate a traditional APR yield with boosts per season locked.</Text>
+      <VStack
+      align='center'
+      >
+      <Box>
+        <UnorderedList>
+          <ListItem >
+          <Text className={[styles.gotham_xLight]} style={{ textAlign:"left", marginTop:"-12px", fontSize:"12px"}} >1 season 12%</Text>
+            </ListItem>
+          <ListItem><Text className={[styles.gotham_xLight]} style={{ textAlign:"left", fontSize:"12px"}} >2 17%</Text></ListItem>
+          <ListItem><Text className={[styles.gotham_xLight]} style={{ textAlign:"left", fontSize:"12px"}} >3 20%</Text></ListItem>
+          <ListItem><Text className={[styles.gotham_xLight]} style={{ textAlign:"left", fontSize:"12px"}} >4 30%</Text></ListItem>
+          <ListItem><Text className={[styles.gotham_xLight]} style={{ textAlign:"left", fontSize:"12px"}} >8 120%</Text></ListItem>
+          <ListItem><Text className={[styles.gotham_xLight]} style={{ textAlign:"left", fontSize:"12px"}} >12 200%</Text></ListItem>
+        </UnorderedList>
+      </Box>
 
-                  <GridItem colSpan={2} bg=''>
-                    <Text className={[styles.gotham_book]} style={{fontSize:"18px"}}  >Your total cost: </Text>
-                  </GridItem>
-                  <GridItem colSpan={2} bg=''style={{paddingBottom:"25%", textAlign:"right"}}>
-                    <Text className={[styles.gotham_book]} style={{fontSize:"18px", }} >{totalPrice} </Text>
-                  </GridItem>
+      </VStack>
+    
+      
 
-                  <GridItem colSpan={4} style={{paddingBottom:"27%"}} >
-                    <Center >
-                    <Image style={{ content: buyImage, position:"absolute",width: "70%",height: "100px"}} 
-                      onMouseEnter={() => setbuyImage(buy_h)} onMouseOut={() => setbuyImage(buy)} onClick={() => attemptPurchase()}/> 
-                    </Center>
-                  </GridItem>
-                  <GridItem colSpan={4}  >
-                    <Center >
-                    <Image src="/img/battle-bay/bankinterior/progress_bar_background.png" style={{ position:"absolute",width: "95%",height: "70px"}} /> 
-                    <Image src="/img/battle-bay/bankinterior/progress_bar.png" style={{ position:"absolute",width: "75%",height: "50px"}} /> 
-                    <Image src="/img/battle-bay/bankinterior/progress_bar_overlay.png" style={{ position:"absolute",width: "75%",height: "50px"}} /> 
-                    </Center>
-                  </GridItem>
+      </GridItem>
+
                   
                 </Grid>
               </Box>
@@ -187,5 +187,5 @@ const PurchaseFortuneForm = ({ isOpen, onClose}) => {
   )
 }
 
-export default PurchaseFortuneForm;
+export default FortuneFAQForm;
 
