@@ -237,10 +237,15 @@ export const configData = {
     urls: {
       api: 'https://api.ebisusbay.com/',
       app: 'https://app.ebisusbay.com/',
-      cdn: 'https://cdn.ebisusbay.com/',
       subgraph: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
       cms: 'http://localhost:4000/api/',
       explorer: 'https://cronoscan.com/',
+      cdn: {
+        primary: 'https://cdn.lotusgalaxy.io/',
+        assets: 'https://ebisusbay-prod.b-cdn.net/',
+        bunnykit: 'https://ik-proxy.b-cdn.net/',
+        legacy: 'https://cdn.ebisusbay.com/',
+      }
     },
     rpc: {
       read: 'https://rpc.ebisusbay.com/',
