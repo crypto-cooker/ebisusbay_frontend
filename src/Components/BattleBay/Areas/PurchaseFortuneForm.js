@@ -300,7 +300,7 @@ const PurchaseFortuneForm = ({ isOpen, onClose}) => {
     </GridItem>
   </Grid>)
 
-  const [purchaseActive, setPurchaseActive] = useState(false);
+  const [purchaseActive, setPurchaseActive] = useState(true);
 
   
   return (

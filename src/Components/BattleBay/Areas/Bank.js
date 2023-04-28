@@ -12,6 +12,7 @@ import {
 import PurchaseFortuneForm from './PurchaseFortuneForm';
 import FortuneFAQForm from './FortuneFAQForm';
 import styles from './App.module.scss';
+import { Stack } from 'react-bootstrap';
 
 const Bank = ({onBack}) => {
 
@@ -109,21 +110,15 @@ const Bank = ({onBack}) => {
 
       
 
-      <div style={{position:"absolute", zIndex:"2",left:"80%",top:"35%"}} onClick={() => onOpenStake()}
-      
-      >
-        <Image style={{ content: buyImage }} onMouseEnter={() => setbuyImage(buy_h)} onMouseOut={() => setbuyImage(buy)} 
-        width={{ base: '400px', md: '100%', lg:'100%', xl: '100%' }} 
-        height={{ base: '100%', md: '100%', lg:'100%', xl: '100%' }}
-        /> 
-      </div>
-
-      {/* <div style={{position:"absolute", zIndex:"2",width: "20%", height: "100%", left:"80%",top:"65%"}} onClick={() => onOpenWithdraw()}>
-        <Image style={{ content: faqImage }} onMouseEnter={() => setfaqImage(faq_h)} onMouseOut={() => setfaqImage(faq)} /> 
-      </div> */}
-
-      <div style={{position:"absolute", zIndex:"2",width: "20%", height: "100%", left:"80%",top:"95%"}} onClick={() => onBack()}>
-        <Image style={{ content: exitImage }} onMouseEnter={() => setexitImage(exit_h)} onMouseOut={() => setexitImage(exit)} /> 
+      <div style={{position:"absolute", zIndex:"2",left:"80%",top:"30%"}}  >
+        <Stack direction="row" spacing={1}>
+          <Image style={{ content: buyImage }} onMouseEnter={() => setbuyImage(buy_h)} onMouseOut={() => setbuyImage(buy)} onClick={() => onOpenStake()}
+          /> 
+          <Image style={{ content: exitImage }} onMouseEnter={() => setexitImage(exit_h)} onMouseOut={() => setexitImage(exit)} onClick={() => onBack()}/> 
+           {/* <div style={{position:"absolute", zIndex:"2",width: "20%", height: "100%", left:"80%",top:"65%"}} onClick={() => onOpenWithdraw()}>
+          <Image style={{ content: faqImage }} onMouseEnter={() => setfaqImage(faq_h)} onMouseOut={() => setfaqImage(faq)} /> 
+        </div> */}
+        </Stack>
       </div>
 
       </div>
