@@ -15,14 +15,16 @@ import {getMarketData} from '@src/GlobalState/marketplaceSlice';
 import {millisecondTimestamp, newlineText, siPrefixedNumber} from '@src/utils';
 import {getTheme, theme} from '@src/Theme/theme';
 import {limitSizeOptions} from '@src/Components/components/constants/filter-options';
-import Button from '../src/Components/components/Button';
+import LegacyButton from '../src/Components/components/Button';
 import {hostedImage} from "@src/helpers/image";
 import {appConfig} from "@src/Config";
 import Head from "next/head";
-import {Center, Heading, SimpleGrid} from "@chakra-ui/react";
+import {AspectRatio, Box, Button, Center, Heading, Image, SimpleGrid, VStack} from "@chakra-ui/react";
 import ads from "@src/core/data/ads.json";
 import ImageService from "@src/core/services/image";
 import {useAppSelector} from "@src/Store/hooks";
+import ReactPlayer from "react-player/lazy";
+import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 
 const fadeInUp = keyframes`
   0% {
@@ -187,13 +189,13 @@ const Home = () => {
               Explore
             </span>
             <Link href="/apply">
-              <Button type="legacy-outlined">Become a Creator</Button>
+              <LegacyButton type="legacy-outlined">Become a Creator</LegacyButton>
             </Link>
 
-            <Button onClick={() => window.open(`/collection/founding-member`, '_self')} type="legacy-outlined">
+            <LegacyButton onClick={() => window.open(`/collection/founding-member`, '_self')} type="legacy-outlined">
               <FontAwesomeIcon icon={faFire} className="me-1" style={{ color: '#ff690e' }} />
               Become a Founding Member
-            </Button>
+            </LegacyButton>
           </div>
         </Reveal>
         <Reveal className="onStep d-inline" keyframes={inline} delay={900} duration={1200} triggerOnce>
@@ -250,6 +252,42 @@ const Home = () => {
       {/*    </p>*/}
       {/*  </div>*/}
       {/*</section>*/}
+      <Box
+        position='relative'
+        bg='red.800'
+        h='calc(100vh - 74px)'
+      >
+        <AspectRatio ratio={1920/1080} overflow='visible'>
+          <video
+            id="background-video"
+            autoPlay loop muted
+            style={{
+              minHeight: 'calc(100vh - 74px)',
+              filter: 'brightness(0.7)',
+            }}
+          >
+            <source src='/img/fortune-token-sale-bg.mp4' type="video/mp4" />
+          </video>
+        </AspectRatio>
+        <Box
+          w='full'
+          position='absolute'
+          top='50%'
+          left='50%'
+          transform='translate(-50%, -50%)'
+          textAlign='center'
+        >
+          <VStack>
+            <Image src='/img/ryoshi/fortune-token.png' />
+            <Heading fontSize={80}>
+              RYOSHI DYNASTIES
+            </Heading>
+            <PrimaryButton w='250px' size='lg'>Token Sale</PrimaryButton>
+            <PrimaryButton w='250px' size='lg'>Marketplace</PrimaryButton>
+            <PrimaryButton w='250px' size='lg'>Collections</PrimaryButton>
+          </VStack>
+        </Box>
+      </Box>
       <Jumbotron.Host isDark={userTheme === 'dark'}>
         {!mobile && <div className="container">{JumbotronData()}</div>}
       </Jumbotron.Host>
@@ -283,9 +321,9 @@ const Home = () => {
                   <div className="flex-fill mx-auto mt-2" style={{maxWidth:300}}>
                     {featuredAd.links.map((link, index) => (
                       <a key={index} href={link.url} target={link.external ? '_blank' : '_self'} rel="noreferrer">
-                        <Button type="legacy" className="w-100">
+                        <LegacyButton type="legacy" className="w-100">
                           {link.label}
-                        </Button>
+                        </LegacyButton>
                       </a>
                     ))}
                   </div>
