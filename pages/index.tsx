@@ -23,8 +23,7 @@ import {AspectRatio, Box, Button, Center, Heading, Image, SimpleGrid, VStack} fr
 import ads from "@src/core/data/ads.json";
 import ImageService from "@src/core/services/image";
 import {useAppSelector} from "@src/Store/hooks";
-import ReactPlayer from "react-player/lazy";
-import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
+import TokenSale from "@src/components-v2/feature/battle-bay/token-sale";
 
 const fadeInUp = keyframes`
   0% {
@@ -252,42 +251,7 @@ const Home = () => {
       {/*    </p>*/}
       {/*  </div>*/}
       {/*</section>*/}
-      <Box
-        position='relative'
-        bg='red.800'
-        h='calc(100vh - 74px)'
-      >
-        <AspectRatio ratio={1920/1080} overflow='visible'>
-          <video
-            id="background-video"
-            autoPlay loop muted
-            style={{
-              minHeight: 'calc(100vh - 74px)',
-              filter: 'brightness(0.7)',
-            }}
-          >
-            <source src='/img/fortune-token-sale-bg.mp4' type="video/mp4" />
-          </video>
-        </AspectRatio>
-        <Box
-          w='full'
-          position='absolute'
-          top='50%'
-          left='50%'
-          transform='translate(-50%, -50%)'
-          textAlign='center'
-        >
-          <VStack>
-            <Image src='/img/ryoshi/fortune-token.png' />
-            <Heading fontSize={80}>
-              RYOSHI DYNASTIES
-            </Heading>
-            <PrimaryButton w='250px' size='lg'>Token Sale</PrimaryButton>
-            <PrimaryButton w='250px' size='lg'>Marketplace</PrimaryButton>
-            <PrimaryButton w='250px' size='lg'>Collections</PrimaryButton>
-          </VStack>
-        </Box>
-      </Box>
+      <TokenSale />
       <Jumbotron.Host isDark={userTheme === 'dark'}>
         {!mobile && <div className="container">{JumbotronData()}</div>}
       </Jumbotron.Host>
