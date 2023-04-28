@@ -396,3 +396,16 @@ opacity:0;
   left: 620px;
   background-image: url("/img/battle-bay/mapImages/flowers1.png");
 }
+
+.bank_label{
+	position: absolute;
+	height: 456px;
+	width: 579px;
+	z-index: 20;
+	background-image: url("/img/battle-bay/building_labels/bank_label.png");
+	transition: all .2s ease-in-out; 
+	z-index: 20;
+}
+.bank_label:hover{
+	background-image: url("/img/battle-bay/building_labels/bank_label_hover.png");	
+}

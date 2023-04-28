@@ -85,7 +85,6 @@ const Bank = ({onBack}) => {
      bg=''
      h='calc(100vh - 74px)'
     >
-      <Box p='6'>
       
       <div style={{position:"absolute", zIndex:"2",width: "40%", height: "100%", left:"0%",top:"5%"}} >
         <Image style={{position:"absolute"}} src='\img\battle-bay\bankinterior\banker_chat_background.png' /> 
@@ -93,9 +92,9 @@ const Bank = ({onBack}) => {
         fontSize={{ base: '6px', md: '12px', lg:'16', xl: '18px' }} 
         padding ={{ base: '10px', md: '25px', lg:'40px', xl: '60px'}}
         style={{position:"absolute", zIndex:"3", color:"white"}} className={[styles.gotham_book]}>{randomGreeting}</Text>
-    </div>
+      </div>
 
-      <div style={{position:"absolute", zIndex:"1",width: "95%",height: "30%"}}>
+      <div style={{position:"absolute", zIndex:"1",width: "100%",height: "30%"}}>
 
       <div style={{position:"absolute", zIndex:"1"}} >
         <Image src='img/battle-bay/bankinterior/bank_interior_background_desktop.png'
@@ -104,7 +103,7 @@ const Bank = ({onBack}) => {
         />
       </div>
 
-      <div style={{position:"absolute", zIndex:"1",bottom:"5%",width: "50%",height: "100%"}}>
+      <div style={{position:"absolute", zIndex:"1",top:"60%",width: "40%",height: "100%"}}>
         <Image src={currentGif} style={{position:"absolute", zIndex:"2"}}/>
       </div>
 
@@ -127,7 +126,6 @@ const Bank = ({onBack}) => {
       <Flex margin={'24px'} justify={'center'}>
       </Flex>
 
-      </Box>
     </section>
   )
 };

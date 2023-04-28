@@ -442,7 +442,13 @@ const SetUpButtons = async () => {
             <div id="bank" className={[styles.enlarge]} style={{position:"absolute", marginTop: bankTop, marginLeft: bankLeft, zIndex:"8"}} 
             onClick={() => onChange('bank')}
             >
-              <img src='/img/battle-bay/mapImages/bank_day.png' width={bankWidth} height={bankHeight} /> </div>
+              <img src='/img/battle-bay/mapImages/bank_day.png' width={bankWidth} height={bankHeight} />
+                {/* <div className={[styles.bank_label]} > */}
+              {/* <img className={[styles.bank_label]}  src='/img/battle-bay/building_labels/bank_label.png' 
+              // width={bank_labelWidth} height={bank_labelHeight} 
+              /> */}
+               {/* </div> */}
+            </div>
 
             <div id="announcement" className={[styles.enlarge]} style={{position:"absolute", marginTop: announcementTop, marginLeft: announcementLeft, zIndex:"9"}} 
             // onClick={() => onChange('announcementBoard')}
@@ -459,8 +465,8 @@ const SetUpButtons = async () => {
             
             <div id="moongate" className={[styles.enlarge]} style={{position:"absolute", marginTop: moongateTop, marginLeft: moongateLeft, zIndex:"9"}}>
               <img src='/img/battle-bay/mapImages/moongate_day.png' width={moongateWidth} height={moongateHeight} />
-              <div className={[styles.enlarge]} style={{position:"absolute",  zIndex:"20"}}>
-                <img src='/img/battle-bay/building_labels/moongate_label.png' /> </div>
+              {/* <div className={[styles.enlarge]} style={{position:"absolute",  zIndex:"20"}}>
+                <img src='/img/battle-bay/building_labels/moongate_label.png' /> </div> */}
             </div>
           
             <div id="torii" className={[styles.enlarge]} style={{position:"absolute", marginTop: toriiTop, marginLeft: toriiLeft, zIndex:"9"}} >
@@ -480,8 +486,7 @@ const SetUpButtons = async () => {
             <div className={[styles.enlarge]} style={{position:"absolute", marginTop: academy_labelTop, marginLeft: academy_labelLeft, zIndex:"20"}}>
               <img src='/img/battle-bay/building_labels/academy_label.png' width={academy_labelWidth} height={academy_labelHeight} /> </div>
 
-            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: bank_labelTop, marginLeft: bank_labelLeft, zIndex:"20"}}>
-              <img src='/img/battle-bay/building_labels/bank_label.png' width={bank_labelWidth} height={bank_labelHeight} /> </div>
+            
 
             <div className={[styles.enlarge]} style={{position:"absolute", marginTop: barracks_labelTop, marginLeft: barracks_labelLeft, zIndex:"20"}}>
               <img src='/img/battle-bay/building_labels/barracks_label.png' width={barracks_labelWidth} height={barracks_labelHeight} /> </div>

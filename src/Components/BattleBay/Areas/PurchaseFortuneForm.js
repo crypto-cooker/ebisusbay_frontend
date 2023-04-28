@@ -69,7 +69,9 @@ const PurchaseFortuneForm = ({ isOpen, onClose}) => {
   //usdc and fortune wallet balances
   const [walletUSDC, setWalletUSDC] = useState(0);
   const [walletFortune, setWalletFortune] = useState(0);
-  const [amountReserved, setAmountReserved] = useState(50);
+  const totalFortuneAvailable = 10000000;
+  const [amountReserved, setAmountReserved] = useState(0);
+  const percentageReserved = (amountReserved / totalFortuneAvailable) * 100;
 
   const updateFortuneAmount = (value) =>
   {
@@ -102,7 +104,8 @@ const PurchaseFortuneForm = ({ isOpen, onClose}) => {
         if (allowance.sub(desiredAmount) < 0) {
           await usdcContract.approve(config.contracts.purchaseFortune, constants.MaxUint256);
         }
-
+        
+        //seems to fail here with an error if approval given in previous step
         const purchaseFortuneContract = new Contract(config.contracts.purchaseFortune, FortunePresale, user.provider.getSigner());
         const tx = await purchaseFortuneContract.purchase(fortuneToPurchase)
         const receipt = await tx.wait();
@@ -210,7 +213,7 @@ const PurchaseFortuneForm = ({ isOpen, onClose}) => {
       height={{ base: '15px', md: '30px' }}
       marginLeft={{ base: '42', md: '155' }}
       />
-      <Text className={[styles.gotham_book]} fontSize={{ base: '12px', md: '24px' }}>Fortune ${walletFortune.toFixed(2)} </Text>
+      <Text className={[styles.gotham_book]} fontSize={{ base: '12px', md: '24px' }}>Fortune ${walletFortune/1000}k </Text>
     </GridItem>
 
     <GridItem 
@@ -287,7 +290,7 @@ const PurchaseFortuneForm = ({ isOpen, onClose}) => {
       width={{ base: '75%', md: '100%' }} 
       height={{ base: '40px', md: '850px' }}
       />  */}
-      <Progress style={{ position:"absolute"}} colorScheme='cyan' value={amountReserved}
+      <Progress style={{ position:"absolute"}} colorScheme='cyan' value={percentageReserved}
       height= {{ base: '35px', md:'40px' }}
       width= {{ base: '280px', md: '700px' }}
       />
