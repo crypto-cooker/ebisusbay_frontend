@@ -41,7 +41,7 @@ import styles from './App.module.scss';
 import {Contract} from "ethers";
 import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
-import PurchaseFortune from "@src/Contracts/PurchaseFortune.json";
+
 import './App.module.scss';
 
 const theme = extendTheme({
@@ -63,44 +63,7 @@ const FortuneFAQForm = ({ isOpen, onClose}) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const user = useSelector((state) => state.user);
-  const [fortuneToPurchase, setFortuneToPurchase] = useState(1000);
-  const fortunePrice = 0.03;
-  const [totalPrice, setTotalPrice] = useState(fortuneToPurchase * fortunePrice);
 
-  const updateFortuneAmount = (value) =>
-  {
-    setFortuneToPurchase(value);
-    setTotalPrice(value * fortunePrice);
-  }
-
-  const attemptPurchase = async () => {
-
-    console.log(fortuneToPurchase)
-
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        // console.log(config.contracts.purchaseFortune)
-        // console.log(PurchaseFortune)
-        // console.log(user.provider.getSigner())
-        // console.log(user.address.toLowerCase())
-        //0x0000000000000000000000000000000000000001
-
-        const purchaseFortuneContract = new Contract(config.contracts.purchaseFortune, PurchaseFortune, user.provider.getSigner());
-        const tx = await purchaseFortuneContract.purchase(fortuneToPurchase)
-        const receipt = await tx.wait();
-        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-
-        console.log('Registered')
-      } catch (error) {
-        console.log(error)
-      }
-    } 
-  }
   return (
     <Modal onClose={onClose} isOpen={isOpen}  size="lg"> 
     {/* isCentered */}

@@ -96,8 +96,11 @@ const Bank = ({onBack}) => {
 
       <div style={{position:"absolute", zIndex:"1",width: "95%",height: "30%"}}>
 
-      <div style={{position:"absolute", zIndex:"1",width: "100%",height: "100%"}} >
-        <Image src='img/battle-bay/bankinterior/bank_interior_background_desktop.png' />
+      <div style={{position:"absolute", zIndex:"1"}} >
+        <Image src='img/battle-bay/bankinterior/bank_interior_background_desktop.png'
+        height={{ base: '100%', md: '100%' }} 
+        width={{ base: '100%', md: '100%' }}
+        />
       </div>
 
       <div style={{position:"absolute", zIndex:"1",bottom:"5%",width: "50%",height: "100%"}}>
@@ -115,9 +118,9 @@ const Bank = ({onBack}) => {
         /> 
       </div>
 
-      <div style={{position:"absolute", zIndex:"2",width: "20%", height: "100%", left:"80%",top:"65%"}} onClick={() => onOpenWithdraw()}>
+      {/* <div style={{position:"absolute", zIndex:"2",width: "20%", height: "100%", left:"80%",top:"65%"}} onClick={() => onOpenWithdraw()}>
         <Image style={{ content: faqImage }} onMouseEnter={() => setfaqImage(faq_h)} onMouseOut={() => setfaqImage(faq)} /> 
-      </div>
+      </div> */}
 
       <div style={{position:"absolute", zIndex:"2",width: "20%", height: "100%", left:"80%",top:"95%"}} onClick={() => onBack()}>
         <Image style={{ content: exitImage }} onMouseEnter={() => setexitImage(exit_h)} onMouseOut={() => setexitImage(exit)} /> 
