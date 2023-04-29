@@ -5782,20 +5782,15 @@ iframe.metaverse {
 
 .rd-bank-modal-mask1 {
   --g: #0000 98%,#000;
-  --r: 45px;
-  mask:
-          radial-gradient(var(--r) at 0    0   ,var(--g)) 0    0,
-          radial-gradient(var(--r) at 100% 0   ,var(--g)) 100% 0;
-  mask-size: 51%;
-  mask-repeat: no-repeat;
+  --r: 40px;
+  --mask: radial-gradient(45px at 45px 0,#0000 98%,#000) -45px;
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
 }
 
 .rd-bank-modal-mask2 {
-  --g: #0000 98%,#000;
-  --r: 50px;
-  mask:
-          radial-gradient(var(--r) at 0    0   ,var(--g)) 0    0,
-          radial-gradient(var(--r) at 100% 0   ,var(--g)) 100% 0;
-  mask-size: 51%;
-  mask-repeat: no-repeat;
+
+  --mask: radial-gradient(50px at 50px 0,#0000 98%,#000) -50px;
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
 }
