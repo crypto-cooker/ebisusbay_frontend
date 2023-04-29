@@ -20,7 +20,7 @@ const RdButton = (props: RdButtonProps) => {
       data-group
       className='rd-button gotham_medium'
       px={1}
-      onMouseEnter={() => setIsSpinning(true)}
+      onMouseEnter={() => setIsSpinning(!!props.stickyIcon)}
       onMouseLeave={() => setIsSpinning(false)}
       {...props as BoxProps}
     >

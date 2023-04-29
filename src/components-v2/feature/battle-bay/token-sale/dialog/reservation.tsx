@@ -11,7 +11,7 @@ import {
   Link,
   Progress,
   SimpleGrid,
-  Text,
+  Text, useBreakpointValue,
   VStack
 } from "@chakra-ui/react";
 import {CloseIcon} from "@chakra-ui/icons";
@@ -128,6 +128,10 @@ export default FortuneReservationPage;
 const FortunePurchaseForm = () => {
   const [reserveAmount, setReserveAmount] = useState('');
   const [fortunePrice, setFortunePrice] = useState(0.03);
+  const fullText = useBreakpointValue<boolean>(
+    {base: false, sm: true},
+    {fallback: 'sm'},
+  )
 
   return (
     <Box pb={2}>
@@ -135,13 +139,13 @@ const FortunePurchaseForm = () => {
         <Box>
           <HStack>
             <Image src='/img/battle-bay/bankinterior/usdc.svg' alt="walletIcon" boxSize={6}/>
-            <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>USDC $0.00</Text>
+            <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? 'USDC ' : ''}$0.00</Text>
           </HStack>
           <Link href='#' fontSize={{base: 'xs', md: 'sm'}} textDecoration='underline' isExternal>Purchase USDC <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} ml={1} /></Link>
         </Box>
         <HStack align='start'>
           <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
-          <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>$Fortune  $0.00</Text>
+          <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? '$Fortune ' : ''}$0.00</Text>
         </HStack>
       </Flex>
       <VStack mx={2}>
