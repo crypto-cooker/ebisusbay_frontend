@@ -20065,6 +20065,30 @@
         "kyc": false,
         "verified": false
       }
+    },
+    {
+      "name": "The Real Ape Kingdom",
+      "slug": "the-real-ape-kingdom",
+      "multiToken": false,
+      "address": "0x2F3883AbDBB28410ae9C75DBb98cfD96f44945e8",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "We Are The Real Ape Kingdom. Revived Stronger Than Ever. Join The Discord And Check Out The Fam",
+        "avatar": "/img/collections/the-real-ape-kingdom/avatar.webp",
+        "card": "/img/collections/the-real-ape-kingdom/card.webp",
+        "banner": "/img/collections/the-real-ape-kingdom/banner.webp",
+        "twitter": "https://twitter.com/realapekingdom",
+        "discord": "https://discord.gg/rMquT5caJP",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
     }
   ],
   "drops": [
