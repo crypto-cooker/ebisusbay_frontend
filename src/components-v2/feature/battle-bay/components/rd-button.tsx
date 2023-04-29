@@ -1,26 +1,24 @@
-import {Box, Button, ButtonProps, Image, Text} from "@chakra-ui/react";
+import {Box, BoxProps, ButtonProps, Image} from "@chakra-ui/react";
 import React from "react";
-import {useColorModeValue} from "@chakra-ui/color-mode";
 
-const RdButton = (props: ButtonProps) => {
+interface RdButtonProps extends ButtonProps {
+  stickyIcon?: boolean;
+}
+
+const RdButton = (props: RdButtonProps) => {
   return (
-    <Button
+    <Box
       as='button'
-      bg='#D59728'
-      borderColor='#EC7F00'
-      color='#FFF6A9'
+      borderColor='#D24547'
+      color='#FFF'
       fontSize='2xl'
-      fontWeight='extrabold'
-      px={0}
-      py={1}
       borderRadius='2px'
       position='relative'
-      borderWidth='4px 0px 4px 0px'
+      borderWidth='6px 0px 6px 0px'
       data-group
-      _hover={{ bg: '#FFB01D' }}
-      _active={{borderColor: '#FFFFFF',}}
-      className='rd-button'
-      {...props}
+      className='rd-button gotham_medium'
+      px={1}
+      {...props as BoxProps}
     >
       <Image
         src='/img/ryoshi/fortune-token.png'
@@ -32,10 +30,19 @@ const RdButton = (props: ButtonProps) => {
         _groupHover={{
           visibility: 'visible',
         }}
-        visibility='hidden'
+        visibility={props.stickyIcon ? 'visible' : 'hidden'}
       />
-      {props.children}
-    </Button>
+      <Box
+        px={0}
+        py={1}
+        bg='linear-gradient(to left, #FDAB1A, #FD8800)'
+        _groupHover={{ bg: 'linear-gradient(to left, #FFE818, #FFD001)' }}
+        _groupActive={{borderColor: '#FFFFFF'}}
+      >
+
+        {props.children}
+      </Box>
+    </Box>
   )
 }
 

@@ -5751,7 +5751,51 @@ iframe.metaverse {
   
 }
 
+@font-face {
+  font-family: 'GothamBook';
+  src: local('Gotham-Book'), url('../../fonts/Gotham-Book.ttf') format('truetype'), /* Safari, Android, iOS */
+}
+@font-face {
+  font-family: 'GothamMedium';
+  src: local('GothamMedium'), url('../../fonts/GothamMedium.ttf') format('truetype'), /* Safari, Android, iOS */
+}
+.gotham_book {
+  font-family: 'GothamBook', Fallback, sans-serif;
+}
+.gotham_medium {
+  font-family: 'GothamMedium', Fallback, sans-serif;
+}
 .rd-button {
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: #b39b7f;
+  //-webkit-text-stroke-width: 1px;
+  //-webkit-text-stroke-color: #9f2729;
+  text-shadow:
+          -1px -1px 0 #9f2729,
+          0   -1px 0 #9f2729,
+          1px -1px 0 #9f2729,
+          1px  0   0 #9f2729,
+          1px  1px 0 #9f2729,
+          0    1px 0 #9f2729,
+          -1px  1px 0 #9f2729,
+          -1px  0   0 #9f2729;
+;
+}
+
+.rd-bank-modal-mask1 {
+  --g: #0000 98%,#000;
+  --r: 45px;
+  mask:
+          radial-gradient(var(--r) at 0    0   ,var(--g)) 0    0,
+          radial-gradient(var(--r) at 100% 0   ,var(--g)) 100% 0;
+  mask-size: 51%;
+  mask-repeat: no-repeat;
+}
+
+.rd-bank-modal-mask2 {
+  --g: #0000 98%,#000;
+  --r: 50px;
+  mask:
+          radial-gradient(var(--r) at 0    0   ,var(--g)) 0    0,
+          radial-gradient(var(--r) at 100% 0   ,var(--g)) 100% 0;
+  mask-size: 51%;
+  mask-repeat: no-repeat;
 }
