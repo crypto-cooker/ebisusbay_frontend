@@ -11,16 +11,22 @@ const LandingScene = ({onEnterTokenSale}: LandingSceneProps) => {
   return (
     <>
       <AspectRatio ratio={1920/1080} overflow='visible'>
-        <video
-          id="background-video"
-          autoPlay loop muted
+        <Image
+          src='/img/ryoshi/fortune-token-sale-bg.jpg'
           style={{
             minHeight: 'calc(100vh - 74px)',
-            filter: 'brightness(0.7) blur(5px)',
+            filter: 'brightness(0.7) blur(5px)'
           }}
-        >
-          <source src='/img/ryoshi/fortune-token-sale-bg.mp4' type="video/mp4" />
-        </video>
+        />
+        {/*<video*/}
+        {/*  autoPlay loop muted*/}
+        {/*  style={{*/}
+        {/*    minHeight: 'calc(100vh - 74px)',*/}
+        {/*    filter: 'brightness(0.7) blur(5px)',*/}
+        {/*  }}*/}
+        {/*>*/}
+        {/*  <source src='/img/ryoshi/fortune-token-sale-bg.mp4' type="video/mp4" />*/}
+        {/*</video>*/}
       </AspectRatio>
       <Box
         w='full'

@@ -1,11 +1,13 @@
 import {Box, BoxProps, ButtonProps, Image} from "@chakra-ui/react";
-import React from "react";
+import React, {useState} from "react";
 
 interface RdButtonProps extends ButtonProps {
   stickyIcon?: boolean;
 }
 
 const RdButton = (props: RdButtonProps) => {
+  const [isSpinning, setIsSpinning] = useState(false);
+
   return (
     <Box
       as='button'
@@ -18,10 +20,12 @@ const RdButton = (props: RdButtonProps) => {
       data-group
       className='rd-button gotham_medium'
       px={1}
+      onMouseEnter={() => setIsSpinning(true)}
+      onMouseLeave={() => setIsSpinning(false)}
       {...props as BoxProps}
     >
       <Image
-        src='/img/ryoshi/fortune-token.png'
+        src={isSpinning || props.isLoading ? '/img/ryoshi/fortune-token.gif' : '/img/ryoshi/fortune-token.png'}
         position='absolute'
         left='5px'
         top='50%'

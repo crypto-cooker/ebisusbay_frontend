@@ -199,7 +199,18 @@ const FortunePurchaseProgress = () => {
         h='30px'
         position='relative'
       >
-        <Progress value={80} bg='#272523' h='30px'/>
+        <Progress
+          value={80}
+          bg='#272523'
+          h='30px'
+          sx={{
+            '& > div': {
+              background: 'linear-gradient(to left, #2ec2e5, #0087d3)',
+              boxShadow: '12px 0 15px -4px rgba(31, 73, 125, 0.8), -12px 0 8px -4px rgba(31, 73, 125, 0.8)'
+            },
+          }}
+        />
+
         <SimpleGrid
           columns={8}
           position='absolute'
