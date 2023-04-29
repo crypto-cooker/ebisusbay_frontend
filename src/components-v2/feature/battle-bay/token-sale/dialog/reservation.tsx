@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import {CloseIcon} from "@chakra-ui/icons";
 import RdButton from "@src/components-v2/feature/battle-bay/components/rd-button";
-import React, {useState} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExternalLinkAlt} from "@fortawesome/free-solid-svg-icons";
 
@@ -191,6 +191,21 @@ const FortunePurchaseForm = () => {
 }
 
 const FortunePurchaseProgress = () => {
+
+  const [progressValue, setProgressValue] = useState(0);
+  const progressRef = useRef();
+  const [barSpot, setBarSpot] = useState(0);
+
+  const GetProgress = async () => {
+    const random = Math.floor(Math.random() * 100);
+    setProgressValue(random);
+    setBarSpot(((random   / 100) * progressRef.current.offsetWidth) - 5);  
+  }
+ 
+  useEffect(() => {
+    GetProgress();
+  }, [progressRef]);
+   
   return (
     <>
       <Flex justify='space-between'>
@@ -204,7 +219,8 @@ const FortunePurchaseProgress = () => {
         position='relative'
       >
         <Progress
-          value={80}
+          ref={progressRef}
+          value={progressValue}
           bg='#272523'
           h='30px'
           sx={{
@@ -214,6 +230,12 @@ const FortunePurchaseProgress = () => {
             },
           }}
         />
+        <Image position='absolute' src='/img/battle-bay/bankinterior/progress_bar_spark.png'
+        top={0}
+        h='30px'
+        left={barSpot}
+        zIndex={0}
+         />
 
         <SimpleGrid
           columns={8}
