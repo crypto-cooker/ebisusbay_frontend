@@ -1,7 +1,8 @@
-import {AspectRatio, Box, Flex, Heading, Image, VStack} from "@chakra-ui/react";
+import {AspectRatio, Box, Flex, Heading, Image, Link, VStack} from "@chakra-ui/react";
 import RdButton from "@src/components-v2/feature/battle-bay/components/rd-button";
 import React from "react";
 import {Fade} from "react-awesome-reveal";
+import NextLink from "next/link";
 
 interface LandingSceneProps {
   onEnterTokenSale: () => void;
@@ -43,8 +44,12 @@ const LandingScene = ({onEnterTokenSale}: LandingSceneProps) => {
             </Heading>
             <VStack mt={8}>
               <RdButton w='250px' fontSize={{base: 'xl', sm: '2xl'}} onClick={onEnterTokenSale}>Token Sale</RdButton>
-              <RdButton w='250px' fontSize={{base: 'xl', sm: '2xl'}}>Marketplace</RdButton>
-              <RdButton w='250px' fontSize={{base: 'xl', sm: '2xl'}}>Collections</RdButton>
+              <Link href='https://ebisusbay.notion.site/ebisusbay/Ryoshi-Dynasties-8cb0bb21ad194af092cf1e1f8a8846c6' isExternal>
+                <RdButton w='250px' fontSize={{base: 'xl', sm: '2xl'}}>Whitepaper</RdButton>
+              </Link>
+              <NextLink href='/marketplace'>
+                <RdButton w='250px' fontSize={{base: 'xl', sm: '2xl'}}>Marketplace</RdButton>
+              </NextLink>
             </VStack>
           </Fade>
         </Flex>
