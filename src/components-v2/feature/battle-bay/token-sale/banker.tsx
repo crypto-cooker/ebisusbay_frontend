@@ -1,6 +1,12 @@
 import {AspectRatio, Box, Image} from "@chakra-ui/react";
 import FortunePurchaseDialog from "@src/components-v2/feature/battle-bay/token-sale/dialog";
-import React from "react";
+import React, {useState} from "react";
+import BankerBubbleBox, {TypewriterText} from "@src/components-v2/feature/battle-bay/components/banker-bubble-box";
+
+const bankerImages = {
+  idle: '/img/battle-bay/gifBanker/eyeblink.gif',
+  talking: '/img/battle-bay/gifBanker/mouth.gif',
+};
 
 interface BankerSceneProps {
   onExit: () => void;
@@ -8,6 +14,7 @@ interface BankerSceneProps {
 }
 
 const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
+  const [bankerImage, setBankerImage] = useState(bankerImages.talking);
 
   return (
     <>
@@ -19,14 +26,30 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
           />
         </AspectRatio>
         <Image
-          src='/img/battle-bay/gifBanker/eyeblink.gif'
+          src={bankerImage}
           w='800px'
           position='absolute'
           bottom={0}
           left={0}
         />
+        <Box
+          position='absolute'
+          top={{base: 5, md: 10, lg: 16}}
+          left={{base: 0, md: 10, lg: 16}}
+          w={{base: 'full', md: '600px'}}
+          rounded='lg'
+        >
+          <BankerBubbleBox minH='250px' fontSize={'xl'}>
+            {isVisible && (
+              <TypewriterText
+                text='Welcome, traveler. It seems that since Ebisu has created all these Fortune tokens, that our world has gone through quite an evolution.'
+                onComplete={() => setBankerImage(bankerImages.idle)}
+              />
+            )}
+          </BankerBubbleBox>
+        </Box>
       </Box>
-      <FortunePurchaseDialog isOpen={isVisible} onClose={onExit} />
+      <FortunePurchaseDialog isOpen={false} onClose={onExit} />
     </>
   );
 
