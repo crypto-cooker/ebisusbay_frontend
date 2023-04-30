@@ -1,11 +1,20 @@
 import {AspectRatio, Box, Icon, Image, useBreakpointValue, VStack} from "@chakra-ui/react";
 import FortunePurchaseDialog from "@src/components-v2/feature/battle-bay/token-sale/dialog";
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import BankerBubbleBox, {TypewriterText} from "@src/components-v2/feature/battle-bay/components/banker-bubble-box";
 import RdButton from "@src/components-v2/feature/battle-bay/components/rd-button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRightFromBracket, faCircleInfo} from "@fortawesome/free-solid-svg-icons";
 import {useWindowSize} from "@src/hooks/useWindowSize";
+import {TokenSaleContext, TokenSaleContextProps} from "@src/components-v2/feature/battle-bay/token-sale/context";
+import {Contract, ethers} from "ethers";
+import FortunePresale from "@src/Contracts/FortunePresale.json";
+import {appConfig} from "@src/Config";
+import {useQuery} from "@tanstack/react-query";
+import {useAppSelector} from "@src/Store/hooks";
+
+const config = appConfig();
+const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
 const bankerImages = {
   idle: '/img/battle-bay/gifBanker/eyeblink.gif',
@@ -25,7 +34,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
     {base: true, sm: false},
     {fallback: 'sm'},
   );
-
+  const user = useAppSelector((state) => state.user);
   const windowSize = useWindowSize();
 
   const handlePurchaseDialogOpen = (page?: string) => {
@@ -42,8 +51,37 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
     onExit();
   }, []);
 
+  const { data: tokenSaleContractValues } = useQuery<TokenSaleContextProps>(
+    ['TokenSale', user.address],
+    async () => {
+      const fortuneContract = new Contract(config.contracts.purchaseFortune, FortunePresale, readProvider);
+      const paused = await fortuneContract.paused();
+      const userFortunePurchased = !!user.address ? await fortuneContract.purchases(user.address) : 0;
+      const totalFortunePurchased = await fortuneContract.totalPurchased();
+      const exchangeRate = await fortuneContract.TOKEN_PRICE_USDC();
+      const maxAllocation = await fortuneContract.MAX_PURCHASE();
+      return {
+        paused,
+        userFortunePurchased: Number(userFortunePurchased),
+        totalFortunePurchased: Number(totalFortunePurchased),
+        exchangeRate: Number(exchangeRate),
+        maxAllocation: Number(maxAllocation)
+      } as TokenSaleContextProps;
+    },
+    {
+      // staleTime: 1,
+      initialData: () => ({
+        paused: false,
+        userFortunePurchased: 0,
+        totalFortunePurchased: 0,
+        exchangeRate: 30000,
+        maxAllocation: 10000000
+      })
+    }
+  )
+
   return (
-    <>
+    <TokenSaleContext.Provider value={tokenSaleContractValues}>
       <Box>
         <AspectRatio ratio={1920/1080} overflow='visible'>
           <Image
@@ -107,7 +145,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
         onClose={() => setPurchaseDialogOpen(false)}
         initialPage={purchaseDialogPage}
       />
-    </>
+    </TokenSaleContext.Provider>
   );
 
 }

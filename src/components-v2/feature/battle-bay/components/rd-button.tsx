@@ -42,8 +42,8 @@ const RdButton = (props: RdButtonProps) => {
         bg='linear-gradient(to left, #FDAB1A, #FD8800)'
         _groupHover={{ bg: 'linear-gradient(to left, #FFE818, #FFD001)' }}
         _groupActive={{borderColor: '#FFFFFF'}}
+        ps={props.stickyIcon ? '15px' : '0px'}
       >
-
         {props.children}
       </Box>
     </Box>

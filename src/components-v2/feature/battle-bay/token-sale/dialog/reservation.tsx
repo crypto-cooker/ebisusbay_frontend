@@ -22,13 +22,13 @@ import {
 } from "@chakra-ui/react";
 import {CloseIcon} from "@chakra-ui/icons";
 import RdButton from "@src/components-v2/feature/battle-bay/components/rd-button";
-import React, {ChangeEvent, useCallback, useEffect, useRef, useState} from "react";
+import React, {ChangeEvent, useCallback, useContext, useEffect, useRef, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExternalLinkAlt} from "@fortawesome/free-solid-svg-icons";
 import {BigNumber, Contract, ethers} from "ethers";
 import {ERC20} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {createSuccessfulTransactionToastContent, round} from "@src/utils";
 import {appConfig} from "@src/Config";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "@src/Store/hooks";
@@ -36,6 +36,11 @@ import FortunePresale from "@src/Contracts/FortunePresale.json";
 import {commify} from "ethers/lib/utils";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount, updateFortuneBalance} from "@src/GlobalState/User";
+import {
+  MultiSelectContext,
+  MultiSelectContextProps
+} from "@src/components-v2/feature/account/profile/tabs/listings/context";
+import {TokenSaleContext, TokenSaleContextProps} from "@src/components-v2/feature/battle-bay/token-sale/context";
 
 const config = appConfig();
 
@@ -273,7 +278,6 @@ const FortunePurchaseForm = () => {
   const dec = getDecrementButtonProps()
   const input = getInputProps()
 
-
   return (
     <Box pb={2}>
       <Flex justify='space-between' mb={4} bg='#272523' p={2} mx={1} roundedBottom='xl'>
@@ -358,16 +362,17 @@ const FortunePurchaseForm = () => {
 }
 
 const FortunePurchaseProgress = () => {
-
+  const tokenSaleContext = useContext(TokenSaleContext) as TokenSaleContextProps;
   const [progressValue, setProgressValue] = useState(0);
   const progressRef = useRef<HTMLDivElement>(null);
   const [barSpot, setBarSpot] = useState(0);
 
   const getProgress = async () => {
-    const random = Math.floor(Math.random() * 100);
-    setProgressValue(random);
+
+    const value = (tokenSaleContext.totalFortunePurchased / tokenSaleContext.maxAllocation) * 100;
+    setProgressValue(value);
     const offsetWidth = progressRef.current?.offsetWidth ?? 0;
-    setBarSpot(((random   / 100) * offsetWidth) - 5);
+    setBarSpot((((value > 0 ? value : 1) / 100) * offsetWidth) - 5);
   }
  
   useEffect(() => {
@@ -445,7 +450,7 @@ const FortunePurchaseProgress = () => {
         </SimpleGrid>
       </Box>
       <Box textAlign='center' mt={1}>
-        <Box>% of $Fortune purchased by all users</Box>
+        <Box>{progressValue ? round(progressValue) : ''}% of $Fortune purchased by all users</Box>
       </Box>
     </>
   )
