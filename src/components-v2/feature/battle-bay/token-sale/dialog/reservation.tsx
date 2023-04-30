@@ -1,24 +1,35 @@
 import {
   Box,
-  Button,
+  Button, Center, Checkbox,
   Flex,
-  FormControl,
+  FormControl, FormErrorMessage,
   FormLabel,
   HStack,
   Icon,
   Image,
   Input,
   Link,
-  Progress,
-  SimpleGrid,
+  Progress, ProgressProps,
+  SimpleGrid, Slide,
   Text, useBreakpointValue,
   VStack
 } from "@chakra-ui/react";
 import {CloseIcon} from "@chakra-ui/icons";
 import RdButton from "@src/components-v2/feature/battle-bay/components/rd-button";
-import React, {useState, useRef, useEffect} from "react";
+import React, {useState, useRef, useEffect, useCallback, ChangeEvent} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExternalLinkAlt} from "@fortawesome/free-solid-svg-icons";
+import {getAuthSignerInStorage} from "@src/helpers/storage";
+import {constants, Contract} from "ethers";
+import {ERC20} from "@src/Contracts/Abis";
+import {toast} from "react-toastify";
+import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {appConfig} from "@src/Config";
+import {useSelector} from "react-redux";
+import {useAppSelector} from "@src/Store/hooks";
+import FortunePresale from "@src/Contracts/FortunePresale.json";
+
+const config = appConfig();
 
 interface FortuneReservationPageProps {
   onFaq: () => void;
@@ -126,16 +137,93 @@ const FortuneReservationPage = ({onFaq, onClose}: FortuneReservationPageProps) =
 export default FortuneReservationPage;
 
 const FortunePurchaseForm = () => {
-  const [reserveAmount, setReserveAmount] = useState('');
+  const [fortuneToPurchase, setFortuneToPurchase] = useState('');
   const [fortunePrice, setFortunePrice] = useState(0.03);
   const fullText = useBreakpointValue<boolean>(
     {base: false, sm: true},
     {fallback: 'sm'},
   )
+  const [isExecuting, setIsExecuting] = useState(false);
+  const [executingLabel, setExecutingLabel] = useState('Purchasing');
+  const user = useAppSelector((state) => state.user);
+  const [tosCheck, setTosCheck] = useState(false);
+
+  const [error, setError] = useState('');
+  const [inputError, setInputError] = useState('');
+  const [tosError, setTosError] = useState('');
+
+  const validateInput = () => {
+    if (!fortuneToPurchase || Number(fortuneToPurchase) <= 0) {
+      setInputError('Please enter a value');
+      return false;
+    }
+
+    if (!tosCheck) {
+      setTosError('Please accept the TOS');
+      return false;
+    }
+
+    setError('');
+    setInputError('');
+    setTosError('');
+
+    return true;
+  }
+
+  const handleTosCheck = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setTosCheck(e.target.checked);
+  }, []);
+
+  const attemptPurchase = async () => {
+    // console.log(fortuneToPurchase)
+    const usdcAddress = config.contracts.usdc;
+
+    try {
+      setExecutingLabel('Validating');
+      setIsExecuting(true);
+
+      if (!validateInput()) return;
+
+      // Convert the desired amount of $Fortune to $USDC
+      let desiredAmount = Number(fortuneToPurchase) * fortunePrice;
+      console.log('desiredAmount', desiredAmount);
+
+      // Instantiate USDC contract and check how much USDC the user has already approved
+      const usdcContract = new Contract(usdcAddress, ERC20, user.provider.getSigner());
+      const allowance = await usdcContract.allowance(user.address, config.contracts.purchaseFortune);
+
+      // If the user has not approved the token sale contract to spend enough of their USDC, approve it
+      if (Number(allowance) - desiredAmount < 0) {
+        console.log('Approving')
+        setExecutingLabel('Approving');
+        await usdcContract.approve(config.contracts.purchaseFortune, constants.MaxUint256);
+      }
+
+      setExecutingLabel('Purchasing');
+      //seems to fail here with an error if approval given in previous step
+      const purchaseFortuneContract = new Contract(config.contracts.purchaseFortune, FortunePresale, user.provider.getSigner());
+      const tx = await purchaseFortuneContract.purchase(fortuneToPurchase)
+      const receipt = await tx.wait();
+
+      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      console.log('Purchased $Fortune!')
+    } catch (error: any) {
+      console.log(error);
+      if (error.data) {
+        toast.error(error.data.message);
+      } else if (error.message) {
+        toast.error(error.message);
+      } else {
+        toast.error('Unknown Error');
+      }
+    } finally {
+      setIsExecuting(false);
+    }
+  }
 
   return (
     <Box pb={2}>
-      <Flex justify='space-between' mb={4} bg='#272523' p={2} mx={1}>
+      <Flex justify='space-between' mb={4} bg='#272523' p={2} mx={1} roundedBottom='xl'>
         <Box>
           <HStack>
             <Image src='/img/battle-bay/bankinterior/usdc.svg' alt="walletIcon" boxSize={6}/>
@@ -149,15 +237,18 @@ const FortunePurchaseForm = () => {
         </HStack>
       </Flex>
       <VStack mx={2}>
-        <FormControl>
+        <FormControl isInvalid={!!inputError}>
           <Flex justify='space-between' align='center' direction={{base: 'column', md: 'row'}}>
             <FormLabel>Amount of $Fortune to reserve</FormLabel>
-            <Input
-              type='number'
-              w='200px'
-              value={reserveAmount}
-              onChange={(e: any) => setReserveAmount(e.target.value)}
-            />
+            <Box>
+              <Input
+                type='number'
+                w='200px'
+                value={fortuneToPurchase}
+                onChange={(e: any) => setFortuneToPurchase(e.target.value)}
+              />
+              <FormErrorMessage>{inputError}</FormErrorMessage>
+            </Box>
           </Flex>
         </FormControl>
         <Flex justify='space-between' w='full'>
@@ -166,25 +257,37 @@ const FortunePurchaseForm = () => {
         </Flex>
         <Flex justify='space-between' w='full'>
           <Text>Your total cost</Text>
-          <Text fontWeight='bold'>${fortunePrice * Number(reserveAmount)}</Text>
+          <Text fontWeight='bold'>${fortunePrice * Number(fortuneToPurchase)}</Text>
         </Flex>
       </VStack>
       <Box textAlign='center' mt={8} mb={2} mx={2}>
+        <Box mb={2}>
+          <FormControl isInvalid={!!tosError}>
+            <VStack spacing={0}>
+              <Checkbox colorScheme='blue' size='lg' onChange={handleTosCheck} defaultChecked>
+                <Text fontSize='xs'>
+                  I agree to the Ebisu's Bay <Link href='https://cdn.ebisusbay.com/terms-of-service.html' textDecoration='underline' isExternal>terms of service
+                  <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} ml={1} /></Link>
+                </Text>
+              </Checkbox>
+              <Center>
+                <FormErrorMessage w='full'>{tosError}</FormErrorMessage>
+              </Center>
+            </VStack>
+          </FormControl>
+        </Box>
         <Box
           ps='20px'>
           <RdButton
             w='250px'
             fontSize={{base: 'xl', sm: '2xl'}}
             stickyIcon={true}
-            onClick={() => {}}
+            onClick={attemptPurchase}
+            isLoading={isExecuting}
           >
-            Buy $Fortune
+            {isExecuting ? executingLabel : 'Buy $Fortune'}
           </RdButton>
         </Box>
-        <Text fontSize='xs' mt={2}>
-          By completing this purchase you agree to our <Link href='#' textDecoration='underline' isExternal>terms of service
-          <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} ml={1} /></Link>
-        </Text>
       </Box>
     </Box>
   )
@@ -193,17 +296,21 @@ const FortunePurchaseForm = () => {
 const FortunePurchaseProgress = () => {
 
   const [progressValue, setProgressValue] = useState(0);
-  const progressRef = useRef();
+  const progressRef = useRef<HTMLDivElement>(null);
   const [barSpot, setBarSpot] = useState(0);
 
-  const GetProgress = async () => {
+  const getProgress = async () => {
     const random = Math.floor(Math.random() * 100);
     setProgressValue(random);
-    setBarSpot(((random   / 100) * progressRef.current.offsetWidth) - 5);  
+    const offsetWidth = progressRef.current?.offsetWidth ?? 0;
+    setBarSpot(((random   / 100) * offsetWidth) - 5);
   }
  
   useEffect(() => {
-    GetProgress();
+    async function func() {
+      await getProgress();
+    }
+    func();
   }, [progressRef]);
    
   return (
