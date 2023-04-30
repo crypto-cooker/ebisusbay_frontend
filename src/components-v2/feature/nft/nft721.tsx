@@ -726,7 +726,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                     <ProfilePreview
                       type="Collection"
                       title={collectionName ?? 'View Collection'}
-                      avatar={hostedImage(collectionMetadata?.avatar, true)}
+                      avatar={ImageService.staticAsset.avatar(collectionMetadata?.avatar)}
                       address={address}
                       verified={collection.verification?.verified}
                       to={`/collection/${address}`}

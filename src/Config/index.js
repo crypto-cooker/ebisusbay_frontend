@@ -21,10 +21,15 @@ export const configData = {
     urls: {
       api: 'https://api.ebisusbay.com/',
       app: 'https://app.ebisusbay.com/',
-      cdn: 'https://cdn.ebisusbay.com/',
       subgraph: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.com/api/',
       explorer: 'https://cronoscan.com/',
+      cdn: {
+        primary: 'https://cdn.lotusgalaxy.io/',
+        assets: 'https://ebisusbay-prod.b-cdn.net/',
+        bunnykit: 'https://ik-proxy.b-cdn.net/',
+        legacy: 'https://cdn.ebisusbay.com/',
+      }
     },
     rpc: {
       read: 'https://rpc.ebisusbay.com/',
@@ -89,10 +94,15 @@ export const configData = {
     urls: {
       api: 'https://api.ebisusbay.biz/',
       app: 'https://app.ebisusbay.biz/',
-      cdn: 'https://cdn.ebisusbay.biz/test/',
       subgraph: 'https://cronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.biz/api/',
       explorer: 'https://cronoscan.com/',
+      cdn: {
+        primary: 'https://cdn.lotusgalaxy.io/',
+        assets: 'https://ebisusbay-dev.b-cdn.net/',
+        bunnykit: 'https://ik-proxy.b-cdn.net/',
+        legacy: 'https://cdn.ebisusbay.biz/',
+      }
     },
     rpc: {
       read: 'https://rpc.ebisusbay.com/',
@@ -156,10 +166,15 @@ export const configData = {
     urls: {
       api: 'https://testapi.ebisusbay.biz/',
       app: 'https://testapp.ebisusbay.biz/',
-      cdn: 'https://cdn.ebisusbay.biz/test/',
       subgraph: 'https://testcronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
       cms: 'https://testcms.ebisusbay.biz/api/',
       explorer: 'https://testnet.cronoscan.com/',
+      cdn: {
+        current: 'https://cdn.lotusgalaxy.io/',
+        assets: 'https://ebisusbay-test.b-cdn.net/',
+        bunnykit: 'https://ik-proxy.b-cdn.net/',
+        legacy: 'https://cdn.ebisusbay.biz/test/',
+      }
     },
     rpc: {
       read: 'https://rpc.ebisusbay.biz/',
@@ -219,10 +234,71 @@ export const configData = {
     }
   },
   [environments.local]: {
+    chain: {
+      name: 'Cronos Mainnet Beta',
+      id: '25',
+      symbol: 'CRO',
+    },
     urls: {
       api: 'https://api.ebisusbay.com/',
+      app: 'https://app.ebisusbay.com/',
+      subgraph: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
       cms: 'http://localhost:4000/api/',
+      explorer: 'https://cronoscan.com/',
+      cdn: {
+        primary: 'https://cdn.lotusgalaxy.io/',
+        assets: 'https://ebisusbay-prod.b-cdn.net/',
+        bunnykit: 'https://ik-proxy.b-cdn.net/',
+        legacy: 'https://cdn.ebisusbay.com/',
+      }
     },
+    rpc: {
+      read: 'https://rpc.ebisusbay.com/',
+      write: 'https://evm.cronos.org/',
+    },
+    contracts: {
+      membership: '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5',
+      auction: '0xd488b38d19d5708cbda224c041a24c3e3149bc93',
+      market: '0x7a3CdB2364f92369a602CAE81167d0679087e6a3',
+      stake: '0xeb074cc764F20d8fE4317ab63f45A85bcE2bEcB1',
+      offer: '0x016b347aeb70cc45e3bbaf324feb3c7c464e18b0',
+      madAuction: '0x47E79264A9d1343C04F4A56922bE7e6177aE03a0',
+      slothtyRugsurance: '0x73063E236EadC1e511FbE7313C6D8C5c651009E9',
+      bundle: '0x40874F18922267cc2Ca7933828594aB5078C1065',
+      cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233',
+      gaslessListing: '0x523d6f30c4aaca133daad97ee2a0c48235bff137',
+      gdc: '0xe3e564252249ab55b47b84d6a934f4cbb94233a9'
+    },
+    tokens: {
+      loot: {
+        name: 'LOOT',
+        symbol: 'LOOT',
+        address: '0xEd34211cDD2cf76C3cceE162761A72d7b6601E2B',
+      },
+      mad: {
+        name: 'MAD',
+        symbol: 'MAD',
+        address: '0x212331e1435a8df230715db4c02b2a3a0abf8c61',
+      },
+      trpz: {
+        name: 'TRPZ',
+        symbol: 'TRPZ',
+        address: '0x1Cc0B25BD5105CD8905f7e9cD174435D4C890E02',
+      },
+      bacc: {
+        name: 'BACC',
+        symbol: 'BACC',
+        address: '',
+      },
+      vrse: {
+        name: 'VRSE',
+        symbol: 'VRSE',
+        address: '0x2ba01269eafce04c8dccc4a9887884ab66e4bcb1',
+      }
+    },
+    collections: rpcConfig.known_contracts,
+    drops: rpcConfig.drops,
+    auctions: rpcConfig.auctions,
     vendors: {
       transak: {
         url: 'https://global-stg.transak.com?apiKey=6bdef2f9-cfab-4d58-bb79-82794642a67e&cryptoCurrencyCode=CRO&isAutoFillUserData=true'

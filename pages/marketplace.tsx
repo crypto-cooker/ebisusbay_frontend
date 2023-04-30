@@ -1,33 +1,40 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, {useCallback, useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
 
 import ListingCollection from '../src/Components/components/ListingCollection';
 import TopFilterBar from '../src/Components/components/TopFilterBar';
-import { sortOptions } from '../src/Components/components/constants/sort-options';
-import { marketPlaceCollectionFilterOptions } from '../src/Components/components/constants/filter-options';
+import {sortOptions} from '@src/Components/components/constants/sort-options';
+import {marketPlaceCollectionFilterOptions} from '@src/Components/components/constants/filter-options';
 import SalesCollection from '../src/Components/components/SalesCollection';
-import { filterListings, getMarketData, searchListings, sortListings, filterListingsByVerification } from '../src/GlobalState/marketplaceSlice';
-import { debounce, siPrefixedNumber } from '../src/utils';
-import { SortOption } from '../src/Components/Models/sort-option.model';
-import { MarketFilterCollection } from "../src/Components/Models/market-filters.model";
+import {
+  filterListings,
+  filterListingsByVerification,
+  getMarketData,
+  searchListings,
+  sortListings
+} from '../src/GlobalState/marketplaceSlice';
+import {debounce, siPrefixedNumber} from '@src/utils';
+import {SortOption} from '@src/Components/Models/sort-option.model';
+import {MarketFilterCollection} from "@src/Components/Models/market-filters.model";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Heading} from "@chakra-ui/react";
+import {useAppSelector} from "@src/Store/hooks";
 
 const Marketplace = () => {
   const cacheName = 'marketplace';
 
   const dispatch = useDispatch();
 
-  const marketplace = useSelector((state) => {
+  const marketplace = useAppSelector((state) => {
     return state.marketplace;
   });
 
-  const marketData = useSelector((state) => {
+  const marketData = useAppSelector((state) => {
     return state.marketplace.marketData;
   });
 
   const [openMenu, setOpenMenu] = React.useState(0);
-  const handleBtnClick = (index) => (element) => {
+  const handleBtnClick = (index: number) => (element: any) => {
     var elements = document.querySelectorAll('.tab');
     for (var i = 0; i < elements.length; i++) {
       elements[i].classList.remove('active');
@@ -47,7 +54,7 @@ const Marketplace = () => {
   const selectDefaultSearchValue = marketplace.query.filter.search ?? '';
 
   const selectFilterOptions = marketPlaceCollectionFilterOptions;
-  const selectSortOptions = useSelector((state) => {
+  const selectSortOptions = useAppSelector((state) => {
     if (state.marketplace.hasRank) {
       return sortOptions;
     }
@@ -58,26 +65,20 @@ const Marketplace = () => {
   const [onlyVerified, setOnlyVerified] = useState(false)
 
   useEffect(() => {
-    dispatch(filterListingsByVerification(false, onlyVerified ? 1 : null));
+    dispatch(filterListingsByVerification(false, onlyVerified));
   }, [onlyVerified])
 
-  const onFilterChange = useCallback(
-    (filterOption) => {
+  const onFilterChange = useCallback((filterOption: any) => {
       dispatch(filterListings(filterOption, cacheName));
-    },
-    [dispatch]
-  );
+  }, [dispatch]);
 
-  const onSortChange = useCallback(
-    (sortOption) => {
+  const onSortChange = useCallback((sortOption: any) => {
       dispatch(sortListings(sortOption, cacheName));
-    },
-    [dispatch]
-  );
+    }, [dispatch]);
 
-  const onSearch = debounce((event) => {
+  const onSearch = debounce((event: any) => {
     const { value } = event.target;
-    dispatch(searchListings(value, cacheName));
+    dispatch(searchListings(value, cacheName, false));
   }, 300);
 
   return (

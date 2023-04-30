@@ -2,7 +2,7 @@ import React from 'react';
 
 import AuctionCollection from '../src/Components/components/AuctionCollection';
 import MetaverseModal from '../src/Components/components/MetaverseModal';
-import {hostedImage} from "../src/helpers/image";
+import {hostedImage} from "@src/helpers/image";
 
 const MetaverseAuctions = () => {
   return (

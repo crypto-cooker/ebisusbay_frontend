@@ -6,6 +6,7 @@ import Reveal from 'react-awesome-reveal';
 
 import { theme } from '../src/Theme/theme';
 import {hostedImage} from "../src/helpers/image";
+import {useAppSelector} from "@src/Store/hooks";
 
 const fadeInUp = keyframes`
   0% {
@@ -74,7 +75,7 @@ const GlobalStyles = createGlobalStyle`
 
 const Jumbotron = {
   Host: styled.div`
-    background-image: url(${({ isDark }) =>
+    background-image: url(${({ isDark }: {isDark: boolean}) =>
     isDark ? hostedImage('/img/background/banner-ryoshi-dark.webp') : hostedImage('/img/background/banner-ryoshi-light.webp')});
     background-size: cover;
     background-repeat: no-repeat;
@@ -102,7 +103,7 @@ const Jumbotron = {
 const Custom500 = () => {
   const dispatch = useDispatch();
 
-  const userTheme = useSelector((state) => {
+  const userTheme = useAppSelector((state) => {
     return state.user.theme;
   });
 
@@ -110,7 +111,7 @@ const Custom500 = () => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const breakpointObserver = ({ target }) => {
+      const breakpointObserver = ({ target }: any) => {
         const { innerWidth } = target;
         const newValue = innerWidth < theme.breakpointsNum.md;
         setMobile(newValue);

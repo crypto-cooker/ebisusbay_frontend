@@ -17,6 +17,7 @@ import { hostedImage } from '../../helpers/image';
 import {Heading} from "@chakra-ui/react";
 import {useQuery} from "@tanstack/react-query";
 import { getCollections } from "@src/core/api/next/collectioninfo";
+import ImageService from "@src/core/services/image";
 
 const config = appConfig();
 
@@ -118,7 +119,7 @@ const AuctionComponent = (props) => {
                         <ProfilePreview
                           type="Collection"
                           title={collection.name}
-                          avatar={hostedImage(collection.metadata.avatar, true)}
+                          avatar={ImageService.staticAsset.avatar(collection.metadata.avatar)}
                           address={listing.nftAddress}
                           verified={collection.verification.verified}
                           to={`/collection/${collection.slug}`}

@@ -16,12 +16,12 @@ export const hostedImage = (imgPath, useThumbnail = false) => {
   imgPath = imgPath.replace(/^\/+/g, '');
   const cdn = appConfig('urls.cdn');
 
-  const imageUrl = new URL(imgPath, cdn);
+  const imageUrl = new URL(imgPath, cdn.assets);
 
   if (useThumbnail) {
-    return ImageService.instance.provider.avatar(imageUrl.toString());
+    return ImageService.staticAsset.avatar(imgPath.toString());
   }
-  return ImageService.instance.provider.convert(imageUrl.toString());
+  return ImageService.staticAsset.convert(imgPath.toString());
 }
 /**
  * Build a hosted image URL from our CDN that is fit for the NFT cards

@@ -8,6 +8,7 @@ import {hostedImage} from './helpers/image';
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import {commify} from "ethers/lib/utils";
 import brands from '../src/core/data/brands.json';
+import ImageService from "@src/core/services/image";
 
 const config = appConfig();
 const drops = config.drops;
@@ -743,12 +744,12 @@ export const isEmptyObj = (obj) => {
 
 export const rankingsLogoForCollection = (collection) => {
   let logo = '/img/logos/ebisu-technicolor.svg';
-  if (!collection) hostedImage(logo, true);
+  if (!collection) ImageService.staticAsset.avatar(logo);
 
   if (collection.metadata.rankings?.source === 'rarity_sniper') logo = '/img/logos/rarity-sniper.png';
   else if (collection.metadata.rankings?.source === 'provided') logo = collection.metadata.avatar;
 
-  return hostedImage(logo, true);
+  return ImageService.staticAsset.avatar(logo);
 };
 export const rankingsTitleForCollection = (collection) => {
   let title = `Ranking provided by Ebisu's Bay`;

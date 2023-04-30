@@ -177,7 +177,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
               <Image
                 h={{base: '100px', sm: '150px', md: '250px', lg: '300px', xl: '360px'}}
                 w='full'
-                src={ImageService.instance.provider.banner(profile.banner)}
+                src={ImageService.staticAsset.banner(profile.banner)}
                 objectFit='cover'
                 backgroundRepeat='no-repeat'
                 backgroundPosition='50% 50%'

@@ -19922,7 +19922,7 @@
       "multiToken": false,
       "address": "0xA86f74B47F1193d9d6DBe4029cAf4A2056607D7C",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "There's a coin lying on the ground! Pick it up?",
         "avatar": "/img/collections/diamond-coins/avatar.webp",
@@ -19989,6 +19989,105 @@
         "verified": false,
         "doxx": false,
         "kyc": false
+      }
+    },
+    {
+      "name": "World of Cats: MILK",
+      "slug": "world-of-cats-milk",
+      "multiToken": false,
+      "address": "0xFd14Cb97102eC422ADF507138580798cb2e6B824",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "MILK is your access pass to the World of Cats: Pussy Edition. \nEach MILK can be redeemed for a whitelist spot, or kept for potential future utility.\nMILK was minted by using $FEL during 11/04/23-25/04/23.",
+        "avatar": "/img/collections/world-of-cats-milk/avatar.webp",
+        "card": "/img/collections/world-of-cats-milk/card.webp",
+        "banner": "/img/collections/world-of-cats-milk/banner.webp",
+        "website": "https://worldofcats.xyz/",
+        "twitter": "https://twitter.com/worldofcatsnft",
+        "discord": "https://discord.gg/worldofcats",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": true,
+        "verified": true
+      }
+    },
+    {
+      "name": "Crypto Crows",
+      "slug": "crypto-crows",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Crypto Crows NFT collection is the first from Corvus Labs. In addition to owning one of a kind NFTs, it's primary utility is free shipping on orders from the Crypto Crows custom merchandise website. There will be additional perks such as discounts on rotation based on traits as well as the usual giveaways, contests, airdrops/free mint for future projects.",
+        "avatar": "/img/collections/crypto-crows/avatar.webp",
+        "card": "/img/collections/crypto-crows/card.webp",
+        "banner": "/img/collections/crypto-crows/banner.webp",
+        "website":"https://almurraydesign.com/cryptocrows",
+        "twitter": "https://twitter.com/Corvuslabs_ltd",
+        "discord": "https://discord.gg/ykEJAt8Pce",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
+    },
+    {
+      "name": "Skeleton Key",
+      "slug": "skeleton-key",
+      "multiToken": false,
+      "address": "0x6a532dF8C5Fc31C7eEF7b88151012FD180cB55d4",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Skeleton Keys are required to access Clash⚡City & to Make your Custom Cityzen which will be your Exclusive Pass to access Clash⚡Verse when we go live. The keys will serve as a literal key to Clash⚡\uFE0FCity in Beta. You will also be able to exchange them for relics. Additionally, there are tier exclusive benefits. Tiers of Skeleton Keys include Gold, Silver & Bronze.",
+        "avatar": "/img/collections/skeleton-key/avatar.webp",
+        "card": "/img/collections/skeleton-key/card.webp",
+        "banner": "/img/collections/skeleton-key/banner.webp",
+        "website":"https://clashcity.xyz/",
+        "twitter": "https://twitter.com/ClashCityTV",
+        "discord": "https://discord.gg/ad4dh44aVz",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "The Real Ape Kingdom",
+      "slug": "the-real-ape-kingdom",
+      "multiToken": false,
+      "address": "0x2F3883AbDBB28410ae9C75DBb98cfD96f44945e8",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "We Are The Real Ape Kingdom. Revived Stronger Than Ever. Join The Discord And Check Out The Fam",
+        "avatar": "/img/collections/the-real-ape-kingdom/avatar.webp",
+        "card": "/img/collections/the-real-ape-kingdom/card.webp",
+        "banner": "/img/collections/the-real-ape-kingdom/banner.webp",
+        "twitter": "https://twitter.com/realapekingdom",
+        "discord": "https://discord.gg/rMquT5caJP",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
       }
     }
   ],
@@ -26463,7 +26562,7 @@
       "slug": "0xluckless-v2-2",
       "title": "0xLuckless v2.2",
       "subtitle": "Welcome to 0xLuckless v2.2, a 6K resolution art project, unique and unlike anything else on the blockchain Created with the power of A.I. and advanced editing techniques across multiple platforms to produce the highest quality artwork on Cronos.",
-      "description": "0xLuckless art holders earn exclusive airdrops, Passive CRO earnings via NFT staking with CroDex, Whitelist access to all future drops and secret releases, discounts on 0xLuckless merch and canvas art on EvergreenKings.com and unlock private channel access on the 0xLuckless Discord server which comes with tons of extra benefits including giveaways, custom art, sneak peeks, and helping shape the future of the project.",
+      "description": "0xLuckless art holders earn exclusive airdrops, Passive CRO earnings via NFT staking with CroDex, Whitelist access to all future drops and secret releases, discounts on 0xLuckless merch and canvas art on EvergreenKings.com and unlock private channel access on the 0xLuckless Discord server which comes with tons of extra benefits including giveaways, custom art, sneak peeks, and helping shape the future of the project.\n\nMint a One of One (5 remain) - Get a Signed Print of that One of One plus an 0xLuckless/CroFam Prize Pack\nMint 5 or more - Get a free 0xLuckless ETH NFT of  your choice\nMint 10 or more - Get a free custom designed one of one art piece NFT created by 0xLuckless\n\nAll NFTs from this collection qualify for a free airdrop exclusive PFP from 0xLuckless\n\nMint prizes can be claimed in the 0xLuckless Community Discord server. Prizes subject to change based on availability. Prizes distributed once verification of ownership has been completed. One of one custom designed pieces will be released in the next collection drop, 0xLuckless v2.3 (all one of one pieces). Physical prizes can be substituted if you wish to remain anonymous. ETH nfts are unminted art pieces from the Project Gr4d13nc3 collection on Ethereum. PFPs will be part of Th3 Luckl355, a PFP collection consisting of 1355 one of a kind hand crafted pfps.",
       "author": {
         "name": "0xLuckless",
         "website":"https://linktr.ee/0xLuckless",
@@ -26474,9 +26573,9 @@
       "maxMintPerTx": 5,
       "maxMintPerAddress": 10,
       "totalSupply": 200,
-      "cost": "650",
-      "memberCost": "600",
-      "whitelistCost": "550",
+      "cost": "550",
+      "memberCost": "500",
+      "whitelistCost": "450",
       "foundersOnly": false,
       "start": 1681329600000,
       "end": null,
@@ -26542,7 +26641,8 @@
           "The third installment released when all Rebel AUT Club NFT's have been minted and either 7777 sold out, or the project decides to stop the mint"
         ]
       }
-    },{
+    },
+    {
       "id": 169,
       "slug": "diamond-coins",
       "title": "Diamond Coins of the Grind Guild",
@@ -26569,12 +26669,51 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/diamond-coins/drop.webp",
         "banner": "/img/collections/diamond-coins/banner.webp",
         "avatar": "/img/collections/diamond-coins/avatar.webp",
         "preview": "/img/collections/diamond-coins/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
+      }
+    },
+    {
+      "id": 170,
+      "slug": "crypto-crows",
+      "title": "Crypto Crows",
+      "subtitle": "The Crypto Crows NFT collection is the first from Corvus Labs. In addition to owning one of a kind NFTs, it's primary utility is free shipping on orders from the Crypto Crows custom merchandise website. There will be additional perks such as discounts on rotation based on traits as well as the usual giveaways, contests, airdrops/free mint for future projects.",
+      "description": "Our goal is to create a community for web3/crypto entrepreneurs to forge stronger relationships with brands and their communities. Join us to learn, build and showcase the technology's true power as a tool to add value to products and services.",
+      "author": {
+        "name": "Corvus Labs",
+        "website":"https://almurraydesign.com/cryptocrows",
+        "twitter": "https://twitter.com/Corvuslabs_ltd",
+        "discord": "https://discord.gg/ykEJAt8Pce"
+      },
+      "address": "",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 99,
+      "totalSupply": 1876,
+      "cost": "300",
+      "memberCost": "250",
+      "whitelistCost": "200",
+      "foundersOnly": false,
+      "start": 1683230400000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/crypto-crows/drop.webp",
+        "banner": "/img/drops/crypto-crows/banner.webp",
+        "avatar": "/img/collections/crypto-crows/avatar.webp",
+        "preview": "/img/collections/crypto-crows/card.webp"
       },
       "verification": {
         "doxx": false,

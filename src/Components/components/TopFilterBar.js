@@ -26,13 +26,13 @@ const TopFilterBar = ({
   defaultSearchValue = '',
   filterPlaceHolder = '',
   sortPlaceHolder = '',
-  onFilterChange = () => { },
-  onSortChange = () => { },
-  onSearch = () => { },
+  onFilterChange = (newValue) => { },
+  onSortChange = (newValue) => { },
+  onSearch = (newValue) => { },
   sortValue = undefined,
   filterValue = undefined,
   onlyVerified = false,
-  setOnlyVerified = () => { }
+  setOnlyVerified = (onlyVerified) => { }
 }) => {
   const userTheme = useSelector((state) => {
     return state.user.theme;

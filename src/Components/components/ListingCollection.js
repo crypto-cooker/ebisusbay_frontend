@@ -16,7 +16,7 @@ const ListingCollection = ({
   showLoadMore = true,
   collectionId = null,
   sellerId = '',
-  cacheName = null,
+  cacheName = '',
 }) => {
   const dispatch = useDispatch();
   const listings = useSelector((state) => state.marketplace.listings);

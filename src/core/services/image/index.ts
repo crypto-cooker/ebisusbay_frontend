@@ -1,6 +1,7 @@
 import ImageKitProvider from "@src/core/services/image/imagekit";
 import BunnyCdnProvider from "@src/core/services/image/bunny";
 import IPFSGatewayTools from '@pinata/ipfs-gateway-tools/dist/node';
+import {appConfig} from "@src/Config";
 
 export interface CdnProvider {
   blurred(url: string): string;
@@ -19,7 +20,7 @@ class ImageService {
   public provider: CdnProvider;
 
   constructor() {
-    this.provider = new ImageKitProvider();
+    this.provider = new ImageKitProvider(appConfig('urls.cdn.bunnykit'));
   }
 
   static get instance() {
@@ -29,15 +30,19 @@ class ImageService {
   static withProvider(provider: 'imagekit' | 'bunny') {
     const service = new ImageService();
     if (provider === 'imagekit') {
-      service.provider = new ImageKitProvider();
+      service.provider = new ImageKitProvider(appConfig('urls.cdn.bunnykit'));
     } else if (provider === 'bunny') {
-      service.provider = new BunnyCdnProvider();
+      service.provider = new BunnyCdnProvider(appConfig('urls.cdn.primary'));
     }
     return service;
   }
 
   static get proxy(): CdnProvider {
     return new CdnProxy();
+  }
+
+  static get staticAsset(): CdnProvider {
+    return new BunnyCdnProvider(appConfig('urls.cdn.assets'));
   }
 }
 
@@ -49,8 +54,8 @@ class CdnProxy implements CdnProvider {
   private readonly imagekit: ImageKitProvider;
 
   constructor() {
-    this.bunny = new BunnyCdnProvider();
-    this.imagekit = new ImageKitProvider();
+    this.bunny = new BunnyCdnProvider(appConfig('urls.cdn.primary'));
+    this.imagekit = new ImageKitProvider(appConfig('urls.cdn.bunnykit'));
   }
 
   avatar(url: string): string {
@@ -66,12 +71,10 @@ class CdnProxy implements CdnProvider {
   }
 
   blurred(url: string): string {
-    url = this.cdnUrl(url);
     return this.restrictedCdn(url).blurred(url);
   }
 
   convert(url: string): string {
-    url = this.cdnUrl(url);
     return this.restrictedCdn(url).convert(url);
   }
 
@@ -80,7 +83,6 @@ class CdnProxy implements CdnProvider {
   }
 
   fixedWidth(url: string, width: number, height: number): string {
-    url = this.cdnUrl(url);
     return this.restrictedCdn(url).fixedWidth(url, width, height);
   }
 
@@ -89,7 +91,6 @@ class CdnProxy implements CdnProvider {
   }
 
   nftCard(url: string): string {
-    url = this.cdnUrl(url);
     return this.restrictedCdn(url).nftCard(url);
   }
 
@@ -103,21 +104,20 @@ class CdnProxy implements CdnProvider {
    * @param url
    */
   restrictedCdn(url: string): CdnProvider {
+    if (!url) return this.bunny;
+
     let gatewayTools = new IPFSGatewayTools();
     const isIpfs = gatewayTools.containsCID(url).containsCid;
 
     const containsProxy = url.includes('/proxy/');
 
-    return isIpfs && !containsProxy ? this.bunny : this.imagekit;
-  }
-
-  cdnUrl(url: string) {
-    if (this.restrictedCdn(url) === this.imagekit) {
-      return url;
+    let isGif = false;
+    try {
+      isGif = new URL(url).pathname.endsWith('.gif');
+    } catch (e) {
+      // ignore
     }
-    const oldCdns = ['https://cdn.ebisusbay.com/', 'https://cdn.ebisusbay.biz/', 'https://cdn.ebisusbay.biz/test/'];
-    const newCdn = 'https://cdn.lotusgalaxy.io/';
-    url = oldCdns.reduce((p, n) => p.replace(n, newCdn), url);
-    return url;
+
+    return isIpfs && !containsProxy && !isGif ? this.bunny : this.imagekit;
   }
 }

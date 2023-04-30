@@ -8,6 +8,7 @@ import {hostedImage} from "@src/helpers/image";
 import {Box, Heading, Text} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import {useColorModeValue} from "@chakra-ui/color-mode";
+import ImageService from "@src/core/services/image";
 
 const VerifiedIcon = styled.span`
   font-size: 10px;
@@ -54,7 +55,7 @@ const CustomSlide = ({ index, avatar, banner, title, subtitle, collectionId, url
           {avatar || collectionId ? (
             <span>
               {avatar ? (
-                <img className="lazy" src={hostedImage(avatar, true)} alt={title} />
+                <img className="lazy" src={ImageService.staticAsset.avatar(avatar)} alt={title} />
               ) : (
                 <Blockies seed={collectionId} size={10} scale={6} />
               )}
