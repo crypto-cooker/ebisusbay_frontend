@@ -56,7 +56,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
           w={{base: 'full', md: '600px'}}
           rounded='lg'
         >
-          <BankerBubbleBox minH='250px' fontSize={'xl'}>
+          <BankerBubbleBox fontSize={'xl'}>
             {isVisible && (
               <TypewriterText
                 text={[

@@ -1,36 +1,41 @@
 import {
   Box,
-  Button, Center, Checkbox,
+  Button,
+  Center,
+  Checkbox,
   Flex,
-  FormControl, FormErrorMessage,
+  FormControl,
+  FormErrorMessage,
   FormLabel,
   HStack,
   Icon,
   Image,
   Input,
   Link,
-  Progress, ProgressProps,
-  SimpleGrid, Slide,
-  Text, useBreakpointValue,
+  Progress,
+  SimpleGrid,
+  Stack,
+  Text,
+  useBreakpointValue,
+  useNumberInput,
   VStack
 } from "@chakra-ui/react";
 import {CloseIcon} from "@chakra-ui/icons";
 import RdButton from "@src/components-v2/feature/battle-bay/components/rd-button";
-import React, {useState, useRef, useEffect, useCallback, ChangeEvent} from "react";
+import React, {ChangeEvent, useCallback, useEffect, useRef, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExternalLinkAlt} from "@fortawesome/free-solid-svg-icons";
-import {getAuthSignerInStorage} from "@src/helpers/storage";
-import {BigNumber, constants, Contract, ethers} from "ethers";
+import {BigNumber, Contract, ethers} from "ethers";
 import {ERC20} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent, round} from "@src/utils";
+import {createSuccessfulTransactionToastContent} from "@src/utils";
 import {appConfig} from "@src/Config";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {useAppSelector} from "@src/Store/hooks";
 import FortunePresale from "@src/Contracts/FortunePresale.json";
 import {commify} from "ethers/lib/utils";
 import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
+import {chainConnect, connectAccount, updateFortuneBalance} from "@src/GlobalState/User";
 
 const config = appConfig();
 
@@ -141,7 +146,7 @@ export default FortuneReservationPage;
 
 const FortunePurchaseForm = () => {
   const dispatch = useDispatch();
-  const [fortuneToPurchase, setFortuneToPurchase] = useState('');
+  const [fortuneToPurchase, setFortuneToPurchase] = useState('1000');
   const [fortunePrice, setFortunePrice] = useState(0.03);
   const fullText = useBreakpointValue<boolean>(
     {base: false, sm: true},
@@ -197,17 +202,20 @@ const FortunePurchaseForm = () => {
 
       // Convert the desired amount of $Fortune to $USDC
       const desiredFortuneAmount = BigNumber.from(fortuneToPurchase);
-      const usdcCost = ethers.utils.parseEther((Number(fortuneToPurchase) * fortunePrice).toString());
+      const usdcCost = desiredFortuneAmount.mul(30000).div(1000000);
+      console.log('usdc cost', desiredFortuneAmount.toString(), usdcCost.toString());
 
       // Instantiate USDC contract and check how much USDC the user has already approved
       const usdcContract = new Contract(usdcAddress, ERC20, user.provider.getSigner());
       const allowance = await usdcContract.allowance(user.address, config.contracts.purchaseFortune);
-
+      console.log('allowance', allowance.toString(), ethers.utils.parseEther(usdcCost.toString()).toString());
       // If the user has not approved the token sale contract to spend enough of their USDC, approve it
-      if (allowance.lt(usdcCost)) {
+
+      const approvalAmount = ethers.utils.parseEther(usdcCost.toString()); // or constants.MaxUint256 is there are issues
+      if (allowance.lt(approvalAmount)) {
         console.log('Approving')
         setExecutingLabel('Approving');
-        await usdcContract.approve(config.contracts.purchaseFortune, ethers.utils.parseEther(usdcCost.toString()));
+        await usdcContract.approve(config.contracts.purchaseFortune, approvalAmount);
       }
 
       setExecutingLabel('Purchasing');
@@ -218,6 +226,7 @@ const FortunePurchaseForm = () => {
       const receipt = await tx.wait();
 
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      dispatch(updateFortuneBalance());
       console.log('Purchased $Fortune!')
     } catch (error: any) {
       console.log(error);
@@ -249,32 +258,55 @@ const FortunePurchaseForm = () => {
     }
   }
 
+  const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
+    useNumberInput({
+      step: 1000,
+      defaultValue: fortuneToPurchase, // MIN_PURCHASE
+      min: 1000, // MIN_PURCHASE
+      max: 10000000, // MAX_PURCHASE
+      precision: 0,
+      onChange(valueAsString, valueAsNumber) {
+        setFortuneToPurchase(valueAsString);
+      }
+    })
+  const inc = getIncrementButtonProps()
+  const dec = getDecrementButtonProps()
+  const input = getInputProps()
+
+
   return (
     <Box pb={2}>
       <Flex justify='space-between' mb={4} bg='#272523' p={2} mx={1} roundedBottom='xl'>
-        <Box>
-          <HStack>
-            <Image src='/img/battle-bay/bankinterior/usdc.svg' alt="walletIcon" boxSize={6}/>
-            <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? 'USDC ' : ''}${user.tokenSale.usdc}</Text>
-          </HStack>
-          <Button fontSize={{base: 'xs', md: 'sm'}} variant='unstyled' fontWeight='normal' textDecoration='underline' onClick={handleBuyUsdc}>Purchase USDC <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} ml={1} /></Button>
-        </Box>
-        <HStack align='start'>
-          <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
-          <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? '$Fortune ' : ''}{commify(user.tokenSale.fortune)}</Text>
-        </HStack>
+        {user.address ? (
+          <>
+            <Box>
+              <HStack>
+                <Image src='/img/battle-bay/bankinterior/usdc.svg' alt="walletIcon" boxSize={6}/>
+                <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? 'USDC ' : ''}${user.tokenSale.usdc}</Text>
+              </HStack>
+              <Button fontSize={{base: 'xs', md: 'sm'}} variant='unstyled' fontWeight='normal' textDecoration='underline' onClick={handleBuyUsdc}>Purchase USDC <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} ml={1} /></Button>
+            </Box>
+            <HStack align='start'>
+              <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
+              <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? '$Fortune ' : ''}{commify(user.tokenSale.fortune)}</Text>
+            </HStack>
+          </>
+        ) : (
+          <Box fontSize='sm' textAlign='center' w='full'>Connect wallet to purchase</Box>
+        )}
       </Flex>
       <VStack mx={2}>
         <FormControl isInvalid={!!inputError}>
           <Flex justify='space-between' align='center' direction={{base: 'column', md: 'row'}}>
             <FormLabel>Amount of $Fortune to reserve</FormLabel>
             <Box>
-              <Input
-                type='number'
-                w='200px'
-                value={fortuneToPurchase}
-                onChange={(e: any) => setFortuneToPurchase(e.target.value)}
-              />
+              <Stack direction={{base:'column', lg:'row'}} spacing={2}>
+                <HStack>
+                  <Button {...dec}>-</Button>
+                  <Input w='150px' {...input} />
+                  <Button {...inc}>+</Button>
+                </HStack>
+              </Stack>
               <FormErrorMessage>{inputError}</FormErrorMessage>
             </Box>
           </Flex>
@@ -285,7 +317,7 @@ const FortunePurchaseForm = () => {
         </Flex>
         <Flex justify='space-between' w='full'>
           <Text>Your total cost</Text>
-          <Text fontWeight='bold'>${fortunePrice * Number(fortuneToPurchase)}</Text>
+          <Text fontWeight='bold'>${commify(fortunePrice * Number(fortuneToPurchase))}</Text>
         </Flex>
       </VStack>
       <Box textAlign='center' mt={8} mb={2} mx={2}>
@@ -313,7 +345,11 @@ const FortunePurchaseForm = () => {
             onClick={handlePurchase}
             isLoading={isExecuting}
           >
-            {isExecuting ? executingLabel : 'Buy $Fortune'}
+            {user.address ? (
+              <>{isExecuting ? executingLabel : 'Buy $Fortune'}</>
+            ) : (
+              <>Connect</>
+            )}
           </RdButton>
         </Box>
       </Box>

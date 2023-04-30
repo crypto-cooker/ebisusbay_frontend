@@ -463,16 +463,7 @@ export const connectAccount =
         })
       );
 
-      const usdcContract = new Contract(config.contracts.usdc, ERC20, signer);
-      const usdcBalance = await usdcContract.balanceOf(address);
-
-      const fortuneContract = new Contract(config.contracts.purchaseFortune, FortunePresale, signer);
-      const fortuneBalance = await fortuneContract.purchases(address);
-
-      dispatch(setTokenSaleStats({
-        usdc: ethers.utils.formatEther(usdcBalance),
-        fortune: Number(fortuneBalance),
-      }));
+      dispatch(updateFortuneBalance());
 
     } catch (error) {
       captureException(error, {
@@ -640,6 +631,23 @@ export const updateBalance = () => async (dispatch: any, getState: any) => {
   const balance = ethers.utils.formatEther(await provider.getBalance(address));
   dispatch(userSlice.actions.balanceUpdated(balance));
 };
+
+export const updateFortuneBalance = () => async (dispatch: any, getState: any) => {
+  const { user } = getState();
+  const { address, provider } = user;
+
+  const usdcContract = new Contract(config.contracts.usdc, ERC20, provider.getSigner());
+  const usdcBalance = await usdcContract.balanceOf(address);
+
+  const fortuneContract = new Contract(config.contracts.purchaseFortune, FortunePresale, provider.getSigner());
+  const fortuneBalance = await fortuneContract.purchases(address);
+
+  dispatch(setTokenSaleStats({
+    usdc: ethers.utils.formatUnits(usdcBalance, 6),
+    fortune: Number(fortuneBalance),
+  }));
+};
+
 
 export const retrieveProfile = () => async (dispatch: any, getState: any) => {
   const { user } = getState();
