@@ -3,6 +3,7 @@ import RdButton from "@src/components-v2/feature/battle-bay/components/rd-button
 import React from "react";
 import {Fade} from "react-awesome-reveal";
 import NextLink from "next/link";
+import NextImage from "next/image";
 
 interface LandingSceneProps {
   onEnterTokenSale: () => void;
@@ -12,8 +13,11 @@ const LandingScene = ({onEnterTokenSale}: LandingSceneProps) => {
   return (
     <>
       <AspectRatio ratio={1920/1080} overflow='visible'>
-        <Image
+        <NextImage
+          alt='Ryoshi Dynasties'
           src='/img/ryoshi/fortune-token-sale-bg.jpg'
+          fill={true}
+          priority
           style={{
             minHeight: 'calc(100vh - 74px)',
             filter: 'brightness(0.7) blur(5px)'
