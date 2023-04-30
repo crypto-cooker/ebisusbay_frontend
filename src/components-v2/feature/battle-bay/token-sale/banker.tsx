@@ -1,8 +1,11 @@
-import {AspectRatio, Box, Image, VStack} from "@chakra-ui/react";
+import {AspectRatio, Box, Icon, Image, useBreakpointValue, VStack} from "@chakra-ui/react";
 import FortunePurchaseDialog from "@src/components-v2/feature/battle-bay/token-sale/dialog";
 import React, {useCallback, useState} from "react";
 import BankerBubbleBox, {TypewriterText} from "@src/components-v2/feature/battle-bay/components/banker-bubble-box";
 import RdButton from "@src/components-v2/feature/battle-bay/components/rd-button";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowRightFromBracket, faCircleInfo} from "@fortawesome/free-solid-svg-icons";
+import {useWindowSize} from "@src/hooks/useWindowSize";
 
 const bankerImages = {
   idle: '/img/battle-bay/gifBanker/eyeblink.gif',
@@ -18,6 +21,12 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
   const [bankerImage, setBankerImage] = useState(bankerImages.talking);
   const [purchaseDialogOpen, setPurchaseDialogOpen] = useState(false);
   const [purchaseDialogPage, setPurchaseDialogPage] = useState('default');
+  const abbreviateButtonText = useBreakpointValue<boolean>(
+    {base: true, sm: false},
+    {fallback: 'sm'},
+  );
+
+  const windowSize = useWindowSize();
 
   const handlePurchaseDialogOpen = (page?: string) => {
     if (page === 'faq') {
@@ -54,14 +63,16 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
           top={{base: 5, md: 10, lg: 16}}
           left={{base: 0, md: 10, lg: 16}}
           w={{base: 'full', md: '600px'}}
+          pe={!!windowSize.height && windowSize.height < 600 ? {base: '60px', sm: '150px', md: '0px'} : {base: '5px', md: '0px'}}
+          ps={{base: '5px', md: '0px'}}
           rounded='lg'
         >
-          <BankerBubbleBox fontSize={'xl'}>
+          <BankerBubbleBox fontSize={{base: 'md', sm: 'lg', md: 'xl'}}>
             {isVisible && (
               <TypewriterText
                 text={[
                   'Welcome, traveler. It seems that since Ebisu has created all these Fortune tokens, our world has gone through quite an evolution.<br /><br />',
-                  'The $Fortune token presale will be held here on May 1st, 2023. Click the FAQ button below to learn more.'
+                  'The $Fortune token presale will be held here on May 1st, 2023. Visit the FAQ to learn more.'
                 ]}
                 onComplete={() => setBankerImage(bankerImages.idle)}
               />
@@ -73,9 +84,21 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
           right={-1}
           bottom={20}
         >
-          <VStack spacing={4}>
-            <RdButton w='150px' onClick={() => handlePurchaseDialogOpen('faq')}>FAQ</RdButton>
-            <RdButton w='150px' onClick={handleExit}>Exit</RdButton>
+          <VStack spacing={4} align='end'>
+            <RdButton w={abbreviateButtonText ? '60px' : '150px'} onClick={() => handlePurchaseDialogOpen('faq')}>
+              {abbreviateButtonText ? (
+                <Icon as={FontAwesomeIcon} icon={faCircleInfo} />
+              ) : (
+                <>FAQ</>
+              )}
+            </RdButton>
+            <RdButton w={abbreviateButtonText ? '60px' : '150px'} onClick={handleExit}>
+              {abbreviateButtonText ? (
+                <Icon as={FontAwesomeIcon} icon={faArrowRightFromBracket} />
+              ) : (
+                <>Exit</>
+              )}
+            </RdButton>
           </VStack>
         </Box>
       </Box>

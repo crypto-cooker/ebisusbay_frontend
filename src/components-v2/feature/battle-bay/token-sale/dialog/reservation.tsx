@@ -151,7 +151,7 @@ const FortunePurchaseForm = () => {
   const fullText = useBreakpointValue<boolean>(
     {base: false, sm: true},
     {fallback: 'sm'},
-  )
+  );
   const [isExecuting, setIsExecuting] = useState(false);
   const [executingLabel, setExecutingLabel] = useState('Purchasing');
   const user = useAppSelector((state) => state.user);
