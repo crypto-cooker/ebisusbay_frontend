@@ -20,14 +20,17 @@ import React, {useState, useRef, useEffect, useCallback, ChangeEvent} from "reac
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExternalLinkAlt} from "@fortawesome/free-solid-svg-icons";
 import {getAuthSignerInStorage} from "@src/helpers/storage";
-import {constants, Contract} from "ethers";
+import {BigNumber, constants, Contract, ethers} from "ethers";
 import {ERC20} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {createSuccessfulTransactionToastContent, round} from "@src/utils";
 import {appConfig} from "@src/Config";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useAppSelector} from "@src/Store/hooks";
 import FortunePresale from "@src/Contracts/FortunePresale.json";
+import {commify} from "ethers/lib/utils";
+import MetaMaskOnboarding from "@metamask/onboarding";
+import {chainConnect, connectAccount} from "@src/GlobalState/User";
 
 const config = appConfig();
 
@@ -137,6 +140,7 @@ const FortuneReservationPage = ({onFaq, onClose}: FortuneReservationPageProps) =
 export default FortuneReservationPage;
 
 const FortunePurchaseForm = () => {
+  const dispatch = useDispatch();
   const [fortuneToPurchase, setFortuneToPurchase] = useState('');
   const [fortunePrice, setFortunePrice] = useState(0.03);
   const fullText = useBreakpointValue<boolean>(
@@ -174,35 +178,43 @@ const FortunePurchaseForm = () => {
     setTosCheck(e.target.checked);
   }, []);
 
+  const handleBuyUsdc = () => {
+    const url = new URL(config.vendors.transak.url)
+    url.searchParams.append('cryptoCurrencyCode', 'USDC');
+    if (!!user.address) {
+      url.searchParams.append('walletAddress', user.address);
+    }
+
+    window.open(url, '_blank');
+  }
+
   const attemptPurchase = async () => {
-    // console.log(fortuneToPurchase)
     const usdcAddress = config.contracts.usdc;
 
     try {
       setExecutingLabel('Validating');
       setIsExecuting(true);
 
-      if (!validateInput()) return;
-
       // Convert the desired amount of $Fortune to $USDC
-      let desiredAmount = Number(fortuneToPurchase) * fortunePrice;
-      console.log('desiredAmount', desiredAmount);
+      const desiredFortuneAmount = BigNumber.from(fortuneToPurchase);
+      const usdcCost = ethers.utils.parseEther((Number(fortuneToPurchase) * fortunePrice).toString());
 
       // Instantiate USDC contract and check how much USDC the user has already approved
       const usdcContract = new Contract(usdcAddress, ERC20, user.provider.getSigner());
       const allowance = await usdcContract.allowance(user.address, config.contracts.purchaseFortune);
 
       // If the user has not approved the token sale contract to spend enough of their USDC, approve it
-      if (Number(allowance) - desiredAmount < 0) {
+      if (allowance.lt(usdcCost)) {
         console.log('Approving')
         setExecutingLabel('Approving');
-        await usdcContract.approve(config.contracts.purchaseFortune, constants.MaxUint256);
+        await usdcContract.approve(config.contracts.purchaseFortune, ethers.utils.parseEther(usdcCost.toString()));
       }
 
       setExecutingLabel('Purchasing');
+      console.log('Purchasing', desiredFortuneAmount)
       //seems to fail here with an error if approval given in previous step
       const purchaseFortuneContract = new Contract(config.contracts.purchaseFortune, FortunePresale, user.provider.getSigner());
-      const tx = await purchaseFortuneContract.purchase(fortuneToPurchase)
+      const tx = await purchaseFortuneContract.purchase(desiredFortuneAmount)
       const receipt = await tx.wait();
 
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -221,19 +233,35 @@ const FortunePurchaseForm = () => {
     }
   }
 
+  const handlePurchase = async () => {
+    if (user.address) {
+      if (!validateInput()) return;
+      await attemptPurchase();
+    } else {
+      if (user.needsOnboard) {
+        const onboarding = new MetaMaskOnboarding();
+        onboarding.startOnboarding();
+      } else if (!user.address) {
+        dispatch(connectAccount());
+      } else if (!user.correctChain) {
+        dispatch(chainConnect());
+      }
+    }
+  }
+
   return (
     <Box pb={2}>
       <Flex justify='space-between' mb={4} bg='#272523' p={2} mx={1} roundedBottom='xl'>
         <Box>
           <HStack>
             <Image src='/img/battle-bay/bankinterior/usdc.svg' alt="walletIcon" boxSize={6}/>
-            <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? 'USDC ' : ''}$0.00</Text>
+            <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? 'USDC ' : ''}${user.tokenSale.usdc}</Text>
           </HStack>
-          <Link href='#' fontSize={{base: 'xs', md: 'sm'}} textDecoration='underline' isExternal>Purchase USDC <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} ml={1} /></Link>
+          <Button fontSize={{base: 'xs', md: 'sm'}} variant='unstyled' fontWeight='normal' textDecoration='underline' onClick={handleBuyUsdc}>Purchase USDC <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} ml={1} /></Button>
         </Box>
         <HStack align='start'>
           <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
-          <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? '$Fortune ' : ''}$0.00</Text>
+          <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? '$Fortune ' : ''}{commify(user.tokenSale.fortune)}</Text>
         </HStack>
       </Flex>
       <VStack mx={2}>
@@ -261,12 +289,12 @@ const FortunePurchaseForm = () => {
         </Flex>
       </VStack>
       <Box textAlign='center' mt={8} mb={2} mx={2}>
-        <Box mb={2}>
+        <Box mb={3}>
           <FormControl isInvalid={!!tosError}>
             <VStack spacing={0}>
-              <Checkbox colorScheme='blue' size='lg' onChange={handleTosCheck} defaultChecked>
+              <Checkbox colorScheme='blue' size='lg' onChange={handleTosCheck}>
                 <Text fontSize='xs'>
-                  I agree to the Ebisu's Bay <Link href='https://cdn.ebisusbay.com/terms-of-service.html' textDecoration='underline' isExternal>terms of service
+                  I agree to the <Link href='https://cdn.ebisusbay.com/terms-of-service.html' textDecoration='underline' isExternal>terms of service
                   <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} ml={1} /></Link>
                 </Text>
               </Checkbox>
@@ -282,7 +310,7 @@ const FortunePurchaseForm = () => {
             w='250px'
             fontSize={{base: 'xl', sm: '2xl'}}
             stickyIcon={true}
-            onClick={attemptPurchase}
+            onClick={handlePurchase}
             isLoading={isExecuting}
           >
             {isExecuting ? executingLabel : 'Buy $Fortune'}

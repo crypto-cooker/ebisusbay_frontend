@@ -1,7 +1,8 @@
-import {AspectRatio, Box, Image} from "@chakra-ui/react";
+import {AspectRatio, Box, Image, VStack} from "@chakra-ui/react";
 import FortunePurchaseDialog from "@src/components-v2/feature/battle-bay/token-sale/dialog";
-import React, {useState} from "react";
+import React, {useCallback, useState} from "react";
 import BankerBubbleBox, {TypewriterText} from "@src/components-v2/feature/battle-bay/components/banker-bubble-box";
+import RdButton from "@src/components-v2/feature/battle-bay/components/rd-button";
 
 const bankerImages = {
   idle: '/img/battle-bay/gifBanker/eyeblink.gif',
@@ -15,6 +16,22 @@ interface BankerSceneProps {
 
 const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
   const [bankerImage, setBankerImage] = useState(bankerImages.talking);
+  const [purchaseDialogOpen, setPurchaseDialogOpen] = useState(false);
+  const [purchaseDialogPage, setPurchaseDialogPage] = useState('default');
+
+  const handlePurchaseDialogOpen = (page?: string) => {
+    if (page === 'faq') {
+      setPurchaseDialogPage('faq');
+    } else {
+      setPurchaseDialogPage('main');
+    }
+    setPurchaseDialogOpen(true);
+  }
+
+  const handleExit = useCallback(() => {
+    setBankerImage(bankerImages.talking);
+    onExit();
+  }, []);
 
   return (
     <>
@@ -42,14 +59,31 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
           <BankerBubbleBox minH='250px' fontSize={'xl'}>
             {isVisible && (
               <TypewriterText
-                text='Welcome, traveler. It seems that since Ebisu has created all these Fortune tokens, that our world has gone through quite an evolution.'
+                text={[
+                  'Welcome, traveler. It seems that since Ebisu has created all these Fortune tokens, our world has gone through quite an evolution.<br /><br />',
+                  'The $Fortune token presale will be held here on May 1st, 2023. Click the FAQ button below to learn more.'
+                ]}
                 onComplete={() => setBankerImage(bankerImages.idle)}
               />
             )}
           </BankerBubbleBox>
         </Box>
+        <Box
+          position='absolute'
+          right={-1}
+          bottom={20}
+        >
+          <VStack spacing={4}>
+            <RdButton w='150px' onClick={() => handlePurchaseDialogOpen('faq')}>FAQ</RdButton>
+            <RdButton w='150px' onClick={handleExit}>Exit</RdButton>
+          </VStack>
+        </Box>
       </Box>
-      <FortunePurchaseDialog isOpen={false} onClose={onExit} />
+      <FortunePurchaseDialog
+        isOpen={purchaseDialogOpen}
+        onClose={() => setPurchaseDialogOpen(false)}
+        initialPage={purchaseDialogPage}
+      />
     </>
   );
 

@@ -22,7 +22,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {toast} from 'react-toastify';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import {Modal, ModalTitle, Offcanvas, Spinner} from 'react-bootstrap';
+import {Modal, ModalTitle, Spinner} from 'react-bootstrap';
 import styled from 'styled-components';
 import {Contract, ethers} from 'ethers';
 import {ERC20} from '@src/Contracts/Abis';
@@ -46,16 +46,20 @@ import classnames from "classnames";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import Button from "@src/Components/components/Button";
 import {
-  Box, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader,
+  Box,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
   DrawerOverlay,
-  Flex,
   Heading,
-  Link, SimpleGrid,
-  Spacer,
-  Text, useBreakpointValue,
+  SimpleGrid,
+  Text,
+  useBreakpointValue,
   useClipboard,
-  useColorMode, useMediaQuery,
-  VStack,
+  useColorMode,
+  useMediaQuery,
   Wrap
 } from "@chakra-ui/react";
 import Image from "next/image";
@@ -223,6 +227,7 @@ const Index = function () {
 
   const handleBuyCro = () => {
     const url = new URL(config.vendors.transak.url)
+    url.searchParams.append('cryptoCurrencyCode', 'CRO');
     url.searchParams.append('walletAddress', user.address);
     
     window.open(url, '_blank');

@@ -76,7 +76,7 @@ export const configData = {
     auctions: rpcConfig.auctions,
     vendors: {
       transak: {
-        url: 'https://global.transak.com?apiKey=c5d03d27-59a6-49dd-9de3-5dad9471d105&cryptoCurrencyCode=CRO&isAutoFillUserData=true'
+        url: 'https://global.transak.com?apiKey=c5d03d27-59a6-49dd-9de3-5dad9471d105&isAutoFillUserData=true'
       }
     }
   },
@@ -143,7 +143,7 @@ export const configData = {
     auctions: rpcConfigDev.auctions,
     vendors: {
       transak: {
-        url: 'https://global-stg.transak.com?apiKey=6bdef2f9-cfab-4d58-bb79-82794642a67e&cryptoCurrencyCode=CRO&isAutoFillUserData=true'
+        url: 'https://global-stg.transak.com?apiKey=6bdef2f9-cfab-4d58-bb79-82794642a67e&isAutoFillUserData=true'
       }
     }
   },
@@ -179,7 +179,7 @@ export const configData = {
       gdc: '0xd464f36885163e124e3a15e31c0e581ba3f648ab',
       allianceCenter: '0x9770d8b97A61520E008f648e7879c337D705D021',
       attack: '0x8b85e49b5a59b113656Fa1A36efa9Aeb70DE27C1',
-      purchaseFortune: '0xE1D0a4ae1DF871510d82144a282FF14bAcA8f2c0',
+      purchaseFortune: '0x88D3A9bB3E38cE673493429AD44e16DF3b70Acfa',
       usdc: '0x1E1d0765439d0d53ee40CC4fB454C2343c84342b'
     },
     tokens: {
@@ -214,7 +214,7 @@ export const configData = {
     auctions: rpcConfigTestnet.auctions,
     vendors: {
       transak: {
-        url: 'https://global-stg.transak.com?apiKey=6bdef2f9-cfab-4d58-bb79-82794642a67e&cryptoCurrencyCode=CRO&isAutoFillUserData=true'
+        url: 'https://global-stg.transak.com?apiKey=6bdef2f9-cfab-4d58-bb79-82794642a67e&isAutoFillUserData=true'
       }
     }
   },

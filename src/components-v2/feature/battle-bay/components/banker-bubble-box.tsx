@@ -1,4 +1,4 @@
-import {Box, BoxProps, Grid, GridItem, Image} from "@chakra-ui/react";
+import {BoxProps, Grid, GridItem, Image} from "@chakra-ui/react";
 import React from "react";
 import Typewriter from 'typewriter-effect';
 
@@ -73,7 +73,7 @@ const BankerBubbleBox = (props: BoxProps) => {
 export default BankerBubbleBox;
 
 interface TypewriterProps {
-  text: string;
+  text: string | string[];
   onComplete?: () => void;
 }
 
@@ -81,14 +81,21 @@ export const TypewriterText = ({text, onComplete}: TypewriterProps) => {
   return (
     <Typewriter
       onInit={(typewriter) => {
-        typewriter.typeString(text)
-          .callFunction(() => {
+        if (!Array.isArray(text)) {
+          text = [text];
+        }
+
+        text.forEach((t) => {
+          typewriter.typeString(t).pauseFor(800);
+        });
+
+        typewriter.callFunction(() => {
             if (!!onComplete) onComplete();
-          })
-          .start();
+          }).start();
       }}
       options={{
-        delay: 25,
+        delay: 20,
+        cursor: ''
       }}
     />
   )

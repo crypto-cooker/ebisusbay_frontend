@@ -1,5 +1,5 @@
 import {createSlice, Dispatch} from '@reduxjs/toolkit';
-import { ethers, BigNumber } from 'ethers';
+import {ethers, BigNumber, Contract} from 'ethers';
 import Web3Modal from 'web3modal';
 
 import detectEthereumProvider from '@metamask/detect-provider';
@@ -22,8 +22,8 @@ import { appConfig } from '../Config';
 import { MarketFilterCollection } from '../Components/Models/market-filters.model';
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import UserContractService from "@src/core/contractService";
-import {AppDispatch} from "@src/Store/store";
-import {getNft} from "@src/core/api/endpoints/nft";
+import {ERC20} from "@src/Contracts/Abis";
+import FortunePresale from "@src/Contracts/FortunePresale.json";
 
 const config = appConfig();
 
@@ -60,6 +60,7 @@ interface UserState {
   hasOutstandingOffers: boolean;
   theme: 'light' | 'dark';
   profile: {[key: string]: any};
+  tokenSale: {[key: string]: any};
 }
 
 const userSlice = createSlice({
@@ -121,6 +122,10 @@ const userSlice = createSlice({
     theme: 'dark',
 
     profile: {},
+    tokenSale: {
+      usdc: 0,
+      fortune: 0
+    },
   } as UserState,
   reducers: {
     accountChanged(state, action) {
@@ -224,6 +229,10 @@ const userSlice = createSlice({
       state.authSignature = null;
       state.contractService = null;
       state.fee = 3;
+      state.tokenSale = {
+        usdc: 0,
+        fortune: 0
+      }
     },
     onThemeChanged(state, action) {
       state.theme = action.payload;
@@ -245,6 +254,10 @@ const userSlice = createSlice({
     setProfile(state, action) {
       state.profile = action.payload;
     },
+    setTokenSaleStats(state, action) {
+      state.tokenSale.usdc = action.payload.usdc;
+      state.tokenSale.fortune = action.payload.fortune;
+    }
   },
 });
 
@@ -266,6 +279,7 @@ export const {
   balanceUpdated,
   onOutstandingOffersFound,
   setProfile,
+  setTokenSaleStats,
 } = userSlice.actions;
 export const user = userSlice.reducer;
 
@@ -448,6 +462,18 @@ export const connectAccount =
           usesEscrow
         })
       );
+
+      const usdcContract = new Contract(config.contracts.usdc, ERC20, signer);
+      const usdcBalance = await usdcContract.balanceOf(address);
+
+      const fortuneContract = new Contract(config.contracts.purchaseFortune, FortunePresale, signer);
+      const fortuneBalance = await fortuneContract.purchases(address);
+
+      dispatch(setTokenSaleStats({
+        usdc: ethers.utils.formatEther(usdcBalance),
+        fortune: Number(fortuneBalance),
+      }));
+
     } catch (error) {
       captureException(error, {
         extra: {
