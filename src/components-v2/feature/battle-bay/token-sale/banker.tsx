@@ -69,7 +69,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
       } as TokenSaleContextProps;
     },
     {
-      // staleTime: 1,
+      staleTime: 1,
       initialData: () => ({
         paused: false,
         userFortunePurchased: 0,

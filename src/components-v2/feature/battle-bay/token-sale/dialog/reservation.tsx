@@ -41,6 +41,7 @@ import {
   MultiSelectContextProps
 } from "@src/components-v2/feature/account/profile/tabs/listings/context";
 import {TokenSaleContext, TokenSaleContextProps} from "@src/components-v2/feature/battle-bay/token-sale/context";
+import {useQueryClient} from "@tanstack/react-query";
 
 const config = appConfig();
 
@@ -151,6 +152,7 @@ export default FortuneReservationPage;
 
 const FortunePurchaseForm = () => {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const [fortuneToPurchase, setFortuneToPurchase] = useState('1000');
   const [fortunePrice, setFortunePrice] = useState(0.03);
   const fullText = useBreakpointValue<boolean>(
@@ -232,6 +234,7 @@ const FortunePurchaseForm = () => {
 
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       dispatch(updateFortuneBalance());
+      await queryClient.invalidateQueries(['TokenSale', user.address]);
       console.log('Purchased $Fortune!')
     } catch (error: any) {
       console.log(error);
