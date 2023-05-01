@@ -210,24 +210,24 @@ const FortunePurchaseForm = () => {
       // Convert the desired amount of $Fortune to $USDC
       const desiredFortuneAmount = BigNumber.from(fortuneToPurchase);
       const usdcCost = desiredFortuneAmount.mul(30000).div(1000000);
-      console.log('usdc cost', desiredFortuneAmount.toString(), usdcCost.toString());
+
+      if (usdcCost.gt(user.tokenSale.usdc)) {
+        setInputError('Amount exceeds USDC balance');
+        return false;
+      }
 
       // Instantiate USDC contract and check how much USDC the user has already approved
       const usdcContract = new Contract(usdcAddress, ERC20, user.provider.getSigner());
       const allowance = await usdcContract.allowance(user.address, config.contracts.purchaseFortune);
-      console.log('allowance', allowance.toString(), ethers.utils.parseEther(usdcCost.toString()).toString());
-      // If the user has not approved the token sale contract to spend enough of their USDC, approve it
 
+      // If the user has not approved the token sale contract to spend enough of their USDC, approve it
       const approvalAmount = ethers.utils.parseEther(usdcCost.toString()); // or constants.MaxUint256 is there are issues
       if (allowance.lt(approvalAmount)) {
-        console.log('Approving')
         setExecutingLabel('Approving');
         await usdcContract.approve(config.contracts.purchaseFortune, approvalAmount);
       }
 
       setExecutingLabel('Purchasing');
-      console.log('Purchasing', desiredFortuneAmount)
-      //seems to fail here with an error if approval given in previous step
       const purchaseFortuneContract = new Contract(config.contracts.purchaseFortune, FortunePresale, user.provider.getSigner());
       const tx = await purchaseFortuneContract.purchase(desiredFortuneAmount)
       const receipt = await tx.wait();
@@ -235,7 +235,6 @@ const FortunePurchaseForm = () => {
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       dispatch(updateFortuneBalance());
       await queryClient.invalidateQueries(['TokenSale', user.address]);
-      console.log('Purchased $Fortune!')
     } catch (error: any) {
       console.log(error);
       if (error.data) {
@@ -351,6 +350,7 @@ const FortunePurchaseForm = () => {
             stickyIcon={true}
             onClick={handlePurchase}
             isLoading={isExecuting}
+            disabled={isExecuting}
           >
             {user.address ? (
               <>{isExecuting ? executingLabel : 'Buy $Fortune'}</>

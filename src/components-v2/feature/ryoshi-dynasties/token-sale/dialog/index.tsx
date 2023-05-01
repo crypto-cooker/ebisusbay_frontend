@@ -10,19 +10,19 @@ const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
 interface PurchaseDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  initialPage?: string;
+  initialPage: string;
 }
 
 const FortunePurchaseDialog = ({isOpen, onClose, initialPage}: PurchaseDialogProps) => {
-  const [page, setPage] = useState(initialPage ?? 'default');
+  const [page, setPage] = useState(initialPage);
 
   const handleClose = useCallback(() => {
-    setPage('default');
+    setPage(initialPage);
     onClose();
   }, []);
 
   useEffect(() => {
-    setPage(initialPage ?? 'default');
+    setPage(initialPage);
   }, [initialPage]);
 
   return (

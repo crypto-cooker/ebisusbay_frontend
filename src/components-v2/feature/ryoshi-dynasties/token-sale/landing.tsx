@@ -4,12 +4,15 @@ import React from "react";
 import {Fade} from "react-awesome-reveal";
 import NextLink from "next/link";
 import NextImage from "next/image";
+import {useWindowSize} from "@src/hooks/useWindowSize";
 
 interface LandingSceneProps {
   onEnterTokenSale: () => void;
 }
 
 const LandingScene = ({onEnterTokenSale}: LandingSceneProps) => {
+  const windowSize = useWindowSize();
+
   return (
     <>
       <AspectRatio ratio={1920/1080} overflow='visible'>
@@ -46,9 +49,9 @@ const LandingScene = ({onEnterTokenSale}: LandingSceneProps) => {
             <Heading>
               <Image src='/img/ryoshi/rd-logo.png' w='800px' />
             </Heading>
-            <VStack mt={8}>
+            <VStack mt={!!windowSize.height && windowSize.height < 700 ? 4 : 8}>
               <RdButton w='250px' fontSize={{base: 'xl', sm: '2xl'}} onClick={onEnterTokenSale}>Token Sale</RdButton>
-              <Link href='https://ebisusbay.notion.site/ebisusbay/Ryoshi-Dynasties-8cb0bb21ad194af092cf1e1f8a8846c6' isExternal>
+              <Link href='https://lotusgalaxy.docsend.com/view/cn6irmx92xy2ek2f' isExternal>
                 <RdButton w='250px' fontSize={{base: 'xl', sm: '2xl'}}>Whitepaper</RdButton>
               </Link>
               <NextLink href='/marketplace'>

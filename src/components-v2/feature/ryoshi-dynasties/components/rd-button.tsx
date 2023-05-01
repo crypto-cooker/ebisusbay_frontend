@@ -6,6 +6,7 @@ const gothamMedium = localFont({ src: '../../../../fonts/GothamMedium.woff2' })
 
 interface RdButtonProps extends ButtonProps {
   stickyIcon?: boolean;
+  hideIcon?: boolean;
 }
 
 const RdButton = (props: RdButtonProps) => {
@@ -15,7 +16,7 @@ const RdButton = (props: RdButtonProps) => {
     <Box
       as='button'
       borderColor='#D24547'
-      color='#FFF'
+      color='#FFF !important'
       fontSize='2xl'
       borderRadius='2px'
       position='relative'
@@ -23,28 +24,35 @@ const RdButton = (props: RdButtonProps) => {
       data-group
       className='rd-button'
       px={1}
-      onMouseEnter={() => setIsSpinning(!!props.stickyIcon)}
-      onMouseLeave={() => setIsSpinning(false)}
+      onMouseEnter={() => props.stickyIcon ? {} : setIsSpinning(!!props.stickyIcon)}
+      onMouseLeave={() => props.stickyIcon ? {} : setIsSpinning(false)}
+      onTouchStart={() => props.stickyIcon ? {} : setIsSpinning(!!props.stickyIcon)}
+      onTouchEnd={() => props.stickyIcon ? {} : setIsSpinning(false)}
+      _active={{
+        borderColor: '#FFFFFF'
+      }}
+      bgColor='transparent !important'
       {...props as BoxProps}
     >
-      <Image
-        src={isSpinning || props.isLoading ? '/img/ryoshi/fortune-token.gif' : '/img/ryoshi/fortune-token.png'}
-        position='absolute'
-        left='5px'
-        top='50%'
-        transform='translate(-50%, -50%)'
-        w='70px'
-        _groupHover={{
-          visibility: 'visible',
-        }}
-        visibility={props.stickyIcon ? 'visible' : 'hidden'}
-      />
+      {!props.hideIcon && (
+        <Image
+          src={isSpinning || props.isLoading ? '/img/ryoshi/fortune-token.gif' : '/img/ryoshi/fortune-token.png'}
+          position='absolute'
+          left='5px'
+          top='50%'
+          transform='translate(-50%, -50%)'
+          w='70px'
+          _groupFocus={{
+            visibility: 'visible',
+          }}
+          visibility={props.stickyIcon ? 'visible' : 'hidden'}
+        />
+      )}
       <Box
         px={0}
         py={1}
         bg='linear-gradient(to left, #FDAB1A, #FD8800)'
         _groupHover={{ bg: 'linear-gradient(to left, #FFE818, #FFD001)' }}
-        _groupActive={{borderColor: '#FFFFFF'}}
         ps={props.stickyIcon ? '15px' : '0px'}
         className={gothamMedium.className}
       >

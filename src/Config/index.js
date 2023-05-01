@@ -46,7 +46,9 @@ export const configData = {
       bundle: '0x40874F18922267cc2Ca7933828594aB5078C1065',
       cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233',
       gaslessListing: '0x523d6f30c4aaca133daad97ee2a0c48235bff137',
-      gdc: '0xe3e564252249ab55b47b84d6a934f4cbb94233a9'
+      gdc: '0xe3e564252249ab55b47b84d6a934f4cbb94233a9',
+      purchaseFortune: '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566',
+      usdc: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59'
       // allianceCenter: '0xba7Eb8a6BD856b652cF9CA4ed2bbE7fE4325Da17'
     },
     tokens: {
@@ -83,6 +85,10 @@ export const configData = {
       transak: {
         url: 'https://global.transak.com?apiKey=c5d03d27-59a6-49dd-9de3-5dad9471d105&isAutoFillUserData=true'
       }
+    },
+    tokenSale: {
+      vipStart: 1682971200,
+      publicStart: 1682974800
     }
   },
   [environments.development]: {
@@ -119,7 +125,9 @@ export const configData = {
       bundle: '0x40874F18922267cc2Ca7933828594aB5078C1065',
       cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233',
       gaslessListing: '0x523d6f30c4aaca133daad97ee2a0c48235bff137',
-      gdc: '0xe3e564252249ab55b47b84d6a934f4cbb94233a9'
+      gdc: '0xe3e564252249ab55b47b84d6a934f4cbb94233a9',
+      purchaseFortune: '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566',
+      usdc: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59'
     },
     tokens: {
       loot: {
@@ -155,6 +163,10 @@ export const configData = {
       transak: {
         url: 'https://global-stg.transak.com?apiKey=6bdef2f9-cfab-4d58-bb79-82794642a67e&isAutoFillUserData=true'
       }
+    },
+    tokenSale: {
+      vipStart: 1682971200,
+      publicStart: 1682974800
     }
   },
   [environments.testnet]: {
@@ -231,6 +243,10 @@ export const configData = {
       transak: {
         url: 'https://global-stg.transak.com?apiKey=6bdef2f9-cfab-4d58-bb79-82794642a67e&isAutoFillUserData=true'
       }
+    },
+    tokenSale: {
+      vipStart: 1682971200,
+      publicStart: 1682974800
     }
   },
   [environments.local]: {
@@ -303,6 +319,10 @@ export const configData = {
       transak: {
         url: 'https://global-stg.transak.com?apiKey=6bdef2f9-cfab-4d58-bb79-82794642a67e&cryptoCurrencyCode=CRO&isAutoFillUserData=true'
       }
+    },
+    tokenSale: {
+      vipStart: 1682971200,
+      publicStart: 1682974800
     }
   }
 };

@@ -643,7 +643,7 @@ export const updateFortuneBalance = () => async (dispatch: any, getState: any) =
   const fortuneBalance = await fortuneContract.purchases(address);
 
   dispatch(setTokenSaleStats({
-    usdc: ethers.utils.formatUnits(usdcBalance, 6),
+    usdc: usdcBalance.div(1000000).toNumber(),
     fortune: Number(fortuneBalance),
   }));
 };

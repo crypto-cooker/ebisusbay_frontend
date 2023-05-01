@@ -4,7 +4,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import BankerBubbleBox, {TypewriterText} from "@src/components-v2/feature/ryoshi-dynasties/components/banker-bubble-box";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRightFromBracket, faCircleInfo} from "@fortawesome/free-solid-svg-icons";
+import {faArrowRightFromBracket, faCircleInfo, faDollarSign} from "@fortawesome/free-solid-svg-icons";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import {TokenSaleContext, TokenSaleContextProps} from "@src/components-v2/feature/ryoshi-dynasties/token-sale/context";
 import {Contract, ethers} from "ethers";
@@ -41,7 +41,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
     if (page === 'faq') {
       setPurchaseDialogPage('faq');
     } else {
-      setPurchaseDialogPage('main');
+      setPurchaseDialogPage('default');
     }
     setPurchaseDialogOpen(true);
   }
@@ -110,7 +110,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
               <TypewriterText
                 text={[
                   'Welcome, traveler. It seems that since Ebisu has created all these Fortune tokens, our world has gone through quite an evolution.<br /><br />',
-                  'The $Fortune token presale will be held here on May 1st at 8pm UTC. Visit the FAQ to learn more.'
+                  'The $Fortune token presale will be held here on May 1st at 8pm UTC. VIPs will have exclusive access to the sale for one hour before the public sale.'
                 ]}
                 onComplete={() => setBankerImage(bankerImages.idle)}
               />
@@ -123,14 +123,21 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
           bottom={20}
         >
           <VStack spacing={4} align='end'>
-            <RdButton w={abbreviateButtonText ? '60px' : '150px'} onClick={() => handlePurchaseDialogOpen('faq')}>
+            <RdButton w={abbreviateButtonText ? '60px' : '200px'} hideIcon={abbreviateButtonText} onClick={() => handlePurchaseDialogOpen('default')}>
+              {abbreviateButtonText ? (
+                <Icon as={FontAwesomeIcon} icon={faDollarSign} />
+              ) : (
+                <>Buy $Fortune</>
+              )}
+            </RdButton>
+            <RdButton w={abbreviateButtonText ? '60px' : '200px'} hideIcon={abbreviateButtonText} onClick={() => handlePurchaseDialogOpen('faq')}>
               {abbreviateButtonText ? (
                 <Icon as={FontAwesomeIcon} icon={faCircleInfo} />
               ) : (
                 <>FAQ</>
               )}
             </RdButton>
-            <RdButton w={abbreviateButtonText ? '60px' : '150px'} onClick={handleExit}>
+            <RdButton w={abbreviateButtonText ? '60px' : '200px'} hideIcon={abbreviateButtonText} onClick={handleExit}>
               {abbreviateButtonText ? (
                 <Icon as={FontAwesomeIcon} icon={faArrowRightFromBracket} />
               ) : (
