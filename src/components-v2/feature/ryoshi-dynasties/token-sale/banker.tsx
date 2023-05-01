@@ -115,7 +115,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
                     'The $Fortune token presale is now open to the public! Press the "Buy $Fortune" button to get started.' :
                   Date.now() > config.tokenSale.vipStart ?
                     'The $Fortune token presale is now open to VIPs! Press the "Buy $Fortune" button to get started.' :
-                    'The $Fortune token presale will be held here on May 1st at 8pm UTC. VIPs will have exclusive access to the sale for one hour before the public sale.'
+                    'The $Fortune token presale will be held here on May 1st at 8pm UTC. VIPs will have exclusive access for one hour before the member sale.'
                 ]}
                 onComplete={() => setBankerImage(bankerImages.idle)}
               />

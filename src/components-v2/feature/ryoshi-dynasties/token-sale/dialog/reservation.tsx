@@ -140,7 +140,9 @@ const FortuneReservationPage = ({onFaq, onClose}: FortuneReservationPageProps) =
           p={4}
           fontSize='sm'
         >
-          <FortunePurchaseProgress />
+          {config.tokenSale.vipStart < Date.now() && (
+            <FortunePurchaseProgress />
+          )}
         </Box>
       </Box>
     </>
@@ -380,7 +382,7 @@ const FortunePurchaseForm = () => {
           </Box>
         </>
       ) : (
-        <Center>{timeSince(config.tokenSale.vipStart)}</Center>
+        <Center my={8}>Token sale will start in {timeSince(config.tokenSale.vipStart)} (8pm UTC)</Center>
       )}
     </Box>
   )

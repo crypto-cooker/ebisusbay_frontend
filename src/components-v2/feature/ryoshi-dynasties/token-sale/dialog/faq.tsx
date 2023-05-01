@@ -94,13 +94,13 @@ const FortuneFaqPage = ({onBack, onClose}: FortuneFaqPageProps) => {
           </Flex>
         </Box>
         <Stack spacing={3} p={2}>
-          <Text className={gothamXLight.className} fontSize={{ base: '12px', md: '12px' }} color='#c5c5c5'>
+          <Text className={gothamXLight.className} fontSize={{ base: '12px', md: '12px' }} fontWeight='bold' color='#F48F0C'>
             ***As you approach the banker's counter, he looks up from his bag of Fortune tokens and greets you with a friendly smile.***
           </Text>
           <Text className={gothamBook.className} fontSize={{ base: '12px', md: '16px' }} >
             Hello there, traveler. I couldn't help but notice that NFT you're carrying in your wallet. That tells me you're quite the loyal explorer of the Lotus Galaxy.
           </Text>
-          <Text className={gothamXLight.className} fontSize={{ base: '12px', md: '12px' }} color='#c5c5c5'>
+          <Text className={gothamXLight.className} fontSize={{ base: '12px', md: '12px' }} fontWeight='bold' color='#F48F0C'>
             ***The banker pauses for a moment, as he looks at you from your feet upwards.***
           </Text>
           <Text className={gothamBook.className} fontSize={{ base: '12px', md: '16px' }} >
@@ -110,7 +110,7 @@ const FortuneFaqPage = ({onBack, onClose}: FortuneFaqPageProps) => {
           <Text className={gothamBook.className} fontSize={{ base: '12px', md: '16px' }} >
             In this presale, the minimum purchase is 1000 tokens. Each token is priced at $0.03.
           </Text>
-          <Text className={gothamXLight.className} fontSize={{ base: '12px', md: '12px' }} color='#c5c5c5'>
+          <Text className={gothamXLight.className} fontSize={{ base: '12px', md: '12px' }} fontWeight='bold' color='#F48F0C'>
             ***The banker leans in closer and whispers,***
           </Text>
           <Text className={gothamBook.className} fontSize={{ base: '12px', md: '16px' }} >
@@ -123,7 +123,7 @@ const FortuneFaqPage = ({onBack, onClose}: FortuneFaqPageProps) => {
             with a rarity based on how many tokens you purchase.
             Thanks to this NFT, you will be served by a different Fortune teller for a personalized Fortune experience.
           </Text>
-          <Text className={gothamXLight.className} fontSize={{ base: '12px', md: '12px' }} color='#c5c5c5'>
+          <Text className={gothamXLight.className} fontSize={{ base: '12px', md: '12px' }} fontWeight='bold' color='#F48F0C'>
             ***The banker nods in delightful approval at his own words.***
           </Text>
           <Text className={gothamBook.className} fontSize={{ base: '12px', md: '16px' }} >
@@ -141,14 +141,14 @@ const FortuneFaqPage = ({onBack, onClose}: FortuneFaqPageProps) => {
           <Text className={gothamBook.className} fontSize={{ base: '12px', md: '16px' }} >
             Finally… should you be one of the few lucky ones to be able to purchase 250000 tokens, the Legendary NFT will be yours, and the most prestigious of all Fortune tellers will be your point of contact: Mr. Bertram Scuddlesworth Esq.
           </Text>
-          <Text className={gothamXLight.className} fontSize={{ base: '12px', md: '12px' }} color='#c5c5c5'>
+          <Text className={gothamXLight.className} fontSize={{ base: '12px', md: '12px' }} fontWeight='bold' color='#F48F0C'>
             ***He leans back and gives you a reassuring smile.***
           </Text>
           <Text className={gothamBook.className} fontSize={{ base: '12px', md: '16px' }} >Only up to 1% of the total supply of Fortune tokens will be sold during the presale. Anything left over after one week will go to community rewards.</Text>
           <Text className={gothamBook.className} fontSize={{ base: '12px', md: '16px' }} >So, what do you say? Are you ready to purchase some tokens?</Text>
-          <Text className={gothamXLight.className} fontSize={{ base: '12px', md: '12px' }} color='#c5c5c5'>***At this point, the banker looks at you straight into your eyes, in anticipation.*** </Text>
-          <Text className={gothamBook.className} fontSize={{ base: '12px', md: '16px' }} >”… I wish I were an adventurer like you… </Text>
-          <Text className={gothamXLight.className} fontSize={{ base: '12px', md: '12px' }} color='#c5c5c5'> ***He mumbles, silently, while looking down.***</Text>
+          <Text className={gothamXLight.className} fontSize={{ base: '12px', md: '12px' }} fontWeight='bold' color='#F48F0C'>***At this point, the banker looks at you straight into your eyes, in anticipation.*** </Text>
+          <Text className={gothamBook.className} fontSize={{ base: '12px', md: '16px' }} >...I wish I were an adventurer like you...</Text>
+          <Text className={gothamXLight.className} fontSize={{ base: '12px', md: '12px' }} fontWeight='bold' color='#F48F0C'> ***He mumbles, silently, while looking down.***</Text>
         </Stack>
       </Box>
     </>
