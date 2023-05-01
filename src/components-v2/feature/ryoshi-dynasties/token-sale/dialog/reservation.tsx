@@ -152,7 +152,7 @@ export default FortuneReservationPage;
 const FortunePurchaseForm = () => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const [fortuneToPurchase, setFortuneToPurchase] = useState('1000');
+  const [fortuneToPurchase, setFortuneToPurchase] = useState('5000');
   const [fortunePrice, setFortunePrice] = useState(0.03);
   const fullText = useBreakpointValue<boolean>(
     {base: false, sm: true},
