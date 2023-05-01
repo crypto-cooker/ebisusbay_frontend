@@ -87,8 +87,8 @@ export const configData = {
       }
     },
     tokenSale: {
-      vipStart: 1682971200,
-      publicStart: 1682974800
+      vipStart: 1682971200000,
+      publicStart: 1682974800000
     }
   },
   [environments.development]: {
@@ -165,8 +165,8 @@ export const configData = {
       }
     },
     tokenSale: {
-      vipStart: 1682971200,
-      publicStart: 1682974800
+      vipStart: 1682971200000,
+      publicStart: 1682974800000
     }
   },
   [environments.testnet]: {
@@ -245,8 +245,8 @@ export const configData = {
       }
     },
     tokenSale: {
-      vipStart: 1682971200,
-      publicStart: 1682974800
+      vipStart: 1682932216000,
+      publicStart: 1682974800000
     }
   },
   [environments.local]: {
@@ -321,8 +321,8 @@ export const configData = {
       }
     },
     tokenSale: {
-      vipStart: 1682971200,
-      publicStart: 1682974800
+      vipStart: 1682971200000,
+      publicStart: 1682974800000
     }
   }
 };

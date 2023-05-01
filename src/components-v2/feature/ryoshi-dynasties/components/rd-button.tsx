@@ -24,10 +24,8 @@ const RdButton = (props: RdButtonProps) => {
       data-group
       className='rd-button'
       px={1}
-      onMouseEnter={() => props.stickyIcon ? {} : setIsSpinning(!!props.stickyIcon)}
-      onMouseLeave={() => props.stickyIcon ? {} : setIsSpinning(false)}
-      onTouchStart={() => props.stickyIcon ? {} : setIsSpinning(!!props.stickyIcon)}
-      onTouchEnd={() => props.stickyIcon ? {} : setIsSpinning(false)}
+      onMouseEnter={() => setIsSpinning(!!props.stickyIcon)}
+      onMouseLeave={() => setIsSpinning(false)}
       _active={{
         borderColor: '#FFFFFF'
       }}
@@ -43,6 +41,9 @@ const RdButton = (props: RdButtonProps) => {
           transform='translate(-50%, -50%)'
           w='70px'
           _groupFocus={{
+            visibility: 'visible',
+          }}
+          _groupHover={{
             visibility: 'visible',
           }}
           visibility={props.stickyIcon ? 'visible' : 'hidden'}

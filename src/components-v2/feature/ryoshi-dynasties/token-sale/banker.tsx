@@ -60,6 +60,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
       const totalFortunePurchased = await fortuneContract.totalPurchased();
       const exchangeRate = await fortuneContract.TOKEN_PRICE_USDC();
       const maxAllocation = await fortuneContract.MAX_PURCHASE();
+      // const userMaxPurchaseAmount =
       return {
         paused,
         userFortunePurchased: Number(userFortunePurchased),
@@ -110,7 +111,11 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
               <TypewriterText
                 text={[
                   'Welcome, traveler. It seems that since Ebisu has created all these Fortune tokens, our world has gone through quite an evolution.<br /><br />',
-                  'The $Fortune token presale will be held here on May 1st at 8pm UTC. VIPs will have exclusive access to the sale for one hour before the public sale.'
+                  Date.now() > config.tokenSale.publicStart ?
+                    'The $Fortune token presale is now open to the public! Press the "Buy $Fortune" button to get started.' :
+                  Date.now() > config.tokenSale.vipStart ?
+                    'The $Fortune token presale is now open to VIPs! Press the "Buy $Fortune" button to get started.' :
+                    'The $Fortune token presale will be held here on May 1st at 8pm UTC. VIPs will have exclusive access to the sale for one hour before the public sale.'
                 ]}
                 onComplete={() => setBankerImage(bankerImages.idle)}
               />
@@ -121,23 +126,26 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
           position='absolute'
           right={-1}
           bottom={20}
+          w={abbreviateButtonText ? '60px' : '250px'}
         >
           <VStack spacing={4} align='end'>
-            <RdButton w={abbreviateButtonText ? '60px' : '200px'} hideIcon={abbreviateButtonText} onClick={() => handlePurchaseDialogOpen('default')}>
-              {abbreviateButtonText ? (
-                <Icon as={FontAwesomeIcon} icon={faDollarSign} />
-              ) : (
-                <>Buy $Fortune</>
-              )}
-            </RdButton>
-            <RdButton w={abbreviateButtonText ? '60px' : '200px'} hideIcon={abbreviateButtonText} onClick={() => handlePurchaseDialogOpen('faq')}>
+            {Date.now() > config.tokenSale.vipStart && (
+              <RdButton w='full' hideIcon={abbreviateButtonText} onClick={() => handlePurchaseDialogOpen('default')}>
+                {abbreviateButtonText ? (
+                  <Icon as={FontAwesomeIcon} icon={faDollarSign} />
+                ) : (
+                  <>Buy $Fortune</>
+                )}
+              </RdButton>
+            )}
+            <RdButton w='full' hideIcon={abbreviateButtonText} onClick={() => handlePurchaseDialogOpen('faq')}>
               {abbreviateButtonText ? (
                 <Icon as={FontAwesomeIcon} icon={faCircleInfo} />
               ) : (
                 <>FAQ</>
               )}
             </RdButton>
-            <RdButton w={abbreviateButtonText ? '60px' : '200px'} hideIcon={abbreviateButtonText} onClick={handleExit}>
+            <RdButton w='full' hideIcon={abbreviateButtonText} onClick={handleExit}>
               {abbreviateButtonText ? (
                 <Icon as={FontAwesomeIcon} icon={faArrowRightFromBracket} />
               ) : (

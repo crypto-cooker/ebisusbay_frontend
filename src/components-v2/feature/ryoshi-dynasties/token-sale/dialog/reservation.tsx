@@ -28,7 +28,7 @@ import {faExternalLinkAlt} from "@fortawesome/free-solid-svg-icons";
 import {BigNumber, Contract, ethers} from "ethers";
 import {ERC20} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent, round} from "@src/utils";
+import {createSuccessfulTransactionToastContent, round, secondsToDhms, timeSince} from "@src/utils";
 import {appConfig} from "@src/Config";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "@src/Store/hooks";
@@ -168,20 +168,33 @@ const FortunePurchaseForm = () => {
   const [inputError, setInputError] = useState('');
   const [tosError, setTosError] = useState('');
 
-  const validateInput = () => {
+  const validateInput = async () => {
     if (!fortuneToPurchase || Number(fortuneToPurchase) <= 0) {
       setInputError('Please enter a value');
       return false;
     }
+    setInputError('');
 
     if (!tosCheck) {
       setTosError('Please accept the TOS');
       return false;
     }
-
-    setError('');
-    setInputError('');
     setTosError('');
+
+    if (Date.now() > config.tokenSale.publicStart) {
+      const isMember = await user.contractService!.market.isMember(user.address);
+      if (!isMember) {
+        setError('Must have a VIP or Founding Member to participate');
+        return false;
+      }
+    } else if (Date.now() > config.tokenSale.vipStart) {
+      const isVip = await user.contractService!.market.isVIP(user.address);
+      if (!isVip) {
+        setError('Must have a Ryoshi VIP to participate');
+        return false;
+      }
+    }
+    setError('');
 
     return true;
   }
@@ -251,7 +264,7 @@ const FortunePurchaseForm = () => {
 
   const handlePurchase = async () => {
     if (user.address) {
-      if (!validateInput()) return;
+      if (!await validateInput()) return;
       await attemptPurchase();
     } else {
       if (user.needsOnboard) {
@@ -301,65 +314,74 @@ const FortunePurchaseForm = () => {
           <Box fontSize='sm' textAlign='center' w='full'>Connect wallet to purchase</Box>
         )}
       </Flex>
-      <VStack mx={2}>
-        <FormControl isInvalid={!!inputError}>
-          <Flex justify='space-between' align='center' direction={{base: 'column', md: 'row'}}>
-            <FormLabel>Amount of $Fortune to reserve</FormLabel>
-            <Box>
-              <Stack direction={{base:'column', lg:'row'}} spacing={2}>
-                <HStack>
-                  <Button {...dec}>-</Button>
-                  <Input w='150px' {...input} />
-                  <Button {...inc}>+</Button>
-                </HStack>
-              </Stack>
-              <FormErrorMessage>{inputError}</FormErrorMessage>
+      {config.tokenSale.vipStart < Date.now() ? (
+        <>
+          <VStack mx={2}>
+            <FormControl isInvalid={!!inputError}>
+              <Flex justify='space-between' align='center' direction={{base: 'column', md: 'row'}}>
+                <FormLabel>Amount of $Fortune to reserve</FormLabel>
+                <Box>
+                  <Stack direction={{base:'column', lg:'row'}} spacing={2}>
+                    <HStack>
+                      <Button {...dec}>-</Button>
+                      <Input w='150px' {...input} />
+                      <Button {...inc}>+</Button>
+                    </HStack>
+                  </Stack>
+                  <FormErrorMessage>{inputError}</FormErrorMessage>
+                </Box>
+              </Flex>
+            </FormControl>
+            <Flex justify='space-between' w='full'>
+              <Text>Current $Fortune price</Text>
+              <Text fontWeight='bold'>${fortunePrice}</Text>
+            </Flex>
+            <Flex justify='space-between' w='full'>
+              <Text>Your total cost</Text>
+              <Text fontWeight='bold'>${commify(fortunePrice * Number(fortuneToPurchase))}</Text>
+            </Flex>
+          </VStack>
+          <Box textAlign='center' mt={8} mb={2} mx={2}>
+            <Box mb={3}>
+              <FormControl isInvalid={!!tosError}>
+                <VStack spacing={0}>
+                  <Checkbox colorScheme='blue' size='lg' onChange={handleTosCheck}>
+                    <Text fontSize='xs'>
+                      I agree to the <Link href='https://cdn.ebisusbay.com/terms-of-service.html' textDecoration='underline' isExternal>terms of service
+                      <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} ml={1} /></Link>
+                    </Text>
+                  </Checkbox>
+                  <Center>
+                    <FormErrorMessage w='full'>{tosError}</FormErrorMessage>
+                  </Center>
+                </VStack>
+              </FormControl>
             </Box>
-          </Flex>
-        </FormControl>
-        <Flex justify='space-between' w='full'>
-          <Text>Current $Fortune price</Text>
-          <Text fontWeight='bold'>${fortunePrice}</Text>
-        </Flex>
-        <Flex justify='space-between' w='full'>
-          <Text>Your total cost</Text>
-          <Text fontWeight='bold'>${commify(fortunePrice * Number(fortuneToPurchase))}</Text>
-        </Flex>
-      </VStack>
-      <Box textAlign='center' mt={8} mb={2} mx={2}>
-        <Box mb={3}>
-          <FormControl isInvalid={!!tosError}>
-            <VStack spacing={0}>
-              <Checkbox colorScheme='blue' size='lg' onChange={handleTosCheck}>
-                <Text fontSize='xs'>
-                  I agree to the <Link href='https://cdn.ebisusbay.com/terms-of-service.html' textDecoration='underline' isExternal>terms of service
-                  <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} ml={1} /></Link>
-                </Text>
-              </Checkbox>
-              <Center>
-                <FormErrorMessage w='full'>{tosError}</FormErrorMessage>
-              </Center>
-            </VStack>
-          </FormControl>
-        </Box>
-        <Box
-          ps='20px'>
-          <RdButton
-            w='250px'
-            fontSize={{base: 'xl', sm: '2xl'}}
-            stickyIcon={true}
-            onClick={handlePurchase}
-            isLoading={isExecuting}
-            disabled={isExecuting}
-          >
-            {user.address ? (
-              <>{isExecuting ? executingLabel : 'Buy $Fortune'}</>
-            ) : (
-              <>Connect</>
+            <Box
+              ps='20px'>
+              <RdButton
+                w='250px'
+                fontSize={{base: 'xl', sm: '2xl'}}
+                stickyIcon={true}
+                onClick={handlePurchase}
+                isLoading={isExecuting}
+                disabled={isExecuting}
+              >
+                {user.address ? (
+                  <>{isExecuting ? executingLabel : 'Buy $Fortune'}</>
+                ) : (
+                  <>Connect</>
+                )}
+              </RdButton>
+            </Box>
+            {!!error && (
+              <Box color='red.300' mt={2}>{error}</Box>
             )}
-          </RdButton>
-        </Box>
-      </Box>
+          </Box>
+        </>
+      ) : (
+        <Center>{timeSince(config.tokenSale.vipStart)}</Center>
+      )}
     </Box>
   )
 }
