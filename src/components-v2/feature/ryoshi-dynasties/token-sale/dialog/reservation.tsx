@@ -482,7 +482,7 @@ const FortunePurchaseProgress = () => {
         </SimpleGrid>
       </Box>
       <Box textAlign='center' mt={1}>
-        <Box>{progressValue ? round(progressValue) : ''}% of $Fortune purchased by all users</Box>
+        <Box>{progressValue ? round(progressValue, 1) : ''}% of $Fortune purchased by all users</Box>
       </Box>
     </>
   )
