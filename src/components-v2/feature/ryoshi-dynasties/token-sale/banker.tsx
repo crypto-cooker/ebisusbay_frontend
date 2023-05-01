@@ -82,6 +82,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
     },
     {
       refetchOnWindowFocus: false,
+      refetchInterval: 60000,
       initialData: () => ({
         paused: false,
         userFortunePurchased: 0,

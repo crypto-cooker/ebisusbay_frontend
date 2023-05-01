@@ -191,7 +191,7 @@ const FortunePurchaseForm = () => {
 
     if (Date.now() > config.tokenSale.publicStart) {
       if (!isMember && !isVip) {
-        setError('Must have a VIP or Founding Member to participate');
+        setError('Must have a VIP, Founding Member, or any Ebisu brand NFT to participate');
         return false;
       }
     } else if (Date.now() > config.tokenSale.vipStart) {
@@ -230,13 +230,16 @@ const FortunePurchaseForm = () => {
       const desiredFortuneAmount = BigNumber.from(fortuneToPurchase);
       const usdcCost = desiredFortuneAmount.mul(30000).div(1000000);
 
-      if (usdcCost.gt(user.tokenSale.usdc)) {
-        setInputError('Amount exceeds USDC balance');
-        return false;
+      // Instantiate USDC contract
+      const usdcContract = new Contract(usdcAddress, ERC20, user.provider.getSigner());
+
+      // Allow tx to continue in case there were issues retrieving USDC
+      const usdcBalance = await usdcContract.balanceOf(user.address);
+      if (usdcCost.gt(usdcBalance)) {
+        setInputError('Amount might exceed USDC balance');
       }
 
-      // Instantiate USDC contract and check how much USDC the user has already approved
-      const usdcContract = new Contract(usdcAddress, ERC20, user.provider.getSigner());
+      // Check how much USDC the user has already approved
       const allowance = await usdcContract.allowance(user.address, config.contracts.purchaseFortune);
 
       // If the user has not approved the token sale contract to spend enough of their USDC, approve it
@@ -253,7 +256,7 @@ const FortunePurchaseForm = () => {
 
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       dispatch(updateFortuneBalance());
-      await queryClient.invalidateQueries(['TokenSale', user.address]);
+      await queryClient.invalidateQueries({ queryKey: ['TokenSale'] });
     } catch (error: any) {
       console.log(error);
       if (error.data) {
