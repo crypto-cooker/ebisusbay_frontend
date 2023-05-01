@@ -9,15 +9,18 @@ import {Api} from "@src/core/services/api-service/types";
 import {Offer} from "@src/core/models/offer";
 import {WalletsQueryParams} from "./mapi/queries/wallets";
 import WalletNft from "@src/core/models/wallet-nft";
+import Graph from "@src/core/services/api-service/graph";
 
 
 export class ApiService implements Api {
   private mapi: Mapi;
   private cms: Cms;
+  private graph: Graph;
 
   constructor(apiKey?: string) {
     this.mapi = new Mapi(apiKey);
     this.cms = new Cms(apiKey);
+    this.graph = new Graph(apiKey);
   }
 
   static withKey(apiKey: string) {
@@ -56,6 +59,14 @@ export class ApiService implements Api {
     query.purchaser = address;
 
     return await this.getOffers(query);
+  }
+
+  async globalTotalPurchased() {
+    return this.graph.globalTotalPurchased();
+  }
+
+  async userTotalPurchased(address: string) {
+    return this.graph.userTotalPurchased(address);
   }
 }
 

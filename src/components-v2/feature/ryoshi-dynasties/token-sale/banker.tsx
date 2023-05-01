@@ -12,6 +12,7 @@ import FortunePresale from "@src/Contracts/FortunePresale.json";
 import {appConfig} from "@src/Config";
 import {useQuery} from "@tanstack/react-query";
 import {useAppSelector} from "@src/Store/hooks";
+import {ApiService} from "@src/core/services/api-service";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -56,11 +57,21 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
     async () => {
       const fortuneContract = new Contract(config.contracts.purchaseFortune, FortunePresale, readProvider);
       const paused = await fortuneContract.paused();
-      const userFortunePurchased = !!user.address ? await fortuneContract.purchases(user.address) : 0;
-      const totalFortunePurchased = await fortuneContract.totalPurchased();
       const exchangeRate = await fortuneContract.TOKEN_PRICE_USDC();
       const maxAllocation = await fortuneContract.MAX_PURCHASE();
       // const userMaxPurchaseAmount =
+      const userFortunePurchased = !!user.address ? await fortuneContract.purchases(user.address) : 0;
+      const totalFortunePurchased = await fortuneContract.totalPurchased();
+
+      // const apiService = new ApiService();
+      // const totalFortunePurchased = await apiService.globalTotalPurchased();
+      // const userFortunePurchased = !!user.address ? await apiService.userTotalPurchased(user.address) : 0;
+
+      // console.log('data', {
+      //   total: totalFortunePurchased,
+      //   user: userFortunePurchased
+      // });
+
       return {
         paused,
         userFortunePurchased: Number(userFortunePurchased),

@@ -283,7 +283,9 @@ export const configData = {
       bundle: '0x40874F18922267cc2Ca7933828594aB5078C1065',
       cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233',
       gaslessListing: '0x523d6f30c4aaca133daad97ee2a0c48235bff137',
-      gdc: '0xe3e564252249ab55b47b84d6a934f4cbb94233a9'
+      gdc: '0xe3e564252249ab55b47b84d6a934f4cbb94233a9',
+      purchaseFortune: '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566',
+      usdc: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59'
     },
     tokens: {
       loot: {
