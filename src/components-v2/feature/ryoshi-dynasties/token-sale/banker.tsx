@@ -1,12 +1,12 @@
 import {AspectRatio, Box, Icon, Image, useBreakpointValue, VStack} from "@chakra-ui/react";
-import FortunePurchaseDialog from "@src/components-v2/feature/battle-bay/token-sale/dialog";
+import FortunePurchaseDialog from "@src/components-v2/feature/ryoshi-dynasties/token-sale/dialog";
 import React, {useCallback, useEffect, useState} from "react";
-import BankerBubbleBox, {TypewriterText} from "@src/components-v2/feature/battle-bay/components/banker-bubble-box";
-import RdButton from "@src/components-v2/feature/battle-bay/components/rd-button";
+import BankerBubbleBox, {TypewriterText} from "@src/components-v2/feature/ryoshi-dynasties/components/banker-bubble-box";
+import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRightFromBracket, faCircleInfo} from "@fortawesome/free-solid-svg-icons";
 import {useWindowSize} from "@src/hooks/useWindowSize";
-import {TokenSaleContext, TokenSaleContextProps} from "@src/components-v2/feature/battle-bay/token-sale/context";
+import {TokenSaleContext, TokenSaleContextProps} from "@src/components-v2/feature/ryoshi-dynasties/token-sale/context";
 import {Contract, ethers} from "ethers";
 import FortunePresale from "@src/Contracts/FortunePresale.json";
 import {appConfig} from "@src/Config";
@@ -110,7 +110,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
               <TypewriterText
                 text={[
                   'Welcome, traveler. It seems that since Ebisu has created all these Fortune tokens, our world has gone through quite an evolution.<br /><br />',
-                  'The $Fortune token presale will be held here on May 1st, 2023. Visit the FAQ to learn more.'
+                  'The $Fortune token presale will be held here on May 1st at 8pm UTC. Visit the FAQ to learn more.'
                 ]}
                 onComplete={() => setBankerImage(bankerImages.idle)}
               />

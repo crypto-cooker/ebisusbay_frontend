@@ -1,7 +1,7 @@
 import {Box} from "@chakra-ui/react";
 import React, {useState} from "react";
-import LandingScene from "@src/components-v2/feature/battle-bay/token-sale/landing";
-import BankerScene from "@src/components-v2/feature/battle-bay/token-sale/banker";
+import LandingScene from "@src/components-v2/feature/ryoshi-dynasties/token-sale/landing";
+import BankerScene from "@src/components-v2/feature/ryoshi-dynasties/token-sale/banker";
 import localFont from 'next/font/local';
 
 const gothamBook = localFont({ src: '../../../../fonts/Gotham-Book.woff2' })

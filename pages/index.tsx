@@ -23,7 +23,7 @@ import {AspectRatio, Box, Button, Center, Heading, Image, SimpleGrid, VStack} fr
 import ads from "@src/core/data/ads.json";
 import ImageService from "@src/core/services/image";
 import {useAppSelector} from "@src/Store/hooks";
-import TokenSale from "@src/components-v2/feature/battle-bay/token-sale";
+import TokenSale from "@src/components-v2/feature/ryoshi-dynasties/token-sale";
 
 const fadeInUp = keyframes`
   0% {

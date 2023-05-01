@@ -1,7 +1,7 @@
 import {Modal, ModalBody, ModalContent, ModalOverlay} from "@chakra-ui/react";
 import React, {useCallback, useEffect, useState} from "react";
-import FortuneReservationPage from "@src/components-v2/feature/battle-bay/token-sale/dialog/reservation";
-import FortuneFaqPage from "@src/components-v2/feature/battle-bay/token-sale/dialog/faq";
+import FortuneReservationPage from "@src/components-v2/feature/ryoshi-dynasties/token-sale/dialog/reservation";
+import FortuneFaqPage from "@src/components-v2/feature/ryoshi-dynasties/token-sale/dialog/faq";
 import localFont from "next/font/local";
 
 const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })

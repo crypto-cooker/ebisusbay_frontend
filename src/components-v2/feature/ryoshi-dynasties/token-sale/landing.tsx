@@ -1,5 +1,5 @@
 import {AspectRatio, Box, Flex, Heading, Image, Link, VStack} from "@chakra-ui/react";
-import RdButton from "@src/components-v2/feature/battle-bay/components/rd-button";
+import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import React from "react";
 import {Fade} from "react-awesome-reveal";
 import NextLink from "next/link";

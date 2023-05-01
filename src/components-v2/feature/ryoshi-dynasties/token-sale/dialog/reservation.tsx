@@ -21,7 +21,7 @@ import {
   VStack
 } from "@chakra-ui/react";
 import {CloseIcon} from "@chakra-ui/icons";
-import RdButton from "@src/components-v2/feature/battle-bay/components/rd-button";
+import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import React, {ChangeEvent, useCallback, useContext, useEffect, useRef, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExternalLinkAlt} from "@fortawesome/free-solid-svg-icons";
@@ -40,7 +40,7 @@ import {
   MultiSelectContext,
   MultiSelectContextProps
 } from "@src/components-v2/feature/account/profile/tabs/listings/context";
-import {TokenSaleContext, TokenSaleContextProps} from "@src/components-v2/feature/battle-bay/token-sale/context";
+import {TokenSaleContext, TokenSaleContextProps} from "@src/components-v2/feature/ryoshi-dynasties/token-sale/context";
 import {useQueryClient} from "@tanstack/react-query";
 
 const config = appConfig();
