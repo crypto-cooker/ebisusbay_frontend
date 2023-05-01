@@ -1,6 +1,34 @@
 [
   {
     "users": [
+      "0x05e6c177ddaebfb84882dad4d684d136f4d2a9ba"
+    ],
+    "tokens": [
+      {
+        "slug": "mm-treehouse",
+        "address": "0xDC5bBDb4A4b051BDB85B959eB3cBD1c8C0d0c105",
+        "ids": [2706]
+      },
+      {
+        "slug": "mad-meerkat",
+        "address": "0x89dBC8Bd9a6037Cbd6EC66C4bF4189c9747B1C56",
+        "ids": [7693, 5384, 1187]
+      },
+      {
+        "slug": "mad-meerkat-degen",
+        "address": "0xA19bFcE9BaF34b92923b71D487db9D0D051a88F8",
+        "ids": [8852, 8839]
+      },
+      {
+        "slug": "mad-crow",
+        "address": "0x65AB0251d29c9C473c8d01BFfa2966F891fB1181",
+        "ids": [250]
+      }
+    ],
+    "reason": "Scammed"
+  },
+  {
+    "users": [
       "0x0df0af284c6d7635cad315d0165433aa07805836",
       "0x988c29a4f0296dfb6ef7528dd4fdf43b21ee3c81"
     ],

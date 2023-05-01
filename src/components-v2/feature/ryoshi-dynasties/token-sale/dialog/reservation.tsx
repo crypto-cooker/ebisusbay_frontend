@@ -414,8 +414,8 @@ const FortunePurchaseProgress = () => {
       await getProgress();
     }
     func();
-  }, [progressRef]);
-   
+  }, [tokenSaleContext.totalFortunePurchased]);
+
   return (
     <>
       <Flex justify='space-between'>
