@@ -235,7 +235,7 @@ const FortunePurchaseForm = () => {
 
       // Allow tx to continue in case there were issues retrieving USDC
       const usdcBalance = await usdcContract.balanceOf(user.address);
-      if (usdcCost.gt(usdcBalance)) {
+      if (usdcCost.mul(1000000).gt(usdcBalance)) {
         setInputError('Amount might exceed USDC balance');
       }
 
