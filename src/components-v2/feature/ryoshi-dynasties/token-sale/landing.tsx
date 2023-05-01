@@ -54,9 +54,12 @@ const LandingScene = ({onEnterTokenSale}: LandingSceneProps) => {
               <Link href='https://lotusgalaxy.docsend.com/view/cn6irmx92xy2ek2f' isExternal>
                 <RdButton w='250px' fontSize={{base: 'xl', sm: '2xl'}}>Whitepaper</RdButton>
               </Link>
-              <NextLink href='/marketplace'>
-                <RdButton w='250px' fontSize={{base: 'xl', sm: '2xl'}}>Marketplace</RdButton>
-              </NextLink>
+              <Link href='https://lotusgalaxy.docsend.com/view/6jrt35hiwkewxdum' isExternal>
+                <RdButton w='250px' fontSize={{base: 'xl', sm: '2xl'}}>Litepaper</RdButton>
+              </Link>
+              {/*<NextLink href='/marketplace'>*/}
+              {/*  <RdButton w='250px' fontSize={{base: 'xl', sm: '2xl'}}>Marketplace</RdButton>*/}
+              {/*</NextLink>*/}
             </VStack>
           </Fade>
         </Flex>

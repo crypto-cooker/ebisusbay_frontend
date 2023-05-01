@@ -28,7 +28,7 @@ import {faExternalLinkAlt} from "@fortawesome/free-solid-svg-icons";
 import {BigNumber, Contract, ethers} from "ethers";
 import {ERC20} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent, round, secondsToDhms, timeSince} from "@src/utils";
+import {createSuccessfulTransactionToastContent, round, timeSince} from "@src/utils";
 import {appConfig} from "@src/Config";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "@src/Store/hooks";
@@ -36,12 +36,9 @@ import FortunePresale from "@src/Contracts/FortunePresale.json";
 import {commify} from "ethers/lib/utils";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount, updateFortuneBalance} from "@src/GlobalState/User";
-import {
-  MultiSelectContext,
-  MultiSelectContextProps
-} from "@src/components-v2/feature/account/profile/tabs/listings/context";
 import {TokenSaleContext, TokenSaleContextProps} from "@src/components-v2/feature/ryoshi-dynasties/token-sale/context";
 import {useQueryClient} from "@tanstack/react-query";
+import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
 
 const config = appConfig();
 
@@ -183,14 +180,21 @@ const FortunePurchaseForm = () => {
     }
     setTosError('');
 
+    const memberCollections = config.tokenSale.memberCollections.map((c: any) => c.toLowerCase());
+    const walletCollections = await getWalletOverview(user.address);
+    const isMember = walletCollections.data.filter((col: any) => {
+      return memberCollections.includes(col.nftAddress.toLowerCase());
+    }).length > 0;
+
+    // Still always check VIP because wallet doesn't detect staked Ryoshis
+    const isVip = await user.contractService!.market.isVIP(user.address);
+
     if (Date.now() > config.tokenSale.publicStart) {
-      const isMember = await user.contractService!.market.isMember(user.address);
-      if (!isMember) {
+      if (!isMember && !isVip) {
         setError('Must have a VIP or Founding Member to participate');
         return false;
       }
     } else if (Date.now() > config.tokenSale.vipStart) {
-      const isVip = await user.contractService!.market.isVIP(user.address);
       if (!isVip) {
         setError('Must have a Ryoshi VIP to participate');
         return false;
@@ -458,6 +462,7 @@ const FortunePurchaseProgress = () => {
           />
           {[...Array(6).fill(0)].map((_, i) => (
             <Box
+              key={i}
               borderColor='#FDAB1A'
               borderStyle='solid'
               borderTopWidth='4px'
