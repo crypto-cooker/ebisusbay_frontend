@@ -124,7 +124,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
                 text={[
                   'Welcome, traveler. It seems that since Ebisu has created all these Fortune tokens, our world has gone through quite an evolution.<br /><br />',
                   Date.now() > config.tokenSale.publicStart ?
-                    'The $Fortune token presale is now open to all members! Press the "Buy $Fortune" button to get started.' :
+                    'The $Fortune token presale is now open to all members! Hold any Ebisu brand NFT to participate. Press the "Buy $Fortune" button to get started.' :
                   Date.now() > config.tokenSale.vipStart ?
                     'The $Fortune token presale is now open to VIPs! Press the "Buy $Fortune" button to get started.' :
                     'The $Fortune token presale will be held here on May 1st at 8pm UTC. VIPs will have exclusive access for one hour, followed by the member sale.'
