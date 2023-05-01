@@ -2,6 +2,9 @@ import {Box} from "@chakra-ui/react";
 import React, {useState} from "react";
 import LandingScene from "@src/components-v2/feature/battle-bay/token-sale/landing";
 import BankerScene from "@src/components-v2/feature/battle-bay/token-sale/banker";
+import localFont from 'next/font/local';
+
+const gothamBook = localFont({ src: '../../../../fonts/Gotham-Book.woff2' })
 
 enum Scene {
   LANDING,
@@ -23,6 +26,7 @@ const TokenSale = () => {
     <Box
       position='relative'
       h='calc(100vh - 74px)'
+      className={gothamBook.className}
     >
       <Box display={scene === Scene.LANDING ? 'block' : 'none'}>
         <LandingScene onEnterTokenSale={handleEnterTokenSale} />

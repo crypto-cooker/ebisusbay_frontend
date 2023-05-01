@@ -5751,20 +5751,6 @@ iframe.metaverse {
   
 }
 
-@font-face {
-  font-family: 'GothamBook';
-  src: local('Gotham-Book'), url('../../fonts/Gotham-Book.ttf') format('truetype'), /* Safari, Android, iOS */
-}
-@font-face {
-  font-family: 'GothamMedium';
-  src: local('GothamMedium'), url('../../fonts/GothamMedium.ttf') format('truetype'), /* Safari, Android, iOS */
-}
-.gotham_book {
-  font-family: 'GothamBook', Fallback, sans-serif;
-}
-.gotham_medium {
-  font-family: 'GothamMedium', Fallback, sans-serif;
-}
 .rd-button {
   //-webkit-text-stroke-width: 1px;
   //-webkit-text-stroke-color: #9f2729;

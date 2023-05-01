@@ -1,5 +1,8 @@
 import {Box, BoxProps, ButtonProps, Image} from "@chakra-ui/react";
 import React, {useState} from "react";
+import localFont from "next/font/local";
+
+const gothamMedium = localFont({ src: '../../../../fonts/GothamMedium.woff2' })
 
 interface RdButtonProps extends ButtonProps {
   stickyIcon?: boolean;
@@ -18,7 +21,7 @@ const RdButton = (props: RdButtonProps) => {
       position='relative'
       borderWidth='6px 0px 6px 0px'
       data-group
-      className='rd-button gotham_medium'
+      className='rd-button'
       px={1}
       onMouseEnter={() => setIsSpinning(!!props.stickyIcon)}
       onMouseLeave={() => setIsSpinning(false)}
@@ -43,6 +46,7 @@ const RdButton = (props: RdButtonProps) => {
         _groupHover={{ bg: 'linear-gradient(to left, #FFE818, #FFD001)' }}
         _groupActive={{borderColor: '#FFFFFF'}}
         ps={props.stickyIcon ? '15px' : '0px'}
+        className={gothamMedium.className}
       >
         {props.children}
       </Box>
