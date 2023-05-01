@@ -59,6 +59,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   const handleBuyCro = () => {
     const url = new URL(config.vendors.transak.url);
     if (user.address) {
+      url.searchParams.append('cryptoCurrencyCode', 'CRO');
       url.searchParams.append('walletAddress', user.address);
     }
 

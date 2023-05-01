@@ -4,7 +4,7 @@ export const PrimaryButton = (props: ButtonProps) => {
   return (
     <Button
       variant='primary'
-      fontSize='sm'
+      fontSize={props.fontSize ?? props.size ?? 'sm'}
       {...props}
     >
       {props.children}

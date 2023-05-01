@@ -15,14 +15,15 @@ import {getMarketData} from '@src/GlobalState/marketplaceSlice';
 import {millisecondTimestamp, newlineText, siPrefixedNumber} from '@src/utils';
 import {getTheme, theme} from '@src/Theme/theme';
 import {limitSizeOptions} from '@src/Components/components/constants/filter-options';
-import Button from '../src/Components/components/Button';
+import LegacyButton from '../src/Components/components/Button';
 import {hostedImage} from "@src/helpers/image";
 import {appConfig} from "@src/Config";
 import Head from "next/head";
-import {Center, Heading, SimpleGrid} from "@chakra-ui/react";
+import {AspectRatio, Box, Button, Center, Heading, Image, SimpleGrid, VStack} from "@chakra-ui/react";
 import ads from "@src/core/data/ads.json";
 import ImageService from "@src/core/services/image";
 import {useAppSelector} from "@src/Store/hooks";
+import TokenSale from "@src/components-v2/feature/ryoshi-dynasties/token-sale";
 
 const fadeInUp = keyframes`
   0% {
@@ -187,13 +188,13 @@ const Home = () => {
               Explore
             </span>
             <Link href="/apply">
-              <Button type="legacy-outlined">Become a Creator</Button>
+              <LegacyButton type="legacy-outlined">Become a Creator</LegacyButton>
             </Link>
 
-            <Button onClick={() => window.open(`/collection/founding-member`, '_self')} type="legacy-outlined">
+            <LegacyButton onClick={() => window.open(`/collection/founding-member`, '_self')} type="legacy-outlined">
               <FontAwesomeIcon icon={faFire} className="me-1" style={{ color: '#ff690e' }} />
               Become a Founding Member
-            </Button>
+            </LegacyButton>
           </div>
         </Reveal>
         <Reveal className="onStep d-inline" keyframes={inline} delay={900} duration={1200} triggerOnce>
@@ -250,6 +251,7 @@ const Home = () => {
       {/*    </p>*/}
       {/*  </div>*/}
       {/*</section>*/}
+      <TokenSale />
       <Jumbotron.Host isDark={userTheme === 'dark'}>
         {!mobile && <div className="container">{JumbotronData()}</div>}
       </Jumbotron.Host>
@@ -283,9 +285,9 @@ const Home = () => {
                   <div className="flex-fill mx-auto mt-2" style={{maxWidth:300}}>
                     {featuredAd.links.map((link, index) => (
                       <a key={index} href={link.url} target={link.external ? '_blank' : '_self'} rel="noreferrer">
-                        <Button type="legacy" className="w-100">
+                        <LegacyButton type="legacy" className="w-100">
                           {link.label}
-                        </Button>
+                        </LegacyButton>
                       </a>
                     ))}
                   </div>
