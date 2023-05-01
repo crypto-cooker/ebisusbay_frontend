@@ -51,7 +51,7 @@ class RyoshiPresale {
     return this.apollo.query({
       query: gql(query),
       variables: {
-        id: address
+        id: address.toLowerCase()
       }
     });
   }

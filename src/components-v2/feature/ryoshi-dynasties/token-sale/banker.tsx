@@ -60,12 +60,12 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
       const exchangeRate = await fortuneContract.TOKEN_PRICE_USDC();
       const maxAllocation = await fortuneContract.MAX_PURCHASE();
       // const userMaxPurchaseAmount =
-      const userFortunePurchased = !!user.address ? await fortuneContract.purchases(user.address) : 0;
-      const totalFortunePurchased = await fortuneContract.totalPurchased();
+      // const userFortunePurchased = !!user.address ? await fortuneContract.purchases(user.address) : 0;
+      // const totalFortunePurchased = await fortuneContract.totalPurchased();
 
-      // const apiService = new ApiService();
-      // const totalFortunePurchased = await apiService.globalTotalPurchased();
-      // const userFortunePurchased = !!user.address ? await apiService.userTotalPurchased(user.address) : 0;
+      const apiService = new ApiService();
+      const totalFortunePurchased = await apiService.globalTotalPurchased();
+      const userFortunePurchased = !!user.address ? await apiService.userTotalPurchased(user.address) : 0;
 
       // console.log('data', {
       //   total: totalFortunePurchased,
@@ -81,7 +81,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
       } as TokenSaleContextProps;
     },
     {
-      staleTime: 1,
+      refetchOnWindowFocus: false,
       initialData: () => ({
         paused: false,
         userFortunePurchased: 0,
@@ -123,10 +123,10 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
                 text={[
                   'Welcome, traveler. It seems that since Ebisu has created all these Fortune tokens, our world has gone through quite an evolution.<br /><br />',
                   Date.now() > config.tokenSale.publicStart ?
-                    'The $Fortune token presale is now open to the public! Press the "Buy $Fortune" button to get started.' :
+                    'The $Fortune token presale is now open to all members! Press the "Buy $Fortune" button to get started.' :
                   Date.now() > config.tokenSale.vipStart ?
                     'The $Fortune token presale is now open to VIPs! Press the "Buy $Fortune" button to get started.' :
-                    'The $Fortune token presale will be held here on May 1st at 8pm UTC. VIPs will have exclusive access for one hour before the member sale.'
+                    'The $Fortune token presale will be held here on May 1st at 8pm UTC. VIPs will have exclusive access for one hour, followed by the member sale.'
                 ]}
                 onComplete={() => setBankerImage(bankerImages.idle)}
               />
