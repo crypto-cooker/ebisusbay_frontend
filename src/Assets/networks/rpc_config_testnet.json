@@ -3362,6 +3362,49 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "FortuneTeller",
+      "slug": "fortuneteller",
+      "multiToken": true,
+      "address": "0xE1D0a4ae1DF871510d82144a282FF14bAcA8f2c0",
+      "tokens": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
+        },
+        {
+          "id": 5
+        }
+      ],
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Fortune Teller NFT from the team at Ebisu's Bay.",
+        "avatar": "/img/collections/fortuneteller/avatar.webp",
+        "card": "/img/collections/fortuneteller/card.webp",
+        "banner": "/img/collections/fortuneteller/banner.webp",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "hidden",
+        "verified": true
+      }
     }
   ],
   "drops": [
@@ -8092,7 +8135,8 @@
         "escrow": false,
         "verified": true
       }
-    },{
+    },
+    {
       "id": 169,
       "slug": "diamond-coins",
       "title": "Diamond Coins of the Grind Guild",

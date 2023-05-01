@@ -5707,3 +5707,75 @@ iframe.metaverse {
   justify-content: space-around;
   flex-wrap: wrap;
 }
+
+.taps-buttons-group{
+  padding: 8px;
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  gap: 8px;
+
+  .smallBtn {
+    background-color: rgb(153, 153, 153);
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 30%;
+    margin-bottom:10px;
+    opacity: 0.8;
+    font-weight: 400;
+    font-family: DM Sans,Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    font-feature-settings: 'kern';
+    border-radius: 5px;
+    border: 0px;
+    
+    &.selected {
+      background-color: rgb(53, 102, 158);
+      color: white;
+      padding: 16px 20px;
+      border: none;
+      cursor: pointer;
+      width: 30%;
+      margin-bottom:10px;
+      opacity: 0.8;
+      font-weight: 400;
+      font-family: DM Sans,Helvetica,Arial,sans-serif;
+      font-size: 14px;
+      font-feature-settings: 'kern';
+      border-radius: 5px;
+      border: 0px;
+    }
+  }
+  
+}
+
+.rd-button {
+  //-webkit-text-stroke-width: 1px;
+  //-webkit-text-stroke-color: #9f2729;
+  text-shadow:
+          -1px -1px 0 #9f2729,
+          0   -1px 0 #9f2729,
+          1px -1px 0 #9f2729,
+          1px  0   0 #9f2729,
+          1px  1px 0 #9f2729,
+          0    1px 0 #9f2729,
+          -1px  1px 0 #9f2729,
+          -1px  0   0 #9f2729;
+}
+
+.rd-bank-modal-mask1 {
+  --g: #0000 98%,#000;
+  --r: 40px;
+  --mask: radial-gradient(45px at 45px 0,#0000 98%,#000) -45px;
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+}
+
+.rd-bank-modal-mask2 {
+
+  --mask: radial-gradient(50px at 50px 0,#0000 98%,#000) -50px;
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+}

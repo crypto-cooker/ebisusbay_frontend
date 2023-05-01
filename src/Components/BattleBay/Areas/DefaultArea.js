@@ -1,0 +1,552 @@
+import React, {useEffect, useLayoutEffect, useState, useRef } from 'react';
+import { resizeMap, resizeNewMap } from './mapFunctions.js'
+import { TransformWrapper, TransformComponent, ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
+import styles from './BattleBay.module.scss';
+import {
+  Button,
+  Flex,
+  Box,
+  Spacer,
+  Image,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  useDisclosure,
+  AspectRatio
+} from "@chakra-ui/react"
+
+const DefaultArea = ({onChange}) => {
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const btnRef = React.useRef()
+
+  const [pins, setPins] = useState([]);
+  const transformComponentRef = useRef()
+  const [elementToZoomTo, setElementToZoomTo] = useState("");
+  const [zoomState, setZoomState] = useState({
+    offsetX: 0,
+    offsetY: 0,
+    scale: 1,
+  });
+  const [initialPositionX, setInitialPositionX] = useState(0);
+  const [initialPositionY, setInitialPositionY] = useState(0);
+
+
+  useEffect(() => {
+    if (transformComponentRef.current) {
+      const { zoomToElement } = transformComponentRef.current;
+      zoomToElement(elementToZoomTo);
+    }
+    console.log("current state " + transformComponentRef?.current?.state) ;
+    // transformComponentRef.current.state;
+  }, [elementToZoomTo]);
+  
+  const changeCanvasState = (ReactZoomPanPinchRef, event) => {
+    setZoomState({
+      offsetX: ReactZoomPanPinchRef.state.positionX,
+      offsetY: ReactZoomPanPinchRef.state.positionY,
+      scale: ReactZoomPanPinchRef.state.scale,
+    });
+    console.log(ReactZoomPanPinchRef.state.positionX, ReactZoomPanPinchRef.state.positionY, ReactZoomPanPinchRef.state.scale)
+  };
+
+  const buildings ={ "allianceCenter" : {height:438, width:554, top:'7%', left:'55%'},
+                      "townhall" : {height:607, width:707, top:'13%', left:'36%'},
+                      "academy" : {height: 792, width: 744, top: '4%', left: '74%'},
+                      "tavern" : {height: 573, width: 725, top: '3%', left: '14%'},
+                      "tavernSpin" : {height: 573, width: 725, top: '3%', left: '14%'},
+
+                      "water" : {height: 703, width: 2880, top: '32%', left: '0%'},
+                      "boat" : {height: 613, width: 718, top: '33%', left: '2%'},
+                      "ebisustatue" : {height: 542, width: 279, top: '35%', left: '40%'},
+                      "fishmarket" : {height: 545, width: 793, top: '36.5%', left: '55%'},
+                      "barracks" : {height: 579, width: 832, top: '12.5%', left: '-0.5%'},
+                      "swordsmen" : {height: 270, width: 383, top: '22%', left: '14%'},
+
+                      "flowers1" : {height: 251, width: 229, top: '3%', left: '14%'},
+                      "flowers2" : {height: 251, width: 229, top: '3%', left: '14%'},
+                      "flowers3" : {height: 251, width: 229, top: '3%', left: '14%'},
+
+                      "bank" : {height: 456, width: 579, top: '%', left: '33%', x: 444, y: 444, scale: 4},
+                      "announcement" : {height: 243, width: 206, top: '28%', left: '60%'},
+
+                      "moongate" : {height: 482, width: 443, top: '23%', left: '67%'},
+                      "torii" : {height: 201, width: 236, top: '6%', left: '0%'},
+                      "pond" : {height: 311, width: 783, top: '0%', left: '65%'}, 
+
+                      'alliancecenter_label' : {height: 438, width: 554, top: '0%', left: '0%'},
+                      'announcementboard_label' : {height: 243, width: 279, top: '28%', left: '60%'},
+                      'moongate_label' : {height: 482, width: 443, top: '23%', left: '67%'},
+                      'academy_label' : {height: 792, width: 744, top: '4%', left: '74%'},
+                      'tavern_label' : {height: 573, width: 725, top: '3%', left: '14%'},
+                      
+                      'townhall_label' : {height: 607, width: 707, top: '13%', left: '36%'},
+                      'barracks_label' : {height: 579, width: 832, top: '12.5%', left: '-0.5%'},
+                      'fishmarket_label' : {height: 545, width: 793, top: '36.5%', left: '55%'},
+                      'bank_label' : {height: 456, width: 579, top: '7%', left: '33%'},
+                    }
+  const buttonsNames = ["bank", "alliancecenter", "torii", "moongate", "barracks", "announcement", "fishmarket","boat", "academy", "tavern", "townhall"];
+
+//#region all resizing stuff
+  const [sizeMultiplier, setSizeMultiplier] = useState(0.5);
+
+  const [allianceCenterWidth, setAllianceCenterWidth] = useState(buildings.allianceCenter.width);
+  const [allianceCenterHeight, setAllianceCenterHeight] = useState(buildings.allianceCenter.height);
+  const [allianceCenterTop, setAllianceCenterTop] = useState(buildings.allianceCenter.top);
+  const [allianceCenterLeft, setAllianceCenterLeft] = useState(buildings.allianceCenter.left);
+
+  const [townhallWidth, setTownhallWidth] = useState(buildings.townhall.width);
+  const [townhallHeight, setTownhallHeight] = useState(buildings.townhall.height);
+  const [townhallTop, setTownhallTop] = useState(buildings.townhall.top);
+  const [townhallLeft, setTownhallLeft] = useState(buildings.townhall.left);
+
+  const [tavernWidth, setTavernWidth] = useState(buildings.tavern.width);
+  const [tavernHeight, setTavernHeight] = useState(buildings.tavern.height);
+  const [tavernTop, setTavernTop] = useState(buildings.tavern.top);
+  const [tavernLeft, setTavernLeft] = useState(buildings.tavern.left);
+
+  const [academyWidth, setAcademyWidth] = useState(buildings.academy.width);
+  const [academyHeight, setAcademyHeight] = useState(buildings.academy.height);
+  const [academyTop, setAcademyTop] = useState(buildings.academy.top);
+  const [academyLeft, setAcademyLeft] = useState(buildings.academy.left);
+
+  const [tavernSpinWidth, setTavernSpinWidth] = useState(buildings.tavernSpin.width);
+  const [tavernSpinHeight, setTavernSpinHeight] = useState(buildings.tavernSpin.height);
+  const [tavernSpinTop, setTavernSpinTop] = useState(buildings.tavernSpin.top);
+  const [tavernSpinLeft, setTavernSpinLeft] = useState(buildings.tavernSpin.left);
+
+  const [flowers1Width, setFlowers1Width] = useState(buildings.flowers1.width);
+  const [flowers1Height, setFlowers1Height] = useState(buildings.flowers1.height);
+  const [flowers1Top, setFlowers1Top] = useState(buildings.flowers1.top);
+  const [flowers1Left, setFlowers1Left] = useState(buildings.flowers1.left);
+                    
+  const [flowers2Width, setFlowers2Width] = useState(buildings.flowers2.width);
+  const [flowers2Height, setFlowers2Height] = useState(buildings.flowers2.height);
+  const [flowers2Top, setFlowers2Top] = useState(buildings.flowers2.top);
+  const [flowers2Left, setFlowers2Left] = useState(buildings.flowers2.left);
+                    
+  const [flowers3Width, setFlowers3Width] = useState(buildings.flowers3.width);
+  const [flowers3Height, setFlowers3Height] = useState(buildings.flowers3.height);
+  const [flowers3Top, setFlowers3Top] = useState(buildings.flowers3.top);
+  const [flowers3Left, setFlowers3Left] = useState(buildings.flowers3.left);
+
+  const [bankWidth, setBankWidth] = useState(buildings.bank.width);
+  const [bankHeight, setBankHeight] = useState(buildings.bank.height);
+  const [bankTop, setBankTop] = useState(buildings.bank.top);
+  const [bankLeft, setBankLeft] = useState(buildings.bank.left);
+
+  const [announcementWidth, setAnnouncementWidth] = useState(buildings.announcement.width);
+  const [announcementHeight, setAnnouncementHeight] = useState(buildings.announcement.height);
+  const [announcementTop, setAnnouncementTop] = useState(buildings.announcement.top);
+  const [announcementLeft, setAnnouncementLeft] = useState(buildings.announcement.left);
+
+  const [waterWidth, setWaterWidth] = useState(buildings.water.width);
+  const [waterHeight, setWaterHeight] = useState(buildings.water.height);
+  const [waterTop, setWaterTop] = useState(buildings.water.top);
+  const [waterLeft, setWaterLeft] = useState(buildings.water.left);
+
+  const [barracksWidth, setBarracksWidth] = useState(buildings.barracks.width);
+  const [barracksHeight, setBarracksHeight] = useState(buildings.barracks.height);
+  const [barracksTop, setBarracksTop] = useState(buildings.barracks.top);
+  const [barracksLeft, setBarracksLeft] = useState(buildings.barracks.left);
+
+  const [fishmarketWidth, setFishmarketWidth] = useState(buildings.fishmarket.width);
+  const [fishmarketHeight, setFishmarketHeight] = useState(buildings.fishmarket.height);
+  const [fishmarketTop, setFishmarketTop] = useState(buildings.fishmarket.top);
+  const [fishmarketLeft, setFishmarketLeft] = useState(buildings.fishmarket.left);
+
+  const [boatWidth, setBoatWidth] = useState(buildings.boat.width);
+  const [boatHeight, setBoatHeight] = useState(buildings.boat.height);
+  const [boatTop, setBoatTop] = useState(buildings.boat.top);
+  const [boatLeft, setBoatLeft] = useState(buildings.boat.left);
+
+  const [ebisustatueWidth, setEbisustatueWidth] = useState(buildings.ebisustatue.width);
+  const [ebisustatueHeight, setEbisustatueHeight] = useState(buildings.ebisustatue.height);
+  const [ebisustatueTop, setEbisustatueTop] = useState(buildings.ebisustatue.top);
+  const [ebisustatueLeft, setEbisustatueLeft] = useState(buildings.ebisustatue.left);
+
+  const [swordsmenWidth, setSwordsmenWidth] = useState(buildings.swordsmen.width);
+  const [swordsmenHeight, setSwordsmenHeight] = useState(buildings.swordsmen.height);
+  const [swordsmenTop, setSwordsmenTop] = useState(buildings.swordsmen.top);
+  const [swordsmenLeft, setSwordsmenLeft] = useState(buildings.swordsmen.left);
+
+  const [moongateWidth, setMoongateWidth] = useState(buildings.moongate.width);
+  const [moongateHeight, setMoongateHeight] = useState(buildings.moongate.height);
+  const [moongateTop, setMoongateTop] = useState(buildings.moongate.top);
+  const [moongateLeft, setMoongateLeft] = useState(buildings.moongate.left);
+
+  const [toriiWidth, setToriiWidth] = useState(buildings.torii.width);
+  const [toriiHeight, setToriiHeight] = useState(buildings.torii.height);
+  const [toriiTop, setToriiTop] = useState(buildings.torii.top);
+  const [toriiLeft, setToriiLeft] = useState(buildings.torii.left);
+
+  const [pondWidth, setPondWidth] = useState(buildings.pond.width);
+  const [pondHeight, setPondHeight] = useState(buildings.pond.height);
+  const [pondTop, setPondTop] = useState(buildings.pond.top);
+  const [pondLeft, setPondLeft] = useState(buildings.pond.left);
+
+  const [alliancecenter_labelWidth, setalliancecenter_labelWidth] = useState(buildings.alliancecenter_label.left);
+  const [alliancecenter_labelHeight, setalliancecenter_labelHeight] = useState(buildings.alliancecenter_label.top);
+  const [alliancecenter_labelTop, setalliancecenter_labelTop] = useState(buildings.alliancecenter_label.width);
+  const [alliancecenter_labelLeft, setalliancecenter_labelLeft] = useState(buildings.alliancecenter_label.height);
+
+  const [townhall_labelWidth, settownhall_labelWidth] = useState(buildings.townhall_label.left);
+  const [townhall_labelHeight, settownhall_labelHeight] = useState(buildings.townhall_label.top);
+  const [townhall_labelTop, settownhall_labelTop] = useState(buildings.townhall_label.width);
+  const [townhall_labelLeft, settownhall_labelLeft] = useState(buildings.townhall_label.height);
+
+  const [tavern_labelWidth, settavern_labelWidth] = useState(buildings.tavern_label.left);
+  const [tavern_labelHeight, settavern_labelHeight] = useState(buildings.tavern_label.top);
+  const [tavern_labelTop, settavern_labelTop] = useState(buildings.tavern_label.width);
+  const [tavern_labelLeft, settavern_labelLeft] = useState(buildings.tavern_label.height);
+
+  const [academy_labelWidth, setacademy_labelWidth] = useState(buildings.academy_label.left);
+  const [academy_labelHeight, setacademy_labelHeight] = useState(buildings.academy_label.top);
+  const [academy_labelTop, setacademy_labelTop] = useState(buildings.academy_label.width);
+  const [academy_labelLeft, setacademy_labelLeft] = useState(buildings.academy_label.height);
+
+  const [announcementboard_labelWidth, setannouncementboard_labelWidth] = useState(buildings.announcementboard_label.left);
+  const [announcementboard_labelHeight, setannouncementboard_labelHeight] = useState(buildings.announcementboard_label.top);
+  const [announcementboard_labelTop, setannouncementboard_labelTop] = useState(buildings.announcementboard_label.width);
+  const [announcementboard_labelLeft, setannouncementboard_labelLeft] = useState(buildings.announcementboard_label.height);
+
+  const [fishmarket_labelWidth, setfishmarket_labelWidth] = useState(buildings.fishmarket_label.left);
+  const [fishmarket_labelHeight, setfishmarket_labelHeight] = useState(buildings.fishmarket_label.top);
+  const [fishmarket_labelTop, setfishmarket_labelTop] = useState(buildings.fishmarket_label.width);
+  const [fishmarket_labelLeft, setfishmarket_labelLeft] = useState(buildings.fishmarket_label.height);
+
+  const [moongate_labelWidth, setmoongate_labelWidth] = useState(buildings.moongate_label.left);
+  const [moongate_labelHeight, setmoongate_labelHeight] = useState(buildings.moongate_label.top);
+  const [moongate_labelTop, setmoongate_labelTop] = useState(buildings.moongate_label.width);
+  const [moongate_labelLeft, setmoongate_labelLeft] = useState(buildings.moongate_label.height);
+
+  const [bank_labelWidth, setbank_labelWidth] = useState(buildings.bank_label.left);
+  const [bank_labelHeight, setbank_labelHeight] = useState(buildings.bank_label.top);
+  const [bank_labelTop, setbank_labelTop] = useState(buildings.bank_label.width);
+  const [bank_labelLeft, setbank_labelLeft] = useState(buildings.bank_label.height);
+
+  const [barracks_labelWidth, setbarracks_labelWidth] = useState(buildings.barracks_label.left);
+  const [barracks_labelHeight, setbarracks_labelHeight] = useState(buildings.barracks_label.top);
+  const [barracks_labelTop, setbarracks_labelTop] = useState(buildings.barracks_label.width);
+  const [barracks_labelLeft, setbarracks_labelLeft] = useState(buildings.barracks_label.height);
+
+//#endregion
+
+useEffect(() => {
+  // resizeMap();
+  setAllianceCenterWidth( buildings.allianceCenter.width * sizeMultiplier);
+  setAllianceCenterHeight( buildings.allianceCenter.height * sizeMultiplier);
+
+  setTownhallWidth( buildings.townhall.width * sizeMultiplier);
+  setTownhallHeight( buildings.townhall.height * sizeMultiplier);
+
+  setTavernWidth( buildings.tavern.width * sizeMultiplier);
+  setTavernHeight( buildings.tavern.height * sizeMultiplier);
+
+  setAcademyWidth( buildings.academy.width * sizeMultiplier);
+  setAcademyHeight( buildings.academy.height * sizeMultiplier);
+  
+  setTavernSpinWidth( buildings.tavernSpin.width * sizeMultiplier);
+  setTavernSpinHeight( buildings.tavernSpin.height * sizeMultiplier);
+
+  setFlowers1Width( buildings.flowers1.width * sizeMultiplier);
+  setFlowers1Height( buildings.flowers1.height * sizeMultiplier);
+
+  setFlowers2Width( buildings.flowers2.width * sizeMultiplier);
+  setFlowers2Height( buildings.flowers2.height * sizeMultiplier);
+
+  setFlowers3Width( buildings.flowers3.width * sizeMultiplier);
+  setFlowers3Height( buildings.flowers3.height * sizeMultiplier);
+
+  setBankWidth( buildings.bank.width * sizeMultiplier);
+  setBankHeight( buildings.bank.height * sizeMultiplier);
+
+  setAnnouncementWidth( buildings.announcement.width * sizeMultiplier);
+  setAnnouncementHeight( buildings.announcement.height * sizeMultiplier);
+
+  setWaterWidth( buildings.water.width * sizeMultiplier);
+  setWaterHeight( buildings.water.height * sizeMultiplier);
+
+  setBarracksWidth( buildings.barracks.width * sizeMultiplier);
+  setBarracksHeight( buildings.barracks.height * sizeMultiplier);
+
+  setFishmarketWidth( buildings.fishmarket.width * sizeMultiplier);
+  setFishmarketHeight( buildings.fishmarket.height * sizeMultiplier);
+
+  setBoatWidth( buildings.boat.width * sizeMultiplier);
+  setBoatHeight( buildings.boat.height * sizeMultiplier);
+
+  setEbisustatueWidth( buildings.ebisustatue.width * sizeMultiplier);
+  setEbisustatueHeight( buildings.ebisustatue.height * sizeMultiplier);
+
+  setSwordsmenWidth( buildings.swordsmen.width * sizeMultiplier);
+  setSwordsmenHeight( buildings.swordsmen.height * sizeMultiplier);
+
+  setMoongateWidth( buildings.moongate.width * sizeMultiplier);
+  setMoongateHeight( buildings.moongate.height * sizeMultiplier);
+
+  setToriiWidth( buildings.torii.width * sizeMultiplier);
+  setToriiHeight( buildings.torii.height * sizeMultiplier);
+
+  setPondWidth( buildings.pond.width * sizeMultiplier);
+  setPondHeight( buildings.pond.height * sizeMultiplier);
+
+  setalliancecenter_labelWidth( buildings.alliancecenter_label.width * sizeMultiplier);
+  setalliancecenter_labelHeight( buildings.alliancecenter_label.height * sizeMultiplier);
+
+  settownhall_labelWidth( buildings.townhall_label.width * sizeMultiplier);
+  settownhall_labelHeight( buildings.townhall_label.height * sizeMultiplier);
+
+  settavern_labelWidth( buildings.tavern_label.width * sizeMultiplier);
+  settavern_labelHeight( buildings.tavern_label.height * sizeMultiplier);
+
+  setacademy_labelWidth( buildings.academy_label.width * sizeMultiplier);
+  setacademy_labelHeight( buildings.academy_label.height * sizeMultiplier);
+
+  setbank_labelWidth( buildings.bank_label.width * sizeMultiplier);
+  setbank_labelHeight( buildings.bank_label.height * sizeMultiplier);
+
+  setbarracks_labelWidth( buildings.barracks_label.width * sizeMultiplier);
+  setbarracks_labelHeight( buildings.barracks_label.height * sizeMultiplier);
+
+  setmoongate_labelWidth( buildings.moongate_label.width * sizeMultiplier);
+  setmoongate_labelHeight( buildings.moongate_label.height * sizeMultiplier);
+
+  setfishmarket_labelWidth( buildings.fishmarket_label.width * sizeMultiplier);
+  setfishmarket_labelHeight( buildings.fishmarket_label.height * sizeMultiplier);
+
+  setannouncementboard_labelWidth( buildings.announcementboard_label.width * sizeMultiplier);
+  setannouncementboard_labelHeight( buildings.announcementboard_label.height * sizeMultiplier);
+}, [sizeMultiplier]);
+
+useEffect(() => {
+  
+  function handleResize(){
+    // console.log('resized to: ', window.innerWidth, 'x', window.innerHeight)
+    if (window.innerWidth < 2880) {
+      setSizeMultiplier(window.innerWidth / 2880);
+      // setInitialPositionX(window.innerWidth / 2);
+      // setInitialPositionY(window.innerHeight / 2);
+      // setZoomState({
+      //   offsetX: window.innerWidth / 2,
+      //   offsetY: window.innerHeight / 2,
+      //   // scale: ReactZoomPanPinchRef.state.scale,
+      // });
+
+    }
+  }
+
+  window.addEventListener('resize', handleResize)
+})
+
+useEffect(() => {
+  // resizeMap();
+  SetUpButtons();
+  setSizeMultiplier(window.innerWidth / 2880);
+}, [])
+
+const SetUpButtons = async () => {
+  setPins(buttonsNames.map((button, i) => 
+    (<Button style={{ marginTop: '4px', marginLeft: '4px' }} 
+    onClick={() => setElementToZoomTo(button)} variant='outline'size='sm'> 
+    {button}</Button>
+    )))
+}
+  return (
+    <section>
+       <Box
+        position='relative'
+        bg='red.800'
+        h='calc(100vh - 74px)'
+      >
+      <AspectRatio ratio={2880/1620} overflow='visible'>
+
+      <TransformWrapper
+        // limitToBounds={true}
+        ref={transformComponentRef}
+        onZoom={changeCanvasState}
+        onPinching={changeCanvasState}
+        onPinchingStop={changeCanvasState}
+        onPanningStop={changeCanvasState}
+        // initialPositionX={initialPositionX}
+        // initialPositionY={initialPositionY}
+        initialScale={1}
+        > 
+        {(utils) => (
+          <React.Fragment>
+            {/* <button onClick={zoomToImage}>Zoom to 1</button> */}
+          {/* <Controls {...utils} /> */}
+          <TransformComponent>
+          
+            <img 
+            src='/img/battle-bay/mapImages/background.png'
+            // src="/img/battle-bay/newMap.png" 
+            useMap="#image-map" className={`${styles.mapImageArea}`} id="fancyMenu"/>
+            <map name="image-map">
+              {/* <area onClick={() => onChange('townHall')} alt="Town Hall" title="Town Hall" coords="793,434,1259,861" shape="rect"/> */}
+              
+                {/* <area onClick={() => onChange('barracks')} alt="Barracks" title="Barracks" coords="194,622,568,968" shape="rect"/>
+                <area onClick={() => onChange('')} alt="Town Hall" title="Town Hall" coords="793,434,1259,861" shape="rect"/>
+                <area onClick={() => onChange('tavern')} alt="Tavern" title="Tavern" coords="377,255,763,531" shape="rect"/>
+                <area onClick={() => onChange('allianceCenter')} alt="Alliance Center" title="Alliance Center" coords="1044,45,1342,414" shape="rect"/>
+                <area onClick={() => onChange('bank')} alt="Bank" title="Bank" coords="1367,283,1808,575" shape="rect"/>
+                <area onClick={() => onChange('academy')} alt="Academy" title="Academy" coords="2118,246,2523,565" shape="rect"/>
+                <area onClick={() => onChange('battleMap')} alt="Fish Market" title="Fish Market" coords="1971,974,2487,1361" shape="rect"/>
+                <area onClick={() => onChange('announcementBoard')} alt="Announcement Board" title="Announcement Board" coords="1813,494,2073,798" shape="rect"/> */}
+            </map>
+
+            <div id="alliancecenter" className={[styles.enlarge]} style={{position:"absolute", marginTop: allianceCenterTop, marginLeft: allianceCenterLeft, zIndex:"9"}} 
+            // onClick={() => onChange('allianceCenter')}
+            >
+              <img src='/img/battle-bay/mapImages/alliancecenter_day.png' width={allianceCenterWidth} height={allianceCenterHeight} /> 
+              <div className={[styles.enlarge]} style={{position:"absolute", marginTop: alliancecenter_labelTop, marginLeft: alliancecenter_labelLeft, zIndex:"20"}}>
+              <img src='/img/battle-bay/building_labels/alliancecenter_label.png' /> </div>
+            </div>
+
+            <div id="townhall" className={[styles.enlarge]} style={{position:"absolute", marginTop: townhallTop, marginLeft: townhallLeft, zIndex:"9"}} 
+            // onClick={() => onChange('townHall')}
+            >
+              <img src='/img/battle-bay/mapImages/townhall.png' width={townhallWidth} height={townhallHeight}/> </div>
+
+            <div id="tavern" className={[styles.enlarge]} style={{position:"absolute", marginTop: tavernTop, marginLeft: tavernLeft, zIndex:"9"}} 
+            // onClick={() => onChange('tavern')}
+            >
+              <img src='/img/battle-bay/mapImages/tavern.png' width={tavernWidth} height={tavernHeight}/> </div>
+
+            <div id="academy" className={[styles.enlarge]} style={{position:"absolute", marginTop: academyTop, marginLeft: academyLeft, zIndex:"9"}} 
+            // onClick={() => onChange('academy')}
+            >
+              <img src='/img/battle-bay/mapImages/academy.png' width={academyWidth} height={academyHeight} /> </div>
+
+            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: tavernSpinTop, marginLeft: tavernSpinLeft, zIndex:"9", pointerEvents:"none"}}>
+              <img src='/img/battle-bay/mapImages/tavern_turbine.png' width={tavernSpinWidth} height={tavernSpinHeight} /></div>
+
+            <div id="boat" className={[styles.enlarge]} style={{position:"absolute", marginTop: boatTop, marginLeft: boatLeft, zIndex:"9"}} 
+            // onClick={() => onChange('battleMap')}
+            >
+              <img src='/img/battle-bay/mapImages/boat_day.png' width={boatWidth} height={boatHeight} /> </div>
+
+            <div id="ebisustatue" className={[styles.enlarge]} style={{position:"absolute", marginTop: ebisustatueTop, marginLeft: ebisustatueLeft, zIndex:"9"}} >
+              <img src='/img/battle-bay/mapImages/ebisustatue.png' width={ebisustatueWidth} height={ebisustatueHeight} /> </div>
+
+            <div id="fishmarket" className={[styles.enlarge]} style={{position:"absolute", marginTop: fishmarketTop, marginLeft: fishmarketLeft, zIndex:"9"}} >
+              <img src='/img/battle-bay/mapImages/fishmarket_day.png' width={fishmarketWidth} height={fishmarketHeight} /> </div>
+
+            <div style={{position:"absolute", marginTop: waterTop, marginLeft: waterLeft, zIndex:"8"}} >
+              <img src='/img/battle-bay/mapImages/water.png' width={waterWidth} height={waterHeight} /> </div>
+
+            <div id="bank" className={[styles.enlarge]} style={{position:"absolute", marginTop: bankTop, marginLeft: bankLeft, zIndex:"8"}} 
+            onClick={() => onChange('bank')}
+            >
+              <img src='/img/battle-bay/mapImages/bank_day.png' width={bankWidth} height={bankHeight} />
+                {/* <div className={[styles.bank_label]} > */}
+              {/* <img className={[styles.bank_label]}  src='/img/battle-bay/building_labels/bank_label.png' 
+              // width={bank_labelWidth} height={bank_labelHeight} 
+              /> */}
+               {/* </div> */}
+            </div>
+
+            <div id="announcement" className={[styles.enlarge]} style={{position:"absolute", marginTop: announcementTop, marginLeft: announcementLeft, zIndex:"9"}} 
+            // onClick={() => onChange('announcementBoard')}
+            >
+              <img src='/img/battle-bay/mapImages/announcement.png' width={announcementWidth} height={announcementHeight} /> </div>
+
+            <div id="barracks" className={[styles.enlarge]} style={{position:"absolute", marginTop: barracksTop, marginLeft: barracksLeft, zIndex:"9"}} 
+            // onClick={() => onChange('barracks')}
+            >
+              <img src='/img/battle-bay/mapImages/barracks.png' width={barracksWidth} height={barracksHeight} /> </div>
+
+            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: swordsmenTop, marginLeft: swordsmenLeft, zIndex:"9", pointerEvents:"none"}} >
+              <img src='/img/battle-bay/mapImages/swordsmen.png' width={swordsmenWidth} height={swordsmenHeight} /> </div>
+            
+            <div id="moongate" className={[styles.enlarge]} style={{position:"absolute", marginTop: moongateTop, marginLeft: moongateLeft, zIndex:"9"}}>
+              <img src='/img/battle-bay/mapImages/moongate_day.png' width={moongateWidth} height={moongateHeight} />
+              {/* <div className={[styles.enlarge]} style={{position:"absolute",  zIndex:"20"}}>
+                <img src='/img/battle-bay/building_labels/moongate_label.png' /> </div> */}
+            </div>
+          
+            <div id="torii" className={[styles.enlarge]} style={{position:"absolute", marginTop: toriiTop, marginLeft: toriiLeft, zIndex:"9"}} >
+              <img src='/img/battle-bay/mapImages/torii.png' width={toriiWidth} height={toriiHeight} /> </div>
+
+            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: pondTop, marginLeft: pondLeft, zIndex:"8"}}>
+              <img src='/img/battle-bay/mapImages/pond1.png' width={pondWidth} height={pondHeight} /> </div>
+
+            
+
+            {/* <div className={[styles.enlarge]} style={{position:"absolute", marginTop: townhall_labelTop, marginLeft: townhall_labelLeft, zIndex:"20"}}>
+              <img src='/img/battle-bay/building_labels/townhall_label.png' width={townhall_labelWidth} height={townhall_labelHeight} /> </div>
+
+            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: tavern_labelTop, marginLeft: tavern_labelLeft, zIndex:"20"}}>
+              <img src='/img/battle-bay/building_labels/tavern_label.png' width={tavern_labelWidth} height={tavern_labelHeight} /> </div>
+
+            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: academy_labelTop, marginLeft: academy_labelLeft, zIndex:"20"}}>
+              <img src='/img/battle-bay/building_labels/academy_label.png' width={academy_labelWidth} height={academy_labelHeight} /> </div>
+
+            
+
+            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: barracks_labelTop, marginLeft: barracks_labelLeft, zIndex:"20"}}>
+              <img src='/img/battle-bay/building_labels/barracks_label.png' width={barracks_labelWidth} height={barracks_labelHeight} /> </div>
+     
+            
+            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: fishmarket_labelTop, marginLeft: fishmarket_labelLeft, zIndex:"20"}}>
+              <img src='/img/battle-bay/building_labels/fishmarket_label.png' width={fishmarket_labelWidth} height={fishmarket_labelHeight} /> </div>
+
+            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: announcementboard_labelTop, marginLeft: announcementboard_labelLeft, zIndex:"20"}}>
+              <img src='/img/battle-bay/building_labels/announcementboard_label.png' width={announcementboard_labelWidth} height={announcementboard_labelHeight} /> </div> */}
+            
+
+          </TransformComponent>
+        </React.Fragment>
+        )}
+      </TransformWrapper>
+
+      {/* <Flex style={{ display: 'flex', marginTop: '16px' }} textAlign='center' justifyContent='space-around'>
+      <Button ref={btnRef} colorScheme='teal' onClick={onOpen} >
+        Buildings
+      </Button> */}
+
+   
+      </AspectRatio>
+    
+<Box  position='absolute' top={0} left={0} p={4}>
+  <Flex direction='row' justify='space-between'>
+    <Box>
+      <Image style={{ display: 'flex', marginTop: '16px' }} src='\img\battle-bay\bankinterior\banker_chat_background.png' w='140px' position={'absolute'} />
+      <Button style={{ display: 'flex', marginTop: '16px' }}  color='white' onClick={() => onChange('userPage')} variant='ghost'size='lg'>  User Profile </Button>
+      <Image style={{ display: 'flex', marginTop: '16px' }}src='\img\battle-bay\bankinterior\banker_chat_background.png' w='140px' position={'absolute'} />
+      <Button style={{ display: 'flex', marginTop: '16px' }}  color='white' ref={btnRef}  variant='ghost' onClick={onOpen} size='lg'>Buildings</Button>
+    </Box>
+    
+  </Flex>
+</Box>
+
+</Box>
+
+      <Drawer
+        isOpen={isOpen}
+        placement='bottom'
+        onClose={onClose}
+        finalFocusRef={btnRef}
+      >
+        {/* <DrawerOverlay /> */}
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Zoom to Building</DrawerHeader>
+
+          <DrawerBody>
+            {pins}
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+      {/* </Flex> */}
+      {/* </div> */}
+    </section>
+  )
+};
+
+
+export default DefaultArea;
