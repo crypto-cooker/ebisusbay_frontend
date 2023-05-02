@@ -686,6 +686,27 @@
     "style": {}
   },
   {
+    "slug": "aiko-society",
+    "name": "Aiko Society",
+    "description": "Aiko Society is a Big Ecosystem that includes Aiko NFT with Aiko Cards in crypto.org chain and Aiko Beanz with Mutant Aiko Beanz in Cronos Chain.\n\nAiko Beanz and Mutant Aiko Beanz release benefits, passive income, gifts and more to their Holders. Each collection has an special room in Aiko Society metaverse, special merchandising and both share the same amazing community.",
+    "images": {
+      "banner": "/img/brands/aiko-society/banner.webp",
+      "preview": "/img/brands/aiko-society/preview.webp"
+    },
+    "collections": [
+      "0x8fAe79f9b06E3f1525C1de4F88940279dC70C7C9",
+      "0xA869e4c032D4E3786f211520E20754F4347ec67D"
+    ],
+    "socials": {
+      "website": "https://www.aikosociety.com/",
+      "twitter": "https://twitter.com/AikoSociety",
+      "discord": "https://discord.gg/JdmsRjcgQJ"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "croarmy-collection",
     "name": "CroArmy Collection",
     "description": "CroArmy is a collection of NFTs that each serve a purpose. We attempt to diversify our holdings so we’re not too heavy in one singular project. Earnings from those projects, are swapped to bcro and airdropped to Coalitions, Soldiers, Burns, and Jackals. On top of our main treasury, we also have side hustles with BTC miners, and Jarheads.",
@@ -829,28 +850,6 @@
       "twitter": "https://twitter.com/BabyHop__",
       "discord": "https://discord.gg/fnVzKYPbg/",
       "telegram": "https://t.me/BabyHopToken"
-    },
-    "categories": [],
-    "style": {}
-  },
-  {
-    "slug": "badmeerkat",
-    "name": "BadMeerkat",
-    "description": "3 Fan Art collection of MadMeerkat \uD83C\uDD95 Traits \uD83C\uDD95 Personality \uD83D\uDFF0 Degen",
-    "images": {
-      "banner": "/img/brands/badmeerkat/banner.webp",
-      "preview": "/img/brands/badmeerkat/preview.webp"
-    },
-    "collections": [
-      "0x22B2f2223d26f27c27494efbF4E6646812193a43",
-      "0xdc9B6e10E0648E2258afe6705690C1E81cf933d7",
-      "0x302789418f6A5DfDe9faB3b8FE9Bc4EEe020E84F",
-      "0xB41398EE9A7a9c7570F1973690Ce98370C3a78E4"
-    ],
-    "socials": {
-      "website": "https://linktr.ee/badmeerkat",
-      "twitter": "https://twitter.com/badmeerkatnft",
-      "discord": "https://discord.gg/wcJ4vvZb4H"
     },
     "categories": [],
     "style": {}
