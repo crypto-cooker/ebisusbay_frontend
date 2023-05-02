@@ -463,9 +463,42 @@ const Index = function () {
                 <FontAwesomeIcon icon={faWallet} className="me-2"/>
                 <span>Wallet Info</span>
               </Heading>
+
               <div className="d-flex">
                 <div className="flex-fill">
-                  <div className="text-muted">Balance</div>
+                  <div className="text-muted">$Fortune Balance</div>
+                  <div>
+                    {!user.connectingWallet ? (
+                      <span className="d-wallet-value">
+                      {user.tokenSale ? (
+                        <div className="d-flex">
+                          <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="Fortune Logo" width={16} height={16} />
+                          <span className="ms-1">
+                            {ethers.utils.commify(round(user.tokenSale.fortune, 2))}
+                          </span>
+                        </div>
+                      ) : (
+                        <>N/A</>
+                      )}
+                    </span>
+                    ) : (
+                      <span>
+                      <Spinner animation="border" role="status" size={'sm'}>
+                        <span className="visually-hidden">Loading...</span>
+                      </Spinner>
+                    </span>
+                    )}
+                  </div>
+                </div>
+                <div className="my-auto">
+                  <PrimaryButton onClick={handleBuyFortune}>
+                    Buy $Fortune
+                  </PrimaryButton>
+                </div>
+              </div>
+              <div className="d-flex mt-2">
+                <div className="flex-fill">
+                  <div className="text-muted">CRO Balance</div>
                   <div>
                     {!user.connectingWallet ? (
                       <span className="d-wallet-value">
@@ -594,39 +627,6 @@ const Index = function () {
                       Harvest
                     </Button>
                   )}
-                </div>
-              </div>
-
-              <div className="d-flex mt-2">
-                <div className="flex-fill">
-                  <div className="text-muted">$Fortune Balance</div>
-                  <div>
-                    {!user.connectingWallet ? (
-                      <span className="d-wallet-value">
-                      {user.tokenSale ? (
-                        <div className="d-flex">
-                          <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="Fortune Logo" width={16} height={16} />
-                          <span className="ms-1">
-                            {ethers.utils.commify(round(user.tokenSale.fortune, 2))}
-                          </span>
-                        </div>
-                      ) : (
-                        <>N/A</>
-                      )}
-                    </span>
-                    ) : (
-                      <span>
-                      <Spinner animation="border" role="status" size={'sm'}>
-                        <span className="visually-hidden">Loading...</span>
-                      </Spinner>
-                    </span>
-                    )}
-                  </div>
-                </div>
-                <div className="my-auto">
-                  <PrimaryButton onClick={handleBuyFortune}>
-                    Buy $Fortune
-                  </PrimaryButton>
                 </div>
               </div>
 
