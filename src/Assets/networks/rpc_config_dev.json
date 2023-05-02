@@ -20132,6 +20132,32 @@
         "kyc": "hidden",
         "verified": true
       }
+    },
+    {
+      "name": "Ghetto Doves Airdrop",
+      "slug": "ghetto-doves-airdrop",
+      "multiToken": false,
+      "address": "0xfB54fc0b0DE234C714d6EecddC6dA6c575bc75D0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/ghetto-doves-airdrop/avatar.webp",
+        "card": "/img/collections/ghetto-doves-airdrop/card.webp",
+        "banner": "/img/collections/ghetto-doves-airdrop/banner.webp",
+        "twitter": "https://twitter.com/DovesGhetto",
+        "website": "https://ghettodoves.com/",
+        "discord": "https://discord.gg/ghetto-doves",
+        "medium": "https://medium.com/@gd_29360/welcome-to-the-city-of-new-york-d940fff215c1",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [

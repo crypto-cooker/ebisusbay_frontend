@@ -3342,7 +3342,7 @@
       "name": "Crypto Crows",
       "slug": "crypto-crows",
       "multiToken": false,
-      "address": "",
+      "address": "0x5Ec772bcE2D981C6ce42ff002a586B10f257031D",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -8189,7 +8189,7 @@
         "twitter": "https://twitter.com/Corvuslabs_ltd",
         "discord": "https://discord.gg/ykEJAt8Pce"
       },
-      "address": "",
+      "address": "0x5Ec772bcE2D981C6ce42ff002a586B10f257031D",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 99,
       "totalSupply": 1876,
@@ -8197,7 +8197,7 @@
       "memberCost": "250",
       "whitelistCost": "200",
       "foundersOnly": false,
-      "start": 1682579014000,
+      "start": 1683055257000,
       "end": null,
       "referral": false,
       "is1155": false,

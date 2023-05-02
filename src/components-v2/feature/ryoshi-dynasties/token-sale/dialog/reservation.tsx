@@ -39,6 +39,7 @@ import {chainConnect, connectAccount, updateFortuneBalance} from "@src/GlobalSta
 import {TokenSaleContext, TokenSaleContextProps} from "@src/components-v2/feature/ryoshi-dynasties/token-sale/context";
 import {useQueryClient} from "@tanstack/react-query";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
+import {useWindowSize} from "@src/hooks/useWindowSize";
 
 const config = appConfig();
 
@@ -400,9 +401,9 @@ const FortunePurchaseProgress = () => {
   const [progressValue, setProgressValue] = useState(0);
   const progressRef = useRef<HTMLDivElement>(null);
   const [barSpot, setBarSpot] = useState(0);
+  const windowSize = useWindowSize();
 
   const getProgress = async () => {
-
     const value = (tokenSaleContext.totalFortunePurchased / tokenSaleContext.maxAllocation) * 100;
     setProgressValue(value);
     const offsetWidth = progressRef.current?.offsetWidth ?? 0;
@@ -414,7 +415,7 @@ const FortunePurchaseProgress = () => {
       await getProgress();
     }
     func();
-  }, [tokenSaleContext.totalFortunePurchased]);
+  }, [tokenSaleContext.totalFortunePurchased, windowSize.width]);
 
   return (
     <>
