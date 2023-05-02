@@ -9,24 +9,45 @@ import {
   Text,
 
 } from '@chakra-ui/react';
-
-import WithdrawForm from './bank/components/WithdrawForm';
-import StakeFortune from './bank/components/StakeFortune';
-import StakeNFTs from './bank/components/StakeNFTs';
-
+import PurchaseFortuneForm from '../Areas/PurchaseFortuneForm';
+import FortuneFAQForm from '../Areas/FortuneFAQForm';
 import styles from './App.module.scss';
 import { Stack } from 'react-bootstrap';
 
-const Bank = ({onBack}) => {
+const oldBank = ({onBack}) => {
 
-  const { isOpen: isOpenStakeFortune, onOpen: onOpenStakeFortune, onClose: onCloseStakeFortune} = useDisclosure();
-  const { isOpen: isOpenStakeNFTs, onOpen: onOpenStakeNFTs, onClose: onCloseStakeNFTs} = useDisclosure();
-  const { isOpen: isOpenWithdraw, onOpen: onOpenWithdraw, onClose: onCloseWithdraw} = useDisclosure();
+  const { isOpen: isOpenStake, onOpen: onOpenStake, onClose: onCloseStake} = useDisclosure();
+  const { isOpen: isOpenFAQ, onOpen: onOpenWithdraw, onClose: onCloseFAQ} = useDisclosure();
+
+  const [isLargerThan1280] = useMediaQuery('(min-width: 1280px)')
+  const [powerUps, setPowerUps] = useState([])
+  const [currentGif, setCurrentGif] = useState('img/battle-bay/gifBanker/eyeBlink.gif')
+
+  const faq = 'url("/img/battle-bay/bankinterior/bank_button_FRTN_FAQ.png")';
+  const faq_h = 'url("/img/battle-bay/bankinterior/bank_button_FRTN_FAQ_hover.png")';
+
+  const buy = 'url("/img/battle-bay/bankinterior/bank_button_buy_fortune.png")';
+  const buy_h = 'url("/img/battle-bay/bankinterior/bank_button_buy_fortune_hover.png")';
+
+  const exit = 'url("/img/battle-bay/bankinterior/bank_button_exit.png")';
+  const exit_h = 'url("/img/battle-bay/bankinterior/bank_button_exit_hover.png")';
+
+  const [faqImage, setfaqImage] = useState(faq);
+  const [buyImage, setbuyImage] = useState(buy);
+  const [exitImage, setexitImage] = useState(exit);
 
   var blink = 'img/battle-bay/gifBanker/eyeBlink.gif';
   var mouth = 'img/battle-bay/gifBanker/mouth.gif';
   var ok = 'img/battle-bay/gifBanker/OK.gif';
   var welcome = 'img/battle-bay/gifBanker/welcome.gif';
+  
+  const breakpoints = {
+    sm: '30em', // 480px
+    md: '48em', // 768px
+    lg: '62em', // 992px
+    xl: '80em', // 1280px
+    '2xl': '96em', // 1536px
+  }
 
  var greetings = ['Greetings, traveler. I am the best person to talk to when it comes to your $Fortune possessions… or lack-thereof… which I could help you address.',
                   'Hail, brave hero! How may I assist you with your $Fortune possessions today? Stake, purchase, or withdraw?',
@@ -37,12 +58,27 @@ const Bank = ({onBack}) => {
   
   const randomGreeting = useState(greetings[Math.floor(Math.random() * greetings.length)]);
 
+  useEffect(() => {
+    setCurrentGif(blink);
+    // talk();
+  }, [])
+
+  useEffect(() => {
+    setPowerUps([<Button height={'20px'}>Power Ups</Button>])
+  }, [])
+
+  const talk = async () => {
+    setCurrentGif(mouth);
+    console.log(randomGreeting)
+    await new Promise(r => setTimeout(r, 1000));
+    setCurrentGif(blink);
+  }
+
   return (
     <section>
 
-    <StakeFortune isOpen={isOpenStakeFortune} onClose={onCloseStakeFortune}/>
-    <StakeNFTs isOpen={isOpenStakeNFTs} onClose={onCloseStakeNFTs}/>
-    <WithdrawForm isOpen={isOpenWithdraw} onClose={onCloseWithdraw}/>
+    <PurchaseFortuneForm isOpen={isOpenStake} onClose={onCloseStake}/>
+    <FortuneFAQForm isOpen={isOpenFAQ} onClose={onCloseFAQ}/>
 
     <Box
      position='relative'
@@ -68,14 +104,19 @@ const Bank = ({onBack}) => {
       </div>
 
       <div style={{position:"absolute", zIndex:"1",top:"60%",width: "40%",height: "100%"}}>
+        <Image src={currentGif} style={{position:"absolute", zIndex:"2"}}/>
       </div>
+
+      
 
       <div style={{position:"absolute", zIndex:"2",left:"80%",top:"30%"}}  >
         <Stack direction="row" spacing={1}>
-          <Button style={{zIndex:"2"}} onClick={() => onOpenStakeFortune()}> Stake $Fortune </Button>
-          <Button style={{zIndex:"2"}} onClick={() => onOpenStakeNFTs()}> Stake NFTs </Button>
-          <Button style={{zIndex:"2"}} onClick={() => onOpenWithdraw()}> Emergency Withdraw </Button>
-          <Button style={{zIndex:"2"}} onClick={() => onBack()}> Exit </Button>
+          <Image style={{ content: buyImage }} onMouseEnter={() => setbuyImage(buy_h)} onMouseOut={() => setbuyImage(buy)} onClick={() => onOpenStake()}
+          /> 
+          <Image style={{ content: exitImage }} onMouseEnter={() => setexitImage(exit_h)} onMouseOut={() => setexitImage(exit)} onClick={() => onBack()}/> 
+           {/* <div style={{position:"absolute", zIndex:"2",width: "20%", height: "100%", left:"80%",top:"65%"}} onClick={() => onOpenWithdraw()}>
+          <Image style={{ content: faqImage }} onMouseEnter={() => setfaqImage(faq_h)} onMouseOut={() => setfaqImage(faq)} /> 
+        </div> */}
         </Stack>
       </div>
 
@@ -90,4 +131,4 @@ const Bank = ({onBack}) => {
 };
 
 
-export default Bank;
+export default oldBank;

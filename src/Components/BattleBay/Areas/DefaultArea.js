@@ -400,7 +400,7 @@ const SetUpButtons = async () => {
             </map>
 
             <div id="alliancecenter" className={[styles.enlarge]} style={{position:"absolute", marginTop: allianceCenterTop, marginLeft: allianceCenterLeft, zIndex:"9"}} 
-            // onClick={() => onChange('allianceCenter')}
+            onClick={() => onChange('allianceCenter')}
             >
               <img src='/img/battle-bay/mapImages/alliancecenter_day.png' width={allianceCenterWidth} height={allianceCenterHeight} /> 
               <div className={[styles.enlarge]} style={{position:"absolute", marginTop: alliancecenter_labelTop, marginLeft: alliancecenter_labelLeft, zIndex:"20"}}>
