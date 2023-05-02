@@ -81,6 +81,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
       } as TokenSaleContextProps;
     },
     {
+      enabled: isVisible,
       refetchOnWindowFocus: false,
       refetchInterval: 10000,
       initialData: () => ({
