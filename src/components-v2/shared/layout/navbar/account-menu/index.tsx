@@ -68,6 +68,8 @@ import CronosIcon from "@src/components-v2/shared/icons/cronos";
 import {useAppSelector} from "@src/Store/hooks";
 import GdcClaimConfirmation from "@src/components-v2/shared/dialogs/gdc-claim-confirmation";
 import ImageService from "@src/core/services/image";
+import {PrimaryButton} from "@src/components-v2/foundation/button";
+import {router} from "next/client";
 
 const StyledModal = styled(Modal)`
   .modal-content {
@@ -231,6 +233,11 @@ const Index = function () {
     url.searchParams.append('walletAddress', user.address);
     
     window.open(url, '_blank');
+  }
+
+  const handleBuyFortune = () => {
+    history.push('/ryoshi-dynasties/token-sale');
+    closeMenu();
   }
 
   useEffect(() => {
@@ -590,11 +597,12 @@ const Index = function () {
                 </div>
               </div>
 
-              <div className="flex-fill mt-2">
-                <div className="text-muted">$Fortune Balance</div>
-                <div>
-                  {!user.connectingWallet ? (
-                    <span className="d-wallet-value">
+              <div className="d-flex mt-2">
+                <div className="flex-fill">
+                  <div className="text-muted">$Fortune Balance</div>
+                  <div>
+                    {!user.connectingWallet ? (
+                      <span className="d-wallet-value">
                       {user.tokenSale ? (
                         <div className="d-flex">
                           <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="Fortune Logo" width={16} height={16} />
@@ -606,13 +614,19 @@ const Index = function () {
                         <>N/A</>
                       )}
                     </span>
-                  ) : (
-                    <span>
+                    ) : (
+                      <span>
                       <Spinner animation="border" role="status" size={'sm'}>
                         <span className="visually-hidden">Loading...</span>
                       </Spinner>
                     </span>
-                  )}
+                    )}
+                  </div>
+                </div>
+                <div className="my-auto">
+                  <PrimaryButton onClick={handleBuyFortune}>
+                    Buy $Fortune
+                  </PrimaryButton>
                 </div>
               </div>
 
