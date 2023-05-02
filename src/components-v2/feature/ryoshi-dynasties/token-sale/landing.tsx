@@ -30,7 +30,7 @@ const LandingScene = ({onEnterTokenSale}: LandingSceneProps) => {
           autoPlay
           loop
           muted
-          poster='/img/ryoshi/fortune-token-sale-bg.jpg'
+          poster={'https://cdn-prod.ebisusbay.com/img/ryoshi/fortune-token-sale-bg.mp4'}
           style={{
             minHeight: 'calc(100vh - 74px)',
             filter: 'brightness(0.7) blur(5px)',
