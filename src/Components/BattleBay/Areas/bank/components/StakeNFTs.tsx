@@ -33,7 +33,7 @@ import {motion} from 'framer-motion'
 import {useAppDispatch, useAppSelector} from "@src/Store/hooks";
 
 
-const StakeNFTs = ({ address, profile, isOpen, onClose}) => {
+const StakeNFTs = ({isOpen, onClose}) => {
 
   const user = useAppSelector((state) => state.user);
  
@@ -67,8 +67,8 @@ const StakeNFTs = ({ address, profile, isOpen, onClose}) => {
 
   useEffect(() => {
     console.log("useEffect")
-    console.log(user.address)
-    console.log(address)
+    // console.log(user.address)
+    // console.log(address)
     setIsLoading(true);
     getCurrentlyStakedNFTs()
   }, []);

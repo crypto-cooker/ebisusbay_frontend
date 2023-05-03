@@ -74,8 +74,8 @@ const Bank = ({onBack, isVisible} : BankerSceneProps) => {
     >
     <Box>
 
-    <StakeFortune isOpen={isOpenStakeFortune} onClose={onCloseStakeFortune}/>
-    <StakeNFTs isOpen={isOpenStakeNFTs} onClose={onCloseStakeNFTs}/>
+    <StakeFortune isOpen={isOpenStakeFortune} onClose={onCloseStakeFortune} initialPage={'main'}/>
+    <StakeNFTs isOpen={isOpenStakeNFTs} onClose={onCloseStakeNFTs} />
     <EmergencyWithdraw isOpen={isOpenWithdraw} onClose={onCloseWithdraw}/>
 
     <AspectRatio ratio={1920/1080} overflow='visible'>
