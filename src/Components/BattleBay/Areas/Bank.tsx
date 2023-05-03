@@ -28,7 +28,7 @@ import {faArrowRightFromBracket, faCircleInfo, faDollarSign} from "@fortawesome/
 import localFont from 'next/font/local';
 
 interface BankerSceneProps {
-  onExit: () => void;
+  onBack: () => void;
   isVisible:boolean;
 }
 
@@ -55,7 +55,7 @@ const Bank = ({onBack, isVisible} : BankerSceneProps) => {
 
   const handleExit = useCallback(() => {
     setBankerImage(bankerImages.talking);
-    onExit();
+    onBack();
   }, []);
 
  var greetings = ['Greetings, traveler. I am the best person to talk to when it comes to your $Fortune possessions… or lack-thereof… which I could help you address.',
