@@ -17,15 +17,15 @@ interface Props {
   initialPage: string;
 }
 
-const StakeFortune = ({ isOpen, onClose, initialPage}: Props) => {
+const StakeFortune = ({address, isOpen, onClose, initialPage}: Props) => {
  
   const [page, setPage] = useState(initialPage);
   const [isLoading, setIsLoading] = useState(false);
-  const user = useSelector((state) => state.user);
+  // const user = useSelector((state) => state.user);
   const [profile, setProfile] = useState(null);
 
   const SetUp = async () => {
-    let profile1 = await getProfile(user.address.toLowerCase());
+    let profile1 = await getProfile(address);
     setProfile(profile1);
   }
 
@@ -58,7 +58,7 @@ const StakeFortune = ({ isOpen, onClose, initialPage}: Props) => {
             {page === 'faq' ? (
             <FaqPage onBack={() => setPage('main')} onClose={handleClose}/>
             ) : (
-            <StakePage address={user.address} profile={profile} onBack={() => setPage('faq')} onClose={handleClose}/>
+            <StakePage onBack={() => setPage('faq')} onClose={handleClose}/>
             )}
           <ModalFooter className="border-0"/>
           </>

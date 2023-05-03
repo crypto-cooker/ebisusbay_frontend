@@ -9,10 +9,12 @@ import AnnouncementBoard from "@src/Components/BattleBay/Areas/AnnouncementBoard
 import DefaultArea from "@src/Components/BattleBay/Areas/DefaultArea";
 import Academy from "@src/Components/BattleBay/Areas/Academy";
 import UserPage from "@src/Components/BattleBay/Areas/UserPage";
+import { useSelector } from 'react-redux';
 
 const BattleBay = () => {
   const [currentPage, setCurrentPage] = useState();
   const [preivousPage, setPreviousPage] = useState();
+  const user = useSelector((state) => state.user);
 
   const navigate = (page) => {
     setPreviousPage(currentPage)
@@ -44,7 +46,7 @@ const BattleBay = () => {
       // ) : currentPage === 'leaderboard' ? (
       //   <Leaderboard onBack={returnToPreviousPage}/>
       ): currentPage === 'bank' ? (
-        <Bank onBack={returnToPreviousPage} />
+        <Bank address={user.address} onBack={returnToPreviousPage} />
       ): currentPage === 'allianceCenter' ? (
         <AllianceCenter onBack={returnToPreviousPage} factions={factions}/>
       ): currentPage === 'academy' ? (

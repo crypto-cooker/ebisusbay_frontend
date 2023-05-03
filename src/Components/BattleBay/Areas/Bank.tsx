@@ -28,6 +28,7 @@ import {faArrowRightFromBracket, faCircleInfo, faDollarSign} from "@fortawesome/
 import localFont from 'next/font/local';
 
 interface BankerSceneProps {
+  address: string;
   onBack: () => void;
   isVisible:boolean;
 }
@@ -37,7 +38,7 @@ const bankerImages = {
   talking: '/img/battle-bay/gifBanker/mouth.gif',
 };
 
-const Bank = ({onBack, isVisible} : BankerSceneProps) => {
+const Bank = ({address, onBack, isVisible} : BankerSceneProps) => {
 
   const { isOpen: isOpenStakeFortune, onOpen: onOpenStakeFortune, onClose: onCloseStakeFortune} = useDisclosure();
   const { isOpen: isOpenStakeNFTs, onOpen: onOpenStakeNFTs, onClose: onCloseStakeNFTs} = useDisclosure();
@@ -74,7 +75,7 @@ const Bank = ({onBack, isVisible} : BankerSceneProps) => {
     >
     <Box>
 
-    <StakeFortune isOpen={isOpenStakeFortune} onClose={onCloseStakeFortune} initialPage={'main'}/>
+    <StakeFortune address={address} isOpen={isOpenStakeFortune} onClose={onCloseStakeFortune} initialPage={'main'}/>
     <StakeNFTs isOpen={isOpenStakeNFTs} onClose={onCloseStakeNFTs} />
     <EmergencyWithdraw isOpen={isOpenWithdraw} onClose={onCloseWithdraw}/>
 
