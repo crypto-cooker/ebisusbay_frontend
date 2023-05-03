@@ -413,7 +413,7 @@ const NftPicker = ({collectionAddress, nfts, onSelect, initialNft}) => {
     <>
       {isBundle(chosenNft.nftAddress) ? (
         <ImageContainer className="mx-auto">
-          <img src={ImageService.instance.provider.avatar('/img/logos/bundle.webp')} alt={chosenNft.name} />
+          <img src={ImageService.translate('/img/logos/bundle.webp').avatar()} alt={chosenNft.name} />
         </ImageContainer>
       ) : (
         <ImageContainer className="mx-auto">

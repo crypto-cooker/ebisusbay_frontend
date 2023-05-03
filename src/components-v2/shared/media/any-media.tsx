@@ -4,6 +4,7 @@ import Link from 'next/link';
 import {CdnImage} from './cdn-image';
 import {fallbackImageUrl} from "@src/core/constants";
 import ImageService from '@src/core/services/image';
+import axios from "axios";
 
 // AnyMediaProps
 
@@ -43,11 +44,11 @@ export const AnyMedia = ({
   const [videoThumbnail, setVideoThumbNail] = useState<string | null>(thumbnail ?? image);
 
   const blurImageUrl = (img: string) => {
-    return ImageService.proxy.blurred(img);
+    return ImageService.translate(img).blurred();
   };
 
   const makeThumb = (vid: string) => {
-    return ImageService.proxy.thumbnail(vid);
+    return ImageService.translate(vid).thumbnail();
   };
 
   useEffect(() => {
@@ -61,7 +62,7 @@ export const AnyMedia = ({
     return fileExt !== filenamePart && fileExt !== '';
   };
 
-  const determineMediaType = () => {
+  const determineMediaType = async () => {
     if (!image || image.startsWith('data')) {
       setDynamicType(MediaType.image);
       return;
@@ -77,35 +78,34 @@ export const AnyMedia = ({
       } else if (imageURL.pathname && knownImageTypes.some((o) => imageURL.pathname.endsWith(o))) {
         setDynamicType(MediaType.image);
       } else {
-        const xhr = new XMLHttpRequest();
-        xhr.open('HEAD', transformedImage, true);
+        let response = await axios.head(transformedImage);
+        let contentType = response.headers['content-type'];
+        if (!contentType) {
+          setDynamicType(MediaType.image);
+          return;
+        }
 
-        xhr.onload = function () {
-          const contentType = xhr.getResponseHeader('Content-Type');
-          if (!contentType) {
-            setDynamicType(MediaType.image);
-            return;
-          }
+        const [mediaType, format] = contentType.split('/');
+        let type = MediaType[mediaType as keyof typeof MediaType] ?? MediaType.image;
+        if (type === MediaType.video) {
+          if (!!thumbnail) {
+            let thumbnailResponse = await axios.head(image);
+            let thumbnailContentType = thumbnailResponse.headers['content-type'];
 
-          const [mediaType, format] = contentType.split('/');
-          let type = MediaType[mediaType as keyof typeof MediaType] ?? MediaType.image;
-          if (type === MediaType.video) {
-            if (!!thumbnail) {
-              setVideoThumbNail(thumbnail);
-            } else {
-              setVideoThumbNail(makeThumb(transformedImage));
-            }
-          }
-          if (format === 'gif') {
-            setTransformedImage(ImageService.proxy.gifToMp4(imageURL.toString()));
-            setVideoThumbNail(thumbnail ?? null);
-            setDynamicType(MediaType.video);
+            console.log('===SET THUMB', ImageService.bunnykit(thumbnail).thumbnail())
+            setVideoThumbNail(ImageService.bunnykit(thumbnail).thumbnail());
           } else {
-            setDynamicType(type);
+            setVideoThumbNail(makeThumb(transformedImage));
           }
-        };
-
-        xhr.send();
+        }
+        if (format === 'gif') {
+          console.log('===SET GIF')
+          setTransformedImage(ImageService.gif(imageURL.toString()).gifToMp4());
+          setVideoThumbNail(thumbnail ?? null);
+          setDynamicType(MediaType.video);
+        } else {
+          setDynamicType(type);
+        }
       }
     } catch (e) {
       console.log('Unable to determine media type', e, image);

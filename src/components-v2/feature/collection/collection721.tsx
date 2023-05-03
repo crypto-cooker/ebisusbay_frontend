@@ -185,7 +185,7 @@ const Collection721 = ({ collection, query, activeDrop = null}: Collection721Pro
         id="profile_banner"
         className="jumbotron breadcumb no-bg"
         style={{
-          backgroundImage: `url(${ImageService.staticAsset.banner(collection.metadata.banner ?? '')})`,
+          backgroundImage: `url(${ImageService.translate(collection.metadata.banner ?? '').banner()})`,
           backgroundPosition: '50% 50%',
         }}
       >
@@ -199,7 +199,7 @@ const Collection721 = ({ collection, query, activeDrop = null}: Collection721Pro
               <div className="profile_avatar">
                 <div className="d_profile_img">
                   {collection.metadata.avatar ? (
-                    <img src={ImageService.staticAsset.fixedWidth(collection.metadata.avatar, 150, 150)} alt={collection.name} />
+                    <img src={ImageService.translate(collection.metadata.avatar).fixedWidth(150, 150)} alt={collection.name} />
                   ) : (
                     <Blockies seed={collection.address.toLowerCase()} size={15} scale={10} />
                   )}

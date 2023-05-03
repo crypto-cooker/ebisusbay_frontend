@@ -55,7 +55,7 @@ const CustomSlide = ({ index, avatar, banner, title, subtitle, collectionId, url
           {avatar || collectionId ? (
             <span>
               {avatar ? (
-                <img className="lazy" src={ImageService.staticAsset.avatar(avatar)} alt={title} />
+                <img className="lazy" src={ImageService.translate(avatar).avatar()} alt={title} />
               ) : (
                 <Blockies seed={collectionId} size={10} scale={6} />
               )}

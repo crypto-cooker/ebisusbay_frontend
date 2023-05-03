@@ -62,7 +62,7 @@ const CronosMutantApesAuction = () => {
       <HeroSection
         className={`jumbotron tint`}
         style={{
-          backgroundImage: `url(${ImageService.instance.provider.banner(background)})`
+          backgroundImage: `url(${ImageService.translate(background).banner()})`
         }}
       >
         <Container maxW='2560px' mx="1.75em" my={2}>

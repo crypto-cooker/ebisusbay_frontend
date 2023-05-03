@@ -29,6 +29,13 @@ export const configData = {
         assets: 'https://ebisusbay-prod.b-cdn.net/',
         bunnykit: 'https://ik-proxy.b-cdn.net/',
         legacy: 'https://cdn.ebisusbay.com/',
+
+        ipfs: 'https://cdn.ltsglxy.network/ipfs/',
+        arweave: 'https://cdn.ltsglxy.network/arweave/',
+        proxy: 'https://cdn.ltsglxy.network/proxy/',
+        storage: 'https://cdn-prod.ebisusbay.com/storage/',
+        files: 'https://cdn-prod.ebisusbay.com/files/',
+        app: 'https://cdn-prod.ebisusbay.com/'
       }
     },
     rpc: {
@@ -119,6 +126,13 @@ export const configData = {
         assets: 'https://ebisusbay-dev.b-cdn.net/',
         bunnykit: 'https://ik-proxy.b-cdn.net/',
         legacy: 'https://cdn.ebisusbay.biz/',
+
+        ipfs: 'https://cdn.ltsglxy.network/ipfs/',
+        arweave: 'https://cdn.ltsglxy.network/arweave/',
+        proxy: 'https://cdn.ltsglxy.network/proxy/',
+        storage: 'https://cdn-dev.ebisusbay.biz/storage/',
+        files: 'https://cdn-dev.ebisusbay.biz/files/',
+        app: 'https://cdn-dev.ebisusbay.biz/'
       }
     },
     rpc: {
@@ -208,6 +222,13 @@ export const configData = {
         assets: 'https://ebisusbay-test.b-cdn.net/',
         bunnykit: 'https://ik-proxy.b-cdn.net/',
         legacy: 'https://cdn.ebisusbay.biz/test/',
+
+        ipfs: 'https://cdn-test.ltsglxy.network/ipfs/',
+        arweave: 'https://cdn-test.ltsglxy.network/arweave/',
+        proxy: 'https://cdn-test.ltsglxy.network/proxy/',
+        storage: 'https://cdn-test.ebisusbay.biz/storage/',
+        files: 'https://cdn-test.ebisusbay.biz/files/',
+        app: 'https://cdn-test.ebisusbay.biz/'
       }
     },
     rpc: {
@@ -287,7 +308,7 @@ export const configData = {
     },
     urls: {
       api: 'https://api.ebisusbay.com/',
-      app: 'https://app.ebisusbay.com/',
+      app: 'http://localhost:3000/',
       subgraph: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
       cms: 'http://localhost:4000/api/',
       explorer: 'https://cronoscan.com/',
@@ -296,6 +317,13 @@ export const configData = {
         assets: 'https://ebisusbay-prod.b-cdn.net/',
         bunnykit: 'https://ik-proxy.b-cdn.net/',
         legacy: 'https://cdn.ebisusbay.com/',
+
+        ipfs: 'https://cdn.ltsglxy.network/ipfs/',
+        arweave: 'https://cdn.ltsglxy.network/arweave/',
+        proxy: 'https://cdn.ltsglxy.network/proxy/',
+        storage: 'https://cdn-prod.ebisusbay.com/storage/',
+        files: 'https://cdn-prod.ebisusbay.com/files/',
+        app: 'https://cdn-prod.ebisusbay.com/'
       }
     },
     rpc: {

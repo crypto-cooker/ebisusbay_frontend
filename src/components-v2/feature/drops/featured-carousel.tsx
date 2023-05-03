@@ -199,7 +199,7 @@ export default class Responsive extends Component {
                           <div className="d-author">
                             <div className="author_list_pp">
                               {drop.images.avatar ? (
-                                <img className="lazy" src={ImageService.staticAsset.avatar(drop.images.avatar)} alt={drop.author.name} />
+                                <img className="lazy" src={ImageService.translate(drop.images.avatar).avatar()} alt={drop.author.name} />
                               ) : (
                                 <Blockies seed={drop.slug} size={10} scale={5} />
                               )}

@@ -29,9 +29,9 @@ const collections = appConfig('collections');
 const getBanner = (collection: any) => {
   let banner = defaultBanner;
   if (!!collection.metadata.card) {
-    banner = ImageService.proxy.convert(collection.metadata.card);
+    banner = ImageService.translate(collection.metadata.card).convert();
   } else if (!!collection.metadata.banner) {
-    banner = ImageService.proxy.convert(collection.metadata.banner);
+    banner = ImageService.translate(collection.metadata.banner).convert();
   }
 
   return banner;
@@ -98,7 +98,7 @@ export default async function handler(req: NextRequest) {
           >
             <img
               alt={collection.name}
-              src={ImageService.proxy.avatar(collection.metadata.avatar)}
+              src={ImageService.translate(collection.metadata.avatar).avatar()}
               width='50px'
               height='50px'
               style={{

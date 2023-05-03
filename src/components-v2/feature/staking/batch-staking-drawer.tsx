@@ -248,7 +248,7 @@ const BatchStakingDrawerItem = ({item, disabled}: BatchStakingDrawerItemProps) =
           style={{borderRadius: '20px'}}
         >
           <AnyMedia
-            image={ImageService.instance.provider.avatar(item.nft.image)}
+            image={ImageService.translate(item.nft.image).avatar()}
             title={item.nft.name}
             usePlaceholder={false}
             className="img-rounded-8"

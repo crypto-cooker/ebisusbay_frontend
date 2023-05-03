@@ -314,7 +314,7 @@ const Index = function () {
       {walletAddress && correctChain && (
         <Box className="de-menu-profile" onClick={() => setShowMenu(!showMenu)}>
           {user.profile.profilePicture ? (
-            <img src={ImageService.instance.provider.avatar(user.profile.profilePicture)} alt={user.profile.username} />
+            <img src={ImageService.translate(user.profile.profilePicture).avatar()} alt={user.profile.username} />
           ) : (
             <Blockies seed={user.address} size={9} scale={4} />
           )}
@@ -356,7 +356,7 @@ const Index = function () {
               <div className="d-flex align-items-center">
                 <span className={classnames('me-2', styles.avatar)}>
                   {user.profile.profilePicture ? (
-                    <img src={ImageService.instance.provider.avatar(user.profile.profilePicture)} alt={user.profile.username} />
+                    <img src={ImageService.translate(user.profile.profilePicture).avatar()} alt={user.profile.username} />
                   ) : (
                     <Blockies seed={user.address} size={9} scale={4}/>
                   )}

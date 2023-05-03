@@ -47,7 +47,7 @@ const ResultCollection = ({collection, floorPrice, onClick, onRemove, useCloseBu
         >
           {collection.metadata && (
             <Image
-              src={ImageService.instance.provider.avatar(collection.metadata.avatar)}
+              src={ImageService.translate(collection.metadata.avatar).avatar()}
               alt={collection.name}
               rounded="md"
             />

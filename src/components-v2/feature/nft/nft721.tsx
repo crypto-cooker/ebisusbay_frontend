@@ -582,7 +582,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                 ) : (
                   <>
                     <AnyMedia
-                      image={ImageService.proxy.convert(specialImageTransform(address, nft.image))}
+                      image={ImageService.translate(specialImageTransform(address, nft.image)).convert()}
                       video={nft.video ?? nft.animation_url}
                       videoProps={{ height: 'auto', autoPlay: true }}
                       title={nft.name}
@@ -726,7 +726,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                     <ProfilePreview
                       type="Collection"
                       title={collectionName ?? 'View Collection'}
-                      avatar={ImageService.staticAsset.avatar(collectionMetadata?.avatar)}
+                      avatar={ImageService.translate(collectionMetadata?.avatar).avatar()}
                       address={address}
                       verified={collection.verification?.verified}
                       to={`/collection/${address}`}
@@ -1021,8 +1021,8 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                               <Flex gap='15px'>
                                 <Box w='72px'>
                                   <MultimediaImage
-                                    source={ImageService.proxy.fixedWidth(specialImageTransform(nft.address, nft.image), 100, 100)}
-                                    fallbackSource={ImageService.instance.provider.fixedWidth(ImageService.proxy.thumbnail(nft.image), 100, 100)}
+                                    source={ImageService.translate(specialImageTransform(nft.address, nft.image)).fixedWidth(100, 100)}
+                                    fallbackSource={ImageService.translate(ImageService.translate(nft.image).thumbnail()).fixedWidth(100, 100)}
                                     title={nft.name}
                                     className="img-fluid img-rounded mb-sm-30"
                                   />

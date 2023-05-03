@@ -253,15 +253,15 @@ const Cart = function () {
                       >
                         {isBundle(nft.address) ? (
                           <AnyMedia
-                            image={ImageService.instance.provider.avatar('/img/logos/bundle.webp')}
+                            image={ImageService.translate('/img/logos/bundle.webp').avatar()}
                             title={nft.name}
                             usePlaceholder={false}
                             className="img-rounded-8"
                           />
                         ) : (
                           <MultimediaImage
-                            source={ImageService.proxy.fixedWidth(specialImageTransform(nft.address, nft.image), 100, 100)}
-                            fallbackSource={ImageService.instance.provider.fixedWidth(ImageService.proxy.thumbnail(nft.image), 100, 100)}
+                            source={ImageService.translate(specialImageTransform(nft.address, nft.image)).fixedWidth(100, 100)}
+                            fallbackSource={ImageService.translate(nft.image).fixedWidth(100, 100)}
                             title={nft.name}
                             className="img-rounded-8"
                           />

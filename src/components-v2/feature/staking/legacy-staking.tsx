@@ -168,7 +168,7 @@ const LegacyStaking = () => {
               videoProps={
                 {autoPlay: true}
               }
-              image={ImageService.proxy.thumbnail('https://cdn.ebisusbay.com/QmX97CwY2NcmPmdS6XtcqLFMV2JGEjnEWjxBQbj4Q6NC2i.mp4')}
+              image={ImageService.translate('https://cdn.ebisusbay.com/QmX97CwY2NcmPmdS6XtcqLFMV2JGEjnEWjxBQbj4Q6NC2i.mp4').thumbnail()}
               title="VIP Founding Member Staking"
             />
           </div>

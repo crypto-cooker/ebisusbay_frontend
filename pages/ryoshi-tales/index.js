@@ -172,7 +172,7 @@ const RyoshiTales = () => {
         image={hostedImage('/img/ryoshiTales/preview.webp')}
       />
       <Center w='100%' height={300}>
-        <Image src={ImageService.instance.provider.banner('img/ryoshiTales/banner.png')} alt={'banner'} width='100%' height='100%' objectFit='cover'/>
+        <Image src={ImageService.translate('img/ryoshiTales/banner.png').banner()} alt={'banner'} width='100%' height='100%' objectFit='cover'/>
       </Center>
       <div>
         <section className="gl-legacy container mt-0" >

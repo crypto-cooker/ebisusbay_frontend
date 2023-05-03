@@ -42,7 +42,7 @@ const Brands = ({ssrBrands}: BrandsProps) => {
               onClick={() => navigate(brand.slug)}
             >
               <Box
-                backgroundImage={ImageService.staticAsset.bannerPreview(brand.images.preview ?? brand.images.banner)}
+                backgroundImage={ImageService.translate(brand.images.preview ?? brand.images.banner).bannerPreview()}
                 backgroundSize="cover"
                 backgroundPosition="50% 50%"
                 h="100%"
