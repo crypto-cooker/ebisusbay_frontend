@@ -11,6 +11,7 @@ import TopFilterBar from './TopFilterBar';
 import {marketPlaceCollectionFilterOptions} from './constants/filter-options';
 import {sortOptions} from './constants/sort-options';
 import {MarketFilters} from "../Models/market-filters.model";
+import ImageService from "@src/core/services/image";
 
 const SalesCollection = ({
   showLoadMore = true,
