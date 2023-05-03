@@ -12,6 +12,7 @@ import {useSelector} from "react-redux";
 const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
 
 interface Props {
+  address: string;
   isOpen: boolean;
   onClose: () => void;
   initialPage: string;
