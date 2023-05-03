@@ -110,7 +110,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/Components/BattleBay/Areas/bank/components/StakeNFTs.js"  ],
   "exclude": [
     "node_modules"
   ]
