@@ -35,20 +35,20 @@ import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 
-const FactionForm = ({ isOpen, onClose, faction, handleClose}) => {
+const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => {
 
   const addressInput = useRef(null);
   const [addresses, setAddresses] = useState([])
   const handleAddChange = (event) => setValue(event.target.value)
   const [addressToAdd, setValue] = useState('')
   const factionNameInput = useRef(null);
-  const [factionType, setFactionType] = useState(0)
+  const [factionType, setFactionType] = useState("")
+  const [factionIndex, setFactionIndex] = useState(0)
   const [addressDisplay, setAddressDisplay] = useState([])
 
   //alerts
   const [showAlert, setShowAlert] = useState(false)
   const [alertMessage, setAlertMessage] = useState("")
-  const [registrationStatus, setRegistrationStatus] = useState("Unregistered")
 
   //other
   const [isLoading, getSigner] = useCreateSigner();
@@ -57,6 +57,12 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose}) => {
   const SaveChanges = async() => {
     if(factionNameInput.current === undefined) {
       setAlertMessage("You must enter a faction name")
+      setShowAlert(true)
+      return;
+    }
+    console.log(factionType)
+    if(addresses.length > getMaxAddresses()) {
+      setAlertMessage("You are over the maximum number of addresses for this faction type")
       setShowAlert(true)
       return;
     }
@@ -69,7 +75,7 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose}) => {
     if (signatureInStorage) {
       try {
         const data = await editFaction(user.address.toLowerCase(), signatureInStorage,
-          faction.id, formik.values.factionName, addresses, formik.values.factionType);
+          faction.id, formik.values.factionName, addresses, factionType);
         // console.log(data);
         //add payment code here
         handleClose();
@@ -98,24 +104,7 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose}) => {
       }
     }
  }
-  const RegisterFaction = async() => {
-    // registrationStatus = 
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        console.log("faction id: "+faction.id)
-        const data = await subscribeFaction(user.address.toLowerCase(), signatureInStorage, faction.id);
-        //add payment code here
 
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  }
   function AddAddress() {
     setShowAlert(false)
 
@@ -151,19 +140,13 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose}) => {
     addressInput.current.value = ''
     setValue('')
   }
-  function collectionFaction() {
-    formik.values.factionType = 'COLLECTION'
-  }
-  function userFaction() {
-    formik.values.factionType = 'WALLET'
-  }
   function getMaxAddresses() {
     return factionType === 'COLLECTION' ? 3 : 15
   }
   const formik = useFormik({
     initialValues: {
       factionName: faction.name,
-      factionType: faction.type,
+      // factionType: faction.type,
       addresses: faction.addresses
     },
     onSubmit: (values) => {
@@ -173,13 +156,13 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose}) => {
   })
   useEffect(() => {
     // console.log("faction change faction change"+faction.name)
-    if(faction.type === 'COLLECTION') {
-      setFactionType(0)
-    } else {
-      setFactionType(1)
-    }
     setAddresses(faction.addresses)
+    setFactionType(faction.type)
   }, [faction]);
+
+  useEffect(() => {
+    factionType === 'COLLECTION' ? setFactionIndex(0) : setFactionIndex(1)
+  }, [factionType]);
 
   useEffect(() => {
     if(addresses !== undefined) {
@@ -202,7 +185,7 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose}) => {
             <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
             <ModalBody>
             <Flex>
-            <FormLabel>Current Status: {registrationStatus}</FormLabel>
+            <FormLabel>Current Status: {isRegistered === true ? "Registered" : "Not Registered"}</FormLabel>
                 {/* <Button type="submit" style={{ display: 'flex' }} 
                       onClick={RegisterFaction} variant='outline' size='lg'>Register Faction</Button> */}
               </Flex>
@@ -218,10 +201,10 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose}) => {
                   placeholder={formik.values.factionName}
                   size='sm'/>
               </FormControl>
-              <Tabs variant='unstyled' style={{ marginTop: '24px'}} defaultIndex = {factionType}>
+              <Tabs variant='unstyled' style={{ marginTop: '24px'}} defaultIndex = {factionIndex}>
                 <TabList>
-                  <Tab onClick={collectionFaction} _selected={{ color: 'white', bg: 'blue.500' }}>Collection Faction</Tab>
-                  <Tab onClick={userFaction} _selected={{ color: 'white', bg: 'blue.500' }}>User Faction</Tab>
+                  <Tab onClick={() => setFactionType("COLLECTION")} _selected={{ color: 'white', bg: 'blue.500' }}>Collection Faction</Tab>
+                  <Tab onClick={() => setFactionType("WALLET")} _selected={{ color: 'white', bg: 'blue.500' }}>Wallet Faction</Tab>
                 </TabList>
                 <TabPanels>
                   <TabPanel>

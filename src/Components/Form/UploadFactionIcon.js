@@ -4,7 +4,6 @@ import axios from "axios";
 
 import { deepValidation } from '../../helpers/validator';
 import UploadAssetFactionIcon from './UploadAssetFactionIcon';
-// import UploadFactionIconPfp from "@src/core/api/RyoshiDynastiesAPICalls";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 
@@ -22,9 +21,8 @@ const UploadFactionIcon = ({
   faction,
   onSuccess
 }) => {
-    const user = useSelector((state) => state.user);
-
-    
+  const user = useSelector((state) => state.user);
+  
   const onUpload = (i) => (asset) => {
     const newAsset = { ...asset, position: i };
     const index = value.findIndex(({ position }) => position === i);
@@ -33,7 +31,6 @@ const UploadFactionIcon = ({
     // console.log(newData);
     // console.log(faction);
     CallPatchFaction(newData, faction);
-    // onChange(name, newData);
     onTouched(name);
   };
 
@@ -45,7 +42,7 @@ const UploadFactionIcon = ({
     }
     if (signatureInStorage) {
       try {
-        console.log(faction.id, newData[0].result)
+        // console.log(faction.id, newData[0].result)
         const res = await UploadFactionIconPfp(user.address.toLowerCase(), signatureInStorage, 
           faction.name, Number(faction.id), newData[0].result);
         // console.log(res);
@@ -93,7 +90,7 @@ const UploadFactionIcon = ({
       <div className="upload-container overflow-auto justify-content-center">
         {[...Array(numberOfAssets).keys()].map((_, i) => {
           const asset = value.find(({ position }) => position === i);
-          // console.log("asset:" + asset);
+
           return (
             <UploadAssetFactionIcon
               key={`${name}-${i}`}

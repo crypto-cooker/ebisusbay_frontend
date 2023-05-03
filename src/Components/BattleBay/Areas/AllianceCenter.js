@@ -22,6 +22,9 @@ import {getFactionsOwned, getFactionsRegistered} from "@src/core/api/RyoshiDynas
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
+import {
+  createSuccessfulTransactionToastContent,
+} from "@src/utils";
 
 //contracts
 import {Contract} from "ethers";
@@ -49,6 +52,7 @@ const AllianceCenter = ({onBack}) => {
   const [selectedFaction, setSelectedFaction] = useState(0);
   const [factionsDisplay, setFactionDisplay] = useState([]);
   const [createFactionButton, setCreateFactionButton] = useState([]);
+  const [factionRegistered, setFactionRegistered] = useState(false);
   
   //for refreshing the page after a faction is updated
   const [modalOpen, setModalOpen] = useState(false);
@@ -80,6 +84,7 @@ const AllianceCenter = ({onBack}) => {
   const RegistrationAction = async (factionId) => {
     if(isRegistered(factionId)) {
       console.log('Already Registered')
+      GetFactions();
     } else {
       let signatureInStorage = getAuthSignerInStorage()?.signature;
       if (!signatureInStorage) {
@@ -88,20 +93,16 @@ const AllianceCenter = ({onBack}) => {
       }
       if (signatureInStorage) {
         try {
-          console.log(config.contracts.allianceCenter)
-          console.log(AllianceCenterContract)
-          console.log(user.provider.getSigner())
-          console.log(user.address.toLowerCase())
           //0x0000000000000000000000000000000000000001
-
           const registerFactionContract = new Contract(config.contracts.allianceCenter, AllianceCenterContract, user.provider.getSigner());
           const tx = await registerFactionContract.registerFaction(user.address.toLowerCase())
           const receipt = await tx.wait();
           toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
 
-          console.log('Registered')
+          // console.log('Registered')
         } catch (error) {
           console.log(error)
+          toast.error("ERROR: This account has already registered a faction this season.");
         }
       } 
     }
@@ -129,11 +130,9 @@ const AllianceCenter = ({onBack}) => {
 
   function selectFaction(faction) {
     setSelectedFaction(faction);
-    handleAddClick();
-    onOpenFaction();
   }
   const GetFactions = async () => {
-    console.log('Getting Factions');
+    // console.log('Getting Factions');
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
@@ -142,17 +141,23 @@ const AllianceCenter = ({onBack}) => {
     if (signatureInStorage) {
       try {
         const data = await getFactionsOwned(user.address.toLowerCase(), signatureInStorage);
-        // console.log(data.data.data);
         const data2 = await getFactionsRegistered(user.address.toLowerCase(), signatureInStorage);
-
         setRegisteredFactions(data2.data.data);
         setPlayerFactions(data.data.data);
+        setFactionRegistered(isRegistered(data.data.data[0].id));
 
       } catch (error) {
         console.log(error)
       }
     }
   }
+  useEffect(() => {
+    if(selectedFaction !== 0) {
+      handleAddClick();
+      onOpenFaction();
+    }
+  }, [selectedFaction]);
+
 
   const firstUpdate = useRef(true);
   useLayoutEffect(() => {
@@ -166,7 +171,8 @@ const AllianceCenter = ({onBack}) => {
         <Tr key={index}>
           <Td textAlign='center'>
             <form onSubmit={handleSubmit}>
-            <FactionPfp values={values}
+            <FactionPfp 
+              values={values}
               errors={errors}
               touched={touched}
               handleChange={handleSubmit}
@@ -208,7 +214,7 @@ const AllianceCenter = ({onBack}) => {
   return (
     <section className="gl-legacy container">
 
-      <FactionForm isOpen={isOpenFaction} onClose={onCloseFaction} faction={selectedFaction} handleClose={handleClose}/>
+      <FactionForm isOpen={isOpenFaction} onClose={onCloseFaction} faction={selectedFaction} handleClose={handleClose} isRegistered={factionRegistered}/>
       <FactionRegistrationForm isOpen={isOpenRegister} onClose={onCloseRegister} handleClose={handleClose}/>
 
       <Button margin={'36px'} position={'absolute'} onClick={onBack}>Back to Village Map</Button>

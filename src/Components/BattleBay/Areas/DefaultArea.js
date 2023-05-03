@@ -426,7 +426,7 @@ const SetUpButtons = async () => {
               <img src='/img/battle-bay/mapImages/tavern_turbine.png' width={tavernSpinWidth} height={tavernSpinHeight} /></div>
 
             <div id="boat" className={[styles.enlarge]} style={{position:"absolute", marginTop: boatTop, marginLeft: boatLeft, zIndex:"9"}} 
-            // onClick={() => onChange('battleMap')}
+            onClick={() => onChange('battleMap')}
             >
               <img src='/img/battle-bay/mapImages/boat_day.png' width={boatWidth} height={boatHeight} /> </div>
 
