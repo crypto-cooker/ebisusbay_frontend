@@ -26,31 +26,32 @@ import {
 import { Spinner } from 'react-bootstrap';
 import { getTheme } from "@src/Theme/theme";
 import {ArrowBackIcon, CloseIcon} from "@chakra-ui/icons";
+import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 
 const StakePage = ({ onBack, onClose}) => {
  
+  const [isExecuting, setIsExecuting] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const user = useSelector((state) => state.user);
   const [daysStaked, setDaysStaked] = useState(90)
   const [fortuneAvailable, setFortuneAvailable] = useState(20)
-  const [fortuneStaked, setFortuneStaked] = useState();
+  const [fortuneStaked, setFortuneStaked] = useState(1000);
   const [mitama, setMitama] = useState(0)
 
-  const handleChangeFortuneAmount = (value) =>
-  {
+  const handleChangeFortuneAmount = (value) => {
     setFortuneStaked(value)
-    setMitama(((daysStaked*value)/1080))
   }
-
   const handleChangeDays = (value) => {
     setDaysStaked(value)
-    setMitama((fortuneStaked*value)/1080)
   }
+  useEffect(() => {
+    setMitama((fortuneStaked*daysStaked)/1080)
+  }, [fortuneStaked, daysStaked])
 
 
   return (
     <ModalBody
-    padding={4}>
+    padding={2}>
     <Box
         position='absolute'
         left={2}
@@ -134,55 +135,69 @@ const StakePage = ({ onBack, onClose}) => {
           </Flex>
         </Box>
       
-      <Flex justifyContent='space-between' >
-        <Box w='0.51%'/>
-            <FormLabel fontSize={'14px'}>Fortune Tokens to Stake:</FormLabel>
-            <FormLabel fontSize={'14px'}>Duration (Days):</FormLabel>
-        <Box w='0.5%'/>
+      <Flex justifyContent='space-between' w='90%' >
+        <Text align='center' fontSize={'14px'}>Fortune Tokens to Stake:</Text>
+        <Text align='center' fontSize={'14px'}>Duration (Days):</Text>
       </Flex>
+
       <Flex justifyContent='space-between' >
         <Box w='0.5%'/>
-          <FormControl w='45%'>
-            <NumberInput defaultValue={1000} min={1000} name="quantity" 
-              onChange={handleChangeFortuneAmount}
-              value={fortuneStaked} type ='number'
-              step={1000}>
-            <NumberInputField />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-          </FormControl>
-          <FormControl w='40%'>
-            <NumberInput defaultValue={90} min={90} max={1080} name="quantity" 
-              onChange={handleChangeDays}
-              value={daysStaked} type ='number'>
-            <NumberInputField />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-          </FormControl>
-        <Box w='0.5%'/>
-      </Flex>
+              <FormControl w='45%'>
+                <NumberInput defaultValue={1000} min={1000} name="quantity" 
+                  onChange={handleChangeFortuneAmount}
+                  value={fortuneStaked} type ='number'
+                  step={1000}>
+                <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+              </FormControl>
+              <FormControl w='40%'>
+                <NumberInput defaultValue={90} min={90} max={1080} name="quantity" 
+                  onChange={handleChangeDays}
+                  value={daysStaked} type ='number'>
+                <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+              </FormControl>
+            <Box w='0.5%'/>
+          </Flex>
 
       <Flex marginTop={'16px'} justifyContent={'center'}>
           <Heading textAlign={'center'} fontSize={'14px'}>$Mitama [$Fortune * daysLocked / maxDays] </Heading>
       </Flex>
 
       <Flex justifyContent={'center'}>
-          <Box bgColor='#353638' w='90%' p={4} color='white' textAlign={'center'}>
+          <Box bgColor='#292626' w='90%' borderRadius={'5px'} p={4} color='white' textAlign={'center'}>
           {mitama.toPrecision(5)}
           </Box>
       </Flex>
-
-      <Flex margin={'24px'} justify={'center'}>
-        <Button justifyContent={'center'} w='200px' margin={2} colorScheme='white' variant='outline'
-          onClick={() => {onOpenStake()}}>Stake Fortune</Button>
-      </Flex>
-
+      <Spacer h='8'/>
+        <Flex alignContent={'center'} justifyContent={'center'}>
+        <Box
+              ps='20px'>
+              <RdButton
+                w='250px'
+                fontSize={{base: 'xl', sm: '2xl'}}
+                stickyIcon={true}
+                onClick={() => {onOpenStake()}}
+                isLoading={isExecuting}
+                disabled={isExecuting}
+              >
+                {user.address ? (
+                  <>{isExecuting ? executingLabel : 'Stake $Fortune'}</>
+                ) : (
+                  <>Connect</>
+                )}
+              </RdButton>
+            </Box>
+        </Flex>
+        <Spacer h='8'/>
     </Box>
     </ModalBody>
     

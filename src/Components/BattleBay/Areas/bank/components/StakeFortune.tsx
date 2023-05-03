@@ -4,6 +4,10 @@ import { Spinner } from 'react-bootstrap';
 import StakePage from "@src/Components/BattleBay/Areas/bank/components/StakePage.js";
 import FaqPage from "@src/Components/BattleBay/Areas/bank/components/FaqPage.js";
 import localFont from "next/font/local";
+import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
+import {getProfile} from "@src/core/cms/endpoints/profile";
+import { getAuthSignerInStorage } from '@src/helpers/storage';
+import {useSelector} from "react-redux";
 
 const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
 
@@ -17,6 +21,13 @@ const StakeFortune = ({ isOpen, onClose, initialPage}: Props) => {
  
   const [page, setPage] = useState(initialPage);
   const [isLoading, setIsLoading] = useState(false);
+  const user = useSelector((state) => state.user);
+  const [profile, setProfile] = useState(null);
+
+  const SetUp = async () => {
+    let profile1 = await getProfile(user.address.toLowerCase());
+    setProfile(profile1);
+  }
 
   const handleClose = useCallback(() => {
     setPage(initialPage);
@@ -24,6 +35,7 @@ const StakeFortune = ({ isOpen, onClose, initialPage}: Props) => {
   }, []);
 
   useEffect(() => {
+    SetUp();
     setPage(initialPage);
   }, [initialPage]);
 
@@ -46,7 +58,7 @@ const StakeFortune = ({ isOpen, onClose, initialPage}: Props) => {
             {page === 'faq' ? (
             <FaqPage onBack={() => setPage('main')} onClose={handleClose}/>
             ) : (
-            <StakePage onBack={() => setPage('faq')} onClose={handleClose}/>
+            <StakePage address={user.address} profile={profile} onBack={() => setPage('faq')} onClose={handleClose}/>
             )}
           <ModalFooter className="border-0"/>
           </>

@@ -8,6 +8,7 @@ import {
   Box,
   Text,
   Stack,
+  Spacer,
 
 
 } from "@chakra-ui/react"
@@ -80,11 +81,11 @@ const FaqPage = ({ onBack, onClose}) => {
       <CloseIcon />
     </Button>
     </Box>
-
+      <Spacer h={4} />
     <Box
         bg='#564D4A'
         h='full'
-        m={6}
+        m={2}
         roundedBottom='3xl'
         className='rd-bank-modal-mask1'
       >

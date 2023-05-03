@@ -1,4 +1,3 @@
-import { useState, useRef, useEffect, Component} from "react";
 import { useSelector } from "react-redux";
 import {
   Modal,
@@ -16,22 +15,28 @@ import {
   Image,
   Input,
   Grid,
-  TableContainer,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Heading,
-
-
+  Button as ChakraButton,
 } from "@chakra-ui/react"
 import { Spinner } from 'react-bootstrap';
-import { getTheme } from "@src/Theme/theme";
 import {ArrowBackIcon, CloseIcon} from "@chakra-ui/icons";
 
-const StakeNFTs = ({ isOpen, onClose}) => {
+import React, {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
+import {useRouter} from 'next/router';
+// import styles from './profile.module.scss';
+import {hostedImage} from "@src/helpers/image";
+import {caseInsensitiveCompare, isUserBlacklisted, shortAddress} from "@src/utils";
+import Inventory from "@src/components-v2/feature/account/profile/tabs/inventory";
+import {
+
+} from "@chakra-ui/react";
+import {motion} from 'framer-motion'
+import {useAppDispatch, useAppSelector} from "@src/Store/hooks";
+
+
+const StakeNFTs = ({ address, profile, isOpen, onClose}) => {
+
+  const user = useAppSelector((state) => state.user);
+ 
  
   const breakpoints = {
     sm: '30em',
@@ -42,7 +47,7 @@ const StakeNFTs = ({ isOpen, onClose}) => {
   }
 
   const [isLoading, setIsLoading] = useState(false);
-  const user = useSelector((state) => state.user);
+  // const user = useSelector((state) => state.user);
   const [stakedNFTs, setStakedNFTs] = useState([]);
 
   const getCurrentlyStakedNFTs = async () => {
@@ -61,6 +66,9 @@ const StakeNFTs = ({ isOpen, onClose}) => {
 
 
   useEffect(() => {
+    console.log("useEffect")
+    console.log(user.address)
+    console.log(address)
     setIsLoading(true);
     getCurrentlyStakedNFTs()
   }, []);
@@ -110,45 +118,11 @@ const StakeNFTs = ({ isOpen, onClose}) => {
 
           <ModalHeader className="text-center">Stake NFTs</ModalHeader>
 
-
-            <Input placeholder='Search Assets'
-            bg='#b87528'
-            color='black'
-            />
             <Spacer h='20px' />
+              <div className="de_tab_content">
+                  <Inventory address={user.address} />
+              </div>
 
-            <Flex alignItems='center' borderRadius={'10px'} justifyContent='space-between'> 
-              <Button bg='#b87528' color='black' borderRadius={'10px'}>Unstaked</Button>
-              <Button bg='#b87528' color='black' borderRadius={'10px'}>Sort By</Button>
-            </Flex>
-
-            <Spacer h='20px' />
-
-            <Grid 
-              templateColumns={{ 
-                base: 'repeat(2, 1fr)', 
-                sm: 'repeat(3, 1fr)',
-                md: 'repeat(4, 1fr)', 
-                lg: 'repeat(5, 1fr)', 
-                xl: 'repeat(6, 1fr)',
-                '2xl': 'repeat(7, 1fr)',
-              }} 
-              gap={6}
-              gridAutoFlow="dense"
-              justifyContent="space-between" 
-              alignItems="center"
-             >
-              <Flex borderRadius={'5px'} w='150px' h='200px' bg='#b87528' ><Text  color={"black"}>NFT</Text></Flex> 
-              <Box w='150px' h='200px' bg='#b87528' ><Text  color={"black"}>NFT</Text></Box> 
-              <Box w='150px' h='200px' bg='#b87528' ><Text  color={"black"}>NFT</Text></Box> 
-              <Box w='150px' h='200px' bg='#b87528' ><Text  color={"black"}>NFT</Text></Box> 
-              <Box w='150px' h='200px' bg='#b87528' ><Text  color={"black"}>NFT</Text></Box> 
-              <Box w='150px' h='200px' bg='#b87528' ><Text  color={"black"}>NFT</Text></Box> 
-      
-             
-            </Grid>
-
-            
           </ModalBody>
           <ModalFooter className="border-0"/>
           </Box>
