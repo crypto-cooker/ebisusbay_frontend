@@ -58,13 +58,13 @@ const StakeNFTs = ({isOpen, onClose}: Props) => {
   const getCurrentlyStakedNFTs = async () => {
     //for each stakedNFTs, create a box with the image and name
     // const stakes = await getStakedNFTs(user.address);
-    const stakes = ["1", "2", "3", "4", "5"]
-    setStakedNFTs( stakes.map((stake) => {
-      return (
-        <Flex borderRadius={'5px'} w='50px' h='50px' bg='#b87528' ><Text  color={"black"}>NFT</Text></Flex>
-      )
-    })
-    );
+    // const stakes = ["1", "2", "3", "4", "5"]
+    // setStakedNFTs( stakes.map((stake) => {
+    //   return (
+    //     <Flex borderRadius={'5px'} w='50px' h='50px' bg='#b87528' ><Text  color={"black"}>NFT</Text></Flex>
+    //   )
+    // })
+    // );
 
     setIsLoading(false);
   };
