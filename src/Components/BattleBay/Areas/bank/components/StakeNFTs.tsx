@@ -32,8 +32,13 @@ import {
 import {motion} from 'framer-motion'
 import {useAppDispatch, useAppSelector} from "@src/Store/hooks";
 
+interface Props {
+  isOpen: boolean;
+  onClose: () => void;
+}
 
-const StakeNFTs = ({isOpen, onClose}) => {
+
+const StakeNFTs = ({isOpen, onClose}: Props) => {
 
   const user = useAppSelector((state) => state.user);
  
