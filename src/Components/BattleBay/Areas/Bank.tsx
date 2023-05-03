@@ -37,7 +37,7 @@ const bankerImages = {
   talking: '/img/battle-bay/gifBanker/mouth.gif',
 };
 
-const Bank = ({onBack}) => {
+const Bank = ({onBack, isVisible} : BankerSceneProps) => {
 
   const { isOpen: isOpenStakeFortune, onOpen: onOpenStakeFortune, onClose: onCloseStakeFortune} = useDisclosure();
   const { isOpen: isOpenStakeNFTs, onOpen: onOpenStakeNFTs, onClose: onCloseStakeNFTs} = useDisclosure();
