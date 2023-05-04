@@ -14,26 +14,32 @@ import {
   Th,
   Td,
   TableContainer,
+  Text,
+  VStack
 
 } from '@chakra-ui/react';
 import FactionForm from './FactionForm';
+import DelegateForm from './DelegateForm';
 import FactionRegistrationForm from './FactionRegistrationForm';
 import {getFactionsOwned, getFactionsRegistered} from "@src/core/api/RyoshiDynastiesAPICalls";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
-import {
-  createSuccessfulTransactionToastContent,
-} from "@src/utils";
 
 //contracts
 import {Contract} from "ethers";
 import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
 import AllianceCenterContract from "@src/Contracts/AllianceCenterContract.json";
+import {createSuccessfulTransactionToastContent} from "@src/utils";
 
 import { useFormik } from 'formik';
 import FactionPfp from './FactionIconUpload';
+import localFont from 'next/font/local';
+const gothamBook = localFont({ src: '../../../fonts/Gotham-Book.woff2' })
+import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
+import {getProfile} from "@src/core/cms/endpoints/profile";
+import { getProfileTroops, getAllFactions, addTroops } from "@src/core/api/RyoshiDynastiesAPICalls";
 
 const AllianceCenter = ({onBack}) => {
 
@@ -56,6 +62,52 @@ const AllianceCenter = ({onBack}) => {
   
   //for refreshing the page after a faction is updated
   const [modalOpen, setModalOpen] = useState(false);
+
+  const [factions, setFactions] = useState([]);
+  const [troops, setTotalTroops] = useState(0);
+  const {address, theme, profile} = useSelector((state) => state.user);
+
+  const SetUp = async () => {
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      try {
+        let profile = await getProfile(user.address.toLowerCase());
+
+        const factionResponse = await getAllFactions();
+        setFactions(factionResponse);
+        const tr = await getProfileTroops(user.address.toLowerCase(), signatureInStorage);
+        setTotalTroops(tr)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+  const AddTroops = async () => {
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      try {
+        const res = await addTroops(user.address.toLowerCase(), signatureInStorage, 8);
+        SetUp();
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+
+  const { isOpen, onOpen: onOpenDelegate, onClose } = useDisclosure();
+  const [delegateMode, setDelegateMode] = useState("delegate");
+
+  useEffect(() => {
+    SetUp();
+  }, [troops]);
 
   const handleAddClick = () => {
     setModalOpen(true);
@@ -165,13 +217,13 @@ const AllianceCenter = ({onBack}) => {
       firstUpdate.current = false;
       return;
     }
-    console.log('Updating ');
+
     if(playerFactions.length > 0) {
       setFactionDisplay(playerFactions.map((faction, index) => (
-        <Tr key={index}>
-          <Td textAlign='center'>
+        <>
+          <VStack>
             <form onSubmit={handleSubmit}>
-            <FactionPfp 
+               <FactionPfp 
               values={values}
               errors={errors}
               touched={touched}
@@ -181,32 +233,51 @@ const AllianceCenter = ({onBack}) => {
               handleBlur={handleBlur}
               faction={faction}
               onSuccess={handleTJUploadSuccess}
-            /></form>
-            {/* <Image src={faction.image} width={100} height={100}/> */}
-          </Td>
-          <Td textAlign='center'>{faction.name}</Td>
-          <Td textAlign='center'>
-            <Button colorScheme={GetRegistrationColor(isRegistered(faction.id))}
+            />
+            </form>
+          <Text className={gothamBook.className} fontSize='24' textAlign='center'>{faction.name}</Text>
+          
+
+          <Flex alignContent={'center'} justifyContent={'center'}>
+          <Box
+            >
+            <RdButton
+              hideIcon={true}
+              w='200px'
+              fontSize={{base: 'lg', sm: 'xl'}}
+              stickyIcon={true}
+              onClick={() => {selectFaction(faction)}}
+            >
+            Edit Faction
+            </RdButton>
+            </Box>
+        </Flex>
+
+        <Button colorScheme={GetRegistrationColor(isRegistered(faction.id))}
               onClick={() => {RegistrationAction(faction.id)}}>{GetRegisterButtonText(isRegistered(faction.id))}
             </Button>
-          </Td>
-          <Td textAlign='center'>{faction.type}</Td>
-          <Td textAlign='center'>
-            <Button colorScheme='blue' onClick={() => {selectFaction(faction)}}>Edit</Button>
-          </Td>
-        </Tr>
+
+          </VStack>
+        </>
         )))
-        //empty due to only being allowed one faction
         setCreateFactionButton()
     }
     else
     {
       setCreateFactionButton(
-        <Button type="legacy"
-          onClick={() => {onOpenRegister()}}
-          className="flex-fill">
+        <Flex alignContent={'center'} justifyContent={'center'}>
+          <Box
+            ps='20px'>
+            <RdButton
+              w='250px'
+              fontSize={{base: 'xl', sm: '2xl'}}
+              stickyIcon={true}
+              onClick={() => {onOpenRegister()}}
+            >
           + Create New Faction
-        </Button>
+            </RdButton>
+            </Box>
+        </Flex>
       )
     }
   }, [playerFactions]);
@@ -216,39 +287,48 @@ const AllianceCenter = ({onBack}) => {
 
       <FactionForm isOpen={isOpenFaction} onClose={onCloseFaction} faction={selectedFaction} handleClose={handleClose} isRegistered={factionRegistered}/>
       <FactionRegistrationForm isOpen={isOpenRegister} onClose={onCloseRegister} handleClose={handleClose}/>
+      <DelegateForm isOpen={isOpen} onClose={onClose} delegateMode={delegateMode} factions={factions} troops={troops} setTotalTroops = {setTotalTroops}/>
 
-      <Button margin={'36px'} position={'absolute'} onClick={onBack}>Back to Village Map</Button>
+      <Button margin={'36px'} className={gothamBook.className} position={'absolute'} onClick={onBack}>Back to Village Map</Button>
       <Box >
         <Center>
         <Image src='img/battle-bay/alliancecenter_day.png'/>
         </Center>
       </Box>
-      <Heading className="title text-center">Alliance Center</Heading>
-      <p className="text-center">The Alliance Center allows for Faction management.</p>
+      <Heading className={gothamBook.className} textAlign='center'>Alliance Center</Heading>
+      <p className={gothamBook.className} textAlign='center'>The Alliance Center allows for Faction management.</p>
+      <Heading  size='md' >Your Troops: {troops}</Heading>
+      <Box
+        ps='20px'
+        marginTop='6'
+        marginBottom='8'
+        >
+        <RdButton 
+        w='250px'
+        fontSize={{base: 'lg', sm: 'xl'}}
+        stickyIcon={true}
+        onClick={AddTroops}>Add Troops
+        </RdButton>
+      </Box>
+      <Box
+        ps='20px'
+        marginTop='6'
+        marginBottom='8'
+        >
+        <RdButton 
+        w='250px'
+        fontSize={{base: 'lg', sm: 'xl'}}
+        stickyIcon={true}
 
-      <p style={{textAlign:'left'}}>Your Factions</p>
+                onClick={() => {setDelegateMode('delegate'), onOpenDelegate();}}>Delegate Troops 
+        </RdButton>
+      </Box>
+
+      <p className={gothamBook.className} style={{textAlign:'left'}}>Your Factions</p>
       <Flex flexDirection='column' textAlign='center' border={'1px solid white'} borderRadius={'10px'} justifyContent='space-around'>
       <div style={{ margin: '8px 24px' }}>
-      <TableContainer>
-        <Table variant='simple'>
-          <Thead>
-            <Tr>
-              <Th textAlign='center'></Th>
-              <Th textAlign='center'>Faction Name</Th>
-              <Th textAlign='center'>Registered this Season</Th>
-              <Th textAlign='center'>Faction Type</Th>
-              {/* <Th textAlign='center'>Troops</Th> */}
-              {/* <Th textAlign='center'>Addresses</Th> */}
-              <Th textAlign='center'></Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-          {factionsDisplay}
-          </Tbody>
-        </Table>
-      </TableContainer>
-
-      <Flex mt='30pt' mb='30pt'>
+      {factionsDisplay}
+      <Flex  mb='20pt'>
         {createFactionButton}
       </Flex>
       </div>

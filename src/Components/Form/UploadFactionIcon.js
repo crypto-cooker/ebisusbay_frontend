@@ -22,7 +22,7 @@ const UploadFactionIcon = ({
   onSuccess
 }) => {
   const user = useSelector((state) => state.user);
-  
+
   const onUpload = (i) => (asset) => {
     const newAsset = { ...asset, position: i };
     const index = value.findIndex(({ position }) => position === i);
@@ -86,7 +86,7 @@ const UploadFactionIcon = ({
   };
 
   return (
-    <Form.Group className={`form-field mb-3 ${error ? 'field-message-error' : ''}`}>
+    <Form.Group className={`form-field  ${error ? 'field-message-error' : ''}`}>
       <div className="upload-container overflow-auto justify-content-center">
         {[...Array(numberOfAssets).keys()].map((_, i) => {
           const asset = value.find(({ position }) => position === i);
@@ -105,9 +105,9 @@ const UploadFactionIcon = ({
           );
         })}
       </div>
-      <Form.Text className="field-description text-muted">
+      {/* <Form.Text className="field-description text-muted">
         {error ? (typeof error === 'string' ? error : getErrorMessage(error[error.length - 1])) : description}
-      </Form.Text>
+      </Form.Text> */}
     </Form.Group>
   );
 };

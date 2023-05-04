@@ -20,6 +20,10 @@ import {
   NumberInput,
   NumberInputField,
   NumberInputStepper,
+  Spacer,
+  Box,
+  Heading,
+
 } 
 from "@chakra-ui/react"
 import { Spinner } from 'react-bootstrap';
@@ -28,6 +32,9 @@ import Button from "@src/Components/components/Button";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import { useCreateSigner } from '@src/Components/Account/Settings/hooks/useCreateSigner'
 import { delegateTroops } from "@src/core/api/RyoshiDynastiesAPICalls";
+import localFont from 'next/font/local';
+const gothamBook = localFont({ src: '../../../fonts/Gotham-Book.woff2' })
+import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 
 const DelegateForm = ({ isOpen, onClose, delegateMode, factions=[], troops, setTotalTroops}) => {
   
@@ -131,15 +138,17 @@ const DelegateForm = ({ isOpen, onClose, delegateMode, factions=[], troops, setT
             <p>{delegateMode==='delegate' ? 'Once delegated, troops may be recalled but will not be unallocated until the end of the week'
                : 'Recalling troops will return them to you at the end of the week'} </p>
             </Flex>
-            <Flex mt='16px'>
-              <Button type="legacy"
-                // onClick={processCreateListingRequest}
-                onClick={delegateMode==='delegate' ? DelegateTroops : RecallTroops}
-                // isLoading={executingCreateListing}
-                // disabled={executingCreateListing}
-                className="flex-fill">
+            <Flex mt='16px' justifyContent='center'>
+            <Box
+              ps='20px'>
+              <RdButton 
+              w='250px'
+              fontSize={{base: 'lg', sm: 'xl'}}
+              stickyIcon={true}
+              onClick={delegateMode==='delegate' ? DelegateTroops : RecallTroops}>
                 {delegateMode==='delegate' ? 'Delegate' : 'Recall'} 
-              </Button>
+              </RdButton>
+            </Box>
             </Flex>
             <Flex>
             {showAlert && (

@@ -78,7 +78,6 @@ const UserPage = ({onBack}) => {
 
   useEffect(() => {
     SetUp();
-    console.log("useEffect")
   }, [troops]);
 
   return (

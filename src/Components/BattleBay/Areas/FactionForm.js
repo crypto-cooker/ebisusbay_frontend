@@ -35,6 +35,13 @@ import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 
+//contracts
+import {Contract} from "ethers";
+import {appConfig} from "@src/Config";
+import {toast} from "react-toastify";
+import AllianceCenterContract from "@src/Contracts/AllianceCenterContract.json";
+import {createSuccessfulTransactionToastContent} from "@src/utils";
+
 const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => {
 
   const addressInput = useRef(null);
@@ -53,6 +60,42 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
   //other
   const [isLoading, getSigner] = useCreateSigner();
   const user = useSelector((state) => state.user);
+
+  //registration
+  const GetRegistrationColor = (registered) => {if(registered) {return 'green'} else {return 'red'}}
+  const GetRegisterButtonText = (registered) => {if(registered) {return 'Registered'} else {return 'Register'}}
+
+  const RegistrationAction = async (factionId) => {
+    if(isRegistered) {
+      console.log('Already Registered')
+    } else {
+      let signatureInStorage = getAuthSignerInStorage()?.signature;
+      if (!signatureInStorage) {
+        const { signature } = await getSigner();
+        signatureInStorage = signature;
+      }
+      if (signatureInStorage) {
+        try {
+          //0x0000000000000000000000000000000000000001
+          const registerFactionContract = new Contract(config.contracts.allianceCenter, AllianceCenterContract, user.provider.getSigner());
+          const tx = await registerFactionContract.registerFaction(user.address.toLowerCase())
+          const receipt = await tx.wait();
+          isRegistered = true;
+          toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+
+          // console.log('Registered')
+        } catch (error) {
+          console.log(error)
+          toast.error("ERROR: This account has already registered a faction this season.");
+        }
+      } 
+    }
+  }
+  const registerButton = () => {
+    <Button colorScheme={GetRegistrationColor(isRegistered)}
+    onClick={() => {RegistrationAction(faction.id)}}>{GetRegisterButtonText(isRegistered)}
+  </Button>
+  }
 
   const SaveChanges = async() => {
     if(factionNameInput.current === undefined) {
@@ -186,9 +229,8 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
             <ModalBody>
             <Flex>
             <FormLabel>Current Status: {isRegistered === true ? "Registered" : "Not Registered"}</FormLabel>
-                {/* <Button type="submit" style={{ display: 'flex' }} 
-                      onClick={RegisterFaction} variant='outline' size='lg'>Register Faction</Button> */}
-              </Flex>
+            {isRegistered === false ? registerButton : null}
+            </Flex>
             <Divider />
             <form onSubmit={formik.handleSubmit} style={{ marginTop: '24px'}}>
               <FormControl isRequired>

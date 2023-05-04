@@ -24,7 +24,7 @@ export default function FactionPfp({ values, errors, touched, handleChange, setF
   };
 
   return (
-    <div className="d-flex justify-content-center position-relative mb-5">
+    <div className="d-flex justify-content-center position-relative ">
       <div className="text-center">
         {editProfileFormFields[1].fields.map((field) => {
           const { type, ...props } = field;
