@@ -25,11 +25,7 @@ export const configData = {
       cms: 'https://cms.ebisusbay.com/api/',
       explorer: 'https://cronoscan.com/',
       cdn: {
-        primary: 'https://cdn.lotusgalaxy.io/',
-        assets: 'https://ebisusbay-prod.b-cdn.net/',
         bunnykit: 'https://ik-proxy.b-cdn.net/',
-        legacy: 'https://cdn.ebisusbay.com/',
-
         ipfs: 'https://cdn.ltsglxy.network/ipfs/',
         arweave: 'https://cdn.ltsglxy.network/arweave/',
         proxy: 'https://cdn.ltsglxy.network/proxy/',
@@ -122,11 +118,7 @@ export const configData = {
       cms: 'https://cms.ebisusbay.biz/api/',
       explorer: 'https://cronoscan.com/',
       cdn: {
-        primary: 'https://cdn.lotusgalaxy.io/',
-        assets: 'https://ebisusbay-dev.b-cdn.net/',
         bunnykit: 'https://ik-proxy.b-cdn.net/',
-        legacy: 'https://cdn.ebisusbay.biz/',
-
         ipfs: 'https://cdn.ltsglxy.network/ipfs/',
         arweave: 'https://cdn.ltsglxy.network/arweave/',
         proxy: 'https://cdn.ltsglxy.network/proxy/',
@@ -218,11 +210,7 @@ export const configData = {
       cms: 'https://testcms.ebisusbay.biz/api/',
       explorer: 'https://testnet.cronoscan.com/',
       cdn: {
-        current: 'https://cdn.lotusgalaxy.io/',
-        assets: 'https://ebisusbay-test.b-cdn.net/',
         bunnykit: 'https://ik-proxy.b-cdn.net/',
-        legacy: 'https://cdn.ebisusbay.biz/test/',
-
         ipfs: 'https://cdn-test.ltsglxy.network/ipfs/',
         arweave: 'https://cdn-test.ltsglxy.network/arweave/',
         proxy: 'https://cdn-test.ltsglxy.network/proxy/',
@@ -313,11 +301,7 @@ export const configData = {
       cms: 'http://localhost:4000/api/',
       explorer: 'https://cronoscan.com/',
       cdn: {
-        primary: 'https://cdn.lotusgalaxy.io/',
-        assets: 'https://ebisusbay-prod.b-cdn.net/',
         bunnykit: 'https://ik-proxy.b-cdn.net/',
-        legacy: 'https://cdn.ebisusbay.com/',
-
         ipfs: 'https://cdn.ltsglxy.network/ipfs/',
         arweave: 'https://cdn.ltsglxy.network/arweave/',
         proxy: 'https://cdn.ltsglxy.network/proxy/',

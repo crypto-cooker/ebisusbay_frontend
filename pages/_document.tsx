@@ -1,9 +1,7 @@
 import { Html, Head, Main, NextScript } from 'next/document';
-import {appConfig} from "../src/Config";
 import Script from "next/script";
 import {ColorModeScript} from "@chakra-ui/react";
 import customTheme from "@src/Theme/theme";
-const cdn = appConfig('urls.cdn.assets');
 
 export default function Document() {
   return (

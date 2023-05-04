@@ -16,8 +16,6 @@ export const hostedImage = (imgPath, useThumbnail = false) => {
   imgPath = imgPath.replace(/^\/+/g, '');
   const cdn = appConfig('urls.cdn');
 
-  const imageUrl = new URL(imgPath, cdn.assets);
-
   if (useThumbnail) {
     return ImageService.translate(imgPath.toString()).avatar();
   }
