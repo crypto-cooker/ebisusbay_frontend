@@ -25,16 +25,19 @@ import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 import {attack, getFactionsOwned} from "@src/core/api/RyoshiDynastiesAPICalls";
+import { createSuccessfulTransactionToastContent } from '@src/utils';
 
 //contracts
 import {Contract} from "ethers";
 import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
-import AttackContract from "@src/Contracts/Attack.json";
+import Battlefield from "@src/Contracts/Battlefield.json";
 
 const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
   const config = appConfig();
+  const user = useSelector((state) => state.user);
+  const [isLoading, getSigner] = useCreateSigner();
 
   const attackSetUp = useRef();
   const attackConclusion = useRef();
@@ -47,14 +50,10 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   const [defenderTroops, setDefenderTroops] = useState(0);
   const [attackerTroops, setAttackerTroops] = useState(0);
   const [attackerTroopsAvailable, setAttackerTroopsAvailable] = useState(0);
-
-  const handleChange = (value) => setAttackerTroops(value)
-
-  const user = useSelector((state) => state.user);
-  const [isLoading, getSigner] = useCreateSigner();
-
   const [attackerOptions, setAttackerOptions] = useState([]);
   const [defenderOptions, setDefenderOptions] = useState([]);
+
+  const handleChange = (value) => setAttackerTroops(value)
 
   //alerts
   const [showAlert, setShowAlert] = useState(false)
@@ -65,6 +64,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
     // quantity: 0,
     defenderFaction: "" ?? null,
   })
+
   const onChangeInputsAttacker = (e) => {
     setDataForm({...dataForm, [e.target.name]: e.target.value})
     setAttackerTroopsAvailable(controlPoint.leaderBoard.filter(faction => faction.name === e.target.value)[0].totalTroops);
@@ -99,26 +99,41 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
     }
     if (signatureInStorage) {
       try {
-
-        var controlPointId = controlPoint.id;
-        var attackerFactionId = controlPoint.leaderBoard.filter(faction => faction.name === dataForm.attackersFaction)[0].id;
-        var defenderFactionId = controlPoint.leaderBoard.filter(faction => faction.name === dataForm.defenderFaction)[0].id;
+        const controlPointId = controlPoint.id;
+        const attackerFactionId = controlPoint.leaderBoard.filter(faction => faction.name === dataForm.attackersFaction)[0].id;
+        const defenderFactionId = controlPoint.leaderBoard.filter(faction => faction.name === dataForm.defenderFaction)[0].id;
         // console.log("controlPoint.id", controlPoint.id)
         // console.log("attackerFactionId", attackerFactionId)
         // console.log("defenderFactionId", defenderFactionId)
         // console.log("attackerTroops", Number(attackerTroops))
-        const data = await attack(user.address.toLowerCase(), signatureInStorage, Number(attackerTroops), controlPointId, attackerFactionId, defenderFactionId);
+        const data = await attack(user.address.toLowerCase(), signatureInStorage, Number(attackerTroops), 
+          controlPointId, attackerFactionId, defenderFactionId);
+        
         console.log("data", data)
         //Signature, timestamp and attackId are returned
-        var attackId = data.data.data.attackId;
-        var timestamp = data.data.data.timestamp;
-        var signature = data.data.data.signature;
+        const timestamp = Number(data.data.data.timestampInSeconds);
+        const attacker = data.data.data.attacker;
+        // var b = attacker.replace(/'/g, '"');
+        const attackId = Number(data.data.data.attackId);
+        const troops = Number(data.data.data.troops);
+        const sig = data.data.data.signature;
 
-        console.log(config.contracts.attack)
-        console.log(AttackContract)
-        
-        const attackContract = new Contract(config.contracts.attack, AttackContract, user.provider.getSigner());
-        const tx = await attackContract.attackFaction([attackId, timestamp, signature], user.provider.getSigner());
+        var attackTuple = {timestamp: timestamp, 
+                          attacker: attacker, 
+                          attackId: attackId, 
+                          quantity: troops};
+        //add check for https://testnet.cronoscan.com/address/0x878a7d4ea252cb8317e8e0dd0d29ca6e03d94b7c#writeProxyContract
+
+        // console.log(config.contracts.attack)1683217043
+        // console.log(AttackContract)//[1683217574, "0x2bc60de5833c7c7279427657ef839c06212a38bf", 59, 2]
+        //0x2bc60De5833C7C7279427657ef839c06212A38bF
+
+        const attackContract = new Contract(config.contracts.attack, Battlefield, user.provider.getSigner());
+
+        console.log("attackTuple", attackTuple)
+        console.log("signatureInStorage", signatureInStorage)
+
+        const tx = await attackContract.attackFaction(attackTuple, sig);
         const receipt = await tx.wait();
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
 
@@ -160,6 +175,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
       } catch (error) {
         console.log(error)
+        toast.error(error);
       }
     }
   }
@@ -199,81 +215,17 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
     attackSetUp.current.style.display = "block"
     attackConclusion.current.style.display = "none"
   }
-  function FakeAttack(attacker, defender)
-  {
-    var attackersSlain = 0;
-    var defendersSlain = 0;
-    var attackerWins = false;
-    var outcomeLog = ""
-
-    while(attacker > 0 && defender > 0)
-    {
-        var attackerRoll = dice.roll();
-        var defenderRoll = dice.roll();
-        if(attackerRoll > defenderRoll)
-        {
-            defender--;
-            defendersSlain++;
-        }
-        else
-        {
-            attacker--;
-            attackersSlain++;
-        }
-        outcomeLog += "Attacker: " + attackerRoll + " Defender: " + defenderRoll+"<br>";
-    }
-    if(attacker > 0)
-    {
-        attackerWins = true;
-    }
-    
-    battleLogText.current.innerHTML = outcomeLog;
-    battleOutcome.current.textContent = attackerWins ? "You won!" : "You lost!";
-    attackerOutcome.current.textContent = dataForm.attackersFaction+" lost "+attackersSlain+" out of "+attackerTroops+" troops";
-    defenderOutcome.current.textContent = dataForm.defenderFaction+" lost "+defendersSlain+" out of "+defenderTroops+" troops";
-    
-    DestroyTroops(dataForm.defenderFaction, defendersSlain);
-    DestroyTroops(dataForm.attackersFaction, attackersSlain);
-  }
-  //will need to be rewritten as a POST request
-  function DestroyTroops(factionToRemoveTroopsFrom, amount)
-  {
-    // factions.forEach(faction => {
-    //   if(faction.faction === factionToRemoveTroopsFrom)
-    //   {
-    //     faction.troops -= amount;
-    //   }
-    // });
-  }
-  function getDefenderTroopsInRegion()
-  {
+  function getDefenderTroopsInRegion(){
     controlPoint.leaderBoard.forEach(faction => {
-      if(faction.name === dataForm.defenderFaction)
-      {
+      if(faction.name === dataForm.defenderFaction){
         setDefenderTroops(faction.totalTroops);
-      }
-    });
+      }});
   }
-  function getAttackerTroopsInRegion()
-  {
+  function getAttackerTroopsInRegion(){
     controlPoint.leaderBoard.forEach(faction => {
-      if(faction.name === dataForm.attackersFaction)
-      {
+      if(faction.name === dataForm.attackersFaction){
         setAttackerTroopsAvailable(faction.totalTroops);
-      }
-    });
-  }
-  const getMax = () => { 
-    console.log("attackerTroopsAvailable", attackerTroopsAvailable)
-    if(attackerTroopsAvailable>=3){return 3;}
-    else{return attackerTroopsAvailable;}
-  }
-  var dice = {
-    sides: 6,
-    roll: function () {
-      var randomNumber = Math.floor(Math.random() * this.sides) + 1;
-      return randomNumber;
-    }
+      }});
   }
   function showDetailedResults()
   {
@@ -283,49 +235,44 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
     setAttackerOptions(playerFactions.map((faction, index) => (
       <option value={faction.name} key={index}>{faction.name}</option>)
       ))
-
-    
   }
 
   useEffect(() => {
+    // console.log("controlPoint", controlPoint)
     GetPlayerOwnedFactions();
-    if(controlPoint.leaderBoard !== undefined)
-    {
+    if(controlPoint.leaderBoard !== undefined) {
       setDefenderOptions(controlPoint.leaderBoard.map((faction, index) => (
         <option value={faction.name} key={index}>{faction.name}</option>)))
     }
   }, [controlPoint])
- 
-  useEffect(() => {
-      if(dataForm.attackersFaction!="")
-      {
-        console.log("dataForm.attackersFaction", dataForm.attackersFaction)
-        getAttackerTroopsInRegion()
-      }
-  }, [dataForm.attackersFaction])
 
   useEffect(() => {
-    if(attackerOptions!="")
-    {
+    if(attackerOptions!="") {
       setShowAlert(false)
       dataForm.attackersFaction = attackerOptions[0].props.value;
     }
   }, [attackerOptions])
 
   useEffect(() => {
-      if(defenderOptions!="")
-      {
+      if(defenderOptions!="") {
         dataForm.defenderFaction = defenderOptions[0].props.value;
       }
   }, [defenderOptions])
 
   useEffect(() => {
-      if(dataForm.defenderFaction!=null)
-      {
+      if(dataForm.defenderFaction!=null) {
+        // console.log("dataForm.defenderFaction", dataForm.defenderFaction)
         setShowAlert(false)
         getDefenderTroopsInRegion()
       }
   }, [dataForm.defenderFaction])
+
+  useEffect(() => {
+    if(dataForm.attackersFaction!="") {
+        // console.log("dataForm.attackersFaction", dataForm.attackersFaction)
+        getAttackerTroopsInRegion()
+      }
+  }, [dataForm.attackersFaction])
   
   useEffect(() => {
     console.log("opened attack tap")
@@ -334,8 +281,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
   const [att, setAtt] = useState([])
   const [def, setDef] = useState([])
-  function setupDice(attackerDice, defenderDice)
-  {
+  function setupDice(attackerDice, defenderDice) {
     attackerDice.length = Math.min(attackerDice.length, 3);
     defenderDice.length = Math.min(defenderDice.length, 3);
     
@@ -360,11 +306,6 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
       />))
     )
   }
-  useEffect(() => {
-    // attackSetUp.current.style.display = "none"
-    // attackConclusion.current.style.display = "block"
-    // setupDice()
-  }, [])
 
   return (
     <Flex flexDirection='column' textAlign='center' border={'1px solid white'} borderRadius={'10px'} justifyContent='space-around' padding='16px'>
