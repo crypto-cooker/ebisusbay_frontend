@@ -112,14 +112,24 @@ class ImageTranslator {
     if (isLocalEnv() || !fromDomain.startsWith('http')) return urlify(toDomain, fromDomain);
     if(!fromDomain || fromDomain.startsWith('data')) return fromDomain;
 
-    const remappableDomains: string[] = Object.values(config.urls.cdn);
+    // Put urls with paths above base urls to avoid path nesting
+    const remappableDomains: string[] = [
+      'https://cdn.ebisusbay.com/storage/',
+      config.urls.cdn.storage,
+      config.urls.cdn.files,
+      config.urls.cdn.proxy,
+      config.urls.cdn.ipfs,
+      config.urls.cdn.arweave,
+      config.urls.cdn.bunnykit,
+      config.urls.cdn.app
+    ]
 
-    // Add any extra domains that need to be remapped
-    remappableDomains.push('https://cdn.ebisusbay.com/storage/');
-
-    return remappableDomains.reduce((prev, next) => {
-      return prev.replace(next, toDomain);
-    }, fromDomain);
+    // Only replace once based on above priority
+    for (const domain of remappableDomains) {
+      if (fromDomain.includes(domain)) {
+        return fromDomain.replace(domain, toDomain);
+      }
+    }
   }
 }
 
