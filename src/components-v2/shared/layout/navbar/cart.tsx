@@ -261,7 +261,7 @@ const Cart = function () {
                         ) : (
                           <MultimediaImage
                             source={ImageService.translate(specialImageTransform(nft.address, nft.image)).fixedWidth(100, 100)}
-                            fallbackSource={ImageService.translate(nft.image).fixedWidth(100, 100)}
+                            fallbackSource={ImageService.bunnykit(ImageService.bunnykit(nft.image).thumbnail()).fixedWidth(100, 100)}
                             title={nft.name}
                             className="img-rounded-8"
                           />

@@ -29,16 +29,32 @@ class ImageTranslator {
 
   static bunnykit(url: string) {
     const translator = new ImageTranslator(url);
-    translator.provider = new BunnyKitProvider(ImageTranslator.remapUrl(url, config.urls.cdn.proxy));
+
+    let remappedUrl = url;
+
+    if (url.includes('/img/') || !url.startsWith('http')) {
+      remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.app);
+    } else if (url.includes('/files/')) {
+      remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.files);
+    } else if (url.includes('/storage/')) {
+      remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.storage);
+    } else if (url.includes('/ipfs/')) {
+      remappedUrl = ImageTranslator.remapUrl(url, `${config.urls.cdn.bunnykit}`);
+    } else if (url.includes('/arweave/')) {
+      remappedUrl = ImageTranslator.remapUrl(url, `${config.urls.cdn.bunnykit}`);
+    } else if (url.includes('/proxy/')) {
+      remappedUrl = ImageTranslator.remapUrl(url, `${config.urls.cdn.bunnykit}`);
+    }
+
+    translator.provider = new BunnyKitProvider(remappedUrl);
+
     return translator;
   }
 
   determineBuilder(url: string) {
     let provider!: CdnProvider;
 
-    if (!url) {
-      url = fallbackImageUrl();
-    }
+    if (!url) url = fallbackImageUrl();
 
     // Bunny parameters don't work with URLs with no file extension
     const pattern = /\.[0-9a-z]+$/i;
@@ -58,7 +74,7 @@ class ImageTranslator {
         const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.ipfs);
         provider = new BunnyCdnProvider(remappedUrl);
       } else {
-        const remappedUrl = ImageTranslator.remapUrl(url, `${config.urls.cdn.bunnykit}ipfs/`);
+        const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.bunnykit);
         provider = new BunnyKitProvider(remappedUrl);
       }
     } else if (url.includes('/arweave/')) {
@@ -66,7 +82,7 @@ class ImageTranslator {
         const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.arweave);
         provider = new BunnyCdnProvider(remappedUrl);
       } else {
-        const remappedUrl = ImageTranslator.remapUrl(url, `${config.urls.cdn.bunnykit}ipfs/`);
+        const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.bunnykit);
         provider = new BunnyKitProvider(remappedUrl);
       }
     } else if (url.includes('/proxy/')) {
@@ -74,13 +90,13 @@ class ImageTranslator {
         const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.proxy);
         provider = new BunnyCdnProvider(remappedUrl);
       } else {
-        const remappedUrl = ImageTranslator.remapUrl(url, `${config.urls.cdn.bunnykit}ipfs/`);
+        const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.bunnykit);
         provider = new BunnyKitProvider(remappedUrl);
       }
     }
 
     if (url.includes('.gif')) {
-      const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.proxy);
+      const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.bunnykit);
       provider = new BunnyKitProvider(remappedUrl);
     }
 

@@ -1,6 +1,6 @@
 import {CdnProvider} from "@src/core/services/image/index";
 import {BunnyBuilder} from "@src/core/services/image/bunny";
-import {ImageKitBuilder} from "@src/core/services/image/imagekit";
+import ImageKitProvider, {ImageKitBuilder} from "@src/core/services/image/imagekit";
 
 class BunnyKitProvider implements CdnProvider {
   private readonly url: string;
@@ -51,10 +51,7 @@ class BunnyKitProvider implements CdnProvider {
   }
 
   thumbnail(): string {
-    return BunnyKitBuilder.from(this.url)
-      .setWidth(440)
-      .setHeight(440)
-      .build();
+    return new ImageKitProvider(this.url).thumbnail();
   }
 
   gifToMp4() {
@@ -126,7 +123,8 @@ class BunnyKitBuilder {
     }
 
     // Bunny
-    if (this.bunnyBuilder.params.toString() !== '') {
+    const bunnyExclusions = url.pathname.includes('ik-thumbnail.jpg') || this.ikBuilder.appendages.length;
+    if (!bunnyExclusions && this.bunnyBuilder.params.toString() !== '') {
       for (const [key, value] of this.bunnyBuilder.params.entries()) {
         url.searchParams.set(key, value);
       }

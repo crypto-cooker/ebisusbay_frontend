@@ -89,17 +89,12 @@ export const AnyMedia = ({
         let type = MediaType[mediaType as keyof typeof MediaType] ?? MediaType.image;
         if (type === MediaType.video) {
           if (!!thumbnail) {
-            let thumbnailResponse = await axios.head(image);
-            let thumbnailContentType = thumbnailResponse.headers['content-type'];
-
-            console.log('===SET THUMB', ImageService.bunnykit(thumbnail).thumbnail())
-            setVideoThumbNail(ImageService.bunnykit(thumbnail).thumbnail());
+            setVideoThumbNail(thumbnail);
           } else {
             setVideoThumbNail(makeThumb(transformedImage));
           }
         }
         if (format === 'gif') {
-          console.log('===SET GIF')
           setTransformedImage(ImageService.gif(imageURL.toString()).gifToMp4());
           setVideoThumbNail(thumbnail ?? null);
           setDynamicType(MediaType.video);
