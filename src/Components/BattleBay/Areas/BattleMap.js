@@ -13,12 +13,12 @@ const BattleMap = ({onBack, factions=[]}) => {
   //#region variables
   // const gif = "/img/battle-bay/fire.gif";
   const mapRef = useRef();
-  // const regionFlags = ["pin-Southern-Trident", "pin-Dragonland", "pin-Human-Kingdoms", "pin-Dwarf-Mines"];
   const  [flagSize, setFlagSize] = useState("1px");
   const [buildingSize, setBuildingSize] = useState("50px");
   const { height, width: windowWidth } = useWindowDimensions();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [controlPoint, setControlPoint] = useState([], () => {});
+  
   const imageRef1 = useRef();
   const imageRef2 = useRef();
   const imageRef3 = useRef();
@@ -35,8 +35,8 @@ const BattleMap = ({onBack, factions=[]}) => {
 
   const controlPoints = [{id:4, title:"Southern Trident",pinName: "pin-Southern-Trident",marginTop: '32%', marginLeft: '20%'},
                          {id:3, title:"Dragonland",pinName: "pin-Dragonland",marginTop: '17%', marginLeft: '24%'},
-                         {id:1, title:"Human Kingdoms",pinName: "pin-Human-Kingdoms",marginTop: '32%', marginLeft: '47%'},
-                         {id:2, title:"Dwarf Mines",pinName: "pin-Dwarf-Mines",marginTop: '30%', marginLeft: '63%'}];
+                         {id:2, title:"Dwarf Mines",pinName: "pin-Dwarf-Mines",marginTop: '32%', marginLeft: '47%'},
+                         {id:1, title:"Human Kingdoms",pinName: "pin-Human-Kingdoms",marginTop: '30%', marginLeft: '63%'}];
 
   function getWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
@@ -160,9 +160,12 @@ const BattleMap = ({onBack, factions=[]}) => {
   const SetUpPins = async () => {
       setPins(controlPoints.map((controlPoint, i) => 
         (<div id={controlPoint.pinName} title={controlPoint.title}
-        style={{position:"absolute", marginTop: controlPoint.marginTop, marginLeft: controlPoint.marginLeft, zIndex:"9", pointerEvents:"none"}}>
+              style={{position:"absolute", marginTop: controlPoint.marginTop, marginLeft: 
+              controlPoint.marginLeft, zIndex:"9", pointerEvents:"none"}}>
         <img width={flagSize} height={flagSize} ref={getImageRef(controlPoint.id)} className={controlPoint.id}/>
-        <div className= "pinText"><h3 className="head">{controlPoint.title}</h3></div>
+        <div className= "pinText">
+          <h3 className="head">{controlPoint.title}</h3>
+        </div>
       </div>
         )))
       if(imageRef1.current != null)
@@ -217,23 +220,6 @@ const BattleMap = ({onBack, factions=[]}) => {
       </map>
       {pins}
       {explosion}
-      
-      {/* <div id="pin-Dragonland" title="Dragonland" 
-        style={{position:"absolute", marginTop: '17%', marginLeft: '24%', zIndex:"9", pointerEvents:"none"}}>
-        <img src=""  width={flagSize} height={flagSize} className="factionIcon"/>
-        <div  className="pinText"><h3 className="head">pin-dragon</h3></div>
-      </div>
-      <div id="pin-Dwarf-Mines" title="Dwarf Mines" 
-        style={{position:"absolute", marginTop: '32%', marginLeft: '47%', zIndex:"9", pointerEvents:"none"}}>
-        <img src=""  width={flagSize} height={flagSize} className="factionIcon"/>
-        <div className="pinText"><h3 className="head">pin-Dwarf-Mines</h3></div>
-      </div>
-      <div id="pin-Human-Kingdoms" title="Human Kingdoms" 
-        style={{position:"absolute", marginTop: '30%', marginLeft: '63%', zIndex:"9", pointerEvents:"none"}}>
-        <img src=""  width={flagSize} height={flagSize} className="factionIcon"/>
-        <div className="pinText"><h3 className="head">pin-Human-Kingdoms</h3></div>
-      </div> */}
-
         </TransformComponent>
       </TransformWrapper>
     </div>
