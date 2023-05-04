@@ -164,11 +164,11 @@ const LegacyStaking = () => {
         <div className="row">
           <div className="col-md-4 text-center">
             <AnyMedia
-              video="https://cdn.ebisusbay.com/QmX97CwY2NcmPmdS6XtcqLFMV2JGEjnEWjxBQbj4Q6NC2i.mp4"
+              video="https://ik-proxy.b-cdn.net/QmX97CwY2NcmPmdS6XtcqLFMV2JGEjnEWjxBQbj4Q6NC2i.mp4"
               videoProps={
                 {autoPlay: true}
               }
-              image={ImageService.translate('https://cdn.ebisusbay.com/QmX97CwY2NcmPmdS6XtcqLFMV2JGEjnEWjxBQbj4Q6NC2i.mp4').thumbnail()}
+              image={ImageService.translate('https://ik-proxy.b-cdn.net/QmX97CwY2NcmPmdS6XtcqLFMV2JGEjnEWjxBQbj4Q6NC2i.mp4').thumbnail()}
               title="VIP Founding Member Staking"
             />
           </div>

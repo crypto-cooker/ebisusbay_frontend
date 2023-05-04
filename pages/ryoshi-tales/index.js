@@ -179,7 +179,7 @@ const RyoshiTales = () => {
           <Center>
             <Box
               as='iframe'
-              src='https://cdn.ebisusbay.biz/Ryoshi_Tales_edit.mp4'
+              src='https://cdn-prod.ebisusbay.biz/Ryoshi_Tales_edit.mp4'
               h={['200px', '240px','312px']}
               sx={{
                 aspectRatio: '16/9'
@@ -247,7 +247,7 @@ const RyoshiTales = () => {
                   Want to know more?
                 </Heading>
                 <Heading as="h2" size="md" mb='8px' mt='24px' color={primaryColor} textAlign='center'>
-                  <Link color={primaryColor} href="https://cdn.ebisusbay.com/Ryoshi_Tales_Pitch_Deck.pdf" target="_blank" style={{ textDecoration: 'underline' }} textAlign='center'>
+                  <Link color={primaryColor} href="https://cdn-prod.ebisusbay.com/Ryoshi_Tales_Pitch_Deck.pdf" target="_blank" style={{ textDecoration: 'underline' }} textAlign='center'>
                     Download the pitch deck here
                   </Link>
                 </Heading>

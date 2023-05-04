@@ -36,5 +36,14 @@ class ImageService {
     const translator = ImageTranslator.bunnykit(url);
     return translator.provider;
   }
+
+  /**
+   * Known public dir assets
+   *
+   * @param url
+   */
+  static staticAsset(url: string): CdnProvider {
+    return new BunnyCdnProvider(ImageTranslator.remapUrl(url, config.urls.cdn.app));
+  }
 }
 export default ImageService;

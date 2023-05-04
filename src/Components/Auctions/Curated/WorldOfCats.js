@@ -8,7 +8,7 @@ import Image from "next/image";
 const WorldOfCatsAuction = () => {
   const name = 'World of Cats Auction';
   const description = 'Special customized World Of Cats auctioned for charity. 100% of the proceeds go to World Of Cats charity fund, which will then be given forward to cat shelters. Winner of this auction gets airdropped token id 0 from the World Of Cats collection & can design his own personalized NFT.';
-  const image = 'https://cdn.ebisusbay.com/collections/woc-prereveal_yJ1SI3qFp.png';
+  const image = 'https://cdn-prod.ebisusbay.com/collections/woc-prereveal_yJ1SI3qFp.png';
 
   return (
     <>
