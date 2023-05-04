@@ -32,8 +32,11 @@ class ImageTranslator {
 
     let remappedUrl = url;
 
-    if (url.includes('/img/') || !url.startsWith('http')) {
+    // Important to keep local and proxy at the top because proxy could contain any of the below values being compared
+    if (!url.startsWith('http')) {
       remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.app);
+    } else if (url.includes('/proxy/')) {
+      remappedUrl = ImageTranslator.remapUrl(url, `${config.urls.cdn.bunnykit}`);
     } else if (url.includes('/files/')) {
       remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.files);
     } else if (url.includes('/storage/')) {
@@ -41,8 +44,6 @@ class ImageTranslator {
     } else if (url.includes('/ipfs/')) {
       remappedUrl = ImageTranslator.remapUrl(url, `${config.urls.cdn.bunnykit}`);
     } else if (url.includes('/arweave/')) {
-      remappedUrl = ImageTranslator.remapUrl(url, `${config.urls.cdn.bunnykit}`);
-    } else if (url.includes('/proxy/')) {
       remappedUrl = ImageTranslator.remapUrl(url, `${config.urls.cdn.bunnykit}`);
     }
 
@@ -60,10 +61,19 @@ class ImageTranslator {
     const pattern = /\.[0-9a-z]+$/i;
     const hasFileExtension = pattern.test(url);
 
-    if (url.includes('/img/') || !url.startsWith('http')) {
+    // Important to keep local and proxy at the top because proxy could contain any of the below values being compared
+    if (!url.startsWith('http')) {
       const baseUrl = isLocalEnv() ? config.urls.app : config.urls.cdn.app;
       const remappedUrl = ImageTranslator.remapUrl(url, baseUrl);
       provider = new BunnyCdnProvider(remappedUrl);
+    } else if (url.includes('/proxy/')) {
+      if (hasFileExtension) {
+        const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.proxy);
+        provider = new BunnyCdnProvider(remappedUrl);
+      } else {
+        const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.bunnykit);
+        provider = new BunnyKitProvider(remappedUrl);
+      }
     } else if (url.includes('/files/')) {
       const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.files);
       provider = new BunnyCdnProvider(remappedUrl);
@@ -81,14 +91,6 @@ class ImageTranslator {
     } else if (url.includes('/arweave/')) {
       if (hasFileExtension) {
         const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.arweave);
-        provider = new BunnyCdnProvider(remappedUrl);
-      } else {
-        const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.bunnykit);
-        provider = new BunnyKitProvider(remappedUrl);
-      }
-    } else if (url.includes('/proxy/')) {
-      if (hasFileExtension) {
-        const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.proxy);
         provider = new BunnyCdnProvider(remappedUrl);
       } else {
         const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.bunnykit);
