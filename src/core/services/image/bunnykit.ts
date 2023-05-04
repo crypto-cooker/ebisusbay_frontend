@@ -55,7 +55,7 @@ class BunnyKitProvider implements CdnProvider {
   }
 
   gifToMp4() {
-    return BunnyKitBuilder.from(this.url).build();
+    return new ImageKitProvider(this.url).gifToMp4();
   }
 
   convert() {
@@ -81,7 +81,7 @@ class BunnyKitBuilder {
   bunnyBuilder: BunnyBuilder;
 
   constructor(url: string) {
-    this.url = url;
+    this.url = this.specialTransform(url);
     this.params = new URLSearchParams();
 
     this.ikBuilder = new ImageKitBuilder(url);
@@ -131,5 +131,19 @@ class BunnyKitBuilder {
     }
 
     return url.toString();
+  }
+
+  private specialTransform(url: string) {
+    if (!url) return url;
+
+    if (url.toLowerCase().includes('/QmTeJ3UYT6BG8v4Scy9E3W9cxEq6TCeg5SiuLKNFXbsW87'.toLowerCase())) {
+      return url.replace('/QmTeJ3UYT6BG8v4Scy9E3W9cxEq6TCeg5SiuLKNFXbsW87', '/QmX97CwY2NcmPmdS6XtcqLFMV2JGEjnEWjxBQbj4Q6NC2i.mp4');
+    }
+
+    if (url.toLowerCase().includes('/QmX97CwY2NcmPmdS6XtcqLFMV2JGEjnEWjxBQbj4Q6NC2i'.toLowerCase())) {
+      return url.replace('/QmX97CwY2NcmPmdS6XtcqLFMV2JGEjnEWjxBQbj4Q6NC2i', '/QmX97CwY2NcmPmdS6XtcqLFMV2JGEjnEWjxBQbj4Q6NC2i.mp4');
+    }
+
+    return url;
   }
 }
