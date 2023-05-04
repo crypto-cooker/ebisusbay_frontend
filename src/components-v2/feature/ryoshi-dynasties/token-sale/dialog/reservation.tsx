@@ -40,6 +40,7 @@ import {TokenSaleContext, TokenSaleContextProps} from "@src/components-v2/featur
 import {useQueryClient} from "@tanstack/react-query";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
 import {useWindowSize} from "@src/hooks/useWindowSize";
+import ImageService from "@src/core/services/image";
 
 const config = appConfig();
 
@@ -357,7 +358,7 @@ const FortunePurchaseForm = () => {
                 <VStack spacing={0}>
                   <Checkbox colorScheme='blue' size='lg' onChange={handleTosCheck}>
                     <Text fontSize='xs'>
-                      I agree to the <Link href='https://cdn.ebisusbay.com/terms-of-service.html' textDecoration='underline' isExternal>terms of service
+                      I agree to the <Link href={ImageService.staticAsset('terms-of-service.html').convert()} textDecoration='underline' isExternal>terms of service
                       <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} ml={1} /></Link>
                     </Text>
                   </Checkbox>

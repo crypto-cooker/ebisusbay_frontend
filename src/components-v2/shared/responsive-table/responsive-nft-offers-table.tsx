@@ -186,7 +186,7 @@ const ProfileCell = ({ address = '' }) => {
       >
           <Box className="author_list_pp" ms={0} mt={0}>
             {!isLoading && data?.data?.profilePicture ? (
-              <img src={ImageService.instance.provider.avatar(data?.data?.profilePicture)} alt={data?.data?.username ? data?.data?.username : shortAddress(address)} />
+              <img src={ImageService.translate(data?.data?.profilePicture).avatar()} alt={data?.data?.username ? data?.data?.username : shortAddress(address)} />
             ) : (
               <Blockies seed={address} size={10} scale={5} />
             )}

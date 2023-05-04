@@ -123,7 +123,7 @@ const DataTable = ({data, timeFrame, onSort}: Pick<ResponsiveCollectionsTablePro
                         overflow='hidden'
                       >
                         <CdnImage
-                          src={ImageService.staticAsset.avatar(collection.metadata.avatar)}
+                          src={ImageService.translate(collection.metadata.avatar).avatar()}
                           alt={collection?.name}
                           width="50"
                           height="50"
@@ -247,7 +247,7 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
                           overflow='hidden'
                         >
                           <ChakraImage
-                            src={ImageService.staticAsset.avatar(collection.metadata.avatar)}
+                            src={ImageService.translate(collection.metadata.avatar).avatar()}
                             alt={collection?.name}
                           />
                         </Box>

@@ -195,7 +195,7 @@ export default function Stats({pageHead, initialTimeframe}: StatsProps) {
             <Table headers={headers[type as keyof typeof headers]} items={leaderBoard[type as keyof typeof leaderBoard]} />
           </div>
       </section>
-      {/*<p className="text-center small"><a href="https://cdn.ebisusbay.com/Contest_Terms_and_Conditions.html">Contest Terms and*/}
+      {/*<p className="text-center small"><a href="https://cdn-prod.ebisusbay.com/Contest_Terms_and_Conditions.html">Contest Terms and*/}
       {/*  Conditions</a></p>*/}
 
       {/*<Modal isOpen={showDialog} onClose={() => setShowDialog(false)}>*/}

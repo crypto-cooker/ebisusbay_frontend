@@ -184,19 +184,19 @@ const SalesCollection = ({
             {listings &&
               listings.map((listing, index) => (
                 <tr key={index}>
-                  <td style={{ minWidth: '50px' }}>
+                  <td style={{ width: '105px' }}>
                     <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
                       {isBundle(listing.nftAddress) ? (
                         <img
                           className="lazy rounded"
-                          src={ImageService.instance.provider.avatar('/img/logos/bundle.webp')}
+                          src={ImageService.translate('/img/logos/bundle.webp').fixedWidth(75, 75)}
                           alt={listing.nft.name}
                           style={{ maxHeight: '75px' }}
                         />
                       ) : (
                         <img
                           className="lazy rounded"
-                          src={listing.nft.image}
+                          src={ImageService.translate(listing.nft.image).fixedWidth(75, 75)}
                           alt={listing.nft.name}
                           style={{ maxHeight: '75px' }}
                         />

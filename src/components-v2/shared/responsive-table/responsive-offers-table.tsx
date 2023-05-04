@@ -86,7 +86,7 @@ const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveOffersTableProp
                       overflow='hidden'
                     >
                       <AnyMedia
-                        image={ImageService.proxy.avatar(offer.nft.image ?? offer.collection.metadata.avatar)}
+                        image={ImageService.translate(offer.nft.image ?? offer.collection.metadata.avatar).avatar()}
                         video={offer.nft.animation_url}
                         title={offer.nft.name ?? offer.collection.name}
                         className=""
@@ -185,7 +185,7 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel}: ResponsiveOffersTable
                         overflow='hidden'
                       >
                         <AnyMedia
-                          image={ImageService.proxy.avatar(offer.nft.image ?? offer.collection.metadata.avatar)}
+                          image={ImageService.translate(offer.nft.image ?? offer.collection.metadata.avatar).avatar()}
                           video={offer.nft.animation_url}
                           title={offer.nft.name ?? offer.collection.name}
                         />

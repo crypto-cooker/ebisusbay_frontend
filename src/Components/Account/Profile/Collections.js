@@ -99,7 +99,7 @@ export default function Collections({ address }) {
                             <Link href={`/collection/${collection.slug}`}>
                               {collection.metadata?.avatar ? (
                                 <CdnImage
-                                  src={ImageService.staticAsset.avatar(collection.metadata.avatar)}
+                                  src={ImageService.translate(collection.metadata.avatar).avatar()}
                                   alt={collection?.name}
                                   width="50"
                                   height="50"

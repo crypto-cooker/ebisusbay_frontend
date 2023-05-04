@@ -206,7 +206,7 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark })
                       width={440}
                       height={440}
                       video={listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url}
-                      thumbnail={!!listing.nft.video || !!listing.nft.animationUrl || !!listing.nft.animation_url ? ImageService.proxy.thumbnail(listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url) : undefined}
+                      thumbnail={!!listing.nft.video || !!listing.nft.animationUrl || !!listing.nft.animation_url ? ImageService.translate(listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url).thumbnail() : undefined}
                       usePlaceholder={true}
                     />
                   </Watermarked>
@@ -219,7 +219,7 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark })
                     width={440}
                     height={440}
                     video={listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url}
-                    thumbnail={!!listing.nft.video || !!listing.nft.animationUrl || !!listing.nft.animation_url ? ImageService.proxy.thumbnail(listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url) : undefined}
+                    thumbnail={!!listing.nft.video || !!listing.nft.animationUrl || !!listing.nft.animation_url ? ImageService.translate(listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url).thumbnail() : undefined}
                     usePlaceholder={true}
                   />
                 )}

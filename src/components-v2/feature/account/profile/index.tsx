@@ -131,7 +131,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
   }
 
   const profilePicture = profile.profilePicture ?
-    ImageService.instance.provider.custom(profile.profilePicture, {width: 200, height: 200}) :
+    ImageService.translate(profile.profilePicture).custom({width: 200, height: 200}) :
     hostedImage('/img/profile-avatar.webp');
 
   // Ensure correct tab highlighted when changing from AccountMenu while already in Profile page
@@ -177,7 +177,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
               <Image
                 h={{base: '100px', sm: '150px', md: '250px', lg: '300px', xl: '360px'}}
                 w='full'
-                src={ImageService.staticAsset.banner(profile.banner)}
+                src={ImageService.translate(profile.banner).banner()}
                 objectFit='cover'
                 backgroundRepeat='no-repeat'
                 backgroundPosition='50% 50%'
