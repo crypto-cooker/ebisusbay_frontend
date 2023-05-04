@@ -20020,7 +20020,7 @@
       "name": "Crypto Crows",
       "slug": "crypto-crows",
       "multiToken": false,
-      "address": "",
+      "address": "0xFaF84539aA0d2165853b549cAed0432222000cCA",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -26764,7 +26764,7 @@
         "twitter": "https://twitter.com/Corvuslabs_ltd",
         "discord": "https://discord.gg/ykEJAt8Pce"
       },
-      "address": "",
+      "address": "0xFaF84539aA0d2165853b549cAed0432222000cCA",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 99,
       "totalSupply": 1876,
