@@ -185,7 +185,7 @@ const Collection721 = ({ collection, query, activeDrop = null}: Collection721Pro
         id="profile_banner"
         className="jumbotron breadcumb no-bg"
         style={{
-          backgroundImage: `url(${ImageService.translate(collection.metadata.banner ?? '').banner()})`,
+          backgroundImage: `url(${!!collection.metadata.banner ? ImageService.translate(collection.metadata.banner).banner() : ''})`,
           backgroundPosition: '50% 50%',
         }}
       >

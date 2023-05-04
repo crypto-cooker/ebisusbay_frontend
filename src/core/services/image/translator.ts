@@ -61,7 +61,8 @@ class ImageTranslator {
     const hasFileExtension = pattern.test(url);
 
     if (url.includes('/img/') || !url.startsWith('http')) {
-      const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.app);
+      const baseUrl = isLocalEnv() ? config.urls.app : config.urls.cdn.app;
+      const remappedUrl = ImageTranslator.remapUrl(url, baseUrl);
       provider = new BunnyCdnProvider(remappedUrl);
     } else if (url.includes('/files/')) {
       const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.files);
