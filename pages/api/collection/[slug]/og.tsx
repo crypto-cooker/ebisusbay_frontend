@@ -1,9 +1,7 @@
 import {ImageResponse, NextRequest} from "next/server";
-import {caseInsensitiveCompare, isAddress, siPrefixedNumber} from "@src/utils";
+import {caseInsensitiveCompare, isAddress, siPrefixedNumber, urlify} from "@src/utils";
 import {appConfig} from "@src/Config";
-import {hostedImage} from "@src/helpers/image";
 import imageSize from "image-size";
-import ImageService from "@src/core/services/image";
 
 
 export const config = {
@@ -29,12 +27,25 @@ const collections = appConfig('collections');
 const getBanner = (collection: any) => {
   let banner = defaultBanner;
   if (!!collection.metadata.card) {
-    banner = ImageService.translate(collection.metadata.card).convert();
+    banner = urlify(appConfig('urls.app'), collection.metadata.card);
   } else if (!!collection.metadata.banner) {
-    banner = ImageService.translate(collection.metadata.banner).convert();
+    banner = urlify(appConfig('urls.app'), collection.metadata.banner);
   }
 
   return banner;
+}
+
+/**
+ * Convert an image to base64 PNG because OG doesn't support webp
+ * 
+ * @param url
+ */
+const base64Image = async (url: string) => {
+  const test1 = await fetch(`${appConfig('urls.app')}api/og/convert?url=${url}`);
+  const contentType = test1.headers.get('content-type') || 'application/octet-stream';
+  const imageBuffer = await test1.arrayBuffer();
+  const base64Image = Buffer.from(imageBuffer).toString('base64');
+  return `data:${contentType};base64,${base64Image}`;
 }
 
 export default async function handler(req: NextRequest) {
@@ -58,12 +69,16 @@ export default async function handler(req: NextRequest) {
     }
   }
 
+  const banner = await base64Image(getBanner(collection));
+  const avatar = await base64Image(urlify(appConfig('urls.app'), collection.metadata.avatar));
+
   try {
     const data = await fetch(
       `${appConfig('urls').api}collectioninfo?address=${collection.address}`,
       { next: { revalidate: 10 }}
     );
     const collectionData = (await data.json()).collections[0];
+
 
     return new ImageResponse(
       (
@@ -82,7 +97,7 @@ export default async function handler(req: NextRequest) {
               position: 'absolute',
               width: '100%',
               height: '100%',
-              backgroundImage: `linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.85) 90%), url(${getBanner(collection)})`,
+              backgroundImage: `linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.85) 90%), url(${banner})`,
               backgroundRepeat: 'no-repeat',
             }}
           >
@@ -98,7 +113,7 @@ export default async function handler(req: NextRequest) {
           >
             <img
               alt={collection.name}
-              src={ImageService.translate(collection.metadata.avatar).avatar()}
+              src={avatar}
               width='50px'
               height='50px'
               style={{
@@ -186,13 +201,13 @@ export default async function handler(req: NextRequest) {
       }
     )
   } catch (e: any) {
-    const dimensions = await fetchImageDimensions(getBanner(collection));
+    const dimensions = await fetchImageDimensions(banner);
 
     return new ImageResponse(
       (
         <img
           alt={collection.name}
-          src={getBanner(collection)}
+          src={banner}
           width='100%'
           height='100%'
         />
@@ -216,4 +231,43 @@ async function fetchImageDimensions(url: string): Promise<{ width: number; heigh
   const buffer = await response.arrayBuffer();
   const dimensions = imageSize(Buffer.from(buffer));
   return { width: dimensions.width!, height: dimensions.height! };
+}
+
+
+async function convertWebPtoPNG(url: string): Promise<string> {
+  // Fetch the WebP image data
+  const response = await fetch(url);
+  const blob = await response.blob();
+
+  // Create an Image object from the fetched Blob
+  const image = new Image();
+  const loadImage = (src: Blob): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      image.src = URL.createObjectURL(src);
+      image.onload = () => resolve();
+      image.onerror = () => reject(new Error('Failed to load image'));
+    });
+  };
+  await loadImage(blob);
+
+  // Draw the image onto a canvas
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  if (!ctx) {
+    throw new Error('Failed to create canvas context');
+  }
+  canvas.width = image.width;
+  canvas.height = image.height;
+  ctx.drawImage(image, 0, 0);
+
+  // Convert the canvas to a PNG data URL
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((blob) => {
+      if (!blob) {
+        reject(new Error('Failed to convert image to PNG'));
+        return;
+      }
+      resolve(URL.createObjectURL(blob));
+    }, 'image/png');
+  });
 }
