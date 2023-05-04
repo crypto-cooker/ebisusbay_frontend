@@ -17779,7 +17779,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -20020,7 +20020,7 @@
       "name": "Crypto Crows",
       "slug": "crypto-crows",
       "multiToken": false,
-      "address": "",
+      "address": "0xFaF84539aA0d2165853b549cAed0432222000cCA",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -20149,6 +20149,108 @@
         "website": "https://ghettodoves.com/",
         "discord": "https://discord.gg/ghetto-doves",
         "medium": "https://medium.com/@gd_29360/welcome-to-the-city-of-new-york-d940fff215c1",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Moonwolves",
+      "slug": "moonwolves",
+      "multiToken": false,
+      "address": "0xEFA293ecD55e378aa614710C2Aee81886B3F84e0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The NFT Collection that empowers the Moonflow Ecosystem!",
+        "avatar": "/img/collections/moonwolves/avatar.webp",
+        "card": "/img/collections/moonwolves/card.webp",
+        "banner": "/img/collections/moonwolves/banner.webp",
+        "website": "https://moonflow.club",
+        "twitter": "https://twitter.com/Moonflownft",
+        "discord": "https://discord.gg/moonflow",
+        "medium": "https://medium.com/@moonflowclubnft",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Ninja Turtle Factions",
+      "slug": "ninja-turtle-factions",
+      "multiToken": false,
+      "address": "0x90d976B61F5C05F064D4F5272919B7fD1499C0A8",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Ninja Turtle Factions (NTF) - A set of 5000 hand drawn NFTs inspired by sensei Crypto Turtle. Each Ninja is known for their stealthy approach to combat, armour, powerful weaponry and skilled in the art of Ninja magic",
+        "avatar": "/img/collections/ninja-turtle-factions/avatar.webp",
+        "card": "/img/collections/ninja-turtle-factions/card.webp",
+        "banner": "/img/collections/ninja-turtle-factions/banner.webp",
+        "website": "https://lnk.bio/NINJA_TURTLE_FACTION",
+        "twitter": "https://twitter.com/NinjaTurtleFctn",
+        "discord": "https://discord.gg/ZCp5GgTWSb",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CroSkull Pets - Season 4",
+      "slug": "croskull-pets-s4",
+      "multiToken": false,
+      "address": "0x77aE45b634a829B002293E554fA67ADC0EB78Bc2",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Underworld is full of all kinds of creatures. During the CroSkulls adventures to the different regions of the Underworld, the CroSkulls often find regional eggs. Each season of CroSkulls explore new regions of the Underworld. Each season will have different seasonal pets. Once the eggs hatch, you will acquire a seasonal pet from that egg's region of the Underworld.",
+        "avatar": "/img/collections/croskull-pets-s4/avatar.webp",
+        "card": "/img/collections/croskull-pets-s4/card.webp",
+        "banner": "/img/collections/croskull-pets-s4/banner.webp",
+        "website": "https://app.croskull.com/",
+        "twitter": "https://twitter.com/CroskullNFT",
+        "discord": "https://discord.gg/q3nWxw8QRY",
+        "medium": "https://medium.com/@croskullnft",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CroSkull Pets Eggs - Season 4",
+      "slug": "croskull-pets-eggs-s4",
+      "multiToken": false,
+      "address": "0x635D66972453E20F5f2EA2787361C752232F07D2",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A Mysterious Egg found by a CroSkull during his adventure! \"I.... never seen an egg like that, it may hatch in a some mysterious creature.\" Hatching Available on https://app.croskull.com/",
+        "avatar": "/img/collections/croskull-pets-eggs-s4/avatar.webp",
+        "card": "/img/collections/croskull-pets-eggs-s4/card.webp",
+        "banner": "/img/collections/croskull-pets-eggs-s4/banner.webp",
+        "website": "https://app.croskull.com/",
+        "twitter": "https://twitter.com/CroskullNFT",
+        "discord": "https://discord.gg/q3nWxw8QRY",
+        "medium": "https://medium.com/@croskullnft",
         "categories": [
           "collectibles"
         ]
@@ -26764,7 +26866,7 @@
         "twitter": "https://twitter.com/Corvuslabs_ltd",
         "discord": "https://discord.gg/ykEJAt8Pce"
       },
-      "address": "",
+      "address": "0xFaF84539aA0d2165853b549cAed0432222000cCA",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 99,
       "totalSupply": 1876,
