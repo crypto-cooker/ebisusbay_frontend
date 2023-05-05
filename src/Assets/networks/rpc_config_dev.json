@@ -22782,7 +22782,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "video": "https://youtu.be/ZCKF8fDk7V4",
       "images": {
         "drop": "/img/drops/genesis-crates/drop.webp",
