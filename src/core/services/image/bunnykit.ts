@@ -115,9 +115,9 @@ class BunnyKitBuilder {
     let url = this.ikBuilder.build();
 
     // Then build the Bunny URL
-    // URL will not work if appendages from imagekit are present
-    const bunnyExclusions = this.ikBuilder.appendages.length > 0;
-    if (!bunnyExclusions) {
+    // Bunny params will not work if video appendages from imagekit are present
+    const excludeBunny = this.ikBuilder.hasGifToMp4Appendage();
+    if (!excludeBunny) {
       url = this.bunnyBuilder.build(url.toString());
     }
 
