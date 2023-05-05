@@ -92,6 +92,7 @@ export const configData = {
     tokenSale: {
       vipStart: 1682971200000,
       publicStart: 1682974800000,
+      publicEnd: 1683579600000,
       memberCollections: [
         '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5', // FM
         '0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29', // Valentine
@@ -184,6 +185,7 @@ export const configData = {
     tokenSale: {
       vipStart: 1682971200000,
       publicStart: 1682974800000,
+      publicEnd: 1683579600000,
       memberCollections: [
         '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5', // FM
         '0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29', // Valentine
@@ -278,6 +280,7 @@ export const configData = {
     tokenSale: {
       vipStart: 1682963727000,
       publicStart: 1682963727000,
+      publicEnd: 1683579600000,
       memberCollections: [
         '0x3F1590A5984C89e6d5831bFB76788F3517Cdf034', // FM
         '0xe51377a260043381b8B525D33B9fFBC601A1469b', // Ryoshi Halloween
@@ -367,6 +370,7 @@ export const configData = {
     tokenSale: {
       vipStart: 1682871200000,
       publicStart: 1682871200000,
+      publicEnd: 1683579600000,
       memberCollections: [
         '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5', // FM
         '0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29', // Valentine

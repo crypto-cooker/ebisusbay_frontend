@@ -111,26 +111,17 @@ class BunnyKitBuilder {
   }
 
   build() {
-    const url = new URL(this.url);
+    // First build the ImageKit URL
+    let url = this.ikBuilder.build();
 
-    // ImageKit
-    for (const appendage of this.ikBuilder.appendages) {
-      url.pathname += `/${appendage}`;
-    }
-    if (Object.entries(this.ikBuilder.trValues).length > 0) {
-      const mapped = Object.entries(this.ikBuilder.trValues).map(([k,v]) => `${k}-${v}`);
-      url.searchParams.set('tr', mapped.join());
-    }
-
-    // Bunny
-    const bunnyExclusions = url.pathname.includes('ik-thumbnail.jpg') || this.ikBuilder.appendages.length;
-    if (!bunnyExclusions && this.bunnyBuilder.params.toString() !== '') {
-      for (const [key, value] of this.bunnyBuilder.params.entries()) {
-        url.searchParams.set(key, value);
-      }
+    // Then build the Bunny URL
+    // Bunny params will not work if video appendages from imagekit are present
+    const excludeBunny = this.ikBuilder.hasGifToMp4Appendage();
+    if (!excludeBunny) {
+      url = this.bunnyBuilder.build(url.toString());
     }
 
-    return url.toString();
+    return url;
   }
 
   private specialTransform(url: string) {

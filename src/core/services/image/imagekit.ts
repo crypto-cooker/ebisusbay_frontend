@@ -18,16 +18,19 @@ class ImageKitProvider implements CdnProvider {
   thumbnail() {
     const kit = ImageKitBuilder.from(this.url);
 
-    let useThumb = false;
-    if (!this.hasFileExtension(kit.url)) {
-      kit.addAppendage('ik-video.mp4');
-      useThumb = true;
-    }
+    // Deprecated, don't think IK needs double transforms anymore
+    // let useThumb = false;
+    // if (!this.hasFileExtension(kit.url)) {
+    //   kit.addAppendage('ik-video.mp4');
+    //   useThumb = true;
+    // }
+    //
+    // const location = new URL(kit.url);
+    // if(useThumb || location.pathname.includes('.')){
+    //   kit.addAppendage('ik-thumbnail.jpg');
+    // }
 
-    const location = new URL(kit.url);
-    if(useThumb || location.pathname.includes('.')){
-      kit.addAppendage('ik-thumbnail.jpg');
-    }
+    kit.addAppendage('ik-thumbnail.jpg');
 
     return kit.build();
   }
@@ -86,12 +89,6 @@ class ImageKitProvider implements CdnProvider {
     if(options.named) kit.setNamed(options.named);
 
     return kit.build();
-  }
-
-  private appendMp4Extension(url: string | URL) {
-    url = new URL(url);
-    url.pathname = `${url.pathname}/ik-video.mp4`;
-    return url.toString();
   }
 
   private hasFileExtension(url: string) {
@@ -169,7 +166,10 @@ export class ImageKitBuilder {
       newUrl.pathname += `/${appendage}`;
     }
 
-    if (Object.entries(this.trValues).length > 0) {
+    // URLs can't accept any params if ik-video.mp4 is in the path
+    const trExclusions = url.includes('ik-gif-video.mp4');
+
+    if (!trExclusions && Object.entries(this.trValues).length > 0) {
       const mapped = Object.entries(this.trValues).map(([k,v]) => `${k}-${v}`);
       newUrl.searchParams.set('tr', mapped.join());
     }
@@ -189,5 +189,9 @@ export class ImageKitBuilder {
     }
 
     return url;
+  }
+
+  hasGifToMp4Appendage() {
+    return this.appendages.includes('ik-gif-video.mp4');
   }
 }
