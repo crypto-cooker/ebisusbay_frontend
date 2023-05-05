@@ -19768,7 +19768,7 @@
       "multiToken": false,
       "address": "0x482eBe3063ED2d2281AAfec31941705787432A1A",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Time Machine 102 : The Travelers is a 5000 piece collection of AI generated and traited images of characters beginning their journeys through time. This is the second generation from the Time Machine team, with even bigger payouts than 101s from the Time Ecosystem.",
         "avatar": "/img/collections/time-machine-102-the-travellers/avatar.webp",
