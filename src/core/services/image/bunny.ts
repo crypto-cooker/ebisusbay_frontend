@@ -44,7 +44,7 @@ class BunnyCdnProvider implements CdnProvider {
   nftCard(): string {
     return BunnyBuilder.from(this.url)
       .setWidth(350)
-      .setHeight(350)
+      // .setHeight(350) // doesn't have an equivalent at_max
       .build();
   }
 
