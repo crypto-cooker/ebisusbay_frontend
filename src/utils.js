@@ -542,6 +542,10 @@ export const isCronosGorillaBusinessCollection = (address) => {
   return isCollection(address, 'cronos-gorilla-business', '0xc843f18d5605654391e7eDBEa250f6838C3e8936');
 };
 
+export const isCroSwapQuartermastersCollection = (address) => {
+  return isCollection(address, 'croswap-quartermasters', '0x333580e4B59E74243451c531c29121c02F8E3102');
+};
+
 export const isBundle = (addressOrSlug) => {
   return caseInsensitiveCompare(addressOrSlug, config.contracts.bundle) || addressOrSlug === 'nft-bundles';
 }
