@@ -28,10 +28,11 @@ import {attack, getFactionsOwned} from "@src/core/api/RyoshiDynastiesAPICalls";
 import { createSuccessfulTransactionToastContent } from '@src/utils';
 
 //contracts
-import {Contract} from "ethers";
+import {Contract, ethers, BigNumber} from "ethers";
 import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
 import Battlefield from "@src/Contracts/Battlefield.json";
+import Resources from "@src/Contracts/Resources.json";
 
 const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
@@ -58,6 +59,10 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   //alerts
   const [showAlert, setShowAlert] = useState(false)
   const [alertMessage, setAlertMessage] = useState("")
+
+  //contract interactions
+  const [koban, setKoban] = useState(0);
+
   
   const [dataForm, setDataForm] = useState({
     attackersFaction: "" ?? null,
@@ -91,6 +96,13 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
       }
     }
   }
+  const CheckForApproval = async () => {
+    const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+    const resourceContract = new Contract(config.contracts.resources, Resources, readProvider);
+    const tx = await resourceContract.isApprovedForAll(user.address.toLowerCase(), config.contracts.battleField);
+    return tx;
+  }
+
   const RealAttack = async () => {
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
@@ -99,21 +111,34 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
     }
     if (signatureInStorage) {
       try {
+
+        //check for approval
+        const approved = await CheckForApproval();
+
+        if(koban < 50)
+        {
+          toast.error("You need at least 50 Koban to attack")
+          return;
+        }
+
+        if(!approved){
+          toast.error("Please approve the contract to spend your resources")
+          
+          const resourceContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
+          const tx = await resourceContract.setApprovalForAll(config.contracts.battleField, true);
+          const receipt = await tx.wait();
+          toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+        }
+
         const controlPointId = controlPoint.id;
         const attackerFactionId = controlPoint.leaderBoard.filter(faction => faction.name === dataForm.attackersFaction)[0].id;
         const defenderFactionId = controlPoint.leaderBoard.filter(faction => faction.name === dataForm.defenderFaction)[0].id;
-        // console.log("controlPoint.id", controlPoint.id)
-        // console.log("attackerFactionId", attackerFactionId)
-        // console.log("defenderFactionId", defenderFactionId)
-        // console.log("attackerTroops", Number(attackerTroops))
+
         const data = await attack(user.address.toLowerCase(), signatureInStorage, Number(attackerTroops), 
           controlPointId, attackerFactionId, defenderFactionId);
         
-        console.log("data", data)
-        //Signature, timestamp and attackId are returned
         const timestamp = Number(data.data.data.timestampInSeconds);
         const attacker = data.data.data.attacker;
-        // var b = attacker.replace(/'/g, '"');
         const attackId = Number(data.data.data.attackId);
         const troops = Number(data.data.data.troops);
         const sig = data.data.data.signature;
@@ -122,62 +147,59 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
                           attacker: attacker, 
                           attackId: attackId, 
                           quantity: troops};
-        //add check for https://testnet.cronoscan.com/address/0x878a7d4ea252cb8317e8e0dd0d29ca6e03d94b7c#writeProxyContract
 
-        // console.log(config.contracts.attack)1683217043
-        // console.log(AttackContract)//[1683217574, "0x2bc60de5833c7c7279427657ef839c06212a38bf", 59, 2]
-        //0x2bc60De5833C7C7279427657ef839c06212A38bF
-
-        const attackContract = new Contract(config.contracts.attack, Battlefield, user.provider.getSigner());
-
-        console.log("attackTuple", attackTuple)
-        console.log("signatureInStorage", signatureInStorage)
-
+        const attackContract = new Contract(config.contracts.battleField, Battlefield, user.provider.getSigner());
         const tx = await attackContract.attackFaction(attackTuple, sig);
         const receipt = await tx.wait();
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
 
-        console.log('Attack completed')
-
-
-        var attackersAlive = Number(attackerTroops);
-        var attackersSlain = 0;
-        var defendersSlain = 0;
-        var outcomeLog = ""
-        var attackerDice = data.data.data[0].diceScores1;
-        var defenderDice = data.data.data[0].diceScores2;
-
-        for(var i = 0; i < attackerDice.length; i++)
-        {
-          if(attackerDice[i] <= defenderDice[i])
-          {
-            attackersAlive--;
-            attackersSlain++;
-            console.log("attacker dies")
-          }
-          else
-          {
-            defendersSlain++;
-          }
-
-          outcomeLog += "Attacker: " + attackerDice[i] + " Defender: " + defenderDice[i]+"<br>";
-        }
-
-        battleLogText.current.innerHTML = outcomeLog;
-        battleOutcome.current.textContent = attackersAlive>0 ? "You won!" : "You lost!";
-        attackerOutcome.current.textContent = dataForm.attackersFaction+" lost "+attackersSlain+"/"+ Number(attackerTroops)+" troops";
-        defenderOutcome.current.textContent = dataForm.defenderFaction+" lost "+defendersSlain+"/"+defenderTroops+" troops";
-        
-        setupDice(attackerDice, defenderDice);
-
-        attackSetUp.current.style.display = "none"
-        attackConclusion.current.style.display = "block"
+        console.log("receipt", receipt);
+        ShowAttackConclusion();
 
       } catch (error) {
-        console.log(error)
+        if(error.response !== undefined)
+        {
+          console.log(error)
+          toast.error(error.response.data.error.metadata.message)
+        }
+        
         toast.error(error);
       }
     }
+  }
+  function ShowAttackConclusion(){
+    var attackersAlive = Number(attackerTroops);
+    var attackersSlain = 0;
+    var defendersSlain = 0;
+    var outcomeLog = ""
+    var attackerDice = data.data.data[0].diceScores1;
+    var defenderDice = data.data.data[0].diceScores2;
+
+    for(var i = 0; i < attackerDice.length; i++)
+    {
+      if(attackerDice[i] <= defenderDice[i])
+      {
+        attackersAlive--;
+        attackersSlain++;
+        console.log("attacker dies")
+      }
+      else
+      {
+        defendersSlain++;
+      }
+
+      outcomeLog += "Attacker: " + attackerDice[i] + " Defender: " + defenderDice[i]+"<br>";
+    }
+
+    battleLogText.current.innerHTML = outcomeLog;
+    battleOutcome.current.textContent = attackersAlive>0 ? "You won!" : "You lost!";
+    attackerOutcome.current.textContent = dataForm.attackersFaction+" lost "+attackersSlain+"/"+ Number(attackerTroops)+" troops";
+    defenderOutcome.current.textContent = dataForm.defenderFaction+" lost "+defendersSlain+"/"+defenderTroops+" troops";
+    
+    setupDice(attackerDice, defenderDice);
+
+    attackSetUp.current.style.display = "none"
+    attackConclusion.current.style.display = "block"
   }
   function Battle()
   {
@@ -236,13 +258,23 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
       <option value={faction.name} key={index}>{faction.name}</option>)
       ))
   }
+  const CheckForKoban = async () => {
+    console.log("CheckForKoban")
+    const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+    const resourceContract = new Contract(config.contracts.resources, Resources, readProvider);
+    const tx = await resourceContract.balanceOf(user.address.toLowerCase(), 1);
+    setKoban(Number(ethers.utils.hexValue(BigNumber.from(tx))));
+  }
 
   useEffect(() => {
     // console.log("controlPoint", controlPoint)
     GetPlayerOwnedFactions();
     if(controlPoint.leaderBoard !== undefined) {
+      //check if faction totalTroops > 0
       setDefenderOptions(controlPoint.leaderBoard.map((faction, index) => (
-        <option value={faction.name} key={index}>{faction.name}</option>)))
+        faction.totalTroops > 0 ?
+        <option value={faction.name} key={index}>{faction.name}</option>
+        : null)))
     }
   }, [controlPoint])
 
@@ -277,6 +309,10 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   useEffect(() => {
     console.log("opened attack tap")
     refreshControlPoint();
+  }, [])
+
+  useEffect(() => {
+    CheckForKoban();
   }, [])
 
   const [att, setAtt] = useState([])
@@ -365,6 +401,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
             </Alert>)}
           </Box>
         </Flex>
+        Your Koban: {koban}
         <div style={{ display: 'flex', marginTop: '16px' }}>
           <Button type="legacy"
             onClick={Battle}
@@ -372,7 +409,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
             // isLoading={executingCreateListing}
             // disabled={executingCreateListing}
             className="flex-fill">
-            Attack
+            Attack (Requires 50 Koban)
           </Button>
         </div>
       </div>
