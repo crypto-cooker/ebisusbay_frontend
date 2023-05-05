@@ -152,7 +152,7 @@ const EmergencyWithdraw = ({ isOpen, onClose}) => {
             bg='#272523'
             h='55px'
             px={10}
-            fontSize={{base: 'lg', sm: '2xl', md: '3xl'}}
+            fontSize={{base: 'lg', sm: '2xl', md: '2xl'}}
             my='auto'
             justify='center'
             direction='column'

@@ -34,6 +34,12 @@ import {toast} from "react-toastify";
 import Battlefield from "@src/Contracts/Battlefield.json";
 import Resources from "@src/Contracts/Resources.json";
 
+//sockets
+// import { socket } from '@src/socket';
+// import { ConnectionState } from 'src/Components/BattleBay/Areas/sockets/ConnectionState';
+// import { ConnectionManager } from 'src/Components/BattleBay/Areas/sockets/ConnectionManager.js';
+// import { Events } from 'src/Components/BattleBay/Areas/sockets/Events.js';
+
 const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
   const config = appConfig();
@@ -62,6 +68,10 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
   //contract interactions
   const [koban, setKoban] = useState(0);
+
+  //sockets
+  // const [isConnected, setIsConnected] = useState(socket.connected);
+  // const [fooEvents, setFooEvents] = useState([]);
 
   
   const [dataForm, setDataForm] = useState({
@@ -115,8 +125,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
         //check for approval
         const approved = await CheckForApproval();
 
-        if(koban < 50)
-        {
+        if(koban < 50){
           toast.error("You need at least 50 Koban to attack")
           return;
         }
@@ -136,6 +145,8 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
         const data = await attack(user.address.toLowerCase(), signatureInStorage, Number(attackerTroops), 
           controlPointId, attackerFactionId, defenderFactionId);
+
+        console.log("data", data);
         
         const timestamp = Number(data.data.data.timestampInSeconds);
         const attacker = data.data.data.attacker;
@@ -154,7 +165,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
 
         console.log("receipt", receipt);
-        ShowAttackConclusion();
+        // ShowAttackConclusion();
 
       } catch (error) {
         if(error.response !== undefined)
@@ -315,6 +326,31 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
     CheckForKoban();
   }, [])
 
+  useEffect(() => {
+    const websocket = new WebSocket('wss://localhost:4000/socket/ryoshi-dynasties/battles?walletAddress='+user.address.toLowerCase())
+    
+    // Connection opened
+    websocket.addEventListener("open", (event) => {
+      websocket.send("Hello Server!");
+    });
+    
+    // websocket.onopen = () => {
+    //   console.log('connected')
+    // }
+    // websocket.onmessage = (event) => {
+    //   const data = JSON.parse(event.data);
+    //   if (data.event === 'BATTLE_ATTACK') {
+    //     console.log('BATTLE_ATTACK', data)
+    //     // logic here
+    //   }
+    // }
+    // return () => {
+    //   if (websocket.readyState === 1) {
+    //     websocket.close()
+    //   }
+    // }
+  }, []);
+
   const [att, setAtt] = useState([])
   const [def, setDef] = useState([])
   function setupDice(attackerDice, defenderDice) {
@@ -346,6 +382,10 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   return (
     <Flex flexDirection='column' textAlign='center' border={'1px solid white'} borderRadius={'10px'} justifyContent='space-around' padding='16px'>
       <div ref={attackSetUp} style={{ display: 'block'}}>
+      {/* <ConnectionState isConnected={ isConnected } />
+      <Events events={ fooEvents } />
+      <ConnectionManager /> */}
+
       <Box m='8px 24px 34px'>
         <p>
           If you are a faction owner, you will be able to attack other troops in the region with troops you have deployed
