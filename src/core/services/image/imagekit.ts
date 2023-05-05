@@ -169,7 +169,10 @@ export class ImageKitBuilder {
       newUrl.pathname += `/${appendage}`;
     }
 
-    if (Object.entries(this.trValues).length > 0) {
+    // URLs can't accept any params if ik-video.mp4 is in the path
+    const trExclusions = url.includes('ik-gif-video.mp4');
+
+    if (!trExclusions && Object.entries(this.trValues).length > 0) {
       const mapped = Object.entries(this.trValues).map(([k,v]) => `${k}-${v}`);
       newUrl.searchParams.set('tr', mapped.join());
     }

@@ -23,7 +23,7 @@ class ImageTranslator {
 
   static gif(url: string) {
     const translator = new ImageTranslator(url);
-    translator.provider = new BunnyKitProvider(ImageTranslator.remapUrl(url, config.urls.cdn.proxy));
+    translator.provider = new BunnyKitProvider(ImageTranslator.remapUrl(url, config.urls.cdn.bunnykit));
     return translator;
   }
 

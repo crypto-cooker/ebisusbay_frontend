@@ -103,15 +103,15 @@ export class BunnyBuilder {
   }
 
   build(url?: string): string {
-    if (!url && !this.url) return '';
-
-    let str = url ?? this.url;
+    if (!url) url = this.url;
+    if (!url) throw new Error('No url provided');
+    const newUrl = new URL(url!);
 
     if (this.params.toString() !== '') {
-      str += `?${this.params}`;
+      for (const [key, value] of this.params.entries()) {
+        newUrl.searchParams.set(key, value);
+      }
     }
-
-    const newUrl = new URL(str!);
 
     return newUrl.toString();
   }
