@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   Modal,
@@ -77,7 +77,7 @@ const DelegateForm = ({ isOpen, onClose, delegateMode, factions=[], troops, setT
         onClose();
       } catch (error) {
         console.log(error)
-        setAlertMessage("Action Failed: faction is not registered")
+        setAlertMessage("There was an issue delegating troops. Please try again later.")
         setShowAlert(true)
       }
     }
@@ -101,6 +101,13 @@ const DelegateForm = ({ isOpen, onClose, delegateMode, factions=[], troops, setT
     }
     onClose();
   }
+  useEffect(() => {
+    if(factions.length > 0)
+    {
+      setDataForm({...dataForm, faction: factions[0].name})
+      setFactionId(factions[0].id)
+    }
+  }, [factions])
   // console.log(factions)
 
   return (

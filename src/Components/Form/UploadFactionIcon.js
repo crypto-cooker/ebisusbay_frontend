@@ -6,6 +6,8 @@ import { deepValidation } from '../../helpers/validator';
 import UploadAssetFactionIcon from './UploadAssetFactionIcon';
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
+import { toast } from 'react-toastify';
+import { createSuccessfulTransactionToastContent } from '@src/utils';
 
 const UploadFactionIcon = ({
   value = [],
@@ -50,6 +52,7 @@ const UploadFactionIcon = ({
 
       } catch (error) {
         console.log(error)
+        toast.error("Icon too large, please use a 250x250 image")
       }
     }
   }
