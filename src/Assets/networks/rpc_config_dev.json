@@ -24753,8 +24753,8 @@
       "referral": false,
       "is1155": false,
       "published": false,
-      "complete": true,
-      "featured": false,
+      "complete": false,
+      "featured": true,
       "redirect": "https://furyquackgang.com/",
       "images": {
         "drop": "/img/drops/fury-quack-gang/drop.webp",
