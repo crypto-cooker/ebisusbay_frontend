@@ -158,7 +158,7 @@ export class ImageKitBuilder {
 
   build(url?: string): string {
     if (!url) url = this.url;
-    if (!url) throw new Error('No url provided');
+    if (!url) return '';
 
     const newUrl = new URL(url!);
 
