@@ -142,9 +142,20 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
         const controlPointId = controlPoint.id;
         const attackerFactionId = controlPoint.leaderBoard.filter(faction => faction.name === dataForm.attackersFaction)[0].id;
         const defenderFactionId = controlPoint.leaderBoard.filter(faction => faction.name === dataForm.defenderFaction)[0].id;
+        
+        console.log("controlPointId", controlPointId);
+        // console.log("attackerFactionId", attackerFactionId + " " + dataForm.attackersFaction);
+        // console.log("defenderFactionId", defenderFactionId + " " + dataForm.defenderFaction);
+        // console.log("attackerTroops", attackerTroops);
+        // console.log("signatureInStorage", signatureInStorage);
 
-        const data = await attack(user.address.toLowerCase(), signatureInStorage, Number(attackerTroops), 
-          controlPointId, attackerFactionId, defenderFactionId);
+        const data = await attack(
+          user.address.toLowerCase(), 
+          signatureInStorage, 
+          Number(attackerTroops), 
+          controlPointId, 
+          attackerFactionId, 
+          defenderFactionId);
 
         console.log("data", data);
         
@@ -168,13 +179,13 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
         // ShowAttackConclusion();
 
       } catch (error) {
-        if(error.response !== undefined)
-        {
+        if(error.response !== undefined) {
           console.log(error)
           toast.error(error.response.data.error.metadata.message)
         }
-        
-        toast.error(error);
+        else {
+          toast.error(error);
+        }
       }
     }
   }
@@ -327,28 +338,23 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   }, [])
 
   useEffect(() => {
-    const websocket = new WebSocket('wss://localhost:4000/socket/ryoshi-dynasties/battles?walletAddress='+user.address.toLowerCase())
+    const websocket = new WebSocket('wss://testcms.ebisusbay.biz/socket/ryoshi-dynasties/battles?walletAddress='+user.address.toLowerCase())
     
-    // Connection opened
-    websocket.addEventListener("open", (event) => {
-      websocket.send("Hello Server!");
-    });
-    
-    // websocket.onopen = () => {
-    //   console.log('connected')
-    // }
-    // websocket.onmessage = (event) => {
-    //   const data = JSON.parse(event.data);
-    //   if (data.event === 'BATTLE_ATTACK') {
-    //     console.log('BATTLE_ATTACK', data)
-    //     // logic here
-    //   }
-    // }
-    // return () => {
-    //   if (websocket.readyState === 1) {
-    //     websocket.close()
-    //   }
-    // }
+    websocket.onopen = () => {
+      console.log('connected')
+    }
+    websocket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      if (data.event === 'BATTLE_ATTACK') {
+        console.log('BATTLE_ATTACK', data)
+        // logic here
+      }  
+    }
+    return () => {
+      if (websocket.readyState === 1) {
+        websocket.close()
+      }
+    }
   }, []);
 
   const [att, setAtt] = useState([])
