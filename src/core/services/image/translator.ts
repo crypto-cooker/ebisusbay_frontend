@@ -117,6 +117,7 @@ class ImageTranslator {
     // Put urls with paths above base urls to avoid path nesting
     const remappableDomains: string[] = [
       'https://cdn.ebisusbay.com/storage/',
+      'https://ipfs.io/ipfs/',
       config.urls.cdn.storage,
       config.urls.cdn.files,
       config.urls.cdn.proxy,
@@ -132,6 +133,8 @@ class ImageTranslator {
         return fromDomain.replace(domain, toDomain);
       }
     }
+
+    return fromDomain;
   }
 }
 

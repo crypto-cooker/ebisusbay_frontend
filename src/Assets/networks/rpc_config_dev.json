@@ -20309,6 +20309,32 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "ThirteenthEvil Dark Joker",
+      "slug": "thirteenth-evil-dark-joker",
+      "multiToken": false,
+      "address": "0x2aAD8785D0A211386584A95554D3e029Bb77bC3f",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Dark Joker is a collection of 3113 hand-drawn unique and limited NFTs. Dark Joker is Annabelle's older brother. Mint is Live: https://13th-evil.netlify.app/  There are only 31 pieces of Winged Dark Jokers in the collection! The rarest item is a DevilCat of which there are only 17 pieces! Guide: https://thirteenthevil.gitbook.io/guide/",
+        "avatar": "/img/collections/thirteenth-evil-dark-joker/avatar.webp",
+        "banner": "/img/collections/thirteenth-evil-dark-joker/banner.webp",
+        "card": "/img/collections/thirteenth-evil-dark-joker/card.webp",
+        "website": "https://13th-evil.netlify.app",
+        "twitter": "https://twitter.com/ThirteenthEvil",
+        "discord": "https://discord.gg/sBJcsPrcRq",
+        "telegram": "https://t.me/AnnabelleCoin",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
