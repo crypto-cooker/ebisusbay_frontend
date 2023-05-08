@@ -5,7 +5,7 @@ import Link from 'next/link';
 import {keyframes} from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
 import styled, {createGlobalStyle} from 'styled-components';
-import {faFire} from '@fortawesome/free-solid-svg-icons';
+import {faBullhorn, faFire} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import ListingCollection from '../src/Components/components/ListingCollection';
@@ -24,6 +24,7 @@ import ads from "@src/core/data/ads.json";
 import ImageService from "@src/core/services/image";
 import {useAppSelector} from "@src/Store/hooks";
 import TokenSale from "@src/components-v2/feature/ryoshi-dynasties/token-sale";
+import Countdown from "react-countdown";
 
 const fadeInUp = keyframes`
   0% {
@@ -59,11 +60,17 @@ const GlobalStyles = createGlobalStyle`
     font-size: 36px;
     margin-bottom: 0px;
   }
-  
+
   .promo {
     padding-bottom: 8px;
-    background: #ffee99;
-    color: #555;
+    background: #15B619;
+    color: #fff;
+    animation: mymove 6s infinite alternate-reverse;
+  }
+
+  @keyframes mymove {
+    from {background-color: #15B619;}
+    to {background-color: #b63d15;}
   }
 
   @media only screen and (max-width: 1199.98px) {
@@ -244,14 +251,14 @@ const Home = () => {
         <link rel="canonical" key="link_canonical" href={appConfig('urls.app')} />
       </Head>
       <GlobalStyles />
-      {/*<section className="promo">*/}
-      {/*  <div className="d-flex justify-content-center px-3">*/}
-      {/*    <p className="my-auto me-3">*/}
-      {/*      <FontAwesomeIcon icon={faBullhorn} /> The Cronos chain is currently experiencing intermittent issues*/}
-      {/*      preventing successful transactions. For Metamask users, please try temporarily changing your RPC URL*/}
-      {/*    </p>*/}
-      {/*  </div>*/}
-      {/*</section>*/}
+      <section className="promo">
+        <div className="d-flex justify-content-center px-3">
+          <p className="my-auto me-3">
+            <FontAwesomeIcon icon={faBullhorn} /> FORTUNE Token presale ends in <Countdown date={1683586800000} />.{' '}
+            <Link href={'ryoshi-dynasties/token-sale'} style={{fontWeight: 'bold'}}>Enter sale now</Link>
+          </p>
+        </div>
+      </section>
       <TokenSale />
       <Jumbotron.Host isDark={userTheme === 'dark'}>
         {!mobile && <div className="container">{JumbotronData()}</div>}
