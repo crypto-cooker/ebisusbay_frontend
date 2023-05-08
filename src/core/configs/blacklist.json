@@ -1,19 +1,6 @@
 [
   {
     "users": [
-      "0x05e6c177ddaebfb84882dad4d684d136f4d2a9ba"
-    ],
-    "tokens": [
-      {
-        "slug": "mad-crow",
-        "address": "0x65AB0251d29c9C473c8d01BFfa2966F891fB1181",
-        "ids": [250]
-      }
-    ],
-    "reason": "Scammed"
-  },
-  {
-    "users": [
       "0x0df0af284c6d7635cad315d0165433aa07805836",
       "0x988c29a4f0296dfb6ef7528dd4fdf43b21ee3c81"
     ],
