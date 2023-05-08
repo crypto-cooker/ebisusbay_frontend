@@ -251,14 +251,14 @@ const Home = () => {
         <link rel="canonical" key="link_canonical" href={appConfig('urls.app')} />
       </Head>
       <GlobalStyles />
-      <section className="promo">
-        <div className="d-flex justify-content-center px-3">
-          <p className="my-auto me-3">
-            <FontAwesomeIcon icon={faBullhorn} /> FORTUNE Token presale ends in <Countdown date={1683586800000} />.{' '}
-            <Link href={'ryoshi-dynasties/token-sale'} style={{fontWeight: 'bold'}}>Enter sale now</Link>
-          </p>
-        </div>
-      </section>
+      {/*<section className="promo">*/}
+      {/*  <div className="d-flex justify-content-center px-3">*/}
+      {/*    <p className="my-auto me-3">*/}
+      {/*      <FontAwesomeIcon icon={faBullhorn} /> FORTUNE Token presale ends in <Countdown date={1683586800000} />.{' '}*/}
+      {/*      <Link href={'ryoshi-dynasties/token-sale'} style={{fontWeight: 'bold'}}>Enter sale now</Link>*/}
+      {/*    </p>*/}
+      {/*  </div>*/}
+      {/*</section>*/}
       <TokenSale />
       <Jumbotron.Host isDark={userTheme === 'dark'}>
         {!mobile && <div className="container">{JumbotronData()}</div>}
