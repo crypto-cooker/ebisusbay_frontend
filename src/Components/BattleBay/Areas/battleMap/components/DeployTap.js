@@ -165,7 +165,7 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
   }, [])
 
   return (
-    <Flex flexDirection='column' textAlign='center' border={'1px solid white'} borderRadius={'10px'} justifyContent='space-around' padding='16px'>
+    <Flex flexDirection='column' textAlign='center'justifyContent='space-around'>
       
       <div className="taps-buttons-group" >
         {/* <button type="button" className={`smallBtn ${currentTab === tabs.deploy ? 'selected' : ''}`} onClick={() => setCurrentTab(tabs.deploy)}>Deploy</button> */}

@@ -18,6 +18,9 @@ import {
   Grid,
   GridItem,
   VStack,
+  Center,
+  Text,
+  Spacer,
 } from "@chakra-ui/react";
 
 import Button from "@src/Components/components/Button";
@@ -26,6 +29,7 @@ import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 import {attack, getFactionsOwned} from "@src/core/api/RyoshiDynastiesAPICalls";
 import { createSuccessfulTransactionToastContent } from '@src/utils';
+import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 
 //contracts
 import {Contract, ethers, BigNumber} from "ethers";
@@ -56,7 +60,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
   const [defenderTroops, setDefenderTroops] = useState(0);
   const [attackerTroops, setAttackerTroops] = useState(0);
-  const [attackerTroopsAvailable, setAttackerTroopsAvailable] = useState(0);
+  const [attackerTroopsAvailable, setAttackerTroopsAvailable] = useState(1);
   const [attackerOptions, setAttackerOptions] = useState([]);
   const [defenderOptions, setDefenderOptions] = useState([]);
 
@@ -68,6 +72,8 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
   //contract interactions
   const [koban, setKoban] = useState(0);
+  const [isExecuting, setIsExecuting] = useState(false);
+  const [executingLabel, setExecutingLabel] = useState('Attacking...');
 
   //sockets
   // const [isConnected, setIsConnected] = useState(socket.connected);
@@ -80,10 +86,10 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
     defenderFaction: "" ?? null,
   })
 
-  const onChangeInputsAttacker = (e) => {
-    setDataForm({...dataForm, [e.target.name]: e.target.value})
-    setAttackerTroopsAvailable(controlPoint.leaderBoard.filter(faction => faction.name === e.target.value)[0].totalTroops);
-  }
+  // const onChangeInputsAttacker = (e) => {
+  //   setDataForm({...dataForm, [e.target.name]: e.target.value})
+  //   setAttackerTroopsAvailable(controlPoint.leaderBoard.filter(faction => faction.name === e.target.value)[0].totalTroops);
+  // }
   const onChangeInputsDefender = (e) => {
     setDataForm({...dataForm, [e.target.name]: e.target.value})
     setDefenderTroops(controlPoint.leaderBoard.filter(faction => faction.name === e.target.value)[0].totalTroops);
@@ -96,7 +102,6 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
     }
     if (signatureInStorage) {
       try {
-        // const res = await getProfileId(user.address.toLowerCase(), signatureInStorage);
         const data = await getFactionsOwned(user.address.toLowerCase(), signatureInStorage);
         const playerFactions = data.data.data;
         // console.log('playerFactions', playerFactions);
@@ -114,6 +119,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   }
 
   const RealAttack = async () => {
+    setIsExecuting(true);
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
@@ -132,7 +138,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
         if(!approved){
           toast.error("Please approve the contract to spend your resources")
-          
+          setExecutingLabel('Approving contract...');
           const resourceContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
           const tx = await resourceContract.setApprovalForAll(config.contracts.battleField, true);
           const receipt = await tx.wait();
@@ -143,12 +149,13 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
         const attackerFactionId = controlPoint.leaderBoard.filter(faction => faction.name === dataForm.attackersFaction)[0].id;
         const defenderFactionId = controlPoint.leaderBoard.filter(faction => faction.name === dataForm.defenderFaction)[0].id;
         
-        console.log("controlPointId", controlPointId);
+        // console.log("controlPointId", controlPointId);
         // console.log("attackerFactionId", attackerFactionId + " " + dataForm.attackersFaction);
         // console.log("defenderFactionId", defenderFactionId + " " + dataForm.defenderFaction);
         // console.log("attackerTroops", attackerTroops);
         // console.log("signatureInStorage", signatureInStorage);
 
+        setExecutingLabel('Attacking...');
         const data = await attack(
           user.address.toLowerCase(), 
           signatureInStorage, 
@@ -187,7 +194,8 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
           toast.error(error);
         }
       }
-    }
+      setIsExecuting(false);
+  }
   }
   function ShowAttackConclusion(){
     var attackersAlive = Number(attackerTroops);
@@ -223,18 +231,16 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
     attackSetUp.current.style.display = "none"
     attackConclusion.current.style.display = "block"
   }
-  function Battle()
+  function PreBattleChecks()
   {
     setShowAlert(false)
 
-    if(getAttackerTroopsInRegion() <= 1)
+    if(attackerTroopsAvailable <= 1)
     {
       setAlertMessage("You must have at least 2 troops to attack")
       setShowAlert(true)
       return;
     }
-
-    getDefenderTroopsInRegion(dataForm.defenderFaction);
 
     if(defenderTroops <= 0)
     {
@@ -250,7 +256,6 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
       return;
     }
 
-    // FakeAttack(attackerTroops, defenderTroops)
     RealAttack();
   }
   function Reset()
@@ -386,60 +391,78 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   }
 
   return (
-    <Flex flexDirection='column' textAlign='center' border={'1px solid white'} borderRadius={'10px'} justifyContent='space-around' padding='16px'>
-      <div ref={attackSetUp} style={{ display: 'block'}}>
-      {/* <ConnectionState isConnected={ isConnected } />
-      <Events events={ fooEvents } />
-      <ConnectionManager /> */}
+    <Flex flexDirection='column' textAlign='center' justifyContent='space-around' >
 
-      <Box m='8px 24px 34px'>
-        <p>
-          If you are a faction owner, you will be able to attack other troops in the region with troops you have deployed
-        </p>
-      </Box>
-      <Flex gap='16px'>
-        <Box>
-          <p>Attackers</p>
-          <FormControl mb={'24px'}>
-            <FormLabel>Attacker Faction:</FormLabel>
-            <Select name='attackersFaction' me={2} value={dataForm.attackersFaction} onChange={onChangeInputsAttacker}>
-              {attackerOptions}
-            </Select>
-            <FormLabel>Troops available: {attackerTroopsAvailable}</FormLabel>
-          </FormControl>
+      <Center>
+        <Flex justifyContent='center' w='90%' >
+          <Text textAlign='center' fontSize={'14px'}>Faction owners can use deployed troops to attack other factions</Text>
+        </Flex>
+      </Center>
 
-          <FormControl>
-            <FormLabel>Quantity:</FormLabel>
-            <NumberInput defaultValue={0} min={0} max={3} name="quantity" 
-              onChange={handleChange}
-              value={attackerTroops} type ='number'>
-             <NumberInputField />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-          </FormControl>
-        </Box>
+      <Spacer m='4' />
 
-        <Box>
-          <p>Defenders</p>
-          <FormControl mb={'24px'}>
-            <FormLabel>Select A Faction to attack:</FormLabel>
-            <Select name='defenderFaction' me={2} value={dataForm.defenderFaction} onChange={onChangeInputsDefender}>
+      <Center>
+        <Flex justifyContent='space-between' w='90%' >
+          <Text textAlign='left' fontSize={'16px'}> Select a Faction to attack:</Text>
+          <Text textAlign='right' fontSize={'16px'}>Attacker Strength (1-3):</Text>
+        </Flex>
+      </Center>
+
+        <Center>
+        <Flex justifyContent='space-between' w='90%' >
+            <Select 
+              name='defenderFaction'
+              backgroundColor='#292626'
+              w='40%' 
+              me={2} 
+              value={dataForm.defenderFaction} 
+              onChange={onChangeInputsDefender}>
               {defenderOptions}
             </Select>
-            <FormLabel>Troops available: {defenderTroops}</FormLabel>
-          </FormControl>
-        </Box>
-      </Flex>
 
-      <div title="When attacking, a D6 roll is made for both the attacker and the defender. 
-            The lower roll (ties going to defender) loses a troop. This continues until one 
-              side has run out of troops">How are Attacks Calculated? (Hover for info)</div>
+            <NumberInput 
+              align='right'
+              defaultValue={1} 
+              min={1} 
+              max={3} 
+              name="quantity" 
+              w='35%'
+              onChange={handleChange}
+              value={attackerTroops} 
+              type ='number'
+              bgColor='#292626'
+              borderRadius='10px'
+              >
+          <NumberInputField />
+          <NumberInputStepper>
+            <NumberIncrementStepper />
+            <NumberDecrementStepper />
+          </NumberInputStepper>
+        </NumberInput>
+        </Flex>
+      </Center>
+     
+      <Spacer m='4' />
 
-        <Flex justify={"center"} align={"center"} style={{ marginTop: '16px' }}>
-          <Box p='3'>
+      <Center>
+        <Flex justifyContent='space-between' w='90%' >
+          <Box>
+            <Text textAlign='left' fontSize={'24px'}>{attackerOptions}</Text>
+            <Text textAlign='left' fontSize={'16px'}>Troops deployed: {attackerTroopsAvailable}</Text>
+            <Text textAlign='left' fontSize={'16px'}>Attack Strength: {attackerTroops}</Text>
+          </Box>
+          
+          <Text textAlign='left' fontSize={'16px'}>VS</Text>
+
+          <Box>
+            <Text textAlign='right' fontSize={'24px'}>{dataForm.defenderFaction}</Text>
+            <Text textAlign='right' fontSize={'16px'}>Troops deployed: {defenderTroops}</Text>
+          </Box>
+        </Flex>
+      </Center>
+
+        <Flex justify={"center"} align={"center"} >
+          <Box p='1'>
             {showAlert && (
             <Alert status='error'>
               <AlertIcon />
@@ -447,18 +470,40 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
             </Alert>)}
           </Box>
         </Flex>
-        Your Koban: {koban}
-        <div style={{ display: 'flex', marginTop: '16px' }}>
-          <Button type="legacy"
-            onClick={Battle}
-            // onClick={processCreateListingRequest}
-            // isLoading={executingCreateListing}
-            // disabled={executingCreateListing}
-            className="flex-fill">
-            Attack (Requires 50 Koban)
-          </Button>
-        </div>
-      </div>
+        
+        <Text fontSize={'14px'}>Costs 50 $Koban</Text>
+
+        <Flex alignContent={'center'} justifyContent={'center'}>
+        <Box
+              ps='20px'>
+              <RdButton
+                w='200px'
+                fontSize={{base: 'xl', sm: '2xl'}}
+                stickyIcon={true}
+                onClick={() => PreBattleChecks()}
+                isLoading={isExecuting}
+                disabled={isExecuting}
+                marginTop='2'
+                marginBottom='2'
+              >
+                {user.address ? (
+                  <>{isExecuting ? executingLabel : 'Attack'}</>
+                ) : (
+                  <>Connect</>
+                )}
+              </RdButton>
+            </Box>
+        </Flex>
+
+
+        <Center>
+          <Flex justifyContent='space-between' w='90%' >
+            <Text fontSize={'12px'}>Your $Koban: {koban}</Text>
+            <Text fontSize={'12px'} title="When attacking, a D6 roll is made for both the attacker and the defender. 
+                The lower roll (ties going to defender) loses a troop. This continues until one 
+                  side has run out of troops">How are Attacks Calculated? (Hover for info)</Text>
+          </Flex>
+        </Center>
 
       <div ref={attackConclusion} style={{ display: 'none'}}>
         <div class="container">

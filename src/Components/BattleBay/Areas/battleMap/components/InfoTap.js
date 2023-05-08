@@ -56,7 +56,7 @@ const InfoTap = ({onClose, controlPoint=[], refreshControlPoint}) => {
     
     {isLoaded ? (
       <>
-      <Flex flexDirection='column' textAlign='center' border={'1px solid white'} borderRadius={'10px'} justifyContent='space-around'>
+      <Flex flexDirection='column' textAlign='center' justifyContent='space-around'>
       <TableContainer>
         <Table size='m'>
           <Thead>
@@ -81,7 +81,7 @@ const InfoTap = ({onClose, controlPoint=[], refreshControlPoint}) => {
     </Flex>
     </> 
        ) : (
-        <Flex flexDirection='column' textAlign='center' border={'1px solid white'} borderRadius={'10px'} justifyContent='space-around'>
+        <Flex flexDirection='column' textAlign='center' justifyContent='space-around'>
         <TableContainer>
           <Table size='m'>
             <Thead>

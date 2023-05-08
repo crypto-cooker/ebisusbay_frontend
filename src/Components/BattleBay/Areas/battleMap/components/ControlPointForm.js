@@ -8,11 +8,16 @@ import {
   ModalHeader,
   ModalOverlay,
   Button,
-  Box
+  Box,
+  Flex,
+  Spacer,
+  Center
+
 } from "@chakra-ui/react"
 import { Spinner } from 'react-bootstrap';
 import localFont from "next/font/local";
 import {CloseIcon} from "@chakra-ui/icons";
+import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 
 import {
   DeployTap,
@@ -55,6 +60,7 @@ const ControlPointForm = ({ isOpen, onClose, controlPoint=[], factions, refreshC
       size='2xl'
       scrollBehavior='inside'
       isCentered
+      padding='2'
       >
       <ModalOverlay />
       <ModalContent
@@ -70,19 +76,11 @@ const ControlPointForm = ({ isOpen, onClose, controlPoint=[], factions, refreshC
         >
         {!isLoading ? (
           <>
-            <ModalHeader className="text-center">
+            {/* <ModalHeader className="text-center">
               {title}
-            </ModalHeader>
+            </ModalHeader> */}
             <ModalBody>
-              <div className="row mt-2 mt-sm-2">
-                <div className="">
-                  <div className="taps-buttons-group">
-                    <button type="button" className={`smallBtn ${currentTab === tabs.info ? 'selected' : ''}`} onClick={() => setCurrentTab(tabs.info)}>Info</button>
-                    <button type="button" className={`smallBtn ${currentTab === tabs.deploy ? 'selected' : ''}`} onClick={() => setCurrentTab(tabs.deploy)}>Deploy</button>
-                    <button type="button" className={`smallBtn ${currentTab === tabs.attack ? 'selected' : ''}`} onClick={() => setCurrentTab(tabs.attack)}>Attack</button>
-                  </div>
-
-                  <Box
+            <Box
       position='absolute'
       left={2}
       top={2}
@@ -109,6 +107,71 @@ const ControlPointForm = ({ isOpen, onClose, controlPoint=[], factions, refreshC
         <CloseIcon />
       </Button>
     </Box>
+            <Box
+        bg='#564D4A'
+        h='full'
+        m={6}
+        roundedBottom='3xl'
+        className='rd-bank-modal-mask1'
+      >
+        <Box
+          color='#FFF'
+          textAlign='center'
+          verticalAlign='middle'
+          className='rd-bank-modal-mask2'
+          p={1}
+        >
+          <Flex
+            bg='#272523'
+            h='55px'
+            px={12}
+            fontSize={{base: 'lg', sm: '2xl', md: '3xl'}}
+            my='auto'
+            justify='center'
+            direction='column'
+          >
+            <>{title}</>
+          </Flex>
+        </Box>
+              <div className="row mt-2 mt-sm-2">
+                <div className="">
+
+                <Center>
+                <Flex justifyContent='space-between' w='90%' >
+                  <RdButton
+                    w='150px'
+                    fontSize={{base: 'xl', sm: '2xl'}}
+                    stickyIcon={false}
+                    hideIcon={true}
+                    onClick={() => setCurrentTab(tabs.info)}
+                    marginTop='2'
+                    marginBottom='2'
+                    >Info 
+                  </RdButton>
+                  <RdButton
+                    w='150px'
+                    fontSize={{base: 'xl', sm: '2xl'}}
+                    stickyIcon={false}
+                    hideIcon={true}
+                    onClick={() => setCurrentTab(tabs.deploy)}
+                    marginTop='2'
+                    marginBottom='2'
+                    >Deploy 
+                  </RdButton>
+                  <RdButton
+                    w='150px'
+                    fontSize={{base: 'xl', sm: '2xl'}}
+                    stickyIcon={false}
+                    hideIcon={true}
+                    onClick={() => setCurrentTab(tabs.attack)}
+                    marginTop='2'
+                    marginBottom='2'
+                    >Attack 
+                  </RdButton>
+                  </Flex>
+                </Center>
+
+    
                   <div className="de_tab_content">
                     {currentTab === tabs.info && (
                       <InfoTap onClose={handleClose} controlPoint={controlPoint} refreshControlPoint={refreshControlPoint}/>
@@ -122,6 +185,7 @@ const ControlPointForm = ({ isOpen, onClose, controlPoint=[], factions, refreshC
                   </div>
                 </div>
               </div>
+              </Box>
             </ModalBody>
             <ModalFooter className="border-0">
 
