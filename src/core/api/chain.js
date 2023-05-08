@@ -114,6 +114,27 @@ export const getWeirdApesStakingStatus = async (collectionAddress, nftId) => {
   return await readContract.stakedApes(nftId);
 };
 
+export const getCroSwapQuartermastersStakingStatus = async (collectionAddress, nftId) => {
+  const readContract = new Contract(
+    '0x8a607d9Be17dEA16BBADB9F2f19f83F2f3f2a360',
+    ['function isStaked(address _product, address _nftAddress, uint256 _id) external view override returns (bool)'],
+    readProvider
+  );
+
+  const isStakedInFarm = await readContract.isStaked(
+    '0x812D8983EAD958512914713606E67022b965D738',
+    collectionAddress,
+    nftId
+  );
+  const isStakedInPool = await readContract.isStaked(
+    '0xEdFE968033fD2B9A98371D052cD7f32A711E533a',
+    collectionAddress,
+    nftId
+  );
+
+  return isStakedInFarm || isStakedInPool;
+};
+
 export const getAntMintPassMetadata = async (collectionAddress, nftId) => {
   try {
     const uri = 'https://gateway.pinata.cloud/ipfs/QmWLqeupPQsb4MTtJFjxEniQ1F67gpQCzuszwhZHFx6rUM';

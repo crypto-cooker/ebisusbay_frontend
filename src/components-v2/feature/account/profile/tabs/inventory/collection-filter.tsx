@@ -83,7 +83,7 @@ export const CollectionFilter = ({collections, filteredAddresses, onFilter, keyP
                     <Box>
                       {collection.metadata?.avatar ? (
                         <img
-                          src={ImageService.instance.provider.avatar(collection.metadata.avatar)}
+                          src={ImageService.translate(collection.metadata.avatar).avatar()}
                           alt={collection?.name}
                           width="25"
                           height="25"

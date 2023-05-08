@@ -172,14 +172,14 @@ const RyoshiTales = () => {
         image={hostedImage('/img/ryoshiTales/preview.webp')}
       />
       <Center w='100%' height={300}>
-        <Image src={ImageService.instance.provider.banner('img/ryoshiTales/banner.png')} alt={'banner'} width='100%' height='100%' objectFit='cover'/>
+        <Image src={ImageService.translate('img/ryoshiTales/banner.png').banner()} alt={'banner'} width='100%' height='100%' objectFit='cover'/>
       </Center>
       <div>
         <section className="gl-legacy container mt-0" >
           <Center>
             <Box
               as='iframe'
-              src='https://cdn.ebisusbay.biz/Ryoshi_Tales_edit.mp4'
+              src='https://cdn-prod.ebisusbay.biz/Ryoshi_Tales_edit.mp4'
               h={['200px', '240px','312px']}
               sx={{
                 aspectRatio: '16/9'
@@ -247,7 +247,7 @@ const RyoshiTales = () => {
                   Want to know more?
                 </Heading>
                 <Heading as="h2" size="md" mb='8px' mt='24px' color={primaryColor} textAlign='center'>
-                  <Link color={primaryColor} href="https://cdn.ebisusbay.com/Ryoshi_Tales_Pitch_Deck.pdf" target="_blank" style={{ textDecoration: 'underline' }} textAlign='center'>
+                  <Link color={primaryColor} href="https://cdn-prod.ebisusbay.com/Ryoshi_Tales_Pitch_Deck.pdf" target="_blank" style={{ textDecoration: 'underline' }} textAlign='center'>
                     Download the pitch deck here
                   </Link>
                 </Heading>

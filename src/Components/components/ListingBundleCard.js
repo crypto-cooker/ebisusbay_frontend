@@ -241,7 +241,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                         height={440}
                         width={440}
                         video={currentNft.video ?? currentNft.animationUrl ?? currentNft.animation_url}
-                        thumbnail={!!currentNft.video || !!currentNft.animationUrl || !!currentNft.animation_url ? ImageService.proxy.thumbnail(currentNft.video ?? currentNft.animationUrl ?? currentNft.animation_url) : undefined}
+                        thumbnail={!!currentNft.video || !!currentNft.animationUrl || !!currentNft.animation_url ? ImageService.translate(currentNft.video ?? currentNft.animationUrl ?? currentNft.animation_url).thumbnail() : undefined}
                         usePlaceholder={true}
                       />
                     )}

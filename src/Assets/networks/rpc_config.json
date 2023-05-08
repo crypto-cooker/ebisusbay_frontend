@@ -5361,7 +5361,7 @@
       "name": "Beta Mascots",
       "slug": "beta-mascots",
       "multiToken": false,
-      "address": "0x19317B3fc2F1Add6b7E17a0A03A5a269Ed5ce48b",
+      "address": "0xb7bcDfcae4fA1A1b39660C03440FCf3E85AE878C",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -16333,7 +16333,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "10000 unique KKC | Community driving project | Price 3 CRO | Launch 4 January | From 3 cro to the moon \uD83D\uDE80",
+        "description": "",
         "avatar": "/img/collections/king-kong-cronos/avatar.webp",
         "banner": "/img/collections/king-kong-cronos/banner.webp",
         "card": "/img/collections/king-kong-cronos/card.webp",
@@ -17779,7 +17779,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -19449,7 +19449,7 @@
       "multiToken": false,
       "address": "0x8bE63187fad2f8824D5eFFA5D90eBbd7318f449b",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Jungle Animal Fight Club is a unique and at the same time hidden place in the depths of the oldest jungle where the wild animals have created a spectacular club to demonstrate their special martial arts. Competitions are held regularly and there are also championship titles for the strongest of these brave fighters. The pioneers and founders of this club and this sport were the black panthers. The panther gives a strong resonance of energy, usually show courage and bravery. His physical attributes allow him the highest level of respect from any jungle dweller. He is commonly known as the Original Gangster of the JAFC.",
         "avatar": "/img/collections/jafc-black-panthers/avatar.webp",
@@ -19768,7 +19768,7 @@
       "multiToken": false,
       "address": "0x482eBe3063ED2d2281AAfec31941705787432A1A",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Time Machine 102 : The Travelers is a 5000 piece collection of AI generated and traited images of characters beginning their journeys through time. This is the second generation from the Time Machine team, with even bigger payouts than 101s from the Time Ecosystem.",
         "avatar": "/img/collections/time-machine-102-the-travellers/avatar.webp",
@@ -20020,7 +20020,7 @@
       "name": "Crypto Crows",
       "slug": "crypto-crows",
       "multiToken": false,
-      "address": "",
+      "address": "0xFaF84539aA0d2165853b549cAed0432222000cCA",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -20116,9 +20116,9 @@
       "listable": true,
       "metadata": {
         "description": "Fortune Teller NFT from the team at Ebisu's Bay.",
-        "avatar": "/img/collections/ebisu/avatar.webp",
-        "card": "/img/collections/ebisu/card.webp",
-        "banner": "/img/collections/ebisu/banner.png",
+        "avatar": "/img/collections/fortuneteller/avatar.webp",
+        "card": "/img/collections/fortuneteller/card.webp",
+        "banner": "/img/collections/fortuneteller/banner.webp",
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
         "discord": "https://discord.gg/ynrBrSkAFG",
@@ -20131,6 +20131,209 @@
         "doxx": "public",
         "kyc": "hidden",
         "verified": true
+      }
+    },
+    {
+      "name": "Ghetto Doves Airdrop",
+      "slug": "ghetto-doves-airdrop",
+      "multiToken": false,
+      "address": "0xfB54fc0b0DE234C714d6EecddC6dA6c575bc75D0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/ghetto-doves-airdrop/avatar.webp",
+        "card": "/img/collections/ghetto-doves-airdrop/card.webp",
+        "banner": "/img/collections/ghetto-doves-airdrop/banner.webp",
+        "twitter": "https://twitter.com/DovesGhetto",
+        "website": "https://ghettodoves.com/",
+        "discord": "https://discord.gg/ghetto-doves",
+        "medium": "https://medium.com/@gd_29360/welcome-to-the-city-of-new-york-d940fff215c1",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Moonwolves",
+      "slug": "moonwolves",
+      "multiToken": false,
+      "address": "0xEFA293ecD55e378aa614710C2Aee81886B3F84e0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The NFT Collection that empowers the Moonflow Ecosystem!",
+        "avatar": "/img/collections/moonwolves/avatar.webp",
+        "card": "/img/collections/moonwolves/card.webp",
+        "banner": "/img/collections/moonwolves/banner.webp",
+        "website": "https://moonflow.club",
+        "twitter": "https://twitter.com/Moonflownft",
+        "discord": "https://discord.gg/moonflow",
+        "medium": "https://medium.com/@moonflowclubnft",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Ninja Turtle Factions",
+      "slug": "ninja-turtle-factions",
+      "multiToken": false,
+      "address": "0x90d976B61F5C05F064D4F5272919B7fD1499C0A8",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Ninja Turtle Factions (NTF) - A set of 5000 hand drawn NFTs inspired by sensei Crypto Turtle. Each Ninja is known for their stealthy approach to combat, armour, powerful weaponry and skilled in the art of Ninja magic",
+        "avatar": "/img/collections/ninja-turtle-factions/avatar.webp",
+        "card": "/img/collections/ninja-turtle-factions/card.webp",
+        "banner": "/img/collections/ninja-turtle-factions/banner.webp",
+        "website": "https://lnk.bio/NINJA_TURTLE_FACTION",
+        "twitter": "https://twitter.com/NinjaTurtleFctn",
+        "discord": "https://discord.gg/ZCp5GgTWSb",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CroSkull Pets - Season 4",
+      "slug": "croskull-pets-s4",
+      "multiToken": false,
+      "address": "0x77aE45b634a829B002293E554fA67ADC0EB78Bc2",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Underworld is full of all kinds of creatures. During the CroSkulls adventures to the different regions of the Underworld, the CroSkulls often find regional eggs. Each season of CroSkulls explore new regions of the Underworld. Each season will have different seasonal pets. Once the eggs hatch, you will acquire a seasonal pet from that egg's region of the Underworld.",
+        "avatar": "/img/collections/croskull-pets-s4/avatar.webp",
+        "card": "/img/collections/croskull-pets-s4/card.webp",
+        "banner": "/img/collections/croskull-pets-s4/banner.webp",
+        "website": "https://app.croskull.com/",
+        "twitter": "https://twitter.com/CroskullNFT",
+        "discord": "https://discord.gg/q3nWxw8QRY",
+        "medium": "https://medium.com/@croskullnft",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CroSkull Pets Eggs - Season 4",
+      "slug": "croskull-pets-eggs-s4",
+      "multiToken": false,
+      "address": "0x635D66972453E20F5f2EA2787361C752232F07D2",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A Mysterious Egg found by a CroSkull during his adventure! \"I.... never seen an egg like that, it may hatch in a some mysterious creature.\" Hatching Available on https://app.croskull.com/",
+        "avatar": "/img/collections/croskull-pets-eggs-s4/avatar.webp",
+        "card": "/img/collections/croskull-pets-eggs-s4/card.webp",
+        "banner": "/img/collections/croskull-pets-eggs-s4/banner.webp",
+        "website": "https://app.croskull.com/",
+        "twitter": "https://twitter.com/CroskullNFT",
+        "discord": "https://discord.gg/q3nWxw8QRY",
+        "medium": "https://medium.com/@croskullnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Cronos Duels",
+      "slug": "cronos-duels",
+      "multiToken": false,
+      "address": "0x17047708f8882dd92cad6de9ae288ea2d795b008",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Dynamic NFT Card Game that Allows the Integration of Cronos NFTs. Staking Rewards, a Dynamic Ranking System, Online Matchmaking against other Card Holders, and much more. Integrate your NFT with a CronosDuels Card, Build Your Deck and Level Up your NFT Experience.\n",
+        "avatar": "/img/collections/cronos-duels/avatar.webp",
+        "website": "https://cronosduels.com/",
+        "twitter": "https://twitter.com/CronosDuels",
+        "discord": "https://discord.gg/CronosDuels",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "The Pogo",
+      "slug": "the-pogo",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Pogo are randomly generated, non-fungible tokens, also known as an \"NFT.\" There are 2,500 unique & 3D rendered Pogo in our genesis collection with over 300 attribute, No two Pogo are the same. \n2490pcs random generated NFT\n10pcs Legendary 1:1 NFT\n\n-Hype The Fun Of Mint\nLucky minter will receive $cro token and NFT airdrops that worth over 15000$cro, Prizes and specific NFT ID can be found on The Pogo social media.\n\n -Sharing Is Caring\nHolder could earn passive income via our partnered NFT staking platform, 20% of mint fund and 50% of the royalties will be share to the Pogo liquidity pool. \n\n- Creative 1:1 Pogo Custom Design\nA fully customize 1/1 Special Pogo NFT with your idea to you in terms of swapping 8 of the genesis Pogo collection.\n\n-We Won't Stop The Joy\nOwner of POGO NFT means you're acquisition a POGO membership card and POGO discord holder badges that available to access the Pogo exclusive club.\nNFT raffles, Stealth event and more activities will be host to our valuable community.\n\n-Merch Store\nVarious merchs oriented from community activities, such as idea proposals, fan arts, will be produced and sold via online store. Figurines, Hats, Tees, Socks, Hoodies, etc will be designed by The Pogo Team.\n\n-Pogoland\nUsing cutting edge technology & art direction we bring Pogo into The Pogoland Metaverse, A web3 crypto home of immersive experiences, from gaming to social hangouts, to concerts, fashion shows, education, and entertainment, connecting each other with our resources.\n\n-Project Holder Benefits\nThis is not the end, it's only the beginning.\nPogo holder will be our first priority to benefit them with our future roadmap, partnership, future collection or even cross chain project.",
+        "avatar": "/img/collections/the-pogo/avatar.webp",
+        "card": "/img/collections/the-pogo/card.webp",
+        "banner": "/img/collections/the-pogo/banner.webp",
+        "website": "https://thepogonft.xyz/",
+        "twitter": "https://twitter.com/ThePogoNFT",
+        "discord": "https://discord.gg/GmdJ6tuzR7",
+        "medium": "https://the-pogo.gitbook.io/the-pogo/",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "ThirteenthEvil Dark Joker",
+      "slug": "thirteenth-evil-dark-joker",
+      "multiToken": false,
+      "address": "0x2aAD8785D0A211386584A95554D3e029Bb77bC3f",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Dark Joker is a collection of 3113 hand-drawn unique and limited NFTs. Dark Joker is Annabelle's older brother. Mint is Live: https://13th-evil.netlify.app/  There are only 31 pieces of Winged Dark Jokers in the collection! The rarest item is a DevilCat of which there are only 17 pieces! Guide: https://thirteenthevil.gitbook.io/guide/",
+        "avatar": "/img/collections/thirteenth-evil-dark-joker/avatar.webp",
+        "banner": "/img/collections/thirteenth-evil-dark-joker/banner.webp",
+        "card": "/img/collections/thirteenth-evil-dark-joker/card.webp",
+        "website": "https://13th-evil.netlify.app",
+        "twitter": "https://twitter.com/ThirteenthEvil",
+        "discord": "https://discord.gg/sBJcsPrcRq",
+        "telegram": "https://t.me/AnnabelleCoin",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
@@ -22605,7 +22808,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "video": "https://youtu.be/ZCKF8fDk7V4",
       "images": {
         "drop": "/img/drops/genesis-crates/drop.webp",
@@ -24451,7 +24654,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": false,
       "redirect": "https://seashrine.io/",
       "chain": "eth",
@@ -24576,8 +24779,8 @@
       "referral": false,
       "is1155": false,
       "published": false,
-      "complete": true,
-      "featured": false,
+      "complete": false,
+      "featured": true,
       "redirect": "https://furyquackgang.com/",
       "images": {
         "drop": "/img/drops/fury-quack-gang/drop.webp",
@@ -26738,7 +26941,7 @@
         "twitter": "https://twitter.com/Corvuslabs_ltd",
         "discord": "https://discord.gg/ykEJAt8Pce"
       },
-      "address": "",
+      "address": "0xFaF84539aA0d2165853b549cAed0432222000cCA",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 99,
       "totalSupply": 1876,
@@ -26757,6 +26960,45 @@
         "banner": "/img/drops/crypto-crows/banner.webp",
         "avatar": "/img/collections/crypto-crows/avatar.webp",
         "preview": "/img/collections/crypto-crows/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
+      }
+    },
+    {
+      "id": 171,
+      "slug": "the-pogo",
+      "title": "The Pogo",
+      "subtitle": "Evolve your Pogo on art, fashion, utility and joy!",
+      "description": "The Pogo are randomly generated, non-fungible tokens, also known as an \"NFT.\" There are 2,500 unique & 3D rendered Pogo in our genesis collection with over 300 attribute, No two Pogo are the same. \n2490pcs random generated NFT\n10pcs Legendary 1:1 NFT\n\n-Hype The Fun Of Mint\nLucky minter will receive $cro token and NFT airdrops that worth over 15000$cro, Prizes and specific NFT ID can be found on The Pogo social media.\n\n -Sharing Is Caring\nHolder could earn passive income via our partnered NFT staking platform, 20% of mint fund and 50% of the royalties will be share to the Pogo liquidity pool. \n\n- Creative 1:1 Pogo Custom Design\nA fully customize 1/1 Special Pogo NFT with your idea to you in terms of swapping 8 of the genesis Pogo collection.\n\n-We Won't Stop The Joy\nOwner of POGO NFT means you're acquisition a POGO membership card and POGO discord holder badges that available to access the Pogo exclusive club.\nNFT raffles, Stealth event and more activities will be host to our valuable community.\n\n-Merch Store\nVarious merchs oriented from community activities, such as idea proposals, fan arts, will be produced and sold via online store. Figurines, Hats, Tees, Socks, Hoodies, etc will be designed by The Pogo Team.\n\n-Pogoland\nUsing cutting edge technology & art direction we bring Pogo into The Pogoland Metaverse, A web3 crypto home of immersive experiences, from gaming to social hangouts, to concerts, fashion shows, education, and entertainment, connecting each other with our resources.\n\n-Project Holder Benefits\nThis is not the end, it's only the beginning.\nPogo holder will be our first priority to benefit them with our future roadmap, partnership, future collection or even cross chain project.",
+      "author": {
+        "name": "Cherryx",
+        "website": "https://thepogonft.xyz/",
+        "twitter": "https://twitter.com/ThePogoNFT",
+        "discord": "https://discord.gg/GmdJ6tuzR7",
+        "medium": "https://the-pogo.gitbook.io/the-pogo/"
+      },
+      "address": "",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 100,
+      "totalSupply": 2500,
+      "cost": "110",
+      "memberCost": "90",
+      "foundersOnly": false,
+      "start": 1683662400000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/the-pogo/drop.webp",
+        "banner": "/img/collections/the-pogo/banner.webp",
+        "avatar": "/img/collections/the-pogo/avatar.webp",
+        "preview": "/img/collections/the-pogo/card.webp"
       },
       "verification": {
         "doxx": false,

@@ -16,25 +16,28 @@ const LandingScene = ({onEnterTokenSale}: LandingSceneProps) => {
   return (
     <>
       <AspectRatio ratio={1920/1080} overflow='visible'>
-        <NextImage
-          alt='Ryoshi Dynasties'
-          src='/img/ryoshi/fortune-token-sale-bg.jpg'
-          fill={true}
-          priority
-          style={{
-            minHeight: 'calc(100vh - 74px)',
-            filter: 'brightness(0.7) blur(5px)'
-          }}
-        />
-        {/*<video*/}
-        {/*  autoPlay loop muted*/}
+        {/*<NextImage*/}
+        {/*  alt='Ryoshi Dynasties'*/}
+        {/*  src='/img/ryoshi/fortune-token-sale-bg.jpg'*/}
+        {/*  fill={true}*/}
+        {/*  priority*/}
         {/*  style={{*/}
         {/*    minHeight: 'calc(100vh - 74px)',*/}
-        {/*    filter: 'brightness(0.7) blur(5px)',*/}
+        {/*    filter: 'brightness(0.7) blur(5px)'*/}
         {/*  }}*/}
-        {/*>*/}
-        {/*  <source src='/img/ryoshi/fortune-token-sale-bg.mp4' type="video/mp4" />*/}
-        {/*</video>*/}
+        {/*/>*/}
+        <video
+          autoPlay
+          loop
+          muted
+          poster={'https://cdn-prod.ebisusbay.com/img/ryoshi/fortune-token-sale-bg.jpg'}
+          style={{
+            minHeight: 'calc(100vh - 74px)',
+            filter: 'brightness(0.7) blur(5px)',
+          }}
+        >
+          <source src='/img/ryoshi/fortune-token-sale-bg.mp4' type="video/mp4" />
+        </video>
       </AspectRatio>
       <Box
         w='full'
@@ -54,9 +57,12 @@ const LandingScene = ({onEnterTokenSale}: LandingSceneProps) => {
               <Link href='https://lotusgalaxy.docsend.com/view/cn6irmx92xy2ek2f' isExternal>
                 <RdButton w='250px' fontSize={{base: 'xl', sm: '2xl'}}>Whitepaper</RdButton>
               </Link>
-              <NextLink href='/marketplace'>
-                <RdButton w='250px' fontSize={{base: 'xl', sm: '2xl'}}>Marketplace</RdButton>
-              </NextLink>
+              <Link href='https://lotusgalaxy.docsend.com/view/6jrt35hiwkewxdum' isExternal>
+                <RdButton w='250px' fontSize={{base: 'xl', sm: '2xl'}}>Litepaper</RdButton>
+              </Link>
+              {/*<NextLink href='/marketplace'>*/}
+              {/*  <RdButton w='250px' fontSize={{base: 'xl', sm: '2xl'}}>Marketplace</RdButton>*/}
+              {/*</NextLink>*/}
             </VStack>
           </Fade>
         </Flex>

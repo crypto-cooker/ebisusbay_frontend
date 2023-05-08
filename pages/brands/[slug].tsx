@@ -74,7 +74,7 @@ const Brand = ({ brand, collections, stats, query }: BrandProps) => {
       >
         <Box
           style={{
-            backgroundImage: `url(${ImageService.staticAsset.banner(brand.images.banner ?? brand.images.preview ?? '')})`,
+            backgroundImage: `url(${ImageService.translate(brand.images.banner ?? brand.images.preview ?? '').banner()})`,
             backgroundPosition: '50% 50%',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover'

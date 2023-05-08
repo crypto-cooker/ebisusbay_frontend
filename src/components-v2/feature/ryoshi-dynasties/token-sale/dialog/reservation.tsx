@@ -28,7 +28,7 @@ import {faExternalLinkAlt} from "@fortawesome/free-solid-svg-icons";
 import {BigNumber, Contract, ethers} from "ethers";
 import {ERC20} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent, round, secondsToDhms, timeSince} from "@src/utils";
+import {createSuccessfulTransactionToastContent, round, timeSince} from "@src/utils";
 import {appConfig} from "@src/Config";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "@src/Store/hooks";
@@ -36,12 +36,11 @@ import FortunePresale from "@src/Contracts/FortunePresale.json";
 import {commify} from "ethers/lib/utils";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount, updateFortuneBalance} from "@src/GlobalState/User";
-import {
-  MultiSelectContext,
-  MultiSelectContextProps
-} from "@src/components-v2/feature/account/profile/tabs/listings/context";
 import {TokenSaleContext, TokenSaleContextProps} from "@src/components-v2/feature/ryoshi-dynasties/token-sale/context";
 import {useQueryClient} from "@tanstack/react-query";
+import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
+import {useWindowSize} from "@src/hooks/useWindowSize";
+import ImageService from "@src/core/services/image";
 
 const config = appConfig();
 
@@ -140,7 +139,9 @@ const FortuneReservationPage = ({onFaq, onClose}: FortuneReservationPageProps) =
           p={4}
           fontSize='sm'
         >
-          <FortunePurchaseProgress />
+          {config.tokenSale.vipStart < Date.now() && (
+            <FortunePurchaseProgress />
+          )}
         </Box>
       </Box>
     </>
@@ -153,7 +154,7 @@ export default FortuneReservationPage;
 const FortunePurchaseForm = () => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const [fortuneToPurchase, setFortuneToPurchase] = useState('1000');
+  const [fortuneToPurchase, setFortuneToPurchase] = useState('5000');
   const [fortunePrice, setFortunePrice] = useState(0.03);
   const fullText = useBreakpointValue<boolean>(
     {base: false, sm: true},
@@ -181,14 +182,21 @@ const FortunePurchaseForm = () => {
     }
     setTosError('');
 
+    const memberCollections = config.tokenSale.memberCollections.map((c: any) => c.toLowerCase());
+    const walletCollections = await getWalletOverview(user.address);
+    const isMember = walletCollections.data.filter((col: any) => {
+      return memberCollections.includes(col.nftAddress.toLowerCase());
+    }).length > 0;
+
+    // Still always check VIP because wallet doesn't detect staked Ryoshis
+    const isVip = await user.contractService!.market.isVIP(user.address);
+
     if (Date.now() > config.tokenSale.publicStart) {
-      const isMember = await user.contractService!.market.isMember(user.address);
-      if (!isMember) {
-        setError('Must have a VIP or Founding Member to participate');
+      if (!isMember && !isVip) {
+        setError('Must have a VIP, Founding Member, or any Ebisu brand NFT to participate');
         return false;
       }
     } else if (Date.now() > config.tokenSale.vipStart) {
-      const isVip = await user.contractService!.market.isVIP(user.address);
       if (!isVip) {
         setError('Must have a Ryoshi VIP to participate');
         return false;
@@ -224,13 +232,16 @@ const FortunePurchaseForm = () => {
       const desiredFortuneAmount = BigNumber.from(fortuneToPurchase);
       const usdcCost = desiredFortuneAmount.mul(30000).div(1000000);
 
-      if (usdcCost.gt(user.tokenSale.usdc)) {
-        setInputError('Amount exceeds USDC balance');
-        return false;
+      // Instantiate USDC contract
+      const usdcContract = new Contract(usdcAddress, ERC20, user.provider.getSigner());
+
+      // Allow tx to continue in case there were issues retrieving USDC
+      const usdcBalance = await usdcContract.balanceOf(user.address);
+      if (usdcCost.mul(1000000).gt(usdcBalance)) {
+        setInputError('Amount might exceed USDC balance');
       }
 
-      // Instantiate USDC contract and check how much USDC the user has already approved
-      const usdcContract = new Contract(usdcAddress, ERC20, user.provider.getSigner());
+      // Check how much USDC the user has already approved
       const allowance = await usdcContract.allowance(user.address, config.contracts.purchaseFortune);
 
       // If the user has not approved the token sale contract to spend enough of their USDC, approve it
@@ -247,7 +258,7 @@ const FortunePurchaseForm = () => {
 
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       dispatch(updateFortuneBalance());
-      await queryClient.invalidateQueries(['TokenSale', user.address]);
+      await queryClient.invalidateQueries({ queryKey: ['TokenSale'] });
     } catch (error: any) {
       console.log(error);
       if (error.data) {
@@ -347,7 +358,7 @@ const FortunePurchaseForm = () => {
                 <VStack spacing={0}>
                   <Checkbox colorScheme='blue' size='lg' onChange={handleTosCheck}>
                     <Text fontSize='xs'>
-                      I agree to the <Link href='https://cdn.ebisusbay.com/terms-of-service.html' textDecoration='underline' isExternal>terms of service
+                      I agree to the <Link href={ImageService.staticAsset('terms-of-service.html').convert()} textDecoration='underline' isExternal>terms of service
                       <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} ml={1} /></Link>
                     </Text>
                   </Checkbox>
@@ -380,7 +391,7 @@ const FortunePurchaseForm = () => {
           </Box>
         </>
       ) : (
-        <Center>{timeSince(config.tokenSale.vipStart)}</Center>
+        <Center my={8}>Token sale will start in {timeSince(config.tokenSale.vipStart)} (8pm UTC)</Center>
       )}
     </Box>
   )
@@ -391,9 +402,9 @@ const FortunePurchaseProgress = () => {
   const [progressValue, setProgressValue] = useState(0);
   const progressRef = useRef<HTMLDivElement>(null);
   const [barSpot, setBarSpot] = useState(0);
+  const windowSize = useWindowSize();
 
   const getProgress = async () => {
-
     const value = (tokenSaleContext.totalFortunePurchased / tokenSaleContext.maxAllocation) * 100;
     setProgressValue(value);
     const offsetWidth = progressRef.current?.offsetWidth ?? 0;
@@ -405,8 +416,8 @@ const FortunePurchaseProgress = () => {
       await getProgress();
     }
     func();
-  }, [progressRef]);
-   
+  }, [tokenSaleContext.totalFortunePurchased, windowSize.width]);
+
   return (
     <>
       <Flex justify='space-between'>
@@ -456,6 +467,7 @@ const FortunePurchaseProgress = () => {
           />
           {[...Array(6).fill(0)].map((_, i) => (
             <Box
+              key={i}
               borderColor='#FDAB1A'
               borderStyle='solid'
               borderTopWidth='4px'
@@ -475,7 +487,7 @@ const FortunePurchaseProgress = () => {
         </SimpleGrid>
       </Box>
       <Box textAlign='center' mt={1}>
-        <Box>{progressValue ? round(progressValue) : ''}% of $Fortune purchased by all users</Box>
+        <Box>{progressValue ? round(progressValue, 1) : ''}% of $Fortune purchased by all users</Box>
       </Box>
     </>
   )

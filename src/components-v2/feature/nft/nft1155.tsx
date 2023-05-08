@@ -407,7 +407,7 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
                     <ProfilePreview
                       type="Collection"
                       title={collectionName ?? 'View Collection'}
-                      avatar={ImageService.staticAsset.avatar(collectionMetadata?.avatar)}
+                      avatar={ImageService.translate(collectionMetadata?.avatar).avatar()}
                       address={address}
                       verified={collection.verification?.verified}
                       to={`/collection/${collectionSlug}`}

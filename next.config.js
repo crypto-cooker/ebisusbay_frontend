@@ -179,6 +179,11 @@ const nextConfig = {
         permanent: false,
       },
       {
+        source: '/battle-bay',
+        destination: '/',
+        permanent: false,
+      },
+      {
         source: '/sales_bot',
         destination:
           'https://discord.com/api/oauth2/authorize?client_id=976699886890254356&permissions=269503504&scope=bot%20applications.commands',

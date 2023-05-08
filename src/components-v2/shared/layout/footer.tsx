@@ -6,6 +6,7 @@ import Link from "next/link";
 import {Box, Center, Flex, Heading, Image, ListItem, SimpleGrid, UnorderedList} from "@chakra-ui/react";
 import {useAppSelector} from "@src/Store/hooks";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
+import ImageService from "@src/core/services/image";
 
 const Footer = () => {
   const userTheme = useAppSelector((state) => state.user.theme);
@@ -29,7 +30,7 @@ const Footer = () => {
                 <ListItem><Link href="/marketplace">Explore</Link></ListItem>
                 <ListItem><Link href="/collections">Collections</Link></ListItem>
                 <ListItem><Link href="/drops">Drops</Link></ListItem>
-                <ListItem><Link href="/stats">Stats</Link></ListItem>
+                <ListItem><Link href="https://ebisusbay.notion.site/ebisusbay/Ryoshi-Dynasties-8cb0bb21ad194af092cf1e1f8a8846c6">Ryoshi Dynasties</Link></ListItem>
                 <ListItem><Link href="/apply?type=listing">Listing Application</Link></ListItem>
                 <ListItem><Link href="/apply?type=launchpad">Launchpad Application</Link></ListItem>
               </UnorderedList>
@@ -42,8 +43,8 @@ const Footer = () => {
                 <ListItem><a href="https://docs.ebisusbay.com/" target="_blank" rel="noreferrer">FAQ</a></ListItem>
                 <ListItem><a href="https://blog.ebisusbay.com/" target="_blank" rel="noreferrer">Blog</a></ListItem>
                 <ListItem><a href="https://almurraydesign.com/cryptocrows.html#!/Ebisus-Bay/c/130146020" target="_blank" rel="noreferrer">Merchandise</a></ListItem>
-                <ListItem><a href="https://cdn.ebisusbay.com/terms-of-service.html" target="_blank" rel="noreferrer">Terms of Service</a></ListItem>
-                <ListItem><a href="https://cdn.ebisusbay.com/privacy-policy.html" target="_blank" rel="noreferrer">Privacy Policy</a></ListItem>
+                <ListItem><a href={ImageService.staticAsset('terms-of-service.html').convert()} target="_blank" rel="noreferrer">Terms of Service</a></ListItem>
+                <ListItem><a href={ImageService.staticAsset('privacy-policy.html').convert()} target="_blank" rel="noreferrer">Privacy Policy</a></ListItem>
               </UnorderedList>
             </Box>
 

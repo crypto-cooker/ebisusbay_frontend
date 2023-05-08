@@ -1,50 +1,52 @@
 import {CdnProvider} from "@src/core/services/image/index";
-import {appConfig, isLocalEnv} from "@src/Config";
 
 class ImageKitProvider implements CdnProvider {
-  private readonly baseUrl: string;
+  private readonly url: string;
 
-  constructor(baseUrl: string) {
-    this.baseUrl = baseUrl;
+  constructor(url: string) {
+    this.url = url;
   }
 
-  blurred(url: string) {
-    const kit = ImageBuilder.from(url, this.baseUrl)
+  blurred() {
+    const kit = ImageKitBuilder.from(this.url)
       .setBlur(30)
       .setQuality(10);
 
     return kit.build();
   }
 
-  thumbnail(url: string) {
-    const kit = ImageBuilder.from(url, this.baseUrl);
+  thumbnail() {
+    const kit = ImageKitBuilder.from(this.url);
 
-    let useThumb = false;
-    if (!this.hasFileExtension(kit.url)) {
-      kit.addAppendage('ik-video.mp4');
-      useThumb = true;
-    }
+    // Deprecated, don't think IK needs double transforms anymore
+    // let useThumb = false;
+    // if (!this.hasFileExtension(kit.url)) {
+    //   kit.addAppendage('ik-video.mp4');
+    //   useThumb = true;
+    // }
+    //
+    // const location = new URL(kit.url);
+    // if(useThumb || location.pathname.includes('.')){
+    //   kit.addAppendage('ik-thumbnail.jpg');
+    // }
 
-    const location = new URL(kit.url);
-    if(useThumb || location.pathname.includes('.')){
-      kit.addAppendage('ik-thumbnail.jpg');
-    }
+    kit.addAppendage('ik-thumbnail.jpg');
 
     return kit.build();
   }
 
-  nftCard(url: string) {
-    const kit = ImageBuilder.from(url, this.baseUrl).setNamed('ml_card');
+  nftCard() {
+    const kit = ImageKitBuilder.from(this.url).setNamed('ml_card');
     return kit.build();
   }
 
-  avatar(url: string) {
-    const kit = ImageBuilder.from(url, this.baseUrl).setNamed('avatar');
+  avatar() {
+    const kit = ImageKitBuilder.from(this.url).setNamed('avatar');
     return kit.build();
   }
 
-  banner(url: string) {
-    const kit = ImageBuilder.from(url, this.baseUrl)
+  banner() {
+    const kit = ImageKitBuilder.from(this.url)
       .setWidth(1920)
       .setHeight(1080)
       .setCrop('at_max');
@@ -52,13 +54,13 @@ class ImageKitProvider implements CdnProvider {
     return kit.build();
   }
 
-  bannerPreview(url: string) {
-    const kit = ImageBuilder.from(url, this.baseUrl).setNamed('wide_preview');
+  bannerPreview() {
+    const kit = ImageKitBuilder.from(this.url).setNamed('wide_preview');
     return kit.build();
   }
 
-  fixedWidth(url: string, width: number, height: number) {
-    const kit = ImageBuilder.from(url, this.baseUrl)
+  fixedWidth(width: number, height: number) {
+    const kit = ImageKitBuilder.from(this.url)
       .setWidth(width)
       .setHeight(height)
       .setCrop('at_max');
@@ -66,19 +68,19 @@ class ImageKitProvider implements CdnProvider {
     return kit.build();
   }
 
-  gifToMp4(url: string | URL) {
-    const kit = ImageBuilder.from(url.toString(), this.baseUrl)
+  gifToMp4() {
+    const kit = ImageKitBuilder.from(this.url)
       .addAppendage('ik-gif-video.mp4');
 
     return kit.build();
   }
 
-  convert(url: string) {
-    return ImageBuilder.from(url, this.baseUrl).build();
+  convert() {
+    return ImageKitBuilder.from(this.url).build();
   }
 
-  custom(url: string, options: any) {
-    const kit = ImageBuilder.from(url, this.baseUrl);
+  custom(options: any) {
+    const kit = ImageKitBuilder.from(this.url);
     if(options.width) kit.setWidth(options.width);
     if(options.height) kit.setHeight(options.height);
     if(options.blur) kit.setBlur(options.blur);
@@ -87,12 +89,6 @@ class ImageKitProvider implements CdnProvider {
     if(options.named) kit.setNamed(options.named);
 
     return kit.build();
-  }
-
-  private appendMp4Extension(url: string | URL) {
-    url = new URL(url);
-    url.pathname = `${url.pathname}/ik-video.mp4`;
-    return url.toString();
   }
 
   private hasFileExtension(url: string) {
@@ -105,21 +101,19 @@ class ImageKitProvider implements CdnProvider {
 
 export default ImageKitProvider;
 
-class ImageBuilder {
+export class ImageKitBuilder {
   url: string;
-  baseUrl: string;
   trValues: any;
   appendages: string[];
 
-  constructor(url: string, baseUrl: string) {
+  constructor(url: string) {
     this.url = this.specialTransform(url);
-    this.baseUrl = baseUrl;
     this.trValues = {};
     this.appendages = [];
   }
 
-  static from(url: string, baseUrl: string) {
-    return new ImageBuilder(url, baseUrl);
+  static from(url: string) {
+    return new ImageKitBuilder(url);
   }
 
   setBlur(value: number) {
@@ -162,26 +156,25 @@ class ImageBuilder {
     return this;
   }
 
-  build() {
-    if(!this.url || this.url.startsWith('data')) return this.url;
+  build(url?: string): string {
+    if (!url) url = this.url;
+    if (!url) return '';
 
-    const fixedUrl = this.remappedUrl();
-
-    if (isLocalEnv() && fixedUrl?.startsWith('/')) return fixedUrl;
-
-    const baseUrl = !fixedUrl.includes(this.baseUrl) ? this.baseUrl : undefined;
-    const url = new URL(fixedUrl, baseUrl);
+    const newUrl = new URL(url!);
 
     for (const appendage of this.appendages) {
-      url.pathname += `/${appendage}`;
+      newUrl.pathname += `/${appendage}`;
     }
 
-    if (Object.entries(this.trValues).length > 0) {
+    // URLs can't accept any params if ik-video.mp4 is in the path
+    const trExclusions = url.includes('ik-gif-video.mp4');
+
+    if (!trExclusions && Object.entries(this.trValues).length > 0) {
       const mapped = Object.entries(this.trValues).map(([k,v]) => `${k}-${v}`);
-      url.searchParams.set('tr', mapped.join());
+      newUrl.searchParams.set('tr', mapped.join());
     }
 
-    return url.toString();
+    return newUrl.toString();
   }
 
   private specialTransform(url: string) {
@@ -198,15 +191,7 @@ class ImageBuilder {
     return url;
   }
 
-  private remappedUrl() {
-    const cdn = appConfig('urls.cdn');
-    let url = this.url;
-    if (this.url.includes(cdn.primary)) {
-      url = this.url.replace(cdn.primary, this.baseUrl);
-    } else if (this.url.includes(cdn.legacy)) {
-      url = this.url.replace(cdn.legacy, this.baseUrl);
-    }
-
-    return url;
+  hasGifToMp4Appendage() {
+    return this.appendages.includes('ik-gif-video.mp4');
   }
 }

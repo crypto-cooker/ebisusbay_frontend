@@ -35,7 +35,7 @@
     "name": "Mad Meerkat Burrow",
     "description": "The Mad Meerkat is inspired by the cheeky nature of the loveable rogues, who loves nothing more than cavorting together in the sun. An expansion from our OG Ethereum collection, these 10000 Next Gen Cro Meerkats will traverse the novel Cronos chain. Guided by the M.A.D values, we will embark on an adventure to explore and unlock all that lies within Cronos. With each Mad Meerkat sharing and learning from one another regardless the chain, it is our next step forward as one Burrow.",
     "images": {
-      "banner": "https://cdn.ebisusbay.biz/brands/mad-meerkat-burrow/background_J956_btjN.webp"
+      "banner": "/img/brands/mad-meerkat-burrow.webp"
     },
     "collections": [
       "0x89dBC8Bd9a6037Cbd6EC66C4bF4189c9747B1C56",
@@ -67,9 +67,11 @@
       "0x14e9ef197C0bfaf7C1328ebed7151f53616Af3C5",
       "0x6d54590Ed6950EcD3987778c004d4773a7e99dAC",
       "0x5DD5d3140Fe619Ef8F4655383283BB555E219A27",
+      "0x635D66972453E20F5f2EA2787361C752232F07D2",
       "0xB77959DC7a12F7549ACC084Af01259Fc48813c89",
       "0x54655D5468f072D5bcE1577c4a46F701C28a41A7",
       "0x31B378ac025a341839CD81C4D29A8457324D3EbC",
+      "0x77aE45b634a829B002293E554fA67ADC0EB78Bc2",
       "0xB9eCFF7e01a48C434a3B8A034906e4b34Da62f90",
       "0xB929D3002208f405180D3C07616F88EDa45F3e14",
       "0x508378E99F5527Acb6eB4f0fc22f954c5783e5F9",
@@ -686,6 +688,27 @@
     "style": {}
   },
   {
+    "slug": "aiko-society",
+    "name": "Aiko Society",
+    "description": "Aiko Society is a Big Ecosystem that includes Aiko NFT with Aiko Cards in crypto.org chain and Aiko Beanz with Mutant Aiko Beanz in Cronos Chain.\n\nAiko Beanz and Mutant Aiko Beanz release benefits, passive income, gifts and more to their Holders. Each collection has an special room in Aiko Society metaverse, special merchandising and both share the same amazing community.",
+    "images": {
+      "banner": "/img/brands/aiko-society/banner.webp",
+      "preview": "/img/brands/aiko-society/preview.webp"
+    },
+    "collections": [
+      "0x8fAe79f9b06E3f1525C1de4F88940279dC70C7C9",
+      "0xA869e4c032D4E3786f211520E20754F4347ec67D"
+    ],
+    "socials": {
+      "website": "https://www.aikosociety.com/",
+      "twitter": "https://twitter.com/AikoSociety",
+      "discord": "https://discord.gg/JdmsRjcgQJ"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "croarmy-collection",
     "name": "CroArmy Collection",
     "description": "CroArmy is a collection of NFTs that each serve a purpose. We attempt to diversify our holdings so we’re not too heavy in one singular project. Earnings from those projects, are swapped to bcro and airdropped to Coalitions, Soldiers, Burns, and Jackals. On top of our main treasury, we also have side hustles with BTC miners, and Jarheads.",
@@ -829,28 +852,6 @@
       "twitter": "https://twitter.com/BabyHop__",
       "discord": "https://discord.gg/fnVzKYPbg/",
       "telegram": "https://t.me/BabyHopToken"
-    },
-    "categories": [],
-    "style": {}
-  },
-  {
-    "slug": "badmeerkat",
-    "name": "BadMeerkat",
-    "description": "3 Fan Art collection of MadMeerkat \uD83C\uDD95 Traits \uD83C\uDD95 Personality \uD83D\uDFF0 Degen",
-    "images": {
-      "banner": "/img/brands/badmeerkat/banner.webp",
-      "preview": "/img/brands/badmeerkat/preview.webp"
-    },
-    "collections": [
-      "0x22B2f2223d26f27c27494efbF4E6646812193a43",
-      "0xdc9B6e10E0648E2258afe6705690C1E81cf933d7",
-      "0x302789418f6A5DfDe9faB3b8FE9Bc4EEe020E84F",
-      "0xB41398EE9A7a9c7570F1973690Ce98370C3a78E4"
-    ],
-    "socials": {
-      "website": "https://linktr.ee/badmeerkat",
-      "twitter": "https://twitter.com/badmeerkatnft",
-      "discord": "https://discord.gg/wcJ4vvZb4H"
     },
     "categories": [],
     "style": {}
