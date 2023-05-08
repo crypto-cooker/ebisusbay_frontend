@@ -144,7 +144,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
           w={abbreviateButtonText ? '60px' : '250px'}
         >
           <VStack spacing={4} align='end'>
-            {Date.now() > config.tokenSale.vipStart && (
+            {Date.now() > config.tokenSale.vipStart && Date.now() < config.tokenSale.publicEnd && (
               <RdButton w='full' hideIcon={abbreviateButtonText} onClick={() => handlePurchaseDialogOpen('default')}>
                 {abbreviateButtonText ? (
                   <Icon as={FontAwesomeIcon} icon={faDollarSign} />
