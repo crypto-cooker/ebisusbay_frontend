@@ -7,6 +7,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBullhorn} from "@fortawesome/free-solid-svg-icons";
 import Countdown from "react-countdown";
 import Link from "next/link";
+import ImageService from "@src/core/services/image";
 
 const gothamBook = localFont({ src: '../../../../fonts/Gotham-Book.woff2' })
 
@@ -48,7 +49,7 @@ const TokenSale = () => {
               position='absolute'
               top={0}
               left={0}
-              src='/img/ryoshi/fortune-banner-minamoto.png'
+              src={ImageService.translate('/img/ryoshi/fortune-banner-minamoto.png').convert()}
             />
           )}
           <Box ps={squeezeBanner && showMinamoto ? '150px' : 'auto'}>
