@@ -8,6 +8,9 @@ import {faBullhorn} from "@fortawesome/free-solid-svg-icons";
 import Countdown from "react-countdown";
 import Link from "next/link";
 import ImageService from "@src/core/services/image";
+import {appConfig} from "@src/Config";
+
+const config = appConfig();
 
 const gothamBook = localFont({ src: '../../../../fonts/Gotham-Book.woff2' })
 
@@ -36,27 +39,29 @@ const TokenSale = () => {
       className={gothamBook.className}
     >
       <Box display={scene === Scene.LANDING ? 'block' : 'none'}>
-        <Box
-          textAlign='center'
-          position='relative'
-          bg='#FD8D03'
-          p='9px'
-          zIndex={1}
-          color='#0A0600'
-        >
-          {showMinamoto && (
-            <Image
-              position='absolute'
-              top={0}
-              left={0}
-              src={ImageService.translate('/img/ryoshi/fortune-banner-minamoto.png').convert()}
-            />
-          )}
-          <Box ps={squeezeBanner && showMinamoto ? '150px' : 'auto'}>
-            <FontAwesomeIcon icon={faBullhorn} /> FORTUNE Token presale ends in <Countdown date={1683586800000} />.{' '}
-            <Link href={'ryoshi-dynasties/token-sale'} style={{fontWeight: 'bold', color:'white', textDecoration:'underline'}}>Enter sale now</Link>
+        {Date.now() < config.tokenSale.publicEnd && (
+          <Box
+            textAlign='center'
+            position='relative'
+            bg='#FD8D03'
+            p='9px'
+            zIndex={1}
+            color='#0A0600'
+          >
+            {showMinamoto && (
+              <Image
+                position='absolute'
+                top={0}
+                left={0}
+                src={ImageService.translate('/img/ryoshi/fortune-banner-minamoto.png').convert()}
+              />
+            )}
+            <Box ps={squeezeBanner && showMinamoto ? '150px' : 'auto'}>
+              <FontAwesomeIcon icon={faBullhorn} /> FORTUNE Token presale ends in <Countdown date={1683586800000} />.{' '}
+              <Link href={'ryoshi-dynasties/token-sale'} style={{fontWeight: 'bold', color:'white', textDecoration:'underline'}}>Enter sale now</Link>
+            </Box>
           </Box>
-        </Box>
+        )}
         <LandingScene onEnterTokenSale={handleEnterTokenSale} />
       </Box>
       <Box display={scene === Scene.BANKER ? 'block' : 'none'}>
