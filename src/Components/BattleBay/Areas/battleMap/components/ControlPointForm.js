@@ -1,18 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
 import {
   Modal,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay
+  ModalOverlay,
+  Button,
+  Box
 } from "@chakra-ui/react"
-import { getControlPoint } from "@src/core/api/RyoshiDynastiesAPICalls";
 import { Spinner } from 'react-bootstrap';
-
-import { getTheme } from "@src/Theme/theme";
+import localFont from "next/font/local";
+import {CloseIcon} from "@chakra-ui/icons";
 
 import {
   DeployTap,
@@ -26,6 +26,8 @@ const tabs = {
   attack: 'attack',
 };
 
+const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
+
 const ControlPointForm = ({ isOpen, onClose, controlPoint=[], factions, refreshControlPoint}) => {
   // console.log("factionForm controlPoint: " + controlPoint.name);
   const [isLoading, setIsLoading] = useState(true);
@@ -36,21 +38,41 @@ const ControlPointForm = ({ isOpen, onClose, controlPoint=[], factions, refreshC
 
   const [currentTab, setCurrentTab] = useState(tabs.info);
 
+  const handleClose = useCallback(() => {
+    onClose();
+    console.log("handleClose");
+  }, []);
+
   useEffect(() => {
     setTitle(controlPoint.name);
     setIsLoading(false);
   }, [controlPoint]);
 
   return (
-    <Modal onClose={onClose} isOpen={isOpen} isCentered>
+    <Modal 
+      onClose={onClose}
+      isOpen={isOpen}
+      size='2xl'
+      scrollBehavior='inside'
+      isCentered
+      >
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent
+        borderWidth='1px'
+        borderStyle='solid'
+        borderLeftColor='#45433C'
+        borderRightColor='#684918'
+        borderTopColor='#625C4D'
+        borderBottomColor='#181514'
+        rounded='3xl'
+        bg='linear-gradient(#1C1917, #272624, #000000)'
+        className={gothamBook.className}
+        >
         {!isLoading ? (
           <>
             <ModalHeader className="text-center">
               {title}
             </ModalHeader>
-            <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
             <ModalBody>
               <div className="row mt-2 mt-sm-2">
                 <div className="">
@@ -60,15 +82,42 @@ const ControlPointForm = ({ isOpen, onClose, controlPoint=[], factions, refreshC
                     <button type="button" className={`smallBtn ${currentTab === tabs.attack ? 'selected' : ''}`} onClick={() => setCurrentTab(tabs.attack)}>Attack</button>
                   </div>
 
+                  <Box
+      position='absolute'
+      left={2}
+      top={2}
+      rounded='full'
+      zIndex={1}
+      _groupHover={{
+        cursor: 'pointer'
+      }}
+      data-group
+    >
+      <Button
+        bg='#C17109'
+        rounded='full'
+        border='8px solid #F48F0C'
+        w={14}
+        h={14}
+        fontSize='28px'
+        onClick={onClose}
+          _groupHover={{
+          bg: '#de8b08',
+          borderColor: '#f9a50b',
+        }}
+      >
+        <CloseIcon />
+      </Button>
+    </Box>
                   <div className="de_tab_content">
                     {currentTab === tabs.info && (
-                      <InfoTap factions={factions} controlPoint={controlPoint} refreshControlPoint={refreshControlPoint}/>
+                      <InfoTap onClose={handleClose} controlPoint={controlPoint} refreshControlPoint={refreshControlPoint}/>
                     )}
                     {currentTab === tabs.deploy && (
-                      <DeployTap controlPoint={controlPoint} refreshControlPoint={refreshControlPoint}/>
+                      <DeployTap onClose={handleClose} controlPoint={controlPoint} refreshControlPoint={refreshControlPoint}/>
                     )}
                     {currentTab === tabs.attack && (
-                      <AttackTap controlPoint={controlPoint} refreshControlPoint={refreshControlPoint}/>
+                      <AttackTap onClose={handleClose} controlPoint={controlPoint} refreshControlPoint={refreshControlPoint}/>
                     )}
                   </div>
                 </div>

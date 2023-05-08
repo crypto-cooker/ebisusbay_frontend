@@ -46,20 +46,31 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
   const [factionTroopsAvailable, setFactionTroopsAvailable] = useState(0);
   const [playerFaction, setPlayerFaction] = useState("");
   const [showFactionTroops, ShowFactionTroops] = useState(false);
+  const [canDeploy, setCanDeploy] = useState(false);
 
   const onChangeInputsFaction = (e) => {
     setSelectedFaction(e.target.value)
-    console.log(playerFaction)
+    console.log(e.target.value)
     if(e.target.value === playerFaction.name)
     {
-      console.log("same faction")
+      // console.log("same faction")
       setFactionTroopsAvailable(playerFaction.troops)
       ShowFactionTroops(true)
     }
     else
     {
+      // console.log("not a faction")
       setFactionTroopsAvailable(0)
       ShowFactionTroops(false)
+    }
+
+    if(e.target.value !== "")
+    {
+      setCanDeploy(true)
+    }
+    else
+    {
+      setCanDeploy(false)
     }
   }
   const GetPlayerOwnedFactions = async () => {
@@ -78,7 +89,6 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
       }
     }
   }
-
   const deployOrRecallTroops = async () => {
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
@@ -92,7 +102,7 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
           var factionId = playerFactions.filter(faction => faction.name === selectedFaction)[0].id
           var data = await deployTroops(user.address.toLowerCase(), signatureInStorage,
            selectedQuantity, controlPoint.id, factionId)
-          GetPlayerTroops();
+          await GetPlayerTroops();
           setSelectedQuantity(0);
           toast.success("You deployed "+ selectedQuantity+ " troops to on behalf of " + selectedFaction)
           // console.log("You deployed", selectedQuantity, "troops to", controlPoint, "on behalf of", selectedFaction)
@@ -158,13 +168,15 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
     <Flex flexDirection='column' textAlign='center' border={'1px solid white'} borderRadius={'10px'} justifyContent='space-around' padding='16px'>
       
       <div className="taps-buttons-group" >
-        <button type="button" className={`smallBtn ${currentTab === tabs.deploy ? 'selected' : ''}`} onClick={() => setCurrentTab(tabs.deploy)}>Deploy</button>
+        {/* <button type="button" className={`smallBtn ${currentTab === tabs.deploy ? 'selected' : ''}`} onClick={() => setCurrentTab(tabs.deploy)}>Deploy</button> */}
         {/* <button type="button" className={`smallBtn ${currentTab === tabs.recall ? 'selected' : ''}`} onClick={() => setCurrentTab(tabs.recall)}>Recall</button> */}
       </div>
 
-      <FormControl mb={'24px'}>
-        <FormLabel>Please select a faction:</FormLabel>
+      <FormControl 
+        mb={'24px'}
+        bg='none'>
         <Select me={2} 
+          bg='none'
           placeholder='Please select a faction'
           value={selectedFaction} 
           name="faction" 
@@ -176,8 +188,7 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
       <Box m='8px 24px'>
         {currentTab === tabs.deploy && (<p>
           Troops available in wallet: {troopsAvailable}
-          <br />
-          {
+          <br /> {
             showFactionTroops ? (<p>Troops available in faction: {factionTroopsAvailable}</p>) : (<p></p>)
           }
         </p>)}
@@ -188,7 +199,7 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
 
       <FormControl>
         <FormLabel>Quantity:</FormLabel>
-        <NumberInput defaultValue={0} min={0} max={troopsAvailable} name="quantity" 
+        <NumberInput defaultValue={1} min={1} max={troopsAvailable} name="quantity" 
           onChange={handleChange}
           value={selectedQuantity} type ='number'>
           <NumberInputField />
@@ -201,12 +212,11 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
 
       <Flex mt='16px'>
         <Button type="legacy"
-          // onClick={processCreateListingRequest}
           onClick={deployOrRecallTroops}
-          // isLoading={executingCreateListing}
-          // disabled={executingCreateListing}
-          className="flex-fill">
-          Apply
+          disabled={!canDeploy}
+          className="flex-fill"> {
+            selectedFaction=== "" ? "Please select a faction" : "Deploy"
+          }
         </Button>
       </Flex>
 
