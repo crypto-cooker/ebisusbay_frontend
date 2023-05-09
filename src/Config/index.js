@@ -209,7 +209,8 @@ export const configData = {
       purchaseFortune: '0xE1D0a4ae1DF871510d82144a282FF14bAcA8f2c0',
       usdc: '0x1E1d0765439d0d53ee40CC4fB454C2343c84342b',
       resources: '0xDa72eE0B52A5a6d5C989f0e817c9e2AF72e572B5',
-      bank: '0x8aBFBbdfa87443E59bfA13D4d3a9c22E9Cad7630'
+      bank: '0x8aBFBbdfa87443E59bfA13D4d3a9c22E9Cad7630',
+      fortune: '0x119adb5E05e85d55690BC4Da7b37c06BfEcF2071'
     },
     tokens: {
       loot: {

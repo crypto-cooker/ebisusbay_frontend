@@ -25,21 +25,22 @@ import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-
 import {commify} from "ethers/lib/utils";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
+import moment from 'moment';
 
 //contracts
 import {Contract, ethers, BigNumber} from "ethers";
 import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
 import Bank from "@src/Contracts/Bank.json";
-import FortunePresale from "@src/Contracts/FortunePresale.json";
+import Fortune from "@src/Contracts/Fortune.json";
 import { createSuccessfulTransactionToastContent } from '@src/utils';
 
 
 const StakePage = ({ onBack, onClose}) => {
  
   const [isExecuting, setIsExecuting] = useState(false);
-  // const [isLoading, setIsLoading] = useState(false);
-  const [isLoading, getSigner] = useCreateSigner();
+  const [isLoading, setIsLoading] = useState(true);
+  const [getSigner] = useCreateSigner();
   const config = appConfig();
 
   const user = useSelector((state) => state.user);
@@ -48,6 +49,18 @@ const StakePage = ({ onBack, onClose}) => {
   const [daysToStake, setDaysToStake] = useState(90)
   const [fortuneToStake, setFortuneToStake] = useState(1000);
   const [mitama, setMitama] = useState(0)
+  const [userFortune, setUserFortune] = useState(0)
+
+  //deposit info
+  const [hasDeposited, setHasDeposited] = useState(false);
+  const [amountDeposited, setAmountDeposited] = useState(0);
+  const [depositLength, setDepositLength] = useState(0);
+  const [startTime, setStartTime] = useState(0);
+  const [depositsView, setDepositsView] = useState([])
+
+  const[minAmountToStake, setMinAmountToStake] = useState(1000);
+  const[minLengthOfTime, setMinLengthOfTime] = useState(90);
+  
 
   const handleChangeFortuneAmount = (value) => {
     setFortuneToStake(value)
@@ -57,12 +70,54 @@ const StakePage = ({ onBack, onClose}) => {
   }
   const CheckForApproval = async () => {
     const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-    const purchaseFortuneContract = new Contract(config.contracts.purchaseFortune, FortunePresale, readProvider);
-    const tx = await purchaseFortuneContract.isApprovedForAll(user.address.toLowerCase(), config.contracts.bank);
-    // const tx = await purchaseFortuneContract.purchase(desiredFortuneAmount)
-    console.log(tx)
-    return tx;
+    const fortuneContract = new Contract(config.contracts.fortune, Fortune, readProvider);
+    const totalApproved = await fortuneContract.allowance(user.address.toLowerCase(), config.contracts.bank);
+    return totalApproved;
   }
+  const CheckForFortune = async () => {
+    const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+    const fortuneContract = new Contract(config.contracts.fortune, Fortune, readProvider);
+    const totalFortune = await fortuneContract.balanceOf(user.address.toLowerCase());
+    const formatedFortune = Number(ethers.utils.hexValue(BigNumber.from(totalFortune)))/1000000000000000000;
+    setUserFortune(formatedFortune);
+  }
+  const CheckForDeposits = async () => {
+    const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+    const bank = new Contract(config.contracts.bank, Bank, readProvider);
+    const deposits = await bank.deposits(user.address.toLowerCase());
+
+    function addDays(date, days) {
+      date.setDate(date.getDate() + days);
+      return date;
+    }
+
+    //if has deposits, set state
+    if(Number(ethers.utils.hexValue(BigNumber.from(deposits[0]))) > 0){
+      setHasDeposited(true);
+      const daysToAdd = Number(ethers.utils.hexValue(BigNumber.from(deposits[1]))/86400);
+      const date = Date(Number(ethers.utils.hexValue(BigNumber.from(deposits[2]))));
+      const newDate = new Date(date);
+      const newerDate = addDays(newDate, daysToAdd);
+
+      setAmountDeposited(Number(ethers.utils.hexValue(BigNumber.from(deposits[0]))/1000000));
+      setDepositLength(daysToAdd);
+      setStartTime(moment(newerDate).format("MMM D yyyy"));
+
+      setMinAmountToStake(Number(ethers.utils.hexValue(BigNumber.from(deposits[0]))/1000000));
+      setMinLengthOfTime(daysToAdd);
+    }
+    else
+    {
+
+    }
+    setIsLoading(false);
+
+    return deposits;
+  }
+
+  function kFormatter(num) {
+    return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
+}
 
   const StakeFortune = async () => {
     setExecutingLabel('Staking...');
@@ -75,24 +130,50 @@ const StakePage = ({ onBack, onClose}) => {
     if (signatureInStorage) {
       try {
         //check for approval
-        const approved = await CheckForApproval();
+        const totalApproved = await CheckForApproval();
+        const desiredFortuneAmount = Number(ethers.utils.hexValue(BigNumber.from(totalApproved)));
+        const convertedFortuneAmount = desiredFortuneAmount / 1000000;
+        const actualFortuneToStake = fortuneToStake*1000000;
+        // console.log(convertedFortuneAmount)
+        // console.log(actualFortuneToStake)
 
-        if(!approved){
+        if(convertedFortuneAmount < actualFortuneToStake){
           toast.error("Please approve the contract to spend your resources")
           setExecutingLabel('Approving contract...');
-          const purchaseFortuneContract = new Contract(config.contracts.purchaseFortune, FortunePresale, user.provider.getSigner());
-          const tx = await purchaseFortuneContract.setApprovalForAll(config.contracts.bank, true);
+          const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
+          const tx = await fortuneContract.approve(config.contracts.bank, fortuneToStake);
           const receipt = await tx.wait();
           toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
         }
 
         setExecutingLabel('Staking...');
         const bankContract = new Contract(config.contracts.bank, Bank, user.provider.getSigner());
-        const tx = await bankContract.openAccount(fortuneToStake, daysToStake*86400);
-        const receipt = await tx.wait();
-        console.log(receipt);
-        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
 
+        if(hasDeposited){
+          //check if amount was increased
+          if(amountDeposited < fortuneToStake){
+            const additionalFortune = fortuneToStake - amountDeposited;
+            const tx = await bankContract.increaseDeposit(additionalFortune*1000000);
+            const receipt = await tx.wait();
+            toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+          }
+          
+          //check if time was increased
+          if(depositLength < daysToStake){
+            const additonalDays = daysToStake - depositLength;
+            const tx = await bankContract.increaseDepositLength(additonalDays*86400);
+            const receipt = await tx.wait();
+            toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+          }
+          CheckForDeposits();
+        }
+        else
+        {
+          const tx = await bankContract.openAccount(fortuneToStake*1000000, daysToStake*86400);
+          const receipt = await tx.wait();
+          console.log(receipt);
+          toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+        }
       } catch (error) {
         console.log(error)
         if(error.response !== undefined) {
@@ -112,6 +193,51 @@ const StakePage = ({ onBack, onClose}) => {
     setMitama((fortuneToStake*daysToStake)/1080)
   }, [fortuneToStake, daysToStake])
 
+  useEffect(() => {
+    CheckForDeposits();
+    CheckForFortune();
+  }, [])
+
+  useEffect(() => {
+    setDepositsView(
+      <>
+      <Center>
+      <Box 
+        bgColor='#292626' 
+        w='95%' 
+        borderRadius={'5px'}
+        paddingTop='2' 
+        paddingBottom='2' 
+        color='white' 
+        textAlign={'center'}>
+      <Center>
+        <Flex justifyContent='space-between' w='90%'>
+          <Text w='30%'>Staked:</Text>
+          <Text w='30%'>Length: </Text>
+          <Text w='40%'>Withdraw Date: </Text>
+        </Flex>
+      </Center>
+
+      <Center>
+        <Flex justifyContent='space-between' w='90%'>
+          <Text w='30%'>{amountDeposited}</Text>
+          <Text w='30%'>{depositLength} Days</Text>
+          <Text w='40%'>{startTime}</Text>
+        </Flex>
+      </Center>
+      </Box>
+      </Center>
+
+      <Spacer h='6'/>
+      <Center>
+        <Flex justifyContent='space-between' w='90%'>
+          <Text align='center' > Increase Amount Staked or Length of Time</Text>
+        </Flex>
+      </Center>
+
+      </>
+      )
+  }, [amountDeposited, depositLength, startTime])
 
   return (
     <ModalBody
@@ -198,27 +324,39 @@ const StakePage = ({ onBack, onClose}) => {
             <>Stake Fortune</>
           </Flex>
         </Box>
-      <Center>
-      <HStack align='start'>
-        <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>Your</Text>
-        <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
-        <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>$Fortune: {commify(user.tokenSale.fortune)}</Text>
-      </HStack>
-      </Center>
-      
-      <Spacer m='4'/>
 
       <Center>
-      <Flex justifyContent='space-between' w='90%' >
-        <Text textAlign='left' fontSize={'14px'}>Fortune Tokens to Stake:</Text>
-        <Text textAlign='right' fontSize={'14px'}>Duration (Days):</Text>
-      </Flex>
+        <HStack align='start'
+        paddingTop='2'
+        >
+          <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>Your</Text>
+          <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
+          <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>$Fortune: {kFormatter(userFortune)}</Text>
+        </HStack>
       </Center>
+        
+        <Spacer m='4'/>
+      { !isLoading ? 
+       hasDeposited ? (<>
+        {depositsView}
+        </>)
+        : (<>
+          <Center>
+          <Flex justifyContent='space-between' w='90%' >
+            <Text textAlign='left' fontSize={'14px'}>Fortune Tokens to Stake:</Text>
+            <Text textAlign='right' fontSize={'14px'}>Duration (Days):</Text>
+          </Flex>
+          </Center>
+          </>)
+      : (<></>)}
 
       <Center>
         <Flex justifyContent='space-between' w='90%' >
           <FormControl w='50%'>
-            <NumberInput defaultValue={1000} min={1000} name="quantity" 
+            <NumberInput 
+              defaultValue={minAmountToStake} 
+              min={minAmountToStake} 
+              name="quantity" 
               onChange={handleChangeFortuneAmount}
               value={fortuneToStake} type ='number'
               step={1000}>
@@ -231,8 +369,8 @@ const StakePage = ({ onBack, onClose}) => {
           </FormControl>
           <FormControl w='33%'>
             <NumberInput 
-              defaultValue={90} 
-              min={90} 
+              defaultValue={minLengthOfTime} 
+              min={minLengthOfTime} 
               max={1080} 
               name="quantity" 
               step={90}
@@ -257,6 +395,9 @@ const StakePage = ({ onBack, onClose}) => {
           <Text textAlign={'center'} fontSize={'24px'}> $Mitama {mitama.toPrecision(5)}</Text>
           </Box>
       </Flex>
+
+      
+
       <Spacer h='8'/>
         <Flex alignContent={'center'} justifyContent={'center'}>
         <Box
@@ -277,7 +418,7 @@ const StakePage = ({ onBack, onClose}) => {
               </RdButton>
             </Box>
         </Flex>
-        <Spacer h='8'/>
+      <Spacer h='8'/>
     </Box>
     </ModalBody>
     

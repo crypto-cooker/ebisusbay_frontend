@@ -1,4 +1,3 @@
-import { useState, useEffect, useCallback} from "react";
 import {
   Modal,
   ModalBody,
@@ -23,15 +22,23 @@ import {
   Image
 } from "@chakra-ui/react"
 import { Spinner } from 'react-bootstrap';
-import StakePage from "@src/Components/BattleBay/Areas/bank/components/StakePage.js";
-import FaqPage from "@src/Components/BattleBay/Areas/bank/components/FaqPage.js";
+import { useState, useEffect, useCallback} from "react";
 import localFont from "next/font/local";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
+
 import {useSelector} from "react-redux";
 import {CloseIcon} from "@chakra-ui/icons";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
+
+//contracts
+import {Contract, ethers, BigNumber} from "ethers";
+import {appConfig} from "@src/Config";
+import {toast} from "react-toastify";
+import Bank from "@src/Contracts/Bank.json";
+import { createSuccessfulTransactionToastContent } from '@src/utils';
+import moment from 'moment';
 
 const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
 
@@ -41,23 +48,100 @@ const EmergencyWithdraw = ({ isOpen, onClose}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isExecuting, setIsExecuting] = useState(false);
   const user = useSelector((state) => state.user);
-  const [fortuneStaked, setFortuneStaked] = useState(20);
-  const [remainingFortune, setRemainingFortune] = useState(fortuneStaked);
-  const [fortuneToWithdraw, setFortuneToWithdraw] = useState(0);
-  const handleChangeFortune = (value) => {
-    if(fortuneStaked - (value*2) < 0) {
+  const [getSigner] = useCreateSigner();
+  const config = appConfig();
+
+  //deposit info
+  const [hasDeposited, setHasDeposited] = useState(false);
+  const [amountDeposited, setAmountDeposited] = useState(0);
+  const [depositLength, setDepositLength] = useState(0);
+  const [startTime, setStartTime] = useState(0);
+  const [depositsView, setDepositsView] = useState([])
+
+  // const [remainingFortune, setRemainingFortune] = useState(0);
+  // const [fortuneStaked, setFortuneStaked] = useState(amountDeposited);
+  // const [fortuneToWithdraw, setFortuneToWithdraw] = useState(0);
+
+  const [executingLabel, setExecutingLabel] = useState('Staking...');
+
+
+  // const handleChangeFortune = (value) => {
+  //   if(fortuneStaked - (value*2) >= 0) {
+  //     setRemainingFortune(fortuneStaked - (value*2))
+  //     setFortuneToWithdraw(value)
+  //   }
+  // }
+  // const WithdrawFortune = async () => {
+  //   setFortuneStaked(fortuneStaked - (fortuneToWithdraw*2))
+  //   setRemainingFortune(fortuneStaked - (fortuneToWithdraw*2))
+  //   setFortuneToWithdraw(0)
+  // }
+
+  const CheckForDeposits = async () => {
+    const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+    const bank = new Contract(config.contracts.bank, Bank, readProvider);
+    const deposits = await bank.deposits(user.address.toLowerCase());
+
+    function addDays(date, days) {
+      date.setDate(date.getDate() + days);
+      return date;
     }
-    else
-    {
-      setRemainingFortune(fortuneStaked - (value*2))
-      setFortuneToWithdraw(value)
+
+    //if has deposits, set state
+    if(Number(ethers.utils.hexValue(BigNumber.from(deposits[0]))) > 0){
+      setHasDeposited(true);
+      const daysToAdd = Number(ethers.utils.hexValue(BigNumber.from(deposits[1]))/86400);
+      const date = Date(Number(ethers.utils.hexValue(BigNumber.from(deposits[2]))));
+      const newDate = new Date(date);
+      const newerDate = addDays(newDate, daysToAdd);
+
+      setAmountDeposited(Number(ethers.utils.hexValue(BigNumber.from(deposits[0]))/1000000));
+      setDepositLength(daysToAdd);
+      setStartTime(moment(newerDate).format("MMM D yyyy"));
     }
+    setIsLoading(false);
   }
-  const WithdrawFortune = () => {
-    setFortuneStaked(fortuneStaked - (fortuneToWithdraw*2))
-    setRemainingFortune(fortuneStaked - (fortuneToWithdraw*2))
-    setFortuneToWithdraw(0)
+  const EmergencyWithdraw = async () => {
+    setExecutingLabel('Staking...');
+    setIsExecuting(true)
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      try {
+          setExecutingLabel('Approving...');
+          const bank = new Contract(config.contracts.bank, Bank, user.provider.getSigner());
+          const tx = await bank.emergencyClose();
+          const receipt = await tx.wait();
+          toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+          CheckForDeposits();
+
+      } catch (error) {
+        console.log(error)
+        if(error.response !== undefined) {
+          console.log(error)
+          toast.error(error.response.data.error.metadata.message)
+        }
+        else {
+          toast.error(error);
+        }
+      }
+    }
+    setIsExecuting(false)
+    console.log("Done")
   }
+
+ 
+  useEffect(() => {
+    CheckForDeposits();
+  }, [])
+
+  // useEffect(() => {
+  //   setFortuneStaked(amountDeposited);
+  //   setRemainingFortune(amountDeposited);
+  // }, [amountDeposited])
  
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
@@ -160,52 +244,62 @@ const EmergencyWithdraw = ({ isOpen, onClose}) => {
             <>Emergency Withdraw</>
           </Flex>
         </Box>
-
-      <Flex marginTop={'16px'} justifyContent={'center'}>
-          <Heading textAlign={'center'}  w='90%' fontSize={'14px'}>Will return 50% of staked tokens and burn the rest</Heading>
-      </Flex>
-      <Spacer h='8'/>
-          <Text align='center' fontSize={'14px'}>Fortune Tokens Staked: {remainingFortune}</Text>
-          <Text align='center' fontSize={'14px'} >Fortune Tokens to Withdraw:</Text>
-
-      <Flex alignContent={'center'} justifyContent={'center'}>
-        <Box textAlign={'center'}>
-          <FormControl>
-            <FormLabel textAlign={'center'}></FormLabel>
-            <NumberInput defaultValue={0} min={0} name="quantity" 
-              onChange={handleChangeFortune}
-              value={fortuneToWithdraw} type ='number'>
-            <NumberInputField />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-              </NumberInput>
-            </FormControl>
-          </Box>
+        <Flex marginTop={'16px'} justifyContent={'center'}>
+              <Text textAlign={'center'}  w='95%' fontSize='14'>Will return 50% of staked tokens and burn the rest</Text>
         </Flex>
-  
-      <Spacer h='8'/>
-        <Flex alignContent={'center'} justifyContent={'center'}>
-        <Box
-              ps='20px'>
-              <RdButton
-                w='250px'
-                fontSize={{base: 'xl', sm: '2xl'}}
-                stickyIcon={true}
-                onClick={() => {WithdrawFortune(); onClose()}}
-                isLoading={isExecuting}
-                disabled={isExecuting}
-              >
-                {user.address ? (
-                  <>{isExecuting ? executingLabel : 'Withdraw'}</>
-                ) : (
-                  <>Connect</>
-                )}
-              </RdButton>
-            </Box>
-        </Flex>
-        <Spacer h='8'/>
+
+        {hasDeposited ? (<>
+          
+          <Spacer h='8'/>
+              <Text align='center' fontSize='14'>Fortune Tokens Staked: {remainingFortune}</Text>
+              <Text align='center' fontSize='14'>Fortune Tokens to Withdraw:</Text>
+
+          <Flex alignContent={'center'} justifyContent={'center'}>
+            {/* <Box textAlign={'center'}>
+              <FormControl>
+                <FormLabel textAlign={'center'}></FormLabel>
+                <NumberInput 
+                  defaultValue={0} 
+                  min={0}
+                  max={fortuneStaked/2}
+                  name="quantity" 
+                  onChange={handleChangeFortune}
+                  value={fortuneToWithdraw} type ='number'>
+                <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                  </NumberInput>
+                </FormControl>
+              </Box> */}
+            </Flex>
+            <Spacer h='8'/>
+            <Flex alignContent={'center'} justifyContent={'center'}>
+            <Box
+                  ps='20px'>
+                  <RdButton
+                    w='250px'
+                    fontSize={{base: 'xl', sm: '2xl'}}
+                    stickyIcon={true}
+                    onClick={() => {EmergencyWithdraw()}}
+                    isLoading={isExecuting}
+                    disabled={isExecuting}
+                  >
+                    {user.address ? (
+                      <>{isExecuting ? executingLabel : 'Withdraw'}</>
+                    ) : (
+                      <>Connect</>
+                    )}
+                  </RdButton>
+                </Box>
+            </Flex>
+            <Spacer h='8'/>
+        </>) : (<>
+            <Spacer h='50'/>
+          <Text textAlign={'center'} fontSize='14'>You have no deposits to withdraw.</Text>
+            <Spacer h='50'/>
+        </>)}
     </Box>
     
     </ModalBody>
