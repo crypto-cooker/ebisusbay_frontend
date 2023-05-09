@@ -72,6 +72,7 @@ const StakePage = ({ onBack, onClose}) => {
     const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
     const fortuneContract = new Contract(config.contracts.fortune, Fortune, readProvider);
     const totalApproved = await fortuneContract.allowance(user.address.toLowerCase(), config.contracts.bank);
+    console.log("totalApproved: ", totalApproved)
     return totalApproved;
   }
   const CheckForFortune = async () => {
@@ -120,7 +121,6 @@ const StakePage = ({ onBack, onClose}) => {
 }
 
   const StakeFortune = async () => {
-    setExecutingLabel('Staking...');
     setIsExecuting(true)
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
@@ -129,6 +129,7 @@ const StakePage = ({ onBack, onClose}) => {
     }
     if (signatureInStorage) {
       try {
+        setExecutingLabel('Checking for Approval...');
         //check for approval
         const totalApproved = await CheckForApproval();
         const desiredFortuneAmount = Number(ethers.utils.hexValue(BigNumber.from(totalApproved)));
@@ -138,8 +139,7 @@ const StakePage = ({ onBack, onClose}) => {
         // console.log(actualFortuneToStake)
 
         if(convertedFortuneAmount < actualFortuneToStake){
-          toast.error("Please approve the contract to spend your resources")
-          setExecutingLabel('Approving contract...');
+          // toast.error("Please approve the contract to spend your resources")
           const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
           const tx = await fortuneContract.approve(config.contracts.bank, fortuneToStake);
           const receipt = await tx.wait();
@@ -152,6 +152,7 @@ const StakePage = ({ onBack, onClose}) => {
         if(hasDeposited){
           //check if amount was increased
           if(amountDeposited < fortuneToStake){
+            console.log("increasing amountDeposited");
             const additionalFortune = fortuneToStake - amountDeposited;
             const tx = await bankContract.increaseDeposit(additionalFortune*1000000);
             const receipt = await tx.wait();
@@ -160,6 +161,7 @@ const StakePage = ({ onBack, onClose}) => {
           
           //check if time was increased
           if(depositLength < daysToStake){
+            console.log("increasing days");
             const additonalDays = daysToStake - depositLength;
             const tx = await bankContract.increaseDepositLength(additonalDays*86400);
             const receipt = await tx.wait();
