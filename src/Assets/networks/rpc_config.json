@@ -1440,7 +1440,7 @@
       "listable": true,
       "metadata": {
         "description": "Join the Elite!",
-        "avatar": "/img/collections/foxfraternity/avatar.jpg",
+        "avatar": "/img/collections/foxfraternity/avatar.webp",
         "card": "/img/collections/foxfraternity/card.jpg",
         "banner": "/img/collections/foxfraternity/banner.jpg",
         "website": "https://www.cronosfoxfraternity.com/",
@@ -5362,6 +5362,9 @@
       "slug": "beta-mascots",
       "multiToken": false,
       "address": "0xb7bcDfcae4fA1A1b39660C03440FCf3E85AE878C",
+      "mergedAddresses": [
+        "0x19317B3fc2F1Add6b7E17a0A03A5a269Ed5ce48b"
+      ],
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -20688,7 +20691,7 @@
       "images": {
         "drop": "/img/drops/foxfraternity/drop.gif",
         "banner": "/img/drops/foxfraternity/banner.webp",
-        "avatar": "/img/collections/foxfraternity/avatar.jpg",
+        "avatar": "/img/collections/foxfraternity/avatar.webp",
         "preview": "/img/collections/foxfraternity/card.jpg"
       },
       "verification": {
@@ -27005,6 +27008,14 @@
         "kyc": true,
         "escrow": false,
         "verified": true
+      },
+      "escrow": {
+        "description": "The Pogo NFT project shall receive 25% of funds at the time of mint. The remaining funds will be held in escrow and released in three equal installments based on the following conditions:",
+        "milestones": [
+          "First installment released after NFT staking is enabled",
+          "Second installment released after 1/1 NFT’s have been distributed and mint rewards have been issued",
+          "Third installment released when all NFT’s have been minted and merch is available to holders"
+        ]
       }
     }
   ]
