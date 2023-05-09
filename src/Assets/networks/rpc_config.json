@@ -27005,6 +27005,14 @@
         "kyc": true,
         "escrow": false,
         "verified": true
+      },
+      "escrow": {
+        "description": "The Pogo NFT project shall receive 25% of funds at the time of mint. The remaining funds will be held in escrow and released in three equal installments based on the following conditions:",
+        "milestones": [
+          "First installment released after NFT staking is enabled",
+          "Second installment released after 1/1 NFT’s have been distributed and mint rewards have been issued",
+          "Third installment released when all NFT’s have been minted and merch is available to holders"
+        ]
       }
     }
   ]

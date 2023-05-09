@@ -368,6 +368,7 @@ const SingleDrop = ({drop}: SingleDropProps) => {
                     {openMenu === tabs.roadmap && (
                       <div className="mt-3 mb-4">
                         <VStack spacing={4} align='start'>
+                          <Text>{drop.escrow.description}</Text>
                           {drop.escrow.milestones.map((milestone: string, index: number) => (
                             <Box key={index}>
                               <Text fontWeight="bold" fontSize="lg">Phase {index + 1}</Text>
