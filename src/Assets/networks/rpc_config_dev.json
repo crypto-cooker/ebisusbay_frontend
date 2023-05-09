@@ -9491,7 +9491,7 @@
       "name": "Croodle Ape",
       "slug": "croodle-ape",
       "multiToken": false,
-      "address": "0xf3a7baeadf59f6900c0202a4680d958b9ad4b713",
+      "address": "",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -16333,7 +16333,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "10000 unique KKC | Community driving project | Price 3 CRO | Launch 4 January | From 3 cro to the moon \uD83D\uDE80",
+        "description": "",
         "avatar": "/img/collections/king-kong-cronos/avatar.webp",
         "banner": "/img/collections/king-kong-cronos/banner.webp",
         "card": "/img/collections/king-kong-cronos/card.webp",
@@ -24778,9 +24778,9 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": false,
+      "published": true,
       "complete": false,
-      "featured": true,
+      "featured": false,
       "redirect": "https://furyquackgang.com/",
       "images": {
         "drop": "/img/drops/fury-quack-gang/drop.webp",
