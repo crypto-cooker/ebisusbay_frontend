@@ -1445,7 +1445,7 @@
         "banner": "/img/collections/foxfraternity/banner.jpg",
         "website": "https://www.cronosfoxfraternity.com/",
         "twitter": "https://twitter.com/FoxFraternity",
-        "discord": "https://discord.gg/EryAWQ4sDn",
+        "discord": "https://discord.gg/f2CvddETGa",
         "categories": [
           "collectibles"
         ]
@@ -20329,6 +20329,31 @@
         "twitter": "https://twitter.com/ThirteenthEvil",
         "discord": "https://discord.gg/sBJcsPrcRq",
         "telegram": "https://t.me/AnnabelleCoin",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Cronos Fox Fraternity Faction",
+      "slug": "cronos-fox-fraternity-faction",
+      "multiToken": false,
+      "address": "0x33E1dfE95806C1702c7eD0f5741D565Fdf329c8C",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Fox Fraternity Faction, Join our discord to connect with other players.",
+        "avatar": "/img/collections/cronos-fox-fraternity-faction/avatar.webp",
+        "card": "/img/collections/cronos-fox-fraternity-faction/card.webp",
+        "banner": "/img/collections/cronos-fox-fraternity-faction/banner.webp",
+        "website": "https://www.cronosfoxfraternity.com/",
+        "twitter": "https://twitter.com/FoxFraternity",
+        "discord": "https://discord.gg/f2CvddETGa",
         "categories": [
           "collectibles"
         ]
