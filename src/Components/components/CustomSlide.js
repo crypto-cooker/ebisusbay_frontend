@@ -43,7 +43,7 @@ const CustomSlide = ({ index, avatar, banner, title, subtitle, collectionId, url
       }} shadow="lg">
         <div className="nft_wrap position-relative">
           <span onClick={() => navigateTo(url)}>
-            <img src={hostedImage(banner)} className="lazy img-fluid w-100" alt={title} />
+            <img src={ImageService.translate(banner).bannerPreview()} className="lazy img-fluid w-100" alt={title} />
           </span>
           {contextComponent && (
             <div className="position-absolute top-0 end-0 m-2">

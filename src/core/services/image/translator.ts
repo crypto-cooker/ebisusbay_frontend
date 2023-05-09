@@ -77,6 +77,10 @@ class ImageTranslator {
     } else if (url.includes('/files/')) {
       const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.files);
       provider = new BunnyCdnProvider(remappedUrl);
+
+      // return immediately because AWS bucket is not on ImageKit
+      return provider;
+
     } else if (url.includes('/storage/')) {
       const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.storage);
       provider = new BunnyCdnProvider(remappedUrl);
@@ -98,7 +102,8 @@ class ImageTranslator {
       }
     }
 
-    if (url.includes('.gif')) {
+    // Bunny is currently unable to translate gifs and mp4s
+    if (url.includes('.gif') || url.includes('.mp4')) {
       const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.bunnykit);
       provider = new BunnyKitProvider(remappedUrl);
     }
