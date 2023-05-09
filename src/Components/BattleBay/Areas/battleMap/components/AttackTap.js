@@ -44,6 +44,8 @@ import Resources from "@src/Contracts/Resources.json";
 // import { ConnectionManager } from 'src/Components/BattleBay/Areas/sockets/ConnectionManager.js';
 // import { Events } from 'src/Components/BattleBay/Areas/sockets/Events.js';
 
+//filter player armies that are deployed to controlpoint id and show the list of factiions that you are supporting there
+
 const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
   const config = appConfig();

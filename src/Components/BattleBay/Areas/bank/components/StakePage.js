@@ -39,8 +39,8 @@ import { createSuccessfulTransactionToastContent } from '@src/utils';
 const StakePage = ({ onBack, onClose}) => {
  
   const [isExecuting, setIsExecuting] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [getSigner] = useCreateSigner();
+  // const [setIsLoading] = useState(true);
+  const [isLoading, getSigner] = useCreateSigner();
   const config = appConfig();
 
   const user = useSelector((state) => state.user);
@@ -72,7 +72,6 @@ const StakePage = ({ onBack, onClose}) => {
     const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
     const fortuneContract = new Contract(config.contracts.fortune, Fortune, readProvider);
     const totalApproved = await fortuneContract.allowance(user.address.toLowerCase(), config.contracts.bank);
-    console.log("totalApproved: ", totalApproved)
     return totalApproved;
   }
   const CheckForFortune = async () => {
@@ -100,19 +99,18 @@ const StakePage = ({ onBack, onClose}) => {
       const newDate = new Date(date);
       const newerDate = addDays(newDate, daysToAdd);
 
-      setAmountDeposited(Number(ethers.utils.hexValue(BigNumber.from(deposits[0]))/1000000));
+      const newNumber = Number(ethers.utils.hexValue(BigNumber.from(deposits[0])));
+      setAmountDeposited(newNumber/1000000000000000000);
       setDepositLength(daysToAdd);
       setStartTime(moment(newerDate).format("MMM D yyyy"));
 
-      setMinAmountToStake(Number(ethers.utils.hexValue(BigNumber.from(deposits[0]))/1000000));
+      setMinAmountToStake(Number(ethers.utils.hexValue(BigNumber.from(deposits[0]))/1000000000000000000));
       setMinLengthOfTime(daysToAdd);
     }
     else
     {
-
+      console.log("no deposits")
     }
-    setIsLoading(false);
-
     return deposits;
   }
 
@@ -122,23 +120,14 @@ const StakePage = ({ onBack, onClose}) => {
 
   const StakeFortune = async () => {
     setIsExecuting(true)
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
       try {
         setExecutingLabel('Checking for Approval...');
         //check for approval
         const totalApproved = await CheckForApproval();
         const desiredFortuneAmount = Number(ethers.utils.hexValue(BigNumber.from(totalApproved)));
-        const convertedFortuneAmount = desiredFortuneAmount / 1000000;
-        const actualFortuneToStake = fortuneToStake*1000000;
-        // console.log(convertedFortuneAmount)
-        // console.log(actualFortuneToStake)
+        const convertedFortuneAmount = desiredFortuneAmount / 1000000000000;
 
-        if(convertedFortuneAmount < actualFortuneToStake){
+        if(convertedFortuneAmount < fortuneToStake){
           // toast.error("Please approve the contract to spend your resources")
           const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
           const tx = await fortuneContract.approve(config.contracts.bank, fortuneToStake);
@@ -151,10 +140,13 @@ const StakePage = ({ onBack, onClose}) => {
 
         if(hasDeposited){
           //check if amount was increased
-          if(amountDeposited < fortuneToStake){
-            console.log("increasing amountDeposited");
+          // console.log("has deposited");
+          // console.log(amountDeposited);
+          // console.log(fortuneToStake);
+          if(amountDeposited < Number(fortuneToStake)){
             const additionalFortune = fortuneToStake - amountDeposited;
-            const tx = await bankContract.increaseDeposit(additionalFortune*1000000);
+            console.log("additional fortune to stake: " + additionalFortune);
+            const tx = await bankContract.increaseDeposit(ethers.utils.parseEther(String(additionalFortune)));
             const receipt = await tx.wait();
             toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
           }
@@ -171,7 +163,8 @@ const StakePage = ({ onBack, onClose}) => {
         }
         else
         {
-          const tx = await bankContract.openAccount(fortuneToStake*1000000, daysToStake*86400);
+          console.log("new deposit");
+          const tx = await bankContract.openAccount(ethers.utils.parseEther(fortuneToStake), daysToStake*86400);
           const receipt = await tx.wait();
           console.log(receipt);
           toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -186,7 +179,7 @@ const StakePage = ({ onBack, onClose}) => {
           toast.error(error);
         }
       }
-    }
+
     setIsExecuting(false)
     console.log("Done")
   }
@@ -394,7 +387,7 @@ const StakePage = ({ onBack, onClose}) => {
 
       <Flex justifyContent={'center'}>
           <Box bgColor='#292626' w='95%' borderRadius={'5px'} p={4} color='white' textAlign={'center'}>
-          <Text textAlign={'center'} fontSize={'24px'}> $Mitama {mitama.toPrecision(5)}</Text>
+          <Text textAlign={'center'} fontSize={'24px'}> $Mitama {mitama.toFixed(0)}</Text>
           </Box>
       </Flex>
 

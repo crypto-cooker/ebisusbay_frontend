@@ -45,10 +45,10 @@ const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
 
 const EmergencyWithdraw = ({ isOpen, onClose}) => {
 
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [isExecuting, setIsExecuting] = useState(false);
   const user = useSelector((state) => state.user);
-  const [getSigner] = useCreateSigner();
+  const [isLoading, getSigner] = useCreateSigner();
   const config = appConfig();
 
   //deposit info
@@ -87,7 +87,6 @@ const EmergencyWithdraw = ({ isOpen, onClose}) => {
       date.setDate(date.getDate() + days);
       return date;
     }
-
     //if has deposits, set state
     if(Number(ethers.utils.hexValue(BigNumber.from(deposits[0]))) > 0){
       setHasDeposited(true);
@@ -96,54 +95,44 @@ const EmergencyWithdraw = ({ isOpen, onClose}) => {
       const newDate = new Date(date);
       const newerDate = addDays(newDate, daysToAdd);
 
-      setAmountDeposited(Number(ethers.utils.hexValue(BigNumber.from(deposits[0]))/1000000));
+      setAmountDeposited(Number(ethers.utils.hexValue(BigNumber.from(deposits[0]))/1000000000000000000));
       setDepositLength(daysToAdd);
       setStartTime(moment(newerDate).format("MMM D yyyy"));
     }
-    setIsLoading(false);
+    else {
+      setHasDeposited(false);
+    }
   }
   const EmergencyWithdraw = async () => {
     setExecutingLabel('Staking...');
     setIsExecuting(true)
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-          setExecutingLabel('Approving...');
-          const bank = new Contract(config.contracts.bank, Bank, user.provider.getSigner());
-          const tx = await bank.emergencyClose();
-          const receipt = await tx.wait();
-          toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-          CheckForDeposits();
 
-      } catch (error) {
+    try {
+      setExecutingLabel('Approving...');
+      const bank = new Contract(config.contracts.bank, Bank, user.provider.getSigner());
+      const tx = await bank.emergencyClose();
+      const receipt = await tx.wait();
+      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      CheckForDeposits();
+    } catch (error) {
+      console.log(error)
+      if(error.response !== undefined) {
         console.log(error)
-        if(error.response !== undefined) {
-          console.log(error)
-          toast.error(error.response.data.error.metadata.message)
-        }
-        else {
-          toast.error(error);
-        }
+        toast.error(error.response.data.error.metadata.message)
+      }
+      else {
+        toast.error(error);
       }
     }
+    
     setIsExecuting(false)
     console.log("Done")
   }
-
  
   useEffect(() => {
     CheckForDeposits();
   }, [])
 
-  // useEffect(() => {
-  //   setFortuneStaked(amountDeposited);
-  //   setRemainingFortune(amountDeposited);
-  // }, [amountDeposited])
- 
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
       <ModalOverlay />
