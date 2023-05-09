@@ -542,6 +542,10 @@ export const isCronosGorillaBusinessCollection = (address) => {
   return isCollection(address, 'cronos-gorilla-business', '0xc843f18d5605654391e7eDBEa250f6838C3e8936');
 };
 
+export const isCroSwapQuartermastersCollection = (address) => {
+  return isCollection(address, 'croswap-quartermasters', '0x333580e4B59E74243451c531c29121c02F8E3102');
+};
+
 export const isBundle = (addressOrSlug) => {
   return caseInsensitiveCompare(addressOrSlug, config.contracts.bundle) || addressOrSlug === 'nft-bundles';
 }
@@ -744,12 +748,12 @@ export const isEmptyObj = (obj) => {
 
 export const rankingsLogoForCollection = (collection) => {
   let logo = '/img/logos/ebisu-technicolor.svg';
-  if (!collection) ImageService.staticAsset.avatar(logo);
+  if (!collection) ImageService.translate(logo).avatar();
 
   if (collection.metadata.rankings?.source === 'rarity_sniper') logo = '/img/logos/rarity-sniper.png';
   else if (collection.metadata.rankings?.source === 'provided') logo = collection.metadata.avatar;
 
-  return ImageService.staticAsset.avatar(logo);
+  return ImageService.translate(logo).avatar();
 };
 export const rankingsTitleForCollection = (collection) => {
   let title = `Ranking provided by Ebisu's Bay`;
@@ -798,6 +802,24 @@ export const stripSpaces = (str) => {
 
 export const appUrl = (path) => {
   return new URL(path, appConfig('urls.app'));
+}
+
+/**
+ * Removes extra slashes from url path
+ *
+ * @param url
+ */
+export function cleanUrl(url) {
+  return url.replace(/([^:])(\/\/+)/g, '$1/');
+}
+
+/**
+ * Combines url components and cleans it
+ *
+ * @param components
+ */
+export function urlify(...components) {
+  return cleanUrl(components.join('/'));
 }
 
 export const pluralize = (val, word, plural = word + 's') => {

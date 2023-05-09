@@ -12,6 +12,7 @@ import FortunePresale from "@src/Contracts/FortunePresale.json";
 import {appConfig} from "@src/Config";
 import {useQuery} from "@tanstack/react-query";
 import {useAppSelector} from "@src/Store/hooks";
+import {ApiService} from "@src/core/services/api-service";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -56,11 +57,21 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
     async () => {
       const fortuneContract = new Contract(config.contracts.purchaseFortune, FortunePresale, readProvider);
       const paused = await fortuneContract.paused();
-      const userFortunePurchased = !!user.address ? await fortuneContract.purchases(user.address) : 0;
-      const totalFortunePurchased = await fortuneContract.totalPurchased();
       const exchangeRate = await fortuneContract.TOKEN_PRICE_USDC();
       const maxAllocation = await fortuneContract.MAX_PURCHASE();
       // const userMaxPurchaseAmount =
+      // const userFortunePurchased = !!user.address ? await fortuneContract.purchases(user.address) : 0;
+      // const totalFortunePurchased = await fortuneContract.totalPurchased();
+
+      const apiService = new ApiService();
+      const totalFortunePurchased = await apiService.globalTotalPurchased();
+      const userFortunePurchased = !!user.address ? await apiService.userTotalPurchased(user.address) : 0;
+
+      // console.log('data', {
+      //   total: totalFortunePurchased,
+      //   user: userFortunePurchased
+      // });
+
       return {
         paused,
         userFortunePurchased: Number(userFortunePurchased),
@@ -70,7 +81,9 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
       } as TokenSaleContextProps;
     },
     {
-      staleTime: 1,
+      enabled: isVisible,
+      refetchOnWindowFocus: false,
+      refetchInterval: 10000,
       initialData: () => ({
         paused: false,
         userFortunePurchased: 0,
@@ -111,11 +124,13 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
               <TypewriterText
                 text={[
                   'Welcome, traveler. It seems that since Ebisu has created all these Fortune tokens, our world has gone through quite an evolution.<br /><br />',
+                  Date.now() > config.tokenSale.publicEnd ?
+                    'The $Fortune token presale is now closed! Thank you to everyone who participated and welcome to Ryoshi Dynasties!' :
                   Date.now() > config.tokenSale.publicStart ?
-                    'The $Fortune token presale is now open to the public! Press the "Buy $Fortune" button to get started.' :
+                    `The $Fortune token presale is now open! Hold any Ebisu brand NFT and press the ${!!windowSize.height && windowSize.height < 600 ? '"$"' : '"Buy $Fortune"'} button to participate. Presale ends May 8th at 9pm UTC` :
                   Date.now() > config.tokenSale.vipStart ?
                     'The $Fortune token presale is now open to VIPs! Press the "Buy $Fortune" button to get started.' :
-                    'The $Fortune token presale will be held here on May 1st at 8pm UTC. VIPs will have exclusive access to the sale for one hour before the public sale.'
+                    'The $Fortune token presale will be held here on May 1st at 8pm UTC. VIPs will have exclusive access for one hour, followed by the member sale.'
                 ]}
                 onComplete={() => setBankerImage(bankerImages.idle)}
               />

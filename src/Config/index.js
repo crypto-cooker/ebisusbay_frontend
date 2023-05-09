@@ -25,10 +25,13 @@ export const configData = {
       cms: 'https://cms.ebisusbay.com/api/',
       explorer: 'https://cronoscan.com/',
       cdn: {
-        primary: 'https://cdn.lotusgalaxy.io/',
-        assets: 'https://ebisusbay-prod.b-cdn.net/',
         bunnykit: 'https://ik-proxy.b-cdn.net/',
-        legacy: 'https://cdn.ebisusbay.com/',
+        ipfs: 'https://cdn.ltsglxy.network/ipfs/',
+        arweave: 'https://cdn.ltsglxy.network/arweave/',
+        proxy: 'https://cdn.ltsglxy.network/proxy/',
+        storage: 'https://cdn-prod.ebisusbay.com/storage/',
+        files: 'https://cdn-prod.ebisusbay.com/files/',
+        app: 'https://cdn-prod.ebisusbay.com/'
       }
     },
     rpc: {
@@ -88,7 +91,19 @@ export const configData = {
     },
     tokenSale: {
       vipStart: 1682971200000,
-      publicStart: 1682974800000
+      publicStart: 1682974800000,
+      publicEnd: 1683579600000,
+      memberCollections: [
+        '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5', // FM
+        '0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29', // Valentine
+        '0x008d4Ab1D8fbC7823422a7cCFe3f1D73c09760Ab', // Holiday Hares
+        '0xD961956B319A10CBdF89409C0aE7059788A4DaBb', // Cronies
+        '0x54E61e2043f894475D17D344250F1983f7F7e6D3', // Ryoshi Halloween
+        '0xE49709A3B59d708f50AA3712F2E5a84b7707664C', // Ryoshi VIP
+        '0xf54abdcba21e7a740f98307a561b605cb3fdcf63', // Legacy VIP
+        '0x584a16905ca9cb10c0a2a9caa8e37a64de48c506', // SeaShrine VIP
+        '0xe3Ef45955b507895779a6A8911bBc48E0E17B11C', // Ryoshi Christmas
+      ]
     }
   },
   [environments.development]: {
@@ -104,10 +119,13 @@ export const configData = {
       cms: 'https://cms.ebisusbay.biz/api/',
       explorer: 'https://cronoscan.com/',
       cdn: {
-        primary: 'https://cdn.lotusgalaxy.io/',
-        assets: 'https://ebisusbay-dev.b-cdn.net/',
         bunnykit: 'https://ik-proxy.b-cdn.net/',
-        legacy: 'https://cdn.ebisusbay.biz/',
+        ipfs: 'https://cdn.ltsglxy.network/ipfs/',
+        arweave: 'https://cdn.ltsglxy.network/arweave/',
+        proxy: 'https://cdn.ltsglxy.network/proxy/',
+        storage: 'https://cdn-dev.ebisusbay.biz/storage/',
+        files: 'https://cdn-dev.ebisusbay.biz/files/',
+        app: 'https://cdn-dev.ebisusbay.biz/'
       }
     },
     rpc: {
@@ -166,7 +184,19 @@ export const configData = {
     },
     tokenSale: {
       vipStart: 1682971200000,
-      publicStart: 1682974800000
+      publicStart: 1682974800000,
+      publicEnd: 1683579600000,
+      memberCollections: [
+        '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5', // FM
+        '0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29', // Valentine
+        '0x008d4Ab1D8fbC7823422a7cCFe3f1D73c09760Ab', // Holiday Hares
+        '0xD961956B319A10CBdF89409C0aE7059788A4DaBb', // Cronies,
+        '0x54E61e2043f894475D17D344250F1983f7F7e6D3', // Ryoshi Halloween
+        '0xE49709A3B59d708f50AA3712F2E5a84b7707664C', // Ryoshi VIP
+        '0xf54abdcba21e7a740f98307a561b605cb3fdcf63', // Legacy VIP
+        '0x584a16905ca9cb10c0a2a9caa8e37a64de48c506', // SeaShrine VIP
+        '0xe3Ef45955b507895779a6A8911bBc48E0E17B11C', // Ryoshi Christmas
+      ]
     }
   },
   [environments.testnet]: {
@@ -182,10 +212,13 @@ export const configData = {
       cms: 'https://testcms.ebisusbay.biz/api/',
       explorer: 'https://testnet.cronoscan.com/',
       cdn: {
-        current: 'https://cdn.lotusgalaxy.io/',
-        assets: 'https://ebisusbay-test.b-cdn.net/',
         bunnykit: 'https://ik-proxy.b-cdn.net/',
-        legacy: 'https://cdn.ebisusbay.biz/test/',
+        ipfs: 'https://cdn-test.ltsglxy.network/ipfs/',
+        arweave: 'https://cdn-test.ltsglxy.network/arweave/',
+        proxy: 'https://cdn-test.ltsglxy.network/proxy/',
+        storage: 'https://cdn-test.ebisusbay.biz/storage/',
+        files: 'https://cdn-test.ebisusbay.biz/files/',
+        app: 'https://cdn-test.ebisusbay.biz/'
       }
     },
     rpc: {
@@ -248,8 +281,17 @@ export const configData = {
       }
     },
     tokenSale: {
-      vipStart: 1682932216000,
-      publicStart: 1682974800000
+      vipStart: 1682963727000,
+      publicStart: 1682963727000,
+      publicEnd: 1683579600000,
+      memberCollections: [
+        '0x3F1590A5984C89e6d5831bFB76788F3517Cdf034', // FM
+        '0xe51377a260043381b8B525D33B9fFBC601A1469b', // Ryoshi Halloween
+        '0xCF7aedEbC5223c4C620625A560300582B77D8719', // Ryoshi VIP
+        '0xa937e814A2c5e99E9e86c4F34162c4F012F75a52', // Legacy VIP
+        '0xa4C40C51de20d1e75E0ac83D6F043AF2f9C6Faa9', // SeaShrine VIP
+        '0x7fb11087c21719C2e4f9Fc16408e8a97a46c92Ad', // Ryoshi Christmas
+      ]
     }
   },
   [environments.local]: {
@@ -260,15 +302,18 @@ export const configData = {
     },
     urls: {
       api: 'https://api.ebisusbay.com/',
-      app: 'https://app.ebisusbay.com/',
+      app: 'http://localhost:3000/',
       subgraph: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
       cms: 'http://localhost:4000/api/',
       explorer: 'https://cronoscan.com/',
       cdn: {
-        primary: 'https://cdn.lotusgalaxy.io/',
-        assets: 'https://ebisusbay-prod.b-cdn.net/',
         bunnykit: 'https://ik-proxy.b-cdn.net/',
-        legacy: 'https://cdn.ebisusbay.com/',
+        ipfs: 'https://cdn.ltsglxy.network/ipfs/',
+        arweave: 'https://cdn.ltsglxy.network/arweave/',
+        proxy: 'https://cdn.ltsglxy.network/proxy/',
+        storage: 'https://cdn-prod.ebisusbay.com/storage/',
+        files: 'https://cdn-prod.ebisusbay.com/files/',
+        app: 'https://cdn-prod.ebisusbay.com/'
       }
     },
     rpc: {
@@ -286,7 +331,9 @@ export const configData = {
       bundle: '0x40874F18922267cc2Ca7933828594aB5078C1065',
       cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233',
       gaslessListing: '0x523d6f30c4aaca133daad97ee2a0c48235bff137',
-      gdc: '0xe3e564252249ab55b47b84d6a934f4cbb94233a9'
+      gdc: '0xe3e564252249ab55b47b84d6a934f4cbb94233a9',
+      purchaseFortune: '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566',
+      usdc: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59'
     },
     tokens: {
       loot: {
@@ -324,8 +371,20 @@ export const configData = {
       }
     },
     tokenSale: {
-      vipStart: 1682971200000,
-      publicStart: 1682974800000
+      vipStart: 1682871200000,
+      publicStart: 1682871200000,
+      publicEnd: 1683579600000,
+      memberCollections: [
+        '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5', // FM
+        '0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29', // Valentine
+        '0x008d4Ab1D8fbC7823422a7cCFe3f1D73c09760Ab', // Holiday Hares
+        '0xD961956B319A10CBdF89409C0aE7059788A4DaBb', // Cronies,
+        '0x54E61e2043f894475D17D344250F1983f7F7e6D3', // Ryoshi Halloween
+        '0xE49709A3B59d708f50AA3712F2E5a84b7707664C', // Ryoshi VIP
+        '0xf54abdcba21e7a740f98307a561b605cb3fdcf63', // Legacy VIP
+        '0x584a16905ca9cb10c0a2a9caa8e37a64de48c506', // SeaShrine VIP
+        '0xe3Ef45955b507895779a6A8911bBc48E0E17B11C', // Ryoshi Christmas
+      ]
     }
   }
 };

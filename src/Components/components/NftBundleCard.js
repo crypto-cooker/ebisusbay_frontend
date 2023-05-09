@@ -205,7 +205,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, ca
                       width={440}
                       height={440}
                       video={currentNft.video ?? currentNft.animationUrl ?? currentNft.animation_url}
-                      thumbnail={!!currentNft.video || !!currentNft.animationUrl || !!currentNft.animation_url ? ImageService.proxy.thumbnail(currentNft.video ?? currentNft.animationUrl ?? currentNft.animation_url) : undefined}
+                      thumbnail={!!currentNft.video || !!currentNft.animationUrl || !!currentNft.animation_url ? ImageService.translate(currentNft.video ?? currentNft.animationUrl ?? currentNft.animation_url).thumbnail() : undefined}
                       usePlaceholder={true}
                     />
                   </Watermarked>
@@ -218,7 +218,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, ca
                     width={440}
                     height={440}
                     video={currentNft.video ?? currentNft.animationUrl ?? currentNft.animation_url}
-                    thumbnail={!!currentNft.video || !!currentNft.animationUrl || !!currentNft.animation_url ? ImageService.proxy.thumbnail(currentNft.video ?? currentNft.animationUrl ?? currentNft.animation_url) : undefined}
+                    thumbnail={!!currentNft.video || !!currentNft.animationUrl || !!currentNft.animation_url ? ImageService.translate(currentNft.video ?? currentNft.animationUrl ?? currentNft.animation_url).thumbnail() : undefined}
                     usePlaceholder={true}
                   />
                 )}

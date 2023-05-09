@@ -38,10 +38,10 @@ const ImageContainer = ({ nft }) => {
             <SwiperSlide key={nft.id}>
               <Flex className='main-image' flexDir='column'>
                 <AnyMedia
-                  image={ImageService.proxy.convert(specialImageTransform(nft.address, nft.image))}
+                  image={ImageService.translate(specialImageTransform(nft.address, nft.image)).convert()}
                   video={nft.video ?? nft.animationUrl ?? nft.animation_url}
                   videoProps={{ height: 'auto', autoPlay: true }}
-                  thumbnail={!!nft.video || !!nft.animationUrl || !!nft.animation_url ? ImageService.proxy.thumbnail(nft.video ?? nft.animationUrl ?? nft.animation_url) : undefined}
+                  thumbnail={!!nft.video || !!nft.animationUrl || !!nft.animation_url ? ImageService.translate(nft.video ?? nft.animationUrl ?? nft.animation_url).thumbnail() : undefined}
                   title={nft.name}
                   usePlaceholder={true}
                   className="img-fluid img-rounded mb-sm-30"
@@ -56,8 +56,8 @@ const ImageContainer = ({ nft }) => {
           {nft.nfts.map((nft, index) => (
             <Box key={nft.id} className={currentIndex === index ? 'active' : ''} w='72px' marginRight='16px' onClick={() => { selectImage(index) }}>
               <MultimediaImage
-                source={ImageService.proxy.fixedWidth(specialImageTransform(nft.address, nft.image), 100, 100)}
-                fallbackSource={ImageService.instance.provider.fixedWidth(ImageService.proxy.thumbnail(nft.image), 100, 100)}
+                source={ImageService.translate(specialImageTransform(nft.address, nft.image)).fixedWidth(100, 100)}
+                fallbackSource={ImageService.translate(ImageService.translate(nft.image).thumbnail()).fixedWidth(100, 100)}
                 title={nft.name}
                 className="img-fluid img-rounded mb-sm-30"
               />

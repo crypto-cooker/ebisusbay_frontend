@@ -137,7 +137,7 @@ const DataTable = ({data, onUpdate, onCancel, onSort, onCheck, onToggleAll}: Res
                     >
                       {listing.valid ? (
                         <AnyMedia
-                          image={ImageService.proxy.avatar(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image)}
+                          image={ImageService.translate(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image).avatar()}
                           video={listing.nft.animation_url}
                           title={listing.nft.name}
                           className=""
@@ -147,7 +147,7 @@ const DataTable = ({data, onUpdate, onCancel, onSort, onCheck, onToggleAll}: Res
                           <Box position='relative'>
                             <Box filter='brightness(0.5)'>
                               <AnyMedia
-                                image={ImageService.proxy.blurred(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image)}
+                                image={ImageService.translate(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image).blurred()}
                                 video={listing.nft.animation_url}
                                 title={listing.nft.name}
                               />
@@ -256,7 +256,7 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel, onCheck, onToggleAll}:
                       >
                         {listing.valid ? (
                           <AnyMedia
-                            image={ImageService.proxy.avatar(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image)}
+                            image={ImageService.translate(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image).avatar()}
                             video={listing.nft.animation_url}
                             title={listing.nft.name}
                           />
@@ -264,7 +264,7 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel, onCheck, onToggleAll}:
                           <Box position='relative'>
                             <Box filter='brightness(0.5)'>
                               <AnyMedia
-                                image={ImageService.instance.provider.blurred(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image)}
+                                image={ImageService.translate(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image).blurred()}
                                 video={listing.nft.animation_url}
                                 title={listing.nft.name}
                               />

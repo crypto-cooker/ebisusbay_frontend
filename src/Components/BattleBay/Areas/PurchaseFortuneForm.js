@@ -269,7 +269,7 @@ const PurchaseFortuneForm = ({ isOpen, onClose}) => {
     marginTop={{ base: '10px', md: '-55px' }}
     >
       <Center >
-      <Link href='https://cdn.ebisusbay.com/terms-of-service.html' isExternal className={[styles.gotham_book]} 
+      <Link href='https://cdn-prod.ebisusbay.com/terms-of-service.html' isExternal className={[styles.gotham_book]}
       fontSize={{ base: '6px', md: '12px' }}>By completing this purchase you agree to our terms of service<ExternalLinkIcon mx='2px' /></Link >
 
       </Center>

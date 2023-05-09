@@ -3,12 +3,16 @@ import {
   convertIpfsResource,
   findCollectionByAddress,
   isAntMintPassCollection,
-  isBundle,
+  isBundle, isCroSwapQuartermastersCollection,
   isNftBlacklisted,
   isUserBlacklisted,
   isWeirdApesCollection
 } from "@src/utils";
-import {getAntMintPassMetadata, getWeirdApesStakingStatus} from "@src/core/api/chain";
+import {
+  getAntMintPassMetadata,
+  getCroSwapQuartermastersStakingStatus,
+  getWeirdApesStakingStatus
+} from "@src/core/api/chain";
 import {fallbackImageUrl} from "@src/core/constants";
 import WalletNft from "@src/core/models/wallet-nft";
 import axios from "axios";
@@ -71,6 +75,16 @@ export async function enrichWalletNft(nft: WalletNft): Promise<WalletNft> {
     let canSell = true;
     if (isWeirdApesCollection(nft.nftAddress)) {
       const staked = await getWeirdApesStakingStatus(nft.nftAddress, nft.nftId);
+      if (staked) {
+        canTransfer = false;
+        canSell = false;
+        isStaked = true;
+      }
+    }
+
+
+    if (isCroSwapQuartermastersCollection(nft.nftAddress)) {
+      const staked = await getCroSwapQuartermastersStakingStatus(nft.nftAddress, nft.nftId);
       if (staked) {
         canTransfer = false;
         canSell = false;

@@ -47,9 +47,9 @@ const CronosMutantApesAuction = () => {
   const description = 'This is your last chance to get one of the 10 Legendary Serums from Cronos Mutant Apes! \n' +
     'By burning this special Serum you are guaranteed to get one of the 10 Legendary Mutant Apes (Last Sale: 100K CRO). \n' +
     'To do so, you\'ll just need to hold 1 Cronos Apes and use this DAPP: https://app.cronosapesnft.com/lab.';
-  const image = 'https://cdn.ebisusbay.biz/collections/mutant-serum_Lrqx04cXt.gif';
+  const image = 'https://cdn-prod.ebisusbay.biz/collections/mutant-serum_Lrqx04cXt.gif';
   const background = 'https://app.cronosapesnft.com/images/background-image.gif';
-  const video = 'https://cdn.ebisusbay.biz/collections/mutant-serum-auction_43Ax4cE8B.mp4';
+  const video = 'https://cdn-prod.ebisusbay.biz/collections/mutant-serum-auction_43Ax4cE8B.mp4';
 
   return (
     <>
@@ -62,7 +62,7 @@ const CronosMutantApesAuction = () => {
       <HeroSection
         className={`jumbotron tint`}
         style={{
-          backgroundImage: `url(${ImageService.instance.provider.banner(background)})`
+          backgroundImage: `url(${ImageService.translate(background).banner()})`
         }}
       >
         <Container maxW='2560px' mx="1.75em" my={2}>

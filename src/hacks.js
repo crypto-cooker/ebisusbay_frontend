@@ -8,7 +8,7 @@ export function isCroSkullRedPotion(address) {
 }
 
 export function croSkullRedPotionImage() {
-  return 'https://cdn.ebisusbay.com/files/0x508378e99f5527acb6eb4f0fc22f954c5783e5f9/images/redpotion.gif';
+  return ImageService.translate('https://cdn-prod.ebisusbay.com/files/0x508378e99f5527acb6eb4f0fc22f954c5783e5f9/images/redpotion.gif').convert();
 }
 
 export function specialImageTransform(address, defaultImage) {

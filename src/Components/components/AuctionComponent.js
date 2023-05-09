@@ -119,7 +119,7 @@ const AuctionComponent = (props) => {
                         <ProfilePreview
                           type="Collection"
                           title={collection.name}
-                          avatar={ImageService.staticAsset.avatar(collection.metadata.avatar)}
+                          avatar={ImageService.translate(collection.metadata.avatar).avatar()}
                           address={listing.nftAddress}
                           verified={collection.verification.verified}
                           to={`/collection/${collection.slug}`}

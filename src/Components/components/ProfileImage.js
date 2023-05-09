@@ -37,7 +37,7 @@ const ProfileImage = ({ title, displayName, address = '' }) => {
         <Link href={`/account/${address}`}>
           <div className="author_list_pp">
             {!isLoading && data?.data?.profilePicture ? (
-              <img src={ImageService.instance.provider.avatar(data?.data?.profilePicture)} alt={data?.data?.username ? data?.data?.username : shortAddress(address)} />
+              <img src={ImageService.translate(data?.data?.profilePicture).avatar()} alt={data?.data?.username ? data?.data?.username : shortAddress(address)} />
             ) : (
               <Blockies seed={address} size={10} scale={5} style={{ width: '10px' }} />
             )}

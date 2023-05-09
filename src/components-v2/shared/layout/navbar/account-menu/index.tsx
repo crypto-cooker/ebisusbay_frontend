@@ -68,6 +68,8 @@ import CronosIcon from "@src/components-v2/shared/icons/cronos";
 import {useAppSelector} from "@src/Store/hooks";
 import GdcClaimConfirmation from "@src/components-v2/shared/dialogs/gdc-claim-confirmation";
 import ImageService from "@src/core/services/image";
+import {PrimaryButton} from "@src/components-v2/foundation/button";
+import {router} from "next/client";
 
 const StyledModal = styled(Modal)`
   .modal-content {
@@ -233,6 +235,11 @@ const Index = function () {
     window.open(url, '_blank');
   }
 
+  const handleBuyFortune = () => {
+    history.push('/ryoshi-dynasties/token-sale');
+    closeMenu();
+  }
+
   useEffect(() => {
     const themeInStorage = getThemeInStorage();
 
@@ -307,7 +314,7 @@ const Index = function () {
       {walletAddress && correctChain && (
         <Box className="de-menu-profile" onClick={() => setShowMenu(!showMenu)}>
           {user.profile.profilePicture ? (
-            <img src={ImageService.instance.provider.avatar(user.profile.profilePicture)} alt={user.profile.username} />
+            <img src={ImageService.translate(user.profile.profilePicture).avatar()} alt={user.profile.username} />
           ) : (
             <Blockies seed={user.address} size={9} scale={4} />
           )}
@@ -349,7 +356,7 @@ const Index = function () {
               <div className="d-flex align-items-center">
                 <span className={classnames('me-2', styles.avatar)}>
                   {user.profile.profilePicture ? (
-                    <img src={ImageService.instance.provider.avatar(user.profile.profilePicture)} alt={user.profile.username} />
+                    <img src={ImageService.translate(user.profile.profilePicture).avatar()} alt={user.profile.username} />
                   ) : (
                     <Blockies seed={user.address} size={9} scale={4}/>
                   )}
@@ -456,9 +463,42 @@ const Index = function () {
                 <FontAwesomeIcon icon={faWallet} className="me-2"/>
                 <span>Wallet Info</span>
               </Heading>
+
               <div className="d-flex">
                 <div className="flex-fill">
-                  <div className="text-muted">Balance</div>
+                  <div className="text-muted">$Fortune Balance</div>
+                  <div>
+                    {!user.connectingWallet ? (
+                      <span className="d-wallet-value">
+                      {user.tokenSale ? (
+                        <div className="d-flex">
+                          <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="Fortune Logo" width={16} height={16} />
+                          <span className="ms-1">
+                            {ethers.utils.commify(round(user.tokenSale.fortune, 2))}
+                          </span>
+                        </div>
+                      ) : (
+                        <>N/A</>
+                      )}
+                    </span>
+                    ) : (
+                      <span>
+                      <Spinner animation="border" role="status" size={'sm'}>
+                        <span className="visually-hidden">Loading...</span>
+                      </Spinner>
+                    </span>
+                    )}
+                  </div>
+                </div>
+                <div className="my-auto">
+                  <PrimaryButton onClick={handleBuyFortune}>
+                    Buy $Fortune
+                  </PrimaryButton>
+                </div>
+              </div>
+              <div className="d-flex mt-2">
+                <div className="flex-fill">
+                  <div className="text-muted">CRO Balance</div>
                   <div>
                     {!user.connectingWallet ? (
                       <span className="d-wallet-value">

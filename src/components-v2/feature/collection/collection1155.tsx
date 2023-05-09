@@ -126,7 +126,7 @@ const Collection1155 = ({ collection, tokenId, query, activeDrop = null }: Colle
         id="profile_banner"
         className="jumbotron breadcumb no-bg"
         style={{
-          backgroundImage: `url(${ImageService.instance.provider.banner(collection.metadata?.banner ?? '')})`,
+          backgroundImage: `url(${!!collection.metadata.banner ? ImageService.translate(collection.metadata.banner).banner() : ''})`,
           backgroundPosition: '50% 50%',
         }}
       >

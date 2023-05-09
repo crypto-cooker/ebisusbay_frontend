@@ -21,21 +21,21 @@ const Drops = () => {
         description="View the hottest drops on the Ebisu's Bay Launchpad"
         url="/drops"
       />
-      <section className="no-top mt-2 pb-2 bg-transparent">
-        <div className="d-flex justify-content-center px-5">
-          <p className="my-auto me-5">
-          Now is your chance to mint a Founding Member VIP from the team that brought you Ebisu's Bay.
-            <span className="fw-bold d-block d-md-inline-block text-end ms-3">            
-                <a href='https://blog.seashrine.io/vip-founding-member-nft-presale-announcement-4b791d086d63' target="_blank" rel="noopener noreferrer" >Learn More</a>
-            </span>
-          </p>
-          <div style={{ width: '70px' }} className="my-auto"> 
-              <a href='https://seashrine.io/#mint' target="_blank" rel="noopener noreferrer" >
-                <img src={hostedImage('/img/drops/seashrine-vip/drop.webp')} className="img-responsive" alt="Founding Member Membership" />
-              </a>
-          </div>
-        </div>
-      </section>
+      {/*<section className="no-top mt-2 pb-2 bg-transparent">*/}
+      {/*  <div className="d-flex justify-content-center px-5">*/}
+      {/*    <p className="my-auto me-5">*/}
+      {/*    Now is your chance to mint a Founding Member VIP from the team that brought you Ebisu's Bay.*/}
+      {/*      <span className="fw-bold d-block d-md-inline-block text-end ms-3">            */}
+      {/*          <a href='https://blog.seashrine.io/vip-founding-member-nft-presale-announcement-4b791d086d63' target="_blank" rel="noopener noreferrer" >Learn More</a>*/}
+      {/*      </span>*/}
+      {/*    </p>*/}
+      {/*    <div style={{ width: '70px' }} className="my-auto"> */}
+      {/*        <a href='https://seashrine.io/#mint' target="_blank" rel="noopener noreferrer" >*/}
+      {/*          <img src={hostedImage('/img/drops/seashrine-vip/drop.webp')} className="img-responsive" alt="Founding Member Membership" />*/}
+      {/*        </a>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</section>*/}
       <section className="jumbotron breadcumb no-bg" style={{ backgroundColor: getTheme(userTheme).colors.bgColor3 }}>
         <div className="container">
           <div className="row py-4">

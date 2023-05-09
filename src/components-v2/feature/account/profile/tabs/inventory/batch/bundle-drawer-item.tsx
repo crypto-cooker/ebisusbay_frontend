@@ -158,14 +158,14 @@ const BundleDrawerItem = ({ item, disabled, onAddCollection }: BundleDrawerItemP
         >
           {isBundle(item.nft.nftAddress) ? (
             <Image
-              src={ImageService.instance.provider.avatar('/img/logos/bundle.webp')}
+              src={ImageService.translate('/img/logos/bundle.webp').avatar()}
               alt={item.nft.name}
               rounded="md"
             />
           ) : (
             <MultimediaImage
-              source={ImageService.proxy.fixedWidth(specialImageTransform(item.nft.nftAddress, item.nft.image), 100, 100)}
-              fallbackSource={ImageService.instance.provider.fixedWidth(ImageService.proxy.thumbnail(item.nft.image), 100, 100)}
+              source={ImageService.translate(specialImageTransform(item.nft.nftAddress, item.nft.image)).fixedWidth(100, 100)}
+              fallbackSource={ImageService.translate(ImageService.translate(item.nft.image).thumbnail()).fixedWidth(100, 100)}
               title={item.nft.name}
               className="img-fluid img-rounded-5"
             />

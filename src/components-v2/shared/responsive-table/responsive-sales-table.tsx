@@ -160,7 +160,7 @@ const DataAccordion = ({data, onSort}: ResponsiveTableProps) => {
                         overflow='hidden'
                       >
                         <AnyMedia
-                          image={ImageService.staticAsset.avatar(listing.nft.image)}
+                          image={ImageService.translate(listing.nft.image).avatar()}
                           video={listing.nft.animation_url}
                           title={listing.nft.name}
                         />

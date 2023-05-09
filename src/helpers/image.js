@@ -16,12 +16,10 @@ export const hostedImage = (imgPath, useThumbnail = false) => {
   imgPath = imgPath.replace(/^\/+/g, '');
   const cdn = appConfig('urls.cdn');
 
-  const imageUrl = new URL(imgPath, cdn.assets);
-
   if (useThumbnail) {
-    return ImageService.staticAsset.avatar(imgPath.toString());
+    return ImageService.translate(imgPath.toString()).avatar();
   }
-  return ImageService.staticAsset.convert(imgPath.toString());
+  return ImageService.translate(imgPath.toString()).convert();
 }
 /**
  * Build a hosted image URL from our CDN that is fit for the NFT cards
@@ -32,7 +30,7 @@ export const hostedImage = (imgPath, useThumbnail = false) => {
  */
 export const nftCardUrl = (nftAddress, nftImage) => {
   if (!nftImage || nftImage.startsWith('data')) return nftImage;
-  return ImageService.proxy.nftCard(specialImageTransform(nftAddress, nftImage));
+  return ImageService.translate(specialImageTransform(nftAddress, nftImage)).nftCard();
 }
 
 export const convertGateway = (imageUrl) => {

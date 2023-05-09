@@ -31,6 +31,7 @@ import {commify} from "ethers/lib/utils";
 import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
 import {useQuery} from "@tanstack/react-query";
 import {getNft} from "@src/core/api/endpoints/nft";
+import ImageService from "@src/core/services/image";
 
 const config = appConfig();
 const floorThreshold = 5;
@@ -435,7 +436,7 @@ const NftPicker = ({collectionAddress, nfts, onSelect, initialNft}) => {
     <>
       {isBundle(chosenNft.nftAddress) ? (
         <ImageContainer className="mx-auto">
-          <img src={ImageService.instance.provider.avatar('/img/logos/bundle.webp')} alt={chosenNft.name} />
+          <img src={ImageService.translate('/img/logos/bundle.webp').avatar()} alt={chosenNft.name} />
         </ImageContainer>
       ) : (
         <ImageContainer className="mx-auto">
