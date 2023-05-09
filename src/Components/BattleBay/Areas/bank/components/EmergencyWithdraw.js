@@ -78,6 +78,7 @@ const EmergencyWithdraw = ({ isOpen, onClose}) => {
   // }
 
   const CheckForDeposits = async () => {
+    console.log("Checking for deposits")
     const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
     const bank = new Contract(config.contracts.bank, Bank, readProvider);
     const deposits = await bank.deposits(user.address.toLowerCase());
@@ -251,8 +252,8 @@ const EmergencyWithdraw = ({ isOpen, onClose}) => {
         {hasDeposited ? (<>
           
           <Spacer h='8'/>
-              <Text align='center' fontSize='14'>Fortune Tokens Staked: {remainingFortune}</Text>
-              <Text align='center' fontSize='14'>Fortune Tokens to Withdraw:</Text>
+              <Text align='center' fontSize='14'>$Fortune Tokens Staked: {amountDeposited}</Text>
+              <Text align='center' fontSize='14'>$Fortune Tokens to Withdraw: {amountDeposited/2}</Text>
 
           <Flex alignContent={'center'} justifyContent={'center'}>
             {/* <Box textAlign={'center'}>
