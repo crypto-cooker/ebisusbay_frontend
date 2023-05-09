@@ -5362,6 +5362,9 @@
       "slug": "beta-mascots",
       "multiToken": false,
       "address": "0xb7bcDfcae4fA1A1b39660C03440FCf3E85AE878C",
+      "mergedAddresses": [
+        "0x19317B3fc2F1Add6b7E17a0A03A5a269Ed5ce48b"
+      ],
       "onChain": false,
       "listable": true,
       "metadata": {
