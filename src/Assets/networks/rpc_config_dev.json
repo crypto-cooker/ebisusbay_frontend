@@ -1440,7 +1440,7 @@
       "listable": true,
       "metadata": {
         "description": "Join the Elite!",
-        "avatar": "/img/collections/foxfraternity/avatar.jpg",
+        "avatar": "/img/collections/foxfraternity/avatar.webp",
         "card": "/img/collections/foxfraternity/card.jpg",
         "banner": "/img/collections/foxfraternity/banner.jpg",
         "website": "https://www.cronosfoxfraternity.com/",
@@ -20688,7 +20688,7 @@
       "images": {
         "drop": "/img/drops/foxfraternity/drop.gif",
         "banner": "/img/drops/foxfraternity/banner.webp",
-        "avatar": "/img/collections/foxfraternity/avatar.jpg",
+        "avatar": "/img/collections/foxfraternity/avatar.webp",
         "preview": "/img/collections/foxfraternity/card.jpg"
       },
       "verification": {
