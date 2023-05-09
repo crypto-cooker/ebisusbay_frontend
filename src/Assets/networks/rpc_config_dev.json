@@ -24778,9 +24778,9 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": false,
+      "published": true,
       "complete": false,
-      "featured": true,
+      "featured": false,
       "redirect": "https://furyquackgang.com/",
       "images": {
         "drop": "/img/drops/fury-quack-gang/drop.webp",
