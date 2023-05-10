@@ -1,7 +1,3 @@
-import React, {useEffect, useLayoutEffect, useState, useRef } from 'react';
-import { resizeMap, resizeNewMap } from './mapFunctions.js'
-import { TransformWrapper, TransformComponent, ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
-import styles from './BattleBay.module.scss';
 import {
   Button,
   Flex,
@@ -16,13 +12,24 @@ import {
   DrawerContent,
   DrawerCloseButton,
   useDisclosure,
-  AspectRatio
+  AspectRatio,
+  VStack,
+  Text,
+  HStack
 } from "@chakra-ui/react"
+
+import React, {useEffect, useLayoutEffect, useState, useRef } from 'react';
+import { resizeMap, resizeNewMap } from './mapFunctions.js'
+import { TransformWrapper, TransformComponent, ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
+import styles from './BattleBay.module.scss';
+import AnnouncementBoardModal from './AnnouncementBoardModal.js';
+import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 
 const DefaultArea = ({onChange}) => {
 
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const btnRef = React.useRef()
+  const[koban, setKoban] = useState(0);
+  const[fortune, setFortune] = useState(0);
+  const[mitama, setMitama] = useState(0);
 
   const [pins, setPins] = useState([]);
   const transformComponentRef = useRef()
@@ -35,6 +42,10 @@ const DefaultArea = ({onChange}) => {
   const [initialPositionX, setInitialPositionX] = useState(0);
   const [initialPositionY, setInitialPositionY] = useState(0);
 
+  const buildingButtonRef = React.useRef()
+  const announcementBoardRef = React.useRef()
+  const { isOpen: isOpenBuildings, onOpen: onOpenBuildings, onClose: onCloseBuildings } = useDisclosure();
+  const { isOpen: isOpenAnnouncementBoard, onOpen: onOpenAnnouncementBoard, onClose: onCloseAnnouncementBoard } = useDisclosure();
 
   useEffect(() => {
     if (transformComponentRef.current) {
@@ -349,6 +360,14 @@ useEffect(() => {
   setSizeMultiplier(window.innerWidth / 2880);
 }, [])
 
+useEffect(() => {
+  onOpenAnnouncementBoard();
+}, [])
+
+useEffect(() => {
+  // get all resources
+}, [])
+
 const SetUpButtons = async () => {
   setPins(buttonsNames.map((button, i) => 
     (<Button style={{ marginTop: '4px', marginLeft: '4px' }} 
@@ -451,7 +470,7 @@ const SetUpButtons = async () => {
             </div>
 
             <div id="announcement" className={[styles.enlarge]} style={{position:"absolute", marginTop: announcementTop, marginLeft: announcementLeft, zIndex:"9"}} 
-            // onClick={() => onChange('announcementBoard')}
+            onClick={onOpenAnnouncementBoard}
             >
               <img src='/img/battle-bay/mapImages/announcement.png' width={announcementWidth} height={announcementHeight} /> </div>
 
@@ -503,50 +522,59 @@ const SetUpButtons = async () => {
         </React.Fragment>
         )}
       </TransformWrapper>
-
-      {/* <Flex style={{ display: 'flex', marginTop: '16px' }} textAlign='center' justifyContent='space-around'>
-      <Button ref={btnRef} colorScheme='teal' onClick={onOpen} >
-        Buildings
-      </Button> */}
-
-   
       </AspectRatio>
     
 <Box  position='absolute' top={0} left={0} p={4}>
-  <Flex direction='row' justify='space-between'>
-    <Box>
-      <Image style={{ display: 'flex', marginTop: '16px' }} src='\img\battle-bay\bankinterior\banker_chat_background.png' w='140px' position={'absolute'} />
-      <Button style={{ display: 'flex', marginTop: '16px' }}  color='white' onClick={() => onChange('userPage')} variant='ghost'size='lg'>  User Profile </Button>
-      <Image style={{ display: 'flex', marginTop: '16px' }}src='\img\battle-bay\bankinterior\banker_chat_background.png' w='140px' position={'absolute'} />
-      <Button style={{ display: 'flex', marginTop: '16px' }}  color='white' ref={btnRef}  variant='ghost' onClick={onOpen} size='lg'>Buildings</Button>
-    </Box>
-    
-  </Flex>
-</Box>
+  <Flex direction='row' justify='space-between' >
+    <Box mb={4} bg='#272523' p={2} rounded='md' >
+      <Flex alignItems='left'>
+        <VStack alignItems='left'>
+          <HStack>
+            <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
+            <Text >Fortune : {fortune}</Text>
+          </HStack>
+          <HStack>
+            <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
+            <Text align='left'>Mitama : {mitama}</Text>
+          </HStack>
+          <HStack>
+            <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
+            <Text align='left'>Koban : {koban}</Text>
+          </HStack>
+        </VStack>
+      </Flex>
 
-</Box>
-
-      <Drawer
-        isOpen={isOpen}
-        placement='bottom'
-        onClose={onClose}
-        finalFocusRef={btnRef}
+      <Spacer h='4'/>
+      <RdButton
+        w='150px'
+        fontSize={{base: 'm', sm: 'm'}}
+        ref={buildingButtonRef} 
+        hideIcon={true}
+        onClick={onOpenBuildings}
       >
-        {/* <DrawerOverlay /> */}
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Zoom to Building</DrawerHeader>
-
-          <DrawerBody>
-            {pins}
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
-      {/* </Flex> */}
-      {/* </div> */}
-    </section>
-  )
-};
+        View Building
+      </RdButton>
+      <AnnouncementBoardModal isOpen={isOpenAnnouncementBoard} onClose={onCloseAnnouncementBoard}/>
+      </Box>
+  </Flex>
+  </Box>
+  </Box>
+    <Drawer
+      isOpen={isOpenBuildings}
+      placement='bottom'
+      onClose={onCloseBuildings}
+      finalFocusRef={buildingButtonRef}
+    >
+      <DrawerContent>
+        <DrawerCloseButton />
+        <DrawerHeader>Zoom to Building</DrawerHeader>
+        <DrawerBody>
+          {pins}
+        </DrawerBody>
+      </DrawerContent>
+    </Drawer>
+  </section>
+)};
 
 
 export default DefaultArea;

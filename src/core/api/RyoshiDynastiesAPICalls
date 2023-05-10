@@ -15,6 +15,16 @@ export const getWeeklyGameId = async () => {
     throw error;
   }
 }
+export const getPreviousGame = async () => {
+  try{
+    var currentGame = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    var data = await api.get(baseURL + "api/ryoshi-dynasties/games/"+Number(currentGame.data.data.id-1));
+    return data.data.data;
+  }
+  catch(error){
+    throw error;
+  }
+}
 export const getSeasonGameId = async () => {
   try{
     var data = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
@@ -283,11 +293,13 @@ export const getControlPoints= async (regionNumber) => {
     throw error;
   }
 }
+
 export const getLeaderBoard = async (controlPointId) => {
   try{
     var gameID = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    // console.log(gameID.data.data);
     var data = await api.get(baseURL + "api/ryoshi-dynasties/control-points/"+controlPointId,
-      {params: {gameId: gameID.data.data.id}});
+      {params: {gameId: Number(gameID.data.data.id-1)}});
     // console.log(data);
     return data.data.data.leaderBoard;
   }
