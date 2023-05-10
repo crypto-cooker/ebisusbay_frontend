@@ -76,5 +76,8 @@ export class ApiService implements Api {
   async getUserStakedFortune(address: string) {
     return this.graph.getUserStakedFortune(address);
   }
+  async getErc20Account(address: string) {
+    return this.graph.getErc20Account(address);
+  }
 }
 

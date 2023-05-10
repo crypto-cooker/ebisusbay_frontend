@@ -24,6 +24,11 @@ class Graph {
     const result = await this.ryoshiDynasties.getUserStakedFortune(address);
     return result.data;
   }
+
+  async getErc20Account(address: string) {
+    const result = await this.ryoshiDynasties.getErc20Account(address);
+    return result.data;
+  }
 }
 
 export default Graph;

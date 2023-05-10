@@ -44,6 +44,25 @@ class RyoshiDynasties {
       }
     });
   }
+
+  async getErc20Account(walletAddress: string) {
+    const query = `
+        query ERC20Query($address: String) {
+            erc20Accounts(where: {id: $address}) {
+                id
+                mitamaBalance
+                fortuneBalance
+            }
+        }
+    `;
+
+    return this.apollo.query({
+      query: gql(query),
+      variables: {
+        address: walletAddress.toLowerCase()
+      }
+    });
+  }
 }
 
 export default RyoshiDynasties;

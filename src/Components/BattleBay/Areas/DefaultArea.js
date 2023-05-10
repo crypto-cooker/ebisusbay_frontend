@@ -15,6 +15,7 @@ import {
   AspectRatio,
   VStack,
   Text,
+  Spinner,
   HStack
 } from "@chakra-ui/react"
 
@@ -24,12 +25,26 @@ import { TransformWrapper, TransformComponent, ReactZoomPanPinchRef } from "reac
 import styles from './BattleBay.module.scss';
 import AnnouncementBoardModal from './AnnouncementBoardModal.js';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
+import {useSelector} from "react-redux";
+import {BigNumber, Contract, ethers} from "ethers";
+import {commify} from "ethers/lib/utils";
+
+import {ApiService} from "@src/core/services/api-service";
+import axios from "axios";
+const api = axios.create({
+  baseURL: 'api/',
+});
+
+const baseURL = 'https://testcms.ebisusbay.biz/';
 
 const DefaultArea = ({onChange}) => {
+
+  const user = useSelector((state) => state.user);
 
   const[koban, setKoban] = useState(0);
   const[fortune, setFortune] = useState(0);
   const[mitama, setMitama] = useState(0);
+  const[resourcesAcquired, setResourcesAcquired] = useState(false);
 
   const [pins, setPins] = useState([]);
   const transformComponentRef = useRef()
@@ -361,11 +376,30 @@ useEffect(() => {
 }, [])
 
 useEffect(() => {
-  onOpenAnnouncementBoard();
+  // onOpenAnnouncementBoard();
 }, [])
+
+
+
+const GetResources = async () => {
+  try {
+    setResourcesAcquired(false);
+    var data = await api.get("https://testapi.ebisusbay.biz/v2/wallets?wallet="+user.address.toLowerCase()+"&collection=0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5");
+    const fortuneAndMitama = await ApiService.withoutKey().getErc20Account(user.address)
+
+    setKoban(data.data.nfts[0].balance);
+    setFortune(Number(ethers.utils.formatEther(fortuneAndMitama.erc20Accounts[0].fortuneBalance)));
+    setMitama(Number(ethers.utils.formatEther(fortuneAndMitama.erc20Accounts[0].mitamaBalance)));
+    
+    setResourcesAcquired(true);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 useEffect(() => {
   // get all resources
+  GetResources();
 }, [])
 
 const SetUpButtons = async () => {
@@ -531,15 +565,15 @@ const SetUpButtons = async () => {
         <VStack alignItems='left'>
           <HStack>
             <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
-            <Text >Fortune : {fortune}</Text>
+            <Text >Fortune : {!resourcesAcquired ? <Spinner size='sm'/> :commify(fortune.toFixed())}</Text>
           </HStack>
           <HStack>
             <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
-            <Text align='left'>Mitama : {mitama}</Text>
+            <Text align='left'>Mitama : {!resourcesAcquired ? <Spinner size='sm'/> :commify(mitama)}</Text>
           </HStack>
           <HStack>
             <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
-            <Text align='left'>Koban : {koban}</Text>
+            <Text align='left'>Koban : {!resourcesAcquired ? <Spinner size='sm'/> : commify(koban)}</Text>
           </HStack>
         </VStack>
       </Flex>
