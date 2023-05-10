@@ -10,6 +10,7 @@ import {Offer} from "@src/core/models/offer";
 import {WalletsQueryParams} from "./mapi/queries/wallets";
 import WalletNft from "@src/core/models/wallet-nft";
 import Graph from "@src/core/services/api-service/graph";
+import {StakedToken} from "@src/core/services/api-service/graph/types";
 
 
 export class ApiService implements Api {
@@ -78,6 +79,10 @@ export class ApiService implements Api {
   }
   async getErc20Account(address: string) {
     return this.graph.getErc20Account(address);
+  }
+
+  async getStakedTokens(address: string) {
+    return this.graph.getStakedTokens(address);
   }
 }
 

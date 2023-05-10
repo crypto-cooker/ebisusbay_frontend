@@ -1,5 +1,5 @@
 import {appConfig} from "@src/Config";
-import {ApolloClient, InMemoryCache, gql, ApolloQueryResult} from '@apollo/client';
+import {ApolloClient, gql, InMemoryCache, TypedDocumentNode} from '@apollo/client';
 import {urlify} from "@src/utils";
 
 const config = appConfig();
@@ -47,13 +47,33 @@ class RyoshiDynasties {
 
   async getErc20Account(walletAddress: string) {
     const query = `
-        query ERC20Query($address: String) {
-            erc20Accounts(where: {id: $address}) {
-                id
-                mitamaBalance
-                fortuneBalance
-            }
+      query ERC20Query($address: String) {
+        erc20Accounts(where: {id: $address}) {
+          id
+          mitamaBalance
+          fortuneBalance
         }
+      }
+    `;
+
+    return this.apollo.query({
+      query: gql(query),
+      variables: {
+        address: walletAddress.toLowerCase()
+      }
+    });
+  }
+
+  async stakedTokens(walletAddress: string) {
+    const query = `
+      query StakedTokensQuery($address: String) {
+        stakedTokens(where: {user: $address}) {
+          id
+          contractAddress
+          tokenId
+          amount
+        }
+      }
     `;
 
     return this.apollo.query({

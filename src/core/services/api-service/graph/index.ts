@@ -1,5 +1,6 @@
 import RyoshiPresale from "@src/core/services/api-service/graph/subgraphs/ryoshi-presale";
 import RyoshiDynasties from "@src/core/services/api-service/graph/subgraphs/ryoshi-dynasties";
+import {StakedToken} from "@src/core/services/api-service/graph/types";
 
 class Graph {
   private ryoshiPresale;
@@ -28,6 +29,11 @@ class Graph {
   async getErc20Account(address: string) {
     const result = await this.ryoshiDynasties.getErc20Account(address);
     return result.data;
+  }
+
+  async getStakedTokens(address: string) {
+    const result = await this.ryoshiDynasties.stakedTokens(address);
+    return result.data.stakedTokens as StakedToken[];
   }
 }
 

@@ -38,7 +38,6 @@ const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, ch
           rounded='3xl'
           bg='linear-gradient(#1C1917, #272624, #000000)'
           className={gothamBook.className}
-          m={6}
         >
           <ModalBody p={2} color='white'>
             <Box
