@@ -72,6 +72,16 @@ export const getProfileTroops = async (_address, _signature) => {
     throw error;
   }
 }
+export const getProfileArmies = async (_address, _signature) => {
+  try{
+    var data = await api.get(baseURL + "api/ryoshi-dynasties/armies?",
+      {params: {address: _address, signature: _signature}});
+    return data;
+  }
+  catch(error){
+    throw error;
+  }
+}
 //creates a faction
 export const createFaction = async (address, signature, type, name, addresses=[], image) => {
   try{

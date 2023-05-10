@@ -40,7 +40,7 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
   const [selectedQuantity, setSelectedQuantity] = useState(0);
   const [selectedFaction, setSelectedFaction] = useState(dataForm.faction);
   const handleChange = (value) => setSelectedQuantity(value)
-  const [playerFactions, setPlayerFactions] = useState([]);
+  const [allFactions, setAllFactions] = useState([]);
 
   const [troopsAvailable, setTroopsAvailable] = useState(0);
   const [factionTroopsAvailable, setFactionTroopsAvailable] = useState(0);
@@ -99,7 +99,7 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
       try {
         if(currentTab === tabs.deploy)
         {
-          var factionId = playerFactions.filter(faction => faction.name === selectedFaction)[0].id
+          var factionId = allFactions.filter(faction => faction.name === selectedFaction)[0].id
           var data = await deployTroops(user.address.toLowerCase(), signatureInStorage,
            selectedQuantity, controlPoint.id, factionId)
           await GetPlayerTroops();
@@ -112,7 +112,6 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
           // console.log("You recalled", selectedQuantity, "troops from", controlPoint, "on behalf of", dataForm.faction)
 
         }
-        // console.log('playerFactions', playerFactions);
       } catch (error) {
         console.log(error)
         toast.error(error.response.data.error.metadata.message)
@@ -136,24 +135,20 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
     }
   }
   const ShowAvailableFactions = async () => {
-      setFactionOption(playerFactions.map((faction, index) => (
-        // console.log(faction),
-      <option value={faction.name} key={index}>{faction.name}</option>)))
-      // onChangeInputsFaction();
-      // if(playerFactions.length > 0)
-      //   setSelectedFaction(playerFactions[0].name)
+      setFactionOption(allFactions.map((faction, index) => (
+        <option value={faction.name} key={index}>{faction.name}</option>
+      )))
   }
 
   useEffect(() => {
-    if(controlPoint.leaderBoard !== undefined)
-    {
-      setPlayerFactions(controlPoint.leaderBoard);
+    if(controlPoint.leaderBoard !== undefined) {
+      setAllFactions(controlPoint.leaderBoard);
     }
   }, [controlPoint])
 
   useEffect(() => {
     ShowAvailableFactions();
-  }, [playerFactions])
+  }, [allFactions])
 
   useEffect(() => {
     // GetFactionTroops();
@@ -189,7 +184,7 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
         {currentTab === tabs.deploy && (<p>
           Troops available in wallet: {troopsAvailable}
           <br /> {
-            showFactionTroops ? (<p>Troops available in faction: {factionTroopsAvailable}</p>) : (<p></p>)
+            showFactionTroops ? (<p>Troops delegated to faction: {factionTroopsAvailable}</p>) : (<p></p>)
           }
         </p>)}
         {currentTab === tabs.recall && (<p>

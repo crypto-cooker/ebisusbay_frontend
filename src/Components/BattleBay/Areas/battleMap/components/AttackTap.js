@@ -27,7 +27,7 @@ import Button from "@src/Components/components/Button";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
-import {attack, getFactionsOwned} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {attack, getFactionsOwned, getProfileArmies} from "@src/core/api/RyoshiDynastiesAPICalls";
 import { createSuccessfulTransactionToastContent } from '@src/utils';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 
@@ -66,6 +66,14 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   const [attackerOptions, setAttackerOptions] = useState([]);
   const [defenderOptions, setDefenderOptions] = useState([]);
 
+  const [allFactions, setAllFactions] = useState([]);
+  const [factionsLoaded, setFactionsLoaded] = useState(false);
+  const [playerArmies, setPlayerArmies] = useState([]);
+  const [combinedArmies, setCombinedArmies] = useState([]);
+  const [isOwnerOfFaction, setIsOwnerOfFaction] = useState(false);
+  const [playerFaction, SetPlayerFaction] = useState([]);
+  const [factionTroops, setFactionTroops] = useState(0);
+
   const handleChange = (value) => setAttackerTroops(value)
 
   //alerts
@@ -85,18 +93,44 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   const [dataForm, setDataForm] = useState({
     attackersFaction: "" ?? null,
     // quantity: 0,
-    defenderFaction: "" ?? null,
+    defendersFaction: "" ?? null,
   })
 
-  // const onChangeInputsAttacker = (e) => {
-  //   setDataForm({...dataForm, [e.target.name]: e.target.value})
-  //   setAttackerTroopsAvailable(controlPoint.leaderBoard.filter(faction => faction.name === e.target.value)[0].totalTroops);
-  // }
+  const CheckIfAttackerFactionIsOwnedByPlayer = async () => {
+      setIsOwnerOfFaction(dataForm.attackersFaction == playerFaction[0].name);
+  }
+  const GetPlayerArmies = async () => {
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      try {
+        const data = await getProfileArmies(user.address.toLowerCase(), signatureInStorage);
+        setPlayerArmies(
+          data.data.data.filter(army => army.controlPointId == controlPoint.id)
+        );
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+  useEffect(() => {
+    console.log('dataForm', dataForm);
+  }, [dataForm])
+
+  const onChangeInputsAttacker = (e) => {
+    setDataForm({...dataForm, [e.target.name]: e.target.value})
+    console.log('combinedArmies', combinedArmies);
+    console.log('e.target.value', e.target.value);
+    setAttackerTroopsAvailable(combinedArmies.filter(faction => faction.name === e.target.value)[0].troops);
+  }
   const onChangeInputsDefender = (e) => {
     setDataForm({...dataForm, [e.target.name]: e.target.value})
     setDefenderTroops(controlPoint.leaderBoard.filter(faction => faction.name === e.target.value)[0].totalTroops);
   }
-  const GetPlayerOwnedFactions = async () => {
+  const GetPlayerOwnedFaction = async () => {
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
@@ -105,9 +139,9 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
     if (signatureInStorage) {
       try {
         const data = await getFactionsOwned(user.address.toLowerCase(), signatureInStorage);
-        const playerFactions = data.data.data;
-        // console.log('playerFactions', playerFactions);
-        ShowAvailableFactions(playerFactions);
+        SetPlayerFaction(data.data.data);
+        console.log('data.data.data', data.data.data);
+        setFactionTroops(data.data.data[0].troops);
       } catch (error) {
         console.log(error)
       }
@@ -119,7 +153,6 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
     const tx = await resourceContract.isApprovedForAll(user.address.toLowerCase(), config.contracts.battleField);
     return tx;
   }
-
   const RealAttack = async () => {
     setIsExecuting(true);
     let signatureInStorage = getAuthSignerInStorage()?.signature;
@@ -149,7 +182,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
         const controlPointId = controlPoint.id;
         const attackerFactionId = controlPoint.leaderBoard.filter(faction => faction.name === dataForm.attackersFaction)[0].id;
-        const defenderFactionId = controlPoint.leaderBoard.filter(faction => faction.name === dataForm.defenderFaction)[0].id;
+        const defenderFactionId = controlPoint.leaderBoard.filter(faction => faction.name === dataForm.defendersFaction)[0].id;
         
         // console.log("controlPointId", controlPointId);
         // console.log("attackerFactionId", attackerFactionId + " " + dataForm.attackersFaction);
@@ -226,7 +259,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
     battleLogText.current.innerHTML = outcomeLog;
     battleOutcome.current.textContent = attackersAlive>0 ? "You won!" : "You lost!";
     attackerOutcome.current.textContent = dataForm.attackersFaction+" lost "+attackersSlain+"/"+ Number(attackerTroops)+" troops";
-    defenderOutcome.current.textContent = dataForm.defenderFaction+" lost "+defendersSlain+"/"+defenderTroops+" troops";
+    defenderOutcome.current.textContent = dataForm.defendersFaction+" lost "+defendersSlain+"/"+defenderTroops+" troops";
     
     setupDice(attackerDice, defenderDice);
 
@@ -268,7 +301,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   }
   function getDefenderTroopsInRegion(){
     controlPoint.leaderBoard.forEach(faction => {
-      if(faction.name === dataForm.defenderFaction){
+      if(faction.name === dataForm.defendersFaction){
         setDefenderTroops(faction.totalTroops);
       }});
   }
@@ -282,11 +315,11 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   {
     battleLog.current.style.display = battleLog.current.style.display === "block" ? "none" : "block";
   }
-  const ShowAvailableFactions = async (playerFactions) => {
-    setAttackerOptions(playerFactions.map((faction, index) => (
-      <option value={faction.name} key={index}>{faction.name}</option>)
-      ))
-  }
+  // const ShowAvailableFactions = async (playerFactions) => {
+  //   setAttackerOptions(playerFactions.map((faction, index) => (
+  //     <option value={faction.name} key={index}>{faction.name}</option>)
+  //     ))
+  // }
   const CheckForKoban = async () => {
     console.log("CheckForKoban")
     const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -296,10 +329,10 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   }
 
   useEffect(() => {
-    // console.log("controlPoint", controlPoint)
-    GetPlayerOwnedFactions();
+    console.log("controlPoint changed")
     if(controlPoint.leaderBoard !== undefined) {
-      //check if faction totalTroops > 0
+      
+      setAllFactions(controlPoint.leaderBoard);
       setDefenderOptions(controlPoint.leaderBoard.map((faction, index) => (
         faction.totalTroops > 0 ?
         <option value={faction.name} key={index}>{faction.name}</option>
@@ -312,37 +345,68 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
       setShowAlert(false)
       dataForm.attackersFaction = attackerOptions[0].props.value;
     }
-  }, [attackerOptions])
+  }, [])
 
   useEffect(() => {
       if(defenderOptions!="") {
-        dataForm.defenderFaction = defenderOptions[0].props.value;
+        dataForm.defendersFaction = defenderOptions[0].props.value;
       }
   }, [defenderOptions])
 
   useEffect(() => {
-      if(dataForm.defenderFaction!=null) {
-        // console.log("dataForm.defenderFaction", dataForm.defenderFaction)
+      if(dataForm.defendersFaction!=null) {
         setShowAlert(false)
         getDefenderTroopsInRegion()
       }
-  }, [dataForm.defenderFaction])
+  }, [dataForm.defendersFaction])
 
   useEffect(() => {
     if(dataForm.attackersFaction!="") {
         // console.log("dataForm.attackersFaction", dataForm.attackersFaction)
         getAttackerTroopsInRegion()
+        CheckIfAttackerFactionIsOwnedByPlayer()
       }
   }, [dataForm.attackersFaction])
   
   useEffect(() => {
-    console.log("opened attack tap")
     refreshControlPoint();
+    CheckForKoban();
+    GetPlayerOwnedFaction();
+    GetPlayerArmies();
   }, [])
 
   useEffect(() => {
-    CheckForKoban();
-  }, [])
+    if(playerArmies.length > 0 && allFactions.length > 0 && !factionsLoaded) {
+      var combinedArmiesLocal = [];
+
+      //we need to combine the playerArmies by factionId
+      playerArmies.forEach((army, index) => {
+        var found = combinedArmiesLocal.find(f => f.factionId === army.factionId);
+        if(found === undefined) {
+          combinedArmiesLocal.push({name: allFactions.find(f => f.id === army.factionId).name, 
+            factionId: army.factionId, troops: army.troops});
+        }
+        else {
+          found.troops += army.troops;
+        }
+      })
+
+      setCombinedArmies(combinedArmiesLocal);
+    }
+  }, [playerArmies, allFactions])
+
+  useEffect(() => {
+    if(combinedArmies.length > 0 && !factionsLoaded) {
+      setAttackerOptions(combinedArmies.map((faction, index) => (
+        <option 
+          value={faction.name}
+          key={index}>
+          {faction.name}</option>)
+      ))
+      setFactionsLoaded(true);
+    }
+  }, [combinedArmies])
+
 
   useEffect(() => {
     const websocket = new WebSocket('wss://testcms.ebisusbay.biz/socket/ryoshi-dynasties/battles?walletAddress='+user.address.toLowerCase())
@@ -366,6 +430,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
   const [att, setAtt] = useState([])
   const [def, setDef] = useState([])
+
   function setupDice(attackerDice, defenderDice) {
     attackerDice.length = Math.min(attackerDice.length, 3);
     defenderDice.length = Math.min(defenderDice.length, 3);
@@ -409,60 +474,76 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
           <Text textAlign='right' fontSize={'16px'}>Attacker Strength (1-3):</Text>
         </Flex>
       </Center>
+      
 
-        <Center>
+      <Center>
         <Flex justifyContent='space-between' w='90%' >
-            <Select 
-              name='defenderFaction'
-              backgroundColor='#292626'
-              w='40%' 
-              me={2} 
-              value={dataForm.defenderFaction} 
-              onChange={onChangeInputsDefender}>
-              {defenderOptions}
-            </Select>
+          <Select 
+            name='attackersFaction'
+            backgroundColor='#292626'
+            w='40%' 
+            me={2} 
+            value={dataForm.attackersFaction} 
+            onChange={onChangeInputsAttacker}>
+            {attackerOptions}
+          </Select>
 
-            <NumberInput 
-              align='right'
-              defaultValue={1} 
-              min={1} 
-              max={3} 
-              name="quantity" 
-              w='35%'
-              onChange={handleChange}
-              value={attackerTroops} 
-              type ='number'
-              bgColor='#292626'
-              borderRadius='10px'
-              >
-          <NumberInputField />
-          <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
-          </NumberInputStepper>
-        </NumberInput>
+          <NumberInput 
+            align='right'
+            defaultValue={1} 
+            min={1} 
+            max={3} 
+            name="quantity" 
+            w='20%'
+            onChange={handleChange}
+            value={attackerTroops} 
+            type ='number'
+            bgColor='#292626'
+            borderRadius='10px'
+            >
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+
+          <Select 
+            name='defendersFaction'
+            backgroundColor='#292626'
+            w='40%' 
+            me={2} 
+            value={dataForm.defendersFaction} 
+            onChange={onChangeInputsDefender}>
+            {defenderOptions}
+          </Select>
         </Flex>
       </Center>
      
       <Spacer m='4' />
 
+      {/* VS */}
       <Center>
         <Flex justifyContent='space-between' w='90%' >
           <Box>
-            <Text textAlign='left' fontSize={'24px'}>{attackerOptions}</Text>
-            <Text textAlign='left' fontSize={'16px'}>Troops deployed: {attackerTroopsAvailable}</Text>
+            <Text textAlign='left' fontSize={'24px'}>{dataForm.attackersFaction}</Text>
+            <Text textAlign='left' fontSize={'16px'}>Troops You Deployed: {attackerTroopsAvailable}</Text>
+            {isOwnerOfFaction 
+            ? <Text textAlign='left' fontSize={'16px'}>Troops Delegated: {factionTroops}</Text> : ""}
+            
             <Text textAlign='left' fontSize={'16px'}>Attack Strength: {attackerTroops}</Text>
           </Box>
           
           <Text textAlign='left' fontSize={'16px'}>VS</Text>
 
           <Box>
-            <Text textAlign='right' fontSize={'24px'}>{dataForm.defenderFaction}</Text>
+            <Text textAlign='right' fontSize={'24px'}>{dataForm.defendersFaction}</Text>
             <Text textAlign='right' fontSize={'16px'}>Troops deployed: {defenderTroops}</Text>
           </Box>
         </Flex>
       </Center>
 
+        {/* Alert */}
         <Flex justify={"center"} align={"center"} >
           <Box p='1'>
             {showAlert && (
@@ -474,7 +555,6 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
         </Flex>
         
         <Text fontSize={'14px'}>Costs 50 $Koban</Text>
-
         <Flex alignContent={'center'} justifyContent={'center'}>
         <Box
               ps='20px'>
@@ -496,7 +576,6 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
               </RdButton>
             </Box>
         </Flex>
-
 
         <Center>
           <Flex justifyContent='space-between' w='90%' >
