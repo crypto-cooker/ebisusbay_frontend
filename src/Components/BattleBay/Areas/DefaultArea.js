@@ -387,10 +387,14 @@ const GetResources = async () => {
     var data = await api.get("https://testapi.ebisusbay.biz/v2/wallets?wallet="+user.address.toLowerCase()+"&collection=0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5");
     const fortuneAndMitama = await ApiService.withoutKey().getErc20Account(user.address)
 
-    setKoban(data.data.nfts[0].balance);
-    setFortune(Number(ethers.utils.formatEther(fortuneAndMitama.erc20Accounts[0].fortuneBalance)));
-    setMitama(Number(ethers.utils.formatEther(fortuneAndMitama.erc20Accounts[0].mitamaBalance)));
-    
+    if(data.data.nfts[0] !== undefined) {
+      setKoban(data.data.nfts[0].balance);
+    }
+    if(fortuneAndMitama.erc20Accounts[0] !== undefined) {
+      setFortune(Number(ethers.utils.formatEther(fortuneAndMitama.erc20Accounts[0].fortuneBalance)));
+      setMitama(Number(ethers.utils.formatEther(fortuneAndMitama.erc20Accounts[0].mitamaBalance)));
+    }
+
     setResourcesAcquired(true);
   } catch (error) {
     console.log(error);
