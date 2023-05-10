@@ -12,17 +12,18 @@ interface PurchaseDialogProps {
   children?: ReactNode;
   title: string;
   utilBtnTitle?: ReactNode;
-  onUtilBtnClick: () => void;
+  onUtilBtnClick?: () => void;
+  size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';
 }
 
-const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, children}: PurchaseDialogProps) => {
+const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, children}: PurchaseDialogProps) => {
 
   return (
     <>
       <Modal
         onClose={() => {}}
         isOpen={isOpen}
-        size='2xl'
+        size={size ?? '2xl'}
         scrollBehavior='inside'
         isCentered
       >
@@ -37,6 +38,7 @@ const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, children
           rounded='3xl'
           bg='linear-gradient(#1C1917, #272624, #000000)'
           className={gothamBook.className}
+          m={6}
         >
           <ModalBody p={2} color='white'>
             <Box
@@ -57,7 +59,7 @@ const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, children
                 w={14}
                 h={14}
                 fontSize='28px'
-                onClick={!!utilBtnTitle ? onUtilBtnClick : undefined}
+                onClick={onUtilBtnClick}
                 _groupHover={{
                   bg: '#de8b08',
                   borderColor: '#f9a50b',

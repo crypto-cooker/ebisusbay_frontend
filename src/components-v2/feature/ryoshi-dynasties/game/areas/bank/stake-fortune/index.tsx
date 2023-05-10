@@ -9,14 +9,14 @@ import StakePage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/ba
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
-interface Props {
+interface StakeFortuneProps {
   address: string;
   isOpen: boolean;
   onClose: () => void;
   initialPage: string;
 }
 
-const Index = ({address, isOpen, onClose, initialPage}: Props) => {
+const StakeFortune = ({address, isOpen, onClose, initialPage}: StakeFortuneProps) => {
  
   const [page, setPage] = useState(initialPage);
   const [isLoading, setIsLoading] = useState(false);
@@ -63,4 +63,4 @@ const Index = ({address, isOpen, onClose, initialPage}: Props) => {
   )
 }
 
-export default Index;
+export default StakeFortune;
