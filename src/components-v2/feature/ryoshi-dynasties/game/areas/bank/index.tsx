@@ -1,31 +1,18 @@
-import { useState, useRef, useEffect, useCallback} from 'react';
-import {
-  Button,
-  Box,
-  Flex,
-  Image,
-  useDisclosure,
-  useMediaQuery,
-  Text,
-  AspectRatio,
-  Stack,
-  useBreakpointValue,
-  VStack,
-  Icon
+import {useCallback, useState} from 'react';
+import {AspectRatio, Box, Icon, Image, useBreakpointValue, useDisclosure, VStack} from '@chakra-ui/react';
 
-} from '@chakra-ui/react';
-
-import EmergencyWithdraw from './bank/components/EmergencyWithdraw';
-import StakeFortune from './bank/components/StakeFortune';
-import StakeNFTs from './bank/components/StakeNFTs';
+import EmergencyWithdraw from '../../../../../../Components/BattleBay/Areas/bank/components/EmergencyWithdraw';
+import Index from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune';
+import StakeNFTs from '../../../../../../Components/BattleBay/Areas/bank/components/StakeNFTs';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {useAppSelector} from "@src/Store/hooks";
 import {useWindowSize} from "@src/hooks/useWindowSize";
-import BankerBubbleBox, {TypewriterText} from "@src/components-v2/feature/ryoshi-dynasties/components/banker-bubble-box";
+import BankerBubbleBox, {
+  TypewriterText
+} from "@src/components-v2/feature/ryoshi-dynasties/components/banker-bubble-box";
 import {appConfig} from "@src/Config";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRightFromBracket, faCircleInfo, faDollarSign} from "@fortawesome/free-solid-svg-icons";
-import localFont from 'next/font/local';
+import {faArrowRightFromBracket, faDollarSign} from "@fortawesome/free-solid-svg-icons";
 
 interface BankerSceneProps {
   address: string;
@@ -66,8 +53,6 @@ const Bank = ({address, onBack, isVisible} : BankerSceneProps) => {
                   'I am here to help all citizens of the Lotus Galaxy stake, purchase or withdraw their tokens. How may I help?',
                   'Blessings, traveler! Let me guess, you want me to help with your Fortune possessions. Say no more. What can I do for you today?']
   
-  const randomGreeting = useState(greetings[Math.floor(Math.random() * greetings.length)]);
-
   return (
     <Box
       position='relative'
@@ -75,7 +60,7 @@ const Bank = ({address, onBack, isVisible} : BankerSceneProps) => {
     >
     <Box>
 
-    <StakeFortune address={address} isOpen={isOpenStakeFortune} onClose={onCloseStakeFortune} initialPage={'main'}/>
+    <Index address={address} isOpen={isOpenStakeFortune} onClose={onCloseStakeFortune} initialPage={'main'}/>
     <StakeNFTs isOpen={isOpenStakeNFTs} onClose={onCloseStakeNFTs} />
     <EmergencyWithdraw isOpen={isOpenWithdraw} onClose={onCloseWithdraw}/>
 
@@ -101,17 +86,10 @@ const Bank = ({address, onBack, isVisible} : BankerSceneProps) => {
         ps={{base: '5px', md: '0px'}}
         rounded='lg'
       >
-        <BankerBubbleBox fontSize={{base: 'md', sm: 'lg', md: 'xl'}}>
+        <BankerBubbleBox fontSize={{base: 'md', sm: 'lg', md: 'xl'}} color='white'>
           {(
             <TypewriterText
-              text={[
-                'Welcome, traveler. It seems that since Ebisu has created all these Fortune tokens, our world has gone through quite an evolution.<br /><br />',
-                Date.now() > config.tokenSale.publicStart ?
-                  'The $Fortune token presale is now open to the public! Press the "Buy $Fortune" button to get started.' :
-                Date.now() > config.tokenSale.vipStart ?
-                  'The $Fortune token presale is now open to VIPs! Press the "Buy $Fortune" button to get started.' :
-                  'The $Fortune token presale will be held here on May 1st at 8pm UTC. VIPs will have exclusive access to the sale for one hour before the public sale.'
-              ]}
+              text={[greetings[Math.floor(Math.random() * greetings.length)]]}
               onComplete={() => setBankerImage(bankerImages.idle)}
             />
           )}
@@ -121,7 +99,7 @@ const Bank = ({address, onBack, isVisible} : BankerSceneProps) => {
         position='absolute'
         right={-1}
         bottom={20}
-        w={abbreviateButtonText ? '60px' : '250px'}
+        w={abbreviateButtonText ? '60px' : '269px'}
       >
         <VStack spacing={4} align='end'>
           {Date.now() > config.tokenSale.vipStart && (
