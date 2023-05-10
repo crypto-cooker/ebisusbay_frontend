@@ -17,7 +17,11 @@ import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-
 const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' })
 const gothamXLight = localFont({ src: '../../../../../../fonts/Gotham-XLight.woff2' })
 
-const AnnouncementPage = ({showLeaderboard}) => {
+interface Props {
+  showLeaderboard: () => void;
+}
+
+const AnnouncementPage = ({showLeaderboard}: Props) => {
  
   const [isLoading, setIsLoading] = useState(false);
   const user = useAppSelector((state) => state.user);
