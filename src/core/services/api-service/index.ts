@@ -27,6 +27,10 @@ export class ApiService implements Api {
     return new ApiService(apiKey);
   }
 
+  static withoutKey() {
+    return new ApiService();
+  }
+
   async getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>> {
     return await this.mapi.getListings(query);
   }
@@ -67,6 +71,10 @@ export class ApiService implements Api {
 
   async userTotalPurchased(address: string) {
     return this.graph.userTotalPurchased(address);
+  }
+
+  async getUserStakedFortune(address: string) {
+    return this.graph.getUserStakedFortune(address);
   }
 }
 
