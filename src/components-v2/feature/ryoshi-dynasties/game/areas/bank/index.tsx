@@ -1,9 +1,8 @@
 import {useCallback, useState} from 'react';
 import {AspectRatio, Box, Icon, Image, useBreakpointValue, useDisclosure, VStack} from '@chakra-ui/react';
 
-import EmergencyWithdraw from '../../../../../../Components/BattleBay/Areas/bank/components/EmergencyWithdraw';
 import Index from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune';
-import StakeNFTs from '../../../../../../Components/BattleBay/Areas/bank/components/StakeNFTs';
+import StakeNFTs from './stake-nft';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {useAppSelector} from "@src/Store/hooks";
 import {useWindowSize} from "@src/hooks/useWindowSize";
@@ -13,6 +12,7 @@ import BankerBubbleBox, {
 import {appConfig} from "@src/Config";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRightFromBracket, faDollarSign} from "@fortawesome/free-solid-svg-icons";
+import EmergencyWithdraw from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/emergency-withdraw";
 
 interface BankerSceneProps {
   address: string;
