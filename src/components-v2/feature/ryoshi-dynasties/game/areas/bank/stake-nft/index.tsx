@@ -183,6 +183,8 @@ const UnstakedNfts = ({address, collection, onAdd, onRemove}: UnstakedNftsProps)
     ['BankUnstakedNfts', address, collection],
     () => nextApiService.getWallet(address!, {
       collection: [collection],
+      sortBy: 'rank',
+      direction: 'desc'
     }),
     {
       getNextPageParam: (lastPage, pages) => {

@@ -97,8 +97,6 @@ const StakingNftCard = ({
   return (
     <Box
       className="card eb-nft__card h-100 shadow"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       data-group
       _hover={{
         borderColor:useColorModeValue('#595d69', '#ddd'),
@@ -203,9 +201,7 @@ const StakingNftCard = ({
           <Spacer />
           <Box
             borderBottomRadius={15}
-            _groupHover={{background: useColorModeValue(lightTheme.textColor4, darkTheme.textColor4), color:lightTheme.textColor1}}
-            px={4}
-            py={1}
+            p={2}
           >
             <div className="d-flex justify-content-between">
               <Box
