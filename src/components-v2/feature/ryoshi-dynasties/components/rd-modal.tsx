@@ -3,7 +3,7 @@ import {ReactNode} from "react";
 import localFont from "next/font/local";
 import {CloseIcon} from "@chakra-ui/icons";
 
-const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
+const gothamBook = localFont({ src: '../../../../fonts/Gotham-Book.woff2' })
 
 
 interface PurchaseDialogProps {

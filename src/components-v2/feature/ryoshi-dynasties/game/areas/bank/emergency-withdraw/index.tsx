@@ -10,7 +10,7 @@ import {toast} from "react-toastify";
 import Bank from "@src/Contracts/Bank.json";
 import {createSuccessfulTransactionToastContent} from '@src/utils';
 import moment from 'moment';
-import RdModal from "@src/components-v2/feature/ryoshi-dynasties/components/modal";
+import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {useAppSelector} from "@src/Store/hooks";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";

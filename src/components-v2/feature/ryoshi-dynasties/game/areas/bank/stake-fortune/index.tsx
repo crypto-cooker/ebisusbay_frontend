@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import {Spinner} from 'react-bootstrap';
 import localFont from "next/font/local";
 import {getProfile} from "@src/core/cms/endpoints/profile";
-import RdModal from "@src/components-v2/feature/ryoshi-dynasties/components/modal";
+import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/faq-page";
 import StakePage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/stake-page";

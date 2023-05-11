@@ -1,11 +1,10 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {Spinner} from 'react-bootstrap';
 import localFont from "next/font/local";
-import {getProfile} from "@src/core/cms/endpoints/profile";
-import RdModal from "@src/components-v2/feature/ryoshi-dynasties/components/modal";
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import AnnouncementPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/landingPage/announcementPage";
 import LeaderBoardPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/landingPage/leaderBoardPage";
+import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 
 const gothamBook = localFont({ src: '../../../fonts/Gotham-Book.woff2' })
 

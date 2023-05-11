@@ -3,7 +3,7 @@ import {Box, Center, Flex, Image, SimpleGrid, Wrap, WrapItem} from "@chakra-ui/r
 import React, {useCallback, useEffect, useState} from 'react';
 // import styles from './profile.module.scss';
 import {useAppSelector} from "@src/Store/hooks";
-import RdModal from "@src/components-v2/feature/ryoshi-dynasties/components/modal";
+import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import nextApiService from "@src/core/services/api-service/next";
 import {ApiService} from "@src/core/services/api-service";
@@ -122,7 +122,7 @@ const StakedNfts = ({address, candidateNfts}: StakedNftsProps) => {
   );
 
   return (
-    <Center my={6}>
+    <Center my={6} px={4}>
       <Wrap>
         {["1", "2", "3", "4", "5"].map((stake, index) => {
           return (
