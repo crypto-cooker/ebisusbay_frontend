@@ -407,10 +407,22 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
     }
   }, [combinedArmies])
 
+  // const websocket = new WebSocket('wss://testcms.ebisusbay.biz/socket/ryoshi-dynasties/battles?walletAddress='+user.address.toLowerCase())
+
+  // const {
+  //   sendMessage,
+  //   sendJsonMessage,
+  //   lastMessage,
+  //   lastJsonMessage,
+  //   readyState,
+  //   getWebSocket,
+  // } = useWebSocket('wss://testcms.ebisusbay.biz/socket/ryoshi-dynasties/battles?walletAddress=0x2bc60de5833c7c7279427657ef839c06212a38bf', {
+  //   onOpen: () => console.log('opened'),
+  //   shouldReconnect: (closeEvent) => true,
+  // });
 
   useEffect(() => {
-    const websocket = new WebSocket('wss://testcms.ebisusbay.biz/socket/ryoshi-dynasties/battles?walletAddress='+user.address.toLowerCase())
-    
+    const websocket = new WebSocket('wss://testcms.ebisusbay.biz/socket/ryoshi-dynasties/battles?walletAddress=0x2bc60de5833c7c7279427657ef839c06212a38bf')
     websocket.onopen = () => {
       console.log('connected')
     }
@@ -528,8 +540,8 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
           <Box>
             <Text textAlign='left' fontSize={'24px'}>{dataForm.attackersFaction}</Text>
             <Text textAlign='left' fontSize={'16px'}>Troops You Deployed: {attackerTroopsAvailable}</Text>
-            {isOwnerOfFaction 
-            ? <Text textAlign='left' fontSize={'16px'}>Troops Delegated: {factionTroops}</Text> : ""}
+            {/* {isOwnerOfFaction 
+            ? <Text textAlign='left' fontSize={'16px'}>Troops Delegated: {factionTroops}</Text> : ""} */}
             
             <Text textAlign='left' fontSize={'16px'}>Attack Strength: {attackerTroops}</Text>
           </Box>

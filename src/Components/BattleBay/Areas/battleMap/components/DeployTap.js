@@ -10,6 +10,12 @@ import {
   NumberInputStepper, 
   NumberIncrementStepper, 
   NumberDecrementStepper, 
+  Radio, RadioGroup,
+  VStack,
+  HStack,
+  Center,
+  Spacer,
+  Text
  } from "@chakra-ui/react";
 
 import { useState, useEffect } from "react";
@@ -19,6 +25,7 @@ import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 import {getProfileTroops, getFactionsOwned, deployTroops, recallTroops, getFactionTroops} from "@src/core/api/RyoshiDynastiesAPICalls";
 import { toast } from "react-toastify";
+import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 
 const tabs = {
   recall: 'recall',
@@ -36,6 +43,7 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
     faction: "" ?? null,
     quantity: 0,
   })
+  const [troopsSource, setTroopsSource] = useState(1);
 
   const [selectedQuantity, setSelectedQuantity] = useState(0);
   const [selectedFaction, setSelectedFaction] = useState(dataForm.faction);
@@ -90,6 +98,27 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
     }
   }
   const deployOrRecallTroops = async () => {
+
+    if(troopsSource==2)
+    {
+      console.log("deploying troops from delegated troops")
+      if(selectedQuantity>factionTroopsAvailable)
+      {
+        toast.error("You don't have enough troops to deploy")
+        return;
+      }
+    }
+    else if(troopsSource==1)
+    {
+      console.log("deploying troops from player troops")
+      if(selectedQuantity>troopsAvailable)
+      {
+        toast.error("You don't have enough troops to deploy")
+        return;
+      }
+    }
+    // return;
+
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
@@ -167,9 +196,13 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
         {/* <button type="button" className={`smallBtn ${currentTab === tabs.recall ? 'selected' : ''}`} onClick={() => setCurrentTab(tabs.recall)}>Recall</button> */}
       </div>
 
+      <Flex direction='row' justify='space-between' justifyContent='center'>
+        <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
+
       <FormControl 
         mb={'24px'}
         bg='none'>
+        <FormLabel>Faction:</FormLabel>
         <Select me={2} 
           bg='none'
           placeholder='Please select a faction'
@@ -180,20 +213,8 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
         </Select>
       </FormControl>
 
-      <Box m='8px 24px'>
-        {currentTab === tabs.deploy && (<p>
-          Troops available in wallet: {troopsAvailable}
-          <br /> {
-            showFactionTroops ? (<p>Troops delegated to faction: {factionTroopsAvailable}</p>) : (<p></p>)
-          }
-        </p>)}
-        {currentTab === tabs.recall && (<p>
-          Troops deployed to {controlPoint.name} on behalf of {dataForm.faction}: {troopsDeployed}
-        </p>)}
-      </Box>
-
       <FormControl>
-        <FormLabel>Quantity:</FormLabel>
+        <FormLabel>Troops To Deploy:</FormLabel>
         <NumberInput defaultValue={1} min={1} max={troopsAvailable} name="quantity" 
           onChange={handleChange}
           value={selectedQuantity} type ='number'>
@@ -204,16 +225,56 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
           </NumberInputStepper>
         </NumberInput>
       </FormControl>
+          </Box>
+      </Flex>
 
-      <Flex mt='16px'>
-        <Button type="legacy"
+      <Flex direction='row' justify='space-between' justifyContent='center'>
+        <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
+      
+          <VStack alignItems='left'>
+            <HStack>
+            {currentTab === tabs.deploy && (
+            <Text textAlign='left' >
+            Troops available in wallet: {troopsAvailable}
+            <br /> {showFactionTroops ? (<>
+            <Text>Troops delegated to faction: {factionTroopsAvailable}</Text>
+            <RadioGroup defaultValue='1' onChange={setTroopsSource} value={troopsSource}>
+            <VStack spacing={1} direction='row' >
+              <Radio colorScheme='orange' size='md' value='1'>
+                Deploy Personal Troops
+              </Radio>
+              <Radio colorScheme='orange' size='md' value='2'>
+                Deploy Faction Troops
+              </Radio>
+            </VStack>
+          </RadioGroup>
+          </>
+            ) : (<p></p>)}
+          </Text>)}
+
+          {currentTab === tabs.recall && (<p> Troops deployed to {controlPoint.name} on behalf of {dataForm.faction}: {troopsDeployed}</p>)}
+
+            </HStack>
+          </VStack>
+
+        </Box>
+      </Flex>
+
+
+  <Flex direction='row' justify='space-between' justifyContent='center'>
+    <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
+      <Center>
+        <RdButton
+          w='250px'
+          fontSize={{base: 'm', sm: 'm'}}
           onClick={deployOrRecallTroops}
           disabled={!canDeploy}
-          className="flex-fill"> {
-            selectedFaction=== "" ? "Please select a faction" : "Deploy"
-          }
-        </Button>
-      </Flex>
+          >
+          {selectedFaction=== "" ? "Please select a faction" : "Deploy" }
+        </RdButton>
+      </Center>
+    </Box>
+  </Flex>
 
     </Flex>
   )
