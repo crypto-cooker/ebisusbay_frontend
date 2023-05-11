@@ -37,6 +37,7 @@ import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
 import Battlefield from "@src/Contracts/Battlefield.json";
 import Resources from "@src/Contracts/Resources.json";
+import {io} from "socket.io-client";
 
 //sockets
 // import { socket } from '@src/socket';
@@ -405,40 +406,37 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
       ))
       setFactionsLoaded(true);
     }
-  }, [combinedArmies])
+  }, [combinedArmies]);
 
-  // const websocket = new WebSocket('wss://testcms.ebisusbay.biz/socket/ryoshi-dynasties/battles?walletAddress='+user.address.toLowerCase())
-
-  // const {
-  //   sendMessage,
-  //   sendJsonMessage,
-  //   lastMessage,
-  //   lastJsonMessage,
-  //   readyState,
-  //   getWebSocket,
-  // } = useWebSocket('wss://testcms.ebisusbay.biz/socket/ryoshi-dynasties/battles?walletAddress=0x2bc60de5833c7c7279427657ef839c06212a38bf', {
-  //   onOpen: () => console.log('opened'),
-  //   shouldReconnect: (closeEvent) => true,
-  // });
-
+  const [isSocketConnected, setIsSocketConnected] = useState(false);
   useEffect(() => {
-    const websocket = new WebSocket('wss://testcms.ebisusbay.biz/socket/ryoshi-dynasties/battles?walletAddress=0x2bc60de5833c7c7279427657ef839c06212a38bf')
-    websocket.onopen = () => {
+    const socket = io('wss://testcms.ebisusbay.biz/socket/ryoshi-dynasties/battles?walletAddress=0x2bc60de5833c7c7279427657ef839c06212a38bf');
+
+    function onConnect() {
+      setIsSocketConnected(true);
       console.log('connected')
     }
-    websocket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      if (data.event === 'BATTLE_ATTACK') {
-        console.log('BATTLE_ATTACK', data)
-        // logic here
-      }  
+
+    function onDisconnect() {
+      setIsSocketConnected(false);
+      console.log('disconnected')
     }
+
+    function onBattleAttackEvent(data) {
+      console.log('BATTLE_ATTACK', data)
+    }
+
+    socket.on('connect', onConnect);
+    socket.on('disconnect', onDisconnect);
+    socket.on('BATTLE_ATTACK', onBattleAttackEvent);
+
     return () => {
-      if (websocket.readyState === 1) {
-        websocket.close()
-      }
-    }
+      socket.off('connect', onConnect);
+      socket.off('disconnect', onDisconnect);
+      socket.off('BATTLE_ATTACK', onBattleAttackEvent);
+    };
   }, []);
+
 
   const [att, setAtt] = useState([])
   const [def, setDef] = useState([])
