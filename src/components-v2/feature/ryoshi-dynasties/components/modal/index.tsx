@@ -24,8 +24,8 @@ const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, ch
         onClose={() => {}}
         isOpen={isOpen}
         size={size ?? '2xl'}
-        scrollBehavior='inside'
-        isCentered
+        scrollBehavior={size === 'full' ? 'outside' : 'inside'}
+        isCentered={size !== 'full'}
       >
         <ModalOverlay />
         <ModalContent

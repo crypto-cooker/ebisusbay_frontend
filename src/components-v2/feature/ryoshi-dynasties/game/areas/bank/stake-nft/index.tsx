@@ -140,23 +140,27 @@ const StakedNfts = ({address, candidateNfts}: StakedNftsProps) => {
                   />
                 </Box>
               ) : (
-                <>
+                <Box
+                  width={100}
+                  height={100}
+                  style={{borderRadius: '20px'}}
+                >
                   <Image
                     position='absolute'
                     src='/img/battle-bay/stakeNFT/slots.svg'
-                    w='80px'
-                    h='80px'
+                    w='100px'
+                    h='100px'
                     zIndex='1'
                   />
                   <Flex
                     position='relative'
                     zIndex='2'
                     opacity='0.9'
-                    justifyContent='center' padding='2' borderRadius={'5px'} w='80px' h='80px' bg='linear-gradient(147.34deg, #967729 -13.87%, #482698 153.79%)' >
+                    justifyContent='center' padding='2' borderRadius={'5px'} w='100px' h='100px' bg='linear-gradient(147.34deg, #967729 -13.87%, #482698 153.79%)' >
                     <Image zIndex='3' src='/img/battle-bay/stakeNFT/lock.svg' w='20px' h='20px' />
                     {/* <Image zIndex='1' src='/img/battle-bay/stakeNFT/slots.svg' w='80px' h='80px' /> */}
                   </Flex>
-                </>
+                </Box>
               )}
             </WrapItem>
           )
