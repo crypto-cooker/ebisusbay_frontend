@@ -3404,7 +3404,7 @@
       "multiToken": false,
       "address": "0x966B18Afe9D9062d611D0C246A1959b7a25FCdDe",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "avatar": "/img/collections/slothty/avatar.png",
@@ -3415,7 +3415,7 @@
         "discord": "http://discord.gg/wkq88dHDyA",
         "telegram": "https://t.me/croslothty",
         "categories": [
-          "uncollectible "
+          "uncollectible"
         ]
       },
       "verification": {
@@ -16336,7 +16336,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "",
+        "description": "The staking and governance token for the ToC Community",
         "avatar": "/img/collections/king-kong-cronos/avatar.webp",
         "banner": "/img/collections/king-kong-cronos/banner.webp",
         "card": "/img/collections/king-kong-cronos/card.webp",
