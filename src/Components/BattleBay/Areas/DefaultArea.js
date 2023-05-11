@@ -28,8 +28,8 @@ import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-
 import {useSelector} from "react-redux";
 import {BigNumber, Contract, ethers} from "ethers";
 import {commify} from "ethers/lib/utils";
-
 import {ApiService} from "@src/core/services/api-service";
+import NextApiService from "@src/core/services/api-service/next";
 import axios from "axios";
 const api = axios.create({
   baseURL: 'api/',
@@ -384,15 +384,17 @@ useEffect(() => {
 const GetResources = async () => {
   try {
     setResourcesAcquired(false);
-    var data = await api.get("https://testapi.ebisusbay.biz/v2/wallets?wallet="+user.address.toLowerCase()+"&collection=0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5");
+    let nfts = await NextApiService.getWallet(user.address, {
+      collection: '0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5',
+    });
     const fortuneAndMitama = await ApiService.withoutKey().getErc20Account(user.address)
 
-    if(data.data.nfts[0] !== undefined) {
-      setKoban(data.data.nfts[0].balance);
+    if (nfts.data.length > 0) {
+      setKoban(nfts.data[0].balance);
     }
-    if(fortuneAndMitama.erc20Accounts[0] !== undefined) {
-      setFortune(Number(ethers.utils.formatEther(fortuneAndMitama.erc20Accounts[0].fortuneBalance)));
-      setMitama(Number(ethers.utils.formatEther(fortuneAndMitama.erc20Accounts[0].mitamaBalance)));
+    if (!!fortuneAndMitama) {
+      setFortune(Number(ethers.utils.formatEther(fortuneAndMitama.fortuneBalance)));
+      setMitama(Number(ethers.utils.formatEther(fortuneAndMitama.mitamaBalance)));
     }
 
     setResourcesAcquired(true);
@@ -403,8 +405,10 @@ const GetResources = async () => {
 
 useEffect(() => {
   // get all resources
-  GetResources();
-}, [])
+  if (!!user.address) {
+    GetResources();
+  }
+}, [user.address])
 
 const SetUpButtons = async () => {
   setPins(buttonsNames.map((button, i) => 
