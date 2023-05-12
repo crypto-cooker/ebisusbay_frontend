@@ -1,21 +1,23 @@
-import {Box, Center, Flex, Image, SimpleGrid, Wrap, WrapItem} from "@chakra-ui/react"
+import {Box, Center, Flex, IconButton, SimpleGrid, Wrap, WrapItem} from "@chakra-ui/react"
 
 import React, {useCallback, useEffect, useState} from 'react';
-// import styles from './profile.module.scss';
 import {useAppSelector} from "@src/Store/hooks";
-import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {useInfiniteQuery} from "@tanstack/react-query";
+import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
+import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
 import nextApiService from "@src/core/services/api-service/next";
 import {ApiService} from "@src/core/services/api-service";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {Spinner} from "react-bootstrap";
 import StakingNftCard from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/staking-nft-card";
 import {appConfig} from "@src/Config";
-import {caseInsensitiveCompare, isBundle} from "@src/utils";
+import {caseInsensitiveCompare} from "@src/utils";
 import WalletNft from "@src/core/models/wallet-nft";
-import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-media";
+import {MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import ImageService from "@src/core/services/image";
-import {specialImageTransform} from "@src/hacks";
+import {StakedToken} from "@src/core/services/api-service/graph/types";
+import ShrineIcon from "@src/components-v2/shared/icons/shrine";
+import {CloseIcon} from "@chakra-ui/icons";
+import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 
 const config = appConfig();
 
@@ -38,6 +40,15 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   const [currentCollection, setCurrentCollection] = useState<any>();
   const [candidateNfts, setCandidateNfts] = useState<WalletNft[]>([]);
 
+  const { data: stakedNfts, status, error } = useQuery(
+    ['BankStakedNfts', user.address],
+    () => ApiService.withoutKey().getStakedTokens(user.address!),
+    {
+      refetchOnWindowFocus: false,
+      enabled: !!user.address
+    }
+  );
+
   const handleBtnClick = (key: string) => (e: any) => {
     setCurrentTab(key);
   };
@@ -49,8 +60,8 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
     }
   }, [candidateNfts]);
 
-  const handleRemoveNft = useCallback((nft: WalletNft) => {
-    setCandidateNfts(candidateNfts.filter((sNft) => sNft.nftId !== nft.nftId && !caseInsensitiveCompare(sNft.nftAddress, nft.nftAddress)));
+  const handleRemoveNft = useCallback((nftAddress: string, nftId: string) => {
+    setCandidateNfts(candidateNfts.filter((nft) => nft.nftId !== nftId || !caseInsensitiveCompare(nft.nftAddress, nftAddress)));
   }, [candidateNfts]);
 
   const handleClose = () => {
@@ -72,29 +83,31 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       title='Stake NFTs'
       size='full'
     >
-      <StakedNfts candidateNfts={candidateNfts} />
+      <StakedNfts
+        currentStakedNfts={stakedNfts}
+        candidateNfts={candidateNfts}
+        onRemove={handleRemoveNft}
+      />
       <Box p={4}>
-        <div className="de_tab">
-          <ul className="de_nav mb-2">
-            <li className={`tab ${currentTab === tabs.ryoshiVip ? 'active' : ''} my-1`}>
-              <span onClick={handleBtnClick(tabs.ryoshiVip)}>Ryoshi VIP</span>
-            </li>
-            <li className={`tab ${currentTab === tabs.ryoshiHalloween ? 'active' : ''} my-1`}>
-              <span onClick={handleBtnClick(tabs.ryoshiHalloween)}>Ryoshi Halloween</span>
-            </li>
-            <li className={`tab ${currentTab === tabs.ryoshiChristmas ? 'active' : ''} my-1`}>
-              <span onClick={handleBtnClick(tabs.ryoshiChristmas)}>Ryoshi Christmas</span>
-            </li>
-          </ul>
-        </div>
-        <div className="de_tab_content">
+        <Flex direction='row' justify='center' mb={2}>
+          <RdTabButton isActive={currentTab === tabs.ryoshiVip} onClick={handleBtnClick(tabs.ryoshiVip)}>
+            VIP
+          </RdTabButton>
+          <RdTabButton isActive={currentTab === tabs.ryoshiHalloween} onClick={handleBtnClick(tabs.ryoshiHalloween)}>
+            Halloween
+          </RdTabButton>
+          <RdTabButton isActive={currentTab === tabs.ryoshiChristmas} onClick={handleBtnClick(tabs.ryoshiChristmas)}>
+            Christmas
+          </RdTabButton>
+        </Flex>
+        <Box>
           <UnstakedNfts
             collection={currentCollection}
             address={user.address ?? undefined}
             onAdd={handleAddNft}
             onRemove={handleRemoveNft}
           />
-        </div>
+        </Box>
       </Box>
     </RdModal>
   )
@@ -103,69 +116,122 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 export default StakeNfts;
 
 interface StakedNftsProps {
-  address?: string;
+  currentStakedNfts?: StakedToken[];
   candidateNfts: WalletNft[];
+  onRemove: (nftAddress: string, nftId: string) => void;
 }
 
-const StakedNfts = ({address, candidateNfts}: StakedNftsProps) => {
+interface PendingNft {
+  nftAddress: string;
+  nftId: string;
+  image: string;
+  isAlreadyStaked: boolean;
+}
 
-  const { data: stakedNfts, status, error, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    ['BankStakedNfts', address],
-    () => ApiService.withoutKey().getStakedTokens(address!),
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return undefined;
-      },
-      refetchOnWindowFocus: false,
-      enabled: !!address
-    }
-  );
+const StakedNfts = ({currentStakedNfts, candidateNfts, onRemove}: StakedNftsProps) => {
+  const [pendingNfts, setPendingNfts] = useState<PendingNft[]>([]);
+
+  const handleRemove = useCallback((nftAddress: string, nftId: string) => {
+    setPendingNfts(pendingNfts.filter((nft) => {
+      return nft.nftId !== nftId || !caseInsensitiveCompare(nft.nftAddress, nftAddress)
+    }));
+    onRemove(nftAddress, nftId);
+  }, [pendingNfts]);
+
+  const handleStake = useCallback(() => {
+    ApiService.withoutKey().requestBankStakeAuthorization(candidateNfts);
+
+  }, []);
+
+  useEffect(() => {
+    if (!currentStakedNfts) return;
+    setPendingNfts(
+      currentStakedNfts.map((stakedNft) => ({
+        nftAddress: stakedNft.contractAddress,
+        nftId: stakedNft.tokenId,
+        image: '',
+        isAlreadyStaked: true
+      }))
+    );
+  }, []);
+
+  useEffect(() => {
+    const newList =
+      pendingNfts.filter((pendingNft) => pendingNft.isAlreadyStaked);
+
+    setPendingNfts(newList.concat(candidateNfts.map((candidateNft) => ({
+      nftAddress: candidateNft.nftAddress,
+      nftId: candidateNft.nftId,
+      image: candidateNft.image,
+      isAlreadyStaked: false
+    }))));
+  }, [candidateNfts]);
 
   return (
     <Center my={6} px={4}>
       <Wrap>
-        {["1", "2", "3", "4", "5"].map((stake, index) => {
+        {[...Array(5).fill(0)].map((_, index) => {
           return (
-            <WrapItem>
-              {!!candidateNfts[index] ? (
-                <Box
-                  width={100}
-                  height={100}
-                  style={{borderRadius: '20px'}}
-                >
-                  <MultimediaImage
-                    source={ImageService.translate(candidateNfts[index].image).fixedWidth(100, 100)}
-                    title={candidateNfts[index].name}
-                    className="img-rounded-8"
-                  />
+            <WrapItem key={index}>
+              {!!pendingNfts[index] ? (
+                <Box position='relative'>
+                  <Box
+                    bg='#376dcf'
+                    p={2}
+                    rounded='xl'
+                    border={pendingNfts[index].isAlreadyStaked ? 'none' : '2px dashed #ffa71c'}
+                  >
+                    <Box
+                      width={100}
+                      height={100}
+                    >
+                      <MultimediaImage
+                        source={ImageService.translate(pendingNfts[index].image).fixedWidth(100, 100)}
+                        title={''}
+                        className="img-rounded-8"
+                      />
+                    </Box>
+                  </Box>
+
+                  <Box
+                    position='absolute'
+                    top={0}
+                    right={0}
+                    pe={2}
+                    pt={1}
+                  >
+                    <IconButton
+                      icon={<CloseIcon boxSize={2} />}
+                      aria-label='Remove'
+                      bg='gray.800'
+                      _hover={{ bg: 'gray.600' }}
+                      size='xs'
+                      rounded='full'
+                      onClick={() => handleRemove(pendingNfts[index].nftAddress, pendingNfts[index].nftId)}
+                    />
+                  </Box>
                 </Box>
               ) : (
                 <Box
-                  width={100}
-                  height={100}
-                  style={{borderRadius: '20px'}}
+                  width={104}
+                  height={104}
+                  rounded='xl'
+                  bgColor='#716A67'
+                  p={2}
+                  my={2}
                 >
-                  <Image
-                    position='absolute'
-                    src='/img/battle-bay/stakeNFT/slots.svg'
-                    w='100px'
-                    h='100px'
-                    zIndex='1'
-                  />
-                  <Flex
-                    position='relative'
-                    zIndex='2'
-                    opacity='0.9'
-                    justifyContent='center' padding='2' borderRadius={'5px'} w='100px' h='100px' bg='linear-gradient(147.34deg, #967729 -13.87%, #482698 153.79%)' >
-                    <Image zIndex='3' src='/img/battle-bay/stakeNFT/lock.svg' w='20px' h='20px' />
-                    {/* <Image zIndex='1' src='/img/battle-bay/stakeNFT/slots.svg' w='80px' h='80px' /> */}
-                  </Flex>
+                  <ShrineIcon boxSize='100%' fill='#B1ADAC'/>
                 </Box>
               )}
             </WrapItem>
           )
         })}
       </Wrap>
+      <Box ms={8}>
+        <RdButton w='150px'>
+          Stake
+        </RdButton>
+      </Box>
     </Center>
   )
 }
@@ -175,7 +241,7 @@ interface UnstakedNftsProps {
   address?: string;
   collection: string;
   onAdd: (nft: WalletNft) => void;
-  onRemove: (nft: WalletNft) => void;
+  onRemove: (nftAddress: string, nftId: string) => void;
 }
 
 const UnstakedNfts = ({address, collection, onAdd, onRemove}: UnstakedNftsProps) => {
@@ -225,14 +291,14 @@ const UnstakedNfts = ({address, collection, onAdd, onRemove}: UnstakedNftsProps)
             columns={{base: 2, sm: 3, md: 4, lg: 5, xl: 6, '2xl': 7}}
             gap={3}
           >
-            {data.pages.map((items, index) => (
-              <React.Fragment key={index}>
-                {items.data.map((nft, index) => (
+            {data.pages.map((items, pageIndex) => (
+              <React.Fragment key={pageIndex}>
+                {items.data.map((nft, itemIndex) => (
                   <StakingNftCard
-                    key={index}
+                    key={nft.name}
                     nft={nft}
                     onAdd={() => onAdd(nft)}
-                    onRemove={() => onRemove(nft)}
+                    onRemove={() => onRemove(nft.nftAddress, nft.nftId)}
                   />
                 ))}
               </React.Fragment>
