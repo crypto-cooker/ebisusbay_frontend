@@ -75,7 +75,7 @@ export const getProfileTroops = async (_address, _signature) => {
 export const getProfileArmies = async (_address, _signature, region, controlPointId) => {
   try{
     var data = await api.get(baseURL + "api/ryoshi-dynasties/armies?",
-      {params: {address: _address, signature: _signature}});
+      {params: {address: _address, signature: _signature, gameId: 10}});
     return data;
   }
   catch(error){

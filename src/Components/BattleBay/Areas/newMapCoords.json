@@ -1,0 +1,115 @@
+<area target="" alt="VolcanicReach" title="VolcanicReach" href="" coords="6247,1594,598" shape="circle">
+    <area target="" alt="Castle" title="Castle" href="" coords="3897,3357,643" shape="circle">
+    <area target="" alt="DragonsRoost" title="DragonsRoost" href="" coords="4822,2635,534" shape="circle">
+    <area target="" alt="TheIronBastion" title="TheIronBastion" href="" coords="5699,2370,378" shape="circle">
+    <area target="" alt="AncestorsFinalRest" title="AncestorsFinalRest" href="" coords="6171,3161,540" shape="circle">
+    <area target="" alt="VenomsDesert" title="VenomsDesert" href="" coords="4441,4645,632" shape="circle">
+    <area target="" alt="RainbowWay" title="RainbowWay" href="" coords="5809,4393,554" shape="circle">
+    <area target="" alt="IceShrine" title="IceShrine" href="" coords="3255,898,489" shape="circle">
+    <area target="" alt="EbisusBay" title="EbisusBay" href="" coords="2075,4540,569" shape="circle">
+    <area target="" alt="VerdantForest" title="VerdantForest" href="" coords="1399,3494,527" shape="circle">
+    <area target="" alt="Felishallow" title="Felishallow" href="" coords="2666,3443,598" shape="circle">
+    <area target="" alt="Seashrine" title="Seashrine" href="" coords="3384,2193,504" shape="circle">
+    <area target="" alt="MitamaFont" title="MitamaFont" href="" coords="2196,2555,450" shape="circle">
+    <area target="" alt="PiratesLagoon" title="PiratesLagoon" href="" coords="696,1888,647" shape="circle">
+    <area target="" alt="HuntersRetreat" title="HuntersRetreat" href="" coords="1614,1015,554" shape="circle">
+    <area target="" alt="MoltenSpires" title="MoltenSpires" href="" coords="5054,1413,548" shape="circle">
+    <area target="" alt="ClutchOfFukurokuju" title="ClutchOfFukurokuju" href="" coords="4277,501,535" shape="circle">
+    <area target="" alt="OmoikanesAthenaeum" title="OmoikanesAthenaeum" href="" coords="2478,1673,533" shape="circle">
+</map>
+"regions": [
+            {
+                "name": "Region1",
+                "controlPoints": [
+                    {
+                        "name": "Volcanic Reach",
+                        "rewardId": 1,
+                        "coordinates" : "6247,1594,598"
+                    },
+                    {
+                        "name": "Castle",
+                        "rewardId": 2,
+                        "coordinates" : "3897,3357,643"
+                    },
+                    {
+                        "name": "Dragons Roost",
+                        "rewardId": 3,
+                        "coordinates" : "4822,2635,534"
+                    },
+                    {
+                        "name": "The Iron Bastion",
+                        "rewardId": 4,
+                        "coordinates" : "5699,2370,378"
+                    },
+                    {
+                        "name": "Ancestors' Final Rest",
+                        "rewardId": 5,
+                        "coordinates" : "6171,3161,540"
+                    },
+                    {
+                        "name": "Venoms Desert",
+                        "rewardId": 6,
+                        "coordinates" : "4441,4645,632"
+                    },
+                    {
+                        "name": "Rainbow Way",
+                        "rewardId": 7,
+                        "coordinates" : "5809,4393,554"
+                    },
+                    {
+                        "name": "Ice Shrine",
+                        "rewardId": 8,
+                        "coordinates" : "3255,898,489"
+                    },
+                    {
+                        "name": "Ebisu's Bay",
+                        "rewardId": 9,
+                        "coordinates" : "2075,4540,569"
+                    },
+                    {
+                        "name": "Verdant Forest",
+                        "rewardId": 10,
+                        "coordinates" : "1399,3494,527"
+                    },
+                    {
+                        "name": "Felishallow",
+                        "rewardId": 11,
+                        "coordinates" : "2666,3443,598"
+                    },
+                    {
+                        "name": "Seashrine",
+                        "rewardId": 12,
+                        "coordinates" : "3384,2193,504"
+                    },
+                    {
+                        "name": "Mitama Font",
+                        "rewardId": 13,
+                        "coordinates" : "2196,2555,450"
+                    },
+                    {
+                        "name": "Pirates Lagoon",
+                        "rewardId": 14,
+                        "coordinates" : "696,1888,647"
+                    },
+                    {
+                        "name": "Hunters Retreat",
+                        "rewardId": 15,
+                        "coordinates" : "1614,1015,554"
+                    },
+                    {
+                        "name": "Molten Spires",
+                        "rewardId": 16,
+                        "coordinates" : "5054,1413,548"
+                    },
+                    {
+                        "name": "Clutch of Fukurokuju",
+                        "rewardId": 17,
+                        "coordinates" : "4277,501,535"
+                    },
+                    {
+                        "name": "Omoikanes Athenaeum",
+                        "rewardId": 18,
+                        "coordinates" : "2478,1673,533"
+                    },
+                ]
+            }]

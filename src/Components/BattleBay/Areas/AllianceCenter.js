@@ -80,6 +80,7 @@ const AllianceCenter = ({onBack}) => {
         const factionResponse = await getAllFactions();
         setFactions(factionResponse);
         const tr = await getProfileTroops(user.address.toLowerCase(), signatureInStorage);
+        console.log(tr)
         setTotalTroops(tr)
       } catch (error) {
         console.log(error)
@@ -95,6 +96,7 @@ const AllianceCenter = ({onBack}) => {
     if (signatureInStorage) {
       try {
         const res = await addTroops(user.address.toLowerCase(), signatureInStorage, 8);
+        console.log(res)
         SetUp();
       } catch (error) {
         console.log(error)
@@ -145,6 +147,7 @@ const AllianceCenter = ({onBack}) => {
       }
       if (signatureInStorage) {
         try {
+          // console.log(signatureInStorage)
           //0x0000000000000000000000000000000000000001
           const registerFactionContract = new Contract(config.contracts.allianceCenter, AllianceCenterContract, user.provider.getSigner());
           const tx = await registerFactionContract.registerFaction(user.address.toLowerCase())

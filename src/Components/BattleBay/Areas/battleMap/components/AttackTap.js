@@ -390,7 +390,9 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   }, [])
 
   useEffect(() => {
+    console.log("playerArmies.length ", playerArmies.length )
     if(playerArmies.length > 0 && allFactions.length > 0 && !factionsLoaded) {
+      console.log("playerArmies changed", playerArmies)
       var combinedArmiesLocal = [];
 
       //we need to combine the playerArmies by factionId
@@ -410,6 +412,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   }, [playerArmies, allFactions])
 
   useEffect(() => {
+    console.log("combinedArmies changed", combinedArmies)
     if(combinedArmies.length > 0 && !factionsLoaded) {
       setAttackerOptions(combinedArmies.map((faction, index) => (
         <option 

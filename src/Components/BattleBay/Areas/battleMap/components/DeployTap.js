@@ -111,7 +111,7 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
     else if(troopsSource==1)
     {
       console.log("deploying troops from player troops")
-      if(selectedQuantity>troopsAvailable)
+      if(selectedQuantity> troopsAvailable+ factionTroopsAvailable)
       {
         toast.error("You don't have enough troops to deploy")
         return;
@@ -215,7 +215,7 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
 
       <FormControl>
         <FormLabel>Troops To Deploy:</FormLabel>
-        <NumberInput defaultValue={1} min={1} max={troopsAvailable} name="quantity" 
+        <NumberInput defaultValue={1} min={1} max={troopsAvailable+factionTroopsAvailable} name="quantity" 
           onChange={handleChange}
           value={selectedQuantity} type ='number'>
           <NumberInputField />
@@ -235,7 +235,7 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
             <HStack>
             {currentTab === tabs.deploy && (
             <Text textAlign='left' >
-            Troops available in wallet: {troopsAvailable}
+            Troops available in wallet: {troopsAvailable+factionTroopsAvailable}
             <br /> {showFactionTroops ? (<>
             <Text>Troops delegated to faction: {factionTroopsAvailable}</Text>
             {/* <RadioGroup defaultValue='1' onChange={setTroopsSource} value={troopsSource}>
