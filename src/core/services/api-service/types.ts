@@ -42,3 +42,8 @@ export enum OfferType {
     DIRECT = 'direct',
     COLLECTION = 'collection'
 }
+
+export interface BankStakeNft {
+    nftAddress: string;
+    nftId: string;
+}

@@ -96,7 +96,7 @@ const StakePage = () => {
     const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
     const bank = new Contract(config.contracts.bank, Bank, readProvider);
     const deposits = await bank.deposits(user.address?.toLowerCase());
-    console.log('deposits', deposits)
+    console.log('deposits', deposits.amount.toString())
 
     //if has deposits, set state
     if(deposits[0].gt(0)){
@@ -106,13 +106,11 @@ const StakePage = () => {
       const newerDate = newDate.setDate(newDate.getDate() + daysToAdd);
 
       setAmountDeposited(Number(ethers.utils.formatEther(deposits[0])));
-      setFortuneToStake(Number(ethers.utils.formatEther(deposits[0])));
       setDepositLength(daysToAdd);
-      setDaysToStake(daysToAdd);
       setWithdrawDate(moment(newerDate).format("MMM D yyyy"));
 
-      setMinAmountToStake(Number(ethers.utils.formatEther(deposits[0])));
-      setMinLengthOfTime(daysToAdd);
+      setMinAmountToStake(1000);
+      setMinLengthOfTime(90);
     } else {
       console.log("no deposits")
     }
@@ -122,20 +120,17 @@ const StakePage = () => {
   const validateInput = async () => {
     setExecutingLabel('Validating');
 
-    if (hasDeposited && fortuneToStake < amountDeposited) {
-      setInputError(`Must stake at least ${amountDeposited} Fortune`);
-      return false;
+    if (userFortune < fortuneToStake) {
+      toast.error("Not enough Fortune");
+      return;
     }
+
     if (fortuneToStake < minAmountToStake) {
       setInputError(`At least ${minAmountToStake} required`);
       return false;
     }
     setInputError('');
 
-    if (hasDeposited && daysToStake < depositLength) {
-      setLengthError(`At least ${depositLength} days required`);
-      return false;
-    }
     if (daysToStake < minLengthOfTime) {
       setLengthError(`At least ${minLengthOfTime} days required`);
       return false;
@@ -186,13 +181,13 @@ const StakePage = () => {
         console.log("has deposited");
         console.log(amountDeposited);
         console.log(fortuneToStake);
-        const hasIncreasedAmount = amountDeposited < fortuneToStake;
+        const hasIncreasedAmount = fortuneToStake > 0;
         const hasIncreasedDays = depositLength < daysToStake;
 
         if (hasIncreasedAmount) {
           const additionalFortune = fortuneToStake - amountDeposited;
           console.log("additional fortune to stake: " + additionalFortune);
-          const tx = await bankContract.increaseDeposit(ethers.utils.parseEther(String(additionalFortune)));
+          const tx = await bankContract.increaseDeposit(ethers.utils.parseEther(String(fortuneToStake)));
           const receipt = await tx.wait();
           toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
         } else if (!hasIncreasedDays) {
@@ -235,7 +230,7 @@ const StakePage = () => {
   }
 
   useEffect(() => {
-    setMitama((fortuneToStake*daysToStake)/1080)
+    setMitama( ((fortuneToStake + amountDeposited )* daysToStake) / 1080)
   }, [fortuneToStake, daysToStake])
 
   useEffect(() => {
@@ -290,7 +285,7 @@ const StakePage = () => {
         { user.address && hasDeposited ? (
           <>
             <Center mt={4} mb={2}>
-              <Text align='center'>Update current stake</Text>
+              <Text align='center'>Increase current stake</Text>
             </Center>
           </>
         ) : (

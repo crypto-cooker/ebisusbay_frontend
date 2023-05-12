@@ -5,7 +5,7 @@ import Mapi from "@src/core/services/api-service/mapi";
 import SearchQuery from "@src/core/services/api-service/mapi/queries/search";
 import {OffersQueryParams} from "@src/core/services/api-service/mapi/queries/offers";
 import {Listing, OwnerListing} from "@src/core/models/listing";
-import {Api} from "@src/core/services/api-service/types";
+import {Api, BankStakeNft} from "@src/core/services/api-service/types";
 import {Offer} from "@src/core/models/offer";
 import {WalletsQueryParams} from "./mapi/queries/wallets";
 import WalletNft from "@src/core/models/wallet-nft";
@@ -83,6 +83,10 @@ export class ApiService implements Api {
 
   async getStakedTokens(address: string) {
     return this.graph.getStakedTokens(address);
+  }
+
+  async requestBankStakeAuthorization(nfts: BankStakeNft[]) {
+    return this.cms.requestBankStakeAuthorization(nfts);
   }
 }
 
