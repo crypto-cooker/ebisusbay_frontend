@@ -185,8 +185,7 @@ const StakePage = () => {
         const hasIncreasedDays = depositLength < daysToStake;
 
         if (hasIncreasedAmount) {
-          const additionalFortune = fortuneToStake - amountDeposited;
-          console.log("additional fortune to stake: " + additionalFortune);
+          console.log("additional fortune to stake: " + fortuneToStake);
           const tx = await bankContract.increaseDeposit(ethers.utils.parseEther(String(fortuneToStake)));
           const receipt = await tx.wait();
           toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));

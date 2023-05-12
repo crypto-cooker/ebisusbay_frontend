@@ -23,7 +23,7 @@ class Cms {
   }
 
   async requestBankStakeAuthorization(nfts: BankStakeNft[]) {
-    return this.ryoshiDynasties.requestBankStakeAuthorization(nfts);
+    return this.ryoshiDynasties.requestBankStakeAuthorization('', nfts, '');
   }
 }
 
