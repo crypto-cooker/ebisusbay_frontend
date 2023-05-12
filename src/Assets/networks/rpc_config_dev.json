@@ -20363,6 +20363,54 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Charon VIP",
+      "slug": "charon-vip",
+      "multiToken": false,
+      "address": "0x28a8c2De33BE177ee6BA5Ee7346889b5263Fc70e",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "May I speak to a manager?",
+        "avatar": "/img/collections/charon-vip/avatar.webp",
+        "banner": "/img/collections/charon-vip/banner.webp",
+        "card": "/img/collections/charon-vip/card.webp",
+        "twitter": "https://www.twitter.com/kingkongcronos2",
+        "discord": "https://discord.gg/8ZQUXur8hH",
+        "medium": "https://medium.com/@titansofcronos",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "BuddieBrix NFT",
+      "slug": "buddiebrix-nft",
+      "multiToken": false,
+      "address": "0xaDD65040952B5b340E1BD71eD2aAB63E6E4b7F37",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "BuddieBrix are collectible cards personalized with an NFT you own. They're a unique and exciting way to showcase your digital assets. After you have minted, you will have access to an order form by clicking the Order button Send us all the required info and once a quick IP rights check is taken care of, we will start creating your one of a kind card. You will receive a physical version of the card that you can display and you'll also receive a digital version of the card which is an exclusive digital asset in its own right. Whether you're a collector, a fan, or simply looking for a new way to showcase your NFTs, a BuddieBrix collectible card is a fun and creative way to bring your digital assets to life.",
+        "avatar": "/img/collections/buddiebrix-nft/avatar.webp",
+        "banner": "/img/collections/buddiebrix-nft/banner.webp",
+        "card": "/img/collections/buddiebrix-nft/card.webp",
+        "website": "https://www.BuddieBrix.com/",
+        "twitter": "https://twitter.com/thebuddielabs",
+        "discord": "https://discord.gg/NoBuddies",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
