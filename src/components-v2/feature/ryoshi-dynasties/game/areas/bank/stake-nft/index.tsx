@@ -139,7 +139,8 @@ const StakedNfts = ({currentStakedNfts, candidateNfts, onRemove}: StakedNftsProp
   }, [pendingNfts]);
 
   const handleStake = useCallback(() => {
-    ApiService.withoutKey().requestBankStakeAuthorization(candidateNfts);
+    console.log('handleStake')
+    // ApiService.withoutKey().requestBankStakeAuthorization(candidateNfts);
 
   }, []);
 
