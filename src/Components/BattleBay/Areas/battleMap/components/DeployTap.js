@@ -238,7 +238,7 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
             Troops available in wallet: {troopsAvailable}
             <br /> {showFactionTroops ? (<>
             <Text>Troops delegated to faction: {factionTroopsAvailable}</Text>
-            <RadioGroup defaultValue='1' onChange={setTroopsSource} value={troopsSource}>
+            {/* <RadioGroup defaultValue='1' onChange={setTroopsSource} value={troopsSource}>
             <VStack spacing={1} direction='row' >
               <Radio colorScheme='orange' size='md' value='1'>
                 Deploy Personal Troops
@@ -247,7 +247,7 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
                 Deploy Faction Troops
               </Radio>
             </VStack>
-          </RadioGroup>
+          </RadioGroup> */}
           </>
             ) : (<p></p>)}
           </Text>)}

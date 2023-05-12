@@ -566,11 +566,11 @@ const SetUpButtons = async () => {
       </TransformWrapper>
       </AspectRatio>
     
-<Box  position='absolute' top={0} left={0} p={4}>
-  <Flex direction='row' justify='space-between' >
-    <Box mb={4} bg='#272523' p={2} rounded='md' >
-      <Flex alignItems='left'>
-        <VStack alignItems='left'>
+<Box  position='absolute' top={0} left={0} p={4}  pointerEvents='none' >
+  <Flex direction='row' justify='space-between' pointerEvents='none'  >
+    <Box mb={4} bg='#272523' p={2} rounded='md' marginTop='150%' pointerEvents='none' >
+      <Flex alignItems='left'  pointerEvents='none' >
+        <VStack alignItems='left'  pointerEvents='none' >
           <HStack>
             <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
             <Text >Fortune : {!resourcesAcquired ? <Spinner size='sm'/> :commify(fortune.toFixed())}</Text>

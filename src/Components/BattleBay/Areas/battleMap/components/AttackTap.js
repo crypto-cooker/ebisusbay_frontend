@@ -21,6 +21,7 @@ import {
   Center,
   Text,
   Spacer,
+  HStack,
 } from "@chakra-ui/react";
 
 import Button from "@src/Components/components/Button";
@@ -38,14 +39,6 @@ import {toast} from "react-toastify";
 import Battlefield from "@src/Contracts/Battlefield.json";
 import Resources from "@src/Contracts/Resources.json";
 import {io} from "socket.io-client";
-
-//sockets
-// import { socket } from '@src/socket';
-// import { ConnectionState } from 'src/Components/BattleBay/Areas/sockets/ConnectionState';
-// import { ConnectionManager } from 'src/Components/BattleBay/Areas/sockets/ConnectionManager.js';
-// import { Events } from 'src/Components/BattleBay/Areas/sockets/Events.js';
-
-//filter player armies that are deployed to controlpoint id and show the list of factiions that you are supporting there
 
 const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
@@ -85,18 +78,60 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   const [koban, setKoban] = useState(0);
   const [isExecuting, setIsExecuting] = useState(false);
   const [executingLabel, setExecutingLabel] = useState('Attacking...');
-
-  //sockets
-  // const [isConnected, setIsConnected] = useState(socket.connected);
-  // const [fooEvents, setFooEvents] = useState([]);
-
+  const [battleAttack, setBattleAttack] = useState([]);
   
+  //dataforms for attacker and defender
   const [dataForm, setDataForm] = useState({
     attackersFaction: "" ?? null,
     // quantity: 0,
     defendersFaction: "" ?? null,
   })
+  const onChangeInputsAttacker = (e) => {
+    setDataForm({...dataForm, [e.target.name]: e.target.value})
+    if(e.target.value !== ''){
+      setAttackerTroopsAvailable(combinedArmies.filter(faction => faction.name === e.target.value)[0].troops);
+    } else {
+      setAttackerTroopsAvailable(0);
+    }
+  }
+  const onChangeInputsDefender = (e) => {
+    setDataForm({...dataForm, [e.target.name]: e.target.value})
+    if(e.target.value !== ''){
+      setDefenderTroops(controlPoint.leaderBoard.filter(faction => faction.name === e.target.value)[0].totalTroops);
+    } else {
+      setDefenderTroops(0);
+    }
+  }
 
+  //dice
+  const [att, setAtt] = useState([])
+  const [def, setDef] = useState([])
+  
+  function setupDice(attackerDice, defenderDice) {
+    attackerDice.length = Math.min(attackerDice.length, 3);
+    defenderDice.length = Math.min(defenderDice.length, 3);
+    
+    // var diceRolls = [5,6,2]
+    setAtt(
+      attackerDice.map((i) => (<Image
+          borderRadius='full'
+          align={'center'}
+          objectFit='cover'
+          boxSize='200px'
+          src = {'img/battle-bay/dice/dice_'+i+'.gif'}
+        />))
+      )
+    // diceRolls = [3,1]
+    setDef(
+      defenderDice.map((i) => (<Image
+        borderRadius='full'
+        align={'center'}
+        objectFit='cover'
+        boxSize='200px'
+        src = {'img/battle-bay/dice/dice_'+i+'.gif'}
+      />))
+    )
+  }
   const CheckIfAttackerFactionIsOwnedByPlayer = async () => {
       setIsOwnerOfFaction(dataForm.attackersFaction == playerFaction[0].name);
   }
@@ -117,20 +152,6 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
       }
     }
   }
-  useEffect(() => {
-    console.log('dataForm', dataForm);
-  }, [dataForm])
-
-  const onChangeInputsAttacker = (e) => {
-    setDataForm({...dataForm, [e.target.name]: e.target.value})
-    console.log('combinedArmies', combinedArmies);
-    console.log('e.target.value', e.target.value);
-    setAttackerTroopsAvailable(combinedArmies.filter(faction => faction.name === e.target.value)[0].troops);
-  }
-  const onChangeInputsDefender = (e) => {
-    setDataForm({...dataForm, [e.target.name]: e.target.value})
-    setDefenderTroops(controlPoint.leaderBoard.filter(faction => faction.name === e.target.value)[0].totalTroops);
-  }
   const GetPlayerOwnedFaction = async () => {
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
@@ -141,7 +162,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
       try {
         const data = await getFactionsOwned(user.address.toLowerCase(), signatureInStorage);
         SetPlayerFaction(data.data.data);
-        console.log('data.data.data', data.data.data);
+        // console.log('data.data.data', data.data.data);
         setFactionTroops(data.data.data[0].troops);
       } catch (error) {
         console.log(error)
@@ -200,7 +221,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
           attackerFactionId, 
           defenderFactionId);
 
-        console.log("data", data);
+        // console.log("data", data);
         
         const timestamp = Number(data.data.data.timestampInSeconds);
         const attacker = data.data.data.attacker;
@@ -217,9 +238,13 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
         const tx = await attackContract.attackFaction(attackTuple, sig);
         const receipt = await tx.wait();
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-
-        console.log("receipt", receipt);
         // ShowAttackConclusion();
+        console.log("receipt", receipt);
+        
+        // if(battleAttack.length !== 0 ){
+        //   ShowAttackConclusion();
+        // }
+        // console.log("receipt", receipt);
 
       } catch (error) {
         if(error.response !== undefined) {
@@ -230,16 +255,17 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
           toast.error(error);
         }
       }
-      setIsExecuting(false);
+    setIsExecuting(false);
   }
   }
+  
   function ShowAttackConclusion(){
     var attackersAlive = Number(attackerTroops);
     var attackersSlain = 0;
     var defendersSlain = 0;
     var outcomeLog = ""
-    var attackerDice = data.data.data[0].diceScores1;
-    var defenderDice = data.data.data[0].diceScores2;
+    const attackerDice = battleAttack[0].diceScores1;
+    const defenderDice = battleAttack[0].diceScores2;
 
     for(var i = 0; i < attackerDice.length; i++)
     {
@@ -247,7 +273,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
       {
         attackersAlive--;
         attackersSlain++;
-        console.log("attacker dies")
+        // console.log("attacker dies")
       }
       else
       {
@@ -259,17 +285,23 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
     battleLogText.current.innerHTML = outcomeLog;
     battleOutcome.current.textContent = attackersAlive>0 ? "You won!" : "You lost!";
-    attackerOutcome.current.textContent = dataForm.attackersFaction+" lost "+attackersSlain+"/"+ Number(attackerTroops)+" troops";
-    defenderOutcome.current.textContent = dataForm.defendersFaction+" lost "+defendersSlain+"/"+defenderTroops+" troops";
+    attackerOutcome.current.textContent = "lost "+attackersSlain+"/"+ Number(attackerTroops)+" troops";
+    defenderOutcome.current.textContent = "lost "+defendersSlain+"/"+defenderTroops+" troops";
     
     setupDice(attackerDice, defenderDice);
 
     attackSetUp.current.style.display = "none"
     attackConclusion.current.style.display = "block"
+    setIsExecuting(false);
   }
   function PreBattleChecks()
   {
     setShowAlert(false)
+    if(dataForm.attackersFaction == ''){
+      setAlertMessage("Must select an attacker faction")
+      setShowAlert(true)
+      return;
+    }
 
     if(attackerTroopsAvailable <= 1)
     {
@@ -312,17 +344,11 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
         setAttackerTroopsAvailable(faction.totalTroops);
       }});
   }
-  function showDetailedResults()
-  {
+  function showDetailedResults(){
     battleLog.current.style.display = battleLog.current.style.display === "block" ? "none" : "block";
   }
-  // const ShowAvailableFactions = async (playerFactions) => {
-  //   setAttackerOptions(playerFactions.map((faction, index) => (
-  //     <option value={faction.name} key={index}>{faction.name}</option>)
-  //     ))
-  // }
   const CheckForKoban = async () => {
-    console.log("CheckForKoban")
+    // console.log("CheckForKoban")
     const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
     const resourceContract = new Contract(config.contracts.resources, Resources, readProvider);
     const tx = await resourceContract.balanceOf(user.address.toLowerCase(), 1);
@@ -340,19 +366,6 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
         : null)))
     }
   }, [controlPoint])
-
-  useEffect(() => {
-    if(attackerOptions!="") {
-      setShowAlert(false)
-      dataForm.attackersFaction = attackerOptions[0].props.value;
-    }
-  }, [])
-
-  useEffect(() => {
-      if(defenderOptions!="") {
-        dataForm.defendersFaction = defenderOptions[0].props.value;
-      }
-  }, [defenderOptions])
 
   useEffect(() => {
       if(dataForm.defendersFaction!=null) {
@@ -410,7 +423,10 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
   const [isSocketConnected, setIsSocketConnected] = useState(false);
   useEffect(() => {
-    const socket = io('wss://testcms.ebisusbay.biz/socket/ryoshi-dynasties/battles?walletAddress=0x2bc60de5833c7c7279427657ef839c06212a38bf');
+    if (!user.address) return;
+
+    console.log('connecting to socket...');
+    const socket = io('wss://testcms.ebisusbay.biz/socket/ryoshi-dynasties/battles?walletAddress='+user.address.toLowerCase());
 
     function onConnect() {
       setIsSocketConnected(true);
@@ -424,6 +440,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
     function onBattleAttackEvent(data) {
       console.log('BATTLE_ATTACK', data)
+      setBattleAttack(JSON.parse(data));
     }
 
     socket.on('connect', onConnect);
@@ -435,40 +452,22 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
       socket.off('disconnect', onDisconnect);
       socket.off('BATTLE_ATTACK', onBattleAttackEvent);
     };
-  }, []);
+  }, [!!user.address]);
 
-
-  const [att, setAtt] = useState([])
-  const [def, setDef] = useState([])
-
-  function setupDice(attackerDice, defenderDice) {
-    attackerDice.length = Math.min(attackerDice.length, 3);
-    defenderDice.length = Math.min(defenderDice.length, 3);
-    
-    // var diceRolls = [5,6,2]
-    setAtt(
-      attackerDice.map((i) => (<Image
-          borderRadius='full'
-          align={'center'}
-          objectFit='cover'
-          boxSize='200px'
-          src = {'img/battle-bay/dice/dice_'+i+'.gif'}
-        />))
-      )
-    // diceRolls = [3,1]
-    setDef(
-      defenderDice.map((i) => (<Image
-        borderRadius='full'
-        align={'center'}
-        objectFit='cover'
-        boxSize='200px'
-        src = {'img/battle-bay/dice/dice_'+i+'.gif'}
-      />))
-    )
-  }
+  useEffect(() => {
+    if (battleAttack.length !== 0)
+    {
+      ShowAttackConclusion();
+      setIsExecuting(false);
+      // setBattleAttack([{"id":33,"armyId1":288,"armyId2":289,"diceScores1":[4,4],"diceScores2":[6,4]}])
+      // console.log('battleAttack', battleAttack[0].diceScores1);
+    return;
+    } 
+  }, [battleAttack]);  
 
   return (
     <Flex flexDirection='column' textAlign='center' justifyContent='space-around' >
+      <div ref={attackSetUp}>
 
       <Center>
         <Flex justifyContent='center' w='90%' >
@@ -479,79 +478,83 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
       <Spacer m='4' />
 
       <Center>
-        <Flex justifyContent='space-between' w='90%' >
-          <Text textAlign='left' fontSize={'16px'}> Select a Faction to attack:</Text>
-          <Text textAlign='right' fontSize={'16px'}>Attacker Strength (1-3):</Text>
-        </Flex>
-      </Center>
-      
+          <VStack justifyContent='space-between'>
+          <Text textAlign='left' fontSize={'16px'}>Select a Faction to attack with:</Text>
+            <Select 
+              name='attackersFaction'
+              backgroundColor='#292626'
+              w='90%' 
+              me={2} 
+              placeholder='Select Attacker'
+              value={dataForm.attackersFaction} 
+              onChange={onChangeInputsAttacker}>
+              {attackerOptions}
+            </Select>
 
-      <Center>
-        <Flex justifyContent='space-between' w='90%' >
-          <Select 
-            name='attackersFaction'
-            backgroundColor='#292626'
-            w='40%' 
-            me={2} 
-            value={dataForm.attackersFaction} 
-            onChange={onChangeInputsAttacker}>
-            {attackerOptions}
-          </Select>
+            <Text textAlign='left' fontSize={'16px'}>Troops You Deployed: {attackerTroopsAvailable}</Text>
 
-          <NumberInput 
-            align='right'
-            defaultValue={1} 
-            min={1} 
-            max={3} 
-            name="quantity" 
-            w='20%'
-            onChange={handleChange}
-            value={attackerTroops} 
-            type ='number'
-            bgColor='#292626'
-            borderRadius='10px'
-            >
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
+          <Text textAlign='right' fontSize={'16px'}>Attack Strength (1-3):</Text>
+            <NumberInput 
+              align='right'
+              defaultValue={1} 
+              min={1} 
+              max={3} 
+              name="quantity" 
+              w='80%'
+              onChange={handleChange}
+              value={attackerTroops} 
+              type ='number'
+              bgColor='#292626'
+              borderRadius='10px'
+              >
+              <NumberInputField />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
 
+            <Text textAlign='center' fontSize={'16px'}>Select a Faction to Attack:</Text>
           <Select 
             name='defendersFaction'
+            placeholder='Select Defender'
             backgroundColor='#292626'
-            w='40%' 
+            w='100%' 
             me={2} 
             value={dataForm.defendersFaction} 
             onChange={onChangeInputsDefender}>
             {defenderOptions}
           </Select>
-        </Flex>
+          </VStack>
       </Center>
+      <Spacer m='4' />
+
      
       <Spacer m='4' />
 
       {/* VS */}
-      <Center>
-        <Flex justifyContent='space-between' w='90%' >
-          <Box>
-            <Text textAlign='left' fontSize={'24px'}>{dataForm.attackersFaction}</Text>
-            <Text textAlign='left' fontSize={'16px'}>Troops You Deployed: {attackerTroopsAvailable}</Text>
-            {/* {isOwnerOfFaction 
-            ? <Text textAlign='left' fontSize={'16px'}>Troops Delegated: {factionTroops}</Text> : ""} */}
-            
-            <Text textAlign='left' fontSize={'16px'}>Attack Strength: {attackerTroops}</Text>
-          </Box>
-          
-          <Text textAlign='left' fontSize={'16px'}>VS</Text>
+      {/* <Center> */}
+      <Flex direction='row' justify='space-between' justifyContent='center'>
+        <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
+          <HStack justify='space-between'>
+            <Box w='45'>
+              <Text textAlign='left' fontSize={'24px'}>{dataForm.attackersFaction}</Text>
+              <Text textAlign='left' fontSize={'16px'}>Attack Strength: {attackerTroops}</Text>
+              {/* {isOwnerOfFaction 
+              ? <Text textAlign='left' fontSize={'16px'}>Troops Delegated: {factionTroops}</Text> : ""} */}
+            </Box>
+            <Box  w='10'>
+              <Text textAlign='left' fontSize={'16px'}>VS</Text>
+            </Box>
 
-          <Box>
-            <Text textAlign='right' fontSize={'24px'}>{dataForm.defendersFaction}</Text>
-            <Text textAlign='right' fontSize={'16px'}>Troops deployed: {defenderTroops}</Text>
+            <Box  w='45'>
+              <Text textAlign='right' fontSize={'24px'}>{dataForm.defendersFaction}</Text>
+              <Text textAlign='right' fontSize={'16px'}>Troops stationed: {defenderTroops}</Text>
+            </Box>
+          </HStack>
           </Box>
         </Flex>
-      </Center>
+      {/* </Center> */}
 
         {/* Alert */}
         <Flex justify={"center"} align={"center"} >
@@ -595,63 +598,88 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
                   side has run out of troops">How are Attacks Calculated? (Hover for info)</Text>
           </Flex>
         </Center>
+      </div>
 
       <div ref={attackConclusion} style={{ display: 'none'}}>
         <div class="container">
           <Heading ref={battleOutcome} >Victory!</Heading>
           <Grid
-        templateAreas={`"att def"`}
-        gridTemplateColumns={'1fr 1fr'}
-        h='200px'
-        gap='1'
-        color='blackAlpha.700'
-        fontWeight='bold'
-      >
+            templateAreas={`"att def"`}
+            gridTemplateColumns={'1fr 1fr'}
+            h='200px'
+            gap='1'
+            color='blackAlpha.700'
+            fontWeight='bold'
+          >
         <GridItem pl='2'  area={'att'}>
           <VStack spacing='-180px'>{att}</VStack>
         </GridItem>
         <GridItem pl='2'  area={'def'}>
         <VStack spacing='-180px'>{def}</VStack>
         </GridItem>
-
       </Grid>
-          <div class="row">
-            <Box >
-              <p style={{textAlign:'left'}}>Attackers</p>
-              <label class = "basicText" ref={attackerOutcome}>This is the attacker outcome</label>
-            </Box>
-            <div class="column border-left">
-            <p style={{textAlign:'left'}}>Defenders</p>
-              <label class = "basicText" ref={defenderOutcome}> This is the defender outcome</label>
-            </div>
-          </div>
-          <Flex gap='16px'>
-            <Button type="legacy"
-              onClick={Reset}
-              // onClick={processCreateListingRequest}
-              // isLoading={executingCreateListing}
-              // disabled={executingCreateListing}
-              className="flex-fill">
-              Attack Again
-            </Button>
-            <Button type="legacy"
-              onClick={showDetailedResults}
-              // onClick={processCreateListingRequest}
-              // isLoading={executingCreateListing}
-              // disabled={executingCreateListing}
-              className="flex-fill">
-              See detailed results
-            </Button>
-            </Flex>
-        </div>
-        <div ref={battleLog} style={{display: 'none', overflowY:'scroll', height:'300px'}}>
-        <form class="form-container">
-          <Heading class = "basicText" id="">Results:</Heading>
-          <p ref={battleLogText}></p>
-        </form>
-      </div>
-      </div>
 
+          <Flex direction='row' justify='space-between' justifyContent='center'>
+            <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
+            <Center>
+              <HStack w='90%' justify='space-between'>
+                <Text style={{textAlign:'left'}}>Attackers {dataForm.attackersFaction}</Text>
+                <Text style={{textAlign:'left'}}>Defenders {dataForm.defendersFaction}</Text>
+              </HStack>
+            </Center>
+            <Center>
+              <HStack w='90%' justify='space-between'>
+                <Text class = "basicText" ref={attackerOutcome}>This is the attacker outcome</Text>
+                <Text class = "basicText" ref={defenderOutcome}> This is the defender outcome</Text>
+              </HStack>
+            </Center>
+
+            </Box>
+          </Flex>
+          </div>
+
+          <Center>
+            <HStack w='90%' justify='space-between'>
+              <RdButton
+                onClick={Reset}
+                w='200px'
+                fontSize={{base: 'md', sm: 'xl'}}
+                hideIcon={true}
+                isLoading={isExecuting}
+                disabled={isExecuting}
+                marginTop='2'
+                marginBottom='2'>
+                Attack Again
+              </RdButton>
+              <RdButton 
+                onClick={showDetailedResults}
+                w='250px'
+                fontSize={{base: 'md', sm: 'xl'}}
+                hideIcon={true}
+                isLoading={isExecuting}
+                disabled={isExecuting}
+                marginTop='2'
+                marginBottom='2'>
+                See detailed results
+              </RdButton>
+            </HStack>
+          </Center>
+          
+
+        <Spacer m='4' />
+
+        <div ref={battleLog} style={{display: 'none', overflowY:'scroll', height:'300px'}}>
+          <Flex direction='row' justify='space-between' justifyContent='center'>
+            <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
+              <form class="form-container" >
+                <Heading class = "basicText" id="">Results:</Heading>
+                <p ref={battleLogText}></p>
+              </form>
+            </Box>
+          </Flex>
+        </div>
+
+      </div>
     </Flex>
   )
 }
