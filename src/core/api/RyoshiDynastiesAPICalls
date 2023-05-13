@@ -60,6 +60,7 @@ export const getProfileTroops = async (_address, _signature) => {
 
     //itterate through the data and get the troops without a control point
     var troops = 0;
+    // console.log(data.data.data)
     data.data.data.forEach(element => {
       if(element.controlPointId == null){
         troops += element.troops;
@@ -77,6 +78,25 @@ export const getProfileArmies = async (_address, _signature, region, controlPoin
     var data = await api.get(baseURL + "api/ryoshi-dynasties/armies?",
       {params: {address: _address, signature: _signature, gameId: 10}});
     return data;
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const getFactionUndeployedArmies = async (_address, _signature) => {
+  try{
+    var gameId = await getWeeklyGameId();
+    var data = await api.get(baseURL + "api/ryoshi-dynasties/armies?",
+      {params: {address: _address, signature: _signature, gameId: gameId}});
+      
+    //itterate through the data and get the troops without a control point
+    var troops = 0;
+    data.data.data.forEach(element => {
+      if(element.controlPointId == null){
+        troops += element.troops;
+      }
+    });
+    return troops;
   }
   catch(error){
     throw error;
@@ -202,17 +222,16 @@ export const delegateTroops = async (address, signature, troops, factionId) => {
 //deploys troops from a faction to a control point
 export const deployTroops = async (address, signature, troops, controlPointId, factionId) => {
   try{
-    var gameID = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
-    var gameId = gameID.data.data.id;
-    
-    // console.log("Troops: "+troops);
+
+    var gameId = await getWeeklyGameId();
+    console.log("Troops: "+troops);
     troops = Number(troops);
-    // console.log("ControlPointID: "+controlPointId);
-    // console.log("GameID: "+gameId);
-    // console.log("FactionID: "+factionId);
+    console.log("ControlPointID: "+controlPointId);
+    console.log("GameID: "+gameId);
+    console.log("FactionID: "+factionId);
     
-    // console.log("Address: "+address);
-    // console.log("Signature: "+signature);
+    console.log("Address: "+address);
+    console.log("Signature: "+signature);
 
     return await api.patch(baseURL + "api/ryoshi-dynasties/armies?", 
       {troops, controlPointId, gameId, factionId},

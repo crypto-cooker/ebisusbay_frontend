@@ -23,7 +23,7 @@ import Button from "@src/Components/components/Button";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
-import {getProfileTroops, getFactionsOwned, deployTroops, recallTroops, getFactionTroops} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {getProfileTroops, getFactionsOwned, deployTroops, recallTroops, getFactionUndeployedArmies} from "@src/core/api/RyoshiDynastiesAPICalls";
 import { toast } from "react-toastify";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 
@@ -43,7 +43,6 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
     faction: "" ?? null,
     quantity: 0,
   })
-  const [troopsSource, setTroopsSource] = useState(1);
 
   const [selectedQuantity, setSelectedQuantity] = useState(0);
   const [selectedFaction, setSelectedFaction] = useState(dataForm.faction);
@@ -51,37 +50,40 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
   const [allFactions, setAllFactions] = useState([]);
 
   const [troopsAvailable, setTroopsAvailable] = useState(0);
-  const [factionTroopsAvailable, setFactionTroopsAvailable] = useState(0);
   const [playerFaction, setPlayerFaction] = useState("");
-  const [showFactionTroops, ShowFactionTroops] = useState(false);
-  const [canDeploy, setCanDeploy] = useState(false);
+  const [hasFaction, setHasFaction] = useState(false);
+
+  // const [showFactionTroops, ShowFactionTroops] = useState(false);
+  // const [canDeploy, setCanDeploy] = useState(false);
+  // const [factionTroopsAvailable, setFactionTroopsAvailable] = useState(0);
+  // const [troopsSource, setTroopsSource] = useState(1);
 
   const onChangeInputsFaction = (e) => {
     setSelectedFaction(e.target.value)
     console.log(e.target.value)
-    if(e.target.value === playerFaction.name)
-    {
-      // console.log("same faction")
-      setFactionTroopsAvailable(playerFaction.troops)
-      ShowFactionTroops(true)
-    }
-    else
-    {
-      // console.log("not a faction")
-      setFactionTroopsAvailable(0)
-      ShowFactionTroops(false)
-    }
+    // if(e.target.value === playerFaction.name)
+    // {
+    //   // console.log("same faction")
+    //   setFactionTroopsAvailable(playerFaction.troops)
+    //   // ShowFactionTroops(true)
+    // }
+    // else
+    // {
+    //   // console.log("not a faction")
+    //   setFactionTroopsAvailable(0)
+    //   // ShowFactionTroops(false)
+    // }
 
-    if(e.target.value !== "")
-    {
-      setCanDeploy(true)
-    }
-    else
-    {
-      setCanDeploy(false)
-    }
+    // if(e.target.value !== "")
+    // {
+    //   setCanDeploy(true)
+    // }
+    // else
+    // {
+    //   setCanDeploy(false)
+    // }
   }
-  const GetPlayerOwnedFactions = async () => {
+  const GetPlayerTroops = async () => {
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
@@ -90,8 +92,20 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
     if (signatureInStorage) {
       try {
         const data = await getFactionsOwned(user.address.toLowerCase(), signatureInStorage);
-        const playerFaction = data.data.data[0];
-        setPlayerFaction(playerFaction)
+
+        if(data.data.data.length > 0)
+        {
+          setHasFaction(true)
+          setPlayerFaction(data.data.data[0])
+          const factionTroopsData = await getFactionUndeployedArmies(user.address.toLowerCase(), signatureInStorage);
+          setTroopsAvailable(factionTroopsData)
+        }
+        else
+        {
+          setHasFaction(false)
+          const troops = await getProfileTroops(user.address.toLowerCase(), signatureInStorage);
+          setTroopsAvailable(troops)
+        }
       } catch (error) {
         console.log(error)
       }
@@ -99,23 +113,28 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
   }
   const deployOrRecallTroops = async () => {
 
-    if(troopsSource==2)
+    // if(troopsSource==2)
+    // {
+    //   console.log("deploying troops from delegated troops")
+    //   if(selectedQuantity>factionTroopsAvailable)
+    //   {
+    //     toast.error("You don't have enough troops to deploy")
+    //     return;
+    //   }
+    // }
+    // else if(troopsSource==1)
+    // {
+    //   console.log("deploying troops from player troops")
+    //   if(selectedQuantity> troopsAvailable+ factionTroopsAvailable)
+    //   {
+    //     toast.error("You don't have enough troops to deploy")
+    //     return;
+    //   }
+    // }
+    if(selectedQuantity> troopsAvailable)
     {
-      console.log("deploying troops from delegated troops")
-      if(selectedQuantity>factionTroopsAvailable)
-      {
-        toast.error("You don't have enough troops to deploy")
-        return;
-      }
-    }
-    else if(troopsSource==1)
-    {
-      console.log("deploying troops from player troops")
-      if(selectedQuantity> troopsAvailable+ factionTroopsAvailable)
-      {
-        toast.error("You don't have enough troops to deploy")
-        return;
-      }
+      toast.error("You don't have enough troops to deploy")
+      return;
     }
     // return;
 
@@ -131,6 +150,7 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
           var factionId = allFactions.filter(faction => faction.name === selectedFaction)[0].id
           var data = await deployTroops(user.address.toLowerCase(), signatureInStorage,
            selectedQuantity, controlPoint.id, factionId)
+
           await GetPlayerTroops();
           setSelectedQuantity(0);
           toast.success("You deployed "+ selectedQuantity+ " troops to on behalf of " + selectedFaction)
@@ -147,26 +167,19 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
       }
     }
   }
-  const GetPlayerTroops = async () => {
-      let signatureInStorage = getAuthSignerInStorage()?.signature;
-        if (!signatureInStorage) {
-          const { signature } = await getSigner();
-          signatureInStorage = signature;
-        }
-        if (signatureInStorage) {
-          try {
-            const troops = await getProfileTroops(user.address.toLowerCase(), signatureInStorage);
-            setTroopsAvailable(troops)
-            // console.log("troops", troops)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  }
   const ShowAvailableFactions = async () => {
+    if(hasFaction)
+    {
+      setFactionOption(
+        <option value={playerFaction.name} key={0}>{playerFaction.name}</option>
+      )
+    }
+    else
+    {
       setFactionOption(allFactions.map((faction, index) => (
         <option value={faction.name} key={index}>{faction.name}</option>
       )))
+    }
   }
 
   useEffect(() => {
@@ -177,16 +190,11 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
 
   useEffect(() => {
     ShowAvailableFactions();
-  }, [allFactions])
+  }, [allFactions, playerFaction])
 
   useEffect(() => {
-    // GetFactionTroops();
     GetPlayerTroops();
   }, [selectedFaction])
-
-  useEffect(() => {
-    GetPlayerOwnedFactions();
-  }, [])
 
   return (
     <Flex flexDirection='column' textAlign='center'justifyContent='space-around'>
@@ -215,7 +223,7 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
 
       <FormControl>
         <FormLabel>Troops To Deploy:</FormLabel>
-        <NumberInput defaultValue={1} min={1} max={troopsAvailable+factionTroopsAvailable} name="quantity" 
+        <NumberInput defaultValue={1} min={1} max={troopsAvailable} name="quantity" 
           onChange={handleChange}
           value={selectedQuantity} type ='number'>
           <NumberInputField />
@@ -235,22 +243,23 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
             <HStack>
             {currentTab === tabs.deploy && (
             <Text textAlign='left' >
-            Troops available in wallet: {troopsAvailable+factionTroopsAvailable}
-            <br /> {showFactionTroops ? (<>
-            <Text>Troops delegated to faction: {factionTroopsAvailable}</Text>
-            {/* <RadioGroup defaultValue='1' onChange={setTroopsSource} value={troopsSource}>
-            <VStack spacing={1} direction='row' >
-              <Radio colorScheme='orange' size='md' value='1'>
-                Deploy Personal Troops
-              </Radio>
-              <Radio colorScheme='orange' size='md' value='2'>
-                Deploy Faction Troops
-              </Radio>
-            </VStack>
-          </RadioGroup> */}
-          </>
-            ) : (<p></p>)}
-          </Text>)}
+              { hasFaction ? (<>
+                <Text>Troops available to faction: {troopsAvailable}</Text>
+                {/* <RadioGroup defaultValue='1' onChange={setTroopsSource} value={troopsSource}>
+                <VStack spacing={1} direction='row' >
+                  <Radio colorScheme='orange' size='md' value='1'>
+                    Deploy Personal Troops
+                  </Radio>
+                  <Radio colorScheme='orange' size='md' value='2'>
+                    Deploy Faction Troops
+                  </Radio>
+                </VStack>
+              </RadioGroup> */}
+                </>
+                  ) : (
+                <Text>Troops available in wallet: {troopsAvailable}</Text>
+                )}
+                </Text>)}
 
           {currentTab === tabs.recall && (<p> Troops deployed to {controlPoint.name} on behalf of {dataForm.faction}: {troopsDeployed}</p>)}
 
@@ -268,7 +277,7 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
           w='250px'
           fontSize={{base: 'm', sm: 'm'}}
           onClick={deployOrRecallTroops}
-          disabled={!canDeploy}
+          disabled={selectedFaction=== "" ? true : false}
           >
           {selectedFaction=== "" ? "Please select a faction" : "Deploy" }
         </RdButton>
