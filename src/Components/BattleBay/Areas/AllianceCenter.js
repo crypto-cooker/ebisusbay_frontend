@@ -21,7 +21,7 @@ import {
 import FactionForm from './FactionForm';
 import DelegateForm from './DelegateForm';
 import FactionRegistrationForm from './FactionRegistrationForm';
-import {getFactionsOwned, getFactionsRegistered} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {getFactionsOwned, getFactionsRegistered, getFactionUndeployedArmies} from "@src/core/api/RyoshiDynastiesAPICalls";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
@@ -46,6 +46,7 @@ const AllianceCenter = ({onBack}) => {
   const config = appConfig();
   const user = useSelector((state) => state.user);
   const [isLoading, getSigner] = useCreateSigner();
+  const [hasFaction, setHasFaction] = useState(false);
 
   const { isOpen: isOpenFaction, onOpen: onOpenFaction, onClose: onCloseFaction } = useDisclosure();
   const { isOpen: isOpenRegister, onOpen: onOpenRegister, onClose: onCloseRegister } = useDisclosure();
@@ -53,7 +54,7 @@ const AllianceCenter = ({onBack}) => {
   const GetRegisterButtonText = (registered) => {if(registered) {return 'Registered'} else {return 'Register'}}
 
   const [registeredFactions, setRegisteredFactions] = useState([]);
-  const [playerFactions, setPlayerFactions] = useState([]);
+  const [playerFaction, setPlayerFaction] = useState([]);
 
   const [selectedFaction, setSelectedFaction] = useState(0);
   const [factionsDisplay, setFactionDisplay] = useState([]);
@@ -65,9 +66,10 @@ const AllianceCenter = ({onBack}) => {
 
   const [factions, setFactions] = useState([]);
   const [troops, setTotalTroops] = useState(0);
+  const [factionTroops, setFactionTroops] = useState(0);
   const {address, theme, profile} = useSelector((state) => state.user);
 
-  const SetUp = async () => {
+  const RefreshTroopsAndFactions = async () => {
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
@@ -76,17 +78,20 @@ const AllianceCenter = ({onBack}) => {
     if (signatureInStorage) {
       try {
         let profile = await getProfile(user.address.toLowerCase());
-
         const factionResponse = await getAllFactions();
         setFactions(factionResponse);
         const tr = await getProfileTroops(user.address.toLowerCase(), signatureInStorage);
-        console.log(tr)
+        const factionTroopsData = await getFactionUndeployedArmies(user.address.toLowerCase(), signatureInStorage);
+        setFactionTroops(factionTroopsData);
+        // const factionTroops = 
+        // console.log(tr)
         setTotalTroops(tr)
       } catch (error) {
         console.log(error)
       }
     }
   }
+
   const AddTroops = async () => {
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
@@ -96,8 +101,8 @@ const AllianceCenter = ({onBack}) => {
     if (signatureInStorage) {
       try {
         const res = await addTroops(user.address.toLowerCase(), signatureInStorage, 8);
-        console.log(res)
-        SetUp();
+        // console.log(res)
+        RefreshTroopsAndFactions();
       } catch (error) {
         console.log(error)
       }
@@ -108,7 +113,7 @@ const AllianceCenter = ({onBack}) => {
   const [delegateMode, setDelegateMode] = useState("delegate");
 
   useEffect(() => {
-    SetUp();
+    RefreshTroopsAndFactions();
   }, [troops]);
 
   const handleAddClick = () => {
@@ -182,10 +187,6 @@ const AllianceCenter = ({onBack}) => {
   const handleTJUploadSuccess = (e) => {
     GetFactions();
   }
-
-  function selectFaction(faction) {
-    setSelectedFaction(faction);
-  }
   const GetFactions = async () => {
     // console.log('Getting Factions');
     let signatureInStorage = getAuthSignerInStorage()?.signature;
@@ -197,8 +198,11 @@ const AllianceCenter = ({onBack}) => {
       try {
         const data = await getFactionsOwned(user.address.toLowerCase(), signatureInStorage);
         const data2 = await getFactionsRegistered(user.address.toLowerCase(), signatureInStorage);
+        const factionTroopsData = await getFactionUndeployedArmies(user.address.toLowerCase(), signatureInStorage);
+        setFactionTroops(factionTroopsData);
         setRegisteredFactions(data2.data.data);
-        setPlayerFactions(data.data.data);
+        setPlayerFaction(data.data.data);
+        setHasFaction(data.data.data.length > 0);
         setFactionRegistered(isRegistered(data.data.data[0].id));
 
       } catch (error) {
@@ -206,6 +210,7 @@ const AllianceCenter = ({onBack}) => {
       }
     }
   }
+
   useEffect(() => {
     if(selectedFaction !== 0) {
       handleAddClick();
@@ -221,8 +226,8 @@ const AllianceCenter = ({onBack}) => {
       return;
     }
 
-    if(playerFactions.length > 0) {
-      setFactionDisplay(playerFactions.map((faction, index) => (
+    if(hasFaction) {
+      setFactionDisplay(playerFaction.map((faction, index) => (
         <>
           <VStack>
             <form onSubmit={handleSubmit}>
@@ -249,7 +254,7 @@ const AllianceCenter = ({onBack}) => {
               w='200px'
               fontSize={{base: 'lg', sm: 'xl'}}
               stickyIcon={true}
-              onClick={() => {selectFaction(faction)}}
+              onClick={() => {setSelectedFaction(faction)}}
             >
             Edit Faction
             </RdButton>
@@ -283,7 +288,7 @@ const AllianceCenter = ({onBack}) => {
         </Flex>
       )
     }
-  }, [playerFactions]);
+  }, [playerFaction]);
   
   return (
     <section className="gl-legacy container">
@@ -300,7 +305,15 @@ const AllianceCenter = ({onBack}) => {
       </Box>
       <Heading className={gothamBook.className} textAlign='center'>Alliance Center</Heading>
       <p className={gothamBook.className} textAlign='center'>The Alliance Center allows for Faction management.</p>
-      <Heading  size='md' >Your Troops: {troops}</Heading>
+
+      <Text>
+        {hasFaction ? <>
+          Faction Troops: {factionTroops}
+          </> : <>
+          Your Troops: {troops}
+          </>}
+      
+      </Text>
       <Box
         ps='20px'
         marginTop='6'
