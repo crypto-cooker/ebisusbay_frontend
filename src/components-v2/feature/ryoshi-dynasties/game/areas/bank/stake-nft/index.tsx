@@ -1,4 +1,4 @@
-import {Box, Center, Flex, IconButton, SimpleGrid, Wrap, WrapItem} from "@chakra-ui/react"
+import {Box, Center, Flex, HStack, Icon, IconButton, SimpleGrid, Wrap, WrapItem} from "@chakra-ui/react"
 
 import React, {useCallback, useEffect, useState} from 'react';
 import {useAppSelector} from "@src/Store/hooks";
@@ -22,6 +22,9 @@ import {Contract} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import useBankStakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-bank-stake-nfts";
 import {getNft} from "@src/core/api/endpoints/nft";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faAward, faCirclePlus, faRibbon} from "@fortawesome/free-solid-svg-icons";
+import {ryoshiConfig} from "@src/Config/ryoshi";
 
 const config = appConfig();
 
@@ -52,10 +55,20 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   const handleAddNft = useCallback((nft: WalletNft) => {
     const isInList = pendingNfts.some((sNft) => sNft.nftId === nft.nftId && caseInsensitiveCompare(sNft.nftAddress, nft.nftAddress));
     if (!isInList) {
+      const collectionSlug = config.collections.find((c: any) => caseInsensitiveCompare(c.address, nft.nftAddress))?.slug;
+      const stakeConfig = ryoshiConfig.staking.bank.collections.find((c) => c.slug === collectionSlug);
+
+      const percentile = (nft.rank / stakeConfig!.maxSupply) * 100;
+      const multiplier = stakeConfig!.multipliers
+        .sort((a: any, b: any) => a.percentile - b.percentile)
+        .find((m: any) => percentile <= m.percentile)?.value || 0;
+
       setPendingNfts([...pendingNfts, {
         nftAddress: nft.nftAddress,
         nftId: nft.nftId,
         image: nft.image,
+        rank: nft.rank,
+        multiplier: multiplier,
         isAlreadyStaked: false
       }]);
     }
@@ -67,12 +80,15 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 
   const handleClose = () => {
     setPendingNfts([]);
+    setStakedNfts([]);
     setCurrentCollection(undefined);
     setCurrentTab(tabs.ryoshiVip);
     onClose();
   }
 
   useEffect(() => {
+    if (!isOpen) return;
+
     queryClient.fetchQuery(
       ['BankStakedNfts', user.address],
       () => ApiService.withoutKey().getStakedTokens(user.address!)
@@ -83,17 +99,26 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       for (const token of data) {
         const nft = await getNft(token.contractAddress, token.tokenId);
         if (nft) {
+          const stakeConfig = ryoshiConfig.staking.bank.collections.find((c) => c.slug === nft.collection.slug);
+
+          const percentile = (nft.nft.rank / stakeConfig!.maxSupply) * 100;
+          const multiplier = stakeConfig!.multipliers
+            .sort((a: any, b: any) => a.percentile - b.percentile)
+            .find((m: any) => percentile <= m.percentile)?.value || 0;
+
           nfts.push({
             nftAddress: token.contractAddress,
             nftId: token.tokenId,
             image: nft.nft.image,
+            rank: nft.nft.rank,
+            multiplier: multiplier,
             isAlreadyStaked:  true
           })
         }
       }
       setPendingNfts(nfts);
     });
-  }, []);
+  }, [isOpen]);
 
   useEffect(() => {
     const collection = config.collections.find((c: any) => c.slug === currentTab);
@@ -150,6 +175,8 @@ interface PendingNft {
   nftAddress: string;
   nftId: string;
   image: string;
+  rank: number;
+  multiplier: number;
   isAlreadyStaked: boolean;
 }
 
@@ -182,6 +209,7 @@ const StakedNfts = ({pendingNfts, stakedNfts, onRemove}: StakedNftsProps) => {
       }
       hasCompletedApproval = true;
 
+      setExecutingLabel('Staking');
       await stakeNfts(
         pendingNfts.map((nft) => ({...nft, amount: 1})),
         stakedNfts
@@ -217,20 +245,22 @@ const StakedNfts = ({pendingNfts, stakedNfts, onRemove}: StakedNftsProps) => {
                       width={100}
                       height={100}
                     >
-                      <MultimediaImage
-                        source={ImageService.translate(pendingNfts[index].image).fixedWidth(100, 100)}
-                        title={''}
-                        className="img-rounded-8"
-                      />
+                      <img src={ImageService.translate(pendingNfts[index].image).fixedWidth(100, 100)}/>
                     </Box>
+                    <Flex fontSize='xs' justify='space-between' mt={1}>
+                      <HStack spacing={1}>
+                        <Icon as={FontAwesomeIcon} icon={faAward} />
+                        <Box as='span'>{pendingNfts[index].rank ?? ''}</Box>
+                      </HStack>
+                      <Box as='span' fontWeight='bold'>{pendingNfts[index].multiplier}x</Box>
+                    </Flex>
                   </Box>
 
                   <Box
                     position='absolute'
                     top={0}
                     right={0}
-                    pe={2}
-                    pt={1}
+                    pe='3px'
                   >
                     <IconButton
                       icon={<CloseIcon boxSize={2} />}
@@ -244,15 +274,20 @@ const StakedNfts = ({pendingNfts, stakedNfts, onRemove}: StakedNftsProps) => {
                   </Box>
                 </Box>
               ) : (
-                <Box
-                  width={104}
-                  height={104}
-                  rounded='xl'
-                  bgColor='#716A67'
-                  p={2}
-                  my={2}
-                >
-                  <ShrineIcon boxSize='100%' fill='#B1ADAC'/>
+                <Box position='relative'>
+                  <Box
+                    p={2}
+                    rounded='xl'
+                  >
+                    <Box
+                      width={100}
+                      height={100}
+                      bgColor='#716A67'
+                      rounded='xl'
+                    >
+                      <ShrineIcon boxSize='100%' fill='#B1ADAC'/>
+                    </Box>
+                  </Box>
                 </Box>
               )}
             </WrapItem>
@@ -260,6 +295,7 @@ const StakedNfts = ({pendingNfts, stakedNfts, onRemove}: StakedNftsProps) => {
         })}
       </Wrap>
       <Box ms={8}>
+        
         <RdButton
           minW='150px'
           onClick={handleStake}
