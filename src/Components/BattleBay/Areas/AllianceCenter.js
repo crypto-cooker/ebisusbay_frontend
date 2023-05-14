@@ -22,7 +22,14 @@ import {
 import FactionForm from './FactionForm';
 import DelegateForm from './DelegateForm';
 import FactionRegistrationForm from './FactionRegistrationForm';
-import {getFactionsOwned, getFactionsRegistered, getFactionUndeployedArmies} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {
+  getFactionsOwned, 
+  getFactionsRegistered, 
+  getFactionUndeployedArmies, 
+  getProfileArmies,
+   getAllFactions, 
+   addTroops 
+  } from "@src/core/api/RyoshiDynastiesAPICalls";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
@@ -39,8 +46,7 @@ import FactionPfp from './FactionIconUpload';
 import localFont from 'next/font/local';
 const gothamBook = localFont({ src: '../../../fonts/Gotham-Book.woff2' })
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
-import {getProfile} from "@src/core/cms/endpoints/profile";
-import { getProfileTroops, getAllFactions, addTroops } from "@src/core/api/RyoshiDynastiesAPICalls";
+
 import {io} from "socket.io-client";
 
 const AllianceCenter = ({onBack}) => {
@@ -57,6 +63,7 @@ const AllianceCenter = ({onBack}) => {
 
   const [registeredFactions, setRegisteredFactions] = useState([]);
   const [playerFaction, setPlayerFaction] = useState([]);
+  const [factions, setFactions] = useState([]);
 
   const [selectedFaction, setSelectedFaction] = useState(0);
   const [factionsDisplay, setFactionDisplay] = useState([]);
@@ -67,10 +74,8 @@ const AllianceCenter = ({onBack}) => {
   //for refreshing the page after a faction is updated
   const [modalOpen, setModalOpen] = useState(false);
 
-  const [factions, setFactions] = useState([]);
-  const [troops, setTotalTroops] = useState(0);
+  const [walletTroops, setWalletTroops] = useState(0);
   const [factionTroops, setFactionTroops] = useState(0);
-  const {address, theme, profile} = useSelector((state) => state.user);
 
   const RefreshTroopsAndFactions = async () => {
     let signatureInStorage = getAuthSignerInStorage()?.signature;
@@ -80,15 +85,27 @@ const AllianceCenter = ({onBack}) => {
     }
     if (signatureInStorage) {
       try {
-        let profile = await getProfile(user.address.toLowerCase());
+        
+        //needed for faction delegation
         const factionResponse = await getAllFactions();
         setFactions(factionResponse);
-        const tr = await getProfileTroops(user.address.toLowerCase(), signatureInStorage);
-        const factionTroopsData = await getFactionUndeployedArmies(user.address.toLowerCase(), signatureInStorage);
-        setFactionTroops(factionTroopsData);
-        // const factionTroops = 
-        // console.log(tr)
-        setTotalTroops(tr)
+
+        // console.log(user.address.toLowerCase())
+        // console.log(signatureInStorage)
+
+        if(hasFaction) {
+          const factionTroopsData = await getFactionUndeployedArmies(user.address.toLowerCase(), signatureInStorage);
+          setFactionTroops(factionTroopsData);
+        }
+        else
+        {
+          //??
+          console.log('no faction')
+          // const tr = await getProfileArmies(user.address.toLowerCase(), signatureInStorage);
+          // setWalletTroops(tr)
+          // console.log(tr) 
+        }
+
       } catch (error) {
         console.log(error)
       }
@@ -104,7 +121,7 @@ const AllianceCenter = ({onBack}) => {
     if (signatureInStorage) {
       try {
         const res = await addTroops(user.address.toLowerCase(), signatureInStorage, 8);
-        // console.log(res)
+        console.log(res)
         RefreshTroopsAndFactions();
       } catch (error) {
         console.log(error)
@@ -115,9 +132,9 @@ const AllianceCenter = ({onBack}) => {
   const { isOpen, onOpen: onOpenDelegate, onClose } = useDisclosure();
   const [delegateMode, setDelegateMode] = useState("delegate");
 
-  useEffect(() => {
-    RefreshTroopsAndFactions();
-  }, [troops]);
+  // useEffect(() => {
+  //   RefreshTroopsAndFactions();
+  // }, [walletTroops]);
 
   const handleAddClick = () => {
     setModalOpen(true);
@@ -133,6 +150,7 @@ const AllianceCenter = ({onBack}) => {
     // initialValues: getInitialValues(),
     enableReinitialize: true,
   });
+
   //return wheter the faction exists in the registered factions array
   const isRegistered = (factionId) => {
     for (let i = 0; i < registeredFactions.length; i++) {
@@ -200,15 +218,19 @@ const AllianceCenter = ({onBack}) => {
     }
     if (signatureInStorage) {
       try {
-        const data = await getFactionsOwned(user.address.toLowerCase(), signatureInStorage);
-        const data2 = await getFactionsRegistered(user.address.toLowerCase(), signatureInStorage);
-        const factionTroopsData = await getFactionUndeployedArmies(user.address.toLowerCase(), signatureInStorage);
-        setFactionTroops(factionTroopsData);
-        setRegisteredFactions(data2.data.data);
-        setPlayerFaction(data.data.data);
-        setHasFaction(data.data.data.length > 0);
-        setFactionRegistered(isRegistered(data.data.data[0].id));
+        const playerFactionData = await getFactionsOwned(user.address.toLowerCase(), signatureInStorage);
+        //if the player has a faction, get the faction data
+        if(playerFactionData.data.data.length > 0)
+        {
+          const factionRegisteredData = await getFactionsRegistered(user.address.toLowerCase(), signatureInStorage);
+          const factionTroopsData = await getFactionUndeployedArmies(user.address.toLowerCase(), signatureInStorage);
 
+          setRegisteredFactions(factionRegisteredData.data.data);
+          setFactionTroops(factionTroopsData);
+          setPlayerFaction(playerFactionData.data.data);
+          setHasFaction(true);
+          setFactionRegistered(isRegistered(playerFactionData.data.data[0].id));
+        }
       } catch (error) {
         console.log(error)
       }
@@ -288,19 +310,14 @@ const AllianceCenter = ({onBack}) => {
     else
     {
       setCreateFactionButton(
-        <Flex alignContent={'center'} justifyContent={'center'}>
-          <Box
-            ps='20px'>
-            <RdButton
-              w='250px'
-              fontSize={{base: 'xl', sm: '2xl'}}
-              stickyIcon={true}
-              onClick={() => {onOpenRegister()}}
-            >
+        <RdButton
+          w='250px'
+          fontSize={{base: 'xl', sm: '2xl'}}
+          stickyIcon={true}
+          onClick={() => {onOpenRegister()}}
+          >
           + Create New Faction
-            </RdButton>
-            </Box>
-        </Flex>
+        </RdButton>
       )
     }
   }, [playerFaction, isExecuting]);
@@ -324,7 +341,12 @@ const AllianceCenter = ({onBack}) => {
 
     function onFactionSubscriptionEvent(data) {
       console.log('FACTION_SUBSCRIPTION', data)
+      // JSON.parse(data).forEach((faction) => {
+      //   if (faction.id === selectedFaction.id) {
+      //     console.log('FACTION_SUBSCRIPTION', faction)
+      // }})
       setIsExecuting(false);
+      GetFactions();
     }
 
     socket.on('connect', onConnect);
@@ -337,18 +359,25 @@ const AllianceCenter = ({onBack}) => {
       socket.off('FACTION_SUBSCRIPTION', onFactionSubscriptionEvent);
     };
   }, [!!user.address]);
+
+  useEffect(() => {
+    if (!hasFaction) return;
+    RefreshTroopsAndFactions();
+
+    console.log('hasFaction', hasFaction);
+  }, [hasFaction]);
   
   return (
     <section className="gl-legacy container">
 
       <FactionForm isOpen={isOpenFaction} onClose={onCloseFaction} faction={selectedFaction} handleClose={handleClose} isRegistered={factionRegistered}/>
       <FactionRegistrationForm isOpen={isOpenRegister} onClose={onCloseRegister} handleClose={handleClose}/>
-      <DelegateForm isOpen={isOpen} onClose={onClose} delegateMode={delegateMode} factions={factions} troops={troops} setTotalTroops = {setTotalTroops}/>
+      <DelegateForm isOpen={isOpen} onClose={onClose} delegateMode={delegateMode} factions={factions} troops={walletTroops} setTotalTroops = {setWalletTroops}/>
 
       <Button margin={'36px'} className={gothamBook.className} position={'absolute'} onClick={onBack}>Back to Village Map</Button>
       <Box >
         <Center>
-        <Image src='img/battle-bay/alliancecenter_day.png'/>
+          <Image src='img/battle-bay/alliancecenter_day.png'/>
         </Center>
       </Box>
 
@@ -367,9 +396,11 @@ const AllianceCenter = ({onBack}) => {
         >
         <div style={{ margin: '8px 24px' }}>
         {factionsDisplay}
-          <Flex  mb='20pt'>
+        <Center>
+          <Flex  m='20pt'>
             {createFactionButton}
           </Flex>
+        </Center>
         </div>
       </Flex>
       <Spacer h='4'/>
@@ -378,7 +409,7 @@ const AllianceCenter = ({onBack}) => {
         {hasFaction ? <>
           Faction Troops: {factionTroops}
           </> : <>
-          Your Troops: {troops}
+          Your Troops: {walletTroops}
           </>}
       </Text>
       <Box
