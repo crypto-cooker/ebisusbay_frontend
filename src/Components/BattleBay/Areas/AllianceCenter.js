@@ -15,7 +15,8 @@ import {
   Td,
   TableContainer,
   Text,
-  VStack
+  VStack,
+  Spacer
 
 } from '@chakra-ui/react';
 import FactionForm from './FactionForm';
@@ -40,6 +41,7 @@ const gothamBook = localFont({ src: '../../../fonts/Gotham-Book.woff2' })
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import { getProfileTroops, getAllFactions, addTroops } from "@src/core/api/RyoshiDynastiesAPICalls";
+import {io} from "socket.io-client";
 
 const AllianceCenter = ({onBack}) => {
 
@@ -50,8 +52,8 @@ const AllianceCenter = ({onBack}) => {
 
   const { isOpen: isOpenFaction, onOpen: onOpenFaction, onClose: onCloseFaction } = useDisclosure();
   const { isOpen: isOpenRegister, onOpen: onOpenRegister, onClose: onCloseRegister } = useDisclosure();
-  const GetRegistrationColor = (registered) => {if(registered) {return 'green'} else {return 'red'}}
-  const GetRegisterButtonText = (registered) => {if(registered) {return 'Registered'} else {return 'Register'}}
+  // const GetRegistrationColor = (registered) => {if(registered) {return 'green'} else {return 'red'}}
+  // const GetRegisterButtonText = (registered) => {if(registered) {return 'Registered'} else {return 'Register'}}
 
   const [registeredFactions, setRegisteredFactions] = useState([]);
   const [playerFaction, setPlayerFaction] = useState([]);
@@ -60,6 +62,7 @@ const AllianceCenter = ({onBack}) => {
   const [factionsDisplay, setFactionDisplay] = useState([]);
   const [createFactionButton, setCreateFactionButton] = useState([]);
   const [factionRegistered, setFactionRegistered] = useState(false);
+  const [isExecuting, setIsExecuting] = useState(false);
   
   //for refreshing the page after a faction is updated
   const [modalOpen, setModalOpen] = useState(false);
@@ -145,6 +148,7 @@ const AllianceCenter = ({onBack}) => {
       console.log('Already Registered')
       GetFactions();
     } else {
+      setIsExecuting(true);
       let signatureInStorage = getAuthSignerInStorage()?.signature;
       if (!signatureInStorage) {
         const { signature } = await getSigner();
@@ -261,9 +265,20 @@ const AllianceCenter = ({onBack}) => {
             </Box>
         </Flex>
 
-        <Button colorScheme={GetRegistrationColor(isRegistered(faction.id))}
-              onClick={() => {RegistrationAction(faction.id)}}>{GetRegisterButtonText(isRegistered(faction.id))}
-            </Button>
+        {isRegistered(faction.id) ? <>
+        <Text fontSize={{base: 'sm', sm: 'md'}}> Faction is registered </Text>
+        </>: 
+          <RdButton 
+            w='250px'
+            fontSize={{base: 'lg', sm: 'xl'}}
+            stickyIcon={true}
+            onClick={() => {RegistrationAction(faction.id)}}
+            isLoading={isExecuting}
+            disabled={isExecuting}
+            >
+            Register Faction
+          </RdButton>
+        }
 
           </VStack>
         </>
@@ -288,7 +303,40 @@ const AllianceCenter = ({onBack}) => {
         </Flex>
       )
     }
-  }, [playerFaction]);
+  }, [playerFaction, isExecuting]);
+
+  const [isSocketConnected, setIsSocketConnected] = useState(false);
+  useEffect(() => {
+    if (!user.address) return;
+
+    console.log('connecting to socket...');
+    const socket = io('wss://testcms.ebisusbay.biz/socket/ryoshi-dynasties/subscriptions?walletAddress='+user.address.toLowerCase());
+
+    function onConnect() {
+      setIsSocketConnected(true);
+      console.log('connected')
+    }
+
+    function onDisconnect() {
+      setIsSocketConnected(false);
+      console.log('disconnected')
+    }
+
+    function onFactionSubscriptionEvent(data) {
+      console.log('FACTION_SUBSCRIPTION', data)
+      setIsExecuting(false);
+    }
+
+    socket.on('connect', onConnect);
+    socket.on('disconnect', onDisconnect);
+    socket.on('FACTION_SUBSCRIPTION', onFactionSubscriptionEvent);
+
+    return () => {
+      socket.off('connect', onConnect);
+      socket.off('disconnect', onDisconnect);
+      socket.off('FACTION_SUBSCRIPTION', onFactionSubscriptionEvent);
+    };
+  }, [!!user.address]);
   
   return (
     <section className="gl-legacy container">
@@ -303,16 +351,35 @@ const AllianceCenter = ({onBack}) => {
         <Image src='img/battle-bay/alliancecenter_day.png'/>
         </Center>
       </Box>
-      <Heading className={gothamBook.className} textAlign='center'>Alliance Center</Heading>
-      <p className={gothamBook.className} textAlign='center'>The Alliance Center allows for Faction management.</p>
 
+      <Heading className={gothamBook.className} textAlign='center'>Alliance Center</Heading>
+      <Text className={gothamBook.className} textAlign='center'>Manage your Faction, Delegate your troops</Text>
+      
+      <Spacer h='4'/>
+      
+      <Flex 
+        backgroundColor='#292626' 
+        flexDirection='column' 
+        textAlign='center' 
+        borderRadius={'10px'} 
+        justifyContent='space-around'
+        border='2px solid #FFD700'
+        >
+        <div style={{ margin: '8px 24px' }}>
+        {factionsDisplay}
+          <Flex  mb='20pt'>
+            {createFactionButton}
+          </Flex>
+        </div>
+      </Flex>
+      <Spacer h='4'/>
+      
       <Text>
         {hasFaction ? <>
           Faction Troops: {factionTroops}
           </> : <>
           Your Troops: {troops}
           </>}
-      
       </Text>
       <Box
         ps='20px'
@@ -320,10 +387,10 @@ const AllianceCenter = ({onBack}) => {
         marginBottom='8'
         >
         <RdButton 
-        w='250px'
-        fontSize={{base: 'lg', sm: 'xl'}}
-        stickyIcon={true}
-        onClick={AddTroops}>Add Troops
+          w='250px'
+          fontSize={{base: 'lg', sm: 'xl'}}
+          stickyIcon={true}
+          onClick={AddTroops}>Add Troops
         </RdButton>
       </Box>
       <Box
@@ -332,30 +399,12 @@ const AllianceCenter = ({onBack}) => {
         marginBottom='8'
         >
         <RdButton 
-        w='250px'
-        fontSize={{base: 'lg', sm: 'xl'}}
-        stickyIcon={true}
-
-                onClick={() => {setDelegateMode('delegate'), onOpenDelegate();}}>Delegate Troops 
+          w='250px'
+          fontSize={{base: 'lg', sm: 'xl'}}
+          stickyIcon={true}
+          onClick={() => {setDelegateMode('delegate'), onOpenDelegate();}}>Delegate Troops 
         </RdButton>
       </Box>
-
-      <p className={gothamBook.className} style={{textAlign:'left'}}>Your Factions</p>
-      <Flex flexDirection='column' textAlign='center' border={'1px solid white'} borderRadius={'10px'} justifyContent='space-around'>
-      <div style={{ margin: '8px 24px' }}>
-      {factionsDisplay}
-      <Flex  mb='20pt'>
-        {createFactionButton}
-      </Flex>
-      </div>
-      </Flex>
-      <Flex>
-      <Box>
-      {/* <button type="button" class="btn" id="editFaction" 
-        onClick={() => {onOpenFaction();}}>Edit Faction</button> */}
-      </Box>
-      </Flex>
-      
     </section>
   )
 };
