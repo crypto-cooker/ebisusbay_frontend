@@ -394,7 +394,7 @@ const GetResources = async () => {
     }
     if (!!fortuneAndMitama) {
       setFortune(Number(ethers.utils.formatEther(fortuneAndMitama.fortuneBalance)));
-      setMitama(Number(ethers.utils.formatEther(fortuneAndMitama.mitamaBalance)));
+      setMitama(Number(fortuneAndMitama.mitamaBalance));
     }
 
     setResourcesAcquired(true);

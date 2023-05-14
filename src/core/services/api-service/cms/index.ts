@@ -22,8 +22,8 @@ class Cms {
     return this.gdcClaims.getClaimSignature(email, address, signature);
   }
 
-  async requestBankStakeAuthorization(nfts: BankStakeNft[]) {
-    return this.ryoshiDynasties.requestBankStakeAuthorization('', nfts, '');
+  async requestBankStakeAuthorization(nfts: BankStakeNft[], address: string) {
+    return this.ryoshiDynasties.requestBankStakeAuthorization(nfts, address);
   }
 }
 

@@ -1,5 +1,5 @@
 import {appConfig} from "@src/Config";
-import {ApolloClient, gql, InMemoryCache, TypedDocumentNode} from '@apollo/client';
+import {ApolloClient, gql, InMemoryCache} from '@apollo/client';
 import {urlify} from "@src/utils";
 
 const config = appConfig();

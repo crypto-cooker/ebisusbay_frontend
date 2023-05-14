@@ -46,4 +46,5 @@ export enum OfferType {
 export interface BankStakeNft {
     nftAddress: string;
     nftId: string;
+    amount: number;
 }

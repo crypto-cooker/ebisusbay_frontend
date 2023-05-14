@@ -3,7 +3,7 @@ import {Box, Center, Flex, IconButton, SimpleGrid, Wrap, WrapItem} from "@chakra
 import React, {useCallback, useEffect, useState} from 'react';
 import {useAppSelector} from "@src/Store/hooks";
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
+import {useInfiniteQuery, useQueryClient} from "@tanstack/react-query";
 import nextApiService from "@src/core/services/api-service/next";
 import {ApiService} from "@src/core/services/api-service";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -18,6 +18,10 @@ import {StakedToken} from "@src/core/services/api-service/graph/types";
 import ShrineIcon from "@src/components-v2/shared/icons/shrine";
 import {CloseIcon} from "@chakra-ui/icons";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
+import {Contract} from "ethers";
+import {ERC721} from "@src/Contracts/Abis";
+import useBankStakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-bank-stake-nfts";
+import {getNft} from "@src/core/api/endpoints/nft";
 
 const config = appConfig();
 
@@ -34,42 +38,62 @@ interface StakeNftsProps {
 
 const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   const user = useAppSelector((state) => state.user);
+  const queryClient = useQueryClient();
 
-  const [selectedCollection, setSelectedCollection] = useState<string>();
   const [currentTab, setCurrentTab] = useState(tabs.ryoshiVip);
   const [currentCollection, setCurrentCollection] = useState<any>();
-  const [candidateNfts, setCandidateNfts] = useState<WalletNft[]>([]);
-
-  const { data: stakedNfts, status, error } = useQuery(
-    ['BankStakedNfts', user.address],
-    () => ApiService.withoutKey().getStakedTokens(user.address!),
-    {
-      refetchOnWindowFocus: false,
-      enabled: !!user.address
-    }
-  );
+  const [stakedNfts, setStakedNfts] = useState<StakedToken[]>([]);
+  const [pendingNfts, setPendingNfts] = useState<PendingNft[]>([]);
 
   const handleBtnClick = (key: string) => (e: any) => {
     setCurrentTab(key);
   };
 
   const handleAddNft = useCallback((nft: WalletNft) => {
-    const isInList = candidateNfts.some((sNft) => sNft.nftId === nft.nftId && caseInsensitiveCompare(sNft.nftAddress, nft.nftAddress));
+    const isInList = pendingNfts.some((sNft) => sNft.nftId === nft.nftId && caseInsensitiveCompare(sNft.nftAddress, nft.nftAddress));
     if (!isInList) {
-      setCandidateNfts([...candidateNfts, nft]);
+      setPendingNfts([...pendingNfts, {
+        nftAddress: nft.nftAddress,
+        nftId: nft.nftId,
+        image: nft.image,
+        isAlreadyStaked: false
+      }]);
     }
-  }, [candidateNfts]);
+  }, [pendingNfts]);
 
   const handleRemoveNft = useCallback((nftAddress: string, nftId: string) => {
-    setCandidateNfts(candidateNfts.filter((nft) => nft.nftId !== nftId || !caseInsensitiveCompare(nft.nftAddress, nftAddress)));
-  }, [candidateNfts]);
+    setPendingNfts(pendingNfts.filter((nft) => nft.nftId !== nftId || !caseInsensitiveCompare(nft.nftAddress, nftAddress)));
+  }, [pendingNfts]);
 
   const handleClose = () => {
-    setCandidateNfts([]);
+    setPendingNfts([]);
     setCurrentCollection(undefined);
     setCurrentTab(tabs.ryoshiVip);
     onClose();
   }
+
+  useEffect(() => {
+    queryClient.fetchQuery(
+      ['BankStakedNfts', user.address],
+      () => ApiService.withoutKey().getStakedTokens(user.address!)
+    ).then(async (data) => {
+      setStakedNfts(data);
+
+      const nfts: PendingNft[] = [];
+      for (const token of data) {
+        const nft = await getNft(token.contractAddress, token.tokenId);
+        if (nft) {
+          nfts.push({
+            nftAddress: token.contractAddress,
+            nftId: token.tokenId,
+            image: nft.nft.image,
+            isAlreadyStaked:  true
+          })
+        }
+      }
+      setPendingNfts(nfts);
+    });
+  }, []);
 
   useEffect(() => {
     const collection = config.collections.find((c: any) => c.slug === currentTab);
@@ -84,8 +108,8 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       size='full'
     >
       <StakedNfts
-        currentStakedNfts={stakedNfts}
-        candidateNfts={candidateNfts}
+        pendingNfts={pendingNfts}
+        stakedNfts={stakedNfts}
         onRemove={handleRemoveNft}
       />
       <Box p={4}>
@@ -102,6 +126,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
         </Flex>
         <Box>
           <UnstakedNfts
+            isReady={isOpen}
             collection={currentCollection}
             address={user.address ?? undefined}
             onAdd={handleAddNft}
@@ -116,8 +141,8 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 export default StakeNfts;
 
 interface StakedNftsProps {
-  currentStakedNfts?: StakedToken[];
-  candidateNfts: WalletNft[];
+  pendingNfts: PendingNft[];
+  stakedNfts: StakedToken[];
   onRemove: (nftAddress: string, nftId: string) => void;
 }
 
@@ -128,45 +153,51 @@ interface PendingNft {
   isAlreadyStaked: boolean;
 }
 
-const StakedNfts = ({currentStakedNfts, candidateNfts, onRemove}: StakedNftsProps) => {
-  const [pendingNfts, setPendingNfts] = useState<PendingNft[]>([]);
+const StakedNfts = ({pendingNfts, stakedNfts, onRemove}: StakedNftsProps) => {
+  const user = useAppSelector((state) => state.user);
+  const [isExecutingStake, setIsExecutingStake] = useState(false);
+  const [executingLabel, setExecutingLabel] = useState('');
+  const [stakeNfts, response] = useBankStakeNfts();
 
-  const handleRemove = useCallback((nftAddress: string, nftId: string) => {
-    setPendingNfts(pendingNfts.filter((nft) => {
-      return nft.nftId !== nftId || !caseInsensitiveCompare(nft.nftAddress, nftAddress)
-    }));
-    onRemove(nftAddress, nftId);
-  }, [pendingNfts]);
+  const handleStake = useCallback(async () => {
+    if (pendingNfts.length === 0) return;
 
-  const handleStake = useCallback(() => {
-    console.log('handleStake')
-    // ApiService.withoutKey().requestBankStakeAuthorization(candidateNfts);
+    let hasCompletedApproval = false;
 
-  }, []);
+    try {
+      setIsExecutingStake(true);
+      setExecutingLabel('Approving');
+      const approvedCollections: string[] = [];
+      for (let nft of pendingNfts) {
+        if (approvedCollections.includes(nft.nftAddress)) continue;
 
-  useEffect(() => {
-    if (!currentStakedNfts) return;
-    setPendingNfts(
-      currentStakedNfts.map((stakedNft) => ({
-        nftAddress: stakedNft.contractAddress,
-        nftId: stakedNft.tokenId,
-        image: '',
-        isAlreadyStaked: true
-      }))
-    );
-  }, []);
+        const nftContract = new Contract(nft.nftAddress, ERC721, user.provider.getSigner());
+        const isApproved = await nftContract.isApprovedForAll(user.address!.toLowerCase(), config.contracts.bank);
 
-  useEffect(() => {
-    const newList =
-      pendingNfts.filter((pendingNft) => pendingNft.isAlreadyStaked);
+        if (!isApproved) {
+          let tx = await nftContract.setApprovalForAll(config.contracts.bank, true);
+          await tx.wait();
+          approvedCollections.push(nft.nftAddress);
+        }
+      }
+      hasCompletedApproval = true;
 
-    setPendingNfts(newList.concat(candidateNfts.map((candidateNft) => ({
-      nftAddress: candidateNft.nftAddress,
-      nftId: candidateNft.nftId,
-      image: candidateNft.image,
-      isAlreadyStaked: false
-    }))));
-  }, [candidateNfts]);
+      await stakeNfts(
+        pendingNfts.map((nft) => ({...nft, amount: 1})),
+        stakedNfts
+      );
+
+    } catch (e: any) {
+      console.log(e);
+      if (!hasCompletedApproval) {
+        // show approval failure message
+      }
+    } finally {
+      setIsExecutingStake(false);
+      setExecutingLabel('');
+    }
+
+  }, [pendingNfts, executingLabel, isExecutingStake]);
 
   return (
     <Center my={6} px={4}>
@@ -208,7 +239,7 @@ const StakedNfts = ({currentStakedNfts, candidateNfts, onRemove}: StakedNftsProp
                       _hover={{ bg: 'gray.600' }}
                       size='xs'
                       rounded='full'
-                      onClick={() => handleRemove(pendingNfts[index].nftAddress, pendingNfts[index].nftId)}
+                      onClick={() => onRemove(pendingNfts[index].nftAddress, pendingNfts[index].nftId)}
                     />
                   </Box>
                 </Box>
@@ -229,8 +260,14 @@ const StakedNfts = ({currentStakedNfts, candidateNfts, onRemove}: StakedNftsProp
         })}
       </Wrap>
       <Box ms={8}>
-        <RdButton w='150px'>
-          Stake
+        <RdButton
+          minW='150px'
+          onClick={handleStake}
+          isLoading={isExecutingStake}
+          disabled={isExecutingStake}
+          stickyIcon={true}
+        >
+          <>{isExecutingStake ? executingLabel : 'Stake'}</>
         </RdButton>
       </Box>
     </Center>
@@ -239,13 +276,14 @@ const StakedNfts = ({currentStakedNfts, candidateNfts, onRemove}: StakedNftsProp
 
 
 interface UnstakedNftsProps {
+  isReady: boolean;
   address?: string;
   collection: string;
   onAdd: (nft: WalletNft) => void;
   onRemove: (nftAddress: string, nftId: string) => void;
 }
 
-const UnstakedNfts = ({address, collection, onAdd, onRemove}: UnstakedNftsProps) => {
+const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedNftsProps) => {
   const { data, status, error, fetchNextPage, hasNextPage } = useInfiniteQuery(
     ['BankUnstakedNfts', address, collection],
     () => nextApiService.getWallet(address!, {
@@ -258,7 +296,7 @@ const UnstakedNfts = ({address, collection, onAdd, onRemove}: UnstakedNftsProps)
         return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
       },
       refetchOnWindowFocus: false,
-      enabled: !!address
+      enabled: !!address && isReady
     }
   );
 
