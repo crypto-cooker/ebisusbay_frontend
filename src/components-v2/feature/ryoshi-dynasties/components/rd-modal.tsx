@@ -14,9 +14,10 @@ interface PurchaseDialogProps {
   utilBtnTitle?: ReactNode;
   onUtilBtnClick?: () => void;
   size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'| '4xl'| '5xl' | 'full';
+  isCentered?: boolean;
 }
 
-const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, children}: PurchaseDialogProps) => {
+const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, isCentered, children}: PurchaseDialogProps) => {
 
   return (
     <>
@@ -25,7 +26,7 @@ const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, ch
         isOpen={isOpen}
         size={size ?? '2xl'}
         scrollBehavior={size === 'full' ? 'outside' : 'inside'}
-        isCentered={size !== 'full'}
+        isCentered={isCentered ?? true}
       >
         <ModalOverlay />
         <ModalContent

@@ -132,6 +132,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       onClose={handleClose}
       title='Stake NFTs'
       size='5xl'
+      isCentered={false}
     >
       <BankStakeNftContext.Provider value={pendingNfts}>
         <Text align='center' p={2}>Ryoshi Tales NFTs can be staked to boost rewards for staked $Fortune. Receive larger boosts by staking higher ranked NFTs.</Text>
