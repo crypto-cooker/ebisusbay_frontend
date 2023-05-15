@@ -41,7 +41,7 @@ const useBankStakeNfts = () => {
           break;
         }
       }
-      const deltaNfts = pendingNfts.filter((nft) => !stakedNfts.some((stakedNft) => caseInsensitiveCompare(nft.nftAddress, stakedNft.contractAddress) && nft.nftId === stakedNft.tokenId));
+      const unstakedNfts = pendingNfts.filter((nft) => !stakedNfts.some((stakedNft) => caseInsensitiveCompare(nft.nftAddress, stakedNft.contractAddress) && nft.nftId === stakedNft.tokenId));
 
       if (shouldWithdraw) {
         const withdrawTx = await bank.withdrawStake(
@@ -51,9 +51,11 @@ const useBankStakeNfts = () => {
         await withdrawTx.wait();
       }
 
-      const approval = await ApiService.withoutKey().requestBankStakeAuthorization(deltaNfts, user.address);
-      const stakeTx = await bank.startStake(approval.data.stakeApproval, approval.data.signature);
-      await stakeTx.wait();
+      if (unstakedNfts.length > 0) {
+        const approval = await ApiService.withoutKey().requestBankStakeAuthorization(unstakedNfts, user.address);
+        const stakeTx = await bank.startStake(approval.data.stakeApproval, approval.data.signature);
+        await stakeTx.wait();
+      }
 
       setResponse({
         ...response,
