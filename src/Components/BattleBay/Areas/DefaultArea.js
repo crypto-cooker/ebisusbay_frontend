@@ -20,7 +20,7 @@ import {
 } from "@chakra-ui/react"
 
 import React, {useEffect, useLayoutEffect, useState, useRef } from 'react';
-import { resizeMap, resizeNewMap } from './mapFunctions.js'
+// import { resizeMap, resizeNewMap } from './mapFunctions.js'
 import { TransformWrapper, TransformComponent, ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
 import styles from './BattleBay.module.scss';
 import AnnouncementBoardModal from './AnnouncementBoardModal.js';
@@ -54,6 +54,8 @@ const DefaultArea = ({onChange}) => {
     offsetY: 0,
     scale: 1,
   });
+
+  const [sizeMultiplier, setSizeMultiplier] = useState(1);
   const [initialPositionX, setInitialPositionX] = useState(0);
   const [initialPositionY, setInitialPositionY] = useState(0);
 
@@ -118,7 +120,6 @@ const DefaultArea = ({onChange}) => {
   const buttonsNames = ["bank", "alliancecenter", "torii", "moongate", "barracks", "announcement", "fishmarket","boat", "academy", "tavern", "townhall"];
 
 //#region all resizing stuff
-  const [sizeMultiplier, setSizeMultiplier] = useState(0.5);
 
   const [allianceCenterWidth, setAllianceCenterWidth] = useState(buildings.allianceCenter.width);
   const [allianceCenterHeight, setAllianceCenterHeight] = useState(buildings.allianceCenter.height);
@@ -263,6 +264,9 @@ const DefaultArea = ({onChange}) => {
 //#endregion
 
 useEffect(() => {
+  if(sizeMultiplier == 1) return;
+
+  // setElementToZoomTo('bank');
   // resizeMap();
   setAllianceCenterWidth( buildings.allianceCenter.width * sizeMultiplier);
   setAllianceCenterHeight( buildings.allianceCenter.height * sizeMultiplier);
@@ -566,41 +570,42 @@ const SetUpButtons = async () => {
       </TransformWrapper>
       </AspectRatio>
     
-<Box  position='absolute' top={0} left={0} p={4}  pointerEvents='none' >
-  <Flex direction='row' justify='space-between' >
-    <Box mb={4} bg='#272523' p={2} rounded='md' marginTop='150%' >
-      <Flex alignItems='left'  >
-        <VStack alignItems='left'  >
-          <HStack>
-            <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
-            <Text >Fortune : {!resourcesAcquired ? <Spinner size='sm'/> :commify(fortune.toFixed())}</Text>
-          </HStack>
-          <HStack>
-            <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
-            <Text align='left'>Mitama : {!resourcesAcquired ? <Spinner size='sm'/> :commify(mitama)}</Text>
-          </HStack>
-          <HStack>
-            <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
-            <Text align='left'>Koban : {!resourcesAcquired ? <Spinner size='sm'/> : commify(koban)}</Text>
-          </HStack>
-        </VStack>
-      </Flex>
+  <Box  position='absolute' top={0} left={0} p={4}  pointerEvents='none' >
+    <Flex direction='row' justify='space-between' >
+      <Box mb={4} bg='#272523' p={2} rounded='md' marginTop='150%' >
+        <Flex alignItems='left'  >
+          <VStack alignItems='left'  >
+            <HStack>
+              <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
+              <Text >Fortune : {!resourcesAcquired ? <Spinner size='sm'/> :commify(fortune.toFixed())}</Text>
+            </HStack>
+            <HStack>
+              <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
+              <Text align='left'>Mitama : {!resourcesAcquired ? <Spinner size='sm'/> :commify(mitama)}</Text>
+            </HStack>
+            <HStack>
+              <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
+              <Text align='left'>Koban : {!resourcesAcquired ? <Spinner size='sm'/> : commify(koban)}</Text>
+            </HStack>
+          </VStack>
+        </Flex>
 
-      <Spacer h='4'/>
-      <RdButton
-        w='150px'
-        pointerEvents='auto'
-        fontSize={{base: 'm', sm: 'm'}}
-        ref={buildingButtonRef} 
-        hideIcon={true}
-        onClick={onOpenBuildings}
-      >
-        View Building
-      </RdButton>
-      <AnnouncementBoardModal isOpen={isOpenAnnouncementBoard} onClose={onCloseAnnouncementBoard}/>
-      </Box>
-  </Flex>
+        <Spacer h='4'/>
+        <RdButton
+          w='150px'
+          pointerEvents='auto'
+          fontSize={{base: 'm', sm: 'm'}}
+          ref={buildingButtonRef} 
+          hideIcon={true}
+          onClick={onOpenBuildings}
+        >
+          View Building
+        </RdButton>
+        <AnnouncementBoardModal isOpen={isOpenAnnouncementBoard} onClose={onCloseAnnouncementBoard}/>
+        </Box>
+    </Flex>
   </Box>
+
   </Box>
     <Drawer
       isOpen={isOpenBuildings}

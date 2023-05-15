@@ -79,6 +79,9 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   const [isExecuting, setIsExecuting] = useState(false);
   const [executingLabel, setExecutingLabel] = useState('Attacking...');
   const [battleAttack, setBattleAttack] = useState([]);
+
+  //current attackID
+  const [attackId, setAttackId] = useState(0);
   
   //dataforms for attacker and defender
   const [dataForm, setDataForm] = useState({
@@ -221,7 +224,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
           attackerFactionId, 
           defenderFactionId);
 
-        // console.log("data", data);
+        setAttackId(data.data.data.attackId);
         
         const timestamp = Number(data.data.data.timestampInSeconds);
         const attacker = data.data.data.attacker;
@@ -240,11 +243,6 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
         // ShowAttackConclusion();
         console.log("receipt", receipt);
-        
-        // if(battleAttack.length !== 0 ){
-        //   ShowAttackConclusion();
-        // }
-        // console.log("receipt", receipt);
 
       } catch (error) {
         if(error.response !== undefined) {
@@ -443,7 +441,9 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
     function onBattleAttackEvent(data) {
       console.log('BATTLE_ATTACK', data)
-      setBattleAttack(JSON.parse(data));
+      const parsedAtack = JSON.parse(data);
+      console.log('parsedAtack', parsedAtack)
+      setBattleAttack(parsedAtack);
     }
 
     socket.on('connect', onConnect);

@@ -363,8 +363,6 @@ const AllianceCenter = ({onBack}) => {
   useEffect(() => {
     if (!hasFaction) return;
     RefreshTroopsAndFactions();
-
-    console.log('hasFaction', hasFaction);
   }, [hasFaction]);
   
   return (
@@ -424,18 +422,21 @@ const AllianceCenter = ({onBack}) => {
           onClick={AddTroops}>Add Troops
         </RdButton>
       </Box>
-      <Box
-        ps='20px'
-        marginTop='6'
-        marginBottom='8'
-        >
-        <RdButton 
-          w='250px'
-          fontSize={{base: 'lg', sm: 'xl'}}
-          stickyIcon={true}
-          onClick={() => {setDelegateMode('delegate'), onOpenDelegate();}}>Delegate Troops 
-        </RdButton>
-      </Box>
+      {hasFaction ? <></> : <>
+        <Box
+          ps='20px'
+          marginTop='6'
+          marginBottom='8'
+          >
+          <RdButton 
+            w='250px'
+            fontSize={{base: 'lg', sm: 'xl'}}
+            stickyIcon={true}
+            onClick={() => {setDelegateMode('delegate'), onOpenDelegate();}}>Delegate Troops 
+          </RdButton>
+        </Box>
+        </>
+        }
     </section>
   )
 };

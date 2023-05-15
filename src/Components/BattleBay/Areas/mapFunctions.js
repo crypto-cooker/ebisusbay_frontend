@@ -100,6 +100,7 @@ export function resizeNewMap()
 }
 export function resizeBattleMap(_width, _height)
 {
+  console.log("resizeBattleMap");
   const resizeImg = new ImageResize({
     width: 7580,
     height: 5320,
