@@ -1,4 +1,4 @@
-import React, {memo, useState} from 'react';
+import React, {memo, useContext, useState} from 'react';
 import {useRouter} from 'next/router';
 import {ethers} from 'ethers';
 import {toast} from 'react-toastify';
@@ -11,9 +11,13 @@ import {Badge, Box, Center, Flex, Heading, Spacer, Text, useClipboard} from "@ch
 import Image from "next/image";
 import {appUrl, caseInsensitiveCompare, round} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
-import {darkTheme, lightTheme} from "@src/Theme/theme";
+import {lightTheme} from "@src/Theme/theme";
 import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
 import {useAppSelector} from "@src/Store/hooks";
+import {
+  BankStakeNftContext,
+  BankStakeNftContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/context";
 
 interface StakingNftCardProps {
   nft: any;
@@ -36,6 +40,8 @@ const StakingNftCard = ({
   const user = useAppSelector((state) => state.user);
   const ryoshiStakingCart = useAppSelector((state) => state.ryoshiStakingCart);
   const { onCopy } = useClipboard(nftUrl.toString());
+  const bankStakeNftContext = useContext(BankStakeNftContext) as BankStakeNftContextProps[];
+
 
   const handleCopyLinkButtonPressed = () => {
     onCopy();
@@ -47,27 +53,23 @@ const StakingNftCard = ({
   };
 
   const navigateTo = (link: string) => {
-    if (ryoshiStakingCart.isDrawerOpen) {
-      if (isInCart()) {
-        onRemove();
-      } else {
-        onAdd();
-      }
+    if (isInCart()) {
+      onRemove();
     } else {
-      window.open(link, '_blank');
+      onAdd();
     }
   };
 
   const getOptions = () => {
     const options = [];
 
-    if (isStaked) {
+    if (isInCart()) {
       options.push({
         icon: faMinus,
         label: 'Unstake',
         handleClick: onAdd,
       });
-    } else if (canStake) {
+    } else {
       options.push({
         icon: faPlus,
         label: 'Stake',
@@ -91,15 +93,17 @@ const StakingNftCard = ({
   };
 
   const isInCart = () => {
-    return ryoshiStakingCart.nfts.some((o) => o.nft.nftId === nft.nftId && caseInsensitiveCompare(o.nft.nftAddress, nft.nftAddress));
+    return bankStakeNftContext.some((o) => o.nftId === nft.nftId && caseInsensitiveCompare(o.nftAddress, nft.nftAddress));
   };
 
   return (
     <Box
       className="card eb-nft__card h-100 shadow"
       data-group
+      borderColor={isInCart() ? '#F48F0C' : 'inherit'}
+      borderWidth={isInCart() ? '3px' : '1px'}
       _hover={{
-        borderColor:useColorModeValue('#595d69', '#ddd'),
+        borderColor:'#F48F0C',
       }}
     >
       <Box

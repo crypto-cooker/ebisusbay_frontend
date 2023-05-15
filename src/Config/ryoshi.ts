@@ -1,6 +1,7 @@
 export const ryoshiConfig = {
   staking: {
     bank: {
+      maxSlots: 5,
       collections: [
         {
           slug: 'ryoshi-tales-vip',

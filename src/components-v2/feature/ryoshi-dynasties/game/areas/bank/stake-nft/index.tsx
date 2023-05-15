@@ -1,4 +1,4 @@
-import {Box, Center, Flex, HStack, Icon, IconButton, SimpleGrid, Wrap, WrapItem} from "@chakra-ui/react"
+import {Box, Flex, HStack, Icon, IconButton, SimpleGrid, Text, Wrap, WrapItem} from "@chakra-ui/react"
 
 import React, {useCallback, useEffect, useState} from 'react';
 import {useAppSelector} from "@src/Store/hooks";
@@ -12,7 +12,6 @@ import StakingNftCard from "@src/components-v2/feature/ryoshi-dynasties/game/are
 import {appConfig} from "@src/Config";
 import {caseInsensitiveCompare} from "@src/utils";
 import WalletNft from "@src/core/models/wallet-nft";
-import {MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import ImageService from "@src/core/services/image";
 import {StakedToken} from "@src/core/services/api-service/graph/types";
 import ShrineIcon from "@src/components-v2/shared/icons/shrine";
@@ -23,8 +22,10 @@ import {ERC721} from "@src/Contracts/Abis";
 import useBankStakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-bank-stake-nfts";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faAward, faCirclePlus, faRibbon} from "@fortawesome/free-solid-svg-icons";
+import {faAward} from "@fortawesome/free-solid-svg-icons";
 import {ryoshiConfig} from "@src/Config/ryoshi";
+import {BankStakeNftContext} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/context";
+import {toast} from "react-toastify";
 
 const config = appConfig();
 
@@ -54,7 +55,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 
   const handleAddNft = useCallback((nft: WalletNft) => {
     const isInList = pendingNfts.some((sNft) => sNft.nftId === nft.nftId && caseInsensitiveCompare(sNft.nftAddress, nft.nftAddress));
-    if (!isInList) {
+    if (!isInList && pendingNfts.length < ryoshiConfig.staking.bank.maxSlots) {
       const collectionSlug = config.collections.find((c: any) => caseInsensitiveCompare(c.address, nft.nftAddress))?.slug;
       const stakeConfig = ryoshiConfig.staking.bank.collections.find((c) => c.slug === collectionSlug);
 
@@ -130,35 +131,38 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       isOpen={isOpen}
       onClose={handleClose}
       title='Stake NFTs'
-      size='full'
+      size='5xl'
     >
-      <StakedNfts
-        pendingNfts={pendingNfts}
-        stakedNfts={stakedNfts}
-        onRemove={handleRemoveNft}
-      />
-      <Box p={4}>
-        <Flex direction='row' justify='center' mb={2}>
-          <RdTabButton isActive={currentTab === tabs.ryoshiVip} onClick={handleBtnClick(tabs.ryoshiVip)}>
-            VIP
-          </RdTabButton>
-          <RdTabButton isActive={currentTab === tabs.ryoshiHalloween} onClick={handleBtnClick(tabs.ryoshiHalloween)}>
-            Halloween
-          </RdTabButton>
-          <RdTabButton isActive={currentTab === tabs.ryoshiChristmas} onClick={handleBtnClick(tabs.ryoshiChristmas)}>
-            Christmas
-          </RdTabButton>
-        </Flex>
-        <Box>
-          <UnstakedNfts
-            isReady={isOpen}
-            collection={currentCollection}
-            address={user.address ?? undefined}
-            onAdd={handleAddNft}
-            onRemove={handleRemoveNft}
-          />
+      <BankStakeNftContext.Provider value={pendingNfts}>
+        <Text align='center' p={2}>Ryoshi Tales NFTs can be staked to boost rewards for staked $Fortune. Receive larger boosts by staking higher ranked NFTs.</Text>
+        <StakedNfts
+          pendingNfts={pendingNfts}
+          stakedNfts={stakedNfts}
+          onRemove={handleRemoveNft}
+        />
+        <Box p={4}>
+          <Flex direction='row' justify='center' mb={2}>
+            <RdTabButton isActive={currentTab === tabs.ryoshiVip} onClick={handleBtnClick(tabs.ryoshiVip)}>
+              VIP
+            </RdTabButton>
+            <RdTabButton isActive={currentTab === tabs.ryoshiHalloween} onClick={handleBtnClick(tabs.ryoshiHalloween)}>
+              Halloween
+            </RdTabButton>
+            <RdTabButton isActive={currentTab === tabs.ryoshiChristmas} onClick={handleBtnClick(tabs.ryoshiChristmas)}>
+              Christmas
+            </RdTabButton>
+          </Flex>
+          <Box>
+            <UnstakedNfts
+              isReady={isOpen}
+              collection={currentCollection}
+              address={user.address ?? undefined}
+              onAdd={handleAddNft}
+              onRemove={handleRemoveNft}
+            />
+          </Box>
         </Box>
-      </Box>
+      </BankStakeNftContext.Provider>
     </RdModal>
   )
 }
@@ -214,11 +218,13 @@ const StakedNfts = ({pendingNfts, stakedNfts, onRemove}: StakedNftsProps) => {
         pendingNfts.map((nft) => ({...nft, amount: 1})),
         stakedNfts
       );
-
+      toast.success('Staking successful!');
     } catch (e: any) {
       console.log(e);
       if (!hasCompletedApproval) {
-        // show approval failure message
+        toast.error('Approval failed. Please try again.');
+      } else {
+        toast.error('Staking failed. Please try again.');
       }
     } finally {
       setIsExecutingStake(false);
@@ -228,7 +234,7 @@ const StakedNfts = ({pendingNfts, stakedNfts, onRemove}: StakedNftsProps) => {
   }, [pendingNfts, executingLabel, isExecutingStake]);
 
   return (
-    <Center my={6} px={4}>
+    <Flex direction={{base: 'column', md: 'row'}} my={6} px={4}>
       <Wrap>
         {[...Array(5).fill(0)].map((_, index) => {
           return (
@@ -294,8 +300,7 @@ const StakedNfts = ({pendingNfts, stakedNfts, onRemove}: StakedNftsProps) => {
           )
         })}
       </Wrap>
-      <Box ms={8}>
-        
+      <Box ms={8} my={{base: 4, md: 'auto'}} textAlign='center'>
         <RdButton
           minW='150px'
           onClick={handleStake}
@@ -306,7 +311,7 @@ const StakedNfts = ({pendingNfts, stakedNfts, onRemove}: StakedNftsProps) => {
           <>{isExecutingStake ? executingLabel : 'Stake'}</>
         </RdButton>
       </Box>
-    </Center>
+    </Flex>
   )
 }
 
@@ -325,7 +330,7 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
     () => nextApiService.getWallet(address!, {
       collection: [collection],
       sortBy: 'rank',
-      direction: 'desc'
+      direction: 'asc'
     }),
     {
       getNextPageParam: (lastPage, pages) => {
@@ -363,7 +368,7 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
           <p>Error: {(error as any).message}</p>
         ) : (
           <SimpleGrid
-            columns={{base: 2, sm: 3, md: 4, lg: 5, xl: 6, '2xl': 7}}
+            columns={{base: 2, sm: 3, md: 4}}
             gap={3}
           >
             {data.pages.map((items, pageIndex) => (
