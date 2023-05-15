@@ -54,7 +54,8 @@ const RdButton = (props: RdButtonProps) => {
         py={1}
         bg='linear-gradient(to left, #FDAB1A, #FD8800)'
         _groupHover={{ bg: 'linear-gradient(to left, #FFE818, #FFD001)' }}
-        ps={props.stickyIcon ? '15px' : '0px'}
+        ps={props.stickyIcon ? '40px' : '0px'}
+        pe={props.stickyIcon ? '6px' : '0px'}
         className={gothamMedium.className}
       >
         {props.children}

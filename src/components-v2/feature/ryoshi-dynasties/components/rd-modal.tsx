@@ -13,7 +13,7 @@ interface PurchaseDialogProps {
   title: string;
   utilBtnTitle?: ReactNode;
   onUtilBtnClick?: () => void;
-  size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';
+  size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'| '4xl'| '5xl' | 'full';
 }
 
 const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, children}: PurchaseDialogProps) => {
@@ -39,87 +39,89 @@ const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, ch
           bg='linear-gradient(#1C1917, #272624, #000000)'
           className={gothamBook.className}
         >
-          <ModalBody p={2} color='white'>
-            <Box
-              position='absolute'
-              left={2}
-              top={2}
-              rounded='full'
-              zIndex={1}
-              _groupHover={{
-                cursor: 'pointer'
-              }}
-              data-group
-            >
-              <Button
-                bg='#C17109'
-                rounded='full'
-                border='8px solid #F48F0C'
-                w={14}
-                h={14}
-                fontSize='28px'
-                onClick={onUtilBtnClick}
-                _groupHover={{
-                  bg: '#de8b08',
-                  borderColor: '#f9a50b',
-                }}
-              >
-                {utilBtnTitle}
-              </Button>
-            </Box>
-            <Box
-              position='absolute'
-              right={2}
-              top={2}
-              rounded='full'
-              zIndex={1}
-              _groupHover={{
-                cursor: 'pointer'
-              }}
-              data-group
-            >
-              <Button
-                bg='#C17109'
-                rounded='full'
-                border='8px solid #F48F0C'
-                w={14}
-                h={14}
-                onClick={onClose}
-                _groupHover={{
-                  bg: '#de8b08',
-                  borderColor: '#f9a50b',
-                }}
-              >
-                <CloseIcon />
-              </Button>
-            </Box>
-            <Box
-              bg='#564D4A'
-              h='full'
-              m={6}
-              roundedBottom='3xl'
-              className='rd-bank-modal-mask1'
-            >
+          <ModalBody color='white'>
+            <Box p={2}  position='relative'>
               <Box
-                color='#FFF'
-                textAlign='center'
-                verticalAlign='middle'
-                className='rd-bank-modal-mask2'
-                p={1}
+                position='absolute'
+                left={-4}
+                top={0}
+                rounded='full'
+                zIndex={1}
+                _groupHover={{
+                  cursor: 'pointer'
+                }}
+                data-group
               >
-                <Flex
-                  bg='#272523'
-                  h='55px'
-                  px={12}
-                  fontSize={{base: 'lg', sm: '2xl', md: '3xl'}}
-                  my='auto'
-                  justify='center'
-                  direction='column'
+                <Button
+                  bg='#C17109'
+                  rounded='full'
+                  border='8px solid #F48F0C'
+                  w={14}
+                  h={14}
+                  fontSize='28px'
+                  onClick={onUtilBtnClick}
+                  _groupHover={{
+                    bg: '#de8b08',
+                    borderColor: '#f9a50b',
+                  }}
                 >
-                  {title}
-                </Flex>
+                  {utilBtnTitle}
+                </Button>
               </Box>
-              {children}
+              <Box
+                position='absolute'
+                right={-4}
+                top={0}
+                rounded='full'
+                zIndex={1}
+                _groupHover={{
+                  cursor: 'pointer'
+                }}
+                data-group
+              >
+                <Button
+                  bg='#C17109'
+                  rounded='full'
+                  border='8px solid #F48F0C'
+                  w={14}
+                  h={14}
+                  onClick={onClose}
+                  _groupHover={{
+                    bg: '#de8b08',
+                    borderColor: '#f9a50b',
+                  }}
+                >
+                  <CloseIcon />
+                </Button>
+              </Box>
+              <Box
+                bg='#564D4A'
+                h='full'
+                my={4}
+                roundedBottom='3xl'
+                className='rd-bank-modal-mask1'
+              >
+                <Box
+                  color='#FFF'
+                  textAlign='center'
+                  verticalAlign='middle'
+                  className='rd-bank-modal-mask2'
+                  p={1}
+                >
+                  <Flex
+                    bg='#272523'
+                    h='55px'
+                    px={12}
+                    fontSize={{base: 'lg', sm: '2xl', md: '3xl'}}
+                    my='auto'
+                    justify='center'
+                    direction='column'
+                  >
+                    {title}
+                  </Flex>
+                </Box>
+                {children}
+              </Box>
             </Box>
           </ModalBody>
         </ModalContent>
