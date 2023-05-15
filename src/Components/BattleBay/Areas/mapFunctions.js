@@ -100,9 +100,9 @@ export function resizeNewMap()
 }
 export function resizeBattleMap(_width, _height)
 {
-    const resizeImg = new ImageResize({
-    width: _width,
-    height: _height,
+  const resizeImg = new ImageResize({
+    width: 7580,
+    height: 5320,
     element : '#islandMap'
   })
 }
