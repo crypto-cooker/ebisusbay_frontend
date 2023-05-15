@@ -10,8 +10,6 @@ import ControlPointForm from './battleMap/components/ControlPointForm.js';
 
 const BattleMap = ({onBack, factions=[]}) => {
 
-  //#region variables
-  // const gif = "/img/battle-bay/fire.gif";
   const mapRef = useRef();
   const  [flagSize, setFlagSize] = useState("1px");
   const [buildingSize, setBuildingSize] = useState("50px");
@@ -23,9 +21,6 @@ const BattleMap = ({onBack, factions=[]}) => {
   const imageRef2 = useRef();
   const imageRef3 = useRef();
   const imageRef4 = useRef();
-
-  // const [mapData, setMap] = useState([], () => {});
-  // const mapData = [];
 
   const [area, setAreas] = useState([]);
   const [selectedControlPoint, setSelectedControlPoint] = useState(0);
@@ -105,8 +100,7 @@ const BattleMap = ({onBack, factions=[]}) => {
   //#endregion
 
   //#region Map Functions
-  function selectRegion(x)
-  {
+  function selectRegion(x) {
     GetControlPointInfo(x);
   }
   const GetControlPointInfo = async (x) => {
@@ -128,24 +122,32 @@ const BattleMap = ({onBack, factions=[]}) => {
   }, [controlPoint]);
 
   useEffect(() => {
-    SetUpPins();
+    // SetUpPins();
     // randomlyPlayExplosion();
   }, [flagSize]);
 
   useEffect(() => {
-    randomlyPlayExplosion();
+    // randomlyPlayExplosion();
   }, [playExlplosion]);
 
   const SetUpMap = async () => {
     getMap().then((data) => {
-      // mapData = data.data.data.map; 
-      console.log(data.data.data.map);
-      setAreas(data.data.data.map.regions[0].controlPoints.map((controlPoint, i) => 
-        (<Button onClick={() => {console.log(controlPoint.id);
-          setSelectedControlPoint(controlPoint.id); selectRegion(controlPoint.id); onOpen();}}
-            coords={controlPoint.coordinates} shape="poly" alt= {controlPoint.name}/>
+      // console.log(data.data.data.map);
+      setAreas(data.data.data.map.regions[0].controlPoints.map((controlPoint, i) => (
+        <area 
+          onClick={() => {
+            // console.log(controlPoint.id);
+            setSelectedControlPoint(controlPoint.id); 
+            selectRegion(controlPoint.id); 
+            onOpen();
+          }}
+          coords={controlPoint.coordinates} 
+          shape="circle" 
+          alt= {controlPoint.name}
+          />
         )))
-      resizeBattleMap();
+      // map height and width, may need to be changed in the future
+      resizeBattleMap(7580, 5320);
     }); 
   }
   const getImageRef = (id) => {
@@ -190,9 +192,15 @@ const BattleMap = ({onBack, factions=[]}) => {
   <div className="container">
     <TransformWrapper>
       <TransformComponent>
-        <img src="/img/battle-bay/opMap.png" alt="Trulli" useMap="#image-map" width="100%" 
+        <img 
+          src="/img/battle-bay/opMap.png" 
+          useMap="#image-map" 
+          width="100%" 
+          className={`${styles.mapImageArea}`}
+          id="islandMap"
+          ref={mapRef}
           // style={{backgroundRepeat: 'repeat', backgroundImage:'url("/img/battle-bay/ocean-3.png")'}} 
-          className={`${styles.mapImageArea}`} id="islandMap" ref={mapRef} />
+          />
         <map name="image-map" width="100%" height="100%" className={`${styles.mapImageArea}`}>
           {area}
         </map>
