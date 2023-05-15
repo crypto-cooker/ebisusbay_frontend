@@ -13,6 +13,10 @@ import {appConfig} from "@src/Config";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRightFromBracket, faDollarSign} from "@fortawesome/free-solid-svg-icons";
 import EmergencyWithdraw from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/emergency-withdraw";
+import {toast} from "react-toastify";
+import MetaMaskOnboarding from "@metamask/onboarding";
+import {chainConnect, connectAccount} from "@src/GlobalState/User";
+import { useDispatch } from 'react-redux';
 
 interface BankerSceneProps {
   address: string;
@@ -26,6 +30,7 @@ const bankerImages = {
 };
 
 const Bank = ({address, onBack, isVisible} : BankerSceneProps) => {
+  const dispatch = useDispatch();
 
   const { isOpen: isOpenStakeFortune, onOpen: onOpenStakeFortune, onClose: onCloseStakeFortune} = useDisclosure();
   const { isOpen: isOpenStakeNFTs, onOpen: onOpenStakeNFTs, onClose: onCloseStakeNFTs} = useDisclosure();
@@ -46,13 +51,28 @@ const Bank = ({address, onBack, isVisible} : BankerSceneProps) => {
     onBack();
   }, []);
 
- var greetings = ['Greetings, traveler. I am the best person to talk to when it comes to your $Fortune possessions… or lack-thereof… which I could help you address.',
+  const greetings = ['Greetings, traveler. I am the best person to talk to when it comes to your $Fortune possessions… or lack-thereof… which I could help you address.',
                   'Hail, brave hero! How may I assist you with your $Fortune possessions today? Stake, purchase, or withdraw?',
                   'Welcome, honored guest! Ready to ride the waves of fortune? Stake, purchase, or withdraw your tokens with me.',
                   'Welcome, traveler. It seems that since Ebisu has created all these Fortune tokens, that our world has gone through quite an evolution.', 
                   'I am here to help all citizens of the Lotus Galaxy stake, purchase or withdraw their tokens. How may I help?',
                   'Blessings, traveler! Let me guess, you want me to help with your Fortune possessions. Say no more. What can I do for you today?']
-  
+
+  const handleAuthedNavigation = useCallback((fn: () => void) => {
+    if (!!user.address) {
+      fn();
+    } else {
+      if (user.needsOnboard) {
+        const onboarding = new MetaMaskOnboarding();
+        onboarding.startOnboarding();
+      } else if (!user.address) {
+        dispatch(connectAccount());
+      } else if (!user.correctChain) {
+        dispatch(chainConnect());
+      }
+    }
+  }, [user.address]);
+
   return (
     <Box
       position='relative'
@@ -103,7 +123,7 @@ const Bank = ({address, onBack, isVisible} : BankerSceneProps) => {
       >
         <VStack spacing={4} align='end'>
           {Date.now() > config.tokenSale.vipStart && (
-            <RdButton w='full' hideIcon={abbreviateButtonText} onClick={() => onOpenStakeFortune()}>
+            <RdButton w='full' hideIcon={abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenStakeFortune)}>
               {abbreviateButtonText ? (
                 <Icon as={FontAwesomeIcon} icon={faDollarSign} />
               ) : (
@@ -111,21 +131,21 @@ const Bank = ({address, onBack, isVisible} : BankerSceneProps) => {
               )}
             </RdButton>
           )}
-          <RdButton w='full' hideIcon={abbreviateButtonText} onClick={() => onOpenStakeNFTs()}>
+          <RdButton w='full' hideIcon={abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>
             {abbreviateButtonText ? (
               <Icon as={FontAwesomeIcon} icon={faDollarSign} />
             ) : (
               <> Stake NFTs </>
             )}
           </RdButton>
-          <RdButton w='full' hideIcon={abbreviateButtonText} onClick={() => onOpenWithdraw()}>
+          <RdButton w='full' hideIcon={abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenWithdraw)}>
             {abbreviateButtonText ? (
               <Icon as={FontAwesomeIcon} icon={faDollarSign} />
             ) : (
               <> Emergency Withdraw </>
             )}
           </RdButton>
-          <RdButton w='full' hideIcon={abbreviateButtonText} onClick={() => onBack()}>
+          <RdButton w='full' hideIcon={abbreviateButtonText} onClick={onBack}>
             {abbreviateButtonText ? (
               <Icon as={FontAwesomeIcon} icon={faArrowRightFromBracket} />
             ) : (
