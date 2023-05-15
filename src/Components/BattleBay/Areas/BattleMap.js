@@ -116,6 +116,7 @@ const BattleMap = ({onBack, factions=[]}) => {
   //#endregion
 
   useEffect(() => {
+    RefreshControlPoint();
     SetUpMap();
     setFlagSize(windowWidth/30 + "px");
     setBuildingSize(windowWidth/20 + "px");
