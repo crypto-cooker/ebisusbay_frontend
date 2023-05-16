@@ -259,7 +259,7 @@ const Home = () => {
       {/*    </p>*/}
       {/*  </div>*/}
       {/*</section>*/}
-      <TokenSale />
+      {/*<TokenSale />*/}
       <Jumbotron.Host isDark={userTheme === 'dark'}>
         {!mobile && <div className="container">{JumbotronData()}</div>}
       </Jumbotron.Host>
