@@ -1,6 +1,6 @@
 import ProfilesRepository from "@src/core/services/api-service/cms/repositories/profiles";
 import GdcClaimsRepository from "@src/core/services/api-service/cms/repositories/gdc-claims";
-import {BankStakeNft} from "@src/core/services/api-service/types";
+import {BankStakeNft, BarracksStakeNft} from "@src/core/services/api-service/types";
 import RyoshiDynastiesRepository from "@src/core/services/api-service/cms/repositories/ryoshi-dynasties";
 
 class Cms {
@@ -24,6 +24,10 @@ class Cms {
 
   async requestBankStakeAuthorization(nfts: BankStakeNft[], address: string) {
     return this.ryoshiDynasties.requestBankStakeAuthorization(nfts, address);
+  }
+
+  async requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string) {
+    return this.ryoshiDynasties.requestBarracksStakeAuthorization(nfts, address);
   }
 }
 

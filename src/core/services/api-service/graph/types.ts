@@ -24,6 +24,138 @@ export type AccountClosed = {
   user: Scalars['String'];
 };
 
+export type AccountClosedByAdmin = {
+  __typename?: 'AccountClosedByAdmin';
+  admin: Scalars['String'];
+  block: Scalars['String'];
+  hash: Scalars['String'];
+  id: Scalars['ID'];
+  time: Scalars['String'];
+  user: Scalars['String'];
+};
+
+export type AccountClosedByAdmin_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  admin?: InputMaybe<Scalars['String']>;
+  admin_contains?: InputMaybe<Scalars['String']>;
+  admin_contains_nocase?: InputMaybe<Scalars['String']>;
+  admin_ends_with?: InputMaybe<Scalars['String']>;
+  admin_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  admin_gt?: InputMaybe<Scalars['String']>;
+  admin_gte?: InputMaybe<Scalars['String']>;
+  admin_in?: InputMaybe<Array<Scalars['String']>>;
+  admin_lt?: InputMaybe<Scalars['String']>;
+  admin_lte?: InputMaybe<Scalars['String']>;
+  admin_not?: InputMaybe<Scalars['String']>;
+  admin_not_contains?: InputMaybe<Scalars['String']>;
+  admin_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  admin_not_ends_with?: InputMaybe<Scalars['String']>;
+  admin_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  admin_not_in?: InputMaybe<Array<Scalars['String']>>;
+  admin_not_starts_with?: InputMaybe<Scalars['String']>;
+  admin_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  admin_starts_with?: InputMaybe<Scalars['String']>;
+  admin_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  block?: InputMaybe<Scalars['String']>;
+  block_contains?: InputMaybe<Scalars['String']>;
+  block_contains_nocase?: InputMaybe<Scalars['String']>;
+  block_ends_with?: InputMaybe<Scalars['String']>;
+  block_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  block_gt?: InputMaybe<Scalars['String']>;
+  block_gte?: InputMaybe<Scalars['String']>;
+  block_in?: InputMaybe<Array<Scalars['String']>>;
+  block_lt?: InputMaybe<Scalars['String']>;
+  block_lte?: InputMaybe<Scalars['String']>;
+  block_not?: InputMaybe<Scalars['String']>;
+  block_not_contains?: InputMaybe<Scalars['String']>;
+  block_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  block_not_ends_with?: InputMaybe<Scalars['String']>;
+  block_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  block_not_in?: InputMaybe<Array<Scalars['String']>>;
+  block_not_starts_with?: InputMaybe<Scalars['String']>;
+  block_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  block_starts_with?: InputMaybe<Scalars['String']>;
+  block_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  hash?: InputMaybe<Scalars['String']>;
+  hash_contains?: InputMaybe<Scalars['String']>;
+  hash_contains_nocase?: InputMaybe<Scalars['String']>;
+  hash_ends_with?: InputMaybe<Scalars['String']>;
+  hash_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  hash_gt?: InputMaybe<Scalars['String']>;
+  hash_gte?: InputMaybe<Scalars['String']>;
+  hash_in?: InputMaybe<Array<Scalars['String']>>;
+  hash_lt?: InputMaybe<Scalars['String']>;
+  hash_lte?: InputMaybe<Scalars['String']>;
+  hash_not?: InputMaybe<Scalars['String']>;
+  hash_not_contains?: InputMaybe<Scalars['String']>;
+  hash_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  hash_not_ends_with?: InputMaybe<Scalars['String']>;
+  hash_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  hash_not_in?: InputMaybe<Array<Scalars['String']>>;
+  hash_not_starts_with?: InputMaybe<Scalars['String']>;
+  hash_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  hash_starts_with?: InputMaybe<Scalars['String']>;
+  hash_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_not?: InputMaybe<Scalars['ID']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  time?: InputMaybe<Scalars['String']>;
+  time_contains?: InputMaybe<Scalars['String']>;
+  time_contains_nocase?: InputMaybe<Scalars['String']>;
+  time_ends_with?: InputMaybe<Scalars['String']>;
+  time_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  time_gt?: InputMaybe<Scalars['String']>;
+  time_gte?: InputMaybe<Scalars['String']>;
+  time_in?: InputMaybe<Array<Scalars['String']>>;
+  time_lt?: InputMaybe<Scalars['String']>;
+  time_lte?: InputMaybe<Scalars['String']>;
+  time_not?: InputMaybe<Scalars['String']>;
+  time_not_contains?: InputMaybe<Scalars['String']>;
+  time_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  time_not_ends_with?: InputMaybe<Scalars['String']>;
+  time_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  time_not_in?: InputMaybe<Array<Scalars['String']>>;
+  time_not_starts_with?: InputMaybe<Scalars['String']>;
+  time_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  time_starts_with?: InputMaybe<Scalars['String']>;
+  time_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  user?: InputMaybe<Scalars['String']>;
+  user_contains?: InputMaybe<Scalars['String']>;
+  user_contains_nocase?: InputMaybe<Scalars['String']>;
+  user_ends_with?: InputMaybe<Scalars['String']>;
+  user_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  user_gt?: InputMaybe<Scalars['String']>;
+  user_gte?: InputMaybe<Scalars['String']>;
+  user_in?: InputMaybe<Array<Scalars['String']>>;
+  user_lt?: InputMaybe<Scalars['String']>;
+  user_lte?: InputMaybe<Scalars['String']>;
+  user_not?: InputMaybe<Scalars['String']>;
+  user_not_contains?: InputMaybe<Scalars['String']>;
+  user_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  user_not_ends_with?: InputMaybe<Scalars['String']>;
+  user_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  user_not_in?: InputMaybe<Array<Scalars['String']>>;
+  user_not_starts_with?: InputMaybe<Scalars['String']>;
+  user_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  user_starts_with?: InputMaybe<Scalars['String']>;
+  user_starts_with_nocase?: InputMaybe<Scalars['String']>;
+};
+
+export enum AccountClosedByAdmin_OrderBy {
+  Admin = 'admin',
+  Block = 'block',
+  Hash = 'hash',
+  Id = 'id',
+  Time = 'time',
+  User = 'user'
+}
+
 export type AccountClosed_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
@@ -1098,6 +1230,8 @@ export type Query = {
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
   accountClosed?: Maybe<AccountClosed>;
+  accountClosedByAdmin?: Maybe<AccountClosedByAdmin>;
+  accountClosedByAdmins: Array<AccountClosedByAdmin>;
   accountCloseds: Array<AccountClosed>;
   accountOpened?: Maybe<AccountOpened>;
   accountOpeneds: Array<AccountOpened>;
@@ -1117,6 +1251,8 @@ export type Query = {
   mintRequestSuccessEvents: Array<MintRequestSuccessEvent>;
   registeredSeason?: Maybe<RegisteredSeason>;
   registeredSeasons: Array<RegisteredSeason>;
+  spend?: Maybe<Spend>;
+  spends: Array<Spend>;
   staked?: Maybe<Staked>;
   stakedToken?: Maybe<StakedToken>;
   stakedTokens: Array<StakedToken>;
@@ -1137,6 +1273,24 @@ export type QueryAccountClosedArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryAccountClosedByAdminArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryAccountClosedByAdminsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<AccountClosedByAdmin_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<AccountClosedByAdmin_Filter>;
 };
 
 
@@ -1310,6 +1464,24 @@ export type QueryRegisteredSeasonsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   subgraphError?: _SubgraphErrorPolicy_;
   where?: InputMaybe<RegisteredSeason_Filter>;
+};
+
+
+export type QuerySpendArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerySpendsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Spend_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<Spend_Filter>;
 };
 
 
@@ -1516,6 +1688,160 @@ export enum RegisteredSeason_OrderBy {
   Time = 'time'
 }
 
+export type Spend = {
+  __typename?: 'Spend';
+  amount: Scalars['String'];
+  block: Scalars['String'];
+  hash: Scalars['String'];
+  id: Scalars['ID'];
+  nonce: Scalars['String'];
+  time: Scalars['String'];
+  user: Scalars['String'];
+};
+
+export type Spend_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  amount?: InputMaybe<Scalars['String']>;
+  amount_contains?: InputMaybe<Scalars['String']>;
+  amount_contains_nocase?: InputMaybe<Scalars['String']>;
+  amount_ends_with?: InputMaybe<Scalars['String']>;
+  amount_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  amount_gt?: InputMaybe<Scalars['String']>;
+  amount_gte?: InputMaybe<Scalars['String']>;
+  amount_in?: InputMaybe<Array<Scalars['String']>>;
+  amount_lt?: InputMaybe<Scalars['String']>;
+  amount_lte?: InputMaybe<Scalars['String']>;
+  amount_not?: InputMaybe<Scalars['String']>;
+  amount_not_contains?: InputMaybe<Scalars['String']>;
+  amount_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  amount_not_ends_with?: InputMaybe<Scalars['String']>;
+  amount_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  amount_not_in?: InputMaybe<Array<Scalars['String']>>;
+  amount_not_starts_with?: InputMaybe<Scalars['String']>;
+  amount_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  amount_starts_with?: InputMaybe<Scalars['String']>;
+  amount_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  block?: InputMaybe<Scalars['String']>;
+  block_contains?: InputMaybe<Scalars['String']>;
+  block_contains_nocase?: InputMaybe<Scalars['String']>;
+  block_ends_with?: InputMaybe<Scalars['String']>;
+  block_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  block_gt?: InputMaybe<Scalars['String']>;
+  block_gte?: InputMaybe<Scalars['String']>;
+  block_in?: InputMaybe<Array<Scalars['String']>>;
+  block_lt?: InputMaybe<Scalars['String']>;
+  block_lte?: InputMaybe<Scalars['String']>;
+  block_not?: InputMaybe<Scalars['String']>;
+  block_not_contains?: InputMaybe<Scalars['String']>;
+  block_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  block_not_ends_with?: InputMaybe<Scalars['String']>;
+  block_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  block_not_in?: InputMaybe<Array<Scalars['String']>>;
+  block_not_starts_with?: InputMaybe<Scalars['String']>;
+  block_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  block_starts_with?: InputMaybe<Scalars['String']>;
+  block_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  hash?: InputMaybe<Scalars['String']>;
+  hash_contains?: InputMaybe<Scalars['String']>;
+  hash_contains_nocase?: InputMaybe<Scalars['String']>;
+  hash_ends_with?: InputMaybe<Scalars['String']>;
+  hash_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  hash_gt?: InputMaybe<Scalars['String']>;
+  hash_gte?: InputMaybe<Scalars['String']>;
+  hash_in?: InputMaybe<Array<Scalars['String']>>;
+  hash_lt?: InputMaybe<Scalars['String']>;
+  hash_lte?: InputMaybe<Scalars['String']>;
+  hash_not?: InputMaybe<Scalars['String']>;
+  hash_not_contains?: InputMaybe<Scalars['String']>;
+  hash_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  hash_not_ends_with?: InputMaybe<Scalars['String']>;
+  hash_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  hash_not_in?: InputMaybe<Array<Scalars['String']>>;
+  hash_not_starts_with?: InputMaybe<Scalars['String']>;
+  hash_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  hash_starts_with?: InputMaybe<Scalars['String']>;
+  hash_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_not?: InputMaybe<Scalars['ID']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  nonce?: InputMaybe<Scalars['String']>;
+  nonce_contains?: InputMaybe<Scalars['String']>;
+  nonce_contains_nocase?: InputMaybe<Scalars['String']>;
+  nonce_ends_with?: InputMaybe<Scalars['String']>;
+  nonce_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  nonce_gt?: InputMaybe<Scalars['String']>;
+  nonce_gte?: InputMaybe<Scalars['String']>;
+  nonce_in?: InputMaybe<Array<Scalars['String']>>;
+  nonce_lt?: InputMaybe<Scalars['String']>;
+  nonce_lte?: InputMaybe<Scalars['String']>;
+  nonce_not?: InputMaybe<Scalars['String']>;
+  nonce_not_contains?: InputMaybe<Scalars['String']>;
+  nonce_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  nonce_not_ends_with?: InputMaybe<Scalars['String']>;
+  nonce_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  nonce_not_in?: InputMaybe<Array<Scalars['String']>>;
+  nonce_not_starts_with?: InputMaybe<Scalars['String']>;
+  nonce_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  nonce_starts_with?: InputMaybe<Scalars['String']>;
+  nonce_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  time?: InputMaybe<Scalars['String']>;
+  time_contains?: InputMaybe<Scalars['String']>;
+  time_contains_nocase?: InputMaybe<Scalars['String']>;
+  time_ends_with?: InputMaybe<Scalars['String']>;
+  time_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  time_gt?: InputMaybe<Scalars['String']>;
+  time_gte?: InputMaybe<Scalars['String']>;
+  time_in?: InputMaybe<Array<Scalars['String']>>;
+  time_lt?: InputMaybe<Scalars['String']>;
+  time_lte?: InputMaybe<Scalars['String']>;
+  time_not?: InputMaybe<Scalars['String']>;
+  time_not_contains?: InputMaybe<Scalars['String']>;
+  time_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  time_not_ends_with?: InputMaybe<Scalars['String']>;
+  time_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  time_not_in?: InputMaybe<Array<Scalars['String']>>;
+  time_not_starts_with?: InputMaybe<Scalars['String']>;
+  time_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  time_starts_with?: InputMaybe<Scalars['String']>;
+  time_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  user?: InputMaybe<Scalars['String']>;
+  user_contains?: InputMaybe<Scalars['String']>;
+  user_contains_nocase?: InputMaybe<Scalars['String']>;
+  user_ends_with?: InputMaybe<Scalars['String']>;
+  user_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  user_gt?: InputMaybe<Scalars['String']>;
+  user_gte?: InputMaybe<Scalars['String']>;
+  user_in?: InputMaybe<Array<Scalars['String']>>;
+  user_lt?: InputMaybe<Scalars['String']>;
+  user_lte?: InputMaybe<Scalars['String']>;
+  user_not?: InputMaybe<Scalars['String']>;
+  user_not_contains?: InputMaybe<Scalars['String']>;
+  user_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  user_not_ends_with?: InputMaybe<Scalars['String']>;
+  user_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  user_not_in?: InputMaybe<Array<Scalars['String']>>;
+  user_not_starts_with?: InputMaybe<Scalars['String']>;
+  user_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  user_starts_with?: InputMaybe<Scalars['String']>;
+  user_starts_with_nocase?: InputMaybe<Scalars['String']>;
+};
+
+export enum Spend_OrderBy {
+  Amount = 'amount',
+  Block = 'block',
+  Hash = 'hash',
+  Id = 'id',
+  Nonce = 'nonce',
+  Time = 'time',
+  User = 'user'
+}
+
 export type Staked = {
   __typename?: 'Staked';
   amount: Scalars['String'];
@@ -1525,6 +1851,7 @@ export type Staked = {
   id: Scalars['ID'];
   time: Scalars['String'];
   tokenId: Scalars['String'];
+  type: Scalars['String'];
   user: Scalars['String'];
 };
 
@@ -1534,6 +1861,7 @@ export type StakedToken = {
   contractAddress: Scalars['String'];
   id: Scalars['ID'];
   tokenId: Scalars['String'];
+  type: Scalars['String'];
   user: Scalars['String'];
 };
 
@@ -1608,6 +1936,26 @@ export type StakedToken_Filter = {
   tokenId_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
   tokenId_starts_with?: InputMaybe<Scalars['String']>;
   tokenId_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<Scalars['String']>;
+  type_contains?: InputMaybe<Scalars['String']>;
+  type_contains_nocase?: InputMaybe<Scalars['String']>;
+  type_ends_with?: InputMaybe<Scalars['String']>;
+  type_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  type_gt?: InputMaybe<Scalars['String']>;
+  type_gte?: InputMaybe<Scalars['String']>;
+  type_in?: InputMaybe<Array<Scalars['String']>>;
+  type_lt?: InputMaybe<Scalars['String']>;
+  type_lte?: InputMaybe<Scalars['String']>;
+  type_not?: InputMaybe<Scalars['String']>;
+  type_not_contains?: InputMaybe<Scalars['String']>;
+  type_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  type_not_ends_with?: InputMaybe<Scalars['String']>;
+  type_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  type_not_in?: InputMaybe<Array<Scalars['String']>>;
+  type_not_starts_with?: InputMaybe<Scalars['String']>;
+  type_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  type_starts_with?: InputMaybe<Scalars['String']>;
+  type_starts_with_nocase?: InputMaybe<Scalars['String']>;
   user?: InputMaybe<Scalars['String']>;
   user_contains?: InputMaybe<Scalars['String']>;
   user_contains_nocase?: InputMaybe<Scalars['String']>;
@@ -1635,6 +1983,7 @@ export enum StakedToken_OrderBy {
   ContractAddress = 'contractAddress',
   Id = 'id',
   TokenId = 'tokenId',
+  Type = 'type',
   User = 'user'
 }
 
@@ -1769,6 +2118,26 @@ export type Staked_Filter = {
   tokenId_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
   tokenId_starts_with?: InputMaybe<Scalars['String']>;
   tokenId_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<Scalars['String']>;
+  type_contains?: InputMaybe<Scalars['String']>;
+  type_contains_nocase?: InputMaybe<Scalars['String']>;
+  type_ends_with?: InputMaybe<Scalars['String']>;
+  type_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  type_gt?: InputMaybe<Scalars['String']>;
+  type_gte?: InputMaybe<Scalars['String']>;
+  type_in?: InputMaybe<Array<Scalars['String']>>;
+  type_lt?: InputMaybe<Scalars['String']>;
+  type_lte?: InputMaybe<Scalars['String']>;
+  type_not?: InputMaybe<Scalars['String']>;
+  type_not_contains?: InputMaybe<Scalars['String']>;
+  type_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  type_not_ends_with?: InputMaybe<Scalars['String']>;
+  type_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  type_not_in?: InputMaybe<Array<Scalars['String']>>;
+  type_not_starts_with?: InputMaybe<Scalars['String']>;
+  type_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  type_starts_with?: InputMaybe<Scalars['String']>;
+  type_starts_with_nocase?: InputMaybe<Scalars['String']>;
   user?: InputMaybe<Scalars['String']>;
   user_contains?: InputMaybe<Scalars['String']>;
   user_contains_nocase?: InputMaybe<Scalars['String']>;
@@ -1799,6 +2168,7 @@ export enum Staked_OrderBy {
   Id = 'id',
   Time = 'time',
   TokenId = 'tokenId',
+  Type = 'type',
   User = 'user'
 }
 
@@ -1807,6 +2177,8 @@ export type Subscription = {
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
   accountClosed?: Maybe<AccountClosed>;
+  accountClosedByAdmin?: Maybe<AccountClosedByAdmin>;
+  accountClosedByAdmins: Array<AccountClosedByAdmin>;
   accountCloseds: Array<AccountClosed>;
   accountOpened?: Maybe<AccountOpened>;
   accountOpeneds: Array<AccountOpened>;
@@ -1826,6 +2198,8 @@ export type Subscription = {
   mintRequestSuccessEvents: Array<MintRequestSuccessEvent>;
   registeredSeason?: Maybe<RegisteredSeason>;
   registeredSeasons: Array<RegisteredSeason>;
+  spend?: Maybe<Spend>;
+  spends: Array<Spend>;
   staked?: Maybe<Staked>;
   stakedToken?: Maybe<StakedToken>;
   stakedTokens: Array<StakedToken>;
@@ -1846,6 +2220,24 @@ export type SubscriptionAccountClosedArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionAccountClosedByAdminArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionAccountClosedByAdminsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<AccountClosedByAdmin_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<AccountClosedByAdmin_Filter>;
 };
 
 
@@ -2022,6 +2414,24 @@ export type SubscriptionRegisteredSeasonsArgs = {
 };
 
 
+export type SubscriptionSpendArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionSpendsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Spend_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<Spend_Filter>;
+};
+
+
 export type SubscriptionStakedArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
@@ -2102,6 +2512,7 @@ export type Unstaked = {
   id: Scalars['ID'];
   time: Scalars['String'];
   tokenId: Scalars['String'];
+  type: Scalars['String'];
   user: Scalars['String'];
 };
 
@@ -2236,6 +2647,26 @@ export type Unstaked_Filter = {
   tokenId_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
   tokenId_starts_with?: InputMaybe<Scalars['String']>;
   tokenId_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<Scalars['String']>;
+  type_contains?: InputMaybe<Scalars['String']>;
+  type_contains_nocase?: InputMaybe<Scalars['String']>;
+  type_ends_with?: InputMaybe<Scalars['String']>;
+  type_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  type_gt?: InputMaybe<Scalars['String']>;
+  type_gte?: InputMaybe<Scalars['String']>;
+  type_in?: InputMaybe<Array<Scalars['String']>>;
+  type_lt?: InputMaybe<Scalars['String']>;
+  type_lte?: InputMaybe<Scalars['String']>;
+  type_not?: InputMaybe<Scalars['String']>;
+  type_not_contains?: InputMaybe<Scalars['String']>;
+  type_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  type_not_ends_with?: InputMaybe<Scalars['String']>;
+  type_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  type_not_in?: InputMaybe<Array<Scalars['String']>>;
+  type_not_starts_with?: InputMaybe<Scalars['String']>;
+  type_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  type_starts_with?: InputMaybe<Scalars['String']>;
+  type_starts_with_nocase?: InputMaybe<Scalars['String']>;
   user?: InputMaybe<Scalars['String']>;
   user_contains?: InputMaybe<Scalars['String']>;
   user_contains_nocase?: InputMaybe<Scalars['String']>;
@@ -2266,6 +2697,7 @@ export enum Unstaked_OrderBy {
   Id = 'id',
   Time = 'time',
   TokenId = 'tokenId',
+  Type = 'type',
   User = 'user'
 }
 

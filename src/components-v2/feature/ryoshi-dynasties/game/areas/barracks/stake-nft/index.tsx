@@ -8,7 +8,7 @@ import nextApiService from "@src/core/services/api-service/next";
 import {ApiService} from "@src/core/services/api-service";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {Spinner} from "react-bootstrap";
-import StakingNftCard from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/staking-nft-card";
+import StakingNftCard from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/staking-nft-card";
 import {appConfig} from "@src/Config";
 import {caseInsensitiveCompare} from "@src/utils";
 import WalletNft from "@src/core/models/wallet-nft";
@@ -19,19 +19,20 @@ import {CloseIcon} from "@chakra-ui/icons";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import {Contract} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
-import useBankStakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-bank-stake-nfts";
+import useBarracksStakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-barracks-stake-nfts";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAward} from "@fortawesome/free-solid-svg-icons";
 import {ryoshiConfig} from "@src/Config/ryoshi";
-import {BankStakeNftContext} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/context";
+import {
+  BarracksStakeNftContext
+} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/context";
 import {toast} from "react-toastify";
 import {StakedTokenType} from "@src/core/services/api-service/types";
 
 const config = appConfig();
 
 const tabs = {
-  ryoshiVip: 'ryoshi-tales-vip',
   ryoshiHalloween: 'ryoshi-tales-halloween',
   ryoshiChristmas: 'ryoshi-tales-christmas'
 };
@@ -45,13 +46,12 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   const user = useAppSelector((state) => state.user);
   const queryClient = useQueryClient();
 
-  const [currentTab, setCurrentTab] = useState(tabs.ryoshiVip);
+  const [currentTab, setCurrentTab] = useState(tabs.ryoshiHalloween);
   const [currentCollection, setCurrentCollection] = useState<any>();
   const [stakedNfts, setStakedNfts] = useState<StakedToken[]>([]);
   const [pendingNfts, setPendingNfts] = useState<PendingNft[]>([]);
 
   const addressForTab = config.collections.find((c: any) => c.slug === currentTab)?.address;
-
 
   const handleBtnClick = (key: string) => (e: any) => {
     setCurrentTab(key);
@@ -59,21 +59,12 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 
   const handleAddNft = useCallback((nft: WalletNft) => {
     const isInList = pendingNfts.some((sNft) => sNft.nftId === nft.nftId && caseInsensitiveCompare(sNft.nftAddress, nft.nftAddress));
-    if (!isInList && pendingNfts.length < ryoshiConfig.staking.bank.maxSlots) {
-      const collectionSlug = config.collections.find((c: any) => caseInsensitiveCompare(c.address, nft.nftAddress))?.slug;
-      const stakeConfig = ryoshiConfig.staking.bank.collections.find((c) => c.slug === collectionSlug);
-
-      const percentile = (nft.rank / stakeConfig!.maxSupply) * 100;
-      const multiplier = stakeConfig!.multipliers
-        .sort((a: any, b: any) => a.percentile - b.percentile)
-        .find((m: any) => percentile <= m.percentile)?.value || 0;
-
+    if (!isInList && pendingNfts.length < ryoshiConfig.staking.barracks.maxSlots) {
       setPendingNfts([...pendingNfts, {
         nftAddress: nft.nftAddress,
         nftId: nft.nftId,
         image: nft.image,
         rank: nft.rank,
-        multiplier: multiplier,
         isAlreadyStaked: false
       }]);
     }
@@ -84,9 +75,9 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   }, [pendingNfts]);
 
   const handleStakeSuccess = useCallback(() => {
-    queryClient.invalidateQueries(['BankStakedNfts', user.address]);
-    queryClient.invalidateQueries(['BankUnstakedNfts', user.address, currentCollection]);
-    queryClient.setQueryData(['BankUnstakedNfts', user.address, currentCollection], (old: any) => {
+    queryClient.invalidateQueries(['BarracksStakedNfts', user.address]);
+    queryClient.invalidateQueries(['BarracksUnstakedNfts', user.address, currentCollection]);
+    queryClient.setQueryData(['BarracksUnstakedNfts', user.address, currentCollection], (old: any) => {
       if (!old) return [];
       old.pages = old.pages.map((page:  any) => {
         page.data = page.data.filter((nft: any) => !pendingNfts.some((pNft) => pNft.nftId === nft.nftId && caseInsensitiveCompare(pNft.nftAddress, nft.nftAddress)));
@@ -99,7 +90,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       contractAddress: nft.nftAddress,
       id: '',
       tokenId: nft.nftId,
-      type: StakedTokenType.BANK,
+      type: StakedTokenType.BARRACKS,
       user: user.address!
     }))]);
     setPendingNfts([...pendingNfts.map((nft) => ({...nft, isAlreadyStaked: true}))]);
@@ -109,7 +100,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
     setPendingNfts([]);
     setStakedNfts([]);
     setCurrentCollection(addressForTab);
-    setCurrentTab(tabs.ryoshiVip);
+    setCurrentTab(tabs.ryoshiHalloween);
     onClose();
   }
 
@@ -117,8 +108,8 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
     if (!isOpen) return;
 
     queryClient.fetchQuery(
-      ['BankStakedNfts', user.address],
-      () => ApiService.withoutKey().getStakedTokens(user.address!, StakedTokenType.BANK)
+      ['BarracksStakedNfts', user.address],
+      () => ApiService.withoutKey().getStakedTokens(user.address!, StakedTokenType.BARRACKS)
     ).then(async (data) => {
       setStakedNfts(data);
 
@@ -126,19 +117,11 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       for (const token of data) {
         const nft = await getNft(token.contractAddress, token.tokenId);
         if (nft) {
-          const stakeConfig = ryoshiConfig.staking.bank.collections.find((c) => c.slug === nft.collection.slug);
-
-          const percentile = (nft.nft.rank / stakeConfig!.maxSupply) * 100;
-          const multiplier = stakeConfig!.multipliers
-            .sort((a: any, b: any) => a.percentile - b.percentile)
-            .find((m: any) => percentile <= m.percentile)?.value || 0;
-
           nfts.push({
             nftAddress: token.contractAddress,
             nftId: token.tokenId,
             image: nft.nft.image,
             rank: nft.nft.rank,
-            multiplier: multiplier,
             isAlreadyStaked:  true
           })
         }
@@ -159,8 +142,8 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       size='5xl'
       isCentered={false}
     >
-      <BankStakeNftContext.Provider value={pendingNfts}>
-        <Text align='center' p={2}>Ryoshi Tales NFTs can be staked to boost rewards for staked $Fortune. Receive larger boosts by staking higher ranked NFTs.</Text>
+      <BarracksStakeNftContext.Provider value={pendingNfts}>
+        <Text align='center' p={2}>Ryoshi Tales NFTs can be staked to earn 2 extra battle units per slot.</Text>
         <StakingBlock
           pendingNfts={pendingNfts}
           stakedNfts={stakedNfts}
@@ -169,9 +152,6 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
         />
         <Box p={4}>
           <Flex direction='row' justify='center' mb={2}>
-            <RdTabButton isActive={currentTab === tabs.ryoshiVip} onClick={handleBtnClick(tabs.ryoshiVip)}>
-              VIP
-            </RdTabButton>
             <RdTabButton isActive={currentTab === tabs.ryoshiHalloween} onClick={handleBtnClick(tabs.ryoshiHalloween)}>
               Halloween
             </RdTabButton>
@@ -189,7 +169,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
             />
           </Box>
         </Box>
-      </BankStakeNftContext.Provider>
+      </BarracksStakeNftContext.Provider>
     </RdModal>
   )
 }
@@ -208,7 +188,6 @@ interface PendingNft {
   nftId: string;
   image: string;
   rank: number;
-  multiplier: number;
   isAlreadyStaked: boolean;
 }
 
@@ -216,7 +195,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
   const user = useAppSelector((state) => state.user);
   const [isExecutingStake, setIsExecutingStake] = useState(false);
   const [executingLabel, setExecutingLabel] = useState('');
-  const [stakeNfts, response] = useBankStakeNfts();
+  const [stakeNfts, response] = useBarracksStakeNfts();
 
   const handleStake = useCallback(async () => {
     if (pendingNfts.length === 0 && stakedNfts.length === 0) return;
@@ -231,10 +210,10 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
         if (approvedCollections.includes(nft.nftAddress)) continue;
 
         const nftContract = new Contract(nft.nftAddress, ERC721, user.provider.getSigner());
-        const isApproved = await nftContract.isApprovedForAll(user.address!.toLowerCase(), config.contracts.bank);
+        const isApproved = await nftContract.isApprovedForAll(user.address!.toLowerCase(), config.contracts.barracks);
 
         if (!isApproved) {
-          let tx = await nftContract.setApprovalForAll(config.contracts.bank, true);
+          let tx = await nftContract.setApprovalForAll(config.contracts.barracks, true);
           await tx.wait();
           approvedCollections.push(nft.nftAddress);
         }
@@ -279,6 +258,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
                     <Box
                       width={100}
                       height={100}
+
                     >
                       <Image src={ImageService.translate(pendingNfts[index].image).fixedWidth(100, 100)} rounded='lg'/>
                     </Box>
@@ -287,7 +267,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
                         <Icon as={FontAwesomeIcon} icon={faAward} />
                         <Box as='span'>{pendingNfts[index].rank ?? ''}</Box>
                       </HStack>
-                      <Box as='span' fontWeight='bold'>{pendingNfts[index].multiplier}x</Box>
+                      <Box as='span' fontWeight='bold'>x {ryoshiConfig.staking.barracks.bonusTroops}</Box>
                     </Flex>
                   </Box>
 
@@ -355,7 +335,7 @@ interface UnstakedNftsProps {
 
 const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedNftsProps) => {
   const { data, status, error, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    ['BankUnstakedNfts', address, collection],
+    ['BarracksUnstakedNfts', address, collection],
     () => nextApiService.getWallet(address!, {
       collection: [collection],
       sortBy: 'rank',

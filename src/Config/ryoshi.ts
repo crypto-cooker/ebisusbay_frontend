@@ -34,6 +34,10 @@ export const ryoshiConfig = {
           ]
         }
       ]
+    },
+    barracks: {
+      maxSlots: 5,
+      bonusTroops: 2
     }
   }
 }

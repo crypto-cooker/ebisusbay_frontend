@@ -15,9 +15,9 @@ import {lightTheme} from "@src/Theme/theme";
 import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
 import {useAppSelector} from "@src/Store/hooks";
 import {
-  BankStakeNftContext,
-  BankStakeNftContextProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/context";
+  BarracksStakeNftContext,
+  BarracksStakeNftContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/context";
 
 interface StakingNftCardProps {
   nft: any;
@@ -40,7 +40,7 @@ const StakingNftCard = ({
   const user = useAppSelector((state) => state.user);
   const ryoshiStakingCart = useAppSelector((state) => state.ryoshiStakingCart);
   const { onCopy } = useClipboard(nftUrl.toString());
-  const bankStakeNftContext = useContext(BankStakeNftContext) as BankStakeNftContextProps[];
+  const barracksStakeNftContext = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps[];
 
 
   const handleCopyLinkButtonPressed = () => {
@@ -93,7 +93,7 @@ const StakingNftCard = ({
   };
 
   const isInCart = () => {
-    return bankStakeNftContext.some((o) => o.nftId === nft.nftId && caseInsensitiveCompare(o.nftAddress, nft.nftAddress));
+    return barracksStakeNftContext.some((o) => o.nftId === nft.nftId && caseInsensitiveCompare(o.nftAddress, nft.nftAddress));
   };
 
   return (

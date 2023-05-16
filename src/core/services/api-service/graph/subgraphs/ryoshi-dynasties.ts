@@ -1,6 +1,7 @@
 import {appConfig} from "@src/Config";
 import {ApolloClient, gql, InMemoryCache} from '@apollo/client';
 import {urlify} from "@src/utils";
+import {StakedTokenType} from "@src/core/services/api-service/types";
 
 const config = appConfig();
 
@@ -64,10 +65,10 @@ class RyoshiDynasties {
     });
   }
 
-  async stakedTokens(walletAddress: string) {
+  async stakedTokens(walletAddress: string, type: StakedTokenType) {
     const query = `
-      query StakedTokensQuery($address: String) {
-        stakedTokens(where: {user: $address}) {
+      query StakedTokensQuery($address: String, $type: String) {
+        stakedTokens(where: {user: $address, type: $type}) {
           id
           contractAddress
           tokenId
@@ -79,7 +80,8 @@ class RyoshiDynasties {
     return this.apollo.query({
       query: gql(query),
       variables: {
-        address: walletAddress.toLowerCase()
+        address: walletAddress.toLowerCase(),
+        type: type.toUpperCase()
       }
     });
   }
