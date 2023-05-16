@@ -20414,6 +20414,57 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Wicked Azz Pawnz",
+      "slug": "wicked-azz-pawnz",
+      "multiToken": false,
+      "address": "0x0bA3D2BE7977075CbDAE40ccBBf73c4FEbfdcb4A",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Anything but your average PAWNZ!",
+        "avatar": "/img/collections/wicked-azz-pawnz/avatar.webp",
+        "banner": "/img/collections/wicked-azz-pawnz/banner.webp",
+        "card": "/img/collections/wicked-azz-pawnz/card.webp",
+        "twitter": "https://twitter.com/rysknft",
+        "discord": "https://discord.gg/CRXq6zz2vG",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Punk Weapon",
+      "slug": "punk-weapon",
+      "multiToken": false,
+      "address": "0xc6Cfb3f2D9D33FF1D0B77cE78c5dD6f790B5605A",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Diverse array of weapons, including swords, guns, and guitars... All adorned with intricate punk-themed designs. From studs and spikes to bold. Each weapon is a work of art in its own right.",
+        "avatar": "/img/collections/punk-weapon/avatar.webp",
+        "banner": "/img/collections/punk-weapon/banner.webp",
+        "card": "/img/collections/punk-weapon/card.webp",
+        "website": "https://thecronosclub.com",
+        "twitter": "https://twitter.com/the_cronos_club",
+        "discord": "https://discord.gg/rvtB8gYSGU",
+        "medium": "https://medium.com/@the_cronos_club",
+        "telegram": "https://t.co/3IKF191DcQ",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
