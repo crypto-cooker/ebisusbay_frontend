@@ -62,7 +62,7 @@ export const getServerSideProps = async ({ params }: {params: any}) => {
 
   return {
     props: {
-      slug: drop?.slug,
+      slug: drop.slug,
       ssrDrop: drop,
       ssrCollection: collection
     },

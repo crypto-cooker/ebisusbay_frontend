@@ -5,9 +5,9 @@ import {caseInsensitiveCompare} from "@src/utils";
 const drops = appConfig('drops');
 
 class LocalDataService {
-  getDrop(slug: string): Drop {
+  getDrop(slug: string): Drop | null {
     const drop = drops.find((drop: any) => caseInsensitiveCompare(drop.slug, slug));
-    return mapDrop(drop);
+    return !!drop ? mapDrop(drop) : null;
   }
 }
 
