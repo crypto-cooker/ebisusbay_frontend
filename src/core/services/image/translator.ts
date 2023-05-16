@@ -61,6 +61,11 @@ class ImageTranslator {
     const pattern = /\.[0-9a-z]+$/i;
     const hasFileExtension = pattern.test(url);
 
+    // If bunnykit url detected, then ignore any further translations
+    if (url.startsWith(config.urls.cdn.bunnykit)) {
+      return new BunnyKitProvider(url);
+    }
+
     // Important to keep local and proxy at the top because proxy could contain any of the below values being compared
     if (!url.startsWith('http')) {
       const baseUrl = isLocalEnv() ? config.urls.app : config.urls.cdn.app;
