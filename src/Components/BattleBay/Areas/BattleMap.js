@@ -68,15 +68,13 @@ const BattleMap = ({onBack, factions=[]}) => {
 
     // return "/img/battle-bay/townhall_day.png";
   }
-
   function wait(ms){
     var start = new Date().getTime();
     var end = start;
     while(end < start + ms) {
       end = new Date().getTime();
    }
- }
-
+  }
   const randomlyPlayExplosion = async () => {
     //get random control point
     var explosionPoint = controlPoints[Math.floor(Math.random() * controlPoints.length)];
@@ -99,7 +97,6 @@ const BattleMap = ({onBack, factions=[]}) => {
   }
   //#endregion
 
-  //#region Map Functions
   function selectRegion(x) {
     GetControlPointInfo(x);
   }
@@ -112,11 +109,9 @@ const BattleMap = ({onBack, factions=[]}) => {
     getControlPoint(selectedControlPoint).then((data) => {
       setControlPoint(data);
   });
-}
-  //#endregion
+  }
 
   useEffect(() => {
-    RefreshControlPoint();
     SetUpMap();
     setFlagSize(windowWidth/30 + "px");
     setBuildingSize(windowWidth/20 + "px");
@@ -134,6 +129,7 @@ const BattleMap = ({onBack, factions=[]}) => {
   const SetUpMap = async () => {
     getMap().then((data) => {
       // console.log(data.data.data.map);
+      resizeBattleMap(7580, 5320);
       setAreas(data.data.data.map.regions[0].controlPoints.map((controlPoint, i) => (
         <area 
           onClick={() => {
@@ -148,7 +144,7 @@ const BattleMap = ({onBack, factions=[]}) => {
           />
         )))
       // map height and width, may need to be changed in the future
-      resizeBattleMap(7580, 5320);
+
     }); 
   }
   const getImageRef = (id) => {

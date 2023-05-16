@@ -1,7 +1,7 @@
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import React, {useState} from "react";
 
-import Barracks from "@src/Components/BattleBay/Areas/Barracks";
+import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks";
 import BattleMap from "@src/Components/BattleBay/Areas/BattleMap";
 import AllianceCenter from "@src/Components/BattleBay/Areas/AllianceCenter";
 import AnnouncementBoard from "@src/Components/BattleBay/Areas/AnnouncementBoard";

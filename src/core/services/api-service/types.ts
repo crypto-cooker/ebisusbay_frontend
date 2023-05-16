@@ -48,3 +48,14 @@ export interface BankStakeNft {
     nftId: string;
     amount: number;
 }
+
+export interface BarracksStakeNft {
+    nftAddress: string;
+    nftId: string;
+    amount: number;
+}
+
+export enum StakedTokenType {
+    BANK = 'bank',
+    BARRACKS = 'barracks'
+}

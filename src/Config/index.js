@@ -243,9 +243,10 @@ export const configData = {
       usdc: '0x1E1d0765439d0d53ee40CC4fB454C2343c84342b',
       resources: '0xDa72eE0B52A5a6d5C989f0e817c9e2AF72e572B5',
       bank: '0x20C669035aA1245eFbAE95E8f0c2bBE93A6BBEB5',
+      barracks: '0x099402e2FBd74Ef6cAe01951F965888eb9408AC5',
       fortune: '0x119adb5E05e85d55690BC4Da7b37c06BfEcF2071',
       gameRewards: '0xDa72eE0B52A5a6d5C989f0e817c9e2AF72e572B5'
-      
+
     },
     tokens: {
       loot: {

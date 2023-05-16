@@ -1,7 +1,7 @@
 import {useCallback, useState} from 'react';
 import {AspectRatio, Box, Icon, Image, useBreakpointValue, useDisclosure, VStack} from '@chakra-ui/react';
 
-import Index from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune';
+import StakeFortune from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune';
 import StakeNFTs from './stake-nft';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {useAppSelector} from "@src/Store/hooks";
@@ -13,10 +13,9 @@ import {appConfig} from "@src/Config";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRightFromBracket, faDollarSign} from "@fortawesome/free-solid-svg-icons";
 import EmergencyWithdraw from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/emergency-withdraw";
-import {toast} from "react-toastify";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 interface BankerSceneProps {
   address: string;
@@ -37,7 +36,6 @@ const Bank = ({address, onBack, isVisible} : BankerSceneProps) => {
   const { isOpen: isOpenWithdraw, onOpen: onOpenWithdraw, onClose: onCloseWithdraw} = useDisclosure();
 
   const [bankerImage, setBankerImage] = useState(bankerImages.talking);
-  const [isExecuting, setIsExecuting] = useState(false);
   const user = useAppSelector((state) => state.user);
   const windowSize = useWindowSize();
   const config = appConfig();
@@ -80,7 +78,7 @@ const Bank = ({address, onBack, isVisible} : BankerSceneProps) => {
     >
     <Box>
 
-    <Index address={address} isOpen={isOpenStakeFortune} onClose={onCloseStakeFortune} initialPage={'main'}/>
+    <StakeFortune address={address} isOpen={isOpenStakeFortune} onClose={onCloseStakeFortune} />
     <StakeNFTs isOpen={isOpenStakeNFTs} onClose={onCloseStakeNFTs} />
     <EmergencyWithdraw isOpen={isOpenWithdraw} onClose={onCloseWithdraw}/>
 
