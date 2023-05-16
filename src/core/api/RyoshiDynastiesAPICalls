@@ -364,3 +364,21 @@ export const attack = async (address, signature, troops, controlPointId, faction
     throw error;
   }
 }
+export const getDailyRewards = async (address, signature) => {
+  try{
+    return await api.get(baseURL + "api/ryoshi-dynasties/game-tokens/daily-reward?", 
+      {params: {address, signature}});
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const getGameTokens = async (address, signature) => {
+  try{
+    return await api.get(baseURL + "api/ryoshi-dynasties/game-tokens/?", 
+      {params: {address, signature}});
+  }
+  catch(error){
+    throw error;
+  }
+}
