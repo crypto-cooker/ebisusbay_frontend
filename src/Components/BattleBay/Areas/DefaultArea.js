@@ -25,26 +25,31 @@ import { TransformWrapper, TransformComponent, ReactZoomPanPinchRef } from "reac
 import styles from './BattleBay.module.scss';
 import AnnouncementBoardModal from './AnnouncementBoardModal.js';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
-import {useSelector} from "react-redux";
 import {BigNumber, Contract, ethers} from "ethers";
+
 import {commify} from "ethers/lib/utils";
 import {ApiService} from "@src/core/services/api-service";
 import NextApiService from "@src/core/services/api-service/next";
-import axios from "axios";
-const api = axios.create({
-  baseURL: 'api/',
-});
+import {getDailyRewards, getGameTokens} from "@src/core/api/RyoshiDynastiesAPICalls";
 
-const baseURL = 'https://testcms.ebisusbay.biz/';
+import { getAuthSignerInStorage } from '@src/helpers/storage';
+import {useSelector} from "react-redux";
+import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
+
+//contracts
+import {appConfig} from "@src/Config";
+import GameRewards from "@src/Contracts/Resources.json";
 
 const DefaultArea = ({onChange}) => {
 
   const user = useSelector((state) => state.user);
+  const config = appConfig();
 
   const[koban, setKoban] = useState(0);
   const[fortune, setFortune] = useState(0);
   const[mitama, setMitama] = useState(0);
   const[resourcesAcquired, setResourcesAcquired] = useState(false);
+  const [isLoading, getSigner] = useCreateSigner();
 
   const [pins, setPins] = useState([]);
   const transformComponentRef = useRef()
@@ -58,6 +63,7 @@ const DefaultArea = ({onChange}) => {
   const [sizeMultiplier, setSizeMultiplier] = useState(1);
   const [initialPositionX, setInitialPositionX] = useState(0);
   const [initialPositionY, setInitialPositionY] = useState(0);
+  const [dailyRewardClaimed, setDailyRewardClaimed] = useState(false);
 
   const buildingButtonRef = React.useRef()
   const announcementBoardRef = React.useRef()
@@ -81,6 +87,70 @@ const DefaultArea = ({onChange}) => {
     });
     console.log(ReactZoomPanPinchRef.state.positionX, ReactZoomPanPinchRef.state.positionY, ReactZoomPanPinchRef.state.scale)
   };
+
+  const GetGameTokens = async () => {
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      try {
+        const data = await getGameTokens(user.address.toLowerCase(), signatureInStorage);
+
+        if(data.data.data.length > 0) {
+
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+  const ClaimDailyRewards = async () => {
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      try {
+        const data = await getDailyRewards(user.address.toLowerCase(), signatureInStorage);
+
+        const sig = data.data.data.signature;
+        const profileId = data.data.data.profileId;
+        const quantity = data.data.data.quantity;
+        const timestamp = data.data.data.timestamp;
+
+        var claimRewardsTuple = {
+          address: user.address.toLowerCase(), 
+          profileId: [profileId], 
+          quantity: [quantity],
+          timestamp: timestamp, 
+                          };
+
+        const gameRewardsContract = new Contract(config.contracts.gameRewards, GameRewards, user.provider.getSigner());
+        const tx = await gameRewardsContract.mintWithSig(claimRewardsTuple, sig);
+        const receipt = await tx.wait();
+        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+  
+  function nFormatter(num, digits) {
+    const lookup = [
+      { value: 1, symbol: "" },
+      { value: 1e3, symbol: "k" },
+      { value: 1e6, symbol: "M" }
+    ];
+    const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+    var item = lookup.slice().reverse().find(function(item) {
+      return num >= item.value;
+    });
+    return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
+  }
 
   const buildings ={ "allianceCenter" : {height:438, width:554, top:'7%', left:'55%'},
                       "townhall" : {height:607, width:707, top:'13%', left:'36%'},
@@ -263,164 +333,160 @@ const DefaultArea = ({onChange}) => {
 
 //#endregion
 
-useEffect(() => {
-  if(sizeMultiplier == 1) return;
+  useEffect(() => {
+    if(sizeMultiplier == 1) return;
 
-  // setElementToZoomTo('bank');
-  // resizeMap();
-  setAllianceCenterWidth( buildings.allianceCenter.width * sizeMultiplier);
-  setAllianceCenterHeight( buildings.allianceCenter.height * sizeMultiplier);
+    // setElementToZoomTo('bank');
+    // resizeMap();
+    setAllianceCenterWidth( buildings.allianceCenter.width * sizeMultiplier);
+    setAllianceCenterHeight( buildings.allianceCenter.height * sizeMultiplier);
 
-  setTownhallWidth( buildings.townhall.width * sizeMultiplier);
-  setTownhallHeight( buildings.townhall.height * sizeMultiplier);
+    setTownhallWidth( buildings.townhall.width * sizeMultiplier);
+    setTownhallHeight( buildings.townhall.height * sizeMultiplier);
 
-  setTavernWidth( buildings.tavern.width * sizeMultiplier);
-  setTavernHeight( buildings.tavern.height * sizeMultiplier);
+    setTavernWidth( buildings.tavern.width * sizeMultiplier);
+    setTavernHeight( buildings.tavern.height * sizeMultiplier);
 
-  setAcademyWidth( buildings.academy.width * sizeMultiplier);
-  setAcademyHeight( buildings.academy.height * sizeMultiplier);
-  
-  setTavernSpinWidth( buildings.tavernSpin.width * sizeMultiplier);
-  setTavernSpinHeight( buildings.tavernSpin.height * sizeMultiplier);
+    setAcademyWidth( buildings.academy.width * sizeMultiplier);
+    setAcademyHeight( buildings.academy.height * sizeMultiplier);
+    
+    setTavernSpinWidth( buildings.tavernSpin.width * sizeMultiplier);
+    setTavernSpinHeight( buildings.tavernSpin.height * sizeMultiplier);
 
-  setFlowers1Width( buildings.flowers1.width * sizeMultiplier);
-  setFlowers1Height( buildings.flowers1.height * sizeMultiplier);
+    setFlowers1Width( buildings.flowers1.width * sizeMultiplier);
+    setFlowers1Height( buildings.flowers1.height * sizeMultiplier);
 
-  setFlowers2Width( buildings.flowers2.width * sizeMultiplier);
-  setFlowers2Height( buildings.flowers2.height * sizeMultiplier);
+    setFlowers2Width( buildings.flowers2.width * sizeMultiplier);
+    setFlowers2Height( buildings.flowers2.height * sizeMultiplier);
 
-  setFlowers3Width( buildings.flowers3.width * sizeMultiplier);
-  setFlowers3Height( buildings.flowers3.height * sizeMultiplier);
+    setFlowers3Width( buildings.flowers3.width * sizeMultiplier);
+    setFlowers3Height( buildings.flowers3.height * sizeMultiplier);
 
-  setBankWidth( buildings.bank.width * sizeMultiplier);
-  setBankHeight( buildings.bank.height * sizeMultiplier);
+    setBankWidth( buildings.bank.width * sizeMultiplier);
+    setBankHeight( buildings.bank.height * sizeMultiplier);
 
-  setAnnouncementWidth( buildings.announcement.width * sizeMultiplier);
-  setAnnouncementHeight( buildings.announcement.height * sizeMultiplier);
+    setAnnouncementWidth( buildings.announcement.width * sizeMultiplier);
+    setAnnouncementHeight( buildings.announcement.height * sizeMultiplier);
 
-  setWaterWidth( buildings.water.width * sizeMultiplier);
-  setWaterHeight( buildings.water.height * sizeMultiplier);
+    setWaterWidth( buildings.water.width * sizeMultiplier);
+    setWaterHeight( buildings.water.height * sizeMultiplier);
 
-  setBarracksWidth( buildings.barracks.width * sizeMultiplier);
-  setBarracksHeight( buildings.barracks.height * sizeMultiplier);
+    setBarracksWidth( buildings.barracks.width * sizeMultiplier);
+    setBarracksHeight( buildings.barracks.height * sizeMultiplier);
 
-  setFishmarketWidth( buildings.fishmarket.width * sizeMultiplier);
-  setFishmarketHeight( buildings.fishmarket.height * sizeMultiplier);
+    setFishmarketWidth( buildings.fishmarket.width * sizeMultiplier);
+    setFishmarketHeight( buildings.fishmarket.height * sizeMultiplier);
 
-  setBoatWidth( buildings.boat.width * sizeMultiplier);
-  setBoatHeight( buildings.boat.height * sizeMultiplier);
+    setBoatWidth( buildings.boat.width * sizeMultiplier);
+    setBoatHeight( buildings.boat.height * sizeMultiplier);
 
-  setEbisustatueWidth( buildings.ebisustatue.width * sizeMultiplier);
-  setEbisustatueHeight( buildings.ebisustatue.height * sizeMultiplier);
+    setEbisustatueWidth( buildings.ebisustatue.width * sizeMultiplier);
+    setEbisustatueHeight( buildings.ebisustatue.height * sizeMultiplier);
 
-  setSwordsmenWidth( buildings.swordsmen.width * sizeMultiplier);
-  setSwordsmenHeight( buildings.swordsmen.height * sizeMultiplier);
+    setSwordsmenWidth( buildings.swordsmen.width * sizeMultiplier);
+    setSwordsmenHeight( buildings.swordsmen.height * sizeMultiplier);
 
-  setMoongateWidth( buildings.moongate.width * sizeMultiplier);
-  setMoongateHeight( buildings.moongate.height * sizeMultiplier);
+    setMoongateWidth( buildings.moongate.width * sizeMultiplier);
+    setMoongateHeight( buildings.moongate.height * sizeMultiplier);
 
-  setToriiWidth( buildings.torii.width * sizeMultiplier);
-  setToriiHeight( buildings.torii.height * sizeMultiplier);
+    setToriiWidth( buildings.torii.width * sizeMultiplier);
+    setToriiHeight( buildings.torii.height * sizeMultiplier);
 
-  setPondWidth( buildings.pond.width * sizeMultiplier);
-  setPondHeight( buildings.pond.height * sizeMultiplier);
+    setPondWidth( buildings.pond.width * sizeMultiplier);
+    setPondHeight( buildings.pond.height * sizeMultiplier);
 
-  setalliancecenter_labelWidth( buildings.alliancecenter_label.width * sizeMultiplier);
-  setalliancecenter_labelHeight( buildings.alliancecenter_label.height * sizeMultiplier);
+    setalliancecenter_labelWidth( buildings.alliancecenter_label.width * sizeMultiplier);
+    setalliancecenter_labelHeight( buildings.alliancecenter_label.height * sizeMultiplier);
 
-  settownhall_labelWidth( buildings.townhall_label.width * sizeMultiplier);
-  settownhall_labelHeight( buildings.townhall_label.height * sizeMultiplier);
+    settownhall_labelWidth( buildings.townhall_label.width * sizeMultiplier);
+    settownhall_labelHeight( buildings.townhall_label.height * sizeMultiplier);
 
-  settavern_labelWidth( buildings.tavern_label.width * sizeMultiplier);
-  settavern_labelHeight( buildings.tavern_label.height * sizeMultiplier);
+    settavern_labelWidth( buildings.tavern_label.width * sizeMultiplier);
+    settavern_labelHeight( buildings.tavern_label.height * sizeMultiplier);
 
-  setacademy_labelWidth( buildings.academy_label.width * sizeMultiplier);
-  setacademy_labelHeight( buildings.academy_label.height * sizeMultiplier);
+    setacademy_labelWidth( buildings.academy_label.width * sizeMultiplier);
+    setacademy_labelHeight( buildings.academy_label.height * sizeMultiplier);
 
-  setbank_labelWidth( buildings.bank_label.width * sizeMultiplier);
-  setbank_labelHeight( buildings.bank_label.height * sizeMultiplier);
+    setbank_labelWidth( buildings.bank_label.width * sizeMultiplier);
+    setbank_labelHeight( buildings.bank_label.height * sizeMultiplier);
 
-  setbarracks_labelWidth( buildings.barracks_label.width * sizeMultiplier);
-  setbarracks_labelHeight( buildings.barracks_label.height * sizeMultiplier);
+    setbarracks_labelWidth( buildings.barracks_label.width * sizeMultiplier);
+    setbarracks_labelHeight( buildings.barracks_label.height * sizeMultiplier);
 
-  setmoongate_labelWidth( buildings.moongate_label.width * sizeMultiplier);
-  setmoongate_labelHeight( buildings.moongate_label.height * sizeMultiplier);
+    setmoongate_labelWidth( buildings.moongate_label.width * sizeMultiplier);
+    setmoongate_labelHeight( buildings.moongate_label.height * sizeMultiplier);
 
-  setfishmarket_labelWidth( buildings.fishmarket_label.width * sizeMultiplier);
-  setfishmarket_labelHeight( buildings.fishmarket_label.height * sizeMultiplier);
+    setfishmarket_labelWidth( buildings.fishmarket_label.width * sizeMultiplier);
+    setfishmarket_labelHeight( buildings.fishmarket_label.height * sizeMultiplier);
 
-  setannouncementboard_labelWidth( buildings.announcementboard_label.width * sizeMultiplier);
-  setannouncementboard_labelHeight( buildings.announcementboard_label.height * sizeMultiplier);
-}, [sizeMultiplier]);
+    setannouncementboard_labelWidth( buildings.announcementboard_label.width * sizeMultiplier);
+    setannouncementboard_labelHeight( buildings.announcementboard_label.height * sizeMultiplier);
+  }, [sizeMultiplier]);
 
-useEffect(() => {
-  
-  function handleResize(){
-    // console.log('resized to: ', window.innerWidth, 'x', window.innerHeight)
-    if (window.innerWidth < 2880) {
-      setSizeMultiplier(window.innerWidth / 2880);
-      // setInitialPositionX(window.innerWidth / 2);
-      // setInitialPositionY(window.innerHeight / 2);
-      // setZoomState({
-      //   offsetX: window.innerWidth / 2,
-      //   offsetY: window.innerHeight / 2,
-      //   // scale: ReactZoomPanPinchRef.state.scale,
-      // });
-
+  useEffect(() => {
+    function handleResize(){
+      // console.log('resized to: ', window.innerWidth, 'x', window.innerHeight)
+      if (window.innerWidth < 2880) {
+        setSizeMultiplier(window.innerWidth / 2880);
+        // setInitialPositionX(window.innerWidth / 2);
+        // setInitialPositionY(window.innerHeight / 2);
+        // setZoomState({
+        //   offsetX: window.innerWidth / 2,
+        //   offsetY: window.innerHeight / 2,
+        //   // scale: ReactZoomPanPinchRef.state.scale,
+        // });
+      }
     }
-  }
+    window.addEventListener('resize', handleResize)
+  })
 
-  window.addEventListener('resize', handleResize)
-})
+  useEffect(() => {
+    // resizeMap();
+    SetUpButtons();
+    setSizeMultiplier(window.innerWidth / 2880);
+  }, [])
 
-useEffect(() => {
-  // resizeMap();
-  SetUpButtons();
-  setSizeMultiplier(window.innerWidth / 2880);
-}, [])
+  useEffect(() => {
+    // onOpenAnnouncementBoard();
+    GetGameTokens();
+  }, [])
 
-useEffect(() => {
-  // onOpenAnnouncementBoard();
-}, [])
+  const GetResources = async () => {
+    try {
+      setResourcesAcquired(false);
+      let nfts = await NextApiService.getWallet(user.address, {
+        collection: '0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5',
+      });
+      const fortuneAndMitama = await ApiService.withoutKey().getErc20Account(user.address)
 
+      if (nfts.data.length > 0) {
+        setKoban(nFormatter(nfts.data[0].balance, 1));
+      }
+      if (!!fortuneAndMitama) {
+        setFortune(nFormatter(Number(ethers.utils.formatEther(fortuneAndMitama.fortuneBalance)), 1));
+        setMitama(nFormatter(Number(fortuneAndMitama.mitamaBalance), 1));
+      }
 
-
-const GetResources = async () => {
-  try {
-    setResourcesAcquired(false);
-    let nfts = await NextApiService.getWallet(user.address, {
-      collection: '0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5',
-    });
-    const fortuneAndMitama = await ApiService.withoutKey().getErc20Account(user.address)
-
-    if (nfts.data.length > 0) {
-      setKoban(nfts.data[0].balance);
+      setResourcesAcquired(true);
+    } catch (error) {
+      console.log(error);
     }
-    if (!!fortuneAndMitama) {
-      setFortune(Number(ethers.utils.formatEther(fortuneAndMitama.fortuneBalance)));
-      setMitama(Number(fortuneAndMitama.mitamaBalance));
+  };
+
+  useEffect(() => {
+    // get all resources
+    if (!!user.address) {
+      GetResources();
     }
+  }, [user.address])
 
-    setResourcesAcquired(true);
-  } catch (error) {
-    console.log(error);
+  const SetUpButtons = async () => {
+    setPins(buttonsNames.map((button, i) => 
+      (<Button style={{ marginTop: '4px', marginLeft: '4px' }} 
+      onClick={() => setElementToZoomTo(button)} variant='outline'size='sm'> 
+      {button}</Button>
+      )))
   }
-};
-
-useEffect(() => {
-  // get all resources
-  if (!!user.address) {
-    GetResources();
-  }
-}, [user.address])
-
-const SetUpButtons = async () => {
-  setPins(buttonsNames.map((button, i) => 
-    (<Button style={{ marginTop: '4px', marginLeft: '4px' }} 
-    onClick={() => setElementToZoomTo(button)} variant='outline'size='sm'> 
-    {button}</Button>
-    )))
-}
   return (
     <section>
        <Box
@@ -577,15 +643,15 @@ const SetUpButtons = async () => {
           <VStack alignItems='left'  >
             <HStack>
               <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
-              <Text >Fortune : {!resourcesAcquired ? <Spinner size='sm'/> :commify(fortune.toFixed())}</Text>
+              <Text >Fortune : {!resourcesAcquired ? <Spinner size='sm'/> :fortune}</Text>
             </HStack>
             <HStack>
               <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
-              <Text align='left'>Mitama : {!resourcesAcquired ? <Spinner size='sm'/> :commify(mitama)}</Text>
+              <Text align='left'>Mitama : {!resourcesAcquired ? <Spinner size='sm'/> :mitama}</Text>
             </HStack>
             <HStack>
               <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
-              <Text align='left'>Koban : {!resourcesAcquired ? <Spinner size='sm'/> : commify(koban)}</Text>
+              <Text align='left'>Koban : {!resourcesAcquired ? <Spinner size='sm'/> : koban}</Text>
             </HStack>
           </VStack>
         </Flex>
@@ -600,6 +666,17 @@ const SetUpButtons = async () => {
           onClick={onOpenBuildings}
         >
           View Building
+        </RdButton>
+        <Spacer h='4'/>
+        <RdButton
+          w='150px'
+          pointerEvents='auto'
+          fontSize={{base: 'm', sm: 'm'}}
+          ref={buildingButtonRef} 
+          hideIcon={true}
+          onClick={onOpenBuildings}
+        >
+          Claim Daily Reward
         </RdButton>
         <AnnouncementBoardModal isOpen={isOpenAnnouncementBoard} onClose={onCloseAnnouncementBoard}/>
         </Box>
