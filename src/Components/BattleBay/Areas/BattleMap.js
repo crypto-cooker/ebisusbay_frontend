@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState } from 'react';
 import { resizeBattleMap, setUpMapZooming } from './mapFunctions.js'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles from './BattleBay.module.scss';
-import { FactionForm } from './battleMap/components/index.js';
+
 import { useDisclosure, Button } from '@chakra-ui/react'
 import { getMap } from "@src/core/api/RyoshiDynastiesAPICalls";
 import { getControlPoint } from "@src/core/api/RyoshiDynastiesAPICalls";
@@ -56,17 +56,9 @@ const BattleMap = ({onBack, factions=[]}) => {
   }
   const GetControlPointImage = async (id) => 
   {
-    // console.log(id);
     var data = await getControlPoint(id)
     console.log(data.leaderBoard[0].image);
     return data.leaderBoard[0].image;
-    // .then((data) => {
-    //   // setControlPoint(data);
-      
-    // }); 
-    // console.log("done");
-
-    // return "/img/battle-bay/townhall_day.png";
   }
   function wait(ms){
     var start = new Date().getTime();
@@ -126,9 +118,13 @@ const BattleMap = ({onBack, factions=[]}) => {
     // randomlyPlayExplosion();
   }, [playExlplosion]);
 
+  useEffect(() => {
+    SetUpMap();
+  }, []);
+
   const SetUpMap = async () => {
     getMap().then((data) => {
-      // console.log(data.data.data.map);
+      console.log(data);
       resizeBattleMap(7580, 5320);
       setAreas(data.data.data.map.regions[0].controlPoints.map((controlPoint, i) => (
         <area 
