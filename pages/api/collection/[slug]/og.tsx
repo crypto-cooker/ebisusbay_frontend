@@ -70,7 +70,7 @@ export default async function handler(req: NextRequest) {
   }
 
   const banner = await base64Image(getBanner(collection));
-  const avatar = await base64Image(urlify(appConfig('urls.app'), collection.metadata.avatar));
+  const avatar = !!collection.metadata.avatar ? await base64Image(urlify(appConfig('urls.app'), collection.metadata.avatar)) : null;
 
   try {
     const data = await fetch(
@@ -111,17 +111,19 @@ export default async function handler(req: NextRequest) {
               bottom: 0,
             }}
           >
-            <img
-              alt={collection.name}
-              src={avatar}
-              width='50px'
-              height='50px'
-              style={{
-                backgroundRepeat: 'no-repeat',
-                objectFit: 'contain',
-                borderRadius: 5,
-              }}
-            />
+            {!!avatar && (
+              <img
+                alt={collection.name}
+                src={avatar}
+                width='50px'
+                height='50px'
+                style={{
+                  backgroundRepeat: 'no-repeat',
+                  objectFit: 'contain',
+                  borderRadius: 5,
+                }}
+              />
+            )}
             <div
               style={{
                 fontSize: 32,
