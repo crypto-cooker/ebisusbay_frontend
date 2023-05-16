@@ -90,20 +90,15 @@ const AllianceCenter = ({onBack}) => {
         const factionResponse = await getAllFactions();
         setFactions(factionResponse);
 
-        // console.log(user.address.toLowerCase())
-        // console.log(signatureInStorage)
-
         if(hasFaction) {
           const factionTroopsData = await getFactionUndeployedArmies(user.address.toLowerCase(), signatureInStorage);
           setFactionTroops(factionTroopsData);
         }
         else
         {
-          //??
           console.log('no faction')
-          // const tr = await getProfileArmies(user.address.toLowerCase(), signatureInStorage);
-          // setWalletTroops(tr)
-          // console.log(tr) 
+          const data = await getProfileArmies(user.address.toLowerCase(), signatureInStorage);
+          setWalletTroops(data.data.data[0].troops)
         }
 
       } catch (error) {
@@ -219,6 +214,7 @@ const AllianceCenter = ({onBack}) => {
     if (signatureInStorage) {
       try {
         const playerFactionData = await getFactionsOwned(user.address.toLowerCase(), signatureInStorage);
+        
         //if the player has a faction, get the faction data
         if(playerFactionData.data.data.length > 0)
         {
@@ -230,6 +226,12 @@ const AllianceCenter = ({onBack}) => {
           setPlayerFaction(playerFactionData.data.data);
           setHasFaction(true);
           setFactionRegistered(isRegistered(playerFactionData.data.data[0].id));
+        }
+        else
+        {
+          setHasFaction(false);
+          const data = await getProfileArmies(user.address.toLowerCase(), signatureInStorage);
+          setWalletTroops(data.data.data[0].troops)
         }
       } catch (error) {
         console.log(error)
@@ -245,12 +247,7 @@ const AllianceCenter = ({onBack}) => {
   }, [selectedFaction]);
 
 
-  const firstUpdate = useRef(true);
   useLayoutEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false;
-      return;
-    }
 
     if(hasFaction) {
       setFactionDisplay(playerFaction.map((faction, index) => (
