@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Modal,
   ModalBody,
@@ -23,7 +23,7 @@ import {
   Stack,
   Divider,
   ListItem,
-  OrderedList,
+  OrderedList, Spacer, HStack, Text, Image, SimpleGrid,
 
 } from "@chakra-ui/react"
 import { Spinner } from 'react-bootstrap';
@@ -41,6 +41,9 @@ import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
 import AllianceCenterContract from "@src/Contracts/AllianceCenterContract.json";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {ArrowBackIcon} from "@chakra-ui/icons";
+import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
+import {commify} from "ethers/lib/utils";
 
 const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => {
 
@@ -219,19 +222,35 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
 
 
   return (
-    <Modal onClose={onClose} isOpen={isOpen} isCentered>
-      <ModalOverlay />
-      <ModalContent>
-        {!isLoading ? (
-          <>
-          <ModalHeader className="text-center">Edit Faction</ModalHeader>
-            <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
-            <ModalBody>
-            <Flex>
-            <FormLabel>Current Status: {isRegistered === true ? "Registered" : "Not Registered"}</FormLabel>
-            {isRegistered === false ? registerButton : null}
-            </Flex>
-            <Divider />
+    <RdModal
+      isOpen={isOpen}
+      onClose={onClose}
+      title='Edit Faction'
+    >
+      {!isLoading ? (
+        <Box pb={6}>
+          <Box mx={1} mb={4} bg='#272523' p={2} roundedBottom='md'>
+            {user.address ? (
+              <Box textAlign='center' w='full'>
+                <Flex>
+                  <Spacer />
+                  <HStack>
+                    <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>
+                      Current Status: {isRegistered === true ? "Registered" : "Not Registered"}
+                    </Text>
+                  </HStack>
+                  <Spacer />
+                </Flex>
+              </Box>
+            ) : (
+              <Box fontSize='sm' textAlign='center' w='full'>Connect wallet to purchase</Box>
+            )}
+          </Box>
+          <Box mx={8}>
+            {/*<Flex>*/}
+            {/*  {isRegistered === false ? registerButton : null}*/}
+            {/*</Flex>*/}
+            {/*<Divider />*/}
             <form onSubmit={formik.handleSubmit} style={{ marginTop: '24px'}}>
               <FormControl isRequired>
                 <FormLabel>Faction name:</FormLabel>
@@ -241,7 +260,7 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
                   value={formik.values.factionName}
                   onChange={formik.handleChange}
                   placeholder={formik.values.factionName}
-                  size='sm'/>
+                />
               </FormControl>
               <Tabs variant='unstyled' style={{ marginTop: '24px'}} defaultIndex = {factionIndex}>
                 <TabList>
@@ -260,16 +279,16 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
                   </OrderedList>
                 </TabPanels>
               </Tabs>
-            <Divider />
-                    
+              <Divider />
+
               <FormLabel style={{ display: 'flex', marginTop: '24px' }}>Addresses of Wallets or Contracts:</FormLabel>
-              
+
               <Input
                 ref={addressInput}
-                  value={addressToAdd}
-                  onChange={handleAddChange}
-                  placeholder=''
-                  size='sm'
+                value={addressToAdd}
+                onChange={handleAddChange}
+                placeholder=''
+                size='sm'
               />
 
               <Stack direction='row' spacing={4} style={{ display: 'flex', marginTop: '16px' }}>
@@ -277,44 +296,42 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
                 <Button colorScheme='red' variant='outline'onClick={RemoveAddress} className="flex-fill"> Remove address </Button>
               </Stack>
 
-              
+
               <ul id="addresseslist"></ul>
               <Flex justify={"center"} align={"center"} style={{ marginTop: '16px' }}>
                 <Box p='3'>
-                {showAlert && (
-                <Alert status='error'>
-                  <AlertIcon />
-                  <AlertTitle>{alertMessage}</AlertTitle>
-                </Alert>
-                )}
+                  {showAlert && (
+                    <Alert status='error'>
+                      <AlertIcon />
+                      <AlertTitle>{alertMessage}</AlertTitle>
+                    </Alert>
+                  )}
                 </Box>
               </Flex>
-            <Divider />
-              
+              <Divider />
+
               <Flex justifyContent={"center"} align={"center"}>
-                
+
                 <Box p='3'>
-                <Button type="submit" style={{ display: 'flex', marginTop: '12px' }} 
-                      onClick={SaveChanges} variant='outline' size='lg'
-                      >SaveChanges</Button>
+                  <Button type="submit" style={{ display: 'flex', marginTop: '12px' }}
+                          onClick={SaveChanges} variant='outline' size='lg'
+                  >Save Changes</Button>
                 </Box>
               </Flex>
               <Flex justifyContent={"right"} align={"right"}>
-                <Button type="submit" style={{ display: 'flex', marginTop: '4px' }} 
-                      onClick={DeleteFaction} variant='outline'size='xs' colorScheme='red' 
-                      >Delete Faction</Button>
+                <Button type="submit" style={{ display: 'flex', marginTop: '4px' }}
+                        onClick={DeleteFaction} variant='outline'size='xs' colorScheme='red'
+                >Delete Faction</Button>
               </Flex>
-              </form>
-            </ModalBody>
-            {/* <ModalFooter className="border-0"/>             */}
-          </>
-        ) : (
-          <Spinner animation="border" role="status" size="sm" className="ms-1">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        )}
-      </ModalContent>
-    </Modal>
+            </form>
+          </Box>
+        </Box>
+      ) : (
+        <Spinner animation="border" role="status" size="sm" className="ms-1">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      )}
+    </RdModal>
     
   )
 }
