@@ -110,7 +110,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "src/Components/BattleBay/Areas/bank/components/StakeNFTs.js", "src/components-v2/feature/ryoshi-dynasties/game/areas/landingPage/leaderBoardPage.js"  ],
+  ],
   "exclude": [
     "node_modules"
   ]

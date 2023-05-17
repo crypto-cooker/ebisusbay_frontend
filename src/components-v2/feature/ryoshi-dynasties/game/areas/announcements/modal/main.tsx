@@ -1,27 +1,16 @@
 import {useState} from "react";
-import {
-  Stack,
-  Text,
-  Button,
-  Grid,
-  GridItem,
-  Box,
-  Flex,
-  Center,
-
-} from "@chakra-ui/react"
+import {Box, Center, Grid, GridItem, Stack, Text,} from "@chakra-ui/react"
 import localFont from 'next/font/local';
 import {useAppSelector} from "@src/Store/hooks";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 
-const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' })
-const gothamXLight = localFont({ src: '../../../../../../fonts/Gotham-XLight.woff2' })
+const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
 interface Props {
-  showLeaderboard: () => void;
+  onShowLeaderboard: () => void;
 }
 
-const AnnouncementPage = ({showLeaderboard}: Props) => {
+const MainPage = ({onShowLeaderboard}: Props) => {
  
   const [isLoading, setIsLoading] = useState(false);
   const user = useAppSelector((state) => state.user);
@@ -56,7 +45,7 @@ const AnnouncementPage = ({showLeaderboard}: Props) => {
           </Center>
         </GridItem>
         
-        <GridItem pl='2'bg='#272523' area={'nav'} onClick={showLeaderboard}>
+        <GridItem pl='2'bg='#272523' area={'nav'} onClick={onShowLeaderboard}>
           View Leaderboard
         </GridItem>
         <GridItem pl='2' bg='#272523' area={'main'}>
@@ -75,4 +64,4 @@ const AnnouncementPage = ({showLeaderboard}: Props) => {
   );
 }
 
-export default AnnouncementPage;
+export default MainPage;

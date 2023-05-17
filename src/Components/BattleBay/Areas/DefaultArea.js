@@ -23,7 +23,7 @@ import React, {useEffect, useLayoutEffect, useState, useRef } from 'react';
 // import { resizeMap, resizeNewMap } from './mapFunctions.js'
 import { TransformWrapper, TransformComponent, ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
 import styles from './BattleBay.module.scss';
-import AnnouncementBoardModal from './AnnouncementBoardModal.js';
+import AnnouncementBoardModal from '../../../components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {BigNumber, Contract, ethers} from "ethers";
 

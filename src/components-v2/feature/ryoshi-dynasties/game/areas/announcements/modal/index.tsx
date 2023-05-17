@@ -1,36 +1,26 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Spinner} from 'react-bootstrap';
-import localFont from "next/font/local";
 import {ArrowBackIcon} from "@chakra-ui/icons";
-import AnnouncementPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/landingPage/announcementPage";
-import LeaderBoardPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/landingPage/leaderBoardPage";
+import MainPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/main";
+import LeaderboardPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/leaderboard";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 
-const gothamBook = localFont({ src: '../../../fonts/Gotham-Book.woff2' })
 
-const AnnouncementBoardModal = ({isOpen, onClose}) => {
- 
+interface AnnouncementBoardModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const AnnouncementBoardModal = ({isOpen, onClose}: AnnouncementBoardModalProps) => {
   const [page, setPage] = useState('info');
   const [isLoading, setIsLoading] = useState(false);
-  // const user = useSelector((state) => state.user);
-  const [profile, setProfile] = useState(null);
-
-  // const SetUp = async () => {
-  //   let profile1 = await getProfile(address);
-  //   setProfile(profile1);
-  // }
-
-  const handleClose = useCallback(() => {
-    setPage(initialPage);
-    onClose();
-  }, []);
 
   useEffect(() => {
     // SetUp();
     setPage('info');
   }, []);
 
-  const showLeaderboard = () => {
+  const handleShowLeaderboard = () => {
     console.log("showLeaderboard");
     setPage('leaderboard');
   }
@@ -46,9 +36,9 @@ const AnnouncementBoardModal = ({isOpen, onClose}) => {
       {!isLoading ? (
         <>
           {page === 'info' ? (
-            <AnnouncementPage showLeaderboard={showLeaderboard}/>
+            <MainPage onShowLeaderboard={handleShowLeaderboard}/>
           ) : (
-            <LeaderBoardPage/>
+            <LeaderboardPage />
           )}
         </>
       ) : (
