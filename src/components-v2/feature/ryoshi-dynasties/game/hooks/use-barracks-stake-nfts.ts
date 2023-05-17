@@ -53,7 +53,7 @@ const useBarracksStakeNfts = () => {
       }
 
       if (unstakedNfts.length > 0) {
-        const approval = await ApiService.withoutKey().requestBarracksStakeAuthorization(unstakedNfts, user.address);
+        const approval = await ApiService.withoutKey().ryoshiDynasties.requestBarracksStakeAuthorization(unstakedNfts, user.address);
         const stakeTx = await barracks.startStake(approval.data.stakeApproval, approval.data.signature);
         await stakeTx.wait();
       }

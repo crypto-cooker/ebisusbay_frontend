@@ -118,7 +118,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 
     queryClient.fetchQuery(
       ['BankStakedNfts', user.address],
-      () => ApiService.withoutKey().getStakedTokens(user.address!, StakedTokenType.BANK)
+      () => ApiService.withoutKey().ryoshiDynasties.getStakedTokens(user.address!, StakedTokenType.BANK)
     ).then(async (data) => {
       setStakedNfts(data);
 

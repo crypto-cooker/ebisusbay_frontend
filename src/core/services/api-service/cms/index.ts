@@ -29,6 +29,14 @@ class Cms {
   async requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string) {
     return this.ryoshiDynasties.requestBarracksStakeAuthorization(nfts, address);
   }
+
+  async getDailyRewards(address: string) {
+    return this.ryoshiDynasties.getDailyRewards(address);
+  }
+
+  async claimDailyRewards(address: string) {
+    return this.ryoshiDynasties.getDailyRewards(address);
+  }
 }
 
 export default Cms;

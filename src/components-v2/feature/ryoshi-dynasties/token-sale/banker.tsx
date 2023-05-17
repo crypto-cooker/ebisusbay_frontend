@@ -64,8 +64,8 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
       // const totalFortunePurchased = await fortuneContract.totalPurchased();
 
       const apiService = new ApiService();
-      const totalFortunePurchased = await apiService.globalTotalPurchased();
-      const userFortunePurchased = !!user.address ? await apiService.userTotalPurchased(user.address) : 0;
+      const totalFortunePurchased = await apiService.ryoshiDynasties.globalTotalPurchased();
+      const userFortunePurchased = !!user.address ? await apiService.ryoshiDynasties.userTotalPurchased(user.address) : 0;
 
       // console.log('data', {
       //   total: totalFortunePurchased,

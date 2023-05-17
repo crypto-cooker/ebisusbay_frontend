@@ -26,6 +26,24 @@ class RyoshiDynastiesRepository extends CmsRepository {
     })
     return response.data;
   }
+
+  async getDailyRewards(address: string) {
+    const response = await this.cms.get('ryoshi-dynasties/game-tokens', {
+      params: {
+        user: address,
+      }
+    })
+    return response.data;
+  }
+
+  async claimDailyRewards(address: string) {
+    const response = await this.cms.get('ryoshi-dynasties/game-tokens/daily-reward', {
+      params: {
+        user: address,
+      }
+    })
+    return response.data;
+  }
 }
 
 export default RyoshiDynastiesRepository;

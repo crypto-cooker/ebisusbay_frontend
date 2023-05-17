@@ -5,7 +5,13 @@ import Mapi from "@src/core/services/api-service/mapi";
 import SearchQuery from "@src/core/services/api-service/mapi/queries/search";
 import {OffersQueryParams} from "@src/core/services/api-service/mapi/queries/offers";
 import {Listing, OwnerListing} from "@src/core/models/listing";
-import {Api, BankStakeNft, BarracksStakeNft, StakedTokenType} from "@src/core/services/api-service/types";
+import {
+  Api,
+  BankStakeNft,
+  BarracksStakeNft,
+  RyoshiDynastiesApi,
+  StakedTokenType
+} from "@src/core/services/api-service/types";
 import {Offer} from "@src/core/models/offer";
 import {WalletsQueryParams} from "./mapi/queries/wallets";
 import WalletNft from "@src/core/models/wallet-nft";
@@ -17,10 +23,13 @@ export class ApiService implements Api {
   private cms: Cms;
   private graph: Graph;
 
+  public ryoshiDynasties: RyoshiDynastiesApi;
+
   constructor(apiKey?: string) {
     this.mapi = new Mapi(apiKey);
     this.cms = new Cms(apiKey);
     this.graph = new Graph(apiKey);
+    this.ryoshiDynasties = new RyoshiDynastiesGroup(apiKey);
   }
 
   static withKey(apiKey: string) {
@@ -64,6 +73,16 @@ export class ApiService implements Api {
 
     return await this.getOffers(query);
   }
+}
+
+class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
+  private cms: Cms;
+  private graph: Graph;
+
+  constructor(apiKey?: string) {
+    this.cms = new Cms(apiKey);
+    this.graph = new Graph(apiKey);
+  }
 
   async globalTotalPurchased() {
     return this.graph.globalTotalPurchased();
@@ -91,5 +110,12 @@ export class ApiService implements Api {
   async requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string) {
     return this.cms.requestBarracksStakeAuthorization(nfts, address);
   }
-}
 
+  async getDailyRewards(address: string) {
+    return this.cms.getDailyRewards(address);
+  }
+
+  async claimDailyRewards(address: string) {
+    return this.cms.claimDailyRewards(address);
+  }
+}

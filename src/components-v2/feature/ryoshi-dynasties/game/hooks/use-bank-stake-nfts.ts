@@ -52,7 +52,7 @@ const useBankStakeNfts = () => {
       }
 
       if (unstakedNfts.length > 0) {
-        const approval = await ApiService.withoutKey().requestBankStakeAuthorization(unstakedNfts, user.address);
+        const approval = await ApiService.withoutKey().ryoshiDynasties.requestBankStakeAuthorization(unstakedNfts, user.address);
         const stakeTx = await bank.startStake(approval.data.stakeApproval, approval.data.signature);
         await stakeTx.wait();
       }

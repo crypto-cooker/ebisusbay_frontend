@@ -41,6 +41,7 @@ import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSig
 import {appConfig} from "@src/Config";
 import GameRewards from "@src/Contracts/Resources.json";
 import AllianceCenter from "./AllianceCenter";
+import DailyCheckinModal from "@src/components-v2/feature/ryoshi-dynasties/game/modals/daily-checkin";
 
 const DefaultArea = ({onChange}) => {
 
@@ -73,6 +74,7 @@ const DefaultArea = ({onChange}) => {
   const { isOpen: isOpenBuildings, onOpen: onOpenBuildings, onClose: onCloseBuildings } = useDisclosure();
   const { isOpen: isOpenAnnouncementBoard, onOpen: onOpenAnnouncementBoard, onClose: onCloseAnnouncementBoard } = useDisclosure();
   const { isOpen: isOpenAllianceCenter, onOpen: onOpenAllianceCenter, onClose: onCloseAllianceCenter } = useDisclosure();
+  const { isOpen: isOpenDailyCheckin, onOpen: onOpenDailyCheckin, onClose: onCloseDailyCheckin } = useDisclosure();
 
   useEffect(() => {
     if (transformComponentRef.current) {
@@ -472,7 +474,7 @@ const DefaultArea = ({onChange}) => {
       let nfts = await NextApiService.getWallet(user.address, {
         collection: '0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5',
       });
-      const fortuneAndMitama = await ApiService.withoutKey().getErc20Account(user.address)
+      const fortuneAndMitama = await ApiService.withoutKey().ryoshiDynasties.getErc20Account(user.address)
 
       if (nfts.data.length > 0) {
         setKoban(nFormatter(nfts.data[0].balance, 1));
@@ -690,11 +692,12 @@ const DefaultArea = ({onChange}) => {
           fontSize={{base: 'm', sm: 'm'}}
           ref={buildingButtonRef} 
           hideIcon={true}
-          onClick={onOpenAllianceCenter}
+          onClick={onOpenDailyCheckin}
         >
           Claim Daily Reward
         </RdButton>
         <AnnouncementBoardModal isOpen={isOpenAnnouncementBoard} onClose={onCloseAnnouncementBoard}/>
+        <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin}/>
         </Box>
     </Flex>
   </Box>
