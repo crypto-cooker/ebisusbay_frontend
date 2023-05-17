@@ -466,7 +466,7 @@ const Index = function () {
 
               <div className="d-flex">
                 <div className="flex-fill">
-                  <div className="text-muted">$Fortune Balance</div>
+                  <div className="text-muted">$Fortune Presale</div>
                   <div>
                     {!user.connectingWallet ? (
                       <span className="d-wallet-value">
@@ -492,7 +492,7 @@ const Index = function () {
                 </div>
                 <div className="my-auto">
                   <PrimaryButton onClick={handleBuyFortune}>
-                    Buy $Fortune
+                    Claim $Fortune
                   </PrimaryButton>
                 </div>
               </div>
