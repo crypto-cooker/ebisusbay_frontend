@@ -24,6 +24,7 @@ import React, {useEffect, useLayoutEffect, useState, useRef } from 'react';
 import { TransformWrapper, TransformComponent, ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
 import styles from './BattleBay.module.scss';
 import AnnouncementBoardModal from '../../../components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal';
+import AllianceCenterModal from './AllianceCenterModal';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {BigNumber, Contract, ethers} from "ethers";
 
@@ -39,6 +40,7 @@ import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSig
 //contracts
 import {appConfig} from "@src/Config";
 import GameRewards from "@src/Contracts/Resources.json";
+import AllianceCenter from "./AllianceCenter";
 
 const DefaultArea = ({onChange}) => {
 
@@ -64,11 +66,13 @@ const DefaultArea = ({onChange}) => {
   const [initialPositionX, setInitialPositionX] = useState(0);
   const [initialPositionY, setInitialPositionY] = useState(0);
   const [dailyRewardClaimed, setDailyRewardClaimed] = useState(false);
+  const [allianceCenterOpen, setAllianceCenterOpen] = useState(false);
 
   const buildingButtonRef = React.useRef()
   const announcementBoardRef = React.useRef()
   const { isOpen: isOpenBuildings, onOpen: onOpenBuildings, onClose: onCloseBuildings } = useDisclosure();
   const { isOpen: isOpenAnnouncementBoard, onOpen: onOpenAnnouncementBoard, onClose: onCloseAnnouncementBoard } = useDisclosure();
+  const { isOpen: isOpenAllianceCenter, onOpen: onOpenAllianceCenter, onClose: onCloseAllianceCenter } = useDisclosure();
 
   useEffect(() => {
     if (transformComponentRef.current) {
@@ -188,6 +192,17 @@ const DefaultArea = ({onChange}) => {
                       'bank_label' : {height: 456, width: 579, top: '7%', left: '33%'},
                     }
   const buttonsNames = ["bank", "alliancecenter", "torii", "moongate", "barracks", "announcement", "fishmarket","boat", "academy", "tavern", "townhall"];
+  
+  const OpenAllianceCenter = () => {
+    setElementToZoomTo('alliancecenter'); 
+    setAllianceCenterOpen(true);
+  }
+  const CloseAllianceCenter = () => {
+    setZoomState(false);
+    setAllianceCenterOpen(false);
+    setElementToZoomTo('fancyMenu'); 
+    // resetTransform();
+  }
 
 //#region all resizing stuff
 
@@ -512,7 +527,6 @@ const DefaultArea = ({onChange}) => {
             {/* <button onClick={zoomToImage}>Zoom to 1</button> */}
           {/* <Controls {...utils} /> */}
           <TransformComponent>
-          
             <img 
             src='/img/battle-bay/mapImages/background.png'
             // src="/img/battle-bay/newMap.png" 
@@ -531,7 +545,8 @@ const DefaultArea = ({onChange}) => {
             </map>
 
             <div id="alliancecenter" className={[styles.enlarge]} style={{position:"absolute", marginTop: allianceCenterTop, marginLeft: allianceCenterLeft, zIndex:"9"}} 
-            onClick={() => onChange('allianceCenter')}
+            // onClick={() => onChange('allianceCenter')}
+            onClick={() => OpenAllianceCenter()}
             >
               <img src='/img/battle-bay/mapImages/alliancecenter_day.png' width={allianceCenterWidth} height={allianceCenterHeight} /> 
               <div className={[styles.enlarge]} style={{position:"absolute", marginTop: alliancecenter_labelTop, marginLeft: alliancecenter_labelLeft, zIndex:"20"}}>
@@ -634,8 +649,9 @@ const DefaultArea = ({onChange}) => {
         </React.Fragment>
         )}
       </TransformWrapper>
+      
       </AspectRatio>
-    
+      {allianceCenterOpen ? <></> : <>
   <Box  position='absolute' top={0} left={0} p={4}  pointerEvents='none' >
     <Flex direction='row' justify='space-between' >
       <Box mb={4} bg='#272523' p={2} rounded='md' marginTop='150%' >
@@ -674,12 +690,19 @@ const DefaultArea = ({onChange}) => {
           fontSize={{base: 'm', sm: 'm'}}
           ref={buildingButtonRef} 
           hideIcon={true}
-          onClick={onOpenBuildings}
+          onClick={onOpenAllianceCenter}
         >
           Claim Daily Reward
         </RdButton>
         <AnnouncementBoardModal isOpen={isOpenAnnouncementBoard} onClose={onCloseAnnouncementBoard}/>
         </Box>
+    </Flex>
+  </Box>
+  </>}
+
+  <Box  position='absolute' top={0} left={0} p={4} >
+    <Flex direction='row' justify='space-between' >
+      {allianceCenterOpen ? <AllianceCenterModal closeAllianceCenter={() => CloseAllianceCenter()}/> : <></>}
     </Flex>
   </Box>
 
