@@ -137,6 +137,7 @@ const BattleMap = ({onBack, factions=[]}) => {
           coords={controlPoint.coordinates} 
           shape="circle" 
           alt= {controlPoint.name}
+          className='cursor-pointer'
           />
         )))
       // map height and width, may need to be changed in the future
