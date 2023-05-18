@@ -668,7 +668,7 @@ const DefaultArea = ({onChange}) => {
               <Text align='left'>Mitama : {!resourcesAcquired ? <Spinner size='sm'/> :mitama}</Text>
             </HStack>
             <HStack>
-              <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
+              <Image borderRadius='10' src='/img/battle-bay/announcementBoard/Koban.svg' alt="walletIcon" boxSize={6}/>
               <Text align='left'>Koban : {!resourcesAcquired ? <Spinner size='sm'/> : koban}</Text>
             </HStack>
           </VStack>

@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {Box, Center, Grid, GridItem, Stack, Text,} from "@chakra-ui/react"
+import {Box, Center, Grid, GridItem, Stack, Text,Image, VStack, HStack, Flex, Spacer} from "@chakra-ui/react"
 import localFont from 'next/font/local';
 import {useAppSelector} from "@src/Store/hooks";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
@@ -21,46 +21,106 @@ const MainPage = ({onShowLeaderboard}: Props) => {
   }
 
   return (
-    <Stack spacing={3} p={4}>
-      <Grid
-        templateAreas={`"nav header"
-                        "nav main"
-                        `}
-        gridTemplateRows={'50px 1fr 30px'}
-        gridTemplateColumns={'150px 1fr'}
-        h='200px'
-        gap='1'
-        color='whiteAlpha.800'
-      >
-        <GridItem pl='2'  area={'header'}>
-          <Center>
-          <RdButton
-            w='250px'
-            fontSize={{base: 'm', sm: 'm'}}
-            hideIcon={true}
-            onClick={claimReward}
-          >
-            {dailyRewardClaimed ? 'Return Tomorrow!' : 'Claim Daily Reward!'}
-          </RdButton>
-          </Center>
-        </GridItem>
-        
-        <GridItem pl='2'bg='#272523' area={'nav'} onClick={onShowLeaderboard}>
-          View Leaderboard
-        </GridItem>
-        <GridItem pl='2' bg='#272523' area={'main'}>
-          <Text className={gothamBook.className} fontSize={{ base: '12px', md: '16px' }} >
-            <Box>
-              Announcements:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna 
-          aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-          "
-        </Box>    
-          </Text>
-        </GridItem>
-      </Grid>
+    <VStack padding='2'>
+      <Box 
+       bg='#272523' 
+       rounded='md' 
+      //  backgroundImage="/img/battle-bay/announcementBoard/seashrineAd.png"
+       minWidth='100%'
+       minHeight='100%'
+       position='relative'
+       >
+      {/* <Image position='absolute' src="/img/battle-bay/announcementBoard/seashrineAd.png"/> */}
+      <Image  src="/img/battle-bay/announcementBoard/seashrineAd.png" w='100%'/>
+      <Text 
+        marginLeft={{base: '10%', sm: '10%'}}
+        marginTop={{base: '-20%', sm: '-17%'}}
+        fontSize={{ base: '24px', md: '24px' }} 
+        position='absolute' 
+        >SEASHRINE</Text>
+      <Text 
+        marginLeft={{base: '10%', sm: '10%'}}
+        marginTop={{base: '-10%', sm: '-12%'}}
+        fontSize={{ base: '12px', md: '12px' }} 
+        position='absolute' 
+        >RELOADED</Text>
+      <Text 
+        marginLeft={{base: '10%', sm: '50%'}}
+        marginTop={{base: '-10%', sm: '-17%'}}
+        fontSize={{ base: '12px', md: '16px' }} 
+        position='absolute' 
+        >Join in the quest for sea treasures</Text>
+        <RdButton
+          position='absolute' 
+          marginLeft={{base: '85%', sm: '60%'}}
+          marginTop={{base: '-10%', sm: '-12%'}}
+          w={{base: '150px', sm: '150px'}}
+          fontSize={{base: 'sm', sm: 'sm'}}
+          hideIcon={true}
+          onClick={(e) => {
+            e.preventDefault();
+            window.location.href='https://seashrine.io/';
+            }}
+        >
+          Visit Seashrine
+        </RdButton>
+      </Box> 
 
-    </Stack>
+      <HStack justify='space-between' w='100%'>
+        <Flex bg='#272523' rounded='md' 
+           w={{base: '150px', sm: '270px'}}
+           h={{base: '165px', sm: '165px'}}>
+          <VStack padding='2' w='100%' >
+            <Text className={gothamBook.className} fontSize={{ base: '12px', md: '24px' }}>Information</Text>
+            <Text className={gothamBook.className} fontSize={{ base: '8px', md: '16px' }}>How To Play?</Text>
+            <Text className={gothamBook.className} fontSize={{ base: '8px', md: '16px' }}>Want to place an ad?</Text>
+            <Text className={gothamBook.className} fontSize={{ base: '8px', md: '16px' }}>About Ebisus's Bay</Text>
+          </VStack>
+        </Flex> 
+        <Flex>
+
+        <VStack w='100%' >
+          <Flex bg='#272523' rounded='md'
+          w={{base: '150px', sm: '300px'}}
+          h={{base: '125px', sm: '100px'}}
+          >
+            <VStack padding='2' w='100%' >
+              <Text textAlign='center'
+                className={gothamBook.className} 
+                fontSize={{ base: '12px', md: '16px' }}
+                > Claim Checkin Rewards</Text>
+              <Spacer h='4'/>
+              <RdButton
+                w={{base: '125px', sm: '250px'}}
+                fontSize={{base: 'sm', sm: 'md'}}
+                hideIcon={true}
+                onClick={claimReward}
+              >
+                {dailyRewardClaimed ? 'Return Tomorrow!' : 'Claim Daily Reward!'}
+              </RdButton>
+                {/* <Image src="/img/battle-bay/announcementBoard/Koban.svg"> </Image> */}
+            </VStack>
+          </Flex> 
+
+          <Spacer h='2'/>
+
+          <Flex bg='#272523' rounded='md'
+          w={{base: '150px', sm: '300px'}}
+          h={{base: '30px', sm: '50px'}}
+          >
+            <VStack padding='2' w='100%' 
+            onClick={onShowLeaderboard}>
+              <Text 
+                textAlign='center'
+                className={gothamBook.className} 
+                fontSize={{ base: '12px', md: '16px' }}
+                > View Leaderboards</Text>
+            </VStack>
+          </Flex> 
+        </VStack>
+        </Flex>
+      </HStack>
+    </VStack>
   );
 }
 
