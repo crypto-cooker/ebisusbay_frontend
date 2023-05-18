@@ -373,13 +373,13 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
             {status === statuses.SOLD_OUT && <Text align="center" mt={2}>MINT HAS ENDED</Text>}
             {status === statuses.EXPIRED && <Text align="center" mt={2}>MINT HAS ENDED</Text>}
 
-            {status === statuses.LIVE && drop.end && (
+            {status === statuses.LIVE && !!drop.end && (
               <div className="me-4">
                 <Heading as="h6" size="sm" className="mb-1">{status === statuses.EXPIRED ? <>Minting Ended</> : <>Minting Ends</>}</Heading>
                 <Heading as="h3" size="md">{convertTime(drop.end)}</Heading>
               </div>
             )}
-            {status === statuses.NOT_STARTED && drop.start && (
+            {status === statuses.NOT_STARTED && !!drop.start && (
               <div className="mt-4 text-center">
                 <Heading as="h6" size="sm" className="mb-1">Minting Starts</Heading>
                 <Heading as="h3" size="md">
@@ -388,7 +388,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
               </div>
             )}
             {status === statuses.NOT_STARTED && !drop.start && (
-              <div className="me-4 text-center">
+              <div className="me-4 mt-4 text-center">
                 <Heading as="h6" size="sm" className="mb-1">Minting Starts</Heading>
                 <Heading as="h3" size="md">TBA</Heading>
               </div>
