@@ -3,10 +3,11 @@ import { resizeBattleMap, setUpMapZooming } from './mapFunctions.js'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles from './BattleBay.module.scss';
 
-import { useDisclosure, Button } from '@chakra-ui/react'
+import { useDisclosure, Button, AspectRatio, Box, Flex } from '@chakra-ui/react'
 import { getMap } from "@src/core/api/RyoshiDynastiesAPICalls";
 import { getControlPoint } from "@src/core/api/RyoshiDynastiesAPICalls";
 import ControlPointForm from './battleMap/components/ControlPointForm.js';
+import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 
 const BattleMap = ({onBack, factions=[]}) => {
 
@@ -16,6 +17,7 @@ const BattleMap = ({onBack, factions=[]}) => {
   const { height, width: windowWidth } = useWindowDimensions();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [controlPoint, setControlPoint] = useState([], () => {});
+  const [isLoading, setIsLoading] = useState(false);
   
   const imageRef1 = useRef();
   const imageRef2 = useRef();
@@ -102,6 +104,9 @@ const BattleMap = ({onBack, factions=[]}) => {
       setControlPoint(data);
   });
   }
+  useEffect(() => {
+    console.log(isLoading);
+  }, [isLoading]);
 
   useEffect(() => {
     SetUpMap();
@@ -180,11 +185,13 @@ const BattleMap = ({onBack, factions=[]}) => {
 
   <ControlPointForm isOpen={isOpen} onClose={onClose} controlPoint={controlPoint} factions={factions} refreshControlPoint={RefreshControlPoint}/>
 
-  <button className="btn" onClick={onBack}>Back to Village Map</button>
-  <p className="title text-center">Select a region to deploy troops to</p>
+  <AspectRatio ratio={2880/1620} overflow='visible'>
 
-  <div className="container">
-    <TransformWrapper>
+    <TransformWrapper
+      centerOnInit={true}
+      disablePadding={true}
+      initialScale={1.25}
+      >
       <TransformComponent>
         <img 
           src="/img/battle-bay/opMap.png" 
@@ -202,7 +209,25 @@ const BattleMap = ({onBack, factions=[]}) => {
           {explosion}
         </TransformComponent>
       </TransformWrapper>
-    </div>
+      </AspectRatio>
+
+    <Box  position='absolute' top={0} left={0} p={4}  pointerEvents='none' >
+    <Flex direction='row' justify='space-between' >
+      <Box mb={4} bg='#272523' p={2} rounded='md' 
+      marginTop={{base: '125%', sm: '50%'}} 
+      >
+        <RdButton
+          w={{base: '150px', sm: '200px'}}
+          pointerEvents='auto'
+          fontSize={{base: '12px', sm: '16px'}}
+          hideIcon={true}
+          onClick={onBack}
+        >
+          Back to Village
+        </RdButton>
+        </Box>
+    </Flex>
+  </Box>
   </section>
   )
 };

@@ -64,8 +64,8 @@ const DefaultArea = ({onChange}) => {
   });
 
   const [sizeMultiplier, setSizeMultiplier] = useState(1);
-  const [initialPositionX, setInitialPositionX] = useState(0);
-  const [initialPositionY, setInitialPositionY] = useState(0);
+  const [initialPositionX, setInitialPositionX] = useState(-906);
+  const [initialPositionY, setInitialPositionY] = useState(-414);
   const [dailyRewardClaimed, setDailyRewardClaimed] = useState(false);
   const [allianceCenterOpen, setAllianceCenterOpen] = useState(false);
 
@@ -353,7 +353,6 @@ const DefaultArea = ({onChange}) => {
   useEffect(() => {
     if(sizeMultiplier == 1) return;
 
-    // setElementToZoomTo('bank');
     // resizeMap();
     setAllianceCenterWidth( buildings.allianceCenter.width * sizeMultiplier);
     setAllianceCenterHeight( buildings.allianceCenter.height * sizeMultiplier);
@@ -508,21 +507,22 @@ const DefaultArea = ({onChange}) => {
     <section>
        <Box
         position='relative'
-        bg='red.800'
+        // bg='red.800'
         h='calc(100vh - 74px)'
       >
       <AspectRatio ratio={2880/1620} overflow='visible'>
-
-      <TransformWrapper
+      
+      <TransformWrapper 
+        
         // limitToBounds={true}
         ref={transformComponentRef}
         onZoom={changeCanvasState}
         onPinching={changeCanvasState}
         onPinchingStop={changeCanvasState}
         onPanningStop={changeCanvasState}
-        // initialPositionX={initialPositionX}
-        // initialPositionY={initialPositionY}
-        initialScale={1}
+        centerOnInit={true}
+        disablePadding={true}
+        initialScale={1.5}
         > 
         {(utils) => (
           <React.Fragment>
@@ -531,19 +531,8 @@ const DefaultArea = ({onChange}) => {
           <TransformComponent>
             <img 
             src='/img/battle-bay/mapImages/background.png'
-            // src="/img/battle-bay/newMap.png" 
             useMap="#image-map" className={`${styles.mapImageArea}`} id="fancyMenu"/>
             <map name="image-map">
-              {/* <area onClick={() => onChange('townHall')} alt="Town Hall" title="Town Hall" coords="793,434,1259,861" shape="rect"/> */}
-              
-                {/* <area onClick={() => onChange('barracks')} alt="Barracks" title="Barracks" coords="194,622,568,968" shape="rect"/>
-                <area onClick={() => onChange('')} alt="Town Hall" title="Town Hall" coords="793,434,1259,861" shape="rect"/>
-                <area onClick={() => onChange('tavern')} alt="Tavern" title="Tavern" coords="377,255,763,531" shape="rect"/>
-                <area onClick={() => onChange('allianceCenter')} alt="Alliance Center" title="Alliance Center" coords="1044,45,1342,414" shape="rect"/>
-                <area onClick={() => onChange('bank')} alt="Bank" title="Bank" coords="1367,283,1808,575" shape="rect"/>
-                <area onClick={() => onChange('academy')} alt="Academy" title="Academy" coords="2118,246,2523,565" shape="rect"/>
-                <area onClick={() => onChange('battleMap')} alt="Fish Market" title="Fish Market" coords="1971,974,2487,1361" shape="rect"/>
-                <area onClick={() => onChange('announcementBoard')} alt="Announcement Board" title="Announcement Board" coords="1813,494,2073,798" shape="rect"/> */}
             </map>
 
             <div id="alliancecenter" className={[styles.enlarge]} style={{position:"absolute", marginTop: allianceCenterTop, marginLeft: allianceCenterLeft, zIndex:"9"}} 
@@ -653,6 +642,7 @@ const DefaultArea = ({onChange}) => {
       </TransformWrapper>
       
       </AspectRatio>
+
       {allianceCenterOpen ? <></> : <>
   <Box  position='absolute' top={0} left={0} p={4}  pointerEvents='none' >
     <Flex direction='row' justify='space-between' >
