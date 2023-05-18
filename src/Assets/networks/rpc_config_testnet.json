@@ -3431,6 +3431,29 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Cronos Towers",
+      "slug": "cronos-towers",
+      "multiToken": false,
+      "address": "0x8aB4457eE1D5E8eAcB8716a4A183E6FF21321bC4",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Cronos Towers is a NFT collection of 1234 unique towers made with AI Midjourney + Scenario.\n\nOur aim is to create more awareness about capabilities of new AIs while providing various utilities to holders of our NFTs. Such as, staking, free AI subsciptions, AI guides, secondary profits, P2E game, Metaverse experience and more.",
+        "avatar": "/img/collections/cronos-towers/avatar.webp",
+        "card": "/img/collections/cronos-towers/card.webp",
+        "banner": "/img/collections/cronos-towers/banner.webp",
+        "website": "https://cronostowers.online/",
+        "twitter": "https://twitter.com/cro_towers",
+        "discord": "https://discord.gg/crotowers",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
     }
   ],
   "drops": [
@@ -8273,6 +8296,45 @@
         "banner": "/img/collections/the-pogo/banner.webp",
         "avatar": "/img/collections/the-pogo/avatar.webp",
         "preview": "/img/collections/the-pogo/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
+      }
+    },
+    {
+      "id": 172,
+      "slug": "cronos-towers",
+      "title": "Cronos Towers",
+      "subtitle": "Cronos Towers is a NFT collection of 1234 unique towers made with AI Midjourney + Scenario.\n\nOur aim is to create more awareness about capabilities of new AIs while providing various utilities to holders of our NFTs. Such as, staking, free AI subsciptions, AI guides, secondary profits, P2E game, Metaverse experience and more.",
+      "description": "UTILITIES\n\nAccess to our holder-exclusive AI Center Category in our Discord, which provides educational resources, news related to AI, and comparisons among similar AI bots. The AI Center will also offer subscription accounts and integrate AI technologies into the Discord, providing members of the community with access to AI-powered tools and features.\n\nNFT staking service for the first 6 months, with a reward pool of more than 5,000 CRO according to our mint progress. Every owner will be able to stake their NFTs.\n\nArt contests every month, with prizes and a chance for holders to showcase their creative skills. The best pieces of art contest entries will be a part of a special NFT collection and distributed among Royal holders who hold more than 15 NFTs.\n\nExclusive rewards for our top holders, including gift Gen2 NFTs, passive income, and more. Nobles (who hold 30+ NFTs) will receive 5x gift Gen2 NFTs + 1000 CRO and %50 of secondary profits will be distributed among them.\n\nDevelopment of a P2E tower defense game with extra benefits for our NFT holders.\n\nA metaverse experience for our NFT holders, furthermore our goal is to create a vibrant and dynamic community that extends beyond the ownership of our NFTs and provides real value to our holders.",
+      "author": {
+        "name": "Cronos Towers",
+        "website": "https://cronostowers.online/",
+        "twitter": "https://twitter.com/cro_towers",
+        "discord": "https://discord.gg/crotowers"
+      },
+      "address": "0x8aB4457eE1D5E8eAcB8716a4A183E6FF21321bC4",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 60,
+      "totalSupply": 1234,
+      "cost": "340",
+      "memberCost": "290",
+      "whitelistCost": "290",
+      "foundersOnly": false,
+      "start": 1684444375000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/cronos-towers/drop.webp",
+        "banner": "/img/collections/cronos-towers/banner.webp",
+        "avatar": "/img/collections/cronos-towers/avatar.webp",
+        "preview": "/img/collections/cronos-towers/card.webp"
       },
       "verification": {
         "doxx": false,
