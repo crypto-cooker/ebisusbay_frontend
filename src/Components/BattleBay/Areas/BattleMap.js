@@ -8,9 +8,12 @@ import { getMap } from "@src/core/api/RyoshiDynastiesAPICalls";
 import { getControlPoint } from "@src/core/api/RyoshiDynastiesAPICalls";
 import ControlPointForm from './battleMap/components/ControlPointForm.js';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
+import ImageService from '@src/core/services/image';
+// ImageService.translate('/path/to/battlemap.png').custom({width: 100, height: 100})
 
 const BattleMap = ({onBack, factions=[]}) => {
 
+  ImageService.translate('/img/battle-bay/opMap.png').fixedWidth(100, 100);
   const mapRef = useRef();
   const  [flagSize, setFlagSize] = useState("1px");
   const [buildingSize, setBuildingSize] = useState("50px");
