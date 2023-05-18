@@ -39,7 +39,7 @@ import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSig
 
 //contracts
 import {appConfig} from "@src/Config";
-import GameRewards from "@src/Contracts/Resources.json";
+import Resources from "@src/Contracts/Resources.json";
 import AllianceCenter from "./AllianceCenter";
 import DailyCheckinModal from "@src/components-v2/feature/ryoshi-dynasties/game/modals/daily-checkin";
 
@@ -134,8 +134,8 @@ const DefaultArea = ({onChange}) => {
           timestamp: timestamp, 
                           };
 
-        const gameRewardsContract = new Contract(config.contracts.gameRewards, GameRewards, user.provider.getSigner());
-        const tx = await gameRewardsContract.mintWithSig(claimRewardsTuple, sig);
+        const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
+        const tx = await resourcesContract.mintWithSig(claimRewardsTuple, sig);
         const receipt = await tx.wait();
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
 
