@@ -58,7 +58,9 @@ const RdButton = (props: RdButtonProps) => {
         pe={props.stickyIcon ? '6px' : '0px'}
         className={gothamMedium.className}
       >
-        {props.children}
+        <Box px={3}>
+          {props.children}
+        </Box>
       </Box>
     </Box>
   )

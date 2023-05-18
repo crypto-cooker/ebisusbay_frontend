@@ -115,7 +115,7 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
     return this.cms.getDailyRewards(address);
   }
 
-  async claimDailyRewards(address: string) {
-    return this.cms.claimDailyRewards(address);
+  async claimDailyRewards(address: string, signature: string) {
+    return this.cms.claimDailyRewards(address, signature);
   }
 }

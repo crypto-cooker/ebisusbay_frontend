@@ -34,8 +34,8 @@ class Cms {
     return this.ryoshiDynasties.getDailyRewards(address);
   }
 
-  async claimDailyRewards(address: string) {
-    return this.ryoshiDynasties.getDailyRewards(address);
+  async claimDailyRewards(address: string, signature: string) {
+    return this.ryoshiDynasties.claimDailyRewards(address, signature);
   }
 }
 

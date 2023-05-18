@@ -39,5 +39,8 @@ export const ryoshiConfig = {
       maxSlots: 5,
       bonusTroops: 2
     }
+  },
+  rewards: {
+    daily: [1, 2, 3, 5, 8, 13, 21]
   }
 }
