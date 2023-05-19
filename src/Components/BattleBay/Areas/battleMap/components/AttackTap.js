@@ -40,6 +40,9 @@ import Battlefield from "@src/Contracts/Battlefield.json";
 import Resources from "@src/Contracts/Resources.json";
 import {io} from "socket.io-client";
 
+import localFont from 'next/font/local';
+const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
+
 const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
   const config = appConfig();
@@ -50,6 +53,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   const attackConclusion = useRef();
   const battleLog = useRef();
   const battleOutcome = useRef();
+  const battleContext = useRef();
   const attackerOutcome = useRef();
   const defenderOutcome = useRef();
   const battleLogText = useRef();
@@ -282,7 +286,8 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
     }
 
     battleLogText.current.innerHTML = outcomeLog;
-    battleOutcome.current.textContent = attackersAlive>0 ? "You won!" : "You lost!";
+    battleOutcome.current.textContent = attackersSlain>defendersSlain ? "Victory!" : "Defeat!";
+    battleContext.current.textContent = attackersSlain>defendersSlain ? "You slew more defenders than you lost" : "The defenders slew more of your troops than you slew of theirs";
     attackerOutcome.current.textContent = "lost "+attackersSlain+"/"+ Number(attackerTroops)+" troops";
     defenderOutcome.current.textContent = "lost "+defendersSlain+"/"+defenderTroops+" troops";
     
@@ -541,18 +546,28 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
         <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
           <HStack justify='space-between'>
             <Box w='45'>
-              <Text textAlign='left' fontSize={'24px'}>{dataForm.attackersFaction}</Text>
-              <Text textAlign='left' fontSize={'16px'}>Attack Strength: {attackerTroops}</Text>
+              <Text textAlign='left' 
+              fontSize={{base: '16px', sm: '24px'}}
+              >{dataForm.attackersFaction}</Text>
+              <Text textAlign='left' 
+              fontSize={{base: '12px', sm: '16px'}}
+              >Attack Strength: {attackerTroops}</Text>
               {/* {isOwnerOfFaction 
               ? <Text textAlign='left' fontSize={'16px'}>Troops Delegated: {factionTroops}</Text> : ""} */}
             </Box>
             <Box  w='10'>
-              <Text textAlign='left' fontSize={'16px'}>VS</Text>
+              <Text textAlign='left' 
+              fontSize={{base: '12px', sm: '16px'}}
+              >VS</Text>
             </Box>
 
             <Box  w='45'>
-              <Text textAlign='right' fontSize={'24px'}>{dataForm.defendersFaction}</Text>
-              <Text textAlign='right' fontSize={'16px'}>Troops stationed: {defenderTroops}</Text>
+              <Text textAlign='right' 
+              fontSize={{base: '16px', sm: '24px'}}
+              >{dataForm.defendersFaction}</Text>
+              <Text textAlign='right' 
+              fontSize={{base: '12px', sm: '16px'}}
+              >Troops stationed: {defenderTroops}</Text>
             </Box>
           </HStack>
           </Box>
@@ -605,7 +620,20 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
       <div ref={attackConclusion} style={{ display: 'none'}}>
         <div class="container">
-          <Heading ref={battleOutcome} >Victory!</Heading>
+          <VStack spacing='2'>
+            <Text 
+              fontSize={{base: '28px', sm: '28px'}}
+              className={gothamBook.className}
+              ref={battleOutcome}
+              as='b'
+              >Victory!</Text>
+            <Text 
+              fontSize={{base: '14px', sm: '14px'}}
+              className={gothamBook.className}
+              ref={battleContext} 
+              as='i'
+              >The defenders slew more of your troops than you slew of theirs</Text>
+          </VStack>
           <Grid
             templateAreas={`"att def"`}
             gridTemplateColumns={'1fr 1fr'}

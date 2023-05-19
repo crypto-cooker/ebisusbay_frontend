@@ -13,7 +13,6 @@ import ImageService from '@src/core/services/image';
 
 const BattleMap = ({onBack, factions=[]}) => {
 
-  ImageService.translate('/img/battle-bay/opMap.png').fixedWidth(100, 100);
   const mapRef = useRef();
   const  [flagSize, setFlagSize] = useState("1px");
   const [buildingSize, setBuildingSize] = useState("50px");
@@ -197,7 +196,8 @@ const BattleMap = ({onBack, factions=[]}) => {
       >
       <TransformComponent>
         <img 
-          src="/img/battle-bay/opMap.png" 
+          // src="/img/battle-bay/opMap.png" 
+          src={ImageService.translate('/img/battle-bay/opMap.png').custom({width: '100px', height: 10})}
           useMap="#image-map" 
           width="100%" 
           className={`${styles.mapImageArea}`}
