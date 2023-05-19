@@ -306,6 +306,12 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
       return;
     }
 
+    if(dataForm.attackersFaction == dataForm.defendersFaction){
+      setAlertMessage("Cannot attack your own faction")
+      setShowAlert(true)
+      return;
+    }
+
     if(attackerTroopsAvailable <= 1)
     {
       setAlertMessage("You must have at least 2 troops to attack")
