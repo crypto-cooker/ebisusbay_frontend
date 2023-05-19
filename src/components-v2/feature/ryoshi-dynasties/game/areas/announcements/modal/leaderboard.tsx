@@ -49,7 +49,7 @@ const LeaderBoardPage = () => {
     if(!isRetrievingLeaderboard)
     {
       GetPreviousGameDates();
-      if(regions.controlPoints !== undefined) {
+      if(regions !== undefined) {
         setAttackerOptions(regions.controlPoints.map((point, index) => (
           <option 
             value={point.name}
