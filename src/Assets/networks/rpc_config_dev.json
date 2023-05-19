@@ -20533,6 +20533,31 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "CROnk OG",
+      "slug": "cronk-og",
+      "multiToken": false,
+      "address": "0xdeb93385ab6cCD19210b447841F25c292DdD5E26",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "$CROnk is a meme-packed, fun-loving project on the Cronos chain. With community at its heart, it offers cool NFT mints and innovative crypto experiences, all wrapped up in a dank meme culture that everyone can enjoy. $CROnk is not just a token, it's a lifestyle.",
+        "avatar": "/img/collections/cronk-og/avatar.webp",
+        "card": "/img/collections/cronk-og/card.webp",
+        "banner": "/img/collections/cronk-og/banner.webp",
+        "website": "https://Cronknft.com/",
+        "twitter": "https://twitter.com/CROnkcroe",
+        "discord": "https://discord.gg/nyYDGnNF",
+        "medium": "https://medium.com/@cronktoshicronkamoto",
+        "telegram": "https://t.me/+1fktS-V0Tbw4ZTAx",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
     }
   ],
   "drops": [
