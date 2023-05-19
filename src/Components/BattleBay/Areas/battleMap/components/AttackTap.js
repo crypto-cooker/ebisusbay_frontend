@@ -286,8 +286,8 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
     }
 
     battleLogText.current.innerHTML = outcomeLog;
-    battleOutcome.current.textContent = attackersSlain>defendersSlain ? "Victory!" : "Defeat!";
-    battleContext.current.textContent = attackersSlain>defendersSlain ? "You slew more defenders than you lost" : "The defenders slew more of your troops than you slew of theirs";
+    battleOutcome.current.textContent = attackersSlain<defendersSlain ? "Victory!" : "Defeat!";
+    battleContext.current.textContent = attackersSlain<defendersSlain ? "You slew more defenders than you lost" : "The defenders slew more of your troops than you slew of theirs";
     attackerOutcome.current.textContent = "lost "+attackersSlain+"/"+ Number(attackerTroops)+" troops";
     defenderOutcome.current.textContent = "lost "+defendersSlain+"/"+defenderTroops+" troops";
     
