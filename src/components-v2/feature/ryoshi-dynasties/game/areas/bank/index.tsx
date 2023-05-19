@@ -11,7 +11,14 @@ import BankerBubbleBox, {
 } from "@src/components-v2/feature/ryoshi-dynasties/components/banker-bubble-box";
 import {appConfig} from "@src/Config";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRightFromBracket, faDollarSign} from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRightFromBracket,
+  faCoins,
+  faDollarSign, faFileImage,
+  faHospital,
+  faImage,
+  faSuitcaseMedical
+} from "@fortawesome/free-solid-svg-icons";
 import EmergencyWithdraw from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/emergency-withdraw";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
@@ -123,7 +130,7 @@ const Bank = ({address, onBack, isVisible} : BankerSceneProps) => {
           {Date.now() > config.tokenSale.vipStart && (
             <RdButton w='full' hideIcon={abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenStakeFortune)}>
               {abbreviateButtonText ? (
-                <Icon as={FontAwesomeIcon} icon={faDollarSign} />
+                <Icon as={FontAwesomeIcon} icon={faCoins} />
               ) : (
                 <>Stake $Fortune </>
               )}
@@ -131,14 +138,14 @@ const Bank = ({address, onBack, isVisible} : BankerSceneProps) => {
           )}
           <RdButton w='full' hideIcon={abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>
             {abbreviateButtonText ? (
-              <Icon as={FontAwesomeIcon} icon={faDollarSign} />
+              <Icon as={FontAwesomeIcon} icon={faImage} />
             ) : (
               <> Stake NFTs </>
             )}
           </RdButton>
           <RdButton w='full' hideIcon={abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenWithdraw)}>
             {abbreviateButtonText ? (
-              <Icon as={FontAwesomeIcon} icon={faDollarSign} />
+              <Icon as={FontAwesomeIcon} icon={faSuitcaseMedical} />
             ) : (
               <> Emergency Withdraw </>
             )}

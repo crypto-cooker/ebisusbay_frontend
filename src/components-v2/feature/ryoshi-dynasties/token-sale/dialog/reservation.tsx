@@ -110,13 +110,13 @@ const FortuneReservationPage = ({onFaq, onClose}: FortuneReservationPageProps) =
         h='full'
         m={6}
         roundedBottom='3xl'
-        className='rd-bank-modal-mask1'
+        className='rd-bank-modal-masktop-outer'
       >
         <Box
           color='#FFF'
           textAlign='center'
           verticalAlign='middle'
-          className='rd-bank-modal-mask2'
+          className='rd-bank-modal-masktop-inner'
           p={1}
         >
           <Flex

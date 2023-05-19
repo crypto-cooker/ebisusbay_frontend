@@ -1,5 +1,5 @@
 import {Box, Button, Flex, Modal, ModalBody, ModalContent, ModalOverlay} from "@chakra-ui/react";
-import {ReactNode} from "react";
+import {ReactNode, useEffect, useState} from "react";
 import localFont from "next/font/local";
 import {CloseIcon} from "@chakra-ui/icons";
 
@@ -18,6 +18,10 @@ interface PurchaseDialogProps {
 }
 
 const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, isCentered, children}: PurchaseDialogProps) => {
+  const [hasUtilBtn, setHasUtilBtn] = useState(false);
+  useEffect(() => {
+    setHasUtilBtn(!!utilBtnTitle && !!onUtilBtnClick);
+  }, [utilBtnTitle, onUtilBtnClick]);
 
   return (
     <>
@@ -42,33 +46,35 @@ const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, is
         >
           <ModalBody color='white'>
             <Box p={2}  position='relative'>
-              <Box
-                position='absolute'
-                left={-4}
-                top={0}
-                rounded='full'
-                zIndex={1}
-                _groupHover={{
-                  cursor: 'pointer'
-                }}
-                data-group
-              >
-                <Button
-                  bg='#C17109'
+              {hasUtilBtn && (
+                <Box
+                  position='absolute'
+                  left={-4}
+                  top={0}
                   rounded='full'
-                  border='8px solid #F48F0C'
-                  w={14}
-                  h={14}
-                  fontSize='28px'
-                  onClick={onUtilBtnClick}
+                  zIndex={1}
                   _groupHover={{
-                    bg: '#de8b08',
-                    borderColor: '#f9a50b',
+                    cursor: 'pointer'
                   }}
+                  data-group
                 >
-                  {utilBtnTitle}
-                </Button>
-              </Box>
+                  <Button
+                    bg='#C17109'
+                    rounded='full'
+                    border='8px solid #F48F0C'
+                    w={14}
+                    h={14}
+                    fontSize='28px'
+                    onClick={onUtilBtnClick}
+                    _groupHover={{
+                      bg: '#de8b08',
+                      borderColor: '#f9a50b',
+                    }}
+                  >
+                    {utilBtnTitle}
+                  </Button>
+                </Box>
+              )}
               <Box
                 position='absolute'
                 right={-4}
@@ -99,17 +105,19 @@ const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, is
                 bg='#564D4A'
                 h='full'
                 my={4}
-                roundedBottom='3xl'
-                className='rd-bank-modal-mask1'
+                roundedBottom='2xl'
+                roundedTopLeft={hasUtilBtn ? 'none' : '2xl'}
+                className={hasUtilBtn ? 'rd-bank-modal-masktop-outer' : 'rd-bank-modal-maskright-outer'}
               >
                 <Box
                   color='#FFF'
                   textAlign='center'
                   verticalAlign='middle'
-                  className='rd-bank-modal-mask2'
+                  className={hasUtilBtn ? 'rd-bank-modal-masktop-inner' : 'rd-bank-modal-maskright-inner'}
                   p={1}
                 >
                   <Flex
+                    roundedTopLeft={hasUtilBtn ? 'none' : '2xl'}
                     bg='#272523'
                     h='55px'
                     px={12}
