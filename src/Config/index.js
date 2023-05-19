@@ -238,7 +238,7 @@ export const configData = {
       gaslessListing: '0xBbe0D0715AbCadb8A0Db41C0Bb7f272570907C45',
       gdc: '0xd464f36885163e124e3a15e31c0e581ba3f648ab',
       allianceCenter: '0x9770d8b97A61520E008f648e7879c337D705D021',
-      battleField: '0x8b85e49b5a59b113656Fa1A36efa9Aeb70DE27C1',
+      battleField: '0x4EeDb8c80bEFB5d672F869a1bdc29Cc2f665Bb3b',
       purchaseFortune: '0xE1D0a4ae1DF871510d82144a282FF14bAcA8f2c0',
       usdc: '0x1E1d0765439d0d53ee40CC4fB454C2343c84342b',
       resources: '0xDa72eE0B52A5a6d5C989f0e817c9e2AF72e572B5',
