@@ -47,15 +47,15 @@ const MainPage = ({onShowLeaderboard}: Props) => {
       <Text 
         marginLeft={{base: '10%', sm: '50%'}}
         marginTop={{base: '-10%', sm: '-17%'}}
-        fontSize={{ base: '12px', md: '16px' }} 
+        fontSize={{ base: '0px', md: '16px' }} 
         position='absolute' 
         >Join in the quest for sea treasures</Text>
         <RdButton
           position='absolute' 
-          marginLeft={{base: '85%', sm: '60%'}}
-          marginTop={{base: '-10%', sm: '-12%'}}
-          w={{base: '150px', sm: '150px'}}
-          fontSize={{base: 'sm', sm: 'sm'}}
+          marginLeft={{base: '62%', sm: '60%'}}
+          marginTop={{base: '-12%', sm: '-12%'}}
+          w={{base: '100px', sm: '150px'}}
+          fontSize={{base: '8px', sm: 'sm'}}
           hideIcon={true}
           onClick={(e) => {
             e.preventDefault();

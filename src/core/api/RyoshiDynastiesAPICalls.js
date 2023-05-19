@@ -329,7 +329,8 @@ export const getLeaderBoard = async (controlPointId) => {
     var gameID = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
     // console.log(gameID.data.data);
     var data = await api.get(baseURL + "api/ryoshi-dynasties/control-points/"+controlPointId,
-      {params: {gameId: Number(gameID.data.data.id-1)}});
+      {params: {gameId: Number(gameID.data.data.id)}});
+      // {params: {gameId: Number(gameID.data.data.id-1)}});
     // console.log(data);
     return data.data.data.leaderBoard;
   }

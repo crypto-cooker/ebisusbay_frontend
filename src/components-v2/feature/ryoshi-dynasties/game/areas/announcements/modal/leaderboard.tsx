@@ -1,83 +1,81 @@
 import React, {useEffect, useState} from 'react';
 import {
-  Button,
   Center,
   Flex,
   Heading,
   Spinner,
   Stack,
-  Tab,
   Table,
   TableContainer,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
   Tbody,
-  Text,
   Th,
   Thead,
   Tr,
+  Select,
+  Td,
+  Text
 } from "@chakra-ui/react"
 import localFont from 'next/font/local';
 import {useAppSelector} from "@src/Store/hooks";
-import {getControlPoints, getLeaderBoard, getPreviousGame, getRegions} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {getLeaderBoard, getPreviousGame, getRegions} from "@src/core/api/RyoshiDynastiesAPICalls";
 import moment from 'moment';
 
 const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
 
 const LeaderBoardPage = () => {
  
-  const [isLoading, setIsLoading] = useState(false);
   const user = useAppSelector((state) => state.user);
-  const [regionButtons, setRegionButtons] = useState<any[]>([]);
-  const [controlPoints, setControlPoints] = useState([]);
-  const [controlPointPanels, setControlPointPanels] = useState([]);
+  const [regionSelected, setRegionSelected] = useState(false);
   const [regions, setRegions] = useState<any[]>([]);
   const [isRetrievingLeaderboard, setIsRetrievingLeaderboard] = useState(false);
-  const [previousGameFound, setPreviousGameFound] = useState(true);
   const [seasonTime, setSeasonTime] = useState('');
-  const [leaderBoard, setLeaderBoard] = useState<any[]>([]);
+  const [leaderBoard, setLeaderBoard] = useState([]);
 
-  useEffect(() => {
-    LoadLeaderBoard();
-  }, []);
+  const [attackerOptions, setAttackerOptions] = useState([]);
 
-  useEffect(() => {
-    if(regions.length > 0 && isRetrievingLeaderboard)
-    {
-      setIsRetrievingLeaderboard(false);
-      setRegionButtons(regions.map((region, i) => (
-        <Button key={i}  onClick={() => {LoadControlPoints(regions, i);}}>{region.name} </Button>
-      )))
-      LoadControlPoints(regions, 0);
-    }
-  }, [regions]);
-
-  const LoadLeaderBoard = async () => {
+  const LoadControlPoints = async () => {
     try{
       setIsRetrievingLeaderboard(true);
       const regions1 = await getRegions();
-      setRegions(regions1)
-      if(regions1.length > 0)
-      {
-        setRegionButtons(regions1.map((region: any, i: any) => (
-          <Button key={i}  onClick={() => {LoadControlPoints(regions1, i);}}>{region.name} </Button>
-        )))
-        LoadControlPoints(regions1, 0);
-        setIsRetrievingLeaderboard(false);
-        GetPreviousGameDates();
-      }
+      setRegions(regions1[0])
+      setIsRetrievingLeaderboard(false);
     }
     catch(error){
       console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    if(!isRetrievingLeaderboard)
+    {
+      GetPreviousGameDates();
+      if(regions.controlPoints !== undefined) {
+        setAttackerOptions(regions.controlPoints.map((point, index) => (
+          <option 
+            value={point.name}
+            key={index}>
+            {point.name}</option>)
+      ))}
+    }
+  }, [regions]);
+
+  const [dataForm, setDataForm] = useState({
+    attackersFaction: "" ?? null,
+  })
+
+  const onChangeInputsAttacker = (e) => {
+    setDataForm({...dataForm, [e.target.name]: e.target.value})
+    if(e.target.value !== ''){
+      LoadControlPointLeaderBoard(e.target.value);
+      setRegionSelected(true);
+    } else {
+      setRegionSelected(false);
     }
   }
   
   const GetPreviousGameDates = async () => {
     try{
       const previousGame = await getPreviousGame();
-        console.log(previousGame);
         setSeasonTime(
           moment(previousGame.startAt).format("MMM D yyyy")+" - "+moment(previousGame.endAt).format("MMM D yyyy")
         )
@@ -87,68 +85,74 @@ const LeaderBoardPage = () => {
     }
   }
 
-  const LoadControlPoints = async (regions: any, x: any) => {
-    // console.log(regions[x].controlPoints)
-    const controlPointsIds = await getControlPoints(x);
-
-    for (let i = 0; i < controlPointsIds.length; i++) {
-      const allFactionsOnPoint = await getLeaderBoard(controlPointsIds[i])
-      const topFiveFactions = allFactionsOnPoint.slice(0, 5);
-      setLeaderBoard([...leaderBoard, topFiveFactions]);
-    }
-
-    setControlPoints(regions[x].controlPoints.map((controlPoint: any, i: any) => (
-      <Tab key={i}>{controlPoint.name}</Tab>
-    )))
-
-    setControlPointPanels(regions[x].controlPoints.map((controlPoint: any, i: any) => (
-      <TabPanel key={i}>
-        {/* {controlPoint.id} */}
-      <TableContainer>
-      <Table variant='simple'>
-      <Thead>
-        <Tr>
-          <Th className='text-center'>Rank</Th>
-          <Th className='text-center'>Faction</Th>
-          <Th className='text-center'>Troops</Th>
+  const LoadControlPointLeaderBoard = async (e) => {
+    //get controlpoint id from regions by matching name
+    const x = regions.controlPoints.findIndex((point) => point.name === e);
+    console.log(x)
+    const allFactionsOnPoint = await getLeaderBoard(x)
+    console.log(allFactionsOnPoint.slice(0, 5))
+    // setLeaderBoard(allFactionsOnPoint.slice(0, 5));
+    setLeaderBoard(
+    <Tbody> {
+        allFactionsOnPoint.slice(0, 5).map((faction, index ) => (
+        <Tr key={index}>
+          <Td textAlign='center'>{index+1}</Td>
+          <Td textAlign='center'>{faction.name}</Td>
+          <Td textAlign='center'>{faction.totalTroops}</Td>
         </Tr>
-      </Thead>
-      <Tbody> 
-          {leaderBoard[i].map((faction: any, j: any) => (
-            <tr key={j}>
-              <td style={{textAlign: 'center'}}>{j+1}</td>
-              <td>{faction.name}</td>
-              <td style={{textAlign: 'center'}}>{faction.totalTroops}</td>
-            </tr>
-          ))}
-       </Tbody>
-      </Table>
-    </TableContainer>
-    </TabPanel>
-    )))
+        ))}
+    </Tbody>)
   }
+
+  useEffect(() => {
+    LoadControlPoints();
+  }, []);
 
   return (
     <Stack spacing={3} p={4}>
-    <Center>
-      <Heading as='h1' className={gothamXLight.className} fontSize='3xl' color='white' mt={5}>{seasonTime}</Heading>
-    </Center>
+      <Center>
+        <Text as='h1' 
+        className={gothamXLight.className} 
+        color='white'
+        mt={5}
+        fontSize={{base: '24px', sm: '28px'}}
+        >{seasonTime}</Text>
+      </Center>
 
-    <Flex>
-    {isRetrievingLeaderboard ? <Spinner size='sm'/> : regionButtons}
-    </Flex>
+      <Flex>
+      {isRetrievingLeaderboard ? <Spinner size='sm'/> : <></>}
+      </Flex>
 
-    
+      <Center>
+      <Select 
+        name='attackersFaction'
+        backgroundColor='#292626'
+        w='90%' 
+        me={2} 
+        placeholder='Select Region'
+        value={dataForm.attackersFaction} 
+        onChange={onChangeInputsAttacker}>
+        {attackerOptions}
+      </Select>
+      </Center>
 
-    <Tabs>
-      <TabList>
-        {controlPoints}
-      </TabList>
-      <TabPanels>
-        {controlPointPanels}
-      </TabPanels>
-      {previousGameFound ? null : <Text>Previous game not found</Text>}
-    </Tabs>
+      <Center>
+      {regionSelected ? (<>
+      
+      <TableContainer w='90%'>
+        <Table size='m'>
+          <Thead>
+            <Tr>
+              <Th textAlign='center'>Rank</Th>
+              <Th textAlign='center'>Faction</Th>
+              <Th textAlign='center'>Troops</Th>
+            </Tr>
+          </Thead>
+          {leaderBoard}
+        </Table>
+      </TableContainer>
+      </>) : (<Text> Select a region</Text>)}
+      </Center>
     </Stack>
   );
 }
