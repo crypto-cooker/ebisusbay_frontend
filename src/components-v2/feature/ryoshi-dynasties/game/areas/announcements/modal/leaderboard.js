@@ -26,7 +26,11 @@ const LeaderBoardPage = () => {
  
   const user = useAppSelector((state) => state.user);
   const [regionSelected, setRegionSelected] = useState(false);
-  const [regions, setRegions] = useState<any[]>([]);
+
+  // type Region = {
+  //   controlPoints?: [];
+  // };
+  const [regions, setRegions] = useState([]);
   const [isRetrievingLeaderboard, setIsRetrievingLeaderboard] = useState(false);
   const [seasonTime, setSeasonTime] = useState('');
   const [leaderBoard, setLeaderBoard] = useState([]);
@@ -49,7 +53,7 @@ const LeaderBoardPage = () => {
     if(!isRetrievingLeaderboard)
     {
       GetPreviousGameDates();
-      if(regions !== undefined) {
+      if(regions.controlPoints !== undefined) {
         setAttackerOptions(regions.controlPoints.map((point, index) => (
           <option 
             value={point.name}
