@@ -20558,6 +20558,57 @@
         "kyc": false,
         "verified": true
       }
+    },
+    {
+      "name": "Cronos Baby Apes",
+      "slug": "cronos-baby-apes",
+      "multiToken": false,
+      "address": "0x688c9c95a7fF91cF1559cdaf098b3038Bc538BE1",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Cronos Baby Apes is an official collection of the Cronos Apes brand. The collection consists of 10,000 utility-enabled and fully animated PFP generated from 250+ unique hand-drawn traits. Each NFT grants you access to an ever-growing set of utilities, including revenue distribution and access to the first holders-only community in Cronos. Baby Apes have been generated inside our Dapp trough “breeding” mechanism.",
+        "avatar": "/img/collections/cronos-baby-apes/avatar.webp",
+        "card": "/img/collections/cronos-baby-apes/card.gif",
+        "banner": "/img/collections/cronos-baby-apes/banner.gif",
+        "website": "https://www.cronosapesnft.com/",
+        "twitter": "https://www.twitter.com/cronosapesnft",
+        "discord": "https://discord.gg/cronosapes",
+        "medium": "https://medium.com/@cronosapes",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "3D Gnomes & Gnomides",
+      "slug": "3d-gnomes-gnomides",
+      "multiToken": false,
+      "address": "0xF8c7893001920F6fA7915b6E60425e21d1FA1260",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "200 3D Gnomes and Gnomides, a limited AI NFT collection by the Crognomes NFT project.",
+        "avatar": "/img/collections/3d-gnomes-gnomides/avatar.webp",
+        "banner": "/img/collections/3d-gnomes-gnomides/banner.webp",
+        "card": "/img/collections/3d-gnomes-gnomides/card.webp",
+        "website": "https://www.crognomes.com/",
+        "twitter": "https://twitter.com/CroGnomes",
+        "discord": "https://discord.gg/VQBRqyjVuy",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
