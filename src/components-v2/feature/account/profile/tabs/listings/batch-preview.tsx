@@ -11,6 +11,7 @@ import {
   MultiSelectContext,
   MultiSelectContextProps
 } from "@src/components-v2/feature/account/profile/tabs/listings/context";
+import useCancelGaslessListing from "@src/Components/Account/Settings/hooks/useCancelGaslessListing";
 
 interface BatchPreviewProps {
   mutationKey: any;
@@ -22,11 +23,11 @@ const BatchPreview = ({mutationKey}: BatchPreviewProps) => {
   const user = useAppSelector((state) => state.user);
   const queryClient = useQueryClient();
   const { selected: listings, setSelected } = useContext(MultiSelectContext) as MultiSelectContextProps;
+  const [cancelGaslessListing, response] = useCancelGaslessListing();
 
   const handleCancel = useCallback(async () => {
     try {
       setIsExecutingCancel(true);
-
       const cancelIds = {
         legacy: listings
           .filter((listing: any) => !isGaslessListing(listing.listingId))
@@ -36,11 +37,16 @@ const BatchPreview = ({mutationKey}: BatchPreviewProps) => {
           .map((listing: any) => listing.listingId),
       }
 
-      const { data: orders } = await cancelListing(cancelIds.gasless);
-      const ship = user.contractService!.ship;
-      const tx = await ship.cancelOrders(orders);
-      const receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      if (cancelIds.gasless.length > 0){
+        await cancelGaslessListing(cancelIds.gasless);
+      }
+
+      if (cancelIds.legacy.length > 0 && !!user?.contractService) {
+        const port = user.contractService.market;
+        await port.cancelListings(cancelIds.legacy)
+      }
+
+      toast.success('Listings have been cancelled');
       await queryClient.invalidateQueries(mutationKey)
     } catch (error: any) {
       console.log(error);
