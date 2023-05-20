@@ -351,13 +351,13 @@ export const getControlPoint = async (controlPointId) => {
     throw error;
   }
 }
-export const attack = async (address, signature, troops, controlPointId, factionId, defendingFactionId) => {
+export const attack = async (address, signature, troops, controlPointId, factionId, defendingFactionId, battleType) => {
   try{
     var gameID = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
     var gameId = gameID.data.data.id;
 
     return await api.post(baseURL + "api/ryoshi-dynasties/battle-transactions?", 
-      {troops, controlPointId, gameId, factionId, defendingFactionId},
+      {troops, controlPointId, gameId, factionId, defendingFactionId, battleType},
       {params: {address, signature}}
       );
   }

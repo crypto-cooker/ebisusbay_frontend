@@ -218,7 +218,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
         // console.log("defenderFactionId", defenderFactionId + " " + dataForm.defenderFaction);
         // console.log("attackerTroops", attackerTroops);
         // console.log("signatureInStorage", signatureInStorage);
-
+        const battleType = 1;
         setExecutingLabel('Attacking...');
         const data = await attack(
           user.address.toLowerCase(), 
@@ -226,8 +226,9 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
           Number(attackerTroops), 
           controlPointId, 
           attackerFactionId, 
-          defenderFactionId);
-
+          defenderFactionId,
+          battleType);
+        
         setAttackId(data.data.data.attackId);
         
         const timestamp = Number(data.data.data.timestampInSeconds);
@@ -241,6 +242,8 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
                           attackId: attackId, 
                           quantity: troops,
                           battleType: 1};
+        
+        console.log("attackTuple", attackTuple);
 
         const attackContract = new Contract(config.contracts.battleField, Battlefield, user.provider.getSigner());
         const tx = await attackContract.attackFaction(attackTuple, sig);
@@ -252,7 +255,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
       } catch (error) {
         if(error.response !== undefined) {
           console.log(error)
-          toast.error(error.response.data.error.metadata.message)
+          // toast.error(error.response.data.error.metadata.message)
         }
         else {
           toast.error(error);
