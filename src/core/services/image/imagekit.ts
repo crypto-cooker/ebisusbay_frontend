@@ -167,11 +167,14 @@ export class ImageKitBuilder {
     }
 
     // URLs can't accept any params if ik-video.mp4 is in the path
-    const trExclusions = url.includes('ik-gif-video.mp4');
+    const trExclusions = newUrl.toString().includes('ik-gif-video.mp4');
 
     if (!trExclusions && Object.entries(this.trValues).length > 0) {
       const mapped = Object.entries(this.trValues).map(([k,v]) => `${k}-${v}`);
       newUrl.searchParams.set('tr', mapped.join());
+    }
+    if (trExclusions) {
+      newUrl.search = '';
     }
 
     return newUrl.toString();
@@ -191,7 +194,10 @@ export class ImageKitBuilder {
     return url;
   }
 
-  hasGifToMp4Appendage() {
+  hasGifToMp4Appendage(url: URL | string) {
+    if (!!url) {
+      return url.toString().includes('ik-gif-video.mp4');
+    }
     return this.appendages.includes('ik-gif-video.mp4');
   }
 }
