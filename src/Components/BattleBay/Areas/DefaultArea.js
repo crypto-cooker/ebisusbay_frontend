@@ -16,7 +16,7 @@ import {
   VStack,
   Text,
   Spinner,
-  HStack
+  HStack, useBreakpointValue
 } from "@chakra-ui/react"
 
 import React, {useEffect, useLayoutEffect, useState, useRef } from 'react';
@@ -503,219 +503,237 @@ const DefaultArea = ({onChange}) => {
       {button}</Button>
       )))
   }
+
+  const [mapInitialized, setMapInitialized] = useState(false);
+  const mapScale = useBreakpointValue(
+    {base: 0.5, sm: 0.6, md: 0.7, lg: 0.8, xl: 0.9, '2xl': 1},
+    {fallback: 'lg'}
+  )
+  useEffect(() => {
+    setMapInitialized(true);
+  }, []);
+
   return (
     <section>
-       <Box
-        position='relative'
-        // bg='red.800'
-        h='calc(100vh - 74px)'
-      >
-      <AspectRatio ratio={2880/1620} overflow='visible'>
-      
-      <TransformWrapper 
-        
-        // limitToBounds={true}
-        ref={transformComponentRef}
-        onZoom={changeCanvasState}
-        onPinching={changeCanvasState}
-        onPinchingStop={changeCanvasState}
-        onPanningStop={changeCanvasState}
-        centerOnInit={true}
-        disablePadding={true}
-        initialScale={1.5}
-        > 
-        {(utils) => (
-          <React.Fragment>
-            {/* <button onClick={zoomToImage}>Zoom to 1</button> */}
-          {/* <Controls {...utils} /> */}
-          <TransformComponent>
-            <img 
-            src='/img/battle-bay/mapImages/background.png'
-            useMap="#image-map" className={`${styles.mapImageArea}`} id="fancyMenu"/>
-            <map name="image-map">
-            </map>
+      <Box position='relative' h='calc(100vh - 74px)'>
+        {mapInitialized && (
+          <TransformWrapper
+            // limitToBounds={true}
+            ref={transformComponentRef}
+            onZoom={changeCanvasState}
+            onPinching={changeCanvasState}
+            onPinchingStop={changeCanvasState}
+            onPanningStop={changeCanvasState}
+            // centerOnInit={true}
+            // disablePadding={true}
+            initialScale={mapScale}
+          >
+            {(utils) => (
+              <React.Fragment>
+                {/* <button onClick={zoomToImage}>Zoom to 1</button> */}
+                {/* <Controls {...utils} /> */}
+                <TransformComponent wrapperStyle={{height: '100%', width: '100%', objectFit: 'cover'}}>
+                  <Box as='img'
+                       src='/img/battle-bay/mapImages/background.png'
+                       maxW='none'
+                       useMap="#image-map" className={`${styles.mapImageArea}`} id="fancyMenu"/>
+                  <map name="image-map">
+                  </map>
 
-            <div id="alliancecenter" className={[styles.enlarge]} style={{position:"absolute", marginTop: allianceCenterTop, marginLeft: allianceCenterLeft, zIndex:"9"}} 
-            // onClick={() => onChange('allianceCenter')}
-            onClick={() => OpenAllianceCenter()}
-            >
-              <img src='/img/battle-bay/mapImages/alliancecenter_day.png' width={allianceCenterWidth} height={allianceCenterHeight} /> 
-              <div className={[styles.enlarge]} style={{position:"absolute", marginTop: alliancecenter_labelTop, marginLeft: alliancecenter_labelLeft, zIndex:"20"}}>
-              <img src='/img/battle-bay/building_labels/alliancecenter_label.png' /> </div>
-            </div>
+                  <Box id="alliancecenter" className={[styles.enlarge]} style={{position:"absolute", marginTop: allianceCenterTop, marginLeft: allianceCenterLeft, zIndex:"9"}}
+                    // onClick={() => onChange('allianceCenter')}
+                       onClick={() => OpenAllianceCenter()}
+                  >
+                    <img src='/img/battle-bay/mapImages/alliancecenter_day.png' />
+                    <Box className={[styles.enlarge]} style={{position:"absolute", marginTop: alliancecenter_labelTop, marginLeft: alliancecenter_labelLeft, zIndex:"20"}}>
+                      <img src='/img/battle-bay/building_labels/alliancecenter_label.png' />
+                    </Box>
+                  </Box>
 
-            <div id="townhall" className={[styles.enlarge]} style={{position:"absolute", marginTop: townhallTop, marginLeft: townhallLeft, zIndex:"9"}} 
-            // onClick={() => onChange('townHall')}
-            >
-              <img src='/img/battle-bay/mapImages/townhall.png' width={townhallWidth} height={townhallHeight}/> </div>
+                  <Box id="townhall" className={[styles.enlarge]} style={{position:"absolute", marginTop: townhallTop, marginLeft: townhallLeft, zIndex:"9"}}
+                    // onClick={() => onChange('townHall')}
+                  >
+                    <img src='/img/battle-bay/mapImages/townhall.png' />
+                  </Box>
 
-            <div id="tavern" className={[styles.enlarge]} style={{position:"absolute", marginTop: tavernTop, marginLeft: tavernLeft, zIndex:"9"}} 
-            // onClick={() => onChange('tavern')}
-            >
-              <img src='/img/battle-bay/mapImages/tavern.png' width={tavernWidth} height={tavernHeight}/> </div>
+                  <Box id="tavern" className={[styles.enlarge]} style={{position:"absolute", marginTop: tavernTop, marginLeft: tavernLeft, zIndex:"9"}}
+                    // onClick={() => onChange('tavern')}
+                  >
+                    <img src='/img/battle-bay/mapImages/tavern.png' />
+                  </Box>
 
-            <div id="academy" className={[styles.enlarge]} style={{position:"absolute", marginTop: academyTop, marginLeft: academyLeft, zIndex:"9"}} 
-            // onClick={() => onChange('academy')}
-            >
-              <img src='/img/battle-bay/mapImages/academy.png' width={academyWidth} height={academyHeight} /> </div>
+                  <Box id="academy" className={[styles.enlarge]} style={{position:"absolute", marginTop: academyTop, marginLeft: academyLeft, zIndex:"9"}}
+                    // onClick={() => onChange('academy')}
+                  >
+                    <img src='/img/battle-bay/mapImages/academy.png' />
+                  </Box>
 
-            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: tavernSpinTop, marginLeft: tavernSpinLeft, zIndex:"9", pointerEvents:"none"}}>
-              <img src='/img/battle-bay/mapImages/tavern_turbine.png' width={tavernSpinWidth} height={tavernSpinHeight} /></div>
+                  <Box className={[styles.enlarge]} style={{position:"absolute", marginTop: tavernSpinTop, marginLeft: tavernSpinLeft, zIndex:"9", pointerEvents:"none"}}>
+                    <img src='/img/battle-bay/mapImages/tavern_turbine.png' />
+                  </Box>
 
-            <div id="boat" className={[styles.enlarge]} style={{position:"absolute", marginTop: boatTop, marginLeft: boatLeft, zIndex:"9"}} 
-            onClick={() => onChange('battleMap')}
-            >
-              <img src='/img/battle-bay/mapImages/boat_day.png' width={boatWidth} height={boatHeight} /> </div>
+                  <Box id="boat" className={[styles.enlarge]} style={{position:"absolute", marginTop: boatTop, marginLeft: boatLeft, zIndex:"9"}}
+                       onClick={() => onChange('battleMap')}
+                  >
+                    <img src='/img/battle-bay/mapImages/boat_day.png' />
+                  </Box>
 
-            <div id="ebisustatue" className={[styles.enlarge]} style={{position:"absolute", marginTop: ebisustatueTop, marginLeft: ebisustatueLeft, zIndex:"9"}} >
-              <img src='/img/battle-bay/mapImages/ebisustatue.png' width={ebisustatueWidth} height={ebisustatueHeight} /> </div>
+                  <Box id="ebisustatue" className={[styles.enlarge]} style={{position:"absolute", marginTop: ebisustatueTop, marginLeft: ebisustatueLeft, zIndex:"9"}} >
+                    <img src='/img/battle-bay/mapImages/ebisustatue.png' />
+                  </Box>
 
-            <div id="fishmarket" className={[styles.enlarge]} style={{position:"absolute", marginTop: fishmarketTop, marginLeft: fishmarketLeft, zIndex:"9"}} >
-              <img src='/img/battle-bay/mapImages/fishmarket_day.png' width={fishmarketWidth} height={fishmarketHeight} /> </div>
+                  <Box id="fishmarket" className={[styles.enlarge]} style={{position:"absolute", marginTop: fishmarketTop, marginLeft: fishmarketLeft, zIndex:"9"}} >
+                    <img src='/img/battle-bay/mapImages/fishmarket_day.png' />
+                  </Box>
 
-            <div style={{position:"absolute", marginTop: waterTop, marginLeft: waterLeft, zIndex:"8"}} >
-              <img src='/img/battle-bay/mapImages/water.png' width={waterWidth} height={waterHeight} /> </div>
+                  <Box style={{position:"absolute", marginTop: waterTop, marginLeft: waterLeft, zIndex:"8"}} >
+                    <img src='/img/battle-bay/mapImages/water.png' />
+                  </Box>
 
-            <div id="bank" className={[styles.enlarge]} style={{position:"absolute", marginTop: bankTop, marginLeft: bankLeft, zIndex:"8"}} 
-            onClick={() => onChange('bank')}
-            >
-              <img src='/img/battle-bay/mapImages/bank_day.png' width={bankWidth} height={bankHeight} />
-                {/* <div className={[styles.bank_label]} > */}
-              {/* <img className={[styles.bank_label]}  src='/img/battle-bay/building_labels/bank_label.png' 
-              // width={bank_labelWidth} height={bank_labelHeight} 
-              /> */}
-               {/* </div> */}
-            </div>
+                  <Box id="bank" className={[styles.enlarge]} style={{position:"absolute", marginTop: bankTop, marginLeft: bankLeft, zIndex:"8"}}
+                       onClick={() => onChange('bank')}
+                  >
+                    <img src='/img/battle-bay/mapImages/bank_day.png' />
+                    {/* <div className={[styles.bank_label]} > */}
+                    {/* <img className={[styles.bank_label]}  src='/img/battle-bay/building_labels/bank_label.png'
+                    // width={bank_labelWidth} height={bank_labelHeight}
+                    /> */}
+                    {/* </div> */}
+                  </Box>
 
-            <div id="announcement" className={[styles.enlarge]} style={{position:"absolute", marginTop: announcementTop, marginLeft: announcementLeft, zIndex:"9"}} 
-            onClick={onOpenAnnouncementBoard}
-            >
-              <img src='/img/battle-bay/mapImages/announcement.png' width={announcementWidth} height={announcementHeight} /> </div>
+                  <Box id="announcement" className={[styles.enlarge]} style={{position:"absolute", marginTop: announcementTop, marginLeft: announcementLeft, zIndex:"9"}}
+                    // onClick={onOpenAnnouncementBoard}
+                  >
+                    <img src='/img/battle-bay/mapImages/announcement.png' />
+                  </Box>
 
-            <div id="barracks" className={[styles.enlarge]} style={{position:"absolute", marginTop: barracksTop, marginLeft: barracksLeft, zIndex:"9"}} 
-            onClick={() => onChange('barracks')}
-            >
-              <img src='/img/battle-bay/mapImages/barracks.png' width={barracksWidth} height={barracksHeight} /> </div>
+                  <Box id="barracks" className={[styles.enlarge]} style={{position:"absolute", marginTop: barracksTop, marginLeft: barracksLeft, zIndex:"9"}}
+                       onClick={() => onChange('barracks')}
+                  >
+                    <img src='/img/battle-bay/mapImages/barracks.png' />
+                  </Box>
 
-            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: swordsmenTop, marginLeft: swordsmenLeft, zIndex:"9", pointerEvents:"none"}} >
-              <img src='/img/battle-bay/mapImages/swordsmen.png' width={swordsmenWidth} height={swordsmenHeight} /> </div>
-            
-            <div id="moongate" className={[styles.enlarge]} style={{position:"absolute", marginTop: moongateTop, marginLeft: moongateLeft, zIndex:"9"}}>
-              <img src='/img/battle-bay/mapImages/moongate_day.png' width={moongateWidth} height={moongateHeight} />
-              {/* <div className={[styles.enlarge]} style={{position:"absolute",  zIndex:"20"}}>
-                <img src='/img/battle-bay/building_labels/moongate_label.png' /> </div> */}
-            </div>
-          
-            <div id="torii" className={[styles.enlarge]} style={{position:"absolute", marginTop: toriiTop, marginLeft: toriiLeft, zIndex:"9"}} >
-              <img src='/img/battle-bay/mapImages/torii.png' width={toriiWidth} height={toriiHeight} /> </div>
+                  <Box className={[styles.enlarge]} style={{position:"absolute", marginTop: swordsmenTop, marginLeft: swordsmenLeft, zIndex:"9", pointerEvents:"none"}} >
+                    <img src='/img/battle-bay/mapImages/swordsmen.png' />
+                  </Box>
 
-            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: pondTop, marginLeft: pondLeft, zIndex:"8"}}>
-              <img src='/img/battle-bay/mapImages/pond1.png' width={pondWidth} height={pondHeight} /> </div>
+                  <Box id="moongate" className={[styles.enlarge]} style={{position:"absolute", marginTop: moongateTop, marginLeft: moongateLeft, zIndex:"9"}}>
+                    <img src='/img/battle-bay/mapImages/moongate_day.png' />
+                    {/* <div className={[styles.enlarge]} style={{position:"absolute",  zIndex:"20"}}>
+                      <img src='/img/battle-bay/building_labels/moongate_label.png' /> </div> */}
+                  </Box>
 
-            
+                  <Box id="torii" className={[styles.enlarge]} style={{position:"absolute", marginTop: toriiTop, marginLeft: toriiLeft, zIndex:"9"}} >
+                    <img src='/img/battle-bay/mapImages/torii.png' />
+                  </Box>
 
-            {/* <div className={[styles.enlarge]} style={{position:"absolute", marginTop: townhall_labelTop, marginLeft: townhall_labelLeft, zIndex:"20"}}>
-              <img src='/img/battle-bay/building_labels/townhall_label.png' width={townhall_labelWidth} height={townhall_labelHeight} /> </div>
+                  <Box className={[styles.enlarge]} style={{position:"absolute", marginTop: pondTop, marginLeft: pondLeft, zIndex:"8"}}>
+                    <img src='/img/battle-bay/mapImages/pond1.png' />
+                  </Box>
 
-            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: tavern_labelTop, marginLeft: tavern_labelLeft, zIndex:"20"}}>
-              <img src='/img/battle-bay/building_labels/tavern_label.png' width={tavern_labelWidth} height={tavern_labelHeight} /> </div>
 
-            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: academy_labelTop, marginLeft: academy_labelLeft, zIndex:"20"}}>
-              <img src='/img/battle-bay/building_labels/academy_label.png' width={academy_labelWidth} height={academy_labelHeight} /> </div>
+                  {/* <div className={[styles.enlarge]} style={{position:"absolute", marginTop: townhall_labelTop, marginLeft: townhall_labelLeft, zIndex:"20"}}>
+                    <img src='/img/battle-bay/building_labels/townhall_label.png' width={townhall_labelWidth} height={townhall_labelHeight} /> </div>
 
-            
+                  <div className={[styles.enlarge]} style={{position:"absolute", marginTop: tavern_labelTop, marginLeft: tavern_labelLeft, zIndex:"20"}}>
+                    <img src='/img/battle-bay/building_labels/tavern_label.png' width={tavern_labelWidth} height={tavern_labelHeight} /> </div>
 
-            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: barracks_labelTop, marginLeft: barracks_labelLeft, zIndex:"20"}}>
-              <img src='/img/battle-bay/building_labels/barracks_label.png' width={barracks_labelWidth} height={barracks_labelHeight} /> </div>
-     
-            
-            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: fishmarket_labelTop, marginLeft: fishmarket_labelLeft, zIndex:"20"}}>
-              <img src='/img/battle-bay/building_labels/fishmarket_label.png' width={fishmarket_labelWidth} height={fishmarket_labelHeight} /> </div>
+                  <div className={[styles.enlarge]} style={{position:"absolute", marginTop: academy_labelTop, marginLeft: academy_labelLeft, zIndex:"20"}}>
+                    <img src='/img/battle-bay/building_labels/academy_label.png' width={academy_labelWidth} height={academy_labelHeight} /> </div>
 
-            <div className={[styles.enlarge]} style={{position:"absolute", marginTop: announcementboard_labelTop, marginLeft: announcementboard_labelLeft, zIndex:"20"}}>
-              <img src='/img/battle-bay/building_labels/announcementboard_label.png' width={announcementboard_labelWidth} height={announcementboard_labelHeight} /> </div> */}
-            
 
-          </TransformComponent>
-        </React.Fragment>
+
+                  <div className={[styles.enlarge]} style={{position:"absolute", marginTop: barracks_labelTop, marginLeft: barracks_labelLeft, zIndex:"20"}}>
+                    <img src='/img/battle-bay/building_labels/barracks_label.png' width={barracks_labelWidth} height={barracks_labelHeight} /> </div>
+
+
+                  <div className={[styles.enlarge]} style={{position:"absolute", marginTop: fishmarket_labelTop, marginLeft: fishmarket_labelLeft, zIndex:"20"}}>
+                    <img src='/img/battle-bay/building_labels/fishmarket_label.png' width={fishmarket_labelWidth} height={fishmarket_labelHeight} /> </div>
+
+                  <div className={[styles.enlarge]} style={{position:"absolute", marginTop: announcementboard_labelTop, marginLeft: announcementboard_labelLeft, zIndex:"20"}}>
+                    <img src='/img/battle-bay/building_labels/announcementboard_label.png' width={announcementboard_labelWidth} height={announcementboard_labelHeight} /> </div> */}
+
+
+                </TransformComponent>
+              </React.Fragment>
+            )}
+          </TransformWrapper>
         )}
-      </TransformWrapper>
-      
-      </AspectRatio>
 
-      {allianceCenterOpen ? <></> : <>
-  <Box  position='absolute' top={0} left={0} p={4}  pointerEvents='none' >
-    <Flex direction='row' justify='space-between' >
-      <Box mb={4} bg='#272523' p={2} rounded='md' marginTop='150%' >
-        <Flex alignItems='left'  >
-          <VStack alignItems='left'  >
-            <HStack>
-              <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
-              <Text >Fortune : {!resourcesAcquired ? <Spinner size='sm'/> :fortune}</Text>
-            </HStack>
-            <HStack>
-              <Image src='/img/battle-bay/announcementBoard/mitama.png' alt="walletIcon" boxSize={6}/>
-              <Text align='left'>Mitama : {!resourcesAcquired ? <Spinner size='sm'/> :mitama}</Text>
-            </HStack>
-            <HStack>
-              <Image src='/img/battle-bay/announcementBoard/koban.png' alt="walletIcon" boxSize={6}/>
-              <Text align='left'>Koban : {!resourcesAcquired ? <Spinner size='sm'/> : koban}</Text>
-            </HStack>
-          </VStack>
-        </Flex>
+        {allianceCenterOpen ? <></> : <>
+          <Box  position='absolute' top={0} left={0} p={4}  pointerEvents='none' >
+            <Flex direction='row' justify='space-between' >
+              <Box mb={4} bg='#272523' p={2} rounded='md' marginTop='150%' >
+                <Flex alignItems='left'  >
+                  <VStack alignItems='left'  >
+                    <HStack>
+                      <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
+                      <Text >Fortune : {!resourcesAcquired ? <Spinner size='sm'/> :fortune}</Text>
+                    </HStack>
+                    <HStack>
+                      <Image src='/img/battle-bay/announcementBoard/mitama.png' alt="walletIcon" boxSize={6}/>
+                      <Text align='left'>Mitama : {!resourcesAcquired ? <Spinner size='sm'/> :mitama}</Text>
+                    </HStack>
+                    <HStack>
+                      <Image src='/img/battle-bay/announcementBoard/koban.png' alt="walletIcon" boxSize={6}/>
+                      <Text align='left'>Koban : {!resourcesAcquired ? <Spinner size='sm'/> : koban}</Text>
+                    </HStack>
+                  </VStack>
+                </Flex>
 
-        <Spacer h='4'/>
-        <RdButton
-          w='150px'
-          pointerEvents='auto'
-          fontSize={{base: 'm', sm: 'm'}}
-          ref={buildingButtonRef} 
-          hideIcon={true}
-          onClick={onOpenBuildings}
-        >
-          View Building
-        </RdButton>
-        <Spacer h='4'/>
-        <RdButton
-          w='150px'
-          pointerEvents='auto'
-          fontSize={{base: 'm', sm: 'm'}}
-          ref={buildingButtonRef} 
-          hideIcon={true}
-          onClick={onOpenDailyCheckin}
-        >
-          Claim Daily Reward
-        </RdButton>
-        <AnnouncementBoardModal isOpen={isOpenAnnouncementBoard} onClose={onCloseAnnouncementBoard}/>
-        <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin}/>
+                <Spacer h='4'/>
+                <RdButton
+                  w='150px'
+                  pointerEvents='auto'
+                  fontSize={{base: 'm', sm: 'm'}}
+                  ref={buildingButtonRef}
+                  hideIcon={true}
+                  onClick={onOpenBuildings}
+                >
+                  View Building
+                </RdButton>
+                <Spacer h='4'/>
+                <RdButton
+                  w='150px'
+                  pointerEvents='auto'
+                  fontSize={{base: 'm', sm: 'm'}}
+                  ref={buildingButtonRef}
+                  hideIcon={true}
+                  onClick={onOpenDailyCheckin}
+                >
+                  Claim Daily Reward
+                </RdButton>
+                <AnnouncementBoardModal isOpen={isOpenAnnouncementBoard} onClose={onCloseAnnouncementBoard}/>
+                <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin}/>
+              </Box>
+            </Flex>
+          </Box>
+        </>}
+
+        <Box  position='absolute' top={0} left={0} p={4} >
+          <Flex direction='row' justify='space-between' >
+            {allianceCenterOpen ? <AllianceCenterModal closeAllianceCenter={() => CloseAllianceCenter()}/> : <></>}
+          </Flex>
         </Box>
-    </Flex>
-  </Box>
-  </>}
 
-  <Box  position='absolute' top={0} left={0} p={4} >
-    <Flex direction='row' justify='space-between' >
-      {allianceCenterOpen ? <AllianceCenterModal closeAllianceCenter={() => CloseAllianceCenter()}/> : <></>}
-    </Flex>
-  </Box>
-
-  </Box>
-    <Drawer
-      isOpen={isOpenBuildings}
-      placement='bottom'
-      onClose={onCloseBuildings}
-      finalFocusRef={buildingButtonRef}
-    >
-      <DrawerContent>
-        <DrawerCloseButton />
-        <DrawerHeader>Zoom to Building</DrawerHeader>
-        <DrawerBody>
-          {pins}
-        </DrawerBody>
-      </DrawerContent>
-    </Drawer>
-  </section>
-)};
+      </Box>
+      <Drawer
+        isOpen={isOpenBuildings}
+        placement='bottom'
+        onClose={onCloseBuildings}
+        finalFocusRef={buildingButtonRef}
+      >
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Zoom to Building</DrawerHeader>
+          <DrawerBody>
+            {pins}
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+    </section>
+  )
+};
 
 
 export default DefaultArea;
