@@ -13439,7 +13439,7 @@
       "multiToken": false,
       "address": "0xeA2a5d420142791AC58c0d446A5386fA0AdE35B3",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "We are artists who share a common vision or purpose. We have various goals, such as promoting the arts in our community, collaborating on projects or exhibitions, or using art as a tool for social change or activism.\nWe specialize in public murals or installations that engage with current events or environmental issues, or we might focus on creating community art programs that bring people together and promote creative expression.\nImagine Artists share commitment to using art as a means of inspiring imagination, creativity, and positive change in the world around them.",
         "avatar": "/img/collections/imagine-artists/avatar.webp",
