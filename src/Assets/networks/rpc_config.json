@@ -11767,7 +11767,7 @@
       "multiToken": false,
       "address": "0xFe320bB9830f6f62a3C7dd7F9B55c8609D0aDe35",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Fury Quack Gang is an NFTs sub-collection of the Fury Mouse Gang. Counting 3500 Fury Ducks. Like the mice, at night the fury takes hold of them and they ravage everything in their path. These creatures are the enemies number 1 of the Fury Mouse Gang and they want to rule on the World",
         "avatar": "/img/collections/fury-quack-gang/avatar.webp",
