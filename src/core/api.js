@@ -33,7 +33,7 @@ import { getCollections } from "@src/core/api/next/collectioninfo";
 
 const config = appConfig();
 let gatewayTools = new IPFSGatewayTools();
-const gateway = 'https://mygateway.mypinata.cloud';
+const gateway = config.urls.cdn.ipfs;
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 const knownContracts = config.collections;
 

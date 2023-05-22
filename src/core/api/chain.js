@@ -1,11 +1,13 @@
 import { BigNumber, Contract, ethers } from 'ethers';
-import { ERC721 } from '../../Contracts/Abis';
+import { ERC721 } from '@src/Contracts/Abis';
 import IPFSGatewayTools from '@pinata/ipfs-gateway-tools/dist/node';
-import {appConfig} from "../../Config";
+import {appConfig} from "@src/Config";
 
+const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(appConfig('rpc.read'));
 let gatewayTools = new IPFSGatewayTools();
-const gateway = 'https://mygateway.mypinata.cloud';
+const gateway = config.urls.cdn.ipfs;
+
 
 export const getCRC721NftsFromWallet = async (collectionAddress, walletAddress) => {
   const readContract = new Contract(collectionAddress, ERC721, readProvider);
@@ -89,7 +91,7 @@ const get721NftById = async (collectionAddress, tokenId, readContract = null) =>
 const getImageFromMetadata = async (json) => {
   let image;
   if (json.image.startsWith('ipfs')) {
-    image = `${gateway}/ipfs/${json.image.substring(7)}`;
+    image = `${gateway}${json.image.substring(7)}`;
   } else if (gatewayTools.containsCID(json.image) && !json.image.startsWith('ar')) {
     try {
       image = gatewayTools.convertToDesiredGateway(json.image, gateway);
