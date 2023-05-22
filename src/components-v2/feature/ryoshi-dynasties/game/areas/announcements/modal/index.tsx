@@ -29,7 +29,7 @@ const AnnouncementBoardModal = ({isOpen, onClose}: AnnouncementBoardModalProps) 
     <RdModal
       isOpen={isOpen}
       onClose={onClose}
-      title={page === 'info' ? 'RYOSHI DYNASTIES' : 'Previous Game Winners'}
+      title={page === 'info' ? 'RYOSHI DYNASTIES' : 'Leaderboard'}
       utilBtnTitle={<ArrowBackIcon />}
       onUtilBtnClick={() => setPage(page === 'info' ? 'leaderboard' : 'info')}
     >
