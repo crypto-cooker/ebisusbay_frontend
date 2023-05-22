@@ -197,11 +197,12 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
         if(koban < 50){
           toast.error("You need at least 50 Koban to attack")
+          setIsExecuting(false);
           return;
         }
 
         if(!approved){
-          toast.error("Please approve the contract to spend your resources")
+          toast.error("Please approve the pop up to allow the contract to spend your resources")
           setExecutingLabel('Approving contract...');
           const resourceContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
           const tx = await resourceContract.setApprovalForAll(config.contracts.battleField, true);
@@ -255,7 +256,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
       } catch (error) {
         if(error.response !== undefined) {
           console.log(error)
-          // toast.error(error.response.data.error.metadata.message)
+          toast.error(error.response.data.error.metadata.message)
         }
         else {
           toast.error(error);
