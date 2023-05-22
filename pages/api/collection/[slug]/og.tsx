@@ -70,7 +70,7 @@ export default async function handler(req: NextRequest) {
   }
 
   const banner = await base64Image(getBanner(collection));
-  const avatar = await base64Image(urlify(appConfig('urls.app'), collection.metadata.avatar));
+  const avatar = !!collection.metadata.avatar ? await base64Image(urlify(appConfig('urls.app'), collection.metadata.avatar)) : null;
 
   try {
     const data = await fetch(
@@ -111,17 +111,19 @@ export default async function handler(req: NextRequest) {
               bottom: 0,
             }}
           >
-            <img
-              alt={collection.name}
-              src={avatar}
-              width='50px'
-              height='50px'
-              style={{
-                backgroundRepeat: 'no-repeat',
-                objectFit: 'contain',
-                borderRadius: 5,
-              }}
-            />
+            {!!avatar && (
+              <img
+                alt={collection.name}
+                src={avatar}
+                width='50px'
+                height='50px'
+                style={{
+                  backgroundRepeat: 'no-repeat',
+                  objectFit: 'contain',
+                  borderRadius: 5,
+                }}
+              />
+            )}
             <div
               style={{
                 fontSize: 32,
@@ -231,43 +233,4 @@ async function fetchImageDimensions(url: string): Promise<{ width: number; heigh
   const buffer = await response.arrayBuffer();
   const dimensions = imageSize(Buffer.from(buffer));
   return { width: dimensions.width!, height: dimensions.height! };
-}
-
-
-async function convertWebPtoPNG(url: string): Promise<string> {
-  // Fetch the WebP image data
-  const response = await fetch(url);
-  const blob = await response.blob();
-
-  // Create an Image object from the fetched Blob
-  const image = new Image();
-  const loadImage = (src: Blob): Promise<void> => {
-    return new Promise((resolve, reject) => {
-      image.src = URL.createObjectURL(src);
-      image.onload = () => resolve();
-      image.onerror = () => reject(new Error('Failed to load image'));
-    });
-  };
-  await loadImage(blob);
-
-  // Draw the image onto a canvas
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
-  if (!ctx) {
-    throw new Error('Failed to create canvas context');
-  }
-  canvas.width = image.width;
-  canvas.height = image.height;
-  ctx.drawImage(image, 0, 0);
-
-  // Convert the canvas to a PNG data URL
-  return new Promise((resolve, reject) => {
-    canvas.toBlob((blob) => {
-      if (!blob) {
-        reject(new Error('Failed to convert image to PNG'));
-        return;
-      }
-      resolve(URL.createObjectURL(blob));
-    }, 'image/png');
-  });
 }

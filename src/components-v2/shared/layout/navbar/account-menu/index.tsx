@@ -260,19 +260,6 @@ const Index = function () {
     dispatch(chainConnect());
   };
 
-  const [cnsBalance, setCnsBalance] = useState(0);
-  useEffect(() => {
-    async function stuff() {
-      const c = new Contract(config.contracts.cnsusd, ERC20, readProvider);
-      const info = await c.balanceOf(user.address);
-      setCnsBalance(round(ethers.utils.formatEther(info)));
-    }
-
-    if (user.address) {
-      stuff();
-    }
-  }, [user.address]);
-
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     dispatch(setTheme(newTheme));

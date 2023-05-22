@@ -130,7 +130,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
                     `The $Fortune token presale is now open! Hold any Ebisu brand NFT and press the ${!!windowSize.height && windowSize.height < 600 ? '"$"' : '"Buy $Fortune"'} button to participate. Presale ends May 8th at 9pm UTC` :
                   Date.now() > config.tokenSale.vipStart ?
                     'The $Fortune token presale is now open to VIPs! Press the "Buy $Fortune" button to get started.' :
-                    'The $Fortune token presale will be held here on May 1st at 8pm UTC. VIPs will have exclusive access for one hour, followed by the member sale.'
+                    'The $Fortune token presale will be held here on May 1st at 11pm UTC. VIPs will have exclusive access for one hour, followed by the member sale.'
                 ]}
                 onComplete={() => setBankerImage(bankerImages.idle)}
               />
@@ -144,7 +144,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
           w={abbreviateButtonText ? '60px' : '250px'}
         >
           <VStack spacing={4} align='end'>
-            {Date.now() > config.tokenSale.vipStart && (
+            {Date.now() > config.tokenSale.vipStart && Date.now() < config.tokenSale.publicEnd && (
               <RdButton w='full' hideIcon={abbreviateButtonText} onClick={() => handlePurchaseDialogOpen('default')}>
                 {abbreviateButtonText ? (
                   <Icon as={FontAwesomeIcon} icon={faDollarSign} />

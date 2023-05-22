@@ -61,6 +61,11 @@ class ImageTranslator {
     const pattern = /\.[0-9a-z]+$/i;
     const hasFileExtension = pattern.test(url);
 
+    // If bunnykit url detected, then ignore any further translations
+    if (url.startsWith(config.urls.cdn.bunnykit)) {
+      return new BunnyKitProvider(url);
+    }
+
     // Important to keep local and proxy at the top because proxy could contain any of the below values being compared
     if (!url.startsWith('http')) {
       const baseUrl = isLocalEnv() ? config.urls.app : config.urls.cdn.app;
@@ -77,6 +82,10 @@ class ImageTranslator {
     } else if (url.includes('/files/')) {
       const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.files);
       provider = new BunnyCdnProvider(remappedUrl);
+
+      // return immediately because AWS bucket is not on ImageKit
+      return provider;
+
     } else if (url.includes('/storage/')) {
       const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.storage);
       provider = new BunnyCdnProvider(remappedUrl);
@@ -98,7 +107,8 @@ class ImageTranslator {
       }
     }
 
-    if (url.includes('.gif')) {
+    // Bunny is currently unable to translate gifs and mp4s
+    if (url.includes('.gif') || url.includes('.mp4')) {
       const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.bunnykit);
       provider = new BunnyKitProvider(remappedUrl);
     }

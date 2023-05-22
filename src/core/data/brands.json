@@ -35,7 +35,7 @@
     "name": "Mad Meerkat Burrow",
     "description": "The Mad Meerkat is inspired by the cheeky nature of the loveable rogues, who loves nothing more than cavorting together in the sun. An expansion from our OG Ethereum collection, these 10000 Next Gen Cro Meerkats will traverse the novel Cronos chain. Guided by the M.A.D values, we will embark on an adventure to explore and unlock all that lies within Cronos. With each Mad Meerkat sharing and learning from one another regardless the chain, it is our next step forward as one Burrow.",
     "images": {
-      "banner": "/img/brands/mad-meerkat-burrow.webp"
+      "banner": "/img/brands/mad-meerkat-burrow/banner.webp"
     },
     "collections": [
       "0x89dBC8Bd9a6037Cbd6EC66C4bF4189c9747B1C56",
@@ -509,7 +509,6 @@
       "banner": "/img/brands/croodle-ape/banner.webp"
     },
     "collections": [
-      "0xf3a7baeadf59f6900c0202a4680d958b9ad4b713",
       "0x84Fd887B14442C070a9B63a966D15a2C98E03FA2",
       "0xfcE5A6571fA0495d28f9D305945E74bA4dDEAD62",
       "0x434c8845261d5cF942d62fcd6503569cE05798b3"
@@ -650,7 +649,8 @@
     "collections": [
       "0x5Cb9a12d31CF751ACc58B12B47cc4E093A6AB580",
       "0x7D89dCC2f35403cFD9B07475826F9a14a340d06A",
-      "0x33e0b91c773D500FB4De87957740f5D200Be7371"
+      "0x33e0b91c773D500FB4De87957740f5D200Be7371",
+      "0x688c9c95a7fF91cF1559cdaf098b3038Bc538BE1"
     ],
     "socials": {
       "website": "https://www.cronosapesnft.com/",

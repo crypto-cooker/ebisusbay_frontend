@@ -14,7 +14,7 @@ const config = appConfig();
 const drops = config.drops;
 const collections = config.collections;
 
-const gateway = 'https://mygateway.mypinata.cloud';
+const gateway = config.urls.cdn.ipfs;
 
 export function debounce(func, wait, immediate) {
   var timeout;
@@ -619,13 +619,13 @@ export const round = (num, decimals) => {
 };
 
 export const convertIpfsResource = (resource, tooltip) => {
-  if (!resource || typeof window === 'undefined') return;
+  if (!resource) return;
 
   let gatewayTools = new IPFSGatewayTools();
 
   let linkedResource;
   if (resource.startsWith('ipfs')) {
-    linkedResource = `${gateway}/ipfs/${resource.substring(7)}`;
+    linkedResource = `${gateway}${resource.substring(7)}`;
   } else if (gatewayTools.containsCID(resource) && !resource.startsWith('ar')) {
     try {
       linkedResource = gatewayTools.convertToDesiredGateway(resource, gateway);

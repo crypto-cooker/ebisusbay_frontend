@@ -60,6 +60,7 @@ export interface DropVerification {
 }
 
 export interface DropEscrow {
+  description?: string;
   milestones: string[];
 }
 

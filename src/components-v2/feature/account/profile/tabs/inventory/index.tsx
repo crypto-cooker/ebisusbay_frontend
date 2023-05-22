@@ -87,17 +87,7 @@ export default function Inventory({ address }: InventoryProps) {
       page: pageParam,
       ...queryParams
     }
-    const nfts = await nextApiService.getWallet(address, params);
-
-    if (pageParam === 1) {
-      const fortuneTellers = await nextApiService.getWallet(address, {
-        collection: ['0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566'],
-      });
-
-      nfts.data = fortuneTellers.data.concat(nfts.data);
-    }
-
-    return nfts;
+    return nextApiService.getWallet(address, params);
   };
 
   const {data, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery(

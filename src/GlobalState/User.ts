@@ -425,7 +425,7 @@ export const connectAccount =
       let sales;
       let stakingRewards: number | string = 0;
       let isMember = false;
-      let fee;
+      let fee = 3;
       let usesEscrow = false;
 
       dispatch(retrieveProfile());

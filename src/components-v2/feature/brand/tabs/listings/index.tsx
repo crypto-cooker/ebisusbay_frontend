@@ -36,7 +36,7 @@ const ListingsTab = ({brand, collections}: ListingsTabProps) => {
   const fetcher = async ({ pageParam = 1 }) => {
     return NextApiService.getListings({
       ...queryParams,
-      page: pageParam + 1,
+      page: pageParam,
     });
   };
 
