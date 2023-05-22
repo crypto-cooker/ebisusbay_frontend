@@ -602,7 +602,7 @@ const DefaultArea = ({onChange}) => {
                   </Box>
 
                   <Box id="announcement" className={[styles.enlarge]} style={{position:"absolute", marginTop: announcementTop, marginLeft: announcementLeft, zIndex:"9"}}
-                    // onClick={onOpenAnnouncementBoard}
+                    onClick={onOpenAnnouncementBoard}
                   >
                     <img src='/img/battle-bay/mapImages/announcement.png' />
                   </Box>
