@@ -13582,7 +13582,7 @@
       "verification": {
         "doxx": false,
         "kyc": true,
-        "verified": true
+        "verified": false
       }
     },
     {
@@ -25957,8 +25957,8 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
-      "complete": false,
+      "published": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/piggy-bank-finance/drop.webp",
         "banner": "/img/collections/piggy-bank-finance/banner.webp",
@@ -25966,7 +25966,7 @@
         "preview": "/img/collections/piggy-bank-finance/card.webp"
       },
       "verification": {
-        "verified": true,
+        "verified": false,
         "doxx": false,
         "kyc": true,
         "escrow": false
