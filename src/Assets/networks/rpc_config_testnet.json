@@ -3454,6 +3454,31 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "Strange Camel Society",
+      "slug": "strange-camel-society",
+      "multiToken": false,
+      "address": "0x2963a24552A5E544e4CA5820Ba8A0B9e87a46011",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Introducing The Strange Camel - a one-of-a-kind collection of 3,333 custom-designed 3D Avatars. These stunningly beautiful avatars are aesthetically pleasing and carry special perks within the SCS ecosystem. The Strange Camel also tells a fascinating story about how camels were the only creatures to survive a deadly virus in 2969, leading to a thrilling adventure that you can be a part of.",
+        "avatar": "/img/collections/strange-camel-society/avatar.webp",
+        "banner": "/img/collections/strange-camel-society/banner.webp",
+        "card": "/img/collections/strange-camel-society/card.webp",
+        "website": "https://www.strangecamelsociety.com/",
+        "twitter": "https://twitter.com/StrangeCamel",
+        "discord": "https://discord.gg/bTQ8u7DHHb",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
@@ -8335,6 +8360,45 @@
         "banner": "/img/collections/cronos-towers/banner.webp",
         "avatar": "/img/collections/cronos-towers/avatar.webp",
         "preview": "/img/collections/cronos-towers/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
+      }
+    },
+    {
+      "id": 173,
+      "slug": "strange-camel-society",
+      "title": "Strange Camel Society",
+      "subtitle": "Introducing The Strange Camel - a one-of-a-kind collection of 3,333 custom-designed 3D Avatars. These stunningly beautiful avatars are aesthetically pleasing and carry special perks within the SCS ecosystem. The Strange Camel also tells a fascinating story about how camels were the only creatures to survive a deadly virus in 2969, leading to a thrilling adventure that you can be a part of.",
+      "description": "Strange Camel has a long-term vision for its NFT collection. The ultimate goal is to create an ecosystem and metaverse revolving around StrangeCamel NFTs. The first steps to realize this vision are implementing a staking system and 'adding a metaverse to their site. By staking their avatars, users can earn valuable $SCS and become part of the community. \n\nIn addition, The Strange Camel is planning to introduce a downtown land, fashion merch, a DAO system, an NFT lottery, and events/tournaments that will provide concrete utility to their NFTs. Join The Strange Camel on their journey to revolutionize the NFT space and become part of their family!",
+      "author": {
+        "name": "Eddy W",
+        "website": "https://www.strangecamelsociety.com/",
+        "twitter": "https://twitter.com/StrangeCamel",
+        "discord": "https://discord.gg/bTQ8u7DHHb"
+      },
+      "address": "0x2963a24552A5E544e4CA5820Ba8A0B9e87a46011",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 40,
+      "totalSupply": 4000,
+      "cost": "200",
+      "memberCost": "200",
+      "whitelistCost": "180",
+      "foundersOnly": false,
+      "start": 1684772413000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/strange-camel-society/drop.webp",
+        "banner": "/img/collections/strange-camel-society/banner.webp",
+        "avatar": "/img/collections/strange-camel-society/avatar.webp",
+        "preview": "/img/collections/strange-camel-society/card.webp"
       },
       "verification": {
         "doxx": false,
