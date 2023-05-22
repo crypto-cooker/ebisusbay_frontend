@@ -5,11 +5,11 @@ import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bar
 import BattleMap from "@src/Components/BattleBay/Areas/BattleMap";
 import AllianceCenter from "@src/Components/BattleBay/Areas/AllianceCenter";
 import AnnouncementBoard from "@src/Components/BattleBay/Areas/AnnouncementBoard";
-import DefaultArea from "@src/Components/BattleBay/Areas/DefaultArea";
 import Academy from "@src/Components/BattleBay/Areas/Academy";
 import UserPage from "@src/Components/BattleBay/Areas/UserPage";
 import { useSelector } from 'react-redux';
 import Bank from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank";
+import Village from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village";
 
 const BattleBay = () => {
   const [currentPage, setCurrentPage] = useState();
@@ -56,7 +56,7 @@ const BattleBay = () => {
       ): currentPage === 'userPage' ? (
         <UserPage onBack={returnToPreviousPage} factions={factions}/>
       ): (
-        <DefaultArea onChange={navigate} />
+        <Village onChange={navigate} />
         // <BattleMap onChange={navigate} />
       )}
     </>

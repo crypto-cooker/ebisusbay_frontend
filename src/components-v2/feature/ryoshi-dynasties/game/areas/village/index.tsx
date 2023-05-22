@@ -1,61 +1,61 @@
 import {
-  Button,
-  Flex,
   Box,
-  Spacer,
-  Image,
+  Button,
   Drawer,
   DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
   DrawerCloseButton,
-  useDisclosure,
-  AspectRatio,
-  VStack,
-  Text,
+  DrawerContent,
+  DrawerHeader,
+  Flex,
+  HStack,
+  Image,
+  Spacer,
   Spinner,
-  HStack, useBreakpointValue
+  Text,
+  useBreakpointValue,
+  useDisclosure,
+  VStack
 } from "@chakra-ui/react"
 
-import React, {useEffect, useLayoutEffect, useState, useRef } from 'react';
+import React, {ReactElement, useEffect, useRef, useState} from 'react';
 // import { resizeMap, resizeNewMap } from './mapFunctions.js'
-import { TransformWrapper, TransformComponent, ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
-import styles from './BattleBay.module.scss';
-import AnnouncementBoardModal from '../../../components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal';
-import AllianceCenterModal from './AllianceCenterModal';
+import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
+import styles from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
-import {BigNumber, Contract, ethers} from "ethers";
-
-import {commify} from "ethers/lib/utils";
+import {Contract, ethers} from "ethers";
 import {ApiService} from "@src/core/services/api-service";
 import NextApiService from "@src/core/services/api-service/next";
 import {getDailyRewards, getGameTokens} from "@src/core/api/RyoshiDynastiesAPICalls";
 
-import { getAuthSignerInStorage } from '@src/helpers/storage';
-import {useSelector} from "react-redux";
+import {getAuthSignerInStorage} from '@src/helpers/storage';
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 
 //contracts
 import {appConfig} from "@src/Config";
 import Resources from "@src/Contracts/Resources.json";
-import AllianceCenter from "./AllianceCenter";
 import DailyCheckinModal from "@src/components-v2/feature/ryoshi-dynasties/game/modals/daily-checkin";
+import {useAppSelector} from "@src/Store/hooks";
+import {toast} from "react-toastify";
+import {createSuccessfulTransactionToastContent} from "@src/utils";
+import AnnouncementBoardModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal";
+import AllianceCenterModal from "@src/Components/BattleBay/Areas/AllianceCenterModal";
 
-const DefaultArea = ({onChange}) => {
+interface VillageProps {
+  onChange: (value: string) => void;
+}
+const Village = ({onChange}: VillageProps) => {
 
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
   const config = appConfig();
 
-  const[koban, setKoban] = useState(0);
-  const[fortune, setFortune] = useState(0);
-  const[mitama, setMitama] = useState(0);
+  const[koban, setKoban] = useState<number | string>(0);
+  const[fortune, setFortune] = useState<number | string>(0);
+  const[mitama, setMitama] = useState<number | string>(0);
   const[resourcesAcquired, setResourcesAcquired] = useState(false);
   const [isLoading, getSigner] = useCreateSigner();
 
-  const [pins, setPins] = useState([]);
-  const transformComponentRef = useRef()
+  const [pins, setPins] = useState<ReactElement[]>([]);
+  const transformComponentRef = useRef<any>(null)
   const [elementToZoomTo, setElementToZoomTo] = useState("");
   const [zoomState, setZoomState] = useState({
     offsetX: 0,
@@ -69,8 +69,8 @@ const DefaultArea = ({onChange}) => {
   const [dailyRewardClaimed, setDailyRewardClaimed] = useState(false);
   const [allianceCenterOpen, setAllianceCenterOpen] = useState(false);
 
-  const buildingButtonRef = React.useRef()
-  const announcementBoardRef = React.useRef()
+  const buildingButtonRef = useRef<any>(null)
+  const announcementBoardRef = useRef<any>(null)
   const { isOpen: isOpenBuildings, onOpen: onOpenBuildings, onClose: onCloseBuildings } = useDisclosure();
   const { isOpen: isOpenAnnouncementBoard, onOpen: onOpenAnnouncementBoard, onClose: onCloseAnnouncementBoard } = useDisclosure();
   const { isOpen: isOpenAllianceCenter, onOpen: onOpenAllianceCenter, onClose: onCloseAllianceCenter } = useDisclosure();
@@ -78,14 +78,14 @@ const DefaultArea = ({onChange}) => {
 
   useEffect(() => {
     if (transformComponentRef.current) {
-      const { zoomToElement } = transformComponentRef.current;
+      const { zoomToElement } = transformComponentRef.current as any;
       zoomToElement(elementToZoomTo);
     }
     console.log("current state " + transformComponentRef?.current?.state) ;
     // transformComponentRef.current.state;
   }, [elementToZoomTo]);
-  
-  const changeCanvasState = (ReactZoomPanPinchRef, event) => {
+
+  const changeCanvasState = (ReactZoomPanPinchRef: any, event: any) => {
     setZoomState({
       offsetX: ReactZoomPanPinchRef.state.positionX,
       offsetY: ReactZoomPanPinchRef.state.positionY,
@@ -102,7 +102,7 @@ const DefaultArea = ({onChange}) => {
     }
     if (signatureInStorage) {
       try {
-        const data = await getGameTokens(user.address.toLowerCase(), signatureInStorage);
+        const data = await getGameTokens(user?.address?.toLowerCase(), signatureInStorage);
 
         if(data.data.data.length > 0) {
 
@@ -120,7 +120,7 @@ const DefaultArea = ({onChange}) => {
     }
     if (signatureInStorage) {
       try {
-        const data = await getDailyRewards(user.address.toLowerCase(), signatureInStorage);
+        const data = await getDailyRewards(user!.address!.toLowerCase(), signatureInStorage);
 
         const sig = data.data.data.signature;
         const profileId = data.data.data.profileId;
@@ -128,11 +128,11 @@ const DefaultArea = ({onChange}) => {
         const timestamp = data.data.data.timestamp;
 
         var claimRewardsTuple = {
-          address: user.address.toLowerCase(), 
-          profileId: [profileId], 
+          address: user!.address!.toLowerCase(),
+          profileId: [profileId],
           quantity: [quantity],
-          timestamp: timestamp, 
-                          };
+          timestamp: timestamp,
+        };
 
         const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
         const tx = await resourcesContract.mintWithSig(claimRewardsTuple, sig);
@@ -144,8 +144,8 @@ const DefaultArea = ({onChange}) => {
       }
     }
   }
-  
-  function nFormatter(num, digits) {
+
+  function nFormatter(num: any, digits: number) {
     const lookup = [
       { value: 1, symbol: "" },
       { value: 1e3, symbol: "k" },
@@ -159,50 +159,50 @@ const DefaultArea = ({onChange}) => {
   }
 
   const buildings ={ "allianceCenter" : {height:438, width:554, top:'7%', left:'55%'},
-                      "townhall" : {height:607, width:707, top:'13%', left:'36%'},
-                      "academy" : {height: 792, width: 744, top: '4%', left: '74%'},
-                      "tavern" : {height: 573, width: 725, top: '3%', left: '14%'},
-                      "tavernSpin" : {height: 573, width: 725, top: '3%', left: '14%'},
+    "townhall" : {height:607, width:707, top:'13%', left:'36%'},
+    "academy" : {height: 792, width: 744, top: '4%', left: '74%'},
+    "tavern" : {height: 573, width: 725, top: '3%', left: '14%'},
+    "tavernSpin" : {height: 573, width: 725, top: '3%', left: '14%'},
 
-                      "water" : {height: 703, width: 2880, top: '32%', left: '0%'},
-                      "boat" : {height: 613, width: 718, top: '33%', left: '2%'},
-                      "ebisustatue" : {height: 542, width: 279, top: '35%', left: '40%'},
-                      "fishmarket" : {height: 545, width: 793, top: '36.5%', left: '55%'},
-                      "barracks" : {height: 579, width: 832, top: '12.5%', left: '-0.5%'},
-                      "swordsmen" : {height: 270, width: 383, top: '22%', left: '14%'},
+    "water" : {height: 703, width: 2880, top: '32%', left: '0%'},
+    "boat" : {height: 613, width: 718, top: '33%', left: '2%'},
+    "ebisustatue" : {height: 542, width: 279, top: '35%', left: '40%'},
+    "fishmarket" : {height: 545, width: 793, top: '36.5%', left: '55%'},
+    "barracks" : {height: 579, width: 832, top: '12.5%', left: '-0.5%'},
+    "swordsmen" : {height: 270, width: 383, top: '22%', left: '14%'},
 
-                      "flowers1" : {height: 251, width: 229, top: '3%', left: '14%'},
-                      "flowers2" : {height: 251, width: 229, top: '3%', left: '14%'},
-                      "flowers3" : {height: 251, width: 229, top: '3%', left: '14%'},
+    "flowers1" : {height: 251, width: 229, top: '3%', left: '14%'},
+    "flowers2" : {height: 251, width: 229, top: '3%', left: '14%'},
+    "flowers3" : {height: 251, width: 229, top: '3%', left: '14%'},
 
-                      "bank" : {height: 456, width: 579, top: '%', left: '33%', x: 444, y: 444, scale: 4},
-                      "announcement" : {height: 243, width: 206, top: '28%', left: '60%'},
+    "bank" : {height: 456, width: 579, top: '%', left: '33%', x: 444, y: 444, scale: 4},
+    "announcement" : {height: 243, width: 206, top: '28%', left: '60%'},
 
-                      "moongate" : {height: 482, width: 443, top: '23%', left: '67%'},
-                      "torii" : {height: 201, width: 236, top: '6%', left: '0%'},
-                      "pond" : {height: 311, width: 783, top: '0%', left: '65%'}, 
+    "moongate" : {height: 482, width: 443, top: '23%', left: '67%'},
+    "torii" : {height: 201, width: 236, top: '6%', left: '0%'},
+    "pond" : {height: 311, width: 783, top: '0%', left: '65%'},
 
-                      'alliancecenter_label' : {height: 438, width: 554, top: '0%', left: '0%'},
-                      'announcementboard_label' : {height: 243, width: 279, top: '28%', left: '60%'},
-                      'moongate_label' : {height: 482, width: 443, top: '23%', left: '67%'},
-                      'academy_label' : {height: 792, width: 744, top: '4%', left: '74%'},
-                      'tavern_label' : {height: 573, width: 725, top: '3%', left: '14%'},
-                      
-                      'townhall_label' : {height: 607, width: 707, top: '13%', left: '36%'},
-                      'barracks_label' : {height: 579, width: 832, top: '12.5%', left: '-0.5%'},
-                      'fishmarket_label' : {height: 545, width: 793, top: '36.5%', left: '55%'},
-                      'bank_label' : {height: 456, width: 579, top: '7%', left: '33%'},
-                    }
+    'alliancecenter_label' : {height: 438, width: 554, top: '0%', left: '0%'},
+    'announcementboard_label' : {height: 243, width: 279, top: '28%', left: '60%'},
+    'moongate_label' : {height: 482, width: 443, top: '23%', left: '67%'},
+    'academy_label' : {height: 792, width: 744, top: '4%', left: '74%'},
+    'tavern_label' : {height: 573, width: 725, top: '3%', left: '14%'},
+
+    'townhall_label' : {height: 607, width: 707, top: '13%', left: '36%'},
+    'barracks_label' : {height: 579, width: 832, top: '12.5%', left: '-0.5%'},
+    'fishmarket_label' : {height: 545, width: 793, top: '36.5%', left: '55%'},
+    'bank_label' : {height: 456, width: 579, top: '7%', left: '33%'},
+  }
   const buttonsNames = ["bank", "alliancecenter", "torii", "moongate", "barracks", "announcement", "fishmarket","boat", "academy", "tavern", "townhall"];
-  
+
   const OpenAllianceCenter = () => {
-    setElementToZoomTo('alliancecenter'); 
+    setElementToZoomTo('alliancecenter');
     setAllianceCenterOpen(true);
   }
   const CloseAllianceCenter = () => {
-    setZoomState(false);
+    // setZoomState(false);
     setAllianceCenterOpen(false);
-    setElementToZoomTo('fancyMenu'); 
+    setElementToZoomTo('fancyMenu');
     // resetTransform();
   }
 
@@ -237,12 +237,12 @@ const DefaultArea = ({onChange}) => {
   const [flowers1Height, setFlowers1Height] = useState(buildings.flowers1.height);
   const [flowers1Top, setFlowers1Top] = useState(buildings.flowers1.top);
   const [flowers1Left, setFlowers1Left] = useState(buildings.flowers1.left);
-                    
+
   const [flowers2Width, setFlowers2Width] = useState(buildings.flowers2.width);
   const [flowers2Height, setFlowers2Height] = useState(buildings.flowers2.height);
   const [flowers2Top, setFlowers2Top] = useState(buildings.flowers2.top);
   const [flowers2Left, setFlowers2Left] = useState(buildings.flowers2.left);
-                    
+
   const [flowers3Width, setFlowers3Width] = useState(buildings.flowers3.width);
   const [flowers3Height, setFlowers3Height] = useState(buildings.flowers3.height);
   const [flowers3Top, setFlowers3Top] = useState(buildings.flowers3.top);
@@ -303,50 +303,50 @@ const DefaultArea = ({onChange}) => {
   const [pondTop, setPondTop] = useState(buildings.pond.top);
   const [pondLeft, setPondLeft] = useState(buildings.pond.left);
 
-  const [alliancecenter_labelWidth, setalliancecenter_labelWidth] = useState(buildings.alliancecenter_label.left);
-  const [alliancecenter_labelHeight, setalliancecenter_labelHeight] = useState(buildings.alliancecenter_label.top);
-  const [alliancecenter_labelTop, setalliancecenter_labelTop] = useState(buildings.alliancecenter_label.width);
-  const [alliancecenter_labelLeft, setalliancecenter_labelLeft] = useState(buildings.alliancecenter_label.height);
+  const [alliancecenter_labelWidth, setalliancecenter_labelWidth] = useState<number | string>(buildings.alliancecenter_label.left);
+  const [alliancecenter_labelHeight, setalliancecenter_labelHeight] = useState<number | string>(buildings.alliancecenter_label.top);
+  const [alliancecenter_labelTop, setalliancecenter_labelTop] = useState<number | string>(buildings.alliancecenter_label.width);
+  const [alliancecenter_labelLeft, setalliancecenter_labelLeft] = useState<number | string>(buildings.alliancecenter_label.height);
 
-  const [townhall_labelWidth, settownhall_labelWidth] = useState(buildings.townhall_label.left);
-  const [townhall_labelHeight, settownhall_labelHeight] = useState(buildings.townhall_label.top);
-  const [townhall_labelTop, settownhall_labelTop] = useState(buildings.townhall_label.width);
-  const [townhall_labelLeft, settownhall_labelLeft] = useState(buildings.townhall_label.height);
+  const [townhall_labelWidth, settownhall_labelWidth] = useState<number | string>(buildings.townhall_label.left);
+  const [townhall_labelHeight, settownhall_labelHeight] = useState<number | string>(buildings.townhall_label.top);
+  const [townhall_labelTop, settownhall_labelTop] = useState<number | string>(buildings.townhall_label.width);
+  const [townhall_labelLeft, settownhall_labelLeft] = useState<number | string>(buildings.townhall_label.height);
 
-  const [tavern_labelWidth, settavern_labelWidth] = useState(buildings.tavern_label.left);
-  const [tavern_labelHeight, settavern_labelHeight] = useState(buildings.tavern_label.top);
-  const [tavern_labelTop, settavern_labelTop] = useState(buildings.tavern_label.width);
-  const [tavern_labelLeft, settavern_labelLeft] = useState(buildings.tavern_label.height);
+  const [tavern_labelWidth, settavern_labelWidth] = useState<number | string>(buildings.tavern_label.left);
+  const [tavern_labelHeight, settavern_labelHeight] = useState<number | string>(buildings.tavern_label.top);
+  const [tavern_labelTop, settavern_labelTop] = useState<number | string>(buildings.tavern_label.width);
+  const [tavern_labelLeft, settavern_labelLeft] = useState<number | string>(buildings.tavern_label.height);
 
-  const [academy_labelWidth, setacademy_labelWidth] = useState(buildings.academy_label.left);
-  const [academy_labelHeight, setacademy_labelHeight] = useState(buildings.academy_label.top);
-  const [academy_labelTop, setacademy_labelTop] = useState(buildings.academy_label.width);
-  const [academy_labelLeft, setacademy_labelLeft] = useState(buildings.academy_label.height);
+  const [academy_labelWidth, setacademy_labelWidth] = useState<number | string>(buildings.academy_label.left);
+  const [academy_labelHeight, setacademy_labelHeight] = useState<number | string>(buildings.academy_label.top);
+  const [academy_labelTop, setacademy_labelTop] = useState<number | string>(buildings.academy_label.width);
+  const [academy_labelLeft, setacademy_labelLeft] = useState<number | string>(buildings.academy_label.height);
 
-  const [announcementboard_labelWidth, setannouncementboard_labelWidth] = useState(buildings.announcementboard_label.left);
-  const [announcementboard_labelHeight, setannouncementboard_labelHeight] = useState(buildings.announcementboard_label.top);
-  const [announcementboard_labelTop, setannouncementboard_labelTop] = useState(buildings.announcementboard_label.width);
-  const [announcementboard_labelLeft, setannouncementboard_labelLeft] = useState(buildings.announcementboard_label.height);
+  const [announcementboard_labelWidth, setannouncementboard_labelWidth] = useState<number | string>(buildings.announcementboard_label.left);
+  const [announcementboard_labelHeight, setannouncementboard_labelHeight] = useState<number | string>(buildings.announcementboard_label.top);
+  const [announcementboard_labelTop, setannouncementboard_labelTop] = useState<number | string>(buildings.announcementboard_label.width);
+  const [announcementboard_labelLeft, setannouncementboard_labelLeft] = useState<number | string>(buildings.announcementboard_label.height);
 
-  const [fishmarket_labelWidth, setfishmarket_labelWidth] = useState(buildings.fishmarket_label.left);
-  const [fishmarket_labelHeight, setfishmarket_labelHeight] = useState(buildings.fishmarket_label.top);
-  const [fishmarket_labelTop, setfishmarket_labelTop] = useState(buildings.fishmarket_label.width);
-  const [fishmarket_labelLeft, setfishmarket_labelLeft] = useState(buildings.fishmarket_label.height);
+  const [fishmarket_labelWidth, setfishmarket_labelWidth] = useState<number | string>(buildings.fishmarket_label.left);
+  const [fishmarket_labelHeight, setfishmarket_labelHeight] = useState<number | string>(buildings.fishmarket_label.top);
+  const [fishmarket_labelTop, setfishmarket_labelTop] = useState<number | string>(buildings.fishmarket_label.width);
+  const [fishmarket_labelLeft, setfishmarket_labelLeft] = useState<number | string>(buildings.fishmarket_label.height);
 
-  const [moongate_labelWidth, setmoongate_labelWidth] = useState(buildings.moongate_label.left);
-  const [moongate_labelHeight, setmoongate_labelHeight] = useState(buildings.moongate_label.top);
-  const [moongate_labelTop, setmoongate_labelTop] = useState(buildings.moongate_label.width);
-  const [moongate_labelLeft, setmoongate_labelLeft] = useState(buildings.moongate_label.height);
+  const [moongate_labelWidth, setmoongate_labelWidth] = useState<number | string>(buildings.moongate_label.left);
+  const [moongate_labelHeight, setmoongate_labelHeight] = useState<number | string>(buildings.moongate_label.top);
+  const [moongate_labelTop, setmoongate_labelTop] = useState<number | string>(buildings.moongate_label.width);
+  const [moongate_labelLeft, setmoongate_labelLeft] = useState<number | string>(buildings.moongate_label.height);
 
-  const [bank_labelWidth, setbank_labelWidth] = useState(buildings.bank_label.left);
-  const [bank_labelHeight, setbank_labelHeight] = useState(buildings.bank_label.top);
-  const [bank_labelTop, setbank_labelTop] = useState(buildings.bank_label.width);
-  const [bank_labelLeft, setbank_labelLeft] = useState(buildings.bank_label.height);
+  const [bank_labelWidth, setbank_labelWidth] = useState<number | string>(buildings.bank_label.left);
+  const [bank_labelHeight, setbank_labelHeight] = useState<number | string>(buildings.bank_label.top);
+  const [bank_labelTop, setbank_labelTop] = useState<number | string>(buildings.bank_label.width);
+  const [bank_labelLeft, setbank_labelLeft] = useState<number | string>(buildings.bank_label.height);
 
-  const [barracks_labelWidth, setbarracks_labelWidth] = useState(buildings.barracks_label.left);
-  const [barracks_labelHeight, setbarracks_labelHeight] = useState(buildings.barracks_label.top);
-  const [barracks_labelTop, setbarracks_labelTop] = useState(buildings.barracks_label.width);
-  const [barracks_labelLeft, setbarracks_labelLeft] = useState(buildings.barracks_label.height);
+  const [barracks_labelWidth, setbarracks_labelWidth] = useState<number | string>(buildings.barracks_label.left);
+  const [barracks_labelHeight, setbarracks_labelHeight] = useState<number | string>(buildings.barracks_label.top);
+  const [barracks_labelTop, setbarracks_labelTop] = useState<number | string>(buildings.barracks_label.width);
+  const [barracks_labelLeft, setbarracks_labelLeft] = useState<number | string>(buildings.barracks_label.height);
 
 //#endregion
 
@@ -365,7 +365,7 @@ const DefaultArea = ({onChange}) => {
 
     setAcademyWidth( buildings.academy.width * sizeMultiplier);
     setAcademyHeight( buildings.academy.height * sizeMultiplier);
-    
+
     setTavernSpinWidth( buildings.tavernSpin.width * sizeMultiplier);
     setTavernSpinHeight( buildings.tavernSpin.height * sizeMultiplier);
 
@@ -470,10 +470,10 @@ const DefaultArea = ({onChange}) => {
   const GetResources = async () => {
     try {
       setResourcesAcquired(false);
-      let nfts = await NextApiService.getWallet(user.address, {
-        collection: '0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5',
+      let nfts = await NextApiService.getWallet(user!.address!, {
+        collection: ['0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5'],
       });
-      const fortuneAndMitama = await ApiService.withoutKey().ryoshiDynasties.getErc20Account(user.address)
+      const fortuneAndMitama = await ApiService.withoutKey().ryoshiDynasties.getErc20Account(user!.address!)
 
       if (nfts.data.length > 0) {
         setKoban(nFormatter(nfts.data[0].balance, 1));
@@ -497,10 +497,10 @@ const DefaultArea = ({onChange}) => {
   }, [user.address])
 
   const SetUpButtons = async () => {
-    setPins(buttonsNames.map((button, i) => 
-      (<Button style={{ marginTop: '4px', marginLeft: '4px' }} 
-      onClick={() => setElementToZoomTo(button)} variant='outline'size='sm'> 
-      {button}</Button>
+    setPins(buttonsNames.map((button, i) =>
+      (<Button style={{ marginTop: '4px', marginLeft: '4px' }}
+               onClick={() => setElementToZoomTo(button)} variant='outline'size='sm'>
+          {button}</Button>
       )))
   }
 
@@ -509,6 +509,35 @@ const DefaultArea = ({onChange}) => {
     {base: 0.5, sm: 0.6, md: 0.7, lg: 0.8, xl: 0.9, '2xl': 1},
     {fallback: 'lg'}
   )
+  const mapProps = useBreakpointValue<MapProps>(
+    {
+      base: {
+        scale: 0.5,
+        initialPosition: { x: -450, y: -120 }
+      },
+      sm: {
+        scale: 0.6,
+        initialPosition: { x: -450, y: -120 }
+      },
+      md: {
+        scale: 0.7,
+        initialPosition: { x: -450, y: -120 }
+      },
+      lg: {
+        scale: 0.8,
+        initialPosition: { x: -450, y: -120 }
+      },
+      xl: {
+        scale: 0.9,
+        initialPosition: { x: -450, y: -120 }
+      },
+      '2xl': {
+        scale: 1,
+        initialPosition: { x: -450, y: -120 }
+      }
+    }
+  );
+
   useEffect(() => {
     setMapInitialized(true);
   }, []);
@@ -524,9 +553,11 @@ const DefaultArea = ({onChange}) => {
             onPinching={changeCanvasState}
             onPinchingStop={changeCanvasState}
             onPanningStop={changeCanvasState}
-            // centerOnInit={true}
-            // disablePadding={true}
-            initialScale={mapScale}
+
+            initialPositionX={mapProps?.initialPosition.x}
+            initialPositionY={mapProps?.initialPosition.y}
+            disablePadding={true}
+            initialScale={mapProps?.scale}
           >
             {(utils) => (
               <React.Fragment>
@@ -540,49 +571,49 @@ const DefaultArea = ({onChange}) => {
                   <map name="image-map">
                   </map>
 
-                  <Box id="alliancecenter" className={[styles.enlarge]} style={{position:"absolute", marginTop: allianceCenterTop, marginLeft: allianceCenterLeft, zIndex:"9"}}
+                  <Box id="alliancecenter" className={styles.enlarge} style={{position:"absolute", marginTop: allianceCenterTop, marginLeft: allianceCenterLeft, zIndex:"9"}}
                     // onClick={() => onChange('allianceCenter')}
                        onClick={() => OpenAllianceCenter()}
                   >
                     <img src='/img/battle-bay/mapImages/alliancecenter_day.png' />
-                    <Box className={[styles.enlarge]} style={{position:"absolute", marginTop: alliancecenter_labelTop, marginLeft: alliancecenter_labelLeft, zIndex:"20"}}>
+                    <Box className={styles.enlarge} style={{position:"absolute", marginTop: alliancecenter_labelTop, marginLeft: alliancecenter_labelLeft, zIndex:"20"}}>
                       <img src='/img/battle-bay/building_labels/alliancecenter_label.png' />
                     </Box>
                   </Box>
 
-                  <Box id="townhall" className={[styles.enlarge]} style={{position:"absolute", marginTop: townhallTop, marginLeft: townhallLeft, zIndex:"9"}}
+                  <Box id="townhall" className={styles.enlarge} style={{position:"absolute", marginTop: townhallTop, marginLeft: townhallLeft, zIndex:"9"}}
                     // onClick={() => onChange('townHall')}
                   >
                     <img src='/img/battle-bay/mapImages/townhall.png' />
                   </Box>
 
-                  <Box id="tavern" className={[styles.enlarge]} style={{position:"absolute", marginTop: tavernTop, marginLeft: tavernLeft, zIndex:"9"}}
+                  <Box id="tavern" className={styles.enlarge} style={{position:"absolute", marginTop: tavernTop, marginLeft: tavernLeft, zIndex:"9"}}
                     // onClick={() => onChange('tavern')}
                   >
                     <img src='/img/battle-bay/mapImages/tavern.png' />
                   </Box>
 
-                  <Box id="academy" className={[styles.enlarge]} style={{position:"absolute", marginTop: academyTop, marginLeft: academyLeft, zIndex:"9"}}
+                  <Box id="academy" className={styles.enlarge} style={{position:"absolute", marginTop: academyTop, marginLeft: academyLeft, zIndex:"9"}}
                     // onClick={() => onChange('academy')}
                   >
                     <img src='/img/battle-bay/mapImages/academy.png' />
                   </Box>
 
-                  <Box className={[styles.enlarge]} style={{position:"absolute", marginTop: tavernSpinTop, marginLeft: tavernSpinLeft, zIndex:"9", pointerEvents:"none"}}>
+                  <Box className={styles.enlarge} style={{position:"absolute", marginTop: tavernSpinTop, marginLeft: tavernSpinLeft, zIndex:"9", pointerEvents:"none"}}>
                     <img src='/img/battle-bay/mapImages/tavern_turbine.png' />
                   </Box>
 
-                  <Box id="boat" className={[styles.enlarge]} style={{position:"absolute", marginTop: boatTop, marginLeft: boatLeft, zIndex:"9"}}
+                  <Box id="boat" className={styles.enlarge} style={{position:"absolute", marginTop: boatTop, marginLeft: boatLeft, zIndex:"9"}}
                        onClick={() => onChange('battleMap')}
                   >
                     <img src='/img/battle-bay/mapImages/boat_day.png' />
                   </Box>
 
-                  <Box id="ebisustatue" className={[styles.enlarge]} style={{position:"absolute", marginTop: ebisustatueTop, marginLeft: ebisustatueLeft, zIndex:"9"}} >
+                  <Box id="ebisustatue" className={styles.enlarge} style={{position:"absolute", marginTop: ebisustatueTop, marginLeft: ebisustatueLeft, zIndex:"9"}} >
                     <img src='/img/battle-bay/mapImages/ebisustatue.png' />
                   </Box>
 
-                  <Box id="fishmarket" className={[styles.enlarge]} style={{position:"absolute", marginTop: fishmarketTop, marginLeft: fishmarketLeft, zIndex:"9"}} >
+                  <Box id="fishmarket" className={styles.enlarge} style={{position:"absolute", marginTop: fishmarketTop, marginLeft: fishmarketLeft, zIndex:"9"}} >
                     <img src='/img/battle-bay/mapImages/fishmarket_day.png' />
                   </Box>
 
@@ -590,7 +621,7 @@ const DefaultArea = ({onChange}) => {
                     <img src='/img/battle-bay/mapImages/water.png' />
                   </Box>
 
-                  <Box id="bank" className={[styles.enlarge]} style={{position:"absolute", marginTop: bankTop, marginLeft: bankLeft, zIndex:"8"}}
+                  <Box id="bank" className={styles.enlarge} style={{position:"absolute", marginTop: bankTop, marginLeft: bankLeft, zIndex:"8"}}
                        onClick={() => onChange('bank')}
                   >
                     <img src='/img/battle-bay/mapImages/bank_day.png' />
@@ -601,33 +632,33 @@ const DefaultArea = ({onChange}) => {
                     {/* </div> */}
                   </Box>
 
-                  <Box id="announcement" className={[styles.enlarge]} style={{position:"absolute", marginTop: announcementTop, marginLeft: announcementLeft, zIndex:"9"}}
-                    onClick={onOpenAnnouncementBoard}
+                  <Box id="announcement" className={styles.enlarge} style={{position:"absolute", marginTop: announcementTop, marginLeft: announcementLeft, zIndex:"9"}}
+                       onClick={onOpenAnnouncementBoard}
                   >
                     <img src='/img/battle-bay/mapImages/announcement.png' />
                   </Box>
 
-                  <Box id="barracks" className={[styles.enlarge]} style={{position:"absolute", marginTop: barracksTop, marginLeft: barracksLeft, zIndex:"9"}}
+                  <Box id="barracks" className={styles.enlarge} style={{position:"absolute", marginTop: barracksTop, marginLeft: barracksLeft, zIndex:"9"}}
                        onClick={() => onChange('barracks')}
                   >
                     <img src='/img/battle-bay/mapImages/barracks.png' />
                   </Box>
 
-                  <Box className={[styles.enlarge]} style={{position:"absolute", marginTop: swordsmenTop, marginLeft: swordsmenLeft, zIndex:"9", pointerEvents:"none"}} >
+                  <Box className={styles.enlarge} style={{position:"absolute", marginTop: swordsmenTop, marginLeft: swordsmenLeft, zIndex:"9", pointerEvents:"none"}} >
                     <img src='/img/battle-bay/mapImages/swordsmen.png' />
                   </Box>
 
-                  <Box id="moongate" className={[styles.enlarge]} style={{position:"absolute", marginTop: moongateTop, marginLeft: moongateLeft, zIndex:"9"}}>
+                  <Box id="moongate" className={styles.enlarge} style={{position:"absolute", marginTop: moongateTop, marginLeft: moongateLeft, zIndex:"9"}}>
                     <img src='/img/battle-bay/mapImages/moongate_day.png' />
                     {/* <div className={[styles.enlarge]} style={{position:"absolute",  zIndex:"20"}}>
                       <img src='/img/battle-bay/building_labels/moongate_label.png' /> </div> */}
                   </Box>
 
-                  <Box id="torii" className={[styles.enlarge]} style={{position:"absolute", marginTop: toriiTop, marginLeft: toriiLeft, zIndex:"9"}} >
+                  <Box id="torii" className={styles.enlarge} style={{position:"absolute", marginTop: toriiTop, marginLeft: toriiLeft, zIndex:"9"}} >
                     <img src='/img/battle-bay/mapImages/torii.png' />
                   </Box>
 
-                  <Box className={[styles.enlarge]} style={{position:"absolute", marginTop: pondTop, marginLeft: pondLeft, zIndex:"8"}}>
+                  <Box className={styles.enlarge} style={{position:"absolute", marginTop: pondTop, marginLeft: pondLeft, zIndex:"8"}}>
                     <img src='/img/battle-bay/mapImages/pond1.png' />
                   </Box>
 
@@ -686,7 +717,6 @@ const DefaultArea = ({onChange}) => {
                   w='150px'
                   pointerEvents='auto'
                   fontSize={{base: 'm', sm: 'm'}}
-                  ref={buildingButtonRef}
                   hideIcon={true}
                   onClick={onOpenBuildings}
                 >
@@ -697,7 +727,6 @@ const DefaultArea = ({onChange}) => {
                   w='150px'
                   pointerEvents='auto'
                   fontSize={{base: 'm', sm: 'm'}}
-                  ref={buildingButtonRef}
                   hideIcon={true}
                   onClick={onOpenDailyCheckin}
                 >
@@ -736,4 +765,9 @@ const DefaultArea = ({onChange}) => {
 };
 
 
-export default DefaultArea;
+export default Village;
+
+interface MapProps {
+  scale: number;
+  initialPosition: { x: number; y: number };
+}
