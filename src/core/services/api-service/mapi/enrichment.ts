@@ -52,7 +52,8 @@ export async function enrichWalletNft(nft: WalletNft): Promise<WalletNft> {
         image = nft.imageAws ?? nft.image;
       } else if (!!nft.tokenUri) {
         if (typeof nft.tokenUri === 'string') {
-          const json = await axios.get(nft.tokenUri, {timeout: 10000});
+          const jsonUrl = convertIpfsResource(nft.tokenUri);
+          const json = await axios.get(jsonUrl, {timeout: 5000});
           image = convertIpfsResource(json.data.image);
           if (json.data.name) nft.name = json.data.name;
         } else if (typeof nft.tokenUri === 'object') {
