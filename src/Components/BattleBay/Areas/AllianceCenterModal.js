@@ -108,22 +108,22 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
     }
   }
 
-  const AddTroops = async () => {
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const res = await addTroops(user.address.toLowerCase(), signatureInStorage, 8);
-        console.log(res)
-        RefreshTroopsAndFactions();
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  }
+  // const AddTroops = async () => {
+  //   let signatureInStorage = getAuthSignerInStorage()?.signature;
+  //   if (!signatureInStorage) {
+  //     const { signature } = await getSigner();
+  //     signatureInStorage = signature;
+  //   }
+  //   if (signatureInStorage) {
+  //     try {
+  //       const res = await addTroops(user.address.toLowerCase(), signatureInStorage, 8);
+  //       console.log(res)
+  //       RefreshTroopsAndFactions();
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  // }
 
   const { isOpen, onOpen: onOpenDelegate, onClose } = useDisclosure();
   const [delegateMode, setDelegateMode] = useState("delegate");
@@ -447,7 +447,7 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
           Your Troops: {walletTroops}
           </>}
       </Text>
-      <Box
+      {/* <Box
         ps='20px'
         marginTop='6'
         marginBottom='8'
@@ -458,7 +458,7 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
           stickyIcon={true}
           onClick={AddTroops}>Add Troops
         </RdButton>
-      </Box>
+      </Box> */}
       {hasFaction ? <></> : <>
         <Box
           ps='20px'
