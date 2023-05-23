@@ -1,17 +1,20 @@
 import React, {useEffect, useRef, useState } from 'react';
-import { resizeBattleMap, setUpMapZooming } from './mapFunctions.js'
+import { useDisclosure, Button, AspectRatio, useBreakpointValue, Box, Flex } from '@chakra-ui/react'
+// import { resizeBattleMap, setUpMapZooming } from '@src/Components/BattleBay/Areas/mapFunctions.js'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import styles from './BattleBay.module.scss';
+import styles from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
 
-import { useDisclosure, Button, AspectRatio, Box, Flex } from '@chakra-ui/react'
 import { getMap } from "@src/core/api/RyoshiDynastiesAPICalls";
 import { getControlPoint } from "@src/core/api/RyoshiDynastiesAPICalls";
-import ControlPointForm from './battleMap/components/ControlPointForm.js';
+import ControlPointForm from '@src/Components/BattleBay/Areas/battleMap/components/ControlPointForm.js';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import ImageService from '@src/core/services/image';
-// ImageService.translate('/path/to/battlemap.png').custom({width: 100, height: 100})
 
-const BattleMap = ({onBack, factions=[]}) => {
+interface BattleMapProps {
+  onChange: (value: string) => void;
+}
+
+const BattleMap = ({onChange}: BattleMapProps) => {
 
   const mapRef = useRef();
   const  [flagSize, setFlagSize] = useState("1px");
@@ -20,7 +23,12 @@ const BattleMap = ({onBack, factions=[]}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [controlPoint, setControlPoint] = useState([], () => {});
   const [isLoading, setIsLoading] = useState(false);
-  
+  const [zoomState, setZoomState] = useState({
+    offsetX: 0,
+    offsetY: 0,
+    scale: 1,
+  });
+
   const imageRef1 = useRef();
   const imageRef2 = useRef();
   const imageRef3 = useRef();
@@ -44,6 +52,14 @@ const BattleMap = ({onBack, factions=[]}) => {
       height
     };
   }
+  const changeCanvasState = (ReactZoomPanPinchRef: any, event: any) => {
+    setZoomState({
+      offsetX: ReactZoomPanPinchRef.state.positionX,
+      offsetY: ReactZoomPanPinchRef.state.positionY,
+      scale: ReactZoomPanPinchRef.state.scale,
+    });
+    console.log(ReactZoomPanPinchRef.state.positionX, ReactZoomPanPinchRef.state.positionY, ReactZoomPanPinchRef.state.scale)
+  };
   function useWindowDimensions() {
     const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 
@@ -132,7 +148,7 @@ const BattleMap = ({onBack, factions=[]}) => {
   const SetUpMap = async () => {
     getMap().then((data) => {
       console.log(data);
-      resizeBattleMap(7580, 5320);
+      // resizeBattleMap(7580, 5320);
       setAreas(data.data.data.map.regions[0].controlPoints.map((controlPoint, i) => (
         <area 
           onClick={() => {
@@ -181,38 +197,104 @@ const BattleMap = ({onBack, factions=[]}) => {
       }
 
   }
+  const [mapInitialized, setMapInitialized] = useState(false);
+  const mapScale = useBreakpointValue(
+    {base: 0.15, sm: 0.6, md: 0.7, lg: 0.8, xl: 0.9, '2xl': 1},
+    {fallback: 'lg'}
+  )
+  const mapProps = useBreakpointValue<MapProps>(
+    {
+      base: {
+        scale: 0.15,
+        initialPosition: { x: -325, y: -10 },
+        minScale: 0.15
+      },
+      sm: {
+        scale: 0.16,
+        initialPosition: { x: -220, y: -150 },
+        minScale: 0.16
+      },
+      md: {
+        scale: 0.18,
+        initialPosition: { x: -220, y: -150 },
+        minScale: 0.18
+      },
+      lg: {
+        scale: 0.20,
+        initialPosition: { x: -220, y: -150 },
+        minScale: 0.20
+      },
+      xl: {
+        scale: 0.28,
+        initialPosition: { x: -220, y: -150 },
+        minScale: 0.28
+      },
+      '2xl': {
+        scale: 0.25,
+        initialPosition: { x: -0, y: -180 },
+        minScale: 0.24
+      }
+    }
+  );
+ 
+  useEffect(() => {
+    setMapInitialized(true);
+    // TransformWrapperRef.current.zoomTo(mapProps?.scale);
+  }, []);
 
   return (
   <section>
-
-  <ControlPointForm isOpen={isOpen} onClose={onClose} controlPoint={controlPoint} factions={factions} refreshControlPoint={RefreshControlPoint}/>
-
-  <AspectRatio ratio={2880/1620} overflow='visible'>
-
+  <ControlPointForm isOpen={isOpen} onClose={onClose} controlPoint={controlPoint} refreshControlPoint={RefreshControlPoint}/>
+  <Box position='relative' h='calc(100vh - 74px)'>
+  {/* <AspectRatio ratio={2880/1620} overflow='visible'> */}
+  {mapInitialized && (
     <TransformWrapper
-      centerOnInit={true}
+      // centerOnInit={true}
+      onZoom={changeCanvasState}
+      onPinching={changeCanvasState}
+      onPinchingStop={changeCanvasState}
+      onPanningStop={changeCanvasState}
+
+      initialPositionX={mapProps?.initialPosition.x}
+      initialPositionY={mapProps?.initialPosition.y}
       disablePadding={true}
-      initialScale={1.25}
+      initialScale={mapProps?.scale}
+      minScale={mapProps?.minScale}
+      maxScale={1}
       >
-      <TransformComponent>
-        <img 
-          // src="/img/battle-bay/opMap.png" 
-          src={ImageService.translate('/img/battle-bay/opMap.png').custom({width: '100px', height: 10})}
-          useMap="#image-map" 
-          width="100%" 
-          className={`${styles.mapImageArea}`}
-          id="islandMap"
-          ref={mapRef}
-          // style={{backgroundRepeat: 'repeat', backgroundImage:'url("/img/battle-bay/ocean-3.png")'}} 
-          />
-        <map name="image-map" width="100%" height="100%" className={`${styles.mapImageArea}`}>
+      {(utils) => (
+        <React.Fragment>
+          
+      <TransformComponent wrapperStyle={{height: '100%', width: '100%', objectFit: 'cover'}}>
+        <Box as='img'
+             src='/img/battle-bay/opMap.png'
+             maxW='none'
+             useMap="#image-map" className={`${styles.mapImageArea}`} id="fancyMenu"/>
+        <map name="image-map">
           {area}
         </map>
+        {/* <img 
+          // src="/img/battle-bay/opMap.png" 
+          // src={ImageService.translate('/img/battle-bay/opMap.png').custom({width: '100px', height: 10})}
+          // useMap="#image-map" 
+          // width="100%" 
+          // className={`${styles.mapImageArea}`}
+          // id="islandMap"
+          // ref={mapRef}
+          // style={{backgroundRepeat: 'repeat', backgroundImage:'url("/img/battle-bay/ocean-3.png")'}} 
+          /> */}
+        {/* <map name="image-map" width="100%" height="100%" className={`${styles.mapImageArea}`}> */}
+          
+        {/* </map> */}
           {pins}
           {explosion}
         </TransformComponent>
+        </React.Fragment>
+        )}
       </TransformWrapper>
-      </AspectRatio>
+  )}
+  </Box>
+      {/* </AspectRatio> */}
 
     <Box  position='absolute' top={0} left={0} p={4}  pointerEvents='none' >
     <Flex direction='row' justify='space-between' >
@@ -224,7 +306,7 @@ const BattleMap = ({onBack, factions=[]}) => {
           pointerEvents='auto'
           fontSize={{base: '12px', sm: '16px'}}
           hideIcon={true}
-          onClick={onBack}
+          onClick={onChange}
         >
           Back to Village
         </RdButton>
@@ -237,3 +319,9 @@ const BattleMap = ({onBack, factions=[]}) => {
 
 
 export default BattleMap;
+
+interface MapProps {
+  scale: number;
+  initialPosition: { x: number; y: number };
+  minScale: number;
+}

@@ -34,7 +34,7 @@ const tabs = {
 
 const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
 
-const ControlPointForm = ({ isOpen, onClose, controlPoint=[], factions, refreshControlPoint}) => {
+const ControlPointForm = ({ isOpen, onClose, controlPoint=[], refreshControlPoint}) => {
   // console.log("factionForm controlPoint: " + controlPoint.name);
   const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState('');

@@ -245,6 +245,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
                           battleType: 1};
         
         console.log("attackTuple", attackTuple);
+        console.log("sig", sig);
 
         const attackContract = new Contract(config.contracts.battleField, Battlefield, user.provider.getSigner());
         const tx = await attackContract.attackFaction(attackTuple, sig);

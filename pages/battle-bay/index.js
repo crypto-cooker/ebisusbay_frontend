@@ -2,7 +2,7 @@ import PageHead from "@src/components-v2/shared/layout/page-head";
 import React, {useState} from "react";
 
 import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks";
-import BattleMap from "@src/Components/BattleBay/Areas/BattleMap";
+import BattleMap from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battleMap";
 import AllianceCenter from "@src/Components/BattleBay/Areas/AllianceCenter";
 import AnnouncementBoard from "@src/Components/BattleBay/Areas/AnnouncementBoard";
 import Academy from "@src/Components/BattleBay/Areas/Academy";
@@ -42,7 +42,7 @@ const BattleBay = () => {
       {currentPage === 'barracks' ? (
         <Barracks onBack={returnToPreviousPage} />
       ) : currentPage === 'battleMap' ? (
-        <BattleMap onBack={returnToPreviousPage} factions={factions}/>
+        <BattleMap onChange={returnToPreviousPage}/>
       // ) : currentPage === 'leaderboard' ? (
       //   <Leaderboard onBack={returnToPreviousPage}/>
       ): currentPage === 'bank' ? (
