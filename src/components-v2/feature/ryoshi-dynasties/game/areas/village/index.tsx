@@ -481,27 +481,33 @@ const Village = ({onChange}: VillageProps) => {
     {
       base: {
         scale: 0.5,
-        initialPosition: { x: -450, y: -120 }
+        initialPosition: { x: -450, y: -120 },
+        minScale: 0.4
       },
       sm: {
         scale: 0.6,
-        initialPosition: { x: -450, y: -120 }
+        initialPosition: { x: -450, y: -120 },
+        minScale: 0.6
       },
       md: {
         scale: 0.7,
-        initialPosition: { x: -450, y: -120 }
+        initialPosition: { x: -450, y: -120 },
+        minScale: 0.7
       },
       lg: {
         scale: 0.8,
-        initialPosition: { x: -450, y: -120 }
+        initialPosition: { x: -450, y: -120 },
+        minScale: 0.6
       },
       xl: {
         scale: 0.9,
-        initialPosition: { x: -450, y: -120 }
+        initialPosition: { x: -450, y: -120 },
+        minScale: 0.6
       },
       '2xl': {
         scale: 1,
-        initialPosition: { x: -450, y: -120 }
+        initialPosition: { x: -450, y: -120 },
+        minScale: 0.8
       }
     }
   );
@@ -526,7 +532,8 @@ const Village = ({onChange}: VillageProps) => {
             initialPositionY={mapProps?.initialPosition.y}
             disablePadding={true}
             initialScale={mapProps?.scale}
-          >
+            minScale={mapProps?.minScale}
+            >
             {(utils) => (
               <React.Fragment>
                 {/* <button onClick={zoomToImage}>Zoom to 1</button> */}
@@ -697,4 +704,5 @@ export default Village;
 interface MapProps {
   scale: number;
   initialPosition: { x: number; y: number };
+  minScale: number;
 }
