@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState } from 'react';
+import React, {ReactElement, useEffect, useRef, useState } from 'react';
 import { useDisclosure, Button, AspectRatio, useBreakpointValue, Box, Flex } from '@chakra-ui/react'
 // import { resizeBattleMap, setUpMapZooming } from '@src/Components/BattleBay/Areas/mapFunctions.js'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
@@ -38,7 +38,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   const [area, setAreas] = useState([]);
   const [selectedControlPoint, setSelectedControlPoint] = useState(0);
   const [pins, setPins] = useState([]);
-  const [explosion, setExplosion] = useState([]);
+  const [explosion, setExplosion] = useState<ReactElement[]>([]);
   const [playExlplosion, setPlayExplosion] = useState(false);
 
   const controlPoints = [{id:4, title:"Southern Trident",pinName: "pin-Southern-Trident",marginTop: '32%', marginLeft: '20%'},
@@ -75,13 +75,13 @@ const BattleMap = ({onChange}: BattleMapProps) => {
 
     return windowDimensions;
   }
-  const GetControlPointImage = async (id) => 
+  const GetControlPointImage = async (id: any) => 
   {
     var data = await getControlPoint(id)
     console.log(data.leaderBoard[0].image);
     return data.leaderBoard[0].image;
   }
-  function wait(ms){
+  function wait(ms: any){
     var start = new Date().getTime();
     var end = start;
     while(end < start + ms) {
@@ -110,10 +110,10 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   }
   //#endregion
 
-  function selectRegion(x) {
+  function selectRegion(x: any) {
     GetControlPointInfo(x);
   }
-  const GetControlPointInfo = async (x) => {
+  const GetControlPointInfo = async (x: any) => {
     getControlPoint(x).then((data) => {
       setControlPoint(data);
   }); 
@@ -150,7 +150,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
     getMap().then((data) => {
       console.log(data);
       // resizeBattleMap(7580, 5320);
-      setAreas(data.data.data.map.regions[0].controlPoints.map((controlPoint, i) => (
+      setAreas(data.data.data.map.regions[0].controlPoints.map((controlPoint: any, i: any) => (
         <area 
           onClick={() => {
             // console.log(controlPoint.id);
@@ -168,7 +168,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
 
     }); 
   }
-  const getImageRef = (id) => {
+  const getImageRef = (id: any) => {
     if(id === 1)
       return imageRef1;
     else if(id === 2)
@@ -178,26 +178,26 @@ const BattleMap = ({onChange}: BattleMapProps) => {
     else if(id === 4)
       return imageRef4;
   }
-  const SetUpPins = async () => {
-      setPins(controlPoints.map((controlPoint, i) => 
-        (<div id={controlPoint.pinName} title={controlPoint.title}
-              style={{position:"absolute", marginTop: controlPoint.marginTop, marginLeft: 
-              controlPoint.marginLeft, zIndex:"9", pointerEvents:"none"}}>
-        <img width={flagSize} height={flagSize} ref={getImageRef(controlPoint.id)} className={controlPoint.id}/>
-        <div className= "pinText">
-          <h3 className="head">{controlPoint.title}</h3>
-        </div>
-      </div>
-        )))
-      if(imageRef1.current != null)
-      {
-        imageRef1.current.src = await GetControlPointImage(1);
-        imageRef2.current.src = await GetControlPointImage(2);
-        imageRef3.current.src = await GetControlPointImage(3);
-        imageRef4.current.src = await GetControlPointImage(4);
-      }
+  // const SetUpPins = async () => {
+  //     setPins(controlPoints.map((controlPoint, i) => 
+  //       (<div id={controlPoint.pinName} title={controlPoint.title}
+  //             style={{position:"absolute", marginTop: controlPoint.marginTop, marginLeft: 
+  //             controlPoint.marginLeft, zIndex:"9", pointerEvents:"none"}}>
+  //       <img width={flagSize} height={flagSize} ref={getImageRef(controlPoint.id)} className={controlPoint.id}/>
+  //       <div className= "pinText">
+  //         <h3 className="head">{controlPoint.title}</h3>
+  //       </div>
+  //     </div>
+  //       )))
+  //     if(imageRef1.current != null)
+  //     {
+  //       imageRef1.current.src = await GetControlPointImage(1);
+  //       imageRef2.current.src = await GetControlPointImage(2);
+  //       imageRef3.current.src = await GetControlPointImage(3);
+  //       imageRef4.current.src = await GetControlPointImage(4);
+  //     }
 
-  }
+  // }
   const [mapInitialized, setMapInitialized] = useState(false);
   const mapScale = useBreakpointValue(
     {base: 0.15, sm: 0.6, md: 0.7, lg: 0.8, xl: 0.9, '2xl': 1},
