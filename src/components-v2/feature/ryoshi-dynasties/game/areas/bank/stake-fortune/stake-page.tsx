@@ -2,7 +2,7 @@ import React, {ChangeEvent, useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {
   Box,
-  Center,
+  Button,
   Flex,
   FormControl,
   FormErrorMessage,
@@ -30,7 +30,7 @@ import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
 import Bank from "@src/Contracts/Bank.json";
 import Fortune from "@src/Contracts/Fortune.json";
-import {createSuccessfulTransactionToastContent, pluralize} from '@src/utils';
+import {createSuccessfulTransactionToastContent, pluralize, round} from '@src/utils';
 import {useAppSelector} from "@src/Store/hooks";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
@@ -63,6 +63,7 @@ const StakePage = () => {
 
   const [inputError, setInputError] = useState('');
   const [lengthError, setLengthError] = useState('');
+  const [isAddingDuration, setIsAddingDuration] = useState(false);
 
   const handleChangeFortuneAmount = (valueAsString: string, valueAsNumber: number) => {
     setFortuneToStake(valueAsNumber)
@@ -233,16 +234,19 @@ const StakePage = () => {
   }, [fortuneToStake, daysToStake])
 
   useEffect(() => {
+    async function initUser() {
+      await checkForFortune();
+      await checkForDeposits();
+    }
     if (user.address) {
-      checkForDeposits();
-      checkForFortune();
+      initUser();
     }
   }, [user.address]);
 
   return (
     <>
       <Box mx={1} pb={6}>
-        <Box mb={4} bg='#272523' p={2} roundedBottom='md'>
+        <Box bg='#272523' p={2} roundedBottom='md'>
           {user.address ? (
             <Box textAlign='center' w='full'>
               <Flex>
@@ -263,83 +267,100 @@ const StakePage = () => {
           {hasDeposited && (
             <Box textAlign='center' mt={2}>
               <hr />
-              <SimpleGrid columns={3} pt={2}>
+              <SimpleGrid columns={{base: 2, sm: 4}} pt={2} gap={2}>
                 <Box>
                   <Text fontSize='sm'>Staked</Text>
                   <Text fontWeight='bold'>{amountDeposited}</Text>
                 </Box>
                 <Box>
                   <Text fontSize='sm'>Length</Text>
-                  <Text fontWeight='bold'>{depositLength}</Text>
+                  <Text fontWeight='bold'>{depositLength} days</Text>
                 </Box>
                 <Box>
                   <Text fontSize='sm'>Withdraw Date</Text>
                   <Text fontWeight='bold'>{withdrawDate}</Text>
+                </Box>
+                <Box>
+                  <Text fontSize='sm'>Reward</Text>
+                  <Text fontWeight='bold'>{round((amountDeposited * depositLength) / 1080)} Troops</Text>
                 </Box>
               </SimpleGrid>
             </Box>
           )}
         </Box>
 
-        { user.address && hasDeposited ? (
-          <>
-            <Center mt={4} mb={2}>
-              <Text align='center'>Increase current stake</Text>
-            </Center>
-          </>
-        ) : (
-          <Center>
-            <Flex justifyContent='space-between' w='90%' >
-              <Text textAlign='left' fontSize={'14px'}>Fortune Tokens to Stake:</Text>
-              <Text textAlign='right' fontSize={'14px'}>Duration (Days):</Text>
-            </Flex>
-          </Center>
-        )}
+        <Text align='center' pt={2} px={2}>Receive Troops and $Mitama by staking $Fortune. Receive more by staking longer.</Text>
 
-        <Box px={6}>
-          <Flex direction={{base: 'column', sm: 'row'}} justify='space-between'>
-            <FormControl maxW='200px' isInvalid={!!inputError}>
-              <NumberInput
-                defaultValue={minAmountToStake}
-                min={minAmountToStake}
-                name="quantity"
-                onChange={handleChangeFortuneAmount}
-                value={fortuneToStake}
-                step={1000}
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-              <FormErrorMessage>{inputError}</FormErrorMessage>
-            </FormControl>
-            <Box w={10}/>
-            <FormControl maxW='250px' isInvalid={!!lengthError}>
-              <Select onChange={handleChangeDays} value={daysToStake} bg='none'>
-                {[...Array(12).fill(0)].map((_, i) => (
-                  <option key={i} value={`${(i + 1) * 90}`}>
-                    {(i + 1)} {pluralize((i + 1), 'Season')} ({(i + 1) * 90} days)
-                  </option>
-                ))}
-              </Select>
-              <FormErrorMessage>{lengthError}</FormErrorMessage>
-            </FormControl>
-           </Flex>
-          <VStack bgColor='#292626' rounded='md' p={4} mt={4} spacing={0}>
-            <Text>You Receive</Text>
-            <Text fontSize={24} fontWeight='bold'>$Mitama {mitama.toFixed(0)}</Text>
-            <Text fontSize={12} color='#aaa'>$Mitama = [$Fortune * Days Staked / 1080] </Text>
-          </VStack>
-        </Box>
+        <Box px={6} pt={6}>
+          <SimpleGrid columns={hasDeposited ? 1 : 2} fontSize='sm'>
+            {!isAddingDuration && (
+              <VStack>
+                <Text>
+                  {hasDeposited ? 'Add additional Fortune' : 'Amount to stake'}
+                </Text>
+                <FormControl maxW='200px' isInvalid={!!inputError}>
+                  <NumberInput
+                    defaultValue={minAmountToStake}
+                    min={minAmountToStake}
+                    name="quantity"
+                    onChange={handleChangeFortuneAmount}
+                    value={fortuneToStake}
+                    step={1000}
+                  >
+                    <NumberInputField />
+                    <NumberInputStepper>
+                      <NumberIncrementStepper />
+                      <NumberDecrementStepper />
+                    </NumberInputStepper>
+                  </NumberInput>
+                  <FormErrorMessage>{inputError}</FormErrorMessage>
+                </FormControl>
+                <Flex>
+                  <Button variant='link' fontSize='sm' onClick={() => setFortuneToStake(userFortune)}>Stake all</Button>
+                  {hasDeposited && (
+                    <>
+                      <Box mx={1}>or</Box>
+                      <Button variant='link' fontSize='sm' onClick={() => setIsAddingDuration(true)}>Increase duration</Button>
+                    </>
+                  )}
+                </Flex>
+              </VStack>
+            )}
+            {(isAddingDuration || !hasDeposited) && (
+              <VStack>
+                <Text>
+                  {hasDeposited ? 'Increase duration by' : 'Duration (days)'}
+                </Text>
+                <FormControl maxW='250px' isInvalid={!!lengthError}>
+                  <Select onChange={handleChangeDays} value={daysToStake} bg='none'>
+                    {[...Array(12).fill(0)].map((_, i) => (
+                      <option key={i} value={`${(i + 1) * 90}`}>
+                        {(i + 1)} {pluralize((i + 1), 'Season')} ({(i + 1) * 90} days)
+                      </option>
+                    ))}
+                  </Select>
+                  <FormErrorMessage>{lengthError}</FormErrorMessage>
+                </FormControl>
+                {hasDeposited && (
+                  <Button variant='link' fontSize='sm' onClick={() => setIsAddingDuration(false)}>Increase amount</Button>
+                )}
+              </VStack>
+            )}
+          </SimpleGrid>
+
+          <Box>
+            <VStack bgColor='#292626' rounded='md' p={4} mt={4} spacing={0}>
+              <Text>Total Reward</Text>
+              <Text fontSize={24} fontWeight='bold'>{mitama.toFixed(0)} Troops</Text>
+              <Text fontSize={12} color='#aaa'>{commify((isAddingDuration ? 0 : fortuneToStake) + amountDeposited)} $Fortune for {commify((isAddingDuration ? daysToStake : 0) + depositLength)} days</Text>
+            </VStack>
+          </Box>
 
 
-        <Spacer h='8'/>
+          <Spacer h='8'/>
           <Flex alignContent={'center'} justifyContent={'center'}>
             <Box ps='20px'>
               <RdButton
-                w='250px'
                 fontSize={{base: 'xl', sm: '2xl'}}
                 stickyIcon={true}
                 onClick={handleStake}
@@ -354,6 +375,7 @@ const StakePage = () => {
               </RdButton>
             </Box>
           </Flex>
+        </Box>
       </Box>
     </>
     
