@@ -19,7 +19,7 @@ import RdButton from "../../../components/rd-button";
 import {useAppSelector} from "@src/Store/hooks";
 
 interface BattleMapHUDProps {
-  onBack: (value: string) => void;
+  onBack: () => void;
 }
 
 export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {

@@ -12,7 +12,7 @@ import ImageService from '@src/core/services/image';
 import {BattleMapHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battleMap/hud";
 
 interface BattleMapProps {
-  onChange: (value: string) => void;
+  onChange: () => void;
 }
 
 const BattleMap = ({onChange}: BattleMapProps) => {
