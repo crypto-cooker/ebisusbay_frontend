@@ -243,45 +243,45 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   }, []);
 
   return (
-  <section>
-  <ControlPointForm isOpen={isOpen} onClose={onClose} controlPoint={controlPoint} refreshControlPoint={RefreshControlPoint}/>
-  <Box position='relative' h='calc(100vh - 74px)'>
-  {mapInitialized && (
-    <TransformWrapper
-      // centerOnInit={true}
-      onZoom={changeCanvasState}
-      onPinching={changeCanvasState}
-      onPinchingStop={changeCanvasState}
-      onPanningStop={changeCanvasState}
+    <section>
+      <ControlPointForm isOpen={isOpen} onClose={onClose} controlPoint={controlPoint} refreshControlPoint={RefreshControlPoint}/>
+      <Box position='relative' h='calc(100vh - 74px)'>
+        {mapInitialized && (
+          <TransformWrapper
+            // centerOnInit={true}
+            onZoom={changeCanvasState}
+            onPinching={changeCanvasState}
+            onPinchingStop={changeCanvasState}
+            onPanningStop={changeCanvasState}
 
-      initialPositionX={mapProps?.initialPosition.x}
-      initialPositionY={mapProps?.initialPosition.y}
-      disablePadding={true}
-      initialScale={mapProps?.scale}
-      minScale={mapProps?.minScale}
-      maxScale={1}
-      >
-      {(utils) => (
-        <React.Fragment>
-          
-      <TransformComponent wrapperStyle={{height: '100%', width: '100%', objectFit: 'cover'}}>
-        <Box as='img'
-             src='/img/battle-bay/opMap.png'
-             maxW='none'
-             useMap="#image-map" className={`${styles.mapImageArea}`} id="fancyMenu"/>
-        <map name="image-map">
-          {area}
-        </map>
-          {pins}
-          {explosion}
-        </TransformComponent>
-        </React.Fragment>
+            initialPositionX={mapProps?.initialPosition.x}
+            initialPositionY={mapProps?.initialPosition.y}
+            disablePadding={true}
+            initialScale={mapProps?.scale}
+            minScale={mapProps?.minScale}
+            maxScale={1}
+            >
+            {(utils) => (
+              <React.Fragment>
+
+            <TransformComponent wrapperStyle={{height: '100%', width: '100%', objectFit: 'cover'}}>
+              <Box as='img'
+                   src='/img/battle-bay/opMap.png'
+                   maxW='none'
+                   useMap="#image-map" className={`${styles.mapImageArea}`} id="fancyMenu"/>
+              <map name="image-map">
+                {area}
+              </map>
+                {pins}
+                {explosion}
+              </TransformComponent>
+              </React.Fragment>
+              )}
+            </TransformWrapper>
         )}
-      </TransformWrapper>
-  )}
-    <BattleMapHUD onBack={onChange}/>
-    </Box>
-  </section>
+        <BattleMapHUD onBack={onChange}/>
+      </Box>
+    </section>
   )
 };
 

@@ -351,8 +351,8 @@ const StakePage = () => {
           <Box>
             <VStack bgColor='#292626' rounded='md' p={4} mt={4} spacing={0}>
               <Text>Total Reward</Text>
-              <Text fontSize={24} fontWeight='bold'>{mitama.toFixed(0)} Troops</Text>
-              <Text fontSize={12} color='#aaa'>{commify((isAddingDuration ? 0 : fortuneToStake) + amountDeposited)} $Fortune for {commify((isAddingDuration ? daysToStake : 0) + depositLength)} days</Text>
+              <Text fontSize={24} fontWeight='bold'>{commify(round(mitama))} Troops</Text>
+              <Text fontSize={12} color='#aaa'>{commify((isAddingDuration ? 0 : fortuneToStake) + amountDeposited)} $Fortune stake for {commify((isAddingDuration ? daysToStake : 0) + depositLength)} days</Text>
             </VStack>
           </Box>
 

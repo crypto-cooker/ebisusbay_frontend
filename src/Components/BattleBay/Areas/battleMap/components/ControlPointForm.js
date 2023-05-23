@@ -25,6 +25,7 @@ import {
   AttackTap
 } from "."
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
+import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 
 const tabs = {
   info: 'info',
@@ -66,37 +67,25 @@ const ControlPointForm = ({ isOpen, onClose, controlPoint=[], refreshControlPoin
           <div className="row mt-2 mt-sm-2">
             <div className="">
               <Center>
-              <Flex justifyContent='space-between' w='90%' >
-                <RdButton
-                  w='150px'
-                  fontSize={{base: 'xl', sm: '2xl'}}
-                  stickyIcon={false}
-                  hideIcon={true}
+                <Flex direction='row' justify='center' mb={2}>
+                <RdTabButton
+                  isActive={currentTab === tabs.info}
                   onClick={() => setCurrentTab(tabs.info)}
-                  marginTop='2'
-                  marginBottom='2'
-                  >Info
-                </RdButton>
-                <RdButton
-                  w='150px'
-                  fontSize={{base: 'xl', sm: '2xl'}}
-                  stickyIcon={false}
-                  hideIcon={true}
+                >
+                  Info
+                </RdTabButton>
+                <RdTabButton
+                  isActive={currentTab === tabs.deploy}
                   onClick={() => setCurrentTab(tabs.deploy)}
-                  marginTop='2'
-                  marginBottom='2'
-                  >Deploy
-                </RdButton>
-                <RdButton
-                  w='150px'
-                  fontSize={{base: 'xl', sm: '2xl'}}
-                  stickyIcon={false}
-                  hideIcon={true}
+                >
+                  Deploy
+                </RdTabButton>
+                <RdTabButton
+                  isActive={currentTab === tabs.attack}
                   onClick={() => setCurrentTab(tabs.attack)}
-                  marginTop='2'
-                  marginBottom='2'
-                  >Attack
-                </RdButton>
+                >
+                  Attack
+                </RdTabButton>
                 </Flex>
               </Center>
 
