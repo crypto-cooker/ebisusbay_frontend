@@ -9,6 +9,7 @@ import { getControlPoint } from "@src/core/api/RyoshiDynastiesAPICalls";
 import ControlPointForm from '@src/Components/BattleBay/Areas/battleMap/components/ControlPointForm.js';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import ImageService from '@src/core/services/image';
+import {BattleMapHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battleMap/hud";
 
 interface BattleMapProps {
   onChange: (value: string) => void;
@@ -21,7 +22,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   const [buildingSize, setBuildingSize] = useState("50px");
   const { height, width: windowWidth } = useWindowDimensions();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [controlPoint, setControlPoint] = useState([], () => {});
+  const [controlPoint, setControlPoint] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [zoomState, setZoomState] = useState({
     offsetX: 0,
@@ -239,14 +240,12 @@ const BattleMap = ({onChange}: BattleMapProps) => {
  
   useEffect(() => {
     setMapInitialized(true);
-    // TransformWrapperRef.current.zoomTo(mapProps?.scale);
   }, []);
 
   return (
   <section>
   <ControlPointForm isOpen={isOpen} onClose={onClose} controlPoint={controlPoint} refreshControlPoint={RefreshControlPoint}/>
   <Box position='relative' h='calc(100vh - 74px)'>
-  {/* <AspectRatio ratio={2880/1620} overflow='visible'> */}
   {mapInitialized && (
     <TransformWrapper
       // centerOnInit={true}
@@ -273,19 +272,6 @@ const BattleMap = ({onChange}: BattleMapProps) => {
         <map name="image-map">
           {area}
         </map>
-        {/* <img 
-          // src="/img/battle-bay/opMap.png" 
-          // src={ImageService.translate('/img/battle-bay/opMap.png').custom({width: '100px', height: 10})}
-          // useMap="#image-map" 
-          // width="100%" 
-          // className={`${styles.mapImageArea}`}
-          // id="islandMap"
-          // ref={mapRef}
-          // style={{backgroundRepeat: 'repeat', backgroundImage:'url("/img/battle-bay/ocean-3.png")'}} 
-          /> */}
-        {/* <map name="image-map" width="100%" height="100%" className={`${styles.mapImageArea}`}> */}
-          
-        {/* </map> */}
           {pins}
           {explosion}
         </TransformComponent>
@@ -293,26 +279,8 @@ const BattleMap = ({onChange}: BattleMapProps) => {
         )}
       </TransformWrapper>
   )}
-  </Box>
-      {/* </AspectRatio> */}
-
-    <Box  position='absolute' top={0} left={0} p={4}  pointerEvents='none' >
-    <Flex direction='row' justify='space-between' >
-      <Box mb={4} bg='#272523' p={2} rounded='md' 
-      marginTop={{base: '125%', sm: '50%'}} 
-      >
-        <RdButton
-          w={{base: '150px', sm: '200px'}}
-          pointerEvents='auto'
-          fontSize={{base: '12px', sm: '16px'}}
-          hideIcon={true}
-          onClick={onChange}
-        >
-          Back to Village
-        </RdButton>
-        </Box>
-    </Flex>
-  </Box>
+    <BattleMapHUD onBack={onChange}/>
+    </Box>
   </section>
   )
 };
