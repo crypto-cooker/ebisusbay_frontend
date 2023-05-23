@@ -56,6 +56,7 @@ const RdButton = (props: RdButtonProps) => {
         _groupHover={{ bg: 'linear-gradient(to left, #FFE818, #FFD001)' }}
         ps={props.stickyIcon ? '40px' : '0px'}
         pe={props.stickyIcon ? '6px' : '0px'}
+        h='full'
         className={gothamMedium.className}
       >
         <Box px={3}>
