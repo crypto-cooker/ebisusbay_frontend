@@ -92,11 +92,11 @@ const BattleMap = ({onChange}: BattleMapProps) => {
     //get random control point
     var explosionPoint = controlPoints[Math.floor(Math.random() * controlPoints.length)];
 
-    setExplosion(
-      <div style={{position:"absolute", marginTop: explosionPoint.marginTop, marginLeft: explosionPoint.marginLeft, zIndex:"9", pointerEvents:"none"}}>
-        <img src='/img/battle-bay/explosion.png' width={flagSize} height={flagSize} className="factionIcon"/>
-      </div>
-    )
+    // setExplosion(
+    //   <div style={{position:"absolute", marginTop: explosionPoint.marginTop, marginLeft: explosionPoint.marginLeft, zIndex:"9", pointerEvents:"none"}}>
+    //     <img src='/img/battle-bay/explosion.png' width={flagSize} height={flagSize} className="factionIcon"/>
+    //   </div>
+    // )
     // console.log("waiting");
     await new Promise(r => setTimeout(r, 1000));
     // console.log("done waiting");
@@ -106,7 +106,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
     //     <img src='/img/battle-bay/explosion.png' width={0} height={0} className="factionIcon"/>
     //   </div>
     // )
-    setPlayExplosion(!playExlplosion);
+    // setPlayExplosion(!playExlplosion);
   }
   //#endregion
 
