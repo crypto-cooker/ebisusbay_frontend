@@ -350,16 +350,18 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
         const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
         const abiFile = require(`@src/Assets/abis/weird-apes-bio.json`);
         const contract = new Contract('0x213f9b2ead19522a063b3d5c8429ca759ffda812', abiFile, readProvider);
+        const voxelAbi = require(`@src/Assets/abis/voxel-weird-apes.json`);
+        const voxelContract = new Contract('0xe02a74813053e96c5c98f817c0949e0b00728ef6', voxelAbi, readProvider);
         try {
           let apeInfo;
           if (isWeirdApesCollection(address)) {
             apeInfo = await contract.infoGWAC(id);
-            const voxelAbi = require(`@src/Assets/abis/voxel-weird-apes.json`);
-            const voxelContract = new Contract('0xe02a74813053e96c5c98f817c0949e0b00728ef6', voxelAbi, readProvider);
             const isClaimed = await voxelContract.isClaimed(id);
             setVoxelClaimed(isClaimed);
           } else if (isLadyWeirdApesCollection(address)) {
             apeInfo = await contract.infoLWAC(id);
+            const isClaimed = await voxelContract.isClaimed(id);
+            setVoxelClaimed(isClaimed);
           } else if (isBabyWeirdApesCollection(address)) {
             apeInfo = await contract.infoBWAC(id);
           } else if (isVoxelWeirdApesCollection(address)) {
@@ -676,7 +678,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                       <span className="fw-bold">This Crognomide has been bred for a Croby</span>
                     </div>
                   )}
-                  {isLadyWeirdApesCollection(address) && ladyWeirdApeChildren !== null && (
+                  {isLadyWeirdApesCollection(address) && ladyWeirdApeChildren !== null && ladyWeirdApeChildren > 0 && (
                     <div className="d-flex flex-row align-items-center mb-4">
                       <LayeredIcon
                         icon={faHeartSolid}
@@ -688,7 +690,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                       <span className="fw-bold">This Lady Weird Ape can make {`${ladyWeirdApeChildren} ${ladyWeirdApeChildren === 1 ? 'baby' : 'babies'}`}</span>
                     </div>
                   )}
-                  {isWeirdApesCollection(address) && voxelClaimed && (
+                  {(isWeirdApesCollection(address) || isLadyWeirdApesCollection(address)) && voxelClaimed && (
                     <div className="d-flex flex-row align-items-center mb-4">
                       <LayeredIcon
                         icon={faHeartSolid}
