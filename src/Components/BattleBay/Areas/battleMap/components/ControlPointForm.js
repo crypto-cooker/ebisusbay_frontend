@@ -22,7 +22,8 @@ import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-
 import {
   DeployTap,
   InfoTap,
-  AttackTap
+  AttackTap,
+  HelpTap
 } from "."
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
@@ -31,6 +32,7 @@ const tabs = {
   info: 'info',
   deploy: 'deploy',
   attack: 'attack',
+  help: 'help'
 };
 
 const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
@@ -61,6 +63,8 @@ const ControlPointForm = ({ isOpen, onClose, controlPoint=[], refreshControlPoin
       onClose={onClose}
       title={title}
       isCentered={false}
+      utilBtnTitle={currentTab === tabs.help ? <ArrowBackIcon /> : <>?</>}
+      onUtilBtnClick={() => setCurrentTab(currentTab === tabs.help ? tabs.attack : tabs.help)}
     >
       {!isLoading ? (
         <>
@@ -98,6 +102,9 @@ const ControlPointForm = ({ isOpen, onClose, controlPoint=[], refreshControlPoin
                 )}
                 {currentTab === tabs.attack && (
                   <AttackTap onClose={handleClose} controlPoint={controlPoint} refreshControlPoint={refreshControlPoint}/>
+                )}
+                {currentTab === tabs.help && (
+                  <HelpTap/>
                 )}
               </div>
             </div>

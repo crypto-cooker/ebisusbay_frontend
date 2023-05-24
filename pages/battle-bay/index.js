@@ -4,7 +4,7 @@ import React, {useState} from "react";
 import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks";
 import BattleMap from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battleMap";
 import AllianceCenter from "@src/Components/BattleBay/Areas/AllianceCenter";
-import AnnouncementBoard from "@src/Components/BattleBay/Areas/AnnouncementBoard";
+// import AnnouncementBoard from "@src/Components/BattleBay/Areas/AnnouncementBoard";
 import Academy from "@src/Components/BattleBay/Areas/Academy";
 import UserPage from "@src/Components/BattleBay/Areas/UserPage";
 import { useSelector } from 'react-redux';
@@ -51,8 +51,8 @@ const BattleBay = () => {
         <AllianceCenter onBack={returnToPreviousPage} factions={factions}/>
       ): currentPage === 'academy' ? (
         <Academy onBack={returnToPreviousPage} />
-      ): currentPage === 'announcementBoard' ? (
-        <AnnouncementBoard onBack={returnToPreviousPage} />
+      // ): currentPage === 'announcementBoard' ? (
+        // <AnnouncementBoard onBack={returnToPreviousPage} />
       ): currentPage === 'userPage' ? (
         <UserPage onBack={returnToPreviousPage} factions={factions}/>
       ): (
