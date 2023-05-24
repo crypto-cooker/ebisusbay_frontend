@@ -209,7 +209,7 @@ const PurchaseFortuneForm = ({ isOpen, onClose}) => {
       fontSize={{ base: '8px', md: '16px' }}>Purchase additional USDC <ExternalLinkIcon mx='2px' /></Link >
     </GridItem>
     <GridItem colSpan={2} bg=''style={{ textAlign:"right"}}>
-    <Image position='absolute' src='/img/ryoshi-dynasties/icons/fortune_token.svg' alt="walletIcon"
+    <Image position='absolute' src='/img/ryoshi-dynasties/icons/fortune.svg' alt="walletIcon"
       height={{ base: '15px', md: '30px' }}
       marginLeft={{ base: '42', md: '155' }}
       />

@@ -78,7 +78,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin}: VillageHudProp
                     {!!user.address ? (
                       <HStack w='full' spacing={4}>
                         <HStack>
-                          <Image src='/img/ryoshi-dynasties/icons/fortune_token.svg' alt="walletIcon" boxSize={6}/>
+                          <Image src='/img/ryoshi-dynasties/icons/fortune.svg' alt="walletIcon" boxSize={6}/>
                           <Text
                             textColor={user.theme === 'dark' ? '#ffffff' : '#ffffff'}
                             >{fortune}</Text>
