@@ -98,7 +98,6 @@ const StakePage = () => {
     const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
     const bank = new Contract(config.contracts.bank, Bank, readProvider);
     const deposits = await bank.deposits(user.address?.toLowerCase());
-    console.log('deposits', deposits.amount.toString())
 
     //if has deposits, set state
     if(deposits[0].gt(0)){
@@ -187,8 +186,8 @@ const StakePage = () => {
         console.log("has deposited");
         console.log(amountDeposited);
         console.log(fortuneToStake);
-        const hasIncreasedAmount = fortuneToStake > 0;
-        const hasIncreasedDays = depositLength < daysToStake;
+        const hasIncreasedAmount = fortuneToStake > 0 && !isAddingDuration;
+        const hasIncreasedDays = depositLength < daysToStake && isAddingDuration;
 
         if (hasIncreasedAmount) {
           console.log("additional fortune to stake: " + fortuneToStake);
@@ -235,173 +234,188 @@ const StakePage = () => {
   }
 
   useEffect(() => {
-    setMitama( ((fortuneToStake + amountDeposited )* daysToStake) / 1080)
-  }, [fortuneToStake, daysToStake])
-
-  useEffect(() => {
     async function initUser() {
       await checkForFortune();
       await checkForDeposits();
     }
-    if (user.address) {
+    if (!!user.address) {
       initUser();
     }
   }, [user.address]);
 
   const [currentApr, setCurrentApr] = useState(0);
   const [newApr, setNewApr] = useState(0);
+  const [newTroops, setNewTroops] = useState(0);
 
   useEffect(() => {
-    let days = depositLength;
+    let totalDays = depositLength;
     if (!hasDeposited || isAddingDuration) {
-      days += daysToStake;
+      totalDays += daysToStake;
     }
-    const numTerms = Math.floor(days / ryoshiConfig.staking.bank.fortune.termLength);
+    const numTerms = Math.floor(totalDays / ryoshiConfig.staking.bank.fortune.termLength);
     const availableAprs = ryoshiConfig.staking.bank.fortune.apr as any;
     const aprKey = findNextLowestNumber(Object.keys(availableAprs), numTerms);
     setNewApr(availableAprs[aprKey] ?? availableAprs[1]);
-  }, [depositLength, daysToStake]);
+
+    let totalFortune = amountDeposited;
+    if (!hasDeposited || !isAddingDuration) {
+      totalFortune += fortuneToStake;
+    }
+    const daysForTroops = isAddingDuration ? totalDays : depositLength;
+    setNewTroops( (totalFortune * daysForTroops) / 1080);
+  }, [depositLength, daysToStake, fortuneToStake, amountDeposited, isAddingDuration]);
 
   return (
     <>
       <Box mx={1} pb={6}>
-        <Box bg='#272523' p={2} roundedBottom='md'>
-          {user.address ? (
-            <Box textAlign='center' w='full'>
-              <Flex>
-                <Spacer />
-                <HStack>
-                  <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>Your</Text>
-                  <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
-                  <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>
-                    $Fortune: {isRetrievingFortune ? <Spinner size='sm'/> : commify(userFortune)}
-                  </Text>
-                </HStack>
-                <Spacer />
+        {!!user.address ? (
+          <>
+            <Box bg='#272523' p={2} roundedBottom='md'>
+                <Box textAlign='center' w='full'>
+                  <Flex>
+                    <Spacer />
+                    <HStack>
+                      <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>Your</Text>
+                      <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
+                      <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>
+                        $Fortune: {isRetrievingFortune ? <Spinner size='sm'/> : commify(round(userFortune))}
+                      </Text>
+                    </HStack>
+                    <Spacer />
+                  </Flex>
+                </Box>
+              {hasDeposited && (
+                <Box textAlign='center' mt={2}>
+                  <hr />
+                  <SimpleGrid columns={{base: 2, sm: 4}} pt={2} gap={2}>
+                    <Box>
+                      <Text fontSize='sm'>Staked</Text>
+                      <Text fontWeight='bold'>{commify(amountDeposited)}</Text>
+                    </Box>
+                    <Box>
+                      <Text fontSize='sm'>APR</Text>
+                      <Text fontWeight='bold'>{currentApr * 100}%</Text>
+                    </Box>
+                    {/*<Box>*/}
+                    {/*  <Text fontSize='sm'>Length</Text>*/}
+                    {/*  <Text fontWeight='bold'>{depositLength} days</Text>*/}
+                    {/*</Box>*/}
+                    <Box>
+                      <Text fontSize='sm'>Troops</Text>
+                      <Text fontWeight='bold'>{commify(round((amountDeposited * depositLength) / 1080))}</Text>
+                    </Box>
+                    <Box>
+                      <Text fontSize='sm'>Withdraw Date</Text>
+                      <Text fontWeight='bold'>{withdrawDate}</Text>
+                    </Box>
+                  </SimpleGrid>
+                </Box>
+              )}
+            </Box>
+
+            <Text align='center' pt={2} px={2} fontSize='sm'>Receive Troops and $Mitama by staking $Fortune. Receive more by staking longer.</Text>
+
+            <Box px={6} pt={6}>
+              <SimpleGrid columns={hasDeposited ? 1 : 2} fontSize='sm'>
+                {!isAddingDuration && (
+                  <VStack>
+                    <Text>
+                      {hasDeposited ? 'Add additional Fortune' : 'Amount to stake'}
+                    </Text>
+                    <FormControl maxW='200px' isInvalid={!!inputError}>
+                      <NumberInput
+                        defaultValue={minAmountToStake}
+                        min={ryoshiConfig.staking.bank.fortune.minimum}
+                        name="quantity"
+                        onChange={handleChangeFortuneAmount}
+                        value={fortuneToStake}
+                        step={1000}
+                      >
+                        <NumberInputField />
+                        <NumberInputStepper>
+                          <NumberIncrementStepper color='#ffffffcc' />
+                          <NumberDecrementStepper color='#ffffffcc'/>
+                        </NumberInputStepper>
+                      </NumberInput>
+                      <FormErrorMessage>{inputError}</FormErrorMessage>
+                    </FormControl>
+                    <Flex>
+                      <Button textColor='#e2e8f0' variant='link' fontSize='sm' onClick={() => setFortuneToStake(userFortune)}>Stake all</Button>
+                      {hasDeposited && (
+                        <>
+                          <Box mx={1}>or</Box>
+                          <Button variant='link' fontSize='sm' onClick={() => setIsAddingDuration(true)}>Increase duration</Button>
+                        </>
+                      )}
+                    </Flex>
+                  </VStack>
+                )}
+                {(isAddingDuration || !hasDeposited) && (
+                  <VStack>
+                    <Text>
+                      {hasDeposited ? 'Increase duration by' : 'Duration (days)'}
+                    </Text>
+                    <FormControl maxW='250px' isInvalid={!!lengthError}>
+                      <Select onChange={handleChangeDays} value={daysToStake} bg='none'>
+                        {[...Array(12).fill(0)].map((_, i) => (
+                          <option key={i} value={`${(i + 1) * ryoshiConfig.staking.bank.fortune.termLength}`}>
+                            {(i + 1)} {pluralize((i + 1), 'Season')} ({(i + 1) * ryoshiConfig.staking.bank.fortune.termLength} days)
+                          </option>
+                        ))}
+                      </Select>
+                      <FormErrorMessage>{lengthError}</FormErrorMessage>
+                    </FormControl>
+                    {hasDeposited && (
+                      <Button variant='link' fontSize='sm' onClick={() => setIsAddingDuration(false)}>Increase amount</Button>
+                    )}
+                  </VStack>
+                )}
+              </SimpleGrid>
+
+              <Box bgColor='#292626' rounded='md' p={4} mt={4} textAlign='center'>
+                <SimpleGrid columns={2}>
+                  <Text>{hasDeposited ? 'New' : ''} APR</Text>
+                  <Text>{hasDeposited ? 'New' : ''} Troops</Text>
+                  <Text fontSize={24} fontWeight='bold'>{newApr * 100}%</Text>
+                  <Text fontSize={24} fontWeight='bold'>{commify(round(newTroops))}</Text>
+                  <Text fontSize={12} color='#aaa'>{commify((isAddingDuration ? depositLength : 0) + daysToStake)} day commitment</Text>
+                  <Text fontSize={12} color='#aaa'>{commify((isAddingDuration ? 0 : fortuneToStake) + amountDeposited)} $Fortune stake</Text>
+                </SimpleGrid>
+              </Box>
+
+
+              <Spacer h='8'/>
+              <Flex alignContent={'center'} justifyContent={'center'}>
+                <Box ps='20px'>
+                  <RdButton
+                    fontSize={{base: 'xl', sm: '2xl'}}
+                    stickyIcon={true}
+                    onClick={handleStake}
+                    isLoading={isExecuting}
+                    disabled={isExecuting}
+                  >
+                    {user.address ? (
+                      <>{isExecuting ? executingLabel : 'Stake $Fortune'}</>
+                    ) : (
+                      <>Connect</>
+                    )}
+                  </RdButton>
+                </Box>
               </Flex>
             </Box>
-          ) : (
-            <Box fontSize='sm' textAlign='center' w='full'>Connect wallet to purchase</Box>
-          )}
-          {hasDeposited && (
-            <Box textAlign='center' mt={2}>
-              <hr />
-              <SimpleGrid columns={{base: 2, sm: 4}} pt={2} gap={2}>
-                <Box>
-                  <Text fontSize='sm'>Staked</Text>
-                  <Text fontWeight='bold'>{amountDeposited}</Text>
-                </Box>
-                <Box>
-                  <Text fontSize='sm'>APR</Text>
-                  <Text fontWeight='bold'>{currentApr * 100}%</Text>
-                </Box>
-                {/*<Box>*/}
-                {/*  <Text fontSize='sm'>Length</Text>*/}
-                {/*  <Text fontWeight='bold'>{depositLength} days</Text>*/}
-                {/*</Box>*/}
-                <Box>
-                  <Text fontSize='sm'>Troops</Text>
-                  <Text fontWeight='bold'>{round((amountDeposited * depositLength) / 1080)}</Text>
-                </Box>
-                <Box>
-                  <Text fontSize='sm'>Withdraw Date</Text>
-                  <Text fontWeight='bold'>{withdrawDate}</Text>
-                </Box>
-              </SimpleGrid>
-            </Box>
-          )}
-        </Box>
-
-        <Text align='center' pt={2} px={2} fontSize='sm'>Receive Troops and $Mitama by staking $Fortune. Receive more by staking longer.</Text>
-
-        <Box px={6} pt={6}>
-          <SimpleGrid columns={hasDeposited ? 1 : 2} fontSize='sm'>
-            {!isAddingDuration && (
-              <VStack>
-                <Text>
-                  {hasDeposited ? 'Add additional Fortune' : 'Amount to stake'}
-                </Text>
-                <FormControl maxW='200px' isInvalid={!!inputError}>
-                  <NumberInput
-                    defaultValue={minAmountToStake}
-                    min={minAmountToStake}
-                    name="quantity"
-                    onChange={handleChangeFortuneAmount}
-                    value={fortuneToStake}
-                    step={1000}
-                  >
-                    <NumberInputField />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper color='#ffffffcc' />
-                      <NumberDecrementStepper color='#ffffffcc'/>
-                    </NumberInputStepper>
-                  </NumberInput>
-                  <FormErrorMessage>{inputError}</FormErrorMessage>
-                </FormControl>
-                <Flex>
-                  <Button textColor='#e2e8f0' variant='link' fontSize='sm' onClick={() => setFortuneToStake(userFortune)}>Stake all</Button>
-                  {hasDeposited && (
-                    <>
-                      <Box mx={1}>or</Box>
-                      <Button variant='link' fontSize='sm' onClick={() => setIsAddingDuration(true)}>Increase duration</Button>
-                    </>
-                  )}
-                </Flex>
-              </VStack>
-            )}
-            {(isAddingDuration || !hasDeposited) && (
-              <VStack>
-                <Text>
-                  {hasDeposited ? 'Increase duration by' : 'Duration (days)'}
-                </Text>
-                <FormControl maxW='250px' isInvalid={!!lengthError}>
-                  <Select onChange={handleChangeDays} value={daysToStake} bg='none'>
-                    {[...Array(12).fill(0)].map((_, i) => (
-                      <option key={i} value={`${(i + 1) * ryoshiConfig.staking.bank.fortune.termLength}`}>
-                        {(i + 1)} {pluralize((i + 1), 'Season')} ({(i + 1) * ryoshiConfig.staking.bank.fortune.termLength} days)
-                      </option>
-                    ))}
-                  </Select>
-                  <FormErrorMessage>{lengthError}</FormErrorMessage>
-                </FormControl>
-                {hasDeposited && (
-                  <Button variant='link' fontSize='sm' onClick={() => setIsAddingDuration(false)}>Increase amount</Button>
-                )}
-              </VStack>
-            )}
-          </SimpleGrid>
-
-          <Box bgColor='#292626' rounded='md' p={4} mt={4} textAlign='center'>
-            <SimpleGrid columns={2}>
-              <Text>APR</Text>
-              <Text>Troops</Text>
-              <Text fontSize={24} fontWeight='bold'>{newApr * 100}%</Text>
-              <Text fontSize={24} fontWeight='bold'>{commify(round(mitama))}</Text>
-              <Text fontSize={12} color='#aaa'>{commify((isAddingDuration ? depositLength : 0) + daysToStake)} day commitment</Text>
-              <Text fontSize={12} color='#aaa'>{commify((isAddingDuration ? 0 : fortuneToStake) + amountDeposited)} $Fortune stake</Text>
-            </SimpleGrid>
-          </Box>
-
-
-          <Spacer h='8'/>
-          <Flex alignContent={'center'} justifyContent={'center'}>
-            <Box ps='20px'>
-              <RdButton
-                fontSize={{base: 'xl', sm: '2xl'}}
-                stickyIcon={true}
-                onClick={handleStake}
-                isLoading={isExecuting}
-                disabled={isExecuting}
-              >
-                {user.address ? (
-                  <>{isExecuting ? executingLabel : 'Stake $Fortune'}</>
-                ) : (
-                  <>Connect</>
-                )}
-              </RdButton>
-            </Box>
-          </Flex>
-        </Box>
+          </>
+        ) : (
+          <VStack fontSize='sm' mt={2} spacing={8}>
+            <Text>Receive Troops and $Mitama by staking $Fortune. Receive more by staking longer.</Text>
+            <RdButton
+              fontSize={{base: 'xl', sm: '2xl'}}
+              stickyIcon={true}
+              onClick={handleStake}
+            >
+              Connect
+            </RdButton>
+          </VStack>
+        )}
       </Box>
     </>
     

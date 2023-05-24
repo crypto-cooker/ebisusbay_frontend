@@ -2,6 +2,7 @@ export const ryoshiConfig = {
   staking: {
     bank: {
       fortune: {
+        minimum: 120,
         termLength: 90,
         apr: {
           1: 0.12,
