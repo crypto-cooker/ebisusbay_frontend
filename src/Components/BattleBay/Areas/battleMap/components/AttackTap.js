@@ -512,9 +512,10 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
               backgroundColor='#292626'
               w='90%' 
               me={2} 
-              placeholder='Select Attacker'
+              // placeholder='Select Attacker'
               value={dataForm.attackersFaction} 
               onChange={onChangeInputsAttacker}>
+                <option selected hidden disabled value="">Select Attacker</option>
               {attackerOptions}
             </Select>
 
@@ -544,12 +545,13 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
             <Text textAlign='center' fontSize={'16px'}>Select a Faction to Attack:</Text>
           <Select 
             name='defendersFaction'
-            placeholder='Select Defender'
+            // placeholder='Select Defender'
             backgroundColor='#292626'
             w='100%' 
             me={2} 
             value={dataForm.defendersFaction} 
             onChange={onChangeInputsDefender}>
+                <option selected hidden disabled value="">Select Defender</option>
             {defenderOptions}
           </Select>
           </VStack>

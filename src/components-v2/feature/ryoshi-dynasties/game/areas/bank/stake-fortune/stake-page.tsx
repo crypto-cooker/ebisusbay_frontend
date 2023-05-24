@@ -332,14 +332,14 @@ const StakePage = () => {
                   >
                     <NumberInputField />
                     <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
+                      <NumberIncrementStepper color='#ffffffcc' />
+                      <NumberDecrementStepper color='#ffffffcc'/>
                     </NumberInputStepper>
                   </NumberInput>
                   <FormErrorMessage>{inputError}</FormErrorMessage>
                 </FormControl>
                 <Flex>
-                  <Button variant='link' fontSize='sm' onClick={() => setFortuneToStake(userFortune)}>Stake all</Button>
+                  <Button textColor='#e2e8f0' variant='link' fontSize='sm' onClick={() => setFortuneToStake(userFortune)}>Stake all</Button>
                   {hasDeposited && (
                     <>
                       <Box mx={1}>or</Box>

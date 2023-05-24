@@ -268,7 +268,7 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
               onSuccess={handleTJUploadSuccess}
             />
             </form>
-          <Text className={gothamBook.className} fontSize='24' textAlign='center'>{faction.name}</Text>
+          <Text textColor='#ffffffeb' className={gothamBook.className} fontSize='24' textAlign='center'>{faction.name}</Text>
           
 
           <Flex alignContent={'center'} justifyContent={'center'}>
@@ -287,7 +287,7 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
         </Flex>
 
         {isRegistered(faction.id) ? <>
-        <Text fontSize={{base: 'sm', sm: 'md'}}> Faction is registered </Text>
+        <Text textColor='#ffffffeb' fontSize={{base: 'sm', sm: 'md'}}> Faction is registered </Text>
         </>: 
           <RdButton 
             w='250px'
@@ -411,8 +411,8 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
         </Button>
       </Box>
 
-      <Text fontSize={{ base: '28px', md: '32px' }} className={gothamBook.className} textAlign='center'>Alliance Center</Text>
-      <Text className={gothamBook.className} textAlign='center'>Manage your Faction, Delegate your troops</Text>
+      <Text textColor='#ffffffeb' fontSize={{ base: '28px', md: '32px' }} className={gothamBook.className} textAlign='center'>Alliance Center</Text>
+      <Text textColor='#ffffffeb' className={gothamBook.className} textAlign='center'>Manage your Faction, Delegate your troops</Text>
       
       <Spacer h='4'/>
       
@@ -435,7 +435,7 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
       </Flex>
       <Spacer h='4'/>
       
-      <Text>
+      <Text textColor='#ffffffeb'>
         {hasFaction ? <>
           Faction Troops: {factionTroops}
           </> : <>
