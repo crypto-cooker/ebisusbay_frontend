@@ -459,7 +459,7 @@ const Index = function () {
                       <span className="d-wallet-value">
                       {user.tokenSale ? (
                         <div className="d-flex">
-                          <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="Fortune Logo" width={16} height={16} />
+                          <Image src='/img/ryoshi-dynasties/icons/fortune_token.svg' alt="Fortune Logo" width={16} height={16} />
                           <span className="ms-1">
                             {ethers.utils.commify(round(user.tokenSale.fortune, 2))}
                           </span>

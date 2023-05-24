@@ -276,7 +276,7 @@ const StakePage = () => {
                     <Spacer />
                     <HStack>
                       <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>Your</Text>
-                      <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
+                      <Image src='/img/ryoshi-dynasties/icons/fortune_token.svg' alt="walletIcon" boxSize={6}/>
                       <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>
                         $Fortune: {isRetrievingFortune ? <Spinner size='sm'/> : commify(round(userFortune))}
                       </Text>

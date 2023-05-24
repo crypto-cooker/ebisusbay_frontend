@@ -78,19 +78,19 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin}: VillageHudProp
                     {!!user.address ? (
                       <HStack w='full' spacing={4}>
                         <HStack>
-                          <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
+                          <Image src='/img/ryoshi-dynasties/icons/fortune_token.svg' alt="walletIcon" boxSize={6}/>
                           <Text
                             textColor={user.theme === 'dark' ? '#ffffff' : '#ffffff'}
                             >{fortune}</Text>
                         </HStack>
                         <HStack>
-                          <Image src='/img/battle-bay/announcementBoard/mitama.png' alt="walletIcon" boxSize={6}/>
+                          <Image src='/img/ryoshi-dynasties/icons/mitama.png' alt="walletIcon" boxSize={6}/>
                           <Text
                             textColor={user.theme === 'dark' ? '#ffffff' : '#ffffff'}
                             >{mitama}</Text>
                         </HStack>
                         <HStack>
-                          <Image src='/img/battle-bay/announcementBoard/koban.png' alt="walletIcon" boxSize={6}/>
+                          <Image src='/img/ryoshi-dynasties/icons/koban.png' alt="walletIcon" boxSize={6}/>
                           <Text
                             textColor={user.theme === 'dark' ? '#ffffff' : '#ffffff'}
                             >{koban}</Text>

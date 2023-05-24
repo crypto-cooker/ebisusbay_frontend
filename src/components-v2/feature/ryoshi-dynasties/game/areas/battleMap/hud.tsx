@@ -12,7 +12,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
   return (
     <Box position='absolute' top={0} left={0} p={4}  pointerEvents='none' >
       <Flex direction='row' justify='space-between' >
-        <Box mb={4} bg={user.theme === 'dark' ? '#272523EE' : '#272523EE'} p={2} rounded='md' w={{base: '345px', sm: '200px'}}>
+        <Box mb={4} bg='#272523EE' p={2} rounded='md' w={{base: '345px', sm: '200px'}}>
           <ReturnToVillageButton onBack={onBack} />
         </Box>
       </Flex>

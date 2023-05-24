@@ -41,6 +41,7 @@ import Resources from "@src/Contracts/Resources.json";
 import {io} from "socket.io-client";
 
 import localFont from 'next/font/local';
+import ImageService from "@src/core/services/image";
 const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
 
 const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
@@ -572,7 +573,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
                 <Image
                   boxSize={{base: '50px', sm: '100px'}}
                   objectFit="cover"
-                  src={attackerImage}
+                  src={ImageService.translate(attackerImage).fixedWidth(100, 100)}
                   /> : <></>
               }
               <Text textAlign='left' 
@@ -597,7 +598,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
                 <Image
                   boxSize={{base: '50px', sm: '100px'}}
                   objectFit="cover"
-                  src={defenderImage}
+                  src={ImageService.translate(defenderImage).fixedWidth(100, 100)}
                   /> : <></>
               }
               <Text textAlign='right' 

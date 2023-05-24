@@ -317,7 +317,7 @@ const FortunePurchaseForm = () => {
               <Button fontSize={{base: 'xs', md: 'sm'}} variant='unstyled' fontWeight='normal' textDecoration='underline' onClick={handleBuyUsdc}>Purchase USDC <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} ml={1} /></Button>
             </Box>
             <HStack align='start'>
-              <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
+              <Image src='/img/ryoshi-dynasties/icons/fortune_token.svg' alt="walletIcon" boxSize={6}/>
               <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? '$Fortune ' : ''}{commify(user.tokenSale.fortune)}</Text>
             </HStack>
           </>
