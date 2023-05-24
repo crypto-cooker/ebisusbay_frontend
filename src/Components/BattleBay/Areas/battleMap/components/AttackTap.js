@@ -664,7 +664,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
         <Box
               ps='20px'>
               <RdButton
-                w='200px'
+                minW='200px'
                 fontSize={{base: 'xl', sm: '2xl'}}
                 stickyIcon={true}
                 onClick={() => PreBattleChecks()}
