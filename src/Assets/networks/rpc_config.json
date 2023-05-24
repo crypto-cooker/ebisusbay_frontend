@@ -20634,6 +20634,57 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Cronos Fox Fraternity Gen2",
+      "slug": "cronos-fox-fraternity-gen2",
+      "multiToken": false,
+      "address": "0x27bf78d35B8b7c08D395B0774C56384d32dC8b59",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "GIF foxes living on the cronos chain.",
+        "avatar": "/img/collections/cronos-fox-fraternity-gen2/avatar.webp",
+        "card": "/img/collections/cronos-fox-fraternity-gen2/card.webp",
+        "banner": "/img/collections/cronos-fox-fraternity-gen2/banner.webp",
+        "website": "https://www.cronosfoxfraternity.com/",
+        "twitter": "https://twitter.com/FoxFraternity",
+        "discord": "https://discord.gg/54enZvZG",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "GreenStix Mutant Candles",
+      "slug": "greenstix-mutant-candles",
+      "multiToken": false,
+      "address": "0x763D9a764E0090C4FbA43347E158425c1C6175d3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Ever wondered to your self? What Would happen if you mixed Radioactive essential oils & candle wax?  Introducing the Mutant Candles, GreenStix is back with WAY MORE TRAITS. The radioactive oil’s definitely did a number on these candles. Some of them have taken the form of.. TREES!! We will be planting trees world wide as always with proceeds from the mint. Bounties, giveaways and 10% $CRO rewards claimable in dApp. #KeepItGreen GreenFiends. ",
+        "avatar": "/img/collections/greenstix-mutant-candles/avatar.webp",
+        "card": "/img/collections/greenstix-mutant-candles/card.webp",
+        "banner": "/img/collections/greenstix-mutant-candles/banner.webp",
+        "website": "https://greenstix.xyz/",
+        "twitter": "https://twitter.com/GreenStix_v2",
+        "discord": "https://discord.gg/md3NwXeRe3",
+        "telegram": "https://t.me/greeenstixtoken",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
