@@ -28,7 +28,7 @@ import {
   getFactionsRegistered, 
   getFactionUndeployedArmies, 
   getProfileArmies,
-   getAllFactions, 
+  getAllFactions, 
    addTroops 
   } from "@src/core/api/RyoshiDynastiesAPICalls";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
@@ -47,6 +47,7 @@ import FactionPfp from './FactionIconUpload';
 import localFont from 'next/font/local';
 const gothamBook = localFont({ src: '../../../fonts/Gotham-Book.woff2' })
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
+import ReturnToVillageButton from "@src/components-v2/feature/ryoshi-dynasties/components/return-button";
 
 import {io} from "socket.io-client";
 
@@ -382,12 +383,6 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
       <FactionRegistrationForm isOpen={isOpenRegister} onClose={onCloseRegister} handleClose={handleClose}/>
       <DelegateForm isOpen={isOpen} onClose={onClose} delegateMode={delegateMode} factions={factions} troops={walletTroops} setTotalTroops = {setWalletTroops}/>
 
-      {/* <Button margin={'36px'} className={gothamBook.className} position={'absolute'} onClick={closeAllianceCenter}>Back to Village Map</Button> */}
-      {/* <Box >
-        <Center>
-          <Image src='img/battle-bay/alliancecenter_day.png'/>
-        </Center>
-      </Box> */}
       <Box
         position='absolute'
         left={6}

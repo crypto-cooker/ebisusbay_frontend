@@ -58,11 +58,14 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   const defenderOutcome = useRef();
   const battleLogText = useRef();
 
-  const [defenderTroops, setDefenderTroops] = useState(0);
   const [attackerTroops, setAttackerTroops] = useState(0);
   const [attackerTroopsAvailable, setAttackerTroopsAvailable] = useState(1);
   const [attackerOptions, setAttackerOptions] = useState([]);
+  const [attackerImage, setAttackerImage] = useState('');
+
+  const [defenderTroops, setDefenderTroops] = useState(0);
   const [defenderOptions, setDefenderOptions] = useState([]);
+  const [defenderImage, setDefenderImage] = useState('');
 
   const [allFactions, setAllFactions] = useState([]);
   const [factionsLoaded, setFactionsLoaded] = useState(false);
@@ -350,13 +353,16 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   function getDefenderTroopsInRegion(){
     controlPoint.leaderBoard.forEach(faction => {
       if(faction.name === dataForm.defendersFaction){
+        console.log("faction", faction)
         setDefenderTroops(faction.totalTroops);
+        setDefenderImage(faction.image);
       }});
   }
   function getAttackerTroopsInRegion(){
     controlPoint.leaderBoard.forEach(faction => {
       if(faction.name === dataForm.attackersFaction){
         setAttackerTroopsAvailable(faction.totalTroops);
+        setAttackerImage(faction.image);
       }});
   }
   function showDetailedResults(){
@@ -377,7 +383,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
       setAllFactions(controlPoint.leaderBoard);
       setDefenderOptions(controlPoint.leaderBoard.map((faction, index) => (
         faction.totalTroops > 0 ?
-        <option value={faction.name} key={index}>{faction.name}</option>
+        <option style={{ background: '#272523' }} value={faction.name} key={index}>{faction.name}</option>
         : null)))
     }
   }, [controlPoint])
@@ -431,6 +437,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
     if(combinedArmies.length > 0 && !factionsLoaded) {
       setAttackerOptions(combinedArmies.map((faction, index) => (
         <option 
+          style={{ background: '#272523' }}
           value={faction.name}
           key={index}>
           {faction.name}</option>)
@@ -529,8 +536,8 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
               >
               <NumberInputField />
               <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
+                <NumberIncrementStepper color='#ffffff' />
+                <NumberDecrementStepper color='#ffffff' />
               </NumberInputStepper>
             </NumberInput>
 
@@ -558,6 +565,14 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
         <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
           <HStack justify='space-between'>
             <Box w='45'>
+              <VStack>
+              {attackerImage !== '' ?
+                <Image
+                  boxSize={{base: '50px', sm: '100px'}}
+                  objectFit="cover"
+                  src={attackerImage}
+                  /> : <></>
+              }
               <Text textAlign='left' 
               fontSize={{base: '16px', sm: '24px'}}
               >{dataForm.attackersFaction}</Text>
@@ -566,6 +581,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
               >Attack Strength: {attackerTroops}</Text>
               {/* {isOwnerOfFaction 
               ? <Text textAlign='left' fontSize={'16px'}>Troops Delegated: {factionTroops}</Text> : ""} */}
+              </VStack>
             </Box>
             <Box  w='10'>
               <Text textAlign='left' 
@@ -574,12 +590,21 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
             </Box>
 
             <Box  w='45'>
+              <VStack>
+              {defenderImage !== '' ?
+                <Image
+                  boxSize={{base: '50px', sm: '100px'}}
+                  objectFit="cover"
+                  src={defenderImage}
+                  /> : <></>
+              }
               <Text textAlign='right' 
               fontSize={{base: '16px', sm: '24px'}}
               >{dataForm.defendersFaction}</Text>
               <Text textAlign='right' 
               fontSize={{base: '12px', sm: '16px'}}
               >Troops stationed: {defenderTroops}</Text>
+              </VStack>
             </Box>
           </HStack>
           </Box>
@@ -623,9 +648,9 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
         <Center>
           <Flex justifyContent='space-between' w='90%' >
             <Text fontSize={'12px'}>Your $Koban: {koban}</Text>
-            <Text fontSize={'12px'} title="When attacking, a D6 roll is made for both the attacker and the defender. 
+            {/* <Text fontSize={'12px'} title="When attacking, a D6 roll is made for both the attacker and the defender. 
                 The lower roll (ties going to defender) loses a troop. This continues until one 
-                  side has run out of troops">How are Attacks Calculated? (Hover for info)</Text>
+                  side has run out of troops">How are Attacks Calculated? (Hover for info)</Text> */}
           </Flex>
         </Center>
       </div>

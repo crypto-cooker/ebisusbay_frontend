@@ -21,6 +21,7 @@ import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useAppSelector} from "@src/Store/hooks";
 import {useDispatch} from "react-redux";
+import ReturnToVillageButton from "@src/components-v2/feature/ryoshi-dynasties/components/return-button";
 
 interface BarracksProps {
   onBack: () => void;
@@ -47,13 +48,13 @@ const Barracks = ({onBack}: BarracksProps) => {
   }, [user.address]);
 
   return (
-    <Box>
+    <Box position='relative' h='calc(100vh - 74px)'>
+      <ReturnToVillageButton onBack={onBack} />
       <StakeNfts isOpen={isOpenStakeNFTs} onClose={onCloseStakeNFTs} />
-      <Button margin={'36px'} position={'absolute'} onClick={onBack}>Back to Village Map</Button>
       <Container>
-      <Box >
+      <Box  >
         <Center>
-        <Image src='img/battle-bay/barracks_day.png'/>
+        <Image marginTop={20} src='img/battle-bay/barracks_day.png'/>
         </Center>
       </Box>
       <Heading className="title text-center">Barracks</Heading>

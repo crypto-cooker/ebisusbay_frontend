@@ -53,7 +53,10 @@ const InfoTap = ({onClose, controlPoint=[], refreshControlPoint}) => {
 
   return (
     <>
-    
+    <Flex 
+       marginLeft='8'
+       marginRight='8'
+       >
     {isLoaded ? (
       <>
       <Flex flexDirection='column' textAlign='center' justifyContent='space-around'>
@@ -61,9 +64,9 @@ const InfoTap = ({onClose, controlPoint=[], refreshControlPoint}) => {
         <Table size='m'>
           <Thead>
             <Tr>
-              <Th textAlign='center'>Rank</Th>
-              <Th textAlign='center'>Faction</Th>
-              <Th textAlign='center'>Troops</Th>
+              <Th textAlign='center' textColor='#a0aec0'>Rank</Th>
+              <Th textAlign='center' textColor='#a0aec0'>Faction</Th>
+              <Th textAlign='center' textColor='#a0aec0'>Troops</Th>
             </Tr>
           </Thead>
           {area}
@@ -71,8 +74,9 @@ const InfoTap = ({onClose, controlPoint=[], refreshControlPoint}) => {
       </TableContainer>
       <Flex 
        marginTop='12'
-       marginLeft='4'
-       marginRight='4'
+       marginLeft='8'
+       marginRight='8'
+       marginBottom='8'
        >
         <p>
           The faction with the highest troop count on {weekEndDate} will recieve a reward of RewardID: {controlPoint.rewardId}
@@ -86,9 +90,9 @@ const InfoTap = ({onClose, controlPoint=[], refreshControlPoint}) => {
           <Table size='m'>
             <Thead>
               <Tr>
-                <Th textAlign='center'>Rank</Th>
-                <Th textAlign='center'>Faction</Th>
-                <Th textAlign='center'>Troops</Th>
+                <Th textAlign='center' textColor='#a0aec0'>Rank</Th>
+                <Th textAlign='center' textColor='#a0aec0'>Faction</Th>
+                <Th textAlign='center' textColor='#a0aec0'>Troops</Th>
               </Tr>
             </Thead>
             <Tr>1</Tr>
@@ -100,8 +104,9 @@ const InfoTap = ({onClose, controlPoint=[], refreshControlPoint}) => {
         </TableContainer>
         <Flex 
          marginTop='12'
-         marginLeft='4'
-         marginRight='4'
+         marginLeft='8'
+         marginRight='8'
+         marginBottom='8'
          >
           <p>
           The faction with the highest troop count on {weekEndDate} will recieve a reward of RewardID: {controlPoint.rewardId}
@@ -109,6 +114,7 @@ const InfoTap = ({onClose, controlPoint=[], refreshControlPoint}) => {
         </Flex>
       </Flex>
       )}
+      </Flex>
     </>
   )
 }

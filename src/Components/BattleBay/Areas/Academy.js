@@ -13,8 +13,7 @@ import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import { useState, useEffect } from "react";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
-
-
+import ReturnToVillageButton from "@src/components-v2/feature/ryoshi-dynasties/components/return-button";
 
 const Academy = ({onBack}) => {
 
@@ -90,7 +89,7 @@ const Academy = ({onBack}) => {
 
   return (
     <section className="gl-legacy container">
-      <Button onClick={onBack}>Back to Village Map</Button>
+      <ReturnToVillageButton onBack={onBack} />
       <Heading className="title text-center">Academy - Wiki</Heading>
 
       <Grid templateColumns='repeat(2, 1fr)' gap={6}>

@@ -46,6 +46,7 @@ import FactionPfp from './FactionIconUpload';
 import localFont from 'next/font/local';
 const gothamBook = localFont({ src: '../../../fonts/Gotham-Book.woff2' })
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
+import ReturnToVillageButton from "@src/components-v2/feature/ryoshi-dynasties/components/return-button";
 
 import {io} from "socket.io-client";
 
@@ -368,8 +369,7 @@ const AllianceCenter = ({onBack}) => {
       <FactionForm isOpen={isOpenFaction} onClose={onCloseFaction} faction={selectedFaction} handleClose={handleClose} isRegistered={factionRegistered}/>
       <FactionRegistrationForm isOpen={isOpenRegister} onClose={onCloseRegister} handleClose={handleClose}/>
       <DelegateForm isOpen={isOpen} onClose={onClose} delegateMode={delegateMode} factions={factions} troops={walletTroops} setTotalTroops = {setWalletTroops}/>
-
-      <Button margin={'36px'} className={gothamBook.className} position={'absolute'} onClick={onBack}>Back to Village Map</Button>
+      <ReturnToVillageButton onBack={onBack} />
       <Box >
         <Center>
           <Image src='img/battle-bay/alliancecenter_day.png'/>

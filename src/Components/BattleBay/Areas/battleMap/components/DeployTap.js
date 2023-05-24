@@ -168,16 +168,16 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
     }
   }
   const ShowAvailableFactions = async () => {
-    if(hasFaction)
-    {
+    if(hasFaction) {
       setFactionOption(
-        <option value={playerFaction.name} key={0}>{playerFaction.name}</option>
+        <option style={{ background: '#272523' }}
+        value={playerFaction.name} key={0}>{playerFaction.name}</option>
       )
     }
-    else
-    {
+    else {
       setFactionOption(allFactions.map((faction, index) => (
-        <option value={faction.name} key={index}>{faction.name}</option>
+        <option style={{ background: '#272523' }}
+        value={faction.name} key={index}>{faction.name}</option>
       )))
     }
   }
@@ -213,10 +213,12 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
         <FormLabel>Faction:</FormLabel>
         <Select me={2} 
           bg='none'
-          placeholder='Please select a faction'
+          // placeholder='Please select a faction'
+          style={{ background: '#272523' }}
           value={selectedFaction} 
           name="faction" 
           onChange={onChangeInputsFaction}>
+            <option selected hidden disabled value="">Please select a faction</option>
           {factionOption}
         </Select>
       </FormControl>
@@ -227,9 +229,9 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
           onChange={handleChange}
           value={selectedQuantity} type ='number'>
           <NumberInputField />
-          <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
+          <NumberInputStepper >
+            <NumberIncrementStepper color='#ffffff'/>
+            <NumberDecrementStepper color='#ffffff'/>
           </NumberInputStepper>
         </NumberInput>
       </FormControl>
