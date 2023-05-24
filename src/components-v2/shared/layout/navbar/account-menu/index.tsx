@@ -453,21 +453,17 @@ const Index = function () {
 
               <div className="d-flex">
                 <div className="flex-fill">
-                  <div className="text-muted">$Fortune Presale</div>
+                  <div className="text-muted">$Fortune</div>
                   <div>
                     {!user.connectingWallet ? (
                       <span className="d-wallet-value">
-                      {user.tokenSale ? (
                         <div className="d-flex">
                           <Image src='/img/ryoshi-dynasties/icons/fortune.svg' alt="Fortune Logo" width={16} height={16} />
                           <span className="ms-1">
-                            {ethers.utils.commify(round(user.tokenSale.fortune, 2))}
+                            {ethers.utils.commify(round(user.fortuneBalance))}
                           </span>
                         </div>
-                      ) : (
-                        <>N/A</>
-                      )}
-                    </span>
+                      </span>
                     ) : (
                       <span>
                       <Spinner animation="border" role="status" size={'sm'}>

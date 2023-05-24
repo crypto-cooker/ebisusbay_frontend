@@ -50,7 +50,7 @@ const DailyCheckin = ({isOpen, onClose}: DailyCheckinProps) => {
     }
   );
 
-  console.log('data', data);
+  // console.log('data', data);
 
   const claimDailyRewards = async () => {
     if (!user.address) return;

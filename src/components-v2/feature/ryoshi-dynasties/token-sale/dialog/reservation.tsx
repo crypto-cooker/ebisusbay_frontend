@@ -35,7 +35,7 @@ import {useAppSelector} from "@src/Store/hooks";
 import FortunePresale from "@src/Contracts/FortunePresale.json";
 import {commify} from "ethers/lib/utils";
 import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount, updateFortuneBalance} from "@src/GlobalState/User";
+import {chainConnect, connectAccount, updateFortuneBalance, updateFortunePresaleBalance} from "@src/GlobalState/User";
 import {TokenSaleContext, TokenSaleContextProps} from "@src/components-v2/feature/ryoshi-dynasties/token-sale/context";
 import {useQueryClient} from "@tanstack/react-query";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
