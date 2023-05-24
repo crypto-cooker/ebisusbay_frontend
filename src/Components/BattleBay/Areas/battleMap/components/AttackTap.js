@@ -28,7 +28,7 @@ import Button from "@src/Components/components/Button";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
-import {attack, getFactionsOwned, getProfileArmies} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {attack, getFactionsOwned, getProfileArmies, getGameTokens } from "@src/core/api/RyoshiDynastiesAPICalls";
 import { createSuccessfulTransactionToastContent } from '@src/utils';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 
@@ -270,6 +270,24 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
     setIsExecuting(false);
   }
   }
+  const CheckForBattleRewards = async () => {
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      try {
+        const data = await getGameTokens(user.address.toLowerCase(), signatureInStorage);
+        if(data.data.data.length > 0){
+          //has battle rewards, display claim button and show rewards
+          console.log("has battle rewards");
+        }
+      } catch (error) {
+        console.log(error)
+      }
+  }
+  }
   
   function ShowAttackConclusion(){
     var attackersAlive = Number(attackerTroops);
@@ -296,17 +314,33 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
     }
 
     battleLogText.current.innerHTML = outcomeLog;
-    battleOutcome.current.textContent = attackersSlain<defendersSlain ? "Victory!" : "Defeat!";
-    battleContext.current.textContent = attackersSlain<defendersSlain ? "You slew more defenders than you lost" : "The defenders slew more of your troops than you slew of theirs";
+
+    if(attackersSlain < defendersSlain) {
+      battleOutcome.current.textContent = "Victory!";
+      battleContext.current.textContent = "You slew more defenders than you lost";
+    }
+    else if(attackersSlain > defendersSlain) {
+      battleOutcome.current.textContent = "Defeat!";
+      battleContext.current.textContent = "The defenders slew more of your troops than you slew of theirs";
+    }
+    else if(attackersSlain == defendersSlain) {
+      battleOutcome.current.textContent = "Draw";
+      battleContext.current.textContent = "Neither side was able to gain an advantage over the other";
+    }
+
     attackerOutcome.current.textContent = "lost "+attackersSlain+"/"+ Number(attackerTroops)+" troops";
     defenderOutcome.current.textContent = "lost "+defendersSlain+"/"+defenderTroops+" troops";
     
     setupDice(attackerDice, defenderDice);
 
+
     attackSetUp.current.style.display = "none"
     attackConclusion.current.style.display = "block"
     setIsExecuting(false);
+
+    if(defendersSlain>0) CheckForBattleRewards();
   }
+
   function PreBattleChecks()
   {
     setShowAlert(false)
