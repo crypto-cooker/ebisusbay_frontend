@@ -67,7 +67,9 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin}: VillageHudProp
   return (
     <Box position='absolute' top={0} left={0} p={4}  pointerEvents='none' >
       <Flex direction='row' justify='space-between' >
-        <Box mb={4} bg='#272523EE' p={2} rounded='md' w={{base: '345px', sm: '400px'}}>
+        <Box mb={4} 
+        bg={user.theme === 'dark' ? '#272523EE' : '#0078cb'}
+        p={2} rounded='md' w={{base: '345px', sm: '400px'}}>
           <Accordion defaultIndex={[0]} allowToggle>
             <AccordionItem border='none'>
               <AccordionButton pointerEvents='auto'>
@@ -77,22 +79,29 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin}: VillageHudProp
                       <HStack w='full' spacing={4}>
                         <HStack>
                           <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
-                          <Text>{fortune}</Text>
+                          <Text
+                            textColor={user.theme === 'dark' ? '#ffffff' : '#ffffff'}
+                            >{fortune}</Text>
                         </HStack>
                         <HStack>
                           <Image src='/img/battle-bay/announcementBoard/mitama.png' alt="walletIcon" boxSize={6}/>
-                          <Text>{mitama}</Text>
+                          <Text
+                            textColor={user.theme === 'dark' ? '#ffffff' : '#ffffff'}
+                            >{mitama}</Text>
                         </HStack>
                         <HStack>
                           <Image src='/img/battle-bay/announcementBoard/koban.png' alt="walletIcon" boxSize={6}/>
-                          <Text>{koban}</Text>
+                          <Text
+                            textColor={user.theme === 'dark' ? '#ffffff' : '#ffffff'}
+                            >{koban}</Text>
                         </HStack>
                       </HStack>
                     ) : (
                       <Text align='center'>Connect wallet for stats</Text>
                     )}
                     <Spacer />
-                    <AccordionIcon />
+                    <AccordionIcon 
+                      color='#ffffff'/>
                   </>
                 ) : (
                   <Progress size='xs' colorScheme='orange' isIndeterminate w='full'/>

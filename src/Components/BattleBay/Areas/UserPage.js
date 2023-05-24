@@ -25,6 +25,7 @@ import { getAuthSignerInStorage } from '@src/helpers/storage';
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 import {getProfile} from "@src/core/cms/endpoints/profile";
 // import {hostedImage, ImageKitService} from "@src/helpers/image";
+import ReturnToVillageButton from "@src/components-v2/feature/ryoshi-dynasties/components/return-button";
 
 const UserPage = ({onBack}) => {
 
@@ -85,9 +86,7 @@ const UserPage = ({onBack}) => {
       <DelegateForm isOpen={isOpen} onClose={onClose} delegateMode={delegateMode} factions={factions} troops={troops} setTotalTroops = {setTotalTroops}/>
 
       <Flex>
-          <Button style={{ display: 'flex', marginTop: '16px', marginBottom: '16px'}} 
-            onClick={onBack} variant='outline'size='lg'> 
-            Back to Village Map</Button>
+      <ReturnToVillageButton onBack={onBack} />
       </Flex>
 
       <Flex alignContent={'center'} justifyContent={'center'}>
