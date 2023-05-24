@@ -36,6 +36,17 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data;
   }
 
+
+  async getSeasonalRewards(address: string, seasonId?: number) {
+    const endpoint = seasonId ? `season-rewards/${seasonId}` : 'all-season-rewards';
+    const response = await this.cms.get(`ryoshi-dynasties/fortune-rewards/${endpoint}`, {
+      params: {
+        walletAddress: address,
+      }
+    })
+    return response.data;
+  }
+
   async claimDailyRewards(address: string, signature: string) {
     const response = await this.cms.get('ryoshi-dynasties/game-tokens/daily-reward', {
       params: {
@@ -43,6 +54,23 @@ class RyoshiDynastiesRepository extends CmsRepository {
         signature
       }
     })
+    return response.data;
+  }
+
+
+  async requestSeasonalRewardsClaimAuthorization(address: string, amount: number, seasonId: number, signature: string) {
+    const response = await this.cms.post(
+      `ryoshi-dynasties/fortune-rewards/withdraw/${seasonId}`,
+      {
+        amount,
+      },
+      {
+        params: {
+          address,
+          signature
+        }
+      }
+    );
     return response.data;
   }
 }

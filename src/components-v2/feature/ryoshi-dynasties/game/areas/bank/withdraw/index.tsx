@@ -1,4 +1,4 @@
-import {Box, Center, Flex, Spinner, Text, VStack} from "@chakra-ui/react"
+import {Box, Center, Flex, HStack, Image, Spinner, Text, VStack} from "@chakra-ui/react"
 import React, {useEffect, useState} from "react";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 
@@ -17,6 +17,9 @@ import {useDispatch} from "react-redux";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import {commify} from "ethers/lib/utils";
 import {useQuery} from "@tanstack/react-query";
+import {ApiService} from "@src/core/services/api-service";
+import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
+import {getAuthSignerInStorage} from "@src/helpers/storage";
 
 const config = appConfig();
 
@@ -97,10 +100,79 @@ const Withdraw = ({ isOpen, onClose}: WithdrawProps) => {
 }
 
 const WithdrawRewardsTab = () => {
+  const user = useAppSelector((state) => state.user);
+  const [isLoading, getSigner] = useCreateSigner();
+
+  const checkForRewards = async () => {
+    return ApiService.withoutKey().ryoshiDynasties.getSeasonalRewards(user.address!);
+  }
+
+  const { error, data: rewards, status, refetch } = useQuery(
+    ['BankSeasonalRewards', user.address],
+    checkForRewards,
+    {
+      enabled: !!user.address,
+      refetchOnWindowFocus: false
+    }
+  );
+
+  const handleWithdraw = async (amount: number, seasonId: number) => {
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, amount, seasonId, signatureInStorage)
+
+      console.log('auth', auth)
+    }
+  }
+  console.log(rewards);
   return (
-    <Box>
-      withdraw here
-    </Box>
+      <Box bgColor='#292626' rounded='md' p={4} fontSize='sm'>
+        <Box textAlign='center'>
+          Fortune rewards accumulate from Fortune staking, marketplace listings, and from playing the game and can be withdrawn at any time.
+          However, only withdrawing at the end of a season will allow you to claim the full amount of rewards.
+        </Box>
+        {status === "loading" ? (
+          <Center py={4}>
+            <Spinner />
+          </Center>
+        ) : status === "error" ? (
+          <Center py={4}>
+            <Text>Error: {(error as any).message}</Text>
+          </Center>
+        ) : (
+          <>
+            {rewards.data.rewards.length > 0 ? (
+              <>
+                <Box py={4}><hr /></Box>
+                {rewards.data.rewards.map((reward: any) => (
+                  <>
+                    <Flex justify='space-between'>
+                      <VStack align='start' spacing={0}>
+                        <Text fontSize='xl' fontWeight='bold'>Season {commify(reward.seasonId)}</Text>
+                        <HStack>
+                          <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
+                          <Text>{reward.totalRewards}</Text>
+                        </HStack>
+                      </VStack>
+                      <RdButton hideIcon={true} onClick={() => handleWithdraw(Number(reward.totalRewards), Number(reward.seasonId))}>
+                        Claim
+                      </RdButton>
+                    </Flex>
+                  </>
+                ))}
+              </>
+            ) : (
+              <Box>
+                <Text textAlign='center' fontSize={14}>You have no rewards to withdraw at this time.</Text>
+              </Box>
+            )}
+          </>
+        )}
+      </Box>
   )
 }
 

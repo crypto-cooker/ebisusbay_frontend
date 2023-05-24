@@ -34,8 +34,16 @@ class Cms {
     return this.ryoshiDynasties.getDailyRewards(address);
   }
 
+  async getSeasonalRewards(address: string, seasonId?: number) {
+    return this.ryoshiDynasties.getSeasonalRewards(address, seasonId);
+  }
+
   async claimDailyRewards(address: string, signature: string) {
     return this.ryoshiDynasties.claimDailyRewards(address, signature);
+  }
+
+  async requestSeasonalRewardsClaimAuthorization(address: string, amount: number, seasonId: number, signature: string) {
+    return this.ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(address, amount, seasonId, signature);
   }
 }
 

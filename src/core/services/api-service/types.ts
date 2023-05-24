@@ -26,7 +26,9 @@ export interface RyoshiDynastiesApi {
     requestBankStakeAuthorization(nfts: BankStakeNft[], address: string): Promise<any>;
     requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string): Promise<any>
     getDailyRewards(address: string): Promise<any>
+    getSeasonalRewards(address: string, seasonId?: number): Promise<any>
     claimDailyRewards(address: string, signature: string): Promise<any>
+    requestSeasonalRewardsClaimAuthorization(address: string, amount: number, seasonId: number, signature: string): Promise<any>;
 }
 
 export enum ListingState {
