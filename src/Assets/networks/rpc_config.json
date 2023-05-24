@@ -13565,7 +13565,7 @@
       "multiToken": false,
       "address": "0xA0edf26589AD4318DAb2354629541cfFd3e5EBDf",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Piggy Bank Finance (PBF) is a collection of 6,666 unique NFTs with over 200 hand-drawn traits on the Cronos blockchain.",
         "avatar": "/img/collections/piggy-bank-finance/avatar.webp",
