@@ -849,3 +849,22 @@ export const cacheBustingKey = (minutes = 5, date = Date.now()) => {
   const coeff = 1000 * 60 * minutes;
   return Math.round(date / coeff) * coeff;
 }
+
+export const findNextLowestNumber = (array, value) => {
+  array = array.map(Number); // coerce all elements to numbers
+  value = +value; // coerce value to a number
+
+  array.sort((a, b) => a - b);  // make sure array is sorted
+
+  // If value is less than the smallest array value, return the smallest array value
+  if (value <= array[0]) return array[0];
+
+  for (let i = 1; i < array.length; i++) {
+    if (array[i] >= value) {
+      return array[i] === value ? array[i] : array[i - 1];
+    }
+  }
+
+  // If value is greater than the largest array value, return the largest array value
+  return array[array.length - 1];
+}

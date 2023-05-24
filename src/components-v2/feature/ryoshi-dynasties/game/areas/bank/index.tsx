@@ -11,15 +11,8 @@ import BankerBubbleBox, {
 } from "@src/components-v2/feature/ryoshi-dynasties/components/banker-bubble-box";
 import {appConfig} from "@src/Config";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {
-  faArrowRightFromBracket,
-  faCoins,
-  faDollarSign, faFileImage,
-  faHospital,
-  faImage,
-  faSuitcaseMedical
-} from "@fortawesome/free-solid-svg-icons";
-import EmergencyWithdraw from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/emergency-withdraw";
+import {faArrowRightFromBracket, faCoins, faImage, faSuitcaseMedical} from "@fortawesome/free-solid-svg-icons";
+import EmergencyWithdraw from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/withdraw";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from 'react-redux';
@@ -147,7 +140,7 @@ const Bank = ({address, onBack, isVisible} : BankerSceneProps) => {
             {abbreviateButtonText ? (
               <Icon as={FontAwesomeIcon} icon={faSuitcaseMedical} />
             ) : (
-              <> Emergency Withdraw </>
+              <>Withdraw</>
             )}
           </RdButton>
           <RdButton w='full' hideIcon={abbreviateButtonText} onClick={onBack}>

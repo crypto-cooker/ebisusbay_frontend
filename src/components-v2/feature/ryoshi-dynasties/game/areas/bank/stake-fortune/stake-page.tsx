@@ -30,10 +30,11 @@ import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
 import Bank from "@src/Contracts/Bank.json";
 import Fortune from "@src/Contracts/Fortune.json";
-import {createSuccessfulTransactionToastContent, pluralize, round} from '@src/utils';
+import {createSuccessfulTransactionToastContent, findNextLowestNumber, pluralize, round} from '@src/utils';
 import {useAppSelector} from "@src/Store/hooks";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
+import {ryoshiConfig} from "@src/Config/ryoshi";
 
 
 const StakePage = () => {
@@ -47,7 +48,7 @@ const StakePage = () => {
   const [executingLabel, setExecutingLabel] = useState('Staking...');
   const [isRetrievingFortune, setIsRetrievingFortune] = useState(false);
 
-  const [daysToStake, setDaysToStake] = useState(90)
+  const [daysToStake, setDaysToStake] = useState(ryoshiConfig.staking.bank.fortune.termLength)
   const [fortuneToStake, setFortuneToStake] = useState(1000);
   const [mitama, setMitama] = useState(0)
   const [userFortune, setUserFortune] = useState(0)
@@ -59,7 +60,7 @@ const StakePage = () => {
   const [withdrawDate, setWithdrawDate] = useState<string>();
 
   const [minAmountToStake, setMinAmountToStake] = useState(1000);
-  const [minLengthOfTime, setMinLengthOfTime] = useState(90);
+  const [minLengthOfTime, setMinLengthOfTime] = useState(ryoshiConfig.staking.bank.fortune.termLength);
 
   const [inputError, setInputError] = useState('');
   const [lengthError, setLengthError] = useState('');
@@ -111,7 +112,11 @@ const StakePage = () => {
       setWithdrawDate(moment(newerDate).format("MMM D yyyy"));
 
       setMinAmountToStake(1000);
-      setMinLengthOfTime(90);
+      setMinLengthOfTime(ryoshiConfig.staking.bank.fortune.termLength);
+
+      const numTerms = Math.floor(daysToAdd / ryoshiConfig.staking.bank.fortune.termLength);
+      const availableAprs = ryoshiConfig.staking.bank.fortune.apr as any;
+      setCurrentApr(availableAprs[numTerms] ?? availableAprs[1]);
     } else {
       console.log("no deposits")
     }
@@ -243,6 +248,20 @@ const StakePage = () => {
     }
   }, [user.address]);
 
+  const [currentApr, setCurrentApr] = useState(0);
+  const [newApr, setNewApr] = useState(0);
+
+  useEffect(() => {
+    let days = depositLength;
+    if (!hasDeposited || isAddingDuration) {
+      days += daysToStake;
+    }
+    const numTerms = Math.floor(days / ryoshiConfig.staking.bank.fortune.termLength);
+    const availableAprs = ryoshiConfig.staking.bank.fortune.apr as any;
+    const aprKey = findNextLowestNumber(Object.keys(availableAprs), numTerms);
+    setNewApr(availableAprs[aprKey] ?? availableAprs[1]);
+  }, [depositLength, daysToStake]);
+
   return (
     <>
       <Box mx={1} pb={6}>
@@ -273,23 +292,27 @@ const StakePage = () => {
                   <Text fontWeight='bold'>{amountDeposited}</Text>
                 </Box>
                 <Box>
-                  <Text fontSize='sm'>Length</Text>
-                  <Text fontWeight='bold'>{depositLength} days</Text>
+                  <Text fontSize='sm'>APR</Text>
+                  <Text fontWeight='bold'>{currentApr * 100}%</Text>
+                </Box>
+                {/*<Box>*/}
+                {/*  <Text fontSize='sm'>Length</Text>*/}
+                {/*  <Text fontWeight='bold'>{depositLength} days</Text>*/}
+                {/*</Box>*/}
+                <Box>
+                  <Text fontSize='sm'>Troops</Text>
+                  <Text fontWeight='bold'>{round((amountDeposited * depositLength) / 1080)}</Text>
                 </Box>
                 <Box>
                   <Text fontSize='sm'>Withdraw Date</Text>
                   <Text fontWeight='bold'>{withdrawDate}</Text>
-                </Box>
-                <Box>
-                  <Text fontSize='sm'>Reward</Text>
-                  <Text fontWeight='bold'>{round((amountDeposited * depositLength) / 1080)} Troops</Text>
                 </Box>
               </SimpleGrid>
             </Box>
           )}
         </Box>
 
-        <Text align='center' pt={2} px={2}>Receive Troops and $Mitama by staking $Fortune. Receive more by staking longer.</Text>
+        <Text align='center' pt={2} px={2} fontSize='sm'>Receive Troops and $Mitama by staking $Fortune. Receive more by staking longer.</Text>
 
         <Box px={6} pt={6}>
           <SimpleGrid columns={hasDeposited ? 1 : 2} fontSize='sm'>
@@ -334,8 +357,8 @@ const StakePage = () => {
                 <FormControl maxW='250px' isInvalid={!!lengthError}>
                   <Select onChange={handleChangeDays} value={daysToStake} bg='none'>
                     {[...Array(12).fill(0)].map((_, i) => (
-                      <option key={i} value={`${(i + 1) * 90}`}>
-                        {(i + 1)} {pluralize((i + 1), 'Season')} ({(i + 1) * 90} days)
+                      <option key={i} value={`${(i + 1) * ryoshiConfig.staking.bank.fortune.termLength}`}>
+                        {(i + 1)} {pluralize((i + 1), 'Season')} ({(i + 1) * ryoshiConfig.staking.bank.fortune.termLength} days)
                       </option>
                     ))}
                   </Select>
@@ -348,12 +371,15 @@ const StakePage = () => {
             )}
           </SimpleGrid>
 
-          <Box>
-            <VStack bgColor='#292626' rounded='md' p={4} mt={4} spacing={0}>
-              <Text>Total Reward</Text>
-              <Text fontSize={24} fontWeight='bold'>{commify(round(mitama))} Troops</Text>
-              <Text fontSize={12} color='#aaa'>{commify((isAddingDuration ? 0 : fortuneToStake) + amountDeposited)} $Fortune stake for {commify((isAddingDuration ? daysToStake : 0) + depositLength)} days</Text>
-            </VStack>
+          <Box bgColor='#292626' rounded='md' p={4} mt={4} textAlign='center'>
+            <SimpleGrid columns={2}>
+              <Text>APR</Text>
+              <Text>Troops</Text>
+              <Text fontSize={24} fontWeight='bold'>{newApr * 100}%</Text>
+              <Text fontSize={24} fontWeight='bold'>{commify(round(mitama))}</Text>
+              <Text fontSize={12} color='#aaa'>{commify((isAddingDuration ? depositLength : 0) + daysToStake)} day commitment</Text>
+              <Text fontSize={12} color='#aaa'>{commify((isAddingDuration ? 0 : fortuneToStake) + amountDeposited)} $Fortune stake</Text>
+            </SimpleGrid>
           </Box>
 
 

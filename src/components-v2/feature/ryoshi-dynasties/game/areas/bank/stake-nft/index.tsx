@@ -59,9 +59,9 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 
   const handleAddNft = useCallback((nft: WalletNft) => {
     const isInList = pendingNfts.some((sNft) => sNft.nftId === nft.nftId && caseInsensitiveCompare(sNft.nftAddress, nft.nftAddress));
-    if (!isInList && pendingNfts.length < ryoshiConfig.staking.bank.maxSlots) {
+    if (!isInList && pendingNfts.length < ryoshiConfig.staking.bank.nft.maxSlots) {
       const collectionSlug = config.collections.find((c: any) => caseInsensitiveCompare(c.address, nft.nftAddress))?.slug;
-      const stakeConfig = ryoshiConfig.staking.bank.collections.find((c) => c.slug === collectionSlug);
+      const stakeConfig = ryoshiConfig.staking.bank.nft.collections.find((c) => c.slug === collectionSlug);
 
       const percentile = (nft.rank / stakeConfig!.maxSupply) * 100;
       const multiplier = stakeConfig!.multipliers
@@ -126,7 +126,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       for (const token of data) {
         const nft = await getNft(token.contractAddress, token.tokenId);
         if (nft) {
-          const stakeConfig = ryoshiConfig.staking.bank.collections.find((c) => c.slug === nft.collection.slug);
+          const stakeConfig = ryoshiConfig.staking.bank.nft.collections.find((c) => c.slug === nft.collection.slug);
 
           const percentile = (nft.nft.rank / stakeConfig!.maxSupply) * 100;
           const multiplier = stakeConfig!.multipliers
