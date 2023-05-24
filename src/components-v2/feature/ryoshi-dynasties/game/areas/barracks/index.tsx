@@ -4,13 +4,8 @@ import {
   Center,
   Container,
   Flex,
-  Heading,
-  Image,
-  ListItem,
   Spacer,
-  StackDivider,
   Text,
-  UnorderedList,
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
@@ -21,7 +16,9 @@ import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useAppSelector} from "@src/Store/hooks";
 import {useDispatch} from "react-redux";
-import ReturnToVillageButton from "@src/components-v2/feature/ryoshi-dynasties/components/return-button";
+
+import localFont from 'next/font/local';
+const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' })
 
 interface BarracksProps {
   onBack: () => void;
@@ -48,25 +45,69 @@ const Barracks = ({onBack}: BarracksProps) => {
   }, [user.address]);
 
   return (
-    <Box position='relative' h='calc(100vh - 74px)'>
-      <ReturnToVillageButton onBack={onBack} />
-      <StakeNfts isOpen={isOpenStakeNFTs} onClose={onCloseStakeNFTs} />
-      <Container>
-      <Box  >
-        <Center>
-        <Image marginTop={20} src='img/battle-bay/barracks_day.png'/>
-        </Center>
+    <Flex 
+        backgroundColor='#292626' 
+        flexDirection='column' 
+        textAlign='center' 
+        borderRadius={'10px'} 
+        justifyContent='space-around'
+        padding='10px'
+        paddingBottom='20px'
+        paddingTop='5px'
+        maxWidth='100%'
+        >
+    <VStack>
+      <Box
+        position='absolute'
+        left={6}
+        top={6}
+        rounded='full'
+        zIndex={1}
+        _groupHover={{
+          cursor: 'pointer'
+        }}
+        data-group
+      >
+        <Button
+          bg='#C17109'
+          rounded='full'
+          border='8px solid #F48F0C'
+          w={2}
+          h={12}
+          fontSize='22px'
+          onClick={onBack}
+          _groupHover={{
+            bg: '#de8b08',
+            borderColor: '#f9a50b',
+          }}
+        >
+          x
+        </Button>
       </Box>
-      <Heading className="title text-center">Barracks</Heading>
+
+      <Text textColor='#ffffffeb' fontSize={{ base: '28px', md: '32px' }} className={gothamBook.className} textAlign='center'>Barracks</Text>
+      <Text textColor='#ffffffeb' className={gothamBook.className} textAlign='center'>Stake Ryoshi Tales NFTs to receive bonus battle units</Text>
+      
+      <Spacer h='4'/>
+
+        <div style={{ margin: '8px 24px' }}>
+        <Center>
+        <StakeNfts isOpen={isOpenStakeNFTs} onClose={onCloseStakeNFTs} />
+      <Container>
+
       <VStack
         spacing={4}
         align='stretch'
       >
-        <Text textAlign={'center'}>Stake Ryoshi Tales NFTs to receive bonus battle units</Text>
+
         <RdButton onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>Stake NFTs</RdButton>
       </VStack>
       </Container>
-    </Box>
+        </Center>
+        </div>
+      <Spacer h='4'/>
+    </VStack>
+    </Flex>
   )
 };
 

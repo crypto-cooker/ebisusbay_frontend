@@ -380,7 +380,7 @@ export const getDailyRewards = async (address, signature) => {
 }
 export const getGameTokens = async (address, signature) => {
   try{
-    return await api.get(baseURL + "api/ryoshi-dynasties/game-tokens/?", 
+    return await api.get(baseURL + "api/ryoshi-dynasties/game-tokens/battle-reward?", 
       {params: {address, signature}});
   }
   catch(error){

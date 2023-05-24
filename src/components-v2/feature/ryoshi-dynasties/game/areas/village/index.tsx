@@ -39,6 +39,8 @@ import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
 import AnnouncementBoardModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal";
 import AllianceCenterModal from "@src/Components/BattleBay/Areas/AllianceCenterModal";
+import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks";
+import PortalModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/portal";
 import {VillageHud} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/hud";
 
 interface VillageProps {
@@ -65,12 +67,15 @@ const Village = ({onChange}: VillageProps) => {
   const [initialPositionY, setInitialPositionY] = useState(-414);
   const [dailyRewardClaimed, setDailyRewardClaimed] = useState(false);
   const [allianceCenterOpen, setAllianceCenterOpen] = useState(false);
+  const [barracksOpen, setBarracksOpen] = useState(false);
+  const [portalOpen, setPortalOpen] = useState(false);
+  // const [buildingOpen, setBuildingOpen] = useState(false);
 
   const buildingButtonRef = useRef<any>(null)
   const announcementBoardRef = useRef<any>(null)
   const { isOpen: isOpenBuildings, onOpen: onOpenBuildings, onClose: onCloseBuildings } = useDisclosure();
   const { isOpen: isOpenAnnouncementBoard, onOpen: onOpenAnnouncementBoard, onClose: onCloseAnnouncementBoard } = useDisclosure();
-  const { isOpen: isOpenAllianceCenter, onOpen: onOpenAllianceCenter, onClose: onCloseAllianceCenter } = useDisclosure();
+  // const { isOpen: isOpenAllianceCenter, onOpen: onOpenAllianceCenter, onClose: onCloseAllianceCenter } = useDisclosure();
   const { isOpen: isOpenDailyCheckin, onOpen: onOpenDailyCheckin, onClose: onCloseDailyCheckin } = useDisclosure();
 
   useEffect(() => {
@@ -197,10 +202,24 @@ const Village = ({onChange}: VillageProps) => {
     setAllianceCenterOpen(true);
   }
   const CloseAllianceCenter = () => {
-    // setZoomState(false);
-    setAllianceCenterOpen(false);
     setElementToZoomTo('fancyMenu');
-    // resetTransform();
+    setAllianceCenterOpen(false);
+  }
+  const OpenBarracks = () => {
+    setElementToZoomTo('barracks');
+    setBarracksOpen(true);
+  }
+  const CloseBarracks = () => {
+    setElementToZoomTo('fancyMenu');
+    setBarracksOpen(false);
+  }
+  const OpenPortal = () => {
+    setElementToZoomTo('moongate');
+    setPortalOpen(true);
+  }
+  const ClosePortal = () => {
+    setElementToZoomTo('fancyMenu');
+    setPortalOpen(false);
   }
 
 //#region all resizing stuff
@@ -614,7 +633,7 @@ const Village = ({onChange}: VillageProps) => {
                   </Box>
 
                   <Box id="barracks" className={styles.enlarge} style={{position:"absolute", marginTop: barracksTop, marginLeft: barracksLeft, zIndex:"9"}}
-                       onClick={() => onChange('barracks')}
+                       onClick={() => OpenBarracks()}
                   >
                     <img src='/img/battle-bay/mapImages/barracks.png' />
                   </Box>
@@ -623,8 +642,9 @@ const Village = ({onChange}: VillageProps) => {
                     <img src='/img/battle-bay/mapImages/swordsmen.png' />
                   </Box>
 
-                  <Box id="moongate" className={styles.enlarge} style={{position:"absolute", marginTop: moongateTop, marginLeft: moongateLeft, zIndex:"9"}}>
-                    <img src='/img/battle-bay/mapImages/moongate_day.png' />
+                  <Box id="moongate" className={styles.enlarge} style={{position:"absolute", marginTop: moongateTop, marginLeft: moongateLeft, zIndex:"9"}}
+                    onClick={() => OpenPortal()}>
+                    <img src='/img/battle-bay/mapImages/moongate_day.png' onClick={() => OpenPortal()}/>
                     {/* <div className={[styles.enlarge]} style={{position:"absolute",  zIndex:"20"}}>
                       <img src='/img/battle-bay/building_labels/moongate_label.png' /> </div> */}
                   </Box>
@@ -666,14 +686,17 @@ const Village = ({onChange}: VillageProps) => {
           </TransformWrapper>
         )}
 
-        {!allianceCenterOpen && (
+        {!allianceCenterOpen && !barracksOpen && !portalOpen && (
           <VillageHud onOpenBuildings={onOpenBuildings} onOpenDailyCheckin={onOpenDailyCheckin} />
         )}
 
         <Box  position='absolute' top={0} left={0} p={4} >
           <Flex direction='row' justify='space-between' >
             {allianceCenterOpen ? <AllianceCenterModal closeAllianceCenter={() => CloseAllianceCenter()}/> : <></>}
-          </Flex>
+            {barracksOpen ? <Barracks onBack={() => CloseBarracks()}/> : <></>}
+            {portalOpen ? <PortalModal onBack={() => ClosePortal()}/> : <></>}
+        
+        </Flex>
         </Box>
 
       </Box>
