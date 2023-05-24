@@ -117,6 +117,7 @@ const StakePage = () => {
       const availableAprs = ryoshiConfig.staking.bank.fortune.apr as any;
       setCurrentApr(availableAprs[numTerms] ?? availableAprs[1]);
     } else {
+      setHasDeposited(false);
       console.log("no deposits")
     }
     return deposits;
@@ -276,7 +277,7 @@ const StakePage = () => {
                     <Spacer />
                     <HStack>
                       <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>Your</Text>
-                      <Image src='/img/ryoshi-dynasties/icons/fortune_token.svg' alt="walletIcon" boxSize={6}/>
+                      <Image src='/img/ryoshi-dynasties/icons/fortune.svg' alt="walletIcon" boxSize={6}/>
                       <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>
                         $Fortune: {isRetrievingFortune ? <Spinner size='sm'/> : commify(round(userFortune))}
                       </Text>
