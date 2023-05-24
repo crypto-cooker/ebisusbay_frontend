@@ -31,24 +31,32 @@ const MainPage = ({onShowLeaderboard}: Props) => {
        position='relative'
        >
       {/* <Image position='absolute' src="/img/battle-bay/announcementBoard/seashrineAd.png"/> */}
-      <Image  src="/img/battle-bay/announcementBoard/seashrineAd.png" w='100%'/>
+      <Image  src="/img/battle-bay/announcementBoard/seashrineAd.png" 
+        w='100%'
+        // filter={sepia(100%) saturate(300%) brightness(70%) hue-rotate(180deg);}
+        // filter={'brightness(0.7)' + ' ' + 'sepia(0.1)'}
+        filter={'brightness(0.7)'}
+        />
       <Text 
         marginLeft={{base: '10%', sm: '10%'}}
         marginTop={{base: '-20%', sm: '-17%'}}
         fontSize={{ base: '24px', md: '24px' }} 
-        position='absolute' 
+        position='absolute'
+        as='b'
         >SEASHRINE</Text>
       <Text 
         marginLeft={{base: '10%', sm: '10%'}}
         marginTop={{base: '-10%', sm: '-12%'}}
         fontSize={{ base: '12px', md: '12px' }} 
         position='absolute' 
+        as='b'
         >RELOADED</Text>
       <Text 
         marginLeft={{base: '10%', sm: '50%'}}
         marginTop={{base: '-10%', sm: '-17%'}}
         fontSize={{ base: '0px', md: '16px' }} 
         position='absolute' 
+        as='b'
         >Join in the quest for sea treasures</Text>
         <RdButton
           position='absolute' 
