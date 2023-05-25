@@ -198,6 +198,8 @@ const Village = ({onChange}: VillageProps) => {
   const buttonsNames = ["bank", "alliancecenter", "torii", "moongate", "barracks", "announcement", "fishmarket","boat", "academy", "tavern", "townhall"];
 
   const OpenAllianceCenter = () => {
+    setBarracksOpen(false);
+    setPortalOpen(false);
     setElementToZoomTo('alliancecenter');
     setAllianceCenterOpen(true);
   }
@@ -206,6 +208,8 @@ const Village = ({onChange}: VillageProps) => {
     setAllianceCenterOpen(false);
   }
   const OpenBarracks = () => {
+    setAllianceCenterOpen(false);
+    setPortalOpen(false);
     setElementToZoomTo('barracks');
     setBarracksOpen(true);
   }
@@ -214,6 +218,8 @@ const Village = ({onChange}: VillageProps) => {
     setBarracksOpen(false);
   }
   const OpenPortal = () => {
+    setBarracksOpen(false);
+    setAllianceCenterOpen(false);
     setElementToZoomTo('moongate');
     setPortalOpen(true);
   }
