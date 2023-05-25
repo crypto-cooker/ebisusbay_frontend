@@ -318,11 +318,11 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
                   >Save Changes</Button>
                 </Box>
               </Flex>
-              <Flex justifyContent={"right"} align={"right"}>
+              {/* <Flex justifyContent={"right"} align={"right"}>
                 <Button type="submit" style={{ display: 'flex', marginTop: '4px' }}
                         onClick={DeleteFaction} variant='outline'size='xs' colorScheme='red'
                 >Delete Faction</Button>
-              </Flex>
+              </Flex> */}
             </form>
           </Box>
         </Box>
