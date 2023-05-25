@@ -32,7 +32,9 @@ import {StakedTokenType} from "@src/core/services/api-service/types";
 
 const config = appConfig();
 
+// Maps to collection slug
 const tabs = {
+  ryoshiVip: 'ryoshi-tales-vip',
   ryoshiHalloween: 'ryoshi-tales-halloween',
   ryoshiChristmas: 'ryoshi-tales-christmas'
 };
@@ -46,7 +48,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   const user = useAppSelector((state) => state.user);
   const queryClient = useQueryClient();
 
-  const [currentTab, setCurrentTab] = useState(tabs.ryoshiHalloween);
+  const [currentTab, setCurrentTab] = useState(tabs.ryoshiVip);
   const [currentCollection, setCurrentCollection] = useState<any>();
   const [stakedNfts, setStakedNfts] = useState<StakedToken[]>([]);
   const [pendingNfts, setPendingNfts] = useState<PendingNft[]>([]);
@@ -152,6 +154,9 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
         />
         <Box p={4}>
           <Flex direction='row' justify='center' mb={2}>
+            <RdTabButton isActive={currentTab === tabs.ryoshiVip} onClick={handleBtnClick(tabs.ryoshiVip)}>
+              VIP
+            </RdTabButton>
             <RdTabButton isActive={currentTab === tabs.ryoshiHalloween} onClick={handleBtnClick(tabs.ryoshiHalloween)}>
               Halloween
             </RdTabButton>
