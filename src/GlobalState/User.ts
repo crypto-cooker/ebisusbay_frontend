@@ -1,25 +1,25 @@
-import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit';
-import {ethers, BigNumber, Contract} from 'ethers';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {BigNumber, Contract, ethers} from 'ethers';
 import Web3Modal from 'web3modal';
 
 import detectEthereumProvider from '@metamask/detect-provider';
-import { DeFiWeb3Connector } from 'deficonnect';
+import {DeFiWeb3Connector} from 'deficonnect';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import * as DefiWalletConnectProvider from '@deficonnect/web3-provider';
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 import {
   caseInsensitiveCompare,
   createSuccessfulTransactionToastContent,
   findCollectionByAddress,
   isUserBlacklisted,
 } from '../utils';
-import { appAuthInitFinished } from './InitSlice';
-import { captureException } from '@sentry/react';
-import { setThemeInStorage } from '../helpers/storage';
-import { getAllOffers } from '../core/subgraph';
-import { offerState } from '../core/api/enums';
-import { appConfig } from '../Config';
-import { MarketFilterCollection } from '../Components/Models/market-filters.model';
+import {appAuthInitFinished} from './InitSlice';
+import {captureException} from '@sentry/react';
+import {setThemeInStorage} from '../helpers/storage';
+import {getAllOffers} from '../core/subgraph';
+import {offerState} from '../core/api/enums';
+import {appConfig} from '../Config';
+import {MarketFilterCollection} from '../Components/Models/market-filters.model';
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import UserContractService from "@src/core/contractService";
 import {ERC20} from "@src/Contracts/Abis";
@@ -50,6 +50,7 @@ interface UserState {
   usesEscrow: boolean;
   updatingEscrowStatus: boolean;
   fortuneBalance: number;
+  loadedFortuneBalance: boolean;
   myNftPageTransferDialog: any;
   myNftPageListDialog: any;
   myNftPageListDialogError: boolean;
@@ -102,7 +103,8 @@ const userSlice = createSlice({
     usesEscrow: false,
     updatingEscrowStatus: false,
     fortuneBalance: 0,
-    
+    loadedFortuneBalance: false,
+
     // My NFTs
     nftsInitialized: false,
     nfts: [],
@@ -236,6 +238,8 @@ const userSlice = createSlice({
         usdc: 0,
         fortune: 0
       }
+      state.fortuneBalance = 0;
+      state.loadedFortuneBalance = false;
     },
     onThemeChanged(state, action) {
       state.theme = action.payload;
@@ -263,6 +267,7 @@ const userSlice = createSlice({
     },
     setFortuneBalance(state, action: PayloadAction<number>) {
       state.fortuneBalance = action.payload;
+      state.loadedFortuneBalance = true;
     }
   },
 });
@@ -286,7 +291,7 @@ export const {
   onOutstandingOffersFound,
   setProfile,
   setTokenPresaleStats,
-  setFortuneBalance,
+  setFortuneBalance
 } = userSlice.actions;
 export const user = userSlice.reducer;
 

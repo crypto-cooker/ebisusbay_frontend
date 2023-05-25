@@ -5787,3 +5787,14 @@ iframe.metaverse {
   -webkit-mask: var(--mask);
   mask: var(--mask);
 }
+
+.rd-bank-modal-maskleft-outer {
+  --mask: radial-gradient(45px at 0% 0,#0000 98%,#000);
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+}
+.rd-bank-modal-maskleft-inner {
+  --mask: radial-gradient(50px at 0% 0,#0000 98%,#000);
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+}

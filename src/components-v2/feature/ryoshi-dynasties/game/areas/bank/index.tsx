@@ -20,7 +20,6 @@ import {useDispatch} from 'react-redux';
 interface BankerSceneProps {
   address: string;
   onBack: () => void;
-  isVisible:boolean;
 }
 
 const bankerImages = {
@@ -28,7 +27,7 @@ const bankerImages = {
   talking: '/img/battle-bay/gifBanker/mouth.gif',
 };
 
-const Bank = ({address, onBack, isVisible} : BankerSceneProps) => {
+const Bank = ({address, onBack} : BankerSceneProps) => {
   const dispatch = useDispatch();
 
   const { isOpen: isOpenStakeFortune, onOpen: onOpenStakeFortune, onClose: onCloseStakeFortune} = useDisclosure();

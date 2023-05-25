@@ -8,7 +8,7 @@ const gothamBook = localFont({ src: '../../../../fonts/Gotham-Book.woff2' })
 
 interface PurchaseDialogProps {
   isOpen: boolean;
-  onClose: () => void;
+  onClose?: () => void;
   children?: ReactNode;
   title: string;
   utilBtnTitle?: ReactNode;
@@ -19,9 +19,33 @@ interface PurchaseDialogProps {
 
 const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, isCentered, children}: PurchaseDialogProps) => {
   const [hasUtilBtn, setHasUtilBtn] = useState(false);
+  const [maskOuterClass, setMaskOuterClass] = useState('');
+  const [maskInnerClass, setMaskInnerClass] = useState('');
+
   useEffect(() => {
-    setHasUtilBtn(!!utilBtnTitle && !!onUtilBtnClick);
-  }, [utilBtnTitle, onUtilBtnClick]);
+    const _hasUtilBtn = !!utilBtnTitle && !!onUtilBtnClick;
+    setHasUtilBtn(_hasUtilBtn);
+
+    let _maskInnerClass = '';
+    let _maskOuterClass = '';
+    if (_hasUtilBtn && !!onClose) {
+      _maskInnerClass = 'rd-bank-modal-masktop-inner';
+      _maskOuterClass = 'rd-bank-modal-masktop-outer';
+    } else if (_hasUtilBtn && !onClose) {
+      _maskInnerClass = 'rd-bank-modal-maskleft-inner';
+      _maskOuterClass = 'rd-bank-modal-maskleft-outer';
+    } else if (!_hasUtilBtn && !!onClose) {
+      _maskInnerClass = 'rd-bank-modal-maskright-inner';
+      _maskOuterClass = 'rd-bank-modal-maskright-outer';
+    }
+    setMaskInnerClass(_maskInnerClass);
+    setMaskOuterClass(_maskOuterClass);
+
+  }, [utilBtnTitle, onUtilBtnClick, onClose]);
+
+  useEffect(() => {
+
+  }, [onClose, onUtilBtnClick]);
 
   return (
     <>
@@ -75,49 +99,53 @@ const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, is
                   </Button>
                 </Box>
               )}
-              <Box
-                position='absolute'
-                right={-4}
-                top={0}
-                rounded='full'
-                zIndex={1}
-                _groupHover={{
-                  cursor: 'pointer'
-                }}
-                data-group
-              >
-                <Button
-                  bg='#C17109'
+              {!!onClose && (
+                <Box
+                  position='absolute'
+                  right={-4}
+                  top={0}
                   rounded='full'
-                  border='8px solid #F48F0C'
-                  w={14}
-                  h={14}
-                  onClick={onClose}
+                  zIndex={1}
                   _groupHover={{
-                    bg: '#de8b08',
-                    borderColor: '#f9a50b',
+                    cursor: 'pointer'
                   }}
+                  data-group
                 >
-                  <CloseIcon />
-                </Button>
-              </Box>
+                  <Button
+                    bg='#C17109'
+                    rounded='full'
+                    border='8px solid #F48F0C'
+                    w={14}
+                    h={14}
+                    onClick={onClose}
+                    _groupHover={{
+                      bg: '#de8b08',
+                      borderColor: '#f9a50b',
+                    }}
+                  >
+                    <CloseIcon />
+                  </Button>
+                </Box>
+              )}
               <Box
                 bg='#564D4A'
                 h='full'
                 my={4}
                 roundedBottom='2xl'
                 roundedTopLeft={hasUtilBtn ? 'none' : '2xl'}
-                className={hasUtilBtn ? 'rd-bank-modal-masktop-outer' : 'rd-bank-modal-maskright-outer'}
+                roundedTopRight={!!onClose ? 'none' : '2xl'}
+                className={maskOuterClass}
               >
                 <Box
                   color='#FFF'
                   textAlign='center'
                   verticalAlign='middle'
-                  className={hasUtilBtn ? 'rd-bank-modal-masktop-inner' : 'rd-bank-modal-maskright-inner'}
+                  className={maskInnerClass}
                   p={1}
                 >
                   <Flex
                     roundedTopLeft={hasUtilBtn ? 'none' : '2xl'}
+                    roundedTopRight={!!onClose ? 'none' : '2xl'}
                     bg='#272523'
                     h='55px'
                     px={12}
