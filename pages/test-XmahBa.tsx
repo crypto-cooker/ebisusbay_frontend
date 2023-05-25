@@ -3,6 +3,8 @@ import {useAppSelector} from "@src/Store/hooks";
 import {Contract} from "ethers";
 import {Box, Button, Text, VStack} from "@chakra-ui/react";
 import {toast} from "react-toastify";
+import {GetServerSidePropsContext} from "next";
+import * as process from "process";
 
 function Test() {
   return (
@@ -82,3 +84,14 @@ const gameLoopAbi = [
   "function curSeason() view returns (uint16)",
   "function newSeason()"
 ];
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  if (!context.req.headers.host?.startsWith('localhost') || process.env.NODE_ENV !== 'development') {
+    return {
+      destination: `/`,
+      permanent: false,
+    }
+  }
+
+  return { props: { } }
+}
