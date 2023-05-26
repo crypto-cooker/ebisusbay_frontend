@@ -214,6 +214,11 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
     }
     if (signatureInStorage) {
       try {
+
+        //needed for faction delegation
+        const factionResponse = await getAllFactions();
+        setFactions(factionResponse);
+
         // console.log('user address: ' + user.address.toLowerCase())
         // console.log('signature: ' + signatureInStorage)
         const playerFactionData = await getFactionsOwned(user.address.toLowerCase(), signatureInStorage);
@@ -234,7 +239,7 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
         {
           setHasFaction(false);
           const data = await getProfileArmies(user.address.toLowerCase(), signatureInStorage);
-          console.log(data)
+          // console.log(data)
           var totalTroops = 0;
           data.data.data.forEach((element) => {
             totalTroops += element.troops;
