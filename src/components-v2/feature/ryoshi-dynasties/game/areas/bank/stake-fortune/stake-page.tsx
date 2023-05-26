@@ -263,7 +263,7 @@ const StakePage = () => {
       totalFortune += fortuneToStake;
     }
     const daysForTroops = isAddingDuration ? totalDays : depositLength;
-    setNewTroops( (totalFortune * daysForTroops) / 1080);
+    setNewTroops(Math.floor(((totalFortune * daysForTroops) / 1080) / 10));
   }, [depositLength, daysToStake, fortuneToStake, amountDeposited, isAddingDuration]);
 
   return (
@@ -303,7 +303,7 @@ const StakePage = () => {
                     {/*</Box>*/}
                     <Box>
                       <Text fontSize='sm'>Troops</Text>
-                      <Text fontWeight='bold'>{commify(round((amountDeposited * depositLength) / 1080))}</Text>
+                      <Text fontWeight='bold'>{commify(Math.floor((((amountDeposited * depositLength) / 1080) / 10)))}</Text>
                     </Box>
                     <Box>
                       <Text fontSize='sm'>Withdraw Date</Text>
