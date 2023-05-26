@@ -47,22 +47,22 @@ const BattleBay = () => {
   };
 
   const handleCloseGateModal = useCallback(() => {
-    if (!user.address || !(user.fortuneBalance > 0)) {
+    if (!user.address || !(user.fortuneBalance > 0) || !(user.mitamaBalance > 0)) {
       router.push('/');
     } else {
       onCloseGateModal();
     }
-  }, [user.address, user.fortuneBalance, user.loadedFortuneBalance]);
+  }, [user.address, user.fortuneBalance, user.mitamaBalance, user.loadedMitamaBalance, user.loadedFortuneBalance]);
 
   useEffect(() => {
-    if (!user.address || !(user.fortuneBalance > 0)) {
+    if (!user.address || !(user.fortuneBalance > 0) || !(user.mitamaBalance > 0)) {
       onOpenGateModal();
     }
 
     // else {
     //   onCloseGateModal();
     // }
-  }, [user.address, user.loadedFortuneBalance]);
+  }, [user.address, user.loadedFortuneBalance, user.loadedMitamaBalance]);
 
   return (
     <>
@@ -99,9 +99,9 @@ const BattleBay = () => {
 
           {authInitFinished ? (
             <>
-              {!!user.address && user.loadedFortuneBalance ? (
+              {!!user.address && user.loadedFortuneBalance && user.loadedMitamaBalance ? (
                 <>
-                  {user.fortuneBalance > 0 ? (
+                  {user.fortuneBalance > 0 || user.mitamaBalance > 0 ? (
                     <>
                       <Text>
                         Please note that the beta version is still under active development which may result in unexpected changes in the gaming experience. We are working hard to get the game ready for the official launch, which is planned for June 15th. Please join our Discord server for updates and to provide feedback.
@@ -118,7 +118,7 @@ const BattleBay = () => {
                     </Box>
                   )}
                 </>
-              ) : (!!user.address && !user.loadedFortuneBalance) ? (
+              ) : (!!user.address && !user.loadedFortuneBalance && !user.loadedMitamaBalance) ? (
                 <Center>
                   <Spinner />
                 </Center>

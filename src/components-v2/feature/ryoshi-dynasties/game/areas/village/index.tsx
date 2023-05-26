@@ -539,7 +539,7 @@ const Village = ({onChange}: VillageProps) => {
 
   useEffect(() => {
     setMapInitialized(true);
-  }, []);
+  }, [user.mitamaBalance]);
 
   return (
     <section>
