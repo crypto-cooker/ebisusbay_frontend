@@ -185,6 +185,11 @@ const nextConfig = {
         permanent: false,
         basePath: false,
       },
+      {
+        source: '/',
+        destination: '/battle-bay',
+        permanent: false,
+      }
     ];
   },
 };
