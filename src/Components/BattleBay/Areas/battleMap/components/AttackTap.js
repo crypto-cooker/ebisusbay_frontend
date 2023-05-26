@@ -31,6 +31,7 @@ import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSig
 import {attack, getFactionsOwned, getProfileArmies, getGameTokens } from "@src/core/api/RyoshiDynastiesAPICalls";
 import { createSuccessfulTransactionToastContent } from '@src/utils';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
+import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 
 //contracts
 import {Contract, ethers, BigNumber} from "ethers";
@@ -87,6 +88,8 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   const [isExecuting, setIsExecuting] = useState(false);
   const [executingLabel, setExecutingLabel] = useState('Attacking...');
   const [battleAttack, setBattleAttack] = useState([]);
+
+  const [attackType, setAttackType] = useState(1);
 
   //current attackID
   const [attackId, setAttackId] = useState(0);
@@ -223,7 +226,6 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
         // console.log("defenderFactionId", defenderFactionId + " " + dataForm.defenderFaction);
         // console.log("attackerTroops", attackerTroops);
         // console.log("signatureInStorage", signatureInStorage);
-        const battleType = 1;
         setExecutingLabel('Attacking...');
         const data = await attack(
           user.address.toLowerCase(), 
@@ -232,7 +234,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
           controlPointId, 
           attackerFactionId, 
           defenderFactionId,
-          battleType);
+          attackType);
         
         setAttackId(data.data.data.attackId);
         
@@ -246,7 +248,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
                           attacker: attacker, 
                           attackId: attackId, 
                           quantity: troops,
-                          battleType: 1};
+                          battleType: attackType};
         
         console.log("attackTuple", attackTuple);
         console.log("sig", sig);
@@ -541,7 +543,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
       <Center>
           <VStack justifyContent='space-between'>
-          <Text textAlign='left' fontSize={'16px'}>Select a Faction to attack with:</Text>
+          {/* <Text textAlign='left' fontSize={'16px'}>Select a Faction to attack with:</Text> */}
             <Select 
               name='attackersFaction'
               backgroundColor='#292626'
@@ -554,9 +556,23 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
               {attackerOptions}
             </Select>
 
-            <Text textAlign='left' fontSize={'16px'}>Troops You Deployed: {attackerTroopsAvailable}</Text>
 
-          <Text textAlign='right' fontSize={'16px'}>Attack Strength (1-3):</Text>
+            {/* <Text textAlign='center' fontSize={'16px'}>Select a Faction to Attack:</Text> */}
+          <Select 
+            name='defendersFaction'
+            // placeholder='Select Defender'
+            backgroundColor='#292626'
+            w='90%' 
+            me={2} 
+            value={dataForm.defendersFaction} 
+            onChange={onChangeInputsDefender}>
+                <option selected hidden disabled value="">Select Defender</option>
+            {defenderOptions}
+          </Select>
+
+          <Text textAlign='left' fontSize={'16px'}>Troops You Deployed: {attackerTroopsAvailable}</Text>
+
+          {/* <Text textAlign='right' fontSize={'16px'}>Attack Strength (1-3):</Text> */}
             <NumberInput 
               align='right'
               defaultValue={1} 
@@ -576,19 +592,30 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
                 <NumberDecrementStepper color='#ffffff' />
               </NumberInputStepper>
             </NumberInput>
+            <Center>
+              <Flex direction='row' justify='center' mb={2}>
+                <RdTabButton
+                  isActive={attackType === 1}
+                  onClick={() => setAttackType(1)}
+                >
+                  Skirmish
+                </RdTabButton>
+                <RdTabButton
+                  isActive={attackType === 2}
+                  onClick={() => setAttackType(2)}
+                >
+                  Conquest
+                </RdTabButton>
+              </Flex>
+            </Center>
 
-            <Text textAlign='center' fontSize={'16px'}>Select a Faction to Attack:</Text>
-          <Select 
-            name='defendersFaction'
-            // placeholder='Select Defender'
-            backgroundColor='#292626'
-            w='100%' 
-            me={2} 
-            value={dataForm.defendersFaction} 
-            onChange={onChangeInputsDefender}>
-                <option selected hidden disabled value="">Select Defender</option>
-            {defenderOptions}
-          </Select>
+            <Text
+              as='i'>{attackType === 1 ? <>
+              Engage in a single attack using the number of troops you wager
+              </> : <>
+              Launch a relentless assault, battling until all troops are eliminated or the opposing faction is defeated
+              </>}
+            </Text>
           </VStack>
       </Center>
       <Spacer m='4' />
