@@ -131,7 +131,7 @@ const StakePage = () => {
       return;
     }
 
-    if (fortuneToStake < minAmountToStake) {
+    if(!hasDeposited && fortuneToStake < minAmountToStake){
       setInputError(`At least ${minAmountToStake} required`);
       return false;
     }
@@ -250,7 +250,8 @@ const StakePage = () => {
 
   useEffect(() => {
     let totalDays = depositLength;
-    if (!hasDeposited || isAddingDuration) {
+    const canUseDuration = (!hasDeposited || isAddingDuration);
+    if (canUseDuration) {
       totalDays += daysToStake;
     }
     const numTerms = Math.floor(totalDays / ryoshiConfig.staking.bank.fortune.termLength);
@@ -262,7 +263,7 @@ const StakePage = () => {
     if (!hasDeposited || !isAddingDuration) {
       totalFortune += fortuneToStake;
     }
-    const daysForTroops = isAddingDuration ? totalDays : depositLength;
+    const daysForTroops = canUseDuration ? totalDays : depositLength;
     setNewTroops(Math.floor(((totalFortune * daysForTroops) / 1080) / 10));
   }, [depositLength, daysToStake, fortuneToStake, amountDeposited, isAddingDuration]);
 
@@ -326,7 +327,7 @@ const StakePage = () => {
                     <FormControl maxW='200px' isInvalid={!!inputError}>
                       <NumberInput
                         defaultValue={1000}
-                        min={minAmountToStake}
+                        min={!hasDeposited ? minAmountToStake : 1}
                         name="quantity"
                         onChange={handleChangeFortuneAmount}
                         value={fortuneToStake}
