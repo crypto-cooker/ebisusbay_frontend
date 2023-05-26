@@ -59,7 +59,7 @@ const StakePage = () => {
   const [depositLength, setDepositLength] = useState(0);
   const [withdrawDate, setWithdrawDate] = useState<string>();
 
-  const [minAmountToStake, setMinAmountToStake] = useState(1000);
+  const [minAmountToStake, setMinAmountToStake] = useState(ryoshiConfig.staking.bank.fortune.minimum);
   const [minLengthOfTime, setMinLengthOfTime] = useState(ryoshiConfig.staking.bank.fortune.termLength);
 
   const [inputError, setInputError] = useState('');
@@ -110,7 +110,7 @@ const StakePage = () => {
       setDepositLength(daysToAdd);
       setWithdrawDate(moment(newerDate).format("MMM D yyyy"));
 
-      setMinAmountToStake(1000);
+      setMinAmountToStake(ryoshiConfig.staking.bank.fortune.minimum);
       setMinLengthOfTime(ryoshiConfig.staking.bank.fortune.termLength);
 
       const numTerms = Math.floor(daysToAdd / ryoshiConfig.staking.bank.fortune.termLength);
@@ -325,8 +325,8 @@ const StakePage = () => {
                     </Text>
                     <FormControl maxW='200px' isInvalid={!!inputError}>
                       <NumberInput
-                        defaultValue={minAmountToStake}
-                        min={ryoshiConfig.staking.bank.fortune.minimum}
+                        defaultValue={1000}
+                        min={minAmountToStake}
                         name="quantity"
                         onChange={handleChangeFortuneAmount}
                         value={fortuneToStake}
