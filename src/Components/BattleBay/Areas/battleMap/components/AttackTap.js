@@ -355,6 +355,24 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
       return;
     }
 
+    if(attackType === 1 && attackerTroops > attackerTroopsAvailable){
+      setAlertMessage("Cannot attack with more troops than you have available")
+      setShowAlert(true)
+      return;
+    }
+
+    if(attackType === 1 && attackerTroops > defenderTroops){
+      setAlertMessage("Cannot attack with more troops than the defender has")
+      setShowAlert(true)
+      return;
+    }
+
+    if(attackType === 2 && attackerTroops > 3){
+      setAlertMessage("Max troops for conquest attacks are 3")
+      setShowAlert(true)
+      return;
+    }
+
     if(dataForm.attackersFaction == dataForm.defendersFaction){
       setAlertMessage("Cannot attack your own faction")
       setShowAlert(true)
@@ -363,7 +381,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
     if(attackerTroopsAvailable <= 1)
     {
-      setAlertMessage("You must have at least 2 troops to attack")
+      setAlertMessage("You must have at least 2 troops on the point to attack")
       setShowAlert(true)
       return;
     }
@@ -580,7 +598,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
               align='right'
               defaultValue={1} 
               min={1} 
-              max={3} 
+              max={attackType === 2 ? 3 : attackerTroopsAvailable}
               name="quantity" 
               w='80%'
               onChange={handleChange}
