@@ -20,17 +20,19 @@ import {useRouter} from "next/router";
 const BattleBay = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const user = useAppSelector((state) => state.user);
 
   const [currentPage, setCurrentPage] = useState<string>();
   const [previousPage, setPreviousPage] = useState<string>();
-  const user = useAppSelector((state) => state.user);
-  const { isOpen: isOpenGateModal, onOpen: onOpenGateModal, onClose: onCloseGateModal } = useDisclosure();
+
+  const { isOpen: isOpenWelcomeModal, onOpen: onOpenWelcomeModal, onClose: onCloseWelcomeModal } = useDisclosure();
   const authInitFinished = useAppSelector((state) => state.appInitialize.authInitFinished);
 
   const navigate = (page: string) => {
     setPreviousPage(currentPage)
     setCurrentPage(page)
   };
+
   const returnToPreviousPage = () => {
     setCurrentPage(previousPage)
   };
@@ -46,22 +48,22 @@ const BattleBay = () => {
     }
   };
 
-  const handleCloseGateModal = useCallback(() => {
+  const handleCloseWelcomeModal = useCallback(() => {
+    if (!authInitFinished || (!!user.address && !user.loadedFortuneBalance && !user.loadedMitamaBalance)) {
+      return;
+    }
+
     if (!user.address || !(user.fortuneBalance > 0) || !(user.mitamaBalance > 0)) {
       router.push('/');
     } else {
-      onCloseGateModal();
+      onCloseWelcomeModal();
     }
   }, [user.address, user.fortuneBalance, user.mitamaBalance, user.loadedMitamaBalance, user.loadedFortuneBalance]);
 
   useEffect(() => {
     if (!user.address || !(user.fortuneBalance > 0) || !(user.mitamaBalance > 0)) {
-      onOpenGateModal();
+      onOpenWelcomeModal();
     }
-
-    // else {
-    //   onCloseGateModal();
-    // }
   }, [user.address, user.loadedFortuneBalance, user.loadedMitamaBalance]);
 
   return (
@@ -91,7 +93,7 @@ const BattleBay = () => {
         <Village onChange={navigate} />
         // <BattleMap onChange={navigate} />
       )}
-      <RdModal isOpen={isOpenGateModal} onClose={handleCloseGateModal} title='Ryoshi Dynasties Beta'>
+      <RdModal isOpen={isOpenWelcomeModal} onClose={handleCloseWelcomeModal} title='Ryoshi Dynasties Beta'>
         <VStack p={4} spacing={8} fontSize='sm' textAlign='center'>
           <Text align='center'>
             Welcome to the beta version of Ryoshi Dynasties! The beta is accessible for users with test $Fortune in their wallet, which was distributed to those who participated in the Fortune token sale.
@@ -107,7 +109,7 @@ const BattleBay = () => {
                         Please note that the beta version is still under active development which may result in unexpected changes in the gaming experience. We are working hard to get the game ready for the official launch, which is planned for June 15th. Please join our Discord server for updates and to provide feedback.
                       </Text>
                       <Center>
-                        <RdButton stickyIcon={true} onClick={onCloseGateModal}>
+                        <RdButton stickyIcon={true} onClick={onCloseWelcomeModal}>
                           Play Now
                         </RdButton>
                       </Center>
@@ -131,7 +133,7 @@ const BattleBay = () => {
               )}
             </>
           ) : (
-            <Center>s
+            <Center>
               <Spinner />
             </Center>
           )}

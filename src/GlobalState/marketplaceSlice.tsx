@@ -150,7 +150,7 @@ export const fetchListings = (isSales = false) => async (dispatch: any, getState
       state.marketplace.query.filter.limit
     );
 
-    if (!cancelled) {
+    if (!cancelled && !!response.listings) {
       response.hasRank = response.listings.length > 0 && typeof response.listings[0].nft.rank !== 'undefined';
       dispatch(listingsReceived(response));
     }
@@ -178,26 +178,6 @@ export const sortListings =
 export const searchListings = (value: string, cacheName: string, isSales: boolean) => async (dispatch: any) => {
   dispatch(onSearch({ search: value, cacheName }));
   dispatch(fetchListings(isSales));
-};
-
-export const resetListings =
-  (isSales = false) =>
-  async (dispatch: any) => {
-    dispatch(clearSet(false));
-    dispatch(fetchListings(isSales));
-  };
-
-export const getCollectionData = (address: string) => async (dispatch: any) => {
-  try {
-    const response = await getCollectionMetadata(address);
-    dispatch(
-      onCollectionDataLoaded({
-        collection: response.collections[0],
-      })
-    );
-  } catch (error) {
-    console.log(error);
-  }
 };
 
 export const getMarketData = () => async (dispatch: any) => {
