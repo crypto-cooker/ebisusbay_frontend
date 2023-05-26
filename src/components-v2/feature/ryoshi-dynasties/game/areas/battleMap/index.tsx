@@ -266,7 +266,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
 
             <TransformComponent wrapperStyle={{height: '100%', width: '100%', objectFit: 'cover'}}>
               <Box as='img'
-                   src='/img/battle-bay/opMap.png'
+                   src={ImageService.translate('/img/battle-bay/opMap.png').convert()}
                    maxW='none'
                    useMap="#image-map" className={`${styles.mapImageArea}`} id="fancyMenu"/>
               <map name="image-map">
