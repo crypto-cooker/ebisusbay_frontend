@@ -686,7 +686,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
           </Box>
         </Flex>
         
-        <Text fontSize={'14px'}>Costs 50 $Koban</Text>
+        <Text fontSize={'14px'}>Costs 50 $Koban per troop you attack with ({50*attackerTroops})</Text>
         <Flex alignContent={'center'} justifyContent={'center'}>
         <Box
               ps='20px'>
