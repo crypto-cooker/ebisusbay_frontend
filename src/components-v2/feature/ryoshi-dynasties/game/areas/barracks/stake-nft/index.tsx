@@ -272,7 +272,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
                         <Icon as={FontAwesomeIcon} icon={faAward} />
                         <Box as='span'>{pendingNfts[index].rank ?? ''}</Box>
                       </HStack>
-                      <Box as='span' fontWeight='bold'>x {ryoshiConfig.staking.barracks.bonusTroops}</Box>
+                      <Box as='span' fontWeight='bold'>+ {ryoshiConfig.staking.barracks.bonusTroops}</Box>
                     </Flex>
                   </Box>
 
