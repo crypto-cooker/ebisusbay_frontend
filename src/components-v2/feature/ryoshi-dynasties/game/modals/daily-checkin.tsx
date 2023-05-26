@@ -28,6 +28,7 @@ const DailyCheckin = ({isOpen, onClose}: DailyCheckinProps) => {
   const [isLoading, getSigner] = useCreateSigner();
   const [streak, setStreak] = useState(1);
   const [nextClaim, setNextClaim] = useState(0);
+  const [buttonText, setButtonText] = useState('Claim Koban');
 
   const fetcher = async () => {
     // let signatureInStorage = getAuthSignerInStorage()?.signature;
@@ -50,7 +51,7 @@ const DailyCheckin = ({isOpen, onClose}: DailyCheckinProps) => {
     }
   );
 
-  // console.log('data', data);
+  console.log('data', data);
 
   const claimDailyRewards = async () => {
     if (!user.address) return;
@@ -62,6 +63,7 @@ const DailyCheckin = ({isOpen, onClose}: DailyCheckinProps) => {
     }
     if (signatureInStorage) {
       try {
+        setButtonText('Authorizing...')
         const authorization = await ApiService.withoutKey().ryoshiDynasties.claimDailyRewards(user.address, signatureInStorage);
 
         const sig = authorization.data.signature;
@@ -69,6 +71,7 @@ const DailyCheckin = ({isOpen, onClose}: DailyCheckinProps) => {
         console.log('auth', authorization)
 
 
+        setButtonText('Claiming...')
         console.log('===contract', config.contracts.resources, Resources, user.provider.getSigner());
         const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
         console.log('===request', mintRequest, sig, authorization);
@@ -76,6 +79,7 @@ const DailyCheckin = ({isOpen, onClose}: DailyCheckinProps) => {
 
         const receipt = await tx.wait();
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+        setButtonText('Done!')
 
       } catch (error) {
         console.log(error)
@@ -111,7 +115,7 @@ const DailyCheckin = ({isOpen, onClose}: DailyCheckinProps) => {
               Your current streak is 1 {pluralize(1, 'day')}. Claim again in {nextClaim}
             </Text>
             <Box textAlign='center' mt={4}>
-              <RdButton stickyIcon={true} onClick={claimDailyRewards}>Claim Koban</RdButton>
+              <RdButton stickyIcon={true} onClick={claimDailyRewards}>{buttonText}</RdButton>
             </Box>
           </>
         ) : (
