@@ -47,7 +47,6 @@ import FactionPfp from './FactionIconUpload';
 import localFont from 'next/font/local';
 const gothamBook = localFont({ src: '../../../fonts/Gotham-Book.woff2' })
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
-import ReturnToVillageButton from "@src/components-v2/feature/ryoshi-dynasties/components/return-button";
 
 import {io} from "socket.io-client";
 
@@ -98,9 +97,13 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
         }
         else
         {
-          console.log('no faction')
+          // console.log('player has no faction')
           const data = await getProfileArmies(user.address.toLowerCase(), signatureInStorage);
-          setWalletTroops(data.data.data[0].troops)
+          var totalTroops = 0;
+          data.data.data.forEach((element) => {
+            totalTroops += element.troops;
+          })
+          setWalletTroops(totalTroops)
         }
 
       } catch (error) {
@@ -109,29 +112,25 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
     }
   }
 
-  // const AddTroops = async () => {
-  //   let signatureInStorage = getAuthSignerInStorage()?.signature;
-  //   if (!signatureInStorage) {
-  //     const { signature } = await getSigner();
-  //     signatureInStorage = signature;
-  //   }
-  //   if (signatureInStorage) {
-  //     try {
-  //       const res = await addTroops(user.address.toLowerCase(), signatureInStorage, 8);
-  //       console.log(res)
-  //       RefreshTroopsAndFactions();
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  // }
+  const AddTroops = async () => {
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      try {
+        const res = await addTroops(user.address.toLowerCase(), signatureInStorage, 8);
+        // console.log(res)
+        RefreshTroopsAndFactions();
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
 
   const { isOpen, onOpen: onOpenDelegate, onClose } = useDisclosure();
   const [delegateMode, setDelegateMode] = useState("delegate");
-
-  // useEffect(() => {
-  //   RefreshTroopsAndFactions();
-  // }, [walletTroops]);
 
   const handleAddClick = () => {
     setModalOpen(true);
@@ -215,6 +214,8 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
     }
     if (signatureInStorage) {
       try {
+        // console.log('user address: ' + user.address.toLowerCase())
+        // console.log('signature: ' + signatureInStorage)
         const playerFactionData = await getFactionsOwned(user.address.toLowerCase(), signatureInStorage);
         
         //if the player has a faction, get the faction data
@@ -233,7 +234,12 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
         {
           setHasFaction(false);
           const data = await getProfileArmies(user.address.toLowerCase(), signatureInStorage);
-          setWalletTroops(data.data.data[0].troops)
+          console.log(data)
+          var totalTroops = 0;
+          data.data.data.forEach((element) => {
+            totalTroops += element.troops;
+          })
+          setWalletTroops(totalTroops)
         }
       } catch (error) {
         console.log(error)
@@ -442,18 +448,22 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
           Your Troops: {walletTroops}
           </>}
       </Text>
-      {/* <Box
-        ps='20px'
-        marginTop='6'
-        marginBottom='8'
-        >
-        <RdButton 
-          w='250px'
-          fontSize={{base: 'lg', sm: 'xl'}}
-          stickyIcon={true}
-          onClick={AddTroops}>Add Troops
-        </RdButton>
-      </Box> */}
+      
+      {location.hostname === 'localhost' ? <>
+        <Box
+          ps='20px'
+          marginTop='6'
+          marginBottom='8'
+          >
+          <RdButton 
+            w='250px'
+            fontSize={{base: 'lg', sm: 'xl'}}
+            stickyIcon={true}
+            onClick={AddTroops}>Add Troops
+          </RdButton>
+        </Box>
+      </> : <></>}
+
       {hasFaction ? <></> : <>
         <Box
           ps='20px'
@@ -466,6 +476,12 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
             stickyIcon={true}
             onClick={() => {setDelegateMode('delegate'), onOpenDelegate();}}>Delegate Troops 
           </RdButton>
+          {/* <Spacer h='4'/>
+          <RdButton 
+            w='250px'
+            fontSize={{base: 'lg', sm: 'xl'}}
+            onClick={() => {}}> View Delegations
+          </RdButton> */}
         </Box>
         </>
         }
