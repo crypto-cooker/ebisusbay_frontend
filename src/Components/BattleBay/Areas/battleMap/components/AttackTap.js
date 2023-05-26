@@ -22,6 +22,7 @@ import {
   Text,
   Spacer,
   HStack,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 import Button from "@src/Components/components/Button";
@@ -32,6 +33,7 @@ import {attack, getFactionsOwned, getProfileArmies, getGameTokens } from "@src/c
 import { createSuccessfulTransactionToastContent } from '@src/utils';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
+import DailyCheckinModal from "@src/components-v2/feature/ryoshi-dynasties/game/modals/daily-checkin";
 
 //contracts
 import {Contract, ethers, BigNumber} from "ethers";
@@ -90,6 +92,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   const [battleAttack, setBattleAttack] = useState([]);
 
   const [attackType, setAttackType] = useState(1);
+  const { isOpen: isOpenDailyCheckin, onOpen: onOpenDailyCheckin, onClose: onCloseDailyCheckin } = useDisclosure();
 
   //current attackID
   const [attackId, setAttackId] = useState(0);
@@ -685,8 +688,13 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
             </Alert>)}
           </Box>
         </Flex>
-        
-        <Text fontSize={'14px'}>Costs 50 $Koban per troop you attack with ({50*attackerTroops})</Text>
+        <Center>
+        <HStack>
+          <Text fontSize={'14px'}>Costs</Text>
+          <Text cursor='pointer' fontSize={'14px'} onClick={() => onOpenDailyCheckin()}>50 $Koban</Text>
+          <Text fontSize={'14px'}>per troop you attack with ({50*attackerTroops})</Text>
+        </HStack>
+        </Center>
         <Flex alignContent={'center'} justifyContent={'center'}>
         <Box
               ps='20px'>
@@ -797,6 +805,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
             </HStack>
           </Center>
           
+      <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin}/>
 
         <Spacer m='4' />
 
