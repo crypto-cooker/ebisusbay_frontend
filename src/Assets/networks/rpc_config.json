@@ -20690,7 +20690,7 @@
       "name": "Skronos Ultimate",
       "slug": "skronos-ultimate",
       "multiToken": false,
-      "address": "0x9e3b86a057778b94EdAA7EffD8B5C30408f804eE",
+      "address": "",
       "onChain": false,
       "listable": true,
       "metadata": {
