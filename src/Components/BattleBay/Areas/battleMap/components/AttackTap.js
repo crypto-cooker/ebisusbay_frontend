@@ -616,13 +616,13 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
             <Center>
               <Flex direction='row' justify='center' mb={2}>
                 <RdTabButton
-                  isActive={attackType === 1}
+                  isActive={attackType === 2}
                   onClick={() => setAttackType(2)}
                 >
                   Skirmish
                 </RdTabButton>
                 <RdTabButton
-                  isActive={attackType === 2}
+                  isActive={attackType === 1}
                   onClick={() => setAttackType(1)}
                 >
                   Conquest
