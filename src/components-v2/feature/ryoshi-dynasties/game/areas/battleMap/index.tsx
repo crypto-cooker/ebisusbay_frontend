@@ -148,7 +148,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
 
   const SetUpMap = async () => {
     getMap().then((data) => {
-      console.log(data);
+      // console.log(data);
       // resizeBattleMap(7580, 5320);
       setAreas(data.data.data.map.regions[0].controlPoints.map((controlPoint: any, i: any) => (
         <area 
@@ -158,16 +158,29 @@ const BattleMap = ({onChange}: BattleMapProps) => {
             selectRegion(controlPoint.id); 
             onOpen();
           }}
-          coords={controlPoint.coordinates} 
+          coords={controlPoint.name === "Felisgarde" ? "2559,3366,499" : controlPoint.coordinates} 
           shape="circle" 
-          alt= {controlPoint.name}
+          alt= {controlPoint.id}
           className='cursor-pointer'
+          title={controlPoint.name}
           />
         )))
       // map height and width, may need to be changed in the future
 
     }); 
+    // const data = area.filter((area: any) => area.props.title === "Classy Keep");
   }
+
+  // useEffect(() => {
+  //   if(area.length === 0) return;
+  //   area.forEach((area: any) => {
+  //     if(area.props.title === "Felisgarde")
+  //     {
+  //       console.log(area);
+  //     }
+  //     // console.log(area.props.title);
+  //   });
+  // }, [area]);
   const getImageRef = (id: any) => {
     if(id === 1)
       return imageRef1;
