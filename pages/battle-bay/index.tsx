@@ -53,15 +53,15 @@ const BattleBay = () => {
       return;
     }
 
-    if (!user.address || !(user.fortuneBalance > 0) || !(user.mitamaBalance > 0)) {
-      router.push('/');
-    } else {
+    if (!!user.address && (user.fortuneBalance > 0 || user.mitamaBalance > 0)) {
       onCloseWelcomeModal();
+    } else {
+      router.push('/');
     }
   }, [user.address, user.fortuneBalance, user.mitamaBalance, user.loadedMitamaBalance, user.loadedFortuneBalance]);
 
   useEffect(() => {
-    if (!user.address || !(user.fortuneBalance > 0) || !(user.mitamaBalance > 0)) {
+    if (!user.address || (user.fortuneBalance === 0 && user.mitamaBalance === 0)) {
       onOpenWelcomeModal();
     }
   }, [user.address, user.loadedFortuneBalance, user.loadedMitamaBalance]);
