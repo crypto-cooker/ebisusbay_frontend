@@ -387,3 +387,12 @@ export const getGameTokens = async (address, signature) => {
     throw error;
   }
 }
+export const getRewardsStreak = async (address, signature) => {
+  try{
+    return await api.get(baseURL + "api/ryoshi-dynasties/game-tokens/daily-reward/next/?", 
+      {params: {address, signature}});
+  }
+  catch(error){
+    throw error;
+  }
+}
