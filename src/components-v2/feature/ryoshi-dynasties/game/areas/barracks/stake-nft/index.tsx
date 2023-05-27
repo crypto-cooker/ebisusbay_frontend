@@ -351,10 +351,41 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
         return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
       },
       refetchOnWindowFocus: false,
-      enabled: !!address && isReady && !!collection
+      enabled: !!address && isReady && !!collection,
+      select: (data) => {
+        data.pages = data.pages.map((page) => {
+          return {
+            ...page,
+            data: page.data.filter((item) => {
+              return item.attributes.some((attr: any) => {
+                const collection = config.collections.find((c: any) => caseInsensitiveCompare(c.address, item.nftAddress));
+                const eligibility = ryoshiConfig.staking.barracks.eligibility.find((e) => e.slug === collection.slug);
+                if (!eligibility) return false;
+                const traitType = attr.trait_type.toLowerCase();
+                const value = attr.value.toString().toLowerCase();
+
+                let found = false;
+                for (let traitRule of eligibility.traits) {
+                  if (traitRule.inclusion === 'include' && traitRule.type === traitType && traitRule.values.includes(value)) {
+                    found = true;
+                    break;
+                  } else if (traitRule.inclusion === 'exclude' && traitRule.type === traitType && !traitRule.values.includes(value)) {
+                    found = true;
+                    break;
+                  }
+                }
+                return found;
+              })
+
+            }),
+          };
+        });
+
+        return data;
+      }
     }
   );
-
+console.log('data', data);
   return (
     <>
       <InfiniteScroll

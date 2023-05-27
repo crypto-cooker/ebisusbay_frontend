@@ -51,7 +51,62 @@ export const ryoshiConfig = {
     },
     barracks: {
       maxSlots: 5,
-      bonusTroops: 2
+      bonusTroops: 2,
+      eligibility: [
+        {
+          slug: 'ryoshi-tales-vip',
+          traits: [
+            {
+              type: 'tools',
+              inclusion: 'include',
+              values: [
+                'axe',
+                'bo',
+                'bokken',
+                'bow',
+                'broadsword',
+                'harpoon',
+                'katana',
+                'kunai with chain',
+                'nagamaki',
+                'naginata',
+                'niuwedo',
+                'odachi',
+                'pickaxe',
+                'tachi',
+                'tanto',
+                'thammer',
+                'trident',
+                'wakizashi',
+              ]
+            },
+          ]
+        },
+        {
+          slug: 'ryoshi-tales-halloween',
+          traits: [
+            {
+              type: 'tools',
+              inclusion: 'exclude',
+              values: [
+                'none'
+              ]
+            },
+          ]
+        },
+        {
+          slug: 'ryoshi-tales-christmas',
+          traits: [
+            {
+              type: 'miscellaneous',
+              inclusion: 'include',
+              values: [
+                'candy cane'
+              ]
+            },
+          ]
+        }
+      ]
     }
   },
   rewards: {

@@ -95,8 +95,8 @@ const BattleBay = () => {
       )}
       <RdModal isOpen={isOpenWelcomeModal} onClose={handleCloseWelcomeModal} title='Ryoshi Dynasties Beta'>
         <VStack p={4} spacing={8} fontSize='sm' textAlign='center'>
-          <Text align='center'>
-            Welcome to the beta version of Ryoshi Dynasties! The beta is accessible for users with test $Fortune in their wallet, which was distributed to those who participated in the Fortune token sale.
+          <Text>
+            Welcome to the beta version of Ryoshi Dynasties! This is a <strong>TESTNET</strong> beta and is accessible for users with test $Fortune in their wallet, which was distributed to those who participated in the Fortune token sale.
           </Text>
 
           {authInitFinished ? (
