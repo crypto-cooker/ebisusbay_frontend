@@ -30,6 +30,10 @@ class Cms {
     return this.ryoshiDynasties.requestBarracksStakeAuthorization(nfts, address);
   }
 
+  async cancelStakeAuthorization(signature: string): Promise<void> {
+    return this.ryoshiDynasties.cancelStakeAuthorization(signature);
+  }
+
   async getDailyRewards(address: string) {
     return this.ryoshiDynasties.getDailyRewards(address);
   }

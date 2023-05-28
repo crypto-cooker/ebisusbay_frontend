@@ -27,6 +27,13 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data;
   }
 
+  async cancelStakeAuthorization(signature: string): Promise<void> {
+    const response = await this.cms.post('ryoshi-dynasties/staking/authorize/cancel', {
+      signature
+    })
+    return response.data;
+  }
+
   async getDailyRewards(address: string) {
     const response = await this.cms.get('ryoshi-dynasties/game-tokens', {
       params: {

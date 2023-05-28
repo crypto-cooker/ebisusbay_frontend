@@ -31,6 +31,7 @@ const useBankStakeNfts = () => {
   const stakeNfts = async (pendingNfts: PendingNft[], stakedNfts: StakedToken[]) => {
     if (!user.address) throw 'User is not logged in';
 
+    let signature: string | null = null;
     try {
       const bank = new Contract(config.contracts.bank, Bank, user.provider.getSigner());
 
@@ -53,6 +54,7 @@ const useBankStakeNfts = () => {
 
       if (unstakedNfts.length > 0) {
         const approval = await ApiService.withoutKey().ryoshiDynasties.requestBankStakeAuthorization(unstakedNfts, user.address);
+        signature = approval.data.signature;
         const stakeTx = await bank.startStake(approval.data.stakeApproval, approval.data.signature);
         await stakeTx.wait();
       }
@@ -62,10 +64,10 @@ const useBankStakeNfts = () => {
         loading: false,
         error: null,
       });
-
-      return true;
     } catch (error) {
-      // @todo send cancellation to CMS if wallet confirmation cancelled?
+      if (!!signature) {
+        await ApiService.withoutKey().ryoshiDynasties.cancelStakeAuthorization(signature);
+      }
 
       setResponse({
         ...response,

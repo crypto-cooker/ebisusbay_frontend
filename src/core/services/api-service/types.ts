@@ -24,7 +24,8 @@ export interface RyoshiDynastiesApi {
     getErc20Account(address: string): Promise<Erc20Account | null>;
     getStakedTokens(address: string, type: StakedTokenType): Promise<StakedToken[]>;
     requestBankStakeAuthorization(nfts: BankStakeNft[], address: string): Promise<any>;
-    requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string): Promise<any>
+    requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string): Promise<any>;
+    cancelStakeAuthorization(signature: string): Promise<void>;
     getDailyRewards(address: string): Promise<any>
     getSeasonalRewards(address: string, seasonId?: number): Promise<any>
     claimDailyRewards(address: string, signature: string): Promise<any>

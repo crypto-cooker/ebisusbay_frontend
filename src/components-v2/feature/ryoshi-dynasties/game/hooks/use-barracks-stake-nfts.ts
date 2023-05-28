@@ -31,6 +31,7 @@ const useBarracksStakeNfts = () => {
   const stakeNfts = async (pendingNfts: PendingNft[], stakedNfts: StakedToken[]) => {
     if (!user.address) throw 'User is not logged in';
 
+    let signature: string | null = null;
     try {
       const barracks = new Contract(config.contracts.barracks, Barracks, user.provider.getSigner());
 
@@ -54,6 +55,7 @@ const useBarracksStakeNfts = () => {
 
       if (unstakedNfts.length > 0) {
         const approval = await ApiService.withoutKey().ryoshiDynasties.requestBarracksStakeAuthorization(unstakedNfts, user.address);
+        signature = approval.data.signature;
         const stakeTx = await barracks.startStake(approval.data.stakeApproval, approval.data.signature);
         await stakeTx.wait();
       }
@@ -63,10 +65,10 @@ const useBarracksStakeNfts = () => {
         loading: false,
         error: null,
       });
-
-      return true;
     } catch (error) {
-      // @todo send cancellation to CMS if wallet confirmation cancelled?
+      if (!!signature) {
+        await ApiService.withoutKey().ryoshiDynasties.cancelStakeAuthorization(signature);
+      }
 
       setResponse({
         ...response,
