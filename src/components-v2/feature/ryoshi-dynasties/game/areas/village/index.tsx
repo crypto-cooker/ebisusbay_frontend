@@ -42,6 +42,7 @@ import AllianceCenterModal from "@src/Components/BattleBay/Areas/AllianceCenterM
 import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks";
 import PortalModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/portal";
 import {VillageHud} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/hud";
+import ImageService from "@src/core/services/image";
 
 interface VillageProps {
   onChange: (value: string) => void;
@@ -565,7 +566,7 @@ const Village = ({onChange}: VillageProps) => {
                 {/* <Controls {...utils} /> */}
                 <TransformComponent wrapperStyle={{height: '100%', width: '100%', objectFit: 'cover'}}>
                   <Box as='img'
-                       src='/img/battle-bay/mapImages/background.png'
+                       src={ImageService.translate('/img/battle-bay/mapImages/background.png').custom({width: 2880, height: 1620})}
                        maxW='none'
                        useMap="#image-map" className={`${styles.mapImageArea}`} id="fancyMenu"/>
                   <map name="image-map">
@@ -575,56 +576,56 @@ const Village = ({onChange}: VillageProps) => {
                     // onClick={() => onChange('allianceCenter')}
                        onClick={() => OpenAllianceCenter()}
                   >
-                    <img src='/img/battle-bay/mapImages/alliancecenter_day.png' />
+                    <img src={ImageService.translate('/img/battle-bay/mapImages/alliancecenter_day.png').convert()} />
                     <Box className={styles.enlarge} style={{position:"absolute", marginTop: alliancecenter_labelTop, marginLeft: alliancecenter_labelLeft, zIndex:"20"}}>
-                      <img src='/img/battle-bay/building_labels/alliancecenter_label.png' />
+                      <img src={ImageService.translate('/img/battle-bay/building_labels/alliancecenter_label.png').convert()} />
                     </Box>
                   </Box>
 
                   <Box id="townhall" className={styles.enlarge} style={{position:"absolute", marginTop: townhallTop, marginLeft: townhallLeft, zIndex:"9"}}
                     // onClick={() => onChange('townHall')}
                   >
-                    <img src='/img/battle-bay/mapImages/townhall.png' />
+                    <img src={ImageService.translate('/img/battle-bay/mapImages/townhall.png').convert()} />
                   </Box>
 
                   <Box id="tavern" className={styles.enlarge} style={{position:"absolute", marginTop: tavernTop, marginLeft: tavernLeft, zIndex:"9"}}
                     // onClick={() => onChange('tavern')}
                   >
-                    <img src='/img/battle-bay/mapImages/tavern.png' />
+                    <img src={ImageService.apng('/img/battle-bay/mapImages/tavern.png').convert()} />
                   </Box>
 
                   <Box id="academy" className={styles.enlarge} style={{position:"absolute", marginTop: academyTop, marginLeft: academyLeft, zIndex:"9"}}
                     // onClick={() => onChange('academy')}
                   >
-                    <img src='/img/battle-bay/mapImages/academy.png' />
+                    <img src={ImageService.translate('/img/battle-bay/mapImages/academy.png').convert()} />
                   </Box>
 
                   <Box className={styles.enlarge} style={{position:"absolute", marginTop: tavernSpinTop, marginLeft: tavernSpinLeft, zIndex:"9", pointerEvents:"none"}}>
-                    <img src='/img/battle-bay/mapImages/tavern_turbine.png' />
+                    <img src={ImageService.apng('/img/battle-bay/mapImages/tavern_turbine.png').convert()} />
                   </Box>
 
                   <Box id="boat" className={styles.enlarge} style={{position:"absolute", marginTop: boatTop, marginLeft: boatLeft, zIndex:"9"}}
                        onClick={() => onChange('battleMap')}
                   >
-                    <img src='/img/battle-bay/mapImages/boat_day.png' />
+                    <img src={ImageService.apng('/img/battle-bay/mapImages/boat_day.png').convert()} />
                   </Box>
 
                   <Box id="ebisustatue" className={styles.enlarge} style={{position:"absolute", marginTop: ebisustatueTop, marginLeft: ebisustatueLeft, zIndex:"9"}} >
-                    <img src='/img/battle-bay/mapImages/ebisustatue.png' />
+                    <img src={ImageService.translate('/img/battle-bay/mapImages/ebisustatue.png').convert()} />
                   </Box>
 
                   <Box id="fishmarket" className={styles.enlarge} style={{position:"absolute", marginTop: fishmarketTop, marginLeft: fishmarketLeft, zIndex:"9"}} >
-                    <img src='/img/battle-bay/mapImages/fishmarket_day.png' />
+                    <img src={ImageService.apng('/img/battle-bay/mapImages/fishmarket_day.png').convert()} />
                   </Box>
 
                   <Box style={{position:"absolute", marginTop: waterTop, marginLeft: waterLeft, zIndex:"8"}} >
-                    <img src='/img/battle-bay/mapImages/water.png' />
+                    <img src={ImageService.translate('/img/battle-bay/mapImages/water.png').custom({width: 2880, height: 703})} />
                   </Box>
 
                   <Box id="bank" className={styles.enlarge} style={{position:"absolute", marginTop: bankTop, marginLeft: bankLeft, zIndex:"8"}}
                        onClick={() => onChange('bank')}
                   >
-                    <img src='/img/battle-bay/mapImages/bank_day.png' />
+                    <img src={ImageService.translate('/img/battle-bay/mapImages/bank_day.png').convert()} />
                     {/* <div className={[styles.bank_label]} > */}
                     {/* <img className={[styles.bank_label]}  src='/img/battle-bay/building_labels/bank_label.png'
                     // width={bank_labelWidth} height={bank_labelHeight}
@@ -635,32 +636,32 @@ const Village = ({onChange}: VillageProps) => {
                   <Box id="announcement" className={styles.enlarge} style={{position:"absolute", marginTop: announcementTop, marginLeft: announcementLeft, zIndex:"9"}}
                        onClick={onOpenAnnouncementBoard}
                   >
-                    <img src='/img/battle-bay/mapImages/announcement.png' />
+                    <img src={ImageService.translate('/img/battle-bay/mapImages/announcement.png').convert()} />
                   </Box>
 
                   <Box id="barracks" className={styles.enlarge} style={{position:"absolute", marginTop: barracksTop, marginLeft: barracksLeft, zIndex:"9"}}
                        onClick={() => OpenBarracks()}
                   >
-                    <img src='/img/battle-bay/mapImages/barracks.png' />
+                    <img src={ImageService.apng('/img/battle-bay/mapImages/barracks.png').convert()} />
                   </Box>
 
                   <Box className={styles.enlarge} style={{position:"absolute", marginTop: swordsmenTop, marginLeft: swordsmenLeft, zIndex:"9", pointerEvents:"none"}} >
-                    <img src='/img/battle-bay/mapImages/swordsmen.png' />
+                    <img src={ImageService.apng('/img/battle-bay/mapImages/swordsmen.png').convert()} />
                   </Box>
 
                   <Box id="moongate" className={styles.enlarge} style={{position:"absolute", marginTop: moongateTop, marginLeft: moongateLeft, zIndex:"9"}}
                     onClick={() => OpenPortal()}>
-                    <img src='/img/battle-bay/mapImages/moongate_day.png' onClick={() => OpenPortal()}/>
+                    <img src={ImageService.apng('/img/battle-bay/mapImages/moongate_day.png').convert()} onClick={() => OpenPortal()}/>
                     {/* <div className={[styles.enlarge]} style={{position:"absolute",  zIndex:"20"}}>
                       <img src='/img/battle-bay/building_labels/moongate_label.png' /> </div> */}
                   </Box>
 
                   <Box id="torii" className={styles.enlarge} style={{position:"absolute", marginTop: toriiTop, marginLeft: toriiLeft, zIndex:"9"}} >
-                    <img src='/img/battle-bay/mapImages/torii.png' />
+                    <img src={ImageService.translate('/img/battle-bay/mapImages/torii.png').convert()} />
                   </Box>
 
                   <Box className={styles.enlarge} style={{position:"absolute", marginTop: pondTop, marginLeft: pondLeft, zIndex:"8"}}>
-                    <img src='/img/battle-bay/mapImages/pond1.png' />
+                    <img src={ImageService.apng('/img/battle-bay/mapImages/pond1.png').convert()} />
                   </Box>
 
 

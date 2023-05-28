@@ -20,6 +20,7 @@ import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {getAuthSignerInStorage} from "@src/helpers/storage";
+import ImageService from "@src/core/services/image";
 
 const config = appConfig();
 
@@ -154,7 +155,7 @@ const WithdrawRewardsTab = () => {
                       <VStack align='start' spacing={0}>
                         <Text fontSize='xl' fontWeight='bold'>Season {commify(reward.seasonId)}</Text>
                         <HStack>
-                          <Image src='/img/ryoshi-dynasties/icons/fortune.svg' alt="walletIcon" boxSize={6}/>
+                          <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="fortuneIcon" boxSize={6}/>
                           <Text>{reward.totalRewards}</Text>
                         </HStack>
                       </VStack>

@@ -37,6 +37,12 @@ class ImageService {
     return translator.provider;
   }
 
+  static apng(url: string): CdnProvider {
+    const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.apng);
+    const translator = ImageTranslator.from(remappedUrl);
+    return translator.provider;
+  }
+
   /**
    * Known public dir assets
    *

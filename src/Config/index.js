@@ -31,6 +31,7 @@ export const configData = {
         proxy: 'https://cdn.ltsglxy.network/proxy/',
         storage: 'https://cdn-prod.ebisusbay.com/storage/',
         files: 'https://cdn-prod.ebisusbay.com/files/',
+        apng: 'https://ebisusbay-prod-no-op.b-cdn.net/',
         app: 'https://cdn-prod.ebisusbay.com/'
       }
     },
@@ -125,6 +126,7 @@ export const configData = {
         proxy: 'https://cdn.ltsglxy.network/proxy/',
         storage: 'https://cdn-dev.ebisusbay.biz/storage/',
         files: 'https://cdn-dev.ebisusbay.biz/files/',
+        apng: 'https://ebisusbay-prod-no-op.b-cdn.net/',
         app: 'https://cdn-dev.ebisusbay.biz/'
       }
     },
@@ -218,6 +220,7 @@ export const configData = {
         proxy: 'https://cdn-test.ltsglxy.network/proxy/',
         storage: 'https://cdn-test.ebisusbay.biz/storage/',
         files: 'https://cdn-test.ebisusbay.biz/files/',
+        apng: 'https://ebisusbay-test-no-op.b-cdn.net/',
         app: 'https://cdn-test.ebisusbay.biz/'
       }
     },
@@ -314,6 +317,7 @@ export const configData = {
         proxy: 'https://cdn.ltsglxy.network/proxy/',
         storage: 'https://cdn-prod.ebisusbay.com/storage/',
         files: 'https://cdn-prod.ebisusbay.com/files/',
+        apng: 'https://ebisusbay-prod-no-op.b-cdn.net/',
         app: 'https://cdn-prod.ebisusbay.com/'
       }
     },

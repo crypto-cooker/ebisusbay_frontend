@@ -35,6 +35,7 @@ import {useAppSelector} from "@src/Store/hooks";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {ryoshiConfig} from "@src/Config/ryoshi";
+import ImageService from "@src/core/services/image";
 
 
 const StakePage = () => {
@@ -278,7 +279,7 @@ const StakePage = () => {
                     <Spacer />
                     <HStack>
                       <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>Your</Text>
-                      <Image src='/img/ryoshi-dynasties/icons/fortune.svg' alt="walletIcon" boxSize={6}/>
+                      <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="fortuneIcon" boxSize={6}/>
                       <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>
                         $Fortune: {isRetrievingFortune ? <Spinner size='sm'/> : commify(round(userFortune))}
                       </Text>

@@ -16,6 +16,7 @@ import EmergencyWithdraw from "@src/components-v2/feature/ryoshi-dynasties/game/
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from 'react-redux';
+import ImageService from "@src/core/services/image";
 
 interface BankerSceneProps {
   address: string;
@@ -83,7 +84,7 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
 
     <AspectRatio ratio={1920/1080} overflow='visible'>
       <Image
-        src='/img/battle-bay/bankinterior/bank_interior_background_desktop_animated.png'
+        src={ImageService.translate('/img/battle-bay/bankinterior/bank_interior_background_desktop_animated.png').convert()}
         minH='calc(100vh - 74px)'
       />
     </AspectRatio>

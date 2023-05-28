@@ -21,6 +21,7 @@ import {ApiService} from "@src/core/services/api-service";
 import {ethers} from "ethers";
 import {useAppSelector} from "@src/Store/hooks";
 import {siPrefixedNumber} from "@src/utils";
+import ImageService from "@src/core/services/image";
 
 interface VillageHudProps {
   onOpenBuildings: () => void;
@@ -78,19 +79,19 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin}: VillageHudProp
                     {!!user.address ? (
                       <HStack w='full' spacing={4}>
                         <HStack>
-                          <Image src='/img/ryoshi-dynasties/icons/fortune.svg' alt="walletIcon" boxSize={6}/>
+                          <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="walletIcon" boxSize={6}/>
                           <Text
                             textColor={user.theme === 'dark' ? '#ffffff' : '#ffffff'}
                             >{fortune}</Text>
                         </HStack>
                         <HStack>
-                          <Image src='/img/ryoshi-dynasties/icons/mitama.png' alt="walletIcon" boxSize={6}/>
+                          <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/mitama.png').convert()} alt="walletIcon" boxSize={6}/>
                           <Text
                             textColor={user.theme === 'dark' ? '#ffffff' : '#ffffff'}
                             >{mitama}</Text>
                         </HStack>
                         <HStack>
-                          <Image src='/img/ryoshi-dynasties/icons/koban.png' alt="walletIcon" boxSize={6}/>
+                          <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="walletIcon" boxSize={6}/>
                           <Text
                             textColor={user.theme === 'dark' ? '#ffffff' : '#ffffff'}
                             >{koban}</Text>
