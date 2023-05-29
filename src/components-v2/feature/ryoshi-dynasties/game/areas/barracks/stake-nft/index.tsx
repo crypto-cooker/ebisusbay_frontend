@@ -102,7 +102,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
     setPendingNfts([]);
     setStakedNfts([]);
     setCurrentCollection(addressForTab);
-    setCurrentTab(tabs.ryoshiHalloween);
+    setCurrentTab(tabs.ryoshiVip);
     onClose();
   }
 

@@ -35,8 +35,6 @@ const tabs = {
   help: 'help'
 };
 
-const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
-
 const ControlPointForm = ({ isOpen, onClose, controlPoint=[], refreshControlPoint, skirmishPrice, conquestPrice}) => {
   // console.log("factionForm controlPoint: " + controlPoint.name);
   const [isLoading, setIsLoading] = useState(true);
@@ -48,8 +46,8 @@ const ControlPointForm = ({ isOpen, onClose, controlPoint=[], refreshControlPoin
   const [currentTab, setCurrentTab] = useState(tabs.info);
 
   const handleClose = useCallback(() => {
+    setCurrentTab(tabs.info);
     onClose();
-    console.log("handleClose");
   }, []);
 
   useEffect(() => {
@@ -60,7 +58,7 @@ const ControlPointForm = ({ isOpen, onClose, controlPoint=[], refreshControlPoin
   return (
     <RdModal
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={handleClose}
       title={title}
       isCentered={false}
       utilBtnTitle={currentTab === tabs.help ? <ArrowBackIcon /> : <>?</>}

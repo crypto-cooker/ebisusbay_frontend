@@ -1,5 +1,5 @@
 import {Box, Center, Flex, HStack, Image, Spinner, Text, VStack} from "@chakra-ui/react"
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 
 //contracts
@@ -56,10 +56,15 @@ const Withdraw = ({ isOpen, onClose}: WithdrawProps) => {
     setCurrentTab(key);
   };
 
+  const handleClose = useCallback(() => {
+    setCurrentTab(tabs.rewards);
+    onClose();
+  }, []);
+
   return (
     <RdModal
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={handleClose}
       title='Withdraw'
     >
       <Text textAlign='center' fontSize={14} py={2}>Withdraw accumulated Fortune rewards or your Fortune stake</Text>
