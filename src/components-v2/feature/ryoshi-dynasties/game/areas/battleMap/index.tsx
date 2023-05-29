@@ -10,6 +10,8 @@ import ControlPointForm from '@src/Components/BattleBay/Areas/battleMap/componen
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import ImageService from '@src/core/services/image';
 import {BattleMapHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battleMap/hud";
+import {io} from "socket.io-client";
+import {useAppSelector} from "@src/Store/hooks";
 
 interface BattleMapProps {
   onChange: () => void;
@@ -17,6 +19,7 @@ interface BattleMapProps {
 
 const BattleMap = ({onChange}: BattleMapProps) => {
 
+  const user = useAppSelector(state => state.user);
   const mapRef = useRef();
   const  [flagSize, setFlagSize] = useState("1px");
   const [buildingSize, setBuildingSize] = useState("50px");
@@ -311,6 +314,40 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   useEffect(() => {
     setMapInitialized(true);
   }, []);
+
+  const [isSocketConnected, setIsSocketConnected] = useState(false);
+  useEffect(() => {
+    if (!user.address) return;
+
+    console.log('connecting to socket...');
+    const socket = io('wss://testcms.ebisusbay.biz/socket/ryoshi-dynasties/battles?walletAddress='+user.address.toLowerCase());
+
+    function onConnect() {
+      setIsSocketConnected(true);
+      console.log('connected')
+    }
+
+    function onDisconnect() {
+      setIsSocketConnected(false);
+      console.log('disconnected')
+    }
+
+    function onBattleFinishedEvent(data: any) {
+      console.log('BATTLE_FINISHED', data)
+      const parsedAtack = JSON.parse(data);
+      console.log('parsedAtack', parsedAtack)
+    }
+
+    socket.on('connect', onConnect);
+    socket.on('disconnect', onDisconnect);
+    socket.on('BATTLE_FINISHED', onBattleFinishedEvent);
+
+    return () => {
+      socket.off('connect', onConnect);
+      socket.off('disconnect', onDisconnect);
+      socket.off('BATTLE_FINISHED', onBattleFinishedEvent);
+    };
+  }, [!!user.address]);
 
   return (
     <section>
