@@ -98,50 +98,50 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   }
   const randomlyPlayExplosion = async () => {
 
-    if(area.length === 0) return;
+    // if(area.length === 0) return;
 
-    //get random area
-    var randomArea = area[Math.floor(Math.random() * area.length)];
-    var left = randomArea.props.coords.split(",")[0];
-    var top = randomArea.props.coords.split(",")[1];
+    // //get random area
+    // var randomArea = area[Math.floor(Math.random() * area.length)];
+    // var left = randomArea.props.coords.split(",")[0];
+    // var top = randomArea.props.coords.split(",")[1];
 
-    setExplosion(
-      <Flex position="absolute" zIndex="9" width="100%" height="100%">
-      <Image
-       position="relative"
-        src='/img/battle-bay/explosion.png' 
-        width={250*5}
-        height={207*5}
-        left={left-(250*2.5)}
-        top={top-(207*2.5)}
-        zIndex="9"
-        />
-      </Flex>
-      )
+    // setExplosion(
+    //   <Flex position="absolute" zIndex="9" width="100%" height="100%">
+    //   <Image
+    //    position="relative"
+    //     src='/img/battle-bay/explosion.png' 
+    //     width={250*5}
+    //     height={207*5}
+    //     left={left-(250*2.5)}
+    //     top={top-(207*2.5)}
+    //     zIndex="9"
+    //     />
+    //   </Flex>
+    //   )
 
-    await new Promise(r => setTimeout(r, 1000));
+    // await new Promise(r => setTimeout(r, 1000));
 
-    setExplosion(
-      <Flex position="absolute" zIndex="9" width="100%" height="100%">
-      <Image
-       position="relative"
-        src='/img/battle-bay/explosion.png' 
-        width={0}
-        height={0}
-        left={left-(250*2.5)}
-        top={top-(207*2.5)}
-        zIndex="9"
-        />
-      </Flex>
-    )
-    setPlayExplosion(!playExlplosion);
+    // setExplosion(
+    //   <Flex position="absolute" zIndex="9" width="100%" height="100%">
+    //   <Image
+    //    position="relative"
+    //     src='/img/battle-bay/explosion.png' 
+    //     width={0}
+    //     height={0}
+    //     left={left-(250*2.5)}
+    //     top={top-(207*2.5)}
+    //     zIndex="9"
+    //     />
+    //   </Flex>
+    // )
+    // setPlayExplosion(!playExlplosion);
   }
   const PlayExplosion = async () => {
 
     if(area.length === 0) return;
 
     //get random area
-    var randomArea = area[Math.floor(Math.random() * area.length)];
+    var randomArea : any = area[Math.floor(Math.random() * area.length)];
     var left = randomArea.props.coords.split(",")[0];
     var top = randomArea.props.coords.split(",")[1];
 
