@@ -1,5 +1,4 @@
-import PageHead from "@src/components-v2/shared/layout/page-head";
-import React, {Suspense, useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 
 import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks";
 import BattleMap from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battleMap";
@@ -19,9 +18,9 @@ import {useRouter} from "next/router";
 import {RyoshiDynastiesContext} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
-import EmptyData from "@src/Components/Offer/EmptyData";
+import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 
-const RyoshiDynasties = () => {
+const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | null}) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const user = useAppSelector((state) => state.user);
@@ -35,7 +34,12 @@ const RyoshiDynasties = () => {
 
   const { data: rdConfig, status: rdConfigFetchStatus, error: rdFetchError} = useQuery(
     ['RyoshiDynastiesContext'],
-    () => ApiService.withoutKey().ryoshiDynasties.getGlobalContext()
+    () => ApiService.withoutKey().ryoshiDynasties.getGlobalContext(),
+    {
+      initialData: initialRdConfig,
+      staleTime: 1000 * 60 * 10,
+      cacheTime: 1000 * 60 * 30,
+    }
   );
 
   const navigate = (page: string) => {
@@ -78,26 +82,31 @@ const RyoshiDynasties = () => {
 
   return (
     <>
-      {rdConfigFetchStatus === "loading" ? (
-        <Center>
-          <Spinner />
-        </Center>
-      ) : rdConfigFetchStatus === "error" ? (
+      {(rdConfigFetchStatus === "error" || rdConfigFetchStatus === "loading") ? (
         <>
-
           <Village onChange={navigate} />
-          <RdModal isOpen={true} title='Error'>
-            <Center>
-              <Box p={4} textAlign='center'>
-                <Text>
-                  Whoops! Looks like something went wrong attempting to retrieve the latest game configuration. Please refresh the page and try again. If the issue persists, please contact support.
-                </Text>
-                <Text mt={8} fontSize='xs'>
-                  Error: {(rdFetchError as any).message}
-                </Text>
-              </Box>
-            </Center>
-          </RdModal>
+          {rdConfigFetchStatus === "loading" ? (
+            <RdModal isOpen={true} title='Initializing Game...'>
+              <Center>
+                <Box p={8}>
+                  <Spinner />
+                </Box>
+              </Center>
+            </RdModal>
+          ) : (
+            <RdModal isOpen={true} title='Error'>
+              <Center>
+                <Box p={4} textAlign='center'>
+                  <Text>
+                    Whoops! Looks like something went wrong attempting to retrieve the latest game configuration. Please refresh the page and try again. If the issue persists, please contact support.
+                  </Text>
+                  <Text mt={8} fontSize='xs'>
+                    Error: {(rdFetchError as any).message}
+                  </Text>
+                </Box>
+              </Center>
+            </RdModal>
+          )}
         </>
       ) : (
         <RyoshiDynastiesContext.Provider value={{config: rdConfig!}}>
