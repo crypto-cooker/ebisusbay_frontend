@@ -713,7 +713,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
         <HStack>
           <Text fontSize={'14px'}>Costs</Text>
           <Text cursor='pointer' fontSize={'14px'} onClick={() => onOpenDailyCheckin()}>{getAttackCost()} $Koban</Text>
-          <Text fontSize={'14px'}>per troop you attack with ({attackTypeEnum[attackType].cost*attackerTroops})</Text>
+          <Text fontSize={'14px'}>per troop you attack with ({getAttackCost()*attackerTroops})</Text>
         </HStack>
         </Center>
         <Flex alignContent={'center'} justifyContent={'center'}>
