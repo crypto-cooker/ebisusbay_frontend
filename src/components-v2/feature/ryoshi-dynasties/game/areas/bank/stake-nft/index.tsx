@@ -1,6 +1,6 @@
 import {Box, Flex, HStack, Icon, IconButton, Image, SimpleGrid, Text, Wrap, WrapItem} from "@chakra-ui/react"
 
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {useAppSelector} from "@src/Store/hooks";
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {useInfiniteQuery, useQueryClient} from "@tanstack/react-query";
@@ -23,10 +23,13 @@ import useBankStakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/h
 import {getNft} from "@src/core/api/endpoints/nft";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAward} from "@fortawesome/free-solid-svg-icons";
-import {ryoshiConfig} from "@src/Config/ryoshi";
 import {BankStakeNftContext} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/context";
 import {toast} from "react-toastify";
 import {StakedTokenType} from "@src/core/services/api-service/types";
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 
 const config = appConfig();
 
@@ -44,6 +47,7 @@ interface StakeNftsProps {
 const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   const user = useAppSelector((state) => state.user);
   const queryClient = useQueryClient();
+  const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   const [currentTab, setCurrentTab] = useState(tabs.ryoshiVip);
   const [currentCollection, setCurrentCollection] = useState<any>();
@@ -59,9 +63,9 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 
   const handleAddNft = useCallback((nft: WalletNft) => {
     const isInList = pendingNfts.some((sNft) => sNft.nftId === nft.nftId && caseInsensitiveCompare(sNft.nftAddress, nft.nftAddress));
-    if (!isInList && pendingNfts.length < ryoshiConfig.staking.bank.nft.maxSlots) {
+    if (!isInList && pendingNfts.length < rdContext.config.bank.staking.nft.maxSlots) {
       const collectionSlug = config.collections.find((c: any) => caseInsensitiveCompare(c.address, nft.nftAddress))?.slug;
-      const stakeConfig = ryoshiConfig.staking.bank.nft.collections.find((c) => c.slug === collectionSlug);
+      const stakeConfig = rdContext.config.bank.staking.nft.collections.find((c) => c.slug === collectionSlug);
 
       const percentile = (nft.rank / stakeConfig!.maxSupply) * 100;
       const multiplier = stakeConfig!.multipliers
@@ -126,7 +130,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       for (const token of data) {
         const nft = await getNft(token.contractAddress, token.tokenId);
         if (nft) {
-          const stakeConfig = ryoshiConfig.staking.bank.nft.collections.find((c) => c.slug === nft.collection.slug);
+          const stakeConfig = rdContext.config.bank.staking.nft.collections.find((c) => c.slug === nft.collection.slug);
 
           const percentile = (nft.nft.rank / stakeConfig!.maxSupply) * 100;
           const multiplier = stakeConfig!.multipliers

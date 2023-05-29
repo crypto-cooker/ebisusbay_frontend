@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, useContext, useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {
   Box,
@@ -34,8 +34,11 @@ import {createSuccessfulTransactionToastContent, findNextLowestNumber, pluralize
 import {useAppSelector} from "@src/Store/hooks";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {ryoshiConfig} from "@src/Config/ryoshi";
 import ImageService from "@src/core/services/image";
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 
 
 const StakePage = () => {
@@ -43,13 +46,14 @@ const StakePage = () => {
  
   const [isExecuting, setIsExecuting] = useState(false);
   const config = appConfig();
+  const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   const user = useAppSelector((state) => state.user);
 
   const [executingLabel, setExecutingLabel] = useState('Staking...');
   const [isRetrievingFortune, setIsRetrievingFortune] = useState(false);
 
-  const [daysToStake, setDaysToStake] = useState(ryoshiConfig.staking.bank.fortune.termLength)
+  const [daysToStake, setDaysToStake] = useState(rdContext.config.bank.staking.fortune.termLength)
   const [fortuneToStake, setFortuneToStake] = useState(1000);
   const [mitama, setMitama] = useState(0)
   const [userFortune, setUserFortune] = useState(0)
@@ -60,8 +64,8 @@ const StakePage = () => {
   const [depositLength, setDepositLength] = useState(0);
   const [withdrawDate, setWithdrawDate] = useState<string>();
 
-  const [minAmountToStake, setMinAmountToStake] = useState(ryoshiConfig.staking.bank.fortune.minimum);
-  const [minLengthOfTime, setMinLengthOfTime] = useState(ryoshiConfig.staking.bank.fortune.termLength);
+  const [minAmountToStake, setMinAmountToStake] = useState(rdContext.config.bank.staking.fortune.minimum);
+  const [minLengthOfTime, setMinLengthOfTime] = useState(rdContext.config.bank.staking.fortune.termLength);
 
   const [inputError, setInputError] = useState('');
   const [lengthError, setLengthError] = useState('');
@@ -111,11 +115,11 @@ const StakePage = () => {
       setDepositLength(daysToAdd);
       setWithdrawDate(moment(newerDate).format("MMM D yyyy"));
 
-      setMinAmountToStake(ryoshiConfig.staking.bank.fortune.minimum);
-      setMinLengthOfTime(ryoshiConfig.staking.bank.fortune.termLength);
+      setMinAmountToStake(rdContext.config.bank.staking.fortune.minimum);
+      setMinLengthOfTime(rdContext.config.bank.staking.fortune.termLength);
 
-      const numTerms = Math.floor(daysToAdd / ryoshiConfig.staking.bank.fortune.termLength);
-      const availableAprs = ryoshiConfig.staking.bank.fortune.apr as any;
+      const numTerms = Math.floor(daysToAdd / rdContext.config.bank.staking.fortune.termLength);
+      const availableAprs = rdContext.config.bank.staking.fortune.apr as any;
       setCurrentApr(availableAprs[numTerms] ?? availableAprs[1]);
     } else {
       setHasDeposited(false);
@@ -170,7 +174,6 @@ const StakePage = () => {
       //check for approval
       const totalApproved = await checkForApproval();
       const desiredFortuneAmount = ethers.utils.parseEther(fortuneToStake.toString());
-      // const convertedFortuneAmount = desiredFortuneAmount / 1000000000000;
 
       console.log('approved amount', totalApproved.lt(desiredFortuneAmount));
       if(totalApproved.lt(desiredFortuneAmount)){
@@ -255,8 +258,8 @@ const StakePage = () => {
     if (canUseDuration) {
       totalDays += daysToStake;
     }
-    const numTerms = Math.floor(totalDays / ryoshiConfig.staking.bank.fortune.termLength);
-    const availableAprs = ryoshiConfig.staking.bank.fortune.apr as any;
+    const numTerms = Math.floor(totalDays / rdContext.config.bank.staking.fortune.termLength);
+    const availableAprs = rdContext.config.bank.staking.fortune.apr as any;
     const aprKey = findNextLowestNumber(Object.keys(availableAprs), numTerms);
     setNewApr(availableAprs[aprKey] ?? availableAprs[1]);
 
@@ -361,8 +364,8 @@ const StakePage = () => {
                     <FormControl maxW='250px' isInvalid={!!lengthError}>
                       <Select onChange={handleChangeDays} value={daysToStake} bg='none'>
                         {[...Array(12).fill(0)].map((_, i) => (
-                          <option key={i} value={`${(i + 1) * ryoshiConfig.staking.bank.fortune.termLength}`}>
-                            {(i + 1)} {pluralize((i + 1), 'Season')} ({(i + 1) * ryoshiConfig.staking.bank.fortune.termLength} days)
+                          <option key={i} value={`${(i + 1) * rdContext.config.bank.staking.fortune.termLength}`}>
+                            {(i + 1)} {pluralize((i + 1), 'Season')} ({(i + 1) * rdContext.config.bank.staking.fortune.termLength} days)
                           </option>
                         ))}
                       </Select>

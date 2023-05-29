@@ -130,4 +130,8 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
   async requestSeasonalRewardsClaimAuthorization(address: string, amount: number, seasonId: number, signature: string) {
     return this.cms.requestSeasonalRewardsClaimAuthorization(address, amount, seasonId, signature);
   }
+
+  async getGlobalContext() {
+    return this.cms.getGlobalContext();
+  }
 }

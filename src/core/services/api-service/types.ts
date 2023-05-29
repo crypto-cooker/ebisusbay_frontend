@@ -6,6 +6,7 @@ import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wa
 import WalletNft from "@src/core/models/wallet-nft";
 import {Listing} from "@src/core/models/listing";
 import {Erc20Account, FortuneStakingAccount, StakedToken} from "@src/core/services/api-service/graph/types";
+import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 
 export interface Api {
     getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>>;
@@ -30,6 +31,7 @@ export interface RyoshiDynastiesApi {
     getSeasonalRewards(address: string, seasonId?: number): Promise<any>
     claimDailyRewards(address: string, signature: string): Promise<any>
     requestSeasonalRewardsClaimAuthorization(address: string, amount: number, seasonId: number, signature: string): Promise<any>;
+    getGlobalContext(): Promise<RyoshiConfig>;
 }
 
 export enum ListingState {

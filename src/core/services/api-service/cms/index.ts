@@ -49,6 +49,10 @@ class Cms {
   async requestSeasonalRewardsClaimAuthorization(address: string, amount: number, seasonId: number, signature: string) {
     return this.ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(address, amount, seasonId, signature);
   }
+
+  async getGlobalContext() {
+    return this.ryoshiDynasties.getGlobalContext();
+  }
 }
 
 export default Cms;

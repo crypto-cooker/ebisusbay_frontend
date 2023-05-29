@@ -1,6 +1,6 @@
 import {Box, Flex, HStack, Icon, IconButton, Image, SimpleGrid, Text, Wrap, WrapItem} from "@chakra-ui/react"
 
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {useAppSelector} from "@src/Store/hooks";
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {useInfiniteQuery, useQueryClient} from "@tanstack/react-query";
@@ -23,12 +23,15 @@ import useBarracksStakeNfts from "@src/components-v2/feature/ryoshi-dynasties/ga
 import {getNft} from "@src/core/api/endpoints/nft";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAward} from "@fortawesome/free-solid-svg-icons";
-import {ryoshiConfig} from "@src/Config/ryoshi";
 import {
   BarracksStakeNftContext
 } from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/context";
 import {toast} from "react-toastify";
 import {StakedTokenType} from "@src/core/services/api-service/types";
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 
 const config = appConfig();
 
@@ -47,6 +50,7 @@ interface StakeNftsProps {
 const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   const user = useAppSelector((state) => state.user);
   const queryClient = useQueryClient();
+  const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   const [currentTab, setCurrentTab] = useState(tabs.ryoshiVip);
   const [currentCollection, setCurrentCollection] = useState<any>();
@@ -61,7 +65,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 
   const handleAddNft = useCallback((nft: WalletNft) => {
     const isInList = pendingNfts.some((sNft) => sNft.nftId === nft.nftId && caseInsensitiveCompare(sNft.nftAddress, nft.nftAddress));
-    if (!isInList && pendingNfts.length < ryoshiConfig.staking.barracks.maxSlots) {
+    if (!isInList && pendingNfts.length < rdContext.config.barracks.staking.nft.maxSlots) {
       setPendingNfts([...pendingNfts, {
         nftAddress: nft.nftAddress,
         nftId: nft.nftId,
@@ -201,6 +205,9 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
   const [isExecutingStake, setIsExecutingStake] = useState(false);
   const [executingLabel, setExecutingLabel] = useState('');
   const [stakeNfts, response] = useBarracksStakeNfts();
+  const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+
+  const collections = rdContext.config.barracks.staking.nft.collections;
 
   const handleStake = useCallback(async () => {
     if (pendingNfts.length === 0 && stakedNfts.length === 0) return;
@@ -272,7 +279,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
                         <Icon as={FontAwesomeIcon} icon={faAward} />
                         <Box as='span'>{pendingNfts[index].rank ?? ''}</Box>
                       </HStack>
-                      <Box as='span' fontWeight='bold'>+ {ryoshiConfig.staking.barracks.bonusTroops}</Box>
+                      <Box as='span' fontWeight='bold'>+ {collections.find(c => caseInsensitiveCompare(c.address, pendingNfts[index].nftAddress))?.multipliers[0].value}</Box>
                     </Flex>
                   </Box>
 
@@ -339,6 +346,8 @@ interface UnstakedNftsProps {
 }
 
 const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedNftsProps) => {
+  const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+
   const { data, status, error, fetchNextPage, hasNextPage } = useInfiniteQuery(
     ['BarracksUnstakedNfts', address, collection],
     () => nextApiService.getWallet(address!, {
@@ -359,7 +368,7 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
             data: page.data.filter((item) => {
               return item.attributes?.some((attr: any) => {
                 const collection = config.collections.find((c: any) => caseInsensitiveCompare(c.address, item.nftAddress));
-                const eligibility = ryoshiConfig.staking.barracks.eligibility.find((e) => e.slug === collection.slug);
+                const eligibility = rdContext.config.barracks.staking.nft.collections.find((e) => e.slug === collection.slug);
                 if (!eligibility) return false;
                 const traitType = attr.trait_type.toLowerCase();
                 const value = attr.value.toString().toLowerCase();
@@ -385,7 +394,7 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
       }
     }
   );
-console.log('data', data);
+
   return (
     <>
       <InfiniteScroll
