@@ -357,7 +357,7 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
           return {
             ...page,
             data: page.data.filter((item) => {
-              return item.attributes.some((attr: any) => {
+              return item.attributes?.some((attr: any) => {
                 const collection = config.collections.find((c: any) => caseInsensitiveCompare(c.address, item.nftAddress));
                 const eligibility = ryoshiConfig.staking.barracks.eligibility.find((e) => e.slug === collection.slug);
                 if (!eligibility) return false;
