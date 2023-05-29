@@ -1,5 +1,5 @@
 import React, {ReactElement, useEffect, useRef, useState } from 'react';
-import { useDisclosure, Button, AspectRatio, useBreakpointValue, Box, Flex } from '@chakra-ui/react'
+import { useDisclosure, Button, AspectRatio, useBreakpointValue, Box, Flex, Image } from '@chakra-ui/react'
 // import { resizeBattleMap, setUpMapZooming } from '@src/Components/BattleBay/Areas/mapFunctions.js'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
@@ -41,10 +41,10 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   const [explosion, setExplosion] = useState<ReactElement[]>([]);
   const [playExlplosion, setPlayExplosion] = useState(false);
 
-  const controlPoints = [{id:4, title:"Southern Trident",pinName: "pin-Southern-Trident",marginTop: '32%', marginLeft: '20%'},
-                         {id:3, title:"Dragonland",pinName: "pin-Dragonland",marginTop: '17%', marginLeft: '24%'},
-                         {id:2, title:"Dwarf Mines",pinName: "pin-Dwarf-Mines",marginTop: '32%', marginLeft: '47%'},
-                         {id:1, title:"Human Kingdoms",pinName: "pin-Human-Kingdoms",marginTop: '30%', marginLeft: '63%'}];
+  // const controlPoints = [{id:4, title:"Southern Trident",pinName: "pin-Southern-Trident",marginTop: '32%', marginLeft: '20%'},
+  //                        {id:3, title:"Dragonland",pinName: "pin-Dragonland",marginTop: '17%', marginLeft: '24%'},
+  //                        {id:2, title:"Dwarf Mines",pinName: "pin-Dwarf-Mines",marginTop: '32%', marginLeft: '47%'},
+  //                        {id:1, title:"Human Kingdoms",pinName: "pin-Human-Kingdoms",marginTop: '30%', marginLeft: '63%'}];
 
   function getWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
@@ -89,24 +89,80 @@ const BattleMap = ({onChange}: BattleMapProps) => {
    }
   }
   const randomlyPlayExplosion = async () => {
-    //get random control point
-    var explosionPoint = controlPoints[Math.floor(Math.random() * controlPoints.length)];
 
-    // setExplosion(
-    //   <div style={{position:"absolute", marginTop: explosionPoint.marginTop, marginLeft: explosionPoint.marginLeft, zIndex:"9", pointerEvents:"none"}}>
-    //     <img src='/img/battle-bay/explosion.png' width={flagSize} height={flagSize} className="factionIcon"/>
-    //   </div>
-    // )
-    // console.log("waiting");
+    if(area.length === 0) return;
+
+    //get random area
+    var randomArea = area[Math.floor(Math.random() * area.length)];
+    var left = randomArea.props.coords.split(",")[0];
+    var top = randomArea.props.coords.split(",")[1];
+
+    setExplosion(
+      <Flex position="absolute" zIndex="9" width="100%" height="100%">
+      <Image
+       position="relative"
+        src='/img/battle-bay/explosion.png' 
+        width={250*5}
+        height={207*5}
+        left={left-(250*2.5)}
+        top={top-(207*2.5)}
+        zIndex="9"
+        />
+      </Flex>
+      )
+
     await new Promise(r => setTimeout(r, 1000));
-    // console.log("done waiting");
 
-    // setExplosion(
-    //   <div style={{position:"absolute", marginTop: explosionPoint.marginTop, marginLeft: explosionPoint.marginLeft, zIndex:"9", pointerEvents:"none"}}>
-    //     <img src='/img/battle-bay/explosion.png' width={0} height={0} className="factionIcon"/>
-    //   </div>
-    // )
-    // setPlayExplosion(!playExlplosion);
+    setExplosion(
+      <Flex position="absolute" zIndex="9" width="100%" height="100%">
+      <Image
+       position="relative"
+        src='/img/battle-bay/explosion.png' 
+        width={0}
+        height={0}
+        left={left-(250*2.5)}
+        top={top-(207*2.5)}
+        zIndex="9"
+        />
+      </Flex>
+    )
+    setPlayExplosion(!playExlplosion);
+  }
+  const PlayExplosion = async () => {
+
+    if(area.length === 0) return;
+
+    //get random area
+    var randomArea = area[Math.floor(Math.random() * area.length)];
+    var left = randomArea.props.coords.split(",")[0];
+    var top = randomArea.props.coords.split(",")[1];
+
+    setExplosion(
+      <Flex position="absolute" zIndex="9" width="100%" height="100%">
+      <Image
+       position="relative"
+        src='/img/battle-bay/explosion.png' 
+        width={250*5}
+        height={207*5}
+        left={left-(250*2.5)}
+        top={top-(207*2.5)}
+        zIndex="9"
+        />
+      </Flex>
+      )
+
+    await new Promise(r => setTimeout(r, 1000));
+
+    setExplosion(
+      <Flex position="absolute" zIndex="9" width="100%" height="100%">
+      <Image
+       position="relative"
+        src='/img/avatar.png' 
+        width={0}
+        height={0}
+        />
+      </Flex>
+    )
   }
   //#endregion
 
@@ -139,8 +195,9 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   }, [flagSize]);
 
   useEffect(() => {
+      // <div style={{position:"absolute", marginTop: explosionPoint.marginTop, marginLeft: explosionPoint.marginLeft, zIndex:"9", pointerEvents:"none"}}>
     // randomlyPlayExplosion();
-  }, [playExlplosion]);
+  }, [playExlplosion, area]);
 
   useEffect(() => {
     SetUpMap();
