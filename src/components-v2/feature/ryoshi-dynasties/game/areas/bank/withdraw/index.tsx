@@ -240,7 +240,7 @@ const EmergencyWithdrawTab = () => {
     } else {
       setHasDeposited(false);
     }
-  }, [amountDeposited]);
+  }, [amountDeposited, deposits]);
 
   return (
     <Box py={4}>
