@@ -37,7 +37,7 @@ const tabs = {
 
 const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
 
-const ControlPointForm = ({ isOpen, onClose, controlPoint=[], refreshControlPoint}) => {
+const ControlPointForm = ({ isOpen, onClose, controlPoint=[], refreshControlPoint, skirmishPrice, conquestPrice}) => {
   // console.log("factionForm controlPoint: " + controlPoint.name);
   const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState('');
@@ -101,7 +101,13 @@ const ControlPointForm = ({ isOpen, onClose, controlPoint=[], refreshControlPoin
                   <DeployTap onClose={handleClose} controlPoint={controlPoint} refreshControlPoint={refreshControlPoint}/>
                 )}
                 {currentTab === tabs.attack && (
-                  <AttackTap onClose={handleClose} controlPoint={controlPoint} refreshControlPoint={refreshControlPoint}/>
+                  <AttackTap 
+                    // onClose={handleClose} 
+                    controlPoint={controlPoint} 
+                    refreshControlPoint={refreshControlPoint} 
+                    skirmishPrice={skirmishPrice}
+                    conquestPrice={conquestPrice}
+                  />
                 )}
                 {currentTab === tabs.help && (
                   <HelpTap/>

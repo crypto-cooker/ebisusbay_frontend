@@ -13,6 +13,10 @@ import {BattleMapHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/are
 import {io} from "socket.io-client";
 import {useAppSelector} from "@src/Store/hooks";
 
+import {Contract, ethers, BigNumber} from "ethers";
+import {appConfig} from "@src/Config";
+import Battlefield from "@src/Contracts/Battlefield.json";
+
 interface BattleMapProps {
   onChange: () => void;
 }
@@ -20,6 +24,7 @@ interface BattleMapProps {
 const BattleMap = ({onChange}: BattleMapProps) => {
 
   const user = useAppSelector(state => state.user);
+  const config = appConfig();
   const mapRef = useRef();
   const  [flagSize, setFlagSize] = useState("1px");
   const [buildingSize, setBuildingSize] = useState("50px");
@@ -271,6 +276,21 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   //     }
 
   // }
+  const [skirmishPrice, setSkirmishPrice] = useState(0);
+  const [conquestPrice, setConquestPrice] = useState(0);
+
+  const GetAttackPrices = async () => {
+    const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+    const resourceContract = new Contract(config.contracts.battleField, Battlefield, readProvider);
+    const skirmish = await resourceContract.skirmishPrice();
+    const conquest = await resourceContract.conquestPrice();
+
+    setSkirmishPrice(Number(ethers.utils.hexValue(BigNumber.from(skirmish))));
+    setConquestPrice(Number(ethers.utils.hexValue(BigNumber.from(conquest))));
+
+    console.log('skirmish', skirmish, 'conquest', conquest);
+  }
+
   const [mapInitialized, setMapInitialized] = useState(false);
   const mapScale = useBreakpointValue(
     {base: 0.15, sm: 0.6, md: 0.7, lg: 0.8, xl: 0.9, '2xl': 1},
@@ -313,6 +333,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
  
   useEffect(() => {
     setMapInitialized(true);
+    GetAttackPrices();
   }, []);
 
   const [isSocketConnected, setIsSocketConnected] = useState(false);
@@ -351,7 +372,11 @@ const BattleMap = ({onChange}: BattleMapProps) => {
 
   return (
     <section>
-      <ControlPointForm isOpen={isOpen} onClose={onClose} controlPoint={controlPoint} refreshControlPoint={RefreshControlPoint}/>
+      <ControlPointForm isOpen={isOpen} onClose={onClose} controlPoint={controlPoint} 
+      refreshControlPoint={RefreshControlPoint}
+      skirmishPrice={skirmishPrice}
+      conquestPrice={conquestPrice}
+      />
       <Box position='relative' h='calc(100vh - 74px)'>
         {mapInitialized && (
           <TransformWrapper

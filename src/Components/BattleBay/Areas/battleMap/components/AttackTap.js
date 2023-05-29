@@ -47,7 +47,7 @@ import localFont from 'next/font/local';
 import ImageService from "@src/core/services/image";
 const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
 
-const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
+const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conquestPrice}) => {
 
   const config = appConfig();
   const user = useSelector((state) => state.user);
@@ -78,8 +78,11 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   const [isOwnerOfFaction, setIsOwnerOfFaction] = useState(false);
   const [playerFaction, SetPlayerFaction] = useState([]);
   const [factionTroops, setFactionTroops] = useState(0);
-
   const handleChange = (value) => setAttackerTroops(value)
+
+  //dice
+  const [att, setAtt] = useState([])
+  const [def, setDef] = useState([])
 
   //alerts
   const [showAlert, setShowAlert] = useState(false)
@@ -91,11 +94,19 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
   const [executingLabel, setExecutingLabel] = useState('Attacking...');
   const [battleAttack, setBattleAttack] = useState([]);
 
+  const attackTypeEnum = {
+    1: {name:"Conquest", maxTroops:3, desc: "Launch a relentless assault, battling until all troops are eliminated or the opposing faction is defeated"},
+    2: {name:"Skirmish", maxTroops:Infinity, desc: "Engage in a single attack using the number of troops you wager"}
+  }
   const [attackType, setAttackType] = useState(1);
+  function getAttackCost(){
+    return attackType == 2 ? skirmishPrice : conquestPrice
+  }
+
   const { isOpen: isOpenDailyCheckin, onOpen: onOpenDailyCheckin, onClose: onCloseDailyCheckin } = useDisclosure();
 
   //current attackID
-  const [attackId, setAttackId] = useState(0);
+  // const [attackId, setAttackId] = useState(0);
   
   //dataforms for attacker and defender
   const [dataForm, setDataForm] = useState({
@@ -119,11 +130,6 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
       setDefenderTroops(0);
     }
   }
-
-  //dice
-  const [att, setAtt] = useState([])
-  const [def, setDef] = useState([])
-  
   function setupDice(attackerDice, defenderDice) {
     attackerDice.length = Math.min(attackerDice.length, 3);
     defenderDice.length = Math.min(defenderDice.length, 3);
@@ -239,7 +245,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
           defenderFactionId,
           attackType);
         
-        setAttackId(data.data.data.attackId);
+        // setAttackId(data.data.data.attackId);
         
         const timestamp = Number(data.data.data.timestampInSeconds);
         const attacker = data.data.data.attacker;
@@ -293,7 +299,6 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
       }
   }
   }
-  
   function ShowAttackConclusion(){
     var attackersAlive = Number(attackerTroops);
     var attackersSlain = 0;
@@ -345,7 +350,6 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
 
     if(defendersSlain>0) CheckForBattleRewards();
   }
-
   function PreBattleChecks()
   {
     setShowAlert(false)
@@ -355,19 +359,19 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
       return;
     }
 
-    if(attackType === 1 && attackerTroops > attackerTroopsAvailable){
+    if(attackType === 2 && attackerTroops > attackerTroopsAvailable){
       setAlertMessage("Cannot attack with more troops than you have available")
       setShowAlert(true)
       return;
     }
 
-    if(attackType === 1 && attackerTroops > defenderTroops){
+    if(attackType === 2 && attackerTroops > defenderTroops){
       setAlertMessage("Cannot attack with more troops than the defender has")
       setShowAlert(true)
       return;
     }
 
-    if(attackType === 2 && attackerTroops > 3){
+    if(attackType === 1 && attackerTroops > 3){
       setAlertMessage("Max troops for conquest attacks are 3")
       setShowAlert(true)
       return;
@@ -445,6 +449,10 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
         : null)))
     }
   }, [controlPoint])
+
+  useEffect(() => {
+    console.log("attackTypeEnum: ", attackTypeEnum[attackType])
+  }, [attackType])
 
   useEffect(() => {
       if(dataForm.defendersFaction!=null) {
@@ -598,7 +606,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
               align='right'
               defaultValue={1} 
               min={1} 
-              max={attackType === 2 ? 3 : attackerTroopsAvailable}
+              max={attackTypeEnum[attackType].maxTroops}
               name="quantity" 
               w='80%'
               onChange={handleChange}
@@ -616,26 +624,21 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
             <Center>
               <Flex direction='row' justify='center' mb={2}>
                 <RdTabButton
-                  isActive={attackType === 2}
-                  onClick={() => setAttackType(2)}
-                >
-                  Skirmish
-                </RdTabButton>
-                <RdTabButton
                   isActive={attackType === 1}
                   onClick={() => setAttackType(1)}
                 >
-                  Conquest
+                  {attackTypeEnum[1].name}
+                </RdTabButton>
+                <RdTabButton
+                  isActive={attackType === 2}
+                  onClick={() => setAttackType(2)}
+                >
+                  {attackTypeEnum[2].name}
                 </RdTabButton>
               </Flex>
             </Center>
-
             <Text
-              as='i'>{attackType === 1 ? <>
-              Engage in a single attack using the number of troops you wager
-              </> : <>
-              Launch a relentless assault, battling until all troops are eliminated or the opposing faction is defeated
-              </>}
+              as='i'>{attackTypeEnum[attackType].desc}
             </Text>
           </VStack>
       </Center>
@@ -709,8 +712,8 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint}) => {
         <Center>
         <HStack>
           <Text fontSize={'14px'}>Costs</Text>
-          <Text cursor='pointer' fontSize={'14px'} onClick={() => onOpenDailyCheckin()}>50 $Koban</Text>
-          <Text fontSize={'14px'}>per troop you attack with ({50*attackerTroops})</Text>
+          <Text cursor='pointer' fontSize={'14px'} onClick={() => onOpenDailyCheckin()}>{getAttackCost()} $Koban</Text>
+          <Text fontSize={'14px'}>per troop you attack with ({attackTypeEnum[attackType].cost*attackerTroops})</Text>
         </HStack>
         </Center>
         <Flex alignContent={'center'} justifyContent={'center'}>
