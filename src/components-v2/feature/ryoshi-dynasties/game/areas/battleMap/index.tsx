@@ -145,32 +145,32 @@ const BattleMap = ({onChange}: BattleMapProps) => {
     var left = randomArea.props.coords.split(",")[0];
     var top = randomArea.props.coords.split(",")[1];
 
-    setExplosion(
-      <Flex position="absolute" zIndex="9" width="100%" height="100%">
-      <Image
-       position="relative"
-        src='/img/battle-bay/explosion.png' 
-        width={250*5}
-        height={207*5}
-        left={left-(250*2.5)}
-        top={top-(207*2.5)}
-        zIndex="9"
-        />
-      </Flex>
-      )
+    // setExplosion(
+    //   <Flex position="absolute" zIndex="9" width="100%" height="100%">
+    //   <Image
+    //    position="relative"
+    //     src='/img/battle-bay/explosion.png' 
+    //     width={250*5}
+    //     height={207*5}
+    //     left={left-(250*2.5)}
+    //     top={top-(207*2.5)}
+    //     zIndex="9"
+    //     />
+    //   </Flex>
+    //   )
 
-    await new Promise(r => setTimeout(r, 1000));
+    // await new Promise(r => setTimeout(r, 1000));
 
-    setExplosion(
-      <Flex position="absolute" zIndex="9" width="100%" height="100%">
-      <Image
-       position="relative"
-        src='/img/avatar.png' 
-        width={0}
-        height={0}
-        />
-      </Flex>
-    )
+    // setExplosion(
+    //   <Flex position="absolute" zIndex="9" width="100%" height="100%">
+    //   <Image
+    //    position="relative"
+    //     src='/img/avatar.png' 
+    //     width={0}
+    //     height={0}
+    //     />
+    //   </Flex>
+    // )
   }
   //#endregion
 
