@@ -20690,7 +20690,7 @@
       "name": "Skronos Ultimate",
       "slug": "skronos-ultimate",
       "multiToken": false,
-      "address": "0x9e3b86a057778b94EdAA7EffD8B5C30408f804eE",
+      "address": "0xE4248Ab197B13d4bF1493bF15aB429128968C699",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -20707,6 +20707,53 @@
         "verified": true,
         "doxx": false,
         "kyc": true
+      }
+    },
+    {
+      "name": "Carkayous - Acorns v2",
+      "slug": "carkayous-acorns-v2",
+      "multiToken": false,
+      "address": "0x5bf2b7f2640a80c0f0592dcc1e98120136fa5595",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Acorns v2 can be used as discounts (in the form of rebates) on all future NFTs by Carkayous. They have a value of $15 each.",
+        "avatar": "/img/collections/carkayous-acorns-v2/avatar.webp",
+        "banner": "/img/collections/carkayous-acorns-v2/banner.webp",
+        "card": "/img/collections/carkayous-acorns-v2/card.webp",
+        "website": "https://carkayous.com/",
+        "twitter": "https://twitter.com/carkayous",
+        "discord": "https://discord.gg/carkayous",
+        "categories": []
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "MiCROchips",
+      "slug": "microchips",
+      "multiToken": false,
+      "address": "0xf038C0cb2935FB8bf9b6e47bCA1df0835f359F92",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "MiCROchips is a 1500 collection made up from 250 individually designed characters with 6 variations. As well as being a unique PFP, MiCROchips act as your ticket to our computer world featuring games, soft staking and revenue sharing. With a mobile game developed pre mint and a web3 battle game about to go into development, it's prime time to join the mainframe.",
+        "avatar": "/img/collections/microchips/avatar.webp",
+        "banner": "/img/collections/microchips/banner.webp",
+        "card": "/img/collections/microchips/card.webp",
+        "website": "https://microchipsnft.com/",
+        "twitter": "https://twitter.com/MiCROchipsNFT",
+        "discord": "https://discord.gg/2xNHN7bTHP",
+        "medium": "https://microchips.gitbook.io/microchips/",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
       }
     }
   ],
