@@ -127,12 +127,12 @@ const StakePage = () => {
   const validateInput = async () => {
     setExecutingLabel('Validating');
 
-    if (userFortune < fortuneToStake) {
+    if ((!hasDeposited || !isAddingDuration) && userFortune < fortuneToStake) {
       toast.error("Not enough Fortune");
       return;
     }
 
-    if(!hasDeposited && fortuneToStake < minAmountToStake){
+    if((!hasDeposited || !isAddingDuration) && fortuneToStake < minAmountToStake){
       setInputError(`At least ${minAmountToStake} required`);
       return false;
     }
