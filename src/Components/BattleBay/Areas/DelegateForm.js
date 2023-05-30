@@ -72,7 +72,7 @@ const DelegateForm = ({ isOpen, onClose, delegateMode, factions=[], troops, setT
       try {
         const res = await delegateTroops(user.address.toLowerCase(), signatureInStorage, troopsToDelegate, factionId);
         setTotalTroops(troops - troopsToDelegate)
-        console.log(res)
+        // console.log(res)
         setShowAlert(false)
         onClose();
       } catch (error) {

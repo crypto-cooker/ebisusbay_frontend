@@ -221,7 +221,7 @@ const StakePage = () => {
         console.log("new deposit");
         const tx = await bankContract.openAccount(desiredFortuneAmount, daysToStake*86400);
         const receipt = await tx.wait();
-        console.log(receipt);
+        // console.log(receipt);
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       }
     } catch (error: any) {

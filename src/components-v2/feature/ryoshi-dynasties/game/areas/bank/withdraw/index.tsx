@@ -131,10 +131,10 @@ const WithdrawRewardsTab = () => {
     if (signatureInStorage) {
       const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, amount, seasonId, signatureInStorage)
 
-      console.log('auth', auth)
+      // console.log('auth', auth)
     }
   }
-  console.log(rewards);
+  // console.log(rewards);
   return (
       <Box bgColor='#292626' rounded='md' p={4} fontSize='sm'>
         <Box textAlign='center'>

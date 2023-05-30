@@ -106,7 +106,7 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
       setShowAlert(true)
       return;
     }
-    console.log(factionType)
+    // console.log(factionType)
     if(addresses.length > getMaxAddresses()) {
       setAlertMessage("You are over the maximum number of addresses for this faction type")
       setShowAlert(true)
@@ -141,7 +141,7 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
     if (signatureInStorage) {
       try {
         const data = await deleteFaction(user.address.toLowerCase(), signatureInStorage, faction.id);
-        console.log(data);
+        // console.log(data);
         //add payment code here
         handleClose();
         onClose();

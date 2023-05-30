@@ -336,7 +336,7 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
   useEffect(() => {
     if (!user.address) return;
 
-    console.log('connecting to socket...');
+    // console.log('connecting to socket...');
     const socket = io('wss://testcms.ebisusbay.biz/socket/ryoshi-dynasties/subscriptions?walletAddress='+user.address.toLowerCase());
 
     function onConnect() {

@@ -21,7 +21,6 @@ const AnnouncementBoardModal = ({isOpen, onClose}: AnnouncementBoardModalProps) 
   }, []);
 
   const handleShowLeaderboard = () => {
-    console.log("showLeaderboard");
     setPage('leaderboard');
   }
 

@@ -84,7 +84,7 @@ const Village = ({onChange}: VillageProps) => {
       const { zoomToElement } = transformComponentRef.current as any;
       zoomToElement(elementToZoomTo);
     }
-    console.log("current state " + transformComponentRef?.current?.state) ;
+    // console.log("current state " + transformComponentRef?.current?.state) ;
     // transformComponentRef.current.state;
   }, [elementToZoomTo]);
 

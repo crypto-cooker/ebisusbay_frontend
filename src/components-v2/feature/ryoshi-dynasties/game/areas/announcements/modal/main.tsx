@@ -17,7 +17,7 @@ const MainPage = ({onShowLeaderboard}: Props) => {
   const[dailyRewardClaimed, setDailyRewardClaimed] = useState(false);
 
   const claimReward = async () => {
-    console.log('claim reward');
+    // console.log('claim reward');
   }
 
   return (

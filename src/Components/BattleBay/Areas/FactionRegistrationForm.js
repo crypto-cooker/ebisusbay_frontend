@@ -42,9 +42,9 @@ const FactionRegistrationForm = ({ isOpen, onClose, handleClose}) => {
         //get random number 
         var factionName = Math.floor(Math.random() * 1000000);
 
-        console.log("faction name: "+factionName);
-        console.log("user address: "+user.address.toLowerCase());
-        console.log("signature: "+signatureInStorage);
+        // console.log("faction name: "+factionName);
+        // console.log("user address: "+user.address.toLowerCase());
+        // console.log("signature: "+signatureInStorage);
         
         const data = await createFaction(user.address.toLowerCase(),
                                          signatureInStorage, 

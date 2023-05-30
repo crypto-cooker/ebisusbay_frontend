@@ -439,7 +439,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
   }
 
   useEffect(() => {
-    console.log("controlPoint changed")
+    // console.log("controlPoint changed")
     if(controlPoint.leaderBoard !== undefined) {
       
       setAllFactions(controlPoint.leaderBoard);
@@ -499,7 +499,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
   }, [playerArmies, allFactions])
 
   useEffect(() => {
-    console.log("combinedArmies changed", combinedArmies)
+    // console.log("combinedArmies changed", combinedArmies)
     if(combinedArmies.length > 0 && !factionsLoaded) {
       setAttackerOptions(combinedArmies.map((faction, index) => (
         <option 
@@ -516,7 +516,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
   useEffect(() => {
     if (!user.address) return;
 
-    console.log('connecting to socket...');
+    // console.log('connecting to socket...');
     const socket = io('wss://testcms.ebisusbay.biz/socket/ryoshi-dynasties/battles?walletAddress='+user.address.toLowerCase());
 
     function onConnect() {
@@ -532,7 +532,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
     function onBattleAttackEvent(data) {
       console.log('BATTLE_ATTACK', data)
       const parsedAtack = JSON.parse(data);
-      console.log('parsedAtack', parsedAtack)
+      // console.log('parsedAtack', parsedAtack)
       setBattleAttack(parsedAtack);
     }
 

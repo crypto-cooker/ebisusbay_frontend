@@ -71,13 +71,13 @@ const DailyCheckin = ({isOpen, onClose}: DailyCheckinProps) => {
 
         const sig = authorization.data.signature;
         const mintRequest = JSON.parse(authorization.data.metadata);
-        console.log('auth', authorization)
+        // console.log('auth', authorization)
 
 
         setButtonText('Claiming...')
-        console.log('===contract', config.contracts.resources, Resources, user.provider.getSigner());
+        // console.log('===contract', config.contracts.resources, Resources, user.provider.getSigner());
         const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
-        console.log('===request', mintRequest, sig, authorization);
+        // console.log('===request', mintRequest, sig, authorization);
         const tx = await resourcesContract.mintWithSig(mintRequest, sig);
 
         const receipt = await tx.wait();
@@ -111,7 +111,7 @@ const DailyCheckin = ({isOpen, onClose}: DailyCheckinProps) => {
     if (signatureInStorage) {
       try {
         const data = await getRewardsStreak(user.address, signatureInStorage);
-        console.log('streak', data.data.data.nextClaim )
+        // console.log('streak', data.data.data.nextClaim )
         if(!data.data.data.nextClaim) {
           // console.log('new account')
           setCanClaim(true)
