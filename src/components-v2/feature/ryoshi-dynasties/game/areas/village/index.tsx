@@ -591,7 +591,7 @@ const Village = ({onChange}: VillageProps) => {
                   <Box id="tavern" className={styles.enlarge} style={{position:"absolute", marginTop: tavernTop, marginLeft: tavernLeft, zIndex:"9"}}
                     // onClick={() => onChange('tavern')}
                   >
-                    <img src={ImageService.apng('/img/battle-bay/mapImages/tavern.png').convert()} />
+                    <img src={ImageService.translate('/img/battle-bay/mapImages/tavern.png').convert()} />
                   </Box>
 
                   <Box id="academy" className={styles.enlarge} style={{position:"absolute", marginTop: academyTop, marginLeft: academyLeft, zIndex:"9"}}
@@ -607,7 +607,7 @@ const Village = ({onChange}: VillageProps) => {
                   <Box id="boat" className={styles.enlarge} style={{position:"absolute", marginTop: boatTop, marginLeft: boatLeft, zIndex:"9"}}
                        onClick={() => onChange('battleMap')}
                   >
-                    <img src={ImageService.apng('/img/battle-bay/mapImages/boat_day.png').convert()} />
+                    <img src={ImageService.translate('/img/battle-bay/mapImages/boat_day.apng').convert()} />
                   </Box>
 
                   <Box id="ebisustatue" className={styles.enlarge} style={{position:"absolute", marginTop: ebisustatueTop, marginLeft: ebisustatueLeft, zIndex:"9"}} >
@@ -615,7 +615,7 @@ const Village = ({onChange}: VillageProps) => {
                   </Box>
 
                   <Box id="fishmarket" className={styles.enlarge} style={{position:"absolute", marginTop: fishmarketTop, marginLeft: fishmarketLeft, zIndex:"9"}} >
-                    <img src={ImageService.apng('/img/battle-bay/mapImages/fishmarket_day.png').convert()} />
+                    <img src={ImageService.translate('/img/battle-bay/mapImages/fishmarket_day.apng').convert()} />
                   </Box>
 
                   <Box style={{position:"absolute", marginTop: waterTop, marginLeft: waterLeft, zIndex:"8"}} >
@@ -642,16 +642,16 @@ const Village = ({onChange}: VillageProps) => {
                   <Box id="barracks" className={styles.enlarge} style={{position:"absolute", marginTop: barracksTop, marginLeft: barracksLeft, zIndex:"9"}}
                        onClick={() => OpenBarracks()}
                   >
-                    <img src={ImageService.apng('/img/battle-bay/mapImages/barracks.png').convert()} />
+                    <img src={ImageService.translate('/img/battle-bay/mapImages/barracks.png').convert()} />
                   </Box>
 
                   <Box className={styles.enlarge} style={{position:"absolute", marginTop: swordsmenTop, marginLeft: swordsmenLeft, zIndex:"9", pointerEvents:"none"}} >
-                    <img src={ImageService.apng('/img/battle-bay/mapImages/swordsmen.png').convert()} />
+                    <img src={ImageService.translate('/img/battle-bay/mapImages/swordsmen.apng').convert()} />
                   </Box>
 
                   <Box id="moongate" className={styles.enlarge} style={{position:"absolute", marginTop: moongateTop, marginLeft: moongateLeft, zIndex:"9"}}
                     onClick={() => OpenPortal()}>
-                    <img src={ImageService.apng('/img/battle-bay/mapImages/moongate_day.png').convert()} onClick={() => OpenPortal()}/>
+                    <img src={ImageService.translate('/img/battle-bay/mapImages/moongate_day.apng').convert()} onClick={() => OpenPortal()}/>
                     {/* <div className={[styles.enlarge]} style={{position:"absolute",  zIndex:"20"}}>
                       <img src='/img/battle-bay/building_labels/moongate_label.png' /> </div> */}
                   </Box>
@@ -661,7 +661,7 @@ const Village = ({onChange}: VillageProps) => {
                   </Box>
 
                   <Box className={styles.enlarge} style={{position:"absolute", marginTop: pondTop, marginLeft: pondLeft, zIndex:"8"}}>
-                    <img src={ImageService.apng('/img/battle-bay/mapImages/pond1.png').convert()} />
+                    <img src={ImageService.translate('/img/battle-bay/mapImages/pond1.apng').convert()} />
                   </Box>
 
 
