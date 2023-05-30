@@ -46,7 +46,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   const [area, setAreas] = useState([]);
   const [selectedControlPoint, setSelectedControlPoint] = useState(0);
   const [pins, setPins] = useState([]);
-  const [explosion, setExplosion] = useState<ReactElement[]>([]);
+  const [explosion, setExplosion] = useState<ReactElement>();
   // const explosionImage = useRef<HTMLElement>();
   // const [playExlplosion, setPlayExplosion] = useState(false);
 
