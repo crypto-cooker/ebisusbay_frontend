@@ -601,7 +601,7 @@ const Village = ({onChange}: VillageProps) => {
                   </Box>
 
                   <Box className={styles.enlarge} style={{position:"absolute", marginTop: tavernSpinTop, marginLeft: tavernSpinLeft, zIndex:"9", pointerEvents:"none"}}>
-                    <img src={ImageService.apng('/img/battle-bay/mapImages/tavern_turbine.png').convert()} />
+                    <img src={ImageService.translate('/img/battle-bay/mapImages/tavern_turbine.apng').convert()} />
                   </Box>
 
                   <Box id="boat" className={styles.enlarge} style={{position:"absolute", marginTop: boatTop, marginLeft: boatLeft, zIndex:"9"}}
