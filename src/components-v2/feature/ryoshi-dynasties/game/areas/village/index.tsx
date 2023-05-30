@@ -500,40 +500,40 @@ const Village = ({onChange}: VillageProps) => {
 
   const [mapInitialized, setMapInitialized] = useState(false);
   const mapScale = useBreakpointValue(
-    {base: 0.5, sm: 0.6, md: 0.7, lg: 0.8, xl: 0.9, '2xl': 1},
+    {base: 0.4, sm: 0.6, md: 0.7, lg: 0.8, xl: 0.9, '2xl': 1},
     {fallback: 'lg'}
   )
   const mapProps = useBreakpointValue<MapProps>(
     {
       base: {
-        scale: 0.5,
-        initialPosition: { x: -450, y: -120 },
+        scale: 0.4,
+        initialPosition: { x: -317, y: 30 },
         minScale: 0.4
       },
       sm: {
-        scale: 0.6,
+        scale: 0.5,
         initialPosition: { x: -450, y: -120 },
-        minScale: 0.6
+        minScale: 0.5
       },
       md: {
+        scale: 0.5,
+        initialPosition: { x: -450, y: -120 },
+        minScale: 0.5
+      },
+      lg: {
+        scale: 0.5,
+        initialPosition: { x: -450, y: -120 },
+        minScale: 0.5
+      },
+      xl: {
+        scale: 0.55,
+        initialPosition: { x: -450, y: -120 },
+        minScale: 0.55
+      },
+      '2xl': {
         scale: 0.7,
         initialPosition: { x: -450, y: -120 },
         minScale: 0.7
-      },
-      lg: {
-        scale: 0.8,
-        initialPosition: { x: -450, y: -120 },
-        minScale: 0.6
-      },
-      xl: {
-        scale: 0.9,
-        initialPosition: { x: -450, y: -120 },
-        minScale: 0.6
-      },
-      '2xl': {
-        scale: 1,
-        initialPosition: { x: -450, y: -120 },
-        minScale: 0.8
       }
     }
   );
