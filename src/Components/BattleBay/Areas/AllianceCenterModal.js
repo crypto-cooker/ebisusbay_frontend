@@ -37,7 +37,7 @@ import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSig
 
 //contracts
 import {Contract} from "ethers";
-import {appConfig} from "@src/Config";
+import {appConfig, isLocalEnv} from "@src/Config";
 import {toast} from "react-toastify";
 import AllianceCenterContract from "@src/Contracts/AllianceCenterContract.json";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
@@ -454,7 +454,7 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
           </>}
       </Text>
       
-      {location.hostname === 'localhost' ? <>
+      {isLocalEnv() ? <>
         <Box
           ps='20px'
           marginTop='6'
@@ -463,7 +463,6 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
           <RdButton 
             w='250px'
             fontSize={{base: 'lg', sm: 'xl'}}
-            stickyIcon={true}
             onClick={AddTroops}>Add Troops
           </RdButton>
         </Box>
@@ -478,7 +477,6 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
           <RdButton 
             w='250px'
             fontSize={{base: 'lg', sm: 'xl'}}
-            stickyIcon={true}
             onClick={() => {setDelegateMode('delegate'), onOpenDelegate();}}>Delegate Troops 
           </RdButton>
           {/* <Spacer h='4'/>

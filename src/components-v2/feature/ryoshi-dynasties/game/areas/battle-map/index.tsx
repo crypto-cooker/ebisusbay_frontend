@@ -9,7 +9,7 @@ import { getControlPoint } from "@src/core/api/RyoshiDynastiesAPICalls";
 import ControlPointForm from '@src/Components/BattleBay/Areas/battleMap/components/ControlPointForm.js';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import ImageService from '@src/core/services/image';
-import {BattleMapHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battleMap/hud";
+import {BattleMapHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/hud";
 import {io} from "socket.io-client";
 import {useAppSelector} from "@src/Store/hooks";
 

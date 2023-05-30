@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from "react";
 
 import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks";
-import BattleMap from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battleMap";
+import BattleMap from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map";
 import AllianceCenter from "@src/Components/BattleBay/Areas/AllianceCenter";
 // import AnnouncementBoard from "@src/Components/BattleBay/Areas/AnnouncementBoard";
 import Academy from "@src/Components/BattleBay/Areas/Academy";
@@ -37,7 +37,7 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
     () => ApiService.withoutKey().ryoshiDynasties.getGlobalContext(),
     {
       initialData: initialRdConfig,
-      staleTime: 1000 * 60 * 10,
+      staleTime: 1000 * 60 * 25,
       cacheTime: 1000 * 60 * 30,
     }
   );
