@@ -159,6 +159,12 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
                         </Box>
                       )}
                     </>
+                  ) : (!!user.address && !user.correctChain) ? (
+                    <Center>
+                      <RdButton stickyIcon={true} onClick={connectWalletPressed}>
+                        Switch Network
+                      </RdButton>
+                    </Center>
                   ) : (!!user.address && !user.loadedFortuneBalance && !user.loadedMitamaBalance) ? (
                     <Center>
                       <Spinner />
