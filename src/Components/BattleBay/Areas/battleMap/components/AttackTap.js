@@ -100,7 +100,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
   }
   const [attackType, setAttackType] = useState(1);
   function getAttackCost(){
-    return attackType == 2 ? skirmishPrice : conquestPrice
+    return attackType == 2 ? skirmishPrice : skirmishPrice
   }
 
   const { isOpen: isOpenDailyCheckin, onOpen: onOpenDailyCheckin, onClose: onCloseDailyCheckin } = useDisclosure();
@@ -259,15 +259,15 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
                           quantity: troops,
                           battleType: attackType};
         
-        console.log("attackTuple", attackTuple);
-        console.log("sig", sig);
+        // console.log("attackTuple", attackTuple);
+        // console.log("sig", sig);
 
         const attackContract = new Contract(config.contracts.battleField, Battlefield, user.provider.getSigner());
         const tx = await attackContract.attackFaction(attackTuple, sig);
         const receipt = await tx.wait();
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
         // ShowAttackConclusion();
-        console.log("receipt", receipt);
+        // console.log("receipt", receipt);
 
       } catch (error) {
         if(error.response !== undefined) {
@@ -415,7 +415,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
   function getDefenderTroopsInRegion(){
     controlPoint.leaderBoard.forEach(faction => {
       if(faction.name === dataForm.defendersFaction){
-        console.log("faction", faction)
+        // console.log("faction", faction)
         setDefenderTroops(faction.totalTroops);
         setDefenderImage(faction.image);
       }});
@@ -450,9 +450,9 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
     }
   }, [controlPoint])
 
-  useEffect(() => {
-    console.log("attackTypeEnum: ", attackTypeEnum[attackType])
-  }, [attackType])
+  // useEffect(() => {
+  //   // console.log("attackTypeEnum: ", attackTypeEnum[attackType])
+  // }, [attackType])
 
   useEffect(() => {
       if(dataForm.defendersFaction!=null) {
@@ -477,9 +477,9 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
   }, [])
 
   useEffect(() => {
-    console.log("playerArmies.length ", playerArmies.length )
+    // console.log("playerArmies.length ", playerArmies.length )
     if(playerArmies.length > 0 && allFactions.length > 0 && !factionsLoaded) {
-      console.log("playerArmies changed", playerArmies)
+      // console.log("playerArmies changed", playerArmies)
       var combinedArmiesLocal = [];
 
       //we need to combine the playerArmies by factionId

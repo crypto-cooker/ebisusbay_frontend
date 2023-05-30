@@ -47,7 +47,8 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   const [selectedControlPoint, setSelectedControlPoint] = useState(0);
   const [pins, setPins] = useState([]);
   const [explosion, setExplosion] = useState<ReactElement[]>([]);
-  const [playExlplosion, setPlayExplosion] = useState(false);
+  // const explosionImage = useRef<HTMLElement>();
+  // const [playExlplosion, setPlayExplosion] = useState(false);
 
   // const controlPoints = [{id:4, title:"Southern Trident",pinName: "pin-Southern-Trident",marginTop: '32%', marginLeft: '20%'},
   //                        {id:3, title:"Dragonland",pinName: "pin-Dragonland",marginTop: '17%', marginLeft: '24%'},
@@ -136,38 +137,71 @@ const BattleMap = ({onChange}: BattleMapProps) => {
     // )
     // setPlayExplosion(!playExlplosion);
   }
-  const PlayExplosion = async () => {
-
+  const PlayExplosion = async (controlPointId : number) => {
+    console.log('PlayExplosion', controlPointId);
+    console.log('area', area);
     if(area.length === 0) return;
 
     //get random area
-    var randomArea : any = area[Math.floor(Math.random() * area.length)];
-    var left = randomArea.props.coords.split(",")[0];
-    var top = randomArea.props.coords.split(",")[1];
+    var left = 0;
+    var top = 0;
 
-    // setExplosion(
+    area.forEach((a: any) => {
+      if(a.props.alt === controlPointId)
+      {
+        left = a.props.coords.split(",")[0];
+        top = a.props.coords.split(",")[1];
+        console.log(a.props.title);
+      }
+    });
+    console.log('PlayExplosion', controlPointId);
+
+    setExplosion(
+      <Image
+       position="relative"
+        src='/img/battle-bay/explosion.png' 
+        width={250*5}
+        height={207*5}
+        left={left-(250*2.5)}
+        top={top-(207*2.5)}
+        zIndex="9"
+        />)
+
+    // if(explosionImage.current === null) return;
+
+    // explosionImage.current.width = 250*5;
+    // explosionImage.current.height = 207*5;
+    // explosionImage.current.left = left-(250*2.5);
+    // explosionImage.current.top = top-(207*2.5);
+    // explosionImage.current.src = '/img/battle-bay/explosion.png';
+
+    await new Promise(r => setTimeout(r, 1000));
+
+    // explosionImage.current.width = 250*5;
+    // explosionImage.current.height = 207*5;
+    // explosionImage.current.left = left-(250*2.5);
+    // explosionImage.current.top = top-(207*2.5);
+    // explosionImage.current.src = '/img/battle-bay/bld0.png';
+    setExplosion(
+      <Image
+       position="relative"
+        src='/img/battle-bay/bld0.png' 
+        width={0}
+        height={0}
+        left={0}
+        top={0}
+        zIndex="9"
+        />)
+    // setExplosionImage(
     //   <Flex position="absolute" zIndex="9" width="100%" height="100%">
     //   <Image
     //    position="relative"
-    //     src='/img/battle-bay/explosion.png' 
-    //     width={250*5}
-    //     height={207*5}
+    //     src='/img/battle-bay/bld0.png' 
+    //     width={0}
+    //     height={0}
     //     left={left-(250*2.5)}
     //     top={top-(207*2.5)}
     //     zIndex="9"
-    //     />
-    //   </Flex>
-    //   )
-
-    // await new Promise(r => setTimeout(r, 1000));
-
-    // setExplosion(
-    //   <Flex position="absolute" zIndex="9" width="100%" height="100%">
-    //   <Image
-    //    position="relative"
-    //     src='/img/avatar.png' 
-    //     width={0}
-    //     height={0}
     //     />
     //   </Flex>
     // )
@@ -192,20 +226,22 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   }, [isLoading]);
 
   useEffect(() => {
-    SetUpMap();
-    setFlagSize(windowWidth/30 + "px");
-    setBuildingSize(windowWidth/20 + "px");
+    // SetUpMap();
+    // setFlagSize(windowWidth/30 + "px");
+    // setBuildingSize(windowWidth/20 + "px");
   }, [controlPoint]);
 
   useEffect(() => {
     // SetUpPins();
     // randomlyPlayExplosion();
-  }, [flagSize]);
+    // PlayExplosion(59);
+    console.log('area', area);
+  }, [area]);
 
-  useEffect(() => {
-      // <div style={{position:"absolute", marginTop: explosionPoint.marginTop, marginLeft: explosionPoint.marginLeft, zIndex:"9", pointerEvents:"none"}}>
-    // randomlyPlayExplosion();
-  }, [playExlplosion, area]);
+  // useEffect(() => {
+  //     // <div style={{position:"absolute", marginTop: explosionPoint.marginTop, marginLeft: explosionPoint.marginLeft, zIndex:"9", pointerEvents:"none"}}>
+  //   // randomlyPlayExplosion();
+  // }, [playExlplosion, area]);
 
   useEffect(() => {
     SetUpMap();
@@ -218,7 +254,6 @@ const BattleMap = ({onChange}: BattleMapProps) => {
       setAreas(data.data.data.map.regions[0].controlPoints.map((controlPoint: any, i: any) => (
         <area 
           onClick={() => {
-            // console.log(controlPoint.id);
             setSelectedControlPoint(controlPoint.id); 
             selectRegion(controlPoint.id); 
             onOpen();
@@ -236,16 +271,6 @@ const BattleMap = ({onChange}: BattleMapProps) => {
     // const data = area.filter((area: any) => area.props.title === "Classy Keep");
   }
 
-  // useEffect(() => {
-  //   if(area.length === 0) return;
-  //   area.forEach((area: any) => {
-  //     if(area.props.title === "Felisgarde")
-  //     {
-  //       console.log(area);
-  //     }
-  //     // console.log(area.props.title);
-  //   });
-  // }, [area]);
   const getImageRef = (id: any) => {
     if(id === 1)
       return imageRef1;
@@ -288,7 +313,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
     setSkirmishPrice(Number(ethers.utils.hexValue(BigNumber.from(skirmish))));
     setConquestPrice(Number(ethers.utils.hexValue(BigNumber.from(conquest))));
 
-    console.log('skirmish', skirmish, 'conquest', conquest);
+    // console.log('skirmish', skirmish, 'conquest', conquest);
   }
 
   const [mapInitialized, setMapInitialized] = useState(false);
@@ -356,7 +381,9 @@ const BattleMap = ({onChange}: BattleMapProps) => {
     function onBattleFinishedEvent(data: any) {
       console.log('BATTLE_FINISHED', data)
       const parsedAtack = JSON.parse(data);
-      console.log('parsedAtack', parsedAtack)
+      // console.log('parsedAtack', parsedAtack)
+      // console.log('parsedAtack.controlPointId', parsedAtack.controlPointId)
+      PlayExplosion(parsedAtack.controlPointId);
     }
 
     socket.on('connect', onConnect);
@@ -405,7 +432,19 @@ const BattleMap = ({onChange}: BattleMapProps) => {
                 {area}
               </map>
                 {pins}
-                {explosion}
+                <Flex position="absolute" zIndex="9" width="100%" height="100%" pointerEvents='none'>
+                  {/* <Image
+                    ref={explosionImage}
+                    position="relative"
+                    src='/img/battle-bay/bld0.png' 
+                    width={0}
+                    height={0}
+                    left={0}
+                    top={0}
+                    zIndex="9"
+                    /> */}
+                    {explosion}
+                </Flex>
               </TransformComponent>
               </React.Fragment>
               )}
