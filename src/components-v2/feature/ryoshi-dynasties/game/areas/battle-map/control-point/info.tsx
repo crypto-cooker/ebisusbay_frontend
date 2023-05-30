@@ -10,7 +10,7 @@ import {
   Td,
   Box,
   Button,
-
+  useBreakpointValue,
   TableContainer,
 } from '@chakra-ui/react';
 import {getWeekEndDate} from "@src/core/api/RyoshiDynastiesAPICalls";
@@ -35,6 +35,34 @@ const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
     const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long", day: "numeric"}
     return new Date(dateString).toLocaleDateString(undefined, options)
   }
+  const parseFactionName = (name: string) => {
+    if(name.length > stringProps?.stringLength) {
+      return name.substring(0, stringProps?.stringLength) + '...';
+    }
+    return name;
+  }
+  const stringProps = useBreakpointValue<StringProps>(
+    {
+      base: {
+        stringLength: 20,
+      },
+      sm: {
+        stringLength: 30,
+      },
+      md: {
+        stringLength: 50,
+      },
+      lg: {
+        stringLength: 50,
+      },
+      xl: {
+        stringLength: 50,
+      },
+      '2xl': {
+        stringLength: 50,
+      }
+    }
+  );
 
   useEffect(() => {
     if(controlPoint.leaderBoard !== undefined)
@@ -44,7 +72,7 @@ const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
         {controlPoint.leaderBoard.filter((faction, index) => index < 5).map((faction, index ) => 
       (<Tr key={index}>
         <Td textAlign='center'>{index+1}</Td>
-        <Td textAlign='center'>{faction.name}</Td>
+        <Td textAlign='center'>{parseFactionName(faction.name)}</Td>
         <Td textAlign='center'>{faction.totalTroops}</Td>
       </Tr>))}</Tbody>)
       setIsLoaded(true);
@@ -53,7 +81,7 @@ const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
 
     useEffect(() => {
       setIsLoaded(false);
-      console.log("opened info tap")
+      // console.log("opened info tap")
       refreshControlPoint();
       }, [])
 
@@ -126,3 +154,7 @@ const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
 }
 
 export default InfoTab;
+
+interface StringProps {
+  stringLength: number;
+}
