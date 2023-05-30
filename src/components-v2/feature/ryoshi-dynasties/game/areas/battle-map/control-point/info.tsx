@@ -1,5 +1,5 @@
 import { Center, Flex } from "@chakra-ui/react";
-import React, {useEffect, useState } from 'react';
+import React, {ReactElement, useEffect, useState} from 'react';
 
 import {
   Table,
@@ -14,10 +14,16 @@ import {
   TableContainer,
 } from '@chakra-ui/react';
 import {getWeekEndDate} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {RdControlPoint} from "@src/core/services/api-service/types";
 
-const InfoTap = ({onClose, controlPoint=[], refreshControlPoint}) => {
+interface InfoTabProps {
+  controlPoint: RdControlPoint;
+  refreshControlPoint: () => void;
+}
+
+const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
   
-  const [area, setAreas] = useState([]);
+  const [area, setAreas] = useState<ReactElement>();
   const [weekEndDate, setWeekEndDate] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -25,8 +31,8 @@ const InfoTap = ({onClose, controlPoint=[], refreshControlPoint}) => {
     const timestamp = await getWeekEndDate();
     setWeekEndDate(formatDate(timestamp));
   }
-  const formatDate = (dateString) => {
-    const options = { year: "numeric", month: "long", day: "numeric"}
+  const formatDate = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long", day: "numeric"}
     return new Date(dateString).toLocaleDateString(undefined, options)
   }
 
@@ -119,4 +125,4 @@ const InfoTap = ({onClose, controlPoint=[], refreshControlPoint}) => {
   )
 }
 
-export default InfoTap;
+export default InfoTab;
