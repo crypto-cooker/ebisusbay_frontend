@@ -6,7 +6,7 @@ import styles from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
 
 import { getMap } from "@src/core/api/RyoshiDynastiesAPICalls";
 import { getControlPoint } from "@src/core/api/RyoshiDynastiesAPICalls";
-import ControlPointForm from '@src/Components/BattleBay/Areas/battleMap/components/ControlPointForm.js';
+import ControlPointModal from '@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import ImageService from '@src/core/services/image';
 import {BattleMapHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/hud";
@@ -372,7 +372,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
 
   return (
     <section>
-      <ControlPointForm isOpen={isOpen} onClose={onClose} controlPoint={controlPoint} 
+      <ControlPointModal isOpen={isOpen} onClose={onClose} controlPoint={controlPoint}
       refreshControlPoint={RefreshControlPoint}
       skirmishPrice={skirmishPrice}
       conquestPrice={conquestPrice}

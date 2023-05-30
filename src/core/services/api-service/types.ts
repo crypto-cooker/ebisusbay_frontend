@@ -78,3 +78,36 @@ export enum StakedTokenType {
     BANK = 'bank',
     BARRACKS = 'barracks'
 }
+
+export interface RdFaction {
+    addresses: string[];
+    id: number;
+    image: string;
+    name: string;
+    troops: number;
+    type: RdFactionType;
+    uuid: string;
+}
+
+export enum RdFactionType {
+    WALLET = 'WALLET',
+    COLLECTION = 'COLLECTION'
+}
+
+export interface RdControlPoint {
+    coordinates: string;
+    id: number;
+    name: string;
+    points: number;
+    regionId: number;
+    rewardId: number;
+    uuid: string;
+    leaderBoard: RdControlPointLeaderBoard[];
+}
+
+export interface RdControlPointLeaderBoard {
+    id: number;
+    image: string;
+    name: string;
+    totalTroops: number;
+}

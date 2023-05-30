@@ -4,7 +4,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-const HelpTap = () => {
+const HelpTab = () => {
 
   return (
     <>
@@ -28,4 +28,4 @@ const HelpTap = () => {
   )
 }
 
-export default HelpTap;
+export default HelpTab;

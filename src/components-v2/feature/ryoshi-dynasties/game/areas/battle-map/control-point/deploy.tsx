@@ -18,7 +18,7 @@ import {
   Text
  } from "@chakra-ui/react";
 
-import { useState, useEffect } from "react";
+import {useState, useEffect, ChangeEventHandler, ChangeEvent, ReactElement} from "react";
 import Button from "@src/Components/components/Button";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
@@ -26,31 +26,38 @@ import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSig
 import {getProfileTroops, getFactionsOwned, deployTroops, recallTroops, getFactionUndeployedArmies} from "@src/core/api/RyoshiDynastiesAPICalls";
 import { toast } from "react-toastify";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
+import {useAppSelector} from "@src/Store/hooks";
+import {RdControlPoint, RdControlPointLeaderBoard, RdFaction} from "@src/core/services/api-service/types";
 
 const tabs = {
   recall: 'recall',
   deploy: 'deploy',
 };
 
-const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
+interface DeployTabProps {
+  controlPoint: RdControlPoint;
+  refreshControlPoint: () => void;
+}
 
-  const user = useSelector((state) => state.user);
+const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
+
+  const user = useAppSelector((state) => state.user);
   const [isLoading, getSigner] = useCreateSigner();
   const [currentTab, setCurrentTab] = useState(tabs.deploy);
 
-  const [factionOption, setFactionOption] = useState([]);
+  const [factionOption, setFactionOption] = useState<ReactElement[] | ReactElement>();
   const [dataForm, setDataForm] = useState({
     faction: "" ?? null,
     quantity: 0,
   })
 
   const [selectedQuantity, setSelectedQuantity] = useState(0);
-  const [selectedFaction, setSelectedFaction] = useState(dataForm.faction);
-  const handleChange = (value) => setSelectedQuantity(value)
-  const [allFactions, setAllFactions] = useState([]);
+  const [selectedFaction, setSelectedFaction] = useState<string>(dataForm.faction);
+  const handleQuantityChange = (stringValue: string, numValue: number) => setSelectedQuantity(numValue)
+  const [allFactions, setAllFactions] = useState<RdControlPointLeaderBoard[]>([]);
 
   const [troopsAvailable, setTroopsAvailable] = useState(0);
-  const [playerFaction, setPlayerFaction] = useState("");
+  const [playerFaction, setPlayerFaction] = useState<RdFaction>();
   const [hasFaction, setHasFaction] = useState(false);
 
   // const [showFactionTroops, ShowFactionTroops] = useState(false);
@@ -58,7 +65,7 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
   // const [factionTroopsAvailable, setFactionTroopsAvailable] = useState(0);
   // const [troopsSource, setTroopsSource] = useState(1);
 
-  const onChangeInputsFaction = (e) => {
+  const onChangeInputsFaction = (e: ChangeEvent<HTMLSelectElement>) => {
     setSelectedFaction(e.target.value)
     console.log(e.target.value)
     // if(e.target.value === playerFaction.name)
@@ -84,6 +91,8 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
     // }
   }
   const GetPlayerTroops = async () => {
+    if (!user.address) return;
+
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
@@ -112,6 +121,7 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
     }
   }
   const deployOrRecallTroops = async () => {
+    if (!user.address) return;
 
     // if(troopsSource==2)
     // {
@@ -161,7 +171,7 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
           // console.log("You recalled", selectedQuantity, "troops from", controlPoint, "on behalf of", dataForm.faction)
 
         }
-      } catch (error) {
+      } catch (error: any) {
         console.log(error)
         toast.error(error.response.data.error.metadata.message)
       }
@@ -171,7 +181,7 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
     if(hasFaction) {
       setFactionOption(
         <option style={{ background: '#272523' }}
-        value={playerFaction.name} key={0}>{playerFaction.name}</option>
+        value={playerFaction!.name} key={0}>{playerFaction!.name}</option>
       )
     }
     else {
@@ -226,8 +236,9 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
       <FormControl>
         <FormLabel>Troops To Deploy:</FormLabel>
         <NumberInput defaultValue={1} min={1} max={troopsAvailable} name="quantity" 
-          onChange={handleChange}
-          value={selectedQuantity} type ='number'>
+          onChange={handleQuantityChange}
+          value={selectedQuantity}
+        >
           <NumberInputField />
           <NumberInputStepper >
             <NumberIncrementStepper color='#ffffff'/>
@@ -263,7 +274,7 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
                 )}
                 </Text>)}
 
-          {currentTab === tabs.recall && (<p> Troops deployed to {controlPoint.name} on behalf of {dataForm.faction}: {troopsDeployed}</p>)}
+          {/*{currentTab === tabs.recall && (<p> Troops deployed to {controlPoint.name} on behalf of {dataForm.faction}: {troopsDeployed}</p>)}*/}
 
             </HStack>
           </VStack>
@@ -279,9 +290,9 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
           w='250px'
           fontSize={{base: 'm', sm: 'm'}}
           onClick={deployOrRecallTroops}
-          disabled={selectedFaction=== "" ? true : false}
-          >
-          {selectedFaction=== "" ? "Please select a faction" : "Deploy" }
+          disabled={!selectedFaction}
+        >
+          {!!selectedFaction ? "Please select a faction" : "Deploy" }
         </RdButton>
       </Center>
     </Box>
@@ -291,4 +302,4 @@ const DeployTap = ({controlPoint=[], refreshControlPoint}) => {
   )
 }
 
-export default DeployTap;
+export default DeployTab;

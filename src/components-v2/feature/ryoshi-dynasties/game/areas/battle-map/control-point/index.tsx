@@ -19,14 +19,13 @@ import localFont from "next/font/local";
 import {ArrowBackIcon, CloseIcon} from "@chakra-ui/icons";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 
-import {
-  DeployTap,
-  InfoTap,
-  AttackTap,
-  HelpTap
-} from "."
+import {AttackTap} from "@src/Components/BattleBay/Areas/battleMap/components";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
+import {useAppSelector} from "@src/Store/hooks";
+import DeployTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/deploy";
+import InfoTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/info";
+import HelpTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/help";
 
 const tabs = {
   info: 'info',
@@ -35,13 +34,22 @@ const tabs = {
   help: 'help'
 };
 
-const ControlPointForm = ({ isOpen, onClose, controlPoint=[], refreshControlPoint, skirmishPrice, conquestPrice}) => {
+interface ControlPointFormProps {
+  isOpen: boolean;
+  onClose: () => void;
+  controlPoint: any;
+  refreshControlPoint: () => void;
+  skirmishPrice: number;
+  conquestPrice: number;
+}
+
+const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint, skirmishPrice, conquestPrice}: ControlPointFormProps) => {
   // console.log("factionForm controlPoint: " + controlPoint.name);
   const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState('');
   const [info, setInfo] = useState([]);
   const [rewardID, setRewardID] = useState(0);
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
 
   const [currentTab, setCurrentTab] = useState(tabs.info);
 
@@ -93,10 +101,10 @@ const ControlPointForm = ({ isOpen, onClose, controlPoint=[], refreshControlPoin
 
               <div className="de_tab_content">
                 {currentTab === tabs.info && (
-                  <InfoTap onClose={handleClose} controlPoint={controlPoint} refreshControlPoint={refreshControlPoint}/>
+                  <InfoTab controlPoint={controlPoint} refreshControlPoint={refreshControlPoint}/>
                 )}
                 {currentTab === tabs.deploy && (
-                  <DeployTap onClose={handleClose} controlPoint={controlPoint} refreshControlPoint={refreshControlPoint}/>
+                  <DeployTab controlPoint={controlPoint} refreshControlPoint={refreshControlPoint}/>
                 )}
                 {currentTab === tabs.attack && (
                   <AttackTap 
@@ -108,7 +116,7 @@ const ControlPointForm = ({ isOpen, onClose, controlPoint=[], refreshControlPoin
                   />
                 )}
                 {currentTab === tabs.help && (
-                  <HelpTap/>
+                  <HelpTab />
                 )}
               </div>
             </div>
@@ -123,4 +131,4 @@ const ControlPointForm = ({ isOpen, onClose, controlPoint=[], refreshControlPoin
   )
 }
 
-export default ControlPointForm;
+export default ControlPointModal;
