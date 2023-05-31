@@ -1,14 +1,14 @@
 import axios from "axios";
+import {appConfig} from "@src/Config";
+const config = appConfig();
 const api = axios.create({
-  baseURL: 'api/',
+  baseURL: config.urls.cms,
 });
-
-const baseURL = 'https://testcms.ebisusbay.biz/';
 
 //gets the current game id
 export const getWeeklyGameId = async () => {
   try{
-    var data = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    var data = await api.get("ryoshi-dynasties/games/0");
     return data.data.data.id;
   }
   catch(error){
@@ -18,10 +18,10 @@ export const getWeeklyGameId = async () => {
 export const getSeason = async (seasonOffset) => {
   try{
     if(seasonOffset == 0){
-      var currentGame = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+      var currentGame = await api.get("ryoshi-dynasties/games/0");
       const seasonIdNumber = Number(currentGame.data.data.id-1);
       // console.log(seasonIdNumber)
-      var data = await api.get(baseURL + "api/ryoshi-dynasties/games/"+seasonIdNumber);
+      var data = await api.get("ryoshi-dynasties/games/"+seasonIdNumber);
       return data.data.data;
     }
   }
@@ -41,7 +41,7 @@ export const getGameEndTime = async () => {
 }
 export const getSeasonGameId = async () => {
   try{
-    var data = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    var data = await api.get("ryoshi-dynasties/games/0");
     return data.data.data.parent.id;
   }
   catch(error){
@@ -50,7 +50,7 @@ export const getSeasonGameId = async () => {
 }
 export const getWeekEndDate = async () => {
   try{
-    var data = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    var data = await api.get("ryoshi-dynasties/games/0");
     return data.data.data.endAt;
   }
   catch(error){
@@ -61,7 +61,7 @@ export const getWeekEndDate = async () => {
 export const getMap = async (_gameNumber) => {
   try{
     var data = await getSeasonGameId();
-    return await api.get(baseURL + "api/ryoshi-dynasties/games/"+data);
+    return await api.get("ryoshi-dynasties/games/"+data);
   }
   catch(error){
     throw error;
@@ -69,7 +69,7 @@ export const getMap = async (_gameNumber) => {
 }
 export const getProfileTroops = async (_address, _signature) => {
   try{
-    var data = await api.get(baseURL + "api/ryoshi-dynasties/armies?",
+    var data = await api.get("ryoshi-dynasties/armies?",
       {params: {address: _address, signature: _signature}});
 
     //itterate through the data and get the troops without a control point
@@ -90,7 +90,7 @@ export const getProfileTroops = async (_address, _signature) => {
 export const getProfileArmies = async (_address, _signature) => {
   try{
     var gameId = await getWeeklyGameId();
-    var data = await api.get(baseURL + "api/ryoshi-dynasties/armies?",
+    var data = await api.get("ryoshi-dynasties/armies?",
       {params: {address: _address, signature: _signature, gameId: gameId}});
     return data;
   }
@@ -101,7 +101,7 @@ export const getProfileArmies = async (_address, _signature) => {
 export const getFactionUndeployedArmies = async (_address, _signature) => {
   try{
     var gameId = await getWeeklyGameId();
-    var data = await api.get(baseURL + "api/ryoshi-dynasties/armies?",
+    var data = await api.get("ryoshi-dynasties/armies?",
       {params: {address: _address, signature: _signature, gameId: gameId}});
       
     //itterate through the data and get the troops without a control point
@@ -120,7 +120,7 @@ export const getFactionUndeployedArmies = async (_address, _signature) => {
 //creates a faction
 export const createFaction = async (address, signature, type, name, addresses=[], image) => {
   try{
-    return await api.post(baseURL + "api/ryoshi-dynasties/factions?", 
+    return await api.post("ryoshi-dynasties/factions?", 
       {name, type, addresses, image},
       {params: {address, signature}});
   }
@@ -131,7 +131,7 @@ export const createFaction = async (address, signature, type, name, addresses=[]
 export const UploadFactionIconPfp = async (address, signature, name, image) => {
   try{
     console.log(address, signature, name, image);
-    return await api.patch(baseURL + "api/ryoshi-dynasties/factions?", 
+    return await api.patch("ryoshi-dynasties/factions?", 
       {name, id, image},
       {params: {address, signature}});
   }
@@ -142,7 +142,7 @@ export const UploadFactionIconPfp = async (address, signature, name, image) => {
 //gets specific factions
 export const getFactionsOwned = async (address, signature) => {
   try{
-    return await api.get(baseURL + "api/ryoshi-dynasties/factions?", 
+    return await api.get("ryoshi-dynasties/factions?", 
       {params: {address, signature}});
   }
   catch(error){
@@ -152,7 +152,7 @@ export const getFactionsOwned = async (address, signature) => {
 export const getFactionsRegistered = async (address, signature) => {
   try{
     var gameId = await getSeasonGameId();
-    return await api.get(baseURL + "api/ryoshi-dynasties/factions?", 
+    return await api.get("ryoshi-dynasties/factions?", 
       {params: {address, signature, gameId}});
   }
   catch(error){
@@ -163,7 +163,7 @@ export const getFactionsRegistered = async (address, signature) => {
 export const subscribeFaction = async (address, signature, factionId) => {
   try{
     var gameId = await getSeasonGameId();
-    return await api.post(baseURL + "api/ryoshi-dynasties/subscriptions?", 
+    return await api.post("ryoshi-dynasties/subscriptions?", 
       {gameId, factionId},
       {params: {address, signature}}
       );
@@ -174,7 +174,7 @@ export const subscribeFaction = async (address, signature, factionId) => {
 }
 export const editFaction = async (address, signature, id, name, addresses=[], type) => {
   try{
-    return await api.patch(baseURL + "api/ryoshi-dynasties/factions?", 
+    return await api.patch("ryoshi-dynasties/factions?", 
       {name, id, addresses, type},
       {params: {address: address, signature: signature}},
       );
@@ -185,7 +185,7 @@ export const editFaction = async (address, signature, id, name, addresses=[], ty
 }
 export const deleteFaction = async (address, signature, id) => {
   try{
-    return await api.delete(baseURL + "api/ryoshi-dynasties/factions?", 
+    return await api.delete("ryoshi-dynasties/factions?", 
       {params: {address, signature, id}},
       );
   }
@@ -195,7 +195,7 @@ export const deleteFaction = async (address, signature, id) => {
 }
 export const getFactionTroops= async (address, signature, factionId) => {
   try{
-    var data = await api.get(baseURL + "api/ryoshi-dynasties/factions/"+factionId,
+    var data = await api.get("ryoshi-dynasties/factions/"+factionId,
     {params: {address, signature}});
     return data.data.data.troops;
   }
@@ -206,7 +206,7 @@ export const getFactionTroops= async (address, signature, factionId) => {
 //adds troops to the player's wallet
 export const createArmy = async (_walletAddress, _walletSignature, _troops) => {
   try{
-    return await api.get(baseURL + "api/ryoshi-dynasties/army?", 
+    return await api.get("ryoshi-dynasties/army?", 
       {params: {walletAddress: _walletAddress, walletSignature: _walletSignature}},
       {body: {troops: _troops}});
   }
@@ -217,7 +217,7 @@ export const createArmy = async (_walletAddress, _walletSignature, _troops) => {
 //takes troops from a player's wallet and adds them to a faction
 export const delegateTroops = async (address, signature, troops, factionId) => {
   try{
-    var gameID = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    var gameID = await api.get("ryoshi-dynasties/games/0");
     let gameId = gameID.data.data.id;
 
     // console.log("GameID: "+gameId);
@@ -225,7 +225,7 @@ export const delegateTroops = async (address, signature, troops, factionId) => {
     // console.log("Troops: "+troops);
     troops = Number(troops);
 
-    return await api.patch(baseURL + "api/ryoshi-dynasties/armies?", 
+    return await api.patch("ryoshi-dynasties/armies?", 
       {troops, factionId, gameId},
       {params: {address: address, signature: signature, action: "DELEGATE"}},
       );
@@ -248,7 +248,7 @@ export const deployTroops = async (address, signature, troops, controlPointId, f
     console.log("Address: "+address);
     console.log("Signature: "+signature);
 
-    return await api.patch(baseURL + "api/ryoshi-dynasties/armies?", 
+    return await api.patch("ryoshi-dynasties/armies?", 
       {troops, controlPointId, gameId, factionId},
       {params: {address: address, signature: signature, action: "DEPLOY"}}
       );
@@ -260,9 +260,9 @@ export const deployTroops = async (address, signature, troops, controlPointId, f
 //recalls troops from a control point and returns them to the faction
 export const recallTroops = async (address, signature, troops, controlPointId, factionId) => {
   try{
-    var gameID = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    var gameID = await api.get("ryoshi-dynasties/games/0");
 
-    return await api.patch(baseURL + "api/ryoshi-dynasties/armies?", 
+    return await api.patch("ryoshi-dynasties/armies?", 
       {params: {address, signature, action: "RECALL"}},
       {body: {troops, controlPointId, gameId: gameID.data.data.id, factionId}});
   }
@@ -272,7 +272,7 @@ export const recallTroops = async (address, signature, troops, controlPointId, f
 }
 export const getReward= async (_rewardNumber) => {
   try{
-    var data = await api.get(baseURL + "api/ryoshi-dynasties/rewards/"+_rewardNumber);
+    var data = await api.get("ryoshi-dynasties/rewards/"+_rewardNumber);
     return data.data.data;
   }
   catch(error){
@@ -283,7 +283,7 @@ export const getReward= async (_rewardNumber) => {
 export const getProfileId = async (_address, _signature) => {
   try{
     //add if else for if it is empty
-    var data = await api.get(baseURL + "api/ryoshi-dynasties/armies?",
+    var data = await api.get("ryoshi-dynasties/armies?",
       {params: {address: _address, signature: _signature}});
     return data;
   }
@@ -293,8 +293,8 @@ export const getProfileId = async (_address, _signature) => {
 }
 export const getAllFactions = async () => {
   try{
-    var gameID = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
-    var data = await api.get(baseURL + "api/ryoshi-dynasties/control-points/1",
+    var gameID = await api.get("ryoshi-dynasties/games/0");
+    var data = await api.get("ryoshi-dynasties/control-points/1",
       {params: {gameId: gameID.data.data.id}});
     return data.data.data.leaderBoard;
   }
@@ -304,7 +304,7 @@ export const getAllFactions = async () => {
 }
 export const addTroops = async (address, signature, troops) => {
   try{
-    return await api.post(baseURL + "api/ryoshi-dynasties/armies?", 
+    return await api.post("ryoshi-dynasties/armies?", 
       {troops},
       {params: {address, signature}});
   }
@@ -314,7 +314,7 @@ export const addTroops = async (address, signature, troops) => {
 }
 export const getRegions= async () => {
   try{
-    var gameID = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    var gameID = await api.get("ryoshi-dynasties/games/0");
     var regions = gameID.data.data.parent.map.regions;
     return regions;
   }
@@ -324,7 +324,7 @@ export const getRegions= async () => {
 }
 export const getControlPoints= async (regionNumber) => {
   try{
-    var gameID = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    var gameID = await api.get("ryoshi-dynasties/games/0");
     var regions = gameID.data.data.parent.map.regions;
     //get all control points under regions
     var controlPoints = [];
@@ -340,9 +340,9 @@ export const getControlPoints= async (regionNumber) => {
 
 export const getLeaderBoard = async (controlPointId, gameId) => {
   try{
-    var gameID = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    var gameID = await api.get("ryoshi-dynasties/games/0");
     // console.log(gameID.data.data);
-    var data = await api.get(baseURL + "api/ryoshi-dynasties/control-points/"+controlPointId,
+    var data = await api.get("ryoshi-dynasties/control-points/"+controlPointId,
       {params: {gameId: Number(gameID.data.data.id)}});
       // {params: {gameId: Number(gameID.data.data.id-1)}});
     // console.log(data);
@@ -355,8 +355,8 @@ export const getLeaderBoard = async (controlPointId, gameId) => {
 //gets a specific control point
 export const getControlPoint = async (controlPointId) => {
   try{
-    var gameID = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
-    var data = await api.get(baseURL + "api/ryoshi-dynasties/control-points/"+controlPointId,
+    var gameID = await api.get("ryoshi-dynasties/games/0");
+    var data = await api.get("ryoshi-dynasties/control-points/"+controlPointId,
       {params: {gameId: gameID.data.data.id}});
     // console.log(data);
     return data.data.data;
@@ -367,10 +367,10 @@ export const getControlPoint = async (controlPointId) => {
 }
 export const attack = async (address, signature, troops, controlPointId, factionId, defendingFactionId, battleType) => {
   try{
-    var gameID = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    var gameID = await api.get("ryoshi-dynasties/games/0");
     var gameId = gameID.data.data.id;
 
-    return await api.post(baseURL + "api/ryoshi-dynasties/battle-transactions?", 
+    return await api.post("ryoshi-dynasties/battle-transactions?", 
       {troops, controlPointId, gameId, factionId, defendingFactionId, battleType},
       {params: {address, signature}}
       );
@@ -381,7 +381,7 @@ export const attack = async (address, signature, troops, controlPointId, faction
 }
 export const getDailyRewards = async (address, signature) => {
   try{
-    return await api.get(baseURL + "api/ryoshi-dynasties/game-tokens/daily-reward?", 
+    return await api.get("ryoshi-dynasties/game-tokens/daily-reward?", 
       {params: {address, signature}});
   }
   catch(error){
@@ -390,7 +390,7 @@ export const getDailyRewards = async (address, signature) => {
 }
 export const getGameTokens = async (address, signature) => {
   try{
-    return await api.get(baseURL + "api/ryoshi-dynasties/game-tokens/battle-reward?", 
+    return await api.get("ryoshi-dynasties/game-tokens/battle-reward?", 
       {params: {address, signature}});
   }
   catch(error){
@@ -399,7 +399,7 @@ export const getGameTokens = async (address, signature) => {
 }
 export const getRewardsStreak = async (address, signature) => {
   try{
-    return await api.get(baseURL + "api/ryoshi-dynasties/game-tokens/daily-reward/next/?", 
+    return await api.get("ryoshi-dynasties/game-tokens/daily-reward/next/?", 
       {params: {address, signature}});
   }
   catch(error){
