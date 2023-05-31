@@ -94,6 +94,11 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
   const [executingLabel, setExecutingLabel] = useState('Attacking...');
   const [battleAttack, setBattleAttack] = useState([]);
 
+  const [attackerFilter, setAttackerFilter] = useState('brightness(1)');
+  const [defenderFilter, setDefenderFilter] = useState('brightness(1)');
+  const [attackerStyle, setAttackerStyle] = useState({});
+  const [defenderStyle, setDefenderStyle] = useState({});
+
   const attackTypeEnum = {
     1: {name:"Conquest", maxTroops:3, desc: "Launch a relentless assault, battling until all troops are eliminated or the opposing faction is defeated"},
     2: {name:"Skirmish", maxTroops:Infinity, desc: "Engage in a single attack using the number of troops you wager"}
@@ -328,14 +333,28 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
     if(attackersSlain < defendersSlain) {
       battleOutcome.current.textContent = "Victory!";
       battleContext.current.textContent = "You slew more defenders than you lost";
+      setAttackerFilter('brightness(1)');
+      setDefenderFilter('brightness(0.4)');
+      setAttackerStyle({position: "relative", background: "whitesmoke", display: "flex", justifyContent: "center",
+                        padding: "5px", boxSize: "border-box", boxShadow: "0 20px 50px rgba(255, 255, 255, 0.8)"});
+      setDefenderStyle({boxShadow: "0 20px 50px rgba(0, 0, 0, 0.8)"});
     }
     else if(attackersSlain > defendersSlain) {
       battleOutcome.current.textContent = "Defeat!";
       battleContext.current.textContent = "The defenders slew more of your troops than you slew of theirs";
+      setAttackerFilter('brightness(0.4)');
+      setDefenderFilter('brightness(1');
+      setAttackerStyle({position: "relative", background: "whitesmoke", display: "flex", justifyContent: "center",
+                        padding: "5px", boxSize: "border-box", boxShadow: "0 20px 50px rgba(255, 255, 255, 0.8)"});
+      setDefenderStyle({boxShadow: "0 20px 50px rgba(0, 0, 0, 0.8)"});
     }
     else if(attackersSlain == defendersSlain) {
       battleOutcome.current.textContent = "Draw";
       battleContext.current.textContent = "Neither side was able to gain an advantage over the other";
+      setAttackerFilter('brightness(1)');
+      setDefenderFilter('brightness(1)');
+      setAttackerStyle({});
+      setDefenderStyle({});
     }
 
     attackerOutcome.current.textContent = "lost "+attackersSlain+"/"+ Number(attackerTroops)+" troops";
@@ -655,11 +674,12 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
             <Box w='45'>
               <VStack>
               {attackerImage !== '' ?
-                <Image
+              <div style={attackerStyle}>
+              <Image
                   boxSize={{base: '50px', sm: '100px'}}
                   objectFit="cover"
                   src={ImageService.translate(attackerImage).fixedWidth(100, 100)}
-                  /> : <></>
+                  /> </div>: <></>
               }
               <Text textAlign='left' 
               fontSize={{base: '16px', sm: '24px'}}
@@ -748,7 +768,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
         </Center>
       </div>
 
-      <div ref={attackConclusion} style={{ display: 'none'}}>
+      <div ref={attackConclusion} style={{ display: 'block'}}>
         <div class="container">
           <VStack spacing='2'>
             <Text 
@@ -764,21 +784,67 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
               as='i'
               >The defenders slew more of your troops than you slew of theirs</Text>
           </VStack>
-          <Grid
+          {/* <Grid
             templateAreas={`"att def"`}
             gridTemplateColumns={'1fr 1fr'}
             h='200px'
             gap='1'
             color='blackAlpha.700'
             fontWeight='bold'
-          >
-        <GridItem pl='2'  area={'att'}>
+          > */}
+        {/* <GridItem pl='2'  area={'att'}>
           <VStack spacing='-180px'>{att}</VStack>
         </GridItem>
         <GridItem pl='2'  area={'def'}>
         <VStack spacing='-180px'>{def}</VStack>
-        </GridItem>
-      </Grid>
+        </GridItem> */}
+      {/* </Grid> */}
+
+      <Flex direction='row' justify='space-between' justifyContent='center'>
+        <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
+          <HStack justify='space-between'>
+            <Box w='45'>
+              <VStack>
+              {attackerImage !== '' ?
+               <div style={attackerStyle}>
+                <Image
+                  boxSize={{base: '50px', sm: '100px'}}
+                  objectFit="cover"
+                  src={ImageService.translate(attackerImage).fixedWidth(100, 100)}
+                  filter={attackerFilter}
+                  /> 
+                  </div>: <></>
+              }
+              <Text textAlign='left' 
+              fontSize={{base: '16px', sm: '24px'}}
+              >{dataForm.attackersFaction}</Text>
+              </VStack>
+            </Box>
+            <Box  w='10'>
+              <Text textAlign='left' 
+              fontSize={{base: '12px', sm: '16px'}}
+              >VS</Text>
+            </Box>
+
+            <Box  w='45'>
+              <VStack>
+              {defenderImage !== '' ?
+              <div style={defenderStyle}>
+                <Image
+                  boxSize={{base: '50px', sm: '100px'}}
+                  objectFit="cover"
+                  src={ImageService.translate(defenderImage).fixedWidth(100, 100)}
+                  filter={defenderFilter}
+                  /> </div>: <></>
+              }
+              <Text textAlign='right' 
+              fontSize={{base: '16px', sm: '24px'}}
+              >{dataForm.defendersFaction}</Text>
+              </VStack>
+            </Box>
+          </HStack>
+          </Box>
+        </Flex>
 
           <Flex direction='row' justify='space-between' justifyContent='center'>
             <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
