@@ -100,7 +100,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
   }
   const [attackType, setAttackType] = useState(1);
   function getAttackCost(){
-    return attackType == 2 ? skirmishPrice : skirmishPrice
+    return attackType == 2 ? skirmishPrice : conquestPrice
   }
 
   const { isOpen: isOpenDailyCheckin, onOpen: onOpenDailyCheckin, onClose: onCloseDailyCheckin } = useDisclosure();
