@@ -200,21 +200,21 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   useEffect(() => {
     if(area.length === 0) return;
 
-    setFlags(area.map((a: any) => {
-      // console.log('controlPoint.id', a.props.alt);
-      const left = a.props.coords.split(",")[0];
-      const top = a.props.coords.split(",")[1];
-      // console.log('left', left, 'top', top);
-      <Image
-        position="relative"
-        src='/img/battle-bay/fire.gif' 
-        width={1000}
-        height={1000}
-        left={left-(250*2.5)}
-        top={top-(207*2.5)}
-        zIndex="10"
-        />
-    }));
+    // setFlags(area.map((a: any) => {
+    //   // console.log('controlPoint.id', a.props.alt);
+    //   const left = a.props.coords.split(",")[0];
+    //   const top = a.props.coords.split(",")[1];
+    //   // console.log('left', left, 'top', top);
+    //   <Image
+    //     position="relative"
+    //     src='/img/battle-bay/fire.gif' 
+    //     width={1000}
+    //     height={1000}
+    //     left={left-(250*2.5)}
+    //     top={top-(207*2.5)}
+    //     zIndex="10"
+    //     />
+    // }));
   }, [area]);
 
   useEffect(() => {
