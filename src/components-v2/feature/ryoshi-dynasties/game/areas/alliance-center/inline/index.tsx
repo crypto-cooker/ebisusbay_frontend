@@ -298,7 +298,7 @@ const CurrentFaction = () => {
                 <RdButton
                   hideIcon={true}
                   fontSize='lg'
-                  onClick={onOpenCreateFaction}
+                  onClick={handleRegister}
                   isLoading={isExecutingRegister}
                   isDisabled={isExecutingRegister}
                 >

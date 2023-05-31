@@ -146,6 +146,12 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
       toast.error("You don't have enough troops to deploy")
       return;
     }
+
+    if(selectedQuantity === 0)
+    {
+      toast.error("You must deploy at least 1 troop")
+      return;
+    }
     // return;
 
     let signatureInStorage = getAuthSignerInStorage()?.signature;
@@ -290,9 +296,9 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
           w='250px'
           fontSize={{base: 'm', sm: 'm'}}
           onClick={deployOrRecallTroops}
-          disabled={!selectedFaction}
+          disabled={!selectedFaction }
         >
-          {!!selectedFaction ? "Please select a faction" : "Deploy" }
+          {!selectedFaction ? "Please select a faction" : "Deploy" }
         </RdButton>
       </Center>
     </Box>
