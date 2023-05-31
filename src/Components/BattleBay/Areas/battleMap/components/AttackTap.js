@@ -768,7 +768,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
         </Center>
       </div>
 
-      <div ref={attackConclusion} style={{ display: 'block'}}>
+      <div ref={attackConclusion} style={{ display: 'none'}}>
         <div class="container">
           <VStack spacing='2'>
             <Text 
