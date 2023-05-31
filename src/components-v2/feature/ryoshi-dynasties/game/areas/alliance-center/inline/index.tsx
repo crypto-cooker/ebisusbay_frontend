@@ -69,7 +69,7 @@ const AllianceCenterInline = ({onClose}: AllianceCenterInlineProps) => {
 
   return (
     <Flex
-      border='2px solid #FFD700'
+      border='1px solid #FFD700'
       backgroundColor='#292626'
       flexDirection='column'
       textAlign='center'
@@ -77,6 +77,7 @@ const AllianceCenterInline = ({onClose}: AllianceCenterInlineProps) => {
       justifyContent='space-around'
       padding={4}
       minW={{base: '100%', xl: '450px' }}
+      boxShadow='0px 0px 10px 0px #000000'
       className={gothamBook.className}
     >
       <Flex justify='space-between'>
@@ -265,90 +266,96 @@ const CurrentFaction = () => {
       {status === 'loading' ? (
         <Box padding={6}>
           <Center><SkeletonCircle size='20' startColor='#ccc' /></Center>
-          <SkeletonText mt='4' noOfLines={2} spacing='4' skeletonHeight='2' startColor='#ccc' />
+          <SkeletonText mt={4} noOfLines={2} spacing='4' skeletonHeight='2' startColor='#ccc' />
+          <SkeletonText mt={8} noOfLines={2} spacing='4' skeletonHeight='2' startColor='#ccc' />
+          <SkeletonText mt={8} noOfLines={2} spacing='4' skeletonHeight='2' startColor='#ccc' />
         </Box>
       ) : status === 'error' ? (
         <Center>
           <Text>{(error as any).message}</Text>
         </Center>
-      ) : !!factionData?.faction ? (
-        <VStack>
-          <Image
-            src={factionData.faction.image}
-            w='150px'
-            rounded='lg'
-          />
-          <Stack direction='row' align='center'>
-            <Text fontSize='lg' fontWeight='bold'>{factionData.faction.name}</Text>
-            <IconButton
-              aria-label='Edit Faction'
-              icon={<EditIcon />}
-              variant='ghost'
-              color={'#FFD700'}
-              onClick={onOpenFaction}
-            />
-          </Stack>
-          <Box bg='#564D4A' p={2} rounded='lg' w='full'>
+      ) : (
+        <>
+          {!!factionData?.faction ? (
+            <VStack>
+              <Image
+                src={factionData.faction.image}
+                w='150px'
+                rounded='lg'
+              />
+              <Stack direction='row' align='center'>
+                <Text fontSize='lg' fontWeight='bold'>{factionData.faction.name}</Text>
+                <IconButton
+                  aria-label='Edit Faction'
+                  icon={<EditIcon />}
+                  variant='ghost'
+                  color={'#FFD700'}
+                  onClick={onOpenFaction}
+                />
+              </Stack>
+              <Box bg='#564D4A' p={2} rounded='lg' w='full'>
+                <SimpleGrid columns={2}>
+                  <VStack align='start' spacing={0} my='auto'>
+                    <Text fontSize='sm'>Current Season</Text>
+                    <Text fontSize='lg' fontWeight='bold'>{!!factionData.registration ? 'Registered' : 'Unregistered'}</Text>
+                  </VStack>
+                  {!factionData.registration && (
+                    <RdButton
+                      hideIcon={true}
+                      fontSize='lg'
+                      onClick={handleRegister}
+                      isLoading={isExecutingRegister}
+                      isDisabled={isExecutingRegister}
+                    >
+                      Register
+                    </RdButton>
+                  )}
+                </SimpleGrid>
+              </Box>
+            </VStack>
+          ) : (
+            <Center>
+              <VStack spacing={6} mb={2}>
+                <Text>You are not the owner of any faction yet</Text>
+                <RdButton
+                  stickyIcon={true}
+                  onClick={onOpenCreateFaction}
+                >
+                  Create Faction
+                </RdButton>
+              </VStack>
+            </Center>
+          )}
+
+          <Box bg='#564D4A' p={2} rounded='lg' w='full' mt={2}>
             <SimpleGrid columns={2}>
               <VStack align='start' spacing={0} my='auto'>
-                <Text fontSize='sm'>Current Season</Text>
-                <Text fontSize='lg' fontWeight='bold'>{!!factionData.registration ? 'Registered' : 'Unregistered'}</Text>
+                <Text fontSize='sm'>Available Troops</Text>
+                <HStack>
+                  <Text fontSize='lg' fontWeight='bold'>{factionData?.walletTroops}</Text>
+                  {isLocalEnv() && (
+                    <IconButton
+                      aria-label='Add Troops'
+                      icon={<AddIcon />}
+                      variant='outline'
+                      color={'#FFD700'}
+                      size='sm'
+                      onClick={handleAddTroops}
+                    />
+                  )}
+                </HStack>
+                <Text fontSize='sm' pt={4}>Faction Troops</Text>
+                <Text fontSize='lg' fontWeight='bold'>{factionData?.factionTroops}</Text>
               </VStack>
-              {!factionData.registration && (
-                <RdButton
-                  hideIcon={true}
-                  fontSize='lg'
-                  onClick={handleRegister}
-                  isLoading={isExecutingRegister}
-                  isDisabled={isExecutingRegister}
-                >
-                  Register
+              {!!factionData?.walletTroops && (
+                <RdButton hideIcon={true} fontSize='lg' onClick={onOpenDelegate} maxH='50px'>
+                  Delegate
                 </RdButton>
               )}
             </SimpleGrid>
           </Box>
-        </VStack>
-      ) : (
-        <Center>
-          <VStack spacing={6} mb={2}>
-            <Text>You are not the owner of any faction yet</Text>
-            <RdButton
-              stickyIcon={true}
-              onClick={onOpenCreateFaction}
-            >
-              Create Faction
-            </RdButton>
-          </VStack>
-        </Center>
+        </>
       )}
-
-      <Box bg='#564D4A' p={2} rounded='lg' w='full' mt={2}>
-        <SimpleGrid columns={2}>
-          <VStack align='start' spacing={0} my='auto'>
-            <Text fontSize='sm'>Available Troops</Text>
-            <HStack>
-              <Text fontSize='lg' fontWeight='bold'>{factionData?.walletTroops}</Text>
-              {isLocalEnv() && (
-                <IconButton
-                  aria-label='Add Troops'
-                  icon={<AddIcon />}
-                  variant='outline'
-                  color={'#FFD700'}
-                  size='sm'
-                  onClick={handleAddTroops}
-                />
-              )}
-            </HStack>
-            <Text fontSize='sm' pt={4}>Faction Troops</Text>
-            <Text fontSize='lg' fontWeight='bold'>{factionData?.factionTroops}</Text>
-          </VStack>
-          {!!factionData?.walletTroops && (
-            <RdButton hideIcon={true} fontSize='lg' onClick={onOpenDelegate} maxH='50px'>
-              Delegate
-            </RdButton>
-          )}
-        </SimpleGrid>
-      </Box>
 
       {!!factionData && (
         <>
