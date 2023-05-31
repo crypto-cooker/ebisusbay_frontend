@@ -29,6 +29,16 @@ export const getSeason = async (seasonOffset) => {
     throw error;
   }
 }
+
+export const getGameEndTime = async () => {
+  try{
+    var currentGame = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    return currentGame.data.data.endAt;
+  }
+  catch(error){
+    throw error;
+  }
+}
 export const getSeasonGameId = async () => {
   try{
     var data = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
