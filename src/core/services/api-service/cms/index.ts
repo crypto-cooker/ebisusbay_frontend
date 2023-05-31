@@ -53,6 +53,10 @@ class Cms {
   async getGlobalContext() {
     return this.ryoshiDynasties.getGlobalContext();
   }
+
+  async getUserContext(address: string, signature: string) {
+    return this.ryoshiDynasties.getUserContext(address, signature);
+  }
 }
 
 export default Cms;

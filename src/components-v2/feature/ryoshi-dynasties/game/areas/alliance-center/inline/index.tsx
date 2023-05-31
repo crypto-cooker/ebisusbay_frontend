@@ -19,22 +19,15 @@ import {
 import {AddIcon, ArrowBackIcon, EditIcon} from "@chakra-ui/icons";
 import localFont from "next/font/local";
 import RdButton from "../../../../components/rd-button";
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
-import {useQuery, useQueryClient} from "@tanstack/react-query";
-import {
-  addTroops,
-  getAllFactions,
-  getFactionsOwned,
-  getFactionsRegistered,
-  getFactionUndeployedArmies,
-  getProfileArmies
-} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {useQuery} from "@tanstack/react-query";
+import {addTroops, getAllFactions} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {getAuthSignerInStorage} from "@src/helpers/storage";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
-import {RdArmy, RdFaction} from "@src/core/services/api-service/types";
+import {RdFaction} from "@src/core/services/api-service/types";
 import EditFactionForm from "@src/Components/BattleBay/Areas/FactionForm";
 import CreateFactionForm from "@src/Components/BattleBay/Areas/FactionRegistrationForm";
 import DelegateForm from "@src/Components/BattleBay/Areas/DelegateForm";
@@ -42,6 +35,10 @@ import {Contract} from "ethers";
 import AllianceCenterContract from "@src/Contracts/AllianceCenterContract.json";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 
 const config = appConfig();
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
@@ -148,7 +145,7 @@ type FactionData = {
 const CurrentFaction = () => {
   const user = useAppSelector((state) => state.user);
   const [_, getSigner] = useCreateSigner();
-  const queryClient = useQueryClient();
+  const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   const { isOpen: isOpenFaction, onOpen: onOpenFaction, onClose: onCloseFaction } = useDisclosure();
   const { isOpen: isOpenCreateFaction, onOpen: onOpenCreateFaction, onClose: onCloseCreateFaction } = useDisclosure();
@@ -156,55 +153,18 @@ const CurrentFaction = () => {
 
   const [isExecutingRegister, setIsExecutingRegister] = useState(false);
 
-  const getUserOwnedFaction = async (): Promise<FactionData> => {
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      const response = await getFactionsOwned(user.address!.toLowerCase(), signatureInStorage);
-      console.log('RES', response);
-      // if (response.data.data.length) {
-      const faction = response.data.data[0];
-      const factionRegisteredData = await getFactionsRegistered(user.address!.toLowerCase(), signatureInStorage);
-      const factionTroopsData = await getFactionUndeployedArmies(user.address!.toLowerCase(), signatureInStorage);
-      const profileArmies = await getProfileArmies(user.address!.toLowerCase(), signatureInStorage);
-      const factionResponse = await getAllFactions();
-
-      return {
-        faction,
-        registration: factionRegisteredData.data.data[0] ?? null,
-        factionTroops: factionTroopsData,
-        walletTroops: profileArmies.data.data.reduce((p: number, n: RdArmy) => p + (n.troops ?? 0), 0),
-        allFactions: factionResponse
-      }
-      // }
-      // return response.data.data.length > 0 ? response.data.data[0] : null;
-    }
-
-    return {
-      faction: null,
-      registration: null,
-      factionTroops: 0,
-      walletTroops: 0,
-      allFactions: []
-    }
-  }
-
-  const {data: factionData, status, error} = useQuery({
-    queryKey: ['GetFactionData', user.address],
-    queryFn: getUserOwnedFaction,
+  const {data: allFactions, status, error} = useQuery({
+    queryKey: ['GetAllFactions'],
+    queryFn: getAllFactions,
     enabled: !!user.address,
   });
 
-  console.log('data', factionData);
-
-  const handleActionComplete = ()=> {
+  const handleActionComplete = async ()=> {
     onCloseFaction();
     onCloseCreateFaction();
     onCloseDelegate();
-    queryClient.invalidateQueries(['GetFactionData', user.address]);
+    await rdContext.refreshUser();
+    // queryClient.invalidateQueries(['GetAllFactions']);
   }
 
   const handleAddTroops = async () => {
@@ -219,7 +179,8 @@ const CurrentFaction = () => {
       try {
         const res = await addTroops(user.address!.toLowerCase(), signatureInStorage, 8);
         // console.log(res)
-        await queryClient.invalidateQueries(['GetFactionData', user.address]);
+        await rdContext.refreshUser();
+        // await queryClient.invalidateQueries(['GetFactionData', user.address]);
       } catch (error) {
         console.log(error)
       }
@@ -229,7 +190,7 @@ const CurrentFaction = () => {
   const handleRegister = async () => {
     if (!user.address) return;
 
-    if(!!factionData?.registration) {
+    if(!!rdContext.user?.season.faction) {
       console.log('Already Registered');
     } else {
       try {
@@ -276,15 +237,15 @@ const CurrentFaction = () => {
         </Center>
       ) : (
         <>
-          {!!factionData?.faction ? (
+          {!!rdContext.user?.faction ? (
             <VStack>
               <Image
-                src={factionData.faction.image}
+                src={rdContext.user.faction.image}
                 w='150px'
                 rounded='lg'
               />
               <Stack direction='row' align='center'>
-                <Text fontSize='lg' fontWeight='bold'>{factionData.faction.name}</Text>
+                <Text fontSize='lg' fontWeight='bold'>{rdContext.user.faction.name}</Text>
                 <IconButton
                   aria-label='Edit Faction'
                   icon={<EditIcon />}
@@ -297,9 +258,9 @@ const CurrentFaction = () => {
                 <SimpleGrid columns={2}>
                   <VStack align='start' spacing={0} my='auto'>
                     <Text fontSize='sm'>Current Season</Text>
-                    <Text fontSize='lg' fontWeight='bold'>{!!factionData.registration ? 'Registered' : 'Unregistered'}</Text>
+                    <Text fontSize='lg' fontWeight='bold'>{!!rdContext.user.season.faction ? 'Registered' : 'Unregistered'}</Text>
                   </VStack>
-                  {!factionData.registration && (
+                  {!rdContext.user.season.faction && (
                     <RdButton
                       hideIcon={true}
                       fontSize='lg'
@@ -327,44 +288,46 @@ const CurrentFaction = () => {
             </Center>
           )}
 
-          <Box bg='#564D4A' p={2} rounded='lg' w='full' mt={2}>
-            <SimpleGrid columns={2}>
-              <VStack align='start' spacing={0} my='auto'>
-                <Text fontSize='sm'>Available Troops</Text>
-                <HStack>
-                  <Text fontSize='lg' fontWeight='bold'>{factionData?.walletTroops}</Text>
-                  {isLocalEnv() && (
-                    <IconButton
-                      aria-label='Add Troops'
-                      icon={<AddIcon />}
-                      variant='outline'
-                      color={'#FFD700'}
-                      size='sm'
-                      onClick={handleAddTroops}
-                    />
-                  )}
-                </HStack>
-                <Text fontSize='sm' pt={4}>Faction Troops</Text>
-                <Text fontSize='lg' fontWeight='bold'>{factionData?.factionTroops}</Text>
-              </VStack>
-              {!!factionData?.walletTroops && (
-                <RdButton hideIcon={true} fontSize='lg' onClick={onOpenDelegate} maxH='50px'>
-                  Delegate
-                </RdButton>
-              )}
-            </SimpleGrid>
-          </Box>
+          {!!rdContext.user && (
+            <Box bg='#564D4A' p={2} rounded='lg' w='full' mt={2}>
+              <SimpleGrid columns={2}>
+                <VStack align='start' spacing={0} my='auto'>
+                  <Text fontSize='sm'>Available Troops</Text>
+                  <HStack>
+                    <Text fontSize='lg' fontWeight='bold'>{!!rdContext.user ? rdContext.user.season.troops.undeployed : 0}</Text>
+                    {isLocalEnv() && (
+                      <IconButton
+                        aria-label='Add Troops'
+                        icon={<AddIcon />}
+                        variant='outline'
+                        color={'#FFD700'}
+                        size='sm'
+                        onClick={handleAddTroops}
+                      />
+                    )}
+                  </HStack>
+                  <Text fontSize='sm' pt={4}>Faction Troops</Text>
+                  <Text fontSize='lg' fontWeight='bold'>{rdContext.user.season.troops.deployed}</Text>
+                </VStack>
+                {!!rdContext.user.season.troops.undeployed && (
+                  <RdButton hideIcon={true} fontSize='lg' onClick={onOpenDelegate} maxH='50px'>
+                    Delegate
+                  </RdButton>
+                )}
+              </SimpleGrid>
+            </Box>
+          )}
         </>
       )}
 
-      {!!factionData && (
+      {!!rdContext.user && (
         <>
-          {!!factionData.faction ? (
-            <EditFactionForm isOpen={isOpenFaction} onClose={onCloseFaction} faction={factionData.faction} handleClose={handleActionComplete} isRegistered={!!factionData.registration} />
+          {!!rdContext.user.faction ? (
+            <EditFactionForm isOpen={isOpenFaction} onClose={onCloseFaction} faction={rdContext.user.faction} handleClose={handleActionComplete} isRegistered={!!rdContext.user.season.faction} />
           ) : (
             <CreateFactionForm isOpen={isOpenCreateFaction} onClose={onCloseCreateFaction} handleClose={handleActionComplete} />
           )}
-          <DelegateForm isOpen={isOpenDelegate} onClose={onCloseDelegate} delegateMode='delegate' factions={factionData.allFactions} troops={factionData.factionTroops} setTotalTroops={factionData.walletTroops}/>
+          <DelegateForm isOpen={isOpenDelegate} onClose={onCloseDelegate} delegateMode='delegate' factions={[]} troops={rdContext.user.season.troops.deployed} setTotalTroops={rdContext.user.season.troops.undeployed}/>
         </>
       )}
 

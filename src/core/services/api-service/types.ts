@@ -32,6 +32,7 @@ export interface RyoshiDynastiesApi {
     claimDailyRewards(address: string, signature: string): Promise<any>
     requestSeasonalRewardsClaimAuthorization(address: string, amount: number, seasonId: number, signature: string): Promise<any>;
     getGlobalContext(): Promise<RyoshiConfig>;
+    getUserContext(address: string, signature: string): Promise<RdUserContext>;
 }
 
 export enum ListingState {
@@ -120,4 +121,17 @@ export interface RdArmy {
     profileId?: number;
     troops?: number;
     uuid: string;
+}
+
+export interface RdUserContext {
+    faction: RdFaction;
+    season: RdUserContextSeason;
+}
+
+interface RdUserContextSeason {
+    faction: RdFaction;
+    troops: {
+        deployed: number;
+        undeployed: number;
+    }
 }

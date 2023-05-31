@@ -16,14 +16,17 @@ import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useRouter} from "next/router";
 import {RyoshiDynastiesContext} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import {useQuery} from "@tanstack/react-query";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
+import {getAuthSignerInStorage} from "@src/helpers/storage";
+import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 
 const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | null}) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const user = useAppSelector((state) => state.user);
+  const queryClient = useQueryClient();
 
   const [currentPage, setCurrentPage] = useState<string>();
   const [previousPage, setPreviousPage] = useState<string>();
@@ -31,6 +34,9 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
   const { isOpen: isOpenWelcomeModal, onOpen: onOpenWelcomeModal, onClose: onCloseWelcomeModal } = useDisclosure();
   const { isOpen: isOpenErrorModal, onOpen: onOpenErrorModal, onClose: onCloseErrorModal } = useDisclosure();
   const authInitFinished = useAppSelector((state) => state.appInitialize.authInitFinished);
+
+  const [_, getSigner] = useCreateSigner();
+  const [signature, setSignature] = useState<string | null>(null);
 
   const { data: rdConfig, status: rdConfigFetchStatus, error: rdFetchError} = useQuery(
     ['RyoshiDynastiesContext'],
@@ -42,6 +48,19 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
     }
   );
 
+  const { data: rdUserContext, refetch: refetchUserContext} = useQuery(
+    ['RyoshiDynastiesUserContext', user.address],
+    async () => {
+      if (signature) {
+        return await ApiService.withoutKey().ryoshiDynasties.getUserContext(user.address!, signature)
+      }
+    },
+    {
+      refetchOnWindowFocus: false,
+      enabled: !!user.address && !!signature,
+    }
+  );
+
   const navigate = (page: string) => {
     setPreviousPage(currentPage)
     setCurrentPage(page)
@@ -50,6 +69,11 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
   const returnToPreviousPage = () => {
     setCurrentPage(previousPage)
   };
+
+  const refreshUserContext = async () => {
+    queryClient.invalidateQueries(['RyoshiDynastiesUserContext', user.address]);
+    refetchUserContext();
+  }
 
   const connectWalletPressed = async () => {
     if (user.needsOnboard) {
@@ -80,6 +104,22 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
     }
   }, [user.address, user.loadedFortuneBalance, user.loadedMitamaBalance]);
 
+  useEffect(() => {
+    async function getSig() {
+      let signatureInStorage = getAuthSignerInStorage()?.signature;
+      if (!signatureInStorage) {
+        const { signature } = await getSigner();
+        signatureInStorage = signature;
+      }
+      setSignature(signatureInStorage);
+    }
+    if (!!user.address) {
+      getSig();
+    } else {
+      setSignature(null);
+    }
+  }, [user.address]);
+
   return (
     <>
       {(rdConfigFetchStatus === "error" || rdConfigFetchStatus === "loading") ? (
@@ -109,7 +149,7 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
           )}
         </>
       ) : (
-        <RyoshiDynastiesContext.Provider value={{config: rdConfig!}}>
+        <RyoshiDynastiesContext.Provider value={{config: rdConfig!, user: rdUserContext, refreshUser: refreshUserContext}}>
           {currentPage === 'barracks' ? (
             <Barracks onBack={returnToPreviousPage} />
           ) : currentPage === 'battleMap' ? (
