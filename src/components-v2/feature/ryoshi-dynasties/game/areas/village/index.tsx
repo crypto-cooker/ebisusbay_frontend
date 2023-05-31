@@ -38,11 +38,11 @@ import {useAppSelector} from "@src/Store/hooks";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
 import AnnouncementBoardModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal";
-import AllianceCenterModal from "@src/Components/BattleBay/Areas/AllianceCenterModal";
 import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks";
 import PortalModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/portal";
 import {VillageHud} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/hud";
 import ImageService from "@src/core/services/image";
+import AllianceCenterInline from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline";
 
 interface VillageProps {
   onChange: (value: string) => void;
@@ -699,7 +699,7 @@ const Village = ({onChange}: VillageProps) => {
 
         <Box  position='absolute' top={0} left={0} p={4} >
           <Flex direction='row' justify='space-between' >
-            {allianceCenterOpen ? <AllianceCenterModal closeAllianceCenter={() => CloseAllianceCenter()}/> : <></>}
+            {allianceCenterOpen ? <AllianceCenterInline onClose={() => CloseAllianceCenter()}/> : <></>}
             {barracksOpen ? <Barracks onBack={() => CloseBarracks()}/> : <></>}
             {portalOpen ? <PortalModal onBack={() => ClosePortal()}/> : <></>}
         

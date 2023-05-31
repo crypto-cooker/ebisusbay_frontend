@@ -1,38 +1,17 @@
-import { useState, useEffect, useRef, useLayoutEffect} from "react";
+import {ReactElement, useEffect, useLayoutEffect, useState} from "react";
+import {Box, Button, Center, Flex, Spacer, Text, useDisclosure, VStack} from '@chakra-ui/react';
+import FactionForm from '../../../../../../../Components/BattleBay/Areas/FactionForm';
+import DelegateForm from '../../../../../../../Components/BattleBay/Areas/DelegateForm';
+import FactionRegistrationForm from '../../../../../../../Components/BattleBay/Areas/FactionRegistrationForm';
 import {
-  Heading,
-  useDisclosure,
-  Image,
-  Box,
-  Center,
-  Flex,
-  Button,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
-  Text,
-  VStack,
-  Spacer,
-  ModalOverlay
-
-} from '@chakra-ui/react';
-import FactionForm from './FactionForm';
-import DelegateForm from './DelegateForm';
-import FactionRegistrationForm from './FactionRegistrationForm';
-import {
-  getFactionsOwned, 
-  getFactionsRegistered, 
-  getFactionUndeployedArmies, 
-  getProfileArmies,
-  getAllFactions, 
-   addTroops 
-  } from "@src/core/api/RyoshiDynastiesAPICalls";
-import { getAuthSignerInStorage } from '@src/helpers/storage';
-import {useSelector} from "react-redux";
+  addTroops,
+  getAllFactions,
+  getFactionsOwned,
+  getFactionsRegistered,
+  getFactionUndeployedArmies,
+  getProfileArmies
+} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {getAuthSignerInStorage} from '@src/helpers/storage';
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 
 //contracts
@@ -42,18 +21,25 @@ import {toast} from "react-toastify";
 import AllianceCenterContract from "@src/Contracts/AllianceCenterContract.json";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
 
-import { useFormik } from 'formik';
-import FactionPfp from './FactionIconUpload';
+import {useFormik} from 'formik';
+import FactionPfp from '../../../../../../../Components/BattleBay/Areas/FactionIconUpload';
 import localFont from 'next/font/local';
-const gothamBook = localFont({ src: '../../../fonts/Gotham-Book.woff2' })
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 
 import {io} from "socket.io-client";
+import {useAppSelector} from "@src/Store/hooks";
+import {RdArmy, RdFaction} from "@src/core/services/api-service/types";
 
-const AllianceCenterModal = ({closeAllianceCenter}) => {
+const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
+
+interface AllianceCenterModalProps {
+  closeAllianceCenter: () => void;
+}
+
+const AllianceCenterModal = ({closeAllianceCenter}: AllianceCenterModalProps) => {
 
   const config = appConfig();
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
   const [isLoading, getSigner] = useCreateSigner();
   const [hasFaction, setHasFaction] = useState(false);
 
@@ -62,13 +48,13 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
   // const GetRegistrationColor = (registered) => {if(registered) {return 'green'} else {return 'red'}}
   // const GetRegisterButtonText = (registered) => {if(registered) {return 'Registered'} else {return 'Register'}}
 
-  const [registeredFactions, setRegisteredFactions] = useState([]);
-  const [playerFaction, setPlayerFaction] = useState([]);
+  const [registeredFactions, setRegisteredFactions] = useState<RdFaction[]>([]);
+  const [playerFaction, setPlayerFaction] = useState<RdFaction[]>([]);
   const [factions, setFactions] = useState([]);
 
-  const [selectedFaction, setSelectedFaction] = useState(0);
-  const [factionsDisplay, setFactionDisplay] = useState([]);
-  const [createFactionButton, setCreateFactionButton] = useState([]);
+  const [selectedFaction, setSelectedFaction] = useState<RdFaction>();
+  const [factionsDisplay, setFactionDisplay] = useState<ReactElement[]>([]);
+  const [createFactionButton, setCreateFactionButton] = useState<ReactElement>();
   const [factionRegistered, setFactionRegistered] = useState(false);
   const [isExecuting, setIsExecuting] = useState(false);
   
@@ -79,6 +65,8 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
   const [factionTroops, setFactionTroops] = useState(0);
 
   const RefreshTroopsAndFactions = async () => {
+    if (!user.address) return;
+
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
@@ -100,8 +88,8 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
           // console.log('player has no faction')
           const data = await getProfileArmies(user.address.toLowerCase(), signatureInStorage);
           var totalTroops = 0;
-          data.data.data.forEach((element) => {
-            totalTroops += element.troops;
+          data.data.data.forEach((element: RdArmy) => {
+            totalTroops += element.troops ?? 0;
           })
           setWalletTroops(totalTroops)
         }
@@ -113,6 +101,8 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
   }
 
   const AddTroops = async () => {
+    if (!user.address) return;
+
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
@@ -141,14 +131,14 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
     GetFactions();
   }
   const formikProps = useFormik({
-    // onSubmit,
+    onSubmit: () => console.log('submit'),
     // validationSchema: userInfoValidation,
-    // initialValues: getInitialValues(),
+    initialValues: {},
     enableReinitialize: true,
   });
 
   //return wheter the faction exists in the registered factions array
-  const isRegistered = (factionId) => {
+  const isRegistered = (factionId: number) => {
     for (let i = 0; i < registeredFactions.length; i++) {
       if (registeredFactions[i].id === factionId) {
         return true;
@@ -157,7 +147,9 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
     return false;
   }
 
-  const RegistrationAction = async (factionId) => {
+  const RegistrationAction = async (factionId: number) => {
+    if (!user.address) return;
+
     if(isRegistered(factionId)) {
       console.log('Already Registered')
       GetFactions();
@@ -202,10 +194,12 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
     GetFactions();
   }, [modalOpen]);
 
-  const handleTJUploadSuccess = (e) => {
+  const handleTJUploadSuccess = (e: any) => {
     GetFactions();
   }
   const GetFactions = async () => {
+    if (!user.address) return;
+
     // console.log('Getting Factions');
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
@@ -241,8 +235,8 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
           const data = await getProfileArmies(user.address.toLowerCase(), signatureInStorage);
           // console.log(data)
           var totalTroops = 0;
-          data.data.data.forEach((element) => {
-            totalTroops += element.troops;
+          data.data.data.forEach((element: RdArmy) => {
+            totalTroops += element.troops ?? 0;
           })
           setWalletTroops(totalTroops)
         }
@@ -253,10 +247,10 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
   }
 
   useEffect(() => {
-    if(selectedFaction !== 0) {
-      handleAddClick();
-      onOpenFaction();
-    }
+    // if(!!selectedFaction) {
+    //   handleAddClick();
+    //   onOpenFaction();
+    // }
   }, [selectedFaction]);
 
 
@@ -315,7 +309,7 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
           </VStack>
         </>
         )))
-        setCreateFactionButton()
+        setCreateFactionButton(undefined)
     }
     else
     {
@@ -349,7 +343,7 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
       console.log('disconnected')
     }
 
-    function onFactionSubscriptionEvent(data) {
+    function onFactionSubscriptionEvent(data: any) {
       console.log('FACTION_SUBSCRIPTION', data)
       // JSON.parse(data).forEach((faction) => {
       //   if (faction.id === selectedFaction.id) {
@@ -390,7 +384,7 @@ const AllianceCenterModal = ({closeAllianceCenter}) => {
         >
     <VStack>
       {/* <ModalOverlay /> */}
-      <FactionForm isOpen={isOpenFaction} onClose={onCloseFaction} faction={selectedFaction} handleClose={handleClose} isRegistered={factionRegistered}/>
+      <FactionForm isOpen={isOpenFaction} onClose={onCloseFaction} faction={0} handleClose={handleClose} isRegistered={factionRegistered}/>
       <FactionRegistrationForm isOpen={isOpenRegister} onClose={onCloseRegister} handleClose={handleClose}/>
       <DelegateForm isOpen={isOpen} onClose={onClose} delegateMode={delegateMode} factions={factions} troops={walletTroops} setTotalTroops = {setWalletTroops}/>
 

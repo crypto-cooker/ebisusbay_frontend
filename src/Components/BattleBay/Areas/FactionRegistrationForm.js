@@ -71,7 +71,7 @@ const FactionRegistrationForm = ({ isOpen, onClose, handleClose}) => {
       <ModalContent>
         {!isLoading ? (
           <>
-          <ModalHeader className="text-center">Register a Clan</ModalHeader>
+          <ModalHeader className="text-center">Create a Faction</ModalHeader>
             <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
             <ModalBody>
               <Flex alignContent={'center'} justifyContent={'center'}>

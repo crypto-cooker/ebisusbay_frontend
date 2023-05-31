@@ -111,3 +111,13 @@ export interface RdControlPointLeaderBoard {
     name: string;
     totalTroops: number;
 }
+
+export interface RdArmy {
+    controlPointId?: number;
+    factionId: number;
+    id: number;
+    parentId: number;
+    profileId?: number;
+    troops?: number;
+    uuid: string;
+}
