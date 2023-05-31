@@ -68,9 +68,6 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
       refetchOnWindowFocus: false
     }
   );
-
-  console.log('GAME', rdGameContext);
-
   const navigate = (page: string) => {
     setPreviousPage(currentPage)
     setCurrentPage(page)
