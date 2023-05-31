@@ -35,12 +35,6 @@ const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
     const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long", day: "numeric"}
     return new Date(dateString).toLocaleDateString(undefined, options)
   }
-  const parseFactionName = (name: string) => {
-    if(name.length > stringProps?.stringLength) {
-      return name.substring(0, stringProps?.stringLength) + '...';
-    }
-    return name;
-  }
   const stringProps = useBreakpointValue<StringProps>(
     {
       base: {
@@ -63,6 +57,13 @@ const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
       }
     }
   );
+  const parseFactionName = (name: string) => {
+    if(name.length > stringProps?.stringLength!) {
+      return name.substring(0, stringProps?.stringLength) + '...';
+    }
+    return name;
+  }
+  
 
   useEffect(() => {
     if(controlPoint.leaderBoard !== undefined)
