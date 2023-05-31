@@ -57,6 +57,10 @@ class Cms {
   async getUserContext(address: string, signature: string) {
     return this.ryoshiDynasties.getUserContext(address, signature);
   }
+
+  async getGameContext() {
+    return this.ryoshiDynasties.getGameContext();
+  }
 }
 
 export default Cms;

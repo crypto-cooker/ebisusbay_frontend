@@ -61,6 +61,16 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
     }
   );
 
+  const { data: rdGameContext, refetch: refetchGameContext} = useQuery(
+    ['RyoshiDynastiesGameContext', user.address],
+    () => ApiService.withoutKey().ryoshiDynasties.getGameContext(),
+    {
+      refetchOnWindowFocus: false
+    }
+  );
+
+  console.log('GAME', rdGameContext);
+
   const navigate = (page: string) => {
     setPreviousPage(currentPage)
     setCurrentPage(page)
@@ -73,6 +83,11 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
   const refreshUserContext = async () => {
     queryClient.invalidateQueries(['RyoshiDynastiesUserContext', user.address]);
     refetchUserContext();
+  }
+
+  const refreshGameContext = async () => {
+    queryClient.invalidateQueries(['RyoshiDynastiesGameContext']);
+    refetchGameContext();
   }
 
   const connectWalletPressed = async () => {
@@ -149,7 +164,15 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
           )}
         </>
       ) : (
-        <RyoshiDynastiesContext.Provider value={{config: rdConfig!, user: rdUserContext, refreshUser: refreshUserContext}}>
+        <RyoshiDynastiesContext.Provider
+          value={{
+            config: rdConfig!,
+            user: rdUserContext,
+            refreshUser: refreshUserContext,
+            game: rdGameContext,
+            refreshGame: refreshGameContext
+          }}
+        >
           {currentPage === 'barracks' ? (
             <Barracks onBack={returnToPreviousPage} />
           ) : currentPage === 'battleMap' ? (

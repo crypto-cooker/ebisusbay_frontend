@@ -6,7 +6,7 @@ import {CloseIcon} from "@chakra-ui/icons";
 const gothamBook = localFont({ src: '../../../../fonts/Gotham-Book.woff2' })
 
 
-interface PurchaseDialogProps {
+interface RdModalProps {
   isOpen: boolean;
   onClose?: () => void;
   children?: ReactNode;
@@ -17,7 +17,7 @@ interface PurchaseDialogProps {
   isCentered?: boolean;
 }
 
-const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, isCentered, children}: PurchaseDialogProps) => {
+const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, isCentered, children}: RdModalProps) => {
   const [hasUtilBtn, setHasUtilBtn] = useState(false);
   const [maskOuterClass, setMaskOuterClass] = useState('');
   const [maskInnerClass, setMaskInnerClass] = useState('');

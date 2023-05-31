@@ -33,6 +33,7 @@ export interface RyoshiDynastiesApi {
     requestSeasonalRewardsClaimAuthorization(address: string, amount: number, seasonId: number, signature: string): Promise<any>;
     getGlobalContext(): Promise<RyoshiConfig>;
     getUserContext(address: string, signature: string): Promise<RdUserContext>;
+    getGameContext(): Promise<RdGameContext>;
 }
 
 export enum ListingState {
@@ -134,4 +135,24 @@ interface RdUserContextSeason {
         deployed: number;
         undeployed: number;
     }
+}
+
+export interface RdGameContext {
+    season: RdSeason;
+    game: RdGame;
+}
+
+interface RdGameBase {
+    id: number;
+    uuid: string;
+    startAt: string;
+    endAt: string;
+}
+
+interface RdGame extends RdGameBase {
+    parent: RdSeason;
+}
+
+interface RdSeason extends RdGameBase {
+    map?: any;
 }

@@ -1,5 +1,5 @@
 import CmsRepository from "@src/core/services/api-service/cms/repositories/index";
-import {BankStakeNft, BarracksStakeNft, RdUserContext} from "@src/core/services/api-service/types";
+import {BankStakeNft, BarracksStakeNft, RdGameContext, RdUserContext} from "@src/core/services/api-service/types";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 
 class RyoshiDynastiesRepository extends CmsRepository {
@@ -96,6 +96,11 @@ class RyoshiDynastiesRepository extends CmsRepository {
         }
     });
     return response.data.data as RdUserContext;
+  }
+
+  async getGameContext() {
+    const response = await this.cms.get('ryoshi-dynasties/context/game');
+    return response.data.data as RdGameContext;
   }
 }
 

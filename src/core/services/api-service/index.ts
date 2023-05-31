@@ -138,4 +138,8 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
   async getUserContext(address: string, signature: string) {
     return this.cms.getUserContext(address, signature);
   }
+
+  async getGameContext() {
+    return this.cms.getGameContext();
+  }
 }
