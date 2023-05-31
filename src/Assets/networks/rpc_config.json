@@ -20755,6 +20755,30 @@
         "kyc": false,
         "verified": false
       }
+    },
+    {
+      "name": "MiCROchips Chipset",
+      "slug": "microchips-chipset",
+      "multiToken": false,
+      "address": "0x3640a7750759a80c5Edd7434CCF3Cbaecff5D7F8",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Special editing MiCROchip for collecting all 6 variations of a character and completing the chipset.   Holding this Special Character along with the 6 character variations allows additional benefits within the MiCROchips mainframe",
+        "avatar": "/img/collections/microchips-chipset/avatar.webp",
+        "banner": "/img/collections/microchips-chipset/banner.webp",
+        "card": "/img/collections/microchips-chipset/card.webp",
+        "website": "https://microchipsnft.com/",
+        "twitter": "https://twitter.com/MiCROchipsNFT",
+        "discord": "https://discord.gg/2xNHN7bTHP",
+        "medium": "https://microchips.gitbook.io/microchips/",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
     }
   ],
   "drops": [
