@@ -508,7 +508,7 @@ const Village = ({onChange}: VillageProps) => {
       base: {
         scale: 0.4,
         initialPosition: { x: -350, y: 50 },
-        minScale: 0.4
+        minScale: 0.2
       },
       sm: {
         scale: 0.5,

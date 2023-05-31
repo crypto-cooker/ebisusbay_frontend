@@ -41,16 +41,11 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   const imageRef4 = useRef();
 
   const [area, setAreas] = useState([]);
-  const [selectedControlPoint, setSelectedControlPoint] = useState(0);
-  const [pins, setPins] = useState([]);
-  const [explosion, setExplosion] = useState<ReactElement>();
-  // const explosionImage = useRef<HTMLElement>();
-  // const [playExlplosion, setPlayExplosion] = useState(false);
+  const [flags, setFlags] = useState([]);
 
-  // const controlPoints = [{id:4, title:"Southern Trident",pinName: "pin-Southern-Trident",marginTop: '32%', marginLeft: '20%'},
-  //                        {id:3, title:"Dragonland",pinName: "pin-Dragonland",marginTop: '17%', marginLeft: '24%'},
-  //                        {id:2, title:"Dwarf Mines",pinName: "pin-Dwarf-Mines",marginTop: '32%', marginLeft: '47%'},
-  //                        {id:1, title:"Human Kingdoms",pinName: "pin-Human-Kingdoms",marginTop: '30%', marginLeft: '63%'}];
+  const [selectedControlPoint, setSelectedControlPoint] = useState(0);
+  // const [pins, setPins] = useState([]);
+  const [explosion, setExplosion] = useState<ReactElement>();
 
   function getWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
@@ -135,7 +130,6 @@ const BattleMap = ({onChange}: BattleMapProps) => {
     // setPlayExplosion(!playExlplosion);
   }
 
-  // const [showExplosion, setShowExplosion] = useState(true);
   const [explosionOnPoint, setExplosionOnPoint] = useState(0);
 
   useEffect(() => {
@@ -202,27 +196,26 @@ const BattleMap = ({onChange}: BattleMapProps) => {
       setControlPoint(data);
   });
   }
-  // useEffect(() => {
-  //   console.log(isLoading);
-  // }, [isLoading]);
 
   useEffect(() => {
-    // SetUpMap();
-    // setFlagSize(windowWidth/30 + "px");
-    // setBuildingSize(windowWidth/20 + "px");
-  }, [controlPoint]);
+    if(area.length === 0) return;
 
-  useEffect(() => {
-    // SetUpPins();
-    // randomlyPlayExplosion();
-    // PlayExplosion(59);
-    console.log('area', area);
+    setFlags(area.map((a: any) => {
+      // console.log('controlPoint.id', a.props.alt);
+      const left = a.props.coords.split(",")[0];
+      const top = a.props.coords.split(",")[1];
+      // console.log('left', left, 'top', top);
+      <Image
+        position="relative"
+        src='/img/battle-bay/fire.gif' 
+        width={1000}
+        height={1000}
+        left={left-(250*2.5)}
+        top={top-(207*2.5)}
+        zIndex="10"
+        />
+    }));
   }, [area]);
-
-  // useEffect(() => {
-  //     // <div style={{position:"absolute", marginTop: explosionPoint.marginTop, marginLeft: explosionPoint.marginLeft, zIndex:"9", pointerEvents:"none"}}>
-  //   // randomlyPlayExplosion();
-  // }, [playExlplosion, area]);
 
   useEffect(() => {
     SetUpMap();
@@ -298,31 +291,28 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   }
 
   const [mapInitialized, setMapInitialized] = useState(false);
-  const mapScale = useBreakpointValue(
-    {base: 0.15, sm: 0.6, md: 0.7, lg: 0.8, xl: 0.9, '2xl': 1},
-    {fallback: 'lg'}
-  )
+
   const mapProps = useBreakpointValue<MapProps>(
     {
       base: {
         scale: 0.15,
         initialPosition: { x: -325, y: -10 },
-        minScale: 0.15
+        minScale: 0.05
       },
       sm: {
         scale: 0.16,
         initialPosition: { x: -220, y: -150 },
-        minScale: 0.16
+        minScale: 0.10
       },
       md: {
         scale: 0.18,
         initialPosition: { x: -220, y: -150 },
-        minScale: 0.18
+        minScale: 0.10
       },
       lg: {
         scale: 0.20,
         initialPosition: { x: -220, y: -150 },
-        minScale: 0.20
+        minScale: 0.10
       },
       xl: {
         scale: 0.28,
@@ -336,12 +326,13 @@ const BattleMap = ({onChange}: BattleMapProps) => {
       }
     }
   );
- 
+
   useEffect(() => {
     setMapInitialized(true);
     GetAttackPrices();
   }, []);
 
+  //socket stuff
   const [isSocketConnected, setIsSocketConnected] = useState(false);
   useEffect(() => {
     if (!user.address) return;
@@ -413,19 +404,9 @@ const BattleMap = ({onChange}: BattleMapProps) => {
               <map name="image-map">
                 {area}
               </map>
-                {pins}
                 <Flex position="absolute" zIndex="9" width="100%" height="100%" pointerEvents='none'>
-                  {/* <Image
-                    ref={explosionImage}
-                    position="relative"
-                    src='/img/battle-bay/bld0.png' 
-                    width={0}
-                    height={0}
-                    left={0}
-                    top={0}
-                    zIndex="9"
-                    /> */}
-                    {explosion}
+                {flags}
+                  {explosion}
                 </Flex>
               </TransformComponent>
               </React.Fragment>
