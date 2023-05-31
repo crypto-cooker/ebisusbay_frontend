@@ -6,7 +6,7 @@ import {
   faCopy,
   faCrow,
   faExternalLinkAlt,
-  faHeart as faHeartSolid,
+  faHeart as faHeartSolid, faHeartBroken,
   faShareAlt,
   faSync
 } from '@fortawesome/free-solid-svg-icons';
@@ -360,7 +360,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
             setVoxelClaimed(isClaimed);
           } else if (isLadyWeirdApesCollection(address)) {
             apeInfo = await contract.infoLWAC(id);
-            const isClaimed = await voxelContract.isClaimed(id);
+            const isClaimed = await voxelContract.isClaimed(id+2500);
             setVoxelClaimed(isClaimed);
           } else if (isBabyWeirdApesCollection(address)) {
             apeInfo = await contract.infoBWAC(id);
@@ -690,16 +690,16 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                       <span className="fw-bold">This Lady Weird Ape can make {`${ladyWeirdApeChildren} ${ladyWeirdApeChildren === 1 ? 'baby' : 'babies'}`}</span>
                     </div>
                   )}
-                  {(isWeirdApesCollection(address) || isLadyWeirdApesCollection(address)) && voxelClaimed && (
+                  {(isWeirdApesCollection(address) || isLadyWeirdApesCollection(address)) && !voxelClaimed && (
                     <div className="d-flex flex-row align-items-center mb-4">
                       <LayeredIcon
-                        icon={faHeartSolid}
+                        icon={faHeartBroken}
                         bgColor={'#ffffff00'}
                         color={'#dc143c'}
                         inverse={false}
                         title={`This Weird Ape has claimed a Voxel Weird Ape`}
                       />
-                      <span className="fw-bold">This Weird Ape has claimed a Voxel Weird Ape</span>
+                      <span className="fw-bold">This Weird Ape has not yet claimed a Voxel Weird Ape</span>
                     </div>
                   )}
                   
