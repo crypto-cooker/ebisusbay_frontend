@@ -1,5 +1,5 @@
 import { Center, Flex } from "@chakra-ui/react";
-import React, {ReactElement, useEffect, useState} from 'react';
+import React, {ReactElement, useEffect, useState, useRef} from 'react';
 
 import {
   Table,
@@ -12,6 +12,7 @@ import {
   Button,
   useBreakpointValue,
   TableContainer,
+  Text
 } from '@chakra-ui/react';
 import {getWeekEndDate} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {RdControlPoint} from "@src/core/services/api-service/types";
@@ -26,7 +27,7 @@ const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
   const [area, setAreas] = useState<ReactElement>();
   const [weekEndDate, setWeekEndDate] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
-
+  const ImageRef1 = useRef(null);
   const GetWeekEndDate = async () => {
     const timestamp = await getWeekEndDate();
     setWeekEndDate(formatDate(timestamp));
@@ -38,7 +39,7 @@ const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
   const stringProps = useBreakpointValue<StringProps>(
     {
       base: {
-        stringLength: 20,
+        stringLength: 15,
       },
       sm: {
         stringLength: 30,
@@ -72,9 +73,18 @@ const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
       setAreas(<Tbody>
         {controlPoint.leaderBoard.filter((faction, index) => index < 5).map((faction, index ) => 
       (<Tr key={index}>
-        <Td textAlign='center'>{index+1}</Td>
-        <Td textAlign='center'>{parseFactionName(faction.name)}</Td>
-        <Td textAlign='center'>{faction.totalTroops}</Td>
+        <img
+          width={40}
+          height={40}
+         src={faction.image}></img>
+        <Td  textAlign='center'>
+        <Text
+          fontSize={{base: 14, sm: 14}}
+          >{faction.totalTroops}</Text></Td>
+        <Td  textAlign='center'>
+          <Text
+          fontSize={{base: 14, sm: 14}}
+          >{parseFactionName(faction.name)}</Text></Td>
       </Tr>))}</Tbody>)
       setIsLoaded(true);
     }
@@ -89,8 +99,8 @@ const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
   return (
     <>
     <Flex 
-       marginLeft='8'
-       marginRight='8'
+       marginLeft='4'
+       marginRight='4'
        >
     {isLoaded ? (
       <>
@@ -99,18 +109,16 @@ const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
         <Table size='m'>
           <Thead>
             <Tr>
-              <Th textAlign='center' textColor='#a0aec0'>Rank</Th>
-              <Th textAlign='center' textColor='#a0aec0'>Faction</Th>
+              <Th textAlign='center' textColor='#a0aec0'></Th>
               <Th textAlign='center' textColor='#a0aec0'>Troops</Th>
+              <Th textAlign='center' textColor='#a0aec0'>Faction</Th>
             </Tr>
           </Thead>
           {area}
           </Table>
       </TableContainer>
       <Flex 
-       marginTop='12'
-       marginLeft='8'
-       marginRight='8'
+       marginTop='8'
        marginBottom='8'
        >
         <p>
