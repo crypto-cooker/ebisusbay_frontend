@@ -20738,7 +20738,7 @@
       "multiToken": false,
       "address": "0xf038C0cb2935FB8bf9b6e47bCA1df0835f359F92",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "MiCROchips is a 1500 collection made up from 250 individually designed characters with 6 variations. As well as being a unique PFP, MiCROchips act as your ticket to our computer world featuring games, soft staking and revenue sharing. With a mobile game developed pre mint and a web3 battle game about to go into development, it's prime time to join the mainframe.",
         "avatar": "/img/collections/microchips/avatar.webp",
