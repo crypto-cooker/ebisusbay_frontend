@@ -27494,8 +27494,16 @@
       "verification": {
         "doxx": false,
         "kyc": true,
-        "escrow": false,
+        "escrow": true,
         "verified": true
+      },
+      "escrow": {
+        "description": "15% of mint funds to be released to the Cronos Towers NFT project at mint. The remaining funds to be released in 3 equal installments upon:",
+        "milestones": [
+          "Staking is released for holders",
+          "The Towers Metaverse is released and playable",
+          "The project completes at least 5 giveaways"
+        ]
       }
     },
     {
@@ -27533,16 +27541,8 @@
       "verification": {
         "doxx": false,
         "kyc": true,
-        "escrow": true,
+        "escrow": false,
         "verified": true
-      },
-      "escrow": {
-        "description": "15% of mint funds to be released to the Cronos Towers NFT project at mint. The remaining funds to be released in 3 equal installments upon:",
-        "milestones": [
-          "Staking is released for holders",
-          "The Towers Metaverse is released and playable",
-          "The project completes at least 5 giveaways"
-        ]
       }
     }
   ]
