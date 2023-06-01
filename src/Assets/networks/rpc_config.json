@@ -20515,7 +20515,7 @@
       "name": "Cronos Towers",
       "slug": "cronos-towers",
       "multiToken": false,
-      "address": "",
+      "address": "0x37f25F400983256e84c39749d05d65fD96Ca461d",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -27471,7 +27471,7 @@
         "twitter": "https://twitter.com/cro_towers",
         "discord": "https://discord.gg/crotowers"
       },
-      "address": "",
+      "address": "0x37f25F400983256e84c39749d05d65fD96Ca461d",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 60,
       "totalSupply": 1234,
@@ -27533,8 +27533,16 @@
       "verification": {
         "doxx": false,
         "kyc": true,
-        "escrow": false,
+        "escrow": true,
         "verified": true
+      },
+      "escrow": {
+        "description": "15% of mint funds to be released to the Cronos Towers NFT project at mint. The remaining funds to be released in 3 equal installments upon:",
+        "milestones": [
+          "Staking is released for holders",
+          "The Towers Metaverse is released and playable",
+          "The project completes at least 5 giveaways"
+        ]
       }
     }
   ]
