@@ -96,7 +96,9 @@ const Barracks = ({onBack, battleRewards}: BarracksProps) => {
         <div style={{ margin: '8px 24px' }}>
         <Center>
         <StakeNfts isOpen={isOpenStakeNFTs} onClose={onCloseStakeNFTs} />
-        <ClaimRewards isOpen={isOpenClaimRewards} onClose={onCloseClaimRewards} battleRewards={battleRewards}/>
+        {!!battleRewards && (
+          <ClaimRewards isOpen={isOpenClaimRewards} onClose={onCloseClaimRewards} battleRewards={battleRewards}/>
+        )}
       <Container>
 
       <VStack
