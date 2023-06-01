@@ -25,7 +25,7 @@ import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-
 import {Contract, ethers} from "ethers";
 import {ApiService} from "@src/core/services/api-service";
 import NextApiService from "@src/core/services/api-service/next";
-import {getDailyRewards, getGameTokens} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {getDailyRewards, getGameTokens, getBattleRewards} from "@src/core/api/RyoshiDynastiesAPICalls";
 
 import {getAuthSignerInStorage} from '@src/helpers/storage';
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
@@ -78,7 +78,7 @@ const Village = ({onChange}: VillageProps) => {
   const { isOpen: isOpenAnnouncementBoard, onOpen: onOpenAnnouncementBoard, onClose: onCloseAnnouncementBoard } = useDisclosure();
   // const { isOpen: isOpenAllianceCenter, onOpen: onOpenAllianceCenter, onClose: onCloseAllianceCenter } = useDisclosure();
   const { isOpen: isOpenDailyCheckin, onOpen: onOpenDailyCheckin, onClose: onCloseDailyCheckin } = useDisclosure();
-
+  const [battleRewards, setBattleRewards] = useState<any[]>([]);
   useEffect(() => {
     if (transformComponentRef.current) {
       const { zoomToElement } = transformComponentRef.current as any;
@@ -142,6 +142,23 @@ const Village = ({onChange}: VillageProps) => {
         const receipt = await tx.wait();
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
 
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+  const CheckForGameTokens = async () => {
+    if (!user.address) return;
+
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      try {
+        const data = await getBattleRewards(user.address.toLowerCase(), signatureInStorage);
+        setBattleRewards(data.data.data);
       } catch (error) {
         console.log(error)
       }
@@ -488,7 +505,8 @@ const Village = ({onChange}: VillageProps) => {
   useEffect(() => {
     // onOpenAnnouncementBoard();
     GetGameTokens();
-  }, [])
+    CheckForGameTokens();
+  }, [user.address])
 
   const SetUpButtons = async () => {
     setPins(buttonsNames.map((button, i) =>
@@ -705,7 +723,7 @@ const Village = ({onChange}: VillageProps) => {
         <Box  position='absolute' top={0} left={0} p={4} >
           <Flex direction='row' justify='space-between' >
             {allianceCenterOpen ? <AllianceCenterInline onClose={() => CloseAllianceCenter()}/> : <></>}
-            {barracksOpen ? <Barracks onBack={() => CloseBarracks()}/> : <></>}
+            {barracksOpen ? <Barracks onBack={() => CloseBarracks()} battleRewards={battleRewards}/> : <></>}
             {portalOpen ? <PortalModal onBack={() => ClosePortal()}/> : <></>}
         
         </Flex>

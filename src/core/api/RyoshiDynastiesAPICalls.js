@@ -32,7 +32,7 @@ export const getSeason = async (seasonOffset) => {
 
 export const getGameEndTime = async () => {
   try{
-    var currentGame = await api.get(baseURL + "api/ryoshi-dynasties/games/0");
+    var currentGame = await api.get("ryoshi-dynasties/games/0");
     return currentGame.data.data.endAt;
   }
   catch(error){
@@ -400,6 +400,24 @@ export const getGameTokens = async (address, signature) => {
 export const getRewardsStreak = async (address, signature) => {
   try{
     return await api.get("ryoshi-dynasties/game-tokens/daily-reward/next/?", 
+      {params: {address, signature}});
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const getBattleRewards = async (address, signature) => {
+  try{
+    return await api.get("ryoshi-dynasties/game-tokens/battle-reward?", 
+      {params: {address, signature}});
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const claimBattleRewards = async (address, signature) => {
+  try{
+    return await api.get("ryoshi-dynasties/game-tokens/battle-reward?", 
       {params: {address, signature}});
   }
   catch(error){

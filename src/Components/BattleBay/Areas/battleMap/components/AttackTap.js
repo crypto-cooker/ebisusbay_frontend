@@ -29,11 +29,12 @@ import Button from "@src/Components/components/Button";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
-import {attack, getFactionsOwned, getProfileArmies, getGameTokens } from "@src/core/api/RyoshiDynastiesAPICalls";
+import {attack, getFactionsOwned, getProfileArmies, getBattleRewards } from "@src/core/api/RyoshiDynastiesAPICalls";
 import { createSuccessfulTransactionToastContent } from '@src/utils';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import DailyCheckinModal from "@src/components-v2/feature/ryoshi-dynasties/game/modals/daily-checkin";
+import ClaimRewards from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/claim-rewards';
 
 //contracts
 import {Contract, ethers, BigNumber} from "ethers";
@@ -109,6 +110,8 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
   }
 
   const { isOpen: isOpenDailyCheckin, onOpen: onOpenDailyCheckin, onClose: onCloseDailyCheckin } = useDisclosure();
+  const { isOpen: isOpenClaimRewards, onOpen: onOpenClaimRewards, onClose: onCloseClaimRewards} = useDisclosure();
+  const [battleRewards, setBattleRewards] = useState([]);
 
   //current attackID
   // const [attackId, setAttackId] = useState(0);
@@ -294,11 +297,8 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
     }
     if (signatureInStorage) {
       try {
-        const data = await getGameTokens(user.address.toLowerCase(), signatureInStorage);
-        if(data.data.data.length > 0){
-          //has battle rewards, display claim button and show rewards
-          console.log("has battle rewards");
-        }
+        const data = await getBattleRewards(user.address.toLowerCase(), signatureInStorage);
+        setBattleRewards(data.data.data);
       } catch (error) {
         console.log(error)
       }
@@ -493,6 +493,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
     CheckForKoban();
     GetPlayerOwnedFaction();
     GetPlayerArmies();
+    CheckForBattleRewards();
   }, [])
 
   useEffect(() => {
@@ -761,9 +762,9 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
         <Center>
           <Flex justifyContent='space-between' w='90%' >
             <Text fontSize={'12px'}>Your $Koban: {koban}</Text>
-            {/* <Text fontSize={'12px'} title="When attacking, a D6 roll is made for both the attacker and the defender. 
-                The lower roll (ties going to defender) loses a troop. This continues until one 
-                  side has run out of troops">How are Attacks Calculated? (Hover for info)</Text> */}
+            {!battleRewards.tokenIds ?  (<></>) :(
+              <RdButton onClick={() => onOpenClaimRewards()}>Claim Rewards will move</RdButton>
+            )}
           </Flex>
         </Center>
       </div>
@@ -893,6 +894,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
           </Center>
           
       <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin}/>
+      <ClaimRewards isOpen={isOpenClaimRewards} onClose={onCloseClaimRewards} battleRewards={battleRewards}/>
 
         <Spacer m='4' />
 
