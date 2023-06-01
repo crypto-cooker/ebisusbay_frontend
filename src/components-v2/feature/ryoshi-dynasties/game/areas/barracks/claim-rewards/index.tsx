@@ -75,8 +75,8 @@ const handleClaim = useCallback(async () => {
     onClose();
   }
   useEffect(() => {
-    console.log("battleRewards: ", battleRewards);
-    console.log("battleRewards.tokenIds: ", battleRewards.tokenIds);
+    // console.log("battleRewards: ", battleRewards);
+    // console.log("battleRewards.tokenIds: ", battleRewards.tokenIds);
   }, [battleRewards])
 
   return (

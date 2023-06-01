@@ -13,7 +13,9 @@ const ReturnToVillageButton = ({onBack}: ReturnToVillageButtonProps) => {
   return (
     <Box position='absolute' top={0} left={0} p={4}  pointerEvents='none' >
       <Flex direction='row' justify='space-between' >
-        <Box mb={4} bg='#272523EE' p={2} rounded='md' w={{base: '345px', sm: '200px'}}>
+        <Box mb={4} 
+        // bg='#272523EE' 
+        p={2} rounded='md' w={{base: '345px', sm: '200px'}}>
           <Button
             color='white'
             bg='#C17109'
