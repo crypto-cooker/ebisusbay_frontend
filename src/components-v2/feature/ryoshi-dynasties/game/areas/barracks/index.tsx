@@ -23,7 +23,7 @@ const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' 
 
 interface BarracksProps {
   onBack: () => void;
-  battleRewards: any;
+  battleRewards?: any;
 }
 
 const Barracks = ({onBack, battleRewards}: BarracksProps) => {
