@@ -85,6 +85,34 @@ class RyoshiDynasties {
       }
     });
   }
+
+  async stakingAccounts(walletAddress: string) {
+    const query = `
+      query StakingAccountsQuery($address: String) {
+        stakingAccounts(where: {id: $address}) {
+          id
+          totalStaked
+          vaults(where: {open: true}, first: 50, orderBy: endTime, orderDirection: desc) {
+            balance
+            id
+            index
+            length
+            open
+            startTime
+            endTime
+            vaultId
+          }
+        }
+      }
+    `;
+
+    return this.apollo.query({
+      query: gql(query),
+      variables: {
+        address: walletAddress.toLowerCase(),
+      }
+    });
+  }
 }
 
 export default RyoshiDynasties;

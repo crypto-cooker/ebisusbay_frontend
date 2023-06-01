@@ -5,7 +5,12 @@ import {OffersQueryParams} from "@src/core/services/api-service/mapi/queries/off
 import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
 import WalletNft from "@src/core/models/wallet-nft";
 import {Listing} from "@src/core/models/listing";
-import {Erc20Account, FortuneStakingAccount, StakedToken} from "@src/core/services/api-service/graph/types";
+import {
+    Erc20Account,
+    FortuneStakingAccount,
+    StakedToken,
+    StakingAccount
+} from "@src/core/services/api-service/graph/types";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 
 export interface Api {
@@ -34,6 +39,7 @@ export interface RyoshiDynastiesApi {
     getGlobalContext(): Promise<RyoshiConfig>;
     getUserContext(address: string, signature: string): Promise<RdUserContext>;
     getGameContext(): Promise<RdGameContext>;
+    getBankStakingAccount(address: string): Promise<StakingAccount | null>;
 }
 
 export enum ListingState {
