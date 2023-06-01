@@ -12,6 +12,7 @@ import {toast} from "react-toastify";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAward} from "@fortawesome/free-solid-svg-icons";
 import {CloseIcon} from "@chakra-ui/icons";
+import ShrineIcon from "@src/components-v2/shared/icons/shrine";
 
 const config = appConfig();
 
