@@ -11,8 +11,8 @@ interface BattleMapHUDProps {
 export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
     
   const user = useAppSelector((state) => state.user);
-  const Ref = useRef(null);
-  const Ref2 = useRef(null);
+  const Ref = useRef<NodeJS.Timer | null>(null);
+  const Ref2 = useRef<NodeJS.Timer | null>(null);
   const [timer, setTimer] = useState('00:00:00');
   const [troopTimer, setTroopTimer] = useState('00:00');
 
