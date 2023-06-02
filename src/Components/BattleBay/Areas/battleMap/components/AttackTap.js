@@ -165,7 +165,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
     )
   }
   const CheckIfAttackerFactionIsOwnedByPlayer = async () => {
-      setIsOwnerOfFaction(dataForm.attackersFaction == playerFaction.name);
+      setIsOwnerOfFaction(dataForm.attackersFaction == playerFaction?.name);
   }
   const GetPlayerArmies = async () => {
     let signatureInStorage = getAuthSignerInStorage()?.signature;
