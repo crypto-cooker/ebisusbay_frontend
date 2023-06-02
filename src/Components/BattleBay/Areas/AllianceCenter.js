@@ -23,8 +23,8 @@ import FactionForm from './FactionForm';
 import DelegateForm from './DelegateForm';
 import FactionRegistrationForm from './FactionRegistrationForm';
 import {
-  getFactionsOwned, 
-  getFactionsRegistered, 
+  getFactionOwned,
+  getFactionRegistered,
   getFactionUndeployedArmies, 
   getProfileArmies,
    getAllFactions, 
@@ -214,12 +214,12 @@ const AllianceCenter = ({onBack}) => {
     }
     if (signatureInStorage) {
       try {
-        const playerFactionData = await getFactionsOwned(user.address.toLowerCase(), signatureInStorage);
+        const playerFactionData = await getFactionOwned(user.address.toLowerCase(), signatureInStorage);
         
         //if the player has a faction, get the faction data
         if(playerFactionData.data.data.length > 0)
         {
-          const factionRegisteredData = await getFactionsRegistered(user.address.toLowerCase(), signatureInStorage);
+          const factionRegisteredData = await getFactionRegistered(user.address.toLowerCase(), signatureInStorage);
           const factionTroopsData = await getFactionUndeployedArmies(user.address.toLowerCase(), signatureInStorage);
 
           setRegisteredFactions(factionRegisteredData.data.data);

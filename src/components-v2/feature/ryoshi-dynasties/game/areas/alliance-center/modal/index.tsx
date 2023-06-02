@@ -6,8 +6,8 @@ import FactionRegistrationForm from '../../../../../../../Components/BattleBay/A
 import {
   addTroops,
   getAllFactions,
-  getFactionsOwned,
-  getFactionsRegistered,
+  getFactionOwned,
+  getFactionRegistered,
   getFactionUndeployedArmies,
   getProfileArmies
 } from "@src/core/api/RyoshiDynastiesAPICalls";
@@ -48,12 +48,12 @@ const AllianceCenterModal = ({closeAllianceCenter}: AllianceCenterModalProps) =>
   // const GetRegistrationColor = (registered) => {if(registered) {return 'green'} else {return 'red'}}
   // const GetRegisterButtonText = (registered) => {if(registered) {return 'Registered'} else {return 'Register'}}
 
-  const [registeredFactions, setRegisteredFactions] = useState<RdFaction[]>([]);
-  const [playerFaction, setPlayerFaction] = useState<RdFaction[]>([]);
+  const [registeredFaction, setRegisteredFaction] = useState<RdFaction>();
+  const [playerFaction, setPlayerFaction] = useState<RdFaction>();
   const [factions, setFactions] = useState([]);
 
   const [selectedFaction, setSelectedFaction] = useState<RdFaction>();
-  const [factionsDisplay, setFactionDisplay] = useState<ReactElement[]>([]);
+  const [factionsDisplay, setFactionDisplay] = useState<ReactElement>();
   const [createFactionButton, setCreateFactionButton] = useState<ReactElement>();
   const [factionRegistered, setFactionRegistered] = useState(false);
   const [isExecuting, setIsExecuting] = useState(false);
@@ -139,12 +139,7 @@ const AllianceCenterModal = ({closeAllianceCenter}: AllianceCenterModalProps) =>
 
   //return wheter the faction exists in the registered factions array
   const isRegistered = (factionId: number) => {
-    for (let i = 0; i < registeredFactions.length; i++) {
-      if (registeredFactions[i].id === factionId) {
-        return true;
-      }
-    }
-    return false;
+    return registeredFaction?.id === factionId;
   }
 
   const RegistrationAction = async (factionId: number) => {
@@ -215,15 +210,15 @@ const AllianceCenterModal = ({closeAllianceCenter}: AllianceCenterModalProps) =>
 
         // console.log('user address: ' + user.address.toLowerCase())
         // console.log('signature: ' + signatureInStorage)
-        const playerFactionData = await getFactionsOwned(user.address.toLowerCase(), signatureInStorage);
+        const playerFactionData = await getFactionOwned(user.address.toLowerCase(), signatureInStorage);
         
         //if the player has a faction, get the faction data
-        if(playerFactionData.data.data.length > 0)
+        if(playerFactionData.data.data)
         {
-          const factionRegisteredData = await getFactionsRegistered(user.address.toLowerCase(), signatureInStorage);
+          const factionRegisteredData = await getFactionRegistered(user.address.toLowerCase(), signatureInStorage);
           const factionTroopsData = await getFactionUndeployedArmies(user.address.toLowerCase(), signatureInStorage);
 
-          setRegisteredFactions(factionRegisteredData.data.data);
+          setRegisteredFaction(factionRegisteredData.data.data);
           setFactionTroops(factionTroopsData);
           setPlayerFaction(playerFactionData.data.data);
           setHasFaction(true);
@@ -256,8 +251,8 @@ const AllianceCenterModal = ({closeAllianceCenter}: AllianceCenterModalProps) =>
 
   useLayoutEffect(() => {
 
-    if(hasFaction) {
-      setFactionDisplay(playerFaction.map((faction, index) => (
+    if(hasFaction && playerFaction) {
+      setFactionDisplay(
         <>
           <VStack>
             <form onSubmit={handleSubmit}>
@@ -269,11 +264,11 @@ const AllianceCenterModal = ({closeAllianceCenter}: AllianceCenterModalProps) =>
               setFieldValue={setFieldValue}
               setFieldTouched={setFieldTouched}
               handleBlur={handleBlur}
-              faction={faction}
+              faction={playerFaction}
               onSuccess={handleTJUploadSuccess}
             />
             </form>
-          <Text textColor='#ffffffeb' className={gothamBook.className} fontSize='24' textAlign='center'>{faction.name}</Text>
+          <Text textColor='#ffffffeb' className={gothamBook.className} fontSize='24' textAlign='center'>{playerFaction.name}</Text>
           
 
           <Flex alignContent={'center'} justifyContent={'center'}>
@@ -284,21 +279,21 @@ const AllianceCenterModal = ({closeAllianceCenter}: AllianceCenterModalProps) =>
               w='200px'
               fontSize={{base: 'lg', sm: 'xl'}}
               stickyIcon={true}
-              onClick={() => {setSelectedFaction(faction)}}
+              onClick={() => {setSelectedFaction(playerFaction)}}
             >
             Edit Faction
             </RdButton>
             </Box>
         </Flex>
 
-        {isRegistered(faction.id) ? <>
+        {isRegistered(playerFaction.id) ? <>
         <Text textColor='#ffffffeb' fontSize={{base: 'sm', sm: 'md'}}> Faction is registered </Text>
         </>: 
           <RdButton 
             w='250px'
             fontSize={{base: 'lg', sm: 'xl'}}
             stickyIcon={true}
-            onClick={() => {RegistrationAction(faction.id)}}
+            onClick={() => {RegistrationAction(playerFaction.id)}}
             isLoading={isExecuting}
             disabled={isExecuting}
             >
@@ -308,7 +303,7 @@ const AllianceCenterModal = ({closeAllianceCenter}: AllianceCenterModalProps) =>
 
           </VStack>
         </>
-        )))
+        )
         setCreateFactionButton(undefined)
     }
     else

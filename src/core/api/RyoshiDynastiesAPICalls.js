@@ -140,7 +140,7 @@ export const UploadFactionIconPfp = async (address, signature, name, image) => {
   }
 }
 //gets specific factions
-export const getFactionsOwned = async (address, signature) => {
+export const getFactionOwned = async (address, signature) => {
   try{
     return await api.get("ryoshi-dynasties/factions?", 
       {params: {address, signature}});
@@ -149,7 +149,7 @@ export const getFactionsOwned = async (address, signature) => {
     throw error;
   }
 }
-export const getFactionsRegistered = async (address, signature) => {
+export const getFactionRegistered = async (address, signature) => {
   try{
     var gameId = await getSeasonGameId();
     return await api.get("ryoshi-dynasties/factions?", 

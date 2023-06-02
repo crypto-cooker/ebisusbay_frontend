@@ -27,7 +27,7 @@ import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSig
 import {
   getTroopsOnControlPoint,
   getProfileTroops,
-  getFactionsOwned,
+  getFactionOwned,
   deployTroops, 
   recallTroops, 
   getFactionUndeployedArmies
@@ -105,12 +105,12 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
     }
     if (signatureInStorage) {
       try {
-        const data = await getFactionsOwned(user.address.toLowerCase(), signatureInStorage);
+        const data = await getFactionOwned(user.address.toLowerCase(), signatureInStorage);
 
-        if(data.data.data.length > 0)
+        if(data.data.data)
         {
           setHasFaction(true)
-          setPlayerFaction(data.data.data[0])
+          setPlayerFaction(data.data.data)
           const factionTroopsData = await getFactionUndeployedArmies(user.address.toLowerCase(), signatureInStorage);
           setTroopsAvailable(factionTroopsData)
         }

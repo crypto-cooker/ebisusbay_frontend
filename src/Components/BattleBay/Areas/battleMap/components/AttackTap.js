@@ -29,7 +29,7 @@ import Button from "@src/Components/components/Button";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
-import {attack, getFactionsOwned, getProfileArmies, getBattleRewards } from "@src/core/api/RyoshiDynastiesAPICalls";
+import {attack, getFactionOwned, getProfileArmies, getBattleRewards } from "@src/core/api/RyoshiDynastiesAPICalls";
 import { createSuccessfulTransactionToastContent } from '@src/utils';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
@@ -46,6 +46,7 @@ import {io} from "socket.io-client";
 
 import localFont from 'next/font/local';
 import ImageService from "@src/core/services/image";
+import {RdFaction} from "@src/core/services/api-service/types";
 const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
 
 const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conquestPrice}) => {
@@ -77,7 +78,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
   const [playerArmies, setPlayerArmies] = useState([]);
   const [combinedArmies, setCombinedArmies] = useState([]);
   const [isOwnerOfFaction, setIsOwnerOfFaction] = useState(false);
-  const [playerFaction, SetPlayerFaction] = useState([]);
+  const [playerFaction, setPlayerFaction] = useState<RdFaction>();
   const [factionTroops, setFactionTroops] = useState(0);
   const handleChange = (value) => setAttackerTroops(value)
 
@@ -164,7 +165,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
     )
   }
   const CheckIfAttackerFactionIsOwnedByPlayer = async () => {
-      setIsOwnerOfFaction(dataForm.attackersFaction == playerFaction[0].name);
+      setIsOwnerOfFaction(dataForm.attackersFaction == playerFaction.name);
   }
   const GetPlayerArmies = async () => {
     let signatureInStorage = getAuthSignerInStorage()?.signature;
@@ -191,10 +192,10 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
     }
     if (signatureInStorage) {
       try {
-        const data = await getFactionsOwned(user.address.toLowerCase(), signatureInStorage);
-        SetPlayerFaction(data.data.data);
+        const data = await getFactionOwned(user.address.toLowerCase(), signatureInStorage);
+        setPlayerFaction(data.data.data);
         // console.log('data.data.data', data.data.data);
-        setFactionTroops(data.data.data[0].troops);
+        setFactionTroops(data.data.data.troops);
       } catch (error) {
         console.log(error)
       }

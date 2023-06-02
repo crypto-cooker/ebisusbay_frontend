@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react"
 import { Spinner } from 'react-bootstrap';
 import { getTheme } from "@src/Theme/theme";
-import { createFaction, getFactionsOwned, getProfileId } from "@src/core/api/RyoshiDynastiesAPICalls";
+import { createFaction, getFactionOwned, getProfileId } from "@src/core/api/RyoshiDynastiesAPICalls";
 
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
