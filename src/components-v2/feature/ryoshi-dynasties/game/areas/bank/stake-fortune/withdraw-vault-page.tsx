@@ -99,13 +99,13 @@ const WithdrawForm = ({vault, onComplete}: WithdrawFormProps) => {
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       onComplete();
     } catch (error: any) {
-      console.log(error)
-      if(error.response !== undefined) {
-        console.log(error)
-        toast.error(error.response.data.error.metadata.message)
-      }
-      else {
-        toast.error(error);
+      console.log(error);
+      if (error.data) {
+        toast.error(error.data.message);
+      } else if (error.message) {
+        toast.error(error.message);
+      } else {
+        toast.error('Unknown Error');
       }
     } finally {
       setIsExecuting(false);

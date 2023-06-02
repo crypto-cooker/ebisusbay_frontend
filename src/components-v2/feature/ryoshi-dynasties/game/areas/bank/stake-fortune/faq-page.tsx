@@ -1,5 +1,14 @@
 import {useState} from "react";
-import {Stack, Text,} from "@chakra-ui/react"
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Stack,
+  Text,
+} from "@chakra-ui/react"
 import localFont from 'next/font/local';
 import {useAppSelector} from "@src/Store/hooks";
 
@@ -12,21 +21,69 @@ const FaqPage = () => {
   const user = useAppSelector((state) => state.user);
 
   return (
-    <Stack spacing={3} p={4}>
-      <Text className={gothamBook.className} fontSize={{ base: '12px', md: '16px' }} >
-      In order to receive $Mitama a player must stake their tokens into a smart contract for AT LEAST the duration of 1 season (90 days).
+    <Stack spacing={3}className={gothamBook.className} fontSize={{ base: 'xs', md: 'sm' }}>
+      <Text p={4}>
+        Stake $Fortune to receive Troops and earn $Fortune rewards. Troops are essential to play Ryoshi Dynasties, by battling other Factions and taking victory over control points to earn additional rewards. The more you stake, the more Troops you will receive and a higher APR% will be earned. Stake in multiple vaults to match your gameplay strategies.
       </Text>
-      <Text className={gothamBook.className} fontSize={{ base: '12px', md: '16px' }} >
-      If user locks up longer than 1 season they will receive bonus spirit multiplier for each additional season locked.
-      </Text>
-      <Text className={gothamBook.className} fontSize={{ base: '12px', md: '16px' }} >
-      - Additional token may be added to lock period at anytime.
-- APR from staking goes into the seasonal release pool for user.
-- Linear Release for the rewards counting down to end of current season. Early withdraw burns tokens.
-- Users can spend out of their rewards pool early to buy “[power-ups] without penalty.
-- Users may be tempted to “re-stake” at the end of their season to earn a “veteran bonus” similar to if they had locked up for two season to begin with.
-- Staking Ryoshi Tales NFTs will give bonus APR multiplier. Max 5 staked.
-      </Text>
+      <Accordion fontSize='sm' defaultIndex={[0]}>
+        <AccordionItem>
+          <AccordionButton fontSize='sm' fontWeight='bold'>
+            <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+              How do I stake?
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+          <AccordionPanel pb={4}>
+            <Text>To stake $Fortune, simply create a vault by clicking the <strong>"+ New Vault"</strong> button. From there, choose how much to stake and for how long.</Text>
+            <Text mt={2}>Note that once staked, the Fortune amount cannot be returned until either the staking duration has ended, or the emergency withdraw is used.</Text>
+          </AccordionPanel>
+        </AccordionItem>
+        <AccordionItem>
+          <AccordionButton fontSize='sm' fontWeight='bold'>
+            <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+              How is APR and Troop count calculated?
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+          <AccordionPanel pb={4}>
+            <Text>APR is based on the length of time in the staking vault. The longer the staking term, the higher the APR</Text>
+            <Text mt={2}>Troops are based on how much staked and for how long. Minimum requirement is 120 Fortune staked for 1 season to earn 1 Troop</Text>
+          </AccordionPanel>
+        </AccordionItem>
+        <AccordionItem>
+          <AccordionButton fontSize='sm' fontWeight='bold'>
+            <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+              Can a vault be modified?
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+          <AccordionPanel pb={4}>
+            <Text>Yes, a vault can have either its Fortune amount or staking duration changed. To update the amount to stake, click the <strong>"+ Add Fortune"</strong> button. To update the staking duration, click the <strong>"+ Increase duration"</strong> button. From here, you can modify the values and also see a preview of the vault's new APR, Troop count and end date.</Text>
+          </AccordionPanel>
+        </AccordionItem>
+        <AccordionItem>
+          <AccordionButton fontSize='sm' fontWeight='bold'>
+            <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+              Can the APR be increased?
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+          <AccordionPanel pb={4}>
+            <Text>Other than increasing the staking duration, APR can be increased by staking <strong>Ryoshi NFTs</strong>. Stake these NFTs by clicking the <strong>"Stake NFTs"</strong> button in the main Bank area. Higher ranked NFTs will add a higher APR.</Text>
+          </AccordionPanel>
+        </AccordionItem>
+        <AccordionItem>
+          <AccordionButton fontSize='sm' fontWeight='bold'>
+            <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+              How do I withdraw staked Fortune?
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+          <AccordionPanel pb={4}>
+            <Text>Staked Fortune is locked until the end of the staking duration. However, it is possible to withdraw early with the Emergency Withdraw function. This will withdraw all the Fortune in the vault, but will burn 50% of the Fortune value. Take caution of this if using this feature.</Text>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
     </Stack>
   );
 }

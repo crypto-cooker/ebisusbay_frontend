@@ -20,30 +20,39 @@ const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
   const [page, setPage] = useState<ReactElement | null>(null);
   const [title, setTitle] = useState<string>('Stake Fortune');
 
-  const handleClose = useCallback(() => {
+  const handleClose = () => {
+    returnHome();
+    onClose();
+  };
+
+  const handleBack = () => {
+    console.log('handleBack?', !!page, page);
+    if (!!page) {
+      returnHome();
+    } else {
+      setPage(<FaqPage />);
+      setTitle('About Fortune Staking');
+    }
+  };
+
+  const returnHome = () => {
     setPage(null);
     setTitle('Stake Fortune');
-    onClose();
-  }, []);
-
-  const handleBack = useCallback(() => {
-    setPage(!!page ? null : <FaqPage />);
-    setTitle('Stake Fortune');
-  }, [page]);
+  };
 
   const handleEditVault = useCallback((vault: FortuneStakingAccount, type: string) => {
-    setPage(<EditVaultPage vault={vault} type={type} onReturn={handleBack} />);
+    setPage(<EditVaultPage vault={vault} type={type} onReturn={returnHome} />);
     setTitle('Update Stake');
-    }, []);
+  }, [returnHome]);
 
   const handleCreateVault = useCallback((vaultIndex: number) => {
-    setPage(<CreateVaultPage vaultIndex={vaultIndex} onReturn={handleBack} />)
-  }, []);
+    setPage(<CreateVaultPage vaultIndex={vaultIndex} onReturn={returnHome} />)
+  }, [returnHome]);
 
   const handleWithdrawVault = useCallback((vault: FortuneStakingAccount) => {
-    setPage(<WithdrawVaultPage vault={vault} onReturn={handleBack} />);
+    setPage(<WithdrawVaultPage vault={vault} onReturn={returnHome} />);
     setTitle('Emergency Withdraw');
-  }, [handleBack]);
+  }, [returnHome]);
 
   return (
     <RdModal
