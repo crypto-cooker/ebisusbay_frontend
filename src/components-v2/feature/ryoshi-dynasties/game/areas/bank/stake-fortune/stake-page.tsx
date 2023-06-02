@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {
   Accordion,
@@ -91,17 +91,21 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault}: StakePageProps
                 </Center>
               ) : (
                 <>
-                  {!!account && account.vaults.slice().reverse().map((vault, index) => (
-                    <Box mt={2}>
-                      <Vault
-                        vault={vault}
-                        index={index}
-                        onEditVault={(type: string) => onEditVault(vault, type)}
-                        onWithdrawVault={() => onWithdrawVault(vault)}
-                        onClosed={refetch}
-                      />
-                    </Box>
-                  ))}
+                  {!!account && account.vaults.length > 0 && (
+                    <Accordion defaultIndex={[0]} allowToggle>
+                      {account.vaults.map((vault, index) => (
+                        <Box mt={2}>
+                          <Vault
+                            vault={vault}
+                            index={index}
+                            onEditVault={(type: string) => onEditVault(vault, type)}
+                            onWithdrawVault={() => onWithdrawVault(vault)}
+                            onClosed={refetch}
+                          />
+                        </Box>
+                      ))}
+                    </Accordion>
+                  )}
                 </>
               )}
             </Box>
@@ -146,17 +150,18 @@ interface VaultProps {
 }
 
 const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProps) => {
-  const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { config: rdConfig, user: rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector((state) => state.user);
 
   const balance = Number(ethers.utils.formatEther(vault.balance));
   const daysToAdd = Number(vault.length / (86400));
-  const numTerms = Math.floor(daysToAdd / rdContext.config.bank.staking.fortune.termLength);
-  const availableAprs = rdContext.config.bank.staking.fortune.apr as any;
+  const numTerms = Math.floor(daysToAdd / rdConfig.bank.staking.fortune.termLength);
+  const availableAprs = rdConfig.bank.staking.fortune.apr as any;
   const apr = (availableAprs[numTerms] ?? availableAprs[1]) * 100;
   const endDate = moment(vault.endTime * 1000).format("MMM D yyyy");
 
   const [isExecutingClose, setIsExecutingClose] = useState(false);
+  const [canIncreaseDuration, setCanIncreaseDuration] = useState(true);
 
   const handleCloseVault = useCallback(async () => {
     try {
@@ -179,10 +184,21 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
     }
   }, []);
 
+  const [totalApr, setTotalApr] = useState(apr);
+  const [bonusApr, setBonusApr] = useState(0);
+  useEffect(() => {
+    const vaultDays = vault.length / 86400;
+    const maxDays = rdConfig.bank.staking.fortune.maxTerms * rdConfig.bank.staking.fortune.termLength;
+    setCanIncreaseDuration(vaultDays < maxDays);
+
+    const bonusApr = rdUser?.bank.bonus.apr ?? 0;
+    setBonusApr(bonusApr);
+    setTotalApr(apr + bonusApr);
+  }, [vault, rdConfig, rdUser, apr]);
+
   return (
     <Box>
-      <Accordion bgColor='#292626' rounded='md' allowToggle>
-        <AccordionItem>
+        <AccordionItem bgColor='#292626' rounded='md'>
           <AccordionButton w='full' py={4}>
             <Flex direction='column' w='full' align='start'>
               <Flex w='full' align='center'>
@@ -199,7 +215,7 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
                     </HStack>
                     <Flex>
                       <Tag variant='outline'>
-                        {apr}%
+                        {apr}% {bonusApr ? `+ ${bonusApr}%` : ''}
                       </Tag>
                       <Tag ms={2} variant='outline'>
                         <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}
@@ -220,7 +236,12 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
           <AccordionPanel pb={0}>
             <SimpleGrid columns={2}>
               <Box>APR</Box>
-              <Box textAlign='end' fontWeight='bold'>{apr}%</Box>
+              <Box textAlign='end'>
+                <VStack align='end' spacing={0}>
+                  <Box fontWeight='bold'>{totalApr}%</Box>
+                  <Box fontSize='xs'>{apr}% Fortune stake + {bonusApr}% NFT stake</Box>
+                </VStack>
+              </Box>
               <Box>Troops</Box>
               <Box textAlign='end' fontWeight='bold'>{commify(Math.floor((((balance * daysToAdd) / 1080) / 10)))}</Box>
               <Box>End Date</Box>
@@ -233,9 +254,11 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
                     <Button onClick={() => onEditVault('amount')}>
                       + Add Fortune
                     </Button>
-                    <Button onClick={() => onEditVault('duration')}>
-                      + Increase Duration
-                    </Button>
+                    {canIncreaseDuration && (
+                      <Button onClick={() => onEditVault('duration')}>
+                        + Increase Duration
+                      </Button>
+                    )}
                   </Stack>
                 </Center>
                 <Center mt={4}>
@@ -259,7 +282,6 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
             )}
           </AccordionPanel>
         </AccordionItem>
-      </Accordion>
     </Box>
   );
 }

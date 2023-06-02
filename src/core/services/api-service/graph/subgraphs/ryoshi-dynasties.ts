@@ -92,7 +92,7 @@ class RyoshiDynasties {
         stakingAccounts(where: {id: $address}) {
           id
           totalStaked
-          vaults(where: {open: true}, first: 50, orderBy: endTime, orderDirection: desc) {
+          vaults(where: {open: true}, first: 50, orderBy: startTime, orderDirection: desc) {
             balance
             id
             index

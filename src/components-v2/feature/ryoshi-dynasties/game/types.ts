@@ -16,6 +16,7 @@ interface RyoshiConfigBankStaking {
 interface RyoshiConfigBankStakingFortune {
   minimum: number;
   termLength: number;
+  maxTerms: number;
   apr: {[key: number]: number};
 }
 

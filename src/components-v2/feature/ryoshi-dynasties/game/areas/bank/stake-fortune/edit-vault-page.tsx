@@ -63,6 +63,7 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
   const [isExecuting, setIsExecuting] = useState(false);
   const [executingLabel, setExecutingLabel] = useState('Staking...');
   const [isRetrievingFortune, setIsRetrievingFortune] = useState(false);
+  const [maxDurationIncrease, setMaxDurationIncrease] = useState(rdConfig.bank.staking.fortune.maxTerms);
 
   const [fortuneToStake, setFortuneToStake] = useState(1000);
   const [daysToStake, setDaysToStake] = useState(rdConfig.bank.staking.fortune.termLength)
@@ -191,6 +192,7 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
     }
   }
 
+  // Calculate APR and Troops from vault plus input
   useEffect(() => {
     const isAddingDuration = type === 'duration';
     const depositLength = vault.length / 86400;
@@ -215,6 +217,7 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
     setNewWithdrawDate((Number(vault.endTime) + (daysToStake * 86400))*1000);
   }, [daysToStake, fortuneToStake]);
 
+  // Calculate APR and Troops from current vault
   useEffect(() => {
     const vaultDays = Number(vault.length / 86400);
     const vaultFortune = Number(ethers.utils.formatEther(vault.balance));
@@ -226,11 +229,20 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
     setCurrentTroops(Math.floor(((vaultFortune * vaultDays) / 1080) / 10));
   }, [vault]);
 
+  // Check for fortune on load
   useEffect(() => {
     if (!!user.address) {
       checkForFortune();
     }
   }, [user.address]);
+
+  // Set max duration increase
+  useEffect(() => {
+    const vaultTerms = vault.length / 86400 / rdConfig.bank.staking.fortune.termLength;
+    const maxTerms = rdConfig.bank.staking.fortune.maxTerms;
+    console.log('TESTY', maxTerms, vaultTerms, maxTerms - vaultTerms);
+    setMaxDurationIncrease(maxTerms - vaultTerms);
+  }, [vault, rdConfig]);
 
   return (
     <Box mx={1} pb={6}>
@@ -291,7 +303,7 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
                   <Text>Increase duration by</Text>
                   <FormControl maxW='250px' isInvalid={!!lengthError}>
                     <Select onChange={handleChangeDays} value={daysToStake} bg='none'>
-                      {[...Array(12).fill(0)].map((_, i) => (
+                      {[...Array(maxDurationIncrease).fill(0)].map((_, i) => (
                         <option key={i} value={`${(i + 1) * rdConfig.bank.staking.fortune.termLength}`}>
                           {(i + 1)} {pluralize((i + 1), 'Season')} ({(i + 1) * rdConfig.bank.staking.fortune.termLength} days)
                         </option>

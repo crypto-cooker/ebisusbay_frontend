@@ -133,6 +133,18 @@ export interface RdArmy {
 export interface RdUserContext {
     faction: RdFaction;
     season: RdUserContextSeason;
+    bank: {
+        nfts: any[];
+        bonus: {
+            apr: number;
+        }
+    },
+    barracks: {
+        nfts: any[];
+        bonus: {
+            troops: number;
+        }
+    }
 }
 
 interface RdUserContextSeason {
