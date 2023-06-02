@@ -260,11 +260,11 @@ export const deployTroops = async (address, signature, troops, controlPointId, f
 //recalls troops from a control point and returns them to the faction
 export const recallTroops = async (address, signature, troops, controlPointId, factionId) => {
   try{
-    var gameID = await api.get("ryoshi-dynasties/games/0");
-
+    var gameId = await getWeeklyGameId();
     return await api.patch("ryoshi-dynasties/armies?", 
-      {params: {address, signature, action: "RECALL"}},
-      {body: {troops, controlPointId, gameId: gameID.data.data.id, factionId}});
+      {troops, controlPointId, gameId, factionId},
+      {params: {address, signature, action: "RECALL"}}
+      );
   }
   catch(error){
     throw error;
@@ -419,6 +419,22 @@ export const claimBattleRewards = async (address, signature) => {
   try{
     return await api.get("ryoshi-dynasties/game-tokens/battle-reward?", 
       {params: {address, signature}});
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const getTroopsOnControlPoint = async (address, signature, controlPoint, gameId) => {
+  try{
+    var data = await api.get("ryoshi-dynasties/armies?",
+      {params: {address, signature, gameId}});
+    var troops = 0;
+    data.data.data.forEach(element => {
+      if(element.controlPointId === controlPoint){
+        troops += element.troops;
+      }
+    });
+    return troops;
   }
   catch(error){
     throw error;

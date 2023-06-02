@@ -15,15 +15,23 @@ import {
   HStack,
   Center,
   Spacer,
-  Text
+  Text,
+  Button
  } from "@chakra-ui/react";
 
 import {useState, useEffect, useContext, ChangeEvent, ReactElement} from "react";
-import Button from "@src/Components/components/Button";
+import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
-import {getProfileTroops, getFactionsOwned, deployTroops, recallTroops, getFactionUndeployedArmies} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {
+  getTroopsOnControlPoint,
+  getProfileTroops,
+  getFactionsOwned,
+  deployTroops, 
+  recallTroops, 
+  getFactionUndeployedArmies
+} from "@src/core/api/RyoshiDynastiesAPICalls";
 import { toast } from "react-toastify";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {useAppSelector} from "@src/Store/hooks";
@@ -50,6 +58,7 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   const [factionOption, setFactionOption] = useState<ReactElement[] | ReactElement>();
+  const [deployMode, setDeployMode] = useState(true);
   const [dataForm, setDataForm] = useState({
     faction: "" ?? null,
     quantity: 0,
@@ -63,36 +72,28 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
   const [troopsAvailable, setTroopsAvailable] = useState(0);
   const [playerFaction, setPlayerFaction] = useState<RdFaction>();
   const [hasFaction, setHasFaction] = useState(false);
-
-  // const [showFactionTroops, ShowFactionTroops] = useState(false);
-  // const [canDeploy, setCanDeploy] = useState(false);
-  // const [factionTroopsAvailable, setFactionTroopsAvailable] = useState(0);
-  // const [troopsSource, setTroopsSource] = useState(1);
+  const[troopsDeployed, setTroopsDeployed] = useState(0);
 
   const onChangeInputsFaction = (e: ChangeEvent<HTMLSelectElement>) => {
     setSelectedFaction(e.target.value)
-    console.log(e.target.value)
-    // if(e.target.value === playerFaction.name)
-    // {
-    //   // console.log("same faction")
-    //   setFactionTroopsAvailable(playerFaction.troops)
-    //   // ShowFactionTroops(true)
-    // }
-    // else
-    // {
-    //   // console.log("not a faction")
-    //   setFactionTroopsAvailable(0)
-    //   // ShowFactionTroops(false)
-    // }
+  }
 
-    // if(e.target.value !== "")
-    // {
-    //   setCanDeploy(true)
-    // }
-    // else
-    // {
-    //   setCanDeploy(false)
-    // }
+  const GetTroopsOnPoint = async () => {
+    if (!user.address) return;
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      try {
+        const data = await getTroopsOnControlPoint(user.address.toLowerCase(), signatureInStorage, controlPoint.id, 27);
+        console.log(data)
+        setTroopsDeployed(data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
   }
   const GetPlayerTroops = async () => {
     if (!user.address) return;
@@ -127,36 +128,34 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
   const deployOrRecallTroops = async () => {
     if (!user.address) return;
 
-    // if(troopsSource==2)
-    // {
-    //   console.log("deploying troops from delegated troops")
-    //   if(selectedQuantity>factionTroopsAvailable)
-    //   {
-    //     toast.error("You don't have enough troops to deploy")
-    //     return;
-    //   }
-    // }
-    // else if(troopsSource==1)
-    // {
-    //   console.log("deploying troops from player troops")
-    //   if(selectedQuantity> troopsAvailable+ factionTroopsAvailable)
-    //   {
-    //     toast.error("You don't have enough troops to deploy")
-    //     return;
-    //   }
-    // }
-    if(selectedQuantity> troopsAvailable)
+    if(currentTab === tabs.deploy)
     {
-      toast.error("You don't have enough troops to deploy")
-      return;
-    }
+      if(selectedQuantity > troopsAvailable)
+      {
+        toast.error("You don't have enough troops to deploy")
+        return;
+      }
 
-    if(selectedQuantity === 0)
-    {
-      toast.error("You must deploy at least 1 troop")
-      return;
+      if(selectedQuantity === 0)
+      {
+        toast.error("You must deploy at least 1 troop")
+        return;
+      }
     }
-    // return;
+    else if(currentTab === tabs.recall)
+    {
+      if(selectedQuantity > troopsDeployed)
+      {
+        toast.error("You don't have enough troops to recall")
+        return;
+      }
+
+      if(selectedQuantity === 0)
+      {
+        toast.error("You must recall at least 1 troop")
+        return;
+      }
+    }
 
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
@@ -169,7 +168,7 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
         {
           var factionId = allFactions.filter(faction => faction.name === selectedFaction)[0].id
           var data = await deployTroops(user.address.toLowerCase(), signatureInStorage,
-           selectedQuantity, controlPoint.id, factionId)
+            selectedQuantity, controlPoint.id, factionId)
 
           await GetPlayerTroops();
           setSelectedQuantity(0);
@@ -180,8 +179,16 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
         }
         else if(currentTab === tabs.recall)
         {
-          // console.log("You recalled", selectedQuantity, "troops from", controlPoint, "on behalf of", dataForm.faction)
+          var factionId = allFactions.filter(faction => faction.name === selectedFaction)[0].id
+          var data = await recallTroops(user.address.toLowerCase(), signatureInStorage,
+            selectedQuantity, controlPoint.id, factionId)
 
+          await GetPlayerTroops();
+          setSelectedQuantity(0);
+          rdContext.refreshUser();
+          refreshControlPoint();
+
+          toast.success("You recalled "+ selectedQuantity + "troops from"+ controlPoint.name +"on behalf of"+ selectedFaction)
         }
       } catch (error: any) {
         console.log(error)
@@ -216,15 +223,26 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
 
   useEffect(() => {
     GetPlayerTroops();
+    GetTroopsOnPoint();
   }, [selectedFaction])
 
   return (
     <Flex flexDirection='column' textAlign='center'justifyContent='space-around'>
-      
-      <div className="taps-buttons-group" >
-        {/* <button type="button" className={`smallBtn ${currentTab === tabs.deploy ? 'selected' : ''}`} onClick={() => setCurrentTab(tabs.deploy)}>Deploy</button> */}
-        {/* <button type="button" className={`smallBtn ${currentTab === tabs.recall ? 'selected' : ''}`} onClick={() => setCurrentTab(tabs.recall)}>Recall</button> */}
-      </div>
+
+      <Center>
+        <Flex direction='row' justify='center' mb={2}>
+          <RdTabButton
+            isActive={currentTab === tabs.deploy}
+            onClick={() => setCurrentTab(tabs.deploy)}
+          > Deploy
+          </RdTabButton>
+          <RdTabButton
+            isActive={currentTab === tabs.recall}
+            onClick={() => setCurrentTab(tabs.recall)}
+          > Recall
+          </RdTabButton>
+        </Flex>
+      </Center>
 
       <Flex direction='row' justify='space-between' justifyContent='center'>
         <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
@@ -246,7 +264,7 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
       </FormControl>
 
       <FormControl>
-        <FormLabel>Troops To Deploy:</FormLabel>
+        <FormLabel>Troops To {currentTab === tabs.recall ? "Recall" : "Deploy"}:</FormLabel>
         <NumberInput defaultValue={1} min={1} max={troopsAvailable} name="quantity" 
           onChange={handleQuantityChange}
           value={selectedQuantity}
@@ -285,8 +303,11 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
                 <Text>Troops available in wallet: {troopsAvailable}</Text>
                 )}
                 </Text>)}
+              
 
-          {/*{currentTab === tabs.recall && (<p> Troops deployed to {controlPoint.name} on behalf of {dataForm.faction}: {troopsDeployed}</p>)}*/}
+          {currentTab === tabs.recall &&  (
+          <Text> Troops deployed to {controlPoint.name} on behalf of {selectedFaction}: {troopsDeployed}</Text>
+            )}
 
             </HStack>
           </VStack>
@@ -304,7 +325,8 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
           onClick={deployOrRecallTroops}
           disabled={!selectedFaction }
         >
-          {!selectedFaction ? "Please select a faction" : "Deploy" }
+          {currentTab === tabs.deploy ? "Deploy" :"Recall" }
+          
         </RdButton>
       </Center>
     </Box>
