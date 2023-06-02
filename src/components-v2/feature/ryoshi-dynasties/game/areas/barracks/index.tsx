@@ -12,7 +12,7 @@ import {
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import StakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft";
 import ClaimRewards from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/claim-rewards';
-import {useCallback} from "react";
+import {useCallback, useEffect} from "react";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useAppSelector} from "@src/Store/hooks";
@@ -106,7 +106,9 @@ const Barracks = ({onBack, battleRewards}: BarracksProps) => {
         align='stretch'
       >
         <RdButton onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>Stake NFTs</RdButton>
-        <RdButton onClick={() => handleAuthedNavigation(onOpenClaimRewards)}>Claim Rewards</RdButton>
+        {!!battleRewards && (
+        <RdButton fontSize='18' onClick={() => handleAuthedNavigation(onOpenClaimRewards)}>Claim Battle Rewards</RdButton>
+        )}
       </VStack>
       </Container>
         </Center>

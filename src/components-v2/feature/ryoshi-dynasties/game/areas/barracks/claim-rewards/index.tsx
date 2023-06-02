@@ -13,6 +13,13 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAward} from "@fortawesome/free-solid-svg-icons";
 import {CloseIcon} from "@chakra-ui/icons";
 import ShrineIcon from "@src/components-v2/shared/icons/shrine";
+import Resources from "@src/Contracts/Resources.json";
+import {getAuthSignerInStorage} from "@src/helpers/storage";
+import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
+import {Contract} from "ethers";
+import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {ApiService} from "@src/core/services/api-service";
+import {useQuery} from "@tanstack/react-query";
 
 const config = appConfig();
 
@@ -27,63 +34,95 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [executingLabel, setExecutingLabel] = useState('');
   const [isExecutingClaim, setIsExecutingClaim] = useState(false);
+  const [isLoading, getSigner] = useCreateSigner();
 
-const handleClaim = useCallback(async () => {
-    // if (pendingNfts.length === 0 && stakedNfts.length === 0) return;
+  const fetcher = async () => {
+    // let signatureInStorage = getAuthSignerInStorage()?.signature;
+    //
+    // if (!signatureInStorage) {
+    //   const { signature } = await getSigner();
+    //   signatureInStorage = signature;
+    // }
+    // if (signatureInStorage) {
+      return await ApiService.withoutKey().ryoshiDynasties.getDailyRewards(user.address!)
+    // }
 
-    let hasCompletedApproval = false;
-
-    try {
-      setIsExecutingClaim(true);
-      setExecutingLabel('Approving');
-    //   const approvedCollections: string[] = [];
-    //   for (let nft of pendingNfts) {
-    //     if (approvedCollections.includes(nft.nftAddress)) continue;
-
-    //     const nftContract = new Contract(nft.nftAddress, ERC721, user.provider.getSigner());
-    //     const isApproved = await nftContract.isApprovedForAll(user.address!.toLowerCase(), config.contracts.barracks);
-
-    //     if (!isApproved) {
-    //       let tx = await nftContract.setApprovalForAll(config.contracts.barracks, true);
-    //       await tx.wait();
-    //       approvedCollections.push(nft.nftAddress);
-    //     }
-    //   }
-      hasCompletedApproval = true;
-
-      setExecutingLabel('Staking');
-    //   await stakeNfts(
-    //     pendingNfts.map((nft) => ({...nft, amount: 1})),
-    //     stakedNfts
-    //   );
-    //   onStaked();
-      toast.success('Staking successful!');
-    } catch (e: any) {
-      console.log(e);
-      if (!hasCompletedApproval) {
-        toast.error('Approval failed. Please try again.');
-      } else {
-        toast.error('Staking failed. Please try again.');
-      }
-    } finally {
-      setIsExecutingClaim(false);
-      setExecutingLabel('');
+  }
+  const {data} = useQuery(
+    ['RyoshiDailyCheckin', user.address],
+    fetcher,
+    {
+      enabled: !!user.address,
+      refetchOnWindowFocus: false,
     }
+  );
+// const handleClaim = useCallback(async () => {
+//     // if (pendingNfts.length === 0 && stakedNfts.length === 0) return;
 
-  }, []);
+//     let hasCompletedApproval = false;
+
+//     try {
+//       setIsExecutingClaim(true);
+//       setExecutingLabel('Approving');
+
+//       hasCompletedApproval = true;
+
+//       setExecutingLabel('Staking');
+
+//       toast.success('Staking successful!');
+//     } catch (e: any) {
+//       console.log(e);
+//       if (!hasCompletedApproval) {
+//         toast.error('Approval failed. Please try again.');
+//       } else {
+//         toast.error('Staking failed. Please try again.');
+//       }
+//     } finally {
+//       setIsExecutingClaim(false);
+//       setExecutingLabel('');
+//     }
+
+//   }, []);
+  const claimBattleRewards = async () => {
+    if (!user.address) return;
+
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      try {
+        setIsExecutingClaim(true);
+
+        const mintRequest = [user.address.toLowerCase(), battleRewards.tokenIds, battleRewards.quantity, battleRewards.expiresAt, battleRewards.nonce];
+
+        setExecutingLabel('Claiming...')
+        // console.log('===contract', config.contracts.resources, Resources, user.provider.getSigner());
+        const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
+        // console.log('===request', mintRequest, sig, authorization);
+        const tx = await resourcesContract.mintWithSig(mintRequest, battleRewards.signature);
+
+        const receipt = await tx.wait();
+        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+        setExecutingLabel('Done!')
+        battleRewards = null;
+        setIsExecutingClaim(false)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
 
   const handleClose = () => {
     onClose();
   }
   useEffect(() => {
-    // console.log("battleRewards: ", battleRewards);
-    // console.log("battleRewards.tokenIds: ", battleRewards.tokenIds);
-  }, [battleRewards])
+    // console.log("battleRewards: ", battleRewards); 
+    }, [battleRewards])
 
   return (
     <>
-    {!battleRewards.tokenIds ?  (<></>) :(
-
     <RdModal
       isOpen={isOpen}
       onClose={handleClose}
@@ -91,6 +130,9 @@ const handleClaim = useCallback(async () => {
       size='5xl'
       isCentered={false}
     >
+    {!battleRewards.tokenIds ?  (<>
+        <Text fontSize='sm' color='gray.400'>No rewards to claim</Text>
+    </>) :(
     <Flex direction={{base: 'column', md: 'row'}} my={6} px={4}>
     <Wrap>
       {[...Array(battleRewards.tokenIds.length).fill(0)].map((_, index) => {
@@ -167,7 +209,7 @@ const handleClaim = useCallback(async () => {
         ) : (
             <RdButton
                 minW='150px'
-                onClick={handleClaim}
+                onClick={claimBattleRewards}
                 isLoading={isExecutingClaim}
                 disabled={isExecutingClaim}
                 stickyIcon={true}
@@ -176,10 +218,10 @@ const handleClaim = useCallback(async () => {
             </RdButton>
           )}
     </Box>
-  </Flex>
-    </RdModal>
+    </Flex>
          ) }
-         </>
+    </RdModal>
+    </>
   )
 }
 
