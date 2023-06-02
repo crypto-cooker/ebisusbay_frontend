@@ -762,7 +762,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
         <Center>
           <Flex justifyContent='space-between' w='90%' >
             <Text fontSize={'12px'}>Your $Koban: {koban}</Text>
-            {!battleRewards.tokenIds ?  (<></>) :(
+            {!battleRewards || battleRewards.length ===0 ? (<></>) : (
               <RdButton onClick={() => onOpenClaimRewards()}>Claim Rewards will move</RdButton>
             )}
           </Flex>

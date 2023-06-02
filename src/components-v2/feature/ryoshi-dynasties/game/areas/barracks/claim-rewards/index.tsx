@@ -118,7 +118,7 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
     onClose();
   }
   useEffect(() => {
-    // console.log("battleRewards: ", battleRewards); 
+    console.log("battleRewards: ", battleRewards); 
     }, [battleRewards])
 
   return (
@@ -130,12 +130,12 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
       size='5xl'
       isCentered={false}
     >
-    {!battleRewards.tokenIds ?  (<>
+    { !battleRewards || battleRewards.length ===0 ?  (<>
         <Text fontSize='sm' color='gray.400'>No rewards to claim</Text>
     </>) :(
     <Flex direction={{base: 'column', md: 'row'}} my={6} px={4}>
     <Wrap>
-      {[...Array(battleRewards.tokenIds.length).fill(0)].map((_, index) => {
+      {[...Array(battleRewards?.tokenIds?.length).fill(0)].map((_, index) => {
         return (
           <WrapItem key={index}>
             {!!battleRewards.tokenIds[index] ? (
