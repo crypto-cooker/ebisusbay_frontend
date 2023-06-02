@@ -240,7 +240,6 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
   useEffect(() => {
     const vaultTerms = vault.length / 86400 / rdConfig.bank.staking.fortune.termLength;
     const maxTerms = rdConfig.bank.staking.fortune.maxTerms;
-    console.log('TESTY', maxTerms, vaultTerms, maxTerms - vaultTerms);
     setMaxDurationIncrease(maxTerms - vaultTerms);
   }, [vault, rdConfig]);
 

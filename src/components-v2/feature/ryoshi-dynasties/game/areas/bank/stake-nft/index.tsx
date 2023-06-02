@@ -291,7 +291,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
                         <Icon as={FontAwesomeIcon} icon={faAward} />
                         <Box as='span'>{pendingNfts[index].rank ?? ''}</Box>
                       </HStack>
-                      <Box as='span' fontWeight='bold'>+ {pendingNfts[index].multiplier * 100}%</Box>
+                      <Box as='span' fontWeight='bold'>+ {pendingNfts[index].multiplier}%</Box>
                     </Flex>
                   </Box>
 
