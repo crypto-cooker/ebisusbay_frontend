@@ -360,7 +360,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
             setVoxelClaimed(isClaimed);
           } else if (isLadyWeirdApesCollection(address)) {
             apeInfo = await contract.infoLWAC(id);
-            const isClaimed = await voxelContract.isClaimed(id+2500);
+            const isClaimed = await voxelContract.isClaimed(Number(id)+2500);
             setVoxelClaimed(isClaimed);
           } else if (isBabyWeirdApesCollection(address)) {
             apeInfo = await contract.infoBWAC(id);
