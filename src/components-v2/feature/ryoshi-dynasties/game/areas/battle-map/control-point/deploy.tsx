@@ -18,7 +18,7 @@ import {
   Text
  } from "@chakra-ui/react";
 
-import {useState, useEffect, ChangeEventHandler, ChangeEvent, ReactElement} from "react";
+import {useState, useEffect, useContext, ChangeEvent, ReactElement} from "react";
 import Button from "@src/Components/components/Button";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
@@ -28,7 +28,10 @@ import { toast } from "react-toastify";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {useAppSelector} from "@src/Store/hooks";
 import {RdControlPoint, RdControlPointLeaderBoard, RdFaction} from "@src/core/services/api-service/types";
-
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 const tabs = {
   recall: 'recall',
   deploy: 'deploy',
@@ -44,6 +47,7 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
   const user = useAppSelector((state) => state.user);
   const [isLoading, getSigner] = useCreateSigner();
   const [currentTab, setCurrentTab] = useState(tabs.deploy);
+  const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   const [factionOption, setFactionOption] = useState<ReactElement[] | ReactElement>();
   const [dataForm, setDataForm] = useState({
@@ -169,6 +173,8 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
 
           await GetPlayerTroops();
           setSelectedQuantity(0);
+          rdContext.refreshUser();
+
           toast.success("You deployed "+ selectedQuantity+ " troops to on behalf of " + selectedFaction)
           // console.log("You deployed", selectedQuantity, "troops to", controlPoint, "on behalf of", selectedFaction)
         }
