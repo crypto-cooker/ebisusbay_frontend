@@ -128,7 +128,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
           >
           {/* <RdButton h='30px' w='210px' position='absolute' right='10px' top='10px' ></RdButton> */}
           <Box
-           h='30px' w='210px' position='absolute' right='13px' top='0px'
+           h='30px' w='210px' right='13px' top='0px'
             as='button'
             borderColor='#292626'
             color='#FFF !important'
@@ -185,7 +185,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
             {troopTimer !== '' && (
               <Text fontSize='xs' color="#aaa">Cooldown:</Text>
             )}
-            <Text textAlign='bottom' fontWeight='bold'>{troopTimer}</Text>
+            <Text verticalAlign='bottom' fontWeight='bold'>{troopTimer}</Text>
             <Tag  variant='outline'>
               <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}
                       alt="troopsIcon" boxSize={4}/>
