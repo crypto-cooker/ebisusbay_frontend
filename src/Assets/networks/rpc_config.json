@@ -20753,7 +20753,7 @@
       "verification": {
         "doxx": false,
         "kyc": false,
-        "verified": false
+        "verified": true
       }
     },
     {
@@ -20777,7 +20777,30 @@
       "verification": {
         "doxx": false,
         "kyc": false,
-        "verified": false
+        "verified": true
+      }
+    },
+    {
+      "name": "CorgiAI VIP Pass",
+      "slug": "corgai-vip-pass",
+      "multiToken": false,
+      "address": "0x4c7863cd4d6c24f8d5c5423ede1852691a2c1a54",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The CorgiAI VIP Pass is a collection of 2000 NFTs created to celebrate the launch of CorgiAI Social Club.",
+        "avatar": "/img/collections/corgai-vip-pass/avatar.webp",
+        "banner": "/img/collections/corgai-vip-pass/banner.webp",
+        "card": "/img/collections/corgai-vip-pass/card.webp",
+        "website": "https://corgiai.xyz/",
+        "twitter": "https://www.twitter.com/corgiaiclub",
+        "discord": "https://discord.gg/HrrmmdAytu",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
       }
     }
   ],
