@@ -239,14 +239,14 @@ export const deployTroops = async (address, signature, troops, controlPointId, f
   try{
 
     var gameId = await getWeeklyGameId();
-    console.log("Troops: "+troops);
-    troops = Number(troops);
-    console.log("ControlPointID: "+controlPointId);
-    console.log("GameID: "+gameId);
-    console.log("FactionID: "+factionId);
+    // console.log("Troops: "+troops);
+    // troops = Number(troops);
+    // console.log("ControlPointID: "+controlPointId);
+    // console.log("GameID: "+gameId);
+    // console.log("FactionID: "+factionId);
     
-    console.log("Address: "+address);
-    console.log("Signature: "+signature);
+    // console.log("Address: "+address);
+    // console.log("Signature: "+signature);
 
     return await api.patch("ryoshi-dynasties/armies?", 
       {troops, controlPointId, gameId, factionId},
