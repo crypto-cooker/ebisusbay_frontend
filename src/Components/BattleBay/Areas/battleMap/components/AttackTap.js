@@ -1,43 +1,37 @@
-import { useState, useRef, useEffect } from 'react';
-import { 
-  Box, 
-  Flex, 
-  FormControl, 
-  FormLabel, 
-  NumberInput, 
-  NumberInputField,
-  NumberInputStepper, 
-  NumberIncrementStepper, 
-  NumberDecrementStepper, 
-  Select ,
-  Heading,
+import {useEffect, useRef, useState} from 'react';
+import {
   Alert,
   AlertIcon,
   AlertTitle,
-  Image,
-  Grid,
-  GridItem,
-  VStack,
+  Box,
   Center,
-  Text,
-  Spacer,
+  Flex,
+  Heading,
   HStack,
+  Image,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  Select,
+  Spacer,
+  Text,
   useDisclosure,
+  VStack,
 } from "@chakra-ui/react";
-
-import Button from "@src/Components/components/Button";
-import { getAuthSignerInStorage } from '@src/helpers/storage';
+import {getAuthSignerInStorage} from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
-import {attack, getFactionOwned, getProfileArmies, getBattleRewards } from "@src/core/api/RyoshiDynastiesAPICalls";
-import { createSuccessfulTransactionToastContent } from '@src/utils';
+import {attack, getBattleRewards, getFactionOwned, getProfileArmies} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {createSuccessfulTransactionToastContent} from '@src/utils';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import DailyCheckinModal from "@src/components-v2/feature/ryoshi-dynasties/game/modals/daily-checkin";
 import ClaimRewards from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/claim-rewards';
 
 //contracts
-import {Contract, ethers, BigNumber} from "ethers";
+import {BigNumber, Contract, ethers} from "ethers";
 import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
 import Battlefield from "@src/Contracts/Battlefield.json";
@@ -46,7 +40,7 @@ import {io} from "socket.io-client";
 
 import localFont from 'next/font/local';
 import ImageService from "@src/core/services/image";
-import {RdFaction} from "@src/core/services/api-service/types";
+
 const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
 
 const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conquestPrice}) => {
@@ -78,7 +72,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
   const [playerArmies, setPlayerArmies] = useState([]);
   const [combinedArmies, setCombinedArmies] = useState([]);
   const [isOwnerOfFaction, setIsOwnerOfFaction] = useState(false);
-  const [playerFaction, setPlayerFaction] = useState<RdFaction>();
+  const [playerFaction, setPlayerFaction] = useState();
   const [factionTroops, setFactionTroops] = useState(0);
   const handleChange = (value) => setAttackerTroops(value)
 
