@@ -20515,7 +20515,7 @@
       "name": "Cronos Towers",
       "slug": "cronos-towers",
       "multiToken": false,
-      "address": "",
+      "address": "0x37f25F400983256e84c39749d05d65fD96Ca461d",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -20738,7 +20738,7 @@
       "multiToken": false,
       "address": "0xf038C0cb2935FB8bf9b6e47bCA1df0835f359F92",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "MiCROchips is a 1500 collection made up from 250 individually designed characters with 6 variations. As well as being a unique PFP, MiCROchips act as your ticket to our computer world featuring games, soft staking and revenue sharing. With a mobile game developed pre mint and a web3 battle game about to go into development, it's prime time to join the mainframe.",
         "avatar": "/img/collections/microchips/avatar.webp",
@@ -20753,7 +20753,7 @@
       "verification": {
         "doxx": false,
         "kyc": false,
-        "verified": false
+        "verified": true
       }
     },
     {
@@ -20777,7 +20777,30 @@
       "verification": {
         "doxx": false,
         "kyc": false,
-        "verified": false
+        "verified": true
+      }
+    },
+    {
+      "name": "CorgiAI VIP Pass",
+      "slug": "corgai-vip-pass",
+      "multiToken": false,
+      "address": "0x4c7863cd4d6c24f8d5c5423ede1852691a2c1a54",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The CorgiAI VIP Pass is a collection of 2000 NFTs created to celebrate the launch of CorgiAI Social Club.",
+        "avatar": "/img/collections/corgai-vip-pass/avatar.webp",
+        "banner": "/img/collections/corgai-vip-pass/banner.webp",
+        "card": "/img/collections/corgai-vip-pass/card.webp",
+        "website": "https://corgiai.xyz/",
+        "twitter": "https://www.twitter.com/corgiaiclub",
+        "discord": "https://discord.gg/HrrmmdAytu",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
       }
     }
   ],
@@ -27471,7 +27494,7 @@
         "twitter": "https://twitter.com/cro_towers",
         "discord": "https://discord.gg/crotowers"
       },
-      "address": "",
+      "address": "0x37f25F400983256e84c39749d05d65fD96Ca461d",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 60,
       "totalSupply": 1234,
@@ -27494,8 +27517,16 @@
       "verification": {
         "doxx": false,
         "kyc": true,
-        "escrow": false,
+        "escrow": true,
         "verified": true
+      },
+      "escrow": {
+        "description": "15% of mint funds to be released to the Cronos Towers NFT project at mint. The remaining funds to be released in 3 equal installments upon:",
+        "milestones": [
+          "Staking is released for holders",
+          "The Towers Metaverse is released and playable",
+          "The project completes at least 5 giveaways"
+        ]
       }
     },
     {
