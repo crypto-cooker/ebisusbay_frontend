@@ -23,7 +23,7 @@ const Footer = () => {
                 alt="ebisus bay logo"
               />
               <p className="mt-2">Ebisu's Bay is the first and largest NFT marketplace on Cronos. Create, buy, sell, trade and enjoy the #CroFam NFT community.</p>
-              <Box fontSize='sm' mt={2}>Version: {process.env.BUILD_VERSION}</Box>
+              {/*<Box fontSize='sm' mt={2}>Version: {process.env.BUILD_VERSION}</Box>*/}
             </Box>
             <Box className="widget">
               <Heading as="h5" size="md">Marketplace</Heading>
