@@ -11,8 +11,8 @@ import BankerBubbleBox, {
 } from "@src/components-v2/feature/ryoshi-dynasties/components/banker-bubble-box";
 import {appConfig} from "@src/Config";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRightFromBracket, faCoins, faImage, faSuitcaseMedical} from "@fortawesome/free-solid-svg-icons";
-import EmergencyWithdraw from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/withdraw";
+import {faArrowRightFromBracket, faCoins, faGift, faImage, faSuitcaseMedical} from "@fortawesome/free-solid-svg-icons";
+import Rewards from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/rewards";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from 'react-redux';
@@ -33,7 +33,7 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
 
   const { isOpen: isOpenStakeFortune, onOpen: onOpenStakeFortune, onClose: onCloseStakeFortune} = useDisclosure();
   const { isOpen: isOpenStakeNFTs, onOpen: onOpenStakeNFTs, onClose: onCloseStakeNFTs} = useDisclosure();
-  const { isOpen: isOpenWithdraw, onOpen: onOpenWithdraw, onClose: onCloseWithdraw} = useDisclosure();
+  const { isOpen: isOpenWithdraw, onOpen: onOpenWithdraw, onClose: onCloseRewards} = useDisclosure();
 
   const [bankerImage, setBankerImage] = useState(bankerImages.talking);
   const user = useAppSelector((state) => state.user);
@@ -80,7 +80,7 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
 
     <StakeFortune address={address} isOpen={isOpenStakeFortune} onClose={onCloseStakeFortune} />
     <StakeNFTs isOpen={isOpenStakeNFTs} onClose={onCloseStakeNFTs} />
-    <EmergencyWithdraw isOpen={isOpenWithdraw} onClose={onCloseWithdraw}/>
+    <Rewards isOpen={isOpenWithdraw} onClose={onCloseRewards}/>
 
     <AspectRatio ratio={1920/1080} overflow='visible'>
       <Image
@@ -133,14 +133,14 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
             {abbreviateButtonText ? (
               <Icon as={FontAwesomeIcon} icon={faImage} />
             ) : (
-              <> Stake NFTs </>
+              <>Stake NFTs </>
             )}
           </RdButton>
           <RdButton w='full' hideIcon={abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenWithdraw)}>
             {abbreviateButtonText ? (
-              <Icon as={FontAwesomeIcon} icon={faSuitcaseMedical} />
+              <Icon as={FontAwesomeIcon} icon={faGift} />
             ) : (
-              <>Withdraw</>
+              <>Rewards</>
             )}
           </RdButton>
           <RdButton w='full' hideIcon={abbreviateButtonText} onClick={onBack}>

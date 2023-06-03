@@ -25,8 +25,8 @@ import ImageService from "@src/core/services/image";
 const config = appConfig();
 
 const tabs = {
-  emergency: 'emergency',
-  rewards: 'rewards'
+  fortune: 'fortune',
+  resources: 'resources'
 };
 
 interface WithdrawProps {
@@ -34,10 +34,10 @@ interface WithdrawProps {
   onClose: () => void;
 }
 
-const Withdraw = ({ isOpen, onClose}: WithdrawProps) => {
+const Rewards = ({ isOpen, onClose}: WithdrawProps) => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
-  const [currentTab, setCurrentTab] = useState(tabs.rewards);
+  const [currentTab, setCurrentTab] = useState(tabs.resources);
 
   const handleConnect = async () => {
     if (!user.address) {
@@ -71,18 +71,18 @@ const Withdraw = ({ isOpen, onClose}: WithdrawProps) => {
       {user.address ? (
         <Box p={4}>
           <Flex direction='row' justify='center' mb={2}>
-            <RdTabButton isActive={currentTab === tabs.rewards} onClick={handleBtnClick(tabs.rewards)}>
-              Rewards
+            <RdTabButton isActive={currentTab === tabs.resources} onClick={handleBtnClick(tabs.resources)}>
+              Fortune
             </RdTabButton>
-            <RdTabButton isActive={currentTab === tabs.emergency} onClick={handleBtnClick(tabs.emergency)}>
-              Emergency
+            <RdTabButton isActive={currentTab === tabs.fortune} onClick={handleBtnClick(tabs.fortune)}>
+              Resources
             </RdTabButton>
           </Flex>
           <Box>
-            {currentTab === tabs.rewards && (
-              <WithdrawRewardsTab />
+            {currentTab === tabs.resources && (
+              <FortuneRewardsTab />
             )}
-            {currentTab === tabs.emergency && (
+            {currentTab === tabs.fortune && (
               <EmergencyWithdrawTab />
             )}
           </Box>
@@ -105,7 +105,7 @@ const Withdraw = ({ isOpen, onClose}: WithdrawProps) => {
   )
 }
 
-const WithdrawRewardsTab = () => {
+const FortuneRewardsTab = () => {
   const user = useAppSelector((state) => state.user);
   const [isLoading, getSigner] = useCreateSigner();
 
@@ -311,4 +311,4 @@ const EmergencyWithdrawTab = () => {
   )
 }
 
-export default Withdraw;
+export default Rewards;
