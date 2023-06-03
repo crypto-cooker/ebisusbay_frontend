@@ -7,25 +7,16 @@ import {
   DrawerContent,
   DrawerHeader,
   Flex,
-  HStack,
-  Image,
-  Spacer,
-  Spinner,
-  Text,
   useBreakpointValue,
-  useDisclosure,
-  VStack
+  useDisclosure
 } from "@chakra-ui/react"
 
 import React, {ReactElement, useEffect, useRef, useState} from 'react';
 // import { resizeMap, resizeNewMap } from './mapFunctions.js'
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import styles from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
-import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
-import {Contract, ethers} from "ethers";
-import {ApiService} from "@src/core/services/api-service";
-import NextApiService from "@src/core/services/api-service/next";
-import {getDailyRewards, getGameTokens, getBattleRewards} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {Contract} from "ethers";
+import {getBattleRewards, getDailyRewards, getGameTokens} from "@src/core/api/RyoshiDynastiesAPICalls";
 
 import {getAuthSignerInStorage} from '@src/helpers/storage';
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
@@ -567,7 +558,11 @@ const Village = ({onChange}: VillageProps) => {
 
   return (
     <section>
-      <Box position='relative' h='calc(100vh - 74px)'>
+      <Box
+        position='relative' h='calc(100vh - 74px)'
+        backgroundImage={`/img/ryoshi-dynasties/village/background-${user.theme}.png`}
+        backgroundSize='cover'
+      >
         {mapInitialized && (
           <TransformWrapper
             // limitToBounds={true}
@@ -582,7 +577,7 @@ const Village = ({onChange}: VillageProps) => {
             disablePadding={true}
             initialScale={mapProps?.scale}
             minScale={mapProps?.minScale}
-            >
+          >
             {(utils) => (
               <React.Fragment>
                 {/* <button onClick={zoomToImage}>Zoom to 1</button> */}
