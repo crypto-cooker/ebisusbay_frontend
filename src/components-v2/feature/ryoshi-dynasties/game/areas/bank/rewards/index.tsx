@@ -57,7 +57,7 @@ const Rewards = ({ isOpen, onClose}: WithdrawProps) => {
   };
 
   const handleClose = useCallback(() => {
-    setCurrentTab(tabs.rewards);
+    setCurrentTab(tabs.fortune);
     onClose();
   }, []);
 
