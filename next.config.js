@@ -33,6 +33,17 @@ const nextConfig = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack },) => {
+    // Important: return the modified config
+    config.plugins.push(
+      new webpack.DefinePlugin({
+        'process.env': {
+          BUILD_ID: JSON.stringify(buildId),
+        },
+      }),
+    );
+    return config;
+  },
   async redirects() {
     return [
       {
