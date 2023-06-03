@@ -377,7 +377,11 @@ const BattleMap = ({onChange}: BattleMapProps) => {
       skirmishPrice={skirmishPrice}
       conquestPrice={conquestPrice}
       />
-      <Box position='relative' h='calc(100vh - 74px)'>
+      <Box
+        position='relative' h='calc(100vh - 74px)'
+        backgroundImage={ImageService.translate(`/img/ryoshi-dynasties/village/background-${user.theme}.png`).convert()}
+        backgroundSize='cover'
+      >
         {mapInitialized && (
           <TransformWrapper
             // centerOnInit={true}
