@@ -167,5 +167,12 @@ const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, is
   )
 }
 
+export const RdModalFooter = ({children}: {children: ReactNode}) => {
+  return (
+    <Box p='3'>
+      {children}
+    </Box>
+  )
+}
 
 export default RdModal;

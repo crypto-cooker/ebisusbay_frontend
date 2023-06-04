@@ -2,7 +2,7 @@ import {ReactElement, useEffect, useLayoutEffect, useState} from "react";
 import {Box, Button, Center, Flex, Spacer, Text, useDisclosure, VStack} from '@chakra-ui/react';
 import FactionForm from '../../../../../../../Components/BattleBay/Areas/FactionForm';
 import DelegateForm from '../../../../../../../Components/BattleBay/Areas/DelegateForm';
-import FactionRegistrationForm from '../../../../../../../Components/BattleBay/Areas/FactionRegistrationForm';
+import FactionRegistrationForm from '../create-faction';
 import {
   addTroops,
   getAllFactions,

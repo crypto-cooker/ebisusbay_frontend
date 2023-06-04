@@ -21,7 +21,7 @@ import {
 } from '@chakra-ui/react';
 import FactionForm from './FactionForm';
 import DelegateForm from './DelegateForm';
-import FactionRegistrationForm from './FactionRegistrationForm';
+import FactionRegistrationForm from '../../../components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/create-faction';
 import {
   getFactionOwned,
   getFactionRegistered,
