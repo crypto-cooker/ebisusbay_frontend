@@ -20623,7 +20623,7 @@
         "banner": "/img/collections/strange-camel-society/banner.webp",
         "card": "/img/collections/strange-camel-society/card.webp",
         "website": "https://www.strangecamelsociety.com/",
-        "twitter": "https://twitter.com/StrangeCamel",
+        "twitter": "https://twitter.com/StrangeCamel_",
         "discord": "https://discord.gg/bTQ8u7DHHb",
         "categories": [
           "collectibles"
@@ -20820,6 +20820,31 @@
         "discord": "https://discord.gg/kemzRExMju",
         "categories": [
           "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Undead Space Ape Degenz",
+      "slug": "undead-space-ape-degenz",
+      "multiToken": false,
+      "address": "0xD80fDbA2774973f7a83a06485b93d835d92c89C7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Introducing the Undead Space Ape Degenz, a captivating fusion of macabre aesthetics and futuristic elements. Immerse yourself in a hauntingly captivating and mysterious space, inhabited by meticulously crafted undead primates. With diverse backgrounds ranging from desolate moonscapes to ethereal nebulae, these NFTs showcase intricate skeletal details, glowing cosmic eyes, and remnants of their past lives. Explore the collection's hidden secrets, gain exclusive access to a vibrant collector community, and witness the duality of life and death in this captivating fusion of art, technology, and the supernatural. Prepare for an unforgettable odyssey into uncharted realms.",
+        "avatar": "/img/collections/undead-space-ape-degenz/avatar.webp",
+        "card": "/img/collections/undead-space-ape-degenz/card.webp",
+        "banner": "/img/collections/undead-space-ape-degenz/banner.webp",
+        "website": "https://degenz.undeadcommunity.wtf/",
+        "twitter": "https://twitter.com/undeadSpaceApes ",
+        "discord": "https://discord.gg/theundeadcommunity",
+        "categories": [
+          "collectibles"
         ]
       },
       "verification": {
@@ -27563,7 +27588,7 @@
       "author": {
         "name": "Eddy W",
         "website": "https://www.strangecamelsociety.com/",
-        "twitter": "https://twitter.com/StrangeCamel",
+        "twitter": "https://twitter.com/StrangeCamel_",
         "discord": "https://discord.gg/bTQ8u7DHHb"
       },
       "address": "",
