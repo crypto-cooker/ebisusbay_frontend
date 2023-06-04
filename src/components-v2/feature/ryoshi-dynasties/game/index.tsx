@@ -181,7 +181,7 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
           ): currentPage === 'bank' ? (
             <Bank address={user.address ?? ''} onBack={returnToPreviousPage} />
           ): currentPage === 'allianceCenter' ? (
-            <AllianceCenter onBack={returnToPreviousPage} />
+            <AllianceCenter onClose={returnToPreviousPage} />
           ): currentPage === 'academy' ? (
             <Academy onBack={returnToPreviousPage} />
             // ): currentPage === 'announcementBoard' ? (
