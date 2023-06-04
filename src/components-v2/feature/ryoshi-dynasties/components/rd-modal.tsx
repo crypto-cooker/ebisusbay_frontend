@@ -167,9 +167,17 @@ const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, is
   )
 }
 
+export const RdModalBody = ({children}: {children: ReactNode}) => {
+  return (
+    <Box p={2}>
+      {children}
+    </Box>
+  )
+}
+
 export const RdModalFooter = ({children}: {children: ReactNode}) => {
   return (
-    <Box p='3'>
+    <Box p={4}>
       {children}
     </Box>
   )

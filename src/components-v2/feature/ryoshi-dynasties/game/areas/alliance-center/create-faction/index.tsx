@@ -16,7 +16,7 @@ interface FactionRegistrationFormProps {
   handleClose: () => void;
 }
 
-const FactionRegistrationForm = ({ isOpen, onClose, handleClose}: FactionRegistrationFormProps) => {
+const CreateFactionForm = ({ isOpen, onClose, handleClose}: FactionRegistrationFormProps) => {
  
   // const [isLoading, setIsLoading] = useState(false);
   const [_, getSigner] = useCreateSigner();
@@ -98,4 +98,4 @@ const FactionRegistrationForm = ({ isOpen, onClose, handleClose}: FactionRegistr
   );
 }
 
-export default FactionRegistrationForm;
+export default CreateFactionForm;

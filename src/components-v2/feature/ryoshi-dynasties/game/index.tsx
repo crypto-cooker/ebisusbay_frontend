@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from "react";
 
 import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks";
 import BattleMap from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map";
-import AllianceCenter from "@src/Components/BattleBay/Areas/AllianceCenter";
+import AllianceCenter from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline";
 // import AnnouncementBoard from "@src/Components/BattleBay/Areas/AnnouncementBoard";
 import Academy from "@src/Components/BattleBay/Areas/Academy";
 import UserPage from "@src/Components/BattleBay/Areas/UserPage";

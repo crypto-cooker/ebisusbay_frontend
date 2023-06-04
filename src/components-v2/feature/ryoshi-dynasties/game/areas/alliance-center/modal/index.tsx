@@ -1,8 +1,8 @@
 import {ReactElement, useEffect, useLayoutEffect, useState} from "react";
 import {Box, Button, Center, Flex, Spacer, Text, useDisclosure, VStack} from '@chakra-ui/react';
 import FactionForm from '../../../../../../../Components/BattleBay/Areas/FactionForm';
-import DelegateForm from '../../../../../../../Components/BattleBay/Areas/DelegateForm';
-import FactionRegistrationForm from '../create-faction';
+import DelegateForm from '../delegate-troops';
+import CreateFactionForm from '../create-faction';
 import {
   addTroops,
   getAllFactions,
@@ -380,7 +380,7 @@ const AllianceCenterModal = ({closeAllianceCenter}: AllianceCenterModalProps) =>
     <VStack>
       {/* <ModalOverlay /> */}
       <FactionForm isOpen={isOpenFaction} onClose={onCloseFaction} faction={0} handleClose={handleClose} isRegistered={factionRegistered}/>
-      <FactionRegistrationForm isOpen={isOpenRegister} onClose={onCloseRegister} handleClose={handleClose}/>
+      <CreateFactionForm isOpen={isOpenRegister} onClose={onCloseRegister} handleClose={handleClose}/>
       <DelegateForm isOpen={isOpen} onClose={onClose} delegateMode={delegateMode} factions={factions} troops={walletTroops} setTotalTroops = {setWalletTroops}/>
 
       <Box

@@ -19,7 +19,7 @@ import {
   VStack,
   Spacer,
 } from '@chakra-ui/react';
-import DelegateForm from './DelegateForm';
+import DelegateForm from '../../../components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/delegate-troops';
 import { getProfileTroops, getAllFactions, addTroops } from "@src/core/api/RyoshiDynastiesAPICalls";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'

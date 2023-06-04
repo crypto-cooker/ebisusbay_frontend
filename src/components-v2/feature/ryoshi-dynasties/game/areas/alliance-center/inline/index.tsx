@@ -30,7 +30,7 @@ import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSig
 import {RdFaction} from "@src/core/services/api-service/types";
 import EditFactionForm from "@src/Components/BattleBay/Areas/FactionForm";
 import CreateFactionForm from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/create-faction";
-import DelegateForm from "@src/Components/BattleBay/Areas/DelegateForm";
+import DelegateTroopsForm from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/delegate-troops";
 import {Contract} from "ethers";
 import AllianceCenterContract from "@src/Contracts/AllianceCenterContract.json";
 import {toast} from "react-toastify";
@@ -152,7 +152,7 @@ const CurrentFaction = () => {
   const { isOpen: isOpenDelegate, onOpen: onOpenDelegate, onClose: onCloseDelegate } = useDisclosure();
 
   const [isExecutingRegister, setIsExecutingRegister] = useState(false);
-
+  const [totalTroops, setTotalTroops] = useState(rdContext.user?.season.troops.undeployed ?? 0);
   const {data: allFactions, status, error} = useQuery({
     queryKey: ['GetAllFactions'],
     queryFn: getAllFactions,
@@ -294,7 +294,7 @@ const CurrentFaction = () => {
                 <VStack align='start' spacing={0} my='auto'>
                   <Text fontSize='sm'>Available Troops</Text>
                   <HStack>
-                    <Text fontSize='lg' fontWeight='bold'>{!!rdContext.user ? rdContext.user.season.troops.undeployed : 0}</Text>
+                    <Text fontSize='lg' fontWeight='bold'>{totalTroops}</Text>
                     {isLocalEnv() && (
                       <IconButton
                         aria-label='Add Troops'
@@ -309,7 +309,7 @@ const CurrentFaction = () => {
                   <Text fontSize='sm' pt={4}>Faction Troops</Text>
                   <Text fontSize='lg' fontWeight='bold'>{rdContext.user.season.troops.deployed}</Text>
                 </VStack>
-                {!!rdContext.user.season.troops.undeployed && (
+                {!!rdContext.user.season.troops.undeployed && !rdContext.user.season.faction && (
                   <RdButton hideIcon={true} fontSize='lg' onClick={onOpenDelegate} maxH='50px'>
                     Delegate
                   </RdButton>
@@ -327,7 +327,7 @@ const CurrentFaction = () => {
           ) : (
             <CreateFactionForm isOpen={isOpenCreateFaction} onClose={onCloseCreateFaction} handleClose={handleActionComplete} />
           )}
-          <DelegateForm isOpen={isOpenDelegate} onClose={onCloseDelegate} delegateMode='delegate' factions={[]} troops={rdContext.user.season.troops.deployed} setTotalTroops={rdContext.user.season.troops.undeployed}/>
+          <DelegateTroopsForm isOpen={isOpenDelegate} onClose={onCloseDelegate} delegateMode='delegate' factions={allFactions} troops={rdContext.user.season.troops.deployed} setTotalTroops={setTotalTroops}/>
         </>
       )}
 
