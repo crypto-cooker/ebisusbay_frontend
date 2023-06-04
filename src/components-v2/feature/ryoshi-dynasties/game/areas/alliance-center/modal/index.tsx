@@ -381,7 +381,7 @@ const AllianceCenterModal = ({closeAllianceCenter}: AllianceCenterModalProps) =>
       {/* <ModalOverlay /> */}
       <FactionForm isOpen={isOpenFaction} onClose={onCloseFaction} faction={0} handleClose={handleClose} isRegistered={factionRegistered}/>
       <CreateFactionForm isOpen={isOpenRegister} onClose={onCloseRegister} handleClose={handleClose}/>
-      <DelegateForm isOpen={isOpen} onClose={onClose} delegateMode={delegateMode} factions={factions} troops={walletTroops} setTotalTroops = {setWalletTroops}/>
+      <DelegateForm isOpen={isOpen} onClose={onClose} delegateMode={'delegate'} factions={factions} troops={walletTroops} setTotalTroops = {setWalletTroops}/>
 
       <Box
         position='absolute'
