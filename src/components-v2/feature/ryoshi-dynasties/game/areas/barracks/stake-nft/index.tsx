@@ -1,4 +1,4 @@
-import {Box, Flex, HStack, Icon, IconButton, Image, SimpleGrid, Text, Wrap, WrapItem} from "@chakra-ui/react"
+import {Box, Flex, HStack, Icon, IconButton, Image, SimpleGrid, Text, VStack, Wrap, WrapItem} from "@chakra-ui/react"
 
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {useAppSelector} from "@src/Store/hooks";
@@ -254,18 +254,19 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
   }, [pendingNfts, executingLabel, isExecutingStake]);
 
   return (
-    <Flex direction={{base: 'column', md: 'row'}} my={6} px={4}>
-      <Wrap>
+    <VStack my={6} px={4} spacing={8}>
+      <SimpleGrid columns={{base: 2, sm: 3, md: 5}} gap={2}>
         {[...Array(5).fill(0)].map((_, index) => {
           return (
-            <WrapItem key={index}>
+            <Box key={index} w='120px'>
               {!!pendingNfts[index] ? (
                 <Box position='relative'>
                   <Box
                     bg='#376dcf'
                     p={2}
                     rounded='xl'
-                    border={pendingNfts[index].isAlreadyStaked ? 'none' : '2px dashed #ffa71c'}
+                    border='2px dashed'
+                    borderColor={pendingNfts[index].isAlreadyStaked ? 'transparent' : '#ffa71c'}
                   >
                     <Box
                       width={100}
@@ -317,10 +318,10 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
                   </Box>
                 </Box>
               )}
-            </WrapItem>
+            </Box>
           )
         })}
-      </Wrap>
+      </SimpleGrid>
       <Box ms={8} my={{base: 4, md: 'auto'}} textAlign='center'>
         <RdButton
           minW='150px'
@@ -332,7 +333,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
           <>{isExecutingStake ? executingLabel : 'Save'}</>
         </RdButton>
       </Box>
-    </Flex>
+    </VStack>
   )
 }
 

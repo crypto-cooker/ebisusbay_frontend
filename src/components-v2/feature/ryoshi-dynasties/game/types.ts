@@ -27,6 +27,7 @@ interface RyoshiConfigBankStakingNFT {
 
 interface RyoshiConfigBankStakingNFTCollection extends RyoshiConfigCollections {
   multipliers: RyoshiConfigStakingMultiplier[];
+  adders: RyoshiConfigStakingMultiplier[];
 }
 
 interface RyoshiConfigStakingMultiplier {
