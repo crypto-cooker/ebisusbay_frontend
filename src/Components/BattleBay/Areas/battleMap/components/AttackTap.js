@@ -214,8 +214,8 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
         //check for approval
         const approved = await CheckForApproval();
 
-        if(koban < (50*Number(attackerTroops))){
-          toast.error("You need at least 50 Koban per troopto attack")
+        if(koban < (Number(getAttackCost())*Number(attackerTroops))){
+          toast.error("You need at least " +getAttackCost() + " Koban per troop to attack")
           setIsExecuting(false);
           return;
         }
