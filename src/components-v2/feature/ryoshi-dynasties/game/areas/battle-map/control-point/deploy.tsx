@@ -176,7 +176,7 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
         // console.log("selectedQuantity", selectedQuantity)
         // console.log("controlPoint.id", controlPoint.id)
 
-        var data = await deployTroops(user.address.toLowerCase(), signatureInStorage,
+        var data = await deployTroops(user.address?.toLowerCase(), signatureInStorage,
           selectedQuantity, controlPoint.id, factionId)
 
         await GetPlayerTroops();
@@ -204,7 +204,7 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
       try {
           setIsExecuting(true);
           var factionId = allFactions.filter(faction => faction.name === selectedFaction)[0].id
-          var data = await recallTroops(user.address.toLowerCase(), signatureInStorage,
+          var data = await recallTroops(user.address?.toLowerCase(), signatureInStorage,
             selectedQuantity, controlPoint.id, factionId)
 
           await GetPlayerTroops();
