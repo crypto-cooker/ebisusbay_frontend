@@ -75,6 +75,7 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
     <Box
       position='relative'
       h='calc(100vh - 74px)'
+      overflow='hidden'
     >
     <Box>
 
