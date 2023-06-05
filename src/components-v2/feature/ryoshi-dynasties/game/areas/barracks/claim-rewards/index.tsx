@@ -27,9 +27,10 @@ interface StakeNftsProps {
   isOpen: boolean;
   onClose: () => void;
   battleRewards: any;
+  refreshBattleRewards: () => void;
 }
 
-const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
+const ClaimRewards = ({isOpen, onClose, battleRewards, refreshBattleRewards}: StakeNftsProps) => {
   const user = useAppSelector((state) => state.user);
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [executingLabel, setExecutingLabel] = useState('');
@@ -94,13 +95,13 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
     if (signatureInStorage) {
       try {
         setIsExecutingClaim(true);
-
-        const mintRequest = [user.address.toLowerCase(), battleRewards.tokenIds, battleRewards.quantity, battleRewards.expiresAt, battleRewards.nonce];
+        // console.log('===claimBattleRewards', battleRewards);
+        const mintRequest = [user.address.toLowerCase(), battleRewards.tokenIds, battleRewards.quantity, battleRewards.expiresAt, battleRewards.id];
 
         setExecutingLabel('Claiming...')
         // console.log('===contract', config.contracts.resources, Resources, user.provider.getSigner());
         const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
-        // console.log('===request', mintRequest, sig, authorization);
+        console.log('===request', mintRequest, battleRewards.signature);
         const tx = await resourcesContract.mintWithSig(mintRequest, battleRewards.signature);
 
         const receipt = await tx.wait();
@@ -108,8 +109,12 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
         setExecutingLabel('Done!')
         battleRewards = null;
         setIsExecutingClaim(false)
+        onClose();
+        // refreshBattleRewards();
       } catch (error) {
         console.log(error)
+        setExecutingLabel('Claim')
+        setIsExecutingClaim(false)
       }
     }
   }
@@ -118,7 +123,7 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
     onClose();
   }
   useEffect(() => {
-    console.log("battleRewards: ", battleRewards); 
+        console.log("battleRewards: ", battleRewards); 
     }, [battleRewards])
 
   return (

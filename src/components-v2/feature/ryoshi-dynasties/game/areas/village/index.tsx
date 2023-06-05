@@ -14,7 +14,7 @@ import {
   useDisclosure
 } from "@chakra-ui/react"
 
-import React, {ReactElement, useEffect, useRef, useState} from 'react';
+import React, {ReactElement, useEffect, useRef, useState, useCallback} from 'react';
 // import { resizeMap, resizeNewMap } from './mapFunctions.js'
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import styles from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
@@ -66,6 +66,13 @@ const Village = ({onChange}: VillageProps) => {
   // const { isOpen: isOpenAllianceCenter, onOpen: onOpenAllianceCenter, onClose: onCloseAllianceCenter } = useDisclosure();
   const { isOpen: isOpenDailyCheckin, onOpen: onOpenDailyCheckin, onClose: onCloseDailyCheckin } = useDisclosure();
   const [battleRewards, setBattleRewards] = useState<any[]>([]);
+
+  const refreshBattleRewards = useCallback(() => {
+    CheckForGameTokens();
+    console.log('battleRewards useCallback', battleRewards);
+  }
+  , []);
+
   useEffect(() => {
     if (transformComponentRef.current) {
       const { zoomToElement } = transformComponentRef.current as any;
@@ -134,23 +141,23 @@ const Village = ({onChange}: VillageProps) => {
   //     }
   //   }
   // }
-  // const CheckForGameTokens = async () => {
-  //   if (!user.address) return;
-  //
-  //   let signatureInStorage = getAuthSignerInStorage()?.signature;
-  //   if (!signatureInStorage) {
-  //     const { signature } = await getSigner();
-  //     signatureInStorage = signature;
-  //   }
-  //   if (signatureInStorage) {
-  //     try {
-  //       const data = await getBattleRewards(user.address.toLowerCase(), signatureInStorage);
-  //       setBattleRewards(data.data.data);
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  // }
+  const CheckForGameTokens = async () => {
+    if (!user.address) return;
+  
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      try {
+        const data = await getBattleRewards(user.address.toLowerCase(), signatureInStorage);
+        setBattleRewards(data.data.data);
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
 
   // function nFormatter(num: any, digits: number) {
   //   const lookup = [
@@ -750,7 +757,7 @@ const Village = ({onChange}: VillageProps) => {
         <Box  position='absolute' top={0} left={0} p={4} >
           <Flex direction='row' justify='space-between' >
             {allianceCenterOpen ? <AllianceCenterInline onClose={() => CloseAllianceCenter()}/> : <></>}
-            {barracksOpen ? <Barracks onBack={() => CloseBarracks()} /> : <></>}
+            {barracksOpen ? <Barracks onBack={() => CloseBarracks()} refreshBattleRewards={refreshBattleRewards}/> : <></>}
             {portalOpen ? <PortalModal onBack={() => ClosePortal()}/> : <></>}
         
         </Flex>
