@@ -15,10 +15,9 @@ const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' 
 
 interface BarracksProps {
   onBack: () => void;
-  refreshBattleRewards: () => void;
 }
 
-const Barracks = ({onBack, refreshBattleRewards}: BarracksProps) => {
+const Barracks = ({onBack}: BarracksProps) => {
   const { isOpen: isOpenStakeNFTs, onOpen: onOpenStakeNFTs, onClose: onCloseStakeNFTs} = useDisclosure();
   const { isOpen: isOpenClaimRewards, onOpen: onOpenClaimRewards, onClose: onCloseClaimRewards} = useDisclosure();
   const [handleAuthedNavigation] = useAuthedFunction();
@@ -101,7 +100,7 @@ const Barracks = ({onBack, refreshBattleRewards}: BarracksProps) => {
         <Center>
         <StakeNfts isOpen={isOpenStakeNFTs} onClose={onCloseStakeNFTs} />
         {!!battleRewards && (
-          <ClaimRewards isOpen={isOpenClaimRewards} onClose={onCloseClaimRewards} battleRewards={battleRewards} refreshBattleRewards={refreshBattleRewards}/>
+          <ClaimRewards isOpen={isOpenClaimRewards} onClose={onCloseClaimRewards} battleRewards={battleRewards}/>
         )}
       <Container>
 

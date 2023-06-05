@@ -757,7 +757,7 @@ const Village = ({onChange}: VillageProps) => {
         <Box  position='absolute' top={0} left={0} p={4} >
           <Flex direction='row' justify='space-between' >
             {allianceCenterOpen ? <AllianceCenterInline onClose={() => CloseAllianceCenter()}/> : <></>}
-            {barracksOpen ? <Barracks onBack={() => CloseBarracks()} refreshBattleRewards={refreshBattleRewards}/> : <></>}
+            {barracksOpen ? <Barracks onBack={() => CloseBarracks()}/> : <></>}
             {portalOpen ? <PortalModal onBack={() => ClosePortal()}/> : <></>}
         
         </Flex>

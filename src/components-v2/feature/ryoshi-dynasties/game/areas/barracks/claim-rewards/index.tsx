@@ -20,6 +20,7 @@ import {Contract} from "ethers";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
 import {ApiService} from "@src/core/services/api-service";
 import {useQuery} from "@tanstack/react-query";
+import {getBattleRewards} from "@src/core/api/RyoshiDynastiesAPICalls";
 
 const config = appConfig();
 
@@ -27,10 +28,9 @@ interface StakeNftsProps {
   isOpen: boolean;
   onClose: () => void;
   battleRewards: any;
-  refreshBattleRewards: () => void;
 }
 
-const ClaimRewards = ({isOpen, onClose, battleRewards, refreshBattleRewards}: StakeNftsProps) => {
+const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
   const user = useAppSelector((state) => state.user);
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [executingLabel, setExecutingLabel] = useState('');
@@ -57,6 +57,20 @@ const ClaimRewards = ({isOpen, onClose, battleRewards, refreshBattleRewards}: St
       refetchOnWindowFocus: false,
     }
   );
+  const checkForBattleRewards = async () => {
+    if (!user.address) return;
+
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      return await getBattleRewards(user.address.toLowerCase(), signatureInStorage);
+    }
+
+    return null;
+  }
 // const handleClaim = useCallback(async () => {
 //     // if (pendingNfts.length === 0 && stakedNfts.length === 0) return;
 
@@ -96,13 +110,18 @@ const ClaimRewards = ({isOpen, onClose, battleRewards, refreshBattleRewards}: St
       try {
         setIsExecutingClaim(true);
         // console.log('===claimBattleRewards', battleRewards);
-        const mintRequest = [user.address.toLowerCase(), battleRewards.tokenIds, battleRewards.quantity, battleRewards.expiresAt, battleRewards.id];
-
+        // const mintRequest = {
+        //   address: user.address.toLowerCase(), 
+        //   ids: battleRewards.tokenIds, 
+        //   amounts: battleRewards.quantity, 
+        //   expire: battleRewards.expiresAt, 
+        //   nonce: battleRewards.id};
+        const battleRewards3 = await checkForBattleRewards();
+        const mintRequest = [user.address.toLowerCase(), battleRewards3.tokenIds, battleRewards3.quantity, battleRewards3.expiresAt, battleRewards3.nonce];
         setExecutingLabel('Claiming...')
         // console.log('===contract', config.contracts.resources, Resources, user.provider.getSigner());
         const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
-        console.log('===request', mintRequest, battleRewards.signature);
-        const tx = await resourcesContract.mintWithSig(mintRequest, battleRewards.signature);
+        const tx = await resourcesContract.mintWithSig(mintRequest, battleRewards3.signature);
 
         const receipt = await tx.wait();
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -110,7 +129,6 @@ const ClaimRewards = ({isOpen, onClose, battleRewards, refreshBattleRewards}: St
         battleRewards = null;
         setIsExecutingClaim(false)
         onClose();
-        // refreshBattleRewards();
       } catch (error) {
         console.log(error)
         setExecutingLabel('Claim')
