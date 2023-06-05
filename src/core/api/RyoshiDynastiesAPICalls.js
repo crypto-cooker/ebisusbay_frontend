@@ -408,8 +408,10 @@ export const getRewardsStreak = async (address, signature) => {
 }
 export const getBattleRewards = async (address, signature) => {
   try{
-    return await api.get("ryoshi-dynasties/game-tokens/battle-reward?", 
+    let data =  await api.get("ryoshi-dynasties/game-tokens/battle-reward?",
       {params: {address, signature}});
+
+    return data.data.data;
   }
   catch(error){
     throw error;

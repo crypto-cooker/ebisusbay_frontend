@@ -6,7 +6,10 @@ import {
   DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
-  Flex, Grid, GridItem, Image,
+  Flex,
+  Grid,
+  GridItem,
+  Image,
   useBreakpointValue,
   useDisclosure
 } from "@chakra-ui/react"
@@ -15,19 +18,12 @@ import React, {ReactElement, useEffect, useRef, useState} from 'react';
 // import { resizeMap, resizeNewMap } from './mapFunctions.js'
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import styles from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
-import {Contract} from "ethers";
-import {getBattleRewards, getDailyRewards, getGameTokens} from "@src/core/api/RyoshiDynastiesAPICalls";
-
-import {getAuthSignerInStorage} from '@src/helpers/storage';
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 
 //contracts
 import {appConfig} from "@src/Config";
-import Resources from "@src/Contracts/Resources.json";
 import DailyCheckinModal from "@src/components-v2/feature/ryoshi-dynasties/game/modals/daily-checkin";
 import {useAppSelector} from "@src/Store/hooks";
-import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
 import AnnouncementBoardModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal";
 import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks";
 import PortalModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/portal";
@@ -88,86 +84,86 @@ const Village = ({onChange}: VillageProps) => {
     console.log(ReactZoomPanPinchRef.state.positionX, ReactZoomPanPinchRef.state.positionY, ReactZoomPanPinchRef.state.scale)
   };
 
-  const GetGameTokens = async () => {
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const data = await getGameTokens(user?.address?.toLowerCase(), signatureInStorage);
+  // const GetGameTokens = async () => {
+  //   let signatureInStorage = getAuthSignerInStorage()?.signature;
+  //   if (!signatureInStorage) {
+  //     const { signature } = await getSigner();
+  //     signatureInStorage = signature;
+  //   }
+  //   if (signatureInStorage) {
+  //     try {
+  //       const data = await getGameTokens(user?.address?.toLowerCase(), signatureInStorage);
+  //
+  //       if(data.data.data.length > 0) {
+  //
+  //       }
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  // }
+  // const ClaimDailyRewards = async () => {
+  //   let signatureInStorage = getAuthSignerInStorage()?.signature;
+  //   if (!signatureInStorage) {
+  //     const { signature } = await getSigner();
+  //     signatureInStorage = signature;
+  //   }
+  //   if (signatureInStorage) {
+  //     try {
+  //       const data = await getDailyRewards(user!.address!.toLowerCase(), signatureInStorage);
+  //
+  //       const sig = data.data.data.signature;
+  //       const profileId = data.data.data.profileId;
+  //       const quantity = data.data.data.quantity;
+  //       const timestamp = data.data.data.timestamp;
+  //
+  //       var claimRewardsTuple = {
+  //         address: user!.address!.toLowerCase(),
+  //         profileId: [profileId],
+  //         quantity: [quantity],
+  //         timestamp: timestamp,
+  //       };
+  //
+  //       const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
+  //       const tx = await resourcesContract.mintWithSig(claimRewardsTuple, sig);
+  //       const receipt = await tx.wait();
+  //       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+  //
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  // }
+  // const CheckForGameTokens = async () => {
+  //   if (!user.address) return;
+  //
+  //   let signatureInStorage = getAuthSignerInStorage()?.signature;
+  //   if (!signatureInStorage) {
+  //     const { signature } = await getSigner();
+  //     signatureInStorage = signature;
+  //   }
+  //   if (signatureInStorage) {
+  //     try {
+  //       const data = await getBattleRewards(user.address.toLowerCase(), signatureInStorage);
+  //       setBattleRewards(data.data.data);
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  // }
 
-        if(data.data.data.length > 0) {
-
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  }
-  const ClaimDailyRewards = async () => {
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const data = await getDailyRewards(user!.address!.toLowerCase(), signatureInStorage);
-
-        const sig = data.data.data.signature;
-        const profileId = data.data.data.profileId;
-        const quantity = data.data.data.quantity;
-        const timestamp = data.data.data.timestamp;
-
-        var claimRewardsTuple = {
-          address: user!.address!.toLowerCase(),
-          profileId: [profileId],
-          quantity: [quantity],
-          timestamp: timestamp,
-        };
-
-        const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
-        const tx = await resourcesContract.mintWithSig(claimRewardsTuple, sig);
-        const receipt = await tx.wait();
-        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  }
-  const CheckForGameTokens = async () => {
-    if (!user.address) return;
-
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const data = await getBattleRewards(user.address.toLowerCase(), signatureInStorage);
-        setBattleRewards(data.data.data);
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  }
-
-  function nFormatter(num: any, digits: number) {
-    const lookup = [
-      { value: 1, symbol: "" },
-      { value: 1e3, symbol: "k" },
-      { value: 1e6, symbol: "M" }
-    ];
-    const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-    var item = lookup.slice().reverse().find(function(item) {
-      return num >= item.value;
-    });
-    return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
-  }
+  // function nFormatter(num: any, digits: number) {
+  //   const lookup = [
+  //     { value: 1, symbol: "" },
+  //     { value: 1e3, symbol: "k" },
+  //     { value: 1e6, symbol: "M" }
+  //   ];
+  //   const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+  //   var item = lookup.slice().reverse().find(function(item) {
+  //     return num >= item.value;
+  //   });
+  //   return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
+  // }
 
   const buildings ={ "allianceCenter" : {height:438, width:554, top:'7%', left:'55%'},
     "townhall" : {height:607, width:707, top:'13%', left:'36%'},
@@ -493,11 +489,11 @@ const Village = ({onChange}: VillageProps) => {
     setSizeMultiplier(window.innerWidth / 2880);
   }, [])
 
-  useEffect(() => {
+  // useEffect(() => {
     // onOpenAnnouncementBoard();
-    GetGameTokens();
-    CheckForGameTokens();
-  }, [user.address])
+    // GetGameTokens();
+    // CheckForGameTokens();
+  // }, [user.address])
 
   const SetUpButtons = async () => {
     setPins(buttonsNames.map((button, i) =>
@@ -754,7 +750,7 @@ const Village = ({onChange}: VillageProps) => {
         <Box  position='absolute' top={0} left={0} p={4} >
           <Flex direction='row' justify='space-between' >
             {allianceCenterOpen ? <AllianceCenterInline onClose={() => CloseAllianceCenter()}/> : <></>}
-            {barracksOpen ? <Barracks onBack={() => CloseBarracks()} battleRewards={battleRewards}/> : <></>}
+            {barracksOpen ? <Barracks onBack={() => CloseBarracks()} /> : <></>}
             {portalOpen ? <PortalModal onBack={() => ClosePortal()}/> : <></>}
         
         </Flex>

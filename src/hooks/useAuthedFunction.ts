@@ -2,16 +2,17 @@ import {useDispatch, useSelector} from 'react-redux';
 import {toast} from "react-toastify";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
+import {useAppSelector} from "@src/Store/hooks";
 
 const useAuthedFunction = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
 
-  const runAuthedFunction = async (fn) => {
+  const runAuthedFunction = async (fn: Function) => {
     if (user.address) {
       try {
         await fn();
-      } catch (error) {
+      } catch (error: any) {
         if (error.data) {
           toast.error(error.data.message);
         } else if (error.message) {

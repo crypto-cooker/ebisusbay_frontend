@@ -1,51 +1,54 @@
-import {
-  Box,
-  Button,
-  Center,
-  Container,
-  Flex,
-  Spacer,
-  Text,
-  useDisclosure,
-  VStack,
-} from '@chakra-ui/react';
+import {Box, Button, Center, Container, Flex, Spacer, Text, useDisclosure, VStack,} from '@chakra-ui/react';
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import StakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft";
 import ClaimRewards from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/claim-rewards';
-import {useCallback, useEffect} from "react";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useAppSelector} from "@src/Store/hooks";
-import {useDispatch} from "react-redux";
 
 import localFont from 'next/font/local';
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import {useQuery} from "@tanstack/react-query";
+import {getAuthSignerInStorage} from "@src/helpers/storage";
+import {getBattleRewards} from "@src/core/api/RyoshiDynastiesAPICalls";
+import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
+
 const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' })
 
 interface BarracksProps {
   onBack: () => void;
-  battleRewards?: any;
 }
 
-const Barracks = ({onBack, battleRewards}: BarracksProps) => {
-  const dispatch = useDispatch();
+const Barracks = ({onBack}: BarracksProps) => {
   const { isOpen: isOpenStakeNFTs, onOpen: onOpenStakeNFTs, onClose: onCloseStakeNFTs} = useDisclosure();
   const { isOpen: isOpenClaimRewards, onOpen: onOpenClaimRewards, onClose: onCloseClaimRewards} = useDisclosure();
+  const [handleAuthedNavigation] = useAuthedFunction();
   const user = useAppSelector((state) => state.user);
+  const [_, getSigner] = useCreateSigner();
 
-  const handleAuthedNavigation = useCallback((fn: () => void) => {
-    if (!!user.address) {
-      fn();
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
+  const checkForBattleRewards = async () => {
+    if (!user.address) return;
+
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
     }
-  }, [user.address]);
+    if (signatureInStorage) {
+      return await getBattleRewards(user.address.toLowerCase(), signatureInStorage);
+    }
+
+    return null;
+  }
+
+  const { data: battleRewards } = useQuery(
+    ['BattleRewards', user.address],
+    checkForBattleRewards,
+    {
+      enabled: !!user.address,
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  console.log('BATTLE', battleRewards);
 
   return (
     <Flex 
@@ -107,7 +110,7 @@ const Barracks = ({onBack, battleRewards}: BarracksProps) => {
       >
         <RdButton onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>Stake NFTs</RdButton>
         {!!battleRewards && (
-        <RdButton fontSize='18' onClick={() => handleAuthedNavigation(onOpenClaimRewards)}>Claim Battle Rewards</RdButton>
+          <RdButton fontSize='18' onClick={() => handleAuthedNavigation(onOpenClaimRewards)}>Claim Battle Rewards</RdButton>
         )}
       </VStack>
       </Container>

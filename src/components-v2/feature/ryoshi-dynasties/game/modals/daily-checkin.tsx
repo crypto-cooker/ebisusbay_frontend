@@ -136,8 +136,10 @@ const DailyCheckin = ({isOpen, onClose}: DailyCheckinProps) => {
   }
 
   useEffect(() => {
-    getRewardsStreakData();
-  }, [user.address])
+    if (isOpen) {
+      getRewardsStreakData();
+    }
+  }, [user.address, isOpen])
 
   return (
     <RdModal

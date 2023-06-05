@@ -293,7 +293,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
     if (signatureInStorage) {
       try {
         const data = await getBattleRewards(user.address.toLowerCase(), signatureInStorage);
-        setBattleRewards(data.data.data);
+        setBattleRewards(data);
       } catch (error) {
         console.log(error)
       }
