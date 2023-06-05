@@ -65,13 +65,7 @@ const Village = ({onChange}: VillageProps) => {
   const { isOpen: isOpenAnnouncementBoard, onOpen: onOpenAnnouncementBoard, onClose: onCloseAnnouncementBoard } = useDisclosure();
   // const { isOpen: isOpenAllianceCenter, onOpen: onOpenAllianceCenter, onClose: onCloseAllianceCenter } = useDisclosure();
   const { isOpen: isOpenDailyCheckin, onOpen: onOpenDailyCheckin, onClose: onCloseDailyCheckin } = useDisclosure();
-  const [battleRewards, setBattleRewards] = useState<any[]>([]);
-
-  const refreshBattleRewards = useCallback(() => {
-    CheckForGameTokens();
-    console.log('battleRewards useCallback', battleRewards);
-  }
-  , []);
+  // const [battleRewards, setBattleRewards] = useState<any[]>([]);
 
   useEffect(() => {
     if (transformComponentRef.current) {
@@ -141,23 +135,23 @@ const Village = ({onChange}: VillageProps) => {
   //     }
   //   }
   // }
-  const CheckForGameTokens = async () => {
-    if (!user.address) return;
+  // const CheckForGameTokens = async () => {
+  //   if (!user.address) return;
   
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const data = await getBattleRewards(user.address.toLowerCase(), signatureInStorage);
-        setBattleRewards(data.data.data);
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  }
+  //   let signatureInStorage = getAuthSignerInStorage()?.signature;
+  //   if (!signatureInStorage) {
+  //     const { signature } = await getSigner();
+  //     signatureInStorage = signature;
+  //   }
+  //   if (signatureInStorage) {
+  //     try {
+  //       const data = await getBattleRewards(user.address.toLowerCase(), signatureInStorage);
+  //       setBattleRewards(data.data.data);
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  // }
 
   // function nFormatter(num: any, digits: number) {
   //   const lookup = [

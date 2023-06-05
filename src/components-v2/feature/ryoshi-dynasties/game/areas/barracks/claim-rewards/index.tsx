@@ -71,33 +71,6 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
 
     return null;
   }
-// const handleClaim = useCallback(async () => {
-//     // if (pendingNfts.length === 0 && stakedNfts.length === 0) return;
-
-//     let hasCompletedApproval = false;
-
-//     try {
-//       setIsExecutingClaim(true);
-//       setExecutingLabel('Approving');
-
-//       hasCompletedApproval = true;
-
-//       setExecutingLabel('Staking');
-
-//       toast.success('Staking successful!');
-//     } catch (e: any) {
-//       console.log(e);
-//       if (!hasCompletedApproval) {
-//         toast.error('Approval failed. Please try again.');
-//       } else {
-//         toast.error('Staking failed. Please try again.');
-//       }
-//     } finally {
-//       setIsExecutingClaim(false);
-//       setExecutingLabel('');
-//     }
-
-//   }, []);
   const claimBattleRewards = async () => {
     if (!user.address) return;
 
