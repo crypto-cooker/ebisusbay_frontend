@@ -339,9 +339,9 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
       battleContext.current.textContent = "The defenders slew more of your troops than you slew of theirs";
       setAttackerFilter('brightness(0.4)');
       setDefenderFilter('brightness(1');
-      setAttackerStyle({position: "relative", background: "whitesmoke", display: "flex", justifyContent: "center",
+      setDefenderStyle({position: "relative", background: "whitesmoke", display: "flex", justifyContent: "center",
                         padding: "5px", boxSize: "border-box", boxShadow: "0 20px 50px rgba(255, 255, 255, 0.8)"});
-      setDefenderStyle({boxShadow: "0 20px 50px rgba(0, 0, 0, 0.8)"});
+      setAttackerStyle({boxShadow: "0 20px 50px rgba(0, 0, 0, 0.8)"});
     }
     else if(attackersSlain == defendersSlain) {
       battleOutcome.current.textContent = "Draw";
@@ -757,9 +757,6 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
         <Center>
           <Flex justifyContent='space-between' w='90%' >
             <Text fontSize={'12px'}>Your $Koban: {koban}</Text>
-            {!battleRewards || battleRewards.length ===0 ? (<></>) : (
-              <RdButton onClick={() => onOpenClaimRewards()}>Claim Rewards will move</RdButton>
-            )}
           </Flex>
         </Center>
       </div>
@@ -866,7 +863,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
               <RdButton
                 onClick={Reset}
                 w='200px'
-                fontSize={{base: 'md', sm: 'xl'}}
+                fontSize={{base: 'sm', sm: 'md'}}
                 hideIcon={true}
                 isLoading={isExecuting}
                 disabled={isExecuting}
@@ -877,19 +874,25 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
               <RdButton 
                 onClick={showDetailedResults}
                 w='250px'
-                fontSize={{base: 'md', sm: 'xl'}}
+                fontSize={{base: 'sm', sm: 'md'}}
                 hideIcon={true}
                 isLoading={isExecuting}
                 disabled={isExecuting}
                 marginTop='2'
                 marginBottom='2'>
-                See detailed results
+                Detailed Results
               </RdButton>
+              {!battleRewards || battleRewards.length ===0 ? (<></>) : (
+              <RdButton 
+                onClick={() => onOpenClaimRewards()}
+                fontSize={{base: 'sm', sm: 'md'}}
+                >Claim Rewards</RdButton>
+            )}
             </HStack>
           </Center>
           
       <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin}/>
-      <ClaimRewards isOpen={isOpenClaimRewards} onClose={onCloseClaimRewards} battleRewards={battleRewards}/>
+      <ClaimRewards isOpen={isOpenClaimRewards} onClose={onCloseClaimRewards} battleRewards={battleRewards} removeBattleRewards={CheckForBattleRewards}/>
 
         <Spacer m='4' />
 
