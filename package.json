@@ -6,11 +6,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "codegen": "graphql-codegen",
+    "predev": "npm run codegen",
     "start": "next start",
     "start-web": "NODE_OPTIONS=\"--max_old_space_size=1408\" next start",
-    "format": "prettier --write \"**/*.+(js|jsx|json|md|mdx|css|scss)\"",
-    "compile": "graphql-codegen",
-    "watch": "graphql-codegen -w"
+    "format": "prettier --write \"**/*.+(js|jsx|json|md|mdx|css|scss)\""
   },
   "lint-staged": {
     "src/**/*.{js,jsx,json,md,mdx}": [
@@ -118,8 +118,8 @@
     }
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^3.3.1",
-    "@graphql-codegen/client-preset": "^3.0.1",
+    "@graphql-codegen/cli": "^4.0.1",
+    "@graphql-codegen/client-preset": "^4.0.0",
     "@types/react-blockies": "^1.4.1",
     "@types/redux-sentry-middleware": "^0.2.2",
     "@types/styled-components": "^5.1.26",
