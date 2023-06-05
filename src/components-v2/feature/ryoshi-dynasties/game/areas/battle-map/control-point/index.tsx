@@ -82,13 +82,13 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
                   isActive={currentTab === tabs.info}
                   onClick={() => setCurrentTab(tabs.info)}
                 >
-                  Info
+                  Leaderboard
                 </RdTabButton>
                 <RdTabButton
                   isActive={currentTab === tabs.deploy}
                   onClick={() => setCurrentTab(tabs.deploy)}
                 >
-                  Deploy
+                  Dispatch Troops
                 </RdTabButton>
                 <RdTabButton
                   isActive={currentTab === tabs.attack}
