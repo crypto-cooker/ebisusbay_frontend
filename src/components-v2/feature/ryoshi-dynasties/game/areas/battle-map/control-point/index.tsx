@@ -1,23 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useSelector } from "react-redux";
 import {
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Button,
-  Box,
   Flex,
-  Spacer,
   Center
-
 } from "@chakra-ui/react"
 import { Spinner } from 'react-bootstrap';
 import localFont from "next/font/local";
-import {ArrowBackIcon, CloseIcon} from "@chakra-ui/icons";
-import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
+import {ArrowBackIcon} from "@chakra-ui/icons";
 
 import {AttackTap} from "@src/Components/BattleBay/Areas/battleMap/components";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";

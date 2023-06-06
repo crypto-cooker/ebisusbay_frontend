@@ -107,6 +107,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
   const { isOpen: isOpenDailyCheckin, onOpen: onOpenDailyCheckin, onClose: onCloseDailyCheckin } = useDisclosure();
   const { isOpen: isOpenClaimRewards, onOpen: onOpenClaimRewards, onClose: onCloseClaimRewards} = useDisclosure();
   const [battleRewards, setBattleRewards] = useState([]);
+  const [battleRewardsClaimed, setBattleRewardsClaimed] = useState(false);
 
   //current attackID
   // const [attackId, setAttackId] = useState(0);
@@ -132,6 +133,11 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
     } else {
       setDefenderTroops(0);
     }
+  }
+  const claimedRewards = () => {
+    setBattleRewardsClaimed(true);
+    onCloseClaimRewards();
+    console.log("claimedRewards")
   }
   function setupDice(attackerDice, defenderDice) {
     attackerDice.length = Math.min(attackerDice.length, 3);
@@ -882,7 +888,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
                 marginBottom='2'>
                 Detailed Results
               </RdButton>
-              {!battleRewards || battleRewards.length ===0 ? (<></>) : (
+              {!battleRewards || battleRewards.length ===0 ||battleRewardsClaimed ? (<></>) : (
               <RdButton 
                 onClick={() => onOpenClaimRewards()}
                 fontSize={{base: 'sm', sm: 'md'}}
@@ -892,7 +898,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
           </Center>
           
       <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin}/>
-      <ClaimRewards isOpen={isOpenClaimRewards} onClose={onCloseClaimRewards} battleRewards={battleRewards} removeBattleRewards={CheckForBattleRewards}/>
+      <ClaimRewards isOpen={isOpenClaimRewards} onClose={claimedRewards} battleRewards={battleRewards} removeBattleRewards={CheckForBattleRewards}/>
 
         <Spacer m='4' />
 

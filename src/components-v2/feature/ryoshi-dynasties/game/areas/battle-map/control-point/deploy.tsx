@@ -44,7 +44,6 @@ const tabs = {
   recall: 'recall',
   deploy: 'deploy',
 };
-
 interface DeployTabProps {
   controlPoint: RdControlPoint;
   refreshControlPoint: () => void;
@@ -89,8 +88,8 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
     }
     if (signatureInStorage) {
       try {
-        const data = await getTroopsOnControlPoint(user.address.toLowerCase(), signatureInStorage, controlPoint.id, 27);
-        // console.log(data)
+        const data = await getTroopsOnControlPoint(user.address.toLowerCase(), signatureInStorage, 
+          controlPoint.id, rdContext?.game?.game.id);
         setTroopsDeployed(data)
       } catch (error) {
         console.log(error)
@@ -171,10 +170,12 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
     if (signatureInStorage) {
       try {
         setIsExecuting(true);
+        
+
         var factionId = allFactions.filter(faction => faction.name === selectedFaction)[0].id
-        // console.log("factionId", factionId)
-        // console.log("selectedQuantity", selectedQuantity)
-        // console.log("controlPoint.id", controlPoint.id)
+        console.log("factionId", factionId)
+        console.log("selectedQuantity", selectedQuantity)
+        console.log("controlPoint.id", controlPoint.id)
 
         var data = await deployTroops(user.address?.toLowerCase(), signatureInStorage,
           selectedQuantity, controlPoint.id, factionId)
@@ -203,9 +204,17 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
     if (signatureInStorage) {
       try {
           setIsExecuting(true);
+
+          // console.log("rdContext", rdContext?.game?.game.id)
           var factionId = allFactions.filter(faction => faction.name === selectedFaction)[0].id
-          var data = await recallTroops(user.address?.toLowerCase(), signatureInStorage,
-            selectedQuantity, controlPoint.id, factionId)
+          console.log("user.address", user.address?.toLowerCase())
+          console.log("signatureInStorage", signatureInStorage)
+          console.log("factionId", factionId)
+          console.log("selectedQuantity", selectedQuantity)
+          console.log("controlPoint.id", controlPoint.id)
+
+          var data = await recallTroops(user.address?.toLowerCase(), signatureInStorage, 
+            rdContext?.game?.game.id, selectedQuantity, controlPoint.id, factionId)
 
           await GetPlayerTroops();
           setSelectedQuantity(0);
@@ -215,7 +224,7 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
           toast.success("You recalled "+ selectedQuantity + " troops from "+ controlPoint.name +" on behalf of "+ selectedFaction)
       } catch (error: any) {
         console.log(error)
-        toast.error(error.response.data.error.metadata.message)
+        // toast.error(error.response.data.error.metadata.message)
       }
       finally {
         setIsExecuting(false);
