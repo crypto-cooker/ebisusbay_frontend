@@ -20852,6 +20852,31 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Cyberpunk Cronicles",
+      "slug": "cyberpunk-cronicles",
+      "multiToken": false,
+      "address": "0x6625e0b113CC4f4E70Fc409Cd1ABFcE8Cf7E747b",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Enter a dystopian metropolis where technology and rebellion collide in CYBERPUNK CROnicles, an electrifying NFT collection on the Cronos blockchain. Immerse yourself in a digital realm of cybernetic outlaws, neon-lit streets, and augmented realities as you unlock the secrets of a dark, post-human future.",
+        "avatar": "/img/collections/cyberpunk-cronicles/avatar.webp",
+        "card": "/img/collections/cyberpunk-cronicles/card.webp",
+        "banner": "/img/collections/cyberpunk-cronicles/banner.webp",
+        "website": "https://thecronosclub.com/",
+        "twitter": "https://twitter.com/The_Cronos_Club ",
+        "discord": "https://discord.gg/rvtB8gYSGU",
+        "medium": "https://medium.com/@the_cronos_club",
+        "telegram": "https://t.me/+8CcIuXpqLFYzN",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [

@@ -1,5 +1,5 @@
 import {appConfig, isLocalEnv} from "../Config";
-import {specialImageTransform} from "../hacks";
+import {croSkullRedPotionImage, isCroSkullRedPotion, specialImageTransform} from "../hacks";
 import ImageService from "@src/core/services/image";
 
 /**
@@ -29,6 +29,9 @@ export const hostedImage = (imgPath, useThumbnail = false) => {
  * @returns {string|*}
  */
 export const nftCardUrl = (nftAddress, nftImage) => {
+  if (isCroSkullRedPotion(nftAddress)) {
+    return croSkullRedPotionImage();
+  }
   if (!nftImage || nftImage.startsWith('data')) return nftImage;
   return ImageService.translate(specialImageTransform(nftAddress, nftImage)).nftCard();
 }
