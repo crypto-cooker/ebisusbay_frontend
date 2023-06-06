@@ -10,6 +10,7 @@ import {useQuery} from "@tanstack/react-query";
 import {getAuthSignerInStorage} from "@src/helpers/storage";
 import {getBattleRewards} from "@src/core/api/RyoshiDynastiesAPICalls";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
+import React, {useState} from 'react';
 
 const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' })
 
@@ -23,7 +24,12 @@ const Barracks = ({onBack}: BarracksProps) => {
   const [handleAuthedNavigation] = useAuthedFunction();
   const user = useAppSelector((state) => state.user);
   const [_, getSigner] = useCreateSigner();
-
+  const [battleRewardsClaimed, setBattleRewardsClaimed] = useState(false);
+  const claimedRewards = () => {
+    setBattleRewardsClaimed(true);
+    onCloseClaimRewards();
+    console.log("claimedRewards")
+  }
   const checkForBattleRewards = async () => {
     if (!user.address) return;
 
@@ -100,7 +106,7 @@ const Barracks = ({onBack}: BarracksProps) => {
         <Center>
         <StakeNfts isOpen={isOpenStakeNFTs} onClose={onCloseStakeNFTs} />
         {!!battleRewards && (
-          <ClaimRewards isOpen={isOpenClaimRewards} onClose={onCloseClaimRewards} battleRewards={battleRewards}/>
+          <ClaimRewards isOpen={isOpenClaimRewards} onClose={claimedRewards} battleRewards={battleRewards}/>
         )}
       <Container>
 
@@ -109,7 +115,7 @@ const Barracks = ({onBack}: BarracksProps) => {
         align='stretch'
       >
         <RdButton onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>Stake NFTs</RdButton>
-        {!!battleRewards && (
+        {(!!battleRewards && !battleRewardsClaimed) &&  (
           <RdButton fontSize='18' onClick={() => handleAuthedNavigation(onOpenClaimRewards)}>Claim Battle Rewards</RdButton>
         )}
       </VStack>
