@@ -18682,7 +18682,7 @@
       "multiToken": false,
       "address": "0xdbFDf81D1fDD2e79e8ffaDE50c219452587e9488",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Launched on the 1st of March on the Cronos Chain, Cowz are the next step in the Steakhouse NFT story line. In the future Cowz will be used to mint other NFT collections as if being sent to the auction house, or if you have what it takes to raise a herd you can to be eligible for airdrops without sacrificing your dairy queens!",
         "avatar": "/img/collections/cowz/avatar.webp",
@@ -20614,7 +20614,7 @@
       "name": "Strange Camel Society",
       "slug": "strange-camel-society",
       "multiToken": false,
-      "address": "",
+      "address": "0x9B168D4D0caEbC30b09b9a0B93e3C075862F6172",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -27616,7 +27616,7 @@
         "twitter": "https://twitter.com/StrangeCamel_",
         "discord": "https://discord.gg/bTQ8u7DHHb"
       },
-      "address": "",
+      "address": "0x9B168D4D0caEbC30b09b9a0B93e3C075862F6172",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 40,
       "totalSupply": 4000,
