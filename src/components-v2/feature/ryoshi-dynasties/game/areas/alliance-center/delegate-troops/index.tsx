@@ -22,6 +22,7 @@ import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-
 import {useAppSelector} from "@src/Store/hooks";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {RdModalBody, RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+import {AxiosError} from "axios";
 
 interface DelegateTroopsFormProps {
   isOpen: boolean;
@@ -74,9 +75,13 @@ const DelegateTroopsForm = ({ isOpen, onClose, delegateMode, factions=[], troops
         // console.log(res)
         setShowAlert(false)
         onClose();
-      } catch (error) {
-        console.log(error)
-        setAlertMessage("There was an issue delegating troops. Please try again later.")
+      } catch (error: any) {
+        console.log(error);
+        if (error instanceof AxiosError) {
+          setAlertMessage(`There was an issue delegating troops. ${error.response?.data.error.metadata.message}`);
+        } else {
+          setAlertMessage("There was an issue delegating troops. Please try again later.");
+        }
         setShowAlert(true)
       }
     }
@@ -123,7 +128,7 @@ const DelegateTroopsForm = ({ isOpen, onClose, delegateMode, factions=[], troops
           <FormLabel>Please select a faction to {delegateMode==='delegate' ? 'delegate troops to'
             : 'recall troops from'}</FormLabel>
           <Select me={2} value={dataForm.faction} name="faction" onChange={changeFactionDropdown}>
-            {factions.map((faction, index) =>
+            {factions.sort((a, b) => a.name > b.name ? 1 : -1).map((faction, index) =>
               (<option value={faction.name} key={index}>{faction.name}</option>))}
           </Select>
         </FormControl>
