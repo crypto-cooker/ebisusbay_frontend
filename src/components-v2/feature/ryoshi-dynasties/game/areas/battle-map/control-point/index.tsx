@@ -81,18 +81,27 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
                 <RdTabButton
                   isActive={currentTab === tabs.info}
                   onClick={() => setCurrentTab(tabs.info)}
+                  fontSize={{base: '12', sm: '14'}}
+                  padding={{base: '0 10px', sm: '0 20px'}}
+                  margin={{base: '0 5px', sm: '0 10px'}}
                 >
                   Leaderboard
                 </RdTabButton>
                 <RdTabButton
                   isActive={currentTab === tabs.deploy}
                   onClick={() => setCurrentTab(tabs.deploy)}
+                  fontSize={{base: '12', sm: '14'}}
+                  padding={{base: '0 10px', sm: '0 20px'}}
+                  margin={{base: '0 5px', sm: '0 10px'}}
                 >
                   Dispatch Troops
                 </RdTabButton>
                 <RdTabButton
                   isActive={currentTab === tabs.attack}
                   onClick={() => setCurrentTab(tabs.attack)}
+                  fontSize={{base: '12', sm: '14'}}
+                  padding={{base: '0 10px', sm: '0 20px'}}
+                  margin={{base: '0 5px', sm: '0 10px'}}
                 >
                   Attack
                 </RdTabButton>
