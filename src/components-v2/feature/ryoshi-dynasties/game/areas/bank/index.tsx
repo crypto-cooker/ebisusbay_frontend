@@ -121,15 +121,13 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
         w={abbreviateButtonText ? '60px' : '269px'}
       >
         <VStack spacing={4} align='end'>
-          {Date.now() > config.tokenSale.vipStart && (
-            <RdButton w='full' hideIcon={abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenStakeFortune)}>
-              {abbreviateButtonText ? (
-                <Icon as={FontAwesomeIcon} icon={faCoins} />
-              ) : (
-                <>Stake $Fortune </>
-              )}
-            </RdButton>
-          )}
+          <RdButton w='full' hideIcon={abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenStakeFortune)}>
+            {abbreviateButtonText ? (
+              <Icon as={FontAwesomeIcon} icon={faCoins} />
+            ) : (
+              <>Stake $Fortune </>
+            )}
+          </RdButton>
           <RdButton w='full' hideIcon={abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>
             {abbreviateButtonText ? (
               <Icon as={FontAwesomeIcon} icon={faImage} />
