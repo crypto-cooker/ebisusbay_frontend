@@ -19,12 +19,12 @@ import {
 import {AddIcon, ArrowBackIcon, EditIcon} from "@chakra-ui/icons";
 import localFont from "next/font/local";
 import RdButton from "../../../../components/rd-button";
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
 import {useQuery} from "@tanstack/react-query";
-import {addTroops, getAllFactions} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {addTroops, getAllFactions, } from "@src/core/api/RyoshiDynastiesAPICalls";
 import {getAuthSignerInStorage} from "@src/helpers/storage";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {RdFaction} from "@src/core/services/api-service/types";
@@ -39,7 +39,8 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-
+import {useFormik} from 'formik';
+import FactionPfp from '../../../../../../../Components/BattleBay/Areas/FactionIconUpload';
 const config = appConfig();
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
@@ -221,7 +222,29 @@ const CurrentFaction = () => {
       }
     }
   }
+  const formikProps = useFormik({
+    onSubmit: () => console.log('submit'),
+    // validationSchema: userInfoValidation,
+    initialValues: {},
+    enableReinitialize: true,
+  });
+  const handleTJUploadSuccess = (e: any) => {
+    // GetFactions();
+    console.log(e);
+    rdContext.refreshUser();
+  }
 
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    setFieldValue,
+    setFieldTouched,
+    handleBlur,
+    validateForm,
+    handleSubmit,
+  } = formikProps;
   return (
     <Box mt={4}>
       {status === 'loading' ? (
@@ -239,11 +262,25 @@ const CurrentFaction = () => {
         <>
           {!!rdContext.user?.faction ? (
             <VStack>
-              <Image
+              {/* <Image
                 src={rdContext.user.faction.image}
                 w='150px'
                 rounded='lg'
-              />
+                
+              /> */}
+              <form onSubmit={handleSubmit} >
+               <FactionPfp 
+                  values={values}
+                  errors={errors}
+                  touched={touched}
+                  handleChange={handleSubmit}
+                  setFieldValue={setFieldValue}
+                  setFieldTouched={setFieldTouched}
+                  handleBlur={handleBlur}
+                  faction={rdContext.user.faction}
+                  onSuccess={handleTJUploadSuccess}
+                />
+                </form>
               <Stack direction='row' align='center'>
                 <Text fontSize='lg' fontWeight='bold'>{rdContext.user.faction.name}</Text>
                 <IconButton

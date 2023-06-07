@@ -47,7 +47,8 @@ const UploadFactionIcon = ({
         // console.log(faction.id, newData[0].result)
         const res = await UploadFactionIconPfp(user.address.toLowerCase(), signatureInStorage, 
           faction.name, Number(faction.id), newData[0].result);
-        // console.log(res);
+        console.log(res);
+        toast.success("Faction icon updated! Refreshing...");
         onSuccess();
 
       } catch (error) {

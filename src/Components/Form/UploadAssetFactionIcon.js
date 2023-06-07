@@ -7,7 +7,8 @@ import useGetSettings from '../Account/Settings/hooks/useGetSettings';
 import useUpdatePfp from '../Account/Settings/hooks/useUpdatePfp';
 import styles from "@src/Components/Account/Settings/Profile/Pfp/pfp.module.scss";
 import {
-  Stack
+  Stack,
+  Image as ChakraImage,
 } from "@chakra-ui/react";
 
 const UploadAssetFactionIcon = ({
@@ -109,12 +110,15 @@ const UploadAssetFactionIcon = ({
             <img src={url} />
           </div>
         ) : (
-          <div className="cursor-pointer">
-            <img src={faction.image} 
-            style={{width:"125px", height:"125px", position:"absolute"}}
-            position={"absolute"}
+          <div className="cursor-pointer" width="150px" height="150px">
+            <ChakraImage src={faction.image} 
+            position="absolute"
+            rounded='lg'
+            width="150px"
+            height="150px"
+
             />
-            <Blockies seed={user?.address} size={25} scale={5} />
+            <Blockies seed={user?.address} size={30} scale={5} />
           </div>
         )}
         {hover && (
