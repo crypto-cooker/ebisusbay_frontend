@@ -128,10 +128,9 @@ export const createFaction = async (address, signature, type, name, addresses=[]
     throw error;
   }
 }
-export const UploadFactionIconPfp = async (address, signature, name, image) => {
+export const UploadFactionIconPfp = async (address, signature, name, id, image) => {
   try{
-    console.log(address, signature, name, image);
-    return await api.patch("ryoshi-dynasties/factions?", 
+    return await api.patch(baseURL + "api/ryoshi-dynasties/factions?", 
       {name, id, image},
       {params: {address, signature}});
   }
@@ -293,7 +292,7 @@ export const getProfileId = async (_address, _signature) => {
 export const getAllFactions = async () => {
   try{
     var gameID = await api.get("ryoshi-dynasties/games/0");
-    var data = await api.get("ryoshi-dynasties/control-points/1",
+    var data = await api.get("ryoshi-dynasties/control-points/"+gameID.data.data.parent.map.regions[0].controlPoints[0].id,
       {params: {gameId: gameID.data.data.id}});
     return data.data.data.leaderBoard;
   }
