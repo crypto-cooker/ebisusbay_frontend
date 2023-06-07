@@ -440,3 +440,15 @@ export const getTroopsOnControlPoint = async (address, signature, controlPoint, 
     throw error;
   }
 }
+export const getRegistrationCost = async (address, signature, blockId, gameId, factionId) => {
+  try{
+    // console.log(address, signature, blockId, gameId, factionId);
+    let data = await api.get("ryoshi-dynasties/factions/subscription?", 
+      {params: {address, signature, blockId}},
+      {gameId, factionId} );
+    return data.data.data;
+  }
+  catch(error){
+    throw error;
+  }
+}

@@ -24,14 +24,13 @@ import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
 import {useQuery} from "@tanstack/react-query";
-import {addTroops, getAllFactions, } from "@src/core/api/RyoshiDynastiesAPICalls";
+import {addTroops, getAllFactions,getRegistrationCost } from "@src/core/api/RyoshiDynastiesAPICalls";
 import {getAuthSignerInStorage} from "@src/helpers/storage";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {RdFaction} from "@src/core/services/api-service/types";
 import EditFactionForm from "@src/Components/BattleBay/Areas/FactionForm";
 import CreateFactionForm from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/create-faction";
 import DelegateTroopsForm from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/delegate-troops";
-import {Contract} from "ethers";
 import AllianceCenterContract from "@src/Contracts/AllianceCenterContract.json";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
@@ -41,6 +40,10 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {useFormik} from 'formik';
 import FactionPfp from '../../../../../../../Components/BattleBay/Areas/FactionIconUpload';
+
+import {BigNumber, Contract, ethers} from "ethers";
+import Fortune from "@src/Contracts/Fortune.json";
+
 const config = appConfig();
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
@@ -188,6 +191,13 @@ const CurrentFaction = () => {
     }
   }
 
+  const checkForApproval = async () => {
+    const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+    const fortuneContract = new Contract(config.contracts.fortune, Fortune, readProvider);
+    const totalApproved = await fortuneContract.allowance(user.address?.toLowerCase(), config.contracts.allianceCenter);
+    return totalApproved as BigNumber;
+  }
+
   const handleRegister = async () => {
     if (!user.address) return;
 
@@ -202,11 +212,32 @@ const CurrentFaction = () => {
           signatureInStorage = signature;
         }
         if (signatureInStorage) {
-          const registerFactionContract = new Contract(config.contracts.allianceCenter, AllianceCenterContract, user.provider.getSigner());
-          const tx = await registerFactionContract.registerFaction(user.address.toLowerCase())
-          const receipt = await tx.wait();
-          toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+          // console.log(rdContext);
+          const data = await getRegistrationCost(user.address?.toLowerCase(), signatureInStorage, 
+            rdContext.game?.season.blockId, rdContext.game?.game.id, rdContext.user?.faction.id)
 
+          const totalApproved = await checkForApproval();
+          if(totalApproved.lt(data.cost))
+          {
+            toast.error('Please approve the contract to spend your tokens');
+            const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
+            const tx1 = await fortuneContract.approve(config.contracts.allianceCenter, data.cost);
+            const receipt1 = await tx1.wait();
+            toast.success(createSuccessfulTransactionToastContent(receipt1.transactionHash));
+          }
+
+          const registrationStruct = {
+            leader: user.address?.toLowerCase(),
+            cost: data.cost,
+            season: rdContext.game?.season.blockId
+          }
+          console.log(registrationStruct);
+          console.log(Number(ethers.utils.formatEther(data.cost)));
+          const registerFactionContract = new Contract(config.contracts.allianceCenter, AllianceCenterContract, user.provider.getSigner());
+          const tx = await registerFactionContract.registerFaction(registrationStruct, data.signature)
+          const receipt = await tx.wait();
+          rdContext.refreshUser();
+          toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
         }
       } catch (error: any) {
         console.log(error);
