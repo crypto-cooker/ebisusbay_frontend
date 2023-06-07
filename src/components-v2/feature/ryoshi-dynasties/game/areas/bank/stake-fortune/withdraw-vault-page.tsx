@@ -1,5 +1,5 @@
 import {Box, Center, Flex, Text, VStack} from "@chakra-ui/react"
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 
 //contracts
@@ -15,6 +15,10 @@ import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
 import {commify} from "ethers/lib/utils";
 import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types";
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 
 const config = appConfig();
 
@@ -30,6 +34,7 @@ interface WithdrawProps {
 
 const WithdrawVaultPage = ({ vault, onReturn }: WithdrawProps) => {
   const dispatch = useDispatch();
+  const { refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector((state) => state.user);
   const [currentStep, setCurrentStep] = useState(steps.form);
 
@@ -46,13 +51,18 @@ const WithdrawVaultPage = ({ vault, onReturn }: WithdrawProps) => {
     }
   }
 
+  const handleComplete = () => {
+    setCurrentStep(steps.complete);
+    refreshUser();
+  }
+
   return (
     <Box mx={1} pb={6}>
       <Text textAlign='center' fontSize={14} py={2}>Withdraw accumulated Fortune rewards or your Fortune stake</Text>
       {user.address ? (
         <Box p={4}>
           {currentStep === steps.form && (
-            <WithdrawForm vault={vault} onComplete={() => setCurrentStep(steps.complete)}/>
+            <WithdrawForm vault={vault} onComplete={handleComplete}/>
           )}
           {currentStep === steps.complete && (
             <WithdrawComplete onReturn={onReturn} />

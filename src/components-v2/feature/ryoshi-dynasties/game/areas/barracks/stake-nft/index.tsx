@@ -50,7 +50,7 @@ interface StakeNftsProps {
 const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   const user = useAppSelector((state) => state.user);
   const queryClient = useQueryClient();
-  const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { config: rdConfig, refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   const [currentTab, setCurrentTab] = useState(tabs.ryoshiVip);
   const [currentCollection, setCurrentCollection] = useState<any>();
@@ -65,7 +65,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 
   const handleAddNft = useCallback((nft: WalletNft) => {
     const isInList = pendingNfts.some((sNft) => sNft.nftId === nft.nftId && caseInsensitiveCompare(sNft.nftAddress, nft.nftAddress));
-    if (!isInList && pendingNfts.length < rdContext.config.barracks.staking.nft.maxSlots) {
+    if (!isInList && pendingNfts.length < rdConfig.barracks.staking.nft.maxSlots) {
       setPendingNfts([...pendingNfts, {
         nftAddress: nft.nftAddress,
         nftId: nft.nftId,
@@ -100,6 +100,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       user: user.address!
     }))]);
     setPendingNfts([...pendingNfts.map((nft) => ({...nft, isAlreadyStaked: true}))]);
+    refreshUser();
   }, [queryClient, stakedNfts, pendingNfts, user.address]);
 
   const handleClose = () => {

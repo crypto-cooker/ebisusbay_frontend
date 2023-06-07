@@ -56,7 +56,7 @@ interface EditVaultPageProps {
 const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
-  const {config: rdConfig} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const {config: rdConfig, refreshUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const queryClient = useQueryClient();
 
   const [currentStep, setCurrentStep] = useState(steps.form);
@@ -177,6 +177,7 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
         const receipt = await tx.wait();
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       }
+      refreshUser();
       setCurrentStep(steps.complete);
     } catch (error: any) {
       console.log(error)
@@ -379,14 +380,14 @@ const StakeComplete = ({amount, duration, onReturn}: StakeCompleteProps) => {
   return (
     <Box py={4}>
       {!!amount && amount > 0 && (
-        <Center>
-          <Box>An extra {amount} $Fortune has now been staked to this vault!</Box>
-        </Center>
+        <Box textAlign='center' mt={2}>
+          An extra {amount} $Fortune has now been staked to this vault!
+        </Box>
       )}
       {!!duration && duration > 0 && (
-        <Center>
-          <Box mt={2}>An extra {duration} days has now been added to this vault!</Box>
-        </Center>
+        <Box textAlign='center' mt={2}>
+          An extra {duration} days has now been added to this vault!
+        </Box>
       )}
       <Box textAlign='center' mt={8} mx={2}>
         <Box ps='20px'>

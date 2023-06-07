@@ -215,7 +215,7 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
                     </HStack>
                     <Flex>
                       <Tag variant='outline'>
-                        {apr}% {bonusApr ? `+ ${bonusApr}%` : ''}
+                        {totalApr}%
                       </Tag>
                       <Tag ms={2} variant='outline'>
                         <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}

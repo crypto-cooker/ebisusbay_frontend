@@ -21,7 +21,8 @@ interface RyoshiConfigBankStakingFortune {
 }
 
 interface RyoshiConfigBankStakingNFT {
-  maxSlots: 5;
+  maxSlots: number;
+  maxMultiplier: number;
   collections: RyoshiConfigBankStakingNFTCollection[];
 }
 

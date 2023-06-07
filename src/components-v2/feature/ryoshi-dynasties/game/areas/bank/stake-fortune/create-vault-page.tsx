@@ -52,7 +52,7 @@ interface CreateVaultPageProps {
 
 const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
   const dispatch = useDispatch();
-  const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { config: rdConfig, refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector((state) => state.user);
 
   const [currentStep, setCurrentStep] = useState(steps.form);
@@ -161,6 +161,7 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
 
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       setCurrentStep(steps.complete);
+      refreshUser();
     } catch (error: any) {
       console.log(error)
       if(error.response !== undefined) {
@@ -299,9 +300,9 @@ interface StakeCompleteProps {
 const StakeComplete = ({amount, duration, onReturn}: StakeCompleteProps) => {
   return (
     <Box py={4}>
-      <Center>
+      <Box textAlign='center' mt={2}>
         {amount} $Fortune has now been staked for {duration} days!
-      </Center>
+      </Box>
       <Box textAlign='center' mt={8} mx={2}>
         <Box ps='20px'>
           <RdButton
