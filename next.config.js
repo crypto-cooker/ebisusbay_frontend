@@ -25,10 +25,7 @@ const nextConfig = {
       'ebisusbay-dev.b-cdn.net',
       'ebisusbay-test.b-cdn.net',
       'ebisusbay-test-no-op.b-cdn.net',
-      'ebisusbay-prod-no-op.b-cdn.net',
-      'cdn-prod.ebisusbay.biz',
-      'cdn-dev.ebisusbay.biz',
-      'cdn-test.ebisusbay.biz',
+      'ebisusbay-prod-no-op.b-cdn.net'
     ],
     formats: ['image/webp'],
   },
