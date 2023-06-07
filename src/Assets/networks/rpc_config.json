@@ -27639,8 +27639,16 @@
       "verification": {
         "doxx": false,
         "kyc": true,
-        "escrow": false,
+        "escrow": true,
         "verified": true
+      },
+      "escrow": {
+        "description": "15% of mint funds to be released to the Strange Camel project at mint. The remaining funds to be released in 3 equal installments upon:",
+        "milestones": [
+          "Staking is released for holders",
+          "DAO is created and the first voting takes place",
+          "Project completes 2 NFT raffles, or more, totalling at least 2000 CRO, whichever comes later"
+        ]
       }
     }
   ]
