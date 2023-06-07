@@ -173,5 +173,9 @@ interface RdGame extends RdGameBase {
 }
 
 interface RdSeason extends RdGameBase {
-    map?: any;
+    blockId: number;
+    endAt: string;
+    id: number;
+    startAt: string;
+    uuid: string;
 }
