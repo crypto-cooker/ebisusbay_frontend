@@ -28,7 +28,7 @@ import {Contract, ethers} from "ethers";
 import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
 import Bank from "@src/Contracts/Bank.json";
-import {createSuccessfulTransactionToastContent} from '@src/utils';
+import {createSuccessfulTransactionToastContent, round} from '@src/utils';
 import {useAppSelector} from "@src/Store/hooks";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
@@ -190,8 +190,11 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
     const vaultDays = vault.length / 86400;
     const maxDays = rdConfig.bank.staking.fortune.maxTerms * rdConfig.bank.staking.fortune.termLength;
     setCanIncreaseDuration(vaultDays < maxDays);
-
-    const bonusApr = rdUser?.bank.bonus.apr ?? 0;
+    
+    let bonusApr = 0;
+    if (rdUser) {
+      bonusApr = (apr * rdUser.bank.bonus.mApr) + rdUser.bank.bonus.aApr;
+    }
     setBonusApr(bonusApr);
     setTotalApr(apr + bonusApr);
   }, [vault, rdConfig, rdUser, apr]);
@@ -215,7 +218,7 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
                     </HStack>
                     <Flex>
                       <Tag variant='outline'>
-                        {totalApr}%
+                        {round(totalApr, 2)}%
                       </Tag>
                       <Tag ms={2} variant='outline'>
                         <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}
@@ -239,7 +242,7 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
               <Box textAlign='end'>
                 <VStack align='end' spacing={0}>
                   <Box fontWeight='bold'>{totalApr}%</Box>
-                  <Box fontSize='xs'>{apr}% Fortune stake + {bonusApr}% NFT stake</Box>
+                  <Box fontSize='xs'>{apr}% Fortune stake + {round(bonusApr, 2)}% NFT stake</Box>
                 </VStack>
               </Box>
               <Box>Troops</Box>

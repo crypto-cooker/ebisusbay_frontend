@@ -136,7 +136,8 @@ export interface RdUserContext {
     bank: {
         nfts: any[];
         bonus: {
-            apr: number;
+            mApr: number;
+            aApr: number;
         }
     },
     barracks: {
