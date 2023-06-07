@@ -587,7 +587,7 @@ export const findCollectionByAddress = (address, tokenId) => {
     const matchesAddress = caseInsensitiveCompare(c.address, address);
     if (!tokenId) return matchesAddress;
 
-    if (c.multiToken) {
+    if (c.multiToken && c.slug !== 'ryoshi-resources') {
       const ids = c.tokens?.map((t) => t.id) ?? [c.id];
       const matchesToken = ids.includes(parseInt(tokenId));
       return matchesAddress && matchesToken;
