@@ -314,16 +314,16 @@ const BattleMap = ({onChange}: BattleMapProps) => {
         initialPosition: { x: -220, y: -150 },
         minScale: 0.10
       },
-      xl: {
-        scale: 0.28,
-        initialPosition: { x: -220, y: -150 },
-        minScale: 0.28
-      },
-      '2xl': {
-        scale: 0.25,
-        initialPosition: { x: -0, y: -180 },
+      xl: {//1920x1080
+        scale: 0.24,
+        initialPosition: { x: -15, y: -333 },
         minScale: 0.24
-      }
+      },
+      '2xl': {//ultrawide
+        scale: 0.24,
+        initialPosition: { x: 646, y: -100 },
+        minScale: 0.24
+      },
     }
   );
 
