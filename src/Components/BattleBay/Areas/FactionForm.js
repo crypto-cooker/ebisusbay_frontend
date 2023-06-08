@@ -23,8 +23,11 @@ import {
   Stack,
   Divider,
   ListItem,
-  OrderedList, Spacer, HStack, Text, Image, SimpleGrid,
-
+  OrderedList, 
+  Spacer, 
+  HStack, 
+  Text,
+  VStack, 
 } from "@chakra-ui/react"
 import { Spinner } from 'react-bootstrap';
 import { getTheme } from "@src/Theme/theme";
@@ -67,6 +70,7 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
   //registration
   const GetRegistrationColor = (registered) => {if(registered) {return 'green'} else {return 'red'}}
   const GetRegisterButtonText = (registered) => {if(registered) {return 'Registered'} else {return 'Register'}}
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
 
   const RegistrationAction = async (factionId) => {
     if(isRegistered) {
@@ -200,6 +204,9 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
     },
     enableReinitialize: true,
   })
+  function showDeleteWarning() {
+    setShowDeleteAlert(true)
+  }
   useEffect(() => {
     // console.log("faction change faction change"+faction.name)
     setAddresses(faction.addresses)
@@ -318,11 +325,32 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
                   >Save Changes</Button>
                 </Box>
               </Flex>
-              {/* <Flex justifyContent={"right"} align={"right"}>
-                <Button type="submit" style={{ display: 'flex', marginTop: '4px' }}
+              <Flex justifyContent={"right"} align={"right"}>
+                
+
+                {showDeleteAlert ? (
+                  <Alert status='error'>
+                    <VStack>
+                      <HStack>
+                        <AlertIcon />
+                        <AlertTitle>Warning! If you disband a registered faction you will be unable to register another faction this season.</AlertTitle>
+                      </HStack>
+                      <HStack>
+                      <Button type="submit" style={{ display: 'flex', marginTop: '4px' }}
                         onClick={DeleteFaction} variant='outline'size='xs' colorScheme='red'
-                >Delete Faction</Button>
-              </Flex> */}
+                        >Confirm Disband</Button>
+                      <Button type="submit" style={{ display: 'flex', marginTop: '4px' }}
+                          onClick={() => setShowDeleteAlert(false)} variant='outline'size='xs' colorScheme='white'
+                        >Cancel</Button>
+                      </HStack>
+                    </VStack>
+                  </Alert>
+                ) : (
+                  <Button type="submit" style={{ display: 'flex', marginTop: '4px' }}
+                        onClick={showDeleteWarning} variant='outline'size='xs' colorScheme='red'
+                >Disband Faction</Button>
+                )}
+              </Flex>
             </form>
           </Box>
         </Box>
