@@ -20295,7 +20295,7 @@
       "multiToken": false,
       "address": "0x860c2245Ea1693f24AEd4A0364bba5787355bAA0",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Pogo are randomly generated, non-fungible tokens, also known as an \"NFT.\" There are 2,500 unique & 3D rendered Pogo in our genesis collection, No two Pogo are the same. Evolve your Pogo on P2E, fashion, utility and art!",
         "avatar": "/img/collections/the-pogo/avatar.webp",
@@ -27535,7 +27535,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/the-pogo/drop.webp",
         "banner": "/img/collections/the-pogo/banner.webp",
