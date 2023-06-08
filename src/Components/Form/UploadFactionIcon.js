@@ -53,7 +53,7 @@ const UploadFactionIcon = ({
 
       } catch (error) {
         console.log(error)
-        toast.error("Icon too large, please use a 250x250 image")
+        toast.error("Icon too large, please use a smaller image")
       }
     }
   }

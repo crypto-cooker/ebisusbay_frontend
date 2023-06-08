@@ -240,13 +240,14 @@ const CurrentFaction = () => {
           toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
         }
       } catch (error: any) {
-        console.log(error);
+        // console.log(error);
+        // if (error.message) {
+        //   toast.error(error.message);
+        // } else 
         if (error.data) {
           toast.error(error.data.message);
-        } else if (error.message) {
-          toast.error(error.message);
-        } else {
-          toast.error('Unknown Error');
+        } else  {
+          toast.error('Already processed a registration for this season ');
         }
       } finally {
         setIsExecutingRegister(false);
