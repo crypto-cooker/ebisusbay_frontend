@@ -28,6 +28,7 @@ import {
   HStack, 
   Text,
   VStack, 
+  Center,
 } from "@chakra-ui/react"
 import { Spinner } from 'react-bootstrap';
 import { getTheme } from "@src/Theme/theme";
@@ -45,7 +46,8 @@ import {toast} from "react-toastify";
 import AllianceCenterContract from "@src/Contracts/AllianceCenterContract.json";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
 import {ArrowBackIcon} from "@chakra-ui/icons";
-import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
+import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
+import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import {commify} from "ethers/lib/utils";
 
 const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => {
@@ -130,9 +132,10 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
         //add payment code here
         handleClose();
         onClose();
-
+        toast.success("Changes Saved");
       } catch (error) {
         console.log(error)
+        toast.error(error);
       }
     }
   }
@@ -149,8 +152,15 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
         //add payment code here
         handleClose();
         onClose();
-      } catch (error) {
+        toast.success("Faction disbanded");
+    } catch (error) {
         console.log(error)
+        if(error.response !== undefined) {
+          toast.error(error.response.data.error.metadata.message)
+        }
+        else {
+          toast.error(error);
+        }
       }
     }
  }
@@ -235,16 +245,41 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
       title='Edit Faction'
     >
       {!isLoading ? (
-        <Box pb={6}>
-          <Box mx={1} mb={4} bg='#272523' p={2} roundedBottom='md'>
+        <Box pb={1}>
+          <Box mx={1} mb={1}  p={2} roundedBottom='lrg'>
             {user.address ? (
               <Box textAlign='center' w='full'>
                 <Flex>
                   <Spacer />
-                  <HStack>
+                  <HStack justifyContent='space-between' w='full'>
                     <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>
                       Current Status: {isRegistered === true ? "Registered" : "Not Registered"}
                     </Text>
+                    {showDeleteAlert ? (
+                  <Alert status='error'>
+                    <VStack>
+                      <HStack>
+                        <AlertIcon />
+                        <AlertTitle>Warning! If you disband a registered faction you will be unable to register another faction this season.</AlertTitle>
+                      </HStack>
+                      <HStack>
+                      <Button type="submit" style={{ display: 'flex', marginTop: '4px' }}
+                        onClick={DeleteFaction} variant='outline'colorScheme='red'
+                        >Confirm Disband</Button>
+                      <Button type="submit" style={{ display: 'flex', marginTop: '4px' }}
+                          onClick={() => setShowDeleteAlert(false)} variant='outline' colorScheme='white'
+                        >Cancel</Button>
+                      </HStack>
+                    </VStack>
+                  </Alert>
+                ) : (
+                  <Button type="submit"
+                    onClick={showDeleteWarning}  
+                    colorScheme='red'
+                    fontSize={{base: '12', sm: '14'}}
+                    variant={"outline"}
+                    >x Disband Faction</Button>
+                )}
                   </HStack>
                   <Spacer />
                 </Flex>
@@ -252,15 +287,16 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
             ) : (
               <Box fontSize='sm' textAlign='center' w='full'>Connect wallet to purchase</Box>
             )}
+            
           </Box>
-          <Box mx={8}>
-            {/*<Flex>*/}
-            {/*  {isRegistered === false ? registerButton : null}*/}
-            {/*</Flex>*/}
-            {/*<Divider />*/}
+          
+          <Box mx={1} bg='#272523' p={2} roundedBottom='xl'>
+            <Box margin='auto' mb='4'>
+
             <form onSubmit={formik.handleSubmit} style={{ marginTop: '24px'}}>
               <FormControl isRequired>
-                <FormLabel>Faction name:</FormLabel>
+                <Flex direction='row' justify='space-between' mb={2}>
+                <FormLabel w='40%'>Faction name:</FormLabel>
                 <Input
                   id='factionName'
                   name='factionName'
@@ -268,28 +304,67 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
                   onChange={formik.handleChange}
                   placeholder={formik.values.factionName}
                 />
+                </Flex>
               </FormControl>
-              <Tabs variant='unstyled' style={{ marginTop: '24px'}} defaultIndex = {factionIndex}>
-                <TabList>
-                  <Tab onClick={() => setFactionType("COLLECTION")} _selected={{ color: 'white', bg: 'blue.500' }}>Collection Faction</Tab>
-                  <Tab onClick={() => setFactionType("WALLET")} _selected={{ color: 'white', bg: 'blue.500' }}>Wallet Faction</Tab>
-                </TabList>
-                <TabPanels>
-                  <TabPanel>
-                    <p>Maximum of 3 collection addresses</p>
-                  </TabPanel>
-                  <TabPanel>
-                    <p>Maximum of 15 wallet addresses</p>
-                  </TabPanel>
-                  <OrderedList>
-                    {addressDisplay}
-                  </OrderedList>
-                </TabPanels>
-              </Tabs>
+            </form>
+            </Box>
+
+            <Divider />
+
+            <Flex direction='row' justify='space-between' mt={2} mb={2}>
+              <Box w='40%' margin='auto'>
+                <Text > 
+                  Faction Type:
+                </Text>
+              </Box>
+              <Box w='60%'>
+                <VStack>
+                <HStack alignContent='right'>
+                <RdTabButton 
+                  onClick={() => setFactionType("COLLECTION")}
+                  isActive={factionType === "COLLECTION"}
+                  fontSize={{base: '12', sm: '14'}}
+                >Collection</RdTabButton>
+                <RdTabButton 
+                  onClick={() => setFactionType("WALLET")}
+                  isActive={factionType === "WALLET"}
+                  fontSize={{base: '12', sm: '14'}}
+                >Wallet</RdTabButton>
+                </HStack>
+
+                <Text as='i' color='#aaa' fontSize={{base: '12', sm: '14'}}>
+                  {factionType === "COLLECTION" ? ("Add up to 3 collection addresses") 
+                  : ("Add up to 15  individual wallet addresses")}
+                </Text>
+                </VStack>
+              </Box>
+            </Flex>
+          
+              
+
               <Divider />
 
-              <FormLabel style={{ display: 'flex', marginTop: '24px' }}>Addresses of Wallets or Contracts:</FormLabel>
-
+              <Flex direction='row' justify='space-between' mb={2}>
+                <FormLabel style={{ display: 'flex', marginTop: '24px' }}>Addresses of 
+                {factionType === "COLLECTION" ? (
+                    " Collections"
+                  ) : (
+                    " Wallets"
+                  )}
+                </FormLabel>
+                <Stack direction={{base: 'column', sm: 'row'}} mt={4}>
+                  <Button 
+                    onClick={AddAddress}
+                    fontSize={{base: '12', sm: '14'}}
+                    > + Add Address
+                  </Button>
+                  <Button 
+                    onClick={RemoveAddress}
+                    fontSize={{base: '12', sm: '14'}}
+                    > - Remove Address
+                  </Button>
+                </Stack>
+              </Flex>
               <Input
                 ref={addressInput}
                 value={addressToAdd}
@@ -297,12 +372,9 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
                 placeholder=''
                 size='sm'
               />
-
-              <Stack direction='row' spacing={4} style={{ display: 'flex', marginTop: '16px' }}>
-                <Button colorScheme='blue'variant='outline' onClick={AddAddress} className="flex-fill"> Add address </Button>
-                <Button colorScheme='red' variant='outline'onClick={RemoveAddress} className="flex-fill"> Remove address </Button>
-              </Stack>
-
+              <OrderedList>
+                {addressDisplay}
+              </OrderedList>
 
               <ul id="addresseslist"></ul>
               <Flex justify={"center"} align={"center"} style={{ marginTop: '16px' }}>
@@ -315,43 +387,19 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
                   )}
                 </Box>
               </Flex>
-              <Divider />
 
               <Flex justifyContent={"center"} align={"center"}>
-
                 <Box p='3'>
-                  <Button type="submit" style={{ display: 'flex', marginTop: '12px' }}
-                          onClick={SaveChanges} variant='outline' size='lg'
-                  >Save Changes</Button>
+                  <RdButton 
+                    onClick={SaveChanges} 
+                   >Save Changes</RdButton>
                 </Box>
               </Flex>
               <Flex justifyContent={"right"} align={"right"}>
                 
 
-                {showDeleteAlert ? (
-                  <Alert status='error'>
-                    <VStack>
-                      <HStack>
-                        <AlertIcon />
-                        <AlertTitle>Warning! If you disband a registered faction you will be unable to register another faction this season.</AlertTitle>
-                      </HStack>
-                      <HStack>
-                      <Button type="submit" style={{ display: 'flex', marginTop: '4px' }}
-                        onClick={DeleteFaction} variant='outline'size='xs' colorScheme='red'
-                        >Confirm Disband</Button>
-                      <Button type="submit" style={{ display: 'flex', marginTop: '4px' }}
-                          onClick={() => setShowDeleteAlert(false)} variant='outline'size='xs' colorScheme='white'
-                        >Cancel</Button>
-                      </HStack>
-                    </VStack>
-                  </Alert>
-                ) : (
-                  <Button type="submit" style={{ display: 'flex', marginTop: '4px' }}
-                        onClick={showDeleteWarning} variant='outline'size='xs' colorScheme='red'
-                >Disband Faction</Button>
-                )}
+                
               </Flex>
-            </form>
           </Box>
         </Box>
       ) : (
