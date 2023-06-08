@@ -16,6 +16,7 @@ import {useAppSelector} from "@src/Store/hooks";
 import {Contract, ethers, BigNumber} from "ethers";
 import {appConfig} from "@src/Config";
 import Battlefield from "@src/Contracts/Battlefield.json";
+import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
 
 interface BattleMapProps {
   onChange: () => void;
@@ -372,11 +373,14 @@ const BattleMap = ({onChange}: BattleMapProps) => {
 
   return (
     <section>
-      <ControlPointModal isOpen={isOpen} onClose={onClose} controlPoint={controlPoint}
-      refreshControlPoint={RefreshControlPoint}
-      skirmishPrice={skirmishPrice}
-      conquestPrice={conquestPrice}
-      />
+      <ControlPointModal 
+        isOpen={isOpen} 
+        onClose={onClose} 
+        controlPoint={controlPoint}
+        refreshControlPoint={RefreshControlPoint}
+        skirmishPrice={skirmishPrice}
+        conquestPrice={conquestPrice}
+        />
       <Box
         position='relative' h='calc(100vh - 74px)'
         backgroundImage={ImageService.translate(`/img/ryoshi-dynasties/village/background-${user.theme}.png`).convert()}
@@ -401,17 +405,16 @@ const BattleMap = ({onChange}: BattleMapProps) => {
               <React.Fragment>
 
             <TransformComponent wrapperStyle={{height: '100%', width: '100%', objectFit: 'cover'}}>
+              <MapFrame gridHeight={'125px 1fr 150px'} gridWidth={'150px 1fr 150px'}>
               <Box as='img'
                    src={ImageService.translate('/img/battle-bay/opMap.png').convert()}
                    maxW='none'
                    useMap="#image-map" className={`${styles.mapImageArea}`} id="fancyMenu"/>
-              <map name="image-map">
-                {area}
-              </map>
+                <map name="image-map"> {area} </map>
                 <Flex position="absolute" zIndex="9" width="100%" height="100%" pointerEvents='none'>
-                {flags}
-                  {explosion}
+                {flags} {explosion}
                 </Flex>
+                </MapFrame>
               </TransformComponent>
               </React.Fragment>
               )}

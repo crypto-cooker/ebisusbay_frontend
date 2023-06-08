@@ -572,7 +572,7 @@ const Village = ({onChange}: VillageProps) => {
                 {/* <button onClick={zoomToImage}>Zoom to 1</button> */}
                 {/* <Controls {...utils} /> */}
                 <TransformComponent wrapperStyle={{height: '100%', width: '100%', objectFit: 'cover'}}>
-                  <MapFrame>
+                  <MapFrame gridHeight={'50px 1fr 50px'} gridWidth={'50px 1fr 50px'}>
                     <Box
                       as='img'
                       src={ImageService.translate('/img/battle-bay/mapImages/background.png').custom({width: 2880, height: 1620})}
