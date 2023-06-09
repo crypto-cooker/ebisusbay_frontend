@@ -35,19 +35,18 @@ const useBankStakeNfts = () => {
     try {
       const bank = new Contract(config.contracts.bank, Bank, user.provider.getSigner());
 
-      let shouldWithdraw = false;
+      let withdrawNfts = [];
       for (const stakedNft of stakedNfts) {
         if (!pendingNfts.some((nft) => caseInsensitiveCompare(nft.nftAddress, stakedNft.contractAddress) && nft.nftId === stakedNft.tokenId)) {
-          shouldWithdraw = true;
-          break;
+          withdrawNfts.push(stakedNft);
         }
       }
       const unstakedNfts = pendingNfts.filter((nft) => !stakedNfts.some((stakedNft) => caseInsensitiveCompare(nft.nftAddress, stakedNft.contractAddress) && nft.nftId === stakedNft.tokenId));
 
-      if (shouldWithdraw) {
+      if (withdrawNfts.length > 0) {
         const withdrawTx = await bank.withdrawStake(
-          stakedNfts.map((nft) => nft.contractAddress),
-          stakedNfts.map((nft) => nft.tokenId),
+          withdrawNfts.map((nft) => nft.contractAddress),
+          withdrawNfts.map((nft) => nft.tokenId),
         );
         await withdrawTx.wait();
       }
@@ -65,10 +64,6 @@ const useBankStakeNfts = () => {
         error: null,
       });
     } catch (error) {
-      if (!!signature) {
-        await ApiService.withoutKey().ryoshiDynasties.cancelStakeAuthorization(signature);
-      }
-
       setResponse({
         ...response,
         loading: false,
