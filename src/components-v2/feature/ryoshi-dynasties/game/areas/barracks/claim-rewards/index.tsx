@@ -129,11 +129,16 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
   const GetTokenImage = (tokenId: number) => {
     //itterate through nftImages and find the one with the matching tokenId
     let nftImage = nftImages.find((nftImage) => Number(nftImage.id) === tokenId);
-    // console.log("nftImage: ", nftImage);
     return nftImage.image;
   }
+  const GetTokenName= (tokenId: number) => {
+    //itterate through nftImages and find the one with the matching tokenId
+    let nftName = nftImages.find((nftImage) => Number(nftImage.id) === tokenId);
+    console.log('===nftName', nftName.name);
+    return nftName.name;
+  }
 
-  const GetNftImages = async (nft: any) => {
+  const GetNftImages = async () => {
     if(!nftImages) return;
 
     let data = await api.get("fullcollections?address=0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5");
@@ -172,24 +177,22 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
                 //   border={pendingNfts[index].isAlreadyStaked ? 'none' : '2px dashed #ffa71c'}
                 >
                   <Box
-                    width={100}
-                    height={100}
+                    width={120}
+                    height={175}
                       onClick={(e) => {
                       e.preventDefault();
                       window.location.href=appUrl(`/collection/0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5/`+battleRewards.tokenIds[index]);
                       }}
                   >
+                      <Text fontSize='10'>{GetTokenName(battleRewards.tokenIds[index])} x{battleRewards.quantity[index]}</Text>
                         <Image
-                          width='100%'
-                          height='100%'
                           src={GetTokenImage(battleRewards.tokenIds[index])}
                         />
-                    
                   </Box>
-                  <Flex fontSize='xs' justify='space-between' mt={1}>
+                  <Flex fontSize='xs' justify='space-between' mt={4}>
                     <Flex marginLeft='auto'>
                       {/* <Icon as={FontAwesomeIcon} icon={faAward} /> */}
-                      <Text>x{battleRewards.quantity[index]}</Text>
+                      <Text as='b'></Text>
                       {/* <Box as='span'>{pendingNfts[index].rank ?? ''}</Box> */}
                     </Flex>
                     {/* <Box as='span' fontWeight='bold'>+ {collections.find(c => caseInsensitiveCompare(c.address, pendingNfts[index].nftAddress))?.multipliers[0].value}</Box> */}
