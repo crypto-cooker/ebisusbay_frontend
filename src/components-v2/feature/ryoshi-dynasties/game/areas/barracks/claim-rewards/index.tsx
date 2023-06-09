@@ -179,10 +179,10 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
                   <Box
                     width={120}
                     height={175}
-                      onClick={(e) => {
-                      e.preventDefault();
-                      window.location.href=appUrl(`/collection/0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5/`+battleRewards.tokenIds[index]);
-                      }}
+                      // onClick={(e) => {
+                      // e.preventDefault();
+                      // href=new URL(appUrl(`/collection/0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5/`+battleRewards.tokenIds[index]));
+                      // }}
                   >
                       <Text fontSize='10'>{GetTokenName(battleRewards.tokenIds[index])} x{battleRewards.quantity[index]}</Text>
                         <Image
