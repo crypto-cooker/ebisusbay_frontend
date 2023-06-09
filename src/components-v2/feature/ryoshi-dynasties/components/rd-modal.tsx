@@ -1,4 +1,4 @@
-import {Box, Button, Flex, Modal, ModalBody, ModalContent, ModalOverlay} from "@chakra-ui/react";
+import {Box, BoxProps, Button, Flex, Modal, ModalBody, ModalContent, ModalOverlay} from "@chakra-ui/react";
 import {ReactNode, useEffect, useState} from "react";
 import localFont from "next/font/local";
 import {CloseIcon} from "@chakra-ui/icons";
@@ -179,6 +179,14 @@ export const RdModalFooter = ({children}: {children: ReactNode}) => {
   return (
     <Box p={4}>
       {children}
+    </Box>
+  )
+}
+
+export const RdModalBox = (props: BoxProps) => {
+  return (
+    <Box bgColor='#292626' rounded='md' p={4} fontSize='sm' {...props}>
+      {props.children}
     </Box>
   )
 }

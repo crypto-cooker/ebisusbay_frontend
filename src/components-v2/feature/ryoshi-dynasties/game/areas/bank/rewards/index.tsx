@@ -1,4 +1,14 @@
-import {Box, Center, Flex, HStack, Image, Spinner, Text, VStack} from "@chakra-ui/react"
+import {
+  Box,
+  Center,
+  Flex,
+  HStack,
+  Image, SimpleGrid,
+  Spinner,
+  Stack,
+  Text, useBreakpointValue,
+  VStack
+} from "@chakra-ui/react"
 import React, {useCallback, useEffect, useState} from "react";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 
@@ -7,6 +17,9 @@ import {Contract, ethers} from "ethers";
 import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
 import Bank from "@src/Contracts/Bank.json";
+import PlatformRewards from "@src/Contracts/PlatformRewards.json";
+import PresaleVaults from "@src/Contracts/PresaleVaults.json";
+import VestingWallet from "@src/Contracts/VestingWallet.json";
 import {createSuccessfulTransactionToastContent} from '@src/utils';
 import moment from 'moment';
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
@@ -21,12 +34,15 @@ import {ApiService} from "@src/core/services/api-service";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {getAuthSignerInStorage} from "@src/helpers/storage";
 import ImageService from "@src/core/services/image";
+import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 
 const config = appConfig();
+const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
 const tabs = {
   fortune: 'fortune',
-  resources: 'resources'
+  resources: 'resources',
+  presale: 'presale'
 };
 
 interface WithdrawProps {
@@ -37,7 +53,7 @@ interface WithdrawProps {
 const Rewards = ({ isOpen, onClose}: WithdrawProps) => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
-  const [currentTab, setCurrentTab] = useState(tabs.resources);
+  const [currentTab, setCurrentTab] = useState(tabs.fortune);
 
   const handleConnect = async () => {
     if (!user.address) {
@@ -65,25 +81,32 @@ const Rewards = ({ isOpen, onClose}: WithdrawProps) => {
     <RdModal
       isOpen={isOpen}
       onClose={handleClose}
-      title='Withdraw'
+      title='Rewards'
+      isCentered={false}
     >
       <Text textAlign='center' fontSize={14} py={2}>Withdraw accumulated Fortune rewards or your Fortune stake</Text>
       {user.address ? (
         <Box p={4}>
           <Flex direction='row' justify='center' mb={2}>
-            <RdTabButton isActive={currentTab === tabs.resources} onClick={handleBtnClick(tabs.resources)}>
+            <RdTabButton isActive={currentTab === tabs.fortune} onClick={handleBtnClick(tabs.fortune)}>
               Fortune
             </RdTabButton>
-            <RdTabButton isActive={currentTab === tabs.fortune} onClick={handleBtnClick(tabs.fortune)}>
+            <RdTabButton isActive={currentTab === tabs.resources} onClick={handleBtnClick(tabs.resources)}>
               Resources
+            </RdTabButton>
+            <RdTabButton isActive={currentTab === tabs.presale} onClick={handleBtnClick(tabs.presale)}>
+              Presale
             </RdTabButton>
           </Flex>
           <Box>
-            {currentTab === tabs.resources && (
+            {currentTab === tabs.fortune && (
               <FortuneRewardsTab />
             )}
-            {currentTab === tabs.fortune && (
+            {currentTab === tabs.resources && (
               <EmergencyWithdrawTab />
+            )}
+            {currentTab === tabs.presale && (
+              <PresaleVaultTab />
             )}
           </Box>
         </Box>
@@ -131,7 +154,8 @@ const FortuneRewardsTab = () => {
     if (signatureInStorage) {
       const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, amount, seasonId, signatureInStorage)
 
-      // console.log('auth', auth)
+      console.log('CON', JSON.stringify(auth.data.reward), auth.data.signature)
+      await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
     }
   }
   // console.log(rewards);
@@ -156,9 +180,9 @@ const FortuneRewardsTab = () => {
                 <Box py={4}><hr /></Box>
                 {rewards.data.rewards.map((reward: any) => (
                   <>
-                    <Flex justify='space-between'>
+                    <Flex justify='space-between' mt={2}>
                       <VStack align='start' spacing={0}>
-                        <Text fontSize='xl' fontWeight='bold'>Season {commify(reward.seasonId)}</Text>
+                        <Text fontSize='xl' fontWeight='bold'>Season {commify(reward.blockId)}</Text>
                         <HStack>
                           <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="fortuneIcon" boxSize={6}/>
                           <Text>{reward.totalRewards}</Text>
@@ -195,7 +219,7 @@ const EmergencyWithdrawTab = () => {
   const checkForDeposits = async () => {
     const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
     const bank = new Contract(config.contracts.bank, Bank, readProvider);
-    return await bank.deposits(user.address?.toLowerCase());
+    return [];
   }
 
   const { error, data: deposits, status, refetch } = useQuery(
@@ -206,46 +230,6 @@ const EmergencyWithdrawTab = () => {
       refetchOnWindowFocus: false
     }
   );
-
-  const handleEmergencyWithdraw = async () => {
-    try {
-      setIsExecuting(true);
-      setExecutingLabel('Withdrawing...');
-      const bank = new Contract(config.contracts.bank, Bank, user.provider.getSigner());
-      const tx = await bank.emergencyClose();
-      const receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      await refetch();
-    } catch (error: any) {
-      console.log(error)
-      if(error.response !== undefined) {
-        console.log(error)
-        toast.error(error.response.data.error.metadata.message)
-      }
-      else {
-        toast.error(error);
-      }
-    } finally {
-      setIsExecuting(false);
-    }
-  }
-
-  useEffect(() => {
-    if (!deposits) return;
-
-    if(deposits[0].gt(0)){
-      setHasDeposited(true);
-      const daysToAdd = Number(deposits[1].div(86400));
-      const newDate = new Date(Number(deposits[2].mul(1000)));
-      const newerDate = newDate.setDate(newDate.getDate() + daysToAdd);
-
-      setAmountDeposited(Number(ethers.utils.formatEther(deposits[0])));
-      setDepositLength(daysToAdd);
-      setWithdrawDate(moment(newerDate).format("MMM D yyyy"));
-    } else {
-      setHasDeposited(false);
-    }
-  }, [amountDeposited, deposits]);
 
   return (
     <Box py={4}>
@@ -259,56 +243,183 @@ const EmergencyWithdrawTab = () => {
         </Center>
       ) : (
         <>
-          <Box bgColor='#292626' rounded='md' p={4}>
-            <Box mb={6}>
-              {hasDeposited && (
-                <Box textAlign='center' fontSize={14} mb={4}>
-                  <Text as='span'>Your current staking term will end{' '}</Text>
-                  <Text as='span' fontWeight='bold'>{withdrawDate}</Text>
-                </Box>
-              )}
-              <Text textAlign='center' fontSize={14}>
-                Emergency withdrawal allows staked Fortune tokens to be withdrawn without waiting for the staking term to end.
-                However, this will only return 50% of the staked tokens and will burn the rest.
-              </Text>
-            </Box>
-            {hasDeposited ? (
-              <Flex direction='row' justify='space-around'>
-                <VStack spacing={0}>
-                  <Text fontSize='sm'>Total Staked</Text>
-                  <Text fontSize='2xl' fontWeight='bold'>{commify(amountDeposited)}</Text>
-                </VStack>
-                <VStack spacing={0}>
-                  <Text fontSize='sm'>Amount To Receive</Text>
-                  <Text fontSize='2xl' fontWeight='bold'>{commify(amountDeposited/2)}</Text>
-                </VStack>
-              </Flex>
-            ) : (
-              <Box>
-                <Text textAlign='center' fontSize={14}>You have no deposits to withdraw at this time.</Text>
-              </Box>
-            )}
-          </Box>
-
-          {hasDeposited && (
-            <Box textAlign='center' mt={8} mx={2}>
-              <Box ps='20px'>
-                <RdButton
-                  fontSize={{base: 'xl', sm: '2xl'}}
-                  stickyIcon={true}
-                  onClick={handleEmergencyWithdraw}
-                  isLoading={isExecuting}
-                  disabled={isExecuting}
-                >
-                  {isExecuting ? executingLabel : 'Withdraw'}
-                </RdButton>
-              </Box>
-            </Box>
-          )}
+          <RdModalBox textAlign='center'>
+            Coming Soon
+          </RdModalBox>
         </>
       )}
     </Box>
   )
 }
 
+
+const steps = [
+  { title: 'First', description: 'Open Vault' },
+  { title: 'Second', description: 'Date & Time' },
+  { title: 'Third', description: 'Select Rooms' },
+]
+
+const PresaleVaultTab = () => {
+  const user = useAppSelector((state) => state.user);
+  const [isOpeningVault, setIsOpeningVault] = useState(false);
+
+  // const { activeStep } = useSteps({
+  //   index: 1,
+  //   count: steps.length,
+  // });
+  // const stepperOrientation = useBreakpointValue<'horizontal' | 'vertical'>(
+  //   {base: 'vertical', lg: 'horizontal'},
+  //   {fallback: 'lg'},
+  // );
+
+  const { data, status, error, refetch } = useQuery({
+    queryKey: ['PresaleVault'],
+    queryFn: async () => {
+      const totalPresaleBalance = await ApiService.withoutKey().ryoshiDynasties.userTotalPurchased(user.address!);
+      const isPresaleParticipant = totalPresaleBalance > 0;
+
+      const presaleVaultsContract = new Contract(config.contracts.presaleVaults, PresaleVaults, readProvider);
+      const hasStarted = Number(await presaleVaultsContract.startTime()) > 0;
+      const vaultAddress = await presaleVaultsContract.vaults(user.address);
+
+      let ret = {
+        hasVault: false,
+        hasStarted,
+        vaultAddress: null,
+        vaultBalance: 0,
+        vestedAmount: 0,
+        isPresaleParticipant,
+        totalPresaleBalance
+      }
+
+      if (vaultAddress !== ethers.constants.AddressZero) {
+        const vestingWallet = new Contract(vaultAddress, VestingWallet, readProvider);
+        const vestedAmount = await vestingWallet.vestedAmount(config.contracts.fortune, Date.now());
+
+        const fortuneContract = new Contract(config.contracts.fortune, PresaleVaults, readProvider);
+        const vaultBalance = await fortuneContract.balanceOf(vaultAddress);
+
+        ret = {
+          ...ret,
+          hasVault: true,
+          vaultAddress,
+          vaultBalance,
+          vestedAmount
+        }
+      }
+
+      const fortuneTellerCollection = config.collections.find((collection: any) => collection.slug === 'fortuneteller');
+      const fortuneTellers = await ApiService.withoutKey().getWallet(user.address!, {
+        collection: [fortuneTellerCollection.address]
+      })
+
+      return {
+        ...ret,
+        fortuneTellers: fortuneTellers.data.sort((a: any, b: any) => Number(b.nftId) - Number(a.nftId))
+      }
+    },
+    enabled: !!user.address,
+  });
+
+  // handle create vault
+  const handleCreateVault = async () => {
+    setIsOpeningVault(true);
+    try {
+      const tx = await user.contractService!.ryoshiPresaleVaults.createVault();
+      const receipt = await tx.wait();
+      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      await refetch();
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error);
+    } finally {
+      setIsOpeningVault(false);
+    }
+  }
+
+  console.log('data', data, error);
+
+  return (
+    <Box>
+      <RdModalBox>
+        <Box textAlign='center'>
+          Users who participated in the Fortune Token Presale can now begin vesting their tokens. Those also holding Fortune Teller NFTs can exchange them for bonus Fortune.
+        </Box>
+      </RdModalBox>
+      {status === 'loading' ? (
+        <Center mt={2}>
+          <Spinner />
+        </Center>
+      ) : status === 'error' ? (
+        <Box textAlign='center' mt={2}>
+          {(error as any).message}
+        </Box>
+      ) : !!data && (
+        <>
+          {data.hasStarted ? (
+            <>
+              <RdModalBox>
+                {data.hasVault ? (
+                  <Box>
+                    You have a vault, show vesting details
+                  </Box>
+                ) : (
+                  <Box>
+                    NO VAULT
+                    <RdButton
+                      hideIcon={true}
+                      onClick={handleCreateVault}
+                      isLoading={isOpeningVault}
+                      isDisabled={isOpeningVault}
+                      loadingText='asdf'
+                    >
+                      Create Vault
+                    </RdButton>
+                  </Box>
+                )}
+              </RdModalBox>
+              {(data.hasVault || !data.isPresaleParticipant) && (
+                <RdModalBox mt={2}>
+                  <Text fontWeight='bold' align='center' fontSize='lg' mb={4}>Fortune Teller Bonus</Text>
+                  {data.fortuneTellers && data.fortuneTellers.length > 0 ? (
+                    <SimpleGrid columns={{base: 1, sm: 2}}>
+                      <Box>
+                        <Image
+                          src={ImageService.gif(data.fortuneTellers[0].image).fixedWidth(150, 150)}
+                        />
+                      </Box>
+                      <Box>
+                        <VStack align='end'>
+                          <Box fontWeight={'bold'}>Teller Count</Box>
+                          {data.fortuneTellers.map((teller: any) => (
+                            <HStack>
+                              <Box textAlign='end' flex='1'>{teller.name}</Box>
+                              <Box textAlign='end' w={8}>{teller.balance}</Box>
+                            </HStack>
+                          ))}
+                          <HStack>
+                            <Box textAlign='end' flex='1'>Total</Box>
+                            <Box textAlign='end' w={8}>0</Box>
+                          </HStack>
+                        </VStack>
+                      </Box>
+                    </SimpleGrid>
+                  ) : (
+                    <Box textAlign='center'>
+                      No Fortune Tellers in wallet
+                    </Box>
+                  )}
+                </RdModalBox>
+              )}
+            </>
+          ) : (
+            <RdModalBox mt={2} textAlign='center'>
+              Vesting wallets will be starting soon.
+            </RdModalBox>
+          )}
+        </>
+      )}
+    </Box>
+  )
+}
 export default Rewards;
