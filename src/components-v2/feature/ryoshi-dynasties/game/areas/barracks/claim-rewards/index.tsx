@@ -1,4 +1,4 @@
-import {Box, Flex, HStack, Icon, IconButton, Image, SimpleGrid, Text, Wrap, WrapItem} from "@chakra-ui/react"
+import {Box, Flex, HStack, Icon, IconButton, Image, SimpleGrid, Spacer, Text, Wrap, WrapItem} from "@chakra-ui/react"
 
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {useAppSelector} from "@src/Store/hooks";
@@ -21,8 +21,19 @@ import {createSuccessfulTransactionToastContent} from "@src/utils";
 import {ApiService} from "@src/core/services/api-service";
 import {useQuery} from "@tanstack/react-query";
 import {getBattleRewards} from "@src/core/api/RyoshiDynastiesAPICalls";
-
+import ImageService from "@src/core/services/image";
+import {nftCardUrl} from "@src/helpers/image";
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
+import {appUrl, caseInsensitiveCompare, round} from "@src/utils";
+import {FullCollectionsQuery} from "@src/core/api/queries/fullcollections";
 const config = appConfig();
+
+import axios from "axios";
+import { set } from "lodash";
+// const ryoshiCollectionAddress = appConfig('collections').find((c: any) => c.slug === 'koban').address;
+const api = axios.create({
+  baseURL: config.urls.api,
+});
 
 interface StakeNftsProps {
   isOpen: boolean;
@@ -36,7 +47,9 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
   const [executingLabel, setExecutingLabel] = useState('');
   const [isExecutingClaim, setIsExecutingClaim] = useState(false);
   const [isLoading, getSigner] = useCreateSigner();
-
+  const [nftImages, setNftImages] = useState<any[]>([]);
+  // const query = FullCollectionsQuery.createApiQuery({address: "0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5", token: ids});
+    // const nftUrl = appUrl(`/collection/${nft.nftAddress}/${nft.nftId}`);
   const fetcher = async () => {
     // let signatureInStorage = getAuthSignerInStorage()?.signature;
     //
@@ -48,6 +61,10 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
       return await ApiService.withoutKey().ryoshiDynasties.getDailyRewards(user.address!)
     // }
 
+  }
+
+  const handleClose = () => {
+    onClose();
   }
   const {data} = useQuery(
     ['RyoshiDailyCheckin', user.address],
@@ -109,13 +126,25 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
       }
     }
   }
-
-  const handleClose = () => {
-    onClose();
+  const GetTokenImage = (tokenId: number) => {
+    //itterate through nftImages and find the one with the matching tokenId
+    let nftImage = nftImages.find((nftImage) => Number(nftImage.id) === tokenId);
+    // console.log("nftImage: ", nftImage);
+    return nftImage.image;
   }
+
+  const GetNftImages = async (nft: any) => {
+    if(!nftImages) return;
+
+    let data = await api.get("fullcollections?address=0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5");
+    setNftImages(data.data.nfts);
+  }
+
   useEffect(() => {
-        console.log("battleRewards: ", battleRewards); 
-    }, [battleRewards])
+    if(!battleRewards) return;
+
+    GetNftImages();
+  }, [battleRewards])
 
   return (
     <>
@@ -126,9 +155,9 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
       size='5xl'
       isCentered={false}
     >
-    { !battleRewards || battleRewards.length ===0 ?  (<>
+    { !battleRewards || battleRewards.length ===0 || nftImages.length ===0 ? (<>
         <Text fontSize='sm' color='gray.400'>No rewards to claim</Text>
-    </>) :(
+    </>) :(<>
     <Flex direction={{base: 'column', md: 'row'}} my={6} px={4}>
     <Wrap>
       {[...Array(battleRewards?.tokenIds?.length).fill(0)].map((_, index) => {
@@ -145,11 +174,17 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
                   <Box
                     width={100}
                     height={100}
-
+                      onClick={(e) => {
+                      e.preventDefault();
+                      window.location.href=appUrl(`/collection/0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5/`+battleRewards.tokenIds[index]);
+                      }}
                   >
-                      <Text>Token id: {battleRewards.tokenIds[index]}</Text>
-
-                    {/* <Image src={ImageService.translate(pendingNfts[index].image).fixedWidth(100, 100)} rounded='lg'/> */}
+                        <Image
+                          width='100%'
+                          height='100%'
+                          src={GetTokenImage(battleRewards.tokenIds[index])}
+                        />
+                    
                   </Box>
                   <Flex fontSize='xs' justify='space-between' mt={1}>
                     <Flex marginLeft='auto'>
@@ -199,6 +234,7 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
         )
       })}
     </Wrap>
+    </Flex>
     <Box ms={8} my={{base: 4, md: 'auto'}} textAlign='center'>
         {battleRewards.tokenIds.length === 0 ? (
             <Text fontSize='sm' color='gray.400'>No rewards to claim</Text>
@@ -214,8 +250,8 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
             </RdButton>
           )}
     </Box>
-    </Flex>
-         ) }
+    <Spacer h='12px' />
+    </> ) }
     </RdModal>
     </>
   )
