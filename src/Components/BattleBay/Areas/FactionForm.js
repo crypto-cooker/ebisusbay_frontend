@@ -135,7 +135,7 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
         toast.success("Changes Saved");
       } catch (error) {
         console.log(error)
-        toast.error(error);
+        toast.error("Saving Changes Failed, Faction name must be unique");
       }
     }
   }
