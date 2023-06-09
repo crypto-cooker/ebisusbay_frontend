@@ -393,9 +393,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
             onPinching={changeCanvasState}
             onPinchingStop={changeCanvasState}
             onPanningStop={changeCanvasState}
-
-            initialPositionX={mapProps?.initialPosition.x}
-            initialPositionY={mapProps?.initialPosition.y}
+            centerOnInit={true}
             disablePadding={true}
             initialScale={mapProps?.scale}
             minScale={mapProps?.minScale}
