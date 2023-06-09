@@ -20809,7 +20809,7 @@
       "multiToken": false,
       "address": "0x028169964177AA2050Db3FaE53EEAeE1443F9b04",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "BOB Mutants is a collection of 1111 hand-drawn unique and limited NFTs with 125+ different traits that has different rarities. In colelction you can find 14 legendaries. BOB Mutants will unlock brand new utility - BOB Shop where you will be able to buy NFTs from different Cronos collections using BOB token. You will be able to stake BOB Mutants on our website to earn BOB token. You can get BOB token ONLY by staking BOB Mutant. DAO, WL, Giveaways and much more!",
         "avatar": "/img/collections/bob-mutants/avatar.webp",
