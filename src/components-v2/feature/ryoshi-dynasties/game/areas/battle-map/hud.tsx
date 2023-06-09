@@ -1,4 +1,4 @@
-import {Box, Flex, Spacer, Text, Progress, HStack, Tag, Image} from "@chakra-ui/react";
+import {Box, Flex, Spacer, Text, Progress, HStack, Tag, Image, SimpleGrid, Center} from "@chakra-ui/react";
 import {useAppSelector} from "@src/Store/hooks";
 import React, {useState, useEffect, useRef, useContext} from "react";
 import ReturnToVillageButton from "@src/components-v2/feature/ryoshi-dynasties/components/return-button";
@@ -124,7 +124,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
           <Spacer />
           <Box mb={4} bg='#272523EE' p={2} rounded='md' 
           w={{base: '200px', sm: '200px'}}
-          h={{base: '105px', sm: '105px'}}
+          h={{base: '135px', sm: '135px'}}
           >
           {/* <RdButton h='30px' w='210px' position='absolute' right='10px' top='10px' ></RdButton> */}
           <Box
@@ -165,7 +165,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
                 <Text fontWeight='bold' zIndex='9'> {timer}</Text>
               </HStack>
             <Spacer h='2' />
-            <HStack justifyContent='right'>
+           <Center>
             <Tag  variant='outline'>
               <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()}
                       alt="troopsIcon" boxSize={4}/>
@@ -178,24 +178,43 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
                 )}
               </Box>
             </Tag>
-            </HStack>
-            <Spacer h='2' />
+           </Center>
 
-            <HStack justifyContent='right'>
-            {troopTimer !== '' && (
-              <Text fontSize='xs' color="#aaa">Cooldown:</Text>
-            )}
-            <Text verticalAlign='bottom' fontWeight='bold'>{troopTimer}</Text>
-            <Tag  variant='outline'>
-              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}
-                      alt="troopsIcon" boxSize={4}/>
+            {/* <Tag  variant='outline'>
               <Box ms={1}>
-                {rdContext.user?.faction?.troops}
+               
               </Box>
-            </Tag>
-            </HStack>
+            </Tag> */}
 
+          <SimpleGrid columns={2} my={4} px={1}>
+            <Box color="#aaa">Available:</Box>
+            <Flex textAlign='end' fontWeight='bold' alignContent='space-between'>
+              <HStack textAlign='end'>
+                <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}alt="troopsIcon" boxSize={4}/>
+                <Text>{rdContext.user?.faction?.troops}</Text>
+              </HStack>
+              </Flex>
+            <Box color="#aaa">Deployed:</Box>
+            <Box textAlign='end' fontWeight='bold'>
+              <HStack textAlign='end'>
+                <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}alt="troopsIcon" boxSize={4}/>
+                <Text>{rdContext.user?.season?.troops.deployed}</Text>
+              </HStack>
+              </Box>
+          </SimpleGrid>
         </div>
+        {troopTimer !== '' && (
+            <Box mt={-3} bg='#cc2828' p={2} rounded='md' 
+              
+               w={{base: '182px', sm: '182px'}}
+               h={{base: '35px', sm: '35px'}}
+               >
+                <HStack justifyContent='space-between'>
+              <Text fontSize='xs' >Troop Cooldown:</Text>
+              <Text verticalAlign='bottom' fontWeight='bold'>{troopTimer}</Text>
+                </HStack>
+              </Box>
+            )}
         </Box>
       </Flex>
     </Box>
