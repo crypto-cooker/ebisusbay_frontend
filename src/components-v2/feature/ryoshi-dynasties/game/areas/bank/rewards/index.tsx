@@ -1,15 +1,5 @@
-import {
-  Box,
-  Center,
-  Flex,
-  HStack,
-  Image, SimpleGrid,
-  Spinner,
-  Stack,
-  Text, useBreakpointValue,
-  VStack
-} from "@chakra-ui/react"
-import React, {useCallback, useEffect, useState} from "react";
+import {Box, Center, Flex, HStack, Image, SimpleGrid, Spinner, Stack, Text, VStack} from "@chakra-ui/react"
+import React, {useCallback, useContext, useState} from "react";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 
 //contracts
@@ -17,11 +7,9 @@ import {Contract, ethers} from "ethers";
 import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
 import Bank from "@src/Contracts/Bank.json";
-import PlatformRewards from "@src/Contracts/PlatformRewards.json";
 import PresaleVaults from "@src/Contracts/PresaleVaults.json";
 import VestingWallet from "@src/Contracts/VestingWallet.json";
-import {createSuccessfulTransactionToastContent} from '@src/utils';
-import moment from 'moment';
+import {createSuccessfulTransactionToastContent, round} from '@src/utils';
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {useAppSelector} from "@src/Store/hooks";
 import MetaMaskOnboarding from "@metamask/onboarding";
@@ -35,6 +23,13 @@ import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSig
 import {getAuthSignerInStorage} from "@src/helpers/storage";
 import ImageService from "@src/core/services/image";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
+import Link from "next/link";
+import {ERC1155, ERC20} from "@src/Contracts/Abis";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -153,12 +148,10 @@ const FortuneRewardsTab = () => {
     }
     if (signatureInStorage) {
       const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, amount, seasonId, signatureInStorage)
-
-      console.log('CON', JSON.stringify(auth.data.reward), auth.data.signature)
       await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
     }
   }
-  // console.log(rewards);
+
   return (
       <Box bgColor='#292626' rounded='md' p={4} fontSize='sm'>
         <Box textAlign='center'>
@@ -185,10 +178,10 @@ const FortuneRewardsTab = () => {
                         <Text fontSize='xl' fontWeight='bold'>Season {commify(reward.blockId)}</Text>
                         <HStack>
                           <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="fortuneIcon" boxSize={6}/>
-                          <Text>{reward.totalRewards}</Text>
+                          <Text>{reward.currentRewards}</Text>
                         </HStack>
                       </VStack>
-                      <RdButton hideIcon={true} onClick={() => handleWithdraw(Number(reward.totalRewards), Number(reward.seasonId))}>
+                      <RdButton hideIcon={true} onClick={() => handleWithdraw(Number(reward.currentRewards), Number(reward.seasonId))}>
                         Claim
                       </RdButton>
                     </Flex>
@@ -196,7 +189,7 @@ const FortuneRewardsTab = () => {
                 ))}
               </>
             ) : (
-              <Box>
+              <Box mt={2}>
                 <Text textAlign='center' fontSize={14}>You have no rewards to withdraw at this time.</Text>
               </Box>
             )}
@@ -261,7 +254,10 @@ const steps = [
 
 const PresaleVaultTab = () => {
   const user = useAppSelector((state) => state.user);
-  const [isOpeningVault, setIsOpeningVault] = useState(false);
+  const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const [executingOpenVault, setExecutingOpenVault] = useState(false);
+  const [executingExchangeTellers, setExecutingExchangeTellers] = useState(false);
+  const [executingClaimFortune, setExecutingClaimFortune] = useState(false);
 
   // const { activeStep } = useSteps({
   //   index: 1,
@@ -293,10 +289,11 @@ const PresaleVaultTab = () => {
       }
 
       if (vaultAddress !== ethers.constants.AddressZero) {
+        const vaultAddress = await presaleVaultsContract.vaults(user.address);
         const vestingWallet = new Contract(vaultAddress, VestingWallet, readProvider);
-        const vestedAmount = await vestingWallet.vestedAmount(config.contracts.fortune, Date.now());
+        const vestedAmount = await vestingWallet.releasable(config.contracts.fortune);
 
-        const fortuneContract = new Contract(config.contracts.fortune, PresaleVaults, readProvider);
+        const fortuneContract = new Contract(config.contracts.fortune, ERC20, readProvider);
         const vaultBalance = await fortuneContract.balanceOf(vaultAddress);
 
         ret = {
@@ -319,11 +316,23 @@ const PresaleVaultTab = () => {
       }
     },
     enabled: !!user.address,
+    refetchOnWindowFocus: false
   });
 
-  // handle create vault
-  const handleCreateVault = async () => {
-    setIsOpeningVault(true);
+  const setApprovalForAll = async () => {
+    const fortuneTellerCollection = config.collections.find((collection: any) => collection.slug === 'fortuneteller');
+
+    const fortuneTellerContract = new Contract(fortuneTellerCollection.address, ERC1155, user.provider.getSigner());
+
+    const isApproved = await fortuneTellerContract.isApprovedForAll(config.contracts.presaleVaults, user.address);
+    if (!isApproved) {
+      let tx = await fortuneTellerContract.setApprovalForAll(config.contracts.presaleVaults, true);
+      await tx.wait();
+    }
+  };
+
+  const handleCreateVault = useCallback(async () => {
+    setExecutingOpenVault(true);
     try {
       const tx = await user.contractService!.ryoshiPresaleVaults.createVault();
       const receipt = await tx.wait();
@@ -333,17 +342,52 @@ const PresaleVaultTab = () => {
       console.log(error);
       toast.error(error);
     } finally {
-      setIsOpeningVault(false);
+      setExecutingOpenVault(false);
     }
-  }
+  }, [user]);
 
-  console.log('data', data, error);
+  const handleExchangeTellers = useCallback(async () => {
+    setExecutingExchangeTellers(true);
+    try {
+      await setApprovalForAll();
+      const tellerParams = data!.fortuneTellers.map((teller: any) => [Number(teller.nftId), teller.balance]);
+      const tx = await user.contractService!.ryoshiPresaleVaults.claimBonus(
+        tellerParams?.map((teller: any) => teller[0]),
+        tellerParams?.map((teller: any) => teller[1])
+      );
+      const receipt = await tx.wait();
+      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      refetch();
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error);
+    } finally {
+      setExecutingExchangeTellers(false);
+    }
+  }, [user, data]);
+
+  const handleClaimFortune = useCallback(async () => {
+    setExecutingClaimFortune(true);
+    try {
+      const vestingWallet = new Contract(data!.vaultAddress!, VestingWallet, user.provider.getSigner());
+
+      const tx = await vestingWallet.release(config.contracts.fortune);
+      const receipt = await tx.wait();
+      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      refetch();
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error);
+    } finally {
+      setExecutingClaimFortune(false);
+    }
+  }, [user, data]);
 
   return (
     <Box>
       <RdModalBox>
         <Box textAlign='center'>
-          Users who participated in the Fortune Token Presale can now begin vesting their tokens. Those also holding Fortune Teller NFTs can exchange them for bonus Fortune.
+          Users who participated in the Fortune Token Presale can now begin vesting their tokens. Those also holding Fortune Teller NFTs can exchange them for bonus Fortune tokens and Fortune Guards.
         </Box>
       </RdModalBox>
       {status === 'loading' ? (
@@ -358,55 +402,112 @@ const PresaleVaultTab = () => {
         <>
           {data.hasStarted ? (
             <>
-              <RdModalBox>
+              <RdModalBox mt={2}>
+                <Text fontWeight='bold' fontSize='lg' mb={4}>Vesting Vault</Text>
                 {data.hasVault ? (
                   <Box>
-                    You have a vault, show vesting details
+                    <Box>
+                      <Text fontSize='xs' color='#aaa'>Vault Total</Text>
+                      <HStack>
+                        <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="fortuneIcon" boxSize={6}/>
+                        <Text fontSize='lg' fontWeight='bold'>{commify(round(Number(ethers.utils.formatEther(data.vaultBalance)), 4))}</Text>
+                      </HStack>
+                    </Box>
+
+                    <Box mt={2}>
+                      <Stack direction={{base: 'column', sm: 'row'}} justify='space-between'>
+                        <Box>
+                          <Text fontSize='xs' color='#aaa'>Vested</Text>
+                          <HStack>
+                            <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="fortuneIcon" boxSize={6}/>
+                            <Text fontSize='lg' fontWeight='bold'>{commify(round(Number(ethers.utils.formatEther(data.vestedAmount)), 4))}</Text>
+                          </HStack>
+                        </Box>
+                        <RdButton
+                          hideIcon={true}
+                          fontSize='md'
+                          isLoading={executingClaimFortune}
+                          isDisabled={executingClaimFortune}
+                          onClick={handleClaimFortune}
+                        >
+                          {executingClaimFortune ? 'Claiming' : 'Claim'}
+                        </RdButton>
+                      </Stack>
+                    </Box>
                   </Box>
                 ) : (
                   <Box>
-                    NO VAULT
-                    <RdButton
-                      hideIcon={true}
-                      onClick={handleCreateVault}
-                      isLoading={isOpeningVault}
-                      isDisabled={isOpeningVault}
-                      loadingText='asdf'
-                    >
-                      Create Vault
-                    </RdButton>
+                    {data.isPresaleParticipant ? (
+                      <>
+                        <Text>Your total presale balance is <strong>{commify(data.totalPresaleBalance)}</strong>. Create a vault now to begin vesting your Fortune tokens. Fortune rewards gained from trading in Fortune Tellers will also begin vesting here.</Text>
+                        <Box textAlign='end' mt={2}>
+                          <RdButton
+                            hideIcon={true}
+                            onClick={handleCreateVault}
+                            isLoading={executingOpenVault}
+                            isDisabled={executingOpenVault}
+                            fontSize='lg'
+                          >
+                            {executingOpenVault ? 'Creating' : 'Create Vault'}
+                          </RdButton>
+                        </Box>
+                      </>
+                    ) : data.fortuneTellers.length > 0 ? (
+                      <Text>You did not participate in the presale. However, you can still trade-in your Fortune Tellers in exchange for bonus Fortune tokens and Fortune Guards.</Text>
+                    ) : (
+                      <Text>You did not participate in the presale.</Text>
+                    )}
                   </Box>
                 )}
               </RdModalBox>
               {(data.hasVault || !data.isPresaleParticipant) && (
                 <RdModalBox mt={2}>
-                  <Text fontWeight='bold' align='center' fontSize='lg' mb={4}>Fortune Teller Bonus</Text>
+                  <Text fontWeight='bold' fontSize='lg' mb={4}>Fortune Teller Bonus</Text>
+                  <Text>Exchange your Fortune Tellers to receive bonus Fortune tokens and Fortune Guards. These Fortune Guards are the key to minting Heroes.</Text>
                   {data.fortuneTellers && data.fortuneTellers.length > 0 ? (
-                    <SimpleGrid columns={{base: 1, sm: 2}}>
-                      <Box>
-                        <Image
-                          src={ImageService.gif(data.fortuneTellers[0].image).fixedWidth(150, 150)}
-                        />
+                    <Box mt={2}>
+                      <Box my={4}><hr /></Box>
+                      <Stack justify='space-between' direction={{base: 'column', sm: 'row'}}>
+                        <Box mx={{base: 'auto', sm: 'inherit'}} w='full' maxW='180px'>
+                          <AnyMedia
+                            image={ImageService.gif(data.fortuneTellers[0].image).fixedWidth(180, 180)}
+                            title={data.fortuneTellers[0].name}
+                          />
+                        </Box>
+                        <Box>
+                          <SimpleGrid templateColumns='1fr max-content' gap={2} alignItems='baseline'>
+                            <Box fontWeight={'bold'} textAlign='end'>Teller</Box>
+                            <Box fontWeight={'bold'} textAlign='end'>Bonus</Box>
+                            {data.fortuneTellers.map((teller: any) => (
+                              <>
+                                <Box textAlign='end'>{teller.name} (x{teller.balance}):</Box>
+                                <Box textAlign='end'>{commify(teller.balance * rdConfig.presale.bonus[Number(teller.nftId) - 1])}</Box>
+                              </>
+                            ))}
+                            <Box textAlign='end'>Total:</Box>
+                            <Box textAlign='end' fontWeight='bold' fontSize='lg'>
+                              {commify(data.fortuneTellers.reduce((value: number, teller: any) => {
+                                return teller.balance * rdConfig.presale.bonus[Number(teller.nftId) - 1];
+                              }, 0))}
+                            </Box>
+                          </SimpleGrid>
+                        </Box>
+                      </Stack>
+                      <Box textAlign='end' mt={2}>
+                        <RdButton
+                          fontSize='lg'
+                          hideIcon={true}
+                          isLoading={executingExchangeTellers}
+                          isDisabled={executingExchangeTellers}
+                          onClick={handleExchangeTellers}
+                        >
+                          {executingExchangeTellers ? 'Exchanging' : 'Exchange'}
+                        </RdButton>
                       </Box>
-                      <Box>
-                        <VStack align='end'>
-                          <Box fontWeight={'bold'}>Teller Count</Box>
-                          {data.fortuneTellers.map((teller: any) => (
-                            <HStack>
-                              <Box textAlign='end' flex='1'>{teller.name}</Box>
-                              <Box textAlign='end' w={8}>{teller.balance}</Box>
-                            </HStack>
-                          ))}
-                          <HStack>
-                            <Box textAlign='end' flex='1'>Total</Box>
-                            <Box textAlign='end' w={8}>0</Box>
-                          </HStack>
-                        </VStack>
-                      </Box>
-                    </SimpleGrid>
+                    </Box>
                   ) : (
-                    <Box textAlign='center'>
-                      No Fortune Tellers in wallet
+                    <Box mt={4}>
+                      No Fortune Tellers in wallet. Pick some up on the <Link href='/collection/fortuneteller' style={{textDecoration: 'underline'}}>marketplace</Link>.
                     </Box>
                   )}
                 </RdModalBox>

@@ -9,8 +9,8 @@ interface RdButtonProps extends ButtonProps {
   hideIcon?: boolean;
 }
 
-const RdButton = (props: RdButtonProps) => {
-  const [isSpinning, setIsSpinning] = useState(false);
+const RdButton = ({stickyIcon, hideIcon, ...props}: RdButtonProps) => {
+  const [isSpinning, setIsSpinning] = useState(props.isLoading);
 
   return (
     <Box
@@ -24,15 +24,13 @@ const RdButton = (props: RdButtonProps) => {
       data-group
       className='rd-button'
       px={1}
-      onMouseEnter={() => setIsSpinning(!!props.stickyIcon)}
-      onMouseLeave={() => setIsSpinning(false)}
       _active={{
         borderColor: '#FFFFFF'
       }}
       bgColor='transparent !important'
       {...props as BoxProps}
     >
-      {!props.hideIcon && (
+      {!hideIcon && (
         <Image
           src={isSpinning || props.isLoading ? '/img/ryoshi/fortune-token.gif' : '/img/ryoshi/fortune-token.png'}
           position='absolute'
@@ -46,7 +44,7 @@ const RdButton = (props: RdButtonProps) => {
           _groupHover={{
             visibility: 'visible',
           }}
-          visibility={props.stickyIcon ? 'visible' : 'hidden'}
+          visibility={stickyIcon ? 'visible' : 'hidden'}
         />
       )}
       <Box
@@ -54,8 +52,8 @@ const RdButton = (props: RdButtonProps) => {
         py={1}
         bg='linear-gradient(to left, #FDAB1A, #FD8800)'
         _groupHover={{ bg: 'linear-gradient(to left, #FFE818, #FFD001)' }}
-        ps={props.stickyIcon ? '40px' : '0px'}
-        pe={props.stickyIcon ? '6px' : '0px'}
+        ps={stickyIcon ? '40px' : '0px'}
+        pe={stickyIcon ? '6px' : '0px'}
         h='full'
         className={gothamMedium.className}
       >

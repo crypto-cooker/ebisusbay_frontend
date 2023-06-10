@@ -2,6 +2,7 @@ export interface RyoshiConfig {
   bank: RyoshiConfigBank;
   barracks: RyoshiConfigBarracks;
   rewards: RyoshiConfigCheckinRewards;
+  presale: RyoshiConfigPresale;
 }
 
 interface RyoshiConfigBank {
@@ -74,4 +75,8 @@ export interface RyoshiConfigCollections {
 
 interface RyoshiConfigCheckinRewards {
   daily: number[];
+}
+
+interface RyoshiConfigPresale {
+  bonus: number[];
 }
