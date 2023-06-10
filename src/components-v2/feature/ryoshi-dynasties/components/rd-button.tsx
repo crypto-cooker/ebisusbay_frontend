@@ -1,11 +1,13 @@
-import {Box, BoxProps, ButtonProps, Image} from "@chakra-ui/react";
+import {Box, BoxProps, ButtonProps, Image, ResponsiveValue, useBreakpointValue} from "@chakra-ui/react";
 import React, {useEffect, useState} from "react";
 import localFont from "next/font/local";
 
 const gothamMedium = localFont({ src: '../../../../fonts/GothamMedium.woff2' })
 
+type Size = 'sm' | 'md' | 'lg';
+
 interface RdButtonProps extends ButtonProps {
-  size?: 'sm' | 'md' | 'lg';
+  size?: ResponsiveValue<Size>;
   stickyIcon?: boolean;
   hoverIcon?: boolean;
   loadingSpinner?: boolean;
@@ -32,6 +34,9 @@ const RdButton = ({size = 'lg', stickyIcon, hoverIcon, loadingSpinner = true, ..
     }
   }
 
+  const resolvedSize = useBreakpointValue(size ? typeof size === 'string' ? { base: size } : size : { base: 'lg' });
+  const sizes: any = resolvedSize ? sizeMappings[resolvedSize] : {};
+
   useEffect(() => {
     console.log('loading', props.isLoading);
     setIsSpinning(props.isLoading);
@@ -47,7 +52,7 @@ const RdButton = ({size = 'lg', stickyIcon, hoverIcon, loadingSpinner = true, ..
       as='button'
       borderColor='#D24547'
       color='#FFF !important'
-      fontSize={sizeMappings[size].fontSize}
+      fontSize={sizes.fontSize}
       borderRadius='2px'
       position='relative'
       borderWidth='6px 0px 6px 0px'
@@ -67,7 +72,7 @@ const RdButton = ({size = 'lg', stickyIcon, hoverIcon, loadingSpinner = true, ..
           left='5px'
           top='50%'
           transform='translate(-50%, -50%)'
-          w={sizeMappings[size].iconWidth}
+          w={sizes.iconWidth}
           _groupHover={{
             visibility: hoverIcon || canShowIcon ? 'visible' : 'hidden',
           }}
@@ -80,9 +85,9 @@ const RdButton = ({size = 'lg', stickyIcon, hoverIcon, loadingSpinner = true, ..
         bg='linear-gradient(to left, #FDAB1A, #FD8800)'
         _groupHover={{
           bg: 'linear-gradient(to left, #FFE818, #FFD001)' ,
-          ps: hoverIcon || canShowIcon ? sizeMappings[size].ps : '0px',
+          ps: hoverIcon || canShowIcon ? sizes.ps : '0px',
         }}
-        ps={canShowIcon ? sizeMappings[size].ps : '0px'}
+        ps={canShowIcon ? sizes.ps : '0px'}
         h='full'
         className={gothamMedium.className}
       >

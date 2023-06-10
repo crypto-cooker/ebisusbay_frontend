@@ -743,7 +743,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
               ps='20px'>
               <RdButton
                 minW='200px'
-                fontSize={{base: 'xl', sm: '2xl'}}
+                size={{base: 'md', sm: 'lg'}}
                 stickyIcon={true}
                 onClick={() => PreBattleChecks()}
                 isLoading={isExecuting}
