@@ -505,7 +505,7 @@ const PresaleVaultTab = () => {
                     </Box>
                   ) : (
                     <Box mt={4}>
-                      No Fortune Tellers in wallet. Pick some up on the <Link href='/collection/fortuneteller' style={{textDecoration: 'underline'}}>marketplace</Link>.
+                      No Fortune Tellers in wallet. Pick some up on the <Link href='/collection/fortuneteller' style={{color: '#F48F0C', fontWeight: 'bold'}}>marketplace</Link>.
                     </Box>
                   )}
                 </RdModalBox>
