@@ -64,7 +64,7 @@ const MainPage = ({onShowLeaderboard}: Props) => {
           marginTop={{base: '-12%', sm: '-12%'}}
           w={{base: '100px', sm: '150px'}}
           fontSize={{base: '8px', sm: 'sm'}}
-          hideIcon={true}
+          hoverIcon={false}
           onClick={(e) => {
             e.preventDefault();
             window.location.href='https://seashrine.io/';
@@ -101,7 +101,7 @@ const MainPage = ({onShowLeaderboard}: Props) => {
               <RdButton
                 w={{base: '125px', sm: '250px'}}
                 fontSize={{base: 'sm', sm: 'md'}}
-                hideIcon={true}
+                hoverIcon={false}
                 onClick={claimReward}
               >
                 {dailyRewardClaimed ? 'Return Tomorrow!' : 'Claim Daily Reward!'}

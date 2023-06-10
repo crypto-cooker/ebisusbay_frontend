@@ -113,7 +113,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin}: VillageHudProp
                   <RdButton
                     pointerEvents='auto'
                     fontSize='m'
-                    hideIcon={true}
+                    hoverIcon={false}
                     onClick={onOpenBuildings}
                   >
                     View Building
@@ -121,8 +121,8 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin}: VillageHudProp
                   <Spacer h='4'/>
                   <RdButton
                     pointerEvents='auto'
-                    fontSize='m'
-                    hideIcon={true}
+                    size='sm'
+                    hoverIcon={false}
                     onClick={onOpenDailyCheckin}
                   >
                     Daily Claim

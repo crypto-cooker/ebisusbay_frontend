@@ -278,7 +278,7 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
             ) : (
               <VStack mb={2} mt={4}>
                 <Text textAlign='center'>Vault staking term is complete! Close this vault to return the staked Fortune back to your account.</Text>
-                <RdButton w='200px' hideIcon={true} fontSize='lg' onClick={handleCloseVault}>
+                <RdButton w='200px' hoverIcon={false} onClick={handleCloseVault}>
                   {isExecutingClose ? 'Closing...' : 'Close Vault'}
                 </RdButton>
               </VStack>

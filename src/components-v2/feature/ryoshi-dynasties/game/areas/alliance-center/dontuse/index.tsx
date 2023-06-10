@@ -275,7 +275,7 @@ const AllianceCenterModal = ({closeAllianceCenter}: AllianceCenterModalProps) =>
           <Box
             >
             <RdButton
-              hideIcon={true}
+              hoverIcon={false}
               w='200px'
               fontSize={{base: 'lg', sm: 'xl'}}
               stickyIcon={true}

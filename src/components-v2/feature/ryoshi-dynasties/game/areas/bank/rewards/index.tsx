@@ -181,7 +181,7 @@ const FortuneRewardsTab = () => {
                           <Text>{reward.currentRewards}</Text>
                         </HStack>
                       </VStack>
-                      <RdButton hideIcon={true} onClick={() => handleWithdraw(Number(reward.currentRewards), Number(reward.seasonId))}>
+                      <RdButton hoverIcon={false} onClick={() => handleWithdraw(Number(reward.currentRewards), Number(reward.seasonId))}>
                         Claim
                       </RdButton>
                     </Flex>
@@ -424,8 +424,7 @@ const PresaleVaultTab = () => {
                           </HStack>
                         </Box>
                         <RdButton
-                          hideIcon={true}
-                          fontSize='md'
+                          size='sm'
                           isLoading={executingClaimFortune}
                           isDisabled={executingClaimFortune}
                           onClick={handleClaimFortune}
@@ -442,11 +441,10 @@ const PresaleVaultTab = () => {
                         <Text>Your total presale balance is <strong>{commify(data.totalPresaleBalance)}</strong>. Create a vault now to begin vesting your Fortune tokens. Fortune rewards gained from trading in Fortune Tellers will also begin vesting here.</Text>
                         <Box textAlign='end' mt={2}>
                           <RdButton
-                            hideIcon={true}
+                            hoverIcon={false}
                             onClick={handleCreateVault}
                             isLoading={executingOpenVault}
                             isDisabled={executingOpenVault}
-                            fontSize='lg'
                           >
                             {executingOpenVault ? 'Creating' : 'Create Vault'}
                           </RdButton>
@@ -495,8 +493,8 @@ const PresaleVaultTab = () => {
                       </Stack>
                       <Box textAlign='end' mt={2}>
                         <RdButton
-                          fontSize='lg'
-                          hideIcon={true}
+                          size='md'
+                          hoverIcon={false}
                           isLoading={executingExchangeTellers}
                           isDisabled={executingExchangeTellers}
                           onClick={handleExchangeTellers}

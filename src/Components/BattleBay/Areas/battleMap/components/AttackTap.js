@@ -870,7 +870,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
                 onClick={Reset}
                 w='200px'
                 fontSize={{base: 'sm', sm: 'md'}}
-                hideIcon={true}
+                hoverIcon={false}
                 isLoading={isExecuting}
                 disabled={isExecuting}
                 marginTop='2'
@@ -881,7 +881,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
                 onClick={showDetailedResults}
                 w='250px'
                 fontSize={{base: 'sm', sm: 'md'}}
-                hideIcon={true}
+                hoverIcon={false}
                 isLoading={isExecuting}
                 disabled={isExecuting}
                 marginTop='2'

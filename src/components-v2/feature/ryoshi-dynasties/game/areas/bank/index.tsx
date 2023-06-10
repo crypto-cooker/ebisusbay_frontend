@@ -121,28 +121,28 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
         w={abbreviateButtonText ? '60px' : '269px'}
       >
         <VStack spacing={4} align='end'>
-          <RdButton w='full' hideIcon={abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenStakeFortune)}>
+          <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenStakeFortune)}>
             {abbreviateButtonText ? (
               <Icon as={FontAwesomeIcon} icon={faCoins} />
             ) : (
               <>Stake $Fortune </>
             )}
           </RdButton>
-          <RdButton w='full' hideIcon={abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>
+          <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>
             {abbreviateButtonText ? (
               <Icon as={FontAwesomeIcon} icon={faImage} />
             ) : (
               <>Stake NFTs </>
             )}
           </RdButton>
-          <RdButton w='full' hideIcon={abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenWithdraw)}>
+          <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenWithdraw)}>
             {abbreviateButtonText ? (
               <Icon as={FontAwesomeIcon} icon={faGift} />
             ) : (
               <>Rewards</>
             )}
           </RdButton>
-          <RdButton w='full' hideIcon={abbreviateButtonText} onClick={onBack}>
+          <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={onBack}>
             {abbreviateButtonText ? (
               <Icon as={FontAwesomeIcon} icon={faArrowRightFromBracket} />
             ) : (

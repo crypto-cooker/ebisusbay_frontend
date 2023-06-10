@@ -331,8 +331,7 @@ const CurrentFaction = () => {
                   </VStack>
                   {!rdContext.user.season.faction && (
                     <RdButton
-                      hideIcon={true}
-                      fontSize='lg'
+                      hoverIcon={false}
                       onClick={handleRegister}
                       isLoading={isExecutingRegister}
                       isDisabled={isExecutingRegister}
@@ -379,7 +378,7 @@ const CurrentFaction = () => {
                   <Text fontSize='lg' fontWeight='bold'>{rdContext.user.season.troops.deployed}</Text>
                 </VStack>
                 {!!rdContext.user.season.troops.undeployed && !rdContext.user.season.faction && (
-                  <RdButton hideIcon={true} fontSize='lg' onClick={onOpenDelegate} maxH='50px'>
+                  <RdButton hoverIcon={false} onClick={onOpenDelegate} maxH='50px'>
                     Delegate
                   </RdButton>
                 )}
