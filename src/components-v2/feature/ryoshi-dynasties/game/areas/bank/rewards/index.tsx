@@ -487,7 +487,7 @@ const PresaleVaultTab = () => {
                             <Box textAlign='end'>Total:</Box>
                             <Box textAlign='end' fontWeight='bold' fontSize='lg'>
                               {commify(data.fortuneTellers.reduce((value: number, teller: any) => {
-                                return teller.balance * rdConfig.presale.bonus[Number(teller.nftId) - 1];
+                                return value + teller.balance * rdConfig.presale.bonus[Number(teller.nftId) - 1];
                               }, 0))}
                             </Box>
                           </SimpleGrid>
