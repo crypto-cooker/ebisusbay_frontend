@@ -20866,7 +20866,7 @@
         "card": "/img/collections/cyberpunk-cronicles/card.webp",
         "banner": "/img/collections/cyberpunk-cronicles/banner.webp",
         "website": "https://thecronosclub.com/",
-        "twitter": "https://twitter.com/The_Cronos_Club ",
+        "twitter": "https://twitter.com/The_Cronos_Club",
         "discord": "https://discord.gg/rvtB8gYSGU",
         "medium": "https://medium.com/@the_cronos_club",
         "telegram": "https://t.me/+8CcIuXpqLFYzN",
@@ -20876,6 +20876,52 @@
         "verified": true,
         "doxx": false,
         "kyc": true
+      }
+    },
+    {
+      "name": "Gangverse Social Club",
+      "slug": "gangverse-social-club",
+      "multiToken": false,
+      "address": "0xaBaa122B9E6B64FCBDD55A03eEb8729220F9C589",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Gangverse is a gateway to the world of gangs for you. You know the life of gangs, fight and win. So what will they gain? In fact, the reward is the administration of a huge region. It is such a dangerous region that the country's security forces are quite inadequate and hesitant to control the region. Doomsday approached the region step by step. The gangs have long determined their strategies and almost completed their war exercises in order to control the developing and growing economy of the region. In fact, everyone is waiting for a little spark. And on the quietest day of the region, a gunshot echoed in the ears of the people of the region, from which it was unclear. It was the sound of the inevitable beginning of the end. Gangs fight in the streets as if vowing not to go back to the old quiet days... We shared a lot of strategic information about Gangs War with you. Now all you have to do is enter the Gangverse and choose your side! All you need is courage. Welcome to your gang!",
+        "avatar": "/img/collections/gangverse-social-club/avatar.webp",
+        "card": "/img/collections/gangverse-social-club/card.webp",
+        "banner": "/img/collections/gangverse-social-club/banner.webp",
+        "website": "https://gangverse.club/",
+        "twitter": "https://twitter.com/gangverse",
+        "discord": "https://discord.gg/u9NJ8GBPXA",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crazzzy Monsters",
+      "slug": "crazzzy-monsters",
+      "multiToken": false,
+      "address": "0x8f2836874DC85B81C2CF0421aF593E6E8d5DffA1",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "10000 Crazzzy Monsters on the Cronos BlockChain, 20 Families of Crazzzy Monsters. Be ready to be overwhelmed by Royaltiezzz, Utilities, Giveawayzzz, Airdropzzz, and More...",
+        "avatar": "/img/collections/crazzzy-monsters/avatar.webp",
+        "card": "/img/collections/crazzzy-monsters/card.webp",
+        "banner": "/img/collections/crazzzy-monsters/banner.webp",
+        "website": "https://crazzzymonsters.com/",
+        "twitter": "https://twitter.com/CrazzzyMonsters",
+        "discord": "https://discord.gg/YjYHgKNapj",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],

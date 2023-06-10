@@ -18629,7 +18629,7 @@
       "multiToken": false,
       "address": "0x28e276E68bBe113Fee31bf125473568DC1761BcF",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Laboratory-Rat (Lab Rat) is a mutated laboratory grown rat enhanced to fit the purpose, grown by his/her Crazy Scientist for laboratory related experiments. Lab Rats are not considered mammal or rodent despite ancestral beginnings due to their mutated and sentient enhanced form. The Lab Rats were cultured to the way of life of the Laboratory and trained to be task orientated. However, torn between it’s 200 IQ and its mammal-senses, the Lab Rats still hold their rabid rodent and wild nature giving a hint of unpredictability.\n\nThe Laboratory Rats collection consists of 10018 unique rats with 231 unique traits and 18 x 1 of 1 legendary NFTs. A large amount will be taken out of the mint to be given out as prizes to the Critters Arena, marketing, Mod & community incentives.",
         "avatar": "/img/collections/lab-rats/avatar.webp",
@@ -18682,7 +18682,7 @@
       "multiToken": false,
       "address": "0xdbFDf81D1fDD2e79e8ffaDE50c219452587e9488",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Launched on the 1st of March on the Cronos Chain, Cowz are the next step in the Steakhouse NFT story line. In the future Cowz will be used to mint other NFT collections as if being sent to the auction house, or if you have what it takes to raise a herd you can to be eligible for airdrops without sacrificing your dairy queens!",
         "avatar": "/img/collections/cowz/avatar.webp",
@@ -20295,7 +20295,7 @@
       "multiToken": false,
       "address": "0x860c2245Ea1693f24AEd4A0364bba5787355bAA0",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Pogo are randomly generated, non-fungible tokens, also known as an \"NFT.\" There are 2,500 unique & 3D rendered Pogo in our genesis collection, No two Pogo are the same. Evolve your Pogo on P2E, fashion, utility and art!",
         "avatar": "/img/collections/the-pogo/avatar.webp",
@@ -20614,7 +20614,7 @@
       "name": "Strange Camel Society",
       "slug": "strange-camel-society",
       "multiToken": false,
-      "address": "",
+      "address": "0x9B168D4D0caEbC30b09b9a0B93e3C075862F6172",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -20809,7 +20809,7 @@
       "multiToken": false,
       "address": "0x028169964177AA2050Db3FaE53EEAeE1443F9b04",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "BOB Mutants is a collection of 1111 hand-drawn unique and limited NFTs with 125+ different traits that has different rarities. In colelction you can find 14 legendaries. BOB Mutants will unlock brand new utility - BOB Shop where you will be able to buy NFTs from different Cronos collections using BOB token. You will be able to stake BOB Mutants on our website to earn BOB token. You can get BOB token ONLY by staking BOB Mutant. DAO, WL, Giveaways and much more!",
         "avatar": "/img/collections/bob-mutants/avatar.webp",
@@ -20866,7 +20866,7 @@
         "card": "/img/collections/cyberpunk-cronicles/card.webp",
         "banner": "/img/collections/cyberpunk-cronicles/banner.webp",
         "website": "https://thecronosclub.com/",
-        "twitter": "https://twitter.com/The_Cronos_Club ",
+        "twitter": "https://twitter.com/The_Cronos_Club",
         "discord": "https://discord.gg/rvtB8gYSGU",
         "medium": "https://medium.com/@the_cronos_club",
         "telegram": "https://t.me/+8CcIuXpqLFYzN",
@@ -20876,6 +20876,52 @@
         "verified": true,
         "doxx": false,
         "kyc": true
+      }
+    },
+    {
+      "name": "Gangverse Social Club",
+      "slug": "gangverse-social-club",
+      "multiToken": false,
+      "address": "0xaBaa122B9E6B64FCBDD55A03eEb8729220F9C589",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Gangverse is a gateway to the world of gangs for you. You know the life of gangs, fight and win. So what will they gain? In fact, the reward is the administration of a huge region. It is such a dangerous region that the country's security forces are quite inadequate and hesitant to control the region. Doomsday approached the region step by step. The gangs have long determined their strategies and almost completed their war exercises in order to control the developing and growing economy of the region. In fact, everyone is waiting for a little spark. And on the quietest day of the region, a gunshot echoed in the ears of the people of the region, from which it was unclear. It was the sound of the inevitable beginning of the end. Gangs fight in the streets as if vowing not to go back to the old quiet days... We shared a lot of strategic information about Gangs War with you. Now all you have to do is enter the Gangverse and choose your side! All you need is courage. Welcome to your gang!",
+        "avatar": "/img/collections/gangverse-social-club/avatar.webp",
+        "card": "/img/collections/gangverse-social-club/card.webp",
+        "banner": "/img/collections/gangverse-social-club/banner.webp",
+        "website": "https://gangverse.club/",
+        "twitter": "https://twitter.com/gangverse",
+        "discord": "https://discord.gg/u9NJ8GBPXA",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crazzzy Monsters",
+      "slug": "crazzzy-monsters",
+      "multiToken": false,
+      "address": "0x8f2836874DC85B81C2CF0421aF593E6E8d5DffA1",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "10000 Crazzzy Monsters on the Cronos BlockChain, 20 Families of Crazzzy Monsters. Be ready to be overwhelmed by Royaltiezzz, Utilities, Giveawayzzz, Airdropzzz, and More...",
+        "avatar": "/img/collections/crazzzy-monsters/avatar.webp",
+        "card": "/img/collections/crazzzy-monsters/card.webp",
+        "banner": "/img/collections/crazzzy-monsters/banner.webp",
+        "website": "https://crazzzymonsters.com/",
+        "twitter": "https://twitter.com/CrazzzyMonsters",
+        "discord": "https://discord.gg/YjYHgKNapj",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
@@ -27535,7 +27581,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/the-pogo/drop.webp",
         "banner": "/img/collections/the-pogo/banner.webp",
@@ -27616,7 +27662,7 @@
         "twitter": "https://twitter.com/StrangeCamel_",
         "discord": "https://discord.gg/bTQ8u7DHHb"
       },
-      "address": "",
+      "address": "0x9B168D4D0caEbC30b09b9a0B93e3C075862F6172",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 40,
       "totalSupply": 4000,
@@ -27639,8 +27685,16 @@
       "verification": {
         "doxx": false,
         "kyc": true,
-        "escrow": false,
+        "escrow": true,
         "verified": true
+      },
+      "escrow": {
+        "description": "15% of mint funds to be released to the Strange Camel project at mint. The remaining funds to be released in 3 equal installments upon:",
+        "milestones": [
+          "Staking is released for holders",
+          "DAO is created and the first voting takes place",
+          "Project completes 2 NFT raffles, or more, totalling at least 2000 CRO, whichever comes later"
+        ]
       }
     }
   ]
