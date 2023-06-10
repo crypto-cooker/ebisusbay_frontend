@@ -506,6 +506,10 @@ const Village = ({onChange}: VillageProps) => {
   }
 
   const [mapInitialized, setMapInitialized] = useState(false);
+  // const mapScale = useBreakpointValue(
+  //   {base: 0.4, sm: 0.6, md: 0.7, lg: 0.8, xl: 0.9, '2xl': 1},
+  //   {fallback: 'lg'}
+  // )
   const mapProps = useBreakpointValue<MapProps>(
     {
       base: {
@@ -528,16 +532,21 @@ const Village = ({onChange}: VillageProps) => {
         initialPosition: { x: -130, y: 20 },
         minScale: 0.5
       },
-      xl: {//1920x1080
+      xl: {
         scale: 0.55,
-        initialPosition: { x: 45, y: -45 },
+        initialPosition: { x: -130, y: 20 },
         minScale: 0.55
       },
-      '2xl': { //ultrawide
+      '2xl': {
         scale: 0.7,
-        initialPosition: { x: 513, y: -64 },
+        initialPosition: { x: -20, y: -35 },
         minScale: 0.7
       },
+      '3xl': { //doesnt apply to any screen larger than 1920px
+        scale: 1.0,
+        initialPosition: { x: -20, y: -35 },
+        minScale: 1.1
+      }
     }
   );
 
