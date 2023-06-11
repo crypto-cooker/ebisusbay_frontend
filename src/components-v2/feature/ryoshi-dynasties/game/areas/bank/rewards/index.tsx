@@ -1,4 +1,4 @@
-import {Box, Center, Flex, HStack, Image, SimpleGrid, Spinner, Stack, Text, VStack} from "@chakra-ui/react"
+import {Box, Center, Flex, HStack, Image, SimpleGrid, Spacer, Spinner, Stack, Text, VStack} from "@chakra-ui/react"
 import React, {useCallback, useContext, useState} from "react";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 
@@ -30,6 +30,8 @@ import {
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import Link from "next/link";
 import {ERC1155, ERC20} from "@src/Contracts/Abis";
+import RdProgressBar from "@src/components-v2/feature/ryoshi-dynasties/components/rd-progress-bar";
+import moment from "moment/moment";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -281,6 +283,15 @@ const PresaleVaultTab = () => {
       let ret = {
         hasVault: false,
         hasStarted,
+        vault: {
+          address: null,
+          balance: 0,
+          releasable: 0,
+          released: 0,
+          completionDate: 0,
+          start: 0,
+          duration: 0
+        },
         vaultAddress: null,
         vaultBalance: 0,
         vestedAmount: 0,
@@ -291,7 +302,10 @@ const PresaleVaultTab = () => {
       if (vaultAddress !== ethers.constants.AddressZero) {
         const vaultAddress = await presaleVaultsContract.vaults(user.address);
         const vestingWallet = new Contract(vaultAddress, VestingWallet, readProvider);
-        const vestedAmount = await vestingWallet.releasable(config.contracts.fortune);
+        const releasableAmount = await vestingWallet.releasable(config.contracts.fortune);
+        const releasedAmount = await vestingWallet.released(config.contracts.fortune);
+        const start = await vestingWallet.start();
+        const duration = await vestingWallet.duration();
 
         const fortuneContract = new Contract(config.contracts.fortune, ERC20, readProvider);
         const vaultBalance = await fortuneContract.balanceOf(vaultAddress);
@@ -299,9 +313,15 @@ const PresaleVaultTab = () => {
         ret = {
           ...ret,
           hasVault: true,
-          vaultAddress,
-          vaultBalance,
-          vestedAmount
+          vault: {
+            address: vaultAddress,
+            balance: Number(ethers.utils.formatEther(vaultBalance)),
+            releasable: Number(ethers.utils.formatEther(releasableAmount)),
+            released: Number(ethers.utils.formatEther(releasedAmount)),
+            completionDate: (Number(start) + Number(duration)) * 1000,
+            start: Number(start * 1000),
+            duration: Number(duration * 1000),
+          }
         }
       }
 
@@ -369,7 +389,7 @@ const PresaleVaultTab = () => {
   const handleClaimFortune = useCallback(async () => {
     setExecutingClaimFortune(true);
     try {
-      const vestingWallet = new Contract(data!.vaultAddress!, VestingWallet, user.provider.getSigner());
+      const vestingWallet = new Contract(data!.vault.address!, VestingWallet, user.provider.getSigner());
 
       const tx = await vestingWallet.release(config.contracts.fortune);
       const receipt = await tx.wait();
@@ -406,21 +426,14 @@ const PresaleVaultTab = () => {
                 <Text fontWeight='bold' fontSize='lg' mb={4}>Vesting Vault</Text>
                 {data.hasVault ? (
                   <Box>
-                    <Box>
-                      <Text fontSize='xs' color='#aaa'>Vault Total</Text>
-                      <HStack>
-                        <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="fortuneIcon" boxSize={6}/>
-                        <Text fontSize='lg' fontWeight='bold'>{commify(round(Number(ethers.utils.formatEther(data.vaultBalance)), 4))}</Text>
-                      </HStack>
-                    </Box>
 
                     <Box mt={2}>
                       <Stack direction={{base: 'column', sm: 'row'}} justify='space-between'>
                         <Box>
-                          <Text fontSize='xs' color='#aaa'>Vested</Text>
+                          <Text fontSize='xs' color='#aaa'>To Claim</Text>
                           <HStack>
                             <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="fortuneIcon" boxSize={6}/>
-                            <Text fontSize='lg' fontWeight='bold'>{commify(round(Number(ethers.utils.formatEther(data.vestedAmount)), 4))}</Text>
+                            <Text fontSize='lg' fontWeight='bold'>{round(data.vault.releasable, 4)}</Text>
                           </HStack>
                         </Box>
                         <RdButton
@@ -432,6 +445,17 @@ const PresaleVaultTab = () => {
                           {executingClaimFortune ? 'Claiming' : 'Claim'}
                         </RdButton>
                       </Stack>
+                    </Box>
+                    <Box mt={4}>
+                      <Flex justify='space-between'>
+                        <Box>0</Box>
+                        <Box>{commify(round(data.vault.releasable + data.vault.released))} / {commify(round(data.vault.balance + data.vault.released))}</Box>
+                      </Flex>
+                      <RdProgressBar current={Date.now() - data.vault.start} max={data.vault.duration} />
+                      <Flex justify='space-between'>
+                        <Spacer />
+                        <Box>{moment(data.vault.completionDate).format("D MMM yyyy")}</Box>
+                      </Flex>
                     </Box>
                   </Box>
                 ) : (

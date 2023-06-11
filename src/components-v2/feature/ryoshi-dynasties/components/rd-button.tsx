@@ -38,7 +38,6 @@ const RdButton = ({size = 'lg', stickyIcon, hoverIcon, loadingSpinner = true, ..
   const sizes: any = resolvedSize ? sizeMappings[resolvedSize] : {};
 
   useEffect(() => {
-    console.log('loading', props.isLoading);
     setIsSpinning(props.isLoading);
   }, [props.isLoading]);
 
