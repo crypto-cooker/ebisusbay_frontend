@@ -20907,7 +20907,7 @@
       "multiToken": false,
       "address": "0x8f2836874DC85B81C2CF0421aF593E6E8d5DffA1",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "10000 Crazzzy Monsters on the Cronos BlockChain, 20 Families of Crazzzy Monsters. Be ready to be overwhelmed by Royaltiezzz, Utilities, Giveawayzzz, Airdropzzz, and More...",
         "avatar": "/img/collections/crazzzy-monsters/avatar.webp",
