@@ -264,7 +264,7 @@ export const configData = {
       barracks: '0x099402e2FBd74Ef6cAe01951F965888eb9408AC5',
       fortune: '0x119adb5E05e85d55690BC4Da7b37c06BfEcF2071',
       rewards: '0xB775F2Ef8E007F6719fF0fc113048180b4482e2c',
-      presaleVaults: '0xF1E9DFd89F3814eED219F3d5C7D555498787d883'
+      presaleVaults: '0x677a4B2910e0e5667907B5bf4cD4fdb188e99281'
     },
     tokens: {
       loot: {
