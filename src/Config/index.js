@@ -51,9 +51,16 @@ export const configData = {
       cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233',
       gaslessListing: '0x523d6f30c4aaca133daad97ee2a0c48235bff137',
       gdc: '0xe3e564252249ab55b47b84d6a934f4cbb94233a9',
+      usdc: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59',
       purchaseFortune: '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566',
-      usdc: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59'
-      // allianceCenter: '0xba7Eb8a6BD856b652cF9CA4ed2bbE7fE4325Da17'
+      allianceCenter: '0x74A61DEdD269075a394932860F071D0884E7E805',
+      battleField: '0xe8939d920218e0083F9e00a23eEeDfbad73d6B4D',
+      resources: '0xce3f4e59834b5B52B301E075C5B3D427B6884b3d',
+      bank: '0x1E16Aa4Bb965478Df310E8444CD18Fa56603A25F',
+      barracks: '0xa30fa981D5d4a837D1031C8168e506618BBF3136',
+      fortune: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
+      rewards: '0x0dC2ad723068B2D1ACab5083fce36E15818BABBB',
+      presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0'
     },
     tokens: {
       loot: {
@@ -146,8 +153,16 @@ export const configData = {
       cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233',
       gaslessListing: '0x523d6f30c4aaca133daad97ee2a0c48235bff137',
       gdc: '0xe3e564252249ab55b47b84d6a934f4cbb94233a9',
+      usdc: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59',
       purchaseFortune: '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566',
-      usdc: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59'
+      allianceCenter: '0x74A61DEdD269075a394932860F071D0884E7E805',
+      battleField: '0xe8939d920218e0083F9e00a23eEeDfbad73d6B4D',
+      resources: '0xce3f4e59834b5B52B301E075C5B3D427B6884b3d',
+      bank: '0x1E16Aa4Bb965478Df310E8444CD18Fa56603A25F',
+      barracks: '0xa30fa981D5d4a837D1031C8168e506618BBF3136',
+      fortune: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
+      rewards: '0x0dC2ad723068B2D1ACab5083fce36E15818BABBB',
+      presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0'
     },
     tokens: {
       loot: {
@@ -240,16 +255,16 @@ export const configData = {
       cnsusd: '0x263818f9693548446A41ad7025923612b490CB0D',
       gaslessListing: '0xBbe0D0715AbCadb8A0Db41C0Bb7f272570907C45',
       gdc: '0xd464f36885163e124e3a15e31c0e581ba3f648ab',
+      usdc: '0x1E1d0765439d0d53ee40CC4fB454C2343c84342b',
+      purchaseFortune: '0xE1D0a4ae1DF871510d82144a282FF14bAcA8f2c0',
       allianceCenter: '0xD75beC9C8320D81D5B7cD0866B7F7DbC886ffeE9',
       battleField: '0x4EeDb8c80bEFB5d672F869a1bdc29Cc2f665Bb3b',
-      purchaseFortune: '0xE1D0a4ae1DF871510d82144a282FF14bAcA8f2c0',
-      usdc: '0x1E1d0765439d0d53ee40CC4fB454C2343c84342b',
       resources: '0xDa72eE0B52A5a6d5C989f0e817c9e2AF72e572B5',
       bank: '0xeDa2FD22690e13070399605EE90E5c2F45b0c992',
       barracks: '0x099402e2FBd74Ef6cAe01951F965888eb9408AC5',
       fortune: '0x119adb5E05e85d55690BC4Da7b37c06BfEcF2071',
       rewards: '0xB775F2Ef8E007F6719fF0fc113048180b4482e2c',
-      presaleVaults: '0x677a4B2910e0e5667907B5bf4cD4fdb188e99281'
+      presaleVaults: '0xF1E9DFd89F3814eED219F3d5C7D555498787d883'
     },
     tokens: {
       loot: {
