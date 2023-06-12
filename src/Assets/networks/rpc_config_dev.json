@@ -18629,7 +18629,7 @@
       "multiToken": false,
       "address": "0x28e276E68bBe113Fee31bf125473568DC1761BcF",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "The Laboratory-Rat (Lab Rat) is a mutated laboratory grown rat enhanced to fit the purpose, grown by his/her Crazy Scientist for laboratory related experiments. Lab Rats are not considered mammal or rodent despite ancestral beginnings due to their mutated and sentient enhanced form. The Lab Rats were cultured to the way of life of the Laboratory and trained to be task orientated. However, torn between it’s 200 IQ and its mammal-senses, the Lab Rats still hold their rabid rodent and wild nature giving a hint of unpredictability.\n\nThe Laboratory Rats collection consists of 10018 unique rats with 231 unique traits and 18 x 1 of 1 legendary NFTs. A large amount will be taken out of the mint to be given out as prizes to the Critters Arena, marketing, Mod & community incentives.",
         "avatar": "/img/collections/lab-rats/avatar.webp",
@@ -19556,7 +19556,7 @@
         "description": "Tata's Guardians: a 5000 piece AI generated art, that will be gamified, investment pool based, and the main NFT in the Tonic ecosystem.",
         "avatar": "/img/collections/tatas-guardians/avatar.webp",
         "card": "/img/collections/tatas-guardians/card.webp",
-        "banner": "/img/collections/tatas-guardians/banner.webp",
+        "banner": "/img/collections/tatas-guardians/banner2.webp",
         "website": "https://www.tatastwistedtonics.com/",
         "twitter": "https://twitter.com/tatastonics",
         "discord": "https://discord.gg/8whpvt3WEr",
@@ -20907,7 +20907,7 @@
       "multiToken": false,
       "address": "0x8f2836874DC85B81C2CF0421aF593E6E8d5DffA1",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "10000 Crazzzy Monsters on the Cronos BlockChain, 20 Families of Crazzzy Monsters. Be ready to be overwhelmed by Royaltiezzz, Utilities, Giveawayzzz, Airdropzzz, and More...",
         "avatar": "/img/collections/crazzzy-monsters/avatar.webp",
