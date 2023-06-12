@@ -6,13 +6,15 @@ interface RdProgressBarProps {
   current: number;
   max: number;
   potential?: number;
-  asPercentage?: boolean;
+  useGrid?: boolean;
+  segments?: number;
 }
-const RdProgressBar = ({current, max, potential, asPercentage}: RdProgressBarProps) => {
+const RdProgressBar = ({current, max, potential, useGrid = true, segments = 8}: RdProgressBarProps) => {
   const [progressValue, setProgressValue] = useState(0);
   const progressRef = useRef<HTMLDivElement>(null);
   const [barSpot, setBarSpot] = useState(0);
   const windowSize = useWindowSize();
+  const hasFillSegments = segments - 1 > 0;
 
   const getProgress = async () => {
     const value = (current / max) * 100;
@@ -56,7 +58,7 @@ const RdProgressBar = ({current, max, potential, asPercentage}: RdProgressBarPro
         />
 
         <SimpleGrid
-          columns={8}
+          columns={hasFillSegments ? segments : 2}
           position='absolute'
           top={0}
           left={0}
@@ -67,19 +69,19 @@ const RdProgressBar = ({current, max, potential, asPercentage}: RdProgressBarPro
             borderColor='#FDAB1A'
             borderStyle='solid'
             borderTopWidth='4px'
-            borderEndWidth='1px'
+            borderEndWidth={useGrid && hasFillSegments ? '1px' : '0px'}
             borderBottomWidth='4px'
             borderStartWidth='4px'
           />
-          {[...Array(6).fill(0)].map((_, i) => (
+          {hasFillSegments && [...Array(segments - 2).fill(0)].map((_, i) => (
             <Box
               key={i}
               borderColor='#FDAB1A'
               borderStyle='solid'
               borderTopWidth='4px'
-              borderEndWidth='1px'
+              borderEndWidth={useGrid ? '1px' : '0px'}
               borderBottomWidth='4px'
-              borderStartWidth='1px'
+              borderStartWidth={useGrid ? '1px' : '0px'}
             />
           ))}
           <Box
@@ -88,7 +90,7 @@ const RdProgressBar = ({current, max, potential, asPercentage}: RdProgressBarPro
             borderTopWidth='4px'
             borderEndWidth='4px'
             borderBottomWidth='4px'
-            borderStartWidth='1px'
+            borderStartWidth={useGrid && hasFillSegments ? '1px' : '0px'}
           />
         </SimpleGrid>
       </Box>
