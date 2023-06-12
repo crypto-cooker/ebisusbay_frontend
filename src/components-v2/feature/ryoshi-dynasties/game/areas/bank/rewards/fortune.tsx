@@ -34,14 +34,29 @@ const FortuneRewardsTab = () => {
     }
   );
 
-  const handleWithdraw = async (amount: number, seasonId: number) => {
+  function convertToNumberAndRoundDown(numStr: string): number {
+    const precision = 13; // the precision you want to keep
+    const parts = numStr.split('.');
+    if (parts.length === 2 && parts[1].length > precision) {
+      parts[1] = parts[1].substring(0, precision);
+      numStr = parts.join('.');
+    }
+    return Number(numStr);
+  }
+
+  const handleWithdraw = async (amountAsString: string, seasonId: number) => {
+
+    const flooredAmount = convertToNumberAndRoundDown(amountAsString);
+    console.log('test1', amountAsString);
+    console.log('test2', flooredAmount);
+
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;
     }
     if (signatureInStorage) {
-      const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, amount, seasonId, signatureInStorage)
+      const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, seasonId, signatureInStorage)
       await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
     }
   }
@@ -89,7 +104,7 @@ const FortuneRewardsTab = () => {
                           <Text>{reward.currentRewards}</Text>
                         </HStack>
                       </VStack>
-                      <RdButton hoverIcon={false} onClick={() => handleWithdraw(Number(reward.currentRewards), Number(reward.seasonId))}>
+                      <RdButton hoverIcon={false} onClick={() => handleWithdraw(reward.currentRewards, Number(reward.seasonId))}>
                         Claim
                       </RdButton>
                     </Flex>
