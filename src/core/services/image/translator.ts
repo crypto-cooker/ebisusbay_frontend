@@ -28,6 +28,8 @@ class ImageTranslator {
   }
 
   static bunnykit(url: string) {
+    if (!url) url = fallbackImageUrl();
+    
     const translator = new ImageTranslator(url);
 
     let remappedUrl = url;

@@ -4954,10 +4954,10 @@
         "avatar": "/img/collections/genesis-crates/avatar.png",
         "card": "/img/collections/genesis-crates/card.webp",
         "banner": "/img/collections/genesis-crates/banner.webp",
-        "website": "https://crowboys.online/",
-        "twitter": "https://twitter.com/CrowboysGameFi",
+        "website": "https://www.crowboys.io/",
+        "twitter": "https://twitter.com/Crowboylabs",
         "discord": "https://discord.gg/crowboys",
-        "medium": "https://medium.com/@crowboysonline",
+        "medium": "https://medium.com/@crowboylabs",
         "telegram": "https://t.me/crowboys",
         "categories": [
           "utility"
@@ -8820,7 +8820,7 @@
       "name": "AlphaClone",
       "slug": "alpha-clone",
       "multiToken": false,
-      "address": "0xF2a7239AEdD9f19C660Ade381Ce3a52979EAEA3b",
+      "address": "0x4d194A41D20F54Bf357E0641faf8702e4ADf6327",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -13565,7 +13565,7 @@
       "multiToken": false,
       "address": "0xA0edf26589AD4318DAb2354629541cfFd3e5EBDf",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Piggy Bank Finance (PBF) is a collection of 6,666 unique NFTs with over 200 hand-drawn traits on the Cronos blockchain.",
         "avatar": "/img/collections/piggy-bank-finance/avatar.webp",
@@ -13582,7 +13582,7 @@
       "verification": {
         "doxx": false,
         "kyc": true,
-        "verified": true
+        "verified": false
       }
     },
     {
@@ -18682,7 +18682,7 @@
       "multiToken": false,
       "address": "0xdbFDf81D1fDD2e79e8ffaDE50c219452587e9488",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Launched on the 1st of March on the Cronos Chain, Cowz are the next step in the Steakhouse NFT story line. In the future Cowz will be used to mint other NFT collections as if being sent to the auction house, or if you have what it takes to raise a herd you can to be eligible for airdrops without sacrificing your dairy queens!",
         "avatar": "/img/collections/cowz/avatar.webp",
@@ -19556,7 +19556,7 @@
         "description": "Tata's Guardians: a 5000 piece AI generated art, that will be gamified, investment pool based, and the main NFT in the Tonic ecosystem.",
         "avatar": "/img/collections/tatas-guardians/avatar.webp",
         "card": "/img/collections/tatas-guardians/card.webp",
-        "banner": "/img/collections/tatas-guardians/banner.webp",
+        "banner": "/img/collections/tatas-guardians/banner2.webp",
         "website": "https://www.tatastwistedtonics.com/",
         "twitter": "https://twitter.com/tatastonics",
         "discord": "https://discord.gg/8whpvt3WEr",
@@ -20295,7 +20295,7 @@
       "multiToken": false,
       "address": "0x860c2245Ea1693f24AEd4A0364bba5787355bAA0",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Pogo are randomly generated, non-fungible tokens, also known as an \"NFT.\" There are 2,500 unique & 3D rendered Pogo in our genesis collection, No two Pogo are the same. Evolve your Pogo on P2E, fashion, utility and art!",
         "avatar": "/img/collections/the-pogo/avatar.webp",
@@ -20515,7 +20515,7 @@
       "name": "Cronos Towers",
       "slug": "cronos-towers",
       "multiToken": false,
-      "address": "",
+      "address": "0x37f25F400983256e84c39749d05d65fD96Ca461d",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -20614,16 +20614,16 @@
       "name": "Strange Camel Society",
       "slug": "strange-camel-society",
       "multiToken": false,
-      "address": "",
+      "address": "0x9B168D4D0caEbC30b09b9a0B93e3C075862F6172",
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "Introducing The Strange Camel - a one-of-a-kind collection of 3,333 custom-designed 3D Avatars. These stunningly beautiful avatars are aesthetically pleasing and carry special perks within the SCS ecosystem. The Strange Camel also tells a fascinating story about how camels were the only creatures to survive a deadly virus in 2969, leading to a thrilling adventure that you can be a part of.",
+        "description": "Introducing The Strange Camel - a one-of-a-kind collection of 4,000 custom-designed 3D Avatars. These stunningly beautiful avatars are aesthetically pleasing and carry special perks within the SCS ecosystem. The Strange Camel also tells a fascinating story about how camels were the only creatures to survive a deadly virus in 2969, leading to a thrilling adventure that you can be a part of.",
         "avatar": "/img/collections/strange-camel-society/avatar.webp",
         "banner": "/img/collections/strange-camel-society/banner.webp",
         "card": "/img/collections/strange-camel-society/card.webp",
         "website": "https://www.strangecamelsociety.com/",
-        "twitter": "https://twitter.com/StrangeCamel",
+        "twitter": "https://twitter.com/StrangeCamel_",
         "discord": "https://discord.gg/bTQ8u7DHHb",
         "categories": [
           "collectibles"
@@ -20633,6 +20633,295 @@
         "verified": true,
         "doxx": false,
         "kyc": true
+      }
+    },
+    {
+      "name": "Cronos Fox Fraternity Gen2",
+      "slug": "cronos-fox-fraternity-gen2",
+      "multiToken": false,
+      "address": "0x27bf78d35B8b7c08D395B0774C56384d32dC8b59",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "GIF foxes living on the cronos chain.",
+        "avatar": "/img/collections/cronos-fox-fraternity-gen2/avatar.webp",
+        "card": "/img/collections/cronos-fox-fraternity-gen2/card.webp",
+        "banner": "/img/collections/cronos-fox-fraternity-gen2/banner.webp",
+        "website": "https://www.cronosfoxfraternity.com/",
+        "twitter": "https://twitter.com/FoxFraternity",
+        "discord": "https://discord.gg/54enZvZG",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "GreenStix Mutant Candles",
+      "slug": "greenstix-mutant-candles",
+      "multiToken": false,
+      "address": "0x763D9a764E0090C4FbA43347E158425c1C6175d3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Ever wondered to your self? What Would happen if you mixed Radioactive essential oils & candle wax?  Introducing the Mutant Candles, GreenStix is back with WAY MORE TRAITS. The radioactive oil’s definitely did a number on these candles. Some of them have taken the form of.. TREES!! We will be planting trees world wide as always with proceeds from the mint. Bounties, giveaways and 10% $CRO rewards claimable in dApp. #KeepItGreen GreenFiends. ",
+        "avatar": "/img/collections/greenstix-mutant-candles/avatar.webp",
+        "card": "/img/collections/greenstix-mutant-candles/card.webp",
+        "banner": "/img/collections/greenstix-mutant-candles/banner.webp",
+        "website": "https://greenstix.xyz/",
+        "twitter": "https://twitter.com/GreenStix_v2",
+        "discord": "https://discord.gg/md3NwXeRe3",
+        "telegram": "https://t.me/greeenstixtoken",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Skronos Ultimate",
+      "slug": "skronos-ultimate",
+      "multiToken": false,
+      "address": "0xE4248Ab197B13d4bF1493bF15aB429128968C699",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collection generated by combining a Skronos Potions + Skronos Syndicate Skull + 4 Skronos Anatomy parts to create the Ultimate Skronos.",
+        "avatar": "/img/collections/skronos-ultimate/avatar.webp",
+        "card": "/img/collections/skronos-ultimate/card.webp",
+        "banner": "/img/collections/skronos-ultimate/banner.webp",
+        "website": "https://skronos-syndicate.com/",
+        "twitter": "https://twitter.com/skronosNFT",
+        "discord": "https://discord.gg/VH78mEQ2cE",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Carkayous - Acorns v2",
+      "slug": "carkayous-acorns-v2",
+      "multiToken": false,
+      "address": "0x5bf2b7f2640a80c0f0592dcc1e98120136fa5595",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Acorns v2 can be used as discounts (in the form of rebates) on all future NFTs by Carkayous. They have a value of $15 each.",
+        "avatar": "/img/collections/carkayous-acorns-v2/avatar.webp",
+        "banner": "/img/collections/carkayous-acorns-v2/banner.webp",
+        "card": "/img/collections/carkayous-acorns-v2/card.webp",
+        "website": "https://carkayous.com/",
+        "twitter": "https://twitter.com/carkayous",
+        "discord": "https://discord.gg/carkayous",
+        "categories": []
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "MiCROchips",
+      "slug": "microchips",
+      "multiToken": false,
+      "address": "0xf038C0cb2935FB8bf9b6e47bCA1df0835f359F92",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "MiCROchips is a 1500 collection made up from 250 individually designed characters with 6 variations. As well as being a unique PFP, MiCROchips act as your ticket to our computer world featuring games, soft staking and revenue sharing. With a mobile game developed pre mint and a web3 battle game about to go into development, it's prime time to join the mainframe.",
+        "avatar": "/img/collections/microchips/avatar.webp",
+        "banner": "/img/collections/microchips/banner.webp",
+        "card": "/img/collections/microchips/card.webp",
+        "website": "https://microchipsnft.com/",
+        "twitter": "https://twitter.com/MiCROchipsNFT",
+        "discord": "https://discord.gg/2xNHN7bTHP",
+        "medium": "https://microchips.gitbook.io/microchips/",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "MiCROchips Chipset",
+      "slug": "microchips-chipset",
+      "multiToken": false,
+      "address": "0x3640a7750759a80c5Edd7434CCF3Cbaecff5D7F8",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Special editing MiCROchip for collecting all 6 variations of a character and completing the chipset.   Holding this Special Character along with the 6 character variations allows additional benefits within the MiCROchips mainframe",
+        "avatar": "/img/collections/microchips-chipset/avatar.webp",
+        "banner": "/img/collections/microchips-chipset/banner.webp",
+        "card": "/img/collections/microchips-chipset/card.webp",
+        "website": "https://microchipsnft.com/",
+        "twitter": "https://twitter.com/MiCROchipsNFT",
+        "discord": "https://discord.gg/2xNHN7bTHP",
+        "medium": "https://microchips.gitbook.io/microchips/",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "CorgiAI VIP Pass",
+      "slug": "corgai-vip-pass",
+      "multiToken": false,
+      "address": "0x4c7863cd4d6c24f8d5c5423ede1852691a2c1a54",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The CorgiAI VIP Pass is a collection of 2000 NFTs created to celebrate the launch of CorgiAI Social Club.",
+        "avatar": "/img/collections/corgai-vip-pass/avatar.webp",
+        "banner": "/img/collections/corgai-vip-pass/banner.webp",
+        "card": "/img/collections/corgai-vip-pass/card.webp",
+        "website": "https://corgiai.xyz/",
+        "twitter": "https://www.twitter.com/corgiaiclub",
+        "discord": "https://discord.gg/HrrmmdAytu",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "BOB Mutants",
+      "slug": "bob-mutants",
+      "multiToken": false,
+      "address": "0x028169964177AA2050Db3FaE53EEAeE1443F9b04",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "BOB Mutants is a collection of 1111 hand-drawn unique and limited NFTs with 125+ different traits that has different rarities. In colelction you can find 14 legendaries. BOB Mutants will unlock brand new utility - BOB Shop where you will be able to buy NFTs from different Cronos collections using BOB token. You will be able to stake BOB Mutants on our website to earn BOB token. You can get BOB token ONLY by staking BOB Mutant. DAO, WL, Giveaways and much more!",
+        "avatar": "/img/collections/bob-mutants/avatar.webp",
+        "card": "/img/collections/bob-mutants/card.webp",
+        "banner": "/img/collections/bob-mutants/banner.webp",
+        "website": "https://bob-adventures.netlify.app/",
+        "twitter": "https://twitter.com/CroBobAdventure",
+        "discord": "https://discord.gg/kemzRExMju",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Undead Space Ape Degenz",
+      "slug": "undead-space-ape-degenz",
+      "multiToken": false,
+      "address": "0xD80fDbA2774973f7a83a06485b93d835d92c89C7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Introducing the Undead Space Ape Degenz, a captivating fusion of macabre aesthetics and futuristic elements. Immerse yourself in a hauntingly captivating and mysterious space, inhabited by meticulously crafted undead primates. With diverse backgrounds ranging from desolate moonscapes to ethereal nebulae, these NFTs showcase intricate skeletal details, glowing cosmic eyes, and remnants of their past lives. Explore the collection's hidden secrets, gain exclusive access to a vibrant collector community, and witness the duality of life and death in this captivating fusion of art, technology, and the supernatural. Prepare for an unforgettable odyssey into uncharted realms.",
+        "avatar": "/img/collections/undead-space-ape-degenz/avatar.webp",
+        "card": "/img/collections/undead-space-ape-degenz/card.webp",
+        "banner": "/img/collections/undead-space-ape-degenz/banner.webp",
+        "website": "https://degenz.undeadcommunity.wtf/",
+        "twitter": "https://twitter.com/undeadSpaceApes ",
+        "discord": "https://discord.gg/theundeadcommunity",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Cyberpunk Cronicles",
+      "slug": "cyberpunk-cronicles",
+      "multiToken": false,
+      "address": "0x6625e0b113CC4f4E70Fc409Cd1ABFcE8Cf7E747b",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Enter a dystopian metropolis where technology and rebellion collide in CYBERPUNK CROnicles, an electrifying NFT collection on the Cronos blockchain. Immerse yourself in a digital realm of cybernetic outlaws, neon-lit streets, and augmented realities as you unlock the secrets of a dark, post-human future.",
+        "avatar": "/img/collections/cyberpunk-cronicles/avatar.webp",
+        "card": "/img/collections/cyberpunk-cronicles/card.webp",
+        "banner": "/img/collections/cyberpunk-cronicles/banner.webp",
+        "website": "https://thecronosclub.com/",
+        "twitter": "https://twitter.com/The_Cronos_Club",
+        "discord": "https://discord.gg/rvtB8gYSGU",
+        "medium": "https://medium.com/@the_cronos_club",
+        "telegram": "https://t.me/+8CcIuXpqLFYzN",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Gangverse Social Club",
+      "slug": "gangverse-social-club",
+      "multiToken": false,
+      "address": "0xaBaa122B9E6B64FCBDD55A03eEb8729220F9C589",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Gangverse is a gateway to the world of gangs for you. You know the life of gangs, fight and win. So what will they gain? In fact, the reward is the administration of a huge region. It is such a dangerous region that the country's security forces are quite inadequate and hesitant to control the region. Doomsday approached the region step by step. The gangs have long determined their strategies and almost completed their war exercises in order to control the developing and growing economy of the region. In fact, everyone is waiting for a little spark. And on the quietest day of the region, a gunshot echoed in the ears of the people of the region, from which it was unclear. It was the sound of the inevitable beginning of the end. Gangs fight in the streets as if vowing not to go back to the old quiet days... We shared a lot of strategic information about Gangs War with you. Now all you have to do is enter the Gangverse and choose your side! All you need is courage. Welcome to your gang!",
+        "avatar": "/img/collections/gangverse-social-club/avatar.webp",
+        "card": "/img/collections/gangverse-social-club/card.webp",
+        "banner": "/img/collections/gangverse-social-club/banner.webp",
+        "website": "https://gangverse.club/",
+        "twitter": "https://twitter.com/gangverse",
+        "discord": "https://discord.gg/u9NJ8GBPXA",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crazzzy Monsters",
+      "slug": "crazzzy-monsters",
+      "multiToken": false,
+      "address": "0x8f2836874DC85B81C2CF0421aF593E6E8d5DffA1",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "10000 Crazzzy Monsters on the Cronos BlockChain, 20 Families of Crazzzy Monsters. Be ready to be overwhelmed by Royaltiezzz, Utilities, Giveawayzzz, Airdropzzz, and More...",
+        "avatar": "/img/collections/crazzzy-monsters/avatar.webp",
+        "card": "/img/collections/crazzzy-monsters/card.webp",
+        "banner": "/img/collections/crazzzy-monsters/banner.webp",
+        "website": "https://crazzzymonsters.com/",
+        "twitter": "https://twitter.com/CrazzzyMonsters",
+        "discord": "https://discord.gg/YjYHgKNapj",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
@@ -23084,10 +23373,10 @@
       "description": "The Genesis Crates Collection and the first NFT for Crowboys Online. These crates come in three rarities (Good, Bad and Ugly), and allow the holder to generate passive income in the form of our $WEST token while staked. $WEST will be used in our First-Person Shooter video game and our metaverse ecosystem. With $WEST you can purchase and trade: weapons, skins, horses, wearables, properties, play mini-games or deposit it before playing the competitive mode(Compete 2 Earn).\n\n\u272ePassive Income\nGood 93%= 1x $WEST daily \nBad 6%= 1.5x $WEST daily + bad banner airdrop \nUgly 1%= 3.5x $WEST daily + ugly banner airdrop\n\n\u272eCrates will also have 2 weapons inside already, so whenever they come live, holders will get airdrops! They come in different conditions though!\n\n\u272eCrates will be able to open to get a random treasure (with wealth multiplier from 0 to 10).\n\nMore Benefits:\n\n\u272e80% of royalties go to holders through Staking.\n\u272e5% discount in the metaverse saloon!\n\u272eAutomatic whitelist for the next NFT - Genesis Crowboy\n\u272eFirst of two genesis NFTs you need to hold to become a Genesis Member, which will be rewarded with special Events, Airdrops & possibility of Alpha/Beta testing of the game and metaverse.\n\u272eAnd much more!",
       "author": {
         "name": "Crowboys",
-        "website": "https://crowboys.online/",
-        "twitter": "https://twitter.com/CrowboysGameFi",
+        "website": "https://www.crowboys.io/",
+        "twitter": "https://twitter.com/Crowboylabs",
         "discord": "https://discord.gg/crowboys",
-        "medium": "https://medium.com/@crowboysonline",
+        "medium": "https://medium.com/@crowboylabs",
         "telegram": "https://t.me/crowboys"
       },
       "address": "0x46A417dD49C8e29637a27a371f19ad889767BC99",
@@ -25957,8 +26246,8 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
-      "complete": false,
+      "published": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/piggy-bank-finance/drop.webp",
         "banner": "/img/collections/piggy-bank-finance/banner.webp",
@@ -25966,7 +26255,7 @@
         "preview": "/img/collections/piggy-bank-finance/card.webp"
       },
       "verification": {
-        "verified": true,
+        "verified": false,
         "doxx": false,
         "kyc": true,
         "escrow": false
@@ -27292,7 +27581,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/the-pogo/drop.webp",
         "banner": "/img/collections/the-pogo/banner.webp",
@@ -27326,7 +27615,7 @@
         "twitter": "https://twitter.com/cro_towers",
         "discord": "https://discord.gg/crotowers"
       },
-      "address": "",
+      "address": "0x37f25F400983256e84c39749d05d65fD96Ca461d",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 60,
       "totalSupply": 1234,
@@ -27334,7 +27623,7 @@
       "memberCost": "290",
       "whitelistCost": "290",
       "foundersOnly": false,
-      "start": 0,
+      "start": 1685649600000,
       "end": null,
       "referral": false,
       "is1155": false,
@@ -27349,23 +27638,31 @@
       "verification": {
         "doxx": false,
         "kyc": true,
-        "escrow": false,
+        "escrow": true,
         "verified": true
+      },
+      "escrow": {
+        "description": "15% of mint funds to be released to the Cronos Towers NFT project at mint. The remaining funds to be released in 3 equal installments upon:",
+        "milestones": [
+          "Staking is released for holders",
+          "The Towers Metaverse is released and playable",
+          "The project completes at least 5 giveaways"
+        ]
       }
     },
     {
       "id": 173,
       "slug": "strange-camel-society",
       "title": "Strange Camel Society",
-      "subtitle": "Introducing The Strange Camel - a one-of-a-kind collection of 3,333 custom-designed 3D Avatars. These stunningly beautiful avatars are aesthetically pleasing and carry special perks within the SCS ecosystem. The Strange Camel also tells a fascinating story about how camels were the only creatures to survive a deadly virus in 2969, leading to a thrilling adventure that you can be a part of.",
+      "subtitle": "Introducing The Strange Camel - a one-of-a-kind collection of 4,000 custom-designed 3D Avatars. These stunningly beautiful avatars are aesthetically pleasing and carry special perks within the SCS ecosystem. The Strange Camel also tells a fascinating story about how camels were the only creatures to survive a deadly virus in 2969, leading to a thrilling adventure that you can be a part of.",
       "description": "Strange Camel has a long-term vision for its NFT collection. The ultimate goal is to create an ecosystem and metaverse revolving around StrangeCamel NFTs. The first steps to realize this vision are implementing a staking system and 'adding a metaverse to their site. By staking their avatars, users can earn valuable $SCS and become part of the community. \n\nIn addition, The Strange Camel is planning to introduce a downtown land, fashion merch, a DAO system, an NFT lottery, and events/tournaments that will provide concrete utility to their NFTs. Join The Strange Camel on their journey to revolutionize the NFT space and become part of their family!",
       "author": {
         "name": "Eddy W",
         "website": "https://www.strangecamelsociety.com/",
-        "twitter": "https://twitter.com/StrangeCamel",
+        "twitter": "https://twitter.com/StrangeCamel_",
         "discord": "https://discord.gg/bTQ8u7DHHb"
       },
-      "address": "",
+      "address": "0x9B168D4D0caEbC30b09b9a0B93e3C075862F6172",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 40,
       "totalSupply": 4000,
@@ -27373,7 +27670,7 @@
       "memberCost": "200",
       "whitelistCost": "180",
       "foundersOnly": false,
-      "start": 0,
+      "start": 1686081600000,
       "end": null,
       "referral": false,
       "is1155": false,
@@ -27388,8 +27685,16 @@
       "verification": {
         "doxx": false,
         "kyc": true,
-        "escrow": false,
+        "escrow": true,
         "verified": true
+      },
+      "escrow": {
+        "description": "15% of mint funds to be released to the Strange Camel project at mint. The remaining funds to be released in 3 equal installments upon:",
+        "milestones": [
+          "Staking is released for holders",
+          "DAO is created and the first voting takes place",
+          "Project completes 2 NFT raffles, or more, totalling at least 2000 CRO, whichever comes later"
+        ]
       }
     }
   ]
