@@ -4047,6 +4047,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/react-avatar-editor@^13.0.0":
+  version "13.0.0"
+  resolved "https://registry.npmjs.org/@types/react-avatar-editor/-/react-avatar-editor-13.0.0.tgz"
+  integrity sha512-5ymOayy6mfT35xTqzni7UjXvCNEg8/pH4pI5RenITp9PBc02KGTYjSV1WboXiQDYSh5KomLT0ngBLEAIhV1QoQ==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-blockies@^1.4.1":
   version "1.4.1"
   resolved "https://registry.npmjs.org/@types/react-blockies/-/react-blockies-1.4.1.tgz"
