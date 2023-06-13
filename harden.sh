@@ -9,7 +9,7 @@ echo -e "\n\nApp container image built on $(date)." > /etc/motd
 rm -fr /var/spool/cron && rm -fr /etc/crontabs && rm -fr /etc/periodic
 
 # Remove all but a handful of admin commands.
-find /sbin /usr/sbin ! -type d -a ! -name nologin -delete
+find /usr/sbin ! -type d -a ! -name nologin -delete
 
 # Remove world-writeable permissions except for /tmp
 find / -xdev -type d -perm /0002 -exec chmod o-w {} + \
@@ -22,24 +22,24 @@ sed -i -r '/^(node|root|nobody)/!d' /etc/group \
   && sed -i -r '/^(node|root|nobody)/!d' /etc/passwd
 
 # Remove interactive login shell for everybody
-sed -i -r 's#^(.*):[^:]*$#\1:/sbin/nologin#' /etc/passwd
+sed -i -r 's#^(.*):[^:]*$#\1:/usr/sbin/nologin#' /etc/passwd
 
 # Disable password login for everybody
 while IFS=: read -r username _; do passwd -l "$username"; done < /etc/passwd || true
 
 # Remove temp shadow,passwd,group
-find /bin /etc /lib /sbin /usr -xdev -type f -regex '.*-$' -exec rm -f {} +
+find /bin /etc /lib /usr -xdev -type f -regex '.*-$' -exec rm -f {} +
 
 # Ensure system dirs are owned by root and not writable by anybody else.
-find /bin /etc /lib /sbin /usr -path /usr/src/app/apminsightdata -prune -o -print -xdev -type d \
+find /bin /etc /lib /usr -path /usr/src/app/apminsightdata -prune -o -print -xdev -type d \
   -exec chown root:root {} \; \
   -exec chmod 0755 {} \;
 
 # Remove suid & sgid files
-find /bin /etc /lib /sbin /usr -xdev -type f -a \( -perm /4000 -o -perm /2000 \) -delete
+find /bin /etc /lib /usr -xdev -type f -a \( -perm /4000 -o -perm /2000 \) -delete
 
 # Remove dangerous commands
-find /bin /etc /lib /sbin /usr -xdev \( \
+find /bin /etc /lib /usr -xdev \( \
   -name hexdump -o \
   -name chgrp -o \
   -name chmod -o \
@@ -63,4 +63,4 @@ rm -fr /root
 rm -f /etc/fstab
 
 # Remove any symlinks that we broke during previous steps
-find /bin /etc /lib /sbin /usr -xdev -type l -exec test ! -e {} \; -delete
+find /bin /etc /lib /usr -xdev -type l -exec test ! -e {} \; -delete
