@@ -9,20 +9,26 @@ import {
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import { toast } from 'react-toastify';
 import {useAppSelector} from "@src/Store/hooks";
+import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 
 import axios from "axios";
-// import { FcAddImage } from "react-icons/fc";
-// import { AiFillGithub } from "react-icons/ai";
-// import styles from "./Cropper.scss";
+
+interface CropperProps {
+  isOpen: boolean;
+  onClose: () => void;
+  src : any;
+  setPreview: any;
+}
 
 // Modal
-const CropperModal = ({isOpen, onClose, src, setPreview}) => {
+const CropperModal = ({isOpen, onClose, src, setPreview}:CropperProps) => {
   const [slideValue, setSlideValue] = useState(10);
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const cropRef = useRef(null);
   const user = useAppSelector((state) => state.user);
+  const [_, getSigner] = useCreateSigner();
 
-  const CallPatchFaction = async (newData, faction) => {
+  const CallPatchFaction = async (newData:any, faction:any) => {
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
@@ -65,7 +71,7 @@ const CropperModal = ({isOpen, onClose, src, setPreview}) => {
   //handle save
   const handleSave = async () => {
     if (cropRef) {
-      const dataUrl = cropRef.current.getImageScaledToCanvas().toDataURL();
+      const dataUrl = cropRef.current?.getImageScaledToCanvas().toDataURL();
       const result = await fetch(dataUrl);
       const blob = await result.blob();
       setPreview(URL.createObjectURL(blob));
@@ -153,13 +159,13 @@ const Cropper = () => {
   const inputRef = useRef(null);
 
   // handle Click
-  const handleInputClick = (e) => {
+  const handleInputClick = (e:any) => {
     e.preventDefault();
-    inputRef.current.click();
+    inputRef.current?.click();
     console.log("clicked");
   };
   // handle Change
-  const handleImgChange = (e) => {
+  const handleImgChange = (e:any) => {
     setSrc(URL.createObjectURL(e.target.files[0]));
     onOpen();
   };
@@ -190,7 +196,7 @@ const Cropper = () => {
           {/* <FcAddImage className="add-icon" /> */}
         {/* </a> */}
         <input
-          variant='filled' 
+          // variant='filled' 
           type="file"
           // accept="image/*"
           ref={inputRef}
