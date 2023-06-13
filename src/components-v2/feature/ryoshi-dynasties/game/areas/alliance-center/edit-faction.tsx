@@ -40,7 +40,7 @@ import {
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import AvatarEditor from 'react-avatar-editor'
-import Cropper from '@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline/Cropper.tsx';
+import Cropper from '@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline/Cropper';
 
 const config = appConfig();
 
