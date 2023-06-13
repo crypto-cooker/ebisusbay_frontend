@@ -9,9 +9,10 @@ import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 interface AnnouncementBoardModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onOpenDailyCheckin: () => void;
 }
 
-const AnnouncementBoardModal = ({isOpen, onClose}: AnnouncementBoardModalProps) => {
+const AnnouncementBoardModal = ({isOpen, onClose, onOpenDailyCheckin}: AnnouncementBoardModalProps) => {
   const [page, setPage] = useState('info');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -35,7 +36,7 @@ const AnnouncementBoardModal = ({isOpen, onClose}: AnnouncementBoardModalProps) 
       {!isLoading ? (
         <>
           {page === 'info' ? (
-            <MainPage onShowLeaderboard={handleShowLeaderboard}/>
+            <MainPage onShowLeaderboard={handleShowLeaderboard} onOpenDailyCheckin={onOpenDailyCheckin}/>
           ) : (
             <LeaderboardPage />
           )}

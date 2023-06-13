@@ -8,17 +8,14 @@ const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff
 
 interface Props {
   onShowLeaderboard: () => void;
+  onOpenDailyCheckin: () => void;
 }
 
-const MainPage = ({onShowLeaderboard}: Props) => {
+const MainPage = ({onShowLeaderboard, onOpenDailyCheckin}: Props) => {
  
   const [isLoading, setIsLoading] = useState(false);
   const user = useAppSelector((state) => state.user);
   const[dailyRewardClaimed, setDailyRewardClaimed] = useState(false);
-
-  const claimReward = async () => {
-    // console.log('claim reward');
-  }
 
   return (
     <VStack padding='2'>
@@ -102,7 +99,7 @@ const MainPage = ({onShowLeaderboard}: Props) => {
                 w={{base: '125px', sm: '250px'}}
                 fontSize={{base: 'sm', sm: 'md'}}
                 hoverIcon={false}
-                onClick={claimReward}
+                onClick={onOpenDailyCheckin}
               >
                 {dailyRewardClaimed ? 'Return Tomorrow!' : 'Claim Daily Reward!'}
               </RdButton>
