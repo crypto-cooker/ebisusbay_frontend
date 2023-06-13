@@ -5,7 +5,7 @@
 FROM node:18-slim
 
 # Update packages
-RUN apt-get update && apt-get install -y git curl procps htop net-tools netcat dnsutils
+RUN apt-get update && apt-get install -y git curl procps htop net-tools dnsutils
 
 RUN npm install -g npm@latest
 
