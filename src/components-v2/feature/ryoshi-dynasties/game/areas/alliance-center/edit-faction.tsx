@@ -248,18 +248,18 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
   }
   }, [addresses]);
 
-  const onClickSave = () => {
-    if (editorRef) {
-      // This returns a HTMLCanvasElement, it can be made into a data URL or a blob,
-      // drawn on another canvas, or added to the DOM.
-      const canvas = editorRef.current.getImage()
+  // const onClickSave = () => {
+  //   if (editorRef) {
+  //     // This returns a HTMLCanvasElement, it can be made into a data URL or a blob,
+  //     // drawn on another canvas, or added to the DOM.
+  //     // const canvas = editorRef.current?.getImage()
 
-      // If you want the image resized to the canvas size (also a HTMLCanvasElement)
-      const canvasScaled = editorRef.current.getImageScaledToCanvas()
-      console.log(canvasScaled);
-      setEditFactionIcon(false);
-    }
-  }
+  //     // If you want the image resized to the canvas size (also a HTMLCanvasElement)
+  //     const canvasScaled = editorRef.current?.getImageScaledToCanvas()
+  //     console.log(canvasScaled);
+  //     setEditFactionIcon(false);
+  //   }
+  // }
   return (
     <RdModal
       isOpen={isOpen}
