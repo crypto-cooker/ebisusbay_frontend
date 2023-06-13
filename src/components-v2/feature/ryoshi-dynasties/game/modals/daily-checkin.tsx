@@ -30,10 +30,10 @@ const DailyCheckin = ({isOpen, onClose}: DailyCheckinProps) => {
   const [isLoading, getSigner] = useCreateSigner();
   const [streak, setStreak] = useState(1);
   const [nextClaim, setNextClaim] = useState("");
-  const [buttonText, setButtonText] = useState('Claim Koban');
 
   const [isGettingStreak, setIsGettingStreak] = useState(true);
   const [canClaim, setCanClaim] = useState(false);
+  const [executingClaim, setExecutingClaim] = useState(false);
 
   const fetcher = async () => {
     // let signatureInStorage = getAuthSignerInStorage()?.signature;
@@ -59,35 +59,34 @@ const DailyCheckin = ({isOpen, onClose}: DailyCheckinProps) => {
   const claimDailyRewards = async () => {
     if (!user.address) return;
 
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
       try {
-        setButtonText('Authorizing...')
-        const authorization = await ApiService.withoutKey().ryoshiDynasties.claimDailyRewards(user.address, signatureInStorage);
+        setExecutingClaim(true);
+        let signatureInStorage = getAuthSignerInStorage()?.signature;
+        if (!signatureInStorage) {
+          const { signature } = await getSigner();
+          signatureInStorage = signature;
+        }
+        if (signatureInStorage) {
+          const authorization = await ApiService.withoutKey().ryoshiDynasties.claimDailyRewards(user.address, signatureInStorage);
 
-        const sig = authorization.data.signature;
-        const mintRequest = JSON.parse(authorization.data.metadata);
-        // console.log('auth', authorization)
+          const sig = authorization.data.signature;
+          const mintRequest = JSON.parse(authorization.data.metadata);
 
+          // console.log('===contract', config.contracts.resources, Resources, user.provider.getSigner());
+          const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
+          // console.log('===request', mintRequest, sig, authorization);
+          const tx = await resourcesContract.mintWithSig(mintRequest, sig);
 
-        setButtonText('Claiming...')
-        // console.log('===contract', config.contracts.resources, Resources, user.provider.getSigner());
-        const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
-        // console.log('===request', mintRequest, sig, authorization);
-        const tx = await resourcesContract.mintWithSig(mintRequest, sig);
-
-        const receipt = await tx.wait();
-        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-        setButtonText('Done!')
-        setCanClaim(false)
+          const receipt = await tx.wait();
+          toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+          setCanClaim(false);
+          setNextClaim('in 24 hours');
+        }
       } catch (error) {
         console.log(error)
+      } finally {
+        setExecutingClaim(false);
       }
-    }
   }
 
   const connectWalletPressed = async () => {
@@ -125,7 +124,7 @@ const DailyCheckin = ({isOpen, onClose}: DailyCheckinProps) => {
           setCanClaim(false)
           setStreak(data.data.data.streak);
           var date = new Date(data.data.data.nextClaim);
-          setNextClaim(date.getHours() + ":" + moment(new Date(date)).format("mm") + " on " + 
+          setNextClaim('at ' + date.getHours() + ":" + moment(new Date(date)).format("mm") + " on " +
             moment(new Date(date)).format("MMM") + " "+ date.getDate()+ " " + date.getFullYear());
         }
         setIsGettingStreak(false);
@@ -157,11 +156,19 @@ const DailyCheckin = ({isOpen, onClose}: DailyCheckinProps) => {
             </> : <>
             {canClaim ? (
               <Box textAlign='center' mt={4}>
-                <RdButton stickyIcon={true} onClick={claimDailyRewards}>{buttonText}</RdButton>
+                <RdButton
+                  stickyIcon={true}
+                  onClick={claimDailyRewards}
+                  isLoading={executingClaim}
+                  disabled={executingClaim}
+                  loadingText='Claiming'
+                >
+                  Claim Koban
+                </RdButton>
               </Box>
               ) : (
                 <Text align='center' mt={4}>
-                Your current streak is {streak} {pluralize(1, 'day')}. Claim again at {nextClaim}
+                Your current streak is {streak} {pluralize(streak, 'day')}. Claim again {nextClaim}
               </Text>
               )}
           </>}
