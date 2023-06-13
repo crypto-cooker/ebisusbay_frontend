@@ -28,7 +28,7 @@ import {addTroops, getAllFactions,getRegistrationCost } from "@src/core/api/Ryos
 import {getAuthSignerInStorage} from "@src/helpers/storage";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {RdFaction} from "@src/core/services/api-service/types";
-import EditFactionForm from "@src/Components/BattleBay/Areas/FactionForm";
+import EditFactionForm from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/edit-faction";
 import CreateFactionForm from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/create-faction";
 import DelegateTroopsForm from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/delegate-troops";
 import AllianceCenterContract from "@src/Contracts/AllianceCenterContract.json";

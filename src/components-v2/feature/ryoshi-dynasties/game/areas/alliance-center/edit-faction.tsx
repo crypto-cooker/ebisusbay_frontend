@@ -1,42 +1,28 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, {ChangeEvent, ReactElement, useEffect, useRef, useState} from "react";
 import {
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-  Input,
-  Button,
-  FormControl,
-  FormLabel,
-  Tabs,
-  TabList,
-  TabPanels,
-  TabPanel,
-  Tab,
-  Flex,
-  Box,
   Alert,
   AlertIcon,
   AlertTitle,
-  Stack,
+  Box,
+  Button,
   Divider,
+  Flex,
+  FormControl,
+  FormLabel,
+  HStack,
+  Input,
   ListItem,
-  OrderedList, 
-  Spacer, 
-  HStack, 
+  OrderedList,
+  Spacer,
+  Stack,
   Text,
-  VStack, 
-  Center,
+  VStack,
 } from "@chakra-ui/react"
-import { Spinner } from 'react-bootstrap';
-import { getTheme } from "@src/Theme/theme";
-import { useFormik } from 'formik';
-import { editFaction, deleteFaction, subscribeFaction} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {Spinner} from 'react-bootstrap';
+import {useFormik} from 'formik';
+import {deleteFaction, editFaction} from "@src/core/api/RyoshiDynastiesAPICalls";
 
-import { getAuthSignerInStorage } from '@src/helpers/storage';
-import {useSelector} from "react-redux";
+import {getAuthSignerInStorage} from '@src/helpers/storage';
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 
 //contracts
@@ -45,21 +31,30 @@ import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
 import AllianceCenterContract from "@src/Contracts/AllianceCenterContract.json";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
-import {ArrowBackIcon} from "@chakra-ui/icons";
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
-import {commify} from "ethers/lib/utils";
+import {useAppSelector} from "@src/Store/hooks";
 
-const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => {
+const config = appConfig();
 
-  const addressInput = useRef(null);
-  const [addresses, setAddresses] = useState([])
-  const handleAddChange = (event) => setValue(event.target.value)
-  const [addressToAdd, setValue] = useState('')
+interface EditFactionProps {
+  isOpen: boolean;
+  onClose: () => void;
+  faction: any;
+  handleClose: () => void;
+  isRegistered: boolean;
+}
+
+const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: EditFactionProps) => {
+
+  const addressInput = useRef<HTMLInputElement>(null);
+  const [addresses, setAddresses] = useState<string[]>([])
+  const handleAddChange = (event: ChangeEvent<HTMLInputElement>) => setAddressesToAdd(event.target.value)
+  const [addressToAdd, setAddressesToAdd] = useState('')
   const factionNameInput = useRef(null);
   const [factionType, setFactionType] = useState("")
   const [factionIndex, setFactionIndex] = useState(0)
-  const [addressDisplay, setAddressDisplay] = useState([])
+  const [addressDisplay, setAddressDisplay] = useState<ReactElement[]>([])
 
   //alerts
   const [showAlert, setShowAlert] = useState(false)
@@ -67,14 +62,14 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
 
   //other
   const [isLoading, getSigner] = useCreateSigner();
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
 
   //registration
-  const GetRegistrationColor = (registered) => {if(registered) {return 'green'} else {return 'red'}}
-  const GetRegisterButtonText = (registered) => {if(registered) {return 'Registered'} else {return 'Register'}}
+  const GetRegistrationColor = (registered: boolean) => {if(registered) {return 'green'} else {return 'red'}}
+  const GetRegisterButtonText = (registered: boolean) => {if(registered) {return 'Registered'} else {return 'Register'}}
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
 
-  const RegistrationAction = async (factionId) => {
+  const RegistrationAction = async (factionId: number) => {
     if(isRegistered) {
       console.log('Already Registered')
     } else {
@@ -87,7 +82,7 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
         try {
           //0x0000000000000000000000000000000000000001
           const registerFactionContract = new Contract(config.contracts.allianceCenter, AllianceCenterContract, user.provider.getSigner());
-          const tx = await registerFactionContract.registerFaction(user.address.toLowerCase())
+          const tx = await registerFactionContract.registerFaction(user.address!.toLowerCase())
           const receipt = await tx.wait();
           isRegistered = true;
           toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -126,7 +121,7 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
     }
     if (signatureInStorage) {
       try {
-        const data = await editFaction(user.address.toLowerCase(), signatureInStorage,
+        const data = await editFaction(user.address!.toLowerCase(), signatureInStorage,
           faction.id, formik.values.factionName, addresses, factionType);
         // console.log(data);
         //add payment code here
@@ -147,13 +142,13 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
     }
     if (signatureInStorage) {
       try {
-        const data = await deleteFaction(user.address.toLowerCase(), signatureInStorage, faction.id);
+        const data = await deleteFaction(user.address!.toLowerCase(), signatureInStorage, faction.id);
         // console.log(data);
         //add payment code here
         handleClose();
         onClose();
         toast.success("Faction disbanded");
-    } catch (error) {
+      } catch (error: any) {
         console.log(error)
         if(error.response !== undefined) {
           toast.error(error.response.data.error.metadata.message)
@@ -184,9 +179,11 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
       setShowAlert(true)
       return;
     }
-    setAddresses(addresses => [...addresses, addressToAdd])
-    addressInput.current.value = ''
-    setValue('')
+    setAddresses(addresses => [...addresses, addressToAdd]);
+    if (addressInput.current) {
+      addressInput.current.value = ''
+    }
+    setAddressesToAdd('')
   }
   function RemoveAddress() {
     setShowAlert(false)
@@ -197,8 +194,10 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
       setShowAlert(true)
       return
     }
-    addressInput.current.value = ''
-    setValue('')
+    if (addressInput.current) {
+      addressInput.current.value = ''
+    }
+    setAddressesToAdd('')
   }
   function getMaxAddresses() {
     return factionType === 'COLLECTION' ? 3 : 15
@@ -412,4 +411,4 @@ const FactionForm = ({ isOpen, onClose, faction, handleClose, isRegistered}) => 
   )
 }
 
-export default FactionForm;
+export default EditFaction;
