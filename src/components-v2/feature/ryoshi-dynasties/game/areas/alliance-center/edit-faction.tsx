@@ -1,4 +1,4 @@
-import React, {ChangeEvent, ReactElement, useEffect, useRef, useState} from "react";
+import React, {ChangeEvent, ReactElement, useEffect, useRef, useState, useContext} from "react";
 import {
   Alert,
   AlertIcon,
@@ -35,6 +35,13 @@ import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/com
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import {useAppSelector} from "@src/Store/hooks";
 
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import AvatarEditor from 'react-avatar-editor'
+import Cropper from '@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline/Cropper.tsx';
+
 const config = appConfig();
 
 interface EditFactionProps {
@@ -68,6 +75,11 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
   const GetRegistrationColor = (registered: boolean) => {if(registered) {return 'green'} else {return 'red'}}
   const GetRegisterButtonText = (registered: boolean) => {if(registered) {return 'Registered'} else {return 'Register'}}
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+
+  //pfp editor
+  const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const[editFactionIcon, setEditFactionIcon] = useState(false);
+  const editorRef = useRef(null)
 
   const RegistrationAction = async (factionId: number) => {
     if(isRegistered) {
@@ -236,7 +248,18 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
   }
   }, [addresses]);
 
+  const onClickSave = () => {
+    if (editorRef) {
+      // This returns a HTMLCanvasElement, it can be made into a data URL or a blob,
+      // drawn on another canvas, or added to the DOM.
+      const canvas = editorRef.current.getImage()
 
+      // If you want the image resized to the canvas size (also a HTMLCanvasElement)
+      const canvasScaled = editorRef.current.getImageScaledToCanvas()
+      console.log(canvasScaled);
+      setEditFactionIcon(false);
+    }
+  }
   return (
     <RdModal
       isOpen={isOpen}
@@ -245,12 +268,38 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
     >
       {!isLoading ? (
         <Box pb={1}>
-          <Box mx={1} mb={1}  p={2} roundedBottom='lrg'>
+          <Box mx={1} mb={1} roundedBottom='lrg'>
             {user.address ? (
               <Box textAlign='center' w='full'>
                 <Flex>
                   <Spacer />
+                  <VStack
+                    spacing={2}
+                    align='center'
+                    justify='center'
+                    w='full'
+                    h='full'
+                    p={2}
+                    // rounded='xl'
+                    bg='#272523'
+                  >
+                  <Cropper />
+              {editFactionIcon && ( <>
+                  <AvatarEditor
+                  ref={editorRef}
+                  image={rdContext.user?.faction.image}
+                  width={200}
+                  height={200}
+                  border={50}
+                  color={[255, 255, 255, 0.6]} // RGBA
+                  scale={1.2}
+                  rotate={0}
+                />
+                {/* <Button onClick={onClickSave}>Save</Button> */}
+                </>)
+              }
                   <HStack justifyContent='space-between' w='full'>
+
                     <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>
                       Current Status: {isRegistered === true ? "Registered" : "Not Registered"}
                     </Text>
@@ -280,6 +329,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
                     >x Disband Faction</Button>
                 )}
                   </HStack>
+                  </VStack>
                   <Spacer />
                 </Flex>
               </Box>

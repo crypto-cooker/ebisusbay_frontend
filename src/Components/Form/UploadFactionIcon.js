@@ -26,6 +26,7 @@ const UploadFactionIcon = ({
   const user = useSelector((state) => state.user);
 
   const onUpload = (i) => (asset) => {
+    console.log(asset);
     const newAsset = { ...asset, position: i };
     const index = value.findIndex(({ position }) => position === i);
 

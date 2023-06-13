@@ -295,13 +295,13 @@ const CurrentFaction = () => {
         <>
           {!!rdContext.user?.faction ? (
             <VStack>
-              {/* <Image
-                src={rdContext.user.faction.image}
+              <Image
+                src={rdContext.user?.faction.image}
                 w='150px'
                 rounded='lg'
                 
-              /> */}
-              <form onSubmit={handleSubmit} >
+              />
+              {/* <form onSubmit={handleSubmit} >
                <FactionPfp 
                   values={values}
                   errors={errors}
@@ -313,7 +313,7 @@ const CurrentFaction = () => {
                   faction={rdContext.user.faction}
                   onSuccess={handleTJUploadSuccess}
                 />
-                </form>
+                </form> */}
               <Stack direction='row' align='center'>
                 <Text fontSize='lg' fontWeight='bold'>{rdContext.user.faction.name}</Text>
                 <IconButton
