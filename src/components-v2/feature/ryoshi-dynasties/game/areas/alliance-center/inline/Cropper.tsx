@@ -24,7 +24,7 @@ interface CropperProps {
 const CropperModal = ({isOpen, onClose, src, setPreview}:CropperProps) => {
   const [slideValue, setSlideValue] = useState(10);
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const cropRef = useRef(null);
+  const cropRef = useRef<any>(null);
   const user = useAppSelector((state) => state.user);
   const [_, getSigner] = useCreateSigner();
 
@@ -147,7 +147,7 @@ const Cropper = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
   // image src
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const [src, setSrc] = useState(null);
+  const [src, setSrc] = useState<string>("");
 
   // preview
   const [preview, setPreview] = useState(null);
@@ -156,7 +156,7 @@ const Cropper = () => {
 //   const [modalOpen, setModalOpen] = useState(false);
 
   // ref to control input element
-  const inputRef = useRef(null);
+  const inputRef = useRef<any>(null);
 
   // handle Click
   const handleInputClick = (e:any) => {

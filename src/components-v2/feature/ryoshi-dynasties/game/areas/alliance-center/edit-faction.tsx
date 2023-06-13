@@ -287,7 +287,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
               {editFactionIcon && ( <>
                   <AvatarEditor
                   ref={editorRef}
-                  image={rdContext.user?.faction.image}
+                  image={rdContext.user?.faction.image!}
                   width={200}
                   height={200}
                   border={50}
