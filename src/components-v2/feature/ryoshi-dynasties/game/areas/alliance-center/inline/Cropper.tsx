@@ -37,7 +37,7 @@ const CropperModal = ({isOpen, onClose, src, setPreview}:CropperProps) => {
     if (signatureInStorage) {
       try {
         // console.log(faction.id, newData[0].result)
-        const res = await UploadFactionIconPfp(user.address.toLowerCase(), signatureInStorage, 
+        const res = await UploadFactionIconPfp(user.address?.toLowerCase(), signatureInStorage, 
           faction.name, Number(faction.id), newData);
         // console.log(res);
         toast.success("Faction icon updated! Refreshing...");
