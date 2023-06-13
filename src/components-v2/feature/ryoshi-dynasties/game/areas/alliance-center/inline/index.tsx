@@ -43,6 +43,7 @@ import FactionPfp from '../../../../../../../Components/BattleBay/Areas/FactionI
 
 import {BigNumber, Contract, ethers} from "ethers";
 import Fortune from "@src/Contracts/Fortune.json";
+import {ApiService} from "@src/core/services/api-service";
 
 const config = appConfig();
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
@@ -159,7 +160,7 @@ const CurrentFaction = () => {
   const [totalTroops, setTotalTroops] = useState(rdContext.user?.season.troops.undeployed ?? 0);
   const {data: allFactions, status, error} = useQuery({
     queryKey: ['GetAllFactions'],
-    queryFn: getAllFactions,
+    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getFactions(),
     enabled: !!user.address,
   });
 
@@ -395,7 +396,7 @@ const CurrentFaction = () => {
           ) : (
             <CreateFactionForm isOpen={isOpenCreateFaction} onClose={onCloseCreateFaction} handleClose={handleActionComplete} />
           )}
-          <DelegateTroopsForm isOpen={isOpenDelegate} onClose={onCloseDelegate} delegateMode='delegate' factions={allFactions} troops={rdContext.user.season.troops.deployed} setTotalTroops={setTotalTroops}/>
+          <DelegateTroopsForm isOpen={isOpenDelegate} onClose={onCloseDelegate} delegateMode='delegate' factions={allFactions ?? []} troops={rdContext.user.season.troops.deployed} setTotalTroops={setTotalTroops}/>
         </>
       )}
 

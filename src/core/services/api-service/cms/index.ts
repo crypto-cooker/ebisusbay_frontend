@@ -61,6 +61,10 @@ class Cms {
   async getGameContext() {
     return this.ryoshiDynasties.getGameContext();
   }
+
+  async getFactions() {
+    return this.ryoshiDynasties.getFactions();
+  }
 }
 
 export default Cms;

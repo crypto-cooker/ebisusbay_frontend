@@ -40,6 +40,7 @@ export interface RyoshiDynastiesApi {
     getUserContext(address: string, signature: string): Promise<RdUserContext>;
     getGameContext(): Promise<RdGameContext>;
     getBankStakingAccount(address: string): Promise<StakingAccount | null>;
+    getFactions(): Promise<RdControlPointLeaderBoard[]>;
 }
 
 export enum ListingState {
