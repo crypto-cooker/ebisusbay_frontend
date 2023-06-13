@@ -91,7 +91,11 @@ const RdButton = ({size = 'lg', stickyIcon, hoverIcon, loadingSpinner = true, ..
         className={gothamMedium.className}
       >
         <Box px={3}>
-          {props.children}
+          {props.isLoading ? (
+            <>{props.loadingText}</>
+          ) : (
+            <>{props.children}</>
+          )}
         </Box>
       </Box>
     </Box>

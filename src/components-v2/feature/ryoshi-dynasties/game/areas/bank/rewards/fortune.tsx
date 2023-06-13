@@ -18,7 +18,6 @@ import {
 const FortuneRewardsTab = () => {
   const { game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector((state) => state.user);
-  const [isLoading, getSigner] = useCreateSigner();
   const [seasonTimeRemaining, setSeasonTimeRemaining] = useState(0);
 
   const checkForRewards = async () => {
@@ -33,33 +32,6 @@ const FortuneRewardsTab = () => {
       refetchOnWindowFocus: false
     }
   );
-
-  function convertToNumberAndRoundDown(numStr: string): number {
-    const precision = 13; // the precision you want to keep
-    const parts = numStr.split('.');
-    if (parts.length === 2 && parts[1].length > precision) {
-      parts[1] = parts[1].substring(0, precision);
-      numStr = parts.join('.');
-    }
-    return Number(numStr);
-  }
-
-  const handleWithdraw = async (amountAsString: string, seasonId: number) => {
-
-    const flooredAmount = convertToNumberAndRoundDown(amountAsString);
-    console.log('test1', amountAsString);
-    console.log('test2', flooredAmount);
-
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, seasonId, signatureInStorage)
-      await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
-    }
-  }
 
   useEffect(() => {
     if (rdGameContext) {
@@ -96,18 +68,7 @@ const FortuneRewardsTab = () => {
                 <Box py={4}><hr /></Box>
                 {rewards.data.rewards.map((reward: any) => (
                   <>
-                    <Flex justify='space-between' mt={2}>
-                      <VStack align='start' spacing={0}>
-                        <Text fontSize='xl' fontWeight='bold'>Season {commify(reward.blockId)}</Text>
-                        <HStack>
-                          <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="fortuneIcon" boxSize={6}/>
-                          <Text>{reward.currentRewards}</Text>
-                        </HStack>
-                      </VStack>
-                      <RdButton hoverIcon={false} onClick={() => handleWithdraw(reward.currentRewards, Number(reward.seasonId))}>
-                        Claim
-                      </RdButton>
-                    </Flex>
+                    <ClaimRow reward={reward} />
                   </>
                 ))}
               </>
@@ -123,5 +84,60 @@ const FortuneRewardsTab = () => {
   )
 }
 
+const ClaimRow = ({reward}: {reward: any}) => {
+  const user = useAppSelector((state) => state.user);
+  const [isLoading, getSigner] = useCreateSigner();
+  const [executingClaim, setExecutingClaim] = useState(false);
 
+  function convertToNumberAndRoundDown(numStr: string): number {
+    const precision = 13; // the precision you want to keep
+    const parts = numStr.split('.');
+    if (parts.length === 2 && parts[1].length > precision) {
+      parts[1] = parts[1].substring(0, precision);
+      numStr = parts.join('.');
+    }
+    return Number(numStr);
+  }
+
+  const handleWithdraw = async (amountAsString: string, seasonId: number) => {
+    try {
+      setExecutingClaim(true);
+      const flooredAmount = convertToNumberAndRoundDown(amountAsString);
+      console.log('test1', amountAsString);
+      console.log('test2', flooredAmount);
+
+      let signatureInStorage = getAuthSignerInStorage()?.signature;
+      if (!signatureInStorage) {
+        const { signature } = await getSigner();
+        signatureInStorage = signature;
+      }
+      if (signatureInStorage) {
+        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, seasonId, signatureInStorage)
+        await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
+      }
+    } finally {
+      setExecutingClaim(false);
+    }
+  }
+
+  return (
+    <Flex justify='space-between' mt={2}>
+      <VStack align='start' spacing={0}>
+        <Text fontSize='xl' fontWeight='bold'>Season {commify(reward.blockId)}</Text>
+        <HStack>
+          <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="fortuneIcon" boxSize={6}/>
+          <Text>{reward.currentRewards}</Text>
+        </HStack>
+      </VStack>
+      <RdButton
+        size='sm'
+        onClick={() => handleWithdraw(reward.currentRewards, Number(reward.seasonId))}
+        isLoading={executingClaim}
+        loadingText='Claiming...'
+      >
+        Claim
+      </RdButton>
+    </Flex>
+  )
+}
 export default FortuneRewardsTab;

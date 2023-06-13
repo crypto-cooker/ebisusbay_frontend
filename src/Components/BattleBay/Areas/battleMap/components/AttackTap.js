@@ -750,12 +750,9 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
                 disabled={isExecuting}
                 marginTop='2'
                 marginBottom='2'
+                loadingText={executingLabel}
               >
-                {user.address ? (
-                  <>{isExecuting ? executingLabel : 'Attack'}</>
-                ) : (
-                  <>Connect</>
-                )}
+                {user.address ? 'Attack' : 'Connect'}
               </RdButton>
             </Box>
         </Flex>

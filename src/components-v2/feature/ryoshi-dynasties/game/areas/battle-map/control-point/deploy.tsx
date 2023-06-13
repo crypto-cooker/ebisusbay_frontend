@@ -365,7 +365,6 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
           disabled={isExecuting}
         >
           {currentTab === tabs.deploy ? "Deploy" :"Recall" }
-          
         </RdButton>
       </Center>
 

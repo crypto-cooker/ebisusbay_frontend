@@ -155,8 +155,9 @@ const WithdrawForm = ({vault, onComplete}: WithdrawFormProps) => {
             onClick={handleEmergencyWithdraw}
             isLoading={isExecuting}
             disabled={isExecuting}
+            loadingText={executingLabel}
           >
-            {isExecuting ? executingLabel : 'Withdraw'}
+            Withdraw
           </RdButton>
         </Box>
       </Box>

@@ -239,19 +239,20 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
     </Wrap>
     </Flex>
     <Box ms={8} my={{base: 4, md: 'auto'}} textAlign='center'>
-        {battleRewards.tokenIds.length === 0 ? (
-            <Text fontSize='sm' color='gray.400'>No rewards to claim</Text>
-        ) : (
-            <RdButton
-                minW='150px'
-                onClick={claimBattleRewards}
-                isLoading={isExecutingClaim}
-                disabled={isExecutingClaim}
-                stickyIcon={true}
-                >
-                <>{isExecutingClaim ? executingLabel : 'Claim'}</>
-            </RdButton>
-          )}
+      {battleRewards.tokenIds.length === 0 ? (
+        <Text fontSize='sm' color='gray.400'>No rewards to claim</Text>
+      ) : (
+        <RdButton
+          minW='150px'
+          onClick={claimBattleRewards}
+          isLoading={isExecutingClaim}
+          disabled={isExecutingClaim}
+          stickyIcon={true}
+          loadingText={executingLabel}
+        >
+          Claim
+        </RdButton>
+      )}
     </Box>
     <Spacer h='12px' />
     </> ) }

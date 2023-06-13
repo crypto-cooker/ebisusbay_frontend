@@ -213,8 +213,9 @@ const PresaleVaultTab = () => {
                           isLoading={executingClaimFortune}
                           isDisabled={executingClaimFortune}
                           onClick={handleClaimFortune}
+                          loadingText='Claiming'
                         >
-                          {executingClaimFortune ? 'Claiming' : 'Claim'}
+                          Claim
                         </RdButton>
                       </Stack>
                     </Box>
@@ -241,8 +242,9 @@ const PresaleVaultTab = () => {
                             onClick={handleCreateVault}
                             isLoading={executingOpenVault}
                             isDisabled={executingOpenVault}
+                            loadingText='Creating'
                           >
-                            {executingOpenVault ? 'Creating' : 'Create Vault'}
+                            Create Vault
                           </RdButton>
                         </Box>
                       </>
@@ -294,8 +296,9 @@ const PresaleVaultTab = () => {
                           isLoading={executingExchangeTellers}
                           isDisabled={executingExchangeTellers}
                           onClick={handleExchangeTellers}
+                          loadingText='Exchanging'
                         >
-                          {executingExchangeTellers ? 'Exchanging' : 'Exchange'}
+                          Exchange
                         </RdButton>
                       </Box>
                     </Box>

@@ -330,8 +330,9 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
           isLoading={isExecutingStake}
           disabled={isExecutingStake}
           stickyIcon={true}
+          loadingText={executingLabel}
         >
-          <>{isExecutingStake ? executingLabel : 'Save'}</>
+          Save
         </RdButton>
       </Box>
     </VStack>
