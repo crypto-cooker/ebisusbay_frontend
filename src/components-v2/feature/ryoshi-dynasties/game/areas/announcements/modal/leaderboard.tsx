@@ -28,6 +28,7 @@ import {getLeaderBoard, getSeason, getRegions} from "@src/core/api/RyoshiDynasti
 import moment from 'moment';
 import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
+import { log } from 'console';
 
 const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
 
@@ -37,6 +38,13 @@ interface leaderBoardProps {
 
 const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
 
+  interface controlpoint{
+    coordinates: string;
+    id: number;
+    name: string;
+    uuid: string;
+  }
+
   const user = useAppSelector((state) => state.user);
   const {data: allFactions, status, error} = useQuery({
     queryFn: () => ApiService.withoutKey().ryoshiDynasties.getGameContext(),
@@ -44,7 +52,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
   });
  
   const [regionSelected, setRegionSelected] = useState(false);
-  const [controlPoints, setControlPoints] = useState<ReactElement[]>([]);
+  const [controlPoints, setControlPoints] = useState<controlpoint[]>([]);
   const [isRetrievingLeaderboard, setIsRetrievingLeaderboard] = useState(false);
   const [previousSeasonTime, setPreviousSeasonTime] = useState('');
   const [currentSeasonTime, setCurrentSeasonTime] = useState('');
@@ -52,7 +60,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
   const [showCurrentGame, setShowCurrentGame] = useState(true);
   const [noGameActive, setNoGameActive] = useState(false);
 
-  const [attackerOptions, setAttackerOptions] = useState([]);
+  const [attackerOptions, setAttackerOptions] = useState<ReactElement[]>([]);
   const [dataForm, setDataForm] = useState({
     attackersFaction: "" ?? null,
   })
@@ -115,22 +123,23 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
       console.log(error)
     }
   }
+  
 
-  const LoadControlPointLeaderBoard = async (e : any) => {
+
+  const LoadControlPointLeaderBoard = async (e : controlpoint) => {
     //get controlpoint id from regions by matching name
     const x = controlPoints.find((point:any) => point.name === e);
-    const allFactionsOnPoint = await getLeaderBoard(x!['id']);
+    console.log(x);
+    const allFactionsOnPoint = await getLeaderBoard(x?.id);
     // console.log(allFactionsOnPoint.slice(0, 5))
     setLeaderBoard(
-    <Tbody> {
-        allFactionsOnPoint.slice(0, 5).map((faction, index ) => (
+        allFactionsOnPoint.slice(0, 5).map((faction:any, index:any) => (
         <Tr key={index}>
           <Td textAlign='center'>{index+1}</Td>
           <Td textAlign='center'>{faction.name}</Td>
           <Td textAlign='center'>{faction.totalTroops}</Td>
         </Tr>
-        ))}
-    </Tbody>)
+        )))
   }
 
   useEffect(() => {
@@ -138,7 +147,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
     {
       GetGameDates();
       if(controlPoints !== undefined) {
-        setAttackerOptions(controlPoints.map((point, index) => (
+        setAttackerOptions(controlPoints.map((point:any, index:any) => (
           <option 
             value={point.name}
             key={index}>
@@ -216,7 +225,9 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
               <Th textAlign='center'>Troops</Th>
             </Tr>
           </Thead>
+          <Tbody>
           {leaderBoard}
+          </Tbody>
         </Table>
       </TableContainer>
       </>) : (<Text> Select a region</Text>)}
