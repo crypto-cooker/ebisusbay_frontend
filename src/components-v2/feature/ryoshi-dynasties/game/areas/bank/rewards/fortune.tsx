@@ -52,7 +52,7 @@ const FortuneRewardsTab = () => {
         <RdProgressBar current={seasonTimeRemaining} max={100} segments={3}/>
       </Box>
       <Box mt={2}>
-        <Text fontWeight='bold' fontSize='lg'>Burn Malus ({round(burnMalus)}%)</Text>
+        <Text fontWeight='bold' fontSize='lg'>Slothy Tax ({round(burnMalus)}%)</Text>
         <RdProgressBar current={burnMalus} max={100} useGrid={false} fillColor='linear-gradient(to left, #B45402, #7D3500)' />
       </Box>
       <Box bgColor='#292626' rounded='md' p={4} fontSize='sm' mt={4}>

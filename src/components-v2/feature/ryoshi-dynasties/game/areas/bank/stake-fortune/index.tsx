@@ -26,7 +26,6 @@ const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
   };
 
   const handleBack = () => {
-    console.log('handleBack?', !!page, page);
     if (!!page) {
       returnHome();
     } else {
