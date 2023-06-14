@@ -161,7 +161,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
 
           <div className="App">
               <HStack justifyContent='center' marginTop='-7'>
-                <Text fontSize='xs' color="#aaa" zIndex='9'>Season End:</Text>
+                <Text fontSize='xs' color="#aaa" zIndex='9'>Game End:</Text>
                 <Text fontWeight='bold' zIndex='9'> {timer}</Text>
               </HStack>
             <Spacer h='2' />
