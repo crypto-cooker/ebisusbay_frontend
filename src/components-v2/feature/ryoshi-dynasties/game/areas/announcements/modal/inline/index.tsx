@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useState, ReactElement} from "react";
 import {Spinner} from 'react-bootstrap';
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import MainPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/main";
@@ -47,7 +47,6 @@ const AnnouncementBoardModal = ({isOpen, onClose, onOpenDailyCheckin}: Announcem
       title={title}
       isOpen={isOpen}
       onClose={handleClose}
-      title={title}
       utilBtnTitle={!!page ? <ArrowBackIcon /> : <>?</>}
       onUtilBtnClick={handleBack}
     >         
