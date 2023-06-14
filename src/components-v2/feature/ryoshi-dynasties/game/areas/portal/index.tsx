@@ -113,7 +113,7 @@ const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' 
             >Visit Seashrine</RdButton>
         <RdButton onClick={(e) => {
             e.preventDefault();
-            window.location.href='https://seashrine.io/portal';
+            window.location.href='https://seashrine.io/portal?tab=cronos';
             }}
             >Bridge VIPs</RdButton>
         </VStack>
