@@ -7,6 +7,8 @@ import StakeABI from "@src/Contracts/Stake.json";
 import Membership from "@src/Contracts/EbisusBayMembership.json";
 import gaslessListingContract from "@src/Contracts/GaslessListing.json";
 import gdcAbi from "@src/Contracts/GDC.json";
+import PlatformRewards from "@src/Contracts/PlatformRewards.json";
+import PresaleVaults from "@src/Contracts/PresaleVaults.json";
 
 const config = appConfig();
 
@@ -64,6 +66,20 @@ class UserContractService {
       this._gdc = new Contract(config.contracts.gdc, gdcAbi, this.signer)
     }
     return this._gdc;
+  }
+
+  get ryoshiPlatformRewards() {
+    if (!this._ryoshiPlatformRewards) {
+      this._ryoshiPlatformRewards = new Contract(config.contracts.rewards, PlatformRewards, this.signer)
+    }
+    return this._ryoshiPlatformRewards;
+  }
+
+  get ryoshiPresaleVaults() {
+    if (!this._ryoshiPresaleVaults) {
+      this._ryoshiPresaleVaults = new Contract(config.contracts.presaleVaults, PresaleVaults, this.signer)
+    }
+    return this._ryoshiPresaleVaults;
   }
 }
 //

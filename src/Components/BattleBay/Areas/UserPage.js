@@ -19,12 +19,13 @@ import {
   VStack,
   Spacer,
 } from '@chakra-ui/react';
-import DelegateForm from './DelegateForm';
+import DelegateForm from '../../../components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/delegate-troops';
 import { getProfileTroops, getAllFactions, addTroops } from "@src/core/api/RyoshiDynastiesAPICalls";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 import {getProfile} from "@src/core/cms/endpoints/profile";
-import {hostedImage, ImageKitService} from "@src/helpers/image";
+// import {hostedImage, ImageKitService} from "@src/helpers/image";
+import ReturnToVillageButton from "@src/components-v2/feature/ryoshi-dynasties/components/return-button";
 
 const UserPage = ({onBack}) => {
 
@@ -69,16 +70,15 @@ const UserPage = ({onBack}) => {
     }
   }
 
-  const profilePicture = profile.profilePicture ?
-    ImageKitService.from(profile.profilePicture).setWidth(200).setHeight(200).buildUrl() :
-    hostedImage('/img/profile-avatar.webp');
+  // const profilePicture = profile.profilePicture ?
+    // ImageKitService.from(profile.profilePicture).setWidth(200).setHeight(200).buildUrl() :
+    // hostedImage('/img/profile-avatar.webp');
 
   const { isOpen, onOpen: onOpenDelegate, onClose } = useDisclosure();
   const [delegateMode, setDelegateMode] = useState("delegate");
 
   useEffect(() => {
     SetUp();
-    console.log("useEffect")
   }, [troops]);
 
   return (
@@ -86,9 +86,7 @@ const UserPage = ({onBack}) => {
       <DelegateForm isOpen={isOpen} onClose={onClose} delegateMode={delegateMode} factions={factions} troops={troops} setTotalTroops = {setTotalTroops}/>
 
       <Flex>
-          <Button style={{ display: 'flex', marginTop: '16px', marginBottom: '16px'}} 
-            onClick={onBack} variant='outline'size='lg'> 
-            Back to Village Map</Button>
+      <ReturnToVillageButton onBack={onBack} />
       </Flex>
 
       <Flex alignContent={'center'} justifyContent={'center'}>
@@ -97,7 +95,7 @@ const UserPage = ({onBack}) => {
           align={'center'}
           objectFit='cover'
           boxSize='150px'
-          src={profilePicture}
+          src={user.profilePicture}
         />
       </Flex>
 

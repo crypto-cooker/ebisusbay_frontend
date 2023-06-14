@@ -1,0 +1,167 @@
+    // <area target="" alt="Buccaneer Beach" title="Buccaneer Beach" href="" coords="504,788,143" shape="circle">
+    // <area target="" alt="Mitagi Retreat" title="Mitagi Retreat" href="" coords="694,481,165" shape="circle">
+{
+    "startAt": "04/01/2023 00:00:00",
+    "endAt": "07/01/2023 00:00:00",
+    "blockId": 4,
+    "map":{
+        "image": "https://test.com",
+        "regions": [
+            {
+                "name": "Kagutsuma",
+                "controlPoints": [
+                    {
+                        "name": "The Iron Bastion",
+                        "rewardId": 1,
+                        "points":8,
+                        "coordinates" : "2332,917,158"
+                    },
+                    {
+                        "name": "The Conflagration",
+                        "rewardId": 1,
+                        "points":4,
+                        "coordinates" : "2590,456,214"
+                    },
+                    {
+                        "name": "Volcanic Reach",
+                        "points":1,
+                        "rewardId": 1,
+                        "coordinates" : "2037,424,206"
+                    }
+                ]
+            },
+            {
+                "name": "Seashrine Isles",
+                "controlPoints": [    
+                    {
+                        "name": "Seashrine",
+                        "rewardId": 1,
+                        "points":10,
+                        "coordinates" : "1608,614,196"
+                    },
+                    {
+                        "name": "Mitamic Fissure",
+                        "rewardId": 1,
+                        "points":5,
+                        "coordinates" : "1131,909,162"
+                    },
+                    {
+                        "name": "Classy Keep",
+                        "rewardId": 1,
+                        "points":7,
+                        "coordinates" : "1466,1095,199"
+                    }
+                ]
+            },
+            {
+                "name": "The Palisades",
+                "controlPoints":[
+                    {
+                        "name": "Dragons Roost",
+                        "rewardId": 1,
+                        "points":8,
+                        "coordinates" : "1911,913,209"
+                    },
+                    {
+                        "name": "Ancestors Final Rest",
+                        "points":4,
+                        "rewardId": 1,
+                        "coordinates" : "2104,1340,159"
+                    },
+                    {
+                        "name": "Insect Race",
+                        "points":4,
+                        "rewardId": 1,
+                        "coordinates" : "2590,1325,243"
+                    }
+                ]
+            },
+            {
+                "name": "Izanami's Cradle",
+                "controlPoints":[
+                    {
+                        "name": "Ebisus Bay",
+                        "points":3,
+                        "rewardId": 1,
+                        "coordinates" : "932,1697,184"
+                    },
+                    {
+                        "name": "Felisgarde",
+                        "points":8,
+                        "rewardId": 1,
+                        "coordinates" : "997,1289,205"
+                    },
+                    {
+                        "name": "Verdant Forest",
+                        "points":2,
+                        "rewardId": 1,
+                        "coordinates" : "593,1245,154"
+                    }
+                ]
+            },
+            {
+                "name": "Jurojin Highlands",
+                "controlPoints":[
+                    {
+                        "name": "Buccaneer Beach",
+                        "points":3,
+                        "rewardId": 1,
+                        "coordinates" : "504,788,143"
+                    },
+                    {
+                        "name": "Omoikanes Athenaeum",
+                        "points":5,
+                        "rewardId": 2,
+                        "coordinates" : "912,671,155"
+                    },
+                    {
+                        "name": "Mitagi Retreat",
+                        "points":3,
+                        "rewardId": 1,
+                        "coordinates" : "694,481,165"
+                    }
+                ]
+            },
+            {
+                "name": "Kuraokami's Expanse",
+                "controlPoints":[
+                    {
+                        "name": "Ice Shrine",
+                        "points":7,
+                        "rewardId": 1,
+                        "coordinates" : "1208,424,142"
+                    },
+                    {
+                        "name": "Clutch Of Fukurokujo",
+                        "points":4,
+                        "rewardId": 1,
+                        "coordinates" : "997,145,185"
+                    },
+                    {
+                        "name": "Orcunheim",
+                        "points":1,
+                        "rewardId": 1,
+                        "coordinates" : "1628,198,201"
+                    }
+                ]
+            },
+            {
+                "name": "Dunes of Bishamon",
+                "controlPoints":[
+                    {
+                        "name": "Venoms Descent",
+                        "points":10,
+                        "rewardId": 1,
+                        "coordinates" : "1467,1822,161"
+                    },
+                    {
+                        "name": "The Infinte Nexus",
+                        "points":3,
+                        "rewardId": 1,
+                        "coordinates" : "1685,1539,182"
+                    }
+                ]
+            }
+        ]
+    }
+}

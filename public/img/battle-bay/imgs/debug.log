@@ -1,0 +1,34 @@
+[0607/200851.620:ERROR:media_internals.cc(112)] Cannot get RenderProcessHost
+[0612/161357.653:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/164950.546:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175552.528:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175557.542:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175602.554:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175607.560:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175612.578:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175617.593:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175622.607:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175627.612:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175632.621:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175637.626:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175642.633:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175647.647:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175652.664:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175723.018:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175728.031:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175733.044:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175738.061:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175743.064:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175748.069:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175753.084:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175758.095:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175803.102:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175808.108:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175813.122:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175818.125:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175823.140:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175828.144:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175828.159:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175833.153:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0612/175833.169:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0614/115456.142:INFO:CONSOLE(1)] "Long rAF frame-time", source: file:///C:/Program%20Files/adobe/Adobe%20Photoshop%202020/Required/www-rich-tooltips/build/external.js (1)

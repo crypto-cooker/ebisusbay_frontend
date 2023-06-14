@@ -1,0 +1,109 @@
+import {useState} from "react";
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  ListItem,
+  OrderedList,
+  Stack,
+  Text,
+} from "@chakra-ui/react"
+import localFont from 'next/font/local';
+import {useAppSelector} from "@src/Store/hooks";
+
+const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
+const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
+
+const FaqPage = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const user = useAppSelector((state) => state.user);
+
+  return (
+    <Stack spacing={3} className={gothamBook.className} fontSize={{ base: 'xs', md: 'sm' }}>
+
+      <Box p={4}>
+        <Text fontSize='lg' fontWeight='bold'>Fortune Rewards</Text>
+        <Text>
+          Fortune rewards accumulate from Fortune staking, marketplace listings, and from playing the game and can be withdrawn at any time.
+          However, only withdrawing at the end of a season will allow you to claim the full amount of rewards.
+        </Text>
+        <Accordion fontSize='sm' mt={4}>
+          <AccordionItem>
+            <AccordionButton fontSize='sm' fontWeight='bold'>
+              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+                How do I claim rewards from the current season?
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <Text>The Fortune tab will contain all seasons with pending rewards, including the current season. Click <strong>Claim</strong> to receive your current season rewards.</Text>
+              <Text mt={4}>* Note that, the current season is subject to a burn malus, known here as the <strong>Karmic Debt</strong>. A percentage of the current rewards will be burned proportional to the time left in the season. The Slothy Tax starts at 80% at the start of a season. That value will decrease to 0% as the current time gets closer to the end of the season.</Text>
+            </AccordionPanel>
+          </AccordionItem>
+          <AccordionItem>
+            <AccordionButton fontSize='sm' fontWeight='bold'>
+              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+                Can I claim rewards from past seasons?
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <Text>Any seasons with unclaimed rewards will be displayed under the <strong>Fortune</strong> tab. Click the <strong>Claim</strong> button to receive the seaon rewards.</Text>
+            </AccordionPanel>
+          </AccordionItem>
+          <AccordionItem>
+            <AccordionButton fontSize='sm' fontWeight='bold'>
+              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+                What is the Karmic Debt?
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <Text>The Karmic Debt, also known as a burn malus, represents the percentage of rewards that will be burned if a user decides to withdraw before the end of season. At the start of the season, this value starts at 80% and decreases linearly until the end of the season when it becomes 0%</Text>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
+      </Box>
+
+      <Box p={4}>
+        <Text fontSize='lg' fontWeight='bold'>Presale Rewards</Text>
+        <Text>Users who participated in the Fortune Token Presale can now begin vesting their tokens. Those also holding Fortune Teller NFTs can exchange them for bonus Fortune tokens and Fortune Guards.  This is done in the <strong>Presale</strong> tab</Text>
+        <Accordion fontSize='sm' mt={4}>
+          <AccordionItem>
+            <AccordionButton fontSize='sm' fontWeight='bold'>
+              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+                How do I receive the presale rewards?
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <Text>Click the <strong>Presale</strong> tab. By connecting your wallet that participated in the presale, a vault will be created which will be used to faciliate the vesting process:</Text>
+              <OrderedList mt={2}>
+                <ListItem>Click the <strong>Create Vault</strong> button to open a vault</ListItem>
+                <ListItem>Once the vault is opened, the page will show your vault balance</ListItem>
+              </OrderedList>
+              <Text mt={4}>These rewards are vested linearly. Every block, more Fortune will become available to claim and you can claim the available amount at any time.</Text>
+            </AccordionPanel>
+          </AccordionItem>
+          <AccordionItem>
+            <AccordionButton fontSize='sm' fontWeight='bold'>
+              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+                How to I trade in my Fortune Tellers?
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <Text>Fortune Tellers can be exchanged to receive bonus Fortune. They will also be exchanged for Fortune Guards, which are a key component to minting Heroes.</Text>
+              <Text mt={4}>If you have Fortune Tellers, they will show up under <strong>Fortune Teller Bonus</strong>. Review your bonus and click <strong>Exchange</strong> to receive it.</Text>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
+      </Box>
+    </Stack>
+  );
+}
+
+export default FaqPage;

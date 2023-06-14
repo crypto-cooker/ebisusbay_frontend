@@ -98,11 +98,12 @@ export function resizeNewMap()
     element : '#fancyMenu'
   })
 }
-export function resizeBattleMap()
+export function resizeBattleMap(_width, _height)
 {
-    const resizeImg = new ImageResize({
-    width: 1280,
-    height: 720,
+  console.log("resizeBattleMap");
+  const resizeImg = new ImageResize({
+    width: 7580,
+    height: 5320,
     element : '#islandMap'
   })
 }

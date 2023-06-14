@@ -35,7 +35,7 @@ import {useAppSelector} from "@src/Store/hooks";
 import FortunePresale from "@src/Contracts/FortunePresale.json";
 import {commify} from "ethers/lib/utils";
 import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount, updateFortuneBalance} from "@src/GlobalState/User";
+import {chainConnect, connectAccount, updateFortuneBalance, updateFortunePresaleBalance} from "@src/GlobalState/User";
 import {TokenSaleContext, TokenSaleContextProps} from "@src/components-v2/feature/ryoshi-dynasties/token-sale/context";
 import {useQueryClient} from "@tanstack/react-query";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
@@ -110,13 +110,13 @@ const FortuneReservationPage = ({onFaq, onClose}: FortuneReservationPageProps) =
         h='full'
         m={6}
         roundedBottom='3xl'
-        className='rd-bank-modal-mask1'
+        className='rd-bank-modal-masktop-outer'
       >
         <Box
           color='#FFF'
           textAlign='center'
           verticalAlign='middle'
-          className='rd-bank-modal-mask2'
+          className='rd-bank-modal-masktop-inner'
           p={1}
         >
           <Flex
@@ -317,7 +317,7 @@ const FortunePurchaseForm = () => {
               <Button fontSize={{base: 'xs', md: 'sm'}} variant='unstyled' fontWeight='normal' textDecoration='underline' onClick={handleBuyUsdc}>Purchase USDC <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} ml={1} /></Button>
             </Box>
             <HStack align='start'>
-              <Image src='/img/battle-bay/bankinterior/fortune_token.svg' alt="walletIcon" boxSize={6}/>
+              <Image src='/img/ryoshi-dynasties/icons/fortune.svg' alt="walletIcon" boxSize={6}/>
               <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? '$Fortune ' : ''}{commify(user.tokenSale.fortune)}</Text>
             </HStack>
           </>
