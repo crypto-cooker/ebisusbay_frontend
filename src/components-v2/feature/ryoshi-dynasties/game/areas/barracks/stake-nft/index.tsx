@@ -66,11 +66,20 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   const handleAddNft = useCallback((nft: WalletNft) => {
     const isInList = pendingNfts.some((sNft) => sNft.nftId === nft.nftId && caseInsensitiveCompare(sNft.nftAddress, nft.nftAddress));
     if (!isInList && pendingNfts.length < rdConfig.barracks.staking.nft.maxSlots) {
+      const collectionSlug = config.collections.find((c: any) => caseInsensitiveCompare(c.address, nft.nftAddress))?.slug;
+      const stakeConfig = rdConfig.barracks.staking.nft.collections.find((c) => c.slug === collectionSlug);
+
+      const percentile = (nft.rank / stakeConfig!.maxSupply) * 100;
+      const multiplier = stakeConfig!.multipliers
+        .sort((a: any, b: any) => a.percentile - b.percentile)
+        .find((m: any) => percentile <= m.percentile)?.value || 0;
+
       setPendingNfts([...pendingNfts, {
         nftAddress: nft.nftAddress,
         nftId: nft.nftId,
         image: nft.image,
         rank: nft.rank,
+        multiplier,
         isAlreadyStaked: false
       }]);
     }
@@ -124,11 +133,19 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       for (const token of data) {
         const nft = await getNft(token.contractAddress, token.tokenId);
         if (nft) {
+          const stakeConfig = rdConfig.barracks.staking.nft.collections.find((c) => c.slug === nft.collection.slug);
+
+          const percentile = (nft.nft.rank / stakeConfig!.maxSupply) * 100;
+          const multiplier = stakeConfig!.multipliers
+            .sort((a: any, b: any) => a.percentile - b.percentile)
+            .find((m: any) => percentile <= m.percentile)?.value || 0;
+
           nfts.push({
             nftAddress: token.contractAddress,
             nftId: token.tokenId,
             image: nft.nft.image,
             rank: nft.nft.rank,
+            multiplier,
             isAlreadyStaked:  true
           })
         }
@@ -198,6 +215,7 @@ interface PendingNft {
   nftId: string;
   image: string;
   rank: number;
+  multiplier: number;
   isAlreadyStaked: boolean;
 }
 
@@ -277,11 +295,17 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
                       <Image src={ImageService.translate(pendingNfts[index].image).fixedWidth(100, 100)} rounded='lg'/>
                     </Box>
                     <Flex fontSize='xs' justify='space-between' mt={1}>
-                      <HStack spacing={1}>
-                        <Icon as={FontAwesomeIcon} icon={faAward} />
-                        <Box as='span'>{pendingNfts[index].rank ?? ''}</Box>
-                      </HStack>
-                      <Box as='span' fontWeight='bold'>+ {collections.find(c => caseInsensitiveCompare(c.address, pendingNfts[index].nftAddress))?.multipliers[0].value}</Box>
+                      <Box verticalAlign='top'>
+                        <HStack spacing={1}>
+                          <Icon as={FontAwesomeIcon} icon={faAward} />
+                          <Box as='span'>{pendingNfts[index].rank ?? ''}</Box>
+                        </HStack>
+                      </Box>
+                      <VStack align='end' spacing={0} fontWeight='bold'>
+                        {pendingNfts[index].multiplier && (
+                          <Box>+ {pendingNfts[index].multiplier}</Box>
+                        )}
+                      </VStack>
                     </Flex>
                   </Box>
 

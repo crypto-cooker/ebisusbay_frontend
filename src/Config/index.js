@@ -354,8 +354,16 @@ export const configData = {
       cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233',
       gaslessListing: '0x523d6f30c4aaca133daad97ee2a0c48235bff137',
       gdc: '0xe3e564252249ab55b47b84d6a934f4cbb94233a9',
+      usdc: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59',
       purchaseFortune: '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566',
-      usdc: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59'
+      allianceCenter: '0x74A61DEdD269075a394932860F071D0884E7E805',
+      battleField: '0xe8939d920218e0083F9e00a23eEeDfbad73d6B4D',
+      resources: '0xce3f4e59834b5B52B301E075C5B3D427B6884b3d',
+      bank: '0x1E16Aa4Bb965478Df310E8444CD18Fa56603A25F',
+      barracks: '0xfDE081ACB68Ac6BB7B7702DEba49D99b081Bd1eF',
+      fortune: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
+      rewards: '0x0dC2ad723068B2D1ACab5083fce36E15818BABBB',
+      presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0'
     },
     tokens: {
       loot: {
