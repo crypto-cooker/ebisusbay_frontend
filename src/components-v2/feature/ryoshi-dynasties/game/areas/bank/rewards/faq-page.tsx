@@ -6,9 +6,8 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
-  Heading,
-  OrderedList,
   ListItem,
+  OrderedList,
   Stack,
   Text,
 } from "@chakra-ui/react"
@@ -41,7 +40,7 @@ const FaqPage = () => {
             </AccordionButton>
             <AccordionPanel pb={4}>
               <Text>The Fortune tab will contain all seasons with pending rewards, including the current season. Click <strong>Claim</strong> to receive your current season rewards.</Text>
-              <Text mt={4}>* Note that, the current season is subject to a burn malus, known here as the <strong>Slothy Tax</strong>. A percentage of the current rewards will be burned proportional to the time left in the season. The Slothy Tax starts at 80% at the start of a season. That value will decrease to 0% as the current time gets closer to the end of the season.</Text>
+              <Text mt={4}>* Note that, the current season is subject to a burn malus, known here as the <strong>Karmic Debt</strong>. A percentage of the current rewards will be burned proportional to the time left in the season. The Slothy Tax starts at 80% at the start of a season. That value will decrease to 0% as the current time gets closer to the end of the season.</Text>
             </AccordionPanel>
           </AccordionItem>
           <AccordionItem>
@@ -58,12 +57,12 @@ const FaqPage = () => {
           <AccordionItem>
             <AccordionButton fontSize='sm' fontWeight='bold'>
               <Box as="span" flex='1' textAlign='left' fontSize='sm'>
-                What is the Slothy Tax?
+                What is the Karmic Debt?
               </Box>
               <AccordionIcon />
             </AccordionButton>
             <AccordionPanel pb={4}>
-              <Text>The Slothy Tax, also known as a burn malus, represents the percentage of rewards that will be burned if a user decides to withdraw before the end of season. At the start of the season, this value starts at 80% and decreases linearly until the end of the season when it becomes 0%</Text>
+              <Text>The Karmic Debt, also known as a burn malus, represents the percentage of rewards that will be burned if a user decides to withdraw before the end of season. At the start of the season, this value starts at 80% and decreases linearly until the end of the season when it becomes 0%</Text>
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
