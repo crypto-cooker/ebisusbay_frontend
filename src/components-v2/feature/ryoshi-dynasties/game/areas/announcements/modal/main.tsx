@@ -7,11 +7,11 @@ import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
 interface Props {
-  onShowLeaderboard: () => void;
+  handleShowLeaderboard: () => void;
   onOpenDailyCheckin: () => void;
 }
 
-const MainPage = ({onShowLeaderboard, onOpenDailyCheckin}: Props) => {
+const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
  
   const [isLoading, setIsLoading] = useState(false);
   const user = useAppSelector((state) => state.user);
@@ -74,7 +74,7 @@ const MainPage = ({onShowLeaderboard, onOpenDailyCheckin}: Props) => {
       <HStack justify='space-between' w='100%'>
         <Flex bg='#272523' rounded='md' 
            w={{base: '150px', sm: '270px'}}
-           h={{base: '165px', sm: '165px'}}>
+           h={{base: '185px', sm: '185px'}}>
           <VStack padding='2' w='100%' >
             <Text className={gothamBook.className} fontSize={{ base: '12px', md: '24px' }}>Information</Text>
             <Text className={gothamBook.className} fontSize={{ base: '8px', md: '16px' }}>How To Play?</Text>
@@ -111,15 +111,16 @@ const MainPage = ({onShowLeaderboard, onOpenDailyCheckin}: Props) => {
 
           <Flex bg='#272523' rounded='md'
           w={{base: '150px', sm: '300px'}}
-          h={{base: '30px', sm: '50px'}}
+          h={{base: '48px', sm: '60px'}}
           >
             <VStack padding='2' w='100%' 
-            onClick={onShowLeaderboard}>
-              <Text 
+            onClick={handleShowLeaderboard}>
+              <RdButton 
                 textAlign='center'
-                className={gothamBook.className} 
-                fontSize={{ base: '12px', md: '16px' }}
-                > View Leaderboards</Text>
+                // className={gothamBook.className} 
+                // fontSize={{ base: '12px', md: '16px' }}
+                fontSize={{base: '8px', sm: 'sm'}}
+                > View Leaderboards</RdButton>
             </VStack>
           </Flex> 
         </VStack>
