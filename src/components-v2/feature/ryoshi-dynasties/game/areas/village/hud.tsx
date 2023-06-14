@@ -26,9 +26,10 @@ import ImageService from "@src/core/services/image";
 interface VillageHudProps {
   onOpenBuildings: () => void;
   onOpenDailyCheckin: () => void;
+  forceRefresh: boolean;
 }
 
-export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin}: VillageHudProps) => {
+export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, forceRefresh}: VillageHudProps) => {
   const user = useAppSelector((state) => state.user);
 
   const[isLoading, setIsLoading] = useState(false);
@@ -63,7 +64,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin}: VillageHudProp
     if (!!user.address) {
       getResources();
     }
-  }, [user.address])
+  }, [user.address, forceRefresh])
 
   return (
     <Box position='absolute' top={0} left={0} p={4}  pointerEvents='none' >

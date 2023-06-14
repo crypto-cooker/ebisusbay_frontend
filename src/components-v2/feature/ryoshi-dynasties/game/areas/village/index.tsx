@@ -67,6 +67,12 @@ const Village = ({onChange}: VillageProps) => {
   // const { isOpen: isOpenAllianceCenter, onOpen: onOpenAllianceCenter, onClose: onCloseAllianceCenter } = useDisclosure();
   const { isOpen: isOpenDailyCheckin, onOpen: onOpenDailyCheckin, onClose: onCloseDailyCheckin } = useDisclosure();
   // const [battleRewards, setBattleRewards] = useState<any[]>([]);
+  const [forceRefreshBool, setForceRefreshBool] = useState(false);
+
+  const forceRefresh = () => {
+    console.log("force refresh")
+    setForceRefreshBool(!forceRefreshBool);
+  }
 
   useEffect(() => {
     if (transformComponentRef.current) {
@@ -712,7 +718,7 @@ const Village = ({onChange}: VillageProps) => {
         )}
 
         {!allianceCenterOpen && !barracksOpen && !portalOpen && (
-          <VillageHud onOpenBuildings={onOpenBuildings} onOpenDailyCheckin={onOpenDailyCheckin} />
+          <VillageHud onOpenBuildings={onOpenBuildings} onOpenDailyCheckin={onOpenDailyCheckin} forceRefresh={forceRefreshBool} />
         )}
 
         <Box  position='absolute' top={0} left={0} p={4} >
@@ -741,7 +747,7 @@ const Village = ({onChange}: VillageProps) => {
       </Drawer>
 
       <AnnouncementBoardModal isOpen={isOpenAnnouncementBoard} onClose={onCloseAnnouncementBoard} onOpenDailyCheckin={onOpenDailyCheckin}/>
-      <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin}/>
+      <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin} forceRefresh={forceRefresh}/>
     </section>
   )
 };
