@@ -327,6 +327,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
                   //   fontSize={{base: '12', sm: '14'}}
                   //   variant={"outline"}
                   //   >x Disband Faction</Button>
+                      <></>
                 )}
                   </HStack>
                   </VStack>

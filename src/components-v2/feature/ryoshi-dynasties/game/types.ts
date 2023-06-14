@@ -2,6 +2,7 @@ export interface RyoshiConfig {
   bank: RyoshiConfigBank;
   barracks: RyoshiConfigBarracks;
   rewards: RyoshiConfigCheckinRewards;
+  factions: RyoshiConfigFactions;
   presale: RyoshiConfigPresale;
 }
 
@@ -79,4 +80,12 @@ interface RyoshiConfigCheckinRewards {
 
 interface RyoshiConfigPresale {
   bonus: number[];
+}
+
+interface RyoshiConfigFactions {
+  registration: RyoshiConfigFactionsRegistration;
+}
+
+interface RyoshiConfigFactionsRegistration {
+  cost: number;
 }
