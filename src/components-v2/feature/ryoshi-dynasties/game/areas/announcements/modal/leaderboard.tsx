@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, ReactElement} from 'react';
 import {
   Center,
   Flex,
@@ -44,11 +44,11 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
   });
  
   const [regionSelected, setRegionSelected] = useState(false);
-  const [controlPoints, setControlPoints] = useState([]);
+  const [controlPoints, setControlPoints] = useState<ReactElement[]>([]);
   const [isRetrievingLeaderboard, setIsRetrievingLeaderboard] = useState(false);
   const [previousSeasonTime, setPreviousSeasonTime] = useState('');
   const [currentSeasonTime, setCurrentSeasonTime] = useState('');
-  const [leaderBoard, setLeaderBoard] = useState([]);
+  const [leaderBoard, setLeaderBoard] = useState<ReactElement[]>([]);
   const [showCurrentGame, setShowCurrentGame] = useState(true);
   const [noGameActive, setNoGameActive] = useState(false);
 
@@ -116,10 +116,10 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
     }
   }
 
-  const LoadControlPointLeaderBoard = async (e) => {
+  const LoadControlPointLeaderBoard = async (e : any) => {
     //get controlpoint id from regions by matching name
-    const x = controlPoints.find((point) => point.name === e);
-    const allFactionsOnPoint = await getLeaderBoard(x.id)
+    const x = controlPoints.find((point:any) => point.name === e);
+    const allFactionsOnPoint = await getLeaderBoard(x!['id']);
     // console.log(allFactionsOnPoint.slice(0, 5))
     setLeaderBoard(
     <Tbody> {
