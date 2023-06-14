@@ -11,6 +11,7 @@ import {getAuthSignerInStorage} from "@src/helpers/storage";
 import {getBattleRewards} from "@src/core/api/RyoshiDynastiesAPICalls";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import React, {useState} from 'react';
+import {ArrowBackIcon} from "@chakra-ui/icons";
 
 const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' })
 
@@ -57,73 +58,77 @@ const Barracks = ({onBack}: BarracksProps) => {
   console.log('BATTLE', battleRewards);
 
   return (
-    <Flex 
-        backgroundColor='#292626' 
-        flexDirection='column' 
-        textAlign='center' 
-        borderRadius={'10px'} 
-        justifyContent='space-around'
-        padding='10px'
-        paddingBottom='20px'
-        paddingTop='5px'
-        maxWidth='100%'
-        >
-    <VStack>
-      <Box
-        position='absolute'
-        left={6}
-        top={6}
-        rounded='full'
-        zIndex={1}
-        _groupHover={{
-          cursor: 'pointer'
-        }}
-        data-group
-      >
-        <Button
-          bg='#C17109'
+    <Flex
+      border='1px solid #FFD700'
+      backgroundColor='#292626'
+      flexDirection='column'
+      textAlign='center'
+      borderRadius={'10px'}
+      justifyContent='space-around'
+      padding={4}
+      minW={{base: '100%', xl: '450px' }}
+      boxShadow='0px 0px 10px 0px #000000'
+      className={gothamBook.className}
+    >
+      <Flex justify='space-between'>
+        <Box
+          left={6}
+          top={6}
           rounded='full'
-          border='8px solid #F48F0C'
-          w={2}
-          h={12}
-          fontSize='22px'
-          onClick={onBack}
+          zIndex={1}
           _groupHover={{
-            bg: '#de8b08',
-            borderColor: '#f9a50b',
+            cursor: 'pointer'
           }}
+          data-group
         >
-          x
-        </Button>
-      </Box>
+          <Button
+            bg='#C17109'
+            rounded='full'
+            border='8px solid #F48F0C'
+            w={14}
+            h={14}
+            onClick={onBack}
+            _groupHover={{
+              bg: '#de8b08',
+              borderColor: '#f9a50b',
+            }}
+          >
+            <ArrowBackIcon boxSize={8} />
+          </Button>
+        </Box>
+        <Box textAlign='end' ms={2}>
+          <Text textColor='#ffffffeb' fontSize={{ base: '28px', md: '32px' }} fontWeight='bold'>Barracks</Text>
+          <Text textColor='#ffffffeb' fontSize='sm' fontStyle='italic'>Stake Ryoshi NFTs to receive bonus troops</Text>
+        </Box>
+      </Flex>
+      <Box>
+      <VStack>
+        <Spacer h='20'/>
 
-      <Text textColor='#ffffffeb' fontSize={{ base: '28px', md: '32px' }} className={gothamBook.className} textAlign='center'>Barracks</Text>
-      <Text textColor='#ffffffeb' className={gothamBook.className} textAlign='center'>Stake Ryoshi Tales NFTs to receive bonus battle units</Text>
-      
-      <Spacer h='4'/>
+          <div style={{ margin: '8px 24px' }}>
+          <Center>
+          <StakeNfts isOpen={isOpenStakeNFTs} onClose={onCloseStakeNFTs} />
+          {!!battleRewards && (
+            <ClaimRewards isOpen={isOpenClaimRewards} onClose={claimedRewards} battleRewards={battleRewards}/>
+          )}
+        <Container>
 
-        <div style={{ margin: '8px 24px' }}>
-        <Center>
-        <StakeNfts isOpen={isOpenStakeNFTs} onClose={onCloseStakeNFTs} />
-        {!!battleRewards && (
-          <ClaimRewards isOpen={isOpenClaimRewards} onClose={claimedRewards} battleRewards={battleRewards}/>
-        )}
-      <Container>
-
-      <VStack
-        spacing={4}
-        align='stretch'
-      >
-        <RdButton onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>Stake NFTs</RdButton>
-        {(!!battleRewards && !battleRewardsClaimed) &&  (
-          <RdButton fontSize='18' onClick={() => handleAuthedNavigation(onOpenClaimRewards)}>Claim Battle Rewards</RdButton>
-        )}
+        <VStack
+          spacing={4}
+          align='stretch'
+        >
+        <Spacer h='20'/>
+          <RdButton onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>Stake NFTs</RdButton>
+          {(!!battleRewards && !battleRewardsClaimed) &&  (
+            <RdButton fontSize='18' onClick={() => handleAuthedNavigation(onOpenClaimRewards)}>Claim Battle Rewards</RdButton>
+          )}
+        </VStack>
+        </Container>
+          </Center>
+          </div>
+        <Spacer h='4'/>
       </VStack>
-      </Container>
-        </Center>
-        </div>
-      <Spacer h='4'/>
-    </VStack>
+      </Box>
     </Flex>
   )
 };
