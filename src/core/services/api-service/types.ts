@@ -161,6 +161,7 @@ export interface RdGameContext {
     season: RdSeason;
     game: RdGame;
     rewards: RdGameRewards;
+    state: RdGameState;
 }
 
 interface RdGameBase {
@@ -184,4 +185,13 @@ interface RdSeason extends RdGameBase {
 
 interface RdGameRewards {
     burnPercentage: number;
+}
+
+export enum RdGameState {
+    NOT_STARTED = 'NOT_STARTED',
+    IN_PROGRESS = 'IN_PROGRESS',
+    FINISHED = 'FINISHED',
+    UPCOMING = 'UPCOMING',
+    RESET = 'RESET',
+    IN_MAINTENANCE = 'IN_MAINTENANCE'
 }

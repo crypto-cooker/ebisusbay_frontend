@@ -191,4 +191,12 @@ export const RdModalBox = (props: BoxProps) => {
   )
 }
 
+export const RdModalAlert = (props: BoxProps) => {
+  return (
+    <Box p={4} textAlign='center'>
+      {props.children}
+    </Box>
+  )
+}
+
 export default RdModal;

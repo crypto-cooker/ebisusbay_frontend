@@ -7,14 +7,12 @@ import {
   DrawerContent,
   DrawerHeader,
   Flex,
-  Grid,
-  GridItem,
-  Image,
+  Text,
   useBreakpointValue,
   useDisclosure
 } from "@chakra-ui/react"
 
-import React, {ReactElement, useEffect, useRef, useState, useCallback} from 'react';
+import React, {ReactElement, useCallback, useContext, useEffect, useRef, useState} from 'react';
 // import { resizeMap, resizeNewMap } from './mapFunctions.js'
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import styles from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
@@ -31,12 +29,19 @@ import {VillageHud} from "@src/components-v2/feature/ryoshi-dynasties/game/areas
 import ImageService from "@src/core/services/image";
 import AllianceCenterInline from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline";
 import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import {RdGameState} from "@src/core/services/api-service/types";
+import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
+import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 
 interface VillageProps {
   onChange: (value: string) => void;
 }
 const Village = ({onChange}: VillageProps) => {
-
+  const { config: rdConfig, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector((state) => state.user);
   const config = appConfig();
 
@@ -560,6 +565,19 @@ const Village = ({onChange}: VillageProps) => {
     setMapInitialized(true);
   }, [user.mitamaBalance]);
 
+
+  const { isOpen: isBlockingModalOpen, onOpen: onOpenBlockingModal, onClose: onCloseBlockingModal } = useDisclosure();
+  const handleSceneChange = useCallback((area: string) => {
+    if (area === 'battleMap') {
+      const blockableStates = [RdGameState.IN_MAINTENANCE, RdGameState.NOT_STARTED];
+      if (!rdGameContext?.state || blockableStates.includes(rdGameContext?.state)) {
+        onOpenBlockingModal();
+        return;
+      }
+    }
+    onChange(area);
+  }, [rdGameContext]);
+
   return (
     <section>
       <Box
@@ -630,7 +648,7 @@ const Village = ({onChange}: VillageProps) => {
                     </Box>
 
                     <Box id="boat" className={styles.enlarge} style={{position:"absolute", marginTop: boatTop, marginLeft: boatLeft, zIndex:"9"}}
-                         onClick={() => onChange('battleMap')}
+                         onClick={() => handleSceneChange('battleMap')}
                     >
                       <img src={ImageService.translate('/img/battle-bay/mapImages/boat_day.apng').convert()} />
                     </Box>
@@ -748,6 +766,15 @@ const Village = ({onChange}: VillageProps) => {
 
       <AnnouncementBoardModal isOpen={isOpenAnnouncementBoard} onClose={onCloseAnnouncementBoard} onOpenDailyCheckin={onOpenDailyCheckin}/>
       <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin} forceRefresh={forceRefresh}/>
+      <RdModal
+        isOpen={isBlockingModalOpen}
+        onClose={onCloseBlockingModal}
+        title='Cannot Enter'
+      >
+        <RdModalAlert>
+          <Text>This area is currently unavailable, either due to maintenance, or a game that has yet to be started. Check back again soon.</Text>
+        </RdModalAlert>
+      </RdModal>
     </section>
   )
 };
