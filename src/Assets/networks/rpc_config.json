@@ -8350,7 +8350,7 @@
       "multiToken": false,
       "address": "0xCe55EDF574FbB862C34CacC05f8386e26641B195",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Apes embark on a journey through the Kingdom of Utopia to set foot on the world! Apes Utopia is a collection of 2,222 NFTs with over 200 features built on the Cronos blockchain. Apes Utopia NFTs provide access to various benefits in our ecosystem. Apes Utopia owners can participate in special events such as NFT sweepstakes, surprise sweepstakes, giveaways and much more. Remember, all Apes Utopia is special - but some are particularly special.",
         "avatar": "/img/collections/apes-utopia/avatar.gif",
