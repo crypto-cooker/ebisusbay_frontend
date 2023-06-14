@@ -1,3 +1,5 @@
+    // <area target="" alt="Buccaneer Beach" title="Buccaneer Beach" href="" coords="504,788,143" shape="circle">
+    // <area target="" alt="Mitagi Retreat" title="Mitagi Retreat" href="" coords="694,481,165" shape="circle">
 {
     "startAt": "04/01/2023 00:00:00",
     "endAt": "07/01/2023 00:00:00",
@@ -12,19 +14,19 @@
                         "name": "The Iron Bastion",
                         "rewardId": 1,
                         "points":8,
-                        "coordinates" : "5646,2426,449"
+                        "coordinates" : "2332,917,158"
                     },
                     {
                         "name": "The Conflagration",
                         "rewardId": 1,
                         "points":4,
-                        "coordinates" : "5095,1520,463"
+                        "coordinates" : "2590,456,214"
                     },
                     {
                         "name": "Volcanic Reach",
                         "points":1,
                         "rewardId": 1,
-                        "coordinates" : "6054,1672,396"
+                        "coordinates" : "2037,424,206"
                     }
                 ]
             },
@@ -35,19 +37,19 @@
                         "name": "Seashrine",
                         "rewardId": 1,
                         "points":10,
-                        "coordinates" : "3656,1469,606"
+                        "coordinates" : "1608,614,196"
                     },
                     {
                         "name": "Mitamic Fissure",
                         "rewardId": 1,
                         "points":5,
-                        "coordinates" : "2583,2335,413"
+                        "coordinates" : "1131,909,162"
                     },
                     {
                         "name": "Classy Keep",
                         "rewardId": 1,
                         "points":7,
-                        "coordinates" : "3688,3000,626"
+                        "coordinates" : "1466,1095,199"
                     }
                 ]
             },
@@ -58,19 +60,19 @@
                         "name": "Dragons Roost",
                         "rewardId": 1,
                         "points":8,
-                        "coordinates" : "4769,2767,389"
+                        "coordinates" : "1911,913,209"
                     },
                     {
                         "name": "Ancestors Final Rest",
                         "points":4,
                         "rewardId": 1,
-                        "coordinates" : "5156,3509,412"
+                        "coordinates" : "2104,1340,159"
                     },
                     {
                         "name": "Insect Race",
                         "points":4,
                         "rewardId": 1,
-                        "coordinates" : "6493,3225,624"
+                        "coordinates" : "2590,1325,243"
                     }
                 ]
             },
@@ -81,19 +83,19 @@
                         "name": "Ebisus Bay",
                         "points":3,
                         "rewardId": 1,
-                        "coordinates" : "2148,4422,366"
+                        "coordinates" : "932,1697,184"
                     },
                     {
                         "name": "Felisgarde",
                         "points":8,
                         "rewardId": 1,
-                        "coordinates" : "2559,3366,499"
+                        "coordinates" : "997,1289,205"
                     },
                     {
                         "name": "Verdant Forest",
                         "points":2,
                         "rewardId": 1,
-                        "coordinates" : "1503,3348,394"
+                        "coordinates" : "593,1245,154"
                     }
                 ]
             },
@@ -104,19 +106,19 @@
                         "name": "Buccaneer Beach",
                         "points":3,
                         "rewardId": 1,
-                        "coordinates" : "1072,2187,503"
+                        "coordinates" : "504,788,143"
                     },
                     {
                         "name": "Omoikanes Athenaeum",
                         "points":5,
                         "rewardId": 2,
-                        "coordinates" : "2278,1512,432"
+                        "coordinates" : "912,671,155"
                     },
                     {
                         "name": "Mitagi Retreat",
                         "points":3,
                         "rewardId": 1,
-                        "coordinates" : "1526,907,554"
+                        "coordinates" : "694,481,165"
                     }
                 ]
             },
@@ -127,19 +129,19 @@
                         "name": "Ice Shrine",
                         "points":7,
                         "rewardId": 1,
-                        "coordinates" : "2800,718,408"
+                        "coordinates" : "1208,424,142"
                     },
                     {
                         "name": "Clutch Of Fukurokujo",
                         "points":4,
                         "rewardId": 1,
-                        "coordinates" : "4153,508,431"
+                        "coordinates" : "997,145,185"
                     },
                     {
                         "name": "Orcunheim",
                         "points":1,
                         "rewardId": 1,
-                        "coordinates" : "5785,4456,631"
+                        "coordinates" : "1628,198,201"
                     }
                 ]
             },
@@ -150,13 +152,13 @@
                         "name": "Venoms Descent",
                         "points":10,
                         "rewardId": 1,
-                        "coordinates" : "3324,4820,395"
+                        "coordinates" : "1467,1822,161"
                     },
                     {
                         "name": "The Infinte Nexus",
                         "points":3,
                         "rewardId": 1,
-                        "coordinates" : "4212,4108,463"
+                        "coordinates" : "1685,1539,182"
                     }
                 ]
             }

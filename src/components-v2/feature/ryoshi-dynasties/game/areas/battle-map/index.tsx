@@ -2,7 +2,7 @@ import React, {ReactElement, useEffect, useRef, useState } from 'react';
 import { useDisclosure, Button, AspectRatio, useBreakpointValue, Box, Flex, Image } from '@chakra-ui/react'
 // import { resizeBattleMap, setUpMapZooming } from '@src/Components/BattleBay/Areas/mapFunctions.js'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import styles from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
+import styles0 from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
 
 import { getMap } from "@src/core/api/RyoshiDynastiesAPICalls";
 import { getControlPoint } from "@src/core/api/RyoshiDynastiesAPICalls";
@@ -17,6 +17,7 @@ import {Contract, ethers, BigNumber} from "ethers";
 import {appConfig} from "@src/Config";
 import Battlefield from "@src/Contracts/Battlefield.json";
 import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
+import styles from "./style.module.css";
 
 interface BattleMapProps {
   onChange: () => void;
@@ -234,7 +235,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
               selectRegion(controlPoint.id); 
               onOpen();
             }}
-            coords={controlPoint.name === "Felisgarde" ? "2559,3366,499" : controlPoint.coordinates} 
+            coords={controlPoint.coordinates} 
             shape="circle" 
             alt= {controlPoint.id}
             className='cursor-pointer'
@@ -404,14 +405,61 @@ const BattleMap = ({onChange}: BattleMapProps) => {
               <React.Fragment>
 
             <TransformComponent wrapperStyle={{height: '100%', width: '100%', objectFit: 'cover'}}>
-              <MapFrame gridHeight={'125px 1fr 150px'} gridWidth={'150px 1fr 150px'}>
+              <MapFrame gridHeight={'50px 1fr 50px'} gridWidth={'50px 1fr 50px'}>
               <Box as='img'
-                   src={ImageService.translate('/img/battle-bay/opMap.png').convert()}
+                   src={'/img/battle-bay/imgs/world_map_background.jpg'}
+                  //  src={ImageService.translate('/img/battle-bay/imgs/world_map_background.jpg').convert()}
                    maxW='none'
                    useMap="#image-map" className={`${styles.mapImageArea}`} id="fancyMenu"/>
-                <map name="image-map"> {area} </map>
+                <map name="image-map"> 
+                  {area} 
+                </map>
                 <Flex position="absolute" zIndex="9" width="100%" height="100%" pointerEvents='none'>
                 {flags} {explosion}
+                <div className={styles.background}>
+                  <div className={styles.water}></div>
+                  <div className={[styles.buccaneer_beach, styles.enlarge].filter(e => !!e).join(' ')}>
+                    <div className={[styles.worldmap_label, styles.buccaneer_beach_label].filter(e => !!e).join(' ')}>Buccaneer Beach</div> </div>
+                  <div className={[styles.mitagi_retreat, styles.enlarge].filter(e => !!e).join(' ')}>
+                    <div className={[styles.worldmap_label, styles.mitagi_retreat_label].filter(e => !!e).join(' ')}>Mitagi Retreat</div> </div>	
+                  <div className={[styles.omoikanes_athenaeum, styles.enlarge].filter(e => !!e).join(' ')}>
+                    <div className={[styles.worldmap_label, styles.omoikanes_athenaeum_label].filter(e => !!e).join(' ')}>Omoikane's Athenaeum</div> </div>		
+                  <div className={[styles.clutch_of_fukurokuju, styles.enlarge].filter(e => !!e).join(' ')}>
+                    <div className={[styles.worldmap_label, styles.clutch_of_fukurokuju_label].filter(e => !!e).join(' ')}>Clutch of Fukurokuju</div> </div>
+                  <div className={[styles.orcunheim, styles.enlarge].filter(e => !!e).join(' ') }>
+                    <div className={[styles.worldmap_label, styles.orcunheim_label].filter(e => !!e).join(' ')}>Orcunheim</div> </div>
+                  <div className={[styles.ice_shrine, styles.enlarge].filter(e => !!e).join(' ') }>
+                    <div className={[styles.worldmap_label, styles.ice_shrine_label].filter(e => !!e).join(' ')}>Ice Shrine</div> </div>	
+                  <div className={[styles.felisgarde, styles.enlarge].filter(e => !!e).join(' ') }>
+                    <div className={[styles.worldmap_label, styles.felisgarde_label].filter(e => !!e).join(' ')}>Felisgarde</div> </div>
+                  <div className={[styles.ebisusbay, styles.enlarge].filter(e => !!e).join(' ')}>
+                    <div className={[styles.worldmap_label, styles.ebisusbay_label].filter(e => !!e).join(' ')}>Ebisu's Bay</div> </div>
+                  <div className={[styles.verdant_forest, styles.enlarge].filter(e => !!e).join(' ')}>
+                    <div className={[styles.worldmap_label, styles.verdant_forest_label].filter(e => !!e).join(' ')}>Verdant Forest</div> </div>
+                  <div className={[styles.infinite_nexus, styles.enlarge].filter(e => !!e).join(' ')}>
+                    <div className={[styles.worldmap_label, styles.infinite_nexus_label].filter(e => !!e).join(' ')}>Infinite Nexus</div></div>
+                  <div className={[styles.venoms_descent, styles.enlarge].filter(e => !!e).join(' ')}>
+                    <div className={[styles.worldmap_label, styles.venoms_descent_label].filter(e => !!e).join(' ')}>Venom's Descent</div></div>
+                  <div className={[styles.mitamic_fissure, styles.enlarge].filter(e => !!e).join(' ')}>
+                    <div className={[styles.worldmap_label, styles.mitamic_fissure_label].filter(e => !!e).join(' ')}>Mitamic Fissure</div></div>
+                  <div className={[styles.seashrine, styles.enlarge].filter(e => !!e).join(' ')}>
+                    <div className={[styles.worldmap_label, styles.seashrine_label].filter(e => !!e).join(' ')}>Seashrine</div></div>
+                  <div className={[styles.classy_keep, styles.enlarge].filter(e => !!e).join(' ')}>
+                    <div className={[styles.worldmap_label, styles.classy_keep_label].filter(e => !!e).join(' ')}>Classy Keep</div></div>
+                  <div className={[styles.ancestors_final_rest, styles.enlarge].filter(e => !!e).join(' ')}>
+                    <div className={[styles.worldmap_label, styles.ancestors_final_rest_label].filter(e => !!e).join(' ')}>Ancestor's Final Rest</div></div>
+                  <div className={[styles.dragon_roost, styles.enlarge].filter(e => !!e).join(' ')}>
+                    <div className={[styles.worldmap_label, styles.dragon_roost_label].filter(e => !!e).join(' ')}>Dragon Roost</div></div>	
+                  <div className={[styles.nyar_spire, styles.enlarge].filter(e => !!e).join(' ')}>
+                    <div className={[styles.worldmap_label, styles.nyar_spire_label].filter(e => !!e).join(' ')}>N'yar Spire</div></div>		
+                  <div className={[styles.iron_bastion, styles.enlarge].filter(e => !!e).join(' ')}>
+                    <div className={[styles.worldmap_label, styles.iron_bastion_label].filter(e => !!e).join(' ')}>Iron Bastion</div></div>
+                  <div className={[styles.volcanic_reach, styles.enlarge].filter(e => !!e).join(' ')}>
+                    <div className={[styles.worldmap_label, styles.volcanic_reach_label].filter(e => !!e).join(' ')}>Volcanic Reach</div></div>	
+                  <div className={[styles.the_conflagration, styles.enlarge].filter(e => !!e).join(' ')}>
+                    <div className={[styles.worldmap_label, styles.the_conflagration_label].filter(e => !!e).join(' ')}>The Conflagration</div></div>
+                </div>
+                
                 </Flex>
                 </MapFrame>
               </TransformComponent>
