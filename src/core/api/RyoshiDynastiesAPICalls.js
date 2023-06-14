@@ -313,8 +313,14 @@ export const addTroops = async (address, signature, troops) => {
 export const getRegions= async () => {
   try{
     var gameID = await api.get("ryoshi-dynasties/games/0");
-    var regions = gameID.data.data.parent.map.regions;
-    return regions;
+    let controlPoints = [];
+    gameID.data.data.parent.map.regions.forEach((region) => {
+      region.controlPoints.forEach((controlPoint) => {
+      controlPoints.push(controlPoint);
+      });
+    });
+    // console.log(controlPoints)
+    return controlPoints;
   }
   catch(error){
     throw error;

@@ -79,8 +79,8 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
   const LoadControlPoints = async () => {
     try{
       setIsRetrievingLeaderboard(true);
-      const regions1 = await getRegions();
-      setControlPoints(regions1[0].controlPoints)
+      const controlPoints = await getRegions();
+      setControlPoints(controlPoints)
       setIsRetrievingLeaderboard(false);
       setNoGameActive(false);
     }
