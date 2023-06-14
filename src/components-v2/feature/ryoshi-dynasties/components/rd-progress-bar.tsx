@@ -8,8 +8,9 @@ interface RdProgressBarProps {
   potential?: number;
   useGrid?: boolean;
   segments?: number;
+  fillColor?: string;
 }
-const RdProgressBar = ({current, max, potential, useGrid = true, segments = 8}: RdProgressBarProps) => {
+const RdProgressBar = ({current, max, potential, useGrid = true, segments = 8, fillColor}: RdProgressBarProps) => {
   const [progressValue, setProgressValue] = useState(0);
   const progressRef = useRef<HTMLDivElement>(null);
   const [barSpot, setBarSpot] = useState(0);
@@ -45,17 +46,20 @@ const RdProgressBar = ({current, max, potential, useGrid = true, segments = 8}: 
           h='30px'
           sx={{
             '& > div': {
-              background: 'linear-gradient(to left, #2ec2e5, #0087d3)',
+              background: fillColor ?? 'linear-gradient(to left, #2ec2e5, #0087d3)',
               boxShadow: '12px 0 15px -4px rgba(31, 73, 125, 0.8), -12px 0 8px -4px rgba(31, 73, 125, 0.8)'
             },
           }}
         />
-        <Image position='absolute' src='/img/battle-bay/bankinterior/progress_bar_spark.png'
-               top={0}
-               h='30px'
-               left={barSpot}
-               zIndex={0}
-        />
+
+        {!fillColor && (
+          <Image position='absolute' src='/img/battle-bay/bankinterior/progress_bar_spark.png'
+                 top={0}
+                 h='30px'
+                 left={barSpot}
+                 zIndex={0}
+          />
+        )}
 
         <SimpleGrid
           columns={hasFillSegments ? segments : 2}

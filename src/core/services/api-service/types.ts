@@ -160,6 +160,7 @@ interface RdUserContextSeason {
 export interface RdGameContext {
     season: RdSeason;
     game: RdGame;
+    rewards: RdGameRewards;
 }
 
 interface RdGameBase {
@@ -179,4 +180,8 @@ interface RdSeason extends RdGameBase {
     id: number;
     startAt: string;
     uuid: string;
+}
+
+interface RdGameRewards {
+    burnPercentage: number;
 }

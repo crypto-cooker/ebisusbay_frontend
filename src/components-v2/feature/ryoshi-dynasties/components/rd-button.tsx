@@ -1,4 +1,4 @@
-import {Box, BoxProps, ButtonProps, Image, ResponsiveValue, useBreakpointValue} from "@chakra-ui/react";
+import {Box, BoxProps, ButtonProps, Flex, Image, ResponsiveValue, useBreakpointValue} from "@chakra-ui/react";
 import React, {useEffect, useState} from "react";
 import localFont from "next/font/local";
 
@@ -78,7 +78,9 @@ const RdButton = ({size = 'lg', stickyIcon, hoverIcon, loadingSpinner = true, ..
           visibility={canShowIcon ? 'visible' : 'hidden'}
         />
       )}
-      <Box
+      <Flex
+        direction='column'
+        justify='center'
         px={0}
         py={1}
         bg='linear-gradient(to left, #FDAB1A, #FD8800)'
@@ -97,7 +99,7 @@ const RdButton = ({size = 'lg', stickyIcon, hoverIcon, loadingSpinner = true, ..
             <>{props.children}</>
           )}
         </Box>
-      </Box>
+      </Flex>
     </Box>
   )
 }

@@ -13,12 +13,14 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import {round} from "@src/utils";
 
 
 const FortuneRewardsTab = () => {
   const { game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector((state) => state.user);
   const [seasonTimeRemaining, setSeasonTimeRemaining] = useState(0);
+  const [burnMalus, setBurnMalus] = useState(0);
 
   const checkForRewards = async () => {
     return ApiService.withoutKey().ryoshiDynasties.getSeasonalRewards(user.address!);
@@ -38,6 +40,7 @@ const FortuneRewardsTab = () => {
       const totalTime = Date.parse(rdGameContext.season.endAt) - Date.parse(rdGameContext.season.startAt);
       const currentElapsed = Date.parse(rdGameContext.season.endAt) - Date.now();
       setSeasonTimeRemaining(Math.floor((currentElapsed / totalTime) * 100));
+      setBurnMalus(rdGameContext!.rewards.burnPercentage / 100);
     }
 
   }, [rdGameContext]);
@@ -46,7 +49,11 @@ const FortuneRewardsTab = () => {
     <Box>
       <Box>
         <Text fontWeight='bold' fontSize='lg'>Current Season Progress ({seasonTimeRemaining}%)</Text>
-        <RdProgressBar current={seasonTimeRemaining} max={100} useGrid={true} segments={3}/>
+        <RdProgressBar current={seasonTimeRemaining} max={100} segments={3}/>
+      </Box>
+      <Box mt={2}>
+        <Text fontWeight='bold' fontSize='lg'>Burn Malus ({round(burnMalus)}%)</Text>
+        <RdProgressBar current={burnMalus} max={100} useGrid={false} fillColor='linear-gradient(to left, #B45402, #7D3500)' />
       </Box>
       <Box bgColor='#292626' rounded='md' p={4} fontSize='sm' mt={4}>
         <Box textAlign='center'>
@@ -103,8 +110,6 @@ const ClaimRow = ({reward}: {reward: any}) => {
     try {
       setExecutingClaim(true);
       const flooredAmount = convertToNumberAndRoundDown(amountAsString);
-      console.log('test1', amountAsString);
-      console.log('test2', flooredAmount);
 
       let signatureInStorage = getAuthSignerInStorage()?.signature;
       if (!signatureInStorage) {
