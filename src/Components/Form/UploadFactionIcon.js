@@ -7,7 +7,9 @@ import UploadAssetFactionIcon from './UploadAssetFactionIcon';
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import { toast } from 'react-toastify';
-import { createSuccessfulTransactionToastContent } from '@src/utils';
+import {appConfig} from "@src/Config";
+
+const config = appConfig();
 
 const UploadFactionIcon = ({
   value = [],
@@ -60,15 +62,13 @@ const UploadFactionIcon = ({
   }
 
   const api = axios.create({
-    baseURL: 'api/',
+    baseURL: config.urls.cms,
   });
-
-  const baseURL = 'https://testcms.ebisusbay.biz/';
 
   const UploadFactionIconPfp = async (address, signature, name, id, image) => {
     try{
       // console.log(address, signature, name, image);
-      return await api.patch(baseURL + "api/ryoshi-dynasties/factions?", 
+      return await api.patch("ryoshi-dynasties/factions?",
         {name, id, image},
         {params: {address, signature}});
     }

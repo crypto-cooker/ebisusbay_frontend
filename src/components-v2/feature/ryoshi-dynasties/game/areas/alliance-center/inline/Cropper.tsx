@@ -10,8 +10,10 @@ import { getAuthSignerInStorage } from '@src/helpers/storage';
 import { toast } from 'react-toastify';
 import {useAppSelector} from "@src/Store/hooks";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
-
 import axios from "axios";
+import {appConfig} from "@src/Config";
+
+const config = appConfig();
 
 interface CropperProps {
   isOpen: boolean;
@@ -51,15 +53,13 @@ const CropperModal = ({isOpen, onClose, src, setPreview}:CropperProps) => {
   }
 
   const api = axios.create({
-    baseURL: 'api/',
+    baseURL: config.urls.cms,
   });
-
-  const baseURL = 'https://testcms.ebisusbay.biz/';
 
   const UploadFactionIconPfp = async (address:any, signature:any, name:any, id:any, image:any) => {
     try{
       // console.log(address, signature, name, image);
-      return await api.patch(baseURL + "api/ryoshi-dynasties/factions?", 
+      return await api.patch("ryoshi-dynasties/factions?",
         {name, id, image},
         {params: {address, signature}});
     }

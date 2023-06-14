@@ -538,7 +538,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
     if (!user.address) return;
 
     // console.log('connecting to socket...');
-    const socket = io('wss://testcms.ebisusbay.biz/socket/ryoshi-dynasties/battles?walletAddress='+user.address.toLowerCase());
+    const socket = io(`${config.urls.cmsSocket}ryoshi-dynasties/battles?walletAddress=${user.address.toLowerCase()}`);
 
     function onConnect() {
       setIsSocketConnected(true);

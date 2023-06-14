@@ -19,6 +19,8 @@ import Battlefield from "@src/Contracts/Battlefield.json";
 import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
 import styles from "./style.module.css";
 
+const config = appConfig();
+
 interface BattleMapProps {
   onChange: () => void;
 }
@@ -341,7 +343,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
     if (!user.address) return;
 
     console.log('connecting to socket...');
-    const socket = io('wss://testcms.ebisusbay.biz/socket/ryoshi-dynasties/battles?walletAddress='+user.address.toLowerCase());
+    const socket = io(`${config.urls.cmsSocket}ryoshi-dynasties/battles?walletAddress=${user.address.toLowerCase()}`);
 
     function onConnect() {
       setIsSocketConnected(true);

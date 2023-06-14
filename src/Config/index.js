@@ -23,6 +23,7 @@ export const configData = {
       app: 'https://app.ebisusbay.com/',
       subgraph: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.com/api/',
+      cmsSocket: 'wss://cms.ebisusbay.com/socket/',
       explorer: 'https://cronoscan.com/',
       cdn: {
         bunnykit: 'https://ik-proxy.b-cdn.net/',
@@ -125,6 +126,7 @@ export const configData = {
       app: 'https://app.ebisusbay.biz/',
       subgraph: 'https://cronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.biz/api/',
+      cmsSocket: 'wss://cms.ebisusbay.biz/socket/',
       explorer: 'https://cronoscan.com/',
       cdn: {
         bunnykit: 'https://ik-proxy.b-cdn.net/',
@@ -227,6 +229,7 @@ export const configData = {
       app: 'https://testapp.ebisusbay.biz/',
       subgraph: 'https://testcronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
       cms: 'https://testcms.ebisusbay.biz/api/',
+      cmsSocket: 'wss://testcms.ebisusbay.biz/socket/',
       explorer: 'https://testnet.cronoscan.com/',
       cdn: {
         bunnykit: 'https://ik-proxy.b-cdn.net/',
@@ -326,6 +329,7 @@ export const configData = {
       app: 'http://localhost:3000/',
       subgraph: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
       cms: 'http://localhost:4000/api/',
+      cmsSocket: 'wss://cms.ebisusbay.com/socket/',
       explorer: 'https://cronoscan.com/',
       cdn: {
         bunnykit: 'https://ik-proxy.b-cdn.net/',
