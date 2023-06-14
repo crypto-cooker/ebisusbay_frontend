@@ -321,12 +321,12 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
                     </VStack>
                   </Alert>
                 ) : (
-                  <Button type="submit"
-                    onClick={showDeleteWarning}  
-                    colorScheme='red'
-                    fontSize={{base: '12', sm: '14'}}
-                    variant={"outline"}
-                    >x Disband Faction</Button>
+                  // <Button type="submit"
+                  //   onClick={showDeleteWarning}  
+                  //   colorScheme='red'
+                  //   fontSize={{base: '12', sm: '14'}}
+                  //   variant={"outline"}
+                  //   >x Disband Faction</Button>
                 )}
                   </HStack>
                   </VStack>
