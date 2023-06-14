@@ -213,78 +213,84 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
               </Flex>
             </Box>
           </Box>
-          <Box px={6} pt={6}>
-            <SimpleGrid columns={2} fontSize='sm'>
-              <VStack>
-                <Text>Amount to stake</Text>
-                <FormControl maxW='200px' isInvalid={!!inputError}>
-                  <NumberInput
-                    defaultValue={1000}
-                    min={rdConfig.bank.staking.fortune.minimum}
-                    name="quantity"
-                    onChange={handleChangeFortuneAmount}
-                    value={fortuneToStake}
-                    step={1000}
-                  >
-                    <NumberInputField />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper color='#ffffffcc' />
-                      <NumberDecrementStepper color='#ffffffcc'/>
-                    </NumberInputStepper>
-                  </NumberInput>
-                  <FormErrorMessage>{inputError}</FormErrorMessage>
-                </FormControl>
-                <Flex>
-                  <Button textColor='#e2e8f0' variant='link' fontSize='sm' onClick={() => setFortuneToStake(userFortune)}>Stake all</Button>
-                </Flex>
-              </VStack>
+          {!isRetrievingFortune && userFortune > 0 ? (
+            <Box px={6} pt={6}>
+              <SimpleGrid columns={2} fontSize='sm'>
+                <VStack>
+                  <Text>Amount to stake</Text>
+                  <FormControl maxW='200px' isInvalid={!!inputError}>
+                    <NumberInput
+                      defaultValue={1000}
+                      min={rdConfig.bank.staking.fortune.minimum}
+                      name="quantity"
+                      onChange={handleChangeFortuneAmount}
+                      value={fortuneToStake}
+                      step={1000}
+                    >
+                      <NumberInputField />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper color='#ffffffcc' />
+                        <NumberDecrementStepper color='#ffffffcc'/>
+                      </NumberInputStepper>
+                    </NumberInput>
+                    <FormErrorMessage>{inputError}</FormErrorMessage>
+                  </FormControl>
+                  <Flex>
+                    <Button textColor='#e2e8f0' variant='link' fontSize='sm' onClick={() => setFortuneToStake(userFortune)}>Stake all</Button>
+                  </Flex>
+                </VStack>
 
-              <VStack>
-                <Text>Duration (days)</Text>
-                <FormControl maxW='250px' isInvalid={!!lengthError}>
-                  <Select onChange={handleChangeDays} value={daysToStake} bg='none'>
-                    {[...Array(12).fill(0)].map((_, i) => (
-                      <option key={i} value={`${(i + 1) * rdConfig.bank.staking.fortune.termLength}`}>
-                        {(i + 1)} {pluralize((i + 1), 'Season')} ({(i + 1) * rdConfig.bank.staking.fortune.termLength} days)
-                      </option>
-                    ))}
-                  </Select>
-                  <FormErrorMessage>{lengthError}</FormErrorMessage>
-                </FormControl>
-              </VStack>
-            </SimpleGrid>
-
-            <Box bgColor='#292626' rounded='md' p={4} mt={4} textAlign='center'>
-              <SimpleGrid columns={2}>
-                <Text>APR</Text>
-                <Text>Troops</Text>
-                <Text fontSize={24} fontWeight='bold'>{newApr * 100}%</Text>
-                <Text fontSize={24} fontWeight='bold'>{commify(round(newTroops))}</Text>
-                <Text fontSize={12} color='#aaa'>{commify(daysToStake)} day commitment</Text>
-                <Text fontSize={12} color='#aaa'>{commify(fortuneToStake)} $Fortune stake</Text>
+                <VStack>
+                  <Text>Duration (days)</Text>
+                  <FormControl maxW='250px' isInvalid={!!lengthError}>
+                    <Select onChange={handleChangeDays} value={daysToStake} bg='none'>
+                      {[...Array(12).fill(0)].map((_, i) => (
+                        <option key={i} value={`${(i + 1) * rdConfig.bank.staking.fortune.termLength}`}>
+                          {(i + 1)} {pluralize((i + 1), 'Season')} ({(i + 1) * rdConfig.bank.staking.fortune.termLength} days)
+                        </option>
+                      ))}
+                    </Select>
+                    <FormErrorMessage>{lengthError}</FormErrorMessage>
+                  </FormControl>
+                </VStack>
               </SimpleGrid>
-            </Box>
 
-
-            <Spacer h='8'/>
-            <Flex alignContent={'center'} justifyContent={'center'}>
-              <Box ps='20px'>
-                <RdButton
-                  fontSize={{base: 'xl', sm: '2xl'}}
-                  stickyIcon={true}
-                  onClick={handleStake}
-                  isLoading={isExecuting}
-                  disabled={isExecuting}
-                >
-                  {user.address ? (
-                    <>{isExecuting ? executingLabel : 'Stake $Fortune'}</>
-                  ) : (
-                    <>Connect</>
-                  )}
-                </RdButton>
+              <Box bgColor='#292626' rounded='md' p={4} mt={4} textAlign='center'>
+                <SimpleGrid columns={2}>
+                  <Text>APR</Text>
+                  <Text>Troops</Text>
+                  <Text fontSize={24} fontWeight='bold'>{newApr * 100}%</Text>
+                  <Text fontSize={24} fontWeight='bold'>{commify(round(newTroops))}</Text>
+                  <Text fontSize={12} color='#aaa'>{commify(daysToStake)} day commitment</Text>
+                  <Text fontSize={12} color='#aaa'>{commify(fortuneToStake)} $Fortune stake</Text>
+                </SimpleGrid>
               </Box>
-            </Flex>
-          </Box>
+
+
+              <Spacer h='8'/>
+              <Flex alignContent={'center'} justifyContent={'center'}>
+                <Box ps='20px'>
+                  <RdButton
+                    fontSize={{base: 'xl', sm: '2xl'}}
+                    stickyIcon={true}
+                    onClick={handleStake}
+                    isLoading={isExecuting}
+                    disabled={isExecuting}
+                  >
+                    {user.address ? (
+                      <>{isExecuting ? executingLabel : 'Stake $Fortune'}</>
+                    ) : (
+                      <>Connect</>
+                    )}
+                  </RdButton>
+                </Box>
+              </Flex>
+            </Box>
+          ) : !isRetrievingFortune && (
+            <Box textAlign='center' mt={4}>
+              <Text>You currently have no Fortune in your wallet.</Text>
+            </Box>
+          )}
         </>
       )}
     </Box>
