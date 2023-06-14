@@ -22,8 +22,9 @@ const config = appConfig();
 interface DailyCheckinProps {
   isOpen: boolean;
   onClose: () => void;
+  forceRefresh: () => void;
 }
-const DailyCheckin = ({isOpen, onClose}: DailyCheckinProps) => {
+const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
   const dispatch = useDispatch();
 
   const user = useAppSelector(state => state.user);
@@ -58,7 +59,6 @@ const DailyCheckin = ({isOpen, onClose}: DailyCheckinProps) => {
 
   const claimDailyRewards = async () => {
     if (!user.address) return;
-
       try {
         setExecutingClaim(true);
         let signatureInStorage = getAuthSignerInStorage()?.signature;
@@ -81,6 +81,7 @@ const DailyCheckin = ({isOpen, onClose}: DailyCheckinProps) => {
           toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
           setCanClaim(false);
           setNextClaim('in 24 hours');
+          forceRefresh();
         }
       } catch (error) {
         console.log(error)
