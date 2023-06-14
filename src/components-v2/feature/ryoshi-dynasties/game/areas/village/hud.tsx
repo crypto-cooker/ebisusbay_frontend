@@ -20,7 +20,7 @@ import NextApiService from "@src/core/services/api-service/next";
 import {ApiService} from "@src/core/services/api-service";
 import {ethers} from "ethers";
 import {useAppSelector} from "@src/Store/hooks";
-import {siPrefixedNumber} from "@src/utils";
+import {round, siPrefixedNumber} from "@src/utils";
 import ImageService from "@src/core/services/image";
 
 interface VillageHudProps {
@@ -46,11 +46,11 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, forceRefresh}: 
       const fortuneAndMitama = await ApiService.withoutKey().ryoshiDynasties.getErc20Account(user!.address!)
 
       if (nfts.data.length > 0) {
-        setKoban(siPrefixedNumber(nfts.data[0].balance));
+        setKoban(siPrefixedNumber(round(Number(nfts.data[0].balance))));
       }
       if (!!fortuneAndMitama) {
-        setFortune(siPrefixedNumber(ethers.utils.formatEther(fortuneAndMitama.fortuneBalance)));
-        setMitama(siPrefixedNumber(fortuneAndMitama.mitamaBalance));
+        setFortune(siPrefixedNumber(round(Number(ethers.utils.formatEther(fortuneAndMitama.fortuneBalance)))));
+        setMitama(siPrefixedNumber(round(Number(fortuneAndMitama.mitamaBalance))));
       }
     } catch (error) {
       console.log(error);

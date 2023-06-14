@@ -96,6 +96,7 @@ const ClaimRow = ({reward}: {reward: any}) => {
   const [isLoading, getSigner] = useCreateSigner();
   const [executingClaim, setExecutingClaim] = useState(false);
 
+  // Round down decimals so that user can't claim more than they have
   function convertToNumberAndRoundDown(numStr: string): number {
     const precision = 13; // the precision you want to keep
     const parts = numStr.split('.');
@@ -131,7 +132,7 @@ const ClaimRow = ({reward}: {reward: any}) => {
         <Text fontSize='xl' fontWeight='bold'>Season {commify(reward.blockId)}</Text>
         <HStack>
           <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="fortuneIcon" boxSize={6}/>
-          <Text>{reward.currentRewards}</Text>
+          <Text>{convertToNumberAndRoundDown(reward.currentRewards)}</Text>
         </HStack>
       </VStack>
       <RdButton
