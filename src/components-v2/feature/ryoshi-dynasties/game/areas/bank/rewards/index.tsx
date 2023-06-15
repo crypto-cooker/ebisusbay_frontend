@@ -28,7 +28,7 @@ interface WithdrawProps {
 const Rewards = ({ isOpen, onClose}: WithdrawProps) => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
-  const [currentTab, setCurrentTab] = useState(tabs.fortune);
+  const [currentTab, setCurrentTab] = useState(tabs.presale);
   const [page, setPage] = useState<string>();
 
   const handleConnect = async () => {
@@ -49,7 +49,7 @@ const Rewards = ({ isOpen, onClose}: WithdrawProps) => {
   };
 
   const handleClose = useCallback(() => {
-    setCurrentTab(tabs.fortune);
+    setCurrentTab(tabs.presale);
     onClose();
   }, []);
 
