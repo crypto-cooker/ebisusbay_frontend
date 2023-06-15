@@ -12,6 +12,7 @@ import ResourcesTab from "./resources";
 import FortuneRewardsTab from "./fortune";
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/rewards/faq-page";
+import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 
 const tabs = {
   fortune: 'fortune',
@@ -89,7 +90,11 @@ const Rewards = ({ isOpen, onClose}: WithdrawProps) => {
               </Flex>
               <Box>
                 {currentTab === tabs.fortune && (
-                  <FortuneRewardsTab />
+                  // <FortuneRewardsTab />
+
+                  <RdModalBox textAlign='center'>
+                    Coming Soon
+                  </RdModalBox>
                 )}
                 {currentTab === tabs.resources && (
                   <ResourcesTab />

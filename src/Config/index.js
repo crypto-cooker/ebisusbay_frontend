@@ -124,7 +124,7 @@ export const configData = {
     urls: {
       api: 'https://api.ebisusbay.biz/',
       app: 'https://app.ebisusbay.biz/',
-      subgraph: 'https://cronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
+      subgraph: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.biz/api/',
       cmsSocket: 'wss://cms.ebisusbay.biz/socket/',
       explorer: 'https://cronoscan.com/',
