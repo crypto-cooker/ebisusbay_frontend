@@ -133,7 +133,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
           fontSize={{base: '8px', sm: 'sm'}}
           hoverIcon={false}
           onClick={() => {
-            window.location.href='https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59';
+            window.open('https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59','_blank');
             }}
         >
           Buy $Fortune Token
@@ -192,8 +192,8 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
               _hover={{ bg: "yellow.900" }}
               _focus={{ boxShadow: "outline" }}
               onClick={() => {
-                window.location.href='https://ebisusbay.notion.site/ebisusbay/Ryoshi-Dynasties-8cb0bb21ad194af092cf1e1f8a8846c6';
-                }}
+                window.open('https://ebisusbay.notion.site/ebisusbay/Ryoshi-Dynasties-8cb0bb21ad194af092cf1e1f8a8846c6','_blank');
+            }}
             >
               Whitepaper
             </Box>
