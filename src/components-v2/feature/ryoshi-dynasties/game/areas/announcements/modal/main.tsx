@@ -133,10 +133,10 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
           fontSize={{base: '8px', sm: 'sm'}}
           hoverIcon={false}
           onClick={() => {
-            window.location.href='https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21';
+            window.location.href='https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59';
             }}
         >
-          Farm Fortune on VVS
+          Buy $Fortune Token
         </RdButton>
       </Box> 
 
@@ -146,7 +146,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
            h={{base: '185px', sm: '185px'}}>
           <VStack padding='2' w='100%' >
             <Text className={gothamBook.className} fontSize={{ base: '12px', md: '24px' }}>Information</Text>
-            <Box
+            {/* <Box
               as="button"
               bg=""
               py={1}
@@ -162,8 +162,8 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
                 }}
             >
               Token Launch
-            </Box>
-            <Box
+            </Box> */}
+            {/* <Box
               as="button"
               bg=""
               py={1}
@@ -179,7 +179,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
                 }}
             >
               Kickstarter
-            </Box>
+            </Box> */}
             <Box
               as="button"
               bg=""
