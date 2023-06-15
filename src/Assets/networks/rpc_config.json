@@ -20954,6 +20954,46 @@
         "kyc": "hidden",
         "verified": true
       }
+    },
+    {
+      "name": "Fortune Guards",
+      "slug": "fortune-guards",
+      "multiToken": true,
+      "address": "0x013f83434356c0a20698605eBAb337aab966AF88",
+      "tokens": [
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
+        },
+        {
+          "id": 5
+        }
+      ],
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Fortune Guards NFT from the team at Ebisu's Bay. Fortune Tellers gained from the Fortune presale can be exchanged 1:1 for Fortune Guards.",
+        "avatar": "/img/collections/fortuneteller/avatar.webp",
+        "card": "/img/collections/fortuneteller/card.webp",
+        "banner": "/img/collections/fortuneteller/banner.webp",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "hidden",
+        "verified": true
+      }
     }
   ],
   "drops": [
