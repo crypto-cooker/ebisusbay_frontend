@@ -146,6 +146,11 @@ export interface RdUserContext {
         bonus: {
             troops: number;
         }
+    },
+    dailyRewards: {
+        streak: number;
+        nextClaim: string;
+        nextReward: number;
     }
 }
 
