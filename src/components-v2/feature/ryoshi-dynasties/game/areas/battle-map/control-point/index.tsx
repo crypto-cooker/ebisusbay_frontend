@@ -47,7 +47,7 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
   }, []);
 
   useEffect(() => {
-    setTitle(controlPoint.name);
+    setTitle(controlPoint.name + ' : ' + controlPoint.points+' points');
     setIsLoading(false);
   }, [controlPoint]);
 

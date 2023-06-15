@@ -25,6 +25,9 @@ import ImageService from "@src/core/services/image";
 import {useAppSelector} from "@src/Store/hooks";
 import TokenSale from "@src/components-v2/feature/ryoshi-dynasties/token-sale";
 import Countdown from "react-countdown";
+import RyoshiDynasties from "@src/components-v2/feature/ryoshi-dynasties/game";
+import {ApiService} from "@src/core/services/api-service";
+import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 
 const fadeInUp = keyframes`
   0% {
@@ -130,7 +133,7 @@ const featuredAd = ads
     return now > millisecondTimestamp(ad.start) && (!ad.end || now < millisecondTimestamp(ad.end));
   });
 
-const Home = () => {
+const Home = ({rdConfig}: {rdConfig: RyoshiConfig | null}) => {
   const history = useRouter();
   const dispatch = useDispatch();
 
@@ -260,6 +263,7 @@ const Home = () => {
       {/*  </div>*/}
       {/*</section>*/}
       {/*<TokenSale />*/}
+      <RyoshiDynasties initialRdConfig={rdConfig}/>
       <Jumbotron.Host isDark={userTheme === 'dark'}>
         {!mobile && <div className="container">{JumbotronData()}</div>}
       </Jumbotron.Host>
@@ -438,6 +442,29 @@ const Home = () => {
   );
 };
 export default Home;
+
+export const getStaticProps = async () => {
+
+  try {
+    const rdConfig = await ApiService
+      .withKey(process.env.EB_API_KEY as string)
+      .ryoshiDynasties
+      .getGlobalContext();
+
+    return {
+      props: {
+        rdConfig: rdConfig
+      },
+    };
+  } catch (e) {
+    return {
+      props: {
+        rdConfig: null
+      },
+    }
+  }
+
+}
 
 declare global {
   interface Window {

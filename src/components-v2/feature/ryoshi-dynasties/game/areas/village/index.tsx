@@ -213,7 +213,7 @@ const Village = ({onChange}: VillageProps) => {
     'fishmarket_label' : {height: 545, width: 793, top: '36.5%', left: '55%'},
     'bank_label' : {height: 456, width: 579, top: '7%', left: '33%'},
   }
-  const buttonsNames = ["bank", "alliancecenter", "torii", "moongate", "barracks", "announcement", "fishmarket","boat", "academy", "tavern", "townhall"];
+  const buttonsNames = ["bank", "alliancecenter", "moongate", "barracks", "announcement", "boat"];
 
   const OpenAllianceCenter = () => {
     setBarracksOpen(false);
@@ -508,6 +508,10 @@ const Village = ({onChange}: VillageProps) => {
     // CheckForGameTokens();
   // }, [user.address])
 
+  useEffect(() => {
+    onOpenAnnouncementBoard();
+  }, []);
+
   const SetUpButtons = async () => {
     setPins(buttonsNames.map((button, i) =>
       (<Button style={{ marginTop: '4px', marginLeft: '4px' }}
@@ -572,8 +576,8 @@ const Village = ({onChange}: VillageProps) => {
     if (blockableAreas.includes(area)) {
       const blockableStates = [RdGameState.IN_MAINTENANCE, RdGameState.NOT_STARTED];
       // if (!rdGameContext?.state || blockableStates.includes(rdGameContext?.state)) {
-        onOpenBlockingModal();
-        return;
+        // onOpenBlockingModal();
+        // return;
       // }
     }
 
@@ -632,25 +636,25 @@ const Village = ({onChange}: VillageProps) => {
                       </Box>
                     </Box>
 
-                    <Box id="townhall" className={styles.enlarge} style={{position:"absolute", marginTop: townhallTop, marginLeft: townhallLeft, zIndex:"9"}}
+                    <Box  style={{position:"absolute", marginTop: townhallTop, marginLeft: townhallLeft, zIndex:"9"}}
                       // onClick={() => onChange('townHall')}
                     >
                       <img src={ImageService.translate('/img/battle-bay/mapImages/townhall.png').convert()} />
                     </Box>
 
-                    <Box id="tavern" className={styles.enlarge} style={{position:"absolute", marginTop: tavernTop, marginLeft: tavernLeft, zIndex:"9"}}
+                    <Box   style={{position:"absolute", marginTop: tavernTop, marginLeft: tavernLeft, zIndex:"9"}}
                       // onClick={() => onChange('tavern')}
                     >
                       <img src={ImageService.translate('/img/battle-bay/mapImages/tavern.png').convert()} />
                     </Box>
 
-                    <Box id="academy" className={styles.enlarge} style={{position:"absolute", marginTop: academyTop, marginLeft: academyLeft, zIndex:"9"}}
+                    <Box  style={{position:"absolute", marginTop: academyTop, marginLeft: academyLeft, zIndex:"9"}}
                       // onClick={() => onChange('academy')}
                     >
                       <img src={ImageService.translate('/img/battle-bay/mapImages/academy.png').convert()} />
                     </Box>
 
-                    <Box className={styles.enlarge} style={{position:"absolute", marginTop: tavernSpinTop, marginLeft: tavernSpinLeft, zIndex:"9", pointerEvents:"none"}}>
+                    <Box  style={{position:"absolute", marginTop: tavernSpinTop, marginLeft: tavernSpinLeft, zIndex:"9", pointerEvents:"none"}}>
                       <img src={ImageService.translate('/img/battle-bay/mapImages/tavern_turbine.apng').convert()} />
                     </Box>
 
@@ -660,11 +664,11 @@ const Village = ({onChange}: VillageProps) => {
                       <img src={ImageService.translate('/img/battle-bay/mapImages/boat_day.apng').convert()} />
                     </Box>
 
-                    <Box id="ebisustatue" className={styles.enlarge} style={{position:"absolute", marginTop: ebisustatueTop, marginLeft: ebisustatueLeft, zIndex:"9"}} >
+                    <Box style={{position:"absolute", marginTop: ebisustatueTop, marginLeft: ebisustatueLeft, zIndex:"9"}} >
                       <img src={ImageService.translate('/img/battle-bay/mapImages/ebisustatue.png').convert()} />
                     </Box>
 
-                    <Box id="fishmarket" className={styles.enlarge} style={{position:"absolute", marginTop: fishmarketTop, marginLeft: fishmarketLeft, zIndex:"9"}} >
+                    <Box style={{position:"absolute", marginTop: fishmarketTop, marginLeft: fishmarketLeft, zIndex:"9"}} >
                       <img src={ImageService.translate('/img/battle-bay/mapImages/fishmarket_day.apng').convert()} />
                     </Box>
 
@@ -706,11 +710,11 @@ const Village = ({onChange}: VillageProps) => {
                         <img src='/img/battle-bay/building_labels/moongate_label.png' /> </div> */}
                     </Box>
 
-                    <Box id="torii" className={styles.enlarge} style={{position:"absolute", marginTop: toriiTop, marginLeft: toriiLeft, zIndex:"9"}} >
+                    <Box id="torii"  style={{position:"absolute", marginTop: toriiTop, marginLeft: toriiLeft, zIndex:"9"}} >
                       <img src={ImageService.translate('/img/battle-bay/mapImages/torii.png').convert()} />
                     </Box>
 
-                    <Box className={styles.enlarge} style={{position:"absolute", marginTop: pondTop, marginLeft: pondLeft, zIndex:"8"}}>
+                    <Box style={{position:"absolute", marginTop: pondTop, marginLeft: pondLeft, zIndex:"8"}}>
                       <img src={ImageService.translate('/img/battle-bay/mapImages/pond1.apng').convert()} />
                     </Box>
 
