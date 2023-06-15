@@ -1,8 +1,11 @@
-import {useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Box, Center, Grid, GridItem, Stack, Text,Image, VStack, HStack, Flex, Spacer} from "@chakra-ui/react"
 import localFont from 'next/font/local';
 import {useAppSelector} from "@src/Store/hooks";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
+import {getAuthSignerInStorage} from "@src/helpers/storage";
+import {getRewardsStreak} from "@src/core/api/RyoshiDynastiesAPICalls";
+import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
@@ -15,7 +18,70 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
  
   const [isLoading, setIsLoading] = useState(false);
   const user = useAppSelector((state) => state.user);
-  const[dailyRewardClaimed, setDailyRewardClaimed] = useState(false);
+  const [isLoading2, getSigner] = useCreateSigner();
+
+  //timer
+  const Ref = useRef<NodeJS.Timer | null>(null);
+  const [timer, setTimer] = useState('00:00:00');
+  const [canClaim, setCanClaim] = useState(false);
+
+    //timer functions
+  const getTimeRemaining = (e:any) => {
+    const total = Date.parse(e) - Date.now();
+    const days = Math.floor(total / (1000 * 60 * 60 * 24));
+    const seconds = Math.floor((total / 1000) % 60);
+    const minutes = Math.floor((total / 1000 / 60) % 60);
+    const hours = Math.floor((total / 1000 / 60 / 60) % 24);
+    return {
+        total, days, hours, minutes, seconds
+    };
+  }
+  const startTimer = (e:any) => {
+      let { total, hours, days, minutes, seconds } = getTimeRemaining(e);
+      if (total >= 0) {
+          setTimer(
+              ((days) > 0 ? (days + ' days ') : (
+              (hours > 9 ? hours : '0' + hours) + ':' +
+              (minutes > 9 ? minutes : '0' + minutes) + ':' +
+              (seconds > 9 ? seconds : '0' + seconds)))
+          )
+      }
+  }
+  const clearTimer = (e:any) => {
+    startTimer(e);
+    if (Ref.current) clearInterval(Ref.current);
+    const id = setInterval(() => { startTimer(e); }, 1000) 
+    Ref.current = id;
+  }
+
+  const getRewardsStreakData = async () => {
+    if (!user.address) return;
+
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      try {
+        const data = await getRewardsStreak(user.address, signatureInStorage);
+        if(!data.data.data.nextClaim || data.data.data.nextClaim <= Date.now()) {
+          setCanClaim(true)
+        }
+        else{
+          setCanClaim(false)
+          clearTimer(data.data.data.nextClaim)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+
+  useEffect(() => {
+      getRewardsStreakData();
+  }, [user.address])
+
 
   return (
     <VStack padding='2'>
@@ -101,7 +167,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
                 hoverIcon={false}
                 onClick={onOpenDailyCheckin}
               >
-                {dailyRewardClaimed ? 'Return Tomorrow!' : 'Claim Daily Reward!'}
+                {canClaim ? 'Claim Daily Reward!' : 'Claim in ' + timer}
               </RdButton>
                 {/* <Image src="/img/battle-bay/announcementBoard/Koban.svg"> </Image> */}
             </VStack>

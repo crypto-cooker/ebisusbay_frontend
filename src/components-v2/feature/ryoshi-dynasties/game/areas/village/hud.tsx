@@ -15,13 +15,16 @@ import {
   Text
 } from "@chakra-ui/react";
 import RdButton from "../../../components/rd-button";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import NextApiService from "@src/core/services/api-service/next";
 import {ApiService} from "@src/core/services/api-service";
 import {ethers} from "ethers";
 import {useAppSelector} from "@src/Store/hooks";
 import {round, siPrefixedNumber} from "@src/utils";
 import ImageService from "@src/core/services/image";
+import {getAuthSignerInStorage} from "@src/helpers/storage";
+import {getRewardsStreak} from "@src/core/api/RyoshiDynastiesAPICalls";
+import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 
 interface VillageHudProps {
   onOpenBuildings: () => void;
@@ -36,7 +39,70 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, forceRefresh}: 
   const[koban, setKoban] = useState<number | string>(0);
   const[fortune, setFortune] = useState<number | string>(0);
   const[mitama, setMitama] = useState<number | string>(0);
+  const [isLoading2, getSigner] = useCreateSigner();
 
+  //timer
+  const Ref = useRef<NodeJS.Timer | null>(null);
+  const [timer, setTimer] = useState('00:00:00');
+  const [canClaim, setCanClaim] = useState(false);
+
+    //timer functions
+  const getTimeRemaining = (e:any) => {
+    const total = Date.parse(e) - Date.now();
+    const days = Math.floor(total / (1000 * 60 * 60 * 24));
+    const seconds = Math.floor((total / 1000) % 60);
+    const minutes = Math.floor((total / 1000 / 60) % 60);
+    const hours = Math.floor((total / 1000 / 60 / 60) % 24);
+    return {
+        total, days, hours, minutes, seconds
+    };
+  }
+  const startTimer = (e:any) => {
+      let { total, hours, days, minutes, seconds } = getTimeRemaining(e);
+      if (total >= 0) {
+          setTimer(
+              ((days) > 0 ? (days + ' days ') : (
+              (hours > 9 ? hours : '0' + hours) + ':' +
+              (minutes > 9 ? minutes : '0' + minutes) + ':' +
+              (seconds > 9 ? seconds : '0' + seconds)))
+          )
+      }
+  }
+  const clearTimer = (e:any) => {
+    startTimer(e);
+    if (Ref.current) clearInterval(Ref.current);
+    const id = setInterval(() => { startTimer(e); }, 1000) 
+    Ref.current = id;
+  }
+
+  const getRewardsStreakData = async () => {
+    if (!user.address) return;
+
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      try {
+        const data = await getRewardsStreak(user.address, signatureInStorage);
+        if(!data.data.data.nextClaim || data.data.data.nextClaim <= Date.now()) {
+          setCanClaim(true)
+        }
+        else{
+          setCanClaim(false)
+          clearTimer(data.data.data.nextClaim)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+
+  useEffect(() => {
+      getRewardsStreakData();
+  }, [user.address])
+  
   const getResources = async () => {
     try {
       setIsLoading(true);
@@ -116,6 +182,8 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, forceRefresh}: 
                     fontSize='m'
                     hoverIcon={false}
                     onClick={onOpenBuildings}
+                    w='175px'
+                    h='40px'
                   >
                     View Building
                   </RdButton>
@@ -125,8 +193,14 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, forceRefresh}: 
                     size='sm'
                     hoverIcon={false}
                     onClick={onOpenDailyCheckin}
+                    w='200px'
+                    h='40px'
                   >
-                    Daily Claim
+                    {canClaim ? (
+                      "Claim Daily Rewards"
+                    ) : (
+                      "Claim in "+ timer
+                     )}
                   </RdButton>
                 </Stack>
               </AccordionPanel>
