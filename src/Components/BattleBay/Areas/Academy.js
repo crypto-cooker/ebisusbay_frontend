@@ -8,13 +8,12 @@ import {
   Box,
   VStack,
 } from '@chakra-ui/react';
-import { getProfileTroops, getWeeklyGameId, getReward, getProfileId, getFactionsOwned, subscribeFaction, getSeasonGameId } from "@src/core/api/RyoshiDynastiesAPICalls";
+import { getProfileTroops, getWeeklyGameId, getReward, getProfileId, getFactionOwned, subscribeFaction, getSeasonGameId } from "@src/core/api/RyoshiDynastiesAPICalls";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
 import { useState, useEffect } from "react";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
-
-
+import ReturnToVillageButton from "@src/components-v2/feature/ryoshi-dynasties/components/return-button";
 
 const Academy = ({onBack}) => {
 
@@ -56,8 +55,8 @@ const Academy = ({onBack}) => {
     
           // const res = await getProfileId(user.address.toLowerCase(), signatureInStorage);
           // console.log("Profile Id: "+res.data.data[0].profileId)
-          const data = await getFactionsOwned(user.address.toLowerCase(), signatureInStorage);
-          console.log(data.data.data[0])
+          const data = await getFactionOwned(user.address.toLowerCase(), signatureInStorage);
+          console.log(data.data.data)
 
         } catch (error) {
           console.log(error)
@@ -90,7 +89,7 @@ const Academy = ({onBack}) => {
 
   return (
     <section className="gl-legacy container">
-      <Button onClick={onBack}>Back to Village Map</Button>
+      <ReturnToVillageButton onBack={onBack} />
       <Heading className="title text-center">Academy - Wiki</Heading>
 
       <Grid templateColumns='repeat(2, 1fr)' gap={6}>

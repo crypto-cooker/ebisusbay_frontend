@@ -4,9 +4,12 @@ import axios from "axios";
 
 import { deepValidation } from '../../helpers/validator';
 import UploadAssetFactionIcon from './UploadAssetFactionIcon';
-// import UploadFactionIconPfp from "@src/core/api/RyoshiDynastiesAPICalls";
 import { getAuthSignerInStorage } from '@src/helpers/storage';
 import {useSelector} from "react-redux";
+import { toast } from 'react-toastify';
+import {appConfig} from "@src/Config";
+
+const config = appConfig();
 
 const UploadFactionIcon = ({
   value = [],
@@ -22,10 +25,10 @@ const UploadFactionIcon = ({
   faction,
   onSuccess
 }) => {
-    const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);
 
-    
   const onUpload = (i) => (asset) => {
+    console.log(asset);
     const newAsset = { ...asset, position: i };
     const index = value.findIndex(({ position }) => position === i);
 
@@ -33,7 +36,6 @@ const UploadFactionIcon = ({
     // console.log(newData);
     // console.log(faction);
     CallPatchFaction(newData, faction);
-    // onChange(name, newData);
     onTouched(name);
   };
 
@@ -45,28 +47,28 @@ const UploadFactionIcon = ({
     }
     if (signatureInStorage) {
       try {
-        console.log(faction.id, newData[0].result)
+        // console.log(faction.id, newData[0].result)
         const res = await UploadFactionIconPfp(user.address.toLowerCase(), signatureInStorage, 
           faction.name, Number(faction.id), newData[0].result);
-        // console.log(res);
+        console.log(res);
+        toast.success("Faction icon updated! Refreshing...");
         onSuccess();
 
       } catch (error) {
         console.log(error)
+        toast.error("Icon too large, please use a smaller image")
       }
     }
   }
 
   const api = axios.create({
-    baseURL: 'api/',
+    baseURL: config.urls.cms,
   });
-
-  const baseURL = 'https://testcms.ebisusbay.biz/';
 
   const UploadFactionIconPfp = async (address, signature, name, id, image) => {
     try{
       // console.log(address, signature, name, image);
-      return await api.patch(baseURL + "api/ryoshi-dynasties/factions?", 
+      return await api.patch("ryoshi-dynasties/factions?",
         {name, id, image},
         {params: {address, signature}});
     }
@@ -89,11 +91,11 @@ const UploadFactionIcon = ({
   };
 
   return (
-    <Form.Group className={`form-field mb-3 ${error ? 'field-message-error' : ''}`}>
+    <Form.Group className={`form-field  ${error ? 'field-message-error' : ''}`}>
       <div className="upload-container overflow-auto justify-content-center">
         {[...Array(numberOfAssets).keys()].map((_, i) => {
           const asset = value.find(({ position }) => position === i);
-          // console.log("asset:" + asset);
+
           return (
             <UploadAssetFactionIcon
               key={`${name}-${i}`}
@@ -108,9 +110,9 @@ const UploadFactionIcon = ({
           );
         })}
       </div>
-      <Form.Text className="field-description text-muted">
+      {/* <Form.Text className="field-description text-muted">
         {error ? (typeof error === 'string' ? error : getErrorMessage(error[error.length - 1])) : description}
-      </Form.Text>
+      </Form.Text> */}
     </Form.Group>
   );
 };

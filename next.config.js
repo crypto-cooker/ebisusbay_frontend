@@ -24,6 +24,8 @@ const nextConfig = {
       'ebisusbay-prod.b-cdn.net',
       'ebisusbay-dev.b-cdn.net',
       'ebisusbay-test.b-cdn.net',
+      'ebisusbay-test-no-op.b-cdn.net',
+      'ebisusbay-prod-no-op.b-cdn.net'
     ],
     formats: ['image/webp'],
   },
@@ -179,17 +181,12 @@ const nextConfig = {
         permanent: false,
       },
       {
-        source: '/battle-bay',
-        destination: '/',
-        permanent: false,
-      },
-      {
         source: '/sales_bot',
         destination:
           'https://discord.com/api/oauth2/authorize?client_id=976699886890254356&permissions=269503504&scope=bot%20applications.commands',
         permanent: false,
         basePath: false,
-      },
+      }
     ];
   },
 };

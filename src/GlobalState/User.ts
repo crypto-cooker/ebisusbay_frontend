@@ -1,29 +1,31 @@
-import {createSlice, Dispatch} from '@reduxjs/toolkit';
-import {ethers, BigNumber, Contract} from 'ethers';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {BigNumber, Contract, ethers} from 'ethers';
 import Web3Modal from 'web3modal';
 
 import detectEthereumProvider from '@metamask/detect-provider';
-import { DeFiWeb3Connector } from 'deficonnect';
+import {DeFiWeb3Connector} from 'deficonnect';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import * as DefiWalletConnectProvider from '@deficonnect/web3-provider';
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 import {
   caseInsensitiveCompare,
   createSuccessfulTransactionToastContent,
   findCollectionByAddress,
   isUserBlacklisted,
 } from '../utils';
-import { appAuthInitFinished } from './InitSlice';
-import { captureException } from '@sentry/react';
-import { setThemeInStorage } from '../helpers/storage';
-import { getAllOffers } from '../core/subgraph';
-import { offerState } from '../core/api/enums';
-import { appConfig } from '../Config';
-import { MarketFilterCollection } from '../Components/Models/market-filters.model';
+import {appAuthInitFinished} from './InitSlice';
+import {captureException} from '@sentry/react';
+import {setThemeInStorage} from '../helpers/storage';
+import {getAllOffers} from '../core/subgraph';
+import {offerState} from '../core/api/enums';
+import {appConfig} from '../Config';
+import {MarketFilterCollection} from '../Components/Models/market-filters.model';
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import UserContractService from "@src/core/contractService";
 import {ERC20} from "@src/Contracts/Abis";
 import FortunePresale from "@src/Contracts/FortunePresale.json";
+import Fortune from "@src/Contracts/Fortune.json";
+import Bank from "@src/Contracts/Bank.json";
 
 const config = appConfig();
 
@@ -48,6 +50,10 @@ interface UserState {
   harvestingStakingRewards: boolean;
   usesEscrow: boolean;
   updatingEscrowStatus: boolean;
+  fortuneBalance: number;
+  loadedFortuneBalance: boolean;
+  mitamaBalance: number;
+  loadedMitamaBalance: boolean;
   myNftPageTransferDialog: any;
   myNftPageListDialog: any;
   myNftPageListDialogError: boolean;
@@ -99,6 +105,10 @@ const userSlice = createSlice({
     harvestingStakingRewards: false,
     usesEscrow: false,
     updatingEscrowStatus: false,
+    fortuneBalance: 0,
+    loadedFortuneBalance: false,
+    mitamaBalance: 0,
+    loadedMitamaBalance: false,
 
     // My NFTs
     nftsInitialized: false,
@@ -233,6 +243,10 @@ const userSlice = createSlice({
         usdc: 0,
         fortune: 0
       }
+      state.fortuneBalance = 0;
+      state.loadedFortuneBalance = false;
+      state.mitamaBalance = 0;
+      state.loadedMitamaBalance = false;
     },
     onThemeChanged(state, action) {
       state.theme = action.payload;
@@ -254,9 +268,17 @@ const userSlice = createSlice({
     setProfile(state, action) {
       state.profile = action.payload;
     },
-    setTokenSaleStats(state, action) {
+    setTokenPresaleStats(state, action) {
       state.tokenSale.usdc = action.payload.usdc;
       state.tokenSale.fortune = action.payload.fortune;
+    },
+    setFortuneBalance(state, action: PayloadAction<number>) {
+      state.fortuneBalance = action.payload;
+      state.loadedFortuneBalance = true;
+    },
+    setMitamaBalance(state, action: PayloadAction<number>) {
+      state.mitamaBalance = action.payload;
+      state.loadedMitamaBalance = true;
     }
   },
 });
@@ -279,7 +301,9 @@ export const {
   balanceUpdated,
   onOutstandingOffersFound,
   setProfile,
-  setTokenSaleStats,
+  setTokenPresaleStats,
+  setFortuneBalance,
+  setMitamaBalance
 } = userSlice.actions;
 export const user = userSlice.reducer;
 
@@ -464,6 +488,7 @@ export const connectAccount =
       );
 
       dispatch(updateFortuneBalance());
+      dispatch(updateMitamaBalance());
 
     } catch (error) {
       captureException(error, {
@@ -632,7 +657,7 @@ export const updateBalance = () => async (dispatch: any, getState: any) => {
   dispatch(userSlice.actions.balanceUpdated(balance));
 };
 
-export const updateFortuneBalance = () => async (dispatch: any, getState: any) => {
+export const updateFortunePresaleBalance = () => async (dispatch: any, getState: any) => {
   const { user } = getState();
   const { address, provider } = user;
 
@@ -642,12 +667,32 @@ export const updateFortuneBalance = () => async (dispatch: any, getState: any) =
   const fortuneContract = new Contract(config.contracts.purchaseFortune, FortunePresale, provider.getSigner());
   const fortuneBalance = await fortuneContract.purchases(address);
 
-  dispatch(setTokenSaleStats({
+  dispatch(setTokenPresaleStats({
     usdc: usdcBalance.div(1000000).toNumber(),
     fortune: Number(fortuneBalance),
   }));
 };
 
+
+export const updateFortuneBalance = () => async (dispatch: any, getState: any) => {
+  const { user } = getState();
+  const { provider } = user;
+
+  const fortuneContract = new Contract(config.contracts.fortune, Fortune, provider.getSigner());
+  const fortuneBalance = await fortuneContract.balanceOf(user.address?.toLowerCase());
+
+  dispatch(setFortuneBalance(Number(ethers.utils.formatEther(fortuneBalance))));
+};
+
+export const updateMitamaBalance = () => async (dispatch: any, getState: any) => {
+  const { user } = getState();
+  const { provider } = user;
+
+  const bankContract = new Contract(config.contracts.bank, Bank, provider.getSigner());
+  const mitamaBalance = await bankContract.getMitamaFor(user.address?.toLowerCase());
+
+  dispatch(setMitamaBalance(Number(mitamaBalance)));
+};
 
 export const retrieveProfile = () => async (dispatch: any, getState: any) => {
   const { user } = getState();

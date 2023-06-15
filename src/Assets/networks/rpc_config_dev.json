@@ -8350,7 +8350,7 @@
       "multiToken": false,
       "address": "0xCe55EDF574FbB862C34CacC05f8386e26641B195",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Apes embark on a journey through the Kingdom of Utopia to set foot on the world! Apes Utopia is a collection of 2,222 NFTs with over 200 features built on the Cronos blockchain. Apes Utopia NFTs provide access to various benefits in our ecosystem. Apes Utopia owners can participate in special events such as NFT sweepstakes, surprise sweepstakes, giveaways and much more. Remember, all Apes Utopia is special - but some are particularly special.",
         "avatar": "/img/collections/apes-utopia/avatar.gif",
@@ -20919,9 +20919,80 @@
         "categories": []
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
+      }
+    },
+    {
+      "name": "Ryoshi Resources",
+      "slug": "ryoshi-resources",
+      "multiToken": true,
+      "address": "0xce3f4e59834b5B52B301E075C5B3D427B6884b3d",
+      "tokens": [
+        {
+          "id": 1
+        }
+      ],
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/fortuneteller/avatar.webp",
+        "card": "/img/collections/fortuneteller/card.webp",
+        "banner": "/img/collections/fortuneteller/banner.webp",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "hidden",
+        "verified": true
+      }
+    },
+    {
+      "name": "Fortune Guards",
+      "slug": "fortune-guards",
+      "multiToken": true,
+      "address": "0x013f83434356c0a20698605eBAb337aab966AF88",
+      "tokens": [
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
+        },
+        {
+          "id": 5
+        }
+      ],
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Fortune Guards NFT from the team at Ebisu's Bay. Fortune Tellers gained from the Fortune presale can be exchanged 1:1 for Fortune Guards.",
+        "avatar": "/img/collections/fortuneteller/avatar.webp",
+        "card": "/img/collections/fortuneteller/card.webp",
+        "banner": "/img/collections/fortuneteller/banner.webp",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "hidden",
+        "verified": true
       }
     }
   ],

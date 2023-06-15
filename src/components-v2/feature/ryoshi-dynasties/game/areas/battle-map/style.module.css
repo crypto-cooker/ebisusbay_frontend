@@ -1,0 +1,388 @@
+/* 37.99% */
+/* @font-face{
+  font-family: control_point_font;
+  src: url(fonts/GothamCond-Black.otf);
+} */
+/* body{
+	margin: auto;
+    cursor: grab;
+	//overflow: hidden;
+} */
+.background{
+	height: 2021px;
+	width: 2880px;
+	background-image: url("/img/battle-bay/imgs/world_map_background.jpg");
+}
+.enlarge:hover{
+  transform: scale(1.1); 
+}
+.water{
+	position: absolute;
+	height: 2021px;
+	width: 2880px;
+	background-image: url("/img/battle-bay/imgs/water.gif");
+}
+.the_conflagration{
+	position: absolute;
+	width: 375px;
+	height: 342px;
+	top: 212px;
+	left: 2395px;
+	background-image: url("/img/battle-bay/imgs/the_conflagration.gif");
+	transition: all .15s ease-in-out; /* Animation */
+}
+.volcanic_reach{
+	position: absolute;
+	width: 199px;
+	height: 193px;
+	top: 264px;
+	left: 1977px;
+	background-image: url("/img/battle-bay/imgs/volcanic_reach.png");
+	transition: all .15s ease-in-out; /* Animation */
+}
+.buccaneer_beach{
+	position: absolute;
+	width: 296;
+	height: 295px;
+	top: 590px;
+	left: 320px;
+	background-image: url("/img/battle-bay/imgs/pirate_ship.gif");
+	transition: all .15s ease-in-out; /* Animation */
+}
+.clutch_of_fukurokuju{
+	position: absolute;
+	width: 241px;
+	height: 242px;
+	top: 20px;
+	left: 898px;
+	background-image: url("/img/battle-bay/imgs/clutch_of_fukurokujo.gif");
+	transition: all .15s ease-in-out; /* Animation */
+}
+.orcunheim{
+	position: absolute;
+	width: 501px;
+	height: 368px;
+	top: 20px;
+	left: 1398px;
+	background-image: url("/img/battle-bay/imgs/orcunheim.gif");
+	transition: all .15s ease-in-out; /* Animation */
+}
+.felisgarde{
+	position: absolute;
+	width: 473px;
+	height: 435px;
+	top: 968px;
+	left: 732px;
+	background-image: url("/img/battle-bay/imgs/felisgarde.gif");
+	transition: all .15s ease-in-out; /* Animation */
+}
+.ebisusbay{
+	position: absolute;
+	width: 266px;
+	height: 193px;
+	top: 1555px;
+	left: 800px;
+	background-image: url("/img/battle-bay/imgs/ebisusbay.gif");
+	transition: all .15s ease-in-out; /* Animation */
+}
+.iron_bastion{
+	position: absolute;
+	width: 403px;
+	height: 207px;
+	top: 811px;
+	left: 2138px;
+	background-image: url("/img/battle-bay/imgs/iron_bastion.png");
+	transition: all .15s ease-in-out; /* Animation */
+}
+.dragon_roost{
+	position: absolute;
+	width: 187px;
+	height: 272px;
+	top: 719px;
+	left: 1824px;
+	background-image: url("/img/battle-bay/imgs/dragon_roost.png");
+	transition: all .15s ease-in-out; /* Animation */
+}
+.ancestors_final_rest{
+	position: absolute;
+	width: 392px;
+	height: 238px;
+	top: 1104px;
+	left: 1884px;
+	background-image: url("/img/battle-bay/imgs/ancestors_final_rest.gif");
+	transition: all .15s ease-in-out; /* Animation */
+}
+.nyar_spire{
+	position: absolute;
+	width: 317px;
+	height: 450px;
+	top: 1080px;
+	left: 2425px;
+	background-image: url("/img/battle-bay/imgs/nyar_spire.gif");
+	transition: all .15s ease-in-out; /* Animation */
+}
+.ice_shrine{
+	position: absolute;
+	width: 277px;
+	height: 223px;
+	top: 254px;
+	left: 1038px;
+	background-image: url("/img/battle-bay/imgs/ice_shrine.png");
+	transition: all .15s ease-in-out; /* Animation */
+}
+.omoikanes_athenaeum{
+	position: absolute;
+	width: 241px;
+	height: 331px;
+	top: 378px;
+	left: 705px;
+	background-image: url("/img/battle-bay/imgs/omoikanes_athenaeum.png");
+	transition: all .15s ease-in-out; /* Animation */
+}
+.mitagi_retreat{
+	position: absolute;
+	width: 280px;
+	height: 236px;
+	top: 267px;
+	left: 464px;
+	background-image: url("/img/battle-bay/imgs/hunters_retreat.png");
+	transition: all .15s ease-in-out; /* Animation */
+}
+.mitamic_fissure{
+	position: absolute;
+	width: 381px;
+	height: 461px;
+	top: 540px;
+	left: 875px;
+
+	background-image: url("/img/battle-bay/imgs/mitamic_fissure.gif");
+	transition: all .15s ease-in-out; /* Animation */
+}
+.seashrine{
+	position: absolute;
+	width: 507px;
+	height: 586px;
+	top: 350px;
+	left: 1300px;
+	background-image: url("/img/battle-bay/imgs/seashrine.png");
+	transition: all .15s ease-in-out; /* Animation */
+}
+.classy_keep{
+	position: absolute;
+	width: 325px;
+	height: 492px;
+	top: 804px;
+	left: 1276px;
+	background-image: url("/img/battle-bay/imgs/classy_keep.gif");
+	transition: all .15s ease-in-out; /* Animation */
+}
+.venoms_descent{
+	position: absolute;
+	width: 255px;
+	height: 186px;
+	top: 1684px;
+	left: 1350px;
+	background-image: url("/img/battle-bay/imgs/venoms_descent.gif");
+	transition: all .15s ease-in-out; /* Animation */
+}
+.infinite_nexus{
+	position: absolute;
+	width: 379px;
+	height: 529px;
+	top: 1178px;
+	left: 1454px;
+	background-image: url("/img/battle-bay/imgs/infinite_ignition.gif");
+	transition: all .15s ease-in-out; /* Animation */
+}
+.verdant_forest{
+	position: absolute;
+	width: 239px;
+	height: 259px;
+	top: 1100px;
+	left: 455px;
+	background-image: url("/img/battle-bay/imgs/verdant_forest.png");
+	transition: all .15s ease-in-out; /* Animation */
+}
+.explosion{
+	position: relative;
+	width: 250px;
+	height: 207px;
+	top: 150px;
+	left: 150px;
+	background-image: url("/img/battle-bay/imgs/explosion.png");
+	transition: all .15s ease-in-out; /* Animation */
+}
+
+/*  */ 
+.worldmap_label{
+	font-family: control_point_font;
+	font-size: 2.75em;
+	font-weight: bold;
+	font-style: italic;
+	letter-spacing: -1px;
+	transform: scale(1, .7);
+	line-height: .9em;
+	position: relative;
+}
+
+.seashrine_label{
+	top: 338px;
+	left: 176px;
+	color: #d9ffff;
+	text-shadow:  0px 4px .2em #32c7ec;
+	-webkit-text-stroke: 1px #00526c;
+	text-stroke: 1px #00526c;
+}
+.mitamic_fissure_label{
+	top: 428px;
+	left: 90px;
+	color: #d9ffff;
+	text-shadow:  0px 4px .2em #32c7ec;
+	-webkit-text-stroke: 1px #00526c;
+	text-stroke: 1px #00526c;
+}
+.classy_keep_label{
+	top: 460px;
+	left: 110px;
+	color: #d9ffff;
+	text-shadow:  0px 4px .2em #32c7ec;
+	-webkit-text-stroke: 1px #00526c;
+	text-stroke: 1px #00526c;
+}
+.felisgarde_label{
+	top: 200px;
+	left: 192px;
+	color: #c2ffbf;
+	text-shadow:  0px 4px .2em #1a7d00;
+	-webkit-text-stroke: 1px #1a7d00;
+	text-stroke: 1px #1a7d00;
+}
+.verdant_forest_label{
+	top: 240px;
+	left: 50px;
+	color: #c2ffbf;
+	text-shadow:  0px 4px .2em #1a7d00;
+	-webkit-text-stroke: 1px #1a7d00;
+	text-stroke: 1px #1a7d00;
+}
+.ebisusbay_label{
+	top: 180px;
+	left: 50px;
+	color: #d9ffff;
+	text-shadow:  0px 4px .2em #32c7ec;
+	-webkit-text-stroke: 1px #00526c;
+	text-stroke: 1px #00526c;
+}
+.buccaneer_beach_label{
+	top: 255px;
+	left: 10px;
+	color: #f4ffe9;
+	text-shadow:  0px 4px .2em #254b00;
+	-webkit-text-stroke: 1px #368700;
+	text-stroke: 1px #368700;
+}
+.omoikanes_athenaeum_label{
+	top: 330px;
+	left: 50px;
+	color: #f4ffe9;
+	text-shadow:  0px 4px .2em #254b00;
+	-webkit-text-stroke: 1px #368700;
+	text-stroke: 1px #368700;
+}
+.mitagi_retreat_label{
+	top: 230px;
+	left: 50px;
+	color: #f4ffe9;
+	text-shadow:  0px 4px .2em #254b00;
+	-webkit-text-stroke: 1px #368700;
+	text-stroke: 1px #368700;
+}
+.ice_shrine_label{
+	top: 180px;
+	left: 90px;
+	color: #fff;
+	text-shadow:  0px 4px .2em #32c7ec;
+	-webkit-text-stroke: 1px #0073aa;
+	text-stroke: 1px #0073aa;
+}
+.clutch_of_fukurokuju_label{
+	top: 235px;
+	left: 20px;
+	color: #fff;
+	text-shadow:  0px 4px .2em #32c7ec;
+	-webkit-text-stroke: 1px #0073aa;
+	text-stroke: 1px #0073aa;
+}
+.orcunheim_label{
+	top: 315px;
+	left: 180px;
+	color: #fff;
+	text-shadow:  0px 4px .2em #32c7ec;
+	-webkit-text-stroke: 1px #0073aa;
+	text-stroke: 1px #0073aa;
+}
+.nyar_spire_label{
+	top: 430px;
+	left: 100px;
+	color: #ffecff;
+	text-shadow:  0px 4px .2em #ff6aff;
+	-webkit-text-stroke: 1px #6c006c;
+	text-stroke: 1px #6c006c;
+}
+.dragon_roost_label{
+	top: 270px;
+	left: 0px;
+	color: #ffecff;
+	text-shadow:  0px 4px .2em #ff6aff;
+	-webkit-text-stroke: 1px #6c006c;
+	text-stroke: 1px #6c006c;
+}
+.ancestors_final_rest_label{
+	top: 230px;
+	left: 42px;
+	color: #ffecff;
+	text-shadow:  0px 4px .2em #ff6aff;
+	-webkit-text-stroke: 1px #6c006c;
+	text-stroke: 1px #6c006c;
+}
+.infinite_nexus_label{
+	top: 365px;
+	left: 138px;
+	color: #fff8e5;
+	text-shadow:  0px 4px .2em #ffbf00 ;
+	-webkit-text-stroke: 1px #664c00;
+	text-stroke: 1px #664c00;
+}
+.venoms_descent_label{
+	width: 110%;
+	top: 175px;
+	left: 20px;
+	color: #fff8e5;
+	text-shadow:  0px 4px .2em #ffbf00 ;
+	-webkit-text-stroke: 1px #664c00;
+	text-stroke: 1px #664c00;
+}
+.iron_bastion_label{
+	top: 185px;
+	left: 70px;
+	color: #fff2f2;
+	text-shadow:  0px 4px .2em #bf0505 ;
+	-webkit-text-stroke: 1px #510303 ;
+	text-stroke: 1px #510303 ;
+}
+.the_conflagration_label{
+	top: 300px;
+	left: 62px;
+	color: #fff2f2;
+	text-shadow:  0px 4px .2em #bf0505 ;
+	-webkit-text-stroke: 1px #510303 ;
+	text-stroke: 1px #510303 ;
+}
+.volcanic_reach_label{
+	top: 170px;
+	left: 0px;
+	color: #fff2f2;
+	text-shadow:  0px 4px .2em ##bf0505 ;
+	-webkit-text-stroke: 1px #510303 ;
+	text-stroke: 1px #510303 ;
+}

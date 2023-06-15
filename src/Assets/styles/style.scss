@@ -5765,17 +5765,36 @@ iframe.metaverse {
           -1px  0   0 #9f2729;
 }
 
-.rd-bank-modal-mask1 {
-  --g: #0000 98%,#000;
-  --r: 40px;
+.rd-bank-modal-masktop-outer {
   --mask: radial-gradient(45px at 45px 0,#0000 98%,#000) -45px;
   -webkit-mask: var(--mask);
   mask: var(--mask);
 }
 
-.rd-bank-modal-mask2 {
-
+.rd-bank-modal-masktop-inner {
   --mask: radial-gradient(50px at 50px 0,#0000 98%,#000) -50px;
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+}
+
+.rd-bank-modal-maskright-outer {
+  --mask: radial-gradient(45px at 100% 0,#0000 98%,#000);
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+}
+.rd-bank-modal-maskright-inner {
+  --mask: radial-gradient(50px at 100% 0,#0000 98%,#000);
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+}
+
+.rd-bank-modal-maskleft-outer {
+  --mask: radial-gradient(45px at 0% 0,#0000 98%,#000);
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+}
+.rd-bank-modal-maskleft-inner {
+  --mask: radial-gradient(50px at 0% 0,#0000 98%,#000);
   -webkit-mask: var(--mask);
   mask: var(--mask);
 }

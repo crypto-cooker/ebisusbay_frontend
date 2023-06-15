@@ -64,13 +64,8 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
       // const totalFortunePurchased = await fortuneContract.totalPurchased();
 
       const apiService = new ApiService();
-      const totalFortunePurchased = await apiService.globalTotalPurchased();
-      const userFortunePurchased = !!user.address ? await apiService.userTotalPurchased(user.address) : 0;
-
-      // console.log('data', {
-      //   total: totalFortunePurchased,
-      //   user: userFortunePurchased
-      // });
+      const totalFortunePurchased = await apiService.ryoshiDynasties.globalTotalPurchased();
+      const userFortunePurchased = !!user.address ? await apiService.ryoshiDynasties.userTotalPurchased(user.address) : 0;
 
       return {
         paused,
@@ -145,7 +140,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
         >
           <VStack spacing={4} align='end'>
             {Date.now() > config.tokenSale.vipStart && Date.now() < config.tokenSale.publicEnd && (
-              <RdButton w='full' hideIcon={abbreviateButtonText} onClick={() => handlePurchaseDialogOpen('default')}>
+              <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={() => handlePurchaseDialogOpen('default')}>
                 {abbreviateButtonText ? (
                   <Icon as={FontAwesomeIcon} icon={faDollarSign} />
                 ) : (
@@ -153,14 +148,14 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
                 )}
               </RdButton>
             )}
-            <RdButton w='full' hideIcon={abbreviateButtonText} onClick={() => handlePurchaseDialogOpen('faq')}>
+            <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={() => handlePurchaseDialogOpen('faq')}>
               {abbreviateButtonText ? (
                 <Icon as={FontAwesomeIcon} icon={faCircleInfo} />
               ) : (
                 <>FAQ</>
               )}
             </RdButton>
-            <RdButton w='full' hideIcon={abbreviateButtonText} onClick={handleExit}>
+            <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={handleExit}>
               {abbreviateButtonText ? (
                 <Icon as={FontAwesomeIcon} icon={faArrowRightFromBracket} />
               ) : (
