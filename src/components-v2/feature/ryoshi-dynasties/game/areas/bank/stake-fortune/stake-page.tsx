@@ -193,7 +193,7 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
     
     let bonusApr = 0;
     if (rdUser) {
-      bonusApr = (apr * rdUser.bank.bonus.mApr) + rdUser.bank.bonus.aApr;
+      bonusApr = (apr + rdUser.bank.bonus.aApr) * (1 + rdUser.bank.bonus.mApr);
     }
     setBonusApr(bonusApr);
     setTotalApr(apr + bonusApr);
