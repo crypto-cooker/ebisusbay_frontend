@@ -1,11 +1,13 @@
 import React, {useEffect, useRef, useState} from "react";
-import {Box, Center, Grid, GridItem, Stack, Text,Image, VStack, HStack, Flex, Spacer} from "@chakra-ui/react"
+import {Box, Grid, GridItem, Text, VStack} from "@chakra-ui/react"
 import localFont from 'next/font/local';
 import {useAppSelector} from "@src/Store/hooks";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {getAuthSignerInStorage} from "@src/helpers/storage";
 import {getRewardsStreak} from "@src/core/api/RyoshiDynastiesAPICalls";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
+import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+import {useRouter} from "next/router";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
@@ -15,6 +17,7 @@ interface Props {
 }
 
 const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
+  const router = useRouter();
  
   const [isLoading, setIsLoading] = useState(false);
   const user = useAppSelector((state) => state.user);
@@ -85,6 +88,9 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
 
   return (
     <VStack padding='2'>
+      <RdModalBox textAlign='center'>
+        Welcome to Ryoshi Dynasties! A captivating gamified DAO experience, combining NFT marketplace, battles, and strategic gameplay. Build your dynasty, collect rare NFTs, and earn rewards.
+      </RdModalBox>
       <Box 
        bg='#272523' 
        rounded='md' 
@@ -94,14 +100,40 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
        position='relative'
        >
       {/* <Image position='absolute' src="/img/battle-bay/announcementBoard/seashrineAd.png"/> */}
-      <Image 
-      //  src="/img/battle-bay/announcementBoard/seashrineAd.png" 
-        src="/img/battle-bay/imgs/vvs.png" 
-        w='100%'
-        // filter={sepia(100%) saturate(300%) brightness(70%) hue-rotate(180deg);}
-        // filter={'brightness(0.7)' + ' ' + 'sepia(0.1)'}
-        filter={'brightness(0.8)'}
-        />
+      {/*<Image */}
+      {/*//  src="/img/battle-bay/announcementBoard/seashrineAd.png" */}
+      {/*  src="/img/battle-bay/imgs/vvs.png" */}
+      {/*  w='100%'*/}
+      {/*  // filter={sepia(100%) saturate(300%) brightness(70%) hue-rotate(180deg);}*/}
+      {/*  // filter={'brightness(0.7)' + ' ' + 'sepia(0.1)'}*/}
+      {/*  filter={'brightness(0.8)'}*/}
+      {/*/>*/}
+        <Box
+          backgroundImage='/img/battle-bay/imgs/vvs.png'
+          backgroundSize='cover'
+          backgroundRepeat='no-repeat'
+          backgroundPosition='center'
+          h='150px'
+          position='relative'
+        >
+          <RdButton
+            position='absolute'
+            bottom={0}
+            mb={2}
+            left='50%'
+            transform='translate(-50%)'
+            // marginLeft={{base: '62%', sm: '60%'}}
+            // marginTop={{base: '-12%', sm: '-12%'}}
+            w='200px'
+            size='sm'
+            hoverIcon={false}
+            onClick={() => {
+              window.open('https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59','_blank');
+            }}
+          >
+            Buy $Fortune Token
+          </RdButton>
+        </Box>
       {/* <Text 
         marginLeft={{base: '10%', sm: '10%'}}
         marginTop={{base: '-20%', sm: '-17%'}}
@@ -123,126 +155,77 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
         position='absolute' 
         as='b'
         >Join in the quest for sea treasures</Text> */}
-        <RdButton
-          position='absolute' 
-          marginLeft={{base: '30%', sm: '32%'}}
-          marginTop={{base: '-12%', sm: '-12%'}}
-          // marginLeft={{base: '62%', sm: '60%'}}
-          // marginTop={{base: '-12%', sm: '-12%'}}
-          w={{base: '125px', sm: '200px'}}
-          fontSize={{base: '8px', sm: 'sm'}}
-          hoverIcon={false}
-          onClick={() => {
-            window.open('https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59','_blank');
-            }}
-        >
-          Buy $Fortune Token
-        </RdButton>
-      </Box> 
+      </Box>
 
-      <HStack justify='space-between' w='100%'>
-        <Flex bg='#272523' rounded='md' 
-           w={{base: '150px', sm: '270px'}}
-           h={{base: '185px', sm: '185px'}}>
-          <VStack padding='2' w='100%' >
-            <Text className={gothamBook.className} fontSize={{ base: '12px', md: '24px' }}>Information</Text>
-            {/* <Box
-              as="button"
-              bg=""
-              py={1}
-              px={4}
-              ml={3}
-              rounded="md"
-              className={gothamBook.className} fontSize={{ base: '8px', md: '16px' }}
-              color="white"
-              _hover={{ bg: "yellow.900" }}
-              _focus={{ boxShadow: "outline" }}
-              onClick={() => {
-                window.location.href='https://m.mexc.com/trade/spot-kline#FRTN_USDT';
-                }}
-            >
-              Token Launch
-            </Box> */}
-            {/* <Box
-              as="button"
-              bg=""
-              py={1}
-              px={4}
-              ml={3}
-              rounded="md"
-              className={gothamBook.className} fontSize={{ base: '8px', md: '16px' }}
-              color="white"
-              _hover={{ bg: "yellow.900" }}
-              _focus={{ boxShadow: "outline" }}
-              onClick={() => {
-                window.location.href=' https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21';
-                }}
-            >
-              Kickstarter
-            </Box> */}
+      <Grid
+        h='240px'
+        templateRows='repeat(2, 1fr)'
+        templateColumns='repeat(4, 1fr)'
+        gap={3}
+        w='full'
+      >
+        <GridItem rowSpan={2} colSpan={2} bg='#272523' p={4} textAlign='center' rounded='md'>
+          <Text fontSize={{ base: 'sm', md: 'xl' }} fontWeight='bold'>Information</Text>
+          <VStack mt={4}>
             <Box
               as="button"
               bg=""
               py={1}
               px={4}
-              ml={3}
               rounded="md"
-              className={gothamBook.className} fontSize={{ base: '8px', md: '16px' }}
+              className={gothamBook.className}
               color="white"
               _hover={{ bg: "yellow.900" }}
               _focus={{ boxShadow: "outline" }}
               onClick={() => {
                 window.open('https://ebisusbay.notion.site/ebisusbay/Ryoshi-Dynasties-8cb0bb21ad194af092cf1e1f8a8846c6','_blank');
-            }}
+              }}
             >
               Whitepaper
             </Box>
+            <Box
+              as="button"
+              bg=""
+              py={1}
+              px={4}
+              rounded="md"
+              className={gothamBook.className}
+              color="white"
+              _hover={{ bg: "yellow.900" }}
+              _focus={{ boxShadow: "outline" }}
+              onClick={() => {
+                router.push('/marketplace');
+              }}
+            >
+              Marketplace
+            </Box>
           </VStack>
-        </Flex> 
-        <Flex>
-
-        <VStack w='100%' >
-          <Flex bg='#272523' rounded='md'
-          w={{base: '150px', sm: '300px'}}
-          h={{base: '125px', sm: '100px'}}
+        </GridItem>
+        <GridItem colSpan={2} bg='#272523' p={2} textAlign='center' rounded='md'>
+          <Text fontSize={{ base: 'sm', md: 'md' }}>Claim Daily Rewards</Text>
+          <RdButton
+            mt={2}
+            w={{base: '125px', sm: '250px'}}
+            fontSize={{base: 'sm', sm: 'md'}}
+            hoverIcon={false}
+            onClick={onOpenDailyCheckin}
           >
-            <VStack padding='2' w='100%' >
-              <Text textAlign='center'
-                className={gothamBook.className} 
-                fontSize={{ base: '12px', md: '16px' }}
-                > Claim Checkin Rewards</Text>
-              <Spacer h='4'/>
-              <RdButton
-                w={{base: '125px', sm: '250px'}}
-                fontSize={{base: 'sm', sm: 'md'}}
-                hoverIcon={false}
-                onClick={onOpenDailyCheckin}
-              >
-                {canClaim ? 'Claim Daily Reward!' : 'Claim in ' + timer}
-              </RdButton>
-                {/* <Image src="/img/battle-bay/announcementBoard/Koban.svg"> </Image> */}
-            </VStack>
-          </Flex> 
-
-          <Spacer h='2'/>
-
-          <Flex bg='#272523' rounded='md'
-          w={{base: '150px', sm: '300px'}}
-          h={{base: '48px', sm: '60px'}}
-          >
-            <VStack padding='2' w='100%' 
-            onClick={handleShowLeaderboard}>
-              <RdButton 
-                textAlign='center'
-                // className={gothamBook.className} 
-                // fontSize={{ base: '12px', md: '16px' }}
-                fontSize={{base: '8px', sm: 'sm'}}
-                > View Leaderboards</RdButton>
-            </VStack>
-          </Flex> 
-        </VStack>
-        </Flex>
-      </HStack>
+            {canClaim ? 'Claim Now!' : 'Claim in ' + timer}
+          </RdButton>
+        </GridItem>
+        <GridItem colSpan={2} bg='#272523' p={2} textAlign='center' rounded='md'>
+          <Text fontSize={{ base: 'sm', md: 'md' }}>Leaderboards</Text>
+          <VStack padding='2' w='100%'
+                  onClick={handleShowLeaderboard}>
+            <RdButton
+              textAlign='center'
+              // className={gothamBook.className}
+              // fontSize={{ base: '12px', md: '16px' }}
+              fontSize={{base: 'sm', sm: 'md'}}
+            > View Leaderboards</RdButton>
+          </VStack>
+        </GridItem>
+      </Grid>
     </VStack>
   );
 }
