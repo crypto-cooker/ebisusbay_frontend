@@ -132,8 +132,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
           w={{base: '125px', sm: '200px'}}
           fontSize={{base: '8px', sm: 'sm'}}
           hoverIcon={false}
-          onClick={(e) => {
-            e.preventDefault();
+          onClick={() => {
             window.location.href='https://seashrine.io/';
             }}
         >
@@ -158,8 +157,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
               color="white"
               _hover={{ bg: "yellow.900" }}
               _focus={{ boxShadow: "outline" }}
-              onClick={(e) => {
-                e.preventDefault();
+              onClick={() => {
                 window.location.href='https://seashrine.io/';
                 }}
             >
@@ -176,8 +174,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
               color="white"
               _hover={{ bg: "yellow.900" }}
               _focus={{ boxShadow: "outline" }}
-              onClick={(e) => {
-                e.preventDefault();
+              onClick={() => {
                 window.location.href='https://seashrine.io/';
                 }}
             >
