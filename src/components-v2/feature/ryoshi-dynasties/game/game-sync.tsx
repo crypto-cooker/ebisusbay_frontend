@@ -129,11 +129,11 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
     return <Village onChange={() => {}}/>
   }, []);
 
-  useEffect(() => {
-    if (!user.address) {
-      onOpenWelcomeModal();
-    }
-  }, [user.address]);
+  // useEffect(() => {
+  //   if (!user.address) {
+  //     onOpenWelcomeModal();
+  //   }
+  // }, [user.address]);
 
   useEffect(() => {
     async function getSig() {

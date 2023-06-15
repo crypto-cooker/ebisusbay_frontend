@@ -508,6 +508,10 @@ const Village = ({onChange}: VillageProps) => {
     // CheckForGameTokens();
   // }, [user.address])
 
+  useEffect(() => {
+    onOpenAnnouncementBoard();
+  }, []);
+
   const SetUpButtons = async () => {
     setPins(buttonsNames.map((button, i) =>
       (<Button style={{ marginTop: '4px', marginLeft: '4px' }}

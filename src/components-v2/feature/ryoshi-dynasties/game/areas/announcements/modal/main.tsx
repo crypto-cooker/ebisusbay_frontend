@@ -89,7 +89,12 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
   return (
     <VStack padding='2'>
       <RdModalBox textAlign='center'>
-        Welcome to Ryoshi Dynasties! A captivating gamified DAO experience, combining NFT marketplace, battles, and strategic gameplay. Build your dynasty, collect rare NFTs, and earn rewards.
+        <Text>
+          Welcome to Ryoshi Dynasties! A captivating gamified DAO experience, combining NFT marketplace, battles, and strategic gameplay. Build your dynasty, collect rare NFTs, and earn rewards.
+        </Text>
+        <Text mt={4}>
+          Users wishing to visit the Ebisu's Bay marketplace experience can still do so by using the links at the top of the page.
+        </Text>
       </RdModalBox>
       <Box 
        bg='#272523' 
