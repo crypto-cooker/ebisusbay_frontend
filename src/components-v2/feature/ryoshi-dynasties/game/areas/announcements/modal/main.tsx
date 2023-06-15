@@ -133,7 +133,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
           fontSize={{base: '8px', sm: 'sm'}}
           hoverIcon={false}
           onClick={() => {
-            window.location.href='https://seashrine.io/';
+            window.location.href='https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21';
             }}
         >
           Farm Fortune on VVS
@@ -158,7 +158,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
               _hover={{ bg: "yellow.900" }}
               _focus={{ boxShadow: "outline" }}
               onClick={() => {
-                window.location.href='https://seashrine.io/';
+                window.location.href='https://m.mexc.com/trade/spot-kline#FRTN_USDT';
                 }}
             >
               Token Launch
@@ -175,7 +175,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
               _hover={{ bg: "yellow.900" }}
               _focus={{ boxShadow: "outline" }}
               onClick={() => {
-                window.location.href='https://seashrine.io/';
+                window.location.href=' https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21';
                 }}
             >
               Kickstarter
@@ -192,7 +192,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
               _hover={{ bg: "yellow.900" }}
               _focus={{ boxShadow: "outline" }}
               onClick={() => {
-                window.location.href='https://seashrine.io/';
+                window.location.href='https://ebisusbay.notion.site/ebisusbay/Ryoshi-Dynasties-8cb0bb21ad194af092cf1e1f8a8846c6';
                 }}
             >
               Whitepaper
