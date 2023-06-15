@@ -47,7 +47,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, forceRefresh}: 
   //timer
   const Ref = useRef<NodeJS.Timer | null>(null);
   const [timer, setTimer] = useState('00:00:00');
-  const [canClaim, setCanClaim] = useState(false);
+  const [canClaim, setCanClaim] = useState(true);
 
     //timer functions
   const getTimeRemaining = (e:any) => {
