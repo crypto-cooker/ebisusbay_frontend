@@ -22,6 +22,7 @@ import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/typ
 import {getAuthSignerInStorage} from "@src/helpers/storage";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+import {io} from "socket.io-client";
 import {appConfig} from "@src/Config";
 
 const config = appConfig();
@@ -51,8 +52,10 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
     () => ApiService.withoutKey().ryoshiDynasties.getGlobalContext(),
     {
       initialData: initialRdConfig ?? undefined,
-      staleTime: 1000 * 60 * 25,
-      cacheTime: 1000 * 60 * 30,
+      // staleTime: 1000 * 60 * 25,
+      // cacheTime: 1000 * 60 * 30,
+      refetchInterval: 1000 * 60,
+      refetchOnWindowFocus: false,
     }
   );
 
@@ -147,6 +150,39 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
       setSignature(null);
     }
   }, [user.address]);
+
+  const [isSocketConnected, setIsSocketConnected] = useState(false);
+  const [isInMaintenanceMode, setIsInMaintenanceMode] = useState(false);
+  useEffect(() => {
+    if (!user.address) return;
+
+    // console.log('connecting to socket...');
+    const socket = io(`${config.urls.cmsSocket}ryoshi-dynasties/games?walletAddress=${user.address}`);
+
+    function onConnect() {
+      setIsSocketConnected(true);
+      console.log('connected')
+    }
+
+    function onDisconnect() {
+      setIsSocketConnected(false);
+      console.log('disconnected')
+    }
+
+    function onGameStatusEvent(data: { gameId: number, newStatus: string }) {
+      console.log('GAME_STATUS', data);
+    }
+
+    socket.on('connect', onConnect);
+    socket.on('disconnect', onDisconnect);
+    socket.on('GAME_STATUS', onGameStatusEvent);
+
+    return () => {
+      socket.off('connect', onConnect);
+      socket.off('disconnect', onDisconnect);
+      socket.off('GAME_STATUS', onGameStatusEvent);
+    };
+  }, []);
 
   return (
     <>
