@@ -140,10 +140,14 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
         handleClose();
         onClose();
         toast.success("Changes Saved");
-      } catch (error) {
+      } catch (error:any) {
         console.log(error)
-        toast.error(error.response.data.error.metadata.message)
-      }
+        if(error.response !== undefined) {
+          toast.error(error.response.data.error.metadata.message)
+        }
+        else {
+          toast.error(error);
+        }
     }
   }
   const DeleteFaction = async() => {
