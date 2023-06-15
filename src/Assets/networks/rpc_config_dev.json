@@ -20919,9 +20919,40 @@
         "categories": []
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
+      }
+    },
+    {
+      "name": "Ryoshi Resources",
+      "slug": "ryoshi-resources",
+      "multiToken": true,
+      "address": "0xce3f4e59834b5B52B301E075C5B3D427B6884b3d",
+      "tokens": [
+        {
+          "id": 1
+        }
+      ],
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/fortuneteller/avatar.webp",
+        "card": "/img/collections/fortuneteller/card.webp",
+        "banner": "/img/collections/fortuneteller/banner.webp",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "hidden",
+        "verified": true
       }
     }
   ],

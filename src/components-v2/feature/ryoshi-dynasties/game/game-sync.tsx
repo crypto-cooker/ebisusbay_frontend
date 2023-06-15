@@ -22,6 +22,9 @@ import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/typ
 import {getAuthSignerInStorage} from "@src/helpers/storage";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+import {appConfig} from "@src/Config";
+
+const config = appConfig();
 
 interface GameSyncProps {
   initialRdConfig: RyoshiConfig | null;
@@ -104,16 +107,16 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
   };
 
   const handleCloseWelcomeModal = useCallback(() => {
-    if (!authInitFinished || (!!user.address && !user.loadedFortuneBalance && !user.loadedMitamaBalance)) {
+    if (!authInitFinished || !!user.address) {
       return;
     }
 
-    if (!!user.address && (user.fortuneBalance > 0 || user.mitamaBalance > 0)) {
+    if (!!user.address) {
       onCloseWelcomeModal();
     } else {
       router.push('/');
     }
-  }, [user.address, user.fortuneBalance, user.mitamaBalance, user.loadedMitamaBalance, user.loadedFortuneBalance]);
+  }, [user.address]);
 
   const handleRefreshPage = () => {
     router.reload();
@@ -124,10 +127,10 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
   }, []);
 
   useEffect(() => {
-    if (!user.address || (user.fortuneBalance === 0 && user.mitamaBalance === 0)) {
+    if (!user.address) {
       onOpenWelcomeModal();
     }
-  }, [user.address, user.loadedFortuneBalance, user.loadedMitamaBalance]);
+  }, [user.address]);
 
   useEffect(() => {
     async function getSig() {
@@ -188,29 +191,18 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
           <RdModal isOpen={isOpenWelcomeModal} onClose={handleCloseWelcomeModal} title='Ryoshi Dynasties Beta'>
             <VStack p={4} spacing={8} fontSize='sm' textAlign='center'>
               <Text>
-                Welcome to the beta version of Ryoshi Dynasties! This is a <strong>TESTNET</strong> beta and is accessible for users with test $Fortune in their wallet, which was distributed to those who participated in the Fortune token sale.
+                Welcome to Ryoshi Dynasties! Put elevator pitch here and also guide users who may just want to use the marketplace
               </Text>
 
               {authInitFinished ? (
                 <>
-                  {!!user.address && user.loadedFortuneBalance && user.loadedMitamaBalance ? (
+                  {!!user.address ? (
                     <>
-                      {user.fortuneBalance > 0 || user.mitamaBalance > 0 ? (
-                        <>
-                          <Text>
-                            Please note that the beta version is still under active development which may result in unexpected changes in the gaming experience. We are working hard to get the game ready for the official launch, which is planned for June 15th. Please join our Discord server for updates and to provide feedback.
-                          </Text>
-                          <Center>
-                            <RdButton stickyIcon={true} onClick={onCloseWelcomeModal}>
-                              Play Now
-                            </RdButton>
-                          </Center>
-                        </>
-                      ) : (
-                        <Box>
-                          No Fortune tokens found in your wallet, which is a requirement for participating in the Beta.
-                        </Box>
-                      )}
+                      <Center>
+                        <RdButton stickyIcon={true} onClick={onCloseWelcomeModal}>
+                          Play Now
+                        </RdButton>
+                      </Center>
                     </>
                   ) : (!!user.address && !user.correctChain) ? (
                     <Center>
@@ -218,7 +210,7 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
                         Switch Network
                       </RdButton>
                     </Center>
-                  ) : (!!user.address && !user.loadedFortuneBalance && !user.loadedMitamaBalance) ? (
+                  ) : (!!user.address) ? (
                     <Center>
                       <Spinner />
                     </Center>

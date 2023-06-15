@@ -578,7 +578,7 @@ const CreateFactionForm = ({ isOpen, onClose, handleClose}: FactionRegistrationF
 
         <SimpleGrid columns={2} my={4} px={1} marginBottom={0}>
             <Box>Season Subscription Fee:</Box>
-            <Box textAlign='end' fontWeight='bold'>1000 $Fortune</Box>
+            <Box textAlign='end' fontWeight='bold'>{rdContext.config.factions.registration.cost} $Fortune</Box>
           </SimpleGrid>
           <Text 
             as='i'
