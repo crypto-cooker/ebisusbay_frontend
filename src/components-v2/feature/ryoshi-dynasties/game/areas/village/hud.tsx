@@ -25,6 +25,9 @@ import ImageService from "@src/core/services/image";
 import {getAuthSignerInStorage} from "@src/helpers/storage";
 import {getRewardsStreak} from "@src/core/api/RyoshiDynastiesAPICalls";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
+import {appConfig} from "@src/Config";
+
+const config = appConfig();
 
 interface VillageHudProps {
   onOpenBuildings: () => void;
@@ -107,7 +110,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, forceRefresh}: 
     try {
       setIsLoading(true);
       let nfts = await NextApiService.getWallet(user!.address!, {
-        collection: ['0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5'],
+        collection: [config.contracts.resources],
       });
       const fortuneAndMitama = await ApiService.withoutKey().ryoshiDynasties.getErc20Account(user!.address!)
 
