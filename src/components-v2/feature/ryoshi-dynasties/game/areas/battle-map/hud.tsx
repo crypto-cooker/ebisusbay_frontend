@@ -26,7 +26,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
   const Ref = useRef<NodeJS.Timer | null>(null);
   const Ref2 = useRef<NodeJS.Timer | null>(null);
   const [timer, setTimer] = useState('00:00:00');
-  const [troopTimer, setTroopTimer] = useState('00:00');
+  const [troopTimer, setTroopTimer] = useState('');
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const[koban, setKoban] = useState<number | string>(0);
   const[isLoading, setIsLoading] = useState(false);
@@ -105,7 +105,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
 
   useEffect(() => {
       getSeasonEndTime();
-      getTroopCooldown();
+      // getTroopCooldown();
       console.log('rdContext', rdContext)
   }, []); 
 
@@ -194,7 +194,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
                 <Text>{rdContext.user?.faction?.troops}</Text>
               </HStack>
               </Flex>
-            <Box color="#aaa">Deployed:</Box>
+            <Box color="#aaa">Total:</Box>
             <Box textAlign='end' fontWeight='bold'>
               <HStack textAlign='end'>
                 <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}alt="troopsIcon" boxSize={4}/>

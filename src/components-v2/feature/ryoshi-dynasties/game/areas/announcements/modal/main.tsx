@@ -94,13 +94,15 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
        position='relative'
        >
       {/* <Image position='absolute' src="/img/battle-bay/announcementBoard/seashrineAd.png"/> */}
-      <Image  src="/img/battle-bay/announcementBoard/seashrineAd.png" 
+      <Image 
+      //  src="/img/battle-bay/announcementBoard/seashrineAd.png" 
+        src="/img/battle-bay/imgs/vvs.png" 
         w='100%'
         // filter={sepia(100%) saturate(300%) brightness(70%) hue-rotate(180deg);}
         // filter={'brightness(0.7)' + ' ' + 'sepia(0.1)'}
-        filter={'brightness(0.7)'}
+        filter={'brightness(0.8)'}
         />
-      <Text 
+      {/* <Text 
         marginLeft={{base: '10%', sm: '10%'}}
         marginTop={{base: '-20%', sm: '-17%'}}
         fontSize={{ base: '24px', md: '24px' }} 
@@ -120,20 +122,21 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
         fontSize={{ base: '0px', md: '16px' }} 
         position='absolute' 
         as='b'
-        >Join in the quest for sea treasures</Text>
+        >Join in the quest for sea treasures</Text> */}
         <RdButton
           position='absolute' 
-          marginLeft={{base: '62%', sm: '60%'}}
+          marginLeft={{base: '30%', sm: '32%'}}
           marginTop={{base: '-12%', sm: '-12%'}}
-          w={{base: '100px', sm: '150px'}}
+          // marginLeft={{base: '62%', sm: '60%'}}
+          // marginTop={{base: '-12%', sm: '-12%'}}
+          w={{base: '125px', sm: '200px'}}
           fontSize={{base: '8px', sm: 'sm'}}
           hoverIcon={false}
-          onClick={(e) => {
-            e.preventDefault();
-            window.location.href='https://seashrine.io/';
+          onClick={() => {
+            window.location.href='https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21';
             }}
         >
-          Visit Seashrine
+          Farm Fortune on VVS
         </RdButton>
       </Box> 
 
@@ -143,9 +146,57 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
            h={{base: '185px', sm: '185px'}}>
           <VStack padding='2' w='100%' >
             <Text className={gothamBook.className} fontSize={{ base: '12px', md: '24px' }}>Information</Text>
-            <Text className={gothamBook.className} fontSize={{ base: '8px', md: '16px' }}>How To Play?</Text>
-            <Text className={gothamBook.className} fontSize={{ base: '8px', md: '16px' }}>Want to place an ad?</Text>
-            <Text className={gothamBook.className} fontSize={{ base: '8px', md: '16px' }}>About Ebisus's Bay</Text>
+            <Box
+              as="button"
+              bg=""
+              py={1}
+              px={4}
+              ml={3}
+              rounded="md"
+              className={gothamBook.className} fontSize={{ base: '8px', md: '16px' }}
+              color="white"
+              _hover={{ bg: "yellow.900" }}
+              _focus={{ boxShadow: "outline" }}
+              onClick={() => {
+                window.location.href='https://m.mexc.com/trade/spot-kline#FRTN_USDT';
+                }}
+            >
+              Token Launch
+            </Box>
+            <Box
+              as="button"
+              bg=""
+              py={1}
+              px={4}
+              ml={3}
+              rounded="md"
+              className={gothamBook.className} fontSize={{ base: '8px', md: '16px' }}
+              color="white"
+              _hover={{ bg: "yellow.900" }}
+              _focus={{ boxShadow: "outline" }}
+              onClick={() => {
+                window.location.href=' https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21';
+                }}
+            >
+              Kickstarter
+            </Box>
+            <Box
+              as="button"
+              bg=""
+              py={1}
+              px={4}
+              ml={3}
+              rounded="md"
+              className={gothamBook.className} fontSize={{ base: '8px', md: '16px' }}
+              color="white"
+              _hover={{ bg: "yellow.900" }}
+              _focus={{ boxShadow: "outline" }}
+              onClick={() => {
+                window.location.href='https://ebisusbay.notion.site/ebisusbay/Ryoshi-Dynasties-8cb0bb21ad194af092cf1e1f8a8846c6';
+                }}
+            >
+              Whitepaper
+            </Box>
           </VStack>
         </Flex> 
         <Flex>
