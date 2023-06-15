@@ -186,11 +186,6 @@ const nextConfig = {
           'https://discord.com/api/oauth2/authorize?client_id=976699886890254356&permissions=269503504&scope=bot%20applications.commands',
         permanent: false,
         basePath: false,
-      },
-      {
-        source: '/',
-        destination: '/battle-bay',
-        permanent: false,
       }
     ];
   },

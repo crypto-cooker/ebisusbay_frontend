@@ -10,8 +10,8 @@ const BattleBay = ({rdConfig}: {rdConfig: RyoshiConfig | null}) => {
     <>
       <PageHead
         title="Ryoshi Dynasties"
-        description="some description.."
-        url={`/battle-bay`}
+        description="Ryoshi Dynasties - A captivating gamified DAO experience, combining NFT marketplace, battles, and strategic gameplay. Build your dynasty, collect rare NFTs, and earn rewards."
+        url={`/ryoshi`}
       />
       <RyoshiDynasties initialRdConfig={rdConfig}/>
     </>

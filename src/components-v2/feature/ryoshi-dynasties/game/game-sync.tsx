@@ -190,10 +190,9 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
           <>{children}</>
           <RdModal isOpen={isOpenWelcomeModal} onClose={handleCloseWelcomeModal} title='Ryoshi Dynasties Beta'>
             <VStack p={4} spacing={8} fontSize='sm' textAlign='center'>
-              <Text>
-                Welcome to Ryoshi Dynasties! Put elevator pitch here and also guide users who may just want to use the marketplace
+              <Text fontSize='md'>
+                Welcome to Ryoshi Dynasties! A captivating gamified DAO experience, combining NFT marketplace, battles, and strategic gameplay. Build your dynasty, collect rare NFTs, and earn rewards.
               </Text>
-
               {authInitFinished ? (
                 <>
                   {!!user.address && user.correctChain ? (
@@ -217,6 +216,9 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
                       </RdButton>
                     </Center>
                   )}
+                  <Text fontSize='sm'>
+                    Users wishing to visit the Ebisu's Bay marketplace experience can still do so by using the links at the top of the page.
+                  </Text>
                 </>
               ) : (
                 <Center>
