@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useRef, useState } from 'react';
+import React, {ReactElement, useEffect, useRef, useState, useContext } from 'react';
 import { useDisclosure, Button, AspectRatio, useBreakpointValue, Box, Flex, Image } from '@chakra-ui/react'
 // import { resizeBattleMap, setUpMapZooming } from '@src/Components/BattleBay/Areas/mapFunctions.js'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
@@ -18,6 +18,10 @@ import {appConfig} from "@src/Config";
 import Battlefield from "@src/Contracts/Battlefield.json";
 import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
 import styles from "./style.module.css";
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 
 const config = appConfig();
 
@@ -29,6 +33,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
 
   const user = useAppSelector(state => state.user);
   const config = appConfig();
+  const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [controlPoint, setControlPoint] = useState([]);
@@ -222,9 +227,10 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   }, [area]);
 
   useEffect(() => {
-    SetUpMap();
+    // SetUpMap();
   }, []);
 
+  //Temporarily turning off to use new process with opperator's new images
   const SetUpMap = async () => {
     getMap().then((data) => {
       // console.log(data);
@@ -233,17 +239,19 @@ const BattleMap = ({onChange}: BattleMapProps) => {
         region.controlPoints.map((controlPoint: any, i: any) => (
           <area 
             onClick={() => {
+              console.log('controlPoint.id', controlPoint.id),
               setSelectedControlPoint(controlPoint.id); 
               selectRegion(controlPoint.id); 
               onOpen();
             }}
-            coords={controlPoint.coordinates} 
+            coords={controlPoint.name=="Classy Keep" ? "1471,1106,211" :controlPoint.coordinates} 
             shape="circle" 
             alt= {controlPoint.id}
             className='cursor-pointer'
             title={controlPoint.name}
             />
           ))))
+          console.log(area);
       // map height and width, may need to be changed in the future
 
     }); 
@@ -300,34 +308,34 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   const mapProps = useBreakpointValue<MapProps>(
     {
       base: {
-        scale: 0.15,
+        scale: 0.45,
         initialPosition: { x: -325, y: -10 },
-        minScale: 0.05
+        minScale: 0.45
       },
       sm: {
-        scale: 0.16,
+        scale: 0.45,
         initialPosition: { x: -220, y: -150 },
-        minScale: 0.10
+        minScale: 0.45
       },
       md: {
-        scale: 0.18,
+        scale: 0.45,
         initialPosition: { x: -220, y: -150 },
-        minScale: 0.10
+        minScale: 0.45
       },
       lg: {
-        scale: 0.20,
+        scale: 0.45,
         initialPosition: { x: -220, y: -150 },
-        minScale: 0.10
+        minScale: 0.45
       },
       xl: {
-        scale: 0.28,
-        initialPosition: { x: -220, y: -150 },
-        minScale: 0.28
+        scale: 0.44,
+        initialPosition: { x: 281, y: -7.45 },
+        minScale: 0.44
       },
       '2xl': {
-        scale: 0.25,
-        initialPosition: { x: -0, y: -180 },
-        minScale: 0.24
+        scale: 0.45,
+        initialPosition: { x: 281, y: -7.45 },
+        minScale: 0.45
       }
     }
   );
@@ -375,6 +383,22 @@ const BattleMap = ({onChange}: BattleMapProps) => {
     };
   }, [!!user.address]);
 
+  const SelectControlPoint = (id: any) => {
+    setSelectedControlPoint(id);
+    selectRegion(id);
+    onOpen();
+  }
+
+  const GetControlPointId = (name: any) => {
+    if(!rdGameContext) return 0;
+    rdGameContext.game.parent.map.regions.map((region: any) =>
+      region.controlPoints.map((controlPoint: any, i: any) => (
+        controlPoint.name == name ? 
+        SelectControlPoint(controlPoint.id)
+         : null
+      )))
+  }
+
   return (
     <section>
       <ControlPointModal 
@@ -408,57 +432,60 @@ const BattleMap = ({onChange}: BattleMapProps) => {
 
             <TransformComponent wrapperStyle={{height: '100%', width: '100%', objectFit: 'cover'}}>
               <MapFrame gridHeight={'50px 1fr 50px'} gridWidth={'50px 1fr 50px'}>
-              <Box as='img'
-                   src={'/img/battle-bay/imgs/world_map_background.jpg'}
-                  //  src={ImageService.translate('/img/battle-bay/imgs/world_map_background.jpg').convert()}
+              <Box 
+                  as='img'
+                  //  src={'/img/battle-bay/imgs/world_map_background.jpg'}
+                   src={ImageService.translate('/img/battle-bay/imgs/world_map_background.jpg').convert()}
                    maxW='none'
-                   useMap="#image-map" className={`${styles.mapImageArea}`} id="fancyMenu"/>
-                <map name="image-map"> 
+                   useMap="#imageMap" 
+                   className={`${styles0.mapImageArea}`} 
+                   id="fancyMenu"/>
+                <map name="imageMap" > 
                   {area} 
                 </map>
-                <Flex position="absolute" zIndex="9" width="100%" height="100%" pointerEvents='none'>
+                <Flex position="absolute" zIndex="0" width="100%" height="100%">
                 {flags} {explosion}
-                <div className={styles.background}>
+                <div >
                   <div className={styles.water}></div>
-                  <div className={[styles.buccaneer_beach, styles.enlarge].filter(e => !!e).join(' ')}>
+                  <div className={[styles.buccaneer_beach, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Buccaneer Beach")}>
                     <div className={[styles.worldmap_label, styles.buccaneer_beach_label].filter(e => !!e).join(' ')}>Buccaneer Beach</div> </div>
-                  <div className={[styles.mitagi_retreat, styles.enlarge].filter(e => !!e).join(' ')}>
+                  <div className={[styles.mitagi_retreat, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Mitagi Retreat")}>
                     <div className={[styles.worldmap_label, styles.mitagi_retreat_label].filter(e => !!e).join(' ')}>Mitagi Retreat</div> </div>	
-                  <div className={[styles.omoikanes_athenaeum, styles.enlarge].filter(e => !!e).join(' ')}>
+                  <div className={[styles.omoikanes_athenaeum, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Omoikanes Athenaeum")}>
                     <div className={[styles.worldmap_label, styles.omoikanes_athenaeum_label].filter(e => !!e).join(' ')}>Omoikane's Athenaeum</div> </div>		
-                  <div className={[styles.clutch_of_fukurokuju, styles.enlarge].filter(e => !!e).join(' ')}>
+                  <div className={[styles.clutch_of_fukurokuju, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Clutch Of Fukurokujo")}>
                     <div className={[styles.worldmap_label, styles.clutch_of_fukurokuju_label].filter(e => !!e).join(' ')}>Clutch of Fukurokuju</div> </div>
-                  <div className={[styles.orcunheim, styles.enlarge].filter(e => !!e).join(' ') }>
+                  <div className={[styles.orcunheim, styles.enlarge].filter(e => !!e).join(' ') } onClick={()=> GetControlPointId("Orcunheim")}>
                     <div className={[styles.worldmap_label, styles.orcunheim_label].filter(e => !!e).join(' ')}>Orcunheim</div> </div>
-                  <div className={[styles.ice_shrine, styles.enlarge].filter(e => !!e).join(' ') }>
+                  <div className={[styles.ice_shrine, styles.enlarge].filter(e => !!e).join(' ') } onClick={()=> GetControlPointId("Ice Shrine")}>
                     <div className={[styles.worldmap_label, styles.ice_shrine_label].filter(e => !!e).join(' ')}>Ice Shrine</div> </div>	
-                  <div className={[styles.felisgarde, styles.enlarge].filter(e => !!e).join(' ') }>
+                  <div className={[styles.felisgarde, styles.enlarge].filter(e => !!e).join(' ') } onClick={()=> GetControlPointId("Felisgarde")}>
                     <div className={[styles.worldmap_label, styles.felisgarde_label].filter(e => !!e).join(' ')}>Felisgarde</div> </div>
-                  <div className={[styles.ebisusbay, styles.enlarge].filter(e => !!e).join(' ')}>
+                  <div className={[styles.ebisusbay, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Ebisus Bay")}>
                     <div className={[styles.worldmap_label, styles.ebisusbay_label].filter(e => !!e).join(' ')}>Ebisu's Bay</div> </div>
-                  <div className={[styles.verdant_forest, styles.enlarge].filter(e => !!e).join(' ')}>
+                  <div className={[styles.verdant_forest, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Verdant Forest")}>
                     <div className={[styles.worldmap_label, styles.verdant_forest_label].filter(e => !!e).join(' ')}>Verdant Forest</div> </div>
-                  <div className={[styles.infinite_nexus, styles.enlarge].filter(e => !!e).join(' ')}>
+                  <div className={[styles.infinite_nexus, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("The Infinte Nexus")}>
                     <div className={[styles.worldmap_label, styles.infinite_nexus_label].filter(e => !!e).join(' ')}>Infinite Nexus</div></div>
-                  <div className={[styles.venoms_descent, styles.enlarge].filter(e => !!e).join(' ')}>
+                  <div className={[styles.venoms_descent, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Venoms Descent")}>
                     <div className={[styles.worldmap_label, styles.venoms_descent_label].filter(e => !!e).join(' ')}>Venom's Descent</div></div>
-                  <div className={[styles.mitamic_fissure, styles.enlarge].filter(e => !!e).join(' ')}>
+                  <div className={[styles.mitamic_fissure, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Mitamic Fissure")}>
                     <div className={[styles.worldmap_label, styles.mitamic_fissure_label].filter(e => !!e).join(' ')}>Mitamic Fissure</div></div>
-                  <div className={[styles.seashrine, styles.enlarge].filter(e => !!e).join(' ')}>
+                  <div className={[styles.seashrine, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Seashrine")}>
                     <div className={[styles.worldmap_label, styles.seashrine_label].filter(e => !!e).join(' ')}>Seashrine</div></div>
-                  <div className={[styles.classy_keep, styles.enlarge].filter(e => !!e).join(' ')}>
+                  <div className={[styles.classy_keep, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Classy Keep")}>
                     <div className={[styles.worldmap_label, styles.classy_keep_label].filter(e => !!e).join(' ')}>Classy Keep</div></div>
-                  <div className={[styles.ancestors_final_rest, styles.enlarge].filter(e => !!e).join(' ')}>
+                  <div className={[styles.ancestors_final_rest, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Ancestors Final Rest")}>
                     <div className={[styles.worldmap_label, styles.ancestors_final_rest_label].filter(e => !!e).join(' ')}>Ancestor's Final Rest</div></div>
-                  <div className={[styles.dragon_roost, styles.enlarge].filter(e => !!e).join(' ')}>
+                  <div className={[styles.dragon_roost, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Dragons Roost")}>
                     <div className={[styles.worldmap_label, styles.dragon_roost_label].filter(e => !!e).join(' ')}>Dragon Roost</div></div>	
-                  <div className={[styles.nyar_spire, styles.enlarge].filter(e => !!e).join(' ')}>
+                  <div className={[styles.nyar_spire, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Insect Race")}>
                     <div className={[styles.worldmap_label, styles.nyar_spire_label].filter(e => !!e).join(' ')}>N'yar Spire</div></div>		
-                  <div className={[styles.iron_bastion, styles.enlarge].filter(e => !!e).join(' ')}>
+                  <div className={[styles.iron_bastion, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("The Iron Bastion")}>
                     <div className={[styles.worldmap_label, styles.iron_bastion_label].filter(e => !!e).join(' ')}>Iron Bastion</div></div>
-                  <div className={[styles.volcanic_reach, styles.enlarge].filter(e => !!e).join(' ')}>
+                  <div className={[styles.volcanic_reach, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Volcanic Reach")}>
                     <div className={[styles.worldmap_label, styles.volcanic_reach_label].filter(e => !!e).join(' ')}>Volcanic Reach</div></div>	
-                  <div className={[styles.the_conflagration, styles.enlarge].filter(e => !!e).join(' ')}>
+                  <div className={[styles.the_conflagration, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("The Conflagration")}>
                     <div className={[styles.worldmap_label, styles.the_conflagration_label].filter(e => !!e).join(' ')}>The Conflagration</div></div>
                 </div>
                 
