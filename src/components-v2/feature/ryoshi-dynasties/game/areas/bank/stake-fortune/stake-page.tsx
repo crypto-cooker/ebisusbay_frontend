@@ -157,7 +157,7 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
   const daysToAdd = Number(vault.length / (86400));
   const numTerms = Math.floor(daysToAdd / rdConfig.bank.staking.fortune.termLength);
   const availableAprs = rdConfig.bank.staking.fortune.apr as any;
-  const apr = (availableAprs[numTerms] ?? availableAprs[1]) * 100;
+  const baseApr = (availableAprs[numTerms] ?? availableAprs[1]) * 100;
   const endDate = moment(vault.endTime * 1000).format("MMM D yyyy");
 
   const [isExecutingClose, setIsExecutingClose] = useState(false);
@@ -184,20 +184,22 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
     }
   }, []);
 
-  const [totalApr, setTotalApr] = useState(apr);
+  const [totalApr, setTotalApr] = useState(baseApr);
   const [bonusApr, setBonusApr] = useState(0);
   useEffect(() => {
     const vaultDays = vault.length / 86400;
     const maxDays = rdConfig.bank.staking.fortune.maxTerms * rdConfig.bank.staking.fortune.termLength;
     setCanIncreaseDuration(vaultDays < maxDays);
     
+    let totalApr = 0;
     let bonusApr = 0;
     if (rdUser) {
-      bonusApr = (apr + rdUser.bank.bonus.aApr) * (1 + rdUser.bank.bonus.mApr);
+      totalApr = (baseApr + rdUser.bank.bonus.aApr) * (1 + rdUser.bank.bonus.mApr);
+      bonusApr = totalApr - baseApr;
     }
     setBonusApr(bonusApr);
-    setTotalApr(apr + bonusApr);
-  }, [vault, rdConfig, rdUser, apr]);
+    setTotalApr(baseApr + bonusApr);
+  }, [vault, rdConfig, rdUser, baseApr]);
 
   return (
     <Box>
@@ -242,7 +244,7 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
               <Box textAlign='end'>
                 <VStack align='end' spacing={0}>
                   <Box fontWeight='bold'>{totalApr}%</Box>
-                  <Box fontSize='xs'>{apr}% Fortune stake + {round(bonusApr, 2)}% NFT stake</Box>
+                  <Box fontSize='xs'>{baseApr}% Fortune stake + {round(bonusApr, 2)}% NFT stake</Box>
                 </VStack>
               </Box>
               <Box>Troops</Box>

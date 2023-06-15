@@ -167,7 +167,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       isCentered={false}
     >
       <BarracksStakeNftContext.Provider value={pendingNfts}>
-        <Text align='center' p={2}>Ryoshi Tales NFTs can be staked to earn 2 extra battle units per slot.</Text>
+        <Text align='center' p={2}>Ryoshi Tales NFTs can be staked to earn extra battle units per slot.</Text>
         <StakingBlock
           pendingNfts={pendingNfts}
           stakedNfts={stakedNfts}
