@@ -59,6 +59,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
   const [leaderBoard, setLeaderBoard] = useState<ReactElement[]>([]);
   const [showCurrentGame, setShowCurrentGame] = useState(true);
   const [noGameActive, setNoGameActive] = useState(false);
+  const [gameActive, setGameActive] = useState(false);
 
   const [attackerOptions, setAttackerOptions] = useState<ReactElement[]>([]);
   const [dataForm, setDataForm] = useState({
@@ -93,7 +94,9 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
     if(status === 'success' && allFactions !== undefined) {
       console.log('getting regions')
       if(allFactions.game !== null) {
-        LoadControlPoints();
+        //locking for week start
+        setNoGameActive(true)
+        // LoadControlPoints();
       }
       else {
         setNoGameActive(true)
@@ -161,7 +164,9 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
     {noGameActive ? (<>
     <Box minH={'200px'}>
       <Center>
-        <Text> No game data available </Text>
+        <Text
+        margin='100'
+        > No game currently active </Text>
       </Center>
     </Box>
         </>) : (<>
