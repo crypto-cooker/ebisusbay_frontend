@@ -142,7 +142,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
         toast.success("Changes Saved");
       } catch (error) {
         console.log(error)
-        toast.error("Saving Changes Failed, Faction name must be unique");
+        toast.error(error.response.data.error.metadata.message)
       }
     }
   }
