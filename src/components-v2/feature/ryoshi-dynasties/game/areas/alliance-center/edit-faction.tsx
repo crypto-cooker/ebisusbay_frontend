@@ -142,14 +142,15 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
         toast.success("Changes Saved");
       } catch (error:any) {
         console.log(error)
-        if(error.response !== undefined) {
+        if (error.response !== undefined) {
           toast.error(error.response.data.error.metadata.message)
-        }
-        else {
+        } else {
           toast.error(error);
         }
+      }
     }
   }
+
   const DeleteFaction = async() => {
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {

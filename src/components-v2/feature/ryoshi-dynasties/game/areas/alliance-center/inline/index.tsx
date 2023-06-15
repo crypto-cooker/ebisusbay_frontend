@@ -241,7 +241,7 @@ const CurrentFaction = () => {
           toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
         }
       } catch (error: any) {
-        // console.log(error);
+        console.log(error);
         // if (error.message) {
         //   toast.error(error.message);
         // } else 
