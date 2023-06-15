@@ -1,5 +1,20 @@
-import {useState, useContext, useEffect} from "react";
-import {Box, Center, Flex, Text, Checkbox, VStack, Alert, AlertIcon, AlertTitle, SimpleGrid, Spacer} from "@chakra-ui/react"
+import {useContext, useState} from "react";
+import {
+    Alert,
+    AlertIcon,
+    AlertTitle,
+    Box,
+    Center,
+    Checkbox,
+    Flex,
+    Icon,
+    SimpleGrid,
+    Spacer,
+    Stack,
+    Text,
+    useDisclosure,
+    VStack
+} from "@chakra-ui/react"
 import {createFaction} from "@src/core/api/RyoshiDynastiesAPICalls";
 
 import {getAuthSignerInStorage} from '@src/helpers/storage';
@@ -8,11 +23,14 @@ import {useAppSelector} from "@src/Store/hooks";
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {toast} from "react-toastify";
 import {RdFactionType} from "@src/core/services/api-service/types";
-import {RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+import {RdModalAlert, RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {
-  RyoshiDynastiesContext,
-  RyoshiDynastiesContextProps
+    RyoshiDynastiesContext,
+    RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faExclamationTriangle} from "@fortawesome/free-solid-svg-icons";
+
 interface FactionRegistrationFormProps {
   isOpen: boolean;
   onClose: () => void;
@@ -28,6 +46,7 @@ const CreateFactionForm = ({ isOpen, onClose, handleClose}: FactionRegistrationF
   const [showAlert, setShowAlert] = useState(false);
   const [understood, setUnderstood] = useState(false);
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { isOpen: isConfirmationOpen, onOpen: onOpenConfirmation, onClose: onCloseConfirmation } = useDisclosure();
   const adjectives = [
       "Radiant",
       "Mystic",
@@ -526,13 +545,8 @@ const CreateFactionForm = ({ isOpen, onClose, handleClose}: FactionRegistrationF
   
   const handleCreateFaction = async () => {
     if (!user.address) return;
-
-    if(!understood) {
-      console.log("Acknowledgement required");
-      setShowAlert(true);
-      return;
-    }
     setShowAlert(false);
+    onCloseConfirmation();
 
     try {
       let signatureInStorage = getAuthSignerInStorage()?.signature;
@@ -567,68 +581,117 @@ const CreateFactionForm = ({ isOpen, onClose, handleClose}: FactionRegistrationF
     }
   }
 
+  const handleConfirmation = () => {
+      if (!user.address) return;
+
+      if(!understood) {
+          console.log("Acknowledgement required");
+          setShowAlert(true);
+          return;
+      }
+      setShowAlert(false);
+
+      onOpenConfirmation();
+  }
+
   return (
-    <RdModal
-      isOpen={isOpen}
-      onClose={onClose}
-      title='Create a Faction'
-    >
-      <Flex alignContent={'center'} justifyContent={'center'}>
-        <Box p='3'>
+    <>
+        <RdModal
+          isOpen={isOpen}
+          onClose={onClose}
+          title='Create a Faction'
+        >
+            <Flex alignContent={'center'} justifyContent={'center'}>
+                <Box p='3'>
 
-        <SimpleGrid columns={2} my={4} px={1} marginBottom={0}>
-            <Box>Season Subscription Fee:</Box>
-            <Box textAlign='end' fontWeight='bold'>{rdContext.config.factions.registration.cost} $Fortune</Box>
-          </SimpleGrid>
-          <Text 
-            as='i'
-            fontSize={{base: '14', md: '14'}}
-            textColor={'#cfcfcf'}
-            > Wallets that participated in the fortune presale will have their season 1 fee waved</Text>
+                    <SimpleGrid columns={2} my={4} px={1} marginBottom={0}>
+                        <Box>Season Subscription Fee:</Box>
+                        <Box textAlign='end' fontWeight='bold'>{rdContext.config.factions.registration.cost} $Fortune</Box>
+                    </SimpleGrid>
+                    <Text
+                      as='i'
+                      fontSize={{base: '14', md: '14'}}
+                      textColor={'#cfcfcf'}
+                    > Wallets that participated in the fortune presale will have their season 1 fee waved</Text>
 
-            <Spacer my={8} />
-          <Text>
-            NFT collections MUST register as a faction each season in order to participate in battle and be considered for listing rewards. Must be holding at least 20 $Mitama in your wallet.
-          </Text>
-
-          
-          <Spacer my={8} />
+                    <Spacer my={8} />
+                    <Text>
+                        NFT collections MUST register as a faction each season in order to participate in battle and be considered for listing rewards. Must be holding at least 20 $Mitama in your wallet.
+                    </Text>
 
 
-            <Box >
-              <VStack>
-            <Text
-              fontSize='14'
-              color='#f04848'
-              as='b'>Warning: If you create a faction, you will be unable to delegate troops to other factions for the remainder of the season</Text>
+                    <Spacer my={8} />
 
-              <Checkbox
-                onChange={(t) => setUnderstood(t.target.checked)}
-                >I Understand</Checkbox>
-                {showAlert && (
-              <Alert status='error'>
-                <AlertIcon />
-                <AlertTitle>Acknowlegement required</AlertTitle>
-              </Alert>)}
-              </VStack>
-            </Box>
-        </Box>
-      </Flex>
 
-      <RdModalFooter>
-        <Center>
-          <RdButton
-            onClick={handleCreateFaction}
-            size='lg'
-            stickyIcon={true}
-            isLoading={isExecuting}
-            isDisabled={isExecuting}
-          >
-            Create Faction
-          </RdButton>
-        </Center>
-      </RdModalFooter>
-    </RdModal>
+                    <Box >
+                        <VStack>
+                            <Stack direction='row' align='center' bg='#f8a211' p={2} rounded='sm'>
+                                <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} color='#333' boxSize={8}/>
+                                <Text
+                                  fontSize='14'
+                                  color='#333'
+                                  as='b'
+                                >
+                                    Warning: If you create a faction, you will be unable to delegate troops to other factions for the remainder of the season
+                                </Text>
+                            </Stack>
+                            <Checkbox
+                              onChange={(t) => setUnderstood(t.target.checked)}
+                            >I Understand</Checkbox>
+                            {showAlert && (
+                              <Alert status='error'>
+                                  <AlertIcon />
+                                  <AlertTitle>Acknowlegement required</AlertTitle>
+                              </Alert>)}
+                        </VStack>
+                    </Box>
+                </Box>
+            </Flex>
+
+            <RdModalFooter>
+                <Center>
+                    <RdButton
+                      onClick={handleConfirmation}
+                      size='lg'
+                      stickyIcon={true}
+                      isLoading={isExecuting}
+                      isDisabled={isExecuting}
+                    >
+                        Create Faction
+                    </RdButton>
+                </Center>
+            </RdModalFooter>
+        </RdModal>
+        <RdModal
+          isOpen={isConfirmationOpen}
+          onClose={onCloseConfirmation}
+          title='Confirm'
+        >
+          <RdModalAlert>
+            <Text>Warning: If you create a faction, you will be unable to delegate troops to other factions for the remainder of the season</Text>
+          </RdModalAlert>
+          <RdModalFooter>
+            <Stack justify='center' direction='row' spacing={6}>
+              <RdButton
+                onClick={onCloseConfirmation}
+                size='lg'
+                isLoading={isExecuting}
+                isDisabled={isExecuting}
+              >
+                Cancel
+              </RdButton>
+              <RdButton
+                onClick={handleCreateFaction}
+                size='lg'
+                isLoading={isExecuting}
+                isDisabled={isExecuting}
+              >
+                Create
+              </RdButton>
+            </Stack>
+          </RdModalFooter>
+        </RdModal>
+    </>
   );
 }
 
