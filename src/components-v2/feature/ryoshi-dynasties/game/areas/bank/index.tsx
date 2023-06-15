@@ -1,5 +1,5 @@
-import {useCallback, useState} from 'react';
-import {AspectRatio, Box, Icon, Image, useBreakpointValue, useDisclosure, VStack} from '@chakra-ui/react';
+import React, {useCallback, useState} from 'react';
+import {AspectRatio, Box, Icon, Image, Text, useBreakpointValue, useDisclosure, VStack} from '@chakra-ui/react';
 
 import StakeFortune from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune';
 import StakeNFTs from './stake-nft';
@@ -17,6 +17,8 @@ import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from 'react-redux';
 import ImageService from "@src/core/services/image";
+import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
+import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 
 interface BankerSceneProps {
   address: string;
@@ -34,6 +36,7 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
   const { isOpen: isOpenStakeFortune, onOpen: onOpenStakeFortune, onClose: onCloseStakeFortune} = useDisclosure();
   const { isOpen: isOpenStakeNFTs, onOpen: onOpenStakeNFTs, onClose: onCloseStakeNFTs} = useDisclosure();
   const { isOpen: isOpenWithdraw, onOpen: onOpenWithdraw, onClose: onCloseRewards} = useDisclosure();
+  const { isOpen: isBlockingModalOpen, onOpen: onOpenBlockingModal, onClose: onCloseBlockingModal } = useDisclosure();
 
   const [bankerImage, setBankerImage] = useState(bankerImages.talking);
   const user = useAppSelector((state) => state.user);
@@ -77,81 +80,90 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
       h='calc(100vh - 74px)'
       overflow='hidden'
     >
-    <Box>
+      <Box>
 
-    <StakeFortune address={address} isOpen={isOpenStakeFortune} onClose={onCloseStakeFortune} />
-    <StakeNFTs isOpen={isOpenStakeNFTs} onClose={onCloseStakeNFTs} />
-    <Rewards isOpen={isOpenWithdraw} onClose={onCloseRewards}/>
+        <StakeFortune address={address} isOpen={isOpenStakeFortune} onClose={onCloseStakeFortune} />
+        <StakeNFTs isOpen={isOpenStakeNFTs} onClose={onCloseStakeNFTs} />
+        <Rewards isOpen={isOpenWithdraw} onClose={onCloseRewards}/>
+        <RdModal
+          isOpen={isBlockingModalOpen}
+          onClose={onCloseBlockingModal}
+          title='Coming Soon'
+        >
+          <RdModalAlert>
+            <Text>This area is currently unavailable, either due to maintenance, or a game that has yet to be started. Check back again soon!</Text>
+          </RdModalAlert>
+        </RdModal>
 
-    <AspectRatio ratio={1920/1080} overflow='visible'>
-      <Image
-        src={ImageService.translate('/img/battle-bay/bankinterior/bank_interior_background_desktop_animated.png').convert()}
-        minH='calc(100vh - 74px)'
-      />
-    </AspectRatio>
-    <Image
-      src={bankerImage}
-      w='800px'
-      position='absolute'
-      bottom={0}
-      left={0}
-    />
-      <Box
-        position='absolute'
-        top={{base: 5, md: 10, lg: 16}}
-        left={{base: 0, md: 10, lg: 16}}
-        w={{base: 'full', md: '600px'}}
-        pe={!!windowSize.height && windowSize.height < 600 ? {base: '60px', sm: '150px', md: '0px'} : {base: '5px', md: '0px'}}
-        ps={{base: '5px', md: '0px'}}
-        rounded='lg'
-      >
-        <BankerBubbleBox fontSize={{base: 'md', sm: 'lg', md: 'xl'}} color='white'>
-          {(
-            <TypewriterText
-              text={[greetings[Math.floor(Math.random() * greetings.length)]]}
-              onComplete={() => setBankerImage(bankerImages.idle)}
-            />
-          )}
-        </BankerBubbleBox>
+        <AspectRatio ratio={1920/1080} overflow='visible'>
+          <Image
+            src={ImageService.translate('/img/battle-bay/bankinterior/bank_interior_background_desktop_animated.png').convert()}
+            minH='calc(100vh - 74px)'
+          />
+        </AspectRatio>
+        <Image
+          src={bankerImage}
+          w='800px'
+          position='absolute'
+          bottom={0}
+          left={0}
+        />
+        <Box
+          position='absolute'
+          top={{base: 5, md: 10, lg: 16}}
+          left={{base: 0, md: 10, lg: 16}}
+          w={{base: 'full', md: '600px'}}
+          pe={!!windowSize.height && windowSize.height < 600 ? {base: '60px', sm: '150px', md: '0px'} : {base: '5px', md: '0px'}}
+          ps={{base: '5px', md: '0px'}}
+          rounded='lg'
+        >
+          <BankerBubbleBox fontSize={{base: 'md', sm: 'lg', md: 'xl'}} color='white'>
+            {(
+              <TypewriterText
+                text={[greetings[Math.floor(Math.random() * greetings.length)]]}
+                onComplete={() => setBankerImage(bankerImages.idle)}
+              />
+            )}
+          </BankerBubbleBox>
+        </Box>
+        <Box
+          position='absolute'
+          right={-1}
+          bottom={20}
+          w={abbreviateButtonText ? '60px' : '269px'}
+        >
+          <VStack spacing={4} align='end'>
+            <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenStakeFortune)}>
+              {abbreviateButtonText ? (
+                <Icon as={FontAwesomeIcon} icon={faCoins} />
+              ) : (
+                <>Stake $Fortune </>
+              )}
+            </RdButton>
+            <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={onOpenBlockingModal}>
+              {abbreviateButtonText ? (
+                <Icon as={FontAwesomeIcon} icon={faImage} />
+              ) : (
+                <>Stake NFTs </>
+              )}
+            </RdButton>
+            <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenWithdraw)}>
+              {abbreviateButtonText ? (
+                <Icon as={FontAwesomeIcon} icon={faGift} />
+              ) : (
+                <>Rewards</>
+              )}
+            </RdButton>
+            <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={onBack}>
+              {abbreviateButtonText ? (
+                <Icon as={FontAwesomeIcon} icon={faArrowRightFromBracket} />
+              ) : (
+                <>Exit</>
+              )}
+            </RdButton>
+          </VStack>
+        </Box>
       </Box>
-      <Box
-        position='absolute'
-        right={-1}
-        bottom={20}
-        w={abbreviateButtonText ? '60px' : '269px'}
-      >
-        <VStack spacing={4} align='end'>
-          <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenStakeFortune)}>
-            {abbreviateButtonText ? (
-              <Icon as={FontAwesomeIcon} icon={faCoins} />
-            ) : (
-              <>Stake $Fortune </>
-            )}
-          </RdButton>
-          <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>
-            {abbreviateButtonText ? (
-              <Icon as={FontAwesomeIcon} icon={faImage} />
-            ) : (
-              <>Stake NFTs </>
-            )}
-          </RdButton>
-          <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenWithdraw)}>
-            {abbreviateButtonText ? (
-              <Icon as={FontAwesomeIcon} icon={faGift} />
-            ) : (
-              <>Rewards</>
-            )}
-          </RdButton>
-          <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={onBack}>
-            {abbreviateButtonText ? (
-              <Icon as={FontAwesomeIcon} icon={faArrowRightFromBracket} />
-            ) : (
-              <>Exit</>
-            )}
-          </RdButton>
-        </VStack>
-      </Box>
-    </Box>
     </Box>
   );
 }

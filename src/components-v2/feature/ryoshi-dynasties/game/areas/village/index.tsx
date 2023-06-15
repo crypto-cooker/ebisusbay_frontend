@@ -568,13 +568,20 @@ const Village = ({onChange}: VillageProps) => {
 
   const { isOpen: isBlockingModalOpen, onOpen: onOpenBlockingModal, onClose: onCloseBlockingModal } = useDisclosure();
   const handleSceneChange = useCallback((area: string) => {
-    if (area === 'battleMap') {
+    const blockableAreas = ['battleMap', 'barracks'];
+    if (blockableAreas.includes(area)) {
       const blockableStates = [RdGameState.IN_MAINTENANCE, RdGameState.NOT_STARTED];
-      if (!rdGameContext?.state || blockableStates.includes(rdGameContext?.state)) {
+      // if (!rdGameContext?.state || blockableStates.includes(rdGameContext?.state)) {
         onOpenBlockingModal();
         return;
-      }
+      // }
     }
+
+    if (area === 'barracks') {
+      OpenBarracks();
+      return;
+    }
+
     onChange(area);
   }, [rdGameContext]);
 
@@ -683,7 +690,7 @@ const Village = ({onChange}: VillageProps) => {
                     </Box>
 
                     <Box id="barracks" className={styles.enlarge} style={{position:"absolute", marginTop: barracksTop, marginLeft: barracksLeft, zIndex:"9"}}
-                         onClick={() => OpenBarracks()}
+                         onClick={() => handleSceneChange('barracks')}
                     >
                       <img src={ImageService.translate('/img/battle-bay/mapImages/barracks.png').convert()} />
                     </Box>
@@ -769,10 +776,10 @@ const Village = ({onChange}: VillageProps) => {
       <RdModal
         isOpen={isBlockingModalOpen}
         onClose={onCloseBlockingModal}
-        title='Cannot Enter'
+        title='Coming Soon'
       >
         <RdModalAlert>
-          <Text>This area is currently unavailable, either due to maintenance, or a game that has yet to be started. Check back again soon.</Text>
+          <Text>This area is currently unavailable, either due to maintenance, or a game that has yet to be started. Check back again soon!</Text>
         </RdModalAlert>
       </RdModal>
     </section>
