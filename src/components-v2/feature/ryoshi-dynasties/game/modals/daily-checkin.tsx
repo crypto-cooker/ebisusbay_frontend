@@ -4,7 +4,7 @@ import {useAppSelector} from "@src/Store/hooks";
 import {ApiService} from "@src/core/services/api-service";
 import {getAuthSignerInStorage} from "@src/helpers/storage";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
-import {Box, Text} from "@chakra-ui/react";
+import {Box, Text, Grid, Image, HStack} from "@chakra-ui/react";
 import {createSuccessfulTransactionToastContent, pluralize} from "@src/utils";
 import {useEffect, useState, useContext} from "react";
 import {Contract} from "ethers";
@@ -16,6 +16,7 @@ import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
 import {getRewardsStreak} from "@src/core/api/RyoshiDynastiesAPICalls";
 import moment from "moment";
+import ImageService from "@src/core/services/image";
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
@@ -155,11 +156,62 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
       <Box mx={1} pb={4}>
         <Text align='center'>
           Earn $Koban by checking in daily. Multiply your rewards by claiming multiple days in a row!
-
         </Text>
         {!!user.address ? ( <>
           {isGettingStreak ? <>
             </> : <>
+            <Grid templateColumns='repeat(7, 1fr)' gap={1} padding={2}>
+          <Box w='100%' h='55' rounded="lg" color={'#FFD700'}  border={streak==1 ? '2px' : ''}>
+            <Text fontSize={16} color='#aaa' textAlign={'center'}>Day 1</Text>
+            <HStack justifyContent={'center'} spacing={0.5}>
+              <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >1</Text>
+              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="walletIcon" boxSize={4}/>
+            </HStack>
+          </Box>
+          <Box w='100%' h='55' rounded="lg" color={'#FFD700'} border={streak==2 ? '2px' : ''}>
+            <Text fontSize={16} color='#aaa' textAlign={'center'}>Day 2</Text>
+            <HStack justifyContent={'center'} spacing={0.5}>
+              <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >5</Text>
+              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="walletIcon" boxSize={4}/>
+            </HStack>
+          </Box>
+          <Box w='100%'h='55' rounded="lg" border={streak==3 ? '2px' : ''}>
+            <Text fontSize={16} color='#aaa' textAlign={'center'}>Day 3</Text>
+            <HStack justifyContent={'center'} spacing={0.5}>
+              <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >10</Text>
+              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="walletIcon" boxSize={4}/>
+            </HStack>
+          </Box>
+          <Box w='100%'h='55' rounded="lg" border={streak==4 ? '2px' : ''}>
+            <Text fontSize={16} color='#aaa' textAlign={'center'}>Day 4</Text>
+            <HStack justifyContent={'center'} spacing={0.5}>
+              <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >15</Text>
+              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="walletIcon" boxSize={4}/>
+            </HStack>
+          </Box>
+          <Box w='100%'h='55' rounded="lg" border={streak==5 ? '2px' : ''}>
+            <Text fontSize={16} color='#aaa' textAlign={'center'}>Day 5</Text>
+            <HStack justifyContent={'center'} spacing={0.5}>
+              <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >20</Text>
+              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="walletIcon" boxSize={4}/>
+            </HStack>
+          </Box>
+          <Box w='100%'h='55' rounded="lg" border={streak==6 ? '2px' : ''}>
+            <Text fontSize={16} color='#aaa' textAlign={'center'}>Day 6</Text>
+            <HStack justifyContent={'center'} spacing={0.5}>
+              <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >25</Text>
+              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="walletIcon" boxSize={4}/>
+            </HStack>
+          </Box>
+          <Box w='100%'h='55' rounded="lg" border={streak==7 ? '2px' : ''}>
+            <Text fontSize={16} color='#aaa' textAlign={'center'}>Day 7</Text>
+            <HStack justifyContent={'center'} spacing={0.5}>
+              <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >30</Text>
+              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="walletIcon" boxSize={4}/>
+            </HStack>
+          </Box>
+        </Grid>
+
             {canClaim ? (
               <Box textAlign='center' mt={4}>
                 <RdButton
