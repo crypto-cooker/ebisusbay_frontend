@@ -344,7 +344,7 @@ const CurrentFaction = () => {
                 {!rdContext.user.season.faction && (
                   <Box textAlign='start' mt={2} fontSize='sm'>
                     <Text>Regular Cost: {rdContext.config.factions.registration.cost}</Text>
-                    <Text >Presale Users: Free for first 3 seasons</Text>
+                    <Text >Presale Users: Free for first season</Text>
                   </Box>
                 )}
               </Box>
