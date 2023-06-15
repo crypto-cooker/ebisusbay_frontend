@@ -39,7 +39,7 @@ const FortuneRewardsTab = () => {
     if (rdGameContext) {
       const totalTime = Date.parse(rdGameContext.season.endAt) - Date.parse(rdGameContext.season.startAt);
       const currentElapsed = Date.parse(rdGameContext.season.endAt) - Date.now();
-      setSeasonTimeRemaining(Math.floor((currentElapsed / totalTime) * 100));
+      setSeasonTimeRemaining(Math.floor(((totalTime - currentElapsed) / totalTime) * 100));
       setBurnMalus(rdGameContext!.rewards.burnPercentage / 100);
     }
 

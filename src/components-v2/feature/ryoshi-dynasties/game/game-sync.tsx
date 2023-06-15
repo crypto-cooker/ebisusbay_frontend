@@ -196,7 +196,7 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
 
               {authInitFinished ? (
                 <>
-                  {!!user.address ? (
+                  {!!user.address && user.correctChain ? (
                     <>
                       <Center>
                         <RdButton stickyIcon={true} onClick={onCloseWelcomeModal}>
@@ -209,10 +209,6 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
                       <RdButton stickyIcon={true} onClick={connectWalletPressed}>
                         Switch Network
                       </RdButton>
-                    </Center>
-                  ) : (!!user.address) ? (
-                    <Center>
-                      <Spinner />
                     </Center>
                   ) : (
                     <Center>
