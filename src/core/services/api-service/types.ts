@@ -186,6 +186,27 @@ interface RdSeason extends RdGameBase {
     id: number;
     startAt: string;
     uuid: string;
+    map: RdSeasonMap;
+}
+
+interface RdSeasonMap {
+    id: number;
+    regions: RdSeasonRegion[];
+    uuid: string;
+};
+
+interface RdSeasonRegion {
+    id: number;
+    name: string;
+    uuid: string;
+    controlPoints: RdSeasonRegionControlPoint[],
+}
+
+interface RdSeasonRegionControlPoint {
+    id: number;
+    name: string;
+    coordinates: string;
+    uuid: string;
 }
 
 interface RdGameRewards {
