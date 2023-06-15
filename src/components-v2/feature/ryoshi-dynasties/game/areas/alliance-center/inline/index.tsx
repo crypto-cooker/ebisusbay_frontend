@@ -384,11 +384,11 @@ const CurrentFaction = () => {
                   <Text fontSize='sm' pt={4}>Faction Troops</Text>
                   <Text fontSize='lg' fontWeight='bold'>{rdContext.user.season.troops.deployed}</Text>
                 </VStack>
-                {!!rdContext.user.season.troops.undeployed && !rdContext.user.season.faction && (
-                  <RdButton hoverIcon={false} onClick={onOpenDelegate} maxH='50px'>
-                    Delegate
-                  </RdButton>
-                )}
+                {/*{!!rdContext.user.season.troops.undeployed && !rdContext.user.season.faction && (*/}
+                {/*  <RdButton hoverIcon={false} onClick={onOpenDelegate} maxH='50px'>*/}
+                {/*    Delegate*/}
+                {/*  </RdButton>*/}
+                {/*)}*/}
               </SimpleGrid>
             </Box>
           )}
