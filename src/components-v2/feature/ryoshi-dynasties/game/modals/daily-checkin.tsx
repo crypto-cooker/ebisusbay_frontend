@@ -6,7 +6,7 @@ import {getAuthSignerInStorage} from "@src/helpers/storage";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {Box, Text} from "@chakra-ui/react";
 import {createSuccessfulTransactionToastContent, pluralize} from "@src/utils";
-import {useEffect, useState} from "react";
+import {useEffect, useState, useContext} from "react";
 import {Contract} from "ethers";
 import {toast} from "react-toastify";
 import {appConfig} from "@src/Config";
@@ -16,6 +16,10 @@ import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
 import {getRewardsStreak} from "@src/core/api/RyoshiDynastiesAPICalls";
 import moment from "moment";
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 
 const config = appConfig();
 
@@ -26,7 +30,7 @@ interface DailyCheckinProps {
 }
 const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
   const dispatch = useDispatch();
-
+  const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector(state => state.user);
   const [isLoading, getSigner] = useCreateSigner();
   const [streak, setStreak] = useState(1);
@@ -81,6 +85,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
           toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
           setCanClaim(false);
           setNextClaim('in 24 hours');
+          rdContext.refreshUser();
           forceRefresh();
         }
       } catch (error) {

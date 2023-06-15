@@ -15,7 +15,7 @@ import {
   Text
 } from "@chakra-ui/react";
 import RdButton from "../../../components/rd-button";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState, useContext} from "react";
 import NextApiService from "@src/core/services/api-service/next";
 import {ApiService} from "@src/core/services/api-service";
 import {ethers} from "ethers";
@@ -26,6 +26,10 @@ import {getAuthSignerInStorage} from "@src/helpers/storage";
 import {getRewardsStreak} from "@src/core/api/RyoshiDynastiesAPICalls";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {appConfig} from "@src/Config";
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 
 const config = appConfig();
 
@@ -37,6 +41,8 @@ interface VillageHudProps {
 
 export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, forceRefresh}: VillageHudProps) => {
   const user = useAppSelector((state) => state.user);
+  const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const config = appConfig();
 
   const[isLoading, setIsLoading] = useState(false);
   const[koban, setKoban] = useState<number | string>(0);
@@ -79,32 +85,21 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, forceRefresh}: 
   }
 
   const getRewardsStreakData = async () => {
-    if (!user.address) return;
+    if (!user.address || !rdUser) return;
+      const dt = Date.parse(rdUser.dailyRewards.nextClaim)
+      // console.log(dt)
 
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const data = await getRewardsStreak(user.address, signatureInStorage);
-        if(!data.data.data.nextClaim || data.data.data.nextClaim <= Date.now()) {
-          setCanClaim(true)
-        }
-        else{
-          setCanClaim(false)
-          clearTimer(data.data.data.nextClaim)
-        }
-      } catch (error) {
-        console.log(error)
+      if(!dt || dt <= Date.now()) {
+        setCanClaim(true)
       }
-    }
+      else{
+        setCanClaim(false)
+        clearTimer(rdUser.dailyRewards.nextClaim)
+      }
   }
-
   useEffect(() => {
       getRewardsStreakData();
-  }, [user.address])
+  }, [user.address, rdUser])
   
   const getResources = async () => {
     try {
