@@ -191,8 +191,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
               color="white"
               _hover={{ bg: "yellow.900" }}
               _focus={{ boxShadow: "outline" }}
-              onClick={(e) => {
-                e.preventDefault();
+              onClick={() => {
                 window.location.href='https://seashrine.io/';
                 }}
             >
