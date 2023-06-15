@@ -236,8 +236,11 @@ const Index = function () {
   }
 
   const handleBuyFortune = () => {
-    history.push('/ryoshi-dynasties/token-sale');
-    closeMenu();
+    const url = new URL('https://vvs.finance/swap')
+    url.searchParams.append('outputCurrency', config.contracts.fortune);
+    url.searchParams.append('inputCurrency', config.contracts.usdc);
+
+    window.open(url, '_blank');
   }
 
   useEffect(() => {
@@ -466,16 +469,16 @@ const Index = function () {
                       </span>
                     ) : (
                       <span>
-                      <Spinner animation="border" role="status" size={'sm'}>
-                        <span className="visually-hidden">Loading...</span>
-                      </Spinner>
-                    </span>
+                        <Spinner animation="border" role="status" size={'sm'}>
+                          <span className="visually-hidden">Loading...</span>
+                        </Spinner>
+                      </span>
                     )}
                   </div>
                 </div>
                 <div className="my-auto">
                   <PrimaryButton onClick={handleBuyFortune}>
-                    Claim $Fortune
+                    Buy $Fortune
                   </PrimaryButton>
                 </div>
               </div>
