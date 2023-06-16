@@ -20994,6 +20994,182 @@
         "kyc": "hidden",
         "verified": true
       }
+    },
+    {
+      "name": "BOB Weed",
+      "slug": "bob-weed",
+      "multiToken": false,
+      "address": "0x3f4A31D0a13A267d0b567580E2E8fa8f8b73A7aC",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "BOB Weed is one of BOB Adventures NFTs collection, created by artificial intelligence created with super limited supply of 200.",
+        "avatar": "/img/collections/bob-weed/avatar.webp",
+        "card": "/img/collections/bob-weed/card.webp",
+        "banner": "/img/collections/bob-weed/banner.webp",
+        "website": "https://bob-adventures.netlify.app/",
+        "twitter": "https://twitter.com/CroBobAdventure",
+        "discord": "https://discord.gg/kemzRExMju",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Bulls",
+      "slug": "bulls",
+      "multiToken": false,
+      "address": "0xE2Ac439bD7FdF924903d22799C11c6C600Ffb6B3",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Bulls are the match to the Cowz you've all been waiting for! Bulls will collect royalties for Cowz, Bulls and ranches and to emit \"Calf NFT's\" via breeding! Jump in if you're feeling BULLISH!",
+        "avatar": "/img/collections/bulls/avatar.webp",
+        "card": "/img/collections/bulls/card.webp",
+        "banner": "/img/collections/bulls/banner.webp",
+        "website": "https://www.cronossteakhouse.com/",
+        "twitter": "https://www.twitter.com/CronoSteakHouse",
+        "discord": "https://discord.gg/fpTgAReDyN",
+        "medium": "https://medium.com/@CronoSteakHouse",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Carkayous - Expedition 8.2 Compositions",
+      "slug": "carkayous-expedition-8p2-compositions",
+      "multiToken": false,
+      "address": "0x7ddd8c4786ea4422d9c3b2b0903ac4bfaacea797",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Where Expedition 8.2 compositions live.",
+        "avatar": "/img/collections/carkayous-expedition-8p2-compositions/avatar.webp",
+        "banner": "/img/collections/carkayous-expedition-8p2-compositions/banner.webp",
+        "card": "/img/collections/carkayous-expedition-8p2-compositions/card.webp",
+        "website": "https://carkayous.com/",
+        "twitter": "https://twitter.com/carkayous",
+        "discord": "https://discord.gg/carkayous",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Atlantis Spaceships",
+      "slug": "atlantis-spaceships",
+      "multiToken": false,
+      "address": "0xCd8799DcFEe2d5a5bD8f26a3b4f30afb1099bCbc",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "In Atlantis, Spaceships play a crucial role in earning Gold and Stardust. Players can race their spaceships against other players’ ships to win valuable  Stardust and Gold. Races are won based on speed tagged to each specific race track, so it’s important to have a fast and well-upgraded spaceship to come out on top.",
+        "avatar": "/img/collections/atlantis-spaceships/avatar.webp",
+        "card": "/img/collections/atlantis-spaceships/card.webp",
+        "banner": "/img/collections/atlantis-spaceships/banner.webp",
+        "website": "https://atlantis.argofinance.money/",
+        "twitter": "https://twitter.com/ArgoProtocol",
+        "discord": "https://discord.gg/argofinance",
+        "medium": "https://argofinance.medium.com",
+        "telegram": "https://t.me/Argo_Finance",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Troopz Loyalty 'Gold' VIP - DAO Pass",
+      "slug": "trooprz-loyalty-vip-gold",
+      "multiToken": false,
+      "address": "0x3ffcb84507c6d5a2b963d5f367feffa496e964c1",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "250 Troopz Loyalty 'Gold' VIP - DAO pass. Create DAO proposals; An opportunity to have a voice in the future strategy and direction of the Troopz project.",
+        "avatar": "/img/collections/trooprz-loyalty-vip-gold/avatar.webp",
+        "banner": "/img/collections/trooprz-loyalty-vip-gold/banner.webp",
+        "card": "/img/collections/trooprz-loyalty-vip-gold/card.webp",
+        "twitter": "https://twitter.com/trooprzarmy",
+        "website": "https://trooprz.army/",
+        "discord": "https://discord.gg/trooprz",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Troopz Empathy 'Silver' VIP - DAO Pass",
+      "slug": "trooprz-empathy-vip-silver",
+      "multiToken": false,
+      "address": "0xa808030692001dd562f437fc676cd63eb232bc2a",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Troopz Empathy 'Silver' VIP - DAO pass. Access to closed voting; An opportunity to back or stop a proposal from getting to a full community vote. Ensure only the best value moves forward!",
+        "avatar": "/img/collections/trooprz-empathy-vip-silver/avatar.webp",
+        "banner": "/img/collections/trooprz-empathy-vip-silver/banner.webp",
+        "card": "/img/collections/trooprz-empathy-vip-silver/card.webp",
+        "twitter": "https://twitter.com/trooprzarmy",
+        "website": "https://trooprz.army/",
+        "discord": "https://discord.gg/trooprz",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Troopz Strength 'Bronze' VIP - DAO Pass",
+      "slug": "trooprz-strength-vip-bronze",
+      "multiToken": false,
+      "address": "0x8721b9ad32d1c7869f19d62ac4b764e3038cc1d2",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Troopz Strength 'Bronze' VIP - DAO pass. Access to community voting; Have your say in the future direction of the Troopz project, stack up your Strength VIPs for maximum voting power!",
+        "avatar": "/img/collections/trooprz-strength-vip-bronze/avatar.webp",
+        "banner": "/img/collections/trooprz-strength-vip-bronze/banner.webp",
+        "card": "/img/collections/trooprz-strength-vip-bronze/card.webp",
+        "twitter": "https://twitter.com/trooprzarmy",
+        "website": "https://trooprz.army/",
+        "discord": "https://discord.gg/trooprz",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
