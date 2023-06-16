@@ -41,7 +41,7 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import AvatarEditor from 'react-avatar-editor'
 import Cropper from '@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline/Cropper';
-
+import Search from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/search";
 const config = appConfig();
 
 interface EditFactionProps {
@@ -56,7 +56,11 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
 
   const addressInput = useRef<HTMLInputElement>(null);
   const [addresses, setAddresses] = useState<string[]>([])
-  const handleAddChange = (event: ChangeEvent<HTMLInputElement>) => setAddressesToAdd(event.target.value)
+  const handleAddChange = (event: ChangeEvent<HTMLInputElement>) => 
+  {
+    console.log(event.target.value)
+    setAddressesToAdd(event.target.value)
+  }
   const [addressToAdd, setAddressesToAdd] = useState('')
   const factionNameInput = useRef(null);
   const [factionType, setFactionType] = useState("")
@@ -80,6 +84,11 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const[editFactionIcon, setEditFactionIcon] = useState(false);
   const editorRef = useRef(null)
+
+  const HandleSelectCollectionCallback = (collectionAddress: string) => {
+    console.log(collectionAddress);
+    setAddressesToAdd(collectionAddress);
+  }
 
   const RegistrationAction = async (factionId: number) => {
     if(isRegistered) {
@@ -394,8 +403,6 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
                 </VStack>
               </Box>
             </Flex>
-          
-              
 
               <Divider />
 
@@ -427,6 +434,13 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
                 placeholder=''
                 size='sm'
               />
+              {factionType === "COLLECTION" ? (
+                    <Search handleSelectCollectionCallback={HandleSelectCollectionCallback}/>
+                  ) : (
+                    <></>
+                  )}
+              
+
               <OrderedList>
                 {addressDisplay}
               </OrderedList>
