@@ -25,6 +25,7 @@ import {useAppSelector} from "@src/Store/hooks";
 import AnnouncementBoardModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/inline";
 import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks";
 import PortalModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/portal";
+import FishMarketModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/fish-market";
 import {VillageHud} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/hud";
 import ImageService from "@src/core/services/image";
 import AllianceCenterInline from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline";
@@ -63,6 +64,8 @@ const Village = ({onChange}: VillageProps) => {
   const [allianceCenterOpen, setAllianceCenterOpen] = useState(false);
   const [barracksOpen, setBarracksOpen] = useState(false);
   const [portalOpen, setPortalOpen] = useState(false);
+  const [marketOpen, setMarketOpen] = useState(false);
+  
   // const [buildingOpen, setBuildingOpen] = useState(false);
 
   const buildingButtonRef = useRef<any>(null)
@@ -187,7 +190,7 @@ const Village = ({onChange}: VillageProps) => {
     "water" : {height: 703, width: 2880, top: '32%', left: '0%'},
     "boat" : {height: 613, width: 718, top: '33%', left: '2%'},
     "ebisustatue" : {height: 542, width: 279, top: '35%', left: '40%'},
-    "fishmarket" : {height: 545, width: 793, top: '36.5%', left: '55%'},
+    "market" : {height: 545, width: 793, top: '36.5%', left: '55%'},
     "barracks" : {height: 579, width: 832, top: '12.5%', left: '-0.5%'},
     "swordsmen" : {height: 270, width: 383, top: '22%', left: '14%'},
 
@@ -213,11 +216,12 @@ const Village = ({onChange}: VillageProps) => {
     'fishmarket_label' : {height: 545, width: 793, top: '36.5%', left: '55%'},
     'bank_label' : {height: 456, width: 579, top: '7%', left: '33%'},
   }
-  const buttonsNames = ["bank", "alliancecenter", "moongate", "barracks", "announcement", "boat"];
+  const buttonsNames = ["bank", "alliancecenter", "moongate", "barracks", "announcement", "boat", "market"];
 
   const OpenAllianceCenter = () => {
     setBarracksOpen(false);
     setPortalOpen(false);
+    setMarketOpen(false);
     setElementToZoomTo('alliancecenter');
     setAllianceCenterOpen(true);
   }
@@ -228,6 +232,7 @@ const Village = ({onChange}: VillageProps) => {
   const OpenBarracks = () => {
     setAllianceCenterOpen(false);
     setPortalOpen(false);
+    setMarketOpen(false);
     setElementToZoomTo('barracks');
     setBarracksOpen(true);
   }
@@ -238,12 +243,24 @@ const Village = ({onChange}: VillageProps) => {
   const OpenPortal = () => {
     setBarracksOpen(false);
     setAllianceCenterOpen(false);
+    setMarketOpen(false);
     setElementToZoomTo('moongate');
     setPortalOpen(true);
   }
   const ClosePortal = () => {
     setElementToZoomTo('fancyMenu');
     setPortalOpen(false);
+  }
+  const OpenMarket = () => {
+    setBarracksOpen(false);
+    setAllianceCenterOpen(false);
+    setPortalOpen(false);
+    setElementToZoomTo('market');
+    setMarketOpen(true);
+  }
+  const CloseMarket = () => {
+    setElementToZoomTo('fancyMenu');
+    setMarketOpen(false);
   }
 
 //#region all resizing stuff
@@ -308,10 +325,10 @@ const Village = ({onChange}: VillageProps) => {
   const [barracksTop, setBarracksTop] = useState(buildings.barracks.top);
   const [barracksLeft, setBarracksLeft] = useState(buildings.barracks.left);
 
-  const [fishmarketWidth, setFishmarketWidth] = useState(buildings.fishmarket.width);
-  const [fishmarketHeight, setFishmarketHeight] = useState(buildings.fishmarket.height);
-  const [fishmarketTop, setFishmarketTop] = useState(buildings.fishmarket.top);
-  const [fishmarketLeft, setFishmarketLeft] = useState(buildings.fishmarket.left);
+  const [fishmarketWidth, setFishmarketWidth] = useState(buildings.market.width);
+  const [fishmarketHeight, setFishmarketHeight] = useState(buildings.market.height);
+  const [fishmarketTop, setFishmarketTop] = useState(buildings.market.top);
+  const [fishmarketLeft, setFishmarketLeft] = useState(buildings.market.left);
 
   const [boatWidth, setBoatWidth] = useState(buildings.boat.width);
   const [boatHeight, setBoatHeight] = useState(buildings.boat.height);
@@ -430,8 +447,8 @@ const Village = ({onChange}: VillageProps) => {
     setBarracksWidth( buildings.barracks.width * sizeMultiplier);
     setBarracksHeight( buildings.barracks.height * sizeMultiplier);
 
-    setFishmarketWidth( buildings.fishmarket.width * sizeMultiplier);
-    setFishmarketHeight( buildings.fishmarket.height * sizeMultiplier);
+    setFishmarketWidth( buildings.market.width * sizeMultiplier);
+    setFishmarketHeight( buildings.market.height * sizeMultiplier);
 
     setBoatWidth( buildings.boat.width * sizeMultiplier);
     setBoatHeight( buildings.boat.height * sizeMultiplier);
@@ -668,8 +685,12 @@ const Village = ({onChange}: VillageProps) => {
                       <img src={ImageService.translate('/img/battle-bay/mapImages/ebisustatue.png').convert()} />
                     </Box>
 
-                    <Box style={{position:"absolute", marginTop: fishmarketTop, marginLeft: fishmarketLeft, zIndex:"9"}} >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/fishmarket_day.apng').convert()} />
+                    <Box 
+                      id="market"
+                      className={styles.enlarge}
+                      onClick={() => OpenMarket()}
+                      style={{position:"absolute", marginTop: fishmarketTop, marginLeft: fishmarketLeft, zIndex:"9"}} >
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/fishmarket_day.apng').convert()}/>
                     </Box>
 
                     <Box style={{position:"absolute", marginTop: waterTop, marginLeft: waterLeft, zIndex:"8"}} >
@@ -746,7 +767,7 @@ const Village = ({onChange}: VillageProps) => {
           </TransformWrapper>
         )}
 
-        {!allianceCenterOpen && !barracksOpen && !portalOpen && (
+        {!allianceCenterOpen && !barracksOpen && !portalOpen && !marketOpen && (
           <VillageHud onOpenBuildings={onOpenBuildings} onOpenDailyCheckin={onOpenDailyCheckin} forceRefresh={forceRefreshBool} />
         )}
 
@@ -755,6 +776,7 @@ const Village = ({onChange}: VillageProps) => {
             {allianceCenterOpen ? <AllianceCenterInline onClose={() => CloseAllianceCenter()}/> : <></>}
             {barracksOpen ? <Barracks onBack={() => CloseBarracks()}/> : <></>}
             {portalOpen ? <PortalModal onBack={() => ClosePortal()}/> : <></>}
+            {marketOpen ? <FishMarketModal onBack={() => CloseMarket()}/> : <></>}
         
         </Flex>
         </Box>
