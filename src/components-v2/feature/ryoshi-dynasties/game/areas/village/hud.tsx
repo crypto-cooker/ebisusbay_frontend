@@ -180,9 +180,9 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, forceRefresh}: 
                     fontSize='m'
                     hoverIcon={false}
                     onClick={onOpenBuildings}
-                    w='175px'
-                    // fontSize={'14'}
-                    h='40px'
+                    w={{base: '175px', sm: '175px'}}
+                    h={{base: '55px', sm: '40px'}}
+                    lineHeight={'1.2'}
                   >
                     View Building
                   </RdButton>
@@ -193,8 +193,9 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, forceRefresh}: 
                     hoverIcon={false}
                     onClick={onOpenDailyCheckin}
                     // fontSize={'14'}
-                    w='200px'
-                    h='40px'
+                    w={{base: '200px', sm: '200px'}}
+                    h={{base: '55px', sm: '40px'}}
+                    lineHeight={'1.2'}
                   >
                     {canClaim ? (
                       "Claim Rewards"
