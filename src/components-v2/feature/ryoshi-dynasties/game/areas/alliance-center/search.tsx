@@ -168,7 +168,7 @@ import {
             onFocus={handleFocus}
             onKeyDown={handleKeyDown}
             value={value}
-            borderColor={inputBorderColor}
+            borderColor={'#aaa'}
             focusBorderColor={inputBorderColorFocused}
             color="white"
             _placeholder={{ color: 'gray.300' }}
@@ -181,14 +181,14 @@ import {
           )}
         </InputGroup>
         <Box
-          position="absolute"
-          bg={bgColor}
+          position="relative"
+          bg={'#272523'}
           w="100%"
           mt={1}
           rounded="md"
           display={isOpen ? 'block' : 'none'}
           borderWidth="1px"
-          borderColor={borderColor}
+          borderColor={'#aaa'}
           boxShadow="dark-lg"
         >
           <Scrollbars
