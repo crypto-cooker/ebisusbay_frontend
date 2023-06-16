@@ -138,6 +138,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
     // )
     // setPlayExplosion(!playExlplosion);
   }
+  const [regionName, setRegionName] = useState('');
 
   const [explosionOnPoint, setExplosionOnPoint] = useState(0);
 
@@ -383,7 +384,8 @@ const BattleMap = ({onChange}: BattleMapProps) => {
     };
   }, [!!user.address]);
 
-  const SelectControlPoint = (id: any) => {
+  const SelectControlPoint = (id: any, regionName: string) => {
+    setRegionName(regionName);
     setSelectedControlPoint(id);
     selectRegion(id);
     onOpen();
@@ -394,7 +396,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
     rdGameContext.game.parent.map.regions.map((region: any) =>
       region.controlPoints.map((controlPoint: any, i: any) => (
         controlPoint.name == name ? 
-        SelectControlPoint(controlPoint.id)
+        SelectControlPoint(controlPoint.id, region.name)
          : null
       )))
   }
@@ -408,6 +410,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
         refreshControlPoint={RefreshControlPoint}
         skirmishPrice={skirmishPrice}
         conquestPrice={conquestPrice}
+        regionName={regionName}
         />
       <Box
         position='relative' h='calc(100vh - 74px)'

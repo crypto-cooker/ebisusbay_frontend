@@ -41,7 +41,7 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import AvatarEditor from 'react-avatar-editor'
 import Cropper from '@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline/Cropper';
-
+import Search from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/search";
 const config = appConfig();
 
 interface EditFactionProps {
@@ -56,7 +56,11 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
 
   const addressInput = useRef<HTMLInputElement>(null);
   const [addresses, setAddresses] = useState<string[]>([])
-  const handleAddChange = (event: ChangeEvent<HTMLInputElement>) => setAddressesToAdd(event.target.value)
+  const handleAddChange = (event: ChangeEvent<HTMLInputElement>) => 
+  {
+    console.log(event.target.value)
+    setAddressesToAdd(event.target.value)
+  }
   const [addressToAdd, setAddressesToAdd] = useState('')
   const factionNameInput = useRef(null);
   const [factionType, setFactionType] = useState("")
@@ -80,6 +84,11 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const[editFactionIcon, setEditFactionIcon] = useState(false);
   const editorRef = useRef(null)
+
+  const HandleSelectCollectionCallback = (collectionAddress: string) => {
+    console.log(collectionAddress);
+    setAddressesToAdd(collectionAddress);
+  }
 
   const RegistrationAction = async (factionId: number) => {
     if(isRegistered) {
@@ -202,18 +211,18 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
     }
     setAddressesToAdd('')
   }
-  function RemoveAddress() {
+  function RemoveAddress(addressToRemove: string) {
     setShowAlert(false)
-    if(addresses.includes(addressToAdd)) {
-      setAddresses(addresses.filter(address => address !== addressToAdd)) 
+    if(addresses.includes(addressToRemove)) {
+      setAddresses(addresses.filter(address => address !== addressToRemove)) 
     } else {
       setAlertMessage("The address you are trying to remove does not exist")
       setShowAlert(true)
       return
     }
-    if (addressInput.current) {
-      addressInput.current.value = ''
-    }
+    // if (addressInput.current) {
+    //   addressInput.current.value = ''
+    // }
     setAddressesToAdd('')
   }
   function getMaxAddresses() {
@@ -247,7 +256,25 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
     if(addresses !== undefined) {
     setAddressDisplay(addresses.map((address, index) => {
       return (
-          <ListItem>{address}</ListItem>
+        <ListItem key={index} marginTop={'2'} color='#aaa'>
+          <Flex justifyContent={"space-between"} margin={'auto'} border={'1px'} rounded={'md'}>
+            <Text 
+            color={'#ffffffeb'}
+            fontSize={{base: '12', sm: '14'}}
+            marginTop={'auto'}
+            marginBottom={'auto'}
+            marginLeft={'2'}
+            >{address}</Text>
+          <Button 
+          h='30px'
+          w='30px'
+          padding={0}
+          onClick={() => RemoveAddress(address)}
+          fontSize={{base: '12', sm: '14'}}
+          >x
+        </Button>
+        </Flex>
+        </ListItem>
       )
     }))
   }
@@ -394,8 +421,6 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
                 </VStack>
               </Box>
             </Flex>
-          
-              
 
               <Divider />
 
@@ -407,26 +432,27 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
                     " Wallets"
                   )}
                 </FormLabel>
-                <Stack direction={{base: 'column', sm: 'row'}} mt={4}>
-                  <Button 
-                    onClick={AddAddress}
-                    fontSize={{base: '12', sm: '14'}}
-                    > + Add Address
-                  </Button>
-                  <Button 
-                    onClick={RemoveAddress}
-                    fontSize={{base: '12', sm: '14'}}
-                    > - Remove Address
-                  </Button>
-                </Stack>
               </Flex>
-              <Input
-                ref={addressInput}
-                value={addressToAdd}
-                onChange={handleAddChange}
-                placeholder=''
-                size='sm'
-              />
+
+              <Stack direction={{base: 'column', sm: 'row'}} mt={'auto'} marginBottom={'auto'}>
+                <Input
+                  ref={addressInput}
+                  value={addressToAdd}
+                  onChange={handleAddChange}
+                  placeholder='Add address here'
+                  size='sm'
+                  />
+                <Button 
+                  onClick={AddAddress}
+                  fontSize={{base: '12', sm: '14'}}
+                  >Add +
+                </Button>
+              </Stack>
+             
+              {factionType === "COLLECTION" ? (
+                  <Search handleSelectCollectionCallback={HandleSelectCollectionCallback}/>
+                ) : ( <></> )}
+              
               <OrderedList>
                 {addressDisplay}
               </OrderedList>
