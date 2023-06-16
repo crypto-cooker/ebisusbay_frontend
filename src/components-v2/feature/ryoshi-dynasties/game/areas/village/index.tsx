@@ -575,10 +575,10 @@ const Village = ({onChange}: VillageProps) => {
     const blockableAreas = ['battleMap', 'barracks'];
     if (blockableAreas.includes(area)) {
       const blockableStates = [RdGameState.IN_MAINTENANCE, RdGameState.NOT_STARTED];
-      // if (!rdGameContext?.state || blockableStates.includes(rdGameContext?.state)) {
-        // onOpenBlockingModal();
-        // return;
-      // }
+      if (!rdGameContext?.state || blockableStates.includes(rdGameContext?.state)) {
+        onOpenBlockingModal();
+        return;
+      }
     }
 
     if (area === 'barracks') {
