@@ -21170,6 +21170,29 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "CroPepe",
+      "slug": "cropepenft",
+      "multiToken": false,
+      "address": "0xeb32c811A7374894F4d38174763EcFce24e9A21F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The CroPepeNFT collection has 8,000 pieces. Find twins (2 identical NFTs) and exchange them for free power drink mints 'SpicyCRO' NFTs.",
+        "avatar": "/img/collections/cropepenft/avatar.webp",
+        "banner": "/img/collections/cropepenft/banner.webp",
+        "card": "/img/collections/cropepenft/card.webp",
+        "website": "https://www.cropepe.com/",
+        "twitter": "https://twitter.com/CroPepeNft",
+        "discord": "https://discord.gg/zCZeY8Ejgq",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
