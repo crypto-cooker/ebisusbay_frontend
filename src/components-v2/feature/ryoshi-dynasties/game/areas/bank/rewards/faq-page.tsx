@@ -99,7 +99,7 @@ const FaqPage = () => {
             <AccordionPanel pb={4}>
               <Text>Fortune Tellers can be exchanged to receive bonus Fortune. They will also be exchanged for Fortune Guards, which are a key component to minting Heroes.</Text>
               <Text mt={4}>If you have Fortune Tellers, they will show up under <strong>Fortune Teller Bonus</strong>. Review your bonus and click <strong>Exchange</strong> to receive it.</Text>
-              <Text mt={4} fontStyle='italic'>*Note that the Cedric "Ceddy" Biscuitworth teller is only eligilble for the Fortune rewards.</Text>
+              <Text mt={4} fontStyle='italic'>*Note that the Cedric "Ceddy" Biscuitworth teller is only eligible for the Fortune rewards.</Text>
             </AccordionPanel>
           </AccordionItem>
           <AccordionItem>

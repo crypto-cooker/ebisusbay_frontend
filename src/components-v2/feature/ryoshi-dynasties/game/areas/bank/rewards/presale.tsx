@@ -306,7 +306,7 @@ const PresaleVaultTab = () => {
                       {data.fortuneTellers.find((teller: any) => teller.nftId === '3') && (
                         <Alert status='warning' my={2}>
                           <AlertIcon />
-                          *Note that Cedric "Ceddy" Biscuitworth teller is only eligilble for the Fortune rewards.
+                          *Note that Cedric "Ceddy" Biscuitworth is only eligible for the Fortune rewards.
                         </Alert>
                       )}
 
