@@ -12,7 +12,20 @@ import VestingWallet from "@src/Contracts/VestingWallet.json";
 import {ERC1155, ERC20} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, round} from "@src/utils";
-import {Box, Center, Flex, HStack, Image, SimpleGrid, Spacer, Spinner, Stack, Text} from "@chakra-ui/react";
+import {
+  Alert,
+  AlertIcon,
+  Box,
+  Center,
+  Flex,
+  HStack,
+  Image,
+  SimpleGrid,
+  Spacer,
+  Spinner,
+  Stack,
+  Text
+} from "@chakra-ui/react";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import ImageService from "@src/core/services/image";
 import RdButton from "../../../../components/rd-button";
@@ -289,6 +302,14 @@ const PresaleVaultTab = () => {
                           </SimpleGrid>
                         </Box>
                       </Stack>
+
+                      {data.fortuneTellers.find((teller: any) => teller.nftId === '3') && (
+                        <Alert status='warning' my={2}>
+                          <AlertIcon />
+                          *Note that Cedric "Ceddy" Biscuitworth teller is only eligilble for the Fortune rewards.
+                        </Alert>
+                      )}
+
                       <Box textAlign='end' mt={2}>
                         <RdButton
                           size='md'

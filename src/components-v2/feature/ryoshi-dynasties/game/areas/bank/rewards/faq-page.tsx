@@ -1,4 +1,4 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import {
   Accordion,
   AccordionButton,
@@ -10,6 +10,7 @@ import {
   OrderedList,
   Stack,
   Text,
+  UnorderedList,
 } from "@chakra-ui/react"
 import localFont from 'next/font/local';
 import {useAppSelector} from "@src/Store/hooks";
@@ -98,6 +99,28 @@ const FaqPage = () => {
             <AccordionPanel pb={4}>
               <Text>Fortune Tellers can be exchanged to receive bonus Fortune. They will also be exchanged for Fortune Guards, which are a key component to minting Heroes.</Text>
               <Text mt={4}>If you have Fortune Tellers, they will show up under <strong>Fortune Teller Bonus</strong>. Review your bonus and click <strong>Exchange</strong> to receive it.</Text>
+              <Text mt={4} fontStyle='italic'>*Note that the Cedric "Ceddy" Biscuitworth teller is only eligilble for the Fortune rewards.</Text>
+            </AccordionPanel>
+          </AccordionItem>
+          <AccordionItem>
+            <AccordionButton fontSize='sm' fontWeight='bold'>
+              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+                Which Fortune Teller NFTs are eligible for rewards?
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <Text>The following Fortune Tellers are eligible for both $Fortune <strong>and</strong> Fortune Guards:</Text>
+              <UnorderedList mt={2}>
+                <ListItem>Mr. Bertram Scuddlesworth Esq</ListItem>
+                <ListItem>Mr. Cornelius Rufus Puffington</ListItem>
+                <ListItem>Mr. Reginald Archibald Worthington</ListItem>
+                <ListItem>Mr. Sebastian Mortimer Tiddleton</ListItem>
+              </UnorderedList>
+              <Text mt={4}>The following Fortune Tellers are eligible for $Fortune <strong>only</strong>:</Text>
+              <UnorderedList mt={2}>
+                <ListItem>Mr. Cedric "Ceddy" Biscuitworth</ListItem>
+              </UnorderedList>
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
