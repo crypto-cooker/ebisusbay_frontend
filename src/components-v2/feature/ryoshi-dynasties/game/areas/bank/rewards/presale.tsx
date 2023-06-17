@@ -209,9 +209,9 @@ const PresaleVaultTab = () => {
             <>
               <RdModalBox mt={2}>
                 <Text fontWeight='bold' fontSize='lg' mb={4}>Vesting Vault</Text>
+                <Text>Fortune tokens in the vault will be vested linearly over a 9 month period (approximately 3 seasons).</Text>
                 {data.hasVault ? (
-                  <Box>
-
+                  <Box mt={4}>
                     <Box mt={2}>
                       <Stack direction={{base: 'column', sm: 'row'}} justify='space-between'>
                         <Box>
@@ -235,12 +235,12 @@ const PresaleVaultTab = () => {
                     <Box mt={4}>
                       <Flex justify='space-between'>
                         <Box>0</Box>
-                        <Box>{commify(round(data.vault.releasable + data.vault.released))} / {commify(round(data.vault.balance + data.vault.released))}</Box>
+                        <Box>Vested: {commify(round(data.vault.releasable + data.vault.released))} / {commify(round(data.vault.balance + data.vault.released))}</Box>
                       </Flex>
                       <RdProgressBar current={Date.now() - data.vault.start} max={data.vault.duration} />
                       <Flex justify='space-between'>
                         <Spacer />
-                        <Box>{moment(data.vault.completionDate).format("D MMM yyyy")}</Box>
+                        <Box>Completes: {moment(data.vault.completionDate).format("D MMM yyyy")}</Box>
                       </Flex>
                     </Box>
                   </Box>
@@ -273,6 +273,7 @@ const PresaleVaultTab = () => {
                 <RdModalBox mt={2}>
                   <Text fontWeight='bold' fontSize='lg' mb={4}>Fortune Teller Bonus</Text>
                   <Text>Exchange your Fortune Tellers to receive bonus Fortune tokens and Fortune Guards. These Fortune Guards are the key to minting Heroes.</Text>
+                  <Text mt={2}>Exchanged Fortune Tellers will be returned once the vault has been fully vested.</Text>
                   {data.fortuneTellers && data.fortuneTellers.length > 0 ? (
                     <Box mt={2}>
                       <Box my={4}><hr /></Box>
