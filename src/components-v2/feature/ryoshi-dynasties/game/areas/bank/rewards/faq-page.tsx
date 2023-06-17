@@ -71,7 +71,7 @@ const FaqPage = () => {
 
       <Box p={4}>
         <Text fontSize='lg' fontWeight='bold'>Presale Rewards</Text>
-        <Text>Users who participated in the Fortune Token Presale can now begin vesting their tokens. Those also holding Fortune Teller NFTs can exchange them for bonus Fortune tokens and Fortune Guards.  This is done in the <strong>Presale</strong> tab</Text>
+        <Text>Users who participated in the Fortune Token Presale can now begin vesting their tokens. Those also holding Fortune Teller NFTs can exchange them for bonus Fortune tokens and Fortune Guards. This is done in the <strong>Presale</strong> tab</Text>
         <Accordion fontSize='sm' mt={4}>
           <AccordionItem>
             <AccordionButton fontSize='sm' fontWeight='bold'>
@@ -86,7 +86,7 @@ const FaqPage = () => {
                 <ListItem>Click the <strong>Create Vault</strong> button to open a vault</ListItem>
                 <ListItem>Once the vault is opened, the page will show your vault balance</ListItem>
               </OrderedList>
-              <Text mt={4}>These rewards are vested linearly. Every block, more Fortune will become available to claim and you can claim the available amount at any time.</Text>
+              <Text mt={4}>These rewards are vested linearly for 3 seasons (9 months). Every block, more Fortune will become available to claim and you can claim the available amount at any time.</Text>
             </AccordionPanel>
           </AccordionItem>
           <AccordionItem>
@@ -99,6 +99,7 @@ const FaqPage = () => {
             <AccordionPanel pb={4}>
               <Text>Fortune Tellers can be exchanged to receive bonus Fortune. They will also be exchanged for Fortune Guards, which are a key component to minting Heroes.</Text>
               <Text mt={4}>If you have Fortune Tellers, they will show up under <strong>Fortune Teller Bonus</strong>. Review your bonus and click <strong>Exchange</strong> to receive it.</Text>
+              <Text mt={4}>Exchanged Fortune Tellers will be returned once the vault has been fully vested (9 months).</Text>
               <Text mt={4} fontStyle='italic'>*Note that the Cedric "Ceddy" Biscuitworth teller is only eligible for the Fortune rewards.</Text>
             </AccordionPanel>
           </AccordionItem>

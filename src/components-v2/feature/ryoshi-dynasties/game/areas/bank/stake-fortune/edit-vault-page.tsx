@@ -356,9 +356,10 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
               onClick={handleStake}
               isLoading={isExecuting}
               disabled={isExecuting}
+              loadingText={isExecuting ? executingLabel : 'Update'}
             >
               {user.address ? (
-                <>{isExecuting ? executingLabel : 'Update'}</>
+                <>Update</>
               ) : (
                 <>Connect</>
               )}
