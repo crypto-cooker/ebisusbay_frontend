@@ -1,12 +1,11 @@
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {useQuery} from "@tanstack/react-query";
 import {useAppSelector} from "@src/Store/hooks";
 import {ApiService} from "@src/core/services/api-service";
 import {getAuthSignerInStorage} from "@src/helpers/storage";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
-import {Box, Text, Grid, Image, HStack} from "@chakra-ui/react";
+import {Box, HStack, Image, SimpleGrid, Text} from "@chakra-ui/react";
 import {createSuccessfulTransactionToastContent, pluralize} from "@src/utils";
-import {useEffect, useState, useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import {Contract} from "ethers";
 import {toast} from "react-toastify";
 import {appConfig} from "@src/Config";
@@ -14,7 +13,6 @@ import Resources from "@src/Contracts/Resources.json";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
-import {getRewardsStreak} from "@src/core/api/RyoshiDynastiesAPICalls";
 import moment from "moment";
 import ImageService from "@src/core/services/image";
 import {
@@ -33,34 +31,12 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
   const dispatch = useDispatch();
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector(state => state.user);
-  const [isLoading, getSigner] = useCreateSigner();
-  const [streak, setStreak] = useState(1);
+  const [_, getSigner] = useCreateSigner();
+  const [streak, setStreak] = useState(0);
   const [nextClaim, setNextClaim] = useState("");
 
-  const [isGettingStreak, setIsGettingStreak] = useState(true);
   const [canClaim, setCanClaim] = useState(false);
   const [executingClaim, setExecutingClaim] = useState(false);
-
-  const fetcher = async () => {
-    // let signatureInStorage = getAuthSignerInStorage()?.signature;
-    //
-    // if (!signatureInStorage) {
-    //   const { signature } = await getSigner();
-    //   signatureInStorage = signature;
-    // }
-    // if (signatureInStorage) {
-      return await ApiService.withoutKey().ryoshiDynasties.getDailyRewards(user.address!)
-    // }
-
-  }
-  const {data} = useQuery(
-    ['RyoshiDailyCheckin', user.address],
-    fetcher,
-    {
-      enabled: !!user.address,
-      refetchOnWindowFocus: false,
-    }
-  );
 
   const claimDailyRewards = async () => {
     if (!user.address) return;
@@ -106,46 +82,29 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
       dispatch(chainConnect());
     }
   };
-  const getRewardsStreakData = async () => {
-    if (!user.address) return;
-
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const data = await getRewardsStreak(user.address, signatureInStorage);
-        // console.log('streak', data.data.data.nextClaim )
-        if(!data.data.data.nextClaim) {
-          // console.log('new account')
-          setCanClaim(true)
-        }
-        else if(data.data.data.nextClaim <= Date.now()) {
-          // console.log('past')
-          setCanClaim(true)
-        }
-        else {
-          // console.log('future')
-          setCanClaim(false)
-          setStreak(data.data.data.streak);
-          var date = new Date(data.data.data.nextClaim);
-          setNextClaim('at ' + date.getHours() + ":" + moment(new Date(date)).format("mm") + " on " +
-            moment(new Date(date)).format("MMM") + " "+ date.getDate()+ " " + date.getFullYear());
-        }
-        setIsGettingStreak(false);
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  }
 
   useEffect(() => {
     if (isOpen) {
-      getRewardsStreakData();
+      if (!user.address || !rdContext.user) {
+        setCanClaim(false);
+        setStreak(0);
+        return;
+      }
+
+      const claimData = rdContext.user.dailyRewards;
+      setStreak(claimData.streak);
+      if(!claimData.nextClaim) {
+        setCanClaim(true);
+      } else if(Date.parse(claimData.nextClaim) <= Date.now()) {
+        setCanClaim(true);
+      } else {
+        setCanClaim(false);
+        let date = new Date(claimData.nextClaim);
+        setNextClaim('at ' + date.getHours() + ":" + moment(new Date(date)).format("mm") + " on " +
+          moment(new Date(date)).format("MMM") + " "+ date.getDate()+ " " + date.getFullYear());
+      }
     }
-  }, [user.address, isOpen])
+  }, [user.address, isOpen, rdContext.user])
 
   return (
     <RdModal
@@ -155,64 +114,36 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
     >
       <Box mx={1} pb={4}>
         <Text align='center'>
-          Earn $Koban by checking in daily. Multiply your rewards by claiming multiple days in a row!
+          Earn Koban by checking in daily. Multiply your rewards by claiming multiple days in a row!
         </Text>
-        {!!user.address ? ( <>
-          {isGettingStreak ? <>
-            </> : <>
-            <Grid templateColumns='repeat(7, 1fr)' gap={1} padding={2}>
-          <Box w='100%' h='55' rounded="lg" color={'#FFD700'}  border={streak==1 ? '2px' : ''}>
-            <Text fontSize={16} color='#aaa' textAlign={'center'}>Day 1</Text>
-            <HStack justifyContent={'center'} spacing={0.5}>
-              <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >1</Text>
-              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="walletIcon" boxSize={4}/>
-            </HStack>
-          </Box>
-          <Box w='100%' h='55' rounded="lg" color={'#FFD700'} border={streak==2 ? '2px' : ''}>
-            <Text fontSize={16} color='#aaa' textAlign={'center'}>Day 2</Text>
-            <HStack justifyContent={'center'} spacing={0.5}>
-              <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >5</Text>
-              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="walletIcon" boxSize={4}/>
-            </HStack>
-          </Box>
-          <Box w='100%'h='55' rounded="lg" border={streak==3 ? '2px' : ''}>
-            <Text fontSize={16} color='#aaa' textAlign={'center'}>Day 3</Text>
-            <HStack justifyContent={'center'} spacing={0.5}>
-              <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >10</Text>
-              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="walletIcon" boxSize={4}/>
-            </HStack>
-          </Box>
-          <Box w='100%'h='55' rounded="lg" border={streak==4 ? '2px' : ''}>
-            <Text fontSize={16} color='#aaa' textAlign={'center'}>Day 4</Text>
-            <HStack justifyContent={'center'} spacing={0.5}>
-              <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >15</Text>
-              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="walletIcon" boxSize={4}/>
-            </HStack>
-          </Box>
-          <Box w='100%'h='55' rounded="lg" border={streak==5 ? '2px' : ''}>
-            <Text fontSize={16} color='#aaa' textAlign={'center'}>Day 5</Text>
-            <HStack justifyContent={'center'} spacing={0.5}>
-              <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >20</Text>
-              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="walletIcon" boxSize={4}/>
-            </HStack>
-          </Box>
-          <Box w='100%'h='55' rounded="lg" border={streak==6 ? '2px' : ''}>
-            <Text fontSize={16} color='#aaa' textAlign={'center'}>Day 6</Text>
-            <HStack justifyContent={'center'} spacing={0.5}>
-              <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >25</Text>
-              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="walletIcon" boxSize={4}/>
-            </HStack>
-          </Box>
-          <Box w='100%'h='55' rounded="lg" border={streak==7 ? '2px' : ''}>
-            <Text fontSize={16} color='#aaa' textAlign={'center'}>Day 7</Text>
-            <HStack justifyContent={'center'} spacing={0.5}>
-              <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >30</Text>
-              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="walletIcon" boxSize={4}/>
-            </HStack>
-          </Box>
-        </Grid>
+        {!!user.address ? (
+          <>
+            <SimpleGrid columns={{base: 4, sm: rdContext.config.rewards.daily.length}} gap={1} padding={2} my={4}>
+              {rdContext.config.rewards.daily.map((reward, index) => (
+                <Box key={index} w='100%' h='55' rounded="lg" color={'#FFD700'}  border={streak == index + 1 ? '2px' : ''}>
+                  <Text fontSize={16} color='#aaa' textAlign={'center'}>Day {index + 1}</Text>
+                  <HStack justifyContent={'center'} spacing={0.5}>
+                    <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >{reward}</Text>
+                    <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="walletIcon" boxSize={4}/>
+                  </HStack>
+                </Box>
+              ))}
+            </SimpleGrid>
 
-            {canClaim ? (
+            <Box textAlign='center'>
+              <Text as='span'>Your current streak is <strong>{streak} {pluralize(streak, 'day')}</strong>. </Text>
+              {canClaim ? (
+                <Text as='span'>
+                  Claim now to increase your streak and earn {rdContext.config.rewards.daily[streak]} Koban
+                </Text>
+              ) : (
+                <Text as='span'>
+                  Claim again {nextClaim}
+                </Text>
+              )}
+            </Box>
+
+            {canClaim && (
               <Box textAlign='center' mt={4}>
                 <RdButton
                   stickyIcon={true}
@@ -224,12 +155,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
                   Claim Koban
                 </RdButton>
               </Box>
-              ) : (
-                <Text align='center' mt={4}>
-                Your current streak is {streak} {pluralize(streak, 'day')}. Claim again {nextClaim}
-              </Text>
-              )}
-          </>}
+            )}
           </>
         ) : (
           <Box textAlign='center' mt={4}>
