@@ -1,5 +1,5 @@
-import React, {useCallback, useState} from 'react';
-import {AspectRatio, Box, Icon, Image, Text, useBreakpointValue, useDisclosure, VStack} from '@chakra-ui/react';
+import React, {useCallback, useEffect, useState} from 'react';
+import {AspectRatio, Box, Icon, Image, Text, useDisclosure, useMediaQuery, VStack} from '@chakra-ui/react';
 
 import StakeFortune from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune';
 import StakeNFTs from './stake-nft';
@@ -9,9 +9,8 @@ import {useWindowSize} from "@src/hooks/useWindowSize";
 import BankerBubbleBox, {
   TypewriterText
 } from "@src/components-v2/feature/ryoshi-dynasties/components/banker-bubble-box";
-import {appConfig} from "@src/Config";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRightFromBracket, faCoins, faGift, faImage, faSuitcaseMedical} from "@fortawesome/free-solid-svg-icons";
+import {faArrowRightFromBracket, faCoins, faGift, faImage} from "@fortawesome/free-solid-svg-icons";
 import Rewards from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/rewards";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
@@ -41,11 +40,13 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
   const [bankerImage, setBankerImage] = useState(bankerImages.talking);
   const user = useAppSelector((state) => state.user);
   const windowSize = useWindowSize();
-  const config = appConfig();
-  const abbreviateButtonText = useBreakpointValue<boolean>(
-    {base: true, sm: false},
-    {fallback: 'sm'},
-  );
+  const [shouldAbbreviateHorizontal] = useMediaQuery('(max-width: 800px)');
+  const [abbreviateButtonText, setAbbreviateButtonText] = useState(false);
+
+  useEffect(() => {
+    const shouldAbbreviateVertical = !!windowSize.height && windowSize.height < 800;
+    setAbbreviateButtonText(shouldAbbreviateVertical && shouldAbbreviateHorizontal);
+  }, [windowSize, shouldAbbreviateHorizontal]);
 
   const handleExit = useCallback(() => {
     setBankerImage(bankerImages.talking);
@@ -113,14 +114,17 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
           top={{base: 5, md: 10, lg: 16}}
           left={{base: 0, md: 10, lg: 16}}
           w={{base: 'full', md: '600px'}}
-          pe={!!windowSize.height && windowSize.height < 600 ? {base: '60px', sm: '150px', md: '0px'} : {base: '5px', md: '0px'}}
+          pe={!!windowSize.height && windowSize.height < 800 ? {base: '60px', sm: '150px', md: '0px'} : {base: '5px', md: '0px'}}
           ps={{base: '5px', md: '0px'}}
           rounded='lg'
         >
           <BankerBubbleBox fontSize={{base: 'md', sm: 'lg', md: 'xl'}} color='white'>
             {(
               <TypewriterText
-                text={[greetings[Math.floor(Math.random() * greetings.length)]]}
+                text={[
+                  greetings[Math.floor(Math.random() * greetings.length)],
+                  '<br /><br />Stake Fortune to stake your Fortune tokens and earn troops. Stake NFTs to boost your staking APR. Go to "Rewards" to claim your presale rewards.'
+                ]}
                 onComplete={() => setBankerImage(bankerImages.idle)}
               />
             )}
