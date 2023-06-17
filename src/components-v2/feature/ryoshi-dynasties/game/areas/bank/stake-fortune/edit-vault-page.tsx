@@ -79,7 +79,7 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
   const [newWithdrawDate, setNewWithdrawDate] = useState(vault.endTime);
 
   const handleChangeFortuneAmount = (valueAsString: string, valueAsNumber: number) => {
-    setFortuneToStake(valueAsNumber)
+    setFortuneToStake(!isNaN(valueAsNumber) ? valueAsNumber : 0);
   }
 
   const handleChangeDays = (e: ChangeEvent<HTMLSelectElement>) => {

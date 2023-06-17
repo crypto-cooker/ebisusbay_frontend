@@ -72,7 +72,7 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
 
 
   const handleChangeFortuneAmount = (valueAsString: string, valueAsNumber: number) => {
-    setFortuneToStake(valueAsNumber)
+    setFortuneToStake(!isNaN(valueAsNumber) ? valueAsNumber : 0);
   }
 
   const handleChangeDays = (e: ChangeEvent<HTMLSelectElement>) => {
