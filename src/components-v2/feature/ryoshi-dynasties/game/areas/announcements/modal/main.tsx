@@ -1,13 +1,14 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {Box, Grid, GridItem, Text, VStack} from "@chakra-ui/react"
 import localFont from 'next/font/local';
 import {useAppSelector} from "@src/Store/hooks";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
-import {getAuthSignerInStorage} from "@src/helpers/storage";
-import {getRewardsStreak} from "@src/core/api/RyoshiDynastiesAPICalls";
-import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {useRouter} from "next/router";
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
@@ -18,10 +19,9 @@ interface Props {
 
 const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
   const router = useRouter();
+  const { user: rdUserContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
  
-  const [isLoading, setIsLoading] = useState(false);
   const user = useAppSelector((state) => state.user);
-  const [isLoading2, getSigner] = useCreateSigner();
 
   //timer
   const Ref = useRef<NodeJS.Timer | null>(null);
@@ -57,34 +57,22 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
     Ref.current = id;
   }
 
-  const getRewardsStreakData = async () => {
-    if (!user.address) return;
-
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const data = await getRewardsStreak(user.address, signatureInStorage);
-        if(!data.data.data.nextClaim || data.data.data.nextClaim <= Date.now()) {
-          setCanClaim(true)
-        }
-        else{
-          setCanClaim(false)
-          clearTimer(data.data.data.nextClaim)
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  }
-
   useEffect(() => {
-      getRewardsStreakData();
-  }, [user.address])
+      if (!user.address || !rdUserContext) {
+        setCanClaim(false);
+        return;
+      }
 
+      const claimData = rdUserContext.dailyRewards;
+      if(!claimData.nextClaim) {
+        setCanClaim(true);
+      } else if(Date.parse(claimData.nextClaim) <= Date.now()) {
+        setCanClaim(true);
+      } else {
+        setCanClaim(false);
+        clearTimer(claimData.nextClaim);
+      }
+  }, [user.address, rdUserContext])
 
   return (
     <VStack padding='2'>
