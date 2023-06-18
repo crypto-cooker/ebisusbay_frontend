@@ -126,7 +126,7 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
   }
 
   const dummyVillage = useMemo(() => {
-    return <Village onChange={() => {}}/>
+    return <Village onChange={() => {}} firstRun={false} onFirstRun={() => {}}/>
   }, []);
 
   // useEffect(() => {
