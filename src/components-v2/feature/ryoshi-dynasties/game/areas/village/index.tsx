@@ -40,8 +40,10 @@ import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/componen
 
 interface VillageProps {
   onChange: (value: string) => void;
+  firstRun: boolean;
+  onFirstRun: () => void;
 }
-const Village = ({onChange}: VillageProps) => {
+const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   const { config: rdConfig, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector((state) => state.user);
   const config = appConfig();
@@ -526,7 +528,10 @@ const Village = ({onChange}: VillageProps) => {
   // }, [user.address])
 
   useEffect(() => {
-    onOpenAnnouncementBoard();
+    if (!firstRun) {
+      onOpenAnnouncementBoard();
+      onFirstRun();
+    }
   }, []);
 
   const SetUpButtons = async () => {
