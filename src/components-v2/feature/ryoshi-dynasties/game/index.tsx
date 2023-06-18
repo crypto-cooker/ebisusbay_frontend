@@ -28,6 +28,7 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
 
   const [currentPage, setCurrentPage] = useState<string>();
   const [previousPage, setPreviousPage] = useState<string>();
+  const [firstRun, setFirstRun] = useState<boolean>(false);
 
   const navigate = (page: string) => {
     setPreviousPage(currentPage)
@@ -59,7 +60,7 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
       ): currentPage === 'userPage' ? (
         <UserPage onBack={returnToPreviousPage} />
       ): (
-        <Village onChange={navigate} />
+        <Village onChange={navigate} firstRun={firstRun} onFirstRun={() => setFirstRun(true)}/>
         // <BattleMap onChange={navigate} />
       )}
     </GameSync>
