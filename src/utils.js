@@ -868,3 +868,17 @@ export const findNextLowestNumber = (array, value) => {
   // If value is greater than the largest array value, return the largest array value
   return array[array.length - 1];
 }
+
+/**
+ * Converts a string to title case
+ * @param str
+ * @returns {*}
+ */
+export const titleCase = (str) => {
+  const splitStr = str.toLowerCase().split(' ');
+  for (let i = 0; i < splitStr.length; i++) {
+    splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+  }
+
+  return splitStr.join(' ');
+}

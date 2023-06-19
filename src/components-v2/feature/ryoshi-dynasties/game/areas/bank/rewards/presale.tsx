@@ -273,7 +273,7 @@ const PresaleVaultTab = () => {
                 <RdModalBox mt={2}>
                   <Text fontWeight='bold' fontSize='lg' mb={4}>Fortune Teller Bonus</Text>
                   <Text>Exchange your Fortune Tellers to receive bonus Fortune tokens and Fortune Guards. These Fortune Guards are the key to minting Heroes.</Text>
-                  <Text mt={2}>Exchanged Fortune Tellers will be returned once the vault has been fully vested.</Text>
+                  <Text mt={2}>Exchanged Fortune Tellers will be returned after 90 days.</Text>
                   {data.fortuneTellers && data.fortuneTellers.length > 0 ? (
                     <Box mt={2}>
                       <Box my={4}><hr /></Box>

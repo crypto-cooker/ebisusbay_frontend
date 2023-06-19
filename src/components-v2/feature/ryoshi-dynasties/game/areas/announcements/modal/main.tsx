@@ -20,7 +20,7 @@ interface Props {
 const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
   const router = useRouter();
   const { user: rdUserContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
- 
+
   const user = useAppSelector((state) => state.user);
 
   //timer

@@ -38,6 +38,11 @@ interface RyoshiConfigStakingMultiplier {
   value: number;
 }
 
+interface RyoshiConfigStakingIdMultiplier {
+  id: number;
+  bonus: number;
+}
+
 interface RyoshiConfigBarracks {
   staking: RyoshiConfigBarracksStaking;
 }
@@ -48,13 +53,13 @@ interface RyoshiConfigBarracksStaking {
 
 interface RyoshiConfigBarracksStakingNFT {
   maxSlots: number;
-  bonusTroops: number;
   collections: RyoshiConfigBarracksStakingNFTCollection[];
 }
 
 interface RyoshiConfigBarracksStakingNFTCollection extends RyoshiConfigCollections {
   traits: RyoshiConfigTraitEligibility[];
   multipliers: RyoshiConfigStakingMultiplier[];
+  ids: RyoshiConfigStakingIdMultiplier[];
 }
 
 interface RyoshiConfigTraitEligibility {

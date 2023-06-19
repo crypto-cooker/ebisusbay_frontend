@@ -1,26 +1,24 @@
 import React, {memo, useContext, useState} from 'react';
 import {useRouter} from 'next/router';
-import {ethers} from 'ethers';
 import {toast} from 'react-toastify';
 import {faEllipsisH, faInfoCircle, faLink, faMinus, faPlus, faPlusCircle} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {MenuPopup} from '@src/Components/components/chakra-components';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {nftCardUrl} from "@src/helpers/image";
-import {Badge, Box, Center, Flex, Heading, Spacer, Text, useClipboard} from "@chakra-ui/react";
-import Image from "next/image";
-import {appUrl, caseInsensitiveCompare, round} from "@src/utils";
+import {Box, Flex, Heading, Spacer, useClipboard} from "@chakra-ui/react";
+import {appUrl, caseInsensitiveCompare} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
-import {lightTheme} from "@src/Theme/theme";
 import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
 import {useAppSelector} from "@src/Store/hooks";
 import {
   BarracksStakeNftContext,
   BarracksStakeNftContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/context";
+import WalletNft from "@src/core/models/wallet-nft";
 
 interface StakingNftCardProps {
-  nft: any;
+  nft: WalletNft;
   canStake?: boolean;
   isStaked?: boolean;
   onAdd: () => void;
@@ -52,8 +50,9 @@ const StakingNftCard = ({
     router.push(nftUrl)
   };
 
-  const navigateTo = (link: string) => {
-    if (isInCart()) {
+  const handleSelect = () => {
+    const count = cartCount();
+    if (count > 0 && count >= (nft.balance ?? 1)) {
       onRemove();
     } else {
       onAdd();
@@ -62,8 +61,9 @@ const StakingNftCard = ({
 
   const getOptions = () => {
     const options = [];
+    const count = cartCount();
 
-    if (isInCart()) {
+    if (count > 0 && count >= (nft.balance ?? 1)) {
       options.push({
         icon: faMinus,
         label: 'Unstake',
@@ -92,16 +92,16 @@ const StakingNftCard = ({
     return options;
   };
 
-  const isInCart = () => {
-    return barracksStakeNftContext.some((o) => o.nftId === nft.nftId && caseInsensitiveCompare(o.nftAddress, nft.nftAddress));
+  const cartCount = () => {
+    return barracksStakeNftContext.filter((o) => o.nftId === nft.nftId && caseInsensitiveCompare(o.nftAddress, nft.nftAddress)).length;
   };
 
   return (
     <Box
       className="card eb-nft__card h-100 shadow"
       data-group
-      borderColor={isInCart() ? '#F48F0C' : 'inherit'}
-      borderWidth={isInCart() ? '3px' : '1px'}
+      borderColor={cartCount() > 0 ? '#F48F0C' : 'inherit'}
+      borderWidth={cartCount() > 0 ? '3px' : '1px'}
       _hover={{
         borderColor:'#F48F0C',
       }}
@@ -119,7 +119,7 @@ const StakingNftCard = ({
         <Flex direction="column" height="100%">
           <div className="card-img-container position-relative">
             <>
-              {isInCart() ? (
+              {cartCount() > 0 ? (
                 <Box
                   top={0}
                   right={0}
@@ -129,7 +129,22 @@ const StakingNftCard = ({
                   cursor="pointer"
                   onClick={onRemove}
                 >
-                  <FontAwesomeIcon icon={faCheckCircle} size="xl" style={{background:'dodgerblue', color:'white'}} className="rounded-circle"/>
+                  {nft.balance && nft.balance > 1 ? (
+                    <Box
+                      rounded='full'
+                      bg='dodgerblue'
+                      border='2px solid white'
+                      w={6}
+                      h={6}
+                      textAlign='center'
+                      fontWeight='bold'
+                      fontSize='sm'
+                    >
+                      {cartCount()}
+                    </Box>
+                  ) : (
+                    <FontAwesomeIcon icon={faCheckCircle} size="xl" style={{background:'dodgerblue', color:'white'}} className="rounded-circle"/>
+                  )}
                 </Box>
               ) : (
                 <Box
@@ -154,7 +169,7 @@ const StakingNftCard = ({
               transition="0.3s ease"
               transform="scale(1.0)"
               cursor="pointer"
-              onClick={() => navigateTo(nftUrl.toString())}
+              onClick={() => handleSelect()}
             >
               <AnyMedia image={nftCardUrl(nft.nftAddress, nft.image)}
                         title={nft.name}
@@ -162,7 +177,6 @@ const StakingNftCard = ({
                         className="card-img-top marketplace"
                         height={440}
                         width={440}
-                        video={ryoshiStakingCart.nfts.length > 0 ? undefined : (nft.video ?? nft.animation_url)}
                         usePlaceholder={true}
               />
             </Box>
@@ -172,36 +186,16 @@ const StakingNftCard = ({
           )}
           <div className="d-flex flex-column p-2 pb-1">
             <div className="card-title mt-auto">
-              <span onClick={() => navigateTo(nftUrl.toString())} style={{ cursor: 'pointer' }}>
-                {nft.count && nft.count > 0 ? (
+              <span onClick={handleSelect} style={{ cursor: 'pointer' }}>
+                {nft.balance && nft.balance > 1 ? (
                   <Heading as="h6" size="sm">
-                    {nft.name} (x{nft.count})
+                    {nft.name} (x{nft.balance})
                   </Heading>
                 ) : (
                   <Heading as="h6" size="sm">{nft.name}</Heading>
                 )}
               </span>
             </div>
-            <span className="card-text">
-              {nft.listed && nft.price ? (
-                <div className="d-flex">
-                  <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
-                  <span className="ms-1">
-                    {ethers.utils.commify(round(nft.price, 2))}
-                  </span>
-                </div>
-              ) : (
-                <>&nbsp;</>
-              )}
-            </span>
-
-            {isStaked && (
-              <Badge variant='outline' colorScheme='orange'>
-                <Center>
-                  STAKED
-                </Center>
-              </Badge>
-            )}
           </div>
           <Spacer />
           <Box
@@ -209,16 +203,7 @@ const StakingNftCard = ({
             p={2}
           >
             <div className="d-flex justify-content-between">
-              <Box
-                _groupHover={{visibility:'visible', color:lightTheme.textColor1}}
-                visibility="hidden"
-              >
-                {isStaked ? (
-                  <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={onAdd}>Unstake</Text>
-                ) : canStake && (
-                  <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={onAdd}>Stake</Text>
-                )}
-              </Box>
+              <Spacer />
               <MenuPopup options={getOptions()}>
                 <FontAwesomeIcon icon={faEllipsisH} style={{ cursor: 'pointer' }} className="my-auto" />
               </MenuPopup>
