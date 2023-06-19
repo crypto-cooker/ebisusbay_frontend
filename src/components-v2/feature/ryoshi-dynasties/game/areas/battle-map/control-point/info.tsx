@@ -70,6 +70,9 @@ const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
     if(controlPoint.leaderBoard !== undefined)
     {
       GetWeekEndDate();
+      //get first one and see if the troops is > 0
+      // if() return;
+
       setAreas(<Tbody>
         {controlPoint.leaderBoard.filter((faction, index) => index < 5).map((faction, index ) => 
       (<Tr key={index}>
@@ -102,7 +105,7 @@ const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
        marginLeft='4'
        marginRight='4'
        >
-    {isLoaded ? (
+    {isLoaded && controlPoint?.leaderBoard[0]?.totalTroops !== 0 ? (
       <>
       <Flex flexDirection='column' textAlign='center' justifyContent='space-around'>
       <TableContainer>
@@ -129,7 +132,14 @@ const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
     </> 
        ) : (
         <Flex flexDirection='column' textAlign='center' justifyContent='space-around'>
-        <TableContainer>
+          <Box minH={'200px'}>
+                      <Center>
+                        <Text
+                          margin='100'
+                          > No Troops currently deployed </Text>
+                      </Center>
+                    </Box>
+        {/* <TableContainer>
           <Table size='m'>
             <Thead>
               <Tr>
@@ -144,7 +154,7 @@ const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
             <Tr>4</Tr>
             <Tr>5</Tr>
             </Table>
-        </TableContainer>
+        </TableContainer> */}
         <Flex 
          marginTop='12'
          marginLeft='8'
