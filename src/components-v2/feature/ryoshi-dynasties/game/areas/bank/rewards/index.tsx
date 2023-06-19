@@ -90,11 +90,7 @@ const Rewards = ({ isOpen, onClose}: WithdrawProps) => {
               </Flex>
               <Box>
                 {currentTab === tabs.fortune && (
-                  // <FortuneRewardsTab />
-
-                  <RdModalBox textAlign='center'>
-                    Coming Soon
-                  </RdModalBox>
+                  <FortuneRewardsTab />
                 )}
                 {currentTab === tabs.resources && (
                   <ResourcesTab />

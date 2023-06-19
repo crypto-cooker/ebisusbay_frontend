@@ -34,7 +34,6 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import {RdGameState} from "@src/core/services/api-service/types";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 
@@ -594,14 +593,14 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
   const { isOpen: isBlockingModalOpen, onOpen: onOpenBlockingModal, onClose: onCloseBlockingModal } = useDisclosure();
   const handleSceneChange = useCallback((area: string) => {
-    const blockableAreas = ['battleMap', 'barracks'];
-    if (blockableAreas.includes(area)) {
-      const blockableStates = [RdGameState.IN_MAINTENANCE, RdGameState.NOT_STARTED];
-      if (!rdGameContext?.state || blockableStates.includes(rdGameContext?.state)) {
-        onOpenBlockingModal();
-        return;
-      }
-    }
+    // const blockableAreas = ['battleMap', 'barracks'];
+    // if (blockableAreas.includes(area)) {
+    //   const blockableStates = [RdGameState.IN_MAINTENANCE, RdGameState.NOT_STARTED];
+    //   if (!rdGameContext?.state || blockableStates.includes(rdGameContext?.state)) {
+    //     onOpenBlockingModal();
+    //     return;
+    //   }
+    // }
 
     if (area === 'barracks') {
       OpenBarracks();
