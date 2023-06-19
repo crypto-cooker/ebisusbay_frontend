@@ -162,7 +162,6 @@ const StakingNftCard = ({
                         className="card-img-top marketplace"
                         height={440}
                         width={440}
-                        video={ryoshiStakingCart.nfts.length > 0 ? undefined : (nft.video ?? nft.animation_url)}
                         usePlaceholder={true}
               />
             </Box>
@@ -182,26 +181,6 @@ const StakingNftCard = ({
                 )}
               </span>
             </div>
-            <span className="card-text">
-              {nft.listed && nft.price ? (
-                <div className="d-flex">
-                  <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
-                  <span className="ms-1">
-                    {ethers.utils.commify(round(nft.price, 2))}
-                  </span>
-                </div>
-              ) : (
-                <>&nbsp;</>
-              )}
-            </span>
-
-            {isStaked && (
-              <Badge variant='outline' colorScheme='orange'>
-                <Center>
-                  STAKED
-                </Center>
-              </Badge>
-            )}
           </div>
           <Spacer />
           <Box

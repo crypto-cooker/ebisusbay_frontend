@@ -1,4 +1,4 @@
-import {Box, Flex, HStack, Icon, IconButton, Image, SimpleGrid, Text, VStack, Wrap, WrapItem} from "@chakra-ui/react"
+import {Box, Flex, HStack, Icon, IconButton, Image, SimpleGrid, Text, VStack} from "@chakra-ui/react"
 
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {useAppSelector} from "@src/Store/hooks";
@@ -39,7 +39,8 @@ const config = appConfig();
 const tabs = {
   ryoshiVip: 'ryoshi-tales-vip',
   ryoshiHalloween: 'ryoshi-tales-halloween',
-  ryoshiChristmas: 'ryoshi-tales-christmas'
+  ryoshiChristmas: 'ryoshi-tales-christmas',
+  fortuneGuards: 'fortune-guards'
 };
 
 interface StakeNftsProps {
@@ -64,8 +65,9 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   };
 
   const handleAddNft = useCallback((nft: WalletNft) => {
-    const isInList = pendingNfts.some((sNft) => sNft.nftId === nft.nftId && caseInsensitiveCompare(sNft.nftAddress, nft.nftAddress));
-    if (!isInList && pendingNfts.length < rdConfig.barracks.staking.nft.maxSlots) {
+    const pendingCount = pendingNfts.filter((sNft) => sNft.nftId === nft.nftId && caseInsensitiveCompare(sNft.nftAddress, nft.nftAddress)).length;
+    const hasRemainingBalance = pendingCount === 0 || pendingCount < (nft.balance ?? 1);
+    if (hasRemainingBalance && pendingNfts.length < rdConfig.barracks.staking.nft.maxSlots) {
       const collectionSlug = config.collections.find((c: any) => caseInsensitiveCompare(c.address, nft.nftAddress))?.slug;
       const stakeConfig = rdConfig.barracks.staking.nft.collections.find((c) => c.slug === collectionSlug);
 
@@ -73,13 +75,14 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       const multiplier = stakeConfig!.multipliers
         .sort((a: any, b: any) => a.percentile - b.percentile)
         .find((m: any) => percentile <= m.percentile)?.value || 0;
+      const idBonus = stakeConfig!.ids.find((i) => i.id.toString() === nft.nftId)?.bonus || 0;
 
       setPendingNfts([...pendingNfts, {
         nftAddress: nft.nftAddress,
         nftId: nft.nftId,
         image: nft.image,
         rank: nft.rank,
-        multiplier,
+        multiplier: multiplier + idBonus,
         isAlreadyStaked: false
       }]);
     }
@@ -139,13 +142,14 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
           const multiplier = stakeConfig!.multipliers
             .sort((a: any, b: any) => a.percentile - b.percentile)
             .find((m: any) => percentile <= m.percentile)?.value || 0;
+          const idBonus = stakeConfig!.ids.find((i) => i.id.toString() === nft.nftId)?.bonus || 0;
 
           nfts.push({
             nftAddress: token.contractAddress,
             nftId: token.tokenId,
             image: nft.nft.image,
             rank: nft.nft.rank,
-            multiplier,
+            multiplier: multiplier + idBonus,
             isAlreadyStaked:  true
           })
         }
@@ -176,15 +180,20 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
         />
         <Box p={4}>
           <Flex direction='row' justify='center' mb={2}>
-            <RdTabButton isActive={currentTab === tabs.ryoshiVip} onClick={handleBtnClick(tabs.ryoshiVip)}>
-              VIP
-            </RdTabButton>
-            <RdTabButton isActive={currentTab === tabs.ryoshiHalloween} onClick={handleBtnClick(tabs.ryoshiHalloween)}>
-              Halloween
-            </RdTabButton>
-            <RdTabButton isActive={currentTab === tabs.ryoshiChristmas} onClick={handleBtnClick(tabs.ryoshiChristmas)}>
-              Christmas
-            </RdTabButton>
+            <SimpleGrid columns={{base: 2, sm: 4}}>
+              <RdTabButton isActive={currentTab === tabs.ryoshiVip} onClick={handleBtnClick(tabs.ryoshiVip)}>
+                VIP
+              </RdTabButton>
+              <RdTabButton isActive={currentTab === tabs.fortuneGuards} onClick={handleBtnClick(tabs.fortuneGuards)}>
+                Guards
+              </RdTabButton>
+              <RdTabButton isActive={currentTab === tabs.ryoshiHalloween} onClick={handleBtnClick(tabs.ryoshiHalloween)}>
+                Halloween
+              </RdTabButton>
+              <RdTabButton isActive={currentTab === tabs.ryoshiChristmas} onClick={handleBtnClick(tabs.ryoshiChristmas)}>
+                Christmas
+              </RdTabButton>
+            </SimpleGrid>
           </Flex>
           <Box>
             <UnstakedNfts
@@ -296,10 +305,12 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
                     </Box>
                     <Flex fontSize='xs' justify='space-between' mt={1}>
                       <Box verticalAlign='top'>
-                        <HStack spacing={1}>
-                          <Icon as={FontAwesomeIcon} icon={faAward} />
-                          <Box as='span'>{pendingNfts[index].rank ?? ''}</Box>
-                        </HStack>
+                        {pendingNfts[index].rank && (
+                          <HStack spacing={1}>
+                            <Icon as={FontAwesomeIcon} icon={faAward} />
+                            <Box as='span'>{pendingNfts[index].rank}</Box>
+                          </HStack>
+                        )}
                       </Box>
                       <VStack align='end' spacing={0} fontWeight='bold'>
                         {pendingNfts[index].multiplier && (
@@ -400,7 +411,7 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
                 const traitType = attr.trait_type.toLowerCase();
                 const value = attr.value.toString().toLowerCase();
 
-                let found = false;
+                let found = eligibility.traits.length === 0;
                 for (let traitRule of eligibility.traits) {
                   if (traitRule.inclusion === 'include' && traitRule.type === traitType && traitRule.values.includes(value)) {
                     found = true;
@@ -410,6 +421,7 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
                     break;
                   }
                 }
+
                 return found;
               })
 
