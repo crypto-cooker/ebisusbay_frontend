@@ -34,6 +34,8 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   const user = useAppSelector(state => state.user);
   const config = appConfig();
   const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const [elementToZoomTo, setElementToZoomTo] = useState("");
+  const transformComponentRef = useRef<any>(null)
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [controlPoint, setControlPoint] = useState([]);
@@ -55,6 +57,17 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   const [selectedControlPoint, setSelectedControlPoint] = useState(0);
   // const [pins, setPins] = useState([]);
   const [explosion, setExplosion] = useState<ReactElement>();
+
+  useEffect(() => {
+    if (transformComponentRef.current) {
+      const { zoomToElement } = transformComponentRef.current as any;
+      zoomToElement(elementToZoomTo);
+    }
+    // console.log("current state " + transformComponentRef?.current?.state);
+    // console.log("current state " + transformComponentRef?.current);
+    // console.log("current state " + transformComponentRef);
+    // transformComponentRef.current.state;
+  }, [elementToZoomTo]);
 
   function getWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
@@ -228,8 +241,10 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   }, [area]);
 
   useEffect(() => {
-    // SetUpMap();
-  }, []);
+    if(!transformComponentRef?.current) return;
+    // console.log('transformComponentRef', transformComponentRef);
+    setElementToZoomTo('fancyMenu'); 
+  }, [transformComponentRef?.current]);
 
   //Temporarily turning off to use new process with opperator's new images
   const SetUpMap = async () => {
@@ -309,34 +324,39 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   const mapProps = useBreakpointValue<MapProps>(
     {
       base: {
-        scale: 0.45,
-        initialPosition: { x: -325, y: -10 },
-        minScale: 0.45
+        scale: 0.40,
+        initialPosition: { x: -400, y: -127 },
+        minScale: 0.15
       },
       sm: {
-        scale: 0.45,
-        initialPosition: { x: -220, y: -150 },
-        minScale: 0.45
+        scale: 0.41,
+        initialPosition: { x: -335, y: -113 },
+        minScale: 0.2
       },
       md: {
-        scale: 0.45,
-        initialPosition: { x: -220, y: -150 },
-        minScale: 0.45
+        scale: 0.42,
+        initialPosition: { x: -185, y: -163 },
+        minScale: 0.3
       },
       lg: {
-        scale: 0.45,
-        initialPosition: { x: -220, y: -150 },
+        scale: 0.43,
+        initialPosition: { x: 281, y: -33 },
         minScale: 0.45
       },
       xl: {
         scale: 0.44,
-        initialPosition: { x: 281, y: -7.45 },
+        initialPosition: { x: 0.78, y: -123 },
         minScale: 0.44
       },
       '2xl': {
         scale: 0.45,
-        initialPosition: { x: 281, y: -7.45 },
+        initialPosition: { x: 268, y: -33 },
         minScale: 0.45
+      },
+      xxl: { //doesnt apply to any screen larger than 1920px
+        scale: 1.0,
+        initialPosition: { x: -20, y: -35 },
+        minScale: 1.1
       }
     }
   );
@@ -420,13 +440,16 @@ const BattleMap = ({onChange}: BattleMapProps) => {
         {mapInitialized && (
           <TransformWrapper
             // centerOnInit={true}
+            ref={transformComponentRef}
             onZoom={changeCanvasState}
             onPinching={changeCanvasState}
             onPinchingStop={changeCanvasState}
             onPanningStop={changeCanvasState}
             // centerOnInit={true}
-            disablePadding={true}
+            // disablePadding={true}
             initialScale={mapProps?.scale}
+            initialPositionX={mapProps?.initialPosition.x}
+            initialPositionY={mapProps?.initialPosition.y}
             minScale={mapProps?.minScale}
             maxScale={1}
             >
@@ -450,7 +473,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
                 {flags} {explosion}
                 <div >
                   <div className={styles.water}></div>
-                  <div className={[styles.buccaneer_beach, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Buccaneer Beach")}>
+                  <div id='beach' className={[styles.buccaneer_beach, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Buccaneer Beach")}>
                     <div className={[styles.worldmap_label, styles.buccaneer_beach_label].filter(e => !!e).join(' ')}>Buccaneer Beach</div> </div>
                   <div className={[styles.mitagi_retreat, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Mitagi Retreat")}>
                     <div className={[styles.worldmap_label, styles.mitagi_retreat_label].filter(e => !!e).join(' ')}>Mitagi Retreat</div> </div>	
