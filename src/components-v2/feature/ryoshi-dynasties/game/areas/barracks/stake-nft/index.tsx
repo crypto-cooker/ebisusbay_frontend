@@ -15,7 +15,7 @@ import WalletNft from "@src/core/models/wallet-nft";
 import ImageService from "@src/core/services/image";
 import {StakedToken} from "@src/core/services/api-service/graph/types";
 import ShrineIcon from "@src/components-v2/shared/icons/shrine";
-import {CloseIcon} from "@chakra-ui/icons";
+import {ArrowBackIcon, CloseIcon} from "@chakra-ui/icons";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import {Contract} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
@@ -32,6 +32,7 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/faq-page";
 
 const config = appConfig();
 
@@ -57,6 +58,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   const [currentCollection, setCurrentCollection] = useState<any>();
   const [stakedNfts, setStakedNfts] = useState<StakedToken[]>([]);
   const [pendingNfts, setPendingNfts] = useState<PendingNft[]>([]);
+  const [page, setPage] = useState<string>();
 
   const addressForTab = config.collections.find((c: any) => c.slug === currentTab)?.address;
 
@@ -123,6 +125,14 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
     onClose();
   }
 
+  const handleBack = () => {
+    if (!!page) {
+      setPage(undefined);
+    } else {
+      setPage('faq');
+    }
+  };
+
   useEffect(() => {
     if (!isOpen) return;
 
@@ -169,43 +179,49 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       title='Stake NFTs'
       size='5xl'
       isCentered={false}
+      utilBtnTitle={!!page ? <ArrowBackIcon /> : <>?</>}
+      onUtilBtnClick={handleBack}
     >
-      <BarracksStakeNftContext.Provider value={pendingNfts}>
-        <Text align='center' p={2}>Ryoshi Tales NFTs can be staked to earn extra battle units per slot.</Text>
-        <StakingBlock
-          pendingNfts={pendingNfts}
-          stakedNfts={stakedNfts}
-          onRemove={handleRemoveNft}
-          onStaked={handleStakeSuccess}
-        />
-        <Box p={4}>
-          <Flex direction='row' justify='center' mb={2}>
-            <SimpleGrid columns={{base: 2, sm: 4}}>
-              <RdTabButton isActive={currentTab === tabs.ryoshiVip} onClick={handleBtnClick(tabs.ryoshiVip)}>
-                VIP
-              </RdTabButton>
-              <RdTabButton isActive={currentTab === tabs.fortuneGuards} onClick={handleBtnClick(tabs.fortuneGuards)}>
-                Guards
-              </RdTabButton>
-              <RdTabButton isActive={currentTab === tabs.ryoshiHalloween} onClick={handleBtnClick(tabs.ryoshiHalloween)}>
-                Halloween
-              </RdTabButton>
-              <RdTabButton isActive={currentTab === tabs.ryoshiChristmas} onClick={handleBtnClick(tabs.ryoshiChristmas)}>
-                Christmas
-              </RdTabButton>
-            </SimpleGrid>
-          </Flex>
-          <Box>
-            <UnstakedNfts
-              isReady={isOpen}
-              collection={currentCollection}
-              address={user.address ?? undefined}
-              onAdd={handleAddNft}
-              onRemove={handleRemoveNft}
-            />
+      {page === 'faq' ? (
+        <FaqPage />
+      ) : (
+        <BarracksStakeNftContext.Provider value={pendingNfts}>
+          <Text align='center' p={2}>Ryoshi Tales NFTs can be staked to earn extra battle units per slot. Some NFTs may require a weapon trait.</Text>
+          <StakingBlock
+            pendingNfts={pendingNfts}
+            stakedNfts={stakedNfts}
+            onRemove={handleRemoveNft}
+            onStaked={handleStakeSuccess}
+          />
+          <Box p={4}>
+            <Flex direction='row' justify='center' mb={2}>
+              <SimpleGrid columns={{base: 2, sm: 4}}>
+                <RdTabButton isActive={currentTab === tabs.ryoshiVip} onClick={handleBtnClick(tabs.ryoshiVip)}>
+                  VIP
+                </RdTabButton>
+                <RdTabButton isActive={currentTab === tabs.fortuneGuards} onClick={handleBtnClick(tabs.fortuneGuards)}>
+                  Guards
+                </RdTabButton>
+                <RdTabButton isActive={currentTab === tabs.ryoshiHalloween} onClick={handleBtnClick(tabs.ryoshiHalloween)}>
+                  Halloween
+                </RdTabButton>
+                <RdTabButton isActive={currentTab === tabs.ryoshiChristmas} onClick={handleBtnClick(tabs.ryoshiChristmas)}>
+                  Christmas
+                </RdTabButton>
+              </SimpleGrid>
+            </Flex>
+            <Box>
+              <UnstakedNfts
+                isReady={isOpen}
+                collection={currentCollection}
+                address={user.address ?? undefined}
+                onAdd={handleAddNft}
+                onRemove={handleRemoveNft}
+              />
+            </Box>
           </Box>
-        </Box>
-      </BarracksStakeNftContext.Provider>
+        </BarracksStakeNftContext.Provider>
+      )}
     </RdModal>
   )
 }
@@ -459,7 +475,7 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
           </div>
         ) : status === "error" ? (
           <p>Error: {(error as any).message}</p>
-        ) : (
+        ) : data?.pages.map((page) => page.data).flat().length > 0 ? (
           <SimpleGrid
             columns={{base: 2, sm: 3, md: 4}}
             gap={3}
@@ -477,6 +493,10 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
               </React.Fragment>
             ))}
           </SimpleGrid>
+        ) : (
+          <Box textAlign='center' mt={8}>
+            <Text>No NFTs available</Text>
+          </Box>
         )}
       </InfiniteScroll>
 
