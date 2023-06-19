@@ -551,23 +551,23 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     {
       base: {
         scale: 0.4,
-        initialPosition: { x: -350, y: 50 },
+        initialPosition: { x: -370, y: -22 },
         minScale: 0.15
       },
       sm: {
-        scale: 0.5,
-        initialPosition: { x: -350, y: 50 },
-        minScale: 0.5
+        scale: 0.50,
+        initialPosition: { x: -439, y: -36 },
+        minScale: 0.2
       },
       md: {
-        scale: 0.5,
-        initialPosition: { x: -170, y: 20 },
-        minScale: 0.5
+        scale: 0.52,
+        initialPosition: { x: -317, y: -42 },
+        minScale: 0.52
       },
       lg: {
-        scale: 0.5,
+        scale: 0.51,
         initialPosition: { x: -130, y: 20 },
-        minScale: 0.5
+        minScale: 0.51
       },
       xl: {
         scale: 0.55,
@@ -576,10 +576,10 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
       },
       '2xl': {
         scale: 0.7,
-        initialPosition: { x: -20, y: -35 },
+        initialPosition: { x: -60, y: -105 },
         minScale: 0.7
       },
-      '3xl': { //doesnt apply to any screen larger than 1920px
+      xxl: { //doesnt apply to any screen larger than 1920px
         scale: 1.0,
         initialPosition: { x: -20, y: -35 },
         minScale: 1.1
@@ -626,6 +626,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
             onPinching={changeCanvasState}
             onPinchingStop={changeCanvasState}
             onPanningStop={changeCanvasState}
+            initialPositionX={mapProps?.initialPosition?.x}
+            initialPositionY={mapProps?.initialPosition?.y}
             // centerOnInit={true}
             disablePadding={true}
             initialScale={mapProps?.scale}

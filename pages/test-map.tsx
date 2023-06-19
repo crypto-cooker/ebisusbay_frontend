@@ -14,27 +14,33 @@ const TestMap = () => {
     {
       base: {
         scale: 0.4,
-        minScale: 0.15
+        minScale: 0.15,
+        centerOnInit: true
       },
       sm: {
         scale: 0.5,
-        minScale: 0.5
+        minScale: 0.5,
+        centerOnInit: false
       },
       md: {
         scale: 0.5,
-        minScale: 0.5
+        minScale: 0.5,
+        centerOnInit: false
       },
       lg: {
         scale: 0.5,
-        minScale: 0.5
+        minScale: 0.5,
+        centerOnInit: false
       },
       xl: {//1920x1080
         scale: 0.55,
-        minScale: 0.55
+        minScale: 0.55,
+        centerOnInit: false
       },
       '2xl': { //ultrawide
         scale: 0.7,
-        minScale: 0.7
+        minScale: 0.7,
+        centerOnInit: false
       },
     }
   );
@@ -48,14 +54,16 @@ const TestMap = () => {
   return (
     <Box
       position='relative' h='calc(100vh - 74px)'
-      backgroundImage={ImageService.translate(`/img/ryoshi-dynasties/village/background-${user.theme}.png`).convert()}
+      // backgroundImage={ImageService.translate(`/img/ryoshi-dynasties/village/background-${user.theme}.png`).convert()}
       backgroundSize='cover'
     >
       {mapInitialized && (
         <TransformWrapper
-          centerOnInit={true}
+          // centerOnInit
+          centerZoomedOut={true}
           initialScale={mapProps!.scale}
           minScale={mapProps!.minScale}
+          // {({zoomIn, zoomOut, resetTransform, ...utils})}
         >
           <React.Fragment>
             {/* <button onClick={zoomToImage}>Zoom to 1</button> */}
@@ -87,4 +95,5 @@ export default TestMap;
 interface MapProps {
   scale: number;
   minScale: number;
+  centerOnInit?: boolean;
 }
