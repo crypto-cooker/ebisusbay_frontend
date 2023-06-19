@@ -276,9 +276,10 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
                     onClick={handleStake}
                     isLoading={isExecuting}
                     disabled={isExecuting}
+                    loadingText={executingLabel}
                   >
                     {user.address ? (
-                      <>{isExecuting ? executingLabel : 'Stake $Fortune'}</>
+                      <>Stake $Fortune</>
                     ) : (
                       <>Connect</>
                     )}
