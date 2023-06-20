@@ -146,7 +146,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       for (const token of data) {
         const nft = await getNft(token.contractAddress, token.tokenId);
         if (nft) {
-          const stakeConfig = rdConfig.barracks.staking.nft.collections.find((c) => c.slug === nft.collection.slug);
+          const stakeConfig = rdConfig.barracks.staking.nft.collections.find((c) => caseInsensitiveCompare(c.address, nft.collection.address));
 
           const percentile = (nft.nft.rank / stakeConfig!.maxSupply) * 100;
           const multiplier = stakeConfig!.multipliers
@@ -386,7 +386,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
                             <Image
                               src={ImageService.translate('/img/ryoshi-dynasties/icons/lock.png').convert()}
                               alt="lockIcon"
-                              boxSize={8}
+                              boxSize={12}
                             />
                           </Center>
                         </Flex>

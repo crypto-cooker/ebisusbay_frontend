@@ -36,7 +36,8 @@ const config = appConfig();
 const tabs = {
   ryoshiVip: 'ryoshi-tales-vip',
   ryoshiHalloween: 'ryoshi-tales-halloween',
-  ryoshiChristmas: 'ryoshi-tales-christmas'
+  ryoshiChristmas: 'ryoshi-tales-christmas',
+  fortuneGuards: 'fortune-guards'
 };
 
 interface StakeNftsProps {
@@ -74,6 +75,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       const adder = stakeConfig!.adders
         .sort((a: any, b: any) => a.percentile - b.percentile)
         .find((m: any) => percentile <= m.percentile)?.value || 0;
+      const idBonus = stakeConfig!.ids.find((i) => i.id.toString() === nft.nftId)?.bonus || 0;
 
       setPendingNfts([...pendingNfts, {
         nftAddress: nft.nftAddress,
@@ -81,7 +83,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
         image: nft.image,
         rank: nft.rank,
         multiplier,
-        adder,
+        adder: adder + idBonus,
         isAlreadyStaked: false
       }]);
     }
@@ -134,7 +136,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       for (const token of data) {
         const nft = await getNft(token.contractAddress, token.tokenId);
         if (nft) {
-          const stakeConfig = rdContext.config.bank.staking.nft.collections.find((c) => c.slug === nft.collection.slug);
+          const stakeConfig = rdContext.config.bank.staking.nft.collections.find((c) => caseInsensitiveCompare(c.address, nft.collection.address));
 
           const percentile = (nft.nft.rank / stakeConfig!.maxSupply) * 100;
           const multiplier = stakeConfig!.multipliers
@@ -143,6 +145,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
           const adder = stakeConfig!.adders
             .sort((a: any, b: any) => a.percentile - b.percentile)
             .find((m: any) => percentile <= m.percentile)?.value || 0;
+          const idBonus = stakeConfig!.ids.find((i) => i.id.toString() === nft.nftId)?.bonus || 0;
 
           nfts.push({
             nftAddress: token.contractAddress,
@@ -150,7 +153,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
             image: nft.nft.image,
             rank: nft.nft.rank,
             multiplier,
-            adder,
+            adder: adder + idBonus,
             isAlreadyStaked:  true
           })
         }
@@ -183,6 +186,9 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
           <Flex direction='row' justify='center' mb={2}>
             <RdTabButton isActive={currentTab === tabs.ryoshiVip} onClick={handleBtnClick(tabs.ryoshiVip)}>
               VIP
+            </RdTabButton>
+            <RdTabButton isActive={currentTab === tabs.fortuneGuards} onClick={handleBtnClick(tabs.fortuneGuards)}>
+              Guards
             </RdTabButton>
             <RdTabButton isActive={currentTab === tabs.ryoshiHalloween} onClick={handleBtnClick(tabs.ryoshiHalloween)}>
               Halloween
@@ -298,10 +304,12 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
                     </Box>
                     <Flex fontSize='xs' justify='space-between' mt={1}>
                       <Box verticalAlign='top'>
-                        <HStack spacing={1}>
-                          <Icon as={FontAwesomeIcon} icon={faAward} />
-                          <Box as='span'>{pendingNfts[index].rank ?? ''}</Box>
-                        </HStack>
+                        {pendingNfts[index].rank && (
+                          <HStack spacing={1}>
+                            <Icon as={FontAwesomeIcon} icon={faAward} />
+                            <Box as='span'>{pendingNfts[index].rank ?? ''}</Box>
+                          </HStack>
+                        )}
                       </Box>
                       <VStack align='end' spacing={0} fontWeight='bold'>
                         {pendingNfts[index].multiplier && (
@@ -364,7 +372,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
                             <Image
                               src={ImageService.translate('/img/ryoshi-dynasties/icons/lock.png').convert()}
                               alt="lockIcon"
-                              boxSize={8}
+                              boxSize={12}
                             />
                           </Center>
                         </Flex>
@@ -444,7 +452,7 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
           </div>
         ) : status === "error" ? (
           <p>Error: {(error as any).message}</p>
-        ) : (
+        ) : data?.pages.map((page) => page.data).flat().length > 0 ? (
           <SimpleGrid
             columns={{base: 2, sm: 3, md: 4}}
             gap={3}
@@ -462,6 +470,10 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
               </React.Fragment>
             ))}
           </SimpleGrid>
+        ) : (
+          <Box textAlign='center' mt={8}>
+            <Text>No NFTs available</Text>
+          </Box>
         )}
       </InfiniteScroll>
 
