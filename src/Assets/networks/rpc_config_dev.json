@@ -3654,31 +3654,6 @@
       }
     },
     {
-      "name": "Slavik Fruit Farm",
-      "slug": "slavik-fruit-farm",
-      "multiToken": false,
-      "address": "0xADFf544D633747aE216c85421b6e9Ad7445a4681",
-      "onChain": false,
-      "listable": false,
-      "metadata": {
-        "description": "Slavik Fruit Farm is a Vibrant Community Focused on Innovation, Positivity & Sustainability.",
-        "avatar": "/img/collections/slavikfruitfarm/avatar.webp",
-        "banner": "/img/collections/slavikfruitfarm/banner.webp",
-        "card": "/img/collections/slavikfruitfarm/card.webp",
-        "website": "https://SlavikFruit.Farm/",
-        "twitter": "https://twitter.com/SlavikFruitFarm",
-        "discord": "https://discord.gg/damg",
-        "categories": [
-          "collectibles"
-        ]
-      },
-      "verification": {
-        "verified": true,
-        "doxx": false,
-        "kyc": false
-      }
-    },
-    {
       "name": "CroDoges",
       "slug": "crodoges",
       "multiToken": false,
@@ -21192,6 +21167,56 @@
         "verified": false,
         "doxx": false,
         "kyc": false
+      }
+    },
+    {
+      "name": "GreenStix OG Candles",
+      "slug": "greenstix-og-candles",
+      "multiToken": false,
+      "address": "0x3ed598C23Bd46a171158aaC2035b0282AC1f9217",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "GreenStix thrives for a greener tomorrow. We plan to make this possible by sending every minter a sapling so they too can get outside and #KeepItGreen. We will be making contributions to organizations all of the U.S. and eventually globally. By building up this community we can all do one small deed and globally it can be a massive effort into preserving as much natural habit land as possible. It all starts with 1 person picking up 1 piece of trash every day, that is 365 pieces of trash, If we ALL do it and we all relay this message we can really have a cleaner and greener tomorrow for our generations to come.",
+        "avatar": "/img/collections/greenstix-mutant-candles/avatar.webp",
+        "card": "/img/collections/greenstix-mutant-candles/card.webp",
+        "banner": "/img/collections/greenstix-mutant-candles/banner.webp",
+        "website": "https://greenstix.xyz/",
+        "twitter": "https://twitter.com/GreenStix_v2",
+        "discord": "https://discord.gg/W3FuHamTen",
+        "medium": "https://medium.com/@greenstixinc",
+        "telegram": "https://t.me/greeenstixtoken",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Rare Pepe Cult",
+      "slug": "rare-pepe-cult",
+      "multiToken": false,
+      "address": "0x8eD66bbF8B3B0577443c3fB3c712f69165515376",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Hello Pepe the frog fam! Welcome, and thank you for coming together to appreciate this beloved character. Pepe has captured the hearts of many through his expressive and nuanced personality. It has become a beloved icon of internet culture. As his fans, you have contributed to the growing community surrounding him and his unique qualities. Pepecro fam now release to you this Rare Pepes and welcome you to culture taking over cronos! Be part of the Rare Pepes Cult now!",
+        "avatar": "/img/collections/rare-pepe-cult/avatar.webp",
+        "banner": "/img/collections/rare-pepe-cult/banner.webp",
+        "card": "/img/collections/rare-pepe-cult/card.webp",
+        "website": "https://linktr.ee/pepecro/",
+        "twitter": "https://twitter.com/PepeCroFam",
+        "discord": "https://discord.gg/uSWFhwgBDm",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
       }
     }
   ],
