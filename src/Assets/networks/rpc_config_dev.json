@@ -3654,31 +3654,6 @@
       }
     },
     {
-      "name": "Slavik Fruit Farm",
-      "slug": "slavik-fruit-farm",
-      "multiToken": false,
-      "address": "0xADFf544D633747aE216c85421b6e9Ad7445a4681",
-      "onChain": false,
-      "listable": false,
-      "metadata": {
-        "description": "Slavik Fruit Farm is a Vibrant Community Focused on Innovation, Positivity & Sustainability.",
-        "avatar": "/img/collections/slavikfruitfarm/avatar.webp",
-        "banner": "/img/collections/slavikfruitfarm/banner.webp",
-        "card": "/img/collections/slavikfruitfarm/card.webp",
-        "website": "https://SlavikFruit.Farm/",
-        "twitter": "https://twitter.com/SlavikFruitFarm",
-        "discord": "https://discord.gg/damg",
-        "categories": [
-          "collectibles"
-        ]
-      },
-      "verification": {
-        "verified": true,
-        "doxx": false,
-        "kyc": false
-      }
-    },
-    {
       "name": "CroDoges",
       "slug": "crodoges",
       "multiToken": false,
