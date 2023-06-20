@@ -593,14 +593,13 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
   const { isOpen: isBlockingModalOpen, onOpen: onOpenBlockingModal, onClose: onCloseBlockingModal } = useDisclosure();
   const handleSceneChange = useCallback((area: string) => {
-    // const blockableAreas = ['battleMap', 'barracks'];
-    // if (blockableAreas.includes(area)) {
-    //   const blockableStates = [RdGameState.IN_MAINTENANCE, RdGameState.NOT_STARTED];
-    //   if (!rdGameContext?.state || blockableStates.includes(rdGameContext?.state)) {
-    //     onOpenBlockingModal();
-    //     return;
-    //   }
-    // }
+    if (area === 'battleMap') {
+      const blockableStates = [RdGameState.IN_MAINTENANCE, RdGameState.NOT_STARTED];
+      if (!rdGameContext?.state || blockableStates.includes(rdGameContext?.state)) {
+        onOpenBlockingModal();
+        return;
+      }
+    }
 
     if (area === 'barracks') {
       OpenBarracks();
