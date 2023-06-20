@@ -11,7 +11,7 @@
 .background{
 	height: 2021px;
 	width: 2880px;
-	background-image: url("/img/battle-bay/imgs/world_map_background.jpg");
+	background-image: url("/img/battle-bay/imgs/world_map_background2.jpg");
 }
 .enlarge:hover{
   transform: scale(1.1); 

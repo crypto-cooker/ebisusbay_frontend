@@ -461,7 +461,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
               <Box 
                   as='img'
                   //  src={'/img/battle-bay/imgs/world_map_background.jpg'}
-                   src={ImageService.translate('/img/battle-bay/imgs/world_map_background.jpg').convert()}
+                   src={ImageService.translate('/img/battle-bay/imgs/world_map_background2.jpg').convert()}
                    maxW='none'
                    useMap="#imageMap" 
                    className={`${styles0.mapImageArea}`} 
