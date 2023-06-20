@@ -461,7 +461,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
               <Box 
                   as='img'
                   //  src={'/img/battle-bay/imgs/world_map_background.jpg'}
-                   src={ImageService.translate('/img/battle-bay/imgs/world_map_background.jpg').custom({width: 2880, height: 2021})}
+                   src={ImageService.translate('/img/ryoshi-dynasties/battle/world-map-background.jpg').custom({width: 2880, height: 2021})}
                    maxW='none'
                    useMap="#imageMap" 
                    className={`${styles0.mapImageArea}`} 
