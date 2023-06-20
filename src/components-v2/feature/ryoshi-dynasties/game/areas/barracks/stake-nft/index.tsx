@@ -1,4 +1,4 @@
-import {Box, Flex, HStack, Icon, IconButton, Image, SimpleGrid, Text, VStack} from "@chakra-ui/react"
+import {Box, Center, Flex, HStack, Icon, IconButton, Image, SimpleGrid, Text, VStack} from "@chakra-ui/react"
 
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {useAppSelector} from "@src/Store/hooks";
@@ -358,14 +358,35 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
                   <Box
                     p={2}
                     rounded='xl'
+                    cursor='pointer'
                   >
                     <Box
                       width={100}
                       height={100}
                       bgColor='#716A67'
                       rounded='xl'
+                      position='relative'
                     >
                       <ShrineIcon boxSize='100%' fill='#B1ADAC'/>
+                      {index > 0 && (
+                        <Flex
+                          position='absolute'
+                          top={0}
+                          left={0}
+                          w={100}
+                          h={100}
+                          fontSize='sm'
+                          bg='#333333DD'
+                          rounded='xl'
+                          justify='center'
+                          fontWeight='semibold'
+                          textAlign='center'
+                        >
+                          <Center>
+                            Coming<br />Soon
+                          </Center>
+                        </Flex>
+                      )}
                     </Box>
                   </Box>
                 </Box>
