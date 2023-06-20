@@ -84,33 +84,33 @@ const BattleMap = ({onChange}: BattleMapProps) => {
     });
     console.log(ReactZoomPanPinchRef.state.positionX, ReactZoomPanPinchRef.state.positionY, ReactZoomPanPinchRef.state.scale)
   };
-  function useWindowDimensions() {
-    const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+  // function useWindowDimensions() {
+  //   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 
-    useEffect(() => {
-      function handleResize() {
-        setWindowDimensions(getWindowDimensions());
-      }
+  //   useEffect(() => {
+  //     function handleResize() {
+  //       setWindowDimensions(getWindowDimensions());
+  //     }
 
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
-    }, []);
+  //     window.addEventListener('resize', handleResize);
+  //     return () => window.removeEventListener('resize', handleResize);
+  //   }, []);
 
-    return windowDimensions;
-  }
-  const GetControlPointImage = async (id: any) => 
-  {
-    var data = await getControlPoint(id)
-    console.log(data.leaderBoard[0].image);
-    return data.leaderBoard[0].image;
-  }
-  function wait(ms: any){
-    var start = new Date().getTime();
-    var end = start;
-    while(end < start + ms) {
-      end = new Date().getTime();
-   }
-  }
+  //   return windowDimensions;
+  // }
+  // const GetControlPointImage = async (id: any) => 
+  // {
+  //   var data = await getControlPoint(id)
+  //   console.log(data.leaderBoard[0].image);
+  //   return data.leaderBoard[0].image;
+  // }
+  // function wait(ms: any){
+  //   var start = new Date().getTime();
+  //   var end = start;
+  //   while(end < start + ms) {
+  //     end = new Date().getTime();
+  //  }
+  // }
   const randomlyPlayExplosion = async () => {
 
     // if(area.length === 0) return;
@@ -461,7 +461,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
               <Box 
                   as='img'
                   //  src={'/img/battle-bay/imgs/world_map_background.jpg'}
-                   src={ImageService.translate('/img/battle-bay/imgs/world_map_background2.jpg').convert()}
+                   src={ImageService.translate('/img/battle-bay/imgs/world_map_background.jpg').custom({width: 2880, height: 2021})}
                    maxW='none'
                    useMap="#imageMap" 
                    className={`${styles0.mapImageArea}`} 
