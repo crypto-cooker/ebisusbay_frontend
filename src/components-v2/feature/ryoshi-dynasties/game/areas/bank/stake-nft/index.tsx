@@ -361,7 +361,11 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
                           textAlign='center'
                         >
                           <Center>
-                            Coming<br />Soon
+                            <Image
+                              src={ImageService.translate('/img/ryoshi-dynasties/icons/lock.png').convert()}
+                              alt="lockIcon"
+                              boxSize={8}
+                            />
                           </Center>
                         </Flex>
                       )}
