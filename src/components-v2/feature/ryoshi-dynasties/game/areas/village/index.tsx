@@ -36,6 +36,7 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+import { RdGameState } from "@src/core/services/api-service/types";
 
 interface VillageProps {
   onChange: (value: string) => void;
